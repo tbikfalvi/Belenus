@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>wndMain</class>
+ <widget class="QMainWindow" name="wndMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>635</width>
+    <height>579</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Belenus</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGraphicsView" name="grvMain"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>635</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_System">
+    <property name="title">
+     <string>&amp;System</string>
+    </property>
+    <addaction name="actionLog_Out"/>
+    <addaction name="separator"/>
+    <addaction name="actionE_xit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="action_Preferences"/>
+    <addaction name="action_Users"/>
+    <addaction name="action_Usercardtypes"/>
+    <addaction name="action_Usercards"/>
+    <addaction name="action_Producttypes"/>
+    <addaction name="action_Products"/>
+   </widget>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="action_Logs"/>
+    <addaction name="actionHardware_test"/>
+   </widget>
+   <addaction name="menu_System"/>
+   <addaction name="menu_Edit"/>
+   <addaction name="menu_View"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="actionE_xit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="action_Preferences">
+   <property name="text">
+    <string>&amp;Preferences ...</string>
+   </property>
+  </action>
+  <action name="action_Logs">
+   <property name="text">
+    <string>&amp;Logs ...</string>
+   </property>
+  </action>
+  <action name="actionLog_Out">
+   <property name="text">
+    <string>Log &amp;Out</string>
+   </property>
+  </action>
+  <action name="action_Users">
+   <property name="text">
+    <string>&amp;Users ...</string>
+   </property>
+  </action>
+  <action name="action_Usercardtypes">
+   <property name="text">
+    <string>Usercard types ...</string>
+   </property>
+  </action>
+  <action name="actionHardware_test">
+   <property name="text">
+    <string>&amp;Hardware test ...</string>
+   </property>
+  </action>
+  <action name="action_Usercards">
+   <property name="text">
+    <string>Usercards ...</string>
+   </property>
+  </action>
+  <action name="action_Producttypes">
+   <property name="text">
+    <string>Product types ...</string>
+   </property>
+  </action>
+  <action name="action_Products">
+   <property name="text">
+    <string>Products ...</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionE_xit</sender>
+   <signal>triggered()</signal>
+   <receiver>wndMain</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>317</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
