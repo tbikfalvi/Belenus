@@ -276,7 +276,7 @@ void cPreferences::loadConfFileSettings()
         m_qsServerAddress    = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
         m_qsServerPort       = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
 
-        unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::DEBUG ).toUInt();
+        unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
             (uiConsoleLevel <= cSeverity::MIN) )
         {
@@ -287,7 +287,7 @@ void cPreferences::loadConfFileSettings()
             g_obLogger << cQTLogger::EOM;
         }
 
-        unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::DEBUG ).toUInt();
+        unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::INFO ).toUInt();
         if( (uiDBLevel >= cSeverity::MAX) &&
             (uiDBLevel <= cSeverity::MIN) )
         {
@@ -298,7 +298,7 @@ void cPreferences::loadConfFileSettings()
             g_obLogger << cQTLogger::EOM;
         }
 
-        unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::DEBUG ).toUInt();
+        unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiGUILevel >= cSeverity::MAX) &&
             (uiGUILevel <= cSeverity::MIN) )
         {

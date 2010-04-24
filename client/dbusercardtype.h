@@ -1,6 +1,10 @@
 #ifndef DBUSERCARDTYPE_H
 #define DBUSERCARDTYPE_H
 
+#include <QSqlRecord>
+
+#include "../framework/sevexception.h"
+
 class cDBUserCardType
 {
 public:
@@ -8,7 +12,7 @@ public:
     ~cDBUserCardType();
 
     void            load( const unsigned int p_uiId )                                   throw( cSevException );
-    void            save() const                                                        throw( cSevException );
+    void            save()                                                              throw( cSevException );
     void            createNew()                                                         throw();
     unsigned int    id()                                                                throw();
     string          name()                                                              throw();

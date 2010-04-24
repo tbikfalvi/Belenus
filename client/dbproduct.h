@@ -1,6 +1,10 @@
 #ifndef DBPRODUCT_H
 #define DBPRODUCT_H
 
+#include <QSqlRecord>
+
+#include "../framework/sevexception.h"
+
 class cDBProduct
 {
 public:
@@ -8,7 +12,7 @@ public:
     ~cDBProduct();
 
     void            load( const unsigned int p_uiId )                                   throw( cSevException );
-    void            save() const                                                        throw( cSevException );
+    void            save()                                                              throw( cSevException );
     void            createNew()                                                         throw();
     unsigned int    id()                                                                throw();
     string          name()                                                              throw();

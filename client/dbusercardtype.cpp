@@ -87,36 +87,35 @@ void cDBUserCardType::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBUserCardType::save() const throw( cSevException )
+void cDBUserCardType::save() throw( cSevException )
 {
     cTracer obTrace( "cDBUserCardType::save" );
-    stringstream  ssQuery;
+    QString  qsQuery;
 
     if( m_uiId )
     {
-        ssQuery << "UPDATE usercardtypes ";
+        qsQuery = "UPDATE";
     }
     else
     {
-        ssQuery << "INSERT INTO usercardtypes ";
+        qsQuery = "INSERT INTO";
     }
-    ssQuery << "SET name = \"" << m_stName << "\", ";
-    ssQuery << "price = \"" << m_inPrice << "\", ";
-    ssQuery << "units = \"" << m_uiUnits << "\", ";
-    ssQuery << "validdatefrom = \"" << m_uiValidDateFromYear << "-";
-    ssQuery << m_uiValidDateFromMonth << "-";
-    ssQuery << m_uiValidDateFromDay << "\", ";
-    ssQuery << "validdateto = \"" << m_uiValidDateToYear << "-";
-    ssQuery << m_uiValidDateToMonth << "-";
-    ssQuery << m_uiValidDateToDay << "\", ";
-    ssQuery << "validdays = \"" << m_uiValidDays << "\", ";
-    ssQuery << "unittime = \"" << m_uiUnitTime << "\" ";
+    qsQuery += " patientCardTypes SET ";
+    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName  ) );
+    qsQuery += QString( "price = %1, " ).arg( m_inPrice );
+    qsQuery += QString( "units = %1, " ).arg( m_uiUnits );
+    qsQuery += QString( "validDateFrom = \"%1-%2-%3\", " ).arg( m_uiValidDateFromYear ).arg( m_uiValidDateFromMonth ).arg( m_uiValidDateFromDay );
+    qsQuery += QString( "validDateTo = \"%1-%2-%3\", " ).arg( m_uiValidDateToYear ).arg( m_uiValidDateToMonth ).arg( m_uiValidDateToDay );
+    qsQuery += QString( "validDays = %1, " ).arg( m_uiValidDays );
+    qsQuery += QString( "unitTime = %1, " ).arg( m_uiUnitTime );
     if( m_uiId )
     {
-        ssQuery << "WHERE usercardtypeid = " << m_uiId;
+        qsQuery += QString( " WHERE patientCardTypeId = %1" ).arg( m_uiId );
     }
 
-    g_poDB->executeQuery( ssQuery.str(), true );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( poQuery ) delete poQuery;
 }
 
 void cDBUserCardType::createNew() throw()

@@ -1,6 +1,8 @@
 #ifndef DBUSER_H
 #define DBUSER_H
 
+#include <QSqlRecord>
+
 #include "../framework/sevexception.h"
 
 class cDBUser
@@ -11,7 +13,7 @@ public:
 
     void          load( const unsigned int p_uiId )             throw( cSevException );
     void          load( const string &p_stName )                throw( cSevException );
-    void          save() const                                  throw( cSevException );
+    void          save()                                        throw( cSevException );
     void          createNew()                                   throw();
     void          logIn( const string &p_stPassword )           throw( cSevException );
     void          logOut()                                      throw();

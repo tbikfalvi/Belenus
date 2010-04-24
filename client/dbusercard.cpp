@@ -73,33 +73,34 @@ void cDBUserCard::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBUserCard::save() const throw( cSevException )
+void cDBUserCard::save() throw( cSevException )
 {
     cTracer obTrace( "cDBUserCard::save" );
-    stringstream  ssQuery;
+    QString  qsQuery;
 
     if( m_uiId )
     {
-        ssQuery << "UPDATE usercards ";
+        qsQuery = "UPDATE";
     }
     else
     {
-        ssQuery << "INSERT INTO usercards ";
+        qsQuery = "INSERT INTO";
     }
-    ssQuery << "SET usercardtypeid = \"" << m_uiUserCardTypeId << "\", ";
-    ssQuery << "barcode = \"" << m_stBarCode << "\", ";
-    ssQuery << "comment = \"" << m_stComment << "\", ";
-    ssQuery << "units = \"" << m_uiUnits << "\", ";
-    ssQuery << "validdate = \"" << m_uiValidDateYear << "-";
-    ssQuery << m_uiValidDateMonth << "-";
-    ssQuery << m_uiValidDateDay << "\", ";
-    ssQuery << "pincode = \"" << m_inPinCode << "\" ";
+    qsQuery += " patientCards SET ";
+    qsQuery += QString( "patientCardTypeId = %1, " ).arg( m_uiUserCardTypeId );
+    qsQuery += QString( "barcode = \"%1\", " ).arg( QString::fromStdString( m_stBarCode ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "units = %1, " ).arg( m_uiUnits );
+    qsQuery += QString( "validDate = \"%1-%2-%3\", " ).arg( m_uiValidDateYear ).arg( m_uiValidDateMonth ).arg( m_uiValidDateDay );
+    qsQuery += QString( "pincode = %1" ).arg( m_inPinCode );
     if( m_uiId )
     {
-        ssQuery << "WHERE usercardid = " << m_uiId;
+        qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
     }
 
-    g_poDB->executeQuery( ssQuery.str(), true );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( poQuery ) delete poQuery;
 }
 
 void cDBUserCard::createNew() throw()

@@ -55,30 +55,33 @@ void cDBProduct::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBProduct::save() const throw( cSevException )
+void cDBProduct::save() throw( cSevException )
 {
     cTracer obTrace( "cDBProduct::save" );
-    stringstream  ssQuery;
+    QString  qsQuery;
 
     if( m_uiId )
     {
-        ssQuery << "UPDATE products ";
+        qsQuery = "UPDATE";
     }
     else
     {
-        ssQuery << "INSERT INTO products ";
+        qsQuery = "INSERT INTO";
     }
-    ssQuery << "SET name = \"" << m_stName << "\", ";
-    ssQuery << "barcode = \"" << m_stBarCode << "\", ";
-    ssQuery << "pricein = " << m_inPriceIn << ", ";
-    ssQuery << "priceout = " << m_inPriceOut << ", ";
-    ssQuery << "count = " << m_inCount << " ";
+    qsQuery += " products SET ";
+    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "barcode = \"%1\", " ).arg( QString::fromStdString( m_stBarCode ) );
+    qsQuery += QString( "priceIn = %1, " ).arg( m_inPriceIn );
+    qsQuery += QString( "priceOut = %1, " ).arg( m_inPriceOut );
+    qsQuery += QString( "count = %1" ).arg( m_inCount );
     if( m_uiId )
     {
-        ssQuery << "WHERE productid = " << m_uiId;
+        qsQuery += QString( " WHERE producId = %1" ).arg( m_uiId );
     }
 
-    g_poDB->executeQuery( ssQuery.str(), true );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( poQuery ) delete poQuery;
 }
 
 void cDBProduct::createNew() throw()

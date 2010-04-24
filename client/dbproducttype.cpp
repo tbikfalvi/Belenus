@@ -38,26 +38,29 @@ void cDBProductType::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBProductType::save() const throw( cSevException )
+void cDBProductType::save() throw( cSevException )
 {
     cTracer obTrace( "cDBProductType::save" );
-    stringstream  ssQuery;
+    QString  qsQuery;
 
     if( m_uiId )
     {
-        ssQuery << "UPDATE producttypes ";
+        qsQuery = "UPDATE";
     }
     else
     {
-        ssQuery << "INSERT INTO producttypes ";
+        qsQuery = "INSERT INTO";
     }
-    ssQuery << "SET name = \"" << m_stName << "\" ";
+    qsQuery += " productTypes SET ";
+    qsQuery += QString( "name = \"%1\"" ).arg( QString::fromStdString( m_stName ) );
     if( m_uiId )
     {
-        ssQuery << "WHERE producttypeid = " << m_uiId;
+        qsQuery += QString( " WHERE producTtypeId = %1" ).arg( m_uiId );
     }
 
-    g_poDB->executeQuery( ssQuery.str(), true );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( poQuery ) delete poQuery;
 }
 
 void cDBProductType::createNew() throw()

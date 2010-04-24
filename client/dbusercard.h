@@ -3,7 +3,7 @@
 
 #include <QSqlRecord>
 
-#include "belenus.h"
+#include "../framework/sevexception.h"
 
 class cDBUserCard
 {
@@ -12,7 +12,7 @@ public:
     ~cDBUserCard();
 
     void            load( const unsigned int p_uiId )                                   throw( cSevException );
-    void            save() const                                                        throw( cSevException );
+    void            save()                                                              throw( cSevException );
     void            createNew()                                                         throw();
     unsigned int    id()                                                                throw();
     unsigned int    userCardTypeId()                                                    throw();

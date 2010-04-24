@@ -1,0 +1,4 @@
+pballok - valami globalis valtozo kell, amiben a kliens licensz szama van.
+          Ezt a szamot kell adatbazisba menteni minden db* objektum
+          "save" fuggvenyeben.
+pballok - a cDBProduct osztaly nincs osszhangban a 'products' tablaval.

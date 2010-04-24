@@ -2,6 +2,7 @@
 #include <QMessageBox>
 
 #include "dlgusercardedit.h"
+#include "belenus.h"
 
 cDlgUserCardEdit::cDlgUserCardEdit( QWidget *p_poParent, cDBUserCard *p_poUserCard ) : QDialog( p_poParent )
 {
