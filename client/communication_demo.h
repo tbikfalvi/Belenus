@@ -13,7 +13,10 @@ public:
     CS_Communication_Demo();
     ~CS_Communication_Demo();
 
-    bool IsHardwareConnected( void );
+    void init( int p_nPort = 0 );
+    bool isHardwareConnected( void );
+    void closeCommunication( void );
+
     string getCustomCaption( void );
     int getPanelCount( void );
 };

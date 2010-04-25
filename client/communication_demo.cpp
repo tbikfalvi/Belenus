@@ -10,9 +10,16 @@ CS_Communication_Demo::~CS_Communication_Demo()
 {
 }
 
-bool CS_Communication_Demo::IsHardwareConnected( void )
+void CS_Communication_Demo::init( int )
+{
+}
+
+bool CS_Communication_Demo::isHardwareConnected( void )
 {
     return true;
+}
+void CS_Communication_Demo::closeCommunication( void )
+{
 }
 
 string CS_Communication_Demo::getCustomCaption( void )

@@ -14,7 +14,10 @@ public:
                        };
     ~CS_Communication() {};
 
-    virtual bool IsHardwareConnected( void ) = 0;
+    virtual void init( int p_nPort = 0 ) = 0;
+    virtual bool isHardwareConnected( void ) = 0;
+    virtual void closeCommunication( void ) = 0;
+
     virtual string getCustomCaption( void ) = 0;
     virtual int getPanelCount( void ) = 0;
 

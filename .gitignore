@@ -1,6 +1,12 @@
+belenus.exe
 belenus
 belenus.ini
 client/Makefile
+client/Makefile.Debug
+client/Makefile.Release
+client/object_script.belenus.Debug
+client/object_script.belenus.Release
+client/debug/
 client/belenus.pro.user
 client/bs_connection.o
 client/communication_demo.o

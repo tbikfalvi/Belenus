@@ -106,7 +106,7 @@ int main( int argc, char *argv[] )
 
 #ifdef __WIN32__
         g_poHardware = new CS_Communication_Serial();
-        if( !g_poHardware->IsHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
+        if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
         {
             delete g_poHardware;
             g_poHardware = new CS_Communication_Demo();
