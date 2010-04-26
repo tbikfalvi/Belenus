@@ -19,6 +19,12 @@ public:
 
     string getCustomCaption( void );
     int getPanelCount( void );
+
+    void SetApplicationModuleCount( int nCount );
+    bool SetHardwareModuleCount( int nCount );
+    int GetHardwareModuleCount();
+
+    void HW_Kezel();
 };
 
 #endif // COMMUNICATION_DEMO_H

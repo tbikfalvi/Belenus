@@ -21,6 +21,11 @@ public:
     virtual string getCustomCaption( void ) = 0;
     virtual int getPanelCount( void ) = 0;
 
+    virtual void SetApplicationModuleCount( int nCount ) = 0;
+    virtual bool SetHardwareModuleCount( int nCount ) = 0;
+    virtual int GetHardwareModuleCount( void ) = 0;
+
+    virtual void HW_Kezel( void ) = 0;
 //-------------------------------------------------------------------
 protected:
     string m_stCustomCaption;

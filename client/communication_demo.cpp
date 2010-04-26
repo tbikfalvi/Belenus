@@ -31,3 +31,17 @@ int CS_Communication_Demo::getPanelCount( void )
 {
     return m_inPanelCount;
 }
+void CS_Communication_Demo::SetApplicationModuleCount( int )
+{
+}
+bool CS_Communication_Demo::SetHardwareModuleCount( int )
+{
+    return true;
+}
+int CS_Communication_Demo::GetHardwareModuleCount()
+{
+    return m_inPanelCount;
+}
+void CS_Communication_Demo::HW_Kezel()
+{
+}
