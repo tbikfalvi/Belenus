@@ -59,9 +59,14 @@ public:
     CS_Communication_Serial();
     ~CS_Communication_Serial();
 
+    int getCountAvailablePorts();
+    int getComPort( int p_inIndex );
+
     void init( int p_nPort = 0 );
     bool isHardwareConnected( void );
     void closeCommunication( void );
+
+    void SetTestMode( bool bMode );
 
     string getCustomCaption( void );
     int getPanelCount( void );
@@ -95,6 +100,8 @@ private:
     bool                     bSendToModulPower_OFF;
     int                      PortNumber;
     int                      nHWModuleCount;         // Hardware-ben a kezelendo panel-ek szama,
+
+    void GetAvailableCommPorts();
 
     bool SP_InitCommunication( int p_inPort=0, DWORD p_dwBaudRate=0, DWORD p_dwParity=0 );
     bool SP_Open( bool bSync=true );

@@ -13,9 +13,14 @@ public:
     CS_Communication_Demo();
     ~CS_Communication_Demo();
 
+    int getCountAvailablePorts();
+    int getComPort( int p_inIndex );
+
     void init( int p_nPort = 0 );
     bool isHardwareConnected( void );
     void closeCommunication( void );
+
+    void SetTestMode( bool );
 
     string getCustomCaption( void );
     int getPanelCount( void );

@@ -36,13 +36,27 @@ CS_Communication_Serial::CS_Communication_Serial()
     m_stCustomCaption = "SERIAL";
     m_inPanelCount = 6;
 
-    m_bPortOpened           = false;
-    PortNumber              = 0;
-    BaudRate                = 9600;
-    Parity                  = 0;
-    m_dwBaudRate            = 9600;
-    m_dwParity              = 0;
-    m_hPort                 = NULL;
+    bySerial_Error             = 0;
+    byHwWdtCounter             = 0;
+    byLedModulKikapcsTimer     = 0;
+    byLedModulOlvasasiHiba     = 0;
+    byLedModulUjraindulas      = 0;
+    m_hPort                    = NULL;
+    BaudRate                   = 0;
+    Parity                     = 0;
+    m_dwBaudRate               = 0;
+    m_dwParity                 = 0;
+    wRelay_mem                 = 0;
+    bEnableIRQ_Msg             = false;
+    chModulMessage             = 0;
+    m_bPortOpened              = false;
+    bTest                      = false;
+    bSendToModulPower_ON       = false;
+    bSendToModulPower_OFF      = false;
+    PortNumber                 = 0;
+    nHWModuleCount             = 0;         // Hardware-ben a kezelendo panel-ek szama,
+
+    GetAvailableCommPorts();
 }
 //====================================================================================
 // CS_Communication_Serial::
@@ -51,6 +65,27 @@ CS_Communication_Serial::CS_Communication_Serial()
 //------------------------------------------------------------------------------------
 CS_Communication_Serial::~CS_Communication_Serial()
 {
+}
+//====================================================================================
+// CS_Communication_Serial::
+//------------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------------
+int CS_Communication_Serial::getCountAvailablePorts()
+{
+   return pComPorts.size();
+}
+//====================================================================================
+// CS_Communication_Serial::
+//------------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------------
+int CS_Communication_Serial::getComPort( int p_inIndex )
+{
+   if( p_inIndex > -1 && p_inIndex < (int)pComPorts.size() )
+      return pComPorts[p_inIndex];
+   else
+      return -1;
 }
 //====================================================================================
 // CS_Communication_Serial::
@@ -117,6 +152,15 @@ void CS_Communication_Serial::closeCommunication( void )
 {
     if( m_bPortOpened )
         SP_Close();
+}
+//====================================================================================
+// CS_Communication_Serial::
+//------------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------------
+void CS_Communication_Serial::SetTestMode( bool bMode )
+{
+    bTest = bMode;
 }
 //====================================================================================
 // CS_Communication_Serial::
@@ -625,6 +669,33 @@ void CS_Communication_Serial::HW_Kezel()
 //====================================================================================
 //====================================================================================
 
+//====================================================================================
+// CS_Communication_Serial::
+//------------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------------
+void CS_Communication_Serial::GetAvailableCommPorts()
+{
+   char  channel[10];
+
+   for(int i=0; i<32; i++)
+   {
+      HANDLE hcom;
+      sprintf( channel, "COM%d", i+1 );
+
+      if( (hcom = CreateFile( channel,
+                              GENERIC_READ|GENERIC_WRITE,
+                              0,
+                              NULL,
+                              OPEN_EXISTING,
+                              FILE_ATTRIBUTE_NORMAL,
+                              NULL )) != INVALID_HANDLE_VALUE )
+      {
+         CloseHandle( hcom );
+         pComPorts.push_back(i+1);
+      }
+   }
+}
 //====================================================================================
 // CS_Communication_Serial::
 //------------------------------------------------------------------------------------
