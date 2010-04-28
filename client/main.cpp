@@ -105,11 +105,45 @@ int main( int argc, char *argv[] )
         }*/
 
 #ifdef __WIN32__
+
+        qsSpalsh += "Checking hardware connection ";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         g_poHardware = new CS_Communication_Serial();
         if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
         {
+            qsSpalsh += "FAILED";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
             delete g_poHardware;
             g_poHardware = new CS_Communication_Demo();
+        }
+        else
+        {
+            qsSpalsh += "CONNECTED";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
+
+            qsSpalsh += "Checking hardware panels:";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            for( int i=0; i<g_poHardware->getPanelCount(); i++ )
+            {
+                qsSpalsh += "Checking hardware panel -"+QString(i)+"- ";
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                if( g_poHardware->checkHardwarePanel( i ) )
+                {
+                    qsSpalsh += " SUCCEEDED";
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                }
+                else
+                {
+                    qsSpalsh += " FAILED";
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                }
+            }
         }
 #else
         g_poHardware = new CS_Communication_Demo();

@@ -7,6 +7,7 @@ client/Makefile.Release
 client/object_script.belenus.Debug
 client/object_script.belenus.Release
 client/debug/
+client/release/
 client/belenus.pro.user
 client/bs_connection.o
 client/communication_demo.o

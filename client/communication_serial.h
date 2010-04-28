@@ -33,12 +33,12 @@ using namespace std;
 //------------------------------------------------------------------------------------
 typedef struct _typ_panel_data
 {
-   char  cPrevStatus;
-   char  cCurrStatus;
-        bool	bInfraModul;
-        bool	bJumpNextStatus;
-        int	nTimeStatusCounter;
-        int	nTimeStatusMain;
+    char    cPrevStatus;
+    char    cCurrStatus;
+    bool    bInfraModul;
+    bool    bJumpNextStatus;
+    int     nTimeStatusCounter;
+    int     nTimeStatusMain;
 } typ_panel_data;
 //====================================================================================
 //
@@ -64,16 +64,17 @@ public:
 
     void init( int p_nPort = 0 );
     bool isHardwareConnected( void );
+    bool checkHardwarePanel( int p_nPanelIndex );
     void closeCommunication( void );
 
-    void SetTestMode( bool bMode );
+    void setTestMode( bool bMode );
 
     string getCustomCaption( void );
     int getPanelCount( void );
 
-    void SetApplicationModuleCount( int nCount );
-    bool SetHardwareModuleCount( int nCount );
-    int GetHardwareModuleCount();
+    void setApplicationModuleCount( int nCount );
+    bool setHardwareModuleCount( int nCount );
+    int getHardwareModuleCount();
 
     void HW_Kezel();
 

@@ -19,16 +19,17 @@ public:
 
     virtual void init( int p_nPort = 0 ) = 0;
     virtual bool isHardwareConnected( void ) = 0;
+    virtual bool checkHardwarePanel( int p_nPanelIndex ) = 0;
     virtual void closeCommunication( void ) = 0;
 
-    virtual void SetTestMode( bool bMode ) = 0;
+    virtual void setTestMode( bool bMode ) = 0;
 
     virtual string getCustomCaption( void ) = 0;
     virtual int getPanelCount( void ) = 0;
 
-    virtual void SetApplicationModuleCount( int nCount ) = 0;
-    virtual bool SetHardwareModuleCount( int nCount ) = 0;
-    virtual int GetHardwareModuleCount( void ) = 0;
+    virtual void setApplicationModuleCount( int nCount ) = 0;
+    virtual bool setHardwareModuleCount( int nCount ) = 0;
+    virtual int getHardwareModuleCount( void ) = 0;
 
     virtual void HW_Kezel( void ) = 0;
 //-------------------------------------------------------------------

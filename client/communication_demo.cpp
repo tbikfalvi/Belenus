@@ -28,11 +28,17 @@ bool CS_Communication_Demo::isHardwareConnected( void )
 {
     return true;
 }
+
+bool CS_Communication_Demo::checkHardwarePanel( int )
+{
+    return true;
+}
+
 void CS_Communication_Demo::closeCommunication( void )
 {
 }
 
-void CS_Communication_Demo::SetTestMode( bool )
+void CS_Communication_Demo::setTestMode( bool )
 {
 }
 
@@ -45,14 +51,14 @@ int CS_Communication_Demo::getPanelCount( void )
 {
     return m_inPanelCount;
 }
-void CS_Communication_Demo::SetApplicationModuleCount( int )
+void CS_Communication_Demo::setApplicationModuleCount( int )
 {
 }
-bool CS_Communication_Demo::SetHardwareModuleCount( int )
+bool CS_Communication_Demo::setHardwareModuleCount( int )
 {
     return true;
 }
-int CS_Communication_Demo::GetHardwareModuleCount()
+int CS_Communication_Demo::getHardwareModuleCount()
 {
     return m_inPanelCount;
 }

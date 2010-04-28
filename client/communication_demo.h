@@ -18,16 +18,17 @@ public:
 
     void init( int p_nPort = 0 );
     bool isHardwareConnected( void );
+    bool checkHardwarePanel( int p_nPanelIndex );
     void closeCommunication( void );
 
-    void SetTestMode( bool );
+    void setTestMode( bool );
 
     string getCustomCaption( void );
     int getPanelCount( void );
 
-    void SetApplicationModuleCount( int nCount );
-    bool SetHardwareModuleCount( int nCount );
-    int GetHardwareModuleCount();
+    void setApplicationModuleCount( int nCount );
+    bool setHardwareModuleCount( int nCount );
+    int getHardwareModuleCount();
 
     void HW_Kezel();
 };

@@ -148,6 +148,27 @@ bool CS_Communication_Serial::isHardwareConnected( void )
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
+bool CS_Communication_Serial::checkHardwarePanel( int p_nPanelIndex )
+{
+    if( p_nPanelIndex > (int)pModul.size()-1 )
+        return false;
+
+    pModul[ p_nPanelIndex ].bVan = false;
+
+    int i=0;
+    do
+    {
+       GetHWModuleStatus( p_nPanelIndex );
+       i++;
+    }while( i<8 && !pModul[ p_nPanelIndex ].bVan );
+
+    return pModul[ p_nPanelIndex ].bVan;
+}
+//====================================================================================
+// CS_Communication_Serial::
+//------------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------------
 void CS_Communication_Serial::closeCommunication( void )
 {
     if( m_bPortOpened )
@@ -158,7 +179,7 @@ void CS_Communication_Serial::closeCommunication( void )
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
-void CS_Communication_Serial::SetTestMode( bool bMode )
+void CS_Communication_Serial::setTestMode( bool bMode )
 {
     bTest = bMode;
 }
@@ -181,7 +202,7 @@ int CS_Communication_Serial::getPanelCount( void )
     return m_inPanelCount;
 }
 //---------------------------------------------------------------------------
-// SetApplicationModuleCount
+// setApplicationModuleCount
 //---------------------------------------------------------------------------
 // A hardware altal kezelendo szolariumok szamat tartalmazo valtozo beallitasa.
 // A fuggvenyt akkor kell egyszer meghivni, ha a hadrver mar mukodik, van
@@ -194,9 +215,14 @@ int CS_Communication_Serial::getPanelCount( void )
 // Visszateresi ertek:
 //    nincs
 //---------------------------------------------------------------------------
-void CS_Communication_Serial::SetApplicationModuleCount( int nCount )
+void CS_Communication_Serial::setApplicationModuleCount( int nCount )
 {
-   nHWModuleCount = nCount;
+   nHWModuleCount = getHardwareModuleCount();
+
+   if( nCount < nHWModuleCount )
+       nHWModuleCount = nCount;
+
+   m_inPanelCount = nHWModuleCount;
 
    if( nHWModuleCount > 0 )
    {
@@ -230,7 +256,7 @@ void CS_Communication_Serial::SetApplicationModuleCount( int nCount )
 //    FALSE       - ha nem sikerult beallitani a hardverben a szolariumok
 //                  szamat
 //---------------------------------------------------------------------------
-bool CS_Communication_Serial::SetHardwareModuleCount( int nCount )
+bool CS_Communication_Serial::setHardwareModuleCount( int nCount )
 {
    bool  bRet = false;
    char  strEEProm[100];
@@ -256,7 +282,7 @@ bool CS_Communication_Serial::SetHardwareModuleCount( int nCount )
    return bRet;
 }
 //---------------------------------------------------------------------------
-// GetHardwareModuleCount
+// getHardwareModuleCount
 //---------------------------------------------------------------------------
 // A hardware altal kezelt szolariumok szamanak kiolvasasa a hardware eszkozbol.
 //---------------------------------------------------------------------------
@@ -267,7 +293,7 @@ bool CS_Communication_Serial::SetHardwareModuleCount( int nCount )
 //    -1          - ha a panelok szamat nem sikerult kiolvasni
 //    nemnegativ  - a hardverben tarolt szolarium panelok szama
 //---------------------------------------------------------------------------
-int CS_Communication_Serial::GetHardwareModuleCount()
+int CS_Communication_Serial::getHardwareModuleCount()
 {
    int   nRet = -1;
    char  strEEProm[100];
@@ -319,14 +345,10 @@ void CS_Communication_Serial::HW_Kezel()
         {
             if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
             {
-//                MINDIG BE VANNAK KAPCSOLVA BARNULAS ALATT
-//          if( !pSzolarium[i]->CsovekKikapcsolva() )
-//          {
                 if( !pModul[ i ].bStop )  //ha nincs relay stop
                 {
                     wRelay |= rel_csovek[(nHWModuleCount-1)*12+i];
                 }
-//          }
                 if( !pPanel[i].bInfraModul )
                 {
                     wRelay |= rel_vent[(nHWModuleCount-1)*12+i];
