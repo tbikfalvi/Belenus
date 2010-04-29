@@ -22,8 +22,6 @@ public:
     QString       getLastUser() const;
     void          setPanelsPerRow( const unsigned int p_uiPanelsPerRow, bool p_boSaveNow = false );
     unsigned int  getPanelsPerRow() const;
-    void          setPanelCount( const unsigned int p_uiPanelCount, bool p_boSaveNow = false );
-    unsigned int  getPanelCount() const;
     void          setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
                                         const unsigned int p_uiMainWindowTop,
                                         const unsigned int p_uiMainWindowWidth,
@@ -52,7 +50,6 @@ public:
 
 
     void          loadConfFileSettings();
-    void          loadDBSettings();
     void          save() const;
 
 private:
@@ -62,7 +59,6 @@ private:
     QString         m_qsLang;
     QString         m_qsLastUser;
     unsigned int    m_uiPanelsPerRow;
-    unsigned int    m_uiPanelCount;
     unsigned int    m_uiMainWindowLeft;
     unsigned int    m_uiMainWindowTop;
     unsigned int    m_uiMainWindowWidth;
@@ -70,8 +66,6 @@ private:
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
     QString         m_qsClientSerial;
-
-    const unsigned int SYS_MAX_DEVICE_COUNT_ID;
 
     void init();
 };

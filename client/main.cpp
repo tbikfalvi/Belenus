@@ -75,8 +75,6 @@ int main( int argc, char *argv[] )
             apMainApp.installTranslator( &obTrans );
         }
 
-        g_poPrefs->loadDBSettings();
-
         qsSpalsh += " LOADED\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
@@ -160,8 +158,9 @@ int main( int argc, char *argv[] )
 
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
-        obMainWindow.show();
         obSplash.finish( &obMainWindow );
+
+        obMainWindow.show();
 
         if( obMainWindow.showLogIn() )
         {

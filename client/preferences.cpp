@@ -2,13 +2,11 @@
 #include "belenus.h"
 
 cPreferences::cPreferences()
-    :SYS_MAX_DEVICE_COUNT_ID(1)
 {
     init();
 }
 
 cPreferences::cPreferences( const QString &p_qsFileName )
-    :SYS_MAX_DEVICE_COUNT_ID(1)
 {
     init();
     setFileName( p_qsFileName );
@@ -27,7 +25,6 @@ void cPreferences::init()
     m_qsLang            = "";
     m_qsLastUser        = "";
     m_uiPanelsPerRow    = 0;
-    m_uiPanelCount      = 0;
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -113,23 +110,6 @@ void cPreferences::setPanelsPerRow( const unsigned int p_uiPanelsPerRow,
 unsigned int cPreferences::getPanelsPerRow() const
 {
     return m_uiPanelsPerRow;
-}
-
-void cPreferences::setPanelCount( const unsigned int p_uiPanelCount,
-                                       bool p_boSaveNow )
-{
-    m_uiPanelCount = p_uiPanelCount;
-
-    if( p_boSaveNow )
-    {
-        string  stQuery = QString( "UPDATE settings SET value=\"%1\" WHERE settingId=%2" ).arg( m_uiPanelCount ).arg( SYS_MAX_DEVICE_COUNT_ID ).toStdString();
-        g_poDB->executeQuery( stQuery );
-    }
-}
-
-unsigned int cPreferences::getPanelCount() const
-{
-    return m_uiPanelCount;
 }
 
 void cPreferences::setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
@@ -313,23 +293,6 @@ void cPreferences::loadConfFileSettings()
     }
 }
 
-void cPreferences::loadDBSettings()
-{
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE settingId = %1" ).arg( SYS_MAX_DEVICE_COUNT_ID ) );
-    if( poQuery->size() == 1 )
-    {
-        poQuery->first();
-        m_uiPanelCount = poQuery->value( 0 ).toInt();
-    }
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licenses LIMIT 1" ) );
-    if( poQuery->size() > 0 )
-    {
-        poQuery->first();
-        m_qsClientSerial = poQuery->value( 1 ).toString();
-    }
-}
-
 void cPreferences::save() const
 {
     QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
@@ -346,8 +309,4 @@ void cPreferences::save() const
 
     obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
     obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
-
-    string  stQuery = QString( "UPDATE settings SET value=\"%1\" WHERE settingId=%2" ).arg( m_uiPanelCount ).arg( SYS_MAX_DEVICE_COUNT_ID ).toStdString();
-    g_obLogger << cSeverity::DEBUG << stQuery << cQTLogger::EOM;
-    g_poDB->executeQuery( stQuery );
 }

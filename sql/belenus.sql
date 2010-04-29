@@ -29,7 +29,6 @@ DROP TABLE IF EXISTS `patientCards`;
 DROP TABLE IF EXISTS `patientCardTypes`;
 DROP TABLE IF EXISTS `patients`;
 DROP TABLE IF EXISTS `productTypes`;
-DROP TABLE IF EXISTS `settings`;
 DROP TABLE IF EXISTS `users`;
 
 -- -----------------------------------------------------------------------------------
@@ -205,16 +204,6 @@ CREATE TABLE `productTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Beallitasok tabla. Az alkalmazas specialis beallitasait tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `settings` (
-  `settingId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL REFERENCES `licenses` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  `value`                   varchar(100)            DEFAULT NULL,
-  PRIMARY KEY (`settingId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
 -- Felhasznalo tabla. A kliens alkalmazast uzemelteto felhasznalok adatait tartalmazza
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `users` (
@@ -233,9 +222,6 @@ CREATE TABLE `users` (
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese default adatokkal
 -- -----------------------------------------------------------------------------------
-
-INSERT INTO `settings` (`value`) VALUES
-  ( '6' );
 
 INSERT INTO `users` (`name`, `realName`, `password`, `groups`) VALUES
   ('admin', 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
