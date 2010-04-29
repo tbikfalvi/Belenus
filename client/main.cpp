@@ -112,7 +112,9 @@ int main( int argc, char *argv[] )
         g_poHardware = new CS_Communication_Serial();
         if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
         {
-            qsSpalsh += "FAILED";
+            qsSpalsh += "FAILED\n";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+            qsSpalsh += "Starting application in DEMO mode.\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             delete g_poHardware;
@@ -120,33 +122,38 @@ int main( int argc, char *argv[] )
         }
         else
         {
-            qsSpalsh += "CONNECTED";
+            qsSpalsh += "CONNECTED\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
 
-            qsSpalsh += "Checking hardware panels:";
+            qsSpalsh += "Checking hardware panels:\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             for( int i=0; i<g_poHardware->getPanelCount(); i++ )
             {
-                qsSpalsh += "Checking hardware panel -"+QString(i)+"- ";
+                qsSpalsh += "     Checking hardware panel -"+QString(i)+"- ";
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
                 if( g_poHardware->checkHardwarePanel( i ) )
                 {
-                    qsSpalsh += " SUCCEEDED";
+                    qsSpalsh += " SUCCEEDED\n";
                     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
                 }
                 else
                 {
-                    qsSpalsh += " FAILED";
+                    qsSpalsh += " FAILED\n";
                     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
                 }
             }
         }
 #else
+
+        qsSpalsh += "Starting application in DEMO mode.\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         g_poHardware = new CS_Communication_Demo();
+
 #endif
 
         cWndMain  obMainWindow;

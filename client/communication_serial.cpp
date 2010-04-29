@@ -32,29 +32,27 @@
 //------------------------------------------------------------------------------------
 CS_Communication_Serial::CS_Communication_Serial()
 {
-    /* a kovetkezo ertekeket EEP-bol kell olvasni */
-    m_stCustomCaption = "SERIAL";
-    m_inPanelCount = 6;
-
-    bySerial_Error             = 0;
-    byHwWdtCounter             = 0;
-    byLedModulKikapcsTimer     = 0;
-    byLedModulOlvasasiHiba     = 0;
-    byLedModulUjraindulas      = 0;
-    m_hPort                    = NULL;
-    BaudRate                   = 0;
-    Parity                     = 0;
-    m_dwBaudRate               = 0;
-    m_dwParity                 = 0;
-    wRelay_mem                 = 0;
-    bEnableIRQ_Msg             = false;
-    chModulMessage             = 0;
-    m_bPortOpened              = false;
-    bTest                      = false;
-    bSendToModulPower_ON       = false;
-    bSendToModulPower_OFF      = false;
-    PortNumber                 = 0;
-    nHWModuleCount             = 0;         // Hardware-ben a kezelendo panel-ek szama,
+    m_stCustomCaption           = "DEMO application";
+    m_inPanelCount              = 6;
+    bySerial_Error              = 0;
+    byHwWdtCounter              = 0;
+    byLedModulKikapcsTimer      = 0;
+    byLedModulOlvasasiHiba      = 0;
+    byLedModulUjraindulas       = 0;
+    m_hPort                     = NULL;
+    BaudRate                    = 0;
+    Parity                      = 0;
+    m_dwBaudRate                = 0;
+    m_dwParity                  = 0;
+    wRelay_mem                  = 0;
+    bEnableIRQ_Msg              = false;
+    chModulMessage              = 0;
+    m_bPortOpened               = false;
+    bTest                       = false;
+    bSendToModulPower_ON        = false;
+    bSendToModulPower_OFF       = false;
+    PortNumber                  = 0;
+    nHWModuleCount              = 0;
 
     GetAvailableCommPorts();
 }
@@ -217,30 +215,35 @@ int CS_Communication_Serial::getPanelCount( void )
 //---------------------------------------------------------------------------
 void CS_Communication_Serial::setApplicationModuleCount( int nCount )
 {
-   nHWModuleCount = getHardwareModuleCount();
+    char    strTemp[100];
 
-   if( nCount < nHWModuleCount )
-       nHWModuleCount = nCount;
+    nHWModuleCount = getHardwareModuleCount();
+    HW_ReadEEProm( 0, strTemp );
+    m_stCustomCaption = QString( strTemp+2 );
 
-   m_inPanelCount = nHWModuleCount;
+    if( nCount < nHWModuleCount )
+        nHWModuleCount = nCount;
 
-   if( nHWModuleCount > 0 )
-   {
-      for( int i=0; i< nHWModuleCount; i++ )
-      {
-         typ_LED_Modul  stTemp;
+    m_inPanelCount = nHWModuleCount;
 
-         memset( &stTemp, 0, SIZEOF_MODUL_DATA );
-         pModul.push_back( stTemp );
-      }
-      for( int i=0; i< nHWModuleCount; i++ )
-      {
-         typ_panel_data    stTemp;
+    if( nHWModuleCount > 0 )
+    {
+        for( int i=0; i< nHWModuleCount; i++ )
+        {
+            typ_LED_Modul  stTemp;
 
-         memset( &stTemp, 0, SIZEOF_PANEL_DATA );
-         pPanel.push_back( stTemp );
-      }
-   }
+            memset( &stTemp, 0, SIZEOF_MODUL_DATA );
+            pModul.push_back( stTemp );
+        }
+        for( int i=0; i< nHWModuleCount; i++ )
+        {
+            typ_panel_data    stTemp;
+
+            memset( &stTemp, 0, SIZEOF_PANEL_DATA );
+            pPanel.push_back( stTemp );
+        }
+        HW_ModulInit();
+    }
 }
 //---------------------------------------------------------------------------
 // SetHardwareModuleCount
