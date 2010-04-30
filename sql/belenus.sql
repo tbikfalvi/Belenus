@@ -42,7 +42,8 @@ DROP TABLE IF EXISTS `users`;
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `clients` (
   `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `code`                    varchar(50)             NOT NULL,
+  `code1`                   varchar(50)             NOT NULL,
+  `code2`                   varchar(50)             NOT NULL,
   `dateCreated`             datetime                NOT NULL,
   `lastLogin`               datetime                NOT NULL,
   PRIMARY KEY (`clientId`)
@@ -56,6 +57,7 @@ CREATE TABLE `doctors` (
   `licenceId`               int(10) unsigned        NOT NULL REFERENCES `licenses` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(100)            NOT NULL,
   `data`                    text                    NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`doctorId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
@@ -74,6 +76,7 @@ CREATE TABLE `licenses` (
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
@@ -97,6 +100,7 @@ CREATE TABLE `panels` (
   `panelTypeId`             int(10) unsigned        NOT NULL REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -112,6 +116,7 @@ CREATE TABLE `panelStatuses` (
   `name`                    varchar(20)             NOT NULL,
   `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelStatusId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -123,6 +128,7 @@ CREATE TABLE `panelTypes` (
   `panelTypeId`             int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL REFERENCES `licenses` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -135,6 +141,7 @@ CREATE TABLE `patientCardHistories` (
   `patientCardId`           int(10) unsigned        NOT NULL REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `dateTimeUsed`            datetime                NOT NULL,
   `units`                   int(11)                 NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardHistoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -151,6 +158,7 @@ CREATE TABLE `patientCards` (
   `units`                   int(11)                 NOT NULL,
   `validDate`               date                    NOT NULL,
   `pincode`                 varchar(5)              DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -167,6 +175,7 @@ CREATE TABLE `patientCardTypes` (
   `validDateTo`             date                    DEFAULT NULL,
   `validDays`               int(11)                 NOT NULL DEFAULT 365,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -179,6 +188,7 @@ CREATE TABLE `patients` (
   `name`                    varchar(100)            NOT NULL,
   `uniqueId`                varchar(50)             NOT NULL,
   `data`                    text                    NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
@@ -190,6 +200,7 @@ CREATE TABLE `products` (
   `licenceId`               int(10) unsigned        NOT NULL REFERENCES `licenses` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `productTypeId`           int(11) unsigned        NOT NULL REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -201,6 +212,7 @@ CREATE TABLE `productTypes` (
   `productTypeId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL REFERENCES `licenses` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -211,6 +223,7 @@ CREATE TABLE `settings` (
   `settingId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL REFERENCES `licenses` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `value`                   varchar(100)            DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`settingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -226,6 +239,7 @@ CREATE TABLE `users` (
   `groups`                  varchar(50)             NOT NULL DEFAULT 'user',
   `active`                  tinyint(1) unsigned     NOT NULL DEFAULT '1',
   `comment`                 text                    DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   UNIQUE (`name`),
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
