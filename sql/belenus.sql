@@ -19,7 +19,7 @@
 
 DROP TABLE IF EXISTS `clients`;
 DROP TABLE IF EXISTS `doctors`;
-DROP TABLE IF EXISTS `licenses`;
+DROP TABLE IF EXISTS `licences`;
 DROP TABLE IF EXISTS `logs`;
 DROP TABLE IF EXISTS `panels`;
 DROP TABLE IF EXISTS `panelStatuses`;
@@ -62,7 +62,7 @@ CREATE TABLE `doctors` (
 -- Liszensz tabla. Ez tartalmazza a kliens alkalmazas liszensz kulcsat es a Studio
 -- egyedi adatait.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `licenses` (
+CREATE TABLE `licences` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `serial`                  varchar(30)             NOT NULL,
   `country`                 varchar(100)            DEFAULT NULL,
@@ -223,6 +223,20 @@ CREATE TABLE `users` (
 -- Tablak feltoltese default adatokkal
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `licences` ( `licenceId`, `serial`, `active` ) VALUES ( 1, "TEST_LICENCE", 1 );
+
 INSERT INTO `users` (`name`, `realName`, `password`, `groups`) VALUES
   ('admin', 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
+
+INSERT INTO `panelTypes` ( `licenceId`, `name` ) VALUES ( 1, "Panel Type 1" );
+
+INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
+  ( 1, 1, "Panel 1" ),
+  ( 1, 1, "Panel 2" ),
+  ( 1, 1, "Panel 3" ),
+  ( 1, 1, "Panel 4" ),
+  ( 1, 1, "Panel 5" ),
+  ( 1, 1, "Panel 6" ),
+  ( 1, 1, "Panel 7" ),
+  ( 1, 1, "Panel 8" );
 

@@ -2,6 +2,7 @@
 #define PREFERENCES_H
 
 #include <QString>
+#include "../framework/sevexception.h"
 
 class cPreferences
 {
@@ -22,6 +23,7 @@ public:
     QString       getLastUser() const;
     void          setPanelsPerRow( const unsigned int p_uiPanelsPerRow, bool p_boSaveNow = false );
     unsigned int  getPanelsPerRow() const;
+    unsigned int  getPanelCount() const;
     void          setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
                                         const unsigned int p_uiMainWindowTop,
                                         const unsigned int p_uiMainWindowWidth,
@@ -31,11 +33,11 @@ public:
     unsigned int  getMainWindowTop() const;
     unsigned int  getMainWindowWidth() const;
     unsigned int  getMainWindowHeight() const;
+    QString       getLicenceId() const;
     void          setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
     QString       getServerAddress() const;
     void          setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
     QString       getServerPort() const;
-    QString       getClientSerial() const;
     void          setLogLevels( const unsigned int p_uiConLevel,
                                 const unsigned int p_uiDBLevel,
                                 const unsigned int p_uiGUILevel,
@@ -50,7 +52,8 @@ public:
 
 
     void          loadConfFileSettings();
-    void          save() const;
+    void          loadDBSettings() throw (cSevException);
+    void          save() const throw (cSevException);
 
 private:
     QString         m_qsFileName;
@@ -59,13 +62,14 @@ private:
     QString         m_qsLang;
     QString         m_qsLastUser;
     unsigned int    m_uiPanelsPerRow;
+    unsigned int    m_uiPanelCount;
     unsigned int    m_uiMainWindowLeft;
     unsigned int    m_uiMainWindowTop;
     unsigned int    m_uiMainWindowWidth;
     unsigned int    m_uiMainWindowHeight;
+    QString         m_qsLicenceId;
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
-    QString         m_qsClientSerial;
 
     void init();
 };

@@ -34,24 +34,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
 
-    QSqlQuery *poQuery = NULL;
-    try
-    {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels" ) );
-        poQuery->first();
-        spbPanels->setMaximum( poQuery->value( 0 ).toInt() );
-
-        delete poQuery;
-    }
-    catch( cSevException &e )
-    {
-        if( poQuery ) delete poQuery;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what();
-        g_obLogger << cQTLogger::EOM;
-    }
-
+    spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
 
     if( g_obUser.isInGroup( "root" ) )

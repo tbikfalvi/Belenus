@@ -75,6 +75,8 @@ int main( int argc, char *argv[] )
             apMainApp.installTranslator( &obTrans );
         }
 
+        g_poPrefs->loadDBSettings();
+
         qsSpalsh += " LOADED\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 

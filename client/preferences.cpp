@@ -19,12 +19,20 @@ cPreferences::~cPreferences()
 
 void cPreferences::init()
 {
-    m_qsFileName        = "";
-    m_qsVersion         = "";
-    m_qsLangFilePrefix  = "";
-    m_qsLang            = "";
-    m_qsLastUser        = "";
-    m_uiPanelsPerRow    = 0;
+    m_qsFileName         = "";
+    m_qsVersion          = "";
+    m_qsLangFilePrefix   = "";
+    m_qsLang             = "";
+    m_qsLastUser         = "";
+    m_uiPanelsPerRow     = 0;
+    m_uiPanelCount       = 0;
+    m_uiMainWindowLeft   = 0;
+    m_uiMainWindowTop    = 0;
+    m_uiMainWindowWidth  = 0;
+    m_uiMainWindowHeight = 0;
+    m_qsLicenceId        = "";
+    m_qsServerAddress    = "";
+    m_qsServerPort       = "";
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -112,6 +120,11 @@ unsigned int cPreferences::getPanelsPerRow() const
     return m_uiPanelsPerRow;
 }
 
+unsigned int cPreferences::getPanelCount() const
+{
+    return m_uiPanelCount;
+}
+
 void cPreferences::setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
                                          const unsigned int p_uiMainWindowTop,
                                          const unsigned int p_uiMainWindowWidth,
@@ -132,22 +145,32 @@ void cPreferences::setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
         obPrefFile.setValue( QString::fromAscii( "UserInterface/MainWindowHeight" ), m_uiMainWindowHeight );
     }
 }
+
 unsigned int cPreferences::getMainWindowLeft() const
 {
     return m_uiMainWindowLeft;
 }
+
 unsigned int cPreferences::getMainWindowTop() const
 {
     return m_uiMainWindowTop;
 }
+
 unsigned int cPreferences::getMainWindowWidth() const
 {
     return m_uiMainWindowWidth;
 }
+
 unsigned int cPreferences::getMainWindowHeight() const
 {
     return m_uiMainWindowHeight;
 }
+
+QString cPreferences::getLicenceId() const
+{
+    return m_qsLicenceId;
+}
+
 void cPreferences::setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow )
 {
     m_qsServerAddress = p_qsServerAddress;
@@ -158,10 +181,12 @@ void cPreferences::setServerAddress( const QString &p_qsServerAddress, bool p_bo
         obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
     }
 }
+
 QString cPreferences::getServerAddress() const
 {
     return m_qsServerAddress;
 }
+
 void cPreferences::setServerPort( const QString &p_qsServerPort, bool p_boSaveNow )
 {
     m_qsServerPort = p_qsServerPort;
@@ -172,14 +197,10 @@ void cPreferences::setServerPort( const QString &p_qsServerPort, bool p_boSaveNo
         obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
     }
 }
+
 QString cPreferences::getServerPort() const
 {
     return m_qsServerPort;
-}
-
-QString cPreferences::getClientSerial() const
-{
-    return m_qsClientSerial;
 }
 
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
@@ -293,7 +314,37 @@ void cPreferences::loadConfFileSettings()
     }
 }
 
-void cPreferences::save() const
+void cPreferences::loadDBSettings() throw (cSevException)
+{
+    QSqlQuery *poQuery = NULL;
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels" ) );
+        poQuery->first();
+        m_uiPanelCount = poQuery->value( 0 ).toInt();
+
+        delete poQuery;
+        poQuery = NULL;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT serial FROM licences LIMIT 1" ) );
+        if( poQuery->first() )
+        {
+            m_qsLicenceId = poQuery->value( 0 ).toString();
+        }
+
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+
+        g_obLogger << e.severity();
+        g_obLogger << e.what();
+        g_obLogger << cQTLogger::EOM;
+    }
+
+}
+
+void cPreferences::save() const throw (cSevException)
 {
     QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
 

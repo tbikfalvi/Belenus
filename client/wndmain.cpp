@@ -119,29 +119,12 @@ void cWndMain::initPanels()
 {
     cTracer obTrace( "cWndMain::initPanels" );
 
-    int        inPanelCount = 0;
-    QSqlQuery *poQuery = NULL;
-    try
+    int        inPanelCount = g_poPrefs->getPanelCount();
+
+    if( g_poHardware->getPanelCount() < inPanelCount )
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels" ) );
-        poQuery->first();
-        inPanelCount = poQuery->value( 0 ).toInt();
-
-        delete poQuery;
-
-        if( g_poHardware->getPanelCount() < inPanelCount )
-        {
-            QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
-            inPanelCount = g_poHardware->getPanelCount();
-        }
-    }
-    catch( cSevException &e )
-    {
-        if( poQuery ) delete poQuery;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what();
-        g_obLogger << cQTLogger::EOM;
+        QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
+        inPanelCount = g_poHardware->getPanelCount();
     }
 }
 
