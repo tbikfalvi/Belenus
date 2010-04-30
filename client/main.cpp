@@ -104,6 +104,9 @@ int main( int argc, char *argv[] )
             if( nCount > 399 ) nCount = 0;
         }*/
 
+        qsSpalsh += "TEMPORARY DISABLED\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
 #ifdef __WIN32__
 
         qsSpalsh += "Checking hardware connection ";
@@ -160,8 +163,11 @@ int main( int argc, char *argv[] )
 
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
-        obMainWindow.show();
+
+        Sleep(3000);
         obSplash.finish( &obMainWindow );
+
+        obMainWindow.show();
 
         if( obMainWindow.showLogIn() )
         {
