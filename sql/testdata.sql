@@ -22,8 +22,8 @@
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`) VALUES
-(1, 'BLNS_SERIAL_DEMO', 'Budapest', NULL, NULL, NULL, NULL, NULL, NULL, 1);
+(0, `BLNS_SERIAL_DEMO`, `Budapest`, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 INSERT INTO `users` (`name`, `licenceId`, `realName`, `password`, `groups`) VALUES
-  ('admin', 1, 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
+  (`admin`, 0, `Administrator`, `d033e22ae348aeb5660fc2140aec35850c4da997`, `admin,user`, `NON`);
 
