@@ -21,7 +21,6 @@ client/dlgcrud.o
 client/dlghardwaretest.o
 client/dlglogin.o
 client/dlglogs.o
-client/dlgpanel.o
 client/dlgpreferences.o
 client/dlgproductedit.o
 client/dlgproducts.o
@@ -34,6 +33,7 @@ client/dlgusercardtypeedit.o
 client/dlgusercardtypes.o
 client/dlguseredit.o
 client/dlgusers.o
+client/frmpanel.o
 client/main.o
 client/preferences.o
 client/qtlogger.o
@@ -51,8 +51,6 @@ client/moc_dlglogin.cpp
 client/moc_dlglogin.o
 client/moc_dlglogs.cpp
 client/moc_dlglogs.o
-client/moc_dlgpanel.cpp
-client/moc_dlgpanel.o
 client/moc_dlgpreferences.cpp
 client/moc_dlgpreferences.o
 client/moc_dlgproductedit.cpp
@@ -77,6 +75,8 @@ client/moc_dlguseredit.cpp
 client/moc_dlguseredit.o
 client/moc_dlgusers.cpp
 client/moc_dlgusers.o
+client/moc_frmpanel.cpp
+client/moc_frmpanel.o
 client/moc_qtmysqlquerymodel.cpp
 client/moc_qtmysqlquerymodel.o
 client/moc_wndmain.cpp

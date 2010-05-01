@@ -37,7 +37,6 @@ HEADERS = ../framework/belenusmessages.h \
     dlghardwaretest.h \
     dlglogin.h \
     dlglogs.h \
-    dlgpanel.h \
     dlgpreferences.h \
     dlgproductedit.h \
     dlgproducttypeedit.h \
@@ -45,6 +44,7 @@ HEADERS = ../framework/belenusmessages.h \
     dlgusercardedit.h \
     dlgusercardtypeedit.h \
     dlguseredit.h \
+    frmpanel.h \
     preferences.h \
     wndmain.h
 SOURCES = ../framework/dbconnection.cpp \
@@ -68,7 +68,6 @@ SOURCES = ../framework/dbconnection.cpp \
     dlghardwaretest.cpp \
     dlglogin.cpp \
     dlglogs.cpp \
-    dlgpanel.cpp \
     dlgpreferences.cpp \
     dlgproductedit.cpp \
     dlgproducttypeedit.cpp \
@@ -76,6 +75,7 @@ SOURCES = ../framework/dbconnection.cpp \
     dlgusercardedit.cpp \
     dlgusercardtypeedit.cpp \
     dlguseredit.cpp \
+    frmpanel.cpp \
     main.cpp \
     preferences.cpp \
     wndmain.cpp

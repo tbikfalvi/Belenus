@@ -20,6 +20,8 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
+    mdiPanels->setBackground( QBrush( Qt::black ) );
+
     updateTitle();
 }
 
@@ -61,6 +63,40 @@ bool cWndMain::showLogIn()
     return boLogInOK;
 }
 
+void cWndMain::initPanels()
+{
+    cTracer obTrace( "cWndMain::initPanels" );
+
+    int        inPanelCount = g_poPrefs->getPanelCount();
+
+    if( g_poHardware->getPanelCount() < inPanelCount )
+    {
+        QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
+        inPanelCount = g_poHardware->getPanelCount();
+    }
+
+    m_obPanels.reserve( g_poPrefs->getPanelCount() );
+
+    cFrmPanel *poFrame;
+    QMdiSubWindow *poPanel;
+    for( int i = 0; i < inPanelCount; i++ )
+    {
+        poFrame = new cFrmPanel();
+        poFrame->setFrameShape( QFrame::Panel);
+        poFrame->setFrameShadow( QFrame::Sunken );
+        poFrame->setLineWidth( 5 );
+
+        poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
+        poPanel->setWidget( poFrame );
+
+        m_obPanels.push_back( poFrame );
+        mdiPanels->addSubWindow( poPanel );
+        m_obPanels.at( i )->show();
+    }
+
+    placeSubWindows();
+}
+
 void cWndMain::updateTitle()
 {
     cTracer obTrace( "cWndMain::updateTitle" );
@@ -83,37 +119,39 @@ void cWndMain::updateTitle()
     setWindowTitle( qsTitle );
 }
 
-void cWndMain::initPanels()
+void cWndMain::placeSubWindows()
 {
-    cTracer obTrace( "cWndMain::initPanels" );
-
-    int        inPanelCount = g_poPrefs->getPanelCount();
-
-    if( g_poHardware->getPanelCount() < inPanelCount )
+    QList<QMdiSubWindow*> obSubWindowList = mdiPanels->subWindowList();
+    if( obSubWindowList.size() )
     {
-        QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
-        inPanelCount = g_poHardware->getPanelCount();
+        int inPanelColumns = g_poPrefs->getPanelsPerRow();
+        int inPanelRows    = ceil( (double)g_poPrefs->getPanelCount() / (double)inPanelColumns );
+        int inPanelW       = mdiPanels->width();
+        int inPanelH       = mdiPanels->height();
+        int inPanelMargin  = 10;
+
+        inPanelW -= (inPanelColumns+1)*inPanelMargin;
+        inPanelW /= inPanelColumns;
+        inPanelH -= (inPanelRows+1)*inPanelMargin;
+        inPanelH /= inPanelRows;
+
+        obSubWindowList.first();
+        int inPosX = inPanelMargin;
+        int inPosY = inPanelMargin;
+        for( int i = 0; i < obSubWindowList.size(); i++ )
+        {
+            QMdiSubWindow *poSubWindow = obSubWindowList.at( i );
+            poSubWindow->move( inPosX, inPosY );
+            poSubWindow->resize( inPanelW, inPanelH );
+
+            inPosX += inPanelMargin + inPanelW;
+            if( inPosX + inPanelW > mdiPanels->width() )
+            {
+                inPosX = inPanelMargin;
+                inPosY += inPanelMargin + inPanelH;
+            }
+        }
     }
-
-    m_obPanels.reserve( g_poPrefs->getPanelCount() );
-
-    QFrame *poFrame;
-    QMdiSubWindow *poPanel;
-    for( int i = 0; i < inPanelCount; i++ )
-    {
-        poFrame = new QFrame();
-        poFrame->setFrameShape( QFrame::StyledPanel);
-        poFrame->setFrameShadow( QFrame::Plain );
-
-        poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
-        poPanel->setWidget( poFrame );
-
-        m_obPanels.push_back( poFrame );
-        mdiPanels->addSubWindow( poPanel );
-        m_obPanels.at( i )->show();
-    }
-
-    mdiPanels->tileSubWindows();
 }
 
 void cWndMain::on_action_Preferences_triggered()
@@ -203,4 +241,10 @@ void cWndMain::on_actionLog_Out_triggered()
     updateTitle();
 
     if( !showLogIn() ) close();
+}
+
+void cWndMain::resizeEvent ( QResizeEvent *p_poEvent )
+{
+    placeSubWindows();
+    p_poEvent->accept();
 }

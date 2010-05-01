@@ -2,9 +2,10 @@
 #define WNDMAIN_H
 
 #include <QString>
+#include <QResizeEvent>
 
 #include "ui_wndmain.h"
-#include "dlgpanel.h"
+#include "frmpanel.h"
 
 using namespace std;
 
@@ -20,9 +21,10 @@ public:
     void initPanels();
 
 private:
-    vector<QFrame*>  m_obPanels;
+    vector<cFrmPanel*>  m_obPanels;
 
     void updateTitle();
+    void placeSubWindows();
 
 private slots:
     void on_action_Preferences_triggered();
@@ -34,6 +36,10 @@ private slots:
     void on_actionLog_Out_triggered();
     void on_action_Producttypes_triggered();
     void on_action_Products_triggered();
+
+protected:
+    void resizeEvent ( QResizeEvent *p_poEvent );
+
 };
 
 #endif
