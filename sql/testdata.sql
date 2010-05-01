@@ -1,13 +1,13 @@
 -- -----------------------------------------------------------------------------------
 --
--- Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+-- Belenus Server alkalmazas ? Pagony Multimedia Studio Bt - 2010
 --
 -- -----------------------------------------------------------------------------------
 --
--- Filename    : testdata.sql
--- AppVersion  : 1.0
+-- Filename : testdata.sql
+-- AppVersion : 1.0
 -- FileVersion : 1.0
--- Author      : Ballok Peter, Bikfalvi Tamas
+-- Author : Ballok Peter, Bikfalvi Tamas
 --
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese default adatokkal

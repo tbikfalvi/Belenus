@@ -149,17 +149,71 @@ CREATE TABLE `patientCardTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- patientOrigin tabla. Opcionalis. Azokat a helyeket tartalmazza, ahonnan a paciens
+-- ertesulhetett a studio-rol.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `patientOrigin` (
+  `patientOriginId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  PRIMARY KEY (`patientOriginId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- reasonToVisit tabla. Opcionalis. Az indokokat tartalmazza, amiert jott a paciens
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `reasonToVisit` (
+  `reasonToVisitId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  PRIMARY KEY (`reasonToVisitId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Paciens tabla. Opcionalis. A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
   `patientId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `patientOriginId`         int(10) unsigned        NOT NULL,
+  `reasonToVisitId`         int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
-  `uniqueId`                varchar(50)             NOT NULL,
-  `data`                    text                    NOT NULL,
+  `gender`                  int(11)                 DEFAULT NULL,
+  `dateBirth`               date                    DEFAULT NULL,
+  `uniqueId`                varchar(20)             DEFAULT NULL,
+  `country`                 varchar(100)            DEFAULT NULL,
+  `region`                  varchar(100)            DEFAULT NULL,
+  `city`                    varchar(100)            DEFAULT NULL,
+  `zip`                     varchar(10)             DEFAULT NULL,
+  `address`                 varchar(100)            DEFAULT NULL,
+  `email`                   varchar(100)            DEFAULT NULL,
+  `phone`                   varchar(100)            DEFAULT NULL,
+  `comment`                 text                    DEFAULT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientId`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientOriginId`) REFERENCES `patientOrigin` (`patientOriginId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`reasonToVisitId`) REFERENCES `reasonToVisit` (`reasonToVisitId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- attendance tabla. Opcionalis. A paciensek kezeleseit nyilvantarto tabla
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `attendance` (
+  `attendanceId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `date`                    date                    NOT NULL,
+  `weight`                  int(11)                 DEFAULT NULL,
+  `height`                  int(11)                 DEFAULT NULL,
+  `bloodPressure`           float                   DEFAULT NULL,
+  `medicineCurrent`         varchar(500)            DEFAULT NULL,
+  `medicineAllergy`         varchar(500)            DEFAULT NULL,
+  PRIMARY KEY (`attendanceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
