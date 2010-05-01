@@ -225,6 +225,19 @@ CREATE TABLE `attendance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- toBeFilled tabla. Opcionalis. A nem kitoltott paciensek illetve kezelesekre
+-- mutato rekordok
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `toBeFilled` (
+  `toBeFilledId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `attendanceId`            int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`toBeFilledId`),
+  FOREIGN KEY (`attendanceId`) REFERENCES `attendance` (`attendanceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Kartya tabla. A studioban eladott kartyak adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patientCards` (
@@ -253,7 +266,7 @@ CREATE TABLE `patientCardHistories` (
   `patientCardId`           int(10) unsigned        NOT NULL,
   `dateTimeUsed`            datetime                NOT NULL,
   `units`                   int(11)                 NOT NULL,
-  `usedTime`                int(11)                 NOT NULL,
+  `time`                    int(11)                 NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardHistoryId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
