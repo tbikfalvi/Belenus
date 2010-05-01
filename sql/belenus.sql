@@ -161,12 +161,13 @@ CREATE TABLE `patientOrigin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- attendance tabla. Opcionalis. A paciensek kezeleseit nyilvantarto tabla
+-- reasonToVisit tabla. Opcionalis. Az indokokat tartalmazza, amiert jott a paciens
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `attendance` (
-  `attendanceId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reasonToVisit` (
+  `reasonToVisitId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  PRIMARY KEY (`attendanceId`),
+  `name`                    varchar(100)            NOT NULL,
+  PRIMARY KEY (`reasonToVisitId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -176,6 +177,8 @@ CREATE TABLE `attendance` (
 CREATE TABLE `patients` (
   `patientId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `patientOriginId`         int(10) unsigned        NOT NULL,
+  `reasonToVisitId`         int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `gender`                  int(11)                 DEFAULT NULL,
   `dateBirth`               date                    DEFAULT NULL,
@@ -191,7 +194,8 @@ CREATE TABLE `patients` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientOriginId`) REFERENCES `patientOrigin` (`patientOriginId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`patientOriginId`) REFERENCES `patientOrigin` (`patientOriginId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`reasonToVisitId`) REFERENCES `reasonToVisit` (`reasonToVisitId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -205,6 +209,8 @@ CREATE TABLE `attendance` (
   `weight`                  int(11)                 DEFAULT NULL,
   `height`                  int(11)                 DEFAULT NULL,
   `bloodPressure`           float                   DEFAULT NULL,
+  `medicineCurrent`         varchar(500)            DEFAULT NULL,
+  `medicineAllergy`         varchar(500)            DEFAULT NULL,
   PRIMARY KEY (`attendanceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
