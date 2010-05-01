@@ -1,4 +1,5 @@
 #include <QMessageBox>
+#include <QMdiSubWindow>
 
 #include "wndmain.h"
 #include "dlglogin.h"
@@ -19,47 +20,14 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
-/*    g_poHardware = new CS_Hardware();
-
-    if( g_poHardware != NULL )
-    {
-        // Elérhetõ COM port-ok lekérdezése
-        if( g_poHardware->SP_GetCountAvailablePorts() > 0 )
-        {
-            //bool    bComPortFound = false;
-
-            // Beállításokból COM port összehasonlítása az elérhetõ COM port-okkal __TO_BE_RESOLVED__
-            for( int i=0;i<g_poHardware->SP_GetCountAvailablePorts(); i++ )
-            {
-                // COM PORT KIOLVASASA A SETTINGS-BOL __TO_BE_RESOLVED__
-                // addig is az elso elerheto com portra csatlakozunk
-            }
-            g_poHardware->SP_InitCommunication( g_poHardware->SP_GetComPort( 0 ) );
-            if( g_poHardware->SP_Open() )
-            {
-               if( g_poHardware->IsHardwareConnected() )
-               {
-                  // PANELOK SZAMANAK KIOLVASASA A SETTINGS-BOL __TO_BE_RESOLVED__
-
-                  // addig a panelok szama 4
-                  g_poHardware->SetApplicationModuleCount( 4 );
-
-                  // TIMER INDITASA g_poHardware->HW_Kezel(); fuggvennyel
-               }
-            }
-        }
-    }
-    else
-    {
-       // NAGY GAZ VAN __TO_BE_RESOLVED__
-    }
-*/
     updateTitle();
 }
 
 cWndMain::~cWndMain()
 {
     cTracer obTrace( "cWndMain::~cWndMain" );
+
+    for( unsigned int i = 0; i < m_obPanels.size(); i++ ) delete m_obPanels.at( i );
 }
 
 bool cWndMain::showLogIn()
@@ -126,6 +94,26 @@ void cWndMain::initPanels()
         QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
         inPanelCount = g_poHardware->getPanelCount();
     }
+
+    m_obPanels.reserve( g_poPrefs->getPanelCount() );
+
+    QFrame *poFrame;
+    QMdiSubWindow *poPanel;
+    for( int i = 0; i < inPanelCount; i++ )
+    {
+        poFrame = new QFrame();
+        poFrame->setFrameShape( QFrame::StyledPanel);
+        poFrame->setFrameShadow( QFrame::Plain );
+
+        poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
+        poPanel->setWidget( poFrame );
+
+        m_obPanels.push_back( poFrame );
+        mdiPanels->addSubWindow( poPanel );
+        m_obPanels.at( i )->show();
+    }
+
+    mdiPanels->tileSubWindows();
 }
 
 void cWndMain::on_action_Preferences_triggered()

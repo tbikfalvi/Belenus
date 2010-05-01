@@ -85,7 +85,6 @@ client/ui_dlgcrud.h
 client/ui_dlghardwaretest.h
 client/ui_dlglogin.h
 client/ui_dlglogs.h
-client/ui_dlgpanel.h
 client/ui_dlgpreferences.h
 client/ui_dlgproductedit.h
 client/ui_dlgproducttypeedit.h

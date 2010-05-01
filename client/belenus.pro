@@ -3,7 +3,6 @@ FORMS = ../framework/dlgcrud.ui \
     dlghardwaretest.ui \
     dlglogin.ui \
     dlglogs.ui \
-    dlgpanel.ui \
     dlgpreferences.ui \
     dlgproductedit.ui \
     dlgproducttypeedit.ui \

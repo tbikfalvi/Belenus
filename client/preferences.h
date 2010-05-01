@@ -33,7 +33,8 @@ public:
     unsigned int  getMainWindowTop() const;
     unsigned int  getMainWindowWidth() const;
     unsigned int  getMainWindowHeight() const;
-    QString       getLicenceId() const;
+    unsigned int  getLicenceId() const;
+    QString       getClientSerial() const;
     void          setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
     QString       getServerAddress() const;
     void          setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
@@ -67,7 +68,8 @@ private:
     unsigned int    m_uiMainWindowTop;
     unsigned int    m_uiMainWindowWidth;
     unsigned int    m_uiMainWindowHeight;
-    QString         m_qsLicenceId;
+    unsigned int    m_uiLicenceId;
+    QString         m_qsClientSerial;
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
 

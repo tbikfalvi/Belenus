@@ -20,7 +20,7 @@ public:
     void initPanels();
 
 private:
-    vector<cDlgPanel*>  m_obPanels;
+    vector<QFrame*>  m_obPanels;
 
     void updateTitle();
 
