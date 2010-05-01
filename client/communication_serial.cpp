@@ -219,7 +219,7 @@ void CS_Communication_Serial::setApplicationModuleCount( int nCount )
 
     nHWModuleCount = getHardwareModuleCount();
     HW_ReadEEProm( 0, strTemp );
-    m_stCustomCaption = QString( strTemp+2 );
+    m_stCustomCaption = strTemp+2;
 
     if( nCount < nHWModuleCount )
         nHWModuleCount = nCount;

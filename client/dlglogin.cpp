@@ -11,11 +11,11 @@ cDlgLogIn::cDlgLogIn( QWidget *p_poParent ) : QDialog( p_poParent )
     setupUi( this );
 
     QPushButton *poBtnLogin = new QPushButton( tr( "&Log In" ), this );
-    poBtnLogin->setIcon( QIcon("./resources/bb_ok.gif") );
+    poBtnLogin->setIcon( QIcon("./resources/ok.gif") );
     btbButtons->addButton( poBtnLogin, QDialogButtonBox::AcceptRole );
 
     QPushButton *poBtnQuit  = new QPushButton( tr( "&Quit" ), this );
-    poBtnQuit->setIcon( QIcon("./resources/tb_exit.gif") );
+    poBtnQuit->setIcon( QIcon("./resources/shutdown.gif") );
     btbButtons->addButton( poBtnQuit, QDialogButtonBox::RejectRole );
 
     m_poModel = new cQTMySQLQueryModel( this );
