@@ -18,19 +18,19 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     tbvCrud->setModel( m_poSortedModel );
 
     m_poBtnNew = new QPushButton( tr( "&New" ), this );
-    m_poBtnNew->setIcon( QIcon("./resources/new.gif") );
+    m_poBtnNew->setIcon( QIcon("./resources/40x40_new.gif") );
     btbButtons->addButton( m_poBtnNew, QDialogButtonBox::ActionRole );
 
     m_poBtnDelete = new QPushButton( tr( "&Delete" ), this );
-    m_poBtnDelete->setIcon( QIcon("./resources/delete.gif") );
+    m_poBtnDelete->setIcon( QIcon("./resources/40x40_delete.gif") );
     btbButtons->addButton( m_poBtnDelete, QDialogButtonBox::ActionRole );
 
     m_poBtnEdit = new QPushButton( tr( "&Edit" ), this );
-    m_poBtnEdit->setIcon( QIcon("./resources/edit.gif") );
+    m_poBtnEdit->setIcon( QIcon("./resources/40x40_edit.gif") );
     btbButtons->addButton( m_poBtnEdit, QDialogButtonBox::ActionRole );
 
     m_poBtnClose = new QPushButton( tr( "&Close" ), this );
-    m_poBtnClose->setIcon( QIcon("./resources/close.gif") );
+    m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.gif") );
     btbButtons->addButton( m_poBtnClose, QDialogButtonBox::AcceptRole );
 
     connect( m_poBtnNew, SIGNAL( clicked( bool ) ), this, SLOT( newClicked( bool ) ) );
