@@ -12,6 +12,7 @@
 #include "dlghardwaretest.h"
 #include "crud/dlgproducttypes.h"
 #include "crud/dlgproducts.h"
+#include "crud/dlgpaneltypes.h"
 
 cWndMain::cWndMain( QWidget *parent )
     : QMainWindow( parent )
@@ -81,7 +82,7 @@ void cWndMain::initPanels()
     QMdiSubWindow *poPanel;
     for( int i = 0; i < inPanelCount; i++ )
     {
-        poFrame = new cFrmPanel();
+        poFrame = new cFrmPanel( i + 1 );
         poFrame->setFrameShape( QFrame::Panel);
         poFrame->setFrameShadow( QFrame::Sunken );
         poFrame->setLineWidth( 5 );
@@ -161,6 +162,8 @@ void cWndMain::on_action_Preferences_triggered()
     cDlgPreferences  obDlgPrefs( this );
 
     obDlgPrefs.exec();
+
+    placeSubWindows();
 }
 
 void cWndMain::on_action_Users_triggered()
@@ -241,6 +244,15 @@ void cWndMain::on_actionLog_Out_triggered()
     updateTitle();
 
     if( !showLogIn() ) close();
+}
+
+void cWndMain::on_actionP_anel_types_triggered()
+{
+    cTracer obTrace( "cWndMain::on_actionP_anel_types_triggered" );
+
+    cDlgPanelTypes  obDlgPanelTypes( this );
+
+    obDlgPanelTypes.exec();
 }
 
 void cWndMain::resizeEvent ( QResizeEvent *p_poEvent )

@@ -36,6 +36,7 @@ private slots:
     void on_actionLog_Out_triggered();
     void on_action_Producttypes_triggered();
     void on_action_Products_triggered();
+    void on_actionP_anel_types_triggered();
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );
