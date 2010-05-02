@@ -21,6 +21,14 @@ cWndMain::cWndMain( QWidget *parent )
     setupUi( this );
 
     updateTitle();
+
+    actionLog_Out->setIcon( QIcon("./resources/40x40_logout.gif") );
+    actionE_xit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
+
+    action_Patientcardtypes->setIcon( QIcon("./resources/40x40_patientcards.gif") );
+    action_Patientcards->setIcon( QIcon("./resources/40x40_patientcard.gif") );
+    action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+    action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 }
 
 cWndMain::~cWndMain()

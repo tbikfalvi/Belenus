@@ -26,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>635</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -41,10 +41,12 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="action_Preferences"/>
+    <addaction name="action_Patientcardtypes"/>
+    <addaction name="action_Patientcards"/>
+    <addaction name="separator"/>
     <addaction name="action_Users"/>
-    <addaction name="action_Usercardtypes"/>
-    <addaction name="action_Usercards"/>
+    <addaction name="separator"/>
+    <addaction name="action_Preferences"/>
     <addaction name="action_Producttypes"/>
     <addaction name="action_Products"/>
    </widget>
@@ -110,9 +112,9 @@
     <string>&amp;Users ...</string>
    </property>
   </action>
-  <action name="action_Usercardtypes">
+  <action name="action_Patientcardtypes">
    <property name="text">
-    <string>Usercard types ...</string>
+    <string>Patientcard types ...</string>
    </property>
   </action>
   <action name="actionHardware_test">
@@ -120,19 +122,28 @@
     <string>&amp;Hardware test ...</string>
    </property>
   </action>
-  <action name="action_Usercards">
+  <action name="action_Patientcards">
    <property name="text">
-    <string>Usercards ...</string>
+    <string>Patientcards ...</string>
    </property>
   </action>
   <action name="action_Producttypes">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Product types ...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="action_Products">
    <property name="text">
     <string>Products ...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
