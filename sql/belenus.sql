@@ -156,6 +156,7 @@ CREATE TABLE `patientOrigin` (
   `patientOriginId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientOriginId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -167,6 +168,7 @@ CREATE TABLE `reasonToVisit` (
   `reasonToVisitId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`reasonToVisitId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -206,13 +208,32 @@ CREATE TABLE `attendance` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        NOT NULL,
   `date`                    date                    NOT NULL,
+  `length`                  time                    DEFAULT NULL,
   `weight`                  int(11)                 DEFAULT NULL,
   `height`                  int(11)                 DEFAULT NULL,
-  `bloodPressure`           float                   DEFAULT NULL,
+  `bloodPressureStart`      float                   DEFAULT NULL,
+  `pulseStart`              float                   DEFAULT NULL,
+  `bloodPressureStop`       float                   DEFAULT NULL,
+  `pulseStop`               float                   DEFAULT NULL,
   `medicineCurrent`         varchar(500)            DEFAULT NULL,
   `medicineAllergy`         varchar(500)            DEFAULT NULL,
+  `comment`                 text                    DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`attendanceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- toBeFilled tabla. Opcionalis. A nem kitoltott paciensek illetve kezelesekre
+-- mutato rekordok
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `toBeFilled` (
+  `toBeFilledId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `attendanceId`            int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`toBeFilledId`),
+  FOREIGN KEY (`attendanceId`) REFERENCES `attendance` (`attendanceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -245,7 +266,7 @@ CREATE TABLE `patientCardHistories` (
   `patientCardId`           int(10) unsigned        NOT NULL,
   `dateTimeUsed`            datetime                NOT NULL,
   `units`                   int(11)                 NOT NULL,
-  `usedTime`                int(11)                 NOT NULL,
+  `time`                    int(11)                 NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardHistoryId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
