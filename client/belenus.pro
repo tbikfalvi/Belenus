@@ -48,6 +48,7 @@ HEADERS = ../framework/belenusmessages.h \
     dlgusercardtypeedit.h \
     dlguseredit.h \
     frmpanel.h \
+    mdipanels.h \
     preferences.h \
     wndmain.h
 SOURCES = ../framework/dbconnection.cpp \
@@ -82,6 +83,7 @@ SOURCES = ../framework/dbconnection.cpp \
     dlguseredit.cpp \
     frmpanel.cpp \
     main.cpp \
+    mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp
 win32 {

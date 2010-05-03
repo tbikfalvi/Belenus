@@ -19,10 +19,6 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
 cFrmPanel::~cFrmPanel()
 {
     cTracer obTrace( "cFrmPanel::~cFrmPanel" );
-
-    delete poTitle;
-    delete poSpacer1;
-    delete poVerticalLayout;
 }
 
 void cFrmPanel::load( const unsigned int p_uiPanelId )
