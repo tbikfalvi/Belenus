@@ -27,8 +27,8 @@ private:
 private slots:
     void on_action_Preferences_triggered();
     void on_action_Users_triggered();
-    void on_action_Usercardtypes_triggered();
-    void on_action_Usercards_triggered();
+    void on_action_Patientcardtypes_triggered();
+    void on_action_Patientcards_triggered();
     void on_action_Logs_triggered();
     void on_actionHardware_test_triggered();
     void on_actionLog_Out_triggered();

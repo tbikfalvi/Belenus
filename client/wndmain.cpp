@@ -121,7 +121,7 @@ void cWndMain::on_action_Users_triggered()
     updateTitle();  //needed in case the login or real name of current user changed
 }
 
-void cWndMain::on_action_Usercardtypes_triggered()
+void cWndMain::on_action_Patientcardtypes_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Usercardtypes_triggered" );
 
@@ -130,7 +130,7 @@ void cWndMain::on_action_Usercardtypes_triggered()
     obDlgUserCardTypes.exec();
 }
 
-void cWndMain::on_action_Usercards_triggered()
+void cWndMain::on_action_Patientcards_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Usercards_triggered" );
 

@@ -22,7 +22,7 @@
      <x>0</x>
      <y>0</y>
      <width>635</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -37,12 +37,12 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="actionP_anel_types"/>
-    <addaction name="action_Products"/>
-    <addaction name="action_Producttypes"/>
-    <addaction name="action_Usercards"/>
-    <addaction name="action_Usercardtypes"/>
+    <addaction name="action_Patientcards"/>
+    <addaction name="action_Patientcardtypes"/>
+    <addaction name="separator"/>
     <addaction name="action_Users"/>
+    <addaction name="separator"/>
+    <addaction name="actionP_anel_types"/>
     <addaction name="separator"/>
     <addaction name="action_Preferences"/>
    </widget>
@@ -108,9 +108,9 @@
     <string>&amp;Users ...</string>
    </property>
   </action>
-  <action name="action_Usercardtypes">
+  <action name="action_Patientcardtypes">
    <property name="text">
-    <string>Usercard types ...</string>
+    <string>Patientcard types ...</string>
    </property>
   </action>
   <action name="actionHardware_test">
@@ -118,9 +118,9 @@
     <string>&amp;Hardware test ...</string>
    </property>
   </action>
-  <action name="action_Usercards">
+  <action name="action_Patientcards">
    <property name="text">
-    <string>User&amp;cards ...</string>
+    <string>Patient &amp;cards ...</string>
    </property>
   </action>
   <action name="action_Producttypes">
