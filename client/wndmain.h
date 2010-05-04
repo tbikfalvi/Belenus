@@ -4,7 +4,7 @@
 #include <QString>
 
 #include "ui_wndmain.h"
-#include "dlgpanel.h"
+#include "mdipanels.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ public:
     void initPanels();
 
 private:
-    vector<QFrame*>  m_obPanels;
+    cMdiPanels         *mdiPanels;
 
     void updateTitle();
 
@@ -34,6 +34,7 @@ private slots:
     void on_actionLog_Out_triggered();
     void on_action_Producttypes_triggered();
     void on_action_Products_triggered();
+    void on_actionP_anel_types_triggered();
 };
 
 #endif

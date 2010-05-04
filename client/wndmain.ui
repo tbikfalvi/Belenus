@@ -14,11 +14,7 @@
    <string>Belenus</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QMdiArea" name="mdiPanels"/>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -41,12 +37,14 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="action_Preferences"/>
-    <addaction name="action_Users"/>
-    <addaction name="action_Usercardtypes"/>
-    <addaction name="action_Usercards"/>
-    <addaction name="action_Producttypes"/>
+    <addaction name="actionP_anel_types"/>
     <addaction name="action_Products"/>
+    <addaction name="action_Producttypes"/>
+    <addaction name="action_Usercards"/>
+    <addaction name="action_Usercardtypes"/>
+    <addaction name="action_Users"/>
+    <addaction name="separator"/>
+    <addaction name="action_Preferences"/>
    </widget>
    <widget class="QMenu" name="menu_View">
     <property name="title">
@@ -122,7 +120,7 @@
   </action>
   <action name="action_Usercards">
    <property name="text">
-    <string>Usercards ...</string>
+    <string>User&amp;cards ...</string>
    </property>
   </action>
   <action name="action_Producttypes">
@@ -132,7 +130,12 @@
   </action>
   <action name="action_Products">
    <property name="text">
-    <string>Products ...</string>
+    <string>P&amp;roducts ...</string>
+   </property>
+  </action>
+  <action name="actionP_anel_types">
+   <property name="text">
+    <string>P&amp;anel types ...</string>
    </property>
   </action>
  </widget>

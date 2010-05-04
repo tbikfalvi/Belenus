@@ -3,6 +3,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlghardwaretest.ui \
     dlglogin.ui \
     dlglogs.ui \
+    dlgpaneltypeedit.ui \
     dlgpreferences.ui \
     dlgproductedit.ui \
     dlgproducttypeedit.ui \
@@ -20,11 +21,12 @@ HEADERS = ../framework/belenusmessages.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
     ../framework/tracer.h \
+    crud/dlgpaneltypes.h \
+    crud/dlgproducts.h \
+    crud/dlgproducttypes.h \
     crud/dlgusercards.h \
     crud/dlgusercardtypes.h \
     crud/dlgusers.h \
-    crud/dlgproducts.h \
-    crud/dlgproducttypes.h \
     belenus.h \
     bs_connection.h \
     communication.h \
@@ -37,7 +39,7 @@ HEADERS = ../framework/belenusmessages.h \
     dlghardwaretest.h \
     dlglogin.h \
     dlglogs.h \
-    dlgpanel.h \
+    dlgpaneltypeedit.h \
     dlgpreferences.h \
     dlgproductedit.h \
     dlgproducttypeedit.h \
@@ -45,6 +47,8 @@ HEADERS = ../framework/belenusmessages.h \
     dlgusercardedit.h \
     dlgusercardtypeedit.h \
     dlguseredit.h \
+    frmpanel.h \
+    mdipanels.h \
     preferences.h \
     wndmain.h
 SOURCES = ../framework/dbconnection.cpp \
@@ -53,6 +57,7 @@ SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
     ../framework/tracer.cpp \
+    crud/dlgpaneltypes.cpp \
     crud/dlgproducts.cpp \
     crud/dlgproducttypes.cpp \
     crud/dlgusercards.cpp \
@@ -68,7 +73,7 @@ SOURCES = ../framework/dbconnection.cpp \
     dlghardwaretest.cpp \
     dlglogin.cpp \
     dlglogs.cpp \
-    dlgpanel.cpp \
+    dlgpaneltypeedit.cpp \
     dlgpreferences.cpp \
     dlgproductedit.cpp \
     dlgproducttypeedit.cpp \
@@ -76,7 +81,9 @@ SOURCES = ../framework/dbconnection.cpp \
     dlgusercardedit.cpp \
     dlgusercardtypeedit.cpp \
     dlguseredit.cpp \
+    frmpanel.cpp \
     main.cpp \
+    mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp
 win32 {

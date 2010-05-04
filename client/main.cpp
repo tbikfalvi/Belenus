@@ -164,7 +164,12 @@ int main( int argc, char *argv[] )
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
+#ifdef __WIN32__
         Sleep(3000);
+#else
+        sleep( 3 );
+#endif
+
         obSplash.finish( &obMainWindow );
 
         obMainWindow.show();

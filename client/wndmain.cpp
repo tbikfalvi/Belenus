@@ -1,5 +1,4 @@
 #include <QMessageBox>
-#include <QMdiSubWindow>
 
 #include "wndmain.h"
 #include "dlglogin.h"
@@ -12,6 +11,7 @@
 #include "dlghardwaretest.h"
 #include "crud/dlgproducttypes.h"
 #include "crud/dlgproducts.h"
+#include "crud/dlgpaneltypes.h"
 
 cWndMain::cWndMain( QWidget *parent )
     : QMainWindow( parent )
@@ -20,14 +20,17 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
+    mdiPanels = new cMdiPanels( centralwidget );
+    verticalLayout->addWidget(mdiPanels);
+
+    mdiPanels->setBackground( QBrush( Qt::black ) );
+
     updateTitle();
 }
 
 cWndMain::~cWndMain()
 {
     cTracer obTrace( "cWndMain::~cWndMain" );
-
-    for( unsigned int i = 0; i < m_obPanels.size(); i++ ) delete m_obPanels.at( i );
 }
 
 bool cWndMain::showLogIn()
@@ -61,6 +64,11 @@ bool cWndMain::showLogIn()
     return boLogInOK;
 }
 
+void cWndMain::initPanels()
+{
+    mdiPanels->initPanels();
+}
+
 void cWndMain::updateTitle()
 {
     cTracer obTrace( "cWndMain::updateTitle" );
@@ -83,39 +91,6 @@ void cWndMain::updateTitle()
     setWindowTitle( qsTitle );
 }
 
-void cWndMain::initPanels()
-{
-    cTracer obTrace( "cWndMain::initPanels" );
-
-    int        inPanelCount = g_poPrefs->getPanelCount();
-
-    if( g_poHardware->getPanelCount() < inPanelCount )
-    {
-        QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
-        inPanelCount = g_poHardware->getPanelCount();
-    }
-
-    m_obPanels.reserve( g_poPrefs->getPanelCount() );
-
-    QFrame *poFrame;
-    QMdiSubWindow *poPanel;
-    for( int i = 0; i < inPanelCount; i++ )
-    {
-        poFrame = new QFrame();
-        poFrame->setFrameShape( QFrame::StyledPanel);
-        poFrame->setFrameShadow( QFrame::Plain );
-
-        poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
-        poPanel->setWidget( poFrame );
-
-        m_obPanels.push_back( poFrame );
-        mdiPanels->addSubWindow( poPanel );
-        m_obPanels.at( i )->show();
-    }
-
-    mdiPanels->tileSubWindows();
-}
-
 void cWndMain::on_action_Preferences_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Preferences_triggered" );
@@ -123,6 +98,8 @@ void cWndMain::on_action_Preferences_triggered()
     cDlgPreferences  obDlgPrefs( this );
 
     obDlgPrefs.exec();
+
+    mdiPanels->placeSubWindows();
 }
 
 void cWndMain::on_action_Users_triggered()
@@ -203,4 +180,13 @@ void cWndMain::on_actionLog_Out_triggered()
     updateTitle();
 
     if( !showLogIn() ) close();
+}
+
+void cWndMain::on_actionP_anel_types_triggered()
+{
+    cTracer obTrace( "cWndMain::on_actionP_anel_types_triggered" );
+
+    cDlgPanelTypes  obDlgPanelTypes( this );
+
+    obDlgPanelTypes.exec();
 }
