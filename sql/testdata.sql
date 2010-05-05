@@ -22,20 +22,20 @@
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`) VALUES
-  ( 0, 'BLNS_SERIAL_DEMO', 'Budapest', NULL, NULL, NULL, NULL, NULL, NULL, 1);
+  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1);
 
 INSERT INTO `users` (`name`, `licenceId`, `realName`, `password`, `groups`) VALUES
-  ( 'admin', 0, 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
+  ( 'admin', 1, 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
 
 INSERT INTO `panelTypes` ( `licenceId`, `name` ) VALUES
-  ( 0, "Panel Type 1" );
+  ( 1, "Panel Type 1" );
 
 INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
-  ( 0, 1, "Panel 1" ),
-  ( 0, 1, "Panel 2" ),
-  ( 0, 1, "Panel 3" ),
-  ( 0, 1, "Panel 4" ),
-  ( 0, 1, "Panel 5" ),
-  ( 0, 1, "Panel 6" ),
-  ( 0, 1, "Panel 7" ),
-  ( 0, 1, "Panel 8" );
+  ( 1, 1, "Panel 1" ),
+  ( 1, 1, "Panel 2" ),
+  ( 1, 1, "Panel 3" ),
+  ( 1, 1, "Panel 4" ),
+  ( 1, 1, "Panel 5" ),
+  ( 1, 1, "Panel 6" ),
+  ( 1, 1, "Panel 7" ),
+  ( 1, 1, "Panel 8" );

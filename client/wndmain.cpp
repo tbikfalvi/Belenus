@@ -12,6 +12,7 @@
 #include "crud/dlgproducttypes.h"
 #include "crud/dlgproducts.h"
 #include "crud/dlgpaneltypes.h"
+#include "crud/dlgpatientorigin.h"
 
 cWndMain::cWndMain( QWidget *parent )
     : QMainWindow( parent )
@@ -33,7 +34,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_Patientcards->setIcon( QIcon("./resources/40x40_patientcard.gif") );
     action_Patientcardtypes->setIcon( QIcon("./resources/40x40_patientcards.gif") );
     action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
-    actionP_anel_types->setIcon( QIcon("./resources/40x40_panel.gif") );
+    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 }
 
@@ -167,9 +168,9 @@ void cWndMain::on_action_Logs_triggered()
     obDlgLogs.exec();
 }
 
-void cWndMain::on_actionHardware_test_triggered()
+void cWndMain::on_action_Hardwaretest_triggered()
 {
-    cTracer obTrace( "cWndMain::on_actionHardware_test_triggered" );
+    cTracer obTrace( "cWndMain::on_action_Hardwaretest_triggered" );
 
     cDlgHardwareTest  obDlgHardwareTest( this );
 
@@ -191,11 +192,20 @@ void cWndMain::on_actionLog_Out_triggered()
     if( !showLogIn() ) close();
 }
 
-void cWndMain::on_actionP_anel_types_triggered()
+void cWndMain::on_action_Paneltypes_triggered()
 {
-    cTracer obTrace( "cWndMain::on_actionP_anel_types_triggered" );
+    cTracer obTrace( "cWndMain::on_action_Paneltypes_triggered" );
 
     cDlgPanelTypes  obDlgPanelTypes( this );
 
     obDlgPanelTypes.exec();
+}
+
+void cWndMain::on_action_Patientorigin_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
+
+    cDlgPatientOrigin  obDlgPaientOrigin( this );
+
+    obDlgPaientOrigin.exec();
 }

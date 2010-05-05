@@ -42,7 +42,8 @@
     <addaction name="separator"/>
     <addaction name="action_Users"/>
     <addaction name="separator"/>
-    <addaction name="actionP_anel_types"/>
+    <addaction name="action_Paneltypes"/>
+    <addaction name="action_Patientorigin"/>
     <addaction name="separator"/>
     <addaction name="action_Preferences"/>
    </widget>
@@ -51,7 +52,7 @@
      <string>&amp;View</string>
     </property>
     <addaction name="action_Logs"/>
-    <addaction name="actionHardware_test"/>
+    <addaction name="action_Hardwaretest"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
@@ -113,7 +114,7 @@
     <string>Patientcard types ...</string>
    </property>
   </action>
-  <action name="actionHardware_test">
+  <action name="action_Hardwaretest">
    <property name="text">
     <string>&amp;Hardware test ...</string>
    </property>
@@ -133,9 +134,14 @@
     <string>P&amp;roducts ...</string>
    </property>
   </action>
-  <action name="actionP_anel_types">
+  <action name="action_Paneltypes">
    <property name="text">
     <string>P&amp;anel types ...</string>
+   </property>
+  </action>
+  <action name="action_Patientorigin">
+   <property name="text">
+    <string>Patient origin ...</string>
    </property>
   </action>
  </widget>

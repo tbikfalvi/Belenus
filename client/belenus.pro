@@ -11,7 +11,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgusercardedit.ui \
     dlgusercardtypeedit.ui \
     dlguseredit.ui \
-    wndmain.ui
+    wndmain.ui \
+    dlgpatientoriginedit.ui
 HEADERS = ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -50,7 +51,10 @@ HEADERS = ../framework/belenusmessages.h \
     frmpanel.h \
     mdipanels.h \
     preferences.h \
-    wndmain.h
+    wndmain.h \
+    db/dbpatientorigin.h \
+    crud/dlgpatientorigin.h \
+    edit/dlgpatientoriginedit.h
 SOURCES = ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
     ../framework/qtlogger.cpp \
@@ -85,8 +89,11 @@ SOURCES = ../framework/dbconnection.cpp \
     main.cpp \
     mdipanels.cpp \
     preferences.cpp \
-    wndmain.cpp
-win32 {
+    wndmain.cpp \
+    db/dbpatientorigin.cpp \
+    crud/dlgpatientorigin.cpp \
+    edit/dlgpatientoriginedit.cpp
+win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }
