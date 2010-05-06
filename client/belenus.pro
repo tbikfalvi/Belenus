@@ -8,6 +8,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpwdconfirm.ui \
     dlguseredit.ui \
     dlgpatientoriginedit.ui \
+    dlgreasontovisitedit.ui \
     wndmain.ui
 HEADERS = belenus.h \
     ../framework/belenusmessages.h \
@@ -22,10 +23,13 @@ HEADERS = belenus.h \
     crud/dlgpaneltypes.h \
     crud/dlgusers.h \
     crud/dlgpatientorigin.h \
+    crud/dlgreasontovisit.h \
     db/dbpatientorigin.h \
+    db/dbreasontovisit.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientoriginedit.h \
+    edit/dlgreasontovisitedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -49,10 +53,13 @@ SOURCES = main.cpp \
     crud/dlgpaneltypes.cpp \
     crud/dlgusers.cpp \
     crud/dlgpatientorigin.cpp \
+    crud/dlgreasontovisit.cpp \
     db/dbpatientorigin.cpp \
+    db/dbreasontovisit.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientoriginedit.cpp \
+    edit/dlgreasontovisitedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     dbuser.cpp \
