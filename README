@@ -15,3 +15,4 @@ PatientOrigin           - Honnan ertesult a paciens a studiorol kerdesre ezekbol
 SourceOrder		- A korabban letrehozott file-ok (usercard, usercardtype, product ... stb
 			  kitorlese. Edit dialog-ok atmozgatasa az uj edit alkonyvtarba
 			  Az egesz lenyege a jobban atlathato kodreszek csoportositasa
+ReasonToVisit		- Miert jott a paciens a studioba kerdesre valaszok
