@@ -8,16 +8,28 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
 {
     setupUi( this );
 
-    m_poPatientOrigin = p_poPatientOrigin;
-    if( m_poPatientOrigin )
-    {
-        ledName->setText( QString::fromStdString( m_poPatientOrigin->name() ) );
-    }
-
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+
+    m_poPatientOrigin = p_poPatientOrigin;
+    if( m_poPatientOrigin )
+    {
+        ledName->setText( QString::fromStdString( m_poPatientOrigin->name() ) );
+        if( m_poPatientOrigin->licenceId() == 0 )
+            checkIndependent->setChecked( true );
+
+        if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
+        {
+            checkIndependent->setEnabled( false );
+            if( m_poPatientOrigin->licenceId() == 0 )
+            {
+                ledName->setEnabled( false );
+                poBtnSave->setEnabled( false );
+            }
+        }
+    }
 }
 
 cDlgPatientOriginEdit::~cDlgPatientOriginEdit()
@@ -40,7 +52,7 @@ void cDlgPatientOriginEdit::accept ()
             m_poPatientOrigin->setName( ledName->text().toStdString() );
             if( checkIndependent->isChecked() )
             {
-                m_poPatientOrigin->setLicenceId( 1 );
+                m_poPatientOrigin->setLicenceId( 0 );
             }
             else
             {

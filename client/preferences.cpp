@@ -332,7 +332,7 @@ void cPreferences::loadDBSettings() throw (cSevException)
         delete poQuery;
         poQuery = NULL;
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences LIMIT 1" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC" ) );
         if( poQuery->first() )
         {
             m_uiLicenceId    = poQuery->value( 0 ).toInt();

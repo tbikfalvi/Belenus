@@ -97,7 +97,7 @@ void cDBPatientOrigin::save() throw( cSevException )
     qsQuery += " patientOrigin SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
-    qsQuery += QString( "archive = \"%1\", " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE patientOriginId = %1" ).arg( m_uiId );

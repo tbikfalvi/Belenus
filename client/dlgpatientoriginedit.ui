@@ -64,5 +64,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btbButtons</sender>
+   <signal>accepted()</signal>
+   <receiver>dlgPatientOriginEdit</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btbButtons</sender>
+   <signal>rejected()</signal>
+   <receiver>dlgPatientOriginEdit</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
