@@ -1,19 +1,40 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : wndmain.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Alkalmazas fo ablakat kezelo allomany.
+//====================================================================================
+
 #include <QMessageBox>
 
 #include "wndmain.h"
-#include "dlglogin.h"
-#include "dlgpreferences.h"
-#include "crud/dlgusers.h"
-#include "dlguseredit.h"
-#include "dlglogs.h"
-#include "crud/dlgusercardtypes.h"
-#include "crud/dlgusercards.h"
-#include "dlghardwaretest.h"
-#include "crud/dlgproducttypes.h"
-#include "crud/dlgproducts.h"
+
+//====================================================================================
+
 #include "crud/dlgpaneltypes.h"
 #include "crud/dlgpatientorigin.h"
+#include "crud/dlgusers.h"
 
+//====================================================================================
+
+#include "edit/dlguseredit.h"
+
+//====================================================================================
+
+#include "dlglogin.h"
+#include "dlgpreferences.h"
+#include "dlghardwaretest.h"
+#include "dlglogs.h"
+
+//====================================================================================
 cWndMain::cWndMain( QWidget *parent )
     : QMainWindow( parent )
 {
@@ -32,9 +53,6 @@ cWndMain::cWndMain( QWidget *parent )
     actionLog_Out->setIcon( QIcon("./resources/40x40_logout.gif") );
     actionE_xit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
 
-    action_Patientcards->setIcon( QIcon("./resources/40x40_patientcard.gif") );
-    action_Patientcardtypes->setIcon( QIcon("./resources/40x40_patientcards.gif") );
-
     action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
 
     action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
@@ -43,12 +61,12 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 }
-
+//====================================================================================
 cWndMain::~cWndMain()
 {
     cTracer obTrace( "cWndMain::~cWndMain" );
 }
-
+//====================================================================================
 bool cWndMain::showLogIn()
 {
     cTracer obTrace( "cWndMain::showLogIn" );
@@ -79,12 +97,12 @@ bool cWndMain::showLogIn()
     obTrace << boLogInOK;
     return boLogInOK;
 }
-
+//====================================================================================
 void cWndMain::initPanels()
 {
     mdiPanels->initPanels();
 }
-
+//====================================================================================
 void cWndMain::updateTitle()
 {
     cTracer obTrace( "cWndMain::updateTitle" );
@@ -106,7 +124,7 @@ void cWndMain::updateTitle()
 
     setWindowTitle( qsTitle );
 }
-
+//====================================================================================
 void cWndMain::on_action_Preferences_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Preferences_triggered" );
@@ -117,7 +135,7 @@ void cWndMain::on_action_Preferences_triggered()
 
     mdiPanels->placeSubWindows();
 }
-
+//====================================================================================
 void cWndMain::on_action_Users_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Users_triggered" );
@@ -128,43 +146,7 @@ void cWndMain::on_action_Users_triggered()
 
     updateTitle();  //needed in case the login or real name of current user changed
 }
-
-void cWndMain::on_action_Patientcardtypes_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Usercardtypes_triggered" );
-
-    cDlgUserCardTypes  obDlgUserCardTypes( this );
-
-    obDlgUserCardTypes.exec();
-}
-
-void cWndMain::on_action_Patientcards_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Usercards_triggered" );
-
-    cDlgUserCards  obDlgUserCards( this );
-
-    obDlgUserCards.exec();
-}
-
-void cWndMain::on_action_Producttypes_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Producttypes_triggered" );
-
-    cDlgProductTypes  obDlgProductTypes( this );
-
-    obDlgProductTypes.exec();
-}
-
-void cWndMain::on_action_Products_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Products_triggered" );
-
-    cDlgProducts  obDlgProducts( this );
-
-    obDlgProducts.exec();
-}
-
+//====================================================================================
 void cWndMain::on_action_Logs_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Logs_triggered" );
@@ -173,7 +155,7 @@ void cWndMain::on_action_Logs_triggered()
 
     obDlgLogs.exec();
 }
-
+//====================================================================================
 void cWndMain::on_action_Hardwaretest_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Hardwaretest_triggered" );
@@ -182,7 +164,7 @@ void cWndMain::on_action_Hardwaretest_triggered()
 
     obDlgHardwareTest.exec();
 }
-
+//====================================================================================
 void cWndMain::on_actionLog_Out_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Log_Out_triggered" );
@@ -197,7 +179,7 @@ void cWndMain::on_actionLog_Out_triggered()
 
     if( !showLogIn() ) close();
 }
-
+//====================================================================================
 void cWndMain::on_action_Paneltypes_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Paneltypes_triggered" );
@@ -206,7 +188,7 @@ void cWndMain::on_action_Paneltypes_triggered()
 
     obDlgPanelTypes.exec();
 }
-
+//====================================================================================
 void cWndMain::on_action_Patientorigin_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
@@ -215,3 +197,4 @@ void cWndMain::on_action_Patientorigin_triggered()
 
     obDlgPatientOrigin.exec();
 }
+//====================================================================================

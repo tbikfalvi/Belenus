@@ -2,7 +2,7 @@
 
 #include "belenus.h"
 #include "dlgpaneltypes.h"
-#include "dlgpaneltypeedit.h"
+#include "../edit/dlgpaneltypeedit.h"
 
 cDlgPanelTypes::cDlgPanelTypes( QWidget *p_poParent )
     : cDlgCrud( p_poParent )

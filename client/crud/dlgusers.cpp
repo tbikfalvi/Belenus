@@ -1,7 +1,7 @@
 #include <QMessageBox>
 
 #include "dlgusers.h"
-#include "dlguseredit.h"
+#include "../edit/dlguseredit.h"
 #include "belenus.h"
 
 cDlgUsers::cDlgUsers( QWidget *p_poParent )

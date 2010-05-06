@@ -27,13 +27,9 @@ private:
 private slots:
     void on_action_Preferences_triggered();
     void on_action_Users_triggered();
-    void on_action_Patientcardtypes_triggered();
-    void on_action_Patientcards_triggered();
     void on_action_Logs_triggered();
     void on_action_Hardwaretest_triggered();
     void on_actionLog_Out_triggered();
-    void on_action_Producttypes_triggered();
-    void on_action_Products_triggered();
     void on_action_Paneltypes_triggered();
     void on_action_Patientorigin_triggered();
 };
