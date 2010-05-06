@@ -32,6 +32,7 @@ private slots:
     void on_actionLog_Out_triggered();
     void on_action_Paneltypes_triggered();
     void on_action_Patientorigin_triggered();
+    void on_action_ReasonToVisit_triggered();
 };
 
 #endif

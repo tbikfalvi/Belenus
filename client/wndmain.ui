@@ -41,6 +41,7 @@
     <addaction name="separator"/>
     <addaction name="action_Paneltypes"/>
     <addaction name="action_Patientorigin"/>
+    <addaction name="action_ReasonToVisit"/>
     <addaction name="separator"/>
     <addaction name="action_Preferences"/>
    </widget>
@@ -139,6 +140,11 @@
   <action name="action_Patientorigin">
    <property name="text">
     <string>Patient origin ...</string>
+   </property>
+  </action>
+  <action name="action_ReasonToVisit">
+   <property name="text">
+    <string>Reason to visit ...</string>
    </property>
   </action>
  </widget>

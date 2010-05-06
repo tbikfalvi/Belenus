@@ -21,6 +21,7 @@
 
 #include "crud/dlgpaneltypes.h"
 #include "crud/dlgpatientorigin.h"
+#include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
 
 //====================================================================================
@@ -58,6 +59,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
     
     action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
+    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
 
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 }
@@ -196,5 +198,14 @@ void cWndMain::on_action_Patientorigin_triggered()
     cDlgPatientOrigin  obDlgPatientOrigin( this );
 
     obDlgPatientOrigin.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ReasonToVisit_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_ReasonToVisit_triggered" );
+
+    cDlgReasonToVisit  obDlgReasonToVisit( this );
+
+    obDlgReasonToVisit.exec();
 }
 //====================================================================================
