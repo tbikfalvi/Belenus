@@ -17,13 +17,13 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
     if( m_poPatientOrigin )
     {
         ledName->setText( QString::fromStdString( m_poPatientOrigin->name() ) );
-        if( m_poPatientOrigin->licenceId() == 0 )
+        if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
             checkIndependent->setChecked( true );
 
         if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
         {
             checkIndependent->setEnabled( false );
-            if( m_poPatientOrigin->licenceId() == 0 )
+            if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
             {
                 ledName->setEnabled( false );
                 poBtnSave->setEnabled( false );

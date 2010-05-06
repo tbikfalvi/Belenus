@@ -8,6 +8,7 @@ cDlgPatientOrigin::cDlgPatientOrigin( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Origin List" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientorigin.gif") );
 
     if( g_obUser.isInGroup( "root" ) )
     {

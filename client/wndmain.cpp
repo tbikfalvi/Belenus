@@ -27,14 +27,20 @@ cWndMain::cWndMain( QWidget *parent )
     mdiPanels->setBackground( QBrush( Qt::black ) );
 
     updateTitle();
+    setWindowIcon( QIcon("./resources/belenus.ico") );
 
     actionLog_Out->setIcon( QIcon("./resources/40x40_logout.gif") );
     actionE_xit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
 
     action_Patientcards->setIcon( QIcon("./resources/40x40_patientcard.gif") );
     action_Patientcardtypes->setIcon( QIcon("./resources/40x40_patientcards.gif") );
+
     action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+
     action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
+    
+    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
+
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 }
 
@@ -205,7 +211,7 @@ void cWndMain::on_action_Patientorigin_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
 
-    cDlgPatientOrigin  obDlgPaientOrigin( this );
+    cDlgPatientOrigin  obDlgPatientOrigin( this );
 
-    obDlgPaientOrigin.exec();
+    obDlgPatientOrigin.exec();
 }
