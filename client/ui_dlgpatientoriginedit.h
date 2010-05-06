@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgpatientoriginedit.ui'
 **
-** Created: Wed May 5 23:28:09 2010
+** Created: Thu May 6 10:38:02 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -51,6 +51,8 @@ public:
         btbButtons->setStandardButtons(QDialogButtonBox::NoButton);
 
         retranslateUi(dlgPatientOriginEdit);
+        QObject::connect(btbButtons, SIGNAL(accepted()), dlgPatientOriginEdit, SLOT(accept()));
+        QObject::connect(btbButtons, SIGNAL(rejected()), dlgPatientOriginEdit, SLOT(reject()));
 
         QMetaObject::connectSlotsByName(dlgPatientOriginEdit);
     } // setupUi
