@@ -1,1 +1,14 @@
+-------------------------------------------------------------------------------------------
 Belenus Project
+-------------------------------------------------------------------------------------------
+Branch neve               Magyarazat
+-------------------------------------------------------------------------------------------
+
+Kepek_ikonok            - Menukhoz, ablakokhoz, toolbar-hoz kepek es ikonok felvetele
+Adatbazis_veglegesites  - A belenus.sql frissitese es az adatbazist letrehozo SQL script-ek
+                          aktualizalasa. Kiegeszult testdata.sql-el, ami nem csak teszt
+                          adatokat, hanem telepiteskor beszurando adatokat is tartalmaz
+Panels                  - Foablakban megjeleno panelok megjelenitese es kezelese
+Main_menu_1             - Foablak menujenek atalakitasa
+PatientOrigin           - Honnan ertesult a paciens a studiorol kerdesre ezekbol az adatokbol
+                          tud valasztani a kezelo paciens adatok megadasakor.
