@@ -37,9 +37,6 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="action_Patientcards"/>
-    <addaction name="action_Patientcardtypes"/>
-    <addaction name="separator"/>
     <addaction name="action_Users"/>
     <addaction name="separator"/>
     <addaction name="action_Paneltypes"/>
