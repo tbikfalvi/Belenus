@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgpatientedit.ui'
 **
-** Created: Fri May 7 11:59:40 2010
+** Created: Fri May 7 17:44:14 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
