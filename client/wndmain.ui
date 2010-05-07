@@ -61,8 +61,15 @@
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
+   <widget class="QMenu" name="menuAction">
+    <property name="title">
+     <string>Action</string>
+    </property>
+    <addaction name="action_PatientNew"/>
+   </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
+   <addaction name="menuAction"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -159,6 +166,11 @@
   <action name="action_Patients">
    <property name="text">
     <string>Patients ...</string>
+   </property>
+  </action>
+  <action name="action_PatientNew">
+   <property name="text">
+    <string>New patient</string>
    </property>
   </action>
  </widget>

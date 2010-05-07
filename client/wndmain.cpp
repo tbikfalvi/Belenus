@@ -23,6 +23,7 @@
 #include "crud/dlgpatientorigin.h"
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
+#include "crud/dlgpatient.h"
 
 //====================================================================================
 
@@ -67,6 +68,7 @@ cWndMain::cWndMain( QWidget *parent )
     //--------------------------------------------------------------------------------
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -218,8 +220,22 @@ void cWndMain::on_action_Patients_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Patiens_triggered" );
 
-    cDlgPatientEdit  obDlgPatientEdit( this );
+    cDlgPatient  obDlgPatient( this );
 
-    obDlgPatientEdit.exec();
+    obDlgPatient.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PatientNew_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_PatienNew_triggered" );
+
+    cDBPatient *poPatient = new cDBPatient;
+    poPatient->createNew();
+
+    cDlgPatientEdit  obDlgEdit( this, poPatient );
+    obDlgEdit.setWindowTitle( tr( "New Patient" ) );
+    obDlgEdit.exec();
+
+    delete poPatient;
 }
 //====================================================================================
