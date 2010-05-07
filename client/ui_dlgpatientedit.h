@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgpatientedit.ui'
 **
-** Created: Fri May 7 17:44:14 2010
+** Created: Fri May 7 20:28:58 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,8 +37,8 @@ public:
     QLabel *lblGender;
     QRadioButton *rbGenderMale;
     QRadioButton *rbGenderFemale;
-    QLabel *lblBirthDate;
-    QDateEdit *dateEdit;
+    QLabel *lblDateBirth;
+    QDateEdit *deDateBirth;
     QLabel *lblUniqueId;
     QLineEdit *ledUniqueId;
     QCheckBox *checkIndependent;
@@ -93,12 +93,12 @@ public:
         rbGenderFemale = new QRadioButton(gbIdentification);
         rbGenderFemale->setObjectName(QString::fromUtf8("rbGenderFemale"));
         rbGenderFemale->setGeometry(QRect(470, 20, 60, 20));
-        lblBirthDate = new QLabel(gbIdentification);
-        lblBirthDate->setObjectName(QString::fromUtf8("lblBirthDate"));
-        lblBirthDate->setGeometry(QRect(10, 50, 70, 20));
-        dateEdit = new QDateEdit(gbIdentification);
-        dateEdit->setObjectName(QString::fromUtf8("dateEdit"));
-        dateEdit->setGeometry(QRect(90, 50, 110, 22));
+        lblDateBirth = new QLabel(gbIdentification);
+        lblDateBirth->setObjectName(QString::fromUtf8("lblDateBirth"));
+        lblDateBirth->setGeometry(QRect(10, 50, 70, 20));
+        deDateBirth = new QDateEdit(gbIdentification);
+        deDateBirth->setObjectName(QString::fromUtf8("deDateBirth"));
+        deDateBirth->setGeometry(QRect(90, 50, 110, 22));
         lblUniqueId = new QLabel(gbIdentification);
         lblUniqueId->setObjectName(QString::fromUtf8("lblUniqueId"));
         lblUniqueId->setGeometry(QRect(210, 50, 110, 20));
@@ -111,6 +111,7 @@ public:
         pbFinishLater = new QPushButton(dlgPatientEdit);
         pbFinishLater->setObjectName(QString::fromUtf8("pbFinishLater"));
         pbFinishLater->setGeometry(QRect(580, 110, 130, 31));
+        pbFinishLater->setIconSize(QSize(20, 20));
         gbAddress = new QGroupBox(dlgPatientEdit);
         gbAddress->setObjectName(QString::fromUtf8("gbAddress"));
         gbAddress->setGeometry(QRect(10, 100, 550, 110));
@@ -168,9 +169,11 @@ public:
         pbSave = new QPushButton(dlgPatientEdit);
         pbSave->setObjectName(QString::fromUtf8("pbSave"));
         pbSave->setGeometry(QRect(580, 20, 130, 30));
+        pbSave->setIconSize(QSize(20, 20));
         pbCancel = new QPushButton(dlgPatientEdit);
         pbCancel->setObjectName(QString::fromUtf8("pbCancel"));
         pbCancel->setGeometry(QRect(580, 54, 130, 30));
+        pbCancel->setIconSize(QSize(20, 20));
         gbVisit = new QGroupBox(dlgPatientEdit);
         gbVisit->setObjectName(QString::fromUtf8("gbVisit"));
         gbVisit->setGeometry(QRect(10, 220, 550, 80));
@@ -189,6 +192,7 @@ public:
         pbAttendances = new QPushButton(dlgPatientEdit);
         pbAttendances->setObjectName(QString::fromUtf8("pbAttendances"));
         pbAttendances->setGeometry(QRect(580, 170, 130, 30));
+        pbAttendances->setIconSize(QSize(20, 20));
 
         retranslateUi(dlgPatientEdit);
 
@@ -203,7 +207,7 @@ public:
         lblGender->setText(QApplication::translate("dlgPatientEdit", "Gender :", 0, QApplication::UnicodeUTF8));
         rbGenderMale->setText(QApplication::translate("dlgPatientEdit", "Male", 0, QApplication::UnicodeUTF8));
         rbGenderFemale->setText(QApplication::translate("dlgPatientEdit", "Female", 0, QApplication::UnicodeUTF8));
-        lblBirthDate->setText(QApplication::translate("dlgPatientEdit", "Date of birth :", 0, QApplication::UnicodeUTF8));
+        lblDateBirth->setText(QApplication::translate("dlgPatientEdit", "Date of birth :", 0, QApplication::UnicodeUTF8));
         lblUniqueId->setText(QApplication::translate("dlgPatientEdit", "Unique identification :", 0, QApplication::UnicodeUTF8));
         checkIndependent->setText(QApplication::translate("dlgPatientEdit", "Independent from the local studio.", 0, QApplication::UnicodeUTF8));
         pbFinishLater->setText(QApplication::translate("dlgPatientEdit", "Finish later ...", 0, QApplication::UnicodeUTF8));

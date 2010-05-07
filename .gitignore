@@ -103,6 +103,7 @@ client/ui_dlgusercardedit.h
 client/ui_dlgusercardtypeedit.h
 client/ui_dlguseredit.h
 client/ui_wndmain.h
+client/ui_dlgpatientedit.h
 BelenusServer
 belenusserver.ini
 server/Makefile
