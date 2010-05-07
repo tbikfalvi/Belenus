@@ -108,7 +108,8 @@ void cDlgPatientEdit::on_pbSave_clicked()
 
     if( boCanBeSaved )
     {
-        QDialog::accept();
+        if( SavePatientData() )
+            QDialog::accept();
     }
     else
     {
@@ -129,5 +130,68 @@ void cDlgPatientEdit::on_pbCancel_clicked()
 
 void cDlgPatientEdit::on_pbFinishLater_clicked()
 {
-    QMessageBox::information( this, tr( "Info" ), tr( "Finish later." ) );
+    QSqlQuery  *poQuery = NULL;
+    try
+    {
+        if( SavePatientData() )
+        {
+            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (NULL, \"%1\")" ).arg( m_poPatient->id() );
+            poQuery = g_poDB->executeQTQuery( qsQuery );
+            delete poQuery;
+
+            QDialog::accept();
+        }
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+
+        g_obLogger << e.severity();
+        g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+bool cDlgPatientEdit::SavePatientData()
+{
+    bool bRet = false;
+
+    try
+    {
+        if( checkIndependent->isChecked() )
+        {
+            m_poPatient->setLicenceId( 0 );
+        }
+        else
+        {
+            m_poPatient->setLicenceId( g_poPrefs->getLicenceId() );
+        }
+        m_poPatient->setPatientOriginId( cmbPatientOrigin->itemData( cmbPatientOrigin->currentIndex() ).toInt() );
+        m_poPatient->setReasonToVisitId( cmbReasonToVisit->itemData( cmbReasonToVisit->currentIndex() ).toInt() );
+        m_poPatient->setName( ledName->text().toStdString() );
+        if( rbGenderMale->isChecked() )
+            m_poPatient->setGender( 1 );
+        else if( rbGenderFemale->isChecked() )
+            m_poPatient->setGender( 2 );
+        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-mm-dd").toStdString() );
+        m_poPatient->setUniqueId( ledUniqueId->text().toStdString() );
+        m_poPatient->setCountry( ledCountry->text().toStdString() );
+        m_poPatient->setRegion( ledRegion->text().toStdString() );
+        m_poPatient->setCity( ledCity->text().toStdString() );
+        m_poPatient->setZip( ledZip->text().toStdString() );
+        m_poPatient->setAddress( ledAddress->text().toStdString() );
+        m_poPatient->setEmail( ledEmail ->text().toStdString() );
+        m_poPatient->setPhone( ledPhone->text().toStdString() );
+        m_poPatient->setComment( ptComment->toPlainText().toStdString() );
+
+        m_poPatient->save();
+
+        bRet = true;
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger << e.severity();
+        g_obLogger << e.what() << cQTLogger::EOM;
+    }
+
+    return bRet;
 }

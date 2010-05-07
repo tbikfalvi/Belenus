@@ -365,7 +365,7 @@
      <string>Comment :</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QPlainTextEdit" name="ptComment">
     <property name="geometry">
      <rect>
       <x>90</x>

@@ -16,6 +16,7 @@ public:
 public slots:
 
 private:
+    bool SavePatientData();
 
 protected:
     cDBPatient *m_poPatient;
