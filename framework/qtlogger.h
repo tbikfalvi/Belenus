@@ -44,6 +44,12 @@ public:
                      const string                &p_stMessage )
             throw();
 
+
+    cQTLogger &operator ()( const cSeverity::teSeverity p_enSev ) {
+        m_enNextSeverityLevel = p_enSev;
+        return *this;
+    }
+
     cQTLogger &operator <<( const int p_inParam ) {
         m_ssMessage << p_inParam;
         return *this;
