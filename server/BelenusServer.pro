@@ -31,7 +31,8 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/network/connection.h \
     serverthread.h \
     main.h \
-    ../framework/preferences.h
+    ../framework/preferences.h \
+    ../framework/network/protocolException.h
 SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtlogger.cpp \
     ../framework/qtmysqlconnection.cpp \

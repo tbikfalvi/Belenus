@@ -12,17 +12,36 @@ AdminClientThread::AdminClientThread()
 
 
 
+void AdminClientThread::setCredentials(QString username, QString password)
+{
+    _username = username;
+    _password = password;
+}
+
+
+
 void AdminClientThread::_initialize()
 {
     Packet msg(Packet::MSG_HELLO);
-    msg << (int)1;
+    msg << (int) VERSION;
 
     send(msg);
 }
 
 
 
-void AdminClientThread::_handleHello(Packet &)
+void AdminClientThread::_handleHello(Packet &packet)
 {
-    g_obLogger << cSeverity::INFO << "[AdminClientThread::AdminClientThread] handleHello" << cQTLogger::EOM;
+    _assertSize( 4, packet );
+}
+
+
+
+void AdminClientThread::_handleLogonChallenge(Packet &packet)
+{
+    _assertSize( 0, packet );
+
+    Packet p(Packet::MSG_LOGON_ADMIN_RESPONSE);
+    p << _username.toStdString() << _password.toStdString();
+    send(p);
 }

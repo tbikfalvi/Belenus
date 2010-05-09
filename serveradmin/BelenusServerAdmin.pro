@@ -22,7 +22,8 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/network/packet.h \
     adminClientThread.h \
     preferences.h \
-    ../framework/preferences.h
+    ../framework/preferences.h \
+    ../framework/network/protocolException.h
 SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtlogger.cpp \
     ../framework/qtmysqlconnection.cpp \

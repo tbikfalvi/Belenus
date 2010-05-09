@@ -21,7 +21,7 @@ ServerThread::~ServerThread()
 }
 
 
-void ServerThread::_handleHello(Packet &)
+void ServerThread::_handleHello(Packet &packet)
 {
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleHello] called" << cQTLogger::EOM;
 
@@ -30,17 +30,38 @@ void ServerThread::_handleHello(Packet &)
     send(_p);
 
     int version = 0;
-    // _p >> version;
-    if ( version!=VERSION ) {
-        g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] client has invalid version " << version << cQTLogger::EOM;
+    packet >> version;
+    g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] client version is " << version << cQTLogger::EOM;
+    if ( version != VERSION ) {
+        g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] client has invalid version" << cQTLogger::EOM;
         Packet p(Packet::MSG_VERSION_MISMATCH);
         send(p);
+        _socket->disconnectFromHost();
     } else {
-        g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] sending logon challenge to client" << version << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] version ok. sending logon challenge to client" << cQTLogger::EOM;
         Packet p(Packet::MSG_LOGON_CHALLENGE);
         send(p);
+
     }
 }
 
 
 
+void ServerThread::_handleLogonResponse(Packet &packet)
+{
+    _assertSize(4, packet, MINIMUM);
+}
+
+
+
+void ServerThread::_handleLogonAdminResponse(Packet &packet)
+{
+    _assertSize(4, packet, MINIMUM);
+    char *username = 0, *password = 0;
+
+    packet >> username >> password;
+    g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] username=" << username << " password=" << password << cQTLogger::EOM;
+
+    Packet p(Packet::MSG_LOGON_OK);
+    send(p);
+}

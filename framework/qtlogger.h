@@ -54,10 +54,12 @@ public:
         m_ssMessage << p_inParam;
         return *this;
     }
+
     cQTLogger &operator <<( const string p_stParam ) {
         m_ssMessage << p_stParam;
         return *this;
     }
+
     cQTLogger &operator <<( const cSeverity::teSeverity p_enSev ) {
         m_enNextSeverityLevel = p_enSev;
         return *this;

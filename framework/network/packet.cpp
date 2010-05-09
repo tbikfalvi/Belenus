@@ -3,21 +3,29 @@
 #include "packet.h"
 
 
-
-Packet::Packet()
-    : _data(sizeof(PacketHeader), 0)
-{
-    _header = reinterpret_cast<PacketHeader*>(_data.data());
-}
+const char * Packet::_packetNames[] = {
+    "MSG_HELLO",
+    "MSG_LOGON_CHALLENGE",
+    "MSG_LOGON_RESPONSE",
+    "MSG_LOGON_ADMIN_RESPONSE",
+    "MSG_LOGON_OK",
+    "MSG_DISCONNECT",
+    "MSG_VERSION_MISMATCH",
+    "MSG_REGISTER_LICENSE_KEY",
+    "MSG_REGISTER_LICENSE_KEY_DONE",
+};
 
 
 
 Packet::Packet(PacketHeader hdr, const char *data)
     : _data(hdr.length + sizeof(PacketHeader), 0)
 {
-    _header = reinterpret_cast<PacketHeader*>(_data.data());
-    memcpy(_header, &hdr, sizeof(PacketHeader));
+    _header.packetId = hdr.packetId;
+    _header.length = hdr.length;
+    _header.magic = hdr.magic;
     memcpy(_data.data()+sizeof(PacketHeader), data, hdr.length);
+
+    _readPos = sizeof(PacketHeader);    // setting reading position to the beginging of data
 }
 
 
@@ -25,10 +33,10 @@ Packet::Packet(PacketHeader hdr, const char *data)
 Packet::Packet(Message msgId)
     :   _data(sizeof(PacketHeader), 0)
 {
-    _header = reinterpret_cast<PacketHeader*>(_data.data());
-    _header->packetId = msgId;
-    _header->magic = Packet::MAGIC;
-    _header->length = 0;
+    _header.packetId = msgId;
+    _header.magic = Packet::MAGIC;
+    _header.length = 0;
+    _readPos = sizeof(PacketHeader);    // setting reading position
 }
 
 
@@ -38,9 +46,12 @@ Packet::~Packet()
 
 
 
-QByteArray & Packet::getPacket()
+QByteArray & Packet::getRawPacket()
 {
-    _header->length = _data.size() - sizeof(PacketHeader);
+    // copy header into the data array
+    if ( (unsigned int)_data.size() < sizeof(PacketHeader) )
+        throw ProtocolException(cSeverity::ERROR, PROTOCOL_INTERNAL_ERROR, "not enough size for header");
+    memcpy(_data.data(), &_header, sizeof(PacketHeader));
     return _data;
 }
 
@@ -59,8 +70,12 @@ Packet *Packet::createPacket(QByteArray &buffer)
 
     PacketHeader hdr;
     memcpy(&hdr, buffer.data(), sizeof(hdr));
+
+    if ( hdr.packetId >= _NO_PACKETS_ )
+        throw ProtocolException(cSeverity::ERROR, PROTOCOL_CORRUPT_PACKET, "Unkown packet");
+
     if ( hdr.magic != Packet::MAGIC )
-        throw 0;
+        throw ProtocolException(cSeverity::ERROR, PROTOCOL_CORRUPT_PACKET, "Invalid magic");
 
     int size = sizeof(hdr) + hdr.length;
     if ( buffer.size() < size )
@@ -69,10 +84,63 @@ Packet *Packet::createPacket(QByteArray &buffer)
     Packet *packet = new Packet( hdr, buffer.data() + sizeof(hdr));
 
     // copy the remaining data to the front of buffer
-    memcpy(buffer.data(), buffer.data()+size, buffer.size()-size);
+    if ( buffer.size()-size )
+        memcpy(buffer.data(), buffer.data()+size, buffer.size()-size);
+
     buffer.resize(buffer.size() - size);
 
     return packet;
+}
+
+
+
+QString Packet::dump()
+{
+    QString msg;
+    QByteArray & data = getRawPacket();
+
+    msg += QString("Length: %1: ").arg(_header.length);
+    for (int i=0; i<data.size(); ++i)
+        msg += QString("%1 ").arg( (int)data.at(i), (int)2, (int)16, (QChar)'0' );
+
+    return msg;
+}
+
+
+
+Packet &Packet::operator <<( const char *param )
+{
+    return this->operator <<(const_cast<char*>(param));
+}
+
+
+
+Packet &Packet::operator <<( string param )
+{
+    return this->operator <<(param.c_str());
+}
+
+
+
+Packet &Packet::operator <<( char *param )
+{
+    char *p = param;
+    while ( *(p++) );
+    int size = _data.size();
+    _data.resize(_data.size() + p - param + 1 );
+    _header.length = _data.size() - sizeof(PacketHeader);
+    memcpy(_data.data() + size, param, p - param + 1);
+    return *this;
+}
+
+
+
+Packet &Packet::operator >>( char *param )
+{
+    param = _data.data() + _readPos;
+    char *p = param;
+    while ( *(p++) ) ++_readPos;
+    return *this;
 }
 
 

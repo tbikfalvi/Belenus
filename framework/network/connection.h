@@ -5,6 +5,8 @@
 #include <QtNetwork>
 #include <QTcpSocket>
 #include "packet.h"
+#include "protocolException.h"
+
 
 
 /**
@@ -20,6 +22,7 @@ class Connection : public QThread {
     Q_OBJECT
 
 public:
+    static const int VERSION = 1;
 
     Connection();
     virtual ~Connection();
@@ -46,16 +49,28 @@ signals:
 
 
 protected:
+    enum AssertType {
+        EXACT, MINIMUM
+    };
+
+
     /* inherited */
     void run();
 
     /* own methods */
     virtual void _connectSignalsToSocket();
     virtual void _handlePacket(Packet &);
+    void _assertSize(unsigned int size, Packet &, AssertType type = EXACT);
 
     /* protocol */
     virtual void _initialize() {};              /* called when connection established to initialize protocol */
     virtual void _handleHello(Packet&) {};
+    virtual void _handleVersionMismatch(Packet&) {};
+    virtual void _handleLogonChallenge(Packet&) {};
+    virtual void _handleLogonAdminResponse(Packet&) {};
+    virtual void _handleLogonResponse(Packet&) {};
+    virtual void _handleLogonOk(Packet&) {};
+    virtual void _handleDisconnect(Packet&) {};
 
     QList<Packet::Message> _allowedPackets;     /* list of packets which are allowed to be received. all other will cause connection to be dropped */
     QTcpSocket *_socket;

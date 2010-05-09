@@ -45,7 +45,7 @@ public:
     }
     virtual const char* what() const throw() { return m_stMsg.c_str(); }
 
-private:
+protected:
     cSeverity::teSeverity  m_enSeverity;
     string                 m_stMsg;
 };

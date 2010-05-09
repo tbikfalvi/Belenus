@@ -7,7 +7,6 @@
 
 
 class ServerThread : public Connection {
-    static const int VERSION = 1;
 
 public:
     ServerThread();
@@ -15,6 +14,8 @@ public:
 
 protected:
     void _handleHello(Packet &);
+    void _handleLogonResponse(Packet &);
+    void _handleLogonAdminResponse(Packet &);
 
 };
 
