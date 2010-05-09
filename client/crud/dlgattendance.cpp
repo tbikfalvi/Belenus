@@ -10,16 +10,31 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_attendance.gif") );
 
-    if( g_obUser.isInGroup( "root" ) )
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblPatient = new QLabel( this );
+    lblPatient->setObjectName( QString::fromUtf8( "lblPatient" ) );
+    lblPatient->setText( "Patient: " );
+    horizontalLayout->addWidget( lblPatient );
+    cmbPatient = new QComboBox( this );
+    cmbPatient->setObjectName( QString::fromUtf8( "cmbPatient" ) );
+    horizontalSpacer1 = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+    horizontalLayout->addWidget( cmbPatient );
+    verticalLayout->insertLayout( 0, horizontalLayout );
+
+    QSqlQuery *poQuery;
+
+    cmbPatient->addItem( tr("<All patient>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE archive<>\"DEL\" AND patientId>0" ) );
+    while( poQuery->next() )
     {
-        m_qsQuery = "SELECT attendanceId, licenceId, date, length, archive FROM attendance WHERE attendanceId>0";
-    }
-    else
-    {
-        m_qsQuery = "SELECT attendanceId AS id, date, length FROM attendance WHERE attendanceId>0 AND archive<>\"DEL\"";
+        cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
 
     setupTableView();
+
+    connect( cmbPatient, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
 }
 
 cDlgAttendance::~cDlgAttendance()
@@ -47,6 +62,29 @@ void cDlgAttendance::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Date" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Time" ) );
     }
+}
+
+void cDlgAttendance::refreshTable()
+{
+    cTracer obTracer( "cDlgAttendance::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT attendanceId, licenceId, date, length, archive FROM attendance WHERE attendanceId>0";
+    }
+    else
+    {
+        m_qsQuery = "SELECT attendanceId AS id, date, length FROM attendance WHERE attendanceId>0 AND archive<>\"DEL\"";
+    }
+
+    unsigned int uiPatientId = cmbPatient->itemData( cmbPatient->currentIndex() ).toInt();
+    if( uiPatientId > 0 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patientId=%1" ).arg( uiPatientId );
+    }
+
+    cDlgCrud::refreshTable();
 }
 
 void cDlgAttendance::enableButtons()
@@ -113,7 +151,7 @@ void cDlgAttendance::editClicked( bool )
         poAttendance->load( m_uiSelectedId );
 
         cDlgAttendanceEdit  obDlgEdit( this, poAttendance );
-//        obDlgEdit.setWindowTitle( QString::fromStdString( poAttendance->name() ) );
+        obDlgEdit.setWindowTitle( tr("Edit attendance") );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();
