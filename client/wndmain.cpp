@@ -71,6 +71,11 @@ cWndMain::cWndMain( QWidget *parent )
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
 
     action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
+
+    actionDeviceStart->setIcon( QIcon( "./resources/40x40_sensolite_start.gif" ) );
+    actionDevicePause->setIcon( QIcon( "./resources/40x40_sensolite_pause.gif" ) );
+
+    connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -250,3 +255,27 @@ void cWndMain::on_action_Attendances_triggered()
     obDlgAttendance.exec();
 }
 //====================================================================================
+void cWndMain::on_actionDeviceStart_triggered()
+{
+    mdiPanels->start();
+    refreshPanelButtons( true );
+}
+//====================================================================================
+void cWndMain::on_actionDevicePause_triggered()
+{
+    mdiPanels->pause();
+    refreshPanelButtons( false );
+}
+//====================================================================================
+void cWndMain::on_actionDeviceReset_triggered()
+{
+    mdiPanels->reset();
+    refreshPanelButtons( false );
+}
+//====================================================================================
+void cWndMain::refreshPanelButtons( bool p_boPanelWorking )
+{
+    actionDeviceStart->setEnabled( !p_boPanelWorking );
+    actionDevicePause->setEnabled( p_boPanelWorking );
+    actionDeviceReset->setEnabled( !p_boPanelWorking );
+}

@@ -22,7 +22,7 @@
      <x>0</x>
      <y>0</y>
      <width>635</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -67,6 +67,10 @@
      <string>Action</string>
     </property>
     <addaction name="action_PatientNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionDeviceStart"/>
+    <addaction name="actionDevicePause"/>
+    <addaction name="actionDeviceReset"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
@@ -87,17 +91,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-  </widget>
-  <widget class="QToolBar" name="toolBar_2">
-   <property name="windowTitle">
-    <string>toolBar_2</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
+   <addaction name="action_Exit"/>
+   <addaction name="action_LogOut"/>
+   <addaction name="separator"/>
+   <addaction name="actionDeviceStart"/>
+   <addaction name="actionDevicePause"/>
+   <addaction name="actionDeviceReset"/>
+   <addaction name="actionDeviceSettings"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -124,29 +124,9 @@
     <string>&amp;Users ...</string>
    </property>
   </action>
-  <action name="action_Patientcardtypes">
-   <property name="text">
-    <string>Patientcard types ...</string>
-   </property>
-  </action>
   <action name="action_Hardwaretest">
    <property name="text">
     <string>&amp;Hardware test ...</string>
-   </property>
-  </action>
-  <action name="action_Patientcards">
-   <property name="text">
-    <string>Patient &amp;cards ...</string>
-   </property>
-  </action>
-  <action name="action_Producttypes">
-   <property name="text">
-    <string>Product types ...</string>
-   </property>
-  </action>
-  <action name="action_Products">
-   <property name="text">
-    <string>P&amp;roducts ...</string>
    </property>
   </action>
   <action name="action_Paneltypes">
@@ -162,6 +142,38 @@
   <action name="action_ReasonToVisit">
    <property name="text">
     <string>Reason to visit ...</string>
+   </property>
+  </action>
+  <action name="actionDeviceStart">
+   <property name="text">
+    <string>Start Device</string>
+   </property>
+   <property name="toolTip">
+    <string>Start Current Device</string>
+   </property>
+  </action>
+  <action name="actionDevicePause">
+   <property name="text">
+    <string>Pause Device</string>
+   </property>
+   <property name="toolTip">
+    <string>Pause Current Device</string>
+   </property>
+  </action>
+  <action name="actionDeviceReset">
+   <property name="text">
+    <string>Reset Device</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset Current Device</string>
+   </property>
+  </action>
+  <action name="actionDeviceSettings">
+   <property name="text">
+    <string>DeviceSettings</string>
+   </property>
+   <property name="toolTip">
+    <string>Current Device Settings</string>
    </property>
   </action>
   <action name="action_Patients">

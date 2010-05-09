@@ -42,6 +42,7 @@ void cMdiPanels::initPanels()
 
         m_obPanels.push_back( poFrame );
         addSubWindow( poPanel );
+        m_obPanels.at( i )->reset();
         m_obPanels.at( i )->show();
     }
 
@@ -84,11 +85,28 @@ void cMdiPanels::placeSubWindows()
     }
 }
 
+void cMdiPanels::start()
+{
+    m_obPanels.at( m_inActivePanel )->start();
+}
+
+void cMdiPanels::pause()
+{
+    m_obPanels.at( m_inActivePanel )->pause();
+}
+
+void cMdiPanels::reset()
+{
+    m_obPanels.at( m_inActivePanel )->reset();
+}
+
 void cMdiPanels::activatePanel( const int p_inPanel )
 {
     m_obPanels.at( m_inActivePanel )->setFrameShadow( QFrame::Sunken );
     m_obPanels.at( p_inPanel )->setFrameShadow( QFrame::Raised );
     m_inActivePanel = p_inPanel;
+
+    emit activePanelChanged( m_obPanels.at( m_inActivePanel )->isWorking() );
 }
 
 void cMdiPanels::resizeEvent ( QResizeEvent *p_poEvent )
