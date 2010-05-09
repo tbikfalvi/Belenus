@@ -17,4 +17,4 @@ SourceOrder		- A korabban letrehozott file-ok (usercard, usercardtype, product .
 			  Az egesz lenyege a jobban atlathato kodreszek csoportositasa
 ReasonToVisit		- Miert jott a paciens a studioba kerdesre valaszok
 DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
-PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesek (attendance) alapjaival
+PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesekkel (attendance)
