@@ -33,6 +33,11 @@ private slots:
     void on_action_Paneltypes_triggered();
     void on_action_Patientorigin_triggered();
     void on_action_ReasonToVisit_triggered();
+    void on_actionDeviceStart_triggered();
+    void on_actionDevicePause_triggered();
+    void on_actionDeviceReset_triggered();
+
+    void refreshPanelButtons( bool p_boPanelWorking );
 };
 
 #endif

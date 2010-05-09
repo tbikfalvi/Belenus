@@ -19,6 +19,12 @@ public:
 
     void initPanels();
     void placeSubWindows();
+    void start();
+    void pause();
+    void reset();
+
+signals:
+    void activePanelChanged( bool p_boActiveWorking ) const;
 
 private:
     vector<cFrmPanel*>  m_obPanels;
