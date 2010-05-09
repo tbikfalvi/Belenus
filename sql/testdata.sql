@@ -15,10 +15,6 @@
 -- Ezeket az INSERT-eket a telepito futtatja le azutan, hogy a szerver programtol
 -- megkapja a kliens serial-hoz tartozo licenceId erteket
 --
--- Az itt lathato INSERT INTO `licences` ... parancs csak fejlesztes celjara kell
---
--- Az INSERT INTO `users` ... parancsot a telepito program fogja lefuttatni
---
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`) VALUES
@@ -41,3 +37,15 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
   ( 1, 1, "Panel 6" ),
   ( 1, 1, "Panel 7" ),
   ( 1, 1, "Panel 8" );
+
+INSERT INTO  `patientorigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 'ARC');
+
+INSERT INTO `reasontovisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 'ARC')
+
+INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `archive`) VALUES
+ (0, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+
+INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `weight`, `height`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `medicineCurrent`, `medicineAllergy`, `comment`, `archive`) VALUES
+ (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');

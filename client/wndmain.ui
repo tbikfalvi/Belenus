@@ -29,19 +29,29 @@
     <property name="title">
      <string>&amp;System</string>
     </property>
-    <addaction name="actionLog_Out"/>
+    <addaction name="action_LogOut"/>
     <addaction name="separator"/>
-    <addaction name="actionE_xit"/>
+    <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="action_Users"/>
+    <widget class="QMenu" name="menuAdministrator">
+     <property name="title">
+      <string>Administrator</string>
+     </property>
+     <addaction name="action_Users"/>
+     <addaction name="separator"/>
+     <addaction name="action_Patientorigin"/>
+     <addaction name="action_ReasonToVisit"/>
+     <addaction name="separator"/>
+     <addaction name="action_Paneltypes"/>
+    </widget>
+    <addaction name="action_Patients"/>
+    <addaction name="action_Attendances"/>
     <addaction name="separator"/>
-    <addaction name="action_Paneltypes"/>
-    <addaction name="action_Patientorigin"/>
-    <addaction name="action_ReasonToVisit"/>
+    <addaction name="menuAdministrator"/>
     <addaction name="separator"/>
     <addaction name="action_Preferences"/>
    </widget>
@@ -52,8 +62,15 @@
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
+   <widget class="QMenu" name="menuAction">
+    <property name="title">
+     <string>Action</string>
+    </property>
+    <addaction name="action_PatientNew"/>
+   </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
+   <addaction name="menuAction"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -82,7 +99,7 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionE_xit">
+  <action name="action_Exit">
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -97,7 +114,7 @@
     <string>&amp;Logs ...</string>
    </property>
   </action>
-  <action name="actionLog_Out">
+  <action name="action_LogOut">
    <property name="text">
     <string>Log &amp;Out</string>
    </property>
@@ -147,11 +164,26 @@
     <string>Reason to visit ...</string>
    </property>
   </action>
+  <action name="action_Patients">
+   <property name="text">
+    <string>Patients ...</string>
+   </property>
+  </action>
+  <action name="action_PatientNew">
+   <property name="text">
+    <string>New patient</string>
+   </property>
+  </action>
+  <action name="action_Attendances">
+   <property name="text">
+    <string>Attendances ...</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>actionE_xit</sender>
+   <sender>action_Exit</sender>
    <signal>triggered()</signal>
    <receiver>wndMain</receiver>
    <slot>close()</slot>

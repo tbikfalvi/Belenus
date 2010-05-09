@@ -9,7 +9,9 @@ FORMS = ../framework/dlgcrud.ui \
     dlguseredit.ui \
     dlgpatientoriginedit.ui \
     dlgreasontovisitedit.ui \
-    wndmain.ui
+    wndmain.ui \
+    dlgpatientedit.ui \
+    dlgattendanceedit.ui
 HEADERS = belenus.h \
     ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
@@ -24,12 +26,18 @@ HEADERS = belenus.h \
     crud/dlgusers.h \
     crud/dlgpatientorigin.h \
     crud/dlgreasontovisit.h \
+    crud/dlgpatient.h \
+    crud/dlgattendance.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
+    db/dbpatient.h \
+    db/dbattendance.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
+    edit/dlgpatientedit.h \
     edit/dlgpatientoriginedit.h \
     edit/dlgreasontovisitedit.h \
+    edit/dlgattendanceedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -54,12 +62,18 @@ SOURCES = main.cpp \
     crud/dlgusers.cpp \
     crud/dlgpatientorigin.cpp \
     crud/dlgreasontovisit.cpp \
+    crud/dlgpatient.cpp \
+    crud/dlgattendance.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
+    db/dbpatient.cpp \
+    db/dbattendance.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
+    edit/dlgpatientedit.cpp \
     edit/dlgpatientoriginedit.cpp \
     edit/dlgreasontovisitedit.cpp \
+    edit/dlgattendanceedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     dbuser.cpp \
@@ -72,7 +86,7 @@ SOURCES = main.cpp \
     mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp
-win32 {
+win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }

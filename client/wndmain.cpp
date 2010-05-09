@@ -23,10 +23,13 @@
 #include "crud/dlgpatientorigin.h"
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
+#include "crud/dlgpatient.h"
+#include "crud/dlgattendance.h"
 
 //====================================================================================
 
 #include "edit/dlguseredit.h"
+#include "edit/dlgpatientedit.h"
 
 //====================================================================================
 
@@ -51,17 +54,23 @@ cWndMain::cWndMain( QWidget *parent )
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
-    actionLog_Out->setIcon( QIcon("./resources/40x40_logout.gif") );
-    actionE_xit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
+    action_LogOut->setIcon( QIcon("./resources/40x40_lock.gif") );
+    action_Exit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
 
-    action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
-
-    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
-    
-    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
-    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
-
+    action_Patients->setIcon( QIcon("./resources/40x40_patient.gif") );
+    //--------------------------------------------------------------------------------
+    menuAdministrator->setIcon( QIcon("./resources/40x40_key.gif") );
+        action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+        action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
+        //----------------------------------------------------------------------------
+        action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
+        action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
+        //----------------------------------------------------------------------------
+        action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
+    //--------------------------------------------------------------------------------
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
+
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -167,7 +176,7 @@ void cWndMain::on_action_Hardwaretest_triggered()
     obDlgHardwareTest.exec();
 }
 //====================================================================================
-void cWndMain::on_actionLog_Out_triggered()
+void cWndMain::on_action_LogOut_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Log_Out_triggered" );
 
@@ -207,5 +216,37 @@ void cWndMain::on_action_ReasonToVisit_triggered()
     cDlgReasonToVisit  obDlgReasonToVisit( this );
 
     obDlgReasonToVisit.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Patients_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Patiens_triggered" );
+
+    cDlgPatient  obDlgPatient( this );
+
+    obDlgPatient.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PatientNew_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_PatienNew_triggered" );
+
+    cDBPatient *poPatient = new cDBPatient;
+    poPatient->createNew();
+
+    cDlgPatientEdit  obDlgEdit( this, poPatient );
+    obDlgEdit.setWindowTitle( tr( "New Patient" ) );
+    obDlgEdit.exec();
+
+    delete poPatient;
+}
+//====================================================================================
+void cWndMain::on_action_Attendances_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Attendances_triggered" );
+
+    cDlgAttendance  obDlgAttendance( this );
+
+    obDlgAttendance.exec();
 }
 //====================================================================================

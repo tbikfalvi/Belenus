@@ -29,10 +29,13 @@ private slots:
     void on_action_Users_triggered();
     void on_action_Logs_triggered();
     void on_action_Hardwaretest_triggered();
-    void on_actionLog_Out_triggered();
+    void on_action_LogOut_triggered();
     void on_action_Paneltypes_triggered();
     void on_action_Patientorigin_triggered();
     void on_action_ReasonToVisit_triggered();
+    void on_action_Patients_triggered();
+    void on_action_PatientNew_triggered();
+    void on_action_Attendances_triggered();
 };
 
 #endif

@@ -12,6 +12,7 @@
 #include "communication.h"
 #include "communication_demo.h"
 #include "bs_connection.h"
+#include "db/dbpatient.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -23,6 +24,7 @@ cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
+cDBPatient               g_obPatient;
 
 int main( int argc, char *argv[] )
 {
