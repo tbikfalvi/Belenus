@@ -13,7 +13,15 @@ public:
     cFrmPanel( const unsigned int p_uiPanelId );
     ~cFrmPanel();
 
+    bool isWorking() const;
+    void start();
+    void pause();
+    void reset();
+
 private:
+    unsigned int  m_uiId;
+    bool          m_poWorking;
+
     QVBoxLayout  *poVerticalLayout;
     QLabel       *poTitle;
     QSpacerItem  *poSpacer1;
