@@ -15,6 +15,14 @@ public:
 
 protected:
     cDBAttendance *m_poAttendance;
+
+private:
+    bool SaveAttendanceData();
+
+private slots:
+    void on_pbFinishLater_clicked();
+    void on_pbCancel_clicked();
+    void on_pbSave_clicked();
 };
 
 #endif
