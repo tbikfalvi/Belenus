@@ -16,3 +16,4 @@ SourceOrder		- A korabban letrehozott file-ok (usercard, usercardtype, product .
 			  kitorlese. Edit dialog-ok atmozgatasa az uj edit alkonyvtarba
 			  Az egesz lenyege a jobban atlathato kodreszek csoportositasa
 ReasonToVisit		- Miert jott a paciens a studioba kerdesre valaszok
+DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
