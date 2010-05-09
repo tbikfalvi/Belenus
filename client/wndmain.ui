@@ -49,6 +49,7 @@
      <addaction name="action_Paneltypes"/>
     </widget>
     <addaction name="action_Patients"/>
+    <addaction name="action_Attendances"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
     <addaction name="separator"/>
@@ -171,6 +172,11 @@
   <action name="action_PatientNew">
    <property name="text">
     <string>New patient</string>
+   </property>
+  </action>
+  <action name="action_Attendances">
+   <property name="text">
+    <string>Attendances ...</string>
    </property>
   </action>
  </widget>

@@ -35,6 +35,7 @@ private slots:
     void on_action_ReasonToVisit_triggered();
     void on_action_Patients_triggered();
     void on_action_PatientNew_triggered();
+    void on_action_Attendances_triggered();
 };
 
 #endif

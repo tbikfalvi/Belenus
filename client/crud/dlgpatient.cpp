@@ -12,11 +12,11 @@ cDlgPatient::cDlgPatient( QWidget *p_poParent )
 
     if( g_obUser.isInGroup( "root" ) )
     {
-        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, archive FROM patients";
+        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, archive FROM patients WHERE patientId>0";
     }
     else
     {
-        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE archive<>\"DEL\"";
+        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND archive<>\"DEL\"";
     }
 
     setupTableView();

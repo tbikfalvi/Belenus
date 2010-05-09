@@ -24,6 +24,7 @@
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
 #include "crud/dlgpatient.h"
+#include "crud/dlgattendance.h"
 
 //====================================================================================
 
@@ -60,6 +61,7 @@ cWndMain::cWndMain( QWidget *parent )
     //--------------------------------------------------------------------------------
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.gif") );
         action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+        action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
         //----------------------------------------------------------------------------
         action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
         action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
@@ -237,5 +239,14 @@ void cWndMain::on_action_PatientNew_triggered()
     obDlgEdit.exec();
 
     delete poPatient;
+}
+//====================================================================================
+void cWndMain::on_action_Attendances_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Attendances_triggered" );
+
+    cDlgAttendance  obDlgAttendance( this );
+
+    obDlgAttendance.exec();
 }
 //====================================================================================

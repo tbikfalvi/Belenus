@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgreasontovisitedit.ui'
 **
-** Created: Fri May 7 14:29:10 2010
+** Created: Sun May 9 16:17:21 2010
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

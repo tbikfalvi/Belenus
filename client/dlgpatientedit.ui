@@ -109,6 +109,16 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="dateTime">
+     <datetime>
+      <hour>0</hour>
+      <minute>0</minute>
+      <second>0</second>
+      <year>1900</year>
+      <month>1</month>
+      <day>1</day>
+     </datetime>
+    </property>
    </widget>
    <widget class="QLabel" name="lblUniqueId">
     <property name="geometry">
@@ -493,6 +503,28 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>ledName</tabstop>
+  <tabstop>rbGenderMale</tabstop>
+  <tabstop>rbGenderFemale</tabstop>
+  <tabstop>deDateBirth</tabstop>
+  <tabstop>ledUniqueId</tabstop>
+  <tabstop>ledCountry</tabstop>
+  <tabstop>ledRegion</tabstop>
+  <tabstop>ledCity</tabstop>
+  <tabstop>ledZip</tabstop>
+  <tabstop>ledAddress</tabstop>
+  <tabstop>cmbPatientOrigin</tabstop>
+  <tabstop>cmbReasonToVisit</tabstop>
+  <tabstop>ledPhone</tabstop>
+  <tabstop>ledEmail</tabstop>
+  <tabstop>ptComment</tabstop>
+  <tabstop>checkIndependent</tabstop>
+  <tabstop>pbSave</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbFinishLater</tabstop>
+  <tabstop>pbAttendances</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

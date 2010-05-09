@@ -23,7 +23,6 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
     {
         QSqlQuery *poQuery;
 
-        cmbPatientOrigin->addItem( tr("<Not set>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientoriginid, name FROM patientorigin WHERE archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
@@ -31,7 +30,6 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
             if( m_poPatient->patientOriginId() == poQuery->value( 0 ) )
                 cmbPatientOrigin->setCurrentIndex( cmbPatientOrigin->count()-1 );
         }
-        cmbReasonToVisit->addItem( tr("<Not set>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT reasontovisitid, name FROM reasontovisit WHERE archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
@@ -58,6 +56,22 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
                 pbAttendances->setEnabled( false );
             }
         }
+        if( m_poPatient->id() == 0 )
+            pbAttendances->setEnabled( false );
+
+        ledName->setText( QString::fromStdString(m_poPatient->name()) );
+        if( m_poPatient->gender() == 1 ) rbGenderMale->setChecked(true);
+        else if( m_poPatient->gender() == 2 ) rbGenderFemale->setChecked(true);
+        deDateBirth->setDate( QDate::fromString(QString::fromStdString(m_poPatient->dateBirth()),"yyyy-MM-dd") );
+        ledUniqueId->setText( QString::fromStdString(m_poPatient->uniqueId()) );
+        ledCountry->setText( QString::fromStdString(m_poPatient->country()) );
+        ledRegion->setText( QString::fromStdString(m_poPatient->region()) );
+        ledCity->setText( QString::fromStdString(m_poPatient->city()) );
+        ledZip->setText( QString::fromStdString(m_poPatient->zip()) );
+        ledAddress->setText( QString::fromStdString(m_poPatient->address()) );
+        ledPhone->setText( QString::fromStdString(m_poPatient->phone()) );
+        ledEmail->setText( QString::fromStdString(m_poPatient->email()) );
+        ptComment->setPlainText( QString::fromStdString(m_poPatient->comment()) );
     }
 }
 
@@ -100,7 +114,7 @@ void cDlgPatientEdit::on_pbSave_clicked()
     if( ledUniqueId->text() == "" && !boSkipErrorMessages )
     {
         boCanBeSaved = false;
-        if( QMessageBox::critical( this, tr( "Error" ), tr( "atient unique identification field must be given.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+        if( QMessageBox::critical( this, tr( "Error" ), tr( "Patient unique identification value must be given.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
         {
             boSkipErrorMessages = true;
         }
@@ -135,7 +149,7 @@ void cDlgPatientEdit::on_pbFinishLater_clicked()
     {
         if( SavePatientData() )
         {
-            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (NULL, \"%1\")" ).arg( m_poPatient->id() );
+            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (0, \"%1\")" ).arg( m_poPatient->id() );
             poQuery = g_poDB->executeQTQuery( qsQuery );
             delete poQuery;
 
@@ -172,7 +186,7 @@ bool cDlgPatientEdit::SavePatientData()
             m_poPatient->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poPatient->setGender( 2 );
-        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-mm-dd").toStdString() );
+        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-MM-dd").toStdString() );
         m_poPatient->setUniqueId( ledUniqueId->text().toStdString() );
         m_poPatient->setCountry( ledCountry->text().toStdString() );
         m_poPatient->setRegion( ledRegion->text().toStdString() );
