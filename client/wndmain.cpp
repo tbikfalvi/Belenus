@@ -25,6 +25,7 @@
 #include "crud/dlgusers.h"
 #include "crud/dlgpatient.h"
 #include "crud/dlgattendance.h"
+#include "crud/dlgpatientselect.h"
 
 //====================================================================================
 
@@ -72,8 +73,11 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
 
-    actionDeviceStart->setIcon( QIcon( "./resources/40x40_sensolite_start.gif" ) );
-    actionDevicePause->setIcon( QIcon( "./resources/40x40_sensolite_pause.gif" ) );
+    actionPatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
+    actionPatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
+    actionDeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
+    actionDeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
+    actionDeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
@@ -136,6 +140,18 @@ void cWndMain::updateTitle()
         qsTitle += " [";
         qsTitle += QString::fromStdString( g_obUser.groups() );
         qsTitle += "]";
+    }
+
+    actionPatientEmpty->setEnabled( g_obPatient.id()>0 );
+    if( g_obPatient.id() > 0 )
+    {
+        qsTitle += " <=> Current patient: [";
+        qsTitle += QString::fromStdString( g_obPatient.name() );
+        qsTitle += "]";
+    }
+    else
+    {
+        qsTitle += " <=> NO PATIENT SELECTED";
     }
 
     setWindowTitle( qsTitle );
@@ -276,6 +292,29 @@ void cWndMain::on_actionDeviceReset_triggered()
 void cWndMain::refreshPanelButtons( bool p_boPanelWorking )
 {
     actionDeviceStart->setEnabled( !p_boPanelWorking );
-    actionDevicePause->setEnabled( p_boPanelWorking );
-    actionDeviceReset->setEnabled( !p_boPanelWorking );
+    actionDeviceReset->setEnabled( p_boPanelWorking );
 }
+//====================================================================================
+void cWndMain::on_actionPatientSelect_triggered()
+{
+    cTracer obTrace( "cWndMain::on_actionPatientSelect_triggered" );
+
+    cDlgPatientSelect  obDlgPatientSelect( this );
+
+    obDlgPatientSelect.exec();
+    updateTitle();
+}
+//====================================================================================
+void cWndMain::on_actionPatientEmpty_triggered()
+{
+    cTracer obTrace( "cWndMain::on_actionPatientEmpty_triggered" );
+
+    g_obPatient.createNew();
+    updateTitle();
+}
+//====================================================================================
+void cWndMain::on_actionAttendanceNew_triggered()
+{
+
+}
+//====================================================================================

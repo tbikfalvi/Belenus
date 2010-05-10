@@ -30,6 +30,8 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     while( poQuery->next() )
     {
         cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( g_obPatient.id() == poQuery->value( 0 ) )
+            cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
     }
 
     setupTableView();
@@ -91,6 +93,9 @@ void cDlgAttendance::enableButtons()
 {
     cTracer obTracer( "cDlgAttendance::enableButtons" );
 
+    if( g_obUser.isInGroup( "root" ) )
+    {
+    }
     if( m_uiSelectedId )
     {
         m_poBtnDelete->setEnabled( true );

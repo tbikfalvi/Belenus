@@ -28,11 +28,11 @@ HEADERS = belenus.h \
     crud/dlgreasontovisit.h \
     crud/dlgpatient.h \
     crud/dlgattendance.h \
+    crud/dlgpatientselect.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
     db/dbattendance.h \
-    dlg/dlgpatientselect.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientedit.h \
@@ -65,11 +65,11 @@ SOURCES = main.cpp \
     crud/dlgreasontovisit.cpp \
     crud/dlgpatient.cpp \
     crud/dlgattendance.cpp \
+    crud/dlgpatientselect.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
     db/dbattendance.cpp \
-    dlg/dlgpatientselect.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
