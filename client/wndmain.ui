@@ -22,7 +22,7 @@
      <x>0</x>
      <y>0</y>
      <width>635</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -85,6 +85,12 @@
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -94,9 +100,13 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
+   <addaction name="actionPatientSelect"/>
+   <addaction name="actionPatientEmpty"/>
+   <addaction name="actionAttendanceNew"/>
+   <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>
-   <addaction name="actionDevicePause"/>
    <addaction name="actionDeviceReset"/>
+   <addaction name="separator"/>
    <addaction name="actionDeviceSettings"/>
   </widget>
   <action name="action_Exit">
@@ -189,6 +199,30 @@
   <action name="action_Attendances">
    <property name="text">
     <string>Attendances ...</string>
+   </property>
+  </action>
+  <action name="actionPatientSelect">
+   <property name="text">
+    <string>PatientSelect</string>
+   </property>
+   <property name="toolTip">
+    <string>Select actual patient</string>
+   </property>
+  </action>
+  <action name="actionPatientEmpty">
+   <property name="text">
+    <string>PatientEmpty</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear actual patient</string>
+   </property>
+  </action>
+  <action name="actionAttendanceNew">
+   <property name="text">
+    <string>AttendanceNew</string>
+   </property>
+   <property name="toolTip">
+    <string>Add new attendance for actual patient</string>
    </property>
   </action>
  </widget>

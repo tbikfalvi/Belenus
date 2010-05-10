@@ -39,6 +39,9 @@ private slots:
     void on_actionDeviceStart_triggered();
     void on_actionDevicePause_triggered();
     void on_actionDeviceReset_triggered();
+    void on_actionPatientSelect_triggered();
+    void on_actionPatientEmpty_triggered();
+    void on_actionAttendanceNew_triggered();
 
     void refreshPanelButtons( bool p_boPanelWorking );
 };

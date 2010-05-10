@@ -135,8 +135,11 @@ client/ui_dlguseredit.h
 client/ui_wndmain.h
 client/ui_dlgpatientedit.h
 client/ui_dlgattendanceedit.h
+resources/Thumbs.db
 BelenusServer
 belenusserver.ini
+server/release
+server/debug
 server/Makefile
 server/Makefile.Debug
 server/Makefile.Release
@@ -164,7 +167,12 @@ server/moc_qtmysqlquerymodel.o
 BelenusServerAdmin
 BelenusServerAdmin.exe
 belenusserveradmin.ini
+serveradmin/Makefile.Debug
+serveradmin/Makefile.Release
 serveradmin/debug/
+serveradmin/object_script.BelenusServerAdmin.Debug
+serveradmin/object_script.BelenusServerAdmin.Release
+serveradmin/ui_mainwindow.h
 serveradmin/Makefile
 serveradmin/Makefile.Debug
 serveradmin/Makefile.Release

@@ -18,9 +18,10 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     horizontalLayout->addWidget( lblPatient );
     cmbPatient = new QComboBox( this );
     cmbPatient->setObjectName( QString::fromUtf8( "cmbPatient" ) );
-    horizontalSpacer1 = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout->addItem( horizontalSpacer1 );
+    cmbPatient->resize( 200, 20 );
     horizontalLayout->addWidget( cmbPatient );
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
     QSqlQuery *poQuery;
@@ -30,6 +31,8 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     while( poQuery->next() )
     {
         cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( g_obPatient.id() == poQuery->value( 0 ) )
+            cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
     }
 
     setupTableView();
@@ -91,22 +94,16 @@ void cDlgAttendance::enableButtons()
 {
     cTracer obTracer( "cDlgAttendance::enableButtons" );
 
-    if( m_uiSelectedId )
-    {
-        m_poBtnDelete->setEnabled( true );
-        m_poBtnEdit->setEnabled( true );
-    }
-    else
-    {
-        m_poBtnDelete->setEnabled( false );
-        m_poBtnEdit->setEnabled( false );
-    }
+    m_poBtnNew->setEnabled( g_obPatient.id() > 0 );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
 }
 
 void cDlgAttendance::newClicked( bool )
 {
     cDBAttendance *poAttendance = new cDBAttendance;
     poAttendance->createNew();
+    poAttendance->setPatientId( g_obPatient.id() );
 
     cDlgAttendanceEdit  obDlgEdit( this, poAttendance );
     obDlgEdit.setWindowTitle( tr( "New Attendance" ) );
