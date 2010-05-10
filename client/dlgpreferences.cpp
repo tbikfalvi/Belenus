@@ -37,12 +37,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_poBtnSystem = new QPushButton( "&System", this );
-        btbButtons->addButton( m_poBtnSystem, QDialogButtonBox::ActionRole );
-        connect( m_poBtnSystem, SIGNAL( clicked( bool ) ), this, SLOT( systemClicked( bool ) ) );
-    }
+    ledServerHost->setText( g_poPrefs->getServerAddress() );
+    ledServerPort->setText( g_poPrefs->getServerPort() );
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -72,12 +68,10 @@ void cDlgPreferences::accept()
         QMessageBox::information( this, tr( "Information" ),
                                   tr( "Some of the changes you made will only be applied after the application is restarted." ) );
 
+    g_poPrefs->setServerAddress( ledServerHost->text() );
+    g_poPrefs->setServerPort( ledServerPort->text() );
+
     g_poPrefs->save();
 
     QDialog::accept();
-}
-
-void cDlgPreferences::systemClicked( const bool )
-{
-
 }
