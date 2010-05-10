@@ -80,6 +80,9 @@ cWndMain::cWndMain( QWidget *parent )
     actionDeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
     actionDeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
     actionDeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
+    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.gif" ) );
+    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.gif" ) );
+    action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }

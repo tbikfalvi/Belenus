@@ -50,6 +50,7 @@
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
+    <addaction name="action_Cards"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
     <addaction name="separator"/>
@@ -66,11 +67,36 @@
     <property name="title">
      <string>Action</string>
     </property>
-    <addaction name="action_PatientNew"/>
+    <widget class="QMenu" name="menuPatient">
+     <property name="title">
+      <string>Patient</string>
+     </property>
+     <addaction name="action_PatientNew"/>
+     <addaction name="separator"/>
+     <addaction name="actionPatientSelect"/>
+     <addaction name="actionPatientEmpty"/>
+    </widget>
+    <widget class="QMenu" name="menuDevice">
+     <property name="title">
+      <string>Device</string>
+     </property>
+     <addaction name="action_UseWithCard"/>
+     <addaction name="action_UseByTime"/>
+     <addaction name="separator"/>
+     <addaction name="actionDeviceStart"/>
+     <addaction name="actionDeviceReset"/>
+    </widget>
+    <widget class="QMenu" name="menuAttendance">
+     <property name="title">
+      <string>Attendance</string>
+     </property>
+     <addaction name="actionAttendanceNew"/>
+    </widget>
+    <addaction name="menuPatient"/>
     <addaction name="separator"/>
-    <addaction name="actionDeviceStart"/>
-    <addaction name="actionDevicePause"/>
-    <addaction name="actionDeviceReset"/>
+    <addaction name="menuAttendance"/>
+    <addaction name="separator"/>
+    <addaction name="menuDevice"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
@@ -103,6 +129,9 @@
    <addaction name="actionPatientSelect"/>
    <addaction name="actionPatientEmpty"/>
    <addaction name="actionAttendanceNew"/>
+   <addaction name="separator"/>
+   <addaction name="action_UseWithCard"/>
+   <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>
    <addaction name="actionDeviceReset"/>
@@ -162,14 +191,6 @@
     <string>Start Current Device</string>
    </property>
   </action>
-  <action name="actionDevicePause">
-   <property name="text">
-    <string>Pause Device</string>
-   </property>
-   <property name="toolTip">
-    <string>Pause Current Device</string>
-   </property>
-  </action>
   <action name="actionDeviceReset">
    <property name="text">
     <string>Reset Device</string>
@@ -193,7 +214,10 @@
   </action>
   <action name="action_PatientNew">
    <property name="text">
-    <string>New patient</string>
+    <string>Create new ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Create new patient</string>
    </property>
   </action>
   <action name="action_Attendances">
@@ -203,7 +227,7 @@
   </action>
   <action name="actionPatientSelect">
    <property name="text">
-    <string>PatientSelect</string>
+    <string>Select actual ...</string>
    </property>
    <property name="toolTip">
     <string>Select actual patient</string>
@@ -211,18 +235,42 @@
   </action>
   <action name="actionPatientEmpty">
    <property name="text">
-    <string>PatientEmpty</string>
+    <string>Deselect actual</string>
    </property>
    <property name="toolTip">
-    <string>Clear actual patient</string>
+    <string>Deselect actual patient</string>
    </property>
   </action>
   <action name="actionAttendanceNew">
    <property name="text">
-    <string>AttendanceNew</string>
+    <string>Create new ...</string>
    </property>
    <property name="toolTip">
     <string>Add new attendance for actual patient</string>
+   </property>
+  </action>
+  <action name="action_Cards">
+   <property name="text">
+    <string>Cards ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Patient cards</string>
+   </property>
+  </action>
+  <action name="action_UseWithCard">
+   <property name="text">
+    <string>Use with card ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Use device with patient card</string>
+   </property>
+  </action>
+  <action name="action_UseByTime">
+   <property name="text">
+    <string>Use by time ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Use device with defined time period</string>
    </property>
   </action>
  </widget>
