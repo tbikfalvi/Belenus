@@ -32,6 +32,7 @@ HEADERS = belenus.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
     db/dbattendance.h \
+    dlg/dlgpatientselect.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientedit.h \
@@ -68,6 +69,7 @@ SOURCES = main.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
     db/dbattendance.cpp \
+    dlg/dlgpatientselect.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
