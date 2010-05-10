@@ -18,3 +18,5 @@ SourceOrder		- A korabban letrehozott file-ok (usercard, usercardtype, product .
 ReasonToVisit		- Miert jott a paciens a studioba kerdesre valaszok
 DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
 PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesekkel (attendance)
+CurrentPatient		- Csak akkor lehet kezelni bizonyos reszeket, ha van aktualis paciens
+			  kivalasztva. Ezt oldja meg.
