@@ -1,0 +1,144 @@
+//====================================================================================
+//
+// Belenus Server Admin alkalmazas © Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+
+
+#include <QMessageBox>
+#include "../framework/qtlogger.h"
+#include "mainwindow.h"
+#include "preferences.h"
+
+
+extern cQTLogger g_obLogger;
+extern Preferences *g_poPrefs;
+
+
+
+MainWindow::MainWindow( QWidget *p_poParent )
+    :   QDialog( p_poParent )
+{
+    setupUi( this );
+
+    iHost->setText( QString("%1:%2").arg(g_poPrefs->value("server/host")).arg(g_poPrefs->value("server/port")) );
+    iUsername->setText("admin");
+    iPassword->setText("p4ssw0rd");
+    enableConnectionButton();
+
+    connect( &_connection, SIGNAL(disconnected()),   this, SLOT(disconnected()) );
+    connect( &_connection, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
+    connect( &_connection, SIGNAL(connected()), this, SLOT(connected()) );
+
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::MainWindow] constructed" << cQTLogger::EOM;
+}
+
+
+
+MainWindow::~MainWindow()
+{
+}
+
+
+
+void MainWindow::enableConnectionButton()
+{
+    bConnect->setEnabled( !iHost->text().isEmpty()
+                          && !iUsername->text().isEmpty()
+                          && !iPassword->text().isEmpty() );
+}
+
+
+
+void MainWindow::on_iHost_textChanged(QString )
+{
+    enableConnectionButton();
+}
+
+
+
+void MainWindow::on_iUsername_textChanged(QString )
+{
+    enableConnectionButton();
+}
+
+
+
+void MainWindow::on_iPassword_textChanged(QString )
+{
+    enableConnectionButton();
+}
+
+
+
+void MainWindow::on_bConnect_clicked()
+{
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] enter" <<cQTLogger::EOM;
+
+    if ( _connection.isConnected() ) {
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] connection is valid. disconnecting" << cQTLogger::EOM;
+        _connection.abortConnection();
+
+    } else {
+        int port = g_poPrefs->value("server/port").toInt();
+        QString host;
+
+        int p = iHost->text().indexOf(':');
+        if ( p>=0 ) {
+            port = iHost->text().mid( iHost->text().indexOf(':')+1, iHost->text().length()-p-1 ).toInt();
+            host = iHost->text().mid(0, p);
+
+            if (port<=0 || port>65535)
+                port = g_poPrefs->value("server/port").toInt();
+        } else
+            host = iHost->text();
+
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host="<< host.toStdString() << ", port=" << port << cQTLogger::EOM;
+
+        bConnect->setEnabled(false);
+        bConnect->setText("Connecting");
+
+        _connection.connectTo( QHostAddress(host), port );
+    }
+}
+
+
+void MainWindow::connected()
+{
+    g_obLogger << cSeverity::DEBUG << "[MainWindow::connected()] starting connection thread" << cQTLogger::EOM;
+
+    bConnect->setText("Disconnect");
+    bConnect->setEnabled(true);
+}
+
+
+
+void MainWindow::disconnected()
+{
+    g_obLogger << cSeverity::DEBUG << "[MainWindow::disconnected] called" << cQTLogger::EOM;
+    bConnect->setText("Connect");
+    bConnect->setEnabled(true);
+}
+
+
+
+void MainWindow::socketError(QAbstractSocket::SocketError socketError)
+{
+    QString err;
+    switch (socketError) {
+        case 0: err = "Connection refused"; break;
+        case 1: err = "Remote host closed the connection"; break;
+        case 2: err = "Host not found"; break;
+        case 3: err = "Socket access error"; break;
+        case 4: err = "Socket resource error"; break;
+        case 5: err = "Socket timeout"; break;
+        case 7: err = "Network error"; break;
+        default:err = "Unkown error"; break;
+    }
+
+    g_obLogger << cSeverity::DEBUG << "[MainWindow::socketError] " << socketError << ": " << err.toStdString() << cQTLogger::EOM;
+    bConnect->setText("Connect");
+    bConnect->setEnabled(true);
+}
+
+
