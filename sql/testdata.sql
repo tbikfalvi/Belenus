@@ -38,14 +38,22 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
   ( 1, 1, "Panel 7" ),
   ( 1, 1, "Panel 8" );
 
-INSERT INTO  `patientorigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
+INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
  (0, 0, '<Nincs megadva>', 'ARC');
+UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
+ALTER TABLE `patientOrigin` auto_increment=1;
 
-INSERT INTO `reasontovisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 'ARC')
+INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 'ARC');
+UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
+ALTER TABLE `reasonToVisit` auto_increment=1;
 
 INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `archive`) VALUES
  (0, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+ UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
+ ALTER TABLE `patients` auto_increment=1;
 
 INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `weight`, `height`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `medicineCurrent`, `medicineAllergy`, `comment`, `archive`) VALUES
  (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+ UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
+ ALTER TABLE `attendance` auto_increment=1;
