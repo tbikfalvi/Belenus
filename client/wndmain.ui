@@ -102,7 +102,6 @@
    <addaction name="separator"/>
    <addaction name="actionPatientSelect"/>
    <addaction name="actionPatientEmpty"/>
-   <addaction name="separator"/>
    <addaction name="actionAttendanceNew"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>

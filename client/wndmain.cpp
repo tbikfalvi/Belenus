@@ -31,6 +31,7 @@
 
 #include "edit/dlguseredit.h"
 #include "edit/dlgpatientedit.h"
+#include "edit/dlgattendanceedit.h"
 
 //====================================================================================
 
@@ -75,6 +76,7 @@ cWndMain::cWndMain( QWidget *parent )
 
     actionPatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
     actionPatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
+    actionAttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
     actionDeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
     actionDeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
     actionDeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
@@ -143,6 +145,7 @@ void cWndMain::updateTitle()
     }
 
     actionPatientEmpty->setEnabled( g_obPatient.id()>0 );
+    actionAttendanceNew->setEnabled( g_obPatient.id()>0 );
     if( g_obPatient.id() > 0 )
     {
         qsTitle += " <=> Current patient: [";
@@ -315,6 +318,14 @@ void cWndMain::on_actionPatientEmpty_triggered()
 //====================================================================================
 void cWndMain::on_actionAttendanceNew_triggered()
 {
+    cDBAttendance *poAttendance = new cDBAttendance;
+    poAttendance->createNew();
+    poAttendance->setPatientId( g_obPatient.id() );
 
+    cDlgAttendanceEdit obDlgEdit( this, poAttendance );
+    obDlgEdit.setWindowTitle( tr( "New Attendance" ) );
+    obDlgEdit.exec();
+
+    delete poAttendance;
 }
 //====================================================================================
