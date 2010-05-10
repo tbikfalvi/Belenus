@@ -13,16 +13,13 @@ class cDlgPatientSelect : public cDlgCrud
     Q_OBJECT
 
 public:
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *horizontalLayoutTop;
     QLabel      *lblName;
     QLineEdit   *ledName;
-    QSpacerItem *horizontalSpacer1;
+    QSpacerItem *horizontalSpacerTop;
     QLabel      *lblUniqueId;
     QLineEdit   *ledUniqueId;
-    QSpacerItem *horizontalSpacer2;
-    QVBoxLayout *verticalCustomLayout;
     QPushButton *pbSelect;
-    QSpacerItem *spacer3;
     QPushButton *pbCancel;
 
     cDlgPatientSelect( QWidget *p_poParent = 0 );
@@ -38,8 +35,6 @@ protected slots:
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
     virtual void on_pbSelect_clicked();
-    virtual void on_pbCancel_clicked();
-
 };
 
 #endif // CDLGPATIENTSELECT_H

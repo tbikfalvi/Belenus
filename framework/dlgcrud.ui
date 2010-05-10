@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>519</width>
     <height>300</height>
    </rect>
   </property>
@@ -105,6 +105,38 @@
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btbButtonsSide</sender>
+   <signal>accepted()</signal>
+   <receiver>dlgCrud</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>546</x>
+     <y>149</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>277</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btbButtonsSide</sender>
+   <signal>rejected()</signal>
+   <receiver>dlgCrud</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>546</x>
+     <y>149</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>277</x>
+     <y>149</y>
     </hint>
    </hints>
   </connection>

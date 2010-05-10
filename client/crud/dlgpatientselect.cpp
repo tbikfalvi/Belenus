@@ -18,47 +18,36 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
     m_poBtnEdit->setVisible(false);
     m_poBtnNew->setVisible(false);
 
-    horizontalLayout = new QHBoxLayout();
-    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    horizontalLayoutTop = new QHBoxLayout();
+    horizontalLayoutTop->setObjectName( QString::fromUtf8( "horizontalLayoutTop" ) );
     lblName = new QLabel( this );
     lblName->setObjectName( QString::fromUtf8( "lblName" ) );
     lblName->setText( "Name: " );
-    horizontalLayout->addWidget( lblName );
+    horizontalLayoutTop->addWidget( lblName );
     ledName = new QLineEdit( this );
     ledName->setObjectName( QString::fromUtf8( "ledName" ) );
-    horizontalLayout->addWidget( ledName );
-    horizontalSpacer1 = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout->addSpacerItem( horizontalSpacer1 );
+    horizontalLayoutTop->addWidget( ledName );
+    horizontalSpacerTop = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayoutTop->addItem( horizontalSpacerTop );
     lblUniqueId = new QLabel( this );
     lblUniqueId->setObjectName( QString::fromUtf8( "lblUniqueId" ) );
     lblUniqueId->setText( "Unique identifier: " );
-    horizontalLayout->addWidget( lblName );
+    horizontalLayoutTop->addWidget( lblUniqueId );
     ledUniqueId = new QLineEdit( this );
     ledUniqueId->setObjectName( QString::fromUtf8( "ledUniqueId" ) );
-    horizontalLayout->addWidget( ledUniqueId );
-    horizontalSpacer2 = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout->addSpacerItem( horizontalSpacer2 );
-    verticalLayout->insertLayout( 0, horizontalLayout );
+    horizontalLayoutTop->addWidget( ledUniqueId );
+    verticalLayout->insertLayout( 0, horizontalLayoutTop );
 
-    verticalCustomLayout = new QVBoxLayout();
-    verticalCustomLayout->setObjectName( QString::fromUtf8( "verticalCustomLayout" ) );
-    pbSelect = new QPushButton( this );
+    pbSelect = new QPushButton( tr( "Select" ), this );
     pbSelect->setObjectName( QString::fromUtf8( "pbSelect" ) );
-    pbSelect->resize( 130, 30 );
     pbSelect->setIconSize( QSize(20, 20) );
     pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
-    pbSelect->setText( "Select" );
-    verticalCustomLayout->addWidget( pbSelect );
-    spacer3 = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    verticalCustomLayout->addSpacerItem( spacer3 );
-    pbCancel = new QPushButton( this );
+    btbButtonsSide->addButton( pbSelect, QDialogButtonBox::ActionRole );
+    pbCancel = new QPushButton( tr( "Cancel" ), this );
     pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
-    pbCancel->resize( 130, 30 );
     pbCancel->setIconSize( QSize(20, 20) );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
-    pbCancel->setText( "Cancel" );
-    verticalCustomLayout->addWidget( pbCancel );
-    verticalLayout->insertLayout( 2, verticalCustomLayout );
+    btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
     setupTableView();
 
@@ -157,9 +146,4 @@ void cDlgPatientSelect::on_pbSelect_clicked()
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
     }
-}
-
-void cDlgPatientSelect::on_pbCancel_clicked()
-{
-    QDialog::reject();
 }

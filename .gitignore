@@ -33,6 +33,7 @@ client/dlgpatient.o
 client/dlgpatientedit.o
 client/dlgpatientorigin.o
 client/dlgpatientoriginedit.o
+client/dlgpatientselect.o
 client/dlgpreferences.o
 client/dlgproductedit.o
 client/dlgproducts.o
@@ -82,6 +83,8 @@ client/moc_dlgpatientorigin.cpp
 client/moc_dlgpatientorigin.o
 client/moc_dlgpatientoriginedit.cpp
 client/moc_dlgpatientoriginedit.o
+client/moc_dlgpatientselect.cpp
+client/moc_dlgpatientselect.o
 client/moc_dlgpreferences.cpp
 client/moc_dlgpreferences.o
 client/moc_dlgproductedit.cpp
