@@ -75,3 +75,22 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
   ( 1, 1, "Panel 7" ),
   ( 1, 1, "Panel 8" );
 
+INSERT INTO `patientorigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
+(1, 1, 'Ismerõs/barát ajánlotta', 'ARC'),
+(2, 1, 'Szórólap', 'ARC'),
+(3, 1, 'Internet', 'ARC'),
+(4, 1, 'TV', 'ARC'),
+(5, 1, 'Újság', 'ARC'),
+(6, 1, 'Egyéb', 'ARC');
+
+INSERT INTO `reasontovisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
+(1, 1, 'Gyógyulás betegségbõl', 'ARC'),
+(2, 1, 'Immunerõsítés / regenerálódás', 'ARC');
+
+INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `archive`) VALUES
+(1, 1, 0, 0, 'Kovács Géza', 1, '1980-02-11', '1980 0211', '', '', '', '', '', '', '', '', 'NEW'),
+(2, 1, 2, 2, 'Herendi Porcelán', 2, '1972-07-25', '1972 0725', '', '', '', '', '', '', '', '', 'NEW'),
+(3, 1, 6, 1, 'Mikó Enikõ', 2, '1985-09-19', '1985 0919', '', '', '', '', '', '', '', '', 'NEW'),
+(4, 1, 0, 0, 'Kalocsai Andrea', 2, '1998-12-07', '1998 1207', '', '', '', '', '', '', '', '', 'NEW'),
+(5, 1, 0, 0, 'Szegedi Paprika', 1, '1981-11-17', '1982 1117', '', '', '', '', '', '', '', '', 'NEW');
+

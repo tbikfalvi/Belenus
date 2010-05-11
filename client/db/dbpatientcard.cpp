@@ -26,26 +26,54 @@ cDBPatientCard::~cDBPatientCard()
 }
 
 void cDBPatientCard::init( const unsigned int p_uiId,
-                             const unsigned int p_uiLicenceId,
-                             const string &p_stName,
-                             const string &p_stArchive ) throw()
+                           const unsigned int p_uiLicenceId,
+                           const unsigned int p_uiPatientCardTypeId,
+                           const unsigned int p_uiPatientId,
+                           const string p_stBarcode,
+                           const string p_stComment,
+                           const int p_nUnits,
+                           const string p_stTimeLeft,
+                           const string p_stValidDate,
+                           const string p_stPincode,
+                           const string &p_stArchive ) throw()
 {
-    m_uiId          = p_uiId;
-    m_uiLicenceId   = p_uiLicenceId;
-    m_stName        = p_stName;
-    m_stArchive     = p_stArchive;
+    m_uiId                  = p_uiId;
+    m_uiLicenceId           = p_uiLicenceId;
+    m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiPatientId           = p_uiPatientId;
+    m_stBarcode             = p_stBarcode;
+    m_stComment             = p_stComment;
+    m_nUnits                = p_nUnits;
+    m_stTimeLeft            = p_stTimeLeft;
+    m_stValidDate           = p_stValidDate;
+    m_stPincode             = p_stPincode;
+    m_stArchive             = p_stArchive;
 }
 
 void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "patientOriginId" );
-    int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
-    int inNameIdx       = p_obRecord.indexOf( "name" );
-    int inArchiveIdx    = p_obRecord.indexOf( "archive" );
+    int inIdIdx                 = p_obRecord.indexOf( "patientOriginId" );
+    int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
+    int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
+    int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inUnitsIdx              = p_obRecord.indexOf( "units" );
+    int inTimeLeftIdx           = p_obRecord.indexOf( "timeLeft" );
+    int inValidDateIdx          = p_obRecord.indexOf( "validDate" );
+    int inPincodeIdx            = p_obRecord.indexOf( "pincode" );
+    int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inPatientCardTypeIdIdx ).toInt(),
+          p_obRecord.value( inPatientIdIdx ).toInt(),
+          p_obRecord.value( inBarcodeIdx ).toString().toStdString(),
+          p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inUnitsIdx ).toInt(),
+          p_obRecord.value( inTimeLeftIdx ).toString().toStdString(),
+          p_obRecord.value( inValidDateIdx ).toString().toStdString(),
+          p_obRecord.value( inPincodeIdx ).toString().toStdString(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -53,23 +81,10 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCard::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientOrigin WHERE patientOriginId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
-        throw cSevException( cSeverity::ERROR, "Patientorigin id not found" );
-
-    poQuery->first();
-    init( poQuery->record() );
-}
-
-void cDBPatientCard::load( const string &p_stName ) throw( cSevException )
-{
-    cTracer obTrace( "cDBPatientCard::load", "name: \""  + p_stName + "\"" );
-
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientOrigin WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
-
-    if( poQuery->size() != 1 )
-        throw cSevException( cSeverity::ERROR, "Patientorigin name not found" );
+        throw cSevException( cSeverity::ERROR, "Patientcard id not found" );
 
     poQuery->first();
     init( poQuery->record() );
@@ -96,7 +111,14 @@ void cDBPatientCard::save() throw( cSevException )
     }
     qsQuery += " patientOrigin SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
+    qsQuery += QString( "barcode = \"%1\", " ).arg( QString::fromStdString( m_stBarcode ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
+    qsQuery += QString( "timeLeft = \"%1\", " ).arg( QString::fromStdString( m_stTimeLeft ) );
+    qsQuery += QString( "validDate = \"%1\", " ).arg( QString::fromStdString( m_stValidDate ) );
+    qsQuery += QString( "pincode = \"%1\", " ).arg( QString::fromStdString( m_stPincode ) );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -110,7 +132,7 @@ void cDBPatientCard::save() throw( cSevException )
 
 void cDBPatientCard::createNew() throw()
 {
-    init( 0, 0, "", "NEW" );
+    init();
 }
 
 unsigned int cDBPatientCard::id() const throw()
@@ -128,14 +150,84 @@ void cDBPatientCard::setLicenceId( const unsigned int p_uiLicenceId ) throw()
     m_uiLicenceId = p_uiLicenceId;
 }
 
-string cDBPatientCard::name() const throw()
+unsigned int cDBPatientCard::patientCardTypeId() const throw()
 {
-    return m_stName;
+    return m_uiPatientCardTypeId;
 }
 
-void cDBPatientCard::setName( const string &p_stName ) throw()
+void cDBPatientCard::setPatientCardTypeId( const unsigned int p_uiPCardTypeId ) throw()
 {
-    m_stName = p_stName;
+    m_uiPatientCardTypeId = p_uiPCardTypeId;
+}
+
+unsigned int cDBPatientCard::patientId() const throw()
+{
+    return m_uiPatientId;
+}
+
+void cDBPatientCard::setPatientId( const unsigned int p_uiPatientId ) throw()
+{
+    m_uiPatientId = p_uiPatientId;
+}
+
+string cDBPatientCard::barcode() const throw()
+{
+    return m_stBarcode;
+}
+
+void cDBPatientCard::setBarcode( const string &p_stBarcode ) throw()
+{
+    m_stBarcode = p_stBarcode;
+}
+
+string cDBPatientCard::comment() const throw()
+{
+    return m_stComment;
+}
+
+void cDBPatientCard::setComment( const string &p_stComment ) throw()
+{
+    m_stComment = p_stComment;
+}
+
+int cDBPatientCard::units() const throw()
+{
+    return m_nUnits;
+}
+
+void cDBPatientCard::setUnits( const int p_nUnits ) throw()
+{
+    m_nUnits = p_nUnits;
+}
+
+string cDBPatientCard::timeLeft() const throw()
+{
+    return m_stTimeLeft;
+}
+
+void cDBPatientCard::setTimeLeft( const string &p_stTimeLeft ) throw()
+{
+    m_stTimeLeft = p_stTimeLeft;
+}
+
+string cDBPatientCard::validDate() const throw()
+{
+    return m_stValidDate;
+}
+
+void cDBPatientCard::setValidDate( const string &p_stValidDate ) throw()
+{
+    m_stValidDate = p_stValidDate;
+}
+
+string cDBPatientCard::pincode() const throw()
+{
+    return m_stPincode;
+}
+
+void cDBPatientCard::setPincode( const string &p_stPincode ) throw()
+{
+    m_stPincode = p_stPincode;
 }
 
 string cDBPatientCard::archive() const throw()
