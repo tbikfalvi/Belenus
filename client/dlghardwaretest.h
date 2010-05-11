@@ -15,7 +15,9 @@ public:
 private:
 
 private slots:
-    void on_pbtTestHardwareConnection_clicked();
+    void on_pbExit_clicked();
+    void on_pbReconnect_clicked();
+    void on_pbTestHardwareConnection_clicked();
 };
 
 #endif // CDLGHARDWARETEST_H

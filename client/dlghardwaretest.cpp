@@ -7,35 +7,11 @@ cDlgHardwareTest::cDlgHardwareTest( QWidget *p_poParent )
 
     setupUi( this );
 
-// __TO_BE_RESOLVED__
-/*
-    pbtComTest->setEnabled( false );
+    pbTestHardwareConnection->setIcon( QIcon("./resources/40x40_hardware_test.gif") );
+    pbReconnect->setIcon( QIcon("./resources/40x40_hadware_reconnect.gif") );
+    pbExit->setIcon( QIcon("./resources/40x40_exit.gif") );
 
-    char    stTemp[10];
-    int     m_inSelectedComPort = 0;
-
-    if( g_poHardware->SP_IsComPortOpened( &m_inSelectedComPort ) )
-    {
-        lblComTestResult->setText( tr( "Port opened" ) );
-    }
-    else
-    {
-        lblComTestResult->setText( tr( "Port unavailable" ) );
-    }
-
-    for( int i=0;i<g_poHardware->SP_GetCountAvailablePorts(); i++ )
-    {
-        memset( stTemp, 0, 10 );
-        sprintf( stTemp, "COM%d", g_poHardware->SP_GetComPort( i ) );
-        cmbComPort->addItem( stTemp );
-        // megnyitott com port kivalasztasa a listabol __TO_BE_RESOLVED__
-    }
-
-    if( g_poHardware->SP_GetCountAvailablePorts() > 0 )
-    {
-        pbtComTest->setEnabled( true );
-    }
-*/
+    on_pbTestHardwareConnection_clicked();
 }
 
 cDlgHardwareTest::~cDlgHardwareTest()
@@ -43,19 +19,26 @@ cDlgHardwareTest::~cDlgHardwareTest()
     cTracer obTrace( "cDlgHardwareTest::~cDlgHardwareTest" );
 }
 
-void cDlgHardwareTest::on_pbtTestHardwareConnection_clicked()
+void cDlgHardwareTest::on_pbTestHardwareConnection_clicked()
 {
     cTracer obTrace( "cDlgHardwareTest::on_pbtTestHardwareConnection_clicked" );
 
-// __TO_BE_RESOLVED__
-/*
-    int     m_inSelectedComPort = 0;
-
-    if( g_poHardware->SP_IsComPortOpened( &m_inSelectedComPort ) )
+    if( g_poHardware->isHardwareConnected() )
     {
-        QString stTemp = QString( tr( "Search hardware on port COM%1" ) ).arg( m_inSelectedComPort );
-
-        lblHWConnectionResult->setText( stTemp );
+        lblHWConnectionResult->setText( tr("Hardware available") );
     }
-*/
+    else
+    {
+        lblHWConnectionResult->setText( tr("Hardware unavailable") );
+    }
+}
+
+void cDlgHardwareTest::on_pbReconnect_clicked()
+{
+
+}
+
+void cDlgHardwareTest::on_pbExit_clicked()
+{
+    QDialog::accept();
 }

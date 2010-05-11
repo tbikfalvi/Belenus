@@ -138,6 +138,11 @@ void cWndMain::updateTitle()
     qsTitle += " - ";
     qsTitle += QString::fromStdString( g_poHardware->getCustomCaption() );
 
+    if( QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
+    {
+        action_Hardwaretest->setEnabled( false );
+    }
+
     if( g_obUser.isLoggedIn() )
     {
         qsTitle += " - ";
@@ -198,9 +203,17 @@ void cWndMain::on_action_Hardwaretest_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Hardwaretest_triggered" );
 
-    cDlgHardwareTest  obDlgHardwareTest( this );
+    if( g_obUser.isInGroup( "system" ) )
+    {
+        cDlgHardwareTest  obDlgHardwareTest( this );
 
-    obDlgHardwareTest.exec();
+        obDlgHardwareTest.exec();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr( "Information" ),
+                              tr( "This area is restricted for system administrators only!" ) );
+    }
 }
 //====================================================================================
 void cWndMain::on_action_LogOut_triggered()
