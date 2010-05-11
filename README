@@ -20,3 +20,4 @@ DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
 PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesekkel (attendance)
 CurrentPatient		- Csak akkor lehet kezelni bizonyos reszeket, ha van aktualis paciens
 			  kivalasztva. Ezt oldja meg.
+HardwareInit		- Hardver kezelés alapjai. Csatlakozás, inicializálás.
