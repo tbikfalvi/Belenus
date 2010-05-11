@@ -25,6 +25,43 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 INSERT INTO `users` (`name`, `licenceId`, `realName`, `password`, `groups`) VALUES
   ( 'admin', 1, 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
 
+INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 'ARC');
+UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
+ALTER TABLE `patientOrigin` auto_increment=1;
+
+INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 'ARC');
+UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
+ALTER TABLE `reasonToVisit` auto_increment=1;
+
+INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `archive`) VALUES
+ (0, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
+ALTER TABLE `patients` auto_increment=1;
+
+INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `weight`, `height`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `medicineCurrent`, `medicineAllergy`, `comment`, `archive`) VALUES
+ (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
+ALTER TABLE `attendance` auto_increment=1;
+
+INSERT INTO `patientcardtypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `archive`) VALUES
+ ('0', '0', 'System Administrator', '0', '999', '2010-01-01', '2110-01-01', '0', '10', 'ARC');
+UPDATE `patientcardtypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
+ALTER TABLE `patientcardtypes` auto_increment=1;
+
+INSERT INTO `patientcards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `archive`) VALUES
+ ('0', '0', '0', '0', 'BELENUS_SERVICECARD', 'Szervíz kártya', '999', '99:99:99', '2110-01-01', NULL, 'ARC');
+UPDATE `patientcards` SET `patientCardId`=0 WHERE `patientCardId`=1;
+ALTER TABLE `patientcards` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+-- Tablak feltoltese teszt adatokkal
+--
+-- Ezek az INSERT-ek a teszteles miatt kellenek
+--
+-- -----------------------------------------------------------------------------------
+
 INSERT INTO `panelTypes` ( `licenceId`, `name` ) VALUES
   ( 1, "Panel Type 1" );
 
@@ -38,22 +75,3 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
   ( 1, 1, "Panel 7" ),
   ( 1, 1, "Panel 8" );
 
-INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 'ARC');
-UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
-ALTER TABLE `patientOrigin` auto_increment=1;
-
-INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 'ARC');
-UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
-ALTER TABLE `reasonToVisit` auto_increment=1;
-
-INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `archive`) VALUES
- (0, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
- UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
- ALTER TABLE `patients` auto_increment=1;
-
-INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `weight`, `height`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `medicineCurrent`, `medicineAllergy`, `comment`, `archive`) VALUES
- (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
- UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
- ALTER TABLE `attendance` auto_increment=1;
