@@ -111,10 +111,11 @@ int main( int argc, char *argv[] )
 
 #ifdef __WIN32__
 
-        qsSpalsh += "Checking hardware connection ";
+        qsSpalsh += "Checking hardware connection ...";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Serial();
+        g_poHardware->init( g_poPrefs->getCommunicationPort() );
         if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
         {
             qsSpalsh += "FAILED\n";
@@ -130,14 +131,19 @@ int main( int argc, char *argv[] )
             qsSpalsh += "CONNECTED\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+            qsSpalsh += "Initializing hardware device ... ";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
             g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
+
+            qsSpalsh += "FINISHED\n";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             qsSpalsh += "Checking hardware panels:\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             for( int i=0; i<g_poHardware->getPanelCount(); i++ )
             {
-                qsSpalsh += "     Checking hardware panel -"+QString(i)+"- ";
+                qsSpalsh += QString("     Checking hardware panel -%1- ").arg(i+1);
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
                 if( g_poHardware->checkHardwarePanel( i ) )

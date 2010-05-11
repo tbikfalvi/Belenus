@@ -39,6 +39,8 @@ public:
     QString       getServerAddress() const;
     void          setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
     QString       getServerPort() const;
+    void          setCommunicationPort( const int p_nPortNumber );
+    int           getCommunicationPort() const;
     void          setLogLevels( const unsigned int p_uiConLevel,
                                 const unsigned int p_uiDBLevel,
                                 const unsigned int p_uiGUILevel,
@@ -72,6 +74,7 @@ private:
     QString         m_qsClientSerial;
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
+    int             m_nCommunicationPort;
 
     void init();
 };

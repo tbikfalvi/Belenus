@@ -42,7 +42,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     m_hPort                     = NULL;
     BaudRate                    = 0;
     Parity                      = 0;
-    m_dwBaudRate                = 0;
+    m_dwBaudRate                = 9600;
     m_dwParity                  = 0;
     wRelay_mem                  = 0;
     bEnableIRQ_Msg              = false;
@@ -336,7 +336,7 @@ void CS_Communication_Serial::HW_Kezel()
    char chSerialOut[2048];
    char chSerialIn[2048];
    unsigned char byStatus;
-    WORD wRelay;
+   WORD wRelay = 0;
 
    //---------------------------------------------------
    // Relay állapotok beállítása
@@ -1179,7 +1179,7 @@ unsigned char CS_Communication_Serial::GetHWModuleStatus( unsigned char byCim )
 void CS_Communication_Serial::EnableModulIRQ()
 {
     char chSerialOut[2048];
-        unsigned char byTemp;
+    unsigned char byTemp = 0;
 
     if( !bEnableIRQ_Msg )
    {
@@ -1203,7 +1203,7 @@ void CS_Communication_Serial::EnableModulIRQ()
 void CS_Communication_Serial::DisableModulIRQ()
 {
     char chSerialOut[2048];
-        unsigned char byTemp;
+    unsigned char byTemp = 0;
 
    if( bEnableIRQ_Msg )
    {
