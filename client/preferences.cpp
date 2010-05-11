@@ -209,6 +209,16 @@ QString cPreferences::getServerPort() const
     return m_qsServerPort;
 }
 
+void cPreferences::setCommunicationPort( const int p_nPortNumber )
+{
+    m_nCommunicationPort = p_nPortNumber;
+}
+
+int cPreferences::getCommunicationPort() const
+{
+    return m_nCommunicationPort;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -282,6 +292,8 @@ void cPreferences::loadConfFileSettings()
 
         m_qsServerAddress    = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
         m_qsServerPort       = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
+
+        m_nCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -366,4 +378,6 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
     obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
+
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_nCommunicationPort );
 }
