@@ -19,6 +19,8 @@
 #include "communication_defines.h"
 #include "windows.h"
 
+const WORD m_RELAY[] = { R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R0 };
+
 //====================================================================================
 //====================================================================================
 // PUBLIKUS FUGGVENYEK
@@ -310,6 +312,18 @@ int CS_Communication_Serial::getHardwareModuleCount()
 
    return nRet;
 }
+void CS_Communication_Serial::setRelayOn( const int nRelayCount )
+{
+    m_wRelay |= m_RELAY[ nRelayCount-1 ];
+}
+void CS_Communication_Serial::setRelayOff( const int nRelayCount )
+{
+    m_wRelay &= ~m_RELAY[ nRelayCount-1 ];
+}
+bool CS_Communication_Serial::getRelayStatus( const int nRelayCount )
+{
+    return true;
+}
 //---------------------------------------------------------------------------
 // HW_Kezel
 //---------------------------------------------------------------------------
@@ -369,6 +383,10 @@ void CS_Communication_Serial::HW_Kezel()
                 }
             }
         }
+    }
+    else
+    {
+        wRelay = m_wRelay;
     }
 
     if( wRelay_mem != wRelay )
