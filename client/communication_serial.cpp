@@ -322,7 +322,10 @@ void CS_Communication_Serial::setRelayOff( const int nRelayCount )
 }
 bool CS_Communication_Serial::getRelayStatus( const int nRelayCount )
 {
-    return true;
+    if( m_wRelay & m_RELAY[ nRelayCount-1 ] )
+        return true;
+    else
+        return false;
 }
 //---------------------------------------------------------------------------
 // HW_Kezel

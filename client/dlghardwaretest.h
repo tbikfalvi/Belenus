@@ -13,24 +13,29 @@ public:
     ~cDlgHardwareTest();
 
 private:
+    QTimer      *timerHWTest;
+    QTimer      *timerRelayTest;
+    int          m_nRelayCount;
 
 private slots:
-    void on_rbRelay12_on_toggled(bool checked);
-    void on_rbRelay11_on_toggled(bool checked);
-    void on_rbRelay10_On_toggled(bool checked);
-    void on_rbRelay09_on_toggled(bool checked);
-    void on_rbRelay08_on_toggled(bool checked);
-    void on_rbRelay07_On_toggled(bool checked);
-    void on_rbRelay06_On_toggled(bool checked);
-    void on_rbRelay05_On_toggled(bool checked);
-    void on_rbRelay04_On_toggled(bool checked);
-    void on_rbRelay03_On_toggled(bool checked);
-    void on_rbRelay02_On_toggled(bool checked);
-    void on_rbRelay01_On_toggled(bool checked);
+    void on_pbSwitchRelay12_clicked();
+    void on_pbSwitchRelay11_clicked();
+    void on_pbSwitchRelay10_clicked();
+    void on_pbSwitchRelay09_clicked();
+    void on_pbSwitchRelay08_clicked();
+    void on_pbSwitchRelay07_clicked();
+    void on_pbSwitchRelay06_clicked();
+    void on_pbSwitchRelay05_clicked();
+    void on_pbSwitchRelay04_clicked();
+    void on_pbSwitchRelay03_clicked();
+    void on_pbSwitchRelay02_clicked();
+    void on_pbSwitchRelay01_clicked();
     void on_pbRelayRunTest_clicked();
     void on_pbExit_clicked();
     void on_pbReconnect_clicked();
     void on_pbTestHardwareConnection_clicked();
+    void updateHWStatus();
+    void updateRelayStatus();
 };
 
 #endif // CDLGHARDWARETEST_H
