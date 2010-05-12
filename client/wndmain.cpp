@@ -39,6 +39,7 @@
 #include "dlg/dlgpreferences.h"
 #include "dlg/dlghardwaretest.h"
 #include "dlg/dlglogs.h"
+#include "dlg/dlginputstart.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -344,4 +345,12 @@ void cWndMain::on_actionAttendanceNew_triggered()
 
     delete poAttendance;
 }
+//====================================================================================
+void cWndMain::on_action_EnterCode_triggered()
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.exec();
+}
+
 //====================================================================================

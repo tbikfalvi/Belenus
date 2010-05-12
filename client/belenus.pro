@@ -11,7 +11,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgreasontovisitedit.ui \
     wndmain.ui \
     dlgpatientedit.ui \
-    dlgattendanceedit.ui
+    dlgattendanceedit.ui \
+    dlginputstart.ui
 HEADERS = belenus.h \
     ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
@@ -42,6 +43,7 @@ HEADERS = belenus.h \
     dlg/dlglogs.h \
     dlg/dlgpreferences.h \
     dlg/dlgpwdconfirm.h \
+    dlg/dlginputstart.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientedit.h \
@@ -82,6 +84,7 @@ SOURCES = main.cpp \
     dlg/dlglogs.cpp \
     dlg/dlgpreferences.cpp \
     dlg/dlgpwdconfirm.cpp \
+    dlg/dlginputstart.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
