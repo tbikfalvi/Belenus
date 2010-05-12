@@ -62,6 +62,16 @@ int CS_Communication_Demo::getHardwareModuleCount()
 {
     return m_inPanelCount;
 }
+void CS_Communication_Demo::setRelayOn( const int )
+{
+}
+void CS_Communication_Demo::setRelayOff( const int )
+{
+}
+bool CS_Communication_Demo::getRelayStatus( const int )
+{
+    return true;
+}
 void CS_Communication_Demo::HW_Kezel()
 {
 }

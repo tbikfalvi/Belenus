@@ -31,6 +31,10 @@ public:
     virtual bool setHardwareModuleCount( int nCount ) = 0;
     virtual int getHardwareModuleCount( void ) = 0;
 
+    virtual void setRelayOn( const int nRelayCount ) = 0;
+    virtual void setRelayOff( const int nRelayCount ) = 0;
+    virtual bool getRelayStatus( const int nRelayCount ) = 0;
+
     virtual void HW_Kezel( void ) = 0;
 //-------------------------------------------------------------------
 protected:
