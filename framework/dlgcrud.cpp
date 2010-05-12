@@ -1,4 +1,4 @@
-#include "../client/belenus.h"
+#include "qtframework.h"
 #include "dlgcrud.h"
 
 cDlgCrud::cDlgCrud( QWidget *p_poParent )
