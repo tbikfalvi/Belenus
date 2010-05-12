@@ -30,6 +30,10 @@ public:
     bool setHardwareModuleCount( int nCount );
     int getHardwareModuleCount();
 
+    void setRelayOn( const int nRelayCount );
+    void setRelayOff( const int nRelayCount );
+    bool getRelayStatus( const int nRelayCount );
+
     void HW_Kezel();
 };
 
