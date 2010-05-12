@@ -3,8 +3,8 @@
 
 #include <QSortFilterProxyModel>
 
-#include "ui_dlglogs.h"
-#include "../framework/qtmysqlquerymodel.h"
+#include "../ui_dlglogs.h"
+#include "../../framework/qtmysqlquerymodel.h"
 
 class cLogsSqlModel : public cQTMySQLQueryModel
 {

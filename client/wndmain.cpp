@@ -35,10 +35,10 @@
 
 //====================================================================================
 
-#include "dlglogin.h"
-#include "dlgpreferences.h"
-#include "dlghardwaretest.h"
-#include "dlglogs.h"
+#include "dlg/dlglogin.h"
+#include "dlg/dlgpreferences.h"
+#include "dlg/dlghardwaretest.h"
+#include "dlg/dlglogs.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )

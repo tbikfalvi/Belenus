@@ -2,7 +2,7 @@
 #include <QMessageBox>
 
 #include "dlguseredit.h"
-#include "dlgpwdconfirm.h"
+#include "../dlg/dlgpwdconfirm.h"
 
 cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     : QDialog( p_poParent )

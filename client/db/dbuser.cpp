@@ -1,4 +1,4 @@
-#include "belenus.h"
+#include "../belenus.h"
 #include "dbuser.h"
 
 cDBUser::cDBUser()

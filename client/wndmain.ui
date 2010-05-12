@@ -126,12 +126,12 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
+   <addaction name="action_UseWithCard"/>
+   <addaction name="action_UseByTime"/>
+   <addaction name="separator"/>
    <addaction name="actionPatientSelect"/>
    <addaction name="actionPatientEmpty"/>
    <addaction name="actionAttendanceNew"/>
-   <addaction name="separator"/>
-   <addaction name="action_UseWithCard"/>
-   <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>
    <addaction name="actionDeviceReset"/>

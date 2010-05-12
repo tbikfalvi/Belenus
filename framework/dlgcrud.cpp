@@ -1,4 +1,4 @@
-#include "belenus.h"
+#include "../belenus.h"
 #include "dlgcrud.h"
 
 cDlgCrud::cDlgCrud( QWidget *p_poParent )

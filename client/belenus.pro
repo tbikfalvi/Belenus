@@ -35,6 +35,13 @@ HEADERS = belenus.h \
     db/dbattendance.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
+    db/dbpanelstatuses.h \
+    db/dbuser.h \
+    dlg/dlghardwaretest.h \
+    dlg/dlglogin.h \
+    dlg/dlglogs.h \
+    dlg/dlgpreferences.h \
+    dlg/dlgpwdconfirm.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientedit.h \
@@ -44,12 +51,6 @@ HEADERS = belenus.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
-    dbuser.h \
-    dlghardwaretest.h \
-    dlglogin.h \
-    dlglogs.h \
-    dlgpreferences.h \
-    dlgpwdconfirm.h \
     frmpanel.h \
     mdipanels.h \
     preferences.h \
@@ -74,6 +75,13 @@ SOURCES = main.cpp \
     db/dbattendance.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
+    db/dbpanelstatuses.cpp \
+    db/dbuser.cpp \
+    dlg/dlghardwaretest.cpp \
+    dlg/dlglogin.cpp \
+    dlg/dlglogs.cpp \
+    dlg/dlgpreferences.cpp \
+    dlg/dlgpwdconfirm.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
@@ -82,12 +90,6 @@ SOURCES = main.cpp \
     edit/dlgattendanceedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
-    dbuser.cpp \
-    dlghardwaretest.cpp \
-    dlglogin.cpp \
-    dlglogs.cpp \
-    dlgpreferences.cpp \
-    dlgpwdconfirm.cpp \
     frmpanel.cpp \
     mdipanels.cpp \
     preferences.cpp \

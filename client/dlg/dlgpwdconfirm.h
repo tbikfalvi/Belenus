@@ -1,8 +1,8 @@
 #ifndef DLGPWDCONFIRM_H
 #define DLGPWDCONFIRM_H
 
-#include "belenus.h"
-#include "ui_dlgpwdconfirm.h"
+#include "../belenus.h"
+#include "../ui_dlgpwdconfirm.h"
 
 class cDlgPwdConfirm : public QDialog, protected Ui::dlgPwdConfirm
 {

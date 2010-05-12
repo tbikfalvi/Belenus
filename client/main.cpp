@@ -7,7 +7,7 @@
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
-#include "dbuser.h"
+#include "db/dbuser.h"
 #include "preferences.h"
 #include "communication.h"
 #include "communication_demo.h"

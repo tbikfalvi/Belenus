@@ -35,7 +35,7 @@ void cMdiPanels::initPanels()
         poFrame = new cFrmPanel( i + 1 );
         poFrame->setFrameShape( QFrame::Panel);
         poFrame->setFrameShadow( QFrame::Sunken );
-        poFrame->setLineWidth( 10 );
+        poFrame->setLineWidth( 5 );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );

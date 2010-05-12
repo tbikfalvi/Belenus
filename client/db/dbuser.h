@@ -3,7 +3,7 @@
 
 #include <QSqlRecord>
 
-#include "../framework/sevexception.h"
+#include "../../framework/sevexception.h"
 
 class cDBUser
 {

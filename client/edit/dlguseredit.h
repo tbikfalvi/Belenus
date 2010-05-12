@@ -3,7 +3,7 @@
 
 #include "belenus.h"
 #include "ui_dlguseredit.h"
-#include "dbuser.h"
+#include "../db/dbuser.h"
 
 class cDlgUserEdit : public QDialog, protected Ui::dlgUserEdit
 {

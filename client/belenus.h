@@ -2,7 +2,7 @@
 #define BELENUS_H
 
 #include "../framework/qtframework.h"
-#include "dbuser.h"
+#include "db/dbuser.h"
 #include "preferences.h"
 #include "communication.h"
 #include "bs_connection.h"
