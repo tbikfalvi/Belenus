@@ -1,6 +1,13 @@
+#include <QStringList>
+#include <QDir>
+#include <QRegExp>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSqlQuery>
+#include <QPixmap>
+#include <QColor>
+#include <QIcon>
+#include <QColorDialog>
 #include "dlgpreferences.h"
 #include "../framework/sevexception.h"
 
@@ -37,12 +44,12 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_poBtnSystem = new QPushButton( "&System", this );
-        btbButtons->addButton( m_poBtnSystem, QDialogButtonBox::ActionRole );
-        connect( m_poBtnSystem, SIGNAL( clicked( bool ) ), this, SLOT( systemClicked( bool ) ) );
-    }
+    ledServerHost->setText( g_poPrefs->getServerAddress() );
+    ledServerPort->setText( g_poPrefs->getServerPort() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
+    btnMainBackground->setIcon( QIcon( obColorIcon ) );
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -60,6 +67,16 @@ void cDlgPreferences::on_sliGUILogLevel_valueChanged( int p_inValue )
     lblGUILogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
 }
 
+void cDlgPreferences::on_btnMainBackground_clicked( bool )
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getMainBackground() ), this );
+    if( obNewColor.isValid() ) g_poPrefs->setMainBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
+    btnMainBackground->setIcon( QIcon( obColorIcon ) );
+}
+
 void cDlgPreferences::accept()
 {
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
@@ -72,12 +89,10 @@ void cDlgPreferences::accept()
         QMessageBox::information( this, tr( "Information" ),
                                   tr( "Some of the changes you made will only be applied after the application is restarted." ) );
 
+    g_poPrefs->setServerAddress( ledServerHost->text() );
+    g_poPrefs->setServerPort( ledServerPort->text() );
+
     g_poPrefs->save();
 
     QDialog::accept();
-}
-
-void cDlgPreferences::systemClicked( const bool )
-{
-
 }

@@ -34,6 +34,7 @@ void cPreferences::init()
     m_qsClientSerial     = "";
     m_qsServerAddress    = "";
     m_qsServerPort       = "";
+    m_qsMainBackground   = "";
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -167,6 +168,22 @@ unsigned int cPreferences::getMainWindowHeight() const
     return m_uiMainWindowHeight;
 }
 
+void cPreferences::setMainBackground( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsMainBackground = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
+    }
+}
+
+QString cPreferences::getMainBackground() const
+{
+    return m_qsMainBackground;
+}
+
 unsigned int cPreferences::getLicenceId() const
 {
     return m_uiLicenceId;
@@ -289,6 +306,7 @@ void cPreferences::loadConfFileSettings()
         m_uiMainWindowTop    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
         m_uiMainWindowWidth  = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
         m_uiMainWindowHeight = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
+        m_qsMainBackground   = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
 
         m_qsServerAddress    = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
         m_qsServerPort       = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
@@ -380,4 +398,6 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
 
     obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_nCommunicationPort );
+
+    obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
 }
