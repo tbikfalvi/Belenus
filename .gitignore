@@ -139,6 +139,7 @@ client/ui_wndmain.h
 client/ui_dlgpatientedit.h
 client/ui_dlgattendanceedit.h
 client/ui_dlginputstart.h
+client/ui_dlgpanelstatusesedit.h
 resources/Thumbs.db
 BelenusServer
 belenusserver.ini
