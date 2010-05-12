@@ -1,6 +1,13 @@
+#include <QStringList>
+#include <QDir>
+#include <QRegExp>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSqlQuery>
+#include <QPixmap>
+#include <QColor>
+#include <QIcon>
+#include <QColorDialog>
 #include "dlgpreferences.h"
 #include "../framework/sevexception.h"
 
@@ -39,6 +46,10 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
+    btnMainBackground->setIcon( QIcon( obColorIcon ) );
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -54,6 +65,16 @@ void cDlgPreferences::on_sliDBLogLevel_valueChanged( int p_inValue )
 void cDlgPreferences::on_sliGUILogLevel_valueChanged( int p_inValue )
 {
     lblGUILogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
+}
+
+void cDlgPreferences::on_btnMainBackground_clicked( bool )
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getMainBackground() ), this );
+    if( obNewColor.isValid() ) g_poPrefs->setMainBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
+    btnMainBackground->setIcon( QIcon( obColorIcon ) );
 }
 
 void cDlgPreferences::accept()

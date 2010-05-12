@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -405,7 +405,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QToolButton" name="toolButton">
+          <widget class="QToolButton" name="btnMainBackground">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -419,7 +419,10 @@
             </size>
            </property>
            <property name="text">
-            <string/>
+            <string>Choose ...</string>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextBesideIcon</enum>
            </property>
           </widget>
          </item>

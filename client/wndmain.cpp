@@ -49,7 +49,7 @@ cWndMain::cWndMain( QWidget *parent )
     mdiPanels = new cMdiPanels( centralwidget );
     verticalLayout->addWidget(mdiPanels);
 
-    mdiPanels->setBackground( QBrush( Qt::black ) );
+    mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
@@ -147,9 +147,13 @@ void cWndMain::on_action_Preferences_triggered()
 
     cDlgPreferences  obDlgPrefs( this );
 
-    obDlgPrefs.exec();
-
-    mdiPanels->placeSubWindows();
+    if( obDlgPrefs.exec() == QDialog::Accepted )
+    {
+        mdiPanels->hide();
+        mdiPanels->placeSubWindows();
+        mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
+        mdiPanels->show();
+    }
 }
 //====================================================================================
 void cWndMain::on_action_Users_triggered()
