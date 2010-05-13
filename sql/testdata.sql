@@ -25,6 +25,13 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 INSERT INTO `users` (`name`, `licenceId`, `realName`, `password`, `groups`) VALUES
   ( 'admin', 1, 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
 
+INSERT INTO `activatecommand` (`activateCommandId`, `name`) VALUES
+ (0, 'Alap állapot'),
+ (1, 'Elõkészítés'),
+ (3, 'Kezelés'),
+ (4, 'Utóhûtés'),
+ (9, 'Várakozás');
+
 INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
  (0, 0, '<Nincs megadva>', 'ARC');
 UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;

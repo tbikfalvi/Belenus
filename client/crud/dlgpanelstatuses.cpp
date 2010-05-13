@@ -8,15 +8,15 @@ cDlgPanelStatuses::cDlgPanelStatuses( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Panelstatus List" ) );
-    setWindowIcon( QIcon("./resources/40x40_panelstatuses.gif") );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.gif") );
 
     if( g_obUser.isInGroup( "root" ) )
     {
-        m_qsQuery = "SELECT panelStatusId, licenceId, name, seqNumber, archive FROM panelStatuses";
+        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.archive FROM panelStatuses, paneltypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
     else
     {
-        m_qsQuery = "SELECT panelStatusId AS id, name, seqNumber FROM panelStatuses WHERE archive<>\"DEL\"";
+        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber FROM panelStatuses, paneltypes WHERE panelStatuses.archive<>\"DEL\" AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
@@ -41,13 +41,15 @@ void cDlgPanelStatuses::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Sequence order" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "PanelType" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sequence order" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Sequence order" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "PanelType" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Sequence order" ) );
     }
 }
 

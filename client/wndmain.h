@@ -42,7 +42,9 @@ private slots:
     void on_actionPatientSelect_triggered();
     void on_actionPatientEmpty_triggered();
     void on_actionAttendanceNew_triggered();
-    void on_action_EnterCode_triggered();
+    void on_action_PanelStatuses_triggered();
+    void on_action_UseWithCard_triggered();
+    void on_action_UseByTime_triggered();
 
     void refreshPanelButtons( bool p_boPanelWorking );
 };
