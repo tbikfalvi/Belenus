@@ -30,7 +30,7 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
                              const unsigned int p_uiPanelTypeId,
                              const unsigned int p_uiSequenceNumber,
                              const string &p_stName,
-                             const unsigned int p_uiLength,
+                             const string &p_stLength,
                              const unsigned int p_uiActivateCommand,
                              const string &p_stArchive ) throw()
 {
@@ -39,7 +39,7 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
     m_uiPanelTypeId     = p_uiPanelTypeId;
     m_uiSequenceNumber  = p_uiSequenceNumber;
     m_stName            = p_stName;
-    m_uiLength          = p_uiLength;
+    m_stLength          = p_stLength;
     m_uiActivateCommand = p_uiActivateCommand;
     m_stArchive         = p_stArchive;
 }
@@ -60,7 +60,7 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPanelTypeIdIdx ).toInt(),
           p_obRecord.value( inSequenceNumberIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString().toStdString(),
-          p_obRecord.value( inLengthIdx ).toInt(),
+          p_obRecord.value( inLengthIdx ).toString().toStdString(),
           p_obRecord.value( inActivateCommandIdx ).toInt(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
@@ -114,8 +114,8 @@ void cDBPanelStatuses::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "panelTypeId = \"%1\", " ).arg( m_uiPanelTypeId );
     qsQuery += QString( "seqNumber = \"%1\", " ).arg( m_uiSequenceNumber );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
-    qsQuery += QString( "length = \"%1\", " ).arg( m_uiLength );
+    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString(m_stName) );
+    qsQuery += QString( "length = \"%1\", " ).arg( QString::fromStdString(m_stLength) );
     qsQuery += QString( "activateCmd = \"%1\", " ).arg( m_uiActivateCommand );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
@@ -178,14 +178,14 @@ void cDBPanelStatuses::setName( const string &p_stName ) throw()
     m_stName = p_stName;
 }
 
-unsigned int cDBPanelStatuses::length() const throw()
+string cDBPanelStatuses::length() const throw()
 {
-    return m_uiLength;
+    return m_stLength;
 }
 
-void cDBPanelStatuses::setLength( const unsigned int p_uiLength ) throw()
+void cDBPanelStatuses::setLength( const string &p_stLength ) throw()
 {
-    m_uiLength = p_uiLength;
+    m_stLength = p_stLength;
 }
 
 unsigned int cDBPanelStatuses::activateCommand() const throw()

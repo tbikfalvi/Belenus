@@ -9,6 +9,7 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Entering ...") );
+    lblAction->setText( tr("Entering code ...") );
     pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
 }

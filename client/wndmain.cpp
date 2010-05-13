@@ -26,6 +26,7 @@
 #include "crud/dlgpatient.h"
 #include "crud/dlgattendance.h"
 #include "crud/dlgpatientselect.h"
+#include "crud/dlgpanelstatuses.h"
 
 //====================================================================================
 
@@ -84,6 +85,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.gif" ) );
     action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.gif" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
+    action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
@@ -165,6 +167,9 @@ void cWndMain::updateTitle()
     {
         qsTitle += " <=> NO PATIENT SELECTED";
     }
+
+    action_Paneltypes->setEnabled( g_obUser.isInGroup( "system" ) );
+    action_PanelStatuses->setEnabled( g_obUser.isInGroup( "system" ) );
 
     setWindowTitle( qsTitle );
 }
@@ -350,11 +355,24 @@ void cWndMain::on_actionAttendanceNew_triggered()
     delete poAttendance;
 }
 //====================================================================================
-void cWndMain::on_action_EnterCode_triggered()
+void cWndMain::on_action_PanelStatuses_triggered()
+{
+    cDlgPanelStatuses   obDlgPanelStatuses( this );
+
+    obDlgPanelStatuses.exec();
+}
+//====================================================================================
+void cWndMain::on_action_UseWithCard_triggered()
 {
     cDlgInputStart  obDlgInputStart( this );
 
     obDlgInputStart.exec();
 }
+//====================================================================================
+void cWndMain::on_action_UseByTime_triggered()
+{
+    cDlgInputStart  obDlgInputStart( this );
 
+    obDlgInputStart.exec();
+}
 //====================================================================================

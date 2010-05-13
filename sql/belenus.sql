@@ -113,6 +113,16 @@ CREATE TABLE `panels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- activateCommand tabla. A statuszokhoz tartozo parancsokat tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `activateCommand` (
+  `activateCommandId`       int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  PRIMARY KEY (`activateCommandId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- -----------------------------------------------------------------------------------
 -- Panel status tabla. A kliens alkalmazasban mukodtetett panelok kulonbozo status-ait
 -- tartalmazza, melyek panel tipusokhoz kapcsolodnak.
 -- -----------------------------------------------------------------------------------
@@ -122,7 +132,7 @@ CREATE TABLE `panelStatuses` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `seqNumber`               int(10) unsigned        NOT NULL,
   `name`                    varchar(20)             NOT NULL,
-  `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
+  `length`                  time                    NOT NULL,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelStatusId`),

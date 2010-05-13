@@ -14,10 +14,13 @@ public:
     virtual ~cDlgPanelStatusesEdit();
 
 public slots:
-    virtual void accept ();
 
 protected:
     cDBPanelStatuses *m_poPanelStatuses;
+
+private slots:
+    void on_pbCancel_clicked();
+    void on_pbOk_clicked();
 };
 
 #endif

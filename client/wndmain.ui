@@ -47,6 +47,7 @@
      <addaction name="action_ReasonToVisit"/>
      <addaction name="separator"/>
      <addaction name="action_Paneltypes"/>
+     <addaction name="action_PanelStatuses"/>
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
@@ -125,8 +126,6 @@
    </attribute>
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
-   <addaction name="separator"/>
-   <addaction name="action_EnterCode"/>
    <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
    <addaction name="action_UseByTime"/>
@@ -275,9 +274,9 @@
     <string>Use device with defined time period</string>
    </property>
   </action>
-  <action name="action_EnterCode">
+  <action name="action_PanelStatuses">
    <property name="text">
-    <string>Enter code</string>
+    <string>Panel statuses ...</string>
    </property>
   </action>
  </widget>
