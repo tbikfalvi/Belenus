@@ -129,6 +129,15 @@ void cWndMain::initPanels()
     mdiPanels->initPanels();
 }
 //====================================================================================
+void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.exec();
+
+    p_poEvent->ignore();
+}
+//====================================================================================
 void cWndMain::updateTitle()
 {
     cTracer obTrace( "cWndMain::updateTitle" );
@@ -299,12 +308,6 @@ void cWndMain::on_actionDeviceStart_triggered()
 {
     mdiPanels->start();
     refreshPanelButtons( true );
-}
-//====================================================================================
-void cWndMain::on_actionDevicePause_triggered()
-{
-    mdiPanels->pause();
-    refreshPanelButtons( false );
 }
 //====================================================================================
 void cWndMain::on_actionDeviceReset_triggered()

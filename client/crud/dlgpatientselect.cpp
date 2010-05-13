@@ -54,7 +54,6 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
     connect( ledName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledUniqueId, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
-    connect( pbCancel, SIGNAL(clicked(bool)), this, SLOT(on_pbCancel_clicked()) );
 }
 
 cDlgPatientSelect::~cDlgPatientSelect()

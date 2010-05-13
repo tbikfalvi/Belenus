@@ -19,6 +19,9 @@ public:
     bool showLogIn();
     void initPanels();
 
+protected:
+    void keyPressEvent ( QKeyEvent *p_poEvent );
+
 private:
     cMdiPanels         *mdiPanels;
 
@@ -37,7 +40,6 @@ private slots:
     void on_action_PatientNew_triggered();
     void on_action_Attendances_triggered();
     void on_actionDeviceStart_triggered();
-    void on_actionDevicePause_triggered();
     void on_actionDeviceReset_triggered();
     void on_actionPatientSelect_triggered();
     void on_actionPatientEmpty_triggered();
