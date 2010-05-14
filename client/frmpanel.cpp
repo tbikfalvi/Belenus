@@ -45,19 +45,6 @@ void cFrmPanel::start()
     m_poWorking = true;
 }
 
-void cFrmPanel::pause()
-{
-    stringstream ssTrace;
-    ssTrace << "Id: " << m_uiId;
-    cTracer obTrace( "cFrmPanel::pause", ssTrace.str() );
-
-    QPalette  obNewPalette = palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
-    setPalette( obNewPalette );
-
-    m_poWorking = false;
-}
-
 void cFrmPanel::reset()
 {
     stringstream ssTrace;
@@ -75,6 +62,14 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 {
     m_uiId = p_uiPanelId;
 
-    poTitle->setText( "Hello Mom!" );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
+    if( poQuery->size() )
+    {
+        poQuery->first();
+        poTitle->setText( poQuery->value( 1 ).toString() );
+    }
+    else
+    {
+        poTitle->setText( "Panel Not Found in Database" );
+    }
 }
-

@@ -17,9 +17,17 @@ cDlgInputStart::~cDlgInputStart()
 {
 }
 
+void cDlgInputStart::setInitialText( const QString &p_stText )
+{
+    ledInputStart->setText( p_stText );
+}
+
 void cDlgInputStart::on_ledInputStart_textChanged(QString )
 {
-    if( ledInputStart->text().length() < 4 && containsOnlyNumbers(ledInputStart->text()) )
+    bool boIsANumber = false;
+    ledInputStart->text().toUInt( &boIsANumber );
+
+    if( (ledInputStart->text().length() < 4) && (boIsANumber) )
     {
         lblAction->setText( tr("Entering time period ...") );
     }
@@ -42,20 +50,4 @@ void cDlgInputStart::on_pbSelect_clicked()
 void cDlgInputStart::on_pbCancel_clicked()
 {
     QDialog::reject();
-}
-
-bool cDlgInputStart::containsOnlyNumbers( QString p_stTemp )
-{
-    bool bRet = true;
-
-    for( int i=0; i<p_stTemp.length(); i++ )
-    {
-        if( !p_stTemp.at(i).isDigit() )
-        {
-            bRet = false;
-            break;
-        }
-    }
-
-    return bRet;
 }

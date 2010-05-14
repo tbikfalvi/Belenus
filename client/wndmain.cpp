@@ -131,9 +131,13 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 {
-    cDlgInputStart  obDlgInputStart( this );
+    if( p_poEvent->text() != "" )
+    {
+        cDlgInputStart  obDlgInputStart( this );
 
-    obDlgInputStart.exec();
+        obDlgInputStart.setInitialText( p_poEvent->text() );
+        obDlgInputStart.exec();
+    }
 
     p_poEvent->ignore();
 }

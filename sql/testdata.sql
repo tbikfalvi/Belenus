@@ -45,15 +45,15 @@ INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `len
 UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
 ALTER TABLE `attendance` auto_increment=1;
 
-INSERT INTO `patientcardtypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `archive`) VALUES
+INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `archive`) VALUES
  ('0', '0', 'System Administrator', '0', '999', '2010-01-01', '2110-01-01', '0', '10', 'ARC');
-UPDATE `patientcardtypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
-ALTER TABLE `patientcardtypes` auto_increment=1;
+UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
+ALTER TABLE `patientCardTypes` auto_increment=1;
 
-INSERT INTO `patientcards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `archive`) VALUES
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `archive`) VALUES
  ('0', '0', '0', '0', 'BELENUS_SERVICECARD', 'Szervíz kártya', '999', '99:99:99', '2110-01-01', NULL, 'ARC');
-UPDATE `patientcards` SET `patientCardId`=0 WHERE `patientCardId`=1;
-ALTER TABLE `patientcards` auto_increment=1;
+UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
+ALTER TABLE `patientCards` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal
@@ -75,7 +75,7 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
   ( 1, 1, "Panel 7" ),
   ( 1, 1, "Panel 8" );
 
-INSERT INTO `patientorigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
+INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
 (1, 1, 'Ismerõs/barát ajánlotta', 'ARC'),
 (2, 1, 'Szórólap', 'ARC'),
 (3, 1, 'Internet', 'ARC'),
@@ -83,7 +83,7 @@ INSERT INTO `patientorigin` (`patientOriginId`, `licenceId`, `name`, `archive`) 
 (5, 1, 'Újság', 'ARC'),
 (6, 1, 'Egyéb', 'ARC');
 
-INSERT INTO `reasontovisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
+INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `archive`) VALUES
 (1, 1, 'Gyógyulás betegségbõl', 'ARC'),
 (2, 1, 'Immunerõsítés / regenerálódás', 'ARC');
 
