@@ -13,7 +13,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientedit.ui \
     dlgattendanceedit.ui \
     dlginputstart.ui \
-    dlgpanelstatusesedit.ui
+    dlgpanelstatusesedit.ui \
+    dlgpatientcardtypeedit.ui
 HEADERS = belenus.h \
     ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
@@ -32,6 +33,7 @@ HEADERS = belenus.h \
     crud/dlgattendance.h \
     crud/dlgpatientselect.h \
     crud/dlgpanelstatuses.h \
+    crud/dlgpatientcardtype.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -53,6 +55,7 @@ HEADERS = belenus.h \
     edit/dlgreasontovisitedit.h \
     edit/dlgattendanceedit.h \
     edit/dlgpanelstatusesedit.h \
+    edit/dlgpatientcardtypeedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -75,6 +78,7 @@ SOURCES = main.cpp \
     crud/dlgattendance.cpp \
     crud/dlgpatientselect.cpp \
     crud/dlgpanelstatuses.cpp \
+    crud/dlgpatientcardtype.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
@@ -96,6 +100,7 @@ SOURCES = main.cpp \
     edit/dlgreasontovisitedit.cpp \
     edit/dlgattendanceedit.cpp \
     edit/dlgpanelstatusesedit.cpp \
+    edit/dlgpatientcardtypeedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
