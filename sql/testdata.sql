@@ -53,7 +53,7 @@ UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
 ALTER TABLE `attendance` auto_increment=1;
 
 INSERT INTO `patientcardtypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `archive`) VALUES
- ('0', '0', 'System Administrator', '0', '999', '2010-01-01', '2110-01-01', '0', '10', 'ARC');
+ ('0', '0', 'System Administrator / Service', '0', '999', '2010-01-01', '2110-01-01', '0', '10', 'ARC');
 UPDATE `patientcardtypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientcardtypes` auto_increment=1;
 

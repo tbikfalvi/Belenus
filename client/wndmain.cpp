@@ -27,6 +27,7 @@
 #include "crud/dlgattendance.h"
 #include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
+#include "crud/dlgpatientcardtype.h"
 
 //====================================================================================
 
@@ -86,6 +87,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.gif" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
     action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
+    action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
@@ -306,12 +308,6 @@ void cWndMain::on_actionDeviceStart_triggered()
     refreshPanelButtons( true );
 }
 //====================================================================================
-void cWndMain::on_actionDevicePause_triggered()
-{
-    mdiPanels->pause();
-    refreshPanelButtons( false );
-}
-//====================================================================================
 void cWndMain::on_actionDeviceReset_triggered()
 {
     mdiPanels->reset();
@@ -374,5 +370,16 @@ void cWndMain::on_action_UseByTime_triggered()
     cDlgInputStart  obDlgInputStart( this );
 
     obDlgInputStart.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Cards_triggered()
+{
+}
+//====================================================================================
+void cWndMain::on_action_CardTypes_triggered()
+{
+    cDlgPatientCardType obDlgPatientCardType( this );
+
+    obDlgPatientCardType.exec();
 }
 //====================================================================================

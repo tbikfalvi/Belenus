@@ -50,7 +50,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
 
 void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx             = p_obRecord.indexOf( "patientOriginId" );
+    int inIdIdx             = p_obRecord.indexOf( "patientCardTypeId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inPriceIdx          = p_obRecord.indexOf( "price" );
@@ -118,7 +118,7 @@ void cDBPatientCardType::save() throw( cSevException )
         qsQuery = "INSERT INTO";
         m_stArchive = "NEW";
     }
-    qsQuery += " patientCardType SET ";
+    qsQuery += " patientCardTypes SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
     qsQuery += QString( "price = \"%1\", " ).arg( m_fPrice );
