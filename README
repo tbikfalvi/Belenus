@@ -23,3 +23,4 @@ CurrentPatient		- Csak akkor lehet kezelni bizonyos reszeket, ha van aktualis pa
 HardwareInit		- Hardver kezelés alapjai. Csatlakozás, inicializálás. Hardver teszt
 			  relék kapcsolálásval.
 PanelStatus		- Panelok mûködését meghatározó panel status-ok kezelése.
+PatientCard		- Pacienseknek altal hasznalt kartyak es kartyatipusok kezelese
