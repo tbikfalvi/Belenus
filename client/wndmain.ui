@@ -51,6 +51,8 @@
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
+    <addaction name="separator"/>
+    <addaction name="action_CardTypes"/>
     <addaction name="action_Cards"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
@@ -277,6 +279,14 @@
   <action name="action_PanelStatuses">
    <property name="text">
     <string>Panel statuses ...</string>
+   </property>
+  </action>
+  <action name="action_CardTypes">
+   <property name="text">
+    <string>Card types ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Patientcard types</string>
    </property>
   </action>
  </widget>

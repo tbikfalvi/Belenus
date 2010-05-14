@@ -37,7 +37,6 @@ private slots:
     void on_action_PatientNew_triggered();
     void on_action_Attendances_triggered();
     void on_actionDeviceStart_triggered();
-    void on_actionDevicePause_triggered();
     void on_actionDeviceReset_triggered();
     void on_actionPatientSelect_triggered();
     void on_actionPatientEmpty_triggered();
@@ -45,6 +44,8 @@ private slots:
     void on_action_PanelStatuses_triggered();
     void on_action_UseWithCard_triggered();
     void on_action_UseByTime_triggered();
+    void on_action_Cards_triggered();
+    void on_action_CardTypes_triggered();
 
     void refreshPanelButtons( bool p_boPanelWorking );
 };
