@@ -133,6 +133,19 @@ void cWndMain::initPanels()
     mdiPanels->initPanels();
 }
 //====================================================================================
+void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
+{
+    if( p_poEvent->text() != "" )
+    {
+        cDlgInputStart  obDlgInputStart( this );
+
+        obDlgInputStart.setInitialText( p_poEvent->text() );
+        obDlgInputStart.exec();
+    }
+
+    p_poEvent->ignore();
+}
+//====================================================================================
 void cWndMain::updateTitle()
 {
     cTracer obTrace( "cWndMain::updateTitle" );

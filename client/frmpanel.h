@@ -15,7 +15,6 @@ public:
 
     bool isWorking() const;
     void start();
-    void pause();
     void reset();
 
 private:

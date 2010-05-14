@@ -12,11 +12,7 @@ public:
     cDlgInputStart( QWidget *p_poParent = 0 );
     virtual ~cDlgInputStart();
 
-private:
-    bool containsOnlyNumbers( QString p_stTemp );
-
-public slots:
-
+    void setInitialText( const QString &p_stText );
 
 private slots:
     void on_pbCancel_clicked();

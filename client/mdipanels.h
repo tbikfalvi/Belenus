@@ -20,7 +20,6 @@ public:
     void initPanels();
     void placeSubWindows();
     void start();
-    void pause();
     void reset();
 
 signals:

@@ -90,11 +90,6 @@ void cMdiPanels::start()
     m_obPanels.at( m_inActivePanel )->start();
 }
 
-void cMdiPanels::pause()
-{
-    m_obPanels.at( m_inActivePanel )->pause();
-}
-
 void cMdiPanels::reset()
 {
     m_obPanels.at( m_inActivePanel )->reset();

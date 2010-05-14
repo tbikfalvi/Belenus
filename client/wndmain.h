@@ -19,6 +19,9 @@ public:
     bool showLogIn();
     void initPanels();
 
+protected:
+    void keyPressEvent ( QKeyEvent *p_poEvent );
+
 private:
     cMdiPanels         *mdiPanels;
 
