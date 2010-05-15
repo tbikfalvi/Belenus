@@ -1,5 +1,5 @@
-#ifndef DB_PATIENTCARD_H
-#define DB_PATIENTCARD_H
+#ifndef DB_PATIENTCARDTYPE_H
+#define DB_PATIENTCARDTYPE_H
 
 #include <QSqlRecord>
 

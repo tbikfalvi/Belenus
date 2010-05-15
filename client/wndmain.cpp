@@ -28,6 +28,7 @@
 #include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
 #include "crud/dlgpatientcardtype.h"
+#include "crud/dlgpatientcard.h"
 
 //====================================================================================
 
@@ -387,6 +388,9 @@ void cWndMain::on_action_UseByTime_triggered()
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
 {
+    cDlgPatientCard obDlgPatientCard( this );
+
+    obDlgPatientCard.exec();
 }
 //====================================================================================
 void cWndMain::on_action_CardTypes_triggered()

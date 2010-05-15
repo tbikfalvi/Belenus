@@ -35,6 +35,8 @@ void cPreferences::init()
     m_qsServerAddress    = "";
     m_qsServerPort       = "";
     m_qsMainBackground   = "";
+    m_nCommunicationPort = 1;
+    m_nBarcodeLength     = 12;
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -236,6 +238,16 @@ int cPreferences::getCommunicationPort() const
     return m_nCommunicationPort;
 }
 
+void cPreferences::setBarcodeLength( const int p_nBarcodeLength )
+{
+    m_nBarcodeLength = p_nBarcodeLength;
+}
+
+int cPreferences::getBarcodeLength() const
+{
+    return m_nBarcodeLength;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -301,6 +313,7 @@ void cPreferences::loadConfFileSettings()
         m_qsLang             = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
         m_qsLastUser         = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
         m_uiPanelsPerRow     = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
+        m_nBarcodeLength     = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
 
         m_uiMainWindowLeft   = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
         m_uiMainWindowTop    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
@@ -387,6 +400,7 @@ void cPreferences::save() const throw (cSevException)
     if( m_qsLang != "" )     obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLang );
     if( m_qsLastUser != "" ) obPrefFile.setValue( QString::fromAscii( "LastUser" ), m_qsLastUser );
     obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
+    obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_nBarcodeLength );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );

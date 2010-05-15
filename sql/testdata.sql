@@ -53,14 +53,9 @@ UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
 ALTER TABLE `attendance` auto_increment=1;
 
 INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `archive`) VALUES
- ('0', '0', 'System Administrator / Service', '0', '999', '2010-01-01', '2110-01-01', '0', '10', 'ARC');
+ ('0', '0', 'Inaktív kártyák', '0', '0', '2010-01-01', '2010-01-01', '0', '0', 'ARC');
 UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
-
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `archive`) VALUES
- ('0', '0', '0', '0', 'BELENUS_SERVICECARD', 'Szervíz kártya', '999', '99:99:99', '2110-01-01', NULL, 'ARC');
-UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
-ALTER TABLE `patientCards` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal

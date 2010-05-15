@@ -35,6 +35,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
                            const string p_stTimeLeft,
                            const string p_stValidDate,
                            const string p_stPincode,
+                           const bool p_bActive,
                            const string &p_stArchive ) throw()
 {
     m_uiId                  = p_uiId;
@@ -47,12 +48,13 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_stTimeLeft            = p_stTimeLeft;
     m_stValidDate           = p_stValidDate;
     m_stPincode             = p_stPincode;
+    m_bActive               = p_bActive;
     m_stArchive             = p_stArchive;
 }
 
 void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx                 = p_obRecord.indexOf( "patientOriginId" );
+    int inIdIdx                 = p_obRecord.indexOf( "patientCardId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
     int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
@@ -62,6 +64,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inTimeLeftIdx           = p_obRecord.indexOf( "timeLeft" );
     int inValidDateIdx          = p_obRecord.indexOf( "validDate" );
     int inPincodeIdx            = p_obRecord.indexOf( "pincode" );
+    int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
@@ -74,6 +77,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inTimeLeftIdx ).toString().toStdString(),
           p_obRecord.value( inValidDateIdx ).toString().toStdString(),
           p_obRecord.value( inPincodeIdx ).toString().toStdString(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -109,7 +113,7 @@ void cDBPatientCard::save() throw( cSevException )
         qsQuery = "INSERT INTO";
         m_stArchive = "NEW";
     }
-    qsQuery += " patientOrigin SET ";
+    qsQuery += " patientCards SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
@@ -119,10 +123,11 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( QString::fromStdString( m_stTimeLeft ) );
     qsQuery += QString( "validDate = \"%1\", " ).arg( QString::fromStdString( m_stValidDate ) );
     qsQuery += QString( "pincode = \"%1\", " ).arg( QString::fromStdString( m_stPincode ) );
+    qsQuery += QString( "active = \"%1\", " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
-        qsQuery += QString( " WHERE patientOriginId = %1" ).arg( m_uiId );
+        qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
     }
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -230,6 +235,16 @@ void cDBPatientCard::setPincode( const string &p_stPincode ) throw()
     m_stPincode = p_stPincode;
 }
 
+bool cDBPatientCard::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBPatientCard::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
+}
+
 string cDBPatientCard::archive() const throw()
 {
     return m_stArchive;
@@ -239,4 +254,3 @@ void cDBPatientCard::setArchive( const string &p_stArchive ) throw()
 {
     m_stArchive = p_stArchive;
 }
-

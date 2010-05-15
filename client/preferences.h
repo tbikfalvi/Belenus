@@ -43,6 +43,8 @@ public:
     QString       getServerPort() const;
     void          setCommunicationPort( const int p_nPortNumber );
     int           getCommunicationPort() const;
+    void          setBarcodeLength( const int p_nBarcodeLength );
+    int           getBarcodeLength() const;
     void          setLogLevels( const unsigned int p_uiConLevel,
                                 const unsigned int p_uiDBLevel,
                                 const unsigned int p_uiGUILevel,
@@ -78,6 +80,7 @@ private:
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
     int             m_nCommunicationPort;
+    int             m_nBarcodeLength;
 
     void init();
 };

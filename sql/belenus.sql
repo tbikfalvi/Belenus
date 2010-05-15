@@ -261,6 +261,7 @@ CREATE TABLE `patientCards` (
   `timeLeft`                time                    NOT NULL,
   `validDate`               date                    NOT NULL,
   `pincode`                 varchar(5)              DEFAULT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
