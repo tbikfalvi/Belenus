@@ -1,10 +1,11 @@
 
 #include "../framework/qtlogger.h"
+#include "../framework/qtmysqlconnection.h"
 #include "serverthread.h"
 
 
 extern cQTLogger g_obLogger;
-
+extern cQTMySQLConnection g_db;
 
 
 
@@ -62,6 +63,17 @@ void ServerThread::_handleLogonAdminResponse(Packet &packet)
     packet >> username >> password;
     g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] username=" << username << " password=" << password << cQTLogger::EOM;
 
-    Packet p(Packet::MSG_LOGON_OK);
-    send(p);
+    QSqlQuery *q = g_db.executeQTQuery(QString("SELECT userId FROM users WHERE name='%1' AND password='%2' AND active=1 LIMIT 2;").arg(username).arg(password));
+    if ( q->size()==1 ) {
+        g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonAdminResponse] userid is " << q->record().field("userid").value().toString().toStdString() << cQTLogger::EOM;
+        Packet p(Packet::MSG_LOGON_OK);
+        send(p);
+    } else {
+        g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonAdminResponse] no active user has been found" << cQTLogger::EOM;
+        Packet p(Packet::MSG_DISCONNECT);
+        send(p);
+        _socket->disconnectFromHost();
+    }
+
+    delete q;
 }
