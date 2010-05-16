@@ -56,7 +56,7 @@ void ServerThread::_handleLogonResponse(Packet &packet)
 
 void ServerThread::_handleLogonAdminResponse(Packet &packet)
 {
-    _assertSize(4, packet, MINIMUM);
+    _assertSize(2, packet, MINIMUM);
     char *username = 0, *password = 0;
 
     packet >> username >> password;

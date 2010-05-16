@@ -99,9 +99,24 @@ QString Packet::dump()
     QString msg;
     QByteArray & data = getRawPacket();
 
-    msg += QString("Length: %1: ").arg(_header.length);
-    for (int i=0; i<data.size(); ++i)
+    msg += QString("Length: %1.\n").arg(_header.length);
+    for (int i=0; i<data.size(); ++i) {
+        if (i>0 && i%4==0)
+            msg += " ";
         msg += QString("%1 ").arg( (int)data.at(i), (int)2, (int)16, (QChar)'0' );
+    }
+
+    if ( data.size()>0 ) {
+        msg += "|";
+        for (int i=0; i<data.size(); ++i) {
+            if (i>0 && i%4==0) msg += " ";
+            if ( data.at(i)>32 )
+                msg += QString("%1").arg( (char)data.at(i) );
+            else
+                msg += ".";
+        }
+    }
+
 
     return msg;
 }
@@ -127,19 +142,33 @@ Packet &Packet::operator <<( char *param )
     char *p = param;
     while ( *(p++) );
     int size = _data.size();
-    _data.resize(_data.size() + p - param + 1 );
+    _data.resize(_data.size() + p - param );
     _header.length = _data.size() - sizeof(PacketHeader);
-    memcpy(_data.data() + size, param, p - param + 1);
+    memcpy(_data.data() + size, param, p - param);
     return *this;
 }
 
 
 
-Packet &Packet::operator >>( char *param )
+Packet &Packet::operator >>( char* &param )
 {
     param = _data.data() + _readPos;
     char *p = param;
-    while ( *(p++) ) ++_readPos;
+    char *limit = _data.data() + _data.size();
+
+    while ( *p && p<limit ) {
+        ++p;
+        ++_readPos;
+    }
+
+    if ( *p==0 ) {
+        ++_readPos; // we stopped on \0 so stand on the next element
+    } else {
+        // what we read is not a correct string as there is no ending \0.
+        // So return a NULL. _readPos already reached the limit
+        param = 0;
+        throw ProtocolException(cSeverity::WARNING, PROTOCOL_CORRUPT_PACKET, QString("No trailing \\0 was found for string").toStdString());
+    }
     return *this;
 }
 

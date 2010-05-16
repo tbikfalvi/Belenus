@@ -98,6 +98,7 @@ void MainWindow::on_bConnect_clicked()
         bConnect->setEnabled(false);
         bConnect->setText("Connecting");
 
+        _connection.setCredentials(iUsername->text(), iPassword->text());
         _connection.connectTo( QHostAddress(host), port );
     }
 }

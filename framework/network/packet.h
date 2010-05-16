@@ -34,6 +34,7 @@ public:
     static const qint16 MAGIC = 0x326f;
 
     static const char *_packetNames[];
+    /* do not forget to modify _packetNames in packet.cpp if you modify this enum. Indexes here must be synched with the names */
     enum Message {
         MSG_HELLO,
         MSG_LOGON_CHALLENGE,
@@ -88,7 +89,13 @@ public:
     /*
      * Readers
      */
-    Packet &operator >>( char *param );
+
+    /*
+     * returns a pointer to the the string. Pointer is inside the packet buffer.
+     * After call you should copy its value in case you want it to use later, as
+     * the pointer goes invalid if packet changes or became deleted
+     */
+    Packet &operator >>( char *&param );
 
     template<typename T>
     Packet & operator >>( T &param ) {
