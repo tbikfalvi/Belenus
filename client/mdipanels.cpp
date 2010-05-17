@@ -7,7 +7,7 @@
 cMdiPanels::cMdiPanels( QWidget *p_poParent )
     : QMdiArea( p_poParent )
 {
-    m_inActivePanel = 0;
+    m_uiActivePanel = 0;
 }
 
 cMdiPanels::~cMdiPanels()
@@ -36,6 +36,8 @@ void cMdiPanels::initPanels()
         poFrame->setFrameShape( QFrame::Panel);
         poFrame->setFrameShadow( QFrame::Sunken );
         poFrame->setLineWidth( 5 );
+
+        connect( poFrame, SIGNAL( panelClicked( unsigned int ) ), this, SLOT( activatePanel( unsigned int ) ) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -87,21 +89,22 @@ void cMdiPanels::placeSubWindows()
 
 void cMdiPanels::start()
 {
-    m_obPanels.at( m_inActivePanel )->start();
+    m_obPanels.at( m_uiActivePanel )->start();
 }
 
 void cMdiPanels::reset()
 {
-    m_obPanels.at( m_inActivePanel )->reset();
+    m_obPanels.at( m_uiActivePanel )->reset();
 }
 
-void cMdiPanels::activatePanel( const int p_inPanel )
+void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
-    m_obPanels.at( m_inActivePanel )->setFrameShadow( QFrame::Sunken );
-    m_obPanels.at( p_inPanel )->setFrameShadow( QFrame::Raised );
-    m_inActivePanel = p_inPanel;
+    m_obPanels.at( m_uiActivePanel )->inactivate();
+    m_obPanels.at( p_uiPanel )->activate();
 
-    emit activePanelChanged( m_obPanels.at( m_inActivePanel )->isWorking() );
+    m_uiActivePanel = p_uiPanel;
+
+    emit activePanelChanged( m_obPanels.at( m_uiActivePanel )->isWorking() );
 }
 
 void cMdiPanels::resizeEvent ( QResizeEvent *p_poEvent )
@@ -112,7 +115,7 @@ void cMdiPanels::resizeEvent ( QResizeEvent *p_poEvent )
 
 void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
 {
-    int inNewPanel = m_inActivePanel;
+    int inNewPanel = m_uiActivePanel;
 
     switch( p_poEvent->key() )
     {
@@ -135,5 +138,5 @@ void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
     default: p_poEvent->ignore();
     }
 
-    if( inNewPanel >= 0 && inNewPanel < (int)m_obPanels.size() && inNewPanel != m_inActivePanel ) activatePanel( inNewPanel );
+    if( inNewPanel >= 0 && inNewPanel < (int)m_obPanels.size() && inNewPanel != (int)m_uiActivePanel ) activatePanel( (unsigned int)inNewPanel );
 }

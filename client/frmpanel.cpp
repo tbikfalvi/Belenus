@@ -15,11 +15,16 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     poVerticalLayout->addWidget( poTitle );
     poVerticalLayout->addItem( poSpacer1 );
 
-    m_poWorking = false;
-
     setAutoFillBackground( true );
 
+    poTitle->setAutoFillBackground( true );
+    poTitle->setContentsMargins( 0, 5, 0, 5 );
+
     load( p_uiPanelId );
+
+    m_uiStatus = 0;
+    inactivate();
+    displayStatus();
 }
 
 cFrmPanel::~cFrmPanel()
@@ -29,7 +34,7 @@ cFrmPanel::~cFrmPanel()
 
 bool cFrmPanel::isWorking() const
 {
-    return m_poWorking;
+    return (m_uiStatus > 0);
 }
 
 void cFrmPanel::start()
@@ -42,7 +47,8 @@ void cFrmPanel::start()
     obNewPalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
     setPalette( obNewPalette );
 
-    m_poWorking = true;
+    m_uiStatus = 1;
+    displayStatus();
 }
 
 void cFrmPanel::reset()
@@ -55,7 +61,32 @@ void cFrmPanel::reset()
     obNewPalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
     setPalette( obNewPalette );
 
-    m_poWorking = false;
+    m_uiStatus = 0;
+    displayStatus();
+}
+
+void cFrmPanel::inactivate()
+{
+    setFrameShadow( QFrame::Sunken );
+
+    QPalette  obNewPalette = poTitle->palette();
+    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#b9b9b9") ) );
+    poTitle->setPalette( obNewPalette );
+}
+
+void cFrmPanel::activate()
+{
+    setFrameShadow( QFrame::Raised );
+
+    QPalette  obNewPalette = poTitle->palette();
+    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#4387cb" ) ) );
+    poTitle->setPalette( obNewPalette );
+}
+
+void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
+{
+    emit panelClicked( m_uiId - 1 );
+    p_poEvent->ignore();
 }
 
 void cFrmPanel::load( const unsigned int p_uiPanelId )
@@ -72,4 +103,9 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
     {
         poTitle->setText( "Panel Not Found in Database" );
     }
+}
+
+void cFrmPanel::displayStatus()
+{
+    poTitle->setAlignment( Qt::AlignCenter );
 }

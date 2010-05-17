@@ -138,15 +138,18 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 {
-    if( p_poEvent->text() != "" )
+    if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
+        (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) )
     {
         cDlgInputStart  obDlgInputStart( this );
 
         obDlgInputStart.setInitialText( p_poEvent->text() );
         obDlgInputStart.exec();
+
+        p_poEvent->ignore();
     }
 
-    p_poEvent->ignore();
+    QMainWindow::keyPressEvent( p_poEvent );
 }
 //====================================================================================
 void cWndMain::updateTitle()
