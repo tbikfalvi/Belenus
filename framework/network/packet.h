@@ -75,6 +75,7 @@ public:
     Packet &operator <<( const char *param );
     Packet &operator <<( char *param );
     Packet &operator <<( string param );
+    Packet &operator <<( QString param );
 
     template<typename T>
     Packet & operator <<( const T param ) {

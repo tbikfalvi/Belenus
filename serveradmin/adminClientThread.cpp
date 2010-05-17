@@ -42,6 +42,6 @@ void AdminClientThread::_handleLogonChallenge(Packet &packet)
     _assertSize( 0, packet );
 
     Packet p(Packet::MSG_LOGON_ADMIN_RESPONSE);
-    p << _username.toStdString() << _password.toStdString();
+    p << _username << QString(QCryptographicHash::hash(_password.toAscii(), QCryptographicHash::Sha1).toHex());
     send(p);
 }

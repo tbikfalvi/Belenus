@@ -98,12 +98,13 @@ QString Packet::dump()
 {
     QString msg;
     QByteArray & data = getRawPacket();
+    msg.reserve( _header.length*3 + 30 );
 
     msg += QString("Length: %1.\n").arg(_header.length);
     for (int i=0; i<data.size(); ++i) {
         if (i>0 && i%4==0)
             msg += " ";
-        msg += QString("%1 ").arg( (int)data.at(i), (int)2, (int)16, (QChar)'0' );
+        msg += QString("%1 ").arg( (unsigned char)data.at(i), (int)2, (int)16, (QChar)'0' );
     }
 
     if ( data.size()>0 ) {
@@ -137,6 +138,13 @@ Packet &Packet::operator <<( string param )
 
 
 
+Packet &Packet::operator <<( QString param )
+{
+    return this->operator << (param.toStdString().c_str());
+}
+
+
+
 Packet &Packet::operator <<( char *param )
 {
     char *p = param;
@@ -154,9 +162,9 @@ Packet &Packet::operator >>( char* &param )
 {
     param = _data.data() + _readPos;
     char *p = param;
-    char *limit = _data.data() + _data.size();
+    unsigned int size = _header.length + sizeof(_header);
 
-    while ( *p && p<limit ) {
+    while ( _readPos<size && *p ) {
         ++p;
         ++_readPos;
     }
