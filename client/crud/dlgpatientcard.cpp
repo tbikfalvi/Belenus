@@ -10,18 +10,34 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
     setWindowTitle( tr( "Patient Card List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.gif") );
 
-    if( g_obUser.isInGroup( "root" ) )
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblPatientCardType = new QLabel( this );
+    lblPatientCardType->setObjectName( QString::fromUtf8( "lblPatientCardType" ) );
+    lblPatientCardType->setText( "Patientcard type: " );
+    horizontalLayout->addWidget( lblPatientCardType );
+    cmbPatientCardType = new QComboBox( this );
+    cmbPatientCardType->setObjectName( QString::fromUtf8( "cmbPatientCardType" ) );
+    cmbPatientCardType->resize( 400, 20 );
+    horizontalLayout->addWidget( cmbPatientCardType );
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+    verticalLayout->insertLayout( 0, horizontalLayout );
+
+    QSqlQuery *poQuery;
+
+    cmbPatientCardType->addItem( tr("<All patientcard type>"), -1 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" ) );
+    while( poQuery->next() )
     {
-        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units, patientCards.archive FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId";
-    }
-    else
-    {
-        m_qsQuery = "SELECT patientCards.patientCardId AS Id, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.archive<>\"DEL\"";
+        cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
 
     setupTableView();
+
+    connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
 }
 
 cDlgPatientCard::~cDlgPatientCard()
@@ -53,6 +69,29 @@ void cDlgPatientCard::setupTableView()
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Patientcard type" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "All units" ) );
     }
+}
+
+void cDlgPatientCard::refreshTable()
+{
+    cTracer obTracer( "cDlgPatientCard::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units, patientCards.archive FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId";
+    }
+    else
+    {
+        m_qsQuery = "SELECT patientCards.patientCardId AS Id, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.archive<>\"DEL\"";
+    }
+
+    int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
+    if( uiPatientCardTypeId > -1 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patientCards.patientCardTypeId=%1" ).arg( uiPatientCardTypeId );
+    }
+
+    cDlgCrud::refreshTable();
 }
 
 void cDlgPatientCard::enableButtons()
