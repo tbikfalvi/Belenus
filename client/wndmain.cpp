@@ -43,6 +43,7 @@
 #include "dlg/dlghardwaretest.h"
 #include "dlg/dlglogs.h"
 #include "dlg/dlginputstart.h"
+#include "dlg/dlgpatientcardadd.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -89,6 +90,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
     action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.gif" ) );
+    action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
@@ -398,5 +400,12 @@ void cWndMain::on_action_CardTypes_triggered()
     cDlgPatientCardType obDlgPatientCardType( this );
 
     obDlgPatientCardType.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PCSaveToDatabase_triggered()
+{
+    cDlgPatientCardAdd  obDlgPatientCardAdd( this );
+
+    obDlgPatientCardAdd.exec();
 }
 //====================================================================================

@@ -15,7 +15,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlginputstart.ui \
     dlgpanelstatusesedit.ui \
     dlgpatientcardtypeedit.ui \
-    dlgpatientcardedit.ui
+    dlgpatientcardedit.ui \
+    dlgpatientcardadd.ui
 HEADERS = belenus.h \
     ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
@@ -50,6 +51,7 @@ HEADERS = belenus.h \
     dlg/dlgpreferences.h \
     dlg/dlgpwdconfirm.h \
     dlg/dlginputstart.h \
+    dlg/dlgpatientcardadd.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientedit.h \
@@ -97,6 +99,7 @@ SOURCES = main.cpp \
     dlg/dlgpreferences.cpp \
     dlg/dlgpwdconfirm.cpp \
     dlg/dlginputstart.cpp \
+    dlg/dlgpatientcardadd.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
