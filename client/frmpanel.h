@@ -5,6 +5,9 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
+#include <vector>
+
+#include "db/dbpanelstatuses.h"
 
 class cFrmPanel : public QFrame
 {
@@ -28,14 +31,23 @@ protected:
 
 private:
     unsigned int  m_uiId;
+    unsigned int  m_uiType;
     unsigned int  m_uiStatus;
+    unsigned int  m_uiCounter;
 
-    QVBoxLayout  *poVerticalLayout;
-    QLabel       *poTitle;
-    QSpacerItem  *poSpacer1;
+    QVBoxLayout  *verticalLayout;
+    QLabel       *lblTitle;
+    QLabel       *lblCurrStatus;
+    QLabel       *lblCurrTimer;
+    QLabel       *lblNextStatusLen;
+    QLabel       *lblInfo;
+    QSpacerItem  *spacer1;
+
+    vector<cDBPanelStatuses*>  m_obStatuses;
 
     void load( const unsigned int p_uiPanelId );
     void displayStatus();
+    void activateNextStatus();
 };
 
 #endif // FRMPANEL_H

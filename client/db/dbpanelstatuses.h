@@ -25,7 +25,7 @@ public:
     string          name() const                                                    throw();
     void            setName( const string &p_stName )                               throw();
     string          length() const                                                  throw();
-    void            setLength( const string &p_stLength )                            throw();
+    void            setLength( const string &p_stLength )                           throw();
     unsigned int    activateCommand() const                                         throw();
     void            setActivateCommand( const unsigned int p_uiActivateCommand )    throw();
     string          archive() const                                                 throw();
