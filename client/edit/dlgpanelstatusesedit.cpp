@@ -27,7 +27,7 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
                 cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
         }
         sbSeqNumber->setValue( m_poPanelStatuses->sequenceNumber() );
-        teLength->setTime( QTime::fromString(QString::fromStdString(m_poPanelStatuses->length()),"hh:mm:ss") );
+        sbLength->setValue( m_poPanelStatuses->length() );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT activateCommandId, name FROM activateCommand ORDER BY activateCommandId" ) );
         while( poQuery->next() )
         {
@@ -64,32 +64,30 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Panelstatus name cannot be empty." ) );
     }
-    if( teLength->time().hour() == 0 &&
-        teLength->time().minute() == 0 &&
-        teLength->time().second() == 0 &&
-        cmbActivateCmd->currentIndex() > 0 )
+
+    if( sbLength->value() == 0 && cmbActivateCmd->currentIndex() > 0 )
     {
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Length of status process time cannot be zero." ) );
     }
-    QSqlQuery *poQuery;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE archive<>\"DEL\" AND panelStatusId<>%1 AND seqNumber=%2" ).arg(m_poPanelStatuses->id()).arg(sbSeqNumber->value()) );
-    if( poQuery->numRowsAffected() > 0 )
+    QSqlQuery *poQuery = NULL;
+    try
     {
-        boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Another panelstatus has the same value for sequence order.\nPlease define a different one." ) );
-    }
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE archive<>\"DEL\" AND panelStatusId<>%1 AND seqNumber=%2" ).arg(m_poPanelStatuses->id()).arg(sbSeqNumber->value()) );
+        if( poQuery->size() > 0 )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Another panelstatus has the same value for sequence order.\nPlease define a different one." ) );
+        }
 
-    if( boCanBeSaved )
-    {
-        try
+        if( boCanBeSaved )
         {
             m_poPanelStatuses->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPanelStatuses->setName( ledName->text().toStdString() );
             m_poPanelStatuses->setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toInt() );
             m_poPanelStatuses->setSequenceNumber( sbSeqNumber->value() );
-            m_poPanelStatuses->setLength( teLength->time().toString("hh:mm:ss").toStdString() );
+            m_poPanelStatuses->setLength( sbLength->value() );
             m_poPanelStatuses->setActivateCommand( cmbActivateCmd->itemData( cmbActivateCmd->currentIndex() ).toInt() );
 
             /*if( checkIndependent->isChecked() )
@@ -101,15 +99,16 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
                 m_poPanelStatuses->setLicenceId( g_poPrefs->getLicenceId() );
             }*/
             m_poPanelStatuses->save();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
 
-        QDialog::accept();
+            QDialog::accept();
+        }
     }
+    catch( cSevException &e )
+    {
+        g_obLogger << e.severity() << e.what() << cQTLogger::EOM;
+    }
+
+    if( poQuery ) delete poQuery;
 }
 
 void cDlgPanelStatusesEdit::on_pbCancel_clicked()
