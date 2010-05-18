@@ -22,6 +22,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     verticalLayout->addWidget( lblCurrTimer );
     verticalLayout->addWidget( lblNextStatusLen );
     verticalLayout->addWidget( lblInfo );
+    verticalLayout->addItem( spacer1 );
 
     setAutoFillBackground( true );
 
@@ -33,6 +34,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_uiType    = 0;
     m_uiStatus  = 0;
     m_uiCounter = 0;
+    m_inTimerId = 0;
 
     load( p_uiPanelId );
 
@@ -58,11 +60,8 @@ void cFrmPanel::start()
     ssTrace << "Id: " << m_uiId;
     cTracer obTrace( "cFrmPanel::start", ssTrace.str() );
 
-    QPalette  obNewPalette = palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
-    setPalette( obNewPalette );
-
     activateNextStatus();
+    m_inTimerId = startTimer( 1000 );
 }
 
 void cFrmPanel::reset()
@@ -70,10 +69,6 @@ void cFrmPanel::reset()
     stringstream ssTrace;
     ssTrace << "Id: " << m_uiId;
     cTracer obTrace( "cFrmPanel::reset", ssTrace.str() );
-
-    QPalette  obNewPalette = palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
-    setPalette( obNewPalette );
 
     m_uiStatus = m_obStatuses.size() - 1;
     activateNextStatus();
@@ -101,6 +96,20 @@ void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 {
     emit panelClicked( m_uiId - 1 );
     p_poEvent->ignore();
+}
+
+void cFrmPanel::timerEvent ( QTimerEvent * )
+{
+    if( m_uiCounter )
+    {
+        m_uiCounter--;
+        lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
+    }
+    else
+    {
+        activateNextStatus();
+        displayStatus();
+    }
 }
 
 void cFrmPanel::load( const unsigned int p_uiPanelId )
@@ -148,10 +157,53 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 
 void cFrmPanel::displayStatus()
 {
-    lblCurrStatus->setText( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) );
+    if( m_uiStatus )
+    {
+        lblCurrStatus->setText( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) );
+
+        lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
+        unsigned int uiNextLen = 0;
+        if( m_uiStatus != m_obStatuses.size() - 1 )
+        {
+            uiNextLen = m_obStatuses.at( m_uiStatus + 1 )->length();
+        }
+        lblNextStatusLen->setText( QString( "%1:%2" ).arg( uiNextLen / 60, 2, 10, QChar( '0' ) ).arg( uiNextLen % 60, 2, 10, QChar( '0' ) ) );
+    }
+    else
+    {
+        lblCurrStatus->setText( "" );
+        lblCurrTimer->setText( "" );
+        lblNextStatusLen->setText( "" );
+    }
+    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
+
+    // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
+    // stilus valtas statuszonkent
+    QPalette  obFramePalette = palette();
+    switch( m_uiStatus )
+    {
+    case 0:
+        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
+        break;
+    case 1:
+        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
+        break;
+    case 2:
+        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
+        break;
+    case 3:
+        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::cyan ) );
+        break;
+    case 4:
+        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::blue ) );
+        break;
+    }
+    setPalette( obFramePalette );
+
     lblCurrStatus->setAlignment( Qt::AlignCenter );
-    lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
     lblCurrTimer->setAlignment( Qt::AlignCenter );
+    lblNextStatusLen->setAlignment( Qt::AlignCenter );
+    lblInfo->setAlignment( Qt::AlignCenter );
 }
 
 void cFrmPanel::activateNextStatus()
@@ -161,10 +213,11 @@ void cFrmPanel::activateNextStatus()
     {
         m_uiStatus  = 0;
         m_uiCounter = 0;
+        killTimer( m_inTimerId );
     }
     else
     {
-        // Update m_uiCounter here and start a new timer
+        m_uiCounter = m_obStatuses.at( m_uiStatus )->length();
     }
 
     displayStatus();

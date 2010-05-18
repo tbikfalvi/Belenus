@@ -27,13 +27,15 @@ signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
 
 protected:
-    void mousePressEvent ( QMouseEvent * p_poEvent );
+    void mousePressEvent ( QMouseEvent *p_poEvent );
+    void timerEvent ( QTimerEvent *p_poEvent );
 
 private:
     unsigned int  m_uiId;
     unsigned int  m_uiType;
     unsigned int  m_uiStatus;
     unsigned int  m_uiCounter;
+    int           m_inTimerId;
 
     QVBoxLayout  *verticalLayout;
     QLabel       *lblTitle;
