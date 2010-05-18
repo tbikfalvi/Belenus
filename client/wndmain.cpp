@@ -28,6 +28,7 @@
 #include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
 #include "crud/dlgpatientcardtype.h"
+#include "crud/dlgpatientcard.h"
 
 //====================================================================================
 
@@ -42,6 +43,7 @@
 #include "dlg/dlghardwaretest.h"
 #include "dlg/dlglogs.h"
 #include "dlg/dlginputstart.h"
+#include "dlg/dlgpatientcardadd.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -88,6 +90,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
     action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.gif" ) );
+    action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
@@ -135,15 +138,18 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 {
-    if( p_poEvent->text() != "" )
+    if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
+        (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) )
     {
         cDlgInputStart  obDlgInputStart( this );
 
         obDlgInputStart.setInitialText( p_poEvent->text() );
         obDlgInputStart.exec();
+
+        p_poEvent->ignore();
     }
 
-    p_poEvent->ignore();
+    QMainWindow::keyPressEvent( p_poEvent );
 }
 //====================================================================================
 void cWndMain::updateTitle()
@@ -387,6 +393,9 @@ void cWndMain::on_action_UseByTime_triggered()
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
 {
+    cDlgPatientCard obDlgPatientCard( this );
+
+    obDlgPatientCard.exec();
 }
 //====================================================================================
 void cWndMain::on_action_CardTypes_triggered()
@@ -394,5 +403,12 @@ void cWndMain::on_action_CardTypes_triggered()
     cDlgPatientCardType obDlgPatientCardType( this );
 
     obDlgPatientCardType.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PCSaveToDatabase_triggered()
+{
+    cDlgPatientCardAdd  obDlgPatientCardAdd( this );
+
+    obDlgPatientCardAdd.exec();
 }
 //====================================================================================

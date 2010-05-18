@@ -49,6 +49,7 @@ private slots:
     void on_action_UseByTime_triggered();
     void on_action_Cards_triggered();
     void on_action_CardTypes_triggered();
+    void on_action_PCSaveToDatabase_triggered();
 
     void refreshPanelButtons( bool p_boPanelWorking );
 };

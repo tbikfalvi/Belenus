@@ -95,9 +95,18 @@
      </property>
      <addaction name="actionAttendanceNew"/>
     </widget>
+    <widget class="QMenu" name="menuPatientCard">
+     <property name="title">
+      <string>PatientCard</string>
+     </property>
+     <addaction name="action_PCSaveToDatabase"/>
+     <addaction name="action_PCActivate"/>
+    </widget>
     <addaction name="menuPatient"/>
     <addaction name="separator"/>
     <addaction name="menuAttendance"/>
+    <addaction name="separator"/>
+    <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
     <addaction name="menuDevice"/>
    </widget>
@@ -287,6 +296,16 @@
    </property>
    <property name="toolTip">
     <string>Patientcard types</string>
+   </property>
+  </action>
+  <action name="action_PCSaveToDatabase">
+   <property name="text">
+    <string>Save to database ...</string>
+   </property>
+  </action>
+  <action name="action_PCActivate">
+   <property name="text">
+    <string>Activate existing ...</string>
    </property>
   </action>
  </widget>

@@ -4,6 +4,8 @@
 #include <QMdiArea>
 #include <QResizeEvent>
 #include <vector>
+#include <QResizeEvent>
+#include <QKeyEvent>
 
 #include "frmpanel.h"
 
@@ -27,9 +29,10 @@ signals:
 
 private:
     vector<cFrmPanel*>  m_obPanels;
-    int                 m_inActivePanel;
+    unsigned int        m_uiActivePanel;
 
-    void activatePanel( const int p_inPanel );
+private slots:
+    void activatePanel( unsigned int p_uiPanel );
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );

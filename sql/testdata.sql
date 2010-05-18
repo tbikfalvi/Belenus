@@ -25,7 +25,7 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 INSERT INTO `users` (`name`, `licenceId`, `realName`, `password`, `groups`) VALUES
   ( 'admin', 1, 'Administrator', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user');
 
-INSERT INTO `activatecommand` (`activateCommandId`, `name`) VALUES
+INSERT INTO `activateCommand` (`activateCommandId`, `name`) VALUES
  (0, 'Alap állapot'),
  (1, 'Elõkészítés'),
  (3, 'Kezelés'),
@@ -53,14 +53,9 @@ UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
 ALTER TABLE `attendance` auto_increment=1;
 
 INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `archive`) VALUES
- ('0', '0', 'System Administrator / Service', '0', '999', '2010-01-01', '2110-01-01', '0', '10', 'ARC');
+ ('0', '0', 'Inaktív kártyák', '0', '0', '2010-01-01', '2010-01-01', '0', '0', 'ARC');
 UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
-
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `archive`) VALUES
- ('0', '0', '0', '0', 'BELENUS_SERVICECARD', 'Szervíz kártya', '999', '99:99:99', '2110-01-01', NULL, 'ARC');
-UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
-ALTER TABLE `patientCards` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal
@@ -69,18 +64,25 @@ ALTER TABLE `patientCards` auto_increment=1;
 --
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panelTypes` ( `licenceId`, `name` ) VALUES
-  ( 1, "Panel Type 1" );
+INSERT INTO `panelTypes` ( `licenceId`, `name`, `archive` ) VALUES
+  ( 1, "Panel Type 1", "ARC" );
 
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title` ) VALUES
-  ( 1, 1, "Panel 1" ),
-  ( 1, 1, "Panel 2" ),
-  ( 1, 1, "Panel 3" ),
-  ( 1, 1, "Panel 4" ),
-  ( 1, 1, "Panel 5" ),
-  ( 1, 1, "Panel 6" ),
-  ( 1, 1, "Panel 7" ),
-  ( 1, 1, "Panel 8" );
+INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `archive` ) VALUES
+  ( 1, 1, 1, "Idle", "00:00:00", 0, "ARC" ),
+  ( 1, 1, 2, "Preparation", "00:01:00", 1, "ARC" ),
+  ( 1, 1, 3, "Treatment", "00:00:30", 0, "ARC" ),
+  ( 1, 1, 4, "Cooling", "00:00:30", 0, "ARC" ),
+  ( 1, 1, 1, "Waiting", "00:01:00", 0, "ARC" );
+
+INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `archive` ) VALUES
+  ( 1, 1, "Panel 1", "ARC" ),
+  ( 1, 1, "Panel 2", "ARC" ),
+  ( 1, 1, "Panel 3", "ARC" ),
+  ( 1, 1, "Panel 4", "ARC" ),
+  ( 1, 1, "Panel 5", "ARC" ),
+  ( 1, 1, "Panel 6", "ARC" ),
+  ( 1, 1, "Panel 7", "ARC" ),
+  ( 1, 1, "Panel 8", "ARC" );
 
 INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `archive`) VALUES
 (1, 1, 'Ismerõs/barát ajánlotta', 'ARC'),

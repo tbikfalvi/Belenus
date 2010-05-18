@@ -36,6 +36,8 @@ client/dlgpanelstatusesedit.o
 client/dlgpaneltypeedit.o
 client/dlgpaneltypes.o
 client/dlgpatient.o
+client/dlgpatientcardtype.o
+client/dlgpatientcardtypeedit.o
 client/dlgpatientedit.o
 client/dlgpatientorigin.o
 client/dlgpatientoriginedit.o
@@ -89,6 +91,10 @@ client/moc_dlgpaneltypes.cpp
 client/moc_dlgpaneltypes.o
 client/moc_dlgpatient.cpp
 client/moc_dlgpatient.o
+client/moc_dlgpatientcardtype.cpp
+client/moc_dlgpatientcardtype.o
+client/moc_dlgpatientcardtypeedit.cpp
+client/moc_dlgpatientcardtypeedit.o
 client/moc_dlgpatientedit.cpp
 client/moc_dlgpatientedit.o
 client/moc_dlgpatientorigin.cpp
@@ -153,6 +159,8 @@ client/ui_dlgattendanceedit.h
 client/ui_dlginputstart.h
 client/ui_dlgpanelstatusesedit.h
 client/ui_dlgpatientcardtypeedit.h
+client/ui_dlgpatientcardedit.h
+client/ui_dlgpatientcardadd.h
 resources/Thumbs.db
 BelenusServer
 belenusserver.ini
