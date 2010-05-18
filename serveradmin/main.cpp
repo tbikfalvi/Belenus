@@ -11,9 +11,8 @@
 #include "preferences.h"
 
 
-cQTLogger             g_obLogger;
-cQTMySQLConnection   *g_poDB;
-Preferences          *g_poPrefs;
+cQTLogger            g_obLogger;
+AdminPreferences     g_prefs;
 
 
 
@@ -23,44 +22,13 @@ int main( int argc, char *argv[] )
 {
     QApplication  apMainApp( argc, argv );
 
-    g_poDB     = new cQTMySQLConnection;
-    g_poPrefs  = new AdminPreferences();
     g_obLogger.setMinSeverityLevels(cSeverity::MAX, cSeverity::MIN, cSeverity::MIN );
 
     int nRet = 1;
     try
     {
-        //---------------------------------------------------------------------------------
-        // Adatbazis megnyitasa
-        //---------------------------------------------------------------------------------
-//        g_poDB->open();
-//        g_obLogger.setDBConnection( g_poDB );
+        g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version").toStdString() << " started." << cQTLogger::EOM;
 
-        g_obLogger << cSeverity::INFO;
-        g_obLogger << "Belenus Server Admin Version " << g_poPrefs->value("version").toStdString() << " started.";
-        g_obLogger << cQTLogger::EOM;
-
-        //---------------------------------------------------------------------------------
-        // Beallitasok betoltese ini file-bol
-        //---------------------------------------------------------------------------------
-//        if( g_poPrefs->getLang() != "uk" )
-//        {
-//            QTranslator obTrans;
-//            QString     qsTransFile = "lang/" + g_poPrefs->getLangFilePrefix() + g_poPrefs->getLang() + ".qm";
-//            g_obLogger << cSeverity::INFO;
-//            obTrans.load( qsTransFile );
-//            apMainApp.installTranslator( &obTrans );
-//        }
-
-        //---------------------------------------------------------------------------------
-        // Beallitasok betoltese adatbazisbol
-        //---------------------------------------------------------------------------------
-//        g_poPrefs->loadDBSettings();
-
-
-        //---------------------------------------------------------------------------------
-        // Fo dialogus ablak megjelenitese
-        //---------------------------------------------------------------------------------
         MainWindow  wndMain;
         wndMain.show();
         nRet = wndMain.exec();
@@ -72,12 +40,7 @@ int main( int argc, char *argv[] )
         g_obLogger << cQTLogger::EOM;
     }
 
-    g_obLogger << cSeverity::INFO;
-    g_obLogger << "Belenus Server Admin Version " << g_poPrefs->value("version").toStdString() << " ended.";
-    g_obLogger << cQTLogger::EOM;
-
-    delete g_poPrefs;
-    delete g_poDB;
+    g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version").toStdString() << " ended." << cQTLogger::EOM;
 
     return nRet;
 }

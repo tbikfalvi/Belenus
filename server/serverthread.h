@@ -13,10 +13,12 @@ public:
     ~ServerThread();
 
 protected:
-    void _handleHello(Packet &);
-    void _handleLogonResponse(Packet &);
-    void _handleLogonAdminResponse(Packet &);
+    void _handleHello(int version);
+    void _handleLogonResponse(const char* code1, const char* code2);
+    void _handleLogonAdminResponse(const char* username, const char* password);
+    void _handleRegisterKey(const char *key);
 
+    bool _isAdmin;
 };
 
 #endif // SERVERTHREAD_H

@@ -53,6 +53,16 @@ protected:
         EXACT, MINIMUM
     };
 
+    enum Reason {
+        REASON_OK,
+        REASON_UNKOWN,
+        REASON_INVALID_VERSION,
+        REASON_INVALID_LICENSE_KEY,
+        REASON_INVALID_SECOND_ID,
+        REASON_AUTHENTICATION_FAILED,
+        REASON_ALREADY_REGISTERED,
+    };
+
 
     /* inherited */
     void run();
@@ -64,13 +74,23 @@ protected:
 
     /* protocol */
     virtual void _initialize() {};              /* called when connection established to initialize protocol */
-    virtual void _handleHello(Packet&) {};
-    virtual void _handleVersionMismatch(Packet&) {};
-    virtual void _handleLogonChallenge(Packet&) {};
-    virtual void _handleLogonAdminResponse(Packet&) {};
-    virtual void _handleLogonResponse(Packet&) {};
-    virtual void _handleLogonOk(Packet&) {};
-    virtual void _handleDisconnect(Packet&) {};
+    virtual void _handleHello(int version) {};
+    virtual void _handleLogonChallenge() {};
+    virtual void _handleLogonAdminResponse(const char* username, const char* password) {};
+    virtual void _handleLogonResponse(const char* code1, const char* code2) {};
+    virtual void _handleLogonOk() {};
+    virtual void _handleDisconnect(Reason reason) {};
+    virtual void _handleRegisterKey(const char* key) {};
+    virtual void _handleRegisterKeyResult(Reason reason) {};
+
+    virtual void _sendHello(int version);
+    virtual void _sendDisconnect(Reason reason);
+    virtual void _sendLogonChallenge();
+    virtual void _sendLogonResponse(const char* code1, const char *code2);
+    virtual void _sendLogonAdminResponse(const char* username, const char* password);
+    virtual void _sendLogonOk();
+    virtual void _sendRegisterKey(const char* key);
+    virtual void _sendRegisterKeyResult(Reason reason);
 
     QList<Packet::Message> _allowedPackets;     /* list of packets which are allowed to be received. all other will cause connection to be dropped */
     QTcpSocket *_socket;

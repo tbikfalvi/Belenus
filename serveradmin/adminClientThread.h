@@ -10,14 +10,18 @@ class AdminClientThread : public Connection
 public:
     AdminClientThread();
     void setCredentials(QString username, QString password);
+    void registerNewKey(const char* key);
 
 protected:
     void _initialize();
-    void _handleHello(Packet&);
-    void _handleLogonChallenge(Packet &);
+    void _handleHello(int version);
+    void _handleLogonChallenge();
+    void _handleLogonOk();
+    void _handleRegisterKeyResult(Reason res);
 
     QString _username;
     QString _password;
+    bool _loggedIn;;
 };
 
 

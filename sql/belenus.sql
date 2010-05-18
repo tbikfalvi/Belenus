@@ -42,10 +42,12 @@ DROP TABLE IF EXISTS `users`;
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `clients` (
   `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `code`                    varchar(50)             NOT NULL,
+  `code1`                   varchar(64)             NOT NULL COMMENT 'licensz kulcsbol generalt kod (SHA1). Amit regisztralni kell adminnak, ezzel veti ossze a szerver',
+  `code2`                   varchar(64)                 NULL COMMENT 'titkos kulcs, alapbol NULL es elso futaskor allitodik be',
   `dateCreated`             datetime                NOT NULL,
   `lastLogin`               datetime                NOT NULL,
   PRIMARY KEY (`clientId`)
+  UNIQUE (´code1´)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- -----------------------------------------------------------------------------------
@@ -65,7 +67,7 @@ CREATE TABLE `doctors` (
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `licenses` (
   `licenceId`               int(10) unsigned        NOT NULL,
-  `serial`                  varchar(30)             NOT NULL,
+  `serial`                  varchar(30)             NOT NULL      COMMENT 'serial kodolt formaban. Ezt kuldi a szervernek a kliens mint code1',
   `country`                 varchar(100)            DEFAULT NULL,
   `region`                  varchar(100)            DEFAULT NULL,
   `city`                    varchar(100)            DEFAULT NULL,

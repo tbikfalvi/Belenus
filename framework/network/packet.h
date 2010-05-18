@@ -21,12 +21,11 @@
   *   password
   * LOGIN_OK (S)
   * DISCONNECT (S)
-  *   reason - not defined yet
-  * VERSION_MISMATCH (S) - sent when version of client does not match with the server
+  *   reason - integer. See for REASON_ enums
   * REGISTER_LICENSE_KEY (C) - only by admins
-  *   code
-  * REGISTER_LICENSE_KEY_DONE (S)
-  *
+  *   code - NOT SHA1 encoded
+  * REGISTER_LICENSE_KEY_RESULT (S)
+  *   result - (OK|ALREADY_REGISTERED)
   */
 
 class Packet {
@@ -42,9 +41,8 @@ public:
         MSG_LOGON_ADMIN_RESPONSE,
         MSG_LOGON_OK,
         MSG_DISCONNECT,
-        MSG_VERSION_MISMATCH,
         MSG_REGISTER_LICENSE_KEY,
-        MSG_REGISTER_LICENSE_KEY_DONE,
+        MSG_REGISTER_LICENSE_KEY_RESULT,
         _NO_PACKETS_
     };
 
