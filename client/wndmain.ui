@@ -63,6 +63,9 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="action_Cassa"/>
+    <addaction name="action_Accounting"/>
+    <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
@@ -306,6 +309,22 @@
   <action name="action_PCActivate">
    <property name="text">
     <string>Activate existing ...</string>
+   </property>
+  </action>
+  <action name="action_Accounting">
+   <property name="text">
+    <string>Accounting ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Main accounting</string>
+   </property>
+  </action>
+  <action name="action_Cassa">
+   <property name="text">
+    <string>Cassa ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Cassa</string>
    </property>
   </action>
  </widget>
