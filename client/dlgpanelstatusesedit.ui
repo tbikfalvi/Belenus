@@ -6,208 +6,139 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>461</width>
-    <height>237</height>
+    <width>364</width>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QCheckBox" name="checkIndependent">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>210</y>
-     <width>220</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Independent from the local studio.</string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="gbIdentification">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>290</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string> Identification </string>
-   </property>
-   <widget class="QLabel" name="lblName">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>41</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Title :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="ledName">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>160</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblPanelType">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Panel type :</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cmbPanelType">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>50</y>
-      <width>160</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="gbProcess">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>91</y>
-     <width>290</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string> Process data </string>
-   </property>
-   <widget class="QLabel" name="lblSeqNumber">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Sequence order :</string>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="sbSeqNumber">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>20</y>
-      <width>60</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblLength">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>46</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Length :</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="teLength">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>50</y>
-      <width>60</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblActivateCmd">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>100</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Activate command :</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cmbActivateCmd">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>80</y>
-      <width>160</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="pbOk">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>20</y>
-     <width>120</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ok</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>20</width>
-     <height>20</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pbCancel">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>60</y>
-     <width>120</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cancel</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>20</width>
-     <height>20</height>
-    </size>
-   </property>
-  </widget>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="gbIdentification">
+       <property name="title">
+        <string> Identification </string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblName">
+          <property name="text">
+           <string>Title :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ledName"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblPanelType">
+          <property name="text">
+           <string>Panel type :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="cmbPanelType"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbProcess">
+       <property name="title">
+        <string> Process data </string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblSeqNumber">
+          <property name="text">
+           <string>Sequence order :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="sbSeqNumber">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblLength">
+          <property name="text">
+           <string>Length :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="sbLength">
+          <property name="suffix">
+           <string>s</string>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>9999</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblActivateCmd">
+          <property name="text">
+           <string>Activate command :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="cmbActivateCmd"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkIndependent">
+       <property name="text">
+        <string>Independent from the local studio.</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pbOk">
+       <property name="text">
+        <string>Ok</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbCancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

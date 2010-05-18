@@ -68,11 +68,11 @@ INSERT INTO `panelTypes` ( `licenceId`, `name`, `archive` ) VALUES
   ( 1, "Panel Type 1", "ARC" );
 
 INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `archive` ) VALUES
-  ( 1, 1, 1, "Idle", "00:00:00", 0, "ARC" ),
-  ( 1, 1, 2, "Preparation", "00:01:00", 1, "ARC" ),
-  ( 1, 1, 3, "Treatment", "00:00:30", 0, "ARC" ),
-  ( 1, 1, 4, "Cooling", "00:00:30", 0, "ARC" ),
-  ( 1, 1, 1, "Waiting", "00:01:00", 0, "ARC" );
+  ( 1, 1, 1, "Idle", 0, 0, "ARC" ),
+  ( 1, 1, 2, "Preparation", 60, 1, "ARC" ),
+  ( 1, 1, 3, "Treatment", 30, 3, "ARC" ),
+  ( 1, 1, 4, "Cooling", 30, 4, "ARC" ),
+  ( 1, 1, 5, "Waiting", 60, 9, "ARC" );
 
 INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `archive` ) VALUES
   ( 1, 1, "Panel 1", "ARC" ),

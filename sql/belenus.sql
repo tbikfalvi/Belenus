@@ -132,7 +132,7 @@ CREATE TABLE `panelStatuses` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `seqNumber`               int(10) unsigned        NOT NULL,
   `name`                    varchar(20)             NOT NULL,
-  `length`                  time                    NOT NULL,
+  `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelStatusId`),
