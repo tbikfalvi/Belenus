@@ -52,6 +52,7 @@ private slots:
     void on_action_PCSaveToDatabase_triggered();
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();
+    void on_action_SkipStatus_triggered();
 
     void refreshPanelButtons( bool p_boPanelWorking );
 };

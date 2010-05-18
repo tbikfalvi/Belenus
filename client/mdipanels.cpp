@@ -35,7 +35,7 @@ void cMdiPanels::initPanels()
         poFrame = new cFrmPanel( i + 1 );
         poFrame->setFrameShape( QFrame::Panel);
         poFrame->setFrameShadow( QFrame::Sunken );
-        poFrame->setLineWidth( 5 );
+        poFrame->setLineWidth( 3 );
 
         connect( poFrame, SIGNAL( panelClicked( unsigned int ) ), this, SLOT( activatePanel( unsigned int ) ) );
 
@@ -61,7 +61,7 @@ void cMdiPanels::placeSubWindows()
         int inPanelRows    = ceil( (double)g_poPrefs->getPanelCount() / (double)inPanelColumns );
         int inPanelW       = width();
         int inPanelH       = height();
-        int inPanelMargin  = 10;
+        int inPanelMargin  = 4;
 
         inPanelW -= (inPanelColumns+1)*inPanelMargin;
         inPanelW /= inPanelColumns;

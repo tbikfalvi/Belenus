@@ -93,6 +93,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
+    action_SkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
@@ -419,6 +420,10 @@ void cWndMain::on_action_Cassa_triggered()
 }
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
+{
+}
+//====================================================================================
+void cWndMain::on_action_SkipStatus_triggered()
 {
 }
 //====================================================================================
