@@ -53,14 +53,14 @@ protected:
         EXACT, MINIMUM
     };
 
-    enum Reason {
-        REASON_OK,
-        REASON_UNKOWN,
-        REASON_INVALID_VERSION,
-        REASON_INVALID_LICENSE_KEY,
-        REASON_INVALID_SECOND_ID,
-        REASON_AUTHENTICATION_FAILED,
-        REASON_ALREADY_REGISTERED,
+    enum Result {
+        RESULT_OK,
+        RESULT_UNKOWN,
+        RESULT_INVALID_VERSION,
+        RESULT_INVALID_LICENSE_KEY,
+        RESULT_INVALID_SECOND_ID,
+        RESULT_AUTHENTICATION_FAILED,
+        RESULT_ALREADY_REGISTERED,
     };
 
 
@@ -79,18 +79,18 @@ protected:
     virtual void _handleLogonAdminResponse(const char* username, const char* password) {};
     virtual void _handleLogonResponse(const char* code1, const char* code2) {};
     virtual void _handleLogonOk() {};
-    virtual void _handleDisconnect(Reason reason) {};
+    virtual void _handleDisconnect(Result reason) {};
     virtual void _handleRegisterKey(const char* key) {};
-    virtual void _handleRegisterKeyResult(Reason reason) {};
+    virtual void _handleRegisterKeyResponse(Result result) {};
 
     virtual void _sendHello(int version);
-    virtual void _sendDisconnect(Reason reason);
+    virtual void _sendDisconnect(Result reason);
     virtual void _sendLogonChallenge();
     virtual void _sendLogonResponse(const char* code1, const char *code2);
     virtual void _sendLogonAdminResponse(const char* username, const char* password);
     virtual void _sendLogonOk();
     virtual void _sendRegisterKey(const char* key);
-    virtual void _sendRegisterKeyResult(Reason reason);
+    virtual void _sendRegisterKeyResponse(Result result);
 
     QList<Packet::Message> _allowedPackets;     /* list of packets which are allowed to be received. all other will cause connection to be dropped */
     QTcpSocket *_socket;

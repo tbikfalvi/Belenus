@@ -42,7 +42,7 @@ void AdminClientThread::_handleLogonChallenge()
 
 
 
-void AdminClientThread::_handleRegisterKeyResult(Reason res)
+void AdminClientThread::_handleRegisterKeyResponse(Result res)
 {
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleRegisterKeyResult] result is " << res << cQTLogger::EOM;
 }

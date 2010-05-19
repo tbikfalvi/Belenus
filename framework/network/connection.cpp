@@ -142,7 +142,7 @@ void Connection::_handlePacket(Packet &packet)
             } break;
 
         case Packet::MSG_DISCONNECT: {
-                Reason r;
+                Result r;
                 packet >> r;
                 _handleDisconnect(r);
             } break;
@@ -153,10 +153,10 @@ void Connection::_handlePacket(Packet &packet)
                 _handleRegisterKey(key);
             } break;
 
-        case Packet::MSG_REGISTER_LICENSE_KEY_RESULT: {
-                Reason r;
+        case Packet::MSG_REGISTER_LICENSE_KEY_RESPONSE: {
+                Result r;
                 packet >> r;
-                _handleRegisterKeyResult(r);
+                _handleRegisterKeyResponse(r);
             } break;
 
 
@@ -228,7 +228,7 @@ void Connection::_sendHello(int version)
 
 
 
-void Connection::_sendDisconnect(Reason reason)
+void Connection::_sendDisconnect(Result reason)
 {
     Packet p(Packet::MSG_DISCONNECT);
     p << reason;
@@ -281,9 +281,9 @@ void Connection::_sendRegisterKey(const char *key)
 
 
 
-void Connection::_sendRegisterKeyResult(Reason reason)
+void Connection::_sendRegisterKeyResponse(Result reason)
 {
-    Packet p(Packet::MSG_REGISTER_LICENSE_KEY_RESULT);
+    Packet p(Packet::MSG_REGISTER_LICENSE_KEY_RESPONSE);
     p << reason;
     send(p);
 }

@@ -11,7 +11,7 @@ const char * Packet::_packetNames[] = {
     "MSG_LOGON_OK",
     "MSG_DISCONNECT",
     "MSG_REGISTER_LICENSE_KEY",
-    "MSG_REGISTER_LICENSE_KEY_RESULT",
+    "MSG_REGISTER_LICENSE_KEY_RESPONSE",
 };
 
 

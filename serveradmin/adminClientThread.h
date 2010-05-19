@@ -17,7 +17,7 @@ protected:
     void _handleHello(int version);
     void _handleLogonChallenge();
     void _handleLogonOk();
-    void _handleRegisterKeyResult(Reason res);
+    void _handleRegisterKeyResponse(Result res);
 
     QString _username;
     QString _password;

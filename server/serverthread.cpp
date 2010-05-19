@@ -32,7 +32,7 @@ void ServerThread::_handleHello(int version)
     g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] client version is " << version << cQTLogger::EOM;
     if ( version != VERSION ) {
         g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] client has invalid version" << cQTLogger::EOM;
-        _sendDisconnect(REASON_INVALID_VERSION);
+        _sendDisconnect(RESULT_INVALID_VERSION);
     } else {
         g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] version ok. sending logon challenge to client" << cQTLogger::EOM;
         _sendLogonChallenge();
@@ -55,7 +55,7 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
         // if code2 is null, user not logined yet, so store its key for next use
         // otherwise check if code2 matches with the stored one
         if ( !q->record().field("code2").isNull() && QString::compare(q->record().field("code2").value().toString(), code2, Qt::CaseInsensitive)!=0 ) {
-            _sendDisconnect(REASON_INVALID_SECOND_ID);
+            _sendDisconnect(RESULT_INVALID_SECOND_ID);
         } else {
             // update lastlogin and set code2
             QSqlQuery *r = g_db.executeQTQuery(QString("UPDATE clients SET code2='%1', lastLogin=NOW() WHERE clientId='%2'").arg(code2).arg(clientId));
@@ -65,7 +65,7 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
         }
     } else {
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonResponse] no active client has been found" << cQTLogger::EOM;
-        _sendDisconnect(REASON_INVALID_LICENSE_KEY);
+        _sendDisconnect(RESULT_INVALID_LICENSE_KEY);
     }
 
     delete q;
@@ -79,7 +79,7 @@ void ServerThread::_handleLogonAdminResponse(const char* username, const char* p
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonAdminResponse] entering" << cQTLogger::EOM;
 
     if ( QString::compare(username, "root")!=0 || QString::compare(password, "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922")!=0 ) {
-        _sendDisconnect(REASON_AUTHENTICATION_FAILED);
+        _sendDisconnect(RESULT_AUTHENTICATION_FAILED);
     } else {
         g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] admin authenticated" << cQTLogger::EOM;
         _sendLogonOk();
@@ -94,7 +94,7 @@ void ServerThread::_handleRegisterKey(const char* newKey)
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleRegisterKey] requesting to register new key: " << newKey << cQTLogger::EOM;
     if ( !_isAdmin ) {
         g_obLogger(cSeverity::ERROR) << "[ServerThread::_handleRegisterKey] requesting new key(" << newKey << ") registration while user is not admin! Disconnecting." << cQTLogger::EOM;
-        _sendDisconnect(REASON_AUTHENTICATION_FAILED);
+        _sendDisconnect(RESULT_AUTHENTICATION_FAILED);
         return;
     }
 
@@ -103,15 +103,15 @@ void ServerThread::_handleRegisterKey(const char* newKey)
     if ( q->size()!=0 ) {
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleRegisterKey] code alread registered" << cQTLogger::EOM;
 
-        _sendRegisterKeyResult(REASON_ALREADY_REGISTERED);
+        _sendRegisterKeyResponse(RESULT_ALREADY_REGISTERED);
     } else {
         QSqlQuery *r = g_db.executeQTQuery( QString("INSERT INTO clients(code1, dateCreated, lastLogin) VALUES(SHA1('%1'),Now(), Now());").arg(newKey) );
         if ( !r->numRowsAffected() ) {
             g_obLogger(cSeverity::ERROR) << "[ServerThread::_handleRegisterKey] new key was not inserted" << cQTLogger::EOM;
-            _sendRegisterKeyResult(REASON_UNKOWN);
+            _sendRegisterKeyResponse(RESULT_UNKOWN);
         } else {
             // key inserted
-            _sendRegisterKeyResult(REASON_OK);
+            _sendRegisterKeyResponse(RESULT_OK);
         }
 
         delete r;
