@@ -93,8 +93,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
-
-    connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
+    action_SkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -326,19 +325,11 @@ void cWndMain::on_action_Attendances_triggered()
 void cWndMain::on_actionDeviceStart_triggered()
 {
     mdiPanels->start();
-    refreshPanelButtons( true );
 }
 //====================================================================================
 void cWndMain::on_actionDeviceReset_triggered()
 {
     mdiPanels->reset();
-    refreshPanelButtons( false );
-}
-//====================================================================================
-void cWndMain::refreshPanelButtons( bool p_boPanelWorking )
-{
-    actionDeviceStart->setEnabled( !p_boPanelWorking );
-    actionDeviceReset->setEnabled( p_boPanelWorking );
 }
 //====================================================================================
 void cWndMain::on_actionPatientSelect_triggered()
@@ -391,6 +382,8 @@ void cWndMain::on_action_UseByTime_triggered()
     cDlgInputStart  obDlgInputStart( this );
 
     obDlgInputStart.exec();
+
+    g_poHardware->setMainActionTime( mdiPanels->activePanel(), 180 );  // 180 -> ennyi másodperccel indul a kiválasztott panel
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
@@ -420,5 +413,10 @@ void cWndMain::on_action_Cassa_triggered()
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
 {
+}
+//====================================================================================
+void cWndMain::on_action_SkipStatus_triggered()
+{
+    mdiPanels->next();
 }
 //====================================================================================

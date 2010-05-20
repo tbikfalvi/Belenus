@@ -45,7 +45,6 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 void cDlgInputStart::on_pbSelect_clicked()
 {
     QDialog::accept();
-
 }
 
 void cDlgInputStart::on_pbCancel_clicked()

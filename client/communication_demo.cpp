@@ -72,6 +72,22 @@ bool CS_Communication_Demo::getRelayStatus( const int )
 {
     return true;
 }
+void CS_Communication_Demo::setCurrentCommand( const int, const int )
+{
+}
+void CS_Communication_Demo::setCounter( const int, const int )
+{
+}
+void CS_Communication_Demo::setMainActionTime( const int, const int )
+{
+}
+bool CS_Communication_Demo::isHardwareMovedNextStatus( const int )
+{
+    return false;
+}
+void CS_Communication_Demo::setHardwareMovedNextStatus( const int )
+{
+}
 void CS_Communication_Demo::HW_Kezel()
 {
 }

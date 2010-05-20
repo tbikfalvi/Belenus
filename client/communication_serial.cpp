@@ -327,6 +327,27 @@ bool CS_Communication_Serial::getRelayStatus( const int nRelayCount )
     else
         return false;
 }
+void CS_Communication_Serial::setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand )
+{
+    pPanel[p_nIndex].cCurrStatus = p_nCurrentCommand;
+}
+void CS_Communication_Serial::setCounter( const int p_nIndex, const int p_nCounter )
+{
+    pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
+}
+void CS_Communication_Serial::setMainActionTime( const int p_nIndex, const int p_nTime )
+{
+    pPanel[p_nIndex].nTimeStatusMain = p_nTime;
+}
+bool CS_Communication_Serial::isHardwareMovedNextStatus( const int p_nIndex )
+{
+    return pPanel[p_nIndex].bJumpNextStatus;
+}
+void CS_Communication_Serial::setHardwareMovedNextStatus( const int p_nIndex )
+{
+    pPanel[p_nIndex].bJumpNextStatus = false;
+}
+
 //---------------------------------------------------------------------------
 // HW_Kezel
 //---------------------------------------------------------------------------
@@ -584,6 +605,7 @@ void CS_Communication_Serial::HW_Kezel()
                          chSerialOut[0] = SEND_3BYTE_TO_MODUL;
                          chSerialOut[1] = SEND_TIME;
                          nIdo = 0;
+
                          if( pPanel[i].cPrevStatus == STATUS_VETKOZES )
                              nIdo = pPanel[i].nTimeStatusMain;
                          else if( pPanel[i].cPrevStatus == STATUS_BARNULAS )

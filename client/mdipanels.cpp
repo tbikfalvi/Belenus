@@ -8,10 +8,14 @@ cMdiPanels::cMdiPanels( QWidget *p_poParent )
     : QMdiArea( p_poParent )
 {
     m_uiActivePanel = 0;
+    m_bHWTimerStarted = false;
+    m_nTimer = 0;
 }
 
 cMdiPanels::~cMdiPanels()
 {
+    if( m_bHWTimerStarted )
+        killTimer( m_nTimer );
 }
 
 void cMdiPanels::initPanels()
@@ -35,7 +39,7 @@ void cMdiPanels::initPanels()
         poFrame = new cFrmPanel( i + 1 );
         poFrame->setFrameShape( QFrame::Panel);
         poFrame->setFrameShadow( QFrame::Sunken );
-        poFrame->setLineWidth( 5 );
+        poFrame->setLineWidth( 3 );
 
         connect( poFrame, SIGNAL( panelClicked( unsigned int ) ), this, SLOT( activatePanel( unsigned int ) ) );
 
@@ -50,6 +54,11 @@ void cMdiPanels::initPanels()
 
     placeSubWindows();
     activatePanel( 0 );
+
+    if( g_poHardware->isHardwareConnected() )
+    {
+        m_nTimer = startTimer( 300 );
+    }
 }
 
 void cMdiPanels::placeSubWindows()
@@ -61,7 +70,7 @@ void cMdiPanels::placeSubWindows()
         int inPanelRows    = ceil( (double)g_poPrefs->getPanelCount() / (double)inPanelColumns );
         int inPanelW       = width();
         int inPanelH       = height();
-        int inPanelMargin  = 10;
+        int inPanelMargin  = 4;
 
         inPanelW -= (inPanelColumns+1)*inPanelMargin;
         inPanelW /= inPanelColumns;
@@ -87,6 +96,13 @@ void cMdiPanels::placeSubWindows()
     }
 }
 
+void cMdiPanels::timerEvent(QTimerEvent *)
+{
+    m_bHWTimerStarted = true;
+
+    g_poHardware->HW_Kezel();
+}
+
 void cMdiPanels::start()
 {
     m_obPanels.at( m_uiActivePanel )->start();
@@ -95,6 +111,16 @@ void cMdiPanels::start()
 void cMdiPanels::reset()
 {
     m_obPanels.at( m_uiActivePanel )->reset();
+}
+
+void cMdiPanels::next()
+{
+    m_obPanels.at( m_uiActivePanel )->next();
+}
+
+int cMdiPanels::activePanel()
+{
+    return m_uiActivePanel;
 }
 
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )

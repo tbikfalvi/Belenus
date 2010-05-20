@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
+    <width>761</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>635</width>
+     <width>761</width>
      <height>20</height>
     </rect>
    </property>
@@ -90,6 +90,7 @@
      <addaction name="action_UseByTime"/>
      <addaction name="separator"/>
      <addaction name="actionDeviceStart"/>
+     <addaction name="action_SkipStatus"/>
      <addaction name="actionDeviceReset"/>
     </widget>
     <widget class="QMenu" name="menuAttendance">
@@ -149,6 +150,7 @@
    <addaction name="actionAttendanceNew"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>
+   <addaction name="action_SkipStatus"/>
    <addaction name="actionDeviceReset"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceSettings"/>
@@ -325,6 +327,14 @@
    </property>
    <property name="toolTip">
     <string>Cassa</string>
+   </property>
+  </action>
+  <action name="action_SkipStatus">
+   <property name="text">
+    <string>Skip status</string>
+   </property>
+   <property name="toolTip">
+    <string>Skip actual status and step to next status</string>
    </property>
   </action>
  </widget>
