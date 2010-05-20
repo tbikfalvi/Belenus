@@ -24,6 +24,7 @@ public:
     void start();
     void reset();
     void next();
+    int  activePanel();
 
 signals:
     void activePanelChanged( bool p_boActiveWorking ) const;

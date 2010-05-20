@@ -118,6 +118,11 @@ void cMdiPanels::next()
     m_obPanels.at( m_uiActivePanel )->next();
 }
 
+int cMdiPanels::activePanel()
+{
+    return m_uiActivePanel;
+}
+
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
     m_obPanels.at( m_uiActivePanel )->inactivate();

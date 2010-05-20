@@ -94,8 +94,6 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
     action_SkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
-
-    connect( mdiPanels, SIGNAL( activePanelChanged( bool ) ), this, SLOT( refreshPanelButtons( bool ) ) );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -384,6 +382,8 @@ void cWndMain::on_action_UseByTime_triggered()
     cDlgInputStart  obDlgInputStart( this );
 
     obDlgInputStart.exec();
+
+    g_poHardware->setMainActionTime( mdiPanels->activePanel(), 180 );  // 180 -> ennyi másodperccel indul a kiválasztott panel
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()

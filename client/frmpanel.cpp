@@ -121,7 +121,6 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
         activateNextStatus();
         displayStatus();
     }
-
     g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter );
 }
 

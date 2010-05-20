@@ -605,6 +605,7 @@ void CS_Communication_Serial::HW_Kezel()
                          chSerialOut[0] = SEND_3BYTE_TO_MODUL;
                          chSerialOut[1] = SEND_TIME;
                          nIdo = 0;
+
                          if( pPanel[i].cPrevStatus == STATUS_VETKOZES )
                              nIdo = pPanel[i].nTimeStatusMain;
                          else if( pPanel[i].cPrevStatus == STATUS_BARNULAS )
