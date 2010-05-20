@@ -20,6 +20,7 @@ public:
     bool isWorking() const;
     void start();
     void reset();
+    void next();
     void inactivate();
     void activate();
 
@@ -36,6 +37,7 @@ private:
     unsigned int  m_uiStatus;
     unsigned int  m_uiCounter;
     int           m_inTimerId;
+    unsigned int  m_uiPanelOrderCount;
 
     QVBoxLayout  *verticalLayout;
     QLabel       *lblTitle;

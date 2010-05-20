@@ -327,6 +327,27 @@ bool CS_Communication_Serial::getRelayStatus( const int nRelayCount )
     else
         return false;
 }
+void CS_Communication_Serial::setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand )
+{
+    pPanel[p_nIndex].cCurrStatus = p_nCurrentCommand;
+}
+void CS_Communication_Serial::setCounter( const int p_nIndex, const int p_nCounter )
+{
+    pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
+}
+void CS_Communication_Serial::setMainActionTime( const int p_nIndex, const int p_nTime )
+{
+    pPanel[p_nIndex].nTimeStatusMain = p_nTime;
+}
+bool CS_Communication_Serial::isHardwareMovedNextStatus( const int p_nIndex )
+{
+    return pPanel[p_nIndex].bJumpNextStatus;
+}
+void CS_Communication_Serial::setHardwareMovedNextStatus( const int p_nIndex )
+{
+    pPanel[p_nIndex].bJumpNextStatus = false;
+}
+
 //---------------------------------------------------------------------------
 // HW_Kezel
 //---------------------------------------------------------------------------

@@ -327,19 +327,11 @@ void cWndMain::on_action_Attendances_triggered()
 void cWndMain::on_actionDeviceStart_triggered()
 {
     mdiPanels->start();
-    refreshPanelButtons( true );
 }
 //====================================================================================
 void cWndMain::on_actionDeviceReset_triggered()
 {
     mdiPanels->reset();
-    refreshPanelButtons( false );
-}
-//====================================================================================
-void cWndMain::refreshPanelButtons( bool p_boPanelWorking )
-{
-    actionDeviceStart->setEnabled( !p_boPanelWorking );
-    actionDeviceReset->setEnabled( p_boPanelWorking );
 }
 //====================================================================================
 void cWndMain::on_actionPatientSelect_triggered()
@@ -425,5 +417,6 @@ void cWndMain::on_action_Accounting_triggered()
 //====================================================================================
 void cWndMain::on_action_SkipStatus_triggered()
 {
+    mdiPanels->next();
 }
 //====================================================================================

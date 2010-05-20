@@ -23,6 +23,7 @@ public:
     void placeSubWindows();
     void start();
     void reset();
+    void next();
 
 signals:
     void activePanelChanged( bool p_boActiveWorking ) const;
@@ -30,6 +31,8 @@ signals:
 private:
     vector<cFrmPanel*>  m_obPanels;
     unsigned int        m_uiActivePanel;
+    bool                m_bHWTimerStarted;
+    int                 m_nTimer;
 
 private slots:
     void activatePanel( unsigned int p_uiPanel );
@@ -37,6 +40,7 @@ private slots:
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );
     void keyPressEvent ( QKeyEvent *p_poEvent );
+    void timerEvent(QTimerEvent *event);
 };
 
 #endif

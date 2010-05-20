@@ -74,6 +74,11 @@ void cFrmPanel::reset()
     activateNextStatus();
 }
 
+void cFrmPanel::next()
+{
+    activateNextStatus();
+}
+
 void cFrmPanel::inactivate()
 {
     setFrameShadow( QFrame::Sunken );
@@ -100,6 +105,12 @@ void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 
 void cFrmPanel::timerEvent ( QTimerEvent * )
 {
+    if( g_poHardware->isHardwareMovedNextStatus( m_uiId-1 ) )
+    {
+        g_poHardware->setHardwareMovedNextStatus( m_uiId-1 );
+        m_uiCounter = 0;
+    }
+
     if( m_uiCounter )
     {
         m_uiCounter--;
@@ -110,6 +121,8 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
         activateNextStatus();
         displayStatus();
     }
+
+    g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter );
 }
 
 void cFrmPanel::load( const unsigned int p_uiPanelId )
@@ -182,21 +195,21 @@ void cFrmPanel::displayStatus()
     QPalette  obFramePalette = palette();
     switch( m_uiStatus )
     {
-    case 0:
-        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
-        break;
-    case 1:
-        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
-        break;
-    case 2:
-        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
-        break;
-    case 3:
-        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::cyan ) );
-        break;
-    case 4:
-        obFramePalette.setBrush( QPalette::Window, QBrush( Qt::blue ) );
-        break;
+        case 0:
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
+            break;
+        case 1:
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
+            break;
+        case 2:
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
+            break;
+        case 3:
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::cyan ) );
+            break;
+        case 4:
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::blue ) );
+            break;
     }
     setPalette( obFramePalette );
 
@@ -214,10 +227,12 @@ void cFrmPanel::activateNextStatus()
         m_uiStatus  = 0;
         m_uiCounter = 0;
         killTimer( m_inTimerId );
+        g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
     else
     {
         m_uiCounter = m_obStatuses.at( m_uiStatus )->length();
+        g_poHardware->setCurrentCommand( m_uiId-1, m_obStatuses.at( m_uiStatus )->activateCommand() );
     }
 
     displayStatus();

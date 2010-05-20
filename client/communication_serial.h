@@ -80,6 +80,12 @@ public:
     void setRelayOff( const int nRelayCount );
     bool getRelayStatus( const int nRelayCount );
 
+    void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
+    void setCounter( const int p_nIndex, const int p_nCounter );
+    void setMainActionTime( const int p_nIndex, const int p_nTime );
+    bool isHardwareMovedNextStatus( const int p_nIndex );
+    void setHardwareMovedNextStatus( const int p_nIndex );
+
     void HW_Kezel();
 
 private:
