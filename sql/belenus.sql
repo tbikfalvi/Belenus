@@ -68,6 +68,7 @@ CREATE TABLE `doctors` (
   `name`                    varchar(100)            NOT NULL,
   `doctorLicence`           varchar(50)             NOT NULL,
   `data`                    text                    NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`doctorId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -92,6 +93,7 @@ CREATE TABLE `panelTypes` (
   `panelTypeId`             int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelTypeId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -106,6 +108,7 @@ CREATE TABLE `panels` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -121,7 +124,6 @@ CREATE TABLE `activateCommand` (
   PRIMARY KEY (`activateCommandId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 -- -----------------------------------------------------------------------------------
 -- Panel status tabla. A kliens alkalmazasban mukodtetett panelok kulonbozo status-ait
 -- tartalmazza, melyek panel tipusokhoz kapcsolodnak.
@@ -134,6 +136,7 @@ CREATE TABLE `panelStatuses` (
   `name`                    varchar(20)             NOT NULL,
   `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelStatusId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -153,6 +156,7 @@ CREATE TABLE `patientCardTypes` (
   `validDateTo`             date                    DEFAULT NULL,
   `validDays`               int(11)                 NOT NULL DEFAULT 365,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardTypeId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -166,6 +170,7 @@ CREATE TABLE `patientOrigin` (
   `patientOriginId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientOriginId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -178,6 +183,7 @@ CREATE TABLE `reasonToVisit` (
   `reasonToVisitId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`reasonToVisitId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -203,6 +209,7 @@ CREATE TABLE `patients` (
   `email`                   varchar(100)            DEFAULT NULL,
   `phone`                   varchar(100)            DEFAULT NULL,
   `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -228,6 +235,7 @@ CREATE TABLE `attendance` (
   `medicineCurrent`         varchar(500)            DEFAULT NULL,
   `medicineAllergy`         varchar(500)            DEFAULT NULL,
   `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`attendanceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -293,6 +301,7 @@ CREATE TABLE `productTypes` (
   `productTypeId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productTypeId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -306,6 +315,7 @@ CREATE TABLE `products` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `productTypeId`           int(11) unsigned        NOT NULL REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
