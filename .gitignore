@@ -1,3 +1,7 @@
+
+
+
+
 belenus.exe
 belenus
 belenus.ini
@@ -36,6 +40,9 @@ client/dlgpanelstatusesedit.o
 client/dlgpaneltypeedit.o
 client/dlgpaneltypes.o
 client/dlgpatient.o
+client/dlgpatientcard.o
+client/dlgpatientcardadd.o
+client/dlgpatientcardedit.o
 client/dlgpatientcardtype.o
 client/dlgpatientcardtypeedit.o
 client/dlgpatientedit.o
@@ -91,6 +98,12 @@ client/moc_dlgpaneltypes.cpp
 client/moc_dlgpaneltypes.o
 client/moc_dlgpatient.cpp
 client/moc_dlgpatient.o
+client/moc_dlgpatientcard.cpp
+client/moc_dlgpatientcard.o
+client/moc_dlgpatientcardadd.cpp
+client/moc_dlgpatientcardadd.o
+client/moc_dlgpatientcardedit.cpp
+client/moc_dlgpatientcardedit.o
 client/moc_dlgpatientcardtype.cpp
 client/moc_dlgpatientcardtype.o
 client/moc_dlgpatientcardtypeedit.cpp

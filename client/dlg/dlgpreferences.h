@@ -24,6 +24,7 @@ private slots:
     void on_sliDBLogLevel_valueChanged( int p_inValue );
     void on_sliGUILogLevel_valueChanged( int p_inValue );
     void on_btnMainBackground_clicked( bool p_boClicked );
+    void on_spbBarcodeLen_valueChanged( int p_inValue );
 };
 
 #endif
