@@ -138,6 +138,12 @@ int main( int argc, char *argv[] )
             qsSpalsh += "FINISHED\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+            qsSpalsh += QString("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            qsSpalsh += QString("Number of hardware panels: %1\n").arg( g_poHardware->getHardwareModuleCount() );
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
             qsSpalsh += "Checking hardware panels:\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
