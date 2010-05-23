@@ -94,6 +94,10 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
     action_SkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.gif") );
+    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
+    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.gif") );
+    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.gif") );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -177,8 +181,6 @@ void cWndMain::updateTitle()
         qsTitle += "]";
     }
 
-    actionPatientEmpty->setEnabled( g_obPatient.id()>0 );
-    actionAttendanceNew->setEnabled( g_obPatient.id()>0 );
     if( g_obPatient.id() > 0 )
     {
         qsTitle += " <=> Current patient: [";
@@ -194,6 +196,18 @@ void cWndMain::updateTitle()
     action_PanelStatuses->setEnabled( g_obUser.isInGroup( "system" ) );
 
     setWindowTitle( qsTitle );
+
+    updateToolbar();
+}
+void cWndMain::updateToolbar()
+{
+    actionPatientSelect->setEnabled( !(g_obPatient.id()>0) );
+    actionPatientSelect->setVisible( !(g_obPatient.id()>0) );
+
+    actionPatientEmpty->setEnabled( g_obPatient.id()>0 );
+    actionPatientEmpty->setVisible( g_obPatient.id()>0 );
+
+    actionAttendanceNew->setEnabled( g_obPatient.id()>0 );
 }
 //====================================================================================
 void cWndMain::on_action_Preferences_triggered()

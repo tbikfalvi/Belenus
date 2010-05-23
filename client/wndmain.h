@@ -26,6 +26,7 @@ private:
     cMdiPanels         *mdiPanels;
 
     void updateTitle();
+    void updateToolbar();
 
 private slots:
     void on_action_Preferences_triggered();

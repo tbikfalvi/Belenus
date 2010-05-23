@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
+    <width>611</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>761</width>
+     <width>611</width>
      <height>20</height>
     </rect>
    </property>
@@ -142,11 +142,13 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
+   <addaction name="actionPatientSelect"/>
+   <addaction name="actionPatientEmpty"/>
+   <addaction name="action_PatientNew"/>
+   <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
    <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
-   <addaction name="actionPatientSelect"/>
-   <addaction name="actionPatientEmpty"/>
    <addaction name="actionAttendanceNew"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>
@@ -154,6 +156,10 @@
    <addaction name="actionDeviceReset"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceSettings"/>
+   <addaction name="separator"/>
+   <addaction name="action_PatientCardSell"/>
+   <addaction name="action_DoctorSchedule"/>
+   <addaction name="action_DeviceSchedule"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -335,6 +341,30 @@
    </property>
    <property name="toolTip">
     <string>Skip actual status and step to next status</string>
+   </property>
+  </action>
+  <action name="action_PatientCardSell">
+   <property name="text">
+    <string>Sell patientcard</string>
+   </property>
+   <property name="toolTip">
+    <string>Sell patientcard</string>
+   </property>
+  </action>
+  <action name="action_DoctorSchedule">
+   <property name="text">
+    <string>Doctor schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Schedule of doctor's consulting hours</string>
+   </property>
+  </action>
+  <action name="action_DeviceSchedule">
+   <property name="text">
+    <string>Device schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Schedule of device useability</string>
    </property>
   </action>
  </widget>
