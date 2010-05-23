@@ -139,6 +139,14 @@ bool cMdiPanels::isPanelWorking()
     return bRet;
 }
 
+bool cMdiPanels::isPanelWorking( const unsigned int p_uiPanel )
+{
+    if( p_uiPanel < m_obPanels.size() )
+        return m_obPanels.at( p_uiPanel )->isWorking();
+    else
+        return false;
+}
+
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
     m_obPanels.at( m_uiActivePanel )->inactivate();

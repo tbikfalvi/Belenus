@@ -12,6 +12,8 @@ public:
     ~cDBPostponed();
 
     void            load( const unsigned int p_uiId )                       throw( cSevException );
+    void            removePatient( const unsigned int p_uiPatientId )       throw( cSevException );
+    void            removeAttendance( const unsigned int p_uiAttendanceId ) throw( cSevException );
     void            save()                                                  throw( cSevException );
     void            createNew()                                             throw();
     unsigned int    id() const                                              throw();

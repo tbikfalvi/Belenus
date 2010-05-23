@@ -79,8 +79,8 @@
      </property>
      <addaction name="action_PatientNew"/>
      <addaction name="separator"/>
-     <addaction name="actionPatientSelect"/>
-     <addaction name="actionPatientEmpty"/>
+     <addaction name="action_PatientSelect"/>
+     <addaction name="action_PatientEmpty"/>
     </widget>
     <widget class="QMenu" name="menuDevice">
      <property name="title">
@@ -89,15 +89,15 @@
      <addaction name="action_UseWithCard"/>
      <addaction name="action_UseByTime"/>
      <addaction name="separator"/>
-     <addaction name="actionDeviceStart"/>
-     <addaction name="action_SkipStatus"/>
-     <addaction name="actionDeviceReset"/>
+     <addaction name="action_DeviceStart"/>
+     <addaction name="action_DeviceSkipStatus"/>
+     <addaction name="action_DeviceReset"/>
     </widget>
     <widget class="QMenu" name="menuAttendance">
      <property name="title">
       <string>Attendance</string>
      </property>
-     <addaction name="actionAttendanceNew"/>
+     <addaction name="action_AttendanceNew"/>
     </widget>
     <widget class="QMenu" name="menuPatientCard">
      <property name="title">
@@ -142,22 +142,22 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
-   <addaction name="actionPatientSelect"/>
-   <addaction name="actionPatientEmpty"/>
+   <addaction name="action_PatientSelect"/>
+   <addaction name="action_PatientEmpty"/>
    <addaction name="action_PatientNew"/>
    <addaction name="action_PostponedPatient"/>
    <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
    <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
-   <addaction name="actionAttendanceNew"/>
+   <addaction name="action_AttendanceNew"/>
    <addaction name="action_PostponedAttendance"/>
    <addaction name="separator"/>
-   <addaction name="actionDeviceStart"/>
-   <addaction name="action_SkipStatus"/>
-   <addaction name="actionDeviceReset"/>
+   <addaction name="action_DeviceStart"/>
+   <addaction name="action_DeviceSkipStatus"/>
+   <addaction name="action_DeviceReset"/>
    <addaction name="separator"/>
-   <addaction name="actionDeviceSettings"/>
+   <addaction name="action_DeviceSettings"/>
    <addaction name="separator"/>
    <addaction name="action_PatientCardSell"/>
    <addaction name="action_DoctorSchedule"/>
@@ -208,7 +208,7 @@
     <string>Reason to visit ...</string>
    </property>
   </action>
-  <action name="actionDeviceStart">
+  <action name="action_DeviceStart">
    <property name="text">
     <string>Start Device</string>
    </property>
@@ -216,7 +216,7 @@
     <string>Start Current Device</string>
    </property>
   </action>
-  <action name="actionDeviceReset">
+  <action name="action_DeviceReset">
    <property name="text">
     <string>Reset Device</string>
    </property>
@@ -224,7 +224,7 @@
     <string>Reset Current Device</string>
    </property>
   </action>
-  <action name="actionDeviceSettings">
+  <action name="action_DeviceSettings">
    <property name="text">
     <string>DeviceSettings</string>
    </property>
@@ -250,7 +250,7 @@
     <string>Attendances ...</string>
    </property>
   </action>
-  <action name="actionPatientSelect">
+  <action name="action_PatientSelect">
    <property name="text">
     <string>Select actual ...</string>
    </property>
@@ -258,7 +258,7 @@
     <string>Select actual patient</string>
    </property>
   </action>
-  <action name="actionPatientEmpty">
+  <action name="action_PatientEmpty">
    <property name="text">
     <string>Deselect actual</string>
    </property>
@@ -266,7 +266,7 @@
     <string>Deselect actual patient</string>
    </property>
   </action>
-  <action name="actionAttendanceNew">
+  <action name="action_AttendanceNew">
    <property name="text">
     <string>Create new ...</string>
    </property>
@@ -337,7 +337,7 @@
     <string>Cassa</string>
    </property>
   </action>
-  <action name="action_SkipStatus">
+  <action name="action_DeviceSkipStatus">
    <property name="text">
     <string>Skip status</string>
    </property>

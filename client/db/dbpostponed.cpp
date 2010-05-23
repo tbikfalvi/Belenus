@@ -58,6 +58,22 @@ void cDBPostponed::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
+void cDBPostponed::removePatient( const unsigned int p_uiPatientId ) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "DELETE FROM toBeFilled WHERE patientId = %1" ).arg( p_uiPatientId ) );
+
+    g_poPrefs->setPostponedPatients( countPostponedPatients() );
+    if( poQuery ) delete poQuery;
+}
+
+void cDBPostponed::removeAttendance( const unsigned int p_uiAttendanceId ) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "DELETE FROM toBeFilled WHERE attendanceId = %1" ).arg( p_uiAttendanceId ) );
+
+    g_poPrefs->setPostponedAttendances( countPostponedAttendances() );
+    if( poQuery ) delete poQuery;
+}
+
 void cDBPostponed::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPostponed::save" );
@@ -71,9 +87,9 @@ void cDBPostponed::save() throw( cSevException )
     {
         qsQuery = "INSERT INTO";
     }
-    qsQuery += " patientOrigin SET ";
+    qsQuery += " toBeFilled SET ";
     qsQuery += QString( "attendanceId = \"%1\", " ).arg( m_uiAttendanceId );
-    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
+    qsQuery += QString( "patientId = \"%1\" " ).arg( m_uiPatientId );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE toBeFilledId = %1" ).arg( m_uiId );
@@ -82,6 +98,9 @@ void cDBPostponed::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+
+    g_poPrefs->setPostponedPatients( countPostponedPatients() );
+    g_poPrefs->setPostponedAttendances( countPostponedAttendances() );
 }
 
 void cDBPostponed::createNew() throw()

@@ -19,6 +19,10 @@
 
 //====================================================================================
 
+#include "db/dbpostponed.h"
+
+//====================================================================================
+
 #include "crud/dlgpaneltypes.h"
 #include "crud/dlgpatientorigin.h"
 #include "crud/dlgreasontovisit.h"
@@ -79,12 +83,12 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
 
-    actionPatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
-    actionPatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
-    actionAttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
-    actionDeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
-    actionDeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
-    actionDeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
+    action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
+    action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
+    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
+    action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
+    action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
     action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.gif" ) );
     action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.gif" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
@@ -93,7 +97,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
-    action_SkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
+    action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
     action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.gif") );
     action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
     action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.gif") );
@@ -101,7 +105,14 @@ cWndMain::cWndMain( QWidget *parent )
     action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.gif") );
     action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
 
+    cDBPostponed    *poDBPostPoned = new cDBPostponed();
+
+    g_poPrefs->setPostponedPatients( poDBPostPoned->countPostponedPatients() );
+    g_poPrefs->setPostponedAttendances( poDBPostPoned->countPostponedAttendances() );
+
     m_nTimer = startTimer( 300 );
+
+    delete poDBPostPoned;
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -210,13 +221,27 @@ void cWndMain::updateToolbar()
 {
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
 
-    actionPatientSelect->setEnabled( !(g_obPatient.id()>0) );
-    actionPatientSelect->setVisible( !(g_obPatient.id()>0) );
+    action_PatientSelect->setEnabled( !(g_obPatient.id()>0) );
+    action_PatientSelect->setVisible( !(g_obPatient.id()>0) );
+    action_PatientEmpty->setEnabled( g_obPatient.id()>0 );
+    action_PatientEmpty->setVisible( g_obPatient.id()>0 );
+    action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
 
-    actionPatientEmpty->setEnabled( g_obPatient.id()>0 );
-    actionPatientEmpty->setVisible( g_obPatient.id()>0 );
+    action_UseWithCard->setEnabled( true );
+    action_UseByTime->setEnabled( true );
 
-    actionAttendanceNew->setEnabled( g_obPatient.id()>0 );
+    action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
+    action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
+
+    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceSkipStatus->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+
+    action_DeviceSettings->setEnabled( false );
+
+    action_PatientCardSell->setEnabled( false );
+    action_DoctorSchedule->setEnabled( false );
+    action_DeviceSchedule->setEnabled( false );
 }
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
@@ -350,19 +375,19 @@ void cWndMain::on_action_Attendances_triggered()
     obDlgAttendance.exec();
 }
 //====================================================================================
-void cWndMain::on_actionDeviceStart_triggered()
+void cWndMain::on_action_DeviceStart_triggered()
 {
     mdiPanels->start();
 }
 //====================================================================================
-void cWndMain::on_actionDeviceReset_triggered()
+void cWndMain::on_action_DeviceReset_triggered()
 {
     mdiPanels->reset();
 }
 //====================================================================================
-void cWndMain::on_actionPatientSelect_triggered()
+void cWndMain::on_action_PatientSelect_triggered()
 {
-    cTracer obTrace( "cWndMain::on_actionPatientSelect_triggered" );
+    cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
 
     cDlgPatientSelect  obDlgPatientSelect( this );
 
@@ -370,15 +395,15 @@ void cWndMain::on_actionPatientSelect_triggered()
     updateTitle();
 }
 //====================================================================================
-void cWndMain::on_actionPatientEmpty_triggered()
+void cWndMain::on_action_PatientEmpty_triggered()
 {
-    cTracer obTrace( "cWndMain::on_actionPatientEmpty_triggered" );
+    cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obPatient.createNew();
     updateTitle();
 }
 //====================================================================================
-void cWndMain::on_actionAttendanceNew_triggered()
+void cWndMain::on_action_AttendanceNew_triggered()
 {
     cDBAttendance *poAttendance = new cDBAttendance;
     poAttendance->createNew();
@@ -443,7 +468,7 @@ void cWndMain::on_action_Accounting_triggered()
 {
 }
 //====================================================================================
-void cWndMain::on_action_SkipStatus_triggered()
+void cWndMain::on_action_DeviceSkipStatus_triggered()
 {
     mdiPanels->next();
 }
