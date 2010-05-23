@@ -26,3 +26,5 @@ PanelStatus		- Panelok mûködését meghatározó panel status-ok kezelése.
 PatientCard		- Pacienseknek altal hasznalt kartyak es kartyatipusok kezelese
 PanelManagement		- Panelok es rajta keresztul a hardver kezelese
 Preferences		- Beállítások módosítására szolgáló dialog
+Toolbar			- Toolbar gombok rendberakása. Engedélyezésük, tiltásuk timer által
+			  meghívott függvény állítja. Néhány még nem mûködõ gomb alapból tiltva.
