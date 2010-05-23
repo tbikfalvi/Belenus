@@ -244,7 +244,7 @@ void CS_Communication_Serial::setApplicationModuleCount( int nCount )
             memset( &stTemp, 0, SIZEOF_PANEL_DATA );
             pPanel.push_back( stTemp );
         }
-        HW_ModulInit();
+        //HW_ModulInit();
     }
 }
 //---------------------------------------------------------------------------
