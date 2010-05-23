@@ -64,6 +64,11 @@ public:
     void          loadDBSettings() throw (cSevException);
     void          save() const throw (cSevException);
 
+    unsigned int    postponedPatients() const;
+    void            setPostponedPatients( const unsigned int p_uiPostponedPatients );
+    unsigned int    postponedAttendances() const;
+    void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
+
 private:
     QString         m_qsFileName;
     QString         m_qsVersion;
@@ -84,6 +89,8 @@ private:
     int             m_inCommunicationPort;
     int             m_inBarcodeLength;
     QString         m_qsBarcodePrefix;
+    unsigned int    m_uiPostponedPatients;
+    unsigned int    m_uiPostponedAttendances;
 
     void init();
 };

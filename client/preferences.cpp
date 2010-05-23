@@ -451,3 +451,23 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
 }
+
+unsigned int cPreferences::postponedPatients() const
+{
+    return m_uiPostponedPatients;
+}
+
+void cPreferences::setPostponedPatients( const unsigned int p_uiPostponedPatients )
+{
+    m_uiPostponedPatients = p_uiPostponedPatients;
+}
+
+unsigned int cPreferences::postponedAttendances() const
+{
+    return m_uiPostponedAttendances;
+}
+
+void cPreferences::setPostponedAttendances( const unsigned int p_uiPostponedAttendances )
+{
+    m_uiPostponedAttendances = p_uiPostponedAttendances;
+}

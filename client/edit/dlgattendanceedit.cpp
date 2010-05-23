@@ -2,6 +2,7 @@
 #include <QMessageBox>
 
 #include "dlgattendanceedit.h"
+#include "db/dbpostponed.h"
 
 cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_poAttendance )
     : QDialog( p_poParent )
@@ -114,9 +115,15 @@ void cDlgAttendanceEdit::on_pbFinishLater_clicked()
     {
         if( SaveAttendanceData() )
         {
-            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (\"%1\", 0)" ).arg( m_poAttendance->id() );
+            cDBPostponed    *pDBPostponed = new cDBPostponed();
+
+            pDBPostponed->createNew();
+            pDBPostponed->setAttendanceId( m_poAttendance->id() );
+            pDBPostponed->save();
+            delete pDBPostponed;
+/*            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (\"%1\", 0)" ).arg( m_poAttendance->id() );
             poQuery = g_poDB->executeQTQuery( qsQuery );
-            delete poQuery;
+            delete poQuery;*/
 
             QDialog::accept();
         }

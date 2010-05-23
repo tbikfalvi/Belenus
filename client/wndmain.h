@@ -21,11 +21,14 @@ public:
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
+    void timerEvent(QTimerEvent *event);
 
 private:
     cMdiPanels         *mdiPanels;
+    int                 m_nTimer;
 
     void updateTitle();
+    void updateToolbar();
 
 private slots:
     void on_action_Preferences_triggered();
@@ -39,11 +42,11 @@ private slots:
     void on_action_Patients_triggered();
     void on_action_PatientNew_triggered();
     void on_action_Attendances_triggered();
-    void on_actionDeviceStart_triggered();
-    void on_actionDeviceReset_triggered();
-    void on_actionPatientSelect_triggered();
-    void on_actionPatientEmpty_triggered();
-    void on_actionAttendanceNew_triggered();
+    void on_action_DeviceStart_triggered();
+    void on_action_DeviceReset_triggered();
+    void on_action_PatientSelect_triggered();
+    void on_action_PatientEmpty_triggered();
+    void on_action_AttendanceNew_triggered();
     void on_action_PanelStatuses_triggered();
     void on_action_UseWithCard_triggered();
     void on_action_UseByTime_triggered();
@@ -52,7 +55,7 @@ private slots:
     void on_action_PCSaveToDatabase_triggered();
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();
-    void on_action_SkipStatus_triggered();
+    void on_action_DeviceSkipStatus_triggered();
 };
 
 #endif
