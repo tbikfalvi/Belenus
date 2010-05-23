@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>611</width>
+    <width>622</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>611</width>
+     <width>622</width>
      <height>20</height>
     </rect>
    </property>
@@ -145,11 +145,13 @@
    <addaction name="actionPatientSelect"/>
    <addaction name="actionPatientEmpty"/>
    <addaction name="action_PatientNew"/>
+   <addaction name="action_PostponedPatient"/>
    <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
    <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
    <addaction name="actionAttendanceNew"/>
+   <addaction name="action_PostponedAttendance"/>
    <addaction name="separator"/>
    <addaction name="actionDeviceStart"/>
    <addaction name="action_SkipStatus"/>
@@ -365,6 +367,22 @@
    </property>
    <property name="toolTip">
     <string>Schedule of device useability</string>
+   </property>
+  </action>
+  <action name="action_PostponedPatient">
+   <property name="text">
+    <string>Fullfill postponed</string>
+   </property>
+   <property name="toolTip">
+    <string>Fullfill data for postponed patients</string>
+   </property>
+  </action>
+  <action name="action_PostponedAttendance">
+   <property name="text">
+    <string>Fullfill postponed</string>
+   </property>
+   <property name="toolTip">
+    <string>Fullfill data for postponed attendances</string>
    </property>
   </action>
  </widget>

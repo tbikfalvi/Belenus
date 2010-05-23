@@ -98,11 +98,17 @@ cWndMain::cWndMain( QWidget *parent )
     action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
     action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.gif") );
     action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.gif") );
+    action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.gif") );
+    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
+
+    m_nTimer = startTimer( 300 );
 }
 //====================================================================================
 cWndMain::~cWndMain()
 {
     cTracer obTrace( "cWndMain::~cWndMain" );
+
+    killTimer( m_nTimer );
 }
 //====================================================================================
 bool cWndMain::showLogIn()
@@ -199,8 +205,11 @@ void cWndMain::updateTitle()
 
     updateToolbar();
 }
+//====================================================================================
 void cWndMain::updateToolbar()
 {
+    action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
+
     actionPatientSelect->setEnabled( !(g_obPatient.id()>0) );
     actionPatientSelect->setVisible( !(g_obPatient.id()>0) );
 
@@ -208,6 +217,11 @@ void cWndMain::updateToolbar()
     actionPatientEmpty->setVisible( g_obPatient.id()>0 );
 
     actionAttendanceNew->setEnabled( g_obPatient.id()>0 );
+}
+//====================================================================================
+void cWndMain::timerEvent(QTimerEvent *)
+{
+    updateToolbar();
 }
 //====================================================================================
 void cWndMain::on_action_Preferences_triggered()

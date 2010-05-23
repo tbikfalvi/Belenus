@@ -21,9 +21,11 @@ public:
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
+    void timerEvent(QTimerEvent *event);
 
 private:
     cMdiPanels         *mdiPanels;
+    int                 m_nTimer;
 
     void updateTitle();
     void updateToolbar();

@@ -123,6 +123,22 @@ int cMdiPanels::activePanel()
     return m_uiActivePanel;
 }
 
+bool cMdiPanels::isPanelWorking()
+{
+    bool    bRet = false;
+
+    for( int i=0; i<(int)m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at( i )->isWorking() )
+        {
+            bRet = true;
+            break;
+        }
+    }
+
+    return bRet;
+}
+
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
     m_obPanels.at( m_uiActivePanel )->inactivate();
