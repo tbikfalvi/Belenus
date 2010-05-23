@@ -25,3 +25,4 @@ HardwareInit		- Hardver kezelés alapjai. Csatlakozás, inicializálás. Hardver tes
 PanelStatus		- Panelok mûködését meghatározó panel status-ok kezelése.
 PatientCard		- Pacienseknek altal hasznalt kartyak es kartyatipusok kezelese
 PanelManagement		- Panelok es rajta keresztul a hardver kezelese
+Preferences		- Beállítások módosítására szolgáló dialog
