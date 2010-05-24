@@ -10,17 +10,6 @@ cDlgPanelStatuses::cDlgPanelStatuses( QWidget *p_poParent )
     setWindowTitle( tr( "Panelstatus List" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.gif") );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.archive FROM panelStatuses, paneltypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
-    }
-    else
-    {
-        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber FROM panelStatuses, paneltypes WHERE panelStatuses.archive<>\"DEL\" AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
-    }
-
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
-
     setupTableView();
 }
 
@@ -43,7 +32,8 @@ void cDlgPanelStatuses::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "PanelType" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sequence order" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
@@ -53,21 +43,29 @@ void cDlgPanelStatuses::setupTableView()
     }
 }
 
+void cDlgPanelStatuses::refreshTable()
+{
+    cTracer obTracer( "cDlgPanelStatuses::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.active, panelStatuses.archive FROM panelStatuses, paneltypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
+    }
+    else
+    {
+        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber FROM panelStatuses, paneltypes WHERE panelStatuses.active=1 AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
+    }
+
+    cDlgCrud::refreshTable();
+}
+
 void cDlgPanelStatuses::enableButtons()
 {
     cTracer obTracer( "cDlgPanelStatuses::enableButtons" );
 
-    if( m_uiSelectedId )
-    {
-        bool boAdmin = g_obUser.isInGroup( "admin" );
-        m_poBtnDelete->setEnabled( boAdmin );
-        m_poBtnEdit->setEnabled( boAdmin );
-    }
-    else
-    {
-        m_poBtnDelete->setEnabled( false );
-        m_poBtnEdit->setEnabled( false );
-    }
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "system" ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( "admin" ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( "system" ) );
 }
 
 void cDlgPanelStatuses::newClicked( bool )
@@ -88,6 +86,8 @@ void cDlgPanelStatuses::newClicked( bool )
 
 void cDlgPanelStatuses::deleteClicked( bool )
 {
+    cDBPanelStatuses  *poPanelStatuses = NULL;
+
     if( QMessageBox::question( this, tr( "Confirmation" ),
                                tr( "Are you sure you want to delete this Panelstatus?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )

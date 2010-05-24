@@ -128,6 +128,8 @@ void cDlgAttendance::newClicked( bool )
 
 void cDlgAttendance::deleteClicked( bool )
 {
+    cDBAttendance  *poAttendance = NULL;
+
     if( QMessageBox::question( this, tr( "Confirmation" ),
                                tr( "Are you sure you want to delete this Attendance?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )

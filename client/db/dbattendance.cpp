@@ -164,7 +164,7 @@ void cDBAttendance::remove() throw( cSevException )
         }
         else
         {
-            qsQuery = "UPDATE attendance SET active=0, archive=\"MOD\" "
+            qsQuery = "UPDATE attendance SET active=0, archive=\"MOD\" ";
         }
         qsQuery += QString( " WHERE attendanceId = %1" ).arg( m_uiId );
 
