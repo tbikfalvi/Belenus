@@ -25,6 +25,8 @@ public:
     void reset();
     void next();
     int  activePanel();
+    bool isPanelWorking();
+    bool isPanelWorking( const unsigned int p_uiPanel );
 
 signals:
     void activePanelChanged( bool p_boActiveWorking ) const;

@@ -41,11 +41,17 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
 
+    ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
+    spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
+    ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
+
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
+
+    spbCOM->setValue( g_poPrefs->getCommunicationPort() );
 
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
@@ -77,20 +83,28 @@ void cDlgPreferences::on_btnMainBackground_clicked( bool )
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 }
 
+void cDlgPreferences::on_spbBarcodeLen_valueChanged( int p_inValue )
+{
+    ledBarcodePrefix->setMaxLength( p_inValue - 1 );
+}
+
 void cDlgPreferences::accept()
 {
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
                              sliGUILogLevel->value() );
     g_poPrefs->setLang( cmbAppLang->currentText() );
-    g_poPrefs->setPanelsPerRow( spbPanels->value() );
-
     if( m_inLangIdx != cmbAppLang->currentIndex() )
         QMessageBox::information( this, tr( "Information" ),
                                   tr( "Some of the changes you made will only be applied after the application is restarted." ) );
 
+    g_poPrefs->setPanelsPerRow( spbPanels->value() );
+    g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
+    g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
+
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );
+    g_poPrefs->setCommunicationPort( spbCOM->value() );
 
     g_poPrefs->save();
 

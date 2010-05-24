@@ -19,24 +19,25 @@ cPreferences::~cPreferences()
 
 void cPreferences::init()
 {
-    m_qsFileName         = "";
-    m_qsVersion          = "";
-    m_qsLangFilePrefix   = "";
-    m_qsLang             = "";
-    m_qsLastUser         = "";
-    m_uiPanelsPerRow     = 0;
-    m_uiPanelCount       = 0;
-    m_uiMainWindowLeft   = 0;
-    m_uiMainWindowTop    = 0;
-    m_uiMainWindowWidth  = 0;
-    m_uiMainWindowHeight = 0;
-    m_uiLicenceId        = 0;
-    m_qsClientSerial     = "";
-    m_qsServerAddress    = "";
-    m_qsServerPort       = "";
-    m_qsMainBackground   = "";
-    m_nCommunicationPort = 1;
-    m_nBarcodeLength     = 12;
+    m_qsFileName          = "";
+    m_qsVersion           = "";
+    m_qsLangFilePrefix    = "";
+    m_qsLang              = "";
+    m_qsLastUser          = "";
+    m_uiPanelsPerRow      = 0;
+    m_uiPanelCount        = 0;
+    m_uiMainWindowLeft    = 0;
+    m_uiMainWindowTop     = 0;
+    m_uiMainWindowWidth   = 0;
+    m_uiMainWindowHeight  = 0;
+    m_uiLicenceId         = 0;
+    m_qsClientSerial      = "";
+    m_qsServerAddress     = "";
+    m_qsServerPort        = "";
+    m_qsMainBackground    = "";
+    m_inCommunicationPort = 1;
+    m_inBarcodeLength     = 12;
+    m_qsBarcodePrefix     = "";
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -228,24 +229,53 @@ QString cPreferences::getServerPort() const
     return m_qsServerPort;
 }
 
-void cPreferences::setCommunicationPort( const int p_nPortNumber )
+void cPreferences::setCommunicationPort( const int p_inPortNumber, bool p_boSaveNow )
 {
-    m_nCommunicationPort = p_nPortNumber;
+    m_inCommunicationPort = p_inPortNumber;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
+    }
 }
 
 int cPreferences::getCommunicationPort() const
 {
-    return m_nCommunicationPort;
+    return m_inCommunicationPort;
 }
 
-void cPreferences::setBarcodeLength( const int p_nBarcodeLength )
+void cPreferences::setBarcodeLength( const int p_inBarcodeLength, bool p_boSaveNow )
 {
-    m_nBarcodeLength = p_nBarcodeLength;
+    m_inBarcodeLength = p_inBarcodeLength;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
+    }
 }
 
 int cPreferences::getBarcodeLength() const
 {
-    return m_nBarcodeLength;
+    return m_inBarcodeLength;
+}
+
+void cPreferences::setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow )
+{
+    m_qsBarcodePrefix = p_qsPrefix;
+    m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
+    }
+}
+
+QString cPreferences::getBarcodePrefix() const
+{
+    return m_qsBarcodePrefix;
 }
 
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
@@ -310,21 +340,26 @@ void cPreferences::loadConfFileSettings()
     }
     else
     {
-        m_qsLang             = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
-        m_qsLastUser         = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
-        m_uiPanelsPerRow     = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
-        m_nBarcodeLength     = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
+        m_qsLang              = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
+        m_qsLastUser          = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
+        m_uiPanelsPerRow      = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
+        m_inBarcodeLength     = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
+        m_qsBarcodePrefix     = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        bool boIsANumber = false;
+        m_qsBarcodePrefix.toInt( &boIsANumber );
+        if( !boIsANumber ) m_qsBarcodePrefix = "";
+        m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );  //Make sure there is at least one free character to be filled in a Barcode
 
-        m_uiMainWindowLeft   = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
-        m_uiMainWindowTop    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
-        m_uiMainWindowWidth  = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
-        m_uiMainWindowHeight = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
-        m_qsMainBackground   = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
+        m_uiMainWindowLeft    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
+        m_uiMainWindowTop     = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
+        m_uiMainWindowWidth   = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
+        m_uiMainWindowHeight  = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
+        m_qsMainBackground    = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
 
-        m_qsServerAddress    = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
-        m_qsServerPort       = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
+        m_qsServerAddress     = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
+        m_qsServerPort        = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
 
-        m_nCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
+        m_inCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -400,7 +435,8 @@ void cPreferences::save() const throw (cSevException)
     if( m_qsLang != "" )     obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLang );
     if( m_qsLastUser != "" ) obPrefFile.setValue( QString::fromAscii( "LastUser" ), m_qsLastUser );
     obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
-    obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_nBarcodeLength );
+    obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
+    obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
@@ -411,7 +447,27 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
     obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
 
-    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_nCommunicationPort );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
 
     obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
+}
+
+unsigned int cPreferences::postponedPatients() const
+{
+    return m_uiPostponedPatients;
+}
+
+void cPreferences::setPostponedPatients( const unsigned int p_uiPostponedPatients )
+{
+    m_uiPostponedPatients = p_uiPostponedPatients;
+}
+
+unsigned int cPreferences::postponedAttendances() const
+{
+    return m_uiPostponedAttendances;
+}
+
+void cPreferences::setPostponedAttendances( const unsigned int p_uiPostponedAttendances )
+{
+    m_uiPostponedAttendances = p_uiPostponedAttendances;
 }

@@ -4,6 +4,7 @@
 #include "dlgpatientedit.h"
 #include "belenus.h"
 #include "../framework/sevexception.h"
+#include "db/dbpostponed.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
     : QDialog( p_poParent )
@@ -144,14 +145,27 @@ void cDlgPatientEdit::on_pbCancel_clicked()
 
 void cDlgPatientEdit::on_pbFinishLater_clicked()
 {
+    if( ledName->text() == "" )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "Patient name cannot be empty." ) );
+        ledName->setFocus();
+        return;
+    }
+
     QSqlQuery  *poQuery = NULL;
     try
     {
         if( SavePatientData() )
         {
-            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (0, \"%1\")" ).arg( m_poPatient->id() );
+            cDBPostponed    *pDBPostponed = new cDBPostponed();
+
+            pDBPostponed->createNew();
+            pDBPostponed->setPatientId( m_poPatient->id() );
+            pDBPostponed->save();
+            delete pDBPostponed;
+/*            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (0, \"%1\")" ).arg( m_poPatient->id() );
             poQuery = g_poDB->executeQTQuery( qsQuery );
-            delete poQuery;
+            delete poQuery;*/
 
             QDialog::accept();
         }

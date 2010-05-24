@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>761</width>
+    <width>622</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>761</width>
+     <width>622</width>
      <height>20</height>
     </rect>
    </property>
@@ -79,8 +79,8 @@
      </property>
      <addaction name="action_PatientNew"/>
      <addaction name="separator"/>
-     <addaction name="actionPatientSelect"/>
-     <addaction name="actionPatientEmpty"/>
+     <addaction name="action_PatientSelect"/>
+     <addaction name="action_PatientEmpty"/>
     </widget>
     <widget class="QMenu" name="menuDevice">
      <property name="title">
@@ -89,15 +89,15 @@
      <addaction name="action_UseWithCard"/>
      <addaction name="action_UseByTime"/>
      <addaction name="separator"/>
-     <addaction name="actionDeviceStart"/>
-     <addaction name="action_SkipStatus"/>
-     <addaction name="actionDeviceReset"/>
+     <addaction name="action_DeviceStart"/>
+     <addaction name="action_DeviceSkipStatus"/>
+     <addaction name="action_DeviceReset"/>
     </widget>
     <widget class="QMenu" name="menuAttendance">
      <property name="title">
       <string>Attendance</string>
      </property>
-     <addaction name="actionAttendanceNew"/>
+     <addaction name="action_AttendanceNew"/>
     </widget>
     <widget class="QMenu" name="menuPatientCard">
      <property name="title">
@@ -129,8 +129,8 @@
    </property>
    <property name="iconSize">
     <size>
-     <width>30</width>
-     <height>30</height>
+     <width>40</width>
+     <height>40</height>
     </size>
    </property>
    <attribute name="toolBarArea">
@@ -142,18 +142,26 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
+   <addaction name="action_PatientSelect"/>
+   <addaction name="action_PatientEmpty"/>
+   <addaction name="action_PatientNew"/>
+   <addaction name="action_PostponedPatient"/>
+   <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
    <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
-   <addaction name="actionPatientSelect"/>
-   <addaction name="actionPatientEmpty"/>
-   <addaction name="actionAttendanceNew"/>
+   <addaction name="action_AttendanceNew"/>
+   <addaction name="action_PostponedAttendance"/>
    <addaction name="separator"/>
-   <addaction name="actionDeviceStart"/>
-   <addaction name="action_SkipStatus"/>
-   <addaction name="actionDeviceReset"/>
+   <addaction name="action_DeviceStart"/>
+   <addaction name="action_DeviceSkipStatus"/>
+   <addaction name="action_DeviceReset"/>
    <addaction name="separator"/>
-   <addaction name="actionDeviceSettings"/>
+   <addaction name="action_DeviceSettings"/>
+   <addaction name="separator"/>
+   <addaction name="action_PatientCardSell"/>
+   <addaction name="action_DoctorSchedule"/>
+   <addaction name="action_DeviceSchedule"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -200,7 +208,7 @@
     <string>Reason to visit ...</string>
    </property>
   </action>
-  <action name="actionDeviceStart">
+  <action name="action_DeviceStart">
    <property name="text">
     <string>Start Device</string>
    </property>
@@ -208,7 +216,7 @@
     <string>Start Current Device</string>
    </property>
   </action>
-  <action name="actionDeviceReset">
+  <action name="action_DeviceReset">
    <property name="text">
     <string>Reset Device</string>
    </property>
@@ -216,7 +224,7 @@
     <string>Reset Current Device</string>
    </property>
   </action>
-  <action name="actionDeviceSettings">
+  <action name="action_DeviceSettings">
    <property name="text">
     <string>DeviceSettings</string>
    </property>
@@ -242,7 +250,7 @@
     <string>Attendances ...</string>
    </property>
   </action>
-  <action name="actionPatientSelect">
+  <action name="action_PatientSelect">
    <property name="text">
     <string>Select actual ...</string>
    </property>
@@ -250,7 +258,7 @@
     <string>Select actual patient</string>
    </property>
   </action>
-  <action name="actionPatientEmpty">
+  <action name="action_PatientEmpty">
    <property name="text">
     <string>Deselect actual</string>
    </property>
@@ -258,7 +266,7 @@
     <string>Deselect actual patient</string>
    </property>
   </action>
-  <action name="actionAttendanceNew">
+  <action name="action_AttendanceNew">
    <property name="text">
     <string>Create new ...</string>
    </property>
@@ -329,12 +337,52 @@
     <string>Cassa</string>
    </property>
   </action>
-  <action name="action_SkipStatus">
+  <action name="action_DeviceSkipStatus">
    <property name="text">
     <string>Skip status</string>
    </property>
    <property name="toolTip">
     <string>Skip actual status and step to next status</string>
+   </property>
+  </action>
+  <action name="action_PatientCardSell">
+   <property name="text">
+    <string>Sell patientcard</string>
+   </property>
+   <property name="toolTip">
+    <string>Sell patientcard</string>
+   </property>
+  </action>
+  <action name="action_DoctorSchedule">
+   <property name="text">
+    <string>Doctor schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Schedule of doctor's consulting hours</string>
+   </property>
+  </action>
+  <action name="action_DeviceSchedule">
+   <property name="text">
+    <string>Device schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Schedule of device useability</string>
+   </property>
+  </action>
+  <action name="action_PostponedPatient">
+   <property name="text">
+    <string>Fullfill postponed</string>
+   </property>
+   <property name="toolTip">
+    <string>Fullfill data for postponed patients</string>
+   </property>
+  </action>
+  <action name="action_PostponedAttendance">
+   <property name="text">
+    <string>Fullfill postponed</string>
+   </property>
+   <property name="toolTip">
+    <string>Fullfill data for postponed attendances</string>
    </property>
   </action>
  </widget>
