@@ -27,13 +27,22 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     QSqlQuery *poQuery;
 
     cmbPatient->addItem( tr("<All patient>"), 0 );
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
-    while( poQuery->next() )
+    try
     {
-        cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-        if( g_obPatient.id() == poQuery->value( 0 ) )
-            cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
+        while( poQuery->next() )
+        {
+            cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( g_obPatient.id() == poQuery->value( 0 ) )
+                cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
+        }
     }
+    catch( cSevException &e )
+    {
+        g_obLogger << e.severity();
+        g_obLogger << e.what() << cQTLogger::EOM;
+    }
+    if( poQuery ) delete poQuery;
 
     setupTableView();
 
@@ -58,7 +67,8 @@ void cDlgAttendance::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Date" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Time" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
@@ -73,7 +83,7 @@ void cDlgAttendance::refreshTable()
 
     if( g_obUser.isInGroup( "root" ) )
     {
-        m_qsQuery = "SELECT attendanceId, licenceId, date, length, archive FROM attendance WHERE attendanceId>0";
+        m_qsQuery = "SELECT attendanceId, licenceId, date, length, active, archive FROM attendance WHERE attendanceId>0";
     }
     else
     {
@@ -94,8 +104,8 @@ void cDlgAttendance::enableButtons()
 {
     cTracer obTracer( "cDlgAttendance::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obPatient.id() > 0 );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
     m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
 }
 
