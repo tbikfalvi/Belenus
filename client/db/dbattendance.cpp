@@ -150,6 +150,29 @@ void cDBAttendance::save() throw( cSevException )
     if( poQuery ) delete poQuery;
 }
 
+void cDBAttendance::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBAttendance::save" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM attendance ";
+        }
+        else
+        {
+            qsQuery = "UPDATE attendance SET active=0, archive=\"MOD\" "
+        }
+        qsQuery += QString( " WHERE attendanceId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
 void cDBAttendance::createNew() throw()
 {
     init();

@@ -27,7 +27,7 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     QSqlQuery *poQuery;
 
     cmbPatient->addItem( tr("<All patient>"), 0 );
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE archive<>\"DEL\" AND patientId>0" ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
     while( poQuery->next() )
     {
         cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
@@ -77,7 +77,7 @@ void cDlgAttendance::refreshTable()
     }
     else
     {
-        m_qsQuery = "SELECT attendanceId AS id, date, length FROM attendance WHERE attendanceId>0 AND archive<>\"DEL\"";
+        m_qsQuery = "SELECT attendanceId AS id, date, length FROM attendance WHERE attendanceId>0 AND active=1";
     }
 
     unsigned int uiPatientId = cmbPatient->itemData( cmbPatient->currentIndex() ).toInt();
@@ -124,14 +124,17 @@ void cDlgAttendance::deleteClicked( bool )
     {
         try
         {
-            QString stQuery = QString( "UPDATE attendance SET archive=\"DEL\" WHERE attendanceId=%1" ).arg( m_uiSelectedId );
-            g_poDB->executeQuery( stQuery.toStdString(), true );
-
+            poAttendance = new cDBAttendance;
+            poAttendance->load( m_uiSelectedId );
+            poAttendance->remove();
             m_uiSelectedId = 0;
             refreshTable();
+            if( poAttendance ) delete poAttendance;
         }
         catch( cSevException &e )
         {
+            if( poAttendance ) delete poAttendance;
+
             g_obLogger << e.severity();
             g_obLogger << e.what() << cQTLogger::EOM;
         }
