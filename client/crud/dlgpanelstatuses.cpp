@@ -94,14 +94,17 @@ void cDlgPanelStatuses::deleteClicked( bool )
     {
         try
         {
-            QString stQuery = QString( "UPDATE panelStatuses SET archive=\"DEL\" WHERE panelStatusId=%1" ).arg( m_uiSelectedId );
-            g_poDB->executeQuery( stQuery.toStdString(), true );
-
+            poPanelStatuses = new cDBPanelStatuses;
+            poPanelStatuses->load( m_uiSelectedId );
+            poPanelStatuses->remove();
             m_uiSelectedId = 0;
             refreshTable();
+            if( poPanelStatuses ) delete poPanelStatuses;
         }
         catch( cSevException &e )
         {
+            if( poPanelStatuses ) delete poPanelStatuses;
+
             g_obLogger << e.severity();
             g_obLogger << e.what() << cQTLogger::EOM;
         }

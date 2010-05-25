@@ -41,6 +41,7 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const string &p_stEmail,
                        const string &p_stPhone,
                        const string &p_stComment,
+                       const bool p_bActive,
                        const string &p_stArchive ) throw()
 {
     m_uiId              = p_uiId;
@@ -59,6 +60,7 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_stEmail           = p_stEmail;
     m_stPhone           = p_stPhone;
     m_stComment         = p_stComment;
+    m_bActive           = p_bActive;
     m_stArchive         = p_stArchive;
 }
 
@@ -80,6 +82,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inEmailIdx              = p_obRecord.indexOf( "email" );
     int inPhoneIdx              = p_obRecord.indexOf( "phone" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
@@ -98,6 +101,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inEmailIdx ).toString().toStdString(),
           p_obRecord.value( inPhoneIdx ).toString().toStdString(),
           p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -162,6 +166,7 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "email = \"%1\", " ).arg( QString::fromStdString( m_stEmail ) );
     qsQuery += QString( "phone = \"%1\", " ).arg( QString::fromStdString( m_stPhone ) );
     qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "active = %1" ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -171,6 +176,29 @@ void cDBPatient::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+}
+
+void cDBPatient::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBPatient::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM patients ";
+        }
+        else
+        {
+            qsQuery = "UPDATE patients SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE patientId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
 }
 
 void cDBPatient::createNew() throw()
@@ -331,6 +359,16 @@ string cDBPatient::comment() const throw()
 void cDBPatient::setComment( const string &p_stComment ) throw()
 {
     m_stComment = p_stComment;
+}
+
+bool cDBPatient::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBPatient::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
 }
 
 string cDBPatient::archive() const throw()

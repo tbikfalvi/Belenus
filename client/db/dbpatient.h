@@ -14,6 +14,7 @@ public:
     void            load( const unsigned int p_uiId )                           throw( cSevException );
     void            load( const string &p_stName )                              throw( cSevException );
     void            save()                                                      throw( cSevException );
+    void            remove()                                                    throw( cSevException );
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
     unsigned int    licenceId() const                                           throw();
@@ -46,27 +47,30 @@ public:
     void            setPhone( const string &p_stPhone )                         throw();
     string          comment() const                                             throw();
     void            setComment( const string &p_stComment )                     throw();
+    bool            active() const                                              throw();
+    void            setActive( const bool p_bActive )                           throw();
     string          archive() const                                             throw();
     void            setArchive( const string &p_stArchive )                     throw();
 
 private:
-    unsigned int  m_uiId;
-    unsigned int  m_uiLicenceId;
-    unsigned int  m_uiPatientOriginId;
-    unsigned int  m_uiReasonToVisitId;
-    string        m_stName;
-    int           m_nGender;
-    string        m_stDateBirth;
-    string        m_stUniqueId;
-    string        m_stCountry;
-    string        m_stRegion;
-    string        m_stCity;
-    string        m_stZip;
-    string        m_stAddress;
-    string        m_stEmail;
-    string        m_stPhone;
-    string        m_stComment;
-    string        m_stArchive;
+    unsigned int    m_uiId;
+    unsigned int    m_uiLicenceId;
+    unsigned int    m_uiPatientOriginId;
+    unsigned int    m_uiReasonToVisitId;
+    string          m_stName;
+    int             m_nGender;
+    string          m_stDateBirth;
+    string          m_stUniqueId;
+    string          m_stCountry;
+    string          m_stRegion;
+    string          m_stCity;
+    string          m_stZip;
+    string          m_stAddress;
+    string          m_stEmail;
+    string          m_stPhone;
+    string          m_stComment;
+    bool            m_bActive;
+    string          m_stArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
@@ -84,6 +88,7 @@ private:
                const string &p_stEmail = "",
                const string &p_stPhone = "",
                const string &p_stComment = "",
+               const bool p_bActive = true,
                const string &p_stArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };
