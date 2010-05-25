@@ -26,6 +26,12 @@
   *   code - NOT SHA1 encoded
   * REGISTER_LICENSE_KEY_RESULT (S)
   *   result - (OK|ALREADY_REGISTERED)
+  * SQL_QUERY (C)
+  *   int id - this id will returned with the result
+  *   sql-query - string containing the query
+  * SQL_RESULT
+  *   int id - id received from the query packet
+  *   ByteArray - the query
   */
 
 class Packet {
@@ -43,6 +49,8 @@ public:
         MSG_DISCONNECT,
         MSG_REGISTER_LICENSE_KEY,
         MSG_REGISTER_LICENSE_KEY_RESPONSE,
+        MSG_SQL_QUERY,
+        MSG_SQL_RESULT,
         _NO_PACKETS_
     };
 

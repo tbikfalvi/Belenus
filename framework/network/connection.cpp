@@ -287,3 +287,21 @@ void Connection::_sendRegisterKeyResponse(Result reason)
     p << reason;
     send(p);
 }
+
+
+
+void Connection::_sendSqlQuery(int queryId, const char *query)
+{
+    Packet p(Packet::MSG_SQL_QUERY);
+    p << queryId << query;
+    send(p);
+}
+
+
+
+void Connection::_sendSqlQueryResult(int queryId, QByteArray &b)
+{
+    Packet p(Packet::MSG_SQL_RESULT);
+    p << queryId << b;
+    send(p);
+}

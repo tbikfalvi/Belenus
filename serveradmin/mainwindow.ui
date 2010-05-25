@@ -157,13 +157,13 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
      <string>Keys</string>
     </attribute>
-    <widget class="QListView" name="listView">
+    <widget class="QListView" name="licenseKeys">
      <property name="geometry">
       <rect>
        <x>0</x>

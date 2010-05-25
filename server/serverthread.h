@@ -18,6 +18,7 @@ protected:
     void _handleLogonAdminResponse(const char* username, const char* password);
     void _handleRegisterKey(const char *key);
 
+    bool _isAuthenticated;
     bool _isAdmin;
 };
 

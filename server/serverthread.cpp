@@ -11,7 +11,8 @@ extern cQTMySQLConnection g_db;
 
 ServerThread::ServerThread() :
         Connection(),
-        _isAdmin(false)
+        _isAdmin(false),
+        _isAuthenticated(false)
 {
     g_obLogger(cSeverity::INFO) << "[ServerThread::ServerThread] initialized" << cQTLogger::EOM;
 }
@@ -49,12 +50,12 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
 
     QSqlQuery *q = g_db.executeQTQuery(QString("SELECT clientId, code2 FROM clients WHERE code1='%1' AND active=1 LIMIT 2;").arg(code1));
     if ( q->size()==1 ) {
-        clientId = q->record().field("clientId").value().toInt();
+        clientId = q->value(0).toInt();
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonResponse] clientId is " << clientId << cQTLogger::EOM;
 
         // if code2 is null, user not logined yet, so store its key for next use
         // otherwise check if code2 matches with the stored one
-        if ( !q->record().field("code2").isNull() && QString::compare(q->record().field("code2").value().toString(), code2, Qt::CaseInsensitive)!=0 ) {
+        if ( !q->value(1).isNull() && QString::compare(q->value(1).toString(), code2, Qt::CaseInsensitive)!=0 ) {
             _sendDisconnect(RESULT_INVALID_SECOND_ID);
         } else {
             // update lastlogin and set code2
@@ -62,6 +63,7 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
             delete r;
 
             _sendLogonOk();
+            _isAuthenticated = true;
         }
     } else {
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonResponse] no active client has been found" << cQTLogger::EOM;
@@ -69,7 +71,6 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
     }
 
     delete q;
-
 }
 
 
@@ -84,6 +85,7 @@ void ServerThread::_handleLogonAdminResponse(const char* username, const char* p
         g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] admin authenticated" << cQTLogger::EOM;
         _sendLogonOk();
         _isAdmin = true;
+        _isAuthenticated = true;
     }
 }
 
@@ -119,3 +121,6 @@ void ServerThread::_handleRegisterKey(const char* newKey)
 
     delete q;
 }
+
+
+
