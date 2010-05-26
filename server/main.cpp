@@ -20,12 +20,14 @@
 #include <iostream>
 
 #include "../framework/qtlogger.h"
+#include "../framework/qtmysqlconnection.h"
 #include "preferences.h"
 #include "serverthread.h"
 #include "main.h"
 
-cQTLogger             g_obLogger;
-Preferences          *g_poPrefs;
+cQTLogger            g_obLogger;
+ServerPreferences    g_prefs;
+cQTMySQLConnection   g_db;
 
 
 
@@ -52,10 +54,10 @@ void Server::execute()
     connect(&_tcpServer, SIGNAL(newConnection()), this, SLOT(connectionAvailable()));
 
 
-    if ( !_tcpServer.listen( QHostAddress(g_poPrefs->value("server/interface")), g_poPrefs->value("server/port").toInt() ) )
+    if ( !_tcpServer.listen( QHostAddress(g_prefs.value("server/interface")), g_prefs.value("server/port").toInt() ) )
         throw cSevException(cSeverity::ERROR, "Unable to start listener");
 
-    g_obLogger(cSeverity::DEBUG) << "[Server::execute] listening on " << g_poPrefs->value("server/interface").toStdString() << ":" << g_poPrefs->value("server/port").toStdString() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Server::execute] listening on " << g_prefs.value("server/interface").toStdString() << ":" << g_prefs.value("server/port").toStdString() << cQTLogger::EOM;
 }
 
 
@@ -76,24 +78,31 @@ int main( int argc, char *argv[] )
 {
     QApplication  app( argc, argv );
 
-    g_poPrefs  = new ServerPreferences();
     g_obLogger.setMinSeverityLevels(cSeverity::MAX, cSeverity::MIN, cSeverity::MIN );
-    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->value("version").toStdString() << " started." << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " started." << cQTLogger::EOM;
+
+    g_db.setHostName( g_prefs.value("database/host") );
+    g_db.setDatabaseName( g_prefs.value("database/schema") );
+    g_db.setUserName( g_prefs.value("database/username") );
+    g_db.setPassword( g_prefs.value("database/password") );
+
 
     Server server;
     QTimer::singleShot(0, &server, SLOT(execute()));
     try {
+        g_obLogger(cSeverity::INFO) << "Connecting to database..." << cQTLogger::EOM;
+        g_db.open();
+
+        g_obLogger(cSeverity::INFO) << "Starting app..." << cQTLogger::EOM;
         app.exec();
     } catch(cSevException e) {
-        g_obLogger(cSeverity::ERROR) << "Exception caught " << e.what() << cQTLogger::EOM;
+        g_obLogger(cSeverity::ERROR) << "Exception: " << e.what() << cQTLogger::EOM;
     }
 
     // cout << "Enter ! to quit";
     // while ( getchar()!='!' ) ;
 
-    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->value("version").toStdString() << " ended." << cQTLogger::EOM;
-
-    delete g_poPrefs;
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " ended." << cQTLogger::EOM;
 
     return 0;
 }

@@ -19,6 +19,18 @@ public:
         if ( port<=0 || port>65535 )
             setValue("server/port", "4000");
 
+        if ( value("database/host")=="" )
+            setValue("database/host", "localhost");
+
+        if ( value("database/schema")=="" )
+            setValue("database/schema", "belenus");
+
+        if ( value("database/username")=="" )
+            setValue("database/username", "root");
+
+        if ( value("database/password")=="" )
+            setValue("database/password", "");
+
     }
 };
 

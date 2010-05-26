@@ -12,7 +12,7 @@
 
 
 extern cQTLogger g_obLogger;
-extern Preferences *g_poPrefs;
+extern AdminPreferences g_prefs;
 
 
 
@@ -21,7 +21,7 @@ MainWindow::MainWindow( QWidget *p_poParent )
 {
     setupUi( this );
 
-    iHost->setText( QString("%1:%2").arg(g_poPrefs->value("server/host")).arg(g_poPrefs->value("server/port")) );
+    iHost->setText( QString("%1:%2").arg(g_prefs.value("server/host")).arg(g_prefs.value("server/port")) );
     iUsername->setText("admin");
     iPassword->setText("p4ssw0rd");
     enableConnectionButton();
@@ -73,15 +73,17 @@ void MainWindow::on_iPassword_textChanged(QString )
 
 void MainWindow::on_bConnect_clicked()
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] enter" <<cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] enter" << cQTLogger::EOM;
 
     if ( _connection.isConnected() ) {
         g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] connection is valid. disconnecting" << cQTLogger::EOM;
         _connection.abortConnection();
 
     } else {
-        int port = g_poPrefs->value("server/port").toInt();
+        int port = g_prefs.value("server/port").toInt();
         QString host;
+
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host is " << host.toStdString() << ", port from config is " << port << cQTLogger::EOM;
 
         int p = iHost->text().indexOf(':');
         if ( p>=0 ) {
@@ -89,15 +91,21 @@ void MainWindow::on_bConnect_clicked()
             host = iHost->text().mid(0, p);
 
             if (port<=0 || port>65535)
-                port = g_poPrefs->value("server/port").toInt();
+                port = g_prefs.value("server/port").toInt();
         } else
             host = iHost->text();
+
+        if ( host.isEmpty() ) {
+            g_obLogger(cSeverity::INFO) << "[MainWindow::on_bConnect_clicked] host is empty. aborting" << cQTLogger::EOM;
+            return;
+        }
 
         g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host="<< host.toStdString() << ", port=" << port << cQTLogger::EOM;
 
         bConnect->setEnabled(false);
         bConnect->setText("Connecting");
 
+        _connection.setCredentials(iUsername->text(), iPassword->text());
         _connection.connectTo( QHostAddress(host), port );
     }
 }
@@ -142,3 +150,15 @@ void MainWindow::socketError(QAbstractSocket::SocketError socketError)
 }
 
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    if ( !_connection.isConnected() )
+        return;
+
+    if ( !iNewKey->text().length() )
+        return;
+
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_pushButton_clicked] registering key " << iNewKey->text().toStdString() << cQTLogger::EOM;
+    _connection.registerNewKey(iNewKey->text().toStdString().c_str());
+}

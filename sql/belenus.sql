@@ -52,12 +52,13 @@ CREATE TABLE `licences` (
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `clients` (
   `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `code1`                   varchar(50)             NOT NULL,
-  `code2`                   varchar(50)             NOT NULL,
+  `code1`                   varchar(64)             NOT NULL COMMENT 'licensz kulcsbol generalt kod (SHA1). Amit regisztralni kell adminnak, ezzel veti ossze a szerver',
+  `code2`                   varchar(64)                 NULL COMMENT 'titkos kulcs, alapbol NULL es elso futaskor allitodik be',
   `dateCreated`             datetime                NOT NULL,
   `lastLogin`               datetime                NOT NULL,
   PRIMARY KEY (`clientId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE (´code1´)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- -----------------------------------------------------------------------------------
 -- Doktor tabla. A studioban rendelo doktorok adatait tartalmazza.

@@ -24,6 +24,7 @@ private:
     void enableConnectionButton();
 
 private slots:
+    void on_pushButton_clicked();
     void on_bConnect_clicked();
     void on_iPassword_textChanged(QString );
     void on_iUsername_textChanged(QString );

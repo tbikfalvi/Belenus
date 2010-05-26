@@ -21,12 +21,17 @@
   *   password
   * LOGIN_OK (S)
   * DISCONNECT (S)
-  *   reason - not defined yet
-  * VERSION_MISMATCH (S) - sent when version of client does not match with the server
+  *   reason - integer. See for REASON_ enums
   * REGISTER_LICENSE_KEY (C) - only by admins
-  *   code
-  * REGISTER_LICENSE_KEY_DONE (S)
-  *
+  *   code - NOT SHA1 encoded
+  * REGISTER_LICENSE_KEY_RESULT (S)
+  *   result - (OK|ALREADY_REGISTERED)
+  * SQL_QUERY (C)
+  *   int id - this id will returned with the result
+  *   sql-query - string containing the query
+  * SQL_RESULT
+  *   int id - id received from the query packet
+  *   ByteArray - the query
   */
 
 class Packet {
@@ -34,6 +39,7 @@ public:
     static const qint16 MAGIC = 0x326f;
 
     static const char *_packetNames[];
+    /* do not forget to modify _packetNames in packet.cpp if you modify this enum. Indexes here must be synched with the names */
     enum Message {
         MSG_HELLO,
         MSG_LOGON_CHALLENGE,
@@ -41,9 +47,10 @@ public:
         MSG_LOGON_ADMIN_RESPONSE,
         MSG_LOGON_OK,
         MSG_DISCONNECT,
-        MSG_VERSION_MISMATCH,
         MSG_REGISTER_LICENSE_KEY,
-        MSG_REGISTER_LICENSE_KEY_DONE,
+        MSG_REGISTER_LICENSE_KEY_RESPONSE,
+        MSG_SQL_QUERY,
+        MSG_SQL_RESULT,
         _NO_PACKETS_
     };
 
@@ -74,6 +81,7 @@ public:
     Packet &operator <<( const char *param );
     Packet &operator <<( char *param );
     Packet &operator <<( string param );
+    Packet &operator <<( QString param );
 
     template<typename T>
     Packet & operator <<( const T param ) {
@@ -88,7 +96,13 @@ public:
     /*
      * Readers
      */
-    Packet &operator >>( char *param );
+
+    /*
+     * returns a pointer to the the string. Pointer is inside the packet buffer.
+     * After call you should copy its value in case you want it to use later, as
+     * the pointer goes invalid if packet changes or became deleted
+     */
+    Packet &operator >>( char *&param );
 
     template<typename T>
     Packet & operator >>( T &param ) {
