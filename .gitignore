@@ -104,6 +104,7 @@ server/Makefile.Debug
 server/Makefile.Release
 server/object_script.BelenusServer.Debug
 server/object_script.BelenusServer.Release
+server/debug/
 server/debug/connection.o
 server/debug/dbconnection.o
 server/debug/main.o
