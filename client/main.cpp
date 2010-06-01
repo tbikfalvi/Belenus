@@ -7,11 +7,12 @@
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
-#include "dbuser.h"
+#include "db/dbuser.h"
 #include "preferences.h"
 #include "communication.h"
 #include "communication_demo.h"
 #include "bs_connection.h"
+#include "db/dbpatient.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -23,6 +24,7 @@ cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
+cDBPatient               g_obPatient;
 
 int main( int argc, char *argv[] )
 {
@@ -104,12 +106,16 @@ int main( int argc, char *argv[] )
             if( nCount > 399 ) nCount = 0;
         }*/
 
+        qsSpalsh += "TEMPORARY DISABLED\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
 #ifdef __WIN32__
 
-        qsSpalsh += "Checking hardware connection ";
+        qsSpalsh += "Checking hardware connection ...";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Serial();
+        g_poHardware->init( g_poPrefs->getCommunicationPort() );
         if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
         {
             qsSpalsh += "FAILED\n";
@@ -125,14 +131,25 @@ int main( int argc, char *argv[] )
             qsSpalsh += "CONNECTED\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+            qsSpalsh += "Initializing hardware device ... ";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
             g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
+
+            qsSpalsh += "FINISHED\n";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            qsSpalsh += QString("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            qsSpalsh += QString("Number of hardware panels: %1\n").arg( g_poHardware->getHardwareModuleCount() );
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             qsSpalsh += "Checking hardware panels:\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             for( int i=0; i<g_poHardware->getPanelCount(); i++ )
             {
-                qsSpalsh += "     Checking hardware panel -"+QString(i)+"- ";
+                qsSpalsh += QString("     Checking hardware panel -%1- ").arg(i+1);
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
                 if( g_poHardware->checkHardwarePanel( i ) )
@@ -160,8 +177,16 @@ int main( int argc, char *argv[] )
 
         obMainWindow.move( g_poPrefs->getMainWindowLeft(), g_poPrefs->getMainWindowTop() );
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
-        obMainWindow.show();
+
+#ifdef __WIN32__
+        Sleep(3000);
+#else
+        sleep( 3 );
+#endif
+
         obSplash.finish( &obMainWindow );
+
+        obMainWindow.show();
 
         if( obMainWindow.showLogIn() )
         {

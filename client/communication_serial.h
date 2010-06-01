@@ -76,6 +76,16 @@ public:
     bool setHardwareModuleCount( int nCount );
     int getHardwareModuleCount();
 
+    void setRelayOn( const int nRelayCount );
+    void setRelayOff( const int nRelayCount );
+    bool getRelayStatus( const int nRelayCount );
+
+    void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
+    void setCounter( const int p_nIndex, const int p_nCounter );
+    void setMainActionTime( const int p_nIndex, const int p_nTime );
+    bool isHardwareMovedNextStatus( const int p_nIndex );
+    void setHardwareMovedNextStatus( const int p_nIndex );
+
     void HW_Kezel();
 
 private:
@@ -101,6 +111,7 @@ private:
     bool                     bSendToModulPower_OFF;
     int                      PortNumber;
     int                      nHWModuleCount;         // Hardware-ben a kezelendo panel-ek szama,
+    WORD                     m_wRelay;
 
     void GetAvailableCommPorts();
 

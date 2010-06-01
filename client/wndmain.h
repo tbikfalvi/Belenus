@@ -4,7 +4,7 @@
 #include <QString>
 
 #include "ui_wndmain.h"
-#include "dlgpanel.h"
+#include "mdipanels.h"
 
 using namespace std;
 
@@ -19,21 +19,43 @@ public:
     bool showLogIn();
     void initPanels();
 
+protected:
+    void keyPressEvent ( QKeyEvent *p_poEvent );
+    void timerEvent(QTimerEvent *event);
+
 private:
-    vector<cDlgPanel*>  m_obPanels;
+    cMdiPanels         *mdiPanels;
+    int                 m_nTimer;
 
     void updateTitle();
+    void updateToolbar();
 
 private slots:
     void on_action_Preferences_triggered();
     void on_action_Users_triggered();
-    void on_action_Usercardtypes_triggered();
-    void on_action_Usercards_triggered();
     void on_action_Logs_triggered();
-    void on_actionHardware_test_triggered();
-    void on_actionLog_Out_triggered();
-    void on_action_Producttypes_triggered();
-    void on_action_Products_triggered();
+    void on_action_Hardwaretest_triggered();
+    void on_action_LogOut_triggered();
+    void on_action_Paneltypes_triggered();
+    void on_action_Patientorigin_triggered();
+    void on_action_ReasonToVisit_triggered();
+    void on_action_Patients_triggered();
+    void on_action_PatientNew_triggered();
+    void on_action_Attendances_triggered();
+    void on_action_DeviceStart_triggered();
+    void on_action_DeviceReset_triggered();
+    void on_action_PatientSelect_triggered();
+    void on_action_PatientEmpty_triggered();
+    void on_action_AttendanceNew_triggered();
+    void on_action_PanelStatuses_triggered();
+    void on_action_UseWithCard_triggered();
+    void on_action_UseByTime_triggered();
+    void on_action_Cards_triggered();
+    void on_action_CardTypes_triggered();
+    void on_action_PCSaveToDatabase_triggered();
+    void on_action_Cassa_triggered();
+    void on_action_Accounting_triggered();
+    void on_action_DeviceSkipStatus_triggered();
 };
 
 #endif

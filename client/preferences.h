@@ -2,6 +2,7 @@
 #define PREFERENCES_H
 
 #include <QString>
+#include "../framework/sevexception.h"
 
 class cPreferences
 {
@@ -22,7 +23,6 @@ public:
     QString       getLastUser() const;
     void          setPanelsPerRow( const unsigned int p_uiPanelsPerRow, bool p_boSaveNow = false );
     unsigned int  getPanelsPerRow() const;
-    void          setPanelCount( const unsigned int p_uiPanelCount, bool p_boSaveNow = false );
     unsigned int  getPanelCount() const;
     void          setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
                                         const unsigned int p_uiMainWindowTop,
@@ -33,11 +33,20 @@ public:
     unsigned int  getMainWindowTop() const;
     unsigned int  getMainWindowWidth() const;
     unsigned int  getMainWindowHeight() const;
+    void          setMainBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString       getMainBackground() const;
+    unsigned int  getLicenceId() const;
+    QString       getClientSerial() const;
     void          setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
     QString       getServerAddress() const;
     void          setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
     QString       getServerPort() const;
-    QString       getClientSerial() const;
+    void          setCommunicationPort( const int p_inPortNumber, bool p_boSaveNow = false );
+    int           getCommunicationPort() const;
+    void          setBarcodeLength( const int p_inBarcodeLength, bool p_boSaveNow = false );
+    int           getBarcodeLength() const;
+    void          setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow = false );
+    QString       getBarcodePrefix() const;
     void          setLogLevels( const unsigned int p_uiConLevel,
                                 const unsigned int p_uiDBLevel,
                                 const unsigned int p_uiGUILevel,
@@ -52,8 +61,13 @@ public:
 
 
     void          loadConfFileSettings();
-    void          loadDBSettings();
-    void          save() const;
+    void          loadDBSettings() throw (cSevException);
+    void          save() const throw (cSevException);
+
+    unsigned int    postponedPatients() const;
+    void            setPostponedPatients( const unsigned int p_uiPostponedPatients );
+    unsigned int    postponedAttendances() const;
+    void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
 
 private:
     QString         m_qsFileName;
@@ -67,11 +81,16 @@ private:
     unsigned int    m_uiMainWindowTop;
     unsigned int    m_uiMainWindowWidth;
     unsigned int    m_uiMainWindowHeight;
+    QString         m_qsMainBackground;
+    unsigned int    m_uiLicenceId;
+    QString         m_qsClientSerial;
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
-    QString         m_qsClientSerial;
-
-    const unsigned int SYS_MAX_DEVICE_COUNT_ID;
+    int             m_inCommunicationPort;
+    int             m_inBarcodeLength;
+    QString         m_qsBarcodePrefix;
+    unsigned int    m_uiPostponedPatients;
+    unsigned int    m_uiPostponedAttendances;
 
     void init();
 };

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlgPatientOriginEdit</class>
+ <widget class="QDialog" name="dlgPatientOriginEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>290</width>
+    <height>101</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="lblName">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>41</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Name :</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="ledName">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>10</y>
+     <width>230</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkIndependent">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>40</y>
+     <width>220</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Independent from the local studio.</string>
+   </property>
+  </widget>
+  <widget class="QDialogButtonBox" name="btbButtons">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>270</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::NoButton</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btbButtons</sender>
+   <signal>accepted()</signal>
+   <receiver>dlgPatientOriginEdit</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btbButtons</sender>
+   <signal>rejected()</signal>
+   <receiver>dlgPatientOriginEdit</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>144</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

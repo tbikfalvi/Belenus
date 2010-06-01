@@ -3,16 +3,22 @@ FORMS = ../framework/dlgcrud.ui \
     dlghardwaretest.ui \
     dlglogin.ui \
     dlglogs.ui \
-    dlgpanel.ui \
+    dlgpaneltypeedit.ui \
     dlgpreferences.ui \
-    dlgproductedit.ui \
-    dlgproducttypeedit.ui \
     dlgpwdconfirm.ui \
-    dlgusercardedit.ui \
-    dlgusercardtypeedit.ui \
     dlguseredit.ui \
-    wndmain.ui
-HEADERS = ../framework/belenusmessages.h \
+    dlgpatientoriginedit.ui \
+    dlgreasontovisitedit.ui \
+    wndmain.ui \
+    dlgpatientedit.ui \
+    dlgattendanceedit.ui \
+    dlginputstart.ui \
+    dlgpanelstatusesedit.ui \
+    dlgpatientcardtypeedit.ui \
+    dlgpatientcardedit.ui \
+    dlgpatientcardadd.ui
+HEADERS = belenus.h \
+    ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
     ../framework/qtframework.h \
@@ -21,66 +27,97 @@ HEADERS = ../framework/belenusmessages.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
     ../framework/tracer.h \
-    crud/dlgusercards.h \
-    crud/dlgusercardtypes.h \
+    crud/dlgpaneltypes.h \
     crud/dlgusers.h \
-    crud/dlgproducts.h \
-    crud/dlgproducttypes.h \
-    belenus.h \
+    crud/dlgpatientorigin.h \
+    crud/dlgreasontovisit.h \
+    crud/dlgpatient.h \
+    crud/dlgattendance.h \
+    crud/dlgpatientselect.h \
+    crud/dlgpanelstatuses.h \
+    crud/dlgpatientcardtype.h \
+    crud/dlgpatientcard.h \
+    db/dbpatientorigin.h \
+    db/dbreasontovisit.h \
+    db/dbpatient.h \
+    db/dbattendance.h \
+    db/dbpatientcard.h \
+    db/dbpatientcardtype.h \
+    db/dbpanelstatuses.h \
+    db/dbuser.h \
+    db/dbpostponed.h \
+    dlg/dlghardwaretest.h \
+    dlg/dlglogin.h \
+    dlg/dlglogs.h \
+    dlg/dlgpreferences.h \
+    dlg/dlgpwdconfirm.h \
+    dlg/dlginputstart.h \
+    dlg/dlgpatientcardadd.h \
+    edit/dlgpaneltypeedit.h \
+    edit/dlguseredit.h \
+    edit/dlgpatientedit.h \
+    edit/dlgpatientoriginedit.h \
+    edit/dlgreasontovisitedit.h \
+    edit/dlgattendanceedit.h \
+    edit/dlgpanelstatusesedit.h \
+    edit/dlgpatientcardtypeedit.h \
+    edit/dlgpatientcardedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
-    dbproduct.h \
-    dbproducttype.h \
-    dbuser.h \
-    dbusercard.h \
-    dbusercardtype.h \
-    dlghardwaretest.h \
-    dlglogin.h \
-    dlglogs.h \
-    dlgpanel.h \
-    dlgpreferences.h \
-    dlgproductedit.h \
-    dlgproducttypeedit.h \
-    dlgpwdconfirm.h \
-    dlgusercardedit.h \
-    dlgusercardtypeedit.h \
-    dlguseredit.h \
+    frmpanel.h \
+    mdipanels.h \
     preferences.h \
     wndmain.h
-SOURCES = ../framework/dbconnection.cpp \
+SOURCES = main.cpp \
+    ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
     ../framework/qtlogger.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
     ../framework/tracer.cpp \
-    crud/dlgproducts.cpp \
-    crud/dlgproducttypes.cpp \
-    crud/dlgusercards.cpp \
-    crud/dlgusercardtypes.cpp \
+    crud/dlgpaneltypes.cpp \
     crud/dlgusers.cpp \
+    crud/dlgpatientorigin.cpp \
+    crud/dlgreasontovisit.cpp \
+    crud/dlgpatient.cpp \
+    crud/dlgattendance.cpp \
+    crud/dlgpatientselect.cpp \
+    crud/dlgpanelstatuses.cpp \
+    crud/dlgpatientcardtype.cpp \
+    crud/dlgpatientcard.cpp \
+    db/dbpatientorigin.cpp \
+    db/dbreasontovisit.cpp \
+    db/dbpatient.cpp \
+    db/dbattendance.cpp \
+    db/dbpatientcard.cpp \
+    db/dbpatientcardtype.cpp \
+    db/dbpanelstatuses.cpp \
+    db/dbuser.cpp \
+    db/dbpostponed.cpp \
+    dlg/dlghardwaretest.cpp \
+    dlg/dlglogin.cpp \
+    dlg/dlglogs.cpp \
+    dlg/dlgpreferences.cpp \
+    dlg/dlgpwdconfirm.cpp \
+    dlg/dlginputstart.cpp \
+    dlg/dlgpatientcardadd.cpp \
+    edit/dlgpaneltypeedit.cpp \
+    edit/dlguseredit.cpp \
+    edit/dlgpatientedit.cpp \
+    edit/dlgpatientoriginedit.cpp \
+    edit/dlgreasontovisitedit.cpp \
+    edit/dlgattendanceedit.cpp \
+    edit/dlgpanelstatusesedit.cpp \
+    edit/dlgpatientcardtypeedit.cpp \
+    edit/dlgpatientcardedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
-    dbproduct.cpp \
-    dbproducttype.cpp \
-    dbuser.cpp \
-    dbusercard.cpp \
-    dbusercardtype.cpp \
-    dlghardwaretest.cpp \
-    dlglogin.cpp \
-    dlglogs.cpp \
-    dlgpanel.cpp \
-    dlgpreferences.cpp \
-    dlgproductedit.cpp \
-    dlgproducttypeedit.cpp \
-    dlgpwdconfirm.cpp \
-    dlgusercardedit.cpp \
-    dlgusercardtypeedit.cpp \
-    dlguseredit.cpp \
-    main.cpp \
+    frmpanel.cpp \
+    mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp
-win32 {
+win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }

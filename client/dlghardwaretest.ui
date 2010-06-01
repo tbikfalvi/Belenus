@@ -6,112 +6,50 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>510</width>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QGroupBox" name="gbComSettings">
+  <widget class="QGroupBox" name="gbHWConnection">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>0</y>
-     <width>381</width>
-     <height>51</height>
+     <y>10</y>
+     <width>330</width>
+     <height>90</height>
     </rect>
    </property>
    <property name="title">
-    <string> Communication settings test </string>
+    <string> Hardware connection </string>
    </property>
-   <widget class="QLabel" name="lblComPort">
+   <widget class="QPushButton" name="pbTestHardwareConnection">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>51</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>COM port: </string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cmbComPort">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>20</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pbtComTest">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>20</y>
-      <width>91</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test COM port</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblComTestResult">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>20</y>
-      <width>111</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Uknown status</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="gbHWSettings">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>60</y>
-     <width>381</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string> Hardware settings test </string>
-   </property>
-   <widget class="QPushButton" name="pbtTestHardwareConnection">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>101</width>
-      <height>23</height>
+      <y>50</y>
+      <width>150</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
      <string>Test connection</string>
     </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
    </widget>
    <widget class="QLabel" name="lblHWConnectionResult">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>80</x>
       <y>20</y>
-      <width>250</width>
+      <width>240</width>
       <height>20</height>
      </rect>
     </property>
@@ -125,8 +63,661 @@
      <string>Unknown status</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lblHWCStatus">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>70</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Status :</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbReconnect">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>50</y>
+      <width>150</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reconnect</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pbExit">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>20</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="gbRelays">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>330</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> Relay test </string>
+   </property>
+   <widget class="QPushButton" name="pbRelayRunTest">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>150</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run relay test</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>20</width>
+      <height>20</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay01">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>20</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay02">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>40</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay03">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>60</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay04">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>80</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay05">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>100</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay06">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>120</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay07">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>140</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay08">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>160</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay09">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>180</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay10">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>200</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay11">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>220</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSwitchRelay12">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>240</y>
+      <width>50</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay01">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>21</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay02">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>41</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay03">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>61</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay04">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>81</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay05">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>101</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 5</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay06">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>121</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 6</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay07">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>141</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 7</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay08">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>161</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 8</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay09">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>181</y>
+      <width>36</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Relay 9</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay10_on">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>201</y>
+      <width>42</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Relay 10</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay11">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>221</y>
+      <width>42</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Relay 11</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRelay12">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>241</y>
+      <width>42</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Relay 12</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay01_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>21</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay02_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>41</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay03_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>61</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay04_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>81</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay05_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>101</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay06_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>121</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay07_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>141</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay08_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>161</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay09_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>181</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay10_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>201</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay11_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>221</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="rbRelay12_On">
+    <property name="geometry">
+     <rect>
+      <x>62</x>
+      <y>241</y>
+      <width>38</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>pbTestHardwareConnection</tabstop>
+  <tabstop>pbReconnect</tabstop>
+  <tabstop>rbRelay01_On</tabstop>
+  <tabstop>rbRelay02_On</tabstop>
+  <tabstop>rbRelay03_On</tabstop>
+  <tabstop>rbRelay04_On</tabstop>
+  <tabstop>rbRelay05_On</tabstop>
+  <tabstop>rbRelay06_On</tabstop>
+  <tabstop>rbRelay07_On</tabstop>
+  <tabstop>pbExit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

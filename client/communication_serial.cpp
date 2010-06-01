@@ -19,6 +19,8 @@
 #include "communication_defines.h"
 #include "windows.h"
 
+const WORD m_RELAY[] = { R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R0 };
+
 //====================================================================================
 //====================================================================================
 // PUBLIKUS FUGGVENYEK
@@ -42,7 +44,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     m_hPort                     = NULL;
     BaudRate                    = 0;
     Parity                      = 0;
-    m_dwBaudRate                = 0;
+    m_dwBaudRate                = 9600;
     m_dwParity                  = 0;
     wRelay_mem                  = 0;
     bEnableIRQ_Msg              = false;
@@ -219,7 +221,7 @@ void CS_Communication_Serial::setApplicationModuleCount( int nCount )
 
     nHWModuleCount = getHardwareModuleCount();
     HW_ReadEEProm( 0, strTemp );
-    m_stCustomCaption = QString( strTemp+2 );
+    m_stCustomCaption = strTemp+2;
 
     if( nCount < nHWModuleCount )
         nHWModuleCount = nCount;
@@ -242,7 +244,7 @@ void CS_Communication_Serial::setApplicationModuleCount( int nCount )
             memset( &stTemp, 0, SIZEOF_PANEL_DATA );
             pPanel.push_back( stTemp );
         }
-        HW_ModulInit();
+        //HW_ModulInit();
     }
 }
 //---------------------------------------------------------------------------
@@ -310,6 +312,42 @@ int CS_Communication_Serial::getHardwareModuleCount()
 
    return nRet;
 }
+void CS_Communication_Serial::setRelayOn( const int nRelayCount )
+{
+    m_wRelay |= m_RELAY[ nRelayCount-1 ];
+}
+void CS_Communication_Serial::setRelayOff( const int nRelayCount )
+{
+    m_wRelay &= ~m_RELAY[ nRelayCount-1 ];
+}
+bool CS_Communication_Serial::getRelayStatus( const int nRelayCount )
+{
+    if( m_wRelay & m_RELAY[ nRelayCount-1 ] )
+        return true;
+    else
+        return false;
+}
+void CS_Communication_Serial::setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand )
+{
+    pPanel[p_nIndex].cCurrStatus = p_nCurrentCommand;
+}
+void CS_Communication_Serial::setCounter( const int p_nIndex, const int p_nCounter )
+{
+    pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
+}
+void CS_Communication_Serial::setMainActionTime( const int p_nIndex, const int p_nTime )
+{
+    pPanel[p_nIndex].nTimeStatusMain = p_nTime;
+}
+bool CS_Communication_Serial::isHardwareMovedNextStatus( const int p_nIndex )
+{
+    return pPanel[p_nIndex].bJumpNextStatus;
+}
+void CS_Communication_Serial::setHardwareMovedNextStatus( const int p_nIndex )
+{
+    pPanel[p_nIndex].bJumpNextStatus = false;
+}
+
 //---------------------------------------------------------------------------
 // HW_Kezel
 //---------------------------------------------------------------------------
@@ -336,7 +374,7 @@ void CS_Communication_Serial::HW_Kezel()
    char chSerialOut[2048];
    char chSerialIn[2048];
    unsigned char byStatus;
-    WORD wRelay;
+   WORD wRelay = 0;
 
    //---------------------------------------------------
    // Relay állapotok beállítása
@@ -369,6 +407,10 @@ void CS_Communication_Serial::HW_Kezel()
                 }
             }
         }
+    }
+    else
+    {
+        wRelay = m_wRelay;
     }
 
     if( wRelay_mem != wRelay )
@@ -563,6 +605,7 @@ void CS_Communication_Serial::HW_Kezel()
                          chSerialOut[0] = SEND_3BYTE_TO_MODUL;
                          chSerialOut[1] = SEND_TIME;
                          nIdo = 0;
+
                          if( pPanel[i].cPrevStatus == STATUS_VETKOZES )
                              nIdo = pPanel[i].nTimeStatusMain;
                          else if( pPanel[i].cPrevStatus == STATUS_BARNULAS )
@@ -1179,7 +1222,7 @@ unsigned char CS_Communication_Serial::GetHWModuleStatus( unsigned char byCim )
 void CS_Communication_Serial::EnableModulIRQ()
 {
     char chSerialOut[2048];
-        unsigned char byTemp;
+    unsigned char byTemp = 0;
 
     if( !bEnableIRQ_Msg )
    {
@@ -1203,7 +1246,7 @@ void CS_Communication_Serial::EnableModulIRQ()
 void CS_Communication_Serial::DisableModulIRQ()
 {
     char chSerialOut[2048];
-        unsigned char byTemp;
+    unsigned char byTemp = 0;
 
    if( bEnableIRQ_Msg )
    {

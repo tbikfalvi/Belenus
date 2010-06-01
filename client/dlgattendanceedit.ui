@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlgAttendanceEdit</class>
+ <widget class="QDialog" name="dlgAttendanceEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>501</width>
+    <height>488</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="gbInformation">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>320</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> Patient information </string>
+   </property>
+   <widget class="QLabel" name="lblName">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>40</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Name :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledName">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>210</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblUniqueId">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Unique identifier :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledUniqueId">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>210</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="gbData">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>320</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> Data </string>
+   </property>
+   <widget class="QLabel" name="lblDate">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>46</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Date :</string>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="deDate">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>20</y>
+      <width>90</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblLength">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Duration :</string>
+    </property>
+   </widget>
+   <widget class="QTimeEdit" name="teLength">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>70</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="displayFormat">
+     <string>mm:ss</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblHeight">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>46</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Height :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledHeight">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>50</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblWeight">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>50</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Weight :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledWeight">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>50</y>
+      <width>70</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblMedicines">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Medicines :</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="ptMedicineCurrent">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>80</y>
+      <width>240</width>
+      <height>64</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblAllergy">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>150</y>
+      <width>60</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Medicine 
+allergy :</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="ptMedicineAllergy">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>150</y>
+      <width>240</width>
+      <height>64</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblComment">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Comment :</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="ptComment">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>220</y>
+      <width>240</width>
+      <height>64</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="gbStart">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>380</y>
+     <width>320</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> Start </string>
+   </property>
+   <widget class="QLabel" name="lblBPStart">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Blood pressure :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledBPStart">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblPulseStart">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pulse :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledPulseStart">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="gbStop">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>430</y>
+     <width>320</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string> Stop </string>
+   </property>
+   <widget class="QLabel" name="lblPulseStop">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>50</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pulse :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledBPStop">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblBPStop">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Blood pressure :</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="ledPulseStop">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pbSave">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>20</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbCancel">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>60</y>
+     <width>130</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbFinishLater">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>120</y>
+     <width>130</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Finish later ...</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>ledName</tabstop>
+  <tabstop>ledUniqueId</tabstop>
+  <tabstop>deDate</tabstop>
+  <tabstop>teLength</tabstop>
+  <tabstop>ledHeight</tabstop>
+  <tabstop>ledWeight</tabstop>
+  <tabstop>ptMedicineCurrent</tabstop>
+  <tabstop>ptMedicineAllergy</tabstop>
+  <tabstop>ptComment</tabstop>
+  <tabstop>ledBPStart</tabstop>
+  <tabstop>ledPulseStart</tabstop>
+  <tabstop>ledBPStop</tabstop>
+  <tabstop>ledPulseStop</tabstop>
+  <tabstop>pbSave</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbFinishLater</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

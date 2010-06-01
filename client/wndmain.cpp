@@ -1,17 +1,55 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas � Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : wndmain.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Alkalmazas fo ablakat kezelo allomany.
+//====================================================================================
+
 #include <QMessageBox>
 
 #include "wndmain.h"
-#include "dlglogin.h"
-#include "dlgpreferences.h"
-#include "crud/dlgusers.h"
-#include "dlguseredit.h"
-#include "dlglogs.h"
-#include "crud/dlgusercardtypes.h"
-#include "crud/dlgusercards.h"
-#include "dlghardwaretest.h"
-#include "crud/dlgproducttypes.h"
-#include "crud/dlgproducts.h"
 
+//====================================================================================
+
+#include "db/dbpostponed.h"
+
+//====================================================================================
+
+#include "crud/dlgpaneltypes.h"
+#include "crud/dlgpatientorigin.h"
+#include "crud/dlgreasontovisit.h"
+#include "crud/dlgusers.h"
+#include "crud/dlgpatient.h"
+#include "crud/dlgattendance.h"
+#include "crud/dlgpatientselect.h"
+#include "crud/dlgpanelstatuses.h"
+#include "crud/dlgpatientcardtype.h"
+#include "crud/dlgpatientcard.h"
+
+//====================================================================================
+
+#include "edit/dlguseredit.h"
+#include "edit/dlgpatientedit.h"
+#include "edit/dlgattendanceedit.h"
+
+//====================================================================================
+
+#include "dlg/dlglogin.h"
+#include "dlg/dlgpreferences.h"
+#include "dlg/dlghardwaretest.h"
+#include "dlg/dlglogs.h"
+#include "dlg/dlginputstart.h"
+#include "dlg/dlgpatientcardadd.h"
+
+//====================================================================================
 cWndMain::cWndMain( QWidget *parent )
     : QMainWindow( parent )
 {
@@ -19,49 +57,71 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
-/*    g_poHardware = new CS_Hardware();
+    mdiPanels = new cMdiPanels( centralwidget );
+    verticalLayout->addWidget(mdiPanels);
 
-    if( g_poHardware != NULL )
-    {
-        // Elérhetõ COM port-ok lekérdezése
-        if( g_poHardware->SP_GetCountAvailablePorts() > 0 )
-        {
-            //bool    bComPortFound = false;
+    mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
-            // Beállításokból COM port összehasonlítása az elérhetõ COM port-okkal __TO_BE_RESOLVED__
-            for( int i=0;i<g_poHardware->SP_GetCountAvailablePorts(); i++ )
-            {
-                // COM PORT KIOLVASASA A SETTINGS-BOL __TO_BE_RESOLVED__
-                // addig is az elso elerheto com portra csatlakozunk
-            }
-            g_poHardware->SP_InitCommunication( g_poHardware->SP_GetComPort( 0 ) );
-            if( g_poHardware->SP_Open() )
-            {
-               if( g_poHardware->IsHardwareConnected() )
-               {
-                  // PANELOK SZAMANAK KIOLVASASA A SETTINGS-BOL __TO_BE_RESOLVED__
-
-                  // addig a panelok szama 4
-                  g_poHardware->SetApplicationModuleCount( 4 );
-
-                  // TIMER INDITASA g_poHardware->HW_Kezel(); fuggvennyel
-               }
-            }
-        }
-    }
-    else
-    {
-       // NAGY GAZ VAN __TO_BE_RESOLVED__
-    }
-*/
     updateTitle();
-}
+    setWindowIcon( QIcon("./resources/belenus.ico") );
 
+    action_LogOut->setIcon( QIcon("./resources/40x40_lock.gif") );
+    action_Exit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
+
+    action_Patients->setIcon( QIcon("./resources/40x40_patient.gif") );
+    //--------------------------------------------------------------------------------
+    menuAdministrator->setIcon( QIcon("./resources/40x40_key.gif") );
+        action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+        action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
+        //----------------------------------------------------------------------------
+        action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
+        action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
+        //----------------------------------------------------------------------------
+        action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
+    //--------------------------------------------------------------------------------
+    action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
+
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
+
+    action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
+    action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
+    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
+    action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
+    action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
+    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.gif" ) );
+    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.gif" ) );
+    action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
+    action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
+    action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.gif" ) );
+    action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
+    action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
+    action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
+    action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.gif") );
+    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
+    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.gif") );
+    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.gif") );
+    action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.gif") );
+    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
+
+    cDBPostponed    *poDBPostPoned = new cDBPostponed();
+
+    g_poPrefs->setPostponedPatients( poDBPostPoned->countPostponedPatients() );
+    g_poPrefs->setPostponedAttendances( poDBPostPoned->countPostponedAttendances() );
+
+    m_nTimer = startTimer( 300 );
+
+    delete poDBPostPoned;
+}
+//====================================================================================
 cWndMain::~cWndMain()
 {
     cTracer obTrace( "cWndMain::~cWndMain" );
-}
 
+    killTimer( m_nTimer );
+}
+//====================================================================================
 bool cWndMain::showLogIn()
 {
     cTracer obTrace( "cWndMain::showLogIn" );
@@ -92,7 +152,28 @@ bool cWndMain::showLogIn()
     obTrace << boLogInOK;
     return boLogInOK;
 }
+//====================================================================================
+void cWndMain::initPanels()
+{
+    mdiPanels->initPanels();
+}
+//====================================================================================
+void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
+{
+    if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
+        (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) )
+    {
+        cDlgInputStart  obDlgInputStart( this );
 
+        obDlgInputStart.setInitialText( p_poEvent->text() );
+        obDlgInputStart.exec();
+
+        p_poEvent->ignore();
+    }
+
+    QMainWindow::keyPressEvent( p_poEvent );
+}
+//====================================================================================
 void cWndMain::updateTitle()
 {
     cTracer obTrace( "cWndMain::updateTitle" );
@@ -103,6 +184,11 @@ void cWndMain::updateTitle()
     qsTitle += " - ";
     qsTitle += QString::fromStdString( g_poHardware->getCustomCaption() );
 
+    if( QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
+    {
+        action_Hardwaretest->setEnabled( false );
+    }
+
     if( g_obUser.isLoggedIn() )
     {
         qsTitle += " - ";
@@ -112,39 +198,72 @@ void cWndMain::updateTitle()
         qsTitle += "]";
     }
 
-    setWindowTitle( qsTitle );
-}
-
-void cWndMain::initPanels()
-{
-    cTracer obTrace( "cWndMain::initPanels" );
-
-    int inPanelCount = g_poPrefs->getPanelCount();
-    if( g_poHardware->getPanelCount() < inPanelCount )
+    if( g_obPatient.id() > 0 )
     {
-        QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
-        inPanelCount = g_poHardware->getPanelCount();
+        qsTitle += " <=> Current patient: [";
+        qsTitle += QString::fromStdString( g_obPatient.name() );
+        qsTitle += "]";
+    }
+    else
+    {
+        qsTitle += " <=> NO PATIENT SELECTED";
     }
 
-    QGraphicsScene *poScene = new QGraphicsScene;
-    cDlgPanel       obPanel;
+    action_Paneltypes->setEnabled( g_obUser.isInGroup( "system" ) );
+    action_PanelStatuses->setEnabled( g_obUser.isInGroup( "system" ) );
 
-    QGraphicsProxyWidget *poPanelProxy = poScene->addWidget( &obPanel );
+    setWindowTitle( qsTitle );
 
-    grvMain->setScene( poScene );
-
-    obPanel.show();
+    updateToolbar();
 }
+//====================================================================================
+void cWndMain::updateToolbar()
+{
+    action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
 
+    action_PatientSelect->setEnabled( !(g_obPatient.id()>0) );
+    action_PatientSelect->setVisible( !(g_obPatient.id()>0) );
+    action_PatientEmpty->setEnabled( g_obPatient.id()>0 );
+    action_PatientEmpty->setVisible( g_obPatient.id()>0 );
+    action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
+
+    action_UseWithCard->setEnabled( true );
+    action_UseByTime->setEnabled( true );
+
+    action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
+    action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
+
+    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceSkipStatus->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+
+    action_DeviceSettings->setEnabled( false );
+
+    action_PatientCardSell->setEnabled( false );
+    action_DoctorSchedule->setEnabled( false );
+    action_DeviceSchedule->setEnabled( false );
+}
+//====================================================================================
+void cWndMain::timerEvent(QTimerEvent *)
+{
+    updateToolbar();
+}
+//====================================================================================
 void cWndMain::on_action_Preferences_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Preferences_triggered" );
 
     cDlgPreferences  obDlgPrefs( this );
 
-    obDlgPrefs.exec();
+    if( obDlgPrefs.exec() == QDialog::Accepted )
+    {
+        mdiPanels->hide();
+        mdiPanels->placeSubWindows();
+        mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
+        mdiPanels->show();
+    }
 }
-
+//====================================================================================
 void cWndMain::on_action_Users_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Users_triggered" );
@@ -155,43 +274,7 @@ void cWndMain::on_action_Users_triggered()
 
     updateTitle();  //needed in case the login or real name of current user changed
 }
-
-void cWndMain::on_action_Usercardtypes_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Usercardtypes_triggered" );
-
-    cDlgUserCardTypes  obDlgUserCardTypes( this );
-
-    obDlgUserCardTypes.exec();
-}
-
-void cWndMain::on_action_Usercards_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Usercards_triggered" );
-
-    cDlgUserCards  obDlgUserCards( this );
-
-    obDlgUserCards.exec();
-}
-
-void cWndMain::on_action_Producttypes_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Producttypes_triggered" );
-
-    cDlgProductTypes  obDlgProductTypes( this );
-
-    obDlgProductTypes.exec();
-}
-
-void cWndMain::on_action_Products_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_Products_triggered" );
-
-    cDlgProducts  obDlgProducts( this );
-
-    obDlgProducts.exec();
-}
-
+//====================================================================================
 void cWndMain::on_action_Logs_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Logs_triggered" );
@@ -200,17 +283,25 @@ void cWndMain::on_action_Logs_triggered()
 
     obDlgLogs.exec();
 }
-
-void cWndMain::on_actionHardware_test_triggered()
+//====================================================================================
+void cWndMain::on_action_Hardwaretest_triggered()
 {
-    cTracer obTrace( "cWndMain::on_actionHardware_test_triggered" );
+    cTracer obTrace( "cWndMain::on_action_Hardwaretest_triggered" );
 
-    cDlgHardwareTest  obDlgHardwareTest( this );
+    if( g_obUser.isInGroup( "system" ) )
+    {
+        cDlgHardwareTest  obDlgHardwareTest( this );
 
-    obDlgHardwareTest.exec();
+        obDlgHardwareTest.exec();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr( "Information" ),
+                              tr( "This area is restricted for system administrators only!" ) );
+    }
 }
-
-void cWndMain::on_actionLog_Out_triggered()
+//====================================================================================
+void cWndMain::on_action_LogOut_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Log_Out_triggered" );
 
@@ -224,3 +315,161 @@ void cWndMain::on_actionLog_Out_triggered()
 
     if( !showLogIn() ) close();
 }
+//====================================================================================
+void cWndMain::on_action_Paneltypes_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Paneltypes_triggered" );
+
+    cDlgPanelTypes  obDlgPanelTypes( this );
+
+    obDlgPanelTypes.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Patientorigin_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
+
+    cDlgPatientOrigin  obDlgPatientOrigin( this );
+
+    obDlgPatientOrigin.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ReasonToVisit_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_ReasonToVisit_triggered" );
+
+    cDlgReasonToVisit  obDlgReasonToVisit( this );
+
+    obDlgReasonToVisit.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Patients_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Patiens_triggered" );
+
+    cDlgPatient  obDlgPatient( this );
+
+    obDlgPatient.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PatientNew_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_PatienNew_triggered" );
+
+    cDBPatient *poPatient = new cDBPatient;
+    poPatient->createNew();
+
+    cDlgPatientEdit  obDlgEdit( this, poPatient );
+    obDlgEdit.setWindowTitle( tr( "New Patient" ) );
+    obDlgEdit.exec();
+
+    delete poPatient;
+}
+//====================================================================================
+void cWndMain::on_action_Attendances_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Attendances_triggered" );
+
+    cDlgAttendance  obDlgAttendance( this );
+
+    obDlgAttendance.exec();
+}
+//====================================================================================
+void cWndMain::on_action_DeviceStart_triggered()
+{
+    mdiPanels->start();
+}
+//====================================================================================
+void cWndMain::on_action_DeviceReset_triggered()
+{
+    mdiPanels->reset();
+}
+//====================================================================================
+void cWndMain::on_action_PatientSelect_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
+
+    cDlgPatientSelect  obDlgPatientSelect( this );
+
+    obDlgPatientSelect.exec();
+    updateTitle();
+}
+//====================================================================================
+void cWndMain::on_action_PatientEmpty_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
+
+    g_obPatient.createNew();
+    updateTitle();
+}
+//====================================================================================
+void cWndMain::on_action_AttendanceNew_triggered()
+{
+    cDBAttendance *poAttendance = new cDBAttendance;
+    poAttendance->createNew();
+    poAttendance->setPatientId( g_obPatient.id() );
+
+    cDlgAttendanceEdit obDlgEdit( this, poAttendance );
+    obDlgEdit.setWindowTitle( tr( "New Attendance" ) );
+    obDlgEdit.exec();
+
+    delete poAttendance;
+}
+//====================================================================================
+void cWndMain::on_action_PanelStatuses_triggered()
+{
+    cDlgPanelStatuses   obDlgPanelStatuses( this );
+
+    obDlgPanelStatuses.exec();
+}
+//====================================================================================
+void cWndMain::on_action_UseWithCard_triggered()
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.exec();
+}
+//====================================================================================
+void cWndMain::on_action_UseByTime_triggered()
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.exec();
+
+    g_poHardware->setMainActionTime( mdiPanels->activePanel(), 180 );  // 180 -> ennyi m�sodperccel indul a kiv�lasztott panel
+}
+//====================================================================================
+void cWndMain::on_action_Cards_triggered()
+{
+    cDlgPatientCard obDlgPatientCard( this );
+
+    obDlgPatientCard.exec();
+}
+//====================================================================================
+void cWndMain::on_action_CardTypes_triggered()
+{
+    cDlgPatientCardType obDlgPatientCardType( this );
+
+    obDlgPatientCardType.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PCSaveToDatabase_triggered()
+{
+    cDlgPatientCardAdd  obDlgPatientCardAdd( this );
+
+    obDlgPatientCardAdd.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Cassa_triggered()
+{
+}
+//====================================================================================
+void cWndMain::on_action_Accounting_triggered()
+{
+}
+//====================================================================================
+void cWndMain::on_action_DeviceSkipStatus_triggered()
+{
+    mdiPanels->next();
+}
+//====================================================================================

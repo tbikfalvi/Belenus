@@ -1,0 +1,177 @@
+#include <QMessageBox>
+
+#include "belenus.h"
+#include "dlgpatientcard.h"
+#include "../edit/dlgpatientcardedit.h"
+
+cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
+    : cDlgCrud( p_poParent )
+{
+    setWindowTitle( tr( "Patient Card List" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientcard.gif") );
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblPatientCardType = new QLabel( this );
+    lblPatientCardType->setObjectName( QString::fromUtf8( "lblPatientCardType" ) );
+    lblPatientCardType->setText( "Patientcard type: " );
+    horizontalLayout->addWidget( lblPatientCardType );
+    cmbPatientCardType = new QComboBox( this );
+    cmbPatientCardType->setObjectName( QString::fromUtf8( "cmbPatientCardType" ) );
+    cmbPatientCardType->resize( 400, 20 );
+    horizontalLayout->addWidget( cmbPatientCardType );
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+    verticalLayout->insertLayout( 0, horizontalLayout );
+
+    QSqlQuery *poQuery;
+
+    cmbPatientCardType->addItem( tr("<All patientcard type>"), -1 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" ) );
+    while( poQuery->next() )
+    {
+        cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+
+    setupTableView();
+
+    connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+}
+
+cDlgPatientCard::~cDlgPatientCard()
+{
+}
+
+void cDlgPatientCard::setupTableView()
+{
+    cTracer obTracer( "cDlgPatientCard::setupTableView" );
+
+    refreshTable();
+
+    cDlgCrud::setupTableView();
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Available units" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Patientcard type" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "All units" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+    }
+    else
+    {
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Barcode" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Available units" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Patientcard type" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "All units" ) );
+    }
+}
+
+void cDlgPatientCard::refreshTable()
+{
+    cTracer obTracer( "cDlgPatientCard::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units, patientCards.archive FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId";
+    }
+    else
+    {
+        m_qsQuery = "SELECT patientCards.patientCardId AS Id, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.archive<>\"DEL\"";
+    }
+
+    int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
+    if( uiPatientCardTypeId > -1 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patientCards.patientCardTypeId=%1" ).arg( uiPatientCardTypeId );
+    }
+
+    cDlgCrud::refreshTable();
+}
+
+void cDlgPatientCard::enableButtons()
+{
+    cTracer obTracer( "cDlgPatientCard::enableButtons" );
+
+    if( m_uiSelectedId )
+    {
+        bool boAdmin = g_obUser.isInGroup( "admin" );
+        m_poBtnDelete->setEnabled( boAdmin );
+        m_poBtnEdit->setEnabled( boAdmin );
+    }
+    else
+    {
+        m_poBtnDelete->setEnabled( false );
+        m_poBtnEdit->setEnabled( false );
+    }
+}
+
+void cDlgPatientCard::newClicked( bool )
+{
+    cDBPatientCard *poPatientCard = new cDBPatientCard;
+    poPatientCard->createNew();
+
+    cDlgPatientCardEdit  obDlgEdit( this, poPatientCard );
+    obDlgEdit.setWindowTitle( tr( "New Patientcard" ) );
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        m_uiSelectedId = poPatientCard->id();
+        refreshTable();
+    }
+
+    delete poPatientCard;
+}
+
+void cDlgPatientCard::deleteClicked( bool )
+{
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Patientcard?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            QString stQuery = QString( "UPDATE patientCards SET archive=\"DEL\" WHERE patientCardId=%1" ).arg( m_uiSelectedId );
+            g_poDB->executeQuery( stQuery.toStdString(), true );
+
+            m_uiSelectedId = 0;
+            refreshTable();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
+    }
+}
+
+void cDlgPatientCard::editClicked( bool )
+{
+    cDBPatientCard  *poPatientCard = NULL;
+
+    try
+    {
+        poPatientCard = new cDBPatientCard;
+        poPatientCard->load( m_uiSelectedId );
+
+        cDlgPatientCardEdit  obDlgEdit( this, poPatientCard );
+        obDlgEdit.setWindowTitle( QString::fromStdString( poPatientCard->barcode() ) );
+        if( obDlgEdit.exec() == QDialog::Accepted )
+        {
+            refreshTable();
+        }
+
+        if( poPatientCard ) delete poPatientCard;
+    }
+    catch( cSevException &e )
+    {
+        if( poPatientCard ) delete poPatientCard;
+
+        g_obLogger << e.severity();
+        g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}

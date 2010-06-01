@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
+    <width>622</width>
     <height>579</height>
    </rect>
   </property>
@@ -14,49 +14,109 @@
    <string>Belenus</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QGraphicsView" name="grvMain"/>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>635</width>
-     <height>21</height>
+     <width>622</width>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
     <property name="title">
      <string>&amp;System</string>
     </property>
-    <addaction name="actionLog_Out"/>
+    <addaction name="action_LogOut"/>
     <addaction name="separator"/>
-    <addaction name="actionE_xit"/>
+    <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <widget class="QMenu" name="menuAdministrator">
+     <property name="title">
+      <string>Administrator</string>
+     </property>
+     <addaction name="action_Users"/>
+     <addaction name="separator"/>
+     <addaction name="action_Patientorigin"/>
+     <addaction name="action_ReasonToVisit"/>
+     <addaction name="separator"/>
+     <addaction name="action_Paneltypes"/>
+     <addaction name="action_PanelStatuses"/>
+    </widget>
+    <addaction name="action_Patients"/>
+    <addaction name="action_Attendances"/>
+    <addaction name="separator"/>
+    <addaction name="action_CardTypes"/>
+    <addaction name="action_Cards"/>
+    <addaction name="separator"/>
+    <addaction name="menuAdministrator"/>
+    <addaction name="separator"/>
     <addaction name="action_Preferences"/>
-    <addaction name="action_Users"/>
-    <addaction name="action_Usercardtypes"/>
-    <addaction name="action_Usercards"/>
-    <addaction name="action_Producttypes"/>
-    <addaction name="action_Products"/>
    </widget>
    <widget class="QMenu" name="menu_View">
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="action_Cassa"/>
+    <addaction name="action_Accounting"/>
+    <addaction name="separator"/>
     <addaction name="action_Logs"/>
-    <addaction name="actionHardware_test"/>
+    <addaction name="action_Hardwaretest"/>
+   </widget>
+   <widget class="QMenu" name="menuAction">
+    <property name="title">
+     <string>Action</string>
+    </property>
+    <widget class="QMenu" name="menuPatient">
+     <property name="title">
+      <string>Patient</string>
+     </property>
+     <addaction name="action_PatientNew"/>
+     <addaction name="separator"/>
+     <addaction name="action_PatientSelect"/>
+     <addaction name="action_PatientEmpty"/>
+    </widget>
+    <widget class="QMenu" name="menuDevice">
+     <property name="title">
+      <string>Device</string>
+     </property>
+     <addaction name="action_UseWithCard"/>
+     <addaction name="action_UseByTime"/>
+     <addaction name="separator"/>
+     <addaction name="action_DeviceStart"/>
+     <addaction name="action_DeviceSkipStatus"/>
+     <addaction name="action_DeviceReset"/>
+    </widget>
+    <widget class="QMenu" name="menuAttendance">
+     <property name="title">
+      <string>Attendance</string>
+     </property>
+     <addaction name="action_AttendanceNew"/>
+    </widget>
+    <widget class="QMenu" name="menuPatientCard">
+     <property name="title">
+      <string>PatientCard</string>
+     </property>
+     <addaction name="action_PCSaveToDatabase"/>
+     <addaction name="action_PCActivate"/>
+    </widget>
+    <addaction name="menuPatient"/>
+    <addaction name="separator"/>
+    <addaction name="menuAttendance"/>
+    <addaction name="separator"/>
+    <addaction name="menuPatientCard"/>
+    <addaction name="separator"/>
+    <addaction name="menuDevice"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
+   <addaction name="menuAction"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -67,14 +127,43 @@
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_Exit"/>
+   <addaction name="action_LogOut"/>
+   <addaction name="separator"/>
+   <addaction name="action_PatientSelect"/>
+   <addaction name="action_PatientEmpty"/>
+   <addaction name="action_PatientNew"/>
+   <addaction name="action_PostponedPatient"/>
+   <addaction name="separator"/>
+   <addaction name="action_UseWithCard"/>
+   <addaction name="action_UseByTime"/>
+   <addaction name="separator"/>
+   <addaction name="action_AttendanceNew"/>
+   <addaction name="action_PostponedAttendance"/>
+   <addaction name="separator"/>
+   <addaction name="action_DeviceStart"/>
+   <addaction name="action_DeviceSkipStatus"/>
+   <addaction name="action_DeviceReset"/>
+   <addaction name="separator"/>
+   <addaction name="action_DeviceSettings"/>
+   <addaction name="separator"/>
+   <addaction name="action_PatientCardSell"/>
+   <addaction name="action_DoctorSchedule"/>
+   <addaction name="action_DeviceSchedule"/>
   </widget>
-  <action name="actionE_xit">
+  <action name="action_Exit">
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -89,7 +178,7 @@
     <string>&amp;Logs ...</string>
    </property>
   </action>
-  <action name="actionLog_Out">
+  <action name="action_LogOut">
    <property name="text">
     <string>Log &amp;Out</string>
    </property>
@@ -99,36 +188,208 @@
     <string>&amp;Users ...</string>
    </property>
   </action>
-  <action name="action_Usercardtypes">
-   <property name="text">
-    <string>Usercard types ...</string>
-   </property>
-  </action>
-  <action name="actionHardware_test">
+  <action name="action_Hardwaretest">
    <property name="text">
     <string>&amp;Hardware test ...</string>
    </property>
   </action>
-  <action name="action_Usercards">
+  <action name="action_Paneltypes">
    <property name="text">
-    <string>Usercards ...</string>
+    <string>P&amp;anel types ...</string>
    </property>
   </action>
-  <action name="action_Producttypes">
+  <action name="action_Patientorigin">
    <property name="text">
-    <string>Product types ...</string>
+    <string>Patient origin ...</string>
    </property>
   </action>
-  <action name="action_Products">
+  <action name="action_ReasonToVisit">
    <property name="text">
-    <string>Products ...</string>
+    <string>Reason to visit ...</string>
+   </property>
+  </action>
+  <action name="action_DeviceStart">
+   <property name="text">
+    <string>Start Device</string>
+   </property>
+   <property name="toolTip">
+    <string>Start Current Device</string>
+   </property>
+  </action>
+  <action name="action_DeviceReset">
+   <property name="text">
+    <string>Reset Device</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset Current Device</string>
+   </property>
+  </action>
+  <action name="action_DeviceSettings">
+   <property name="text">
+    <string>DeviceSettings</string>
+   </property>
+   <property name="toolTip">
+    <string>Current Device Settings</string>
+   </property>
+  </action>
+  <action name="action_Patients">
+   <property name="text">
+    <string>Patients ...</string>
+   </property>
+  </action>
+  <action name="action_PatientNew">
+   <property name="text">
+    <string>Create new ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Create new patient</string>
+   </property>
+  </action>
+  <action name="action_Attendances">
+   <property name="text">
+    <string>Attendances ...</string>
+   </property>
+  </action>
+  <action name="action_PatientSelect">
+   <property name="text">
+    <string>Select actual ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Select actual patient</string>
+   </property>
+  </action>
+  <action name="action_PatientEmpty">
+   <property name="text">
+    <string>Deselect actual</string>
+   </property>
+   <property name="toolTip">
+    <string>Deselect actual patient</string>
+   </property>
+  </action>
+  <action name="action_AttendanceNew">
+   <property name="text">
+    <string>Create new ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Add new attendance for actual patient</string>
+   </property>
+  </action>
+  <action name="action_Cards">
+   <property name="text">
+    <string>Cards ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Patient cards</string>
+   </property>
+  </action>
+  <action name="action_UseWithCard">
+   <property name="text">
+    <string>Use with card ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Use device with patient card</string>
+   </property>
+  </action>
+  <action name="action_UseByTime">
+   <property name="text">
+    <string>Use by time ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Use device with defined time period</string>
+   </property>
+  </action>
+  <action name="action_PanelStatuses">
+   <property name="text">
+    <string>Panel statuses ...</string>
+   </property>
+  </action>
+  <action name="action_CardTypes">
+   <property name="text">
+    <string>Card types ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Patientcard types</string>
+   </property>
+  </action>
+  <action name="action_PCSaveToDatabase">
+   <property name="text">
+    <string>Save to database ...</string>
+   </property>
+  </action>
+  <action name="action_PCActivate">
+   <property name="text">
+    <string>Activate existing ...</string>
+   </property>
+  </action>
+  <action name="action_Accounting">
+   <property name="text">
+    <string>Accounting ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Main accounting</string>
+   </property>
+  </action>
+  <action name="action_Cassa">
+   <property name="text">
+    <string>Cassa ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Cassa</string>
+   </property>
+  </action>
+  <action name="action_DeviceSkipStatus">
+   <property name="text">
+    <string>Skip status</string>
+   </property>
+   <property name="toolTip">
+    <string>Skip actual status and step to next status</string>
+   </property>
+  </action>
+  <action name="action_PatientCardSell">
+   <property name="text">
+    <string>Sell patientcard</string>
+   </property>
+   <property name="toolTip">
+    <string>Sell patientcard</string>
+   </property>
+  </action>
+  <action name="action_DoctorSchedule">
+   <property name="text">
+    <string>Doctor schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Schedule of doctor's consulting hours</string>
+   </property>
+  </action>
+  <action name="action_DeviceSchedule">
+   <property name="text">
+    <string>Device schedule</string>
+   </property>
+   <property name="toolTip">
+    <string>Schedule of device useability</string>
+   </property>
+  </action>
+  <action name="action_PostponedPatient">
+   <property name="text">
+    <string>Fullfill postponed</string>
+   </property>
+   <property name="toolTip">
+    <string>Fullfill data for postponed patients</string>
+   </property>
+  </action>
+  <action name="action_PostponedAttendance">
+   <property name="text">
+    <string>Fullfill postponed</string>
+   </property>
+   <property name="toolTip">
+    <string>Fullfill data for postponed attendances</string>
    </property>
   </action>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>actionE_xit</sender>
+   <sender>action_Exit</sender>
    <signal>triggered()</signal>
    <receiver>wndMain</receiver>
    <slot>close()</slot>
