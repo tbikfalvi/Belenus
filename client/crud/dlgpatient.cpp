@@ -61,8 +61,8 @@ void cDlgPatient::enableButtons()
 {
     cTracer obTracer( "cDlgPatient::enableButtons" );
 
-    m_poBtnEdit->setEnabled( m_uiSelectedId>0 );
-    m_poBtnDelete->setEnabled( m_uiSelectedId>0 );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
 }
 
 void cDlgPatient::newClicked( bool )
@@ -79,33 +79,6 @@ void cDlgPatient::newClicked( bool )
     }
 
     delete poPatient;
-}
-
-void cDlgPatient::deleteClicked( bool )
-{
-    cDBPatient  *poPatient = NULL;
-
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this Patient?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            poPatient = new cDBPatient;
-            poPatient->load( m_uiSelectedId );
-            poPatient->remove();
-            m_uiSelectedId = 0;
-            refreshTable();
-            if( poPatient ) delete poPatient;
-        }
-        catch( cSevException &e )
-        {
-            if( poPatient ) delete poPatient;
-
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
 }
 
 void cDlgPatient::editClicked( bool )
@@ -132,5 +105,32 @@ void cDlgPatient::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgPatient::deleteClicked( bool )
+{
+    cDBPatient  *poPatient = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Patient?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poPatient = new cDBPatient;
+            poPatient->load( m_uiSelectedId );
+            poPatient->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poPatient ) delete poPatient;
+        }
+        catch( cSevException &e )
+        {
+            if( poPatient ) delete poPatient;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }

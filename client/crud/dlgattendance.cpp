@@ -126,33 +126,6 @@ void cDlgAttendance::newClicked( bool )
     delete poAttendance;
 }
 
-void cDlgAttendance::deleteClicked( bool )
-{
-    cDBAttendance  *poAttendance = NULL;
-
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this Attendance?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            poAttendance = new cDBAttendance;
-            poAttendance->load( m_uiSelectedId );
-            poAttendance->remove();
-            m_uiSelectedId = 0;
-            refreshTable();
-            if( poAttendance ) delete poAttendance;
-        }
-        catch( cSevException &e )
-        {
-            if( poAttendance ) delete poAttendance;
-
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
-}
-
 void cDlgAttendance::editClicked( bool )
 {
     cDBAttendance  *poAttendance = NULL;
@@ -177,5 +150,32 @@ void cDlgAttendance::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgAttendance::deleteClicked( bool )
+{
+    cDBAttendance  *poAttendance = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Attendance?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poAttendance = new cDBAttendance;
+            poAttendance->load( m_uiSelectedId );
+            poAttendance->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poAttendance ) delete poAttendance;
+        }
+        catch( cSevException &e )
+        {
+            if( poAttendance ) delete poAttendance;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }

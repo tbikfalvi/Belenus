@@ -84,33 +84,6 @@ void cDlgPanelStatuses::newClicked( bool )
     delete poPanelStatuses;
 }
 
-void cDlgPanelStatuses::deleteClicked( bool )
-{
-    cDBPanelStatuses  *poPanelStatuses = NULL;
-
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this Panelstatus?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            poPanelStatuses = new cDBPanelStatuses;
-            poPanelStatuses->load( m_uiSelectedId );
-            poPanelStatuses->remove();
-            m_uiSelectedId = 0;
-            refreshTable();
-            if( poPanelStatuses ) delete poPanelStatuses;
-        }
-        catch( cSevException &e )
-        {
-            if( poPanelStatuses ) delete poPanelStatuses;
-
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
-}
-
 void cDlgPanelStatuses::editClicked( bool )
 {
     cDBPanelStatuses  *poPanelStatuses = NULL;
@@ -135,5 +108,32 @@ void cDlgPanelStatuses::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgPanelStatuses::deleteClicked( bool )
+{
+    cDBPanelStatuses  *poPanelStatuses = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Panelstatus?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poPanelStatuses = new cDBPanelStatuses;
+            poPanelStatuses->load( m_uiSelectedId );
+            poPanelStatuses->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poPanelStatuses ) delete poPanelStatuses;
+        }
+        catch( cSevException &e )
+        {
+            if( poPanelStatuses ) delete poPanelStatuses;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }
