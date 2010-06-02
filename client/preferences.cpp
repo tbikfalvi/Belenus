@@ -403,14 +403,14 @@ void cPreferences::loadDBSettings() throw (cSevException)
     QSqlQuery *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels WHERE active=1" ) );
         poQuery->first();
         m_uiPanelCount = poQuery->value( 0 ).toInt();
 
         delete poQuery;
         poQuery = NULL;
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences ORDER BY licenceId DESC" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences WHERE active=1 ORDER BY licenceId DESC" ) );
         if( poQuery->first() )
         {
             m_uiLicenceId    = poQuery->value( 0 ).toInt();

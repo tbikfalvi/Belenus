@@ -46,6 +46,7 @@ HEADERS = belenus.h \
     db/dbpanelstatuses.h \
     db/dbuser.h \
     db/dbpostponed.h \
+    db/dbpaneltypes.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -95,6 +96,7 @@ SOURCES = main.cpp \
     db/dbpanelstatuses.cpp \
     db/dbuser.cpp \
     db/dbpostponed.cpp \
+    db/dbpaneltypes.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

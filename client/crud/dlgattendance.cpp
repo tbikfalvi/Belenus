@@ -27,13 +27,22 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     QSqlQuery *poQuery;
 
     cmbPatient->addItem( tr("<All patient>"), 0 );
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE archive<>\"DEL\" AND patientId>0" ) );
-    while( poQuery->next() )
+    try
     {
-        cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-        if( g_obPatient.id() == poQuery->value( 0 ) )
-            cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
+        while( poQuery->next() )
+        {
+            cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( g_obPatient.id() == poQuery->value( 0 ) )
+                cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
+        }
     }
+    catch( cSevException &e )
+    {
+        g_obLogger << e.severity();
+        g_obLogger << e.what() << cQTLogger::EOM;
+    }
+    if( poQuery ) delete poQuery;
 
     setupTableView();
 
@@ -58,7 +67,8 @@ void cDlgAttendance::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Date" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Time" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
@@ -73,11 +83,11 @@ void cDlgAttendance::refreshTable()
 
     if( g_obUser.isInGroup( "root" ) )
     {
-        m_qsQuery = "SELECT attendanceId, licenceId, date, length, archive FROM attendance WHERE attendanceId>0";
+        m_qsQuery = "SELECT attendanceId, licenceId, date, length, active, archive FROM attendance WHERE attendanceId>0";
     }
     else
     {
-        m_qsQuery = "SELECT attendanceId AS id, date, length FROM attendance WHERE attendanceId>0 AND archive<>\"DEL\"";
+        m_qsQuery = "SELECT attendanceId AS id, date, length FROM attendance WHERE attendanceId>0 AND active=1";
     }
 
     unsigned int uiPatientId = cmbPatient->itemData( cmbPatient->currentIndex() ).toInt();
@@ -94,8 +104,8 @@ void cDlgAttendance::enableButtons()
 {
     cTracer obTracer( "cDlgAttendance::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obPatient.id() > 0 );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
     m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
 }
 
@@ -114,28 +124,6 @@ void cDlgAttendance::newClicked( bool )
     }
 
     delete poAttendance;
-}
-
-void cDlgAttendance::deleteClicked( bool )
-{
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this Attendance?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            QString stQuery = QString( "UPDATE attendance SET archive=\"DEL\" WHERE attendanceId=%1" ).arg( m_uiSelectedId );
-            g_poDB->executeQuery( stQuery.toStdString(), true );
-
-            m_uiSelectedId = 0;
-            refreshTable();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
 }
 
 void cDlgAttendance::editClicked( bool )
@@ -162,5 +150,32 @@ void cDlgAttendance::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgAttendance::deleteClicked( bool )
+{
+    cDBAttendance  *poAttendance = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Attendance?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poAttendance = new cDBAttendance;
+            poAttendance->load( m_uiSelectedId );
+            poAttendance->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poAttendance ) delete poAttendance;
+        }
+        catch( cSevException &e )
+        {
+            if( poAttendance ) delete poAttendance;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }

@@ -210,7 +210,7 @@ void cWndMain::updateTitle()
     }
 
     action_Paneltypes->setEnabled( g_obUser.isInGroup( "system" ) );
-    action_PanelStatuses->setEnabled( g_obUser.isInGroup( "system" ) );
+    action_PanelStatuses->setEnabled( g_obUser.isInGroup( "admin" ) );
 
     setWindowTitle( qsTitle );
 

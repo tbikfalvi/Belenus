@@ -16,6 +16,7 @@ protected:
     virtual void enableButtons();
 
 protected slots:
+    virtual void refreshTable();
     virtual void newClicked( bool );
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );

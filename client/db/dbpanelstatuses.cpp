@@ -32,6 +32,7 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
                              const string &p_stName,
                              const unsigned int p_uiLength,
                              const unsigned int p_uiActivateCommand,
+                             const bool p_bActive,
                              const string &p_stArchive ) throw()
 {
     m_uiId              = p_uiId;
@@ -41,6 +42,7 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
     m_stName            = p_stName;
     m_uiLength          = p_uiLength;
     m_uiActivateCommand = p_uiActivateCommand;
+    m_bActive           = p_bActive;
     m_stArchive         = p_stArchive;
 }
 
@@ -53,6 +55,7 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inLengthIdx             = p_obRecord.indexOf( "length" );
     int inActivateCommandIdx    = p_obRecord.indexOf( "activateCmd" );
+    int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
@@ -62,6 +65,7 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString().toStdString(),
           p_obRecord.value( inLengthIdx ).toInt(),
           p_obRecord.value( inActivateCommandIdx ).toInt(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -117,6 +121,7 @@ void cDBPanelStatuses::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString(m_stName) );
     qsQuery += QString( "length = %1, " ).arg( m_uiLength );
     qsQuery += QString( "activateCmd = %1, " ).arg( m_uiActivateCommand );
+    qsQuery += QString( "active = %1" ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -126,6 +131,29 @@ void cDBPanelStatuses::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+}
+
+void cDBPanelStatuses::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBPanelStatuses::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM panelStatuses ";
+        }
+        else
+        {
+            qsQuery = "UPDATE panelStatuses SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE panelStatusId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
 }
 
 void cDBPanelStatuses::createNew() throw()
@@ -196,6 +224,16 @@ unsigned int cDBPanelStatuses::activateCommand() const throw()
 void cDBPanelStatuses::setActivateCommand( const unsigned int p_uiActivateCommand ) throw()
 {
     m_uiActivateCommand = p_uiActivateCommand;
+}
+
+bool cDBPanelStatuses::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBPanelStatuses::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
 }
 
 string cDBPanelStatuses::archive() const throw()

@@ -9,17 +9,6 @@ cDlgUsers::cDlgUsers( QWidget *p_poParent )
 {
     setWindowTitle( tr( "User List" ) );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_qsQuery = "SELECT userId AS id, active, name, realName FROM users";
-    }
-    else
-    {
-        m_qsQuery = "SELECT userId AS id, name, realName FROM users WHERE active = 1";
-    }
-
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
-
     m_uiSelectedId = g_obUser.id();
 
     setupTableView();
@@ -52,15 +41,32 @@ void cDlgUsers::setupTableView()
     tbvCrud->resizeColumnToContents( 1 );
 }
 
+void cDlgUsers::refreshTable()
+{
+    cTracer obTracer( "cDlgUsers::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT userId AS id, active, name, realName FROM users";
+    }
+    else
+    {
+        m_qsQuery = "SELECT userId AS id, name, realName FROM users WHERE active = 1";
+    }
+
+    cDlgCrud::refreshTable();
+}
+
 void cDlgUsers::enableButtons()
 {
     cTracer obTracer( "cDlgUsers::enableButtons" );
 
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+
     if( m_uiSelectedId )
     {
-        bool boAdmin = g_obUser.isInGroup( "admin" );
-        m_poBtnDelete->setEnabled( boAdmin && g_obUser.id() != m_uiSelectedId );
-        m_poBtnEdit->setEnabled( boAdmin || g_obUser.id() == m_uiSelectedId );
+        m_poBtnDelete->setEnabled( g_obUser.isInGroup( "admin" ) && g_obUser.id() != m_uiSelectedId );
+        m_poBtnEdit->setEnabled( g_obUser.isInGroup( "admin" ) || g_obUser.id() == m_uiSelectedId );
     }
     else
     {
@@ -83,20 +89,6 @@ void cDlgUsers::newClicked( bool )
     }
 
     delete poUser;
-}
-
-void cDlgUsers::deleteClicked( bool )
-{
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this User?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        QString stQuery = QString( "UPDATE users SET active=0, name=\"%1\" WHERE userId=%1" ).arg( m_uiSelectedId );
-        g_poDB->executeQuery( stQuery.toStdString(), true );
-
-        m_uiSelectedId = 0;
-        refreshTable();
-    }
 }
 
 void cDlgUsers::editClicked( bool )
@@ -130,5 +122,19 @@ void cDlgUsers::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgUsers::deleteClicked( bool )
+{
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this User?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        QString stQuery = QString( "UPDATE users SET active=0, name=\"%1\" WHERE userId=%1" ).arg( m_uiSelectedId );
+        g_poDB->executeQuery( stQuery.toStdString(), true );
+
+        m_uiSelectedId = 0;
+        refreshTable();
     }
 }

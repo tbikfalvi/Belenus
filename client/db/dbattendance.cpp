@@ -39,6 +39,7 @@ void cDBAttendance::init( const unsigned int p_uiId,
                           const string &p_stMedicineCurrent,
                           const string &p_stMedicineAllergy,
                           const string &p_stComment,
+                          const bool p_bActive,
                           const string &p_stArchive ) throw()
 {
     m_uiId                  = p_uiId;
@@ -55,6 +56,7 @@ void cDBAttendance::init( const unsigned int p_uiId,
     m_stMedicineCurrent     = p_stMedicineCurrent;
     m_stMedicineAllergy     = p_stMedicineAllergy;
     m_stComment             = p_stComment;
+    m_bActive               = p_bActive;
     m_stArchive             = p_stArchive;
 }
 
@@ -74,6 +76,7 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
     int inMedCurrentIdx     = p_obRecord.indexOf( "medicineCurrent" );
     int inMedAllergyIdx     = p_obRecord.indexOf( "medicineAllergy" );
     int inCommentIdx        = p_obRecord.indexOf( "comment" );
+    int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
@@ -90,6 +93,7 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inMedCurrentIdx ).toString().toStdString(),
           p_obRecord.value( inMedAllergyIdx ).toString().toStdString(),
           p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -139,6 +143,7 @@ void cDBAttendance::save() throw( cSevException )
     qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( QString::fromStdString( m_stMedicineCurrent ) );
     qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( QString::fromStdString( m_stMedicineAllergy ) );
     qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "active = %1" ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -148,6 +153,29 @@ void cDBAttendance::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+}
+
+void cDBAttendance::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBAttendance::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM attendance ";
+        }
+        else
+        {
+            qsQuery = "UPDATE attendance SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE attendanceId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
 }
 
 void cDBAttendance::createNew() throw()
@@ -290,6 +318,16 @@ void cDBAttendance::setComment( const string &p_stComment ) throw()
     m_stComment = p_stComment;
 }
 
+bool cDBAttendance::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBAttendance::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
+}
+
 string cDBAttendance::archive() const throw()
 {
     return m_stArchive;
@@ -299,4 +337,3 @@ void cDBAttendance::setArchive( const string &p_stArchive ) throw()
 {
     m_stArchive = p_stArchive;
 }
-

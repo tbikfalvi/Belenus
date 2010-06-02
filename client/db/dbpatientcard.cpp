@@ -135,6 +135,29 @@ void cDBPatientCard::save() throw( cSevException )
     if( poQuery ) delete poQuery;
 }
 
+void cDBPatientCard::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCard::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM patientCards ";
+        }
+        else
+        {
+            qsQuery = "UPDATE patientCards SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
 void cDBPatientCard::createNew() throw()
 {
     init();

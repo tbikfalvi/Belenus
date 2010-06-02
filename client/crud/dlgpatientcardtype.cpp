@@ -10,17 +10,6 @@ cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
     setWindowTitle( tr( "Patient Cardtype List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcardtype.gif") );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, price, units, archive FROM patientCardTypes";
-    }
-    else
-    {
-        m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units FROM patientCardTypes WHERE archive<>\"DEL\"";
-    }
-
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
-
     setupTableView();
 }
 
@@ -43,7 +32,8 @@ void cDlgPatientCardType::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
@@ -53,21 +43,29 @@ void cDlgPatientCardType::setupTableView()
     }
 }
 
+void cDlgPatientCardType::refreshTable()
+{
+    cTracer obTracer( "cDlgPatientCardType::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, price, units, active, archive FROM patientCardTypes";
+    }
+    else
+    {
+        m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units FROM patientCardTypes WHERE active=1";
+    }
+
+    cDlgCrud::refreshTable();
+}
+
 void cDlgPatientCardType::enableButtons()
 {
     cTracer obTracer( "cDlgPatientCardType::enableButtons" );
 
-    if( m_uiSelectedId )
-    {
-        bool boAdmin = g_obUser.isInGroup( "admin" );
-        m_poBtnDelete->setEnabled( boAdmin );
-        m_poBtnEdit->setEnabled( boAdmin );
-    }
-    else
-    {
-        m_poBtnDelete->setEnabled( false );
-        m_poBtnEdit->setEnabled( false );
-    }
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
 }
 
 void cDlgPatientCardType::newClicked( bool )
@@ -84,28 +82,6 @@ void cDlgPatientCardType::newClicked( bool )
     }
 
     delete poPatientCardType;
-}
-
-void cDlgPatientCardType::deleteClicked( bool )
-{
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this PatientCard Type?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            QString stQuery = QString( "UPDATE patientCardTypes SET archive=\"DEL\" WHERE patientCardTypeId=%1" ).arg( m_uiSelectedId );
-            g_poDB->executeQuery( stQuery.toStdString(), true );
-
-            m_uiSelectedId = 0;
-            refreshTable();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
 }
 
 void cDlgPatientCardType::editClicked( bool )
@@ -132,5 +108,32 @@ void cDlgPatientCardType::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgPatientCardType::deleteClicked( bool )
+{
+    cDBPatientCardType  *poPatientCardType = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this PatientCard Type?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poPatientCardType = new cDBPatientCardType;
+            poPatientCardType->load( m_uiSelectedId );
+            poPatientCardType->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poPatientCardType ) delete poPatientCardType;
+        }
+        catch( cSevException &e )
+        {
+            if( poPatientCardType ) delete poPatientCardType;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }

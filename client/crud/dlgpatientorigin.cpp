@@ -10,17 +10,6 @@ cDlgPatientOrigin::cDlgPatientOrigin( QWidget *p_poParent )
     setWindowTitle( tr( "Patient Origin List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientorigin.gif") );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_qsQuery = "SELECT patientOriginId, licenceId, name, archive FROM patientOrigin";
-    }
-    else
-    {
-        m_qsQuery = "SELECT patientOriginId AS id, name FROM patientOrigin WHERE archive<>\"DEL\"";
-    }
-
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
-
     setupTableView();
 }
 
@@ -41,7 +30,8 @@ void cDlgPatientOrigin::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
@@ -49,21 +39,29 @@ void cDlgPatientOrigin::setupTableView()
     }
 }
 
+void cDlgPatientOrigin::refreshTable()
+{
+    cTracer obTracer( "cDlgPatientOrigin::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT patientOriginId, licenceId, name, active, archive FROM patientOrigin";
+    }
+    else
+    {
+        m_qsQuery = "SELECT patientOriginId AS id, name FROM patientOrigin WHERE active=1";
+    }
+
+    cDlgCrud::refreshTable();
+}
+
 void cDlgPatientOrigin::enableButtons()
 {
     cTracer obTracer( "cDlgPatientOrigin::enableButtons" );
 
-    if( m_uiSelectedId )
-    {
-        bool boAdmin = g_obUser.isInGroup( "admin" );
-        m_poBtnDelete->setEnabled( boAdmin );
-        m_poBtnEdit->setEnabled( boAdmin );
-    }
-    else
-    {
-        m_poBtnDelete->setEnabled( false );
-        m_poBtnEdit->setEnabled( false );
-    }
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
 }
 
 void cDlgPatientOrigin::newClicked( bool )
@@ -80,28 +78,6 @@ void cDlgPatientOrigin::newClicked( bool )
     }
 
     delete poPatientOrigin;
-}
-
-void cDlgPatientOrigin::deleteClicked( bool )
-{
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this Patient Origin?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            QString stQuery = QString( "UPDATE patientOrigin SET archive=\"DEL\" WHERE patientOriginId=%1" ).arg( m_uiSelectedId );
-            g_poDB->executeQuery( stQuery.toStdString(), true );
-
-            m_uiSelectedId = 0;
-            refreshTable();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
 }
 
 void cDlgPatientOrigin::editClicked( bool )
@@ -128,5 +104,32 @@ void cDlgPatientOrigin::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgPatientOrigin::deleteClicked( bool )
+{
+    cDBPatientOrigin  *poPatientOrigin = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Patient Origin?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poPatientOrigin = new cDBPatientOrigin;
+            poPatientOrigin->load( m_uiSelectedId );
+            poPatientOrigin->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poPatientOrigin ) delete poPatientOrigin;
+        }
+        catch( cSevException &e )
+        {
+            if( poPatientOrigin ) delete poPatientOrigin;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }

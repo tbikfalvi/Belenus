@@ -13,6 +13,7 @@ public:
 
     void            load( const unsigned int p_uiId )                   throw( cSevException );
     void            save()                                              throw( cSevException );
+    void            remove()                                            throw( cSevException );
     void            createNew()                                         throw();
     unsigned int    id() const                                          throw();
     unsigned int    licenceId() const                                   throw();
@@ -41,6 +42,8 @@ public:
     void            setMedicineAllergy( const string &p_stMedicineA )   throw();
     string          comment() const                                     throw();
     void            setComment( const string &p_stComment )             throw();
+    bool            active() const                                      throw();
+    void            setActive( const bool p_bActive )                   throw();
     string          archive() const                                     throw();
     void            setArchive( const string &p_stArchive )             throw();
 
@@ -59,6 +62,7 @@ private:
     string          m_stMedicineCurrent;
     string          m_stMedicineAllergy;
     string          m_stComment;
+    bool            m_bActive;
     string          m_stArchive;
 
     void init( const unsigned int p_uiId = 0,
@@ -75,6 +79,7 @@ private:
                const string &p_stMedicineCurrent = "",
                const string &p_stMedicineAllergy = "",
                const string &p_stComment = "",
+               const bool p_bActive = true,
                const string &p_stArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };
