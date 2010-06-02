@@ -28,11 +28,13 @@ cDBReasonToVisit::~cDBReasonToVisit()
 void cDBReasonToVisit::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const string &p_stName,
+                             const bool p_bActive,
                              const string &p_stArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_stName        = p_stName;
+    m_bActive       = p_bActive;
     m_stArchive     = p_stArchive;
 }
 
@@ -41,11 +43,13 @@ void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx         = p_obRecord.indexOf( "reasonToVisitId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -97,6 +101,7 @@ void cDBReasonToVisit::save() throw( cSevException )
     qsQuery += " reasonToVisit SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "active = %1" ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -108,9 +113,32 @@ void cDBReasonToVisit::save() throw( cSevException )
     if( poQuery ) delete poQuery;
 }
 
+void cDBReasonToVisit::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBReasonToVisit::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM reasonToVisit ";
+        }
+        else
+        {
+            qsQuery = "UPDATE reasonToVisit SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE reasonToVisitId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
 void cDBReasonToVisit::createNew() throw()
 {
-    init( 0, 0, "", "NEW" );
+    init();
 }
 
 unsigned int cDBReasonToVisit::id() const throw()
@@ -136,6 +164,16 @@ string cDBReasonToVisit::name() const throw()
 void cDBReasonToVisit::setName( const string &p_stName ) throw()
 {
     m_stName = p_stName;
+}
+
+bool cDBReasonToVisit::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBReasonToVisit::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
 }
 
 string cDBReasonToVisit::archive() const throw()

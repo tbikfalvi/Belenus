@@ -34,6 +34,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
                              const string &p_stValidDateTo,
                              const int p_nValidDays,
                              const int p_nUnitTime,
+                             const bool p_bActive,
                              const string &p_stArchive ) throw()
 {
     m_uiId              = p_uiId;
@@ -45,6 +46,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
     m_stValidDateTo     = p_stValidDateTo;
     m_nValidDays        = p_nValidDays;
     m_nUnitTime         = p_nUnitTime;
+    m_bActive           = p_bActive;
     m_stArchive         = p_stArchive;
 }
 
@@ -59,6 +61,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
     int inValidDaysIdx      = p_obRecord.indexOf( "validDays" );
     int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
+    int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
@@ -70,6 +73,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateToIdx ).toString().toStdString(),
           p_obRecord.value( inValidDaysIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -127,6 +131,7 @@ void cDBPatientCardType::save() throw( cSevException )
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( QString::fromStdString( m_stValidDateTo ) );
     qsQuery += QString( "validDays = \"%1\", " ).arg( m_nValidDays );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
+    qsQuery += QString( "active = %1" ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -136,6 +141,29 @@ void cDBPatientCardType::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+}
+
+void cDBPatientCardType::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCardType::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_stArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM patientCardTypes ";
+        }
+        else
+        {
+            qsQuery = "UPDATE patientCardTypes SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE patientCardTypeId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
 }
 
 void cDBPatientCardType::createNew() throw()
@@ -226,6 +254,16 @@ int cDBPatientCardType::unitTime() const throw()
 void cDBPatientCardType::setUnitTime( const int p_nUnitTime ) throw()
 {
     m_nUnitTime = p_nUnitTime;
+}
+
+bool cDBPatientCardType::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBPatientCardType::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
 }
 
 string cDBPatientCardType::archive() const throw()
