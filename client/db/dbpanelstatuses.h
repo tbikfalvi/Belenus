@@ -14,6 +14,7 @@ public:
     void            load( const unsigned int p_uiId )                               throw( cSevException );
     void            load( const string &p_stName )                                  throw( cSevException );
     void            save()                                                          throw( cSevException );
+    void            remove()                                                        throw( cSevException );
     void            createNew()                                                     throw();
     unsigned int    id() const                                                      throw();
     unsigned int    licenceId() const                                               throw();
@@ -28,6 +29,8 @@ public:
     void            setLength( const unsigned int p_uiLength )                      throw();
     unsigned int    activateCommand() const                                         throw();
     void            setActivateCommand( const unsigned int p_uiActivateCommand )    throw();
+    bool            active() const                                                  throw();
+    void            setActive( const bool p_bActive )                               throw();
     string          archive() const                                                 throw();
     void            setArchive( const string &p_stArchive )                         throw();
 
@@ -39,6 +42,7 @@ private:
     string          m_stName;
     unsigned int    m_uiLength;
     unsigned int    m_uiActivateCommand;
+    bool            m_bActive;
     string          m_stArchive;
 
     void init( const unsigned int p_uiId = 0,
@@ -48,6 +52,7 @@ private:
                const string &p_stName = "",
                const unsigned int p_uiLength = 0,
                const unsigned int p_uiActivateCommand = 0,
+               const bool p_bActive = true,
                const string &p_stArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };

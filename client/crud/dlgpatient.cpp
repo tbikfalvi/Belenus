@@ -10,15 +10,6 @@ cDlgPatient::cDlgPatient( QWidget *p_poParent )
     setWindowTitle( tr( "Patient List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.gif") );
 
-    if( g_obUser.isInGroup( "root" ) )
-    {
-        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, archive FROM patients WHERE patientId>0";
-    }
-    else
-    {
-        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND archive<>\"DEL\"";
-    }
-
     setupTableView();
 }
 
@@ -40,7 +31,8 @@ void cDlgPatient::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "UniqueId" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
@@ -49,20 +41,28 @@ void cDlgPatient::setupTableView()
     }
 }
 
+void cDlgPatient::refreshTable()
+{
+    cTracer obTracer( "cDlgPatient::refreshTable" );
+
+    if( g_obUser.isInGroup( "root" ) )
+    {
+        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, active, archive FROM patients WHERE patientId>0";
+    }
+    else
+    {
+        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND active=1";
+    }
+
+    cDlgCrud::refreshTable();
+}
+
 void cDlgPatient::enableButtons()
 {
     cTracer obTracer( "cDlgPatient::enableButtons" );
 
-    if( m_uiSelectedId )
-    {
-        m_poBtnDelete->setEnabled( true );
-        m_poBtnEdit->setEnabled( true );
-    }
-    else
-    {
-        m_poBtnDelete->setEnabled( false );
-        m_poBtnEdit->setEnabled( false );
-    }
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
 }
 
 void cDlgPatient::newClicked( bool )
@@ -79,28 +79,6 @@ void cDlgPatient::newClicked( bool )
     }
 
     delete poPatient;
-}
-
-void cDlgPatient::deleteClicked( bool )
-{
-    if( QMessageBox::question( this, tr( "Confirmation" ),
-                               tr( "Are you sure you want to delete this Patient?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            QString stQuery = QString( "UPDATE patients SET archive=\"DEL\" WHERE patientId=%1" ).arg( m_uiSelectedId );
-            g_poDB->executeQuery( stQuery.toStdString(), true );
-
-            m_uiSelectedId = 0;
-            refreshTable();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
-        }
-    }
 }
 
 void cDlgPatient::editClicked( bool )
@@ -127,5 +105,32 @@ void cDlgPatient::editClicked( bool )
 
         g_obLogger << e.severity();
         g_obLogger << e.what() << cQTLogger::EOM;
+    }
+}
+
+void cDlgPatient::deleteClicked( bool )
+{
+    cDBPatient  *poPatient = NULL;
+
+    if( QMessageBox::question( this, tr( "Confirmation" ),
+                               tr( "Are you sure you want to delete this Patient?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poPatient = new cDBPatient;
+            poPatient->load( m_uiSelectedId );
+            poPatient->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poPatient ) delete poPatient;
+        }
+        catch( cSevException &e )
+        {
+            if( poPatient ) delete poPatient;
+
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
     }
 }

@@ -93,7 +93,7 @@ void cDlgPatientSelect::refreshTable()
     }
     else
     {
-        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND archive<>\"DEL\"";
+        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND active=1";
     }
 
     QString stTemp;

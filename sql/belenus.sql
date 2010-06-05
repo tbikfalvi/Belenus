@@ -69,9 +69,26 @@ CREATE TABLE `doctors` (
   `name`                    varchar(100)            NOT NULL,
   `doctorLicence`           varchar(50)             NOT NULL,
   `data`                    text                    NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`doctorId`),
+  PRIMARY KEY (`doctorId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Doktorok rendelesi idejet tartalmazo tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `doctorSchedule` (
+  `doctorScheduleId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `doctorId`                int(10) unsigned        NOT NULL,
+  `dayOfWeek`               int(11)                 NOT NULL,
+  `timeFrom`                time                    DEFAULT NULL,
+  `timeTo`                  time                    DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`doctorScheduleId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`doctorId`) REFERENCES `doctors` (`doctorId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -93,8 +110,9 @@ CREATE TABLE `panelTypes` (
   `panelTypeId`             int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`panelTypeId`),
+  PRIMARY KEY (`panelTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -107,8 +125,9 @@ CREATE TABLE `panels` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`panelId`),
+  PRIMARY KEY (`panelId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -122,7 +141,6 @@ CREATE TABLE `activateCommand` (
   PRIMARY KEY (`activateCommandId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 -- -----------------------------------------------------------------------------------
 -- Panel status tabla. A kliens alkalmazasban mukodtetett panelok kulonbozo status-ait
 -- tartalmazza, melyek panel tipusokhoz kapcsolodnak.
@@ -135,8 +153,9 @@ CREATE TABLE `panelStatuses` (
   `name`                    varchar(20)             NOT NULL,
   `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`panelStatusId`),
+  PRIMARY KEY (`panelStatusId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -154,8 +173,9 @@ CREATE TABLE `patientCardTypes` (
   `validDateTo`             date                    DEFAULT NULL,
   `validDays`               int(11)                 NOT NULL DEFAULT 365,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`patientCardTypeId`),
+  PRIMARY KEY (`patientCardTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -167,8 +187,9 @@ CREATE TABLE `patientOrigin` (
   `patientOriginId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`patientOriginId`),
+  PRIMARY KEY (`patientOriginId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -179,8 +200,9 @@ CREATE TABLE `reasonToVisit` (
   `reasonToVisitId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`reasonToVisitId`),
+  PRIMARY KEY (`reasonToVisitId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -204,11 +226,30 @@ CREATE TABLE `patients` (
   `email`                   varchar(100)            DEFAULT NULL,
   `phone`                   varchar(100)            DEFAULT NULL,
   `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`patientId`),
+  PRIMARY KEY (`patientId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientOriginId`) REFERENCES `patientOrigin` (`patientOriginId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`reasonToVisitId`) REFERENCES `reasonToVisit` (`reasonToVisitId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Paciensek altal lefoglalt idopontokat tartalmazo tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `attendanceSchedule` (
+  `attendanceScheduleId`    int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `dayOfWeek`               int(11)                 NOT NULL,
+  `timeFrom`                time                    DEFAULT NULL,
+  `timeTo`                  time                    DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`attendanceScheduleId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -229,8 +270,9 @@ CREATE TABLE `attendance` (
   `medicineCurrent`         varchar(500)            DEFAULT NULL,
   `medicineAllergy`         varchar(500)            DEFAULT NULL,
   `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`attendanceId`),
+  PRIMARY KEY (`attendanceId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -264,9 +306,24 @@ CREATE TABLE `patientCards` (
   `pincode`                 varchar(5)              DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`patientCardId`),
+  PRIMARY KEY (`patientCardId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Pacienseket es kartyakat osszekoto tabla arra az esetre, ha nem a kartyatulajdonos
+-- hasznalja a kartyat
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `connectPatientWithCard` (
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`licenceID`,`patientCardId`,`patientId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -281,7 +338,7 @@ CREATE TABLE `patientCardHistories` (
   `units`                   int(11)                 NOT NULL,
   `time`                    int(11)                 NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`patientCardHistoryId`),
+  PRIMARY KEY (`patientCardHistoryId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -294,8 +351,9 @@ CREATE TABLE `productTypes` (
   `productTypeId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`productTypeId`),
+  PRIMARY KEY (`productTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -307,8 +365,9 @@ CREATE TABLE `products` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `productTypeId`           int(11) unsigned        NOT NULL REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`productId`),
+  PRIMARY KEY (`productId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productTypeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -327,6 +386,6 @@ CREATE TABLE `users` (
   `comment`                 text                    DEFAULT NULL,
   `archive`                 varchar(10)             NOT NULL,
   UNIQUE (`name`),
-  PRIMARY KEY (`userId`),
+  PRIMARY KEY (`userId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -4,7 +4,7 @@
 //
 //====================================================================================
 //
-// Filename    : dbreasontovisit.cpp
+// Filename    : dbpaneltypes.cpp
 // AppVersion  : 1.0
 // FileVersion : 1.0
 // Author      : Bikfalvi Tamas
@@ -14,18 +14,18 @@
 //====================================================================================
 
 #include "belenus.h"
-#include "dbreasontovisit.h"
+#include "dbpaneltypes.h"
 
-cDBReasonToVisit::cDBReasonToVisit()
+cDBPanelTypes::cDBPanelTypes()
 {
     init();
 }
 
-cDBReasonToVisit::~cDBReasonToVisit()
+cDBPanelTypes::~cDBPanelTypes()
 {
 }
 
-void cDBReasonToVisit::init( const unsigned int p_uiId,
+void cDBPanelTypes::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const string &p_stName,
                              const bool p_bActive,
@@ -38,9 +38,9 @@ void cDBReasonToVisit::init( const unsigned int p_uiId,
     m_stArchive     = p_stArchive;
 }
 
-void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
+void cDBPanelTypes::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "reasonToVisitId" );
+    int inIdIdx         = p_obRecord.indexOf( "panelTypesId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
@@ -53,35 +53,35 @@ void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
-void cDBReasonToVisit::load( const unsigned int p_uiId ) throw( cSevException )
+void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPanelTypes::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM reasonToVisit WHERE reasonToVisitId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE panelTypesId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
-        throw cSevException( cSeverity::ERROR, "Reason to visit id not found" );
+        throw cSevException( cSeverity::ERROR, "Paneltype id not found" );
 
     poQuery->first();
     init( poQuery->record() );
 }
 
-void cDBReasonToVisit::load( const string &p_stName ) throw( cSevException )
+void cDBPanelTypes::load( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPanelTypes::load", "name: \""  + p_stName + "\"" );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM reasonToVisit WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM panelTypes WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
 
     if( poQuery->size() != 1 )
-        throw cSevException( cSeverity::ERROR, "Reason to visit name not found" );
+        throw cSevException( cSeverity::ERROR, "Paneltype name not found" );
 
     poQuery->first();
     init( poQuery->record() );
 }
 
-void cDBReasonToVisit::save() throw( cSevException )
+void cDBPanelTypes::save() throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::save" );
+    cTracer obTrace( "cDBPanelTypes::save" );
     QString  qsQuery;
 
     if( m_uiId )
@@ -98,14 +98,14 @@ void cDBReasonToVisit::save() throw( cSevException )
         qsQuery = "INSERT INTO";
         m_stArchive = "NEW";
     }
-    qsQuery += " reasonToVisit SET ";
+    qsQuery += " panelTypes SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
     qsQuery += QString( "active = %1" ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
-        qsQuery += QString( " WHERE reasonToVisitId = %1" ).arg( m_uiId );
+        qsQuery += QString( " WHERE panelTypeId = %1" ).arg( m_uiId );
     }
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -113,9 +113,9 @@ void cDBReasonToVisit::save() throw( cSevException )
     if( poQuery ) delete poQuery;
 }
 
-void cDBReasonToVisit::remove() throw( cSevException )
+void cDBPanelTypes::remove() throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::remove" );
+    cTracer obTrace( "cDBPanelTypes::remove" );
 
     if( m_uiId )
     {
@@ -123,65 +123,65 @@ void cDBReasonToVisit::remove() throw( cSevException )
 
         if( m_stArchive.compare( "NEW" ) == 0 )
         {
-            qsQuery = "DELETE FROM reasonToVisit ";
+            qsQuery = "DELETE FROM panelTypes ";
         }
         else
         {
-            qsQuery = "UPDATE reasonToVisit SET active=0, archive=\"MOD\" ";
+            qsQuery = "UPDATE panelTypes SET active=0, archive=\"MOD\" ";
         }
-        qsQuery += QString( " WHERE reasonToVisitId = %1" ).arg( m_uiId );
+        qsQuery += QString( " WHERE panelTypeId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
 }
 
-void cDBReasonToVisit::createNew() throw()
+void cDBPanelTypes::createNew() throw()
 {
     init();
 }
 
-unsigned int cDBReasonToVisit::id() const throw()
+unsigned int cDBPanelTypes::id() const throw()
 {
     return m_uiId;
 }
 
-unsigned int cDBReasonToVisit::licenceId() const throw()
+unsigned int cDBPanelTypes::licenceId() const throw()
 {
     return m_uiLicenceId;
 }
 
-void cDBReasonToVisit::setLicenceId( const unsigned int p_uiLicenceId ) throw()
+void cDBPanelTypes::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
 }
 
-string cDBReasonToVisit::name() const throw()
+string cDBPanelTypes::name() const throw()
 {
     return m_stName;
 }
 
-void cDBReasonToVisit::setName( const string &p_stName ) throw()
+void cDBPanelTypes::setName( const string &p_stName ) throw()
 {
     m_stName = p_stName;
 }
 
-bool cDBReasonToVisit::active() const throw()
+bool cDBPanelTypes::active() const throw()
 {
     return m_bActive;
 }
 
-void cDBReasonToVisit::setActive( const bool p_bActive ) throw()
+void cDBPanelTypes::setActive( const bool p_bActive ) throw()
 {
     m_bActive = p_bActive;
 }
 
-string cDBReasonToVisit::archive() const throw()
+string cDBPanelTypes::archive() const throw()
 {
     return m_stArchive;
 }
 
-void cDBReasonToVisit::setArchive( const string &p_stArchive ) throw()
+void cDBPanelTypes::setArchive( const string &p_stArchive ) throw()
 {
     m_stArchive = p_stArchive;
 }
