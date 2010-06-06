@@ -24,11 +24,15 @@ private:
     void enableConnectionButton();
 
 private slots:
+    /* slots for UI signals */
     void on_pushButton_clicked();
     void on_bConnect_clicked();
     void on_iPassword_textChanged(QString );
     void on_iUsername_textChanged(QString );
     void on_iHost_textChanged(QString );
+
+    /* slots for signals from Connection */
+    void on_sqlResult(int id, SqlResult *res);
 
 protected:
 

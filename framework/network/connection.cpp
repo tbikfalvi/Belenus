@@ -159,6 +159,19 @@ void Connection::_handlePacket(Packet &packet)
                 _handleRegisterKeyResponse(r);
             } break;
 
+        case Packet::MSG_SQL_QUERY: {
+                int id;
+                char *u;
+                packet >> id >> u;
+                _handleSqlQuery(id,u);
+            } break;
+
+        case Packet::MSG_SQL_RESULT: {
+                int id;
+                packet >> id;
+                SqlResult *s = new SqlResult();
+                _handleSqlQueryResult(id, s);
+            } break;
 
         default:
             g_obLogger << cSeverity::ERROR << "[Connection::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
@@ -304,4 +317,11 @@ void Connection::_sendSqlQueryResult(int queryId, QByteArray &b)
     Packet p(Packet::MSG_SQL_RESULT);
     p << queryId << b;
     send(p);
+}
+
+
+
+void Connection::_handleSqlQueryResult(int queryId, SqlResult *res)
+{
+    emit sqlResultReady(queryId, res);
 }

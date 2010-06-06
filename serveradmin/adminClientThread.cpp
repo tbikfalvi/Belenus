@@ -64,3 +64,10 @@ void AdminClientThread::registerNewKey(const char *key)
 
     _sendRegisterKey(key);
 }
+
+
+
+void AdminClientThread::executeSqlQuery(int id, const char *q)
+{
+    _sendSqlQuery(id, q);
+}

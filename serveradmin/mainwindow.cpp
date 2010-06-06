@@ -29,6 +29,7 @@ MainWindow::MainWindow( QWidget *p_poParent )
     connect( &_connection, SIGNAL(disconnected()),   this, SLOT(disconnected()) );
     connect( &_connection, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
     connect( &_connection, SIGNAL(connected()), this, SLOT(connected()) );
+    connect( &_connection, SIGNAL(SqlResultReady(int, SqlResult*)), this, SLOT(on_sqlResult(int,SqlResult*)) );
 
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::MainWindow] constructed" << cQTLogger::EOM;
 }
@@ -113,10 +114,17 @@ void MainWindow::on_bConnect_clicked()
 
 void MainWindow::connected()
 {
-    g_obLogger << cSeverity::DEBUG << "[MainWindow::connected()] starting connection thread" << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::connected()] enter" << cQTLogger::EOM;
 
     bConnect->setText("Disconnect");
     bConnect->setEnabled(true);
+
+    // load the keys from server
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::connected()] getting licenses from server" << cQTLogger::EOM;
+    licenseKeys->addItem("Loading licenses from server...");
+
+    _connection.executeSqlQuery(1, "SELECT licenseId, serial, country, region, city, zip, address, studio, contact, active FROM licenses");
+
 }
 
 
@@ -161,4 +169,12 @@ void MainWindow::on_pushButton_clicked()
 
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_pushButton_clicked] registering key " << iNewKey->text().toStdString() << cQTLogger::EOM;
     _connection.registerNewKey(iNewKey->text().toStdString().c_str());
+}
+
+
+
+void MainWindow::on_sqlResult(int id, SqlResult *res)
+{
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->size() << cQTLogger::EOM;
+
 }

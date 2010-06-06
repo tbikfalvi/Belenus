@@ -163,7 +163,7 @@
     <attribute name="title">
      <string>Keys</string>
     </attribute>
-    <widget class="QListView" name="licenseKeys">
+    <widget class="QListWidget" name="licenseKeys">
      <property name="geometry">
       <rect>
        <x>0</x>

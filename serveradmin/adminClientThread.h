@@ -7,10 +7,13 @@
 
 class AdminClientThread : public Connection
 {
+    Q_OBJECT
+
 public:
     AdminClientThread();
     void setCredentials(QString username, QString password);
     void registerNewKey(const char* key);
+    void executeSqlQuery(int, const char*);
 
 protected:
     void _initialize();

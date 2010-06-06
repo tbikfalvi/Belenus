@@ -13,6 +13,7 @@ public:
     static QByteArray * create(QSqlResult&);
 
     /** creates the object of SqlResult received from network */
+    SqlResult() { /* be removed */ }
     SqlResult(QByteArray &b);
     ~SqlResult();
 

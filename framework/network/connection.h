@@ -47,7 +47,7 @@ signals:
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void packetReceived(Packet&);
-
+    void sqlResultReady(int id, SqlResult*);
 
 protected:
     enum AssertType {
@@ -84,7 +84,7 @@ protected:
     virtual void _handleRegisterKey(const char* key) {};
     virtual void _handleRegisterKeyResponse(Result result) {};
     virtual void _handleSqlQuery(int queryId, const char* query) {}
-    virtual void _handleSqlQueryResult(int queryId, SqlResult *) {}
+    virtual void _handleSqlQueryResult(int queryId, SqlResult *);
 
     virtual void _sendHello(int version);
     virtual void _sendDisconnect(Result reason);
