@@ -135,7 +135,7 @@ CREATE TABLE `panels` (
 -- -----------------------------------------------------------------------------------
 -- PanelUse tabla. A kliens alkalmazasban mukodtetett panelokat mukodtetesere.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `panelUse` (
+CREATE TABLE `panelUses` (
   `panelUseId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
