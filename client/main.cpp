@@ -85,14 +85,9 @@ int main( int argc, char *argv[] )
         qsSpalsh += "Connecting to Belenus server\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-//        m_ptcpSocket = new QTcpSocket();
-//        g_poServer   = new BelenusServerConnection( m_ptcpSocket );
-
-//        g_poServer->start();
-
-        /*g_poServer->init( g_poPrefs->getClientSerial(),
-                          g_poPrefs->getServerAddress(),
-                          g_poPrefs->getServerPort() );*/
+        g_poServer   = new BelenusServerConnection();
+        g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
+        g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );
 
         qsSpalsh += "Waiting for response from Belenus server ";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

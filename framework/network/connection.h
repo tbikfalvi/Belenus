@@ -86,7 +86,7 @@ protected:
     virtual void _handleSqlQuery(int queryId, const char* query) {}
     virtual void _handleSqlQueryResult(int queryId, SqlResult *);
 
-    virtual void _sendHello(int version);
+    virtual void _sendHello();
     virtual void _sendDisconnect(Result reason);
     virtual void _sendLogonChallenge();
     virtual void _sendLogonResponse(const char* code1, const char *code2);

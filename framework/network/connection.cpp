@@ -34,7 +34,7 @@ void Connection::_connectSignalsToSocket()
 void Connection::connectTo(QTcpSocket *s)
 {
     if ( !isFinished() ) {
-        g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] incoming from " << s->peerAddress().toString().toStdString() << ":" << s->peerPort() << cQTLogger::EOM;
+        g_obLogger << cSeverity::DEBUG << "[Connection::connectTo] incoming from " << s->peerAddress().toString().toStdString() << ":" << s->peerPort() << cQTLogger::EOM;
 
         _socket = s;
         _connectSignalsToSocket();
@@ -46,7 +46,7 @@ void Connection::connectTo(QTcpSocket *s)
 
 void Connection::connectTo(QHostAddress addr, qint16 port)
 {
-    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] incoming from " << addr.toString().toStdString() << ":" << port << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] connecting to " << addr.toString().toStdString() << ":" << port << cQTLogger::EOM;
     _socket = new QTcpSocket();
     _connectSignalsToSocket();
     _socket->connectToHost(addr, port);
@@ -232,10 +232,10 @@ void Connection::_assertSize(unsigned int size, Packet &p, AssertType type)
 
 
 
-void Connection::_sendHello(int version)
+void Connection::_sendHello()
 {
     Packet p(Packet::MSG_HELLO);
-    p << version;
+    p << VERSION;
     send(p);
 }
 

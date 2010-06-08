@@ -56,8 +56,8 @@ CREATE TABLE `clients` (
   `code2`                   varchar(64)                 NULL COMMENT 'titkos kulcs, alapbol NULL es elso futaskor allitodik be',
   `dateCreated`             datetime                NOT NULL,
   `lastLogin`               datetime                NOT NULL,
-  PRIMARY KEY (`clientId`)
-  UNIQUE (´code1´)
+  PRIMARY KEY (`clientId`),
+  UNIQUE (`code1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- -----------------------------------------------------------------------------------
