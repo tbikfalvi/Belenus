@@ -133,6 +133,22 @@ CREATE TABLE `panels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- PanelUse tabla. A kliens alkalmazasban mukodtetett panelokat mukodtetesere.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `panelUse` (
+  `panelUseId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `useTime`                 int(10) unsigned        NOT NULL,
+  `useCurrency`             int(10) unsigned        NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`panelUseId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- activateCommand tabla. A statuszokhoz tartozo parancsokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `activateCommand` (
