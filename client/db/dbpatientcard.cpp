@@ -123,7 +123,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( QString::fromStdString( m_stTimeLeft ) );
     qsQuery += QString( "validDate = \"%1\", " ).arg( QString::fromStdString( m_stValidDate ) );
     qsQuery += QString( "pincode = \"%1\", " ).arg( QString::fromStdString( m_stPincode ) );
-    qsQuery += QString( "active = \"%1\", " ).arg( m_bActive );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {

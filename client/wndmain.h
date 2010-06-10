@@ -56,6 +56,8 @@ private slots:
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();
     void on_action_DeviceSkipStatus_triggered();
+    void on_action_PostponedPatient_triggered();
+    void on_action_PostponedAttendance_triggered();
 };
 
 #endif

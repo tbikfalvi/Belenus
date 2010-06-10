@@ -166,7 +166,7 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "email = \"%1\", " ).arg( QString::fromStdString( m_stEmail ) );
     qsQuery += QString( "phone = \"%1\", " ).arg( QString::fromStdString( m_stPhone ) );
     qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
-    qsQuery += QString( "active = %1" ).arg( m_bActive );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {

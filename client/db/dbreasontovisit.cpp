@@ -101,7 +101,7 @@ void cDBReasonToVisit::save() throw( cSevException )
     qsQuery += " reasonToVisit SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
-    qsQuery += QString( "active = %1" ).arg( m_bActive );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {

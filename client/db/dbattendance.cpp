@@ -143,7 +143,7 @@ void cDBAttendance::save() throw( cSevException )
     qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( QString::fromStdString( m_stMedicineCurrent ) );
     qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( QString::fromStdString( m_stMedicineAllergy ) );
     qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
-    qsQuery += QString( "active = %1" ).arg( m_bActive );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {

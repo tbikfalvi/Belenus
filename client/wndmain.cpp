@@ -33,6 +33,7 @@
 #include "crud/dlgpanelstatuses.h"
 #include "crud/dlgpatientcardtype.h"
 #include "crud/dlgpatientcard.h"
+#include "crud/dlgpostponedpatientselect.h"
 
 //====================================================================================
 
@@ -471,5 +472,18 @@ void cWndMain::on_action_Accounting_triggered()
 void cWndMain::on_action_DeviceSkipStatus_triggered()
 {
     mdiPanels->next();
+}
+//====================================================================================
+void cWndMain::on_action_PostponedPatient_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_PostponedPatient_triggered" );
+
+    cDlgPostponedPatientSelect  obDlgPostponedPatientSelect( this );
+
+    obDlgPostponedPatientSelect.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PostponedAttendance_triggered()
+{
 }
 //====================================================================================
