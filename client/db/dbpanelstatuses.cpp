@@ -121,7 +121,7 @@ void cDBPanelStatuses::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString(m_stName) );
     qsQuery += QString( "length = %1, " ).arg( m_uiLength );
     qsQuery += QString( "activateCmd = %1, " ).arg( m_uiActivateCommand );
-    qsQuery += QString( "active = %1" ).arg( m_bActive );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {

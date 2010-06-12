@@ -131,7 +131,7 @@ void cDBPatientCardType::save() throw( cSevException )
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( QString::fromStdString( m_stValidDateTo ) );
     qsQuery += QString( "validDays = \"%1\", " ).arg( m_nValidDays );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
-    qsQuery += QString( "active = %1" ).arg( m_bActive );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {

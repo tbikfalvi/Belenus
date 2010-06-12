@@ -37,6 +37,7 @@ HEADERS = belenus.h \
     crud/dlgpanelstatuses.h \
     crud/dlgpatientcardtype.h \
     crud/dlgpatientcard.h \
+    crud/dlgpostponedpatientselect.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -88,6 +89,7 @@ SOURCES = main.cpp \
     crud/dlgpanelstatuses.cpp \
     crud/dlgpatientcardtype.cpp \
     crud/dlgpatientcard.cpp \
+    crud/dlgpostponedpatientselect.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
