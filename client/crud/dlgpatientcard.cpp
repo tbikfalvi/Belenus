@@ -80,7 +80,7 @@ void cDlgPatientCard::refreshTable()
     }
     else
     {
-        m_qsQuery = "SELECT patientCards.patientCardId AS Id, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.active=1";
+        m_qsQuery = "SELECT patientCards.patientCardId AS Id, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId";
     }
 
     int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
