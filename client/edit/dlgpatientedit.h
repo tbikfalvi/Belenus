@@ -4,6 +4,7 @@
 #include "belenus.h"
 #include "ui_dlgpatientedit.h"
 #include "db/dbpatient.h"
+#include "db/dbpostponed.h"
 
 class cDlgPatientEdit : public QDialog, private Ui::dlgPatientEdit
 {
@@ -19,7 +20,8 @@ private:
     bool SavePatientData();
 
 protected:
-    cDBPatient *m_poPatient;
+    cDBPatient      *m_poPatient;
+    cDBPostponed    *m_poPostponed;
 
 private slots:
     void on_pbFinishLater_clicked();

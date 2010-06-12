@@ -19,6 +19,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
     pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.gif") );
     pbAttendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
 
+    m_poPostponed = NULL;
+
     m_poPatient = p_poPatient;
     if( m_poPatient )
     {
@@ -163,11 +165,8 @@ void cDlgPatientEdit::on_pbFinishLater_clicked()
             pDBPostponed->setPatientId( m_poPatient->id() );
             pDBPostponed->save();
             delete pDBPostponed;
-/*            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (0, \"%1\")" ).arg( m_poPatient->id() );
-            poQuery = g_poDB->executeQTQuery( qsQuery );
-            delete poQuery;*/
 
-            QDialog::accept();
+            QDialog::reject();
         }
     }
     catch( cSevException &e )
