@@ -45,10 +45,10 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     pbSelect->setIconSize( QSize(20, 20) );
     pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
     btbButtonsSide->addButton( pbSelect, QDialogButtonBox::ActionRole );
-    pbCancel = new QPushButton( tr( "Cancel" ), this );
+    pbCancel = new QPushButton( tr( "Exit" ), this );
     pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
     pbCancel->setIconSize( QSize(20, 20) );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbCancel->setIcon( QIcon("./resources/40x40_exit.gif") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
     setupTableView();
@@ -139,21 +139,22 @@ void cDlgPostponedPatientSelect::on_pbSelect_clicked()
     cDBPatient  *poPatient = NULL;
     try
     {
+        cDBPostponed    *poPostponed = new cDBPostponed;
+        poPostponed->loadPatient( m_uiSelectedId );
+
         poPatient = new cDBPatient;
         poPatient->load( m_uiSelectedId );
 
-        cDlgPatientEdit  obDlgEdit( this, poPatient );
+        cDlgPatientEdit  obDlgEdit( this, poPatient, poPostponed );
         obDlgEdit.setWindowTitle( QString::fromStdString( poPatient->name() ) );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
-            cDBPostponed    *poPostponed = new cDBPostponed;
-
             poPostponed->removePatient( m_uiSelectedId );
-            if( poPostponed ) delete poPostponed;
-            refreshTable();
         }
+        refreshTable();
 
         if( poPatient ) delete poPatient;
+        if( poPostponed ) delete poPostponed;
     }
     catch( cSevException &e )
     {

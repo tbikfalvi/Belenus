@@ -6,7 +6,7 @@
 #include "../framework/sevexception.h"
 #include "db/dbpostponed.h"
 
-cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
+cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgPatientEdit::cDlgPatientEdit" );
@@ -19,9 +19,9 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient )
     pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.gif") );
     pbAttendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
 
-    m_poPostponed = NULL;
-
+    m_poPostponed = p_poPostponed;
     m_poPatient = p_poPatient;
+
     if( m_poPatient )
     {
         QSqlQuery *poQuery;
@@ -159,13 +159,15 @@ void cDlgPatientEdit::on_pbFinishLater_clicked()
     {
         if( SavePatientData() )
         {
-            cDBPostponed    *pDBPostponed = new cDBPostponed();
+            if( m_poPostponed == NULL )
+            {
+                m_poPostponed = new cDBPostponed();
 
-            pDBPostponed->createNew();
-            pDBPostponed->setPatientId( m_poPatient->id() );
-            pDBPostponed->save();
-            delete pDBPostponed;
-
+                m_poPostponed->createNew();
+                m_poPostponed->setPatientId( m_poPatient->id() );
+                m_poPostponed->save();
+                delete m_poPostponed;
+            }
             QDialog::reject();
         }
     }

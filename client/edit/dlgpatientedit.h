@@ -11,7 +11,7 @@ class cDlgPatientEdit : public QDialog, private Ui::dlgPatientEdit
     Q_OBJECT
 
 public:
-    cDlgPatientEdit( QWidget *p_poParent = 0, cDBPatient *p_poPatient = NULL );
+    cDlgPatientEdit( QWidget *p_poParent = 0, cDBPatient *p_poPatient = NULL, cDBPostponed *p_poPostponed = NULL );
     ~cDlgPatientEdit();
 
 public slots:
