@@ -31,3 +31,5 @@ Toolbar			- Toolbar gombok rendberakása. Engedélyezésük, tiltásuk timer által
 DatabaseFinal		- Az 'active' mezõ felvétele az adatbázis táblákba és ennek lekezelése
 PostponedPatient	- Ha a páciens adatait a kezelõ késõbb akarja kitölteni, akkor a
 			  postponed (toBeFilled) temp táblába kerül az ID-ja
+Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
+
