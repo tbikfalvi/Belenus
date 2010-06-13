@@ -111,8 +111,8 @@ void cDBCassaHistory::save() throw( cSevException )
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
     qsQuery += QString( "actionBalance = \"%1\", " ).arg( m_inActionBalance );
-    qsQuery += QString( "actionTime = \"%1\", " ).arg( m_stActionTime );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_stComment );
+    qsQuery += QString( "actionTime = \"%1\", " ).arg( QString::fromStdString( m_stActionTime ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
