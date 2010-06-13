@@ -59,7 +59,7 @@ void cDBCassaDenomination::load( const unsigned int p_uiDenominationId,
                                  const unsigned int p_uiCassaId,
                                  const unsigned int p_uiLicenceId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBCassaDenomination::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBCassaDenomination::load", QString( "id1: %1 id2: %2 id3: %3 " ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ).toStdString() );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaDenomination WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ) );
 
@@ -99,18 +99,19 @@ void cDBCassaDenomination::save() throw( cSevException )
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( !m_bNewRecord )
     {
-        qsQuery += QString( " WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( m_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId );
+        qsQuery += QString( " WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( m_uiDenominationId ).arg( m_uiCassaId ).arg( m_uiLicenceId );
     }
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( poQuery ) delete poQuery;
+    m_bNewRecord = false;
 }
 
 void cDBCassaDenomination::remove() throw( cSevException )
 {
     cTracer obTrace( "cDBCassaDenomination::remove" );
 
-    if( m_uiId )
+    if( !m_bNewRecord )
     {
         QString  qsQuery;
 
@@ -122,7 +123,7 @@ void cDBCassaDenomination::remove() throw( cSevException )
         {
             qsQuery = "UPDATE cassaDenomination SET archive=\"DEL\" ";
         }
-        qsQuery += QString( " WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( m_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId );
+        qsQuery += QString( " WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( m_uiDenominationId ).arg( m_uiCassaId ).arg( m_uiLicenceId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
@@ -145,7 +146,7 @@ void cDBCassaDenomination::setDenominationId( const unsigned int p_uiDenominatio
     m_uiDenominationId = p_uiDenominationId;
 }
 
-unsigned int cDBCassaDenomination::CassaId() const throw()
+unsigned int cDBCassaDenomination::cassaId() const throw()
 {
     return m_uiCassaId;
 }
