@@ -52,13 +52,12 @@ CREATE TABLE `licences` (
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `clients` (
   `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `code1`                   varchar(64)             NOT NULL COMMENT 'licensz kulcsbol generalt kod (SHA1). Amit regisztralni kell adminnak, ezzel veti ossze a szerver',
-  `code2`                   varchar(64)                 NULL COMMENT 'titkos kulcs, alapbol NULL es elso futaskor allitodik be',
+  `code1`                   varchar(50)             NOT NULL,
+  `code2`                   varchar(50)             NOT NULL,
   `dateCreated`             datetime                NOT NULL,
   `lastLogin`               datetime                NOT NULL,
   PRIMARY KEY (`clientId`)
-  UNIQUE (´code1´)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
 -- Doktor tabla. A studioban rendelo doktorok adatait tartalmazza.
@@ -130,22 +129,6 @@ CREATE TABLE `panels` (
   PRIMARY KEY (`panelId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- PanelUse tabla. A kliens alkalmazasban mukodtetett panelokat mukodtetesere.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `panelUses` (
-  `panelUseId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `panelId`                 int(10) unsigned        NOT NULL,
-  `useTime`                 int(10) unsigned        NOT NULL,
-  `useCurrency`             int(10) unsigned        NOT NULL,
-  `active`                  tinyint(1)              DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`panelUseId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -405,3 +388,66 @@ CREATE TABLE `users` (
   PRIMARY KEY (`userId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Penztar tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `cassa` (
+  `cassaId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `currentBalance`          int(11)                 NOT NULL,
+  `startDateTime`           datetime                NOT NULL,
+  `stopDateTime`            datetime                NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`cassaId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Penztar tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `cassaHistory` (
+  `cassaHistoryId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `cassaId`                 int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `actionValue`             int(11)                 NOT NULL,
+  `actionBalance`           int(11)                 NOT NULL,
+  `actionTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment`                 text                    DEFAULT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`cassaHistoryId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Penztar tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `denominations` (
+  `denominationId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `denomination`            int(10) unsigned        NOT NULL DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`denominationId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Penztar tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `cassaDenominations` (
+  `denominationId`          int(10) unsigned        NOT NULL,
+  `cassaId`                 int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `value`                   int(10) unsigned        NOT NULL DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`denominationId`,`cassaId`,`licenceID`),
+  FOREIGN KEY (`denominationId`) REFERENCES `denominations` (`denominationId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

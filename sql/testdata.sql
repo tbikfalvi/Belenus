@@ -104,8 +104,24 @@ INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
-(1, 1, 'Gyógyulás betegségbõl', 1, 'ARC'),
-(2, 1, 'Immunerõsítés / regenerálódás', 1, 'ARC');
+ (1, 1, 'Gyógyulás betegségbõl', 1, 'ARC'),
+ (2, 1, 'Immunerõsítés / regenerálódás', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `archive`) VALUES
+ (1, 0, 5, 'ARC'),
+ (2, 0, 10, 'ARC'),
+ (3, 0, 20, 'ARC'),
+ (4, 0, 50, 'ARC'),
+ (5, 0, 100, 'ARC'),
+ (6, 0, 200, 'ARC'),
+ (7, 0, 500, 'ARC'),
+ (8, 0, 1000, 'ARC'),
+ (9, 0, 2000, 'ARC'),
+ (10, 0, 5000, 'ARC'),
+ (11, 0, 10000, 'ARC'),
+ (12, 0, 20000, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal
