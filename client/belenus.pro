@@ -51,6 +51,7 @@ HEADERS = belenus.h \
     db/dbpaneluses.h \
     db/dbcassa.h \
     db/dbdenomination.h \
+    db/dbcassahistory.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -105,6 +106,7 @@ SOURCES = main.cpp \
     db/dbpaneluses.cpp \
     db/dbcassa.cpp \
     db/dbdenomination.cpp \
+    db/dbcassahistory.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
