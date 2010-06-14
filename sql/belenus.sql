@@ -474,7 +474,7 @@ CREATE TABLE `cassaDenominations` (
 -- -----------------------------------------------------------------------------------
 -- Szamla tabla.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `invoice` (
+CREATE TABLE `invoices` (
   `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `name`                    varchar(100)            NOT NULL,
   `country`                 varchar(100)            DEFAULT NULL,
@@ -490,3 +490,16 @@ CREATE TABLE `invoice` (
   PRIMARY KEY (`invoiceId`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- -----------------------------------------------------------------------------------
+-- Kosar tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `carts` (
+  `cartId`                  int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`cartId`),
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
