@@ -22,14 +22,14 @@ MainWindow::MainWindow( QWidget *p_poParent )
     setupUi( this );
 
     iHost->setText( QString("%1:%2").arg(g_prefs.value("server/host")).arg(g_prefs.value("server/port")) );
-    iUsername->setText("admin");
-    iPassword->setText("p4ssw0rd");
+    iUsername->setText("root");
+    iPassword->setText("Korben5Dallas");
     enableConnectionButton();
 
     connect( &_connection, SIGNAL(disconnected()),   this, SLOT(disconnected()) );
     connect( &_connection, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
     connect( &_connection, SIGNAL(connected()), this, SLOT(connected()) );
-    connect( &_connection, SIGNAL(SqlResultReady(int, SqlResult*)), this, SLOT(on_sqlResult(int,SqlResult*)) );
+    connect( &_connection, SIGNAL(sqlResultReady(int, SqlResult*)), this, SLOT(on_sqlResult(int,SqlResult*)) );
 
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::MainWindow] constructed" << cQTLogger::EOM;
 }
@@ -121,7 +121,6 @@ void MainWindow::connected()
 
     // load the keys from server
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::connected()] getting licenses from server" << cQTLogger::EOM;
-    licenseKeys->addItem("Loading licenses from server...");
 
     _connection.executeSqlQuery(1, "SELECT licenseId, serial, country, region, city, zip, address, studio, contact, active FROM licenses");
 
@@ -159,10 +158,12 @@ void MainWindow::socketError(QAbstractSocket::SocketError socketError)
 
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_bRegister_clicked()
 {
-    if ( !_connection.isConnected() )
+    if ( !_connection.isConnected() ) {
+        g_obLogger(cSeverity::ERROR) << "Not connected to server" << cQTLogger::EOM;
         return;
+    }
 
     if ( !iNewKey->text().length() )
         return;
@@ -175,6 +176,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_sqlResult(int id, SqlResult *res)
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->size() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->columnCount() << cQTLogger::EOM;
 
+    licenseKeys->setModel(res);
 }

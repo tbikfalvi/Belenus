@@ -95,7 +95,7 @@ protected:
     virtual void _sendRegisterKey(const char* key);
     virtual void _sendRegisterKeyResponse(Result result);
     virtual void _sendSqlQuery(int queryId, const char *query);
-    virtual void _sendSqlQueryResult(int queryId, QByteArray &);
+    virtual void _sendSqlQueryResult(int queryId, SqlResult &);
 
     QList<Packet::Message> _allowedPackets;     /* list of packets which are allowed to be received. all other will cause connection to be dropped */
     QTcpSocket *_socket;

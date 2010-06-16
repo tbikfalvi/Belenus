@@ -3,7 +3,7 @@
 
 #include "adminClientThread.h"
 #include "ui_mainwindow.h"
-
+#include "modellicensekeys.h"
 
 
 
@@ -25,7 +25,7 @@ private:
 
 private slots:
     /* slots for UI signals */
-    void on_pushButton_clicked();
+    void on_bRegister_clicked();
     void on_bConnect_clicked();
     void on_iPassword_textChanged(QString );
     void on_iUsername_textChanged(QString );

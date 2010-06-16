@@ -11,8 +11,8 @@ extern cQTMySQLConnection g_db;
 
 ServerThread::ServerThread() :
         Connection(),
-        _isAdmin(false),
-        _isAuthenticated(false)
+        _isAuthenticated(false),
+        _isAdmin(false)
 {
     g_obLogger(cSeverity::INFO) << "[ServerThread::ServerThread] initialized" << cQTLogger::EOM;
 }
@@ -28,7 +28,7 @@ void ServerThread::_handleHello(int version)
 {
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleHello] called" << cQTLogger::EOM;
 
-    _sendHello(VERSION);
+    _sendHello();
 
     g_obLogger(cSeverity::INFO) << "[ServerThread::_handleHello] client version is " << version << cQTLogger::EOM;
     if ( version != VERSION ) {
@@ -80,6 +80,7 @@ void ServerThread::_handleLogonAdminResponse(const char* username, const char* p
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonAdminResponse] entering" << cQTLogger::EOM;
 
     if ( QString::compare(username, "root")!=0 || QString::compare(password, "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922")!=0 ) {
+        g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] admin authentication failed" << cQTLogger::EOM;
         _sendDisconnect(RESULT_AUTHENTICATION_FAILED);
     } else {
         g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] admin authenticated" << cQTLogger::EOM;
@@ -122,5 +123,26 @@ void ServerThread::_handleRegisterKey(const char* newKey)
     delete q;
 }
 
+
+
+void ServerThread::_handleSqlQuery(int queryId, const char *query)
+{
+    g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleSqlQuery] entered. QueryId="<<queryId<<" query=" << query << cQTLogger::EOM;
+
+    SqlResult result;
+
+    try {
+        QSqlQuery *q = g_db.executeQTQuery(query);
+        if (!q)
+            throw cSevException(cSeverity::ERROR, "Memory error during query");
+
+        result.copy(q);
+        delete q;
+
+    } catch(cSevException e) {
+    }
+
+    _sendSqlQueryResult(queryId, result);
+}
 
 

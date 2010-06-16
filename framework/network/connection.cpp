@@ -34,7 +34,7 @@ void Connection::_connectSignalsToSocket()
 void Connection::connectTo(QTcpSocket *s)
 {
     if ( !isFinished() ) {
-        g_obLogger << cSeverity::DEBUG << "[Connection::connectTo] incoming from " << s->peerAddress().toString().toStdString() << ":" << s->peerPort() << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] incoming from " << s->peerAddress().toString().toStdString() << ":" << s->peerPort() << cQTLogger::EOM;
 
         _socket = s;
         _connectSignalsToSocket();
@@ -168,7 +168,8 @@ void Connection::_handlePacket(Packet &packet)
 
         case Packet::MSG_SQL_RESULT: {
                 int id;
-                packet >> id;
+                bool status;
+                packet >> id >> status;
                 SqlResult *s = new SqlResult();
                 _handleSqlQueryResult(id, s);
             } break;
@@ -208,7 +209,7 @@ void Connection::run()
 void Connection::send(Packet &p)
 {
     qint64 writtenBytes = _socket->write(p.getRawPacket());
-    g_obLogger << cSeverity::INFO << "[Connection::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump().toStdString() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Connection::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump().toStdString() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
 }
 
 
@@ -312,10 +313,12 @@ void Connection::_sendSqlQuery(int queryId, const char *query)
 
 
 
-void Connection::_sendSqlQueryResult(int queryId, QByteArray &b)
+void Connection::_sendSqlQueryResult(int queryId, SqlResult &b)
 {
     Packet p(Packet::MSG_SQL_RESULT);
-    p << queryId << b;
+    p << queryId << b.isValid();
+    p << b.getCSV();
+
     send(p);
 }
 

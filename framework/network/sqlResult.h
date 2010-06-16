@@ -1,37 +1,36 @@
 #ifndef _sql_result_h_
 #define _sql_result_h_
 
+#include <QVector>
+#include <QSqlQuery>
+#include <QSqlRecord>
 #include <QByteArray>
 #include <QVariant>
-#include <QSqlResult>
+#include <QAbstractTableModel>
 
 
+class SqlResult : public QAbstractTableModel {
+    Q_OBJECT
 
-class SqlResult {
 public:
-    /** creates a byte-array from an SQL result to be sent over the network */
-    static QByteArray * create(QSqlResult&);
+    SqlResult(QObject *parent = 0);
+    virtual ~SqlResult();
+    bool copy(QSqlQuery*);
+    int rowCount(const QModelIndex & parent = QModelIndex()) const;
+    int columnCount(const QModelIndex & parent = QModelIndex()) const;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+    QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+    bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role);
 
-    /** creates the object of SqlResult received from network */
-    SqlResult() { /* be removed */ }
-    SqlResult(QByteArray &b);
-    ~SqlResult();
+    bool isValid() const { return _valid; }
+    const char* getCSV();
 
-    /** returns the value of the i-th field */
-    QVariant value(int i);
-    /** returns the name of the i-th field */
-    const char* fieldName(int i);
-    /** returns the number of rows in the result */
-    int size();
-    /** returns true if dataset is valid (eg. complete) */
-    bool isValid();
+protected:
+    typedef QVector<QHash<int, QVariant> > DataTable;
 
-
-    bool seek(int i, bool relative = false);
-    bool first();
-    bool next();
-    bool prev();
-    bool last();
+    bool _valid;
+    QVector<QString> _headers;
+    DataTable _data;
 };
 
 

@@ -23,7 +23,7 @@ void AdminClientThread::setCredentials(QString username, QString password)
 
 void AdminClientThread::_initialize()
 {
-    _sendHello(VERSION);
+    _sendHello();
 }
 
 
@@ -52,6 +52,7 @@ void AdminClientThread::_handleRegisterKeyResponse(Result res)
 void AdminClientThread::_handleLogonOk()
 {
     _loggedIn = true;
+    _sendSqlQuery(1, "SELECT * FROM users");
 }
 
 
