@@ -122,7 +122,7 @@ void MainWindow::connected()
     // load the keys from server
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::connected()] getting licenses from server" << cQTLogger::EOM;
 
-    _connection.executeSqlQuery(1, "SELECT licenseId, serial, country, region, city, zip, address, studio, contact, active FROM licenses");
+    _connection.queryLicenseKeys();
 
 }
 
@@ -176,7 +176,24 @@ void MainWindow::on_bRegister_clicked()
 
 void MainWindow::on_sqlResult(int id, SqlResult *res)
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->columnCount() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->rowCount() << cQTLogger::EOM;
 
-    licenseKeys->setModel(res);
+    if ( id==AdminClientThread::Q_GET_KEYS )
+        licenseKeys->setModel(res);
+}
+
+
+
+void MainWindow::on_bResetCode2_clicked()
+{
+    if (!licenseKeys->model())
+        return;
+
+    QModelIndexList indexes = licenseKeys->selectionModel()->selection().indexes();
+    if (indexes.count()<1)
+        return;
+
+    int clientId = licenseKeys->model()->index(indexes.at(0).row(), 0).data().toInt();
+    g_obLogger(cSeverity::INFO) << "[MainWindow::on_bResetCode2_clicked] Reseting code2 for client " << clientId << cQTLogger::EOM;
+    _connection.resetCode2( clientId );
 }

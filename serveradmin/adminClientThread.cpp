@@ -45,6 +45,7 @@ void AdminClientThread::_handleLogonChallenge()
 void AdminClientThread::_handleRegisterKeyResponse(Result res)
 {
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleRegisterKeyResult] result is " << res << cQTLogger::EOM;
+    queryLicenseKeys();
 }
 
 
@@ -52,7 +53,6 @@ void AdminClientThread::_handleRegisterKeyResponse(Result res)
 void AdminClientThread::_handleLogonOk()
 {
     _loggedIn = true;
-    _sendSqlQuery(1, "SELECT * FROM users");
 }
 
 
@@ -68,7 +68,16 @@ void AdminClientThread::registerNewKey(const char *key)
 
 
 
-void AdminClientThread::executeSqlQuery(int id, const char *q)
+void AdminClientThread::queryLicenseKeys()
 {
-    _sendSqlQuery(id, q);
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLicenseKeys] entered " << cQTLogger::EOM;
+    _sendSqlQuery(Q_GET_KEYS, "SELECT clientId, code1, code2, dateCreated, lastLogin, licenceId, serial, country, region, city, zip, address, studio, contact, active FROM clients LEFT JOIN licences ON clients.code1=SHA1(serial)");
+}
+
+
+
+void AdminClientThread::resetCode2(int clientId)
+{
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::resetCode2] reseting code2 of client " << clientId << cQTLogger::EOM;
+    _sendSqlQuery(Q_RESET_CODE2, QString("UPDATE clients SET code2=NULL WHERE clientId=%1").arg(clientId).toStdString().c_str());
 }

@@ -169,8 +169,11 @@ void Connection::_handlePacket(Packet &packet)
         case Packet::MSG_SQL_RESULT: {
                 int id;
                 bool status;
-                packet >> id >> status;
+                char* str;
+                packet >> id >> status >> str;
                 SqlResult *s = new SqlResult();
+                s->fromStringStream(str);
+                s->setValid(status);
                 _handleSqlQueryResult(id, s);
             } break;
 
@@ -317,7 +320,7 @@ void Connection::_sendSqlQueryResult(int queryId, SqlResult &b)
 {
     Packet p(Packet::MSG_SQL_RESULT);
     p << queryId << b.isValid();
-    p << b.getCSV();
+    p << b.toStringStream();
 
     send(p);
 }

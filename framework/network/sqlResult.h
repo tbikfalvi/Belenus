@@ -7,6 +7,7 @@
 #include <QByteArray>
 #include <QVariant>
 #include <QAbstractTableModel>
+#include <QTextStream>
 
 
 class SqlResult : public QAbstractTableModel {
@@ -22,8 +23,10 @@ public:
     QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
     bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role);
 
+    void setValid(bool v) { _valid = v; }
     bool isValid() const { return _valid; }
-    const char* getCSV();
+    QString toStringStream();
+    bool fromStringStream(QString);
 
 protected:
     typedef QVector<QHash<int, QVariant> > DataTable;

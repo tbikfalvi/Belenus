@@ -137,9 +137,11 @@ void ServerThread::_handleSqlQuery(int queryId, const char *query)
             throw cSevException(cSeverity::ERROR, "Memory error during query");
 
         result.copy(q);
-        delete q;
+        //delete q;
 
     } catch(cSevException e) {
+        g_obLogger(cSeverity::ERROR) << "[ServerThread::_handleSqlQuery] error at queryId="<<queryId<<" query=" << query << ". error:" << e.what() << cQTLogger::EOM;
+        result.setValid(false);
     }
 
     _sendSqlQueryResult(queryId, result);
