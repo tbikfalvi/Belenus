@@ -4,6 +4,7 @@
 #include <QVector>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSqlError>
 #include <QByteArray>
 #include <QVariant>
 #include <QAbstractTableModel>

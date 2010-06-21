@@ -74,8 +74,14 @@ bool SqlResult::copy(QSqlQuery *q) {
 
     _headers.clear();
     _data.clear();
-    if ( q->isActive() ) {
-        _valid = true;
+
+    if ( q->lastError().isValid() ) {
+        _valid = false;
+        return false;
+    }
+    _valid = true;
+
+    if ( q->isActive() && q->isSelect() ) {
 
         // copy fieldnames
         _headers.resize(q->record().count());
