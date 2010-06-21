@@ -13,6 +13,8 @@ public:
     enum QueryIds {
         Q_GET_KEYS,
         Q_RESET_CODE2,
+        Q_REMOVE_LICENSE_KEY,
+        Q_GET_LOGS,
     };
 
 
@@ -21,6 +23,8 @@ public:
     void registerNewKey(const char* key);
     void queryLicenseKeys();
     void resetCode2(int clientId);
+    void queryLogs(cSeverity::teSeverity minSeverity = cSeverity::DEBUG, int last = 50);
+    void removeKey(int clientId);
 
 protected:
     void _initialize();

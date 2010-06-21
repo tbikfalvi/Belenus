@@ -13,6 +13,7 @@ class MainWindow : public QDialog, protected Ui::UMainWindow
 public:
     MainWindow( QWidget *p_poParent = 0 );
     virtual ~MainWindow();
+    void log(QString msg);
 
 public slots:
     void connected();
@@ -24,6 +25,9 @@ private:
 
 private slots:
     /* slots for UI signals */
+    void on_bRemoveKey_clicked();
+    void on_bGetLogs_clicked();
+    void on_pushButton_clicked();
     void on_bResetCode2_clicked();
     void on_bRegister_clicked();
     void on_bConnect_clicked();
