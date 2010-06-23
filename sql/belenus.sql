@@ -234,6 +234,26 @@ CREATE TABLE `patients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Pacienshez kotheto egyeb cimek: pl. szamlazas miatt
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `patientAddress` (
+  `patientAddressId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `country`                 varchar(100)            DEFAULT NULL,
+  `region`                  varchar(100)            DEFAULT NULL,
+  `city`                    varchar(100)            DEFAULT NULL,
+  `zip`                     varchar(10)             DEFAULT NULL,
+  `address`                 varchar(100)            DEFAULT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`patientAddressId`,`licenceID`),
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Paciensek altal lefoglalt idopontokat tartalmazo tabla.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `attendanceSchedule` (
@@ -451,3 +471,35 @@ CREATE TABLE `cassaDenominations` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- -----------------------------------------------------------------------------------
+-- Szamla tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `invoices` (
+  `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `name`                    varchar(100)            NOT NULL,
+  `country`                 varchar(100)            DEFAULT NULL,
+  `region`                  varchar(100)            NOT NULL,
+  `city`                    varchar(100)            NOT NULL,
+  `zip`                     varchar(10)             NOT NULL,
+  `address`                 varchar(100)            NOT NULL,
+  `product`                 varchar(100)            NOT NULL,
+  `netPrice`                int(11)                 NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
+  `totalPrice`              int(11)                 NOT NULL,
+  `invoiceReady`            tinyint(1)              DEFAULT 0,
+  PRIMARY KEY (`invoiceId`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Kosar tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `carts` (
+  `cartId`                  int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`cartId`),
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
