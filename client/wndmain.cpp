@@ -49,6 +49,7 @@
 #include "dlg/dlglogs.h"
 #include "dlg/dlginputstart.h"
 #include "dlg/dlgpatientcardadd.h"
+#include "dlg/dlgserialreg.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -105,6 +106,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.gif") );
     action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.gif") );
     action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
+    action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.gif" ) );
 
     cDBPostponed    *poDBPostPoned = new cDBPostponed();
 
@@ -148,6 +150,23 @@ bool cWndMain::showLogIn()
         }
 
         updateTitle();
+
+        if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
+            QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
+                                                               // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
+        {
+            if( QMessageBox::warning( this,
+                                      tr("Attention"),
+                                      tr("The application has no valid serial key registered.\n"
+                                         "The application will only control the hardware with DEMO serial key for 7 days.\n\n"
+                                         "Do you want to enter a valid serial key and register the application?\n"
+                                         "Please note you need live internet connection for the registration process."),
+                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+            {
+                cDlgSerialReg   obDlgSerialReg( this );
+                obDlgSerialReg.exec();
+            }
+        }
     }
 
     obTrace << boLogInOK;
@@ -487,5 +506,11 @@ void cWndMain::on_action_PostponedPatient_triggered()
 //====================================================================================
 void cWndMain::on_action_PostponedAttendance_triggered()
 {
+}
+//====================================================================================
+void cWndMain::on_action_ValidateSerialKey_triggered()
+{
+    cDlgSerialReg   obDlgSerialReg( this );
+    obDlgSerialReg.exec();
 }
 //====================================================================================
