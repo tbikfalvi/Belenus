@@ -33,4 +33,6 @@ DatabaseFinal		- Az 'active' mezõ felvétele az adatbázis táblákba és ennek lekez
 PostponedPatient	- Ha a páciens adatait a kezelõ késõbb akarja kitölteni, akkor a
 			  postponed (toBeFilled) temp táblába kerül az ID-ja
 Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
-
+ApplicationStart	- Program inditasa utan ellenorizni kell, hogy, ha a HW kapcsolat OK,
+			  ne mukodjon a program DEMO kulccsal csak 7 napig. Ugyanugy, mint
+			  rossz internet kapcsolat, vagy szunnapok eseten
