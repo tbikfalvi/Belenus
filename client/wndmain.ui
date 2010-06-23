@@ -48,6 +48,8 @@
      <addaction name="separator"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
+     <addaction name="separator"/>
+     <addaction name="action_ValidateSerialKey"/>
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
@@ -383,6 +385,11 @@
    </property>
    <property name="toolTip">
     <string>Fullfill data for postponed attendances</string>
+   </property>
+  </action>
+  <action name="action_ValidateSerialKey">
+   <property name="text">
+    <string>Validate Serial key ...</string>
    </property>
   </action>
  </widget>
