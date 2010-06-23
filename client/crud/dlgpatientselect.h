@@ -24,6 +24,7 @@ public:
 
     cDlgPatientSelect( QWidget *p_poParent = 0 );
     ~cDlgPatientSelect();
+    void setSearchPatientName( QString p_stName );
 
 protected:
     virtual void setupTableView();

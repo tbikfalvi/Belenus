@@ -61,6 +61,11 @@ cDlgPatientSelect::~cDlgPatientSelect()
     cTracer obTrace( "cDlgPatientSelect::~cDlgPatientSelect" );
 }
 
+void cDlgPatientSelect::setSearchPatientName( QString p_stName )
+{
+    ledName->setText( p_stName );
+}
+
 void cDlgPatientSelect::setupTableView()
 {
     cTracer obTracer( "cDlgPatientSelect::setupTableView" );
