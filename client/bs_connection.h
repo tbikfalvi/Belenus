@@ -20,63 +20,34 @@
 
 #include <QString>
 #include <QtNetwork>
+#include "../framework/network/connection.h"
+#include "../framework/qtlogger.h"
+
+
 
 //====================================================================================
-class BelenusServerConnection : public QThread
+class BelenusServerConnection : public Connection
 {
     Q_OBJECT
 
 public:
-    QString      m_qsAction;
-    QString      m_qsCommand;
-    QString      m_qsParameter;
 
-    BelenusServerConnection( QTcpSocket *p_pTcpSocket );
-    ~BelenusServerConnection();
+    BelenusServerConnection();
+    virtual ~BelenusServerConnection();
 
-    void run();
-    void init( QString p_qsClientSerial,
-               QString p_qsHostAddress,
-               QString p_qsHostPort );
-    bool isConnectionActive();
-    bool isSerialValid();
-
-public slots:
-    void msgReceive();
-    void displayError(QAbstractSocket::SocketError socketError);
+    void setLoginKeys(QString serial, QString code2);
 
 private:
-    QTcpSocket  *m_ptcpSocket;
-    QByteArray   m_obPwdHash;
-    quint16      blockSize;
+    void _initialize();
+    void _handleLogonChallenge();
+    void _handleLogonOk();
 
-    bool         m_bConnectionInProgress;
-    bool         m_bCheckRegistration;
-
-    bool         m_bSerialValid;
-    QString      m_qsHostAddress;
-    QString      m_qsHostPort;
-    QString      m_qsMessageIN;
-    QString      m_qsMessageOUT;
-    QString      m_qsMessageChecksumIN;
-    QString      m_qsMessageChecksumOUT;
-    int          m_nProcessStep;
-    QString      m_qsClientSerial;
-
-    void connectToServer();
-    void disconnectFromServer();
-    void checkClientRegistration();
-    void sendMessage();
-    void msgSend( QString qsMsg );
-    bool checkMessageConsistency();
-    QString getMessageBody();
-    QString getMessageAction();
-    void ProcessMessage();
-    void ProcessClientAuthorization();
-
-private slots:
-
+private:
+    QString _serial;
+    QString _code2;
+    bool _authenticated;
 };
-//====================================================================================
+
+
 
 #endif // BS_CONNECTION_H

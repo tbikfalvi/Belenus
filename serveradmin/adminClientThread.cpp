@@ -23,7 +23,7 @@ void AdminClientThread::setCredentials(QString username, QString password)
 
 void AdminClientThread::_initialize()
 {
-    _sendHello(VERSION);
+    _sendHello();
 }
 
 
@@ -45,6 +45,7 @@ void AdminClientThread::_handleLogonChallenge()
 void AdminClientThread::_handleRegisterKeyResponse(Result res)
 {
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleRegisterKeyResult] result is " << res << cQTLogger::EOM;
+    queryLicenseKeys();
 }
 
 
@@ -63,4 +64,48 @@ void AdminClientThread::registerNewKey(const char *key)
         return;
 
     _sendRegisterKey(key);
+}
+
+
+
+void AdminClientThread::queryLicenseKeys()
+{
+    if ( !_loggedIn )
+        return;
+
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLicenseKeys] entered " << cQTLogger::EOM;
+    _sendSqlQuery(Q_GET_KEYS, "SELECT clientId, code1, code2, dateCreated, lastLogin, licenceId, serial, country, region, city, zip, address, studio, contact, active FROM clients LEFT JOIN licences ON clients.code1=SHA1(serial)");
+}
+
+
+
+void AdminClientThread::resetCode2(int clientId)
+{
+    if ( !_loggedIn )
+        return;
+
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::resetCode2] reseting code2 of client " << clientId << cQTLogger::EOM;
+    _sendSqlQuery(Q_RESET_CODE2, QString("UPDATE clients SET code2=NULL WHERE clientId=%1").arg(clientId).toStdString().c_str());
+}
+
+
+
+void AdminClientThread::queryLogs(cSeverity::teSeverity minSeverity, int last)
+{
+    if ( !_loggedIn )
+        return;
+
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLogs] getting logs from server sev=" << (int)minSeverity << " last=" << last << cQTLogger::EOM;
+    _sendSqlQuery(Q_GET_LOGS, QString("SELECT * FROM logs WHERE severity<=%1 ORDER BY date DESC LIMIT %2").arg(minSeverity).arg(last).toStdString().c_str());
+}
+
+
+
+void AdminClientThread::removeKey(int clientId)
+{
+    if ( !_loggedIn )
+        return;
+
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::removeKey] removing license key for client " << clientId << cQTLogger::EOM;
+    _sendSqlQuery(Q_RESET_CODE2, QString("DELETE FROM clients WHERE clientID=%1").arg(clientId).toStdString().c_str());
 }

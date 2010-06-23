@@ -46,7 +46,7 @@ void Connection::connectTo(QTcpSocket *s)
 
 void Connection::connectTo(QHostAddress addr, qint16 port)
 {
-    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] incoming from " << addr.toString().toStdString() << ":" << port << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] connecting to " << addr.toString().toStdString() << ":" << port << cQTLogger::EOM;
     _socket = new QTcpSocket();
     _connectSignalsToSocket();
     _socket->connectToHost(addr, port);
@@ -159,6 +159,23 @@ void Connection::_handlePacket(Packet &packet)
                 _handleRegisterKeyResponse(r);
             } break;
 
+        case Packet::MSG_SQL_QUERY: {
+                int id;
+                char *u;
+                packet >> id >> u;
+                _handleSqlQuery(id,u);
+            } break;
+
+        case Packet::MSG_SQL_RESULT: {
+                int id;
+                bool status;
+                char* str;
+                packet >> id >> status >> str;
+                SqlResult *s = new SqlResult();
+                s->fromStringStream(str);
+                s->setValid(status);
+                _handleSqlQueryResult(id, s);
+            } break;
 
         default:
             g_obLogger << cSeverity::ERROR << "[Connection::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
@@ -195,7 +212,7 @@ void Connection::run()
 void Connection::send(Packet &p)
 {
     qint64 writtenBytes = _socket->write(p.getRawPacket());
-    g_obLogger << cSeverity::INFO << "[Connection::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump().toStdString() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Connection::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump().toStdString() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
 }
 
 
@@ -219,10 +236,10 @@ void Connection::_assertSize(unsigned int size, Packet &p, AssertType type)
 
 
 
-void Connection::_sendHello(int version)
+void Connection::_sendHello()
 {
     Packet p(Packet::MSG_HELLO);
-    p << version;
+    p << VERSION;
     send(p);
 }
 
@@ -299,9 +316,18 @@ void Connection::_sendSqlQuery(int queryId, const char *query)
 
 
 
-void Connection::_sendSqlQueryResult(int queryId, QByteArray &b)
+void Connection::_sendSqlQueryResult(int queryId, SqlResult &b)
 {
     Packet p(Packet::MSG_SQL_RESULT);
-    p << queryId << b;
+    p << queryId << b.isValid();
+    p << b.toStringStream();
+
     send(p);
+}
+
+
+
+void Connection::_handleSqlQueryResult(int queryId, SqlResult *res)
+{
+    emit sqlResultReady(queryId, res);
 }

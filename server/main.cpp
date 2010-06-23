@@ -93,14 +93,22 @@ int main( int argc, char *argv[] )
         g_obLogger(cSeverity::INFO) << "Connecting to database..." << cQTLogger::EOM;
         g_db.open();
 
+//        QSqlQuery *r = g_db.executeQTQuery("SELECT * FROM logs");
+//        g_obLogger(cSeverity::DEBUG) << "Query is " << r->isActive() << " rows=" << r->size() << cQTLogger::EOM;
+//
+//        SqlResult sres;
+//        sres.copy(r);
+//        g_obLogger(cSeverity::DEBUG) << "CSV is\n" << sres.toStringStream().toStdString() << cQTLogger::EOM;
+//
+//        SqlResult sres2;
+//        sres2.fromStringStream( sres.toStringStream() );
+//        g_obLogger(cSeverity::DEBUG) << "CSV2 is\n" << sres2.toStringStream().toStdString() << cQTLogger::EOM;
+
         g_obLogger(cSeverity::INFO) << "Starting app..." << cQTLogger::EOM;
         app.exec();
     } catch(cSevException e) {
         g_obLogger(cSeverity::ERROR) << "Exception: " << e.what() << cQTLogger::EOM;
     }
-
-    // cout << "Enter ! to quit";
-    // while ( getchar()!='!' ) ;
 
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " ended." << cQTLogger::EOM;
 

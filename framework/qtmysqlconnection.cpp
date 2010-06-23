@@ -46,6 +46,7 @@ void cQTMySQLConnection::executeQuery( const string &p_stQuery,
     if( p_boLog )
     {
         g_obLogger << cSeverity::DEBUG;
+        g_obLogger << "[cQTMySQLConnection::executeQuery]";
         g_obLogger << p_stQuery << cQTLogger::EOM;
     }
 

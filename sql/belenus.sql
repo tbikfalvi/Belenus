@@ -56,8 +56,9 @@ CREATE TABLE `clients` (
   `code2`                   varchar(50)             NOT NULL,
   `dateCreated`             datetime                NOT NULL,
   `lastLogin`               datetime                NOT NULL,
-  PRIMARY KEY (`clientId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`clientId`),
+  UNIQUE (`code1`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- -----------------------------------------------------------------------------------
 -- Doktor tabla. A studioban rendelo doktorok adatait tartalmazza.
