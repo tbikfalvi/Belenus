@@ -29,7 +29,6 @@ cDBPatient               g_obPatient;
 int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
-//    QTcpSocket      *m_ptcpSocket;
 
     QPixmap          obPixmap("resources/splash.jpg");
     QSplashScreen    obSplash( obPixmap );
@@ -101,7 +100,7 @@ int main( int argc, char *argv[] )
             if( nCount > 399 ) nCount = 0;
         }*/
 
-        qsSpalsh += "TEMPORARY DISABLED\n";
+        qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
 #ifdef __WIN32__
