@@ -7,10 +7,24 @@
 
 class AdminClientThread : public Connection
 {
+    Q_OBJECT
+
 public:
+    enum QueryIds {
+        Q_GET_KEYS,
+        Q_RESET_CODE2,
+        Q_REMOVE_LICENSE_KEY,
+        Q_GET_LOGS,
+    };
+
+
     AdminClientThread();
     void setCredentials(QString username, QString password);
     void registerNewKey(const char* key);
+    void queryLicenseKeys();
+    void resetCode2(int clientId);
+    void queryLogs(cSeverity::teSeverity minSeverity = cSeverity::DEBUG, int last = 50);
+    void removeKey(int clientId);
 
 protected:
     void _initialize();
@@ -21,7 +35,9 @@ protected:
 
     QString _username;
     QString _password;
-    bool _loggedIn;;
+    bool _loggedIn;
+
+
 };
 
 

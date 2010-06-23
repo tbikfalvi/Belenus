@@ -171,8 +171,10 @@ client/ui_dlgpanelstatusesedit.h
 client/ui_dlgpatientcardtypeedit.h
 client/ui_dlgpatientcardedit.h
 client/ui_dlgpatientcardadd.h
+client/ui_dlgpanel.h
 resources/Thumbs.db
 BelenusServer
+BelenusServer.exe
 belenusserver.ini
 server/release
 server/debug

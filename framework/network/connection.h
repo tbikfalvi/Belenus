@@ -47,7 +47,7 @@ signals:
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void packetReceived(Packet&);
-
+    void sqlResultReady(int id, SqlResult*);
 
 protected:
     enum AssertType {
@@ -84,9 +84,9 @@ protected:
     virtual void _handleRegisterKey(const char* key) {};
     virtual void _handleRegisterKeyResponse(Result result) {};
     virtual void _handleSqlQuery(int queryId, const char* query) {}
-    virtual void _handleSqlQueryResult(int queryId, SqlResult *) {}
+    virtual void _handleSqlQueryResult(int queryId, SqlResult *);
 
-    virtual void _sendHello(int version);
+    virtual void _sendHello();
     virtual void _sendDisconnect(Result reason);
     virtual void _sendLogonChallenge();
     virtual void _sendLogonResponse(const char* code1, const char *code2);
@@ -95,7 +95,7 @@ protected:
     virtual void _sendRegisterKey(const char* key);
     virtual void _sendRegisterKeyResponse(Result result);
     virtual void _sendSqlQuery(int queryId, const char *query);
-    virtual void _sendSqlQueryResult(int queryId, QByteArray &);
+    virtual void _sendSqlQueryResult(int queryId, SqlResult &);
 
     QList<Packet::Message> _allowedPackets;     /* list of packets which are allowed to be received. all other will cause connection to be dropped */
     QTcpSocket *_socket;

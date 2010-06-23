@@ -18,7 +18,6 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardedit.ui \
     dlgpatientcardadd.ui
 HEADERS = belenus.h \
-    ../framework/belenusmessages.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
     ../framework/qtframework.h \
@@ -75,7 +74,11 @@ HEADERS = belenus.h \
     frmpanel.h \
     mdipanels.h \
     preferences.h \
-    wndmain.h
+    wndmain.h \
+    ../framework/network/sqlResult.h \
+    ../framework/network/protocolException.h \
+    ../framework/network/packet.h \
+    ../framework/network/connection.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -130,7 +133,10 @@ SOURCES = main.cpp \
     frmpanel.cpp \
     mdipanels.cpp \
     preferences.cpp \
-    wndmain.cpp
+    wndmain.cpp \
+    ../framework/network/sqlResult.cpp \
+    ../framework/network/packet.cpp \
+    ../framework/network/connection.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
