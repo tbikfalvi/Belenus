@@ -128,6 +128,13 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>ledInputStart</tabstop>
+  <tabstop>pbPatient</tabstop>
+  <tabstop>pbCardcode</tabstop>
+  <tabstop>pbTime</tabstop>
+  <tabstop>pbCancel</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

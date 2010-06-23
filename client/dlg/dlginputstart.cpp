@@ -139,6 +139,6 @@ void cDlgInputStart::on_ledInputStart_returnPressed()
     else if( !m_bPat && !m_bCard && m_bTime ) on_pbTime_clicked();
     else
     {
-
+        QMessageBox::information( this, tr("Attention"),tr("Please click on the desired button for the defined search value!"));
     }
 }
