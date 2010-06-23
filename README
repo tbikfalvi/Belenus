@@ -29,6 +29,7 @@ Preferences		- Beállítások módosítására szolgáló dialog
 Toolbar			- Toolbar gombok rendberakása. Engedélyezésük, tiltásuk timer által
 			  meghívott függvény állítja. Néhány még nem mûködõ gomb alapból tiltva.
 DatabaseFinal		- Az 'active' mezõ felvétele az adatbázis táblákba és ennek lekezelése
+			  Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
 PostponedPatient	- Ha a páciens adatait a kezelõ késõbb akarja kitölteni, akkor a
 			  postponed (toBeFilled) temp táblába kerül az ID-ja
 Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
