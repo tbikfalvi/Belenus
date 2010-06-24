@@ -108,6 +108,12 @@ cWndMain::cWndMain( QWidget *parent )
     action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
     action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.gif" ) );
 
+    menuPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
+    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.gif") );
+    menuDevice->setIcon( QIcon( "./resources/40x40_device.gif" ) );
+    action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
+
     cDBPostponed    *poDBPostPoned = new cDBPostponed();
 
     g_poPrefs->setPostponedPatients( poDBPostPoned->countPostponedPatients() );
@@ -196,7 +202,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 //====================================================================================
 void cWndMain::updateTitle()
 {
-    cTracer obTrace( "cWndMain::updateTitle" );
+    //cTracer obTrace( "cWndMain::updateTitle" );
 
     QString  qsTitle = tr( "Belenus " );
     qsTitle += g_poPrefs->getVersion();
@@ -259,7 +265,6 @@ void cWndMain::updateToolbar()
 
     action_DeviceSettings->setEnabled( false );
 
-    action_PatientCardSell->setEnabled( false );
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
 }
@@ -512,5 +517,10 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
 {
     cDlgSerialReg   obDlgSerialReg( this );
     obDlgSerialReg.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PatientCardSell_triggered()
+{
+
 }
 //====================================================================================

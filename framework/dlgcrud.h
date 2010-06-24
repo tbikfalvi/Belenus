@@ -36,6 +36,7 @@ protected slots:
     virtual void newClicked( bool ) = 0;
     virtual void deleteClicked( bool ) = 0;
     virtual void editClicked( bool ) = 0;
+//    virtual void closeClicked( bool ) = 0;
 };
 
 #endif

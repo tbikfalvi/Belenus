@@ -3,6 +3,7 @@
 #include "belenus.h"
 #include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardtypeedit.h"
+#include "../db/dbpatientcard.h"
 
 cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
@@ -121,6 +122,15 @@ void cDlgPatientCardType::deleteClicked( bool )
     {
         try
         {
+            cDBPatientCard  obDBPatientCard;
+            if( obDBPatientCard.isPatientCardTypeLinked( m_uiSelectedId ) )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("Unfortunatelly delete of this card type is not possible.\n"
+                                         "There are patientcards attached to this card type.") );
+                return;
+            }
+
             poPatientCardType = new cDBPatientCardType;
             poPatientCardType->load( m_uiSelectedId );
             poPatientCardType->remove();

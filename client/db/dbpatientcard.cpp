@@ -158,6 +158,18 @@ void cDBPatientCard::remove() throw( cSevException )
     }
 }
 
+bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
+{
+    cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ).toStdString() );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
 void cDBPatientCard::createNew() throw()
 {
     init();
