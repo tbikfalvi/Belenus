@@ -488,7 +488,7 @@ CREATE TABLE `invoices` (
   `vatpercent`              int(11)                 NOT NULL,
   `totalPrice`              int(11)                 NOT NULL,
   `invoiceReady`            tinyint(1)              DEFAULT 0,
-  PRIMARY KEY (`invoiceId`),
+  PRIMARY KEY (`invoiceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
