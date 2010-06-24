@@ -36,3 +36,4 @@ Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
 ApplicationStart	- Program inditasa utan ellenorizni kell, hogy, ha a HW kapcsolat OK,
 			  ne mukodjon a program DEMO kulccsal csak 7 napig. Ugyanugy, mint
 			  rossz internet kapcsolat, vagy szunnapok eseten
+ServerAdmin		- Szerver adminisztrátor program
