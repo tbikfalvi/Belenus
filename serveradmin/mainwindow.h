@@ -25,6 +25,7 @@ private:
 
 private slots:
     /* slots for UI signals */
+    void on_pbExit_clicked();
     void on_bRemoveKey_clicked();
     void on_bGetLogs_clicked();
     void on_pushButton_clicked();

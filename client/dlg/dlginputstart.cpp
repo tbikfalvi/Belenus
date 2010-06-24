@@ -2,20 +2,55 @@
 #include <QMessageBox>
 
 #include "dlginputstart.h"
+#include "../crud/dlgpatientselect.h"
 
 cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     : QDialog( p_poParent )
 {
     setupUi( this );
 
+    m_poParent      = p_poParent;
+
     setWindowTitle( tr("Entering ...") );
     lblAction->setText( tr("Entering code ...") );
-    pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
+    pbCardcode->setIcon( QIcon("./resources/40x40_patientcard.gif") );
+    pbTime->setIcon( QIcon("./resources/40x40_clock.gif") );
+
+    m_bTime         = false;
+    m_bCard         = false;
+    m_bPat          = false;
+    m_bInitCalled   = false;
+
+    pbTime->setEnabled( false );
+    pbCardcode->setEnabled( false );
+    pbPatient->setEnabled( false );
 }
 
 cDlgInputStart::~cDlgInputStart()
 {
+}
+
+void cDlgInputStart::init()
+{
+    m_bInitCalled = true;
+
+    if( m_bTime )
+    {
+        pbTime->setEnabled( true );
+        lblAction->setText( tr("Entering time period ...") );
+    }
+    if( m_bCard )
+    {
+        pbCardcode->setEnabled( true );
+        lblAction->setText( tr("Entering barcode ...") );
+    }
+    if( m_bPat  )
+    {
+        pbPatient->setEnabled( true );
+        lblAction->setText( tr("Entering patient name ...") );
+    }
 }
 
 void cDlgInputStart::setInitialText( const QString &p_stText )
@@ -25,24 +60,69 @@ void cDlgInputStart::setInitialText( const QString &p_stText )
 
 void cDlgInputStart::on_ledInputStart_textChanged(QString )
 {
+    if( m_bInitCalled ) return;
+
     bool boIsANumber = false;
     ledInputStart->text().toUInt( &boIsANumber );
 
-    if( (ledInputStart->text().length() < 4) && (boIsANumber) )
+    m_bTime = true;
+    m_bCard = true;
+    m_bPat  = true;
+
+    pbTime->setEnabled( true );
+    pbCardcode->setEnabled( true );
+    pbPatient->setEnabled( true );
+
+    if( ledInputStart->text().length() == 0 ||
+        ledInputStart->text().length() > 3 ||
+        !boIsANumber )
+    {
+        m_bTime = false;
+        pbTime->setEnabled( false );
+    }
+    if( ledInputStart->text().length() == 0 ||
+        ledInputStart->text().contains(' ') )
+    {
+        m_bCard = false;
+        pbCardcode->setEnabled( false );
+    }
+    if( ledInputStart->text().length() == 0 ||
+        boIsANumber )
+    {
+        m_bPat = false;
+        pbPatient->setEnabled( false );
+    }
+
+    if( m_bTime )
     {
         lblAction->setText( tr("Entering time period ...") );
     }
-    else if( ledInputStart->text().length() > 3 )
+    else if( m_bCard )
     {
         lblAction->setText( tr("Entering barcode ...") );
     }
-    else
+    else if( m_bPat )
     {
-        lblAction->setText( tr("Entering code ...") );
+        lblAction->setText( tr("Entering patient name ...") );
     }
 }
 
-void cDlgInputStart::on_pbSelect_clicked()
+void cDlgInputStart::on_pbPatient_clicked()
+{
+    cDlgPatientSelect  obDlgPatientSelect( m_poParent );
+    obDlgPatientSelect.setSearchPatientName( ledInputStart->text() );
+
+    QDialog::accept();
+
+    obDlgPatientSelect.exec();
+}
+
+void cDlgInputStart::on_pbCardcode_clicked()
+{
+    QDialog::accept();
+}
+
+void cDlgInputStart::on_pbTime_clicked()
 {
     QDialog::accept();
 }
@@ -50,4 +130,15 @@ void cDlgInputStart::on_pbSelect_clicked()
 void cDlgInputStart::on_pbCancel_clicked()
 {
     QDialog::reject();
+}
+
+void cDlgInputStart::on_ledInputStart_returnPressed()
+{
+    if( m_bPat && !m_bCard && !m_bTime ) on_pbPatient_clicked();
+    else if( !m_bPat && m_bCard && !m_bTime ) on_pbCardcode_clicked();
+    else if( !m_bPat && !m_bCard && m_bTime ) on_pbTime_clicked();
+    else
+    {
+        QMessageBox::information( this, tr("Attention"),tr("Please click on the desired button for the defined search value!"));
+    }
 }

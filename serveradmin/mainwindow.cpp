@@ -21,6 +21,9 @@ MainWindow::MainWindow( QWidget *p_poParent )
 {
     setupUi( this );
 
+    setWindowIcon( QIcon("./resources/belenus.ico") );
+    pbExit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
+
     iHost->setText( QString("%1:%2").arg(g_prefs.value("server/host")).arg(g_prefs.value("server/port")) );
     iUsername->setText("root");
     iPassword->setText("Korben5Dallas");
@@ -271,4 +274,9 @@ void MainWindow::on_bRemoveKey_clicked()
     g_obLogger(cSeverity::INFO) << "[MainWindow::on_bRemoveKey_clicked] Removing license on " << clientId << cQTLogger::EOM;
     log("Removing key");
     _connection.removeKey( clientId );
+}
+
+void MainWindow::on_pbExit_clicked()
+{
+    close();
 }

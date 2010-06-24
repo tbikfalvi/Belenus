@@ -266,7 +266,7 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    updateToolbar();
+    updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_Preferences_triggered()
@@ -447,6 +447,8 @@ void cWndMain::on_action_UseWithCard_triggered()
 {
     cDlgInputStart  obDlgInputStart( this );
 
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
     obDlgInputStart.exec();
 }
 //====================================================================================
@@ -454,9 +456,9 @@ void cWndMain::on_action_UseByTime_triggered()
 {
     cDlgInputStart  obDlgInputStart( this );
 
+    obDlgInputStart.m_bTime = true;
+    obDlgInputStart.init();
     obDlgInputStart.exec();
-
-    g_poHardware->setMainActionTime( mdiPanels->activePanel(), 180 );  // 180 -> ennyi másodperccel indul a kiválasztott panel
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
