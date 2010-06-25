@@ -13,6 +13,7 @@ public:
 
     void            load( const unsigned int p_uiId )                           throw( cSevException );
     void            load( const string &p_stName )                              throw( cSevException );
+    unsigned int    getPatientCount( const string &p_stName )                   throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
     void            createNew()                                                 throw();

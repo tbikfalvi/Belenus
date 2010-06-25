@@ -20,6 +20,7 @@
 //====================================================================================
 
 #include "db/dbpostponed.h"
+#include "db/dbpatient.h"
 
 //====================================================================================
 
@@ -187,12 +188,26 @@ void cWndMain::initPanels()
 void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 {
     if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
-        (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) )
+        (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
+        (p_poEvent->key() == Qt::Key_Space) )
     {
         cDlgInputStart  obDlgInputStart( this );
 
         obDlgInputStart.setInitialText( p_poEvent->text() );
         obDlgInputStart.exec();
+
+        if( obDlgInputStart.m_bPat )
+        {
+            processInputPatient( obDlgInputStart.getEditText().trimmed() );
+        }
+        else if( obDlgInputStart.m_bCard )
+        {
+            processInputPatientCard( obDlgInputStart.getEditText() );
+        }
+        else if( obDlgInputStart.m_bTime )
+        {
+            processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+        }
 
         p_poEvent->ignore();
     }
@@ -455,6 +470,7 @@ void cWndMain::on_action_UseWithCard_triggered()
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
     obDlgInputStart.exec();
+    processInputPatientCard( obDlgInputStart.getEditText() );
 }
 //====================================================================================
 void cWndMain::on_action_UseByTime_triggered()
@@ -464,6 +480,7 @@ void cWndMain::on_action_UseByTime_triggered()
     obDlgInputStart.m_bTime = true;
     obDlgInputStart.init();
     obDlgInputStart.exec();
+    processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
@@ -520,6 +537,43 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
 }
 //====================================================================================
 void cWndMain::on_action_PatientCardSell_triggered()
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
+    obDlgInputStart.exec();
+}
+//====================================================================================
+void cWndMain::processInputPatient( QString p_stPatientName )
+{
+    cDBPatient      obDBPatient;
+    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed().toStdString());
+
+    if( uiPatientCount > 1 )
+    {
+        cDlgPatientSelect  obDlgPatientSelect( this );
+        obDlgPatientSelect.setSearchPatientName( p_stPatientName.trimmed() );
+        obDlgPatientSelect.exec();
+    }
+    else if( uiPatientCount == 1 )
+    {
+        g_obPatient.load( obDBPatient.id() );
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("There is no patient in the database with name like\n\n"
+                              "\'%1\'").arg(p_stPatientName.trimmed()) );
+    }
+}
+//====================================================================================
+void cWndMain::processInputPatientCard( QString p_stBarcode )
+{
+
+}
+//====================================================================================
+void cWndMain::processInputTimePeriod( int p_inSecond )
 {
 
 }

@@ -14,6 +14,7 @@ public:
 
     void setInitialText( const QString &p_stText );
     void init();
+    QString getEditText();
 
     bool m_bTime;
     bool m_bCard;

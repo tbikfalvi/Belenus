@@ -58,6 +58,11 @@ void cDlgInputStart::setInitialText( const QString &p_stText )
     ledInputStart->setText( p_stText );
 }
 
+QString cDlgInputStart::getEditText()
+{
+    return ledInputStart->text();
+}
+
 void cDlgInputStart::on_ledInputStart_textChanged(QString )
 {
     if( m_bInitCalled ) return;
@@ -109,21 +114,25 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 
 void cDlgInputStart::on_pbPatient_clicked()
 {
-    cDlgPatientSelect  obDlgPatientSelect( m_poParent );
-    obDlgPatientSelect.setSearchPatientName( ledInputStart->text() );
-
+    m_bPat = true;
+    m_bCard = false;
+    m_bTime = false;
     QDialog::accept();
-
-    obDlgPatientSelect.exec();
 }
 
 void cDlgInputStart::on_pbCardcode_clicked()
 {
+    m_bPat = false;
+    m_bCard = true;
+    m_bTime = false;
     QDialog::accept();
 }
 
 void cDlgInputStart::on_pbTime_clicked()
 {
+    m_bPat = false;
+    m_bCard = false;
+    m_bTime = true;
     QDialog::accept();
 }
 
