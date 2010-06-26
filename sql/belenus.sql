@@ -420,6 +420,7 @@ CREATE TABLE `cassa` (
   `currentBalance`          int(11)                 NOT NULL,
   `startDateTime`           datetime                NOT NULL,
   `stopDateTime`            datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`cassaId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -438,6 +439,7 @@ CREATE TABLE `cassaHistory` (
   `actionBalance`           int(11)                 NOT NULL,
   `actionTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`cassaHistoryId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -452,6 +454,7 @@ CREATE TABLE `denominations` (
   `denominationId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `denomination`            int(10) unsigned        NOT NULL DEFAULT 0,
+  `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`denominationId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT

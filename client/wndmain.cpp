@@ -177,6 +177,42 @@ bool cWndMain::showLogIn()
                 obDlgSerialReg.exec();
             }
         }
+
+        //----------------------------------------------
+        // Penztar betoltese, ellenorzese
+        //----------------------------------------------
+        try
+        {
+            g_obCassa.load();
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Cassa table empty") != 0 )
+            {
+                g_obLogger << e.severity();
+                g_obLogger << e.what() << cQTLogger::EOM;
+            }
+            else
+            {
+                g_obCassa.createNew();
+                if( QMessageBox::critical( this, tr("Question"),
+                                           tr("There is no data recorded in database for cassa.\n"
+                                              "The application can not record any money related\n"
+                                              "action without valid cassa data record.\n"
+                                              "Do you want to start cassa recording with the current user?\n\n"
+                                              "If you want to start cassa with different user, please log out\n"
+                                              "and relogin with the desired user account."),
+                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    g_obCassa.setUserId( g_obUser.id() );
+                    g_obCassa.setLicenceId( g_poPrefs->getLicenceId() );
+                    g_obCassa.setCurrentBalance( 0 );
+                    g_obCassa.setStartDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ).toStdString() );
+                    g_obCassa.setActive( true );
+                    g_obCassa.save();
+                }
+            }
+        }
     }
 
     obTrace << boLogInOK;
@@ -607,10 +643,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                         obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
                     }
                 }
-                if( obDlgPatientCardEdit.exec() == QDialog::Accepted )
-                {
-                    QMessageBox::information(this,"","kartya eladas");
-                }
+                obDlgPatientCardEdit.exec();
             }
         }
     }
