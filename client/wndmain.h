@@ -63,6 +63,7 @@ private slots:
     void on_action_PostponedAttendance_triggered();
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
+    void on_action_EditActualPatient_triggered();
 };
 
 #endif

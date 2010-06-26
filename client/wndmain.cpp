@@ -108,6 +108,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.gif") );
     action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
     action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.gif" ) );
+    action_EditActualPatient->setIcon( QIcon("./resources/40x40_patientedit.gif") );
 
     menuPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
     menuAttendance->setIcon( QIcon("./resources/40x40_attendance.gif") );
@@ -266,6 +267,7 @@ void cWndMain::updateToolbar()
     action_PatientSelect->setVisible( !(g_obPatient.id()>0) );
     action_PatientEmpty->setEnabled( g_obPatient.id()>0 );
     action_PatientEmpty->setVisible( g_obPatient.id()>0 );
+    action_EditActualPatient->setEnabled( g_obPatient.id()>0 );
     action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
 
     action_UseWithCard->setEnabled( true );
@@ -576,5 +578,12 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 void cWndMain::processInputTimePeriod( int p_inSecond )
 {
 
+}
+//====================================================================================
+void cWndMain::on_action_EditActualPatient_triggered()
+{
+    cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
+    obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
+    obDlgEdit.exec();
 }
 //====================================================================================

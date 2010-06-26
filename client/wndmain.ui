@@ -146,6 +146,7 @@
    <addaction name="separator"/>
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
+   <addaction name="action_EditActualPatient"/>
    <addaction name="action_PatientNew"/>
    <addaction name="action_PostponedPatient"/>
    <addaction name="separator"/>
@@ -390,6 +391,14 @@
   <action name="action_ValidateSerialKey">
    <property name="text">
     <string>Validate Serial key ...</string>
+   </property>
+  </action>
+  <action name="action_EditActualPatient">
+   <property name="text">
+    <string>Edit actual ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit actual patient</string>
    </property>
   </action>
  </widget>
