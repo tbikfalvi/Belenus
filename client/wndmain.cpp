@@ -43,6 +43,7 @@
 #include "edit/dlgpatientedit.h"
 #include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
+#include "edit/dlgcassaedit.h"
 
 //====================================================================================
 
@@ -184,6 +185,37 @@ bool cWndMain::showLogIn()
         try
         {
             g_obCassa.load();
+
+            if( QString::fromStdString( g_obCassa.stopDateTime() ).length() == 0 )
+            {
+                QMessageBox::information(this,"","nincs lezárva");
+            }
+            else
+            {
+                if( g_obCassa.userId() == g_obUser.id() )
+                {
+                    if( QMessageBox::question( this, tr("Question"),
+                                               "Do you want to continue the previous cassa record?",
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    {
+                        g_obCassa.setStopDateTime( "" );
+                    }
+                    else
+                    {
+                        //start new cassa record
+                        cDlgCassaEdit   obDlgCassaEdit( this, &g_obCassa );
+
+                        obDlgCassaEdit.exec();
+                    }
+                }
+                else
+                {
+                    //start new cassa record
+                    cDlgCassaEdit   obDlgCassaEdit( this, &g_obCassa );
+
+                    obDlgCassaEdit.exec();
+                }
+            }
         }
         catch( cSevException &e )
         {
