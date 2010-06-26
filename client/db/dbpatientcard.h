@@ -12,6 +12,7 @@ public:
     ~cDBPatientCard();
 
     void            load( const unsigned int p_uiId )                           throw( cSevException );
+    void            load( const string &p_stBarcode )                           throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();

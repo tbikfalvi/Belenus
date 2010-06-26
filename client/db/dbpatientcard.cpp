@@ -94,6 +94,19 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
+void cDBPatientCard::load( const string &p_stBarcode ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCard::load", "name: \""  + p_stBarcode + "\"" );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE barcode = \"" + QString::fromStdString( p_stBarcode ) + "\"" );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Patientcard barcode not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBPatientCard::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCard::save" );

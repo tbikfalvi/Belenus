@@ -21,7 +21,6 @@ public:
     bool m_bPat;
 
 private:
-    QWidget *m_poParent;
     bool     m_bInitCalled;
 
 private slots:

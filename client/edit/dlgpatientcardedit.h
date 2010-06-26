@@ -13,6 +13,8 @@ class cDlgPatientCardEdit : public QDialog, protected Ui::dlgPatientCardEdit
 public:
     cDlgPatientCardEdit( QWidget *p_poParent = 0, cDBPatientCard *p_poPatientCard = NULL );
     virtual ~cDlgPatientCardEdit();
+    void activatePatientCard();
+    void setPatientCardOwner( const unsigned int p_uiPatientId );
 
 protected:
     cDBPatientCard      *m_poPatientCard;

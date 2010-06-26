@@ -9,8 +9,6 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
 {
     setupUi( this );
 
-    m_poParent      = p_poParent;
-
     setWindowTitle( tr("Entering ...") );
     lblAction->setText( tr("Entering code ...") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
@@ -41,12 +39,12 @@ void cDlgInputStart::init()
         pbTime->setEnabled( true );
         lblAction->setText( tr("Entering time period ...") );
     }
-    if( m_bCard )
+    else if( m_bCard )
     {
         pbCardcode->setEnabled( true );
         lblAction->setText( tr("Entering barcode ...") );
     }
-    if( m_bPat  )
+    else if( m_bPat  )
     {
         pbPatient->setEnabled( true );
         lblAction->setText( tr("Entering patient name ...") );
@@ -122,6 +120,13 @@ void cDlgInputStart::on_pbPatient_clicked()
 
 void cDlgInputStart::on_pbCardcode_clicked()
 {
+    if( ledInputStart->text().length() != g_poPrefs->getBarcodeLength() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Barcode of patientcard should be %1 character length.").arg(g_poPrefs->getBarcodeLength()) );
+        ledInputStart->setFocus();
+        return;
+    }
     m_bPat = false;
     m_bCard = true;
     m_bTime = false;

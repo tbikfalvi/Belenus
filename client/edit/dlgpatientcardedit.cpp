@@ -11,7 +11,9 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     setupUi( this );
 
     m_bDlgLoaded = false;
+    m_poPatientCard = p_poPatientCard;
 
+    setWindowTitle( QString::fromStdString(m_poPatientCard->barcode()) );
     pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
     cbActive->setChecked( true );
@@ -25,7 +27,6 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         deValidDate->setEnabled( false );
     }
 
-    m_poPatientCard = p_poPatientCard;
     if( m_poPatientCard )
     {
         QSqlQuery *poQuery;
@@ -68,6 +69,23 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 
 cDlgPatientCardEdit::~cDlgPatientCardEdit()
 {
+}
+
+void cDlgPatientCardEdit::activatePatientCard()
+{
+    cbActive->setChecked( true );
+}
+
+void cDlgPatientCardEdit::setPatientCardOwner( const unsigned int p_uiPatientId )
+{
+    for( int i=0; i<cmbPatient->count(); i++ )
+    {
+        if( cmbPatient->itemData(i).toUInt() == p_uiPatientId )
+        {
+            cmbPatient->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void cDlgPatientCardEdit::on_pbSave_clicked()
@@ -140,8 +158,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
             m_poPatientCard->setBarcode( ledBarcode->text().toStdString() );
             m_poPatientCard->setActive( cbActive->isChecked() );
-            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toInt() );
-            m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toInt() );
+            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+            m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
             m_poPatientCard->setTimeLeft( teTimeLeft->time().toString("hh:mm:ss").toStdString() );
             m_poPatientCard->setValidDate( deValidDate->date().toString("yyyy-MM-dd").toStdString() );

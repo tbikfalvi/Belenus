@@ -21,6 +21,7 @@
 
 #include "db/dbpostponed.h"
 #include "db/dbpatient.h"
+#include "db/dbpatientcard.h"
 
 //====================================================================================
 
@@ -41,6 +42,7 @@
 #include "edit/dlguseredit.h"
 #include "edit/dlgpatientedit.h"
 #include "edit/dlgattendanceedit.h"
+#include "edit/dlgpatientcardedit.h"
 
 //====================================================================================
 
@@ -195,19 +197,20 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         cDlgInputStart  obDlgInputStart( this );
 
         obDlgInputStart.setInitialText( p_poEvent->text() );
-        obDlgInputStart.exec();
-
-        if( obDlgInputStart.m_bPat )
+        if( obDlgInputStart.exec() == QDialog::Accepted )
         {
-            processInputPatient( obDlgInputStart.getEditText().trimmed() );
-        }
-        else if( obDlgInputStart.m_bCard )
-        {
-            processInputPatientCard( obDlgInputStart.getEditText() );
-        }
-        else if( obDlgInputStart.m_bTime )
-        {
-            processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+            if( obDlgInputStart.m_bPat )
+            {
+                processInputPatient( obDlgInputStart.getEditText().trimmed() );
+            }
+            else if( obDlgInputStart.m_bCard )
+            {
+                processInputPatientCard( obDlgInputStart.getEditText() );
+            }
+            else if( obDlgInputStart.m_bTime )
+            {
+                processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+            }
         }
 
         p_poEvent->ignore();
@@ -471,8 +474,8 @@ void cWndMain::on_action_UseWithCard_triggered()
 
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
-    obDlgInputStart.exec();
-    processInputPatientCard( obDlgInputStart.getEditText() );
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+        processInputPatientCard( obDlgInputStart.getEditText() );
 }
 //====================================================================================
 void cWndMain::on_action_UseByTime_triggered()
@@ -481,8 +484,8 @@ void cWndMain::on_action_UseByTime_triggered()
 
     obDlgInputStart.m_bTime = true;
     obDlgInputStart.init();
-    obDlgInputStart.exec();
-    processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+        processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
@@ -544,7 +547,10 @@ void cWndMain::on_action_PatientCardSell_triggered()
 
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
-    obDlgInputStart.exec();
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+
+    }
 }
 //====================================================================================
 void cWndMain::processInputPatient( QString p_stPatientName )
@@ -572,7 +578,62 @@ void cWndMain::processInputPatient( QString p_stPatientName )
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
+    cDBPatientCard  obDBPatientCard;
 
+    try
+    {
+        obDBPatientCard.load( p_stBarcode.toStdString() );
+
+        if( obDBPatientCard.active() )
+        {
+
+        }
+        else
+        {
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("This barcode has not been activated yet.\n"
+                                          "Do you want to activate it now?"),
+                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            {
+                cDlgPatientCardEdit     obDlgPatientCardEdit( this, &obDBPatientCard );
+
+                obDlgPatientCardEdit.activatePatientCard();
+                if( g_obPatient.id() > 0 )
+                {
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr("Do you want to assign this patientcard to the actual patient?"),
+                                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                    {
+                        obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
+                    }
+                }
+                if( obDlgPatientCardEdit.exec() == QDialog::Accepted )
+                {
+                    QMessageBox::information(this,"","kartya eladas");
+                }
+            }
+        }
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
+        {
+            g_obLogger << e.severity();
+            g_obLogger << e.what() << cQTLogger::EOM;
+        }
+        else
+        {
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("This barcode has not found in the database.\n"
+                                          "Do you want to register it for a new patientcard?"),
+                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            {
+                obDBPatientCard.createNew();
+                obDBPatientCard.setBarcode( p_stBarcode.toStdString() );
+                obDBPatientCard.save();
+            }
+        }
+    }
 }
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inSecond )
