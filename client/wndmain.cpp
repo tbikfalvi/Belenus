@@ -43,6 +43,7 @@
 #include "edit/dlgpatientedit.h"
 #include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
+#include "edit/dlgcassaedit.h"
 
 //====================================================================================
 
@@ -253,10 +254,10 @@ bool cWndMain::showLogIn()
         { // Penztar rekord nem letezik
 
             if( QMessageBox::critical( this, tr("Question"),
-                                       tr("There is no data recorded in database for cassa.\n"
-                                          "The application can not record any money related\n"
-                                          "action without valid cassa data record.\n"
+                                       tr("There is no data recorded in database for cassa.\n\n"
                                           "Do you want to start cassa recording with the current user?\n\n"
+                                          "Please note the application can not record any money related\n"
+                                          "action without valid cassa data record.\n"
                                           "If you want to start cassa with different user, please log out\n"
                                           "and relogin with the desired user account."),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
@@ -380,6 +381,8 @@ void cWndMain::updateToolbar()
 
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
+
+    action_Cassa->setEnabled( g_obCassa.isCassaEnabled() );
 }
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
@@ -442,6 +445,14 @@ void cWndMain::on_action_Hardwaretest_triggered()
 void cWndMain::on_action_LogOut_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Log_Out_triggered" );
+
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Do you want to close your cassa?"),
+                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        on_action_Cassa_triggered();
+        g_obCassa.cassaClose();
+    }
 
     g_obLogger << cSeverity::INFO;
     g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out";
@@ -604,6 +615,14 @@ void cWndMain::on_action_PCSaveToDatabase_triggered()
 //====================================================================================
 void cWndMain::on_action_Cassa_triggered()
 {
+    cDBCassa    *pDBCassa = new cDBCassa();
+
+    pDBCassa->load( g_obCassa.cassaId() );
+    cDlgCassaEdit   obDlgCassaEdit( this, pDBCassa );
+
+    obDlgCassaEdit.exec();
+
+    if( pDBCassa ) delete pDBCassa;
 }
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()

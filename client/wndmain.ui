@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
+    <width>657</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>622</width>
+     <width>657</width>
      <height>20</height>
     </rect>
    </property>
@@ -165,6 +165,8 @@
    <addaction name="action_PatientCardSell"/>
    <addaction name="action_DoctorSchedule"/>
    <addaction name="action_DeviceSchedule"/>
+   <addaction name="separator"/>
+   <addaction name="action_Cassa"/>
   </widget>
   <action name="action_Exit">
    <property name="text">

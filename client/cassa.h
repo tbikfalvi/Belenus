@@ -25,6 +25,7 @@ public:
     void                    cassaEnabled();
     void                    cassaDisabled();
     bool                    isCassaEnabled();
+    unsigned int            cassaId();
 
 private:
     cDBCassa                *m_pCassa;

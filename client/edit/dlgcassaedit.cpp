@@ -46,12 +46,14 @@ void cDlgCassaEdit::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Denomination" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Value" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Denomination" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Value" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Comment" ) );
     }
 }
 
@@ -59,11 +61,11 @@ void cDlgCassaEdit::refreshTable()
 {
     if( g_obUser.isInGroup( "root" ) )
     {
-        m_qsQuery = QString( "SELECT cassadenominations.denominationId, cassadenominations.licenceId, denominations.denomination, cassadenominations.value, cassadenominations.archive FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(m_poCassa->id());
+        m_qsQuery = QString( "SELECT cassadenominations.denominationId, cassadenominations.licenceId, denominations.denomination, cassadenominations.value, denominations.comment, cassadenominations.archive FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(m_poCassa->id());
     }
     else
     {
-        m_qsQuery = QString( "SELECT cassadenominations.denominationId as id, denominations.denomination, cassadenominations.value FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(m_poCassa->id());
+        m_qsQuery = QString( "SELECT cassadenominations.denominationId as id, denominations.denomination, cassadenominations.value, denominations.comment FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(m_poCassa->id());
     }
 
     tbvCassa->selectionModel()->blockSignals( true );
@@ -109,6 +111,21 @@ void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected,
 }
 
 void cDlgCassaEdit::enableButtons()
+{
+
+}
+
+void cDlgCassaEdit::on_pbClose_clicked()
+{
+    QDialog::accept();
+}
+
+void cDlgCassaEdit::on_pbCashAdd_clicked()
+{
+
+}
+
+void cDlgCassaEdit::on_pbCashGet_clicked()
 {
 
 }
