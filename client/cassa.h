@@ -21,11 +21,17 @@ public:
     bool                    isCassaClosed();
     unsigned int            cassaOwner();
     void                    cassaReOpen();
+    void                    cassaClose();
+    void                    cassaEnabled();
+    void                    cassaDisabled();
+    bool                    isCassaEnabled();
 
 private:
     cDBCassa                *m_pCassa;
     cDBDenomination         *m_pDenomination;
     cDBCassaDenomination    *m_pCassaDenomination;
+
+    bool                     m_bCassaEnabled;
 
 };
 

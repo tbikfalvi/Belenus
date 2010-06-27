@@ -142,7 +142,7 @@ bool cWndMain::showLogIn()
     cDlgLogIn  obDlgLogIn( this );
     bool       boLogInOK = ( obDlgLogIn.exec() == QDialog::Accepted );
 
-    if ( boLogInOK )
+    if( boLogInOK )
     {
         g_obLogger.setAppUser( g_obUser.id() );
         g_obLogger << cSeverity::INFO;
@@ -183,23 +183,75 @@ bool cWndMain::showLogIn()
         //----------------------------------------------
         g_obCassa.init( this );
 
+        // Penztar ellenorzese
         if( g_obCassa.isCassaExists() )
-        {
+        { // Penztar rekord letezik, utolso bejegyzes betoltve
+
+            // Penztar le van zarva?
             if( g_obCassa.isCassaClosed() )
-            {
+            { // Penztar le van zarva
+
+                // Ugyanaz zarta le az elozo penztarat, aki most be van jelentkezve?
                 if( g_obUser.id() == g_obCassa.cassaOwner() )
-                {
+                { // Ugyanaz van bejelentkezve
+
+                    // Uj nap kezdodott, vagy visszajelentkezett
                     if( QMessageBox::question( this, tr("Question"),
-                                               "Do you want to continue the previous cassa record?",
+                                               tr( "Do you want to continue the previous cassa record?" ),
                                                QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    {
+                    { // Elozo penztar folytatasa
+
                         g_obCassa.cassaReOpen();
                     }
-                }
-            }
-        }
+                    else
+                    { // Uj penztar nyitasa
+
+                        g_obCassa.createNew( g_obUser.id() );
+                    }
+                } // Ugyanaz volt bejelentkezve
+                else
+                { // Mas jelentkezett be, uj penztar bejegyzes nyitasa
+
+                    g_obCassa.createNew( g_obUser.id() );
+                } // Mas volt bejelentkezve
+            } // Penztar le volt zarva
+            else
+            { // Penztar nincs lezarva
+
+                // Ugyanaz van bejelentkezve, aki a penztart eddig hasznalta?
+                if( g_obUser.id() != g_obCassa.cassaOwner() )
+                { // Mas jelentkezett be
+
+                    // Be akarja zarni a korabbi penztarat es indit egy ujat?
+                    if( QMessageBox::warning( this, tr("Warning"),
+                                              tr("The last cassa record is assigned to a different user.\n"
+                                                 "You are not able to start new cassa record assigned to you\n"
+                                                 "until the previous is still open.\n\n"
+                                                 "Do you want to close the previous cassa and start a new one?\n\n"
+                                                 "Please note if you don't open a cassa record assigned to you\n"
+                                                 "the application can not record any money related action."),
+                                              QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    { // Korabbi penztar bezarasa, uj nyitasa
+
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                    } // Uj penztar nyitva
+                    else
+                    { // Korabbi penztar nem lesz lezarva, penztar szolgaltatasa letiltasa
+
+                        g_obCassa.cassaDisabled();
+                    } // Penztar letiltva
+                } // Mas volt bejelentkezve
+                else
+                { // Ugyanaz jelentkezett be
+
+                    g_obCassa.cassaEnabled();
+                } // Ugyanaz jelentkezett be
+            } // Penztar nem volt lezarva
+        } // Penztar rekord letezett
         else
-        {
+        { // Penztar rekord nem letezik
+
             if( QMessageBox::critical( this, tr("Question"),
                                        tr("There is no data recorded in database for cassa.\n"
                                           "The application can not record any money related\n"
@@ -208,11 +260,17 @@ bool cWndMain::showLogIn()
                                           "If you want to start cassa with different user, please log out\n"
                                           "and relogin with the desired user account."),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-            {
+            { // Elso rekord letrehozasa
+
                 g_obCassa.createNew( g_obUser.id() );
-            }
-        }
-    }
+            } // Elso rekord letrehozva
+            else
+            { // Penztar szolgaltatas letiltasa
+
+                g_obCassa.cassaDisabled();
+            } // Penztar letiltva
+        } // Penztar rekord nem letezett
+    } // if ( boLogInOK )
 
     obTrace << boLogInOK;
     return boLogInOK;

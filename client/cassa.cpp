@@ -23,9 +23,11 @@
 
 cCassa::cCassa()
 {
-    m_pCassa = new cDBCassa();
-    m_pDenomination = new cDBDenomination();
-    m_pCassaDenomination = new cDBCassaDenomination();
+    m_pCassa                = new cDBCassa();
+    m_pDenomination         = new cDBDenomination();
+    m_pCassaDenomination    = new cDBCassaDenomination();
+
+    m_bCassaEnabled         = false;
 }
 
 cCassa::~cCassa()
@@ -141,12 +143,12 @@ void cCassa::createNew( unsigned int p_uiUserId )
         while( poQuery->next() )
         {
             m_pCassaDenomination->createNew();
-            m_pCassaDenomination->setDenominationId( poQuery->value( 0 ) );
+            m_pCassaDenomination->setDenominationId( poQuery->value( 0 ).toUInt() );
             m_pCassaDenomination->setCassaId( m_pCassa->id() );
             m_pCassaDenomination->setLicenceId( g_poPrefs->getLicenceId() );
             m_pCassaDenomination->save();
-
         }
+        cassaEnabled();
     }
     catch( cSevException &e )
     {
@@ -167,11 +169,33 @@ bool cCassa::isCassaClosed()
 
 unsigned int cCassa::cassaOwner()
 {
-    m_pCassa->userId();
+    return m_pCassa->userId();
 }
 
 void cCassa::cassaReOpen()
 {
     m_pCassa->setStopDateTime( "" );
     m_pCassa->save();
+    cassaEnabled();
+}
+
+void cCassa::cassaClose()
+{
+    m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ).toStdString() );
+    m_pCassa->save();
+}
+
+void cCassa::cassaEnabled()
+{
+    m_bCassaEnabled = true;
+}
+
+void cCassa::cassaDisabled()
+{
+    m_bCassaEnabled = false;
+}
+
+bool cCassa::isCassaEnabled()
+{
+    return m_bCassaEnabled;
 }
