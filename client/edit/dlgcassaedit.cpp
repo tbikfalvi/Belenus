@@ -2,6 +2,7 @@
 #include <QMessageBox>
 
 #include "dlgcassaedit.h"
+#include "../db/dbuser.h"
 
 cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent, cDBCassa *p_poCassa )
     : QDialog( p_poParent )
@@ -18,6 +19,41 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent, cDBCassa *p_poCassa )
     tbvCassa->setModel( m_poSortedModel );
 
     m_poCassa = p_poCassa;
+
+    if( m_poCassa )
+    {
+        cDBUser obUser;
+
+        obUser.load( m_poCassa->userId() );
+
+        QString m_qsStart = "";
+        QString m_qsStop = "";
+
+        if( QString::fromStdString(m_poCassa->startDateTime()).length() > 0 )
+        {
+            m_qsStart = QString::fromStdString(m_poCassa->startDateTime());
+            m_qsStart.truncate( m_qsStart.length()-3 );
+            m_qsStart.replace( 10, 1, " " );
+        }
+        if( QString::fromStdString(m_poCassa->stopDateTime()).length() > 0 )
+        {
+            m_qsStop = QString::fromStdString(m_poCassa->stopDateTime());
+            m_qsStop.truncate( m_qsStop.length()-3 );
+            m_qsStop.replace( 10, 1, " " );
+        }
+
+        dtStartDate->setText( m_qsStart );
+        dtStopDate->setText( m_qsStop );
+        lblBalanceValue->setText( convertCurrency( m_poCassa->currentBalance(), g_poPrefs->getCurrencyShort() ) );
+        lblUser->setText( QString::fromStdString(obUser.realName()) );
+    }
+
+    pbClose->setIcon( QIcon("./resources/40x40_exit.gif") );
+    pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.gif") );
+    pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.gif") );
+
+    dtStartDate->setEnabled( false );
+    dtStopDate->setEnabled( false );
 
     setupTableView();
 }
@@ -110,6 +146,26 @@ void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected,
     enableButtons();
 }
 
+QString cDlgCassaEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+{
+    QString qsValue = QString::number( p_nCurrencyValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+    qsRet += " " + p_qsCurrency;
+
+    return qsRet;
+}
+
 void cDlgCassaEdit::enableButtons()
 {
 
@@ -117,7 +173,7 @@ void cDlgCassaEdit::enableButtons()
 
 void cDlgCassaEdit::on_pbClose_clicked()
 {
-    QDialog::accept();
+    QDialog::close();
 }
 
 void cDlgCassaEdit::on_pbCashAdd_clicked()

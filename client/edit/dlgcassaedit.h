@@ -30,6 +30,7 @@ protected:
 
     void setupTableView();
     void enableButtons();
+    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 protected slots:
     void refreshTable();

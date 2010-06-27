@@ -615,14 +615,12 @@ void cWndMain::on_action_PCSaveToDatabase_triggered()
 //====================================================================================
 void cWndMain::on_action_Cassa_triggered()
 {
-    cDBCassa    *pDBCassa = new cDBCassa();
+    cDBCassa    obDBCassa;
 
-    pDBCassa->load( g_obCassa.cassaId() );
-    cDlgCassaEdit   obDlgCassaEdit( this, pDBCassa );
+    obDBCassa.load( g_obCassa.cassaId() );
+    cDlgCassaEdit   obDlgCassaEdit( this, &obDBCassa );
 
     obDlgCassaEdit.exec();
-
-    if( pDBCassa ) delete pDBCassa;
 }
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
