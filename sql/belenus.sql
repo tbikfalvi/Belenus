@@ -454,6 +454,7 @@ CREATE TABLE `denominations` (
   `denominationId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `denomination`            int(10) unsigned        NOT NULL DEFAULT 0,
+  `comment`                 text                    DEFAULT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`denominationId`,`licenceID`),

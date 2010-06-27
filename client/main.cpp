@@ -13,7 +13,7 @@
 #include "communication_demo.h"
 #include "bs_connection.h"
 #include "db/dbpatient.h"
-#include "db/dbcassa.h"
+#include "cassa.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -26,7 +26,7 @@ cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
 cDBPatient               g_obPatient;
-cDBCassa                 g_obCassa;
+cCassa                   g_obCassa;
 
 int main( int argc, char *argv[] )
 {

@@ -82,7 +82,8 @@ HEADERS = belenus.h \
     ../framework/network/sqlResult.h \
     ../framework/network/protocolException.h \
     ../framework/network/packet.h \
-    ../framework/network/connection.h
+    ../framework/network/connection.h \
+    cassa.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -142,7 +143,8 @@ SOURCES = main.cpp \
     wndmain.cpp \
     ../framework/network/sqlResult.cpp \
     ../framework/network/packet.cpp \
-    ../framework/network/connection.cpp
+    ../framework/network/connection.cpp \
+    cassa.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

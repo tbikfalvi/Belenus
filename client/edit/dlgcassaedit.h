@@ -29,9 +29,12 @@ protected:
     cDBCassa                *m_poCassa;
 
     void setupTableView();
+    void enableButtons();
 
 protected slots:
     void refreshTable();
+    void itemSelectionChanged( const QItemSelection &p_obSelected,
+                               const QItemSelection &p_obDeSelected );
 };
 
 #endif
