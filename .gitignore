@@ -186,6 +186,7 @@ client/ui_dlgproductedit.h
 client/ui_dlgproducttypeedit.h
 client/ui_dlgpwdconfirm.h
 client/ui_dlgreasontovisitedit.h
+client/ui_dlgserialreg.h
 client/ui_dlgusercardedit.h
 client/ui_dlgusercardtypeedit.h
 client/ui_dlguseredit.h
