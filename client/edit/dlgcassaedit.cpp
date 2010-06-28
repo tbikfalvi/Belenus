@@ -9,6 +9,8 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent, cDBCassa *p_poCassa )
 {
     setupUi( this );
 
+    resize( width(), 148 );
+
     m_qsQuery       = "";
     m_poModel       = new cQTMySQLQueryModel( this );
     m_poSortedModel = new QSortFilterProxyModel();
@@ -51,6 +53,8 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent, cDBCassa *p_poCassa )
     pbClose->setIcon( QIcon("./resources/40x40_exit.gif") );
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.gif") );
     pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.gif") );
+
+    pbMore->setEnabled( false );
 
     dtStartDate->setEnabled( false );
     dtStopDate->setEnabled( false );
@@ -184,4 +188,16 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
 void cDlgCassaEdit::on_pbCashGet_clicked()
 {
 
+}
+
+void cDlgCassaEdit::on_pbMore_clicked()
+{
+    if( height() == 421 )
+    {
+        resize( width(), 148 );
+    }
+    else if( height() == 148 )
+    {
+        resize( width(), 421 );
+    }
 }

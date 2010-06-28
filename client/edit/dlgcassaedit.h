@@ -38,6 +38,7 @@ protected slots:
                                const QItemSelection &p_obDeSelected );
 
 private slots:
+    void on_pbMore_clicked();
     void on_pbCashGet_clicked();
     void on_pbCashAdd_clicked();
     void on_pbClose_clicked();
