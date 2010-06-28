@@ -615,10 +615,7 @@ void cWndMain::on_action_PCSaveToDatabase_triggered()
 //====================================================================================
 void cWndMain::on_action_Cassa_triggered()
 {
-    cDBCassa    obDBCassa;
-
-    obDBCassa.load( g_obCassa.cassaId() );
-    cDlgCassaEdit   obDlgCassaEdit( this, &obDBCassa );
+    cDlgCassaEdit   obDlgCassaEdit( this );
 
     obDlgCassaEdit.exec();
 }

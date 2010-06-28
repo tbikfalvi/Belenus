@@ -140,3 +140,15 @@ unsigned int cCassa::cassaId()
 {
     return m_pCassa->id();
 }
+
+void cCassa::cassaIncreaseMoney( int p_nMoney )
+{
+    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
+    m_pCassa->save();
+}
+
+void cCassa::cassaDecreaseMoney( int p_nMoney )
+{
+    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()-p_nMoney );
+    m_pCassa->save();
+}

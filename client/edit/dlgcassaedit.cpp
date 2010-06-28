@@ -3,13 +3,16 @@
 
 #include "dlgcassaedit.h"
 #include "../db/dbuser.h"
+#include "../dlg/dlgcassaaction.h"
 
-cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent, cDBCassa *p_poCassa )
+cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     : QDialog( p_poParent )
 {
     setupUi( this );
 
+    setWindowTitle( tr("Cassa") );
     resize( width(), 148 );
+    tbvCassa->setEnabled( false );
 
     m_qsQuery       = "";
     m_poModel       = new cQTMySQLQueryModel( this );
@@ -20,35 +23,32 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent, cDBCassa *p_poCassa )
     m_poSortedModel->setSourceModel( m_poModel );
     tbvCassa->setModel( m_poSortedModel );
 
-    m_poCassa = p_poCassa;
+    cDBCassa    obCassa;
+    cDBUser     obUser;
 
-    if( m_poCassa )
+    obCassa.load( g_obCassa.cassaId() );
+    obUser.load( obCassa.userId() );
+
+    QString m_qsStart = "";
+    QString m_qsStop = "";
+
+    if( QString::fromStdString(obCassa.startDateTime()).length() > 0 )
     {
-        cDBUser obUser;
-
-        obUser.load( m_poCassa->userId() );
-
-        QString m_qsStart = "";
-        QString m_qsStop = "";
-
-        if( QString::fromStdString(m_poCassa->startDateTime()).length() > 0 )
-        {
-            m_qsStart = QString::fromStdString(m_poCassa->startDateTime());
-            m_qsStart.truncate( m_qsStart.length()-3 );
-            m_qsStart.replace( 10, 1, " " );
-        }
-        if( QString::fromStdString(m_poCassa->stopDateTime()).length() > 0 )
-        {
-            m_qsStop = QString::fromStdString(m_poCassa->stopDateTime());
-            m_qsStop.truncate( m_qsStop.length()-3 );
-            m_qsStop.replace( 10, 1, " " );
-        }
-
-        dtStartDate->setText( m_qsStart );
-        dtStopDate->setText( m_qsStop );
-        lblBalanceValue->setText( convertCurrency( m_poCassa->currentBalance(), g_poPrefs->getCurrencyShort() ) );
-        lblUser->setText( QString::fromStdString(obUser.realName()) );
+        m_qsStart = QString::fromStdString(obCassa.startDateTime());
+        m_qsStart.truncate( m_qsStart.length()-3 );
+        m_qsStart.replace( 10, 1, " " );
     }
+    if( QString::fromStdString(obCassa.stopDateTime()).length() > 0 )
+    {
+        m_qsStop = QString::fromStdString(obCassa.stopDateTime());
+        m_qsStop.truncate( m_qsStop.length()-3 );
+        m_qsStop.replace( 10, 1, " " );
+    }
+
+    dtStartDate->setText( m_qsStart );
+    dtStopDate->setText( m_qsStop );
+    lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+    lblUser->setText( QString::fromStdString(obUser.realName()) );
 
     pbClose->setIcon( QIcon("./resources/40x40_exit.gif") );
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.gif") );
@@ -101,11 +101,11 @@ void cDlgCassaEdit::refreshTable()
 {
     if( g_obUser.isInGroup( "root" ) )
     {
-        m_qsQuery = QString( "SELECT cassadenominations.denominationId, cassadenominations.licenceId, denominations.denomination, cassadenominations.value, denominations.comment, cassadenominations.archive FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(m_poCassa->id());
+        m_qsQuery = QString( "SELECT cassadenominations.denominationId, cassadenominations.licenceId, denominations.denomination, cassadenominations.value, denominations.comment, cassadenominations.archive FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
     }
     else
     {
-        m_qsQuery = QString( "SELECT cassadenominations.denominationId as id, denominations.denomination, cassadenominations.value, denominations.comment FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(m_poCassa->id());
+        m_qsQuery = QString( "SELECT cassadenominations.denominationId as id, denominations.denomination, cassadenominations.value, denominations.comment FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
     }
 
     tbvCassa->selectionModel()->blockSignals( true );
@@ -182,12 +182,36 @@ void cDlgCassaEdit::on_pbClose_clicked()
 
 void cDlgCassaEdit::on_pbCashAdd_clicked()
 {
+    cDlgCassaAction     obDlgCassaAction( this );
 
+    obDlgCassaAction.setCassaAction();
+    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    {
+        cDBCassa    obCassa;
+        int         nTemp = 0;
+        QString     stRet = obDlgCassaAction.cassaResult( &nTemp );
+
+        g_obCassa.cassaIncreaseMoney( stRet.toInt() );
+        obCassa.load( g_obCassa.cassaId() );
+        lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+    }
 }
 
 void cDlgCassaEdit::on_pbCashGet_clicked()
 {
+    cDlgCassaAction     obDlgCassaAction( this );
 
+    obDlgCassaAction.setCassaAction();
+    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    {
+        cDBCassa    obCassa;
+        int         nTemp = 0;
+        QString     stRet = obDlgCassaAction.cassaResult( &nTemp );
+
+        g_obCassa.cassaDecreaseMoney( stRet.toInt() );
+        obCassa.load( g_obCassa.cassaId() );
+        lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+    }
 }
 
 void cDlgCassaEdit::on_pbMore_clicked()
@@ -195,9 +219,11 @@ void cDlgCassaEdit::on_pbMore_clicked()
     if( height() == 421 )
     {
         resize( width(), 148 );
+        tbvCassa->setEnabled( false );
     }
     else if( height() == 148 )
     {
         resize( width(), 421 );
+        tbvCassa->setEnabled( true );
     }
 }

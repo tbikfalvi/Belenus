@@ -14,7 +14,7 @@ class cDlgCassaEdit : public QDialog, protected Ui::dlgCassaEdit
     Q_OBJECT
 
 public:
-    cDlgCassaEdit( QWidget *p_poParent = 0, cDBCassa *p_poCassa = NULL );
+    cDlgCassaEdit( QWidget *p_poParent = 0 );
     virtual ~cDlgCassaEdit();
 
 public slots:

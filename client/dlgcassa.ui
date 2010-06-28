@@ -251,6 +251,15 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>dtStartDate</tabstop>
+  <tabstop>dtStopDate</tabstop>
+  <tabstop>pbMore</tabstop>
+  <tabstop>tbvCassa</tabstop>
+  <tabstop>pbClose</tabstop>
+  <tabstop>pbCashAdd</tabstop>
+  <tabstop>pbCashGet</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
