@@ -75,16 +75,16 @@ protected:
 
     /* protocol */
     virtual void _initialize() {};              /* called when connection established to initialize protocol */
-    virtual void _handleHello(int version) {};
+    virtual void _handleHello(int /*version*/) {};
     virtual void _handleLogonChallenge() {};
-    virtual void _handleLogonAdminResponse(const char* username, const char* password) {};
-    virtual void _handleLogonResponse(const char* code1, const char* code2) {};
+    virtual void _handleLogonAdminResponse(const char* /*username*/, const char* /*password*/) {};
+    virtual void _handleLogonResponse(const char* /*code1*/, const char* /*code2*/) {};
     virtual void _handleLogonOk() {};
-    virtual void _handleDisconnect(Result reason) {};
-    virtual void _handleRegisterKey(const char* key) {};
-    virtual void _handleRegisterKeyResponse(Result result) {};
-    virtual void _handleSqlQuery(int queryId, const char* query) {}
-    virtual void _handleSqlQueryResult(int queryId, SqlResult *);
+    virtual void _handleDisconnect(Result /*reason*/) {};
+    virtual void _handleRegisterKey(const char* /*key*/) {};
+    virtual void _handleRegisterKeyResponse(Result /*result*/) {};
+    virtual void _handleSqlQuery(int /*queryId*/, const char* /*query*/) {}
+    virtual void _handleSqlQueryResult(int /*queryId*/, SqlResult *);
 
     virtual void _sendHello();
     virtual void _sendDisconnect(Result reason);
