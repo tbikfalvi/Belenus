@@ -2,7 +2,7 @@
 #define _PROTOCOLEXCEPTION_H
 
 
-#include "../sevException.h"
+#include "../sevexception.h"
 
 
 enum ProtocolError {
