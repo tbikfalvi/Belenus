@@ -326,6 +326,22 @@ QString cPreferences::getCurrencySeparator() const
     return m_qsCurrencySeparator;
 }
 
+void cPreferences::setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow )
+{
+    m_uiMaxTreatLength = p_uiMaxTreatLength;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
+    }
+}
+
+unsigned int cPreferences::getMaxTreatLength() const
+{
+    return m_uiMaxTreatLength;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -412,6 +428,8 @@ void cPreferences::loadConfFileSettings()
         m_qsCurrencyShort     = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
         m_qsCurrencyLong      = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
         m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
+
+        m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -506,6 +524,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
     obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
     obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
+
+    obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
 }
 
 unsigned int cPreferences::postponedPatients() const

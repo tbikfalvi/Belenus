@@ -10,7 +10,7 @@
 // Author      : Bikfalvi Tamas
 //
 //====================================================================================
-// Penztart es az azzal kapcsolodo reszeket kezelo allomany.
+// Penztart es az azzal kapcsolodo reszeket kezelo osztaly.
 //====================================================================================
 
 #include <QMessageBox>
