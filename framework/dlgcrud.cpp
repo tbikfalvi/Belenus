@@ -40,10 +40,12 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     m_poBtnClose->setFixedHeight( 30 );
     m_poBtnClose->setIconSize( QSize(20,20) );
     btbButtons->addButton( m_poBtnClose, QDialogButtonBox::AcceptRole );
+//    btbButtons->addButton( m_poBtnClose, QDialogButtonBox::ActionRole );
 
     connect( m_poBtnNew, SIGNAL( clicked( bool ) ), this, SLOT( newClicked( bool ) ) );
     connect( m_poBtnDelete, SIGNAL( clicked( bool ) ), this, SLOT( deleteClicked( bool ) ) );
     connect( m_poBtnEdit, SIGNAL( clicked( bool ) ), this, SLOT( editClicked( bool ) ) );
+//    connect( m_poBtnClose, SIGNAL( clicked( bool ) ), this, SLOT( closeClicked( bool ) ) );
 }
 
 cDlgCrud::~cDlgCrud()
@@ -108,3 +110,9 @@ void cDlgCrud::itemSelectionChanged( const QItemSelection &p_obSelected,
 
     enableButtons();
 }
+/*
+void cDlgCrud::closeClicked( bool )
+{
+    QDialog::close();
+}
+*/

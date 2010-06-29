@@ -13,8 +13,10 @@ class cDlgPatientCard : public cDlgCrud
 
 public:
     QHBoxLayout *horizontalLayout;
-    QLabel *lblPatientCardType;
-    QComboBox *cmbPatientCardType;
+    QLabel      *lblPatientCardType;
+    QComboBox   *cmbPatientCardType;
+    QLabel      *lblBarcode;
+    QLineEdit   *ledBarcode;
     QSpacerItem *horizontalSpacer1;
 
     cDlgPatientCard( QWidget *p_poParent = 0 );

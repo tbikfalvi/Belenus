@@ -29,6 +29,9 @@ private:
 
     void updateTitle();
     void updateToolbar();
+    void processInputPatient( QString p_stPatientName );
+    void processInputPatientCard( QString p_stBarcode );
+    void processInputTimePeriod( int p_inSecond );
 
 private slots:
     void on_action_Preferences_triggered();
@@ -59,6 +62,8 @@ private slots:
     void on_action_PostponedPatient_triggered();
     void on_action_PostponedAttendance_triggered();
     void on_action_ValidateSerialKey_triggered();
+    void on_action_PatientCardSell_triggered();
+    void on_action_EditActualPatient_triggered();
 };
 
 #endif

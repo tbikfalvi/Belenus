@@ -1,5 +1,5 @@
-#ifndef DB_XXX_H
-#define DB_XXX_H
+#ifndef DB_CASSAHISTORY_H
+#define DB_CASSAHISTORY_H
 
 #include <QSqlRecord>
 

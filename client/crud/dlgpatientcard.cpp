@@ -14,12 +14,21 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
     lblPatientCardType = new QLabel( this );
     lblPatientCardType->setObjectName( QString::fromUtf8( "lblPatientCardType" ) );
-    lblPatientCardType->setText( "Patientcard type: " );
+    lblPatientCardType->setText( tr("Patientcard type: ") );
     horizontalLayout->addWidget( lblPatientCardType );
     cmbPatientCardType = new QComboBox( this );
     cmbPatientCardType->setObjectName( QString::fromUtf8( "cmbPatientCardType" ) );
     cmbPatientCardType->resize( 400, 20 );
     horizontalLayout->addWidget( cmbPatientCardType );
+
+    lblBarcode = new QLabel( this );
+    lblBarcode->setObjectName( QString::fromUtf8( "lblBarcode" ) );
+    lblBarcode->setText( tr("Barcode: ") );
+    horizontalLayout->addWidget( lblBarcode );
+    ledBarcode = new QLineEdit( this );
+    ledBarcode->setObjectName( QString::fromUtf8( "ledBarcode" ) );
+    horizontalLayout->addWidget( ledBarcode );
+
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
@@ -36,6 +45,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
     setupTableView();
 
     connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+    connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 }
 
 cDlgPatientCard::~cDlgPatientCard()
@@ -88,6 +98,14 @@ void cDlgPatientCard::refreshTable()
     {
         m_qsQuery += " AND ";
         m_qsQuery += QString( "patientCards.patientCardTypeId=%1" ).arg( uiPatientCardTypeId );
+    }
+    QString stTemp;
+
+    stTemp = ledBarcode->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
     }
 
     cDlgCrud::refreshTable();

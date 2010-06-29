@@ -3,6 +3,7 @@
 #include "belenus.h"
 #include "dlgpatient.h"
 #include "../edit/dlgpatientedit.h"
+#include "../db/dbpostponed.h"
 
 cDlgPatient::cDlgPatient( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
@@ -118,9 +119,13 @@ void cDlgPatient::deleteClicked( bool )
     {
         try
         {
+            cDBPostponed    obDBPostponed;
+            obDBPostponed.removePatient( m_uiSelectedId );
+
             poPatient = new cDBPatient;
             poPatient->load( m_uiSelectedId );
             poPatient->remove();
+
             m_uiSelectedId = 0;
             refreshTable();
             if( poPatient ) delete poPatient;

@@ -127,6 +127,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             m_poPatientCardType->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd").toStdString() );
             m_poPatientCardType->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd").toStdString() );
             m_poPatientCardType->setValidDays( ledValidDays->text().toUInt() );
+            m_poPatientCardType->setActive( true );
 
             if( checkIndependent->isChecked() )
             {

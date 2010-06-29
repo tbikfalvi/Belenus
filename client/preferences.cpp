@@ -278,6 +278,54 @@ QString cPreferences::getBarcodePrefix() const
     return m_qsBarcodePrefix;
 }
 
+void cPreferences::setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow )
+{
+    m_qsCurrencyShort = p_qsCurrencyShort;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
+    }
+}
+
+QString cPreferences::getCurrencyShort() const
+{
+    return m_qsCurrencyShort;
+}
+
+void cPreferences::setCurrencyLong( const QString &p_qsCurrencyLong, bool p_boSaveNow )
+{
+    m_qsCurrencyLong = p_qsCurrencyLong;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
+    }
+}
+
+QString cPreferences::getCurrencyLong() const
+{
+    return m_qsCurrencyLong;
+}
+
+void cPreferences::setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow )
+{
+    m_qsCurrencySeparator = p_qsCurrencySeparator;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
+    }
+}
+
+QString cPreferences::getCurrencySeparator() const
+{
+    return m_qsCurrencySeparator;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -360,6 +408,10 @@ void cPreferences::loadConfFileSettings()
         m_qsServerPort        = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
 
         m_inCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
+
+        m_qsCurrencyShort     = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
+        m_qsCurrencyLong      = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
+        m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -450,6 +502,10 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
 
     obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
+
+    obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
+    obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
+    obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
 }
 
 unsigned int cPreferences::postponedPatients() const

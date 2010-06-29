@@ -94,6 +94,19 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
+void cDBPatientCard::load( const string &p_stBarcode ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCard::load", "name: \""  + p_stBarcode + "\"" );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE barcode = \"" + QString::fromStdString( p_stBarcode ) + "\"" );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Patientcard barcode not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBPatientCard::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCard::save" );
@@ -156,6 +169,18 @@ void cDBPatientCard::remove() throw( cSevException )
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
+{
+    cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ).toStdString() );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
 }
 
 void cDBPatientCard::createNew() throw()

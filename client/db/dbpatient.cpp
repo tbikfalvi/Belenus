@@ -131,6 +131,21 @@ void cDBPatient::load( const string &p_stName ) throw( cSevException )
     init( poQuery->record() );
 }
 
+unsigned int cDBPatient::getPatientCount( const string &p_stName ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatient::load", "name: \""  + p_stName + "\"" );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name LIKE '\%" + QString::fromStdString( p_stName ) + "\%'" );
+
+    if( poQuery->size() == 1 )
+    {
+        poQuery->first();
+        init( poQuery->record() );
+    }
+
+    return poQuery->size();
+}
+
 void cDBPatient::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatient::save" );

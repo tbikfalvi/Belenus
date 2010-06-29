@@ -183,7 +183,7 @@ void cDBUser::setGroups( const string &p_stGroups ) throw()
 
 bool cDBUser::isInGroup( const string &p_stGroup ) const throw()
 {
-    cTracer obTrace( "cDBUser::isInGroup", p_stGroup );
+    //cTracer obTrace( "cDBUser::isInGroup", p_stGroup );
 
     string::size_type  uiGroupStartLoc = 0;
 
@@ -203,7 +203,7 @@ bool cDBUser::isInGroup( const string &p_stGroup ) const throw()
     }
 
     bool boFound = (uiGroupStartLoc < m_stGroups.size());
-    obTrace << boFound;
+    //obTrace << boFound;
     return boFound;
 }
 

@@ -11,7 +11,10 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     setupUi( this );
 
     m_bDlgLoaded = false;
+    m_poPatientCard = p_poPatientCard;
+    m_poPatientCardType = new cDBPatientCardType;
 
+    setWindowTitle( QString::fromStdString(m_poPatientCard->barcode()) );
     pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
     cbActive->setChecked( true );
@@ -25,7 +28,6 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         deValidDate->setEnabled( false );
     }
 
-    m_poPatientCard = p_poPatientCard;
     if( m_poPatientCard )
     {
         QSqlQuery *poQuery;
@@ -68,10 +70,30 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 
 cDlgPatientCardEdit::~cDlgPatientCardEdit()
 {
+    if( m_poPatientCardType ) delete m_poPatientCardType;
+}
+
+void cDlgPatientCardEdit::activatePatientCard()
+{
+    cbActive->setChecked( true );
+    cmbCardType->setFocus();
+}
+
+void cDlgPatientCardEdit::setPatientCardOwner( const unsigned int p_uiPatientId )
+{
+    for( int i=0; i<cmbPatient->count(); i++ )
+    {
+        if( cmbPatient->itemData(i).toUInt() == p_uiPatientId )
+        {
+            cmbPatient->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void cDlgPatientCardEdit::on_pbSave_clicked()
 {
+    bool  boSkipErrorMessages = false;
     time_t     ttTime;
     struct tm *poTm;
     time( &ttTime );
@@ -82,12 +104,18 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     if( ledBarcode->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Barcode cannot be empty." ) );
+        if( QMessageBox::critical( this, tr( "Error" ), tr( "Barcode cannot be empty.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+        {
+            boSkipErrorMessages = true;
+        }
     }
     else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
+        if( QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. Barcode should be %1 character length.\n\nPress Ignore to skip other error messages." ).arg(g_poPrefs->getBarcodeLength()), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+        {
+            boSkipErrorMessages = true;
+        }
     }
     else
     {
@@ -97,35 +125,53 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
         if( poQuery->numRowsAffected() > 0 )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. This barcode already saved into database." ) );
+            if( QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. This barcode already saved into database.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+            {
+                boSkipErrorMessages = true;
+            }
         }
     }
     if( cbActive->isChecked() )
     {
-        if( cmbCardType->currentIndex() == 0 )
+        if( cmbCardType->currentIndex() == 0 && !boSkipErrorMessages )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Invalid Patientcard type.\nFor active patientcard other type should be selected.\n\nIf you want to connect the card to this type,\ndeactivate the card with unchecking the Active checkbox." ) );
+            if( QMessageBox::critical( this, tr( "Error" ), tr( "Invalid Patientcard type.\nFor active patientcard other type should be selected.\n\nIf you want to connect the card to this type,\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+            {
+                boSkipErrorMessages = true;
+            }
         }
-        if( cmbPatient->currentIndex() == 0 )
+        if( cmbPatient->currentIndex() == 0 && !boSkipErrorMessages )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Please select valid patient for the card.\nFor active patientcard an owner must be selected.\n\nIf you don't want to add this card to any patient,\ndeactivate the card with unchecking the Active checkbox." ) );
+            if( QMessageBox::critical( this, tr( "Error" ), tr( "Please select valid patient for the card.\nFor active patientcard an owner should be selected.\n\nIf you don't want to add this card to any patient,\npress the Save button." ), QMessageBox::Ok, QMessageBox::Save ) == QMessageBox::Save )
+            {
+                boCanBeSaved = true;
+            }
         }
-        if( ledUnits->text() == "" )
+        if( ledUnits->text() == "" && !boSkipErrorMessages )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Available units cannot be empty." ) );
+            if( QMessageBox::critical( this, tr( "Error" ), tr( "Available units cannot be empty.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+            {
+                boSkipErrorMessages = true;
+            }
         }
-        else if( ledUnits->text().toInt() < 1 )
+        else if( ledUnits->text().toInt() < 1 && !boSkipErrorMessages )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Number of available units can not be less then 1.\n\nIf you want to reset the number of available units\ndeactivate the card with unchecking the Active checkbox." ) );
+            if( QMessageBox::critical( this, tr( "Error" ), tr( "Number of available units can not be less then 1.\n\nIf you want to reset the number of available units\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+            {
+                boSkipErrorMessages = true;
+            }
         }
-        if( deValidDate->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) )
+        if( deValidDate->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) && !boSkipErrorMessages )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Incorrect validation date.\n\nIf you want to reset the date of validation\ndeactivate the card with unchecking the Active checkbox." ) );
+            if( QMessageBox::critical( this, tr( "Error" ), tr( "Incorrect validation date.\n\nIf you want to reset the date of validation\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
+            {
+                boSkipErrorMessages = true;
+            }
         }
     }
 
@@ -140,8 +186,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
             m_poPatientCard->setBarcode( ledBarcode->text().toStdString() );
             m_poPatientCard->setActive( cbActive->isChecked() );
-            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toInt() );
-            m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toInt() );
+            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+            m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
             m_poPatientCard->setTimeLeft( teTimeLeft->time().toString("hh:mm:ss").toStdString() );
             m_poPatientCard->setValidDate( deValidDate->date().toString("yyyy-MM-dd").toStdString() );
@@ -160,7 +206,13 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             QDialog::accept();
 
             if( bIsCardActivated )
+            {
+                m_poPatientCardType->name();
+                m_poPatientCardType->price();
+                m_poPatientCard->barcode();
+                m_poPatientCard->comment();
                 QMessageBox::information( this, "Info", "kartya eladas ..." );
+            }
         }
         catch( cSevException &e )
         {
@@ -189,7 +241,6 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
 
     if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
     {
-        m_poPatientCardType = new cDBPatientCardType;
         m_poPatientCardType->load( cmbCardType->itemData( index ).toInt() );
 
         g_obLogger << "Unittime: " << m_poPatientCardType->units()*m_poPatientCardType->unitTime() << cQTLogger::EOM;

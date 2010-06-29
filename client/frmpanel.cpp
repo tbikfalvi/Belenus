@@ -187,7 +187,7 @@ void cFrmPanel::displayStatus()
         lblCurrTimer->setText( "" );
         lblNextStatusLen->setText( "" );
     }
-    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
+//    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
 
     // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
     // stilus valtas statuszonkent
