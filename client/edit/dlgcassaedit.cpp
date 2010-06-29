@@ -188,10 +188,11 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
         cDBCassa    obCassa;
+        QString     qsComment;
         int         nTemp = 0;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp );
+        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment );
 
-        g_obCassa.cassaIncreaseMoney( stRet.toInt() );
+        g_obCassa.cassaIncreaseMoney( stRet.toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );
         lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
     }
@@ -205,10 +206,11 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
         cDBCassa    obCassa;
+        QString     qsComment;
         int         nTemp = 0;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp );
+        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment );
 
-        g_obCassa.cassaDecreaseMoney( stRet.toInt() );
+        g_obCassa.cassaDecreaseMoney( stRet.toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );
         lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
     }

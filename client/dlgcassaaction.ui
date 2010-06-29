@@ -181,6 +181,10 @@
  <tabstops>
   <tabstop>ledMoney</tabstop>
   <tabstop>cbInvoice</tabstop>
+  <tabstop>rbPayCash</tabstop>
+  <tabstop>rbVoucher</tabstop>
+  <tabstop>rbCreditcard</tabstop>
+  <tabstop>teComment</tabstop>
   <tabstop>pbOk</tabstop>
   <tabstop>pbCancel</tabstop>
  </tabstops>

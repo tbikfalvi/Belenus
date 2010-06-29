@@ -11,6 +11,8 @@
 
 class cCassa
 {
+    //Q_OBJECT
+
 public:
     cCassa();
     ~cCassa();
@@ -26,8 +28,8 @@ public:
     void                    cassaDisabled();
     bool                    isCassaEnabled();
     unsigned int            cassaId();
-    void                    cassaIncreaseMoney( int p_nMoney );
-    void                    cassaDecreaseMoney( int p_nMoney );
+    void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
+    void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
 
 private:
     cDBCassa                *m_pCassa;

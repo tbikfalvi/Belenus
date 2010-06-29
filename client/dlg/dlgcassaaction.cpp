@@ -12,6 +12,8 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent )
 
     pbOk->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+
+    lblCurrencyShort->setText( g_poPrefs->getCurrencyShort() );
 }
 
 cDlgCassaAction::~cDlgCassaAction()
@@ -54,7 +56,7 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment )
     else if( rbVoucher->isChecked() ) *p_nPayType = 2;
     else if( rbCreditcard->isChecked() ) *p_nPayType = 3;
 
-    p_qsComment = teComment->toPlainText();
+    *p_qsComment = teComment->toPlainText();
     return ledMoney->text().remove( QChar(',') );
 }
 

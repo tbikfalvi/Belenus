@@ -14,9 +14,12 @@
 //====================================================================================
 
 #include <QMessageBox>
+#include <QSqlQuery>
+#include <QString>
 
 #include "cassa.h"
 #include "belenus.h"
+#include "db/dbcassahistory.h"
 
 //====================================================================================
 
@@ -63,18 +66,18 @@ bool cCassa::isCassaExists()
 
 void cCassa::createNew( unsigned int p_uiUserId )
 {
-    m_pCassa->createNew();
-    m_pCassa->setUserId( p_uiUserId );
-    m_pCassa->setLicenceId( g_poPrefs->getLicenceId() );
-    m_pCassa->setCurrentBalance( 0 );
-    m_pCassa->setStartDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ).toStdString() );
-    m_pCassa->setActive( true );
-    m_pCassa->save();
-
     QSqlQuery *poQuery;
 
     try
     {
+        m_pCassa->createNew();
+        m_pCassa->setUserId( p_uiUserId );
+        m_pCassa->setLicenceId( g_poPrefs->getLicenceId() );
+        m_pCassa->setCurrentBalance( 0 );
+        m_pCassa->setStartDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ).toStdString() );
+        m_pCassa->setActive( true );
+        m_pCassa->save();
+
         poQuery = g_poDB->executeQTQuery( QString( "SELECT denominationId FROM denominations WHERE active=1" ) );
         while( poQuery->next() )
         {
@@ -84,6 +87,18 @@ void cCassa::createNew( unsigned int p_uiUserId )
             m_pCassaDenomination->setLicenceId( g_poPrefs->getLicenceId() );
             m_pCassaDenomination->save();
         }
+
+        cDBCassaHistory obDBCassaHistory;
+
+        obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBCassaHistory.setCassaId( m_pCassa->id() );
+        obDBCassaHistory.setUserId( p_uiUserId );
+        obDBCassaHistory.setActionValue( 0 );
+        obDBCassaHistory.setActionBalance( 0 );
+        obDBCassaHistory.setComment( QObject::tr("Open new cassa record.").toStdString() );
+        obDBCassaHistory.setActive( true );
+        obDBCassaHistory.save();
+
         cassaEnabled();
     }
     catch( cSevException &e )
@@ -112,6 +127,18 @@ void cCassa::cassaReOpen()
 {
     m_pCassa->setStopDateTime( "" );
     m_pCassa->save();
+
+    cDBCassaHistory obDBCassaHistory;
+
+    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setActionValue( 0 );
+    obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
+    obDBCassaHistory.setComment( QObject::tr("Reopen cassa record.").toStdString() );
+    obDBCassaHistory.setActive( true );
+    obDBCassaHistory.save();
+
     cassaEnabled();
 }
 
@@ -119,6 +146,17 @@ void cCassa::cassaClose()
 {
     m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ).toStdString() );
     m_pCassa->save();
+
+    cDBCassaHistory obDBCassaHistory;
+
+    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setActionValue( 0 );
+    obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
+    obDBCassaHistory.setComment( QObject::tr("Close cassa record.").toStdString() );
+    obDBCassaHistory.setActive( true );
+    obDBCassaHistory.save();
 }
 
 void cCassa::cassaEnabled()
@@ -141,14 +179,52 @@ unsigned int cCassa::cassaId()
     return m_pCassa->id();
 }
 
-void cCassa::cassaIncreaseMoney( int p_nMoney )
+void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )
 {
+    QString m_qsComment = QObject::tr("Add money to cassa.");
+
+    if( p_qsComment.length() > 0 )
+    {
+        m_qsComment += " - ";
+        m_qsComment += p_qsComment;
+    }
+
     m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
     m_pCassa->save();
+
+    cDBCassaHistory obDBCassaHistory;
+
+    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setActionValue( p_nMoney );
+    obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
+    obDBCassaHistory.setComment( m_qsComment.toStdString() );
+    obDBCassaHistory.setActive( true );
+    obDBCassaHistory.save();
 }
 
-void cCassa::cassaDecreaseMoney( int p_nMoney )
+void cCassa::cassaDecreaseMoney( int p_nMoney, QString p_qsComment )
 {
+    QString m_qsComment = QObject::tr("Remove money from cassa.");
+
+    if( p_qsComment.length() > 0 )
+    {
+        m_qsComment += " - ";
+        m_qsComment += p_qsComment;
+    }
+
     m_pCassa->setCurrentBalance( m_pCassa->currentBalance()-p_nMoney );
     m_pCassa->save();
+
+    cDBCassaHistory obDBCassaHistory;
+
+    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setActionValue( p_nMoney );
+    obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
+    obDBCassaHistory.setComment( m_qsComment.toStdString() );
+    obDBCassaHistory.setActive( true );
+    obDBCassaHistory.save();
 }
