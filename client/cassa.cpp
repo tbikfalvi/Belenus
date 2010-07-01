@@ -10,7 +10,7 @@
 // Author      : Bikfalvi Tamas
 //
 //====================================================================================
-// Penztart es az azzal kapcsolodo reszeket kezelo allomany.
+// Penztart es az azzal kapcsolodo reszeket kezelo osztaly.
 //====================================================================================
 
 #include <QMessageBox>
@@ -39,7 +39,7 @@ cCassa::~cCassa()
     if( m_pCassaDenomination ) delete m_pCassaDenomination;
 }
 
-void cCassa::init( QWidget *parent )
+void cCassa::init()
 {
     try
     {

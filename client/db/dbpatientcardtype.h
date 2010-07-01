@@ -23,6 +23,8 @@ public:
     void            setName( const string &p_stName )                   throw();
     float           price() const                                       throw();
     void            setPrice( const float p_fPrice )                    throw();
+    int             vatpercent() const                                  throw();
+    void            setVatpercent( const int p_nVatpercent )            throw();
     int             units() const                                       throw();
     void            setUnits( const int p_nUnits )                      throw();
     string          validDateFrom() const                               throw();
@@ -43,6 +45,7 @@ private:
     unsigned int    m_uiLicenceId;
     string          m_stName;
     float           m_fPrice;
+    int             m_nVatpercent;
     int             m_nUnits;
     string          m_stValidDateFrom;
     string          m_stValidDateTo;
@@ -55,6 +58,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const string &p_stName = "",
                const float p_fPrice = 0,
+               const int p_nVatpercent = 0,
                const int p_nUnits = 0,
                const string &p_stValidDateFrom = "",
                const string &p_stValidDateTo = "",

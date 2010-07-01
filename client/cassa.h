@@ -17,7 +17,7 @@ public:
     cCassa();
     ~cCassa();
 
-    void                    init( QWidget *parent );
+    void                    init();
     bool                    isCassaExists();
     void                    createNew( unsigned int p_uiUserId );
     bool                    isCassaClosed();

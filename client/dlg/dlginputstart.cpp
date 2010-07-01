@@ -43,6 +43,10 @@ void cDlgInputStart::init()
     {
         pbCardcode->setEnabled( true );
         lblAction->setText( tr("Entering barcode ...") );
+        if( g_poPrefs->getBarcodePrefix().length() > 0 )
+        {
+            ledInputStart->setText( g_poPrefs->getBarcodePrefix() );
+        }
     }
     else if( m_bPat  )
     {
@@ -135,6 +139,27 @@ void cDlgInputStart::on_pbCardcode_clicked()
 
 void cDlgInputStart::on_pbTime_clicked()
 {
+    bool boIsANumber = false;
+
+    ledInputStart->text().toUInt( &boIsANumber );
+
+    if( !boIsANumber )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Invalid value entered.\n"
+                                 "Please use only numbers.") );
+        ledInputStart->setFocus();
+        return;
+    }
+    else if( ledInputStart->text().toUInt() > g_poPrefs->getMaxTreatLength() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Invalid value entered.\n"
+                                 "Time value can not be greater than %1 minutes.").arg(g_poPrefs->getMaxTreatLength()) );
+        ledInputStart->setFocus();
+        return;
+    }
+
     m_bPat = false;
     m_bCard = false;
     m_bTime = true;

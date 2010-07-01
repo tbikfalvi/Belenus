@@ -53,6 +53,8 @@ public:
     QString         getCurrencyLong() const;
     void            setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow = false );
     QString         getCurrencySeparator() const;
+    void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow = false );
+    unsigned int    getMaxTreatLength() const;
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -100,6 +102,7 @@ private:
     QString         m_qsCurrencyShort;
     QString         m_qsCurrencyLong;
     QString         m_qsCurrencySeparator;
+    unsigned int    m_uiMaxTreatLength;
 
     void init();
 };

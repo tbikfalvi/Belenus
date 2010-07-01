@@ -72,8 +72,8 @@ ALTER TABLE `attendance` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (0, 0, 'Inaktív kártyák', 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
+INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
+ (0, 0, 'Inaktív kártyák', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
 UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
 
@@ -122,6 +122,13 @@ INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `com
  (10, 0, 5000, "", 1, 'ARC'),
  (11, 0, 10000, "", 1, 'ARC'),
  (12, 0, 20000, "", 1, 'ARC');
+
+INSERT INTO `belenus`.`ledgertypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
+ (1 , '0', 'Géphasználat', '1', 'ARC'),
+ (2 , '0', 'Bérlet eladás', '1', 'ARC'),
+ (3 , '0', 'Bérlet feltöltés', '1', 'ARC'),
+ (4 , '0', 'Termék eladás', '1', 'ARC'),
+ (5 , '0', 'Egyéb', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal

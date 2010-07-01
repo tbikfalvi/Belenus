@@ -55,6 +55,8 @@ HEADERS = belenus.h \
     db/dbdenomination.h \
     db/dbcassahistory.h \
     db/dbcassadenomination.h \
+    db/dbledger.h \
+    db/dbledgerdevice.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -85,7 +87,8 @@ HEADERS = belenus.h \
     ../framework/network/protocolException.h \
     ../framework/network/packet.h \
     ../framework/network/connection.h \
-    cassa.h
+    cassa.h \
+    ledger.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -119,6 +122,8 @@ SOURCES = main.cpp \
     db/dbdenomination.cpp \
     db/dbcassahistory.cpp \
     db/dbcassadenomination.cpp \
+    db/dbledger.cpp \
+    db/dbledgerdevice.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -147,7 +152,8 @@ SOURCES = main.cpp \
     ../framework/network/sqlResult.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/connection.cpp \
-    cassa.cpp
+    cassa.cpp \
+    ledger.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

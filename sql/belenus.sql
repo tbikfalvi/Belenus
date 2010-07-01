@@ -168,6 +168,7 @@ CREATE TABLE `patientCardTypes` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(50)             NOT NULL,
   `price`                   float(2)                NOT NULL DEFAULT 0.00,
+  `vatpercent`              int(11)                 NOT NULL,
   `units`                   int(11)                 NOT NULL DEFAULT 0,
   `validDateFrom`           date                    DEFAULT NULL,
   `validDateTo`             date                    DEFAULT NULL,
@@ -385,6 +386,8 @@ CREATE TABLE `products` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `productTypeId`           int(11) unsigned        NOT NULL REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
+  `netPrice`                int(11)                 NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productId`,`licenceID`),
@@ -507,4 +510,70 @@ CREATE TABLE `carts` (
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Konyveles tipusok tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `ledgerTypes` (
+  `ledgerTypeId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`ledgerTypeId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Konyveles tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `ledger` (
+  `ledgerId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `ledgerTypeId`            int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `netPrice`                int(11)                 NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
+  `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`ledgerId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerTypeId`) REFERENCES `ledgerTypes` (`ledgerTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- GepKonyveles tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `ledgerDevice` (
+  `ledgerDeviceId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `units`                   int(11)                 NOT NULL,
+  `cash`                    int(11)                 NOT NULL,
+  `timeReal`                int(11)                 NOT NULL,
+  `timeLeft`                int(11)                 NOT NULL,
+  `timeCard`                int(11)                 NOT NULL,
+  `timeCash`                int(11)                 NOT NULL,
+  `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`ledgerDeviceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
