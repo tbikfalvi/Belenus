@@ -26,6 +26,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     {
         ledName->setText( QString::fromStdString( m_poPatientCardType->name() ) );
         ledPrice->setText( QString::number(m_poPatientCardType->price()) );
+        ledVatpercent->setText( QString::number(m_poPatientCardType->vatpercent()) );
         ledUnits->setText( QString::number(m_poPatientCardType->units()) );
         ledUnitTime->setText( QString::number(m_poPatientCardType->unitTime()) );
         deValidDateFrom->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateFrom()),"yyyy-MM-dd") );
@@ -90,6 +91,8 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Price of patientcard type must be set." ) );
     }
+    if( ledVatpercent->text() == "" )
+        ledVatpercent->setText( "0" );
     if( ledUnits->text() == "" )
     {
         boCanBeSaved = false;
@@ -122,6 +125,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         {
             m_poPatientCardType->setName( ledName->text().toStdString() );
             m_poPatientCardType->setPrice( ledPrice->text().toUInt() );
+            m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
             m_poPatientCardType->setUnitTime( ledUnitTime->text().toUInt() );
             m_poPatientCardType->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd").toStdString() );

@@ -55,6 +55,8 @@ HEADERS = belenus.h \
     db/dbdenomination.h \
     db/dbcassahistory.h \
     db/dbcassadenomination.h \
+    db/dbledger.h \
+    db/dbledgerdevice.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -120,6 +122,8 @@ SOURCES = main.cpp \
     db/dbdenomination.cpp \
     db/dbcassahistory.cpp \
     db/dbcassadenomination.cpp \
+    db/dbledger.cpp \
+    db/dbledgerdevice.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
