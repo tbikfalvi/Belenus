@@ -29,7 +29,7 @@ void cDBPanelUses::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const unsigned int p_uiPanelId,
                              const unsigned int p_uiUseTime,
-                             const unsigned int p_uiUseCurrency,
+                             const unsigned int p_uiUsePrice,
                              const bool p_bActive,
                              const string &p_stArchive ) throw()
 {
@@ -37,27 +37,24 @@ void cDBPanelUses::init( const unsigned int p_uiId,
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPanelId         = p_uiPanelId;
     m_uiUseTime         = p_uiUseTime;
-    m_uiUseCurrency     = p_uiUseCurrency;
-    m_bActive           = p_bActive;
+    m_uiUsePrice        = p_uiUsePrice;
     m_stArchive         = p_stArchive;
 }
 
 void cDBPanelUses::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx             = p_obRecord.indexOf( "panelStatusId" );
+    int inIdIdx             = p_obRecord.indexOf( "panelUseId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inPanelIdIdx        = p_obRecord.indexOf( "panelId" );
     int inUseTimeIdx        = p_obRecord.indexOf( "useTime" );
-    int inUseCurrencyIdx    = p_obRecord.indexOf( "useCurrency" );
-    int inActiveIdx         = p_obRecord.indexOf( "active" );
+    int inUsePriceIdx       = p_obRecord.indexOf( "usePrice" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPanelIdIdx ).toInt(),
           p_obRecord.value( inUseTimeIdx ).toInt(),
-          p_obRecord.value( inUseCurrencyIdx ).toInt(),
-          p_obRecord.value( inActiveIdx ).toBool(),
+          p_obRecord.value( inUsePriceIdx ).toInt(),
           p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
@@ -97,8 +94,7 @@ void cDBPanelUses::save() throw( cSevException )
     qsQuery += QString( "licenceId = %1, " ).arg( m_uiLicenceId );
     qsQuery += QString( "panelId = %1, " ).arg( m_uiPanelId );
     qsQuery += QString( "useTime = %1, " ).arg( m_uiUseTime );
-    qsQuery += QString( "useCurrency = %1, " ).arg( m_uiUseCurrency );
-    qsQuery += QString( "active = %1" ).arg( m_bActive );
+    qsQuery += QString( "usePrice = %1, " ).arg( m_uiUsePrice );
     qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
@@ -124,7 +120,7 @@ void cDBPanelUses::remove() throw( cSevException )
         }
         else
         {
-            qsQuery = "UPDATE panelUses SET active=0, archive=\"MOD\" ";
+            qsQuery = "UPDATE panelUses SET archive=\"DEL\" ";
         }
         qsQuery += QString( " WHERE panelUseId = %1" ).arg( m_uiId );
 
@@ -173,24 +169,14 @@ void cDBPanelUses::setUseTime( const unsigned int p_uiUseTime ) throw()
     m_uiUseTime = p_uiUseTime;
 }
 
-unsigned int cDBPanelUses::useCurrency() const throw()
+unsigned int cDBPanelUses::usePrice() const throw()
 {
-    return m_uiUseCurrency;
+    return m_uiUsePrice;
 }
 
-void cDBPanelUses::setUseCurrency( const unsigned int p_uiUseCurrency ) throw()
+void cDBPanelUses::setUsePrice( const unsigned int p_uiUsePrice ) throw()
 {
-    m_uiUseCurrency = p_uiUseCurrency;
-}
-
-bool cDBPanelUses::active() const throw()
-{
-    return m_bActive;
-}
-
-void cDBPanelUses::setActive( const bool p_bActive ) throw()
-{
-    m_bActive = p_bActive;
+    m_uiUsePrice = p_uiUsePrice;
 }
 
 string cDBPanelUses::archive() const throw()
