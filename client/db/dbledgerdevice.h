@@ -1,15 +1,15 @@
-#ifndef DB_LEDGER_H
-#define DB_LEDGER_H
+#ifndef DB_LEDGERDEVICE_H
+#define DB_LEDGERDEVICE_H
 
 #include <QSqlRecord>
 
 #include "../../framework/sevexception.h"
 
-class cDBLedger
+class cDBLedgerDevice
 {
 public:
-    cDBLedger();
-    ~cDBLedger();
+    cDBLedgerDevice();
+    ~cDBLedgerDevice();
 
     void            load( const unsigned int p_uiId )                               throw( cSevException );
     void            save()                                                          throw( cSevException );
@@ -20,18 +20,22 @@ public:
     void            setLicenceId( const unsigned int p_nLicenceId )                 throw();
     unsigned int    userId() const                                                  throw();
     void            setUserId( const unsigned int p_uiUserId )                      throw();
-    unsigned int    productId() const                                               throw();
-    void            setProductId( const unsigned int p_nProductId )                 throw();
-    unsigned int    patientCardTypeId() const                                       throw();
-    void            setPatientCardTypeId( const unsigned int p_nPatientCardTypeId ) throw();
     unsigned int    panelId() const                                                 throw();
     void            setPanelId( const unsigned int p_nPanelId )                     throw();
-    string          name() const                                                    throw();
-    void            setName( const string &p_stName )                               throw();
-    int             netPrice() const                                                throw();
-    void            setNetPrice( const int p_nNetPrice )                            throw();
-    int             vatpercent() const                                              throw();
-    void            setVatpercent( const int p_nVatpercent )                        throw();
+    unsigned int    patientCardId() const                                           throw();
+    void            setPatientCardId( const unsigned int p_nPatientCardId )         throw();
+    int             units() const                                                   throw();
+    void            setUnits( const int p_inUnits )                                 throw();
+    int             cash() const                                                    throw();
+    void            setCash( const int p_inCash )                                   throw();
+    int             timeReal() const                                                throw();
+    void            setTimeReal( const int p_inTimeReal )                           throw();
+    int             timeLeft() const                                                throw();
+    void            setTimeLeft( const int p_inTimeLeft )                           throw();
+    int             timeCard() const                                                throw();
+    void            setTimeCard( const int p_inTimeCard )                           throw();
+    int             timeCash() const                                                throw();
+    void            setTimeCash( const int p_inTimeCash )                           throw();
     string          ledgerTime() const                                              throw();
     void            setLedgerTime( const string &p_stLedgerTime )                   throw();
     string          comment() const                                                 throw();
@@ -45,12 +49,14 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiUserId;
-    unsigned int    m_uiProductId;
-    unsigned int    m_uiPatientCardTypeId;
     unsigned int    m_uiPanelId;
-    string          m_stName;
-    int             m_nNetPrice;
-    int             m_nVatpercent;
+    unsigned int    m_uiPatientCardId;
+    int             m_inUnits;
+    int             m_inCash;
+    int             m_inTimeReal;
+    int             m_inTimeLeft;
+    int             m_inTimeCard;
+    int             m_inTimeCash;
     string          m_stLedgerTime;
     string          m_stComment;
     bool            m_bActive;
@@ -59,12 +65,14 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiUserId = 0,
-               const unsigned int p_uiProductId = 0,
-               const unsigned int p_uiPatientCardTypeId = 0,
                const unsigned int p_uiPanelId = 0,
-               const string &p_stName = "",
-               const int p_nNetPrice = 0,
-               const int p_nVatpercent = 0,
+               const unsigned int p_uiPatientCardId = 0,
+               const int p_inUnits = 0,
+               const int p_inCash = 0,
+               const int p_inTimeReal = 0,
+               const int p_inTimeLeft = 0,
+               const int p_inTimeCard = 0,
+               const int p_inTimeCash = 0,
                const string &p_stLedgerTime = "",
                const string &p_stComment = "",
                const bool p_bActive = false,

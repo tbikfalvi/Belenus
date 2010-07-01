@@ -182,7 +182,7 @@ bool cWndMain::showLogIn()
         //----------------------------------------------
         // Penztar betoltese, ellenorzese
         //----------------------------------------------
-        g_obCassa.init( this );
+        g_obCassa.init();
 
         // Penztar ellenorzese
         if( g_obCassa.isCassaExists() )

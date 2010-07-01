@@ -123,6 +123,13 @@ INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `com
  (11, 0, 10000, "", 1, 'ARC'),
  (12, 0, 20000, "", 1, 'ARC');
 
+INSERT INTO `belenus`.`ledgertypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
+ (1 , '0', 'Géphasználat', '1', 'ARC'),
+ (2 , '0', 'Bérlet eladás', '1', 'ARC'),
+ (3 , '0', 'Bérlet feltöltés', '1', 'ARC'),
+ (4 , '0', 'Termék eladás', '1', 'ARC'),
+ (5 , '0', 'Egyéb', '1', 'ARC');
+
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal
 --

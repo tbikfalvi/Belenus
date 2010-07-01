@@ -513,11 +513,25 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Konyveles tipusok tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `ledgerTypes` (
+  `ledgerTypeId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`ledgerTypeId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Konyveles tabla.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `ledger` (
   `ledgerId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `ledgerTypeId`            int(10) unsigned        NOT NULL,
   `userId`                  int(10) unsigned        NOT NULL,
   `productId`               int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
@@ -531,6 +545,7 @@ CREATE TABLE `ledger` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`ledgerId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerTypeId`) REFERENCES `ledgerTypes` (`ledgerTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,

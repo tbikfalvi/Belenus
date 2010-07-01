@@ -27,6 +27,7 @@ cDBLedger::~cDBLedger()
 
 void cDBLedger::init( const unsigned int p_uiId,
                       const unsigned int p_uiLicenceId,
+                      const unsigned int p_uiLedgerTypeId,
                       const unsigned int p_uiUserId,
                       const unsigned int p_uiProductId,
                       const unsigned int p_uiPatientCardTypeId,
@@ -41,6 +42,7 @@ void cDBLedger::init( const unsigned int p_uiId,
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
+    m_uiLedgerTypeId        = p_uiLedgerTypeId;
     m_uiUserId              = p_uiUserId;
     m_uiProductId           = p_uiProductId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
@@ -58,6 +60,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx                 = p_obRecord.indexOf( "ledgerId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inLedgerTypeIdIdx       = p_obRecord.indexOf( "ledgerTypeId" );
     int inUserIdIdx             = p_obRecord.indexOf( "userId" );
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
@@ -72,6 +75,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inLedgerTypeIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
@@ -119,6 +123,7 @@ void cDBLedger::save() throw( cSevException )
     }
     qsQuery += " ledger SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
@@ -180,6 +185,16 @@ unsigned int cDBLedger::licenceId() const throw()
 void cDBLedger::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBLedger::ledgerTypeId() const throw()
+{
+    return m_uiLedgerTypeId;
+}
+
+void cDBLedger::setLedgerTypeId( const unsigned int p_uiLedgerTypeId ) throw()
+{
+    m_uiLedgerTypeId = p_uiLedgerTypeId;
 }
 
 unsigned int cDBLedger::userId() const throw()

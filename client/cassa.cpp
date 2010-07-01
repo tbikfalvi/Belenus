@@ -39,7 +39,7 @@ cCassa::~cCassa()
     if( m_pCassaDenomination ) delete m_pCassaDenomination;
 }
 
-void cCassa::init( QWidget *parent )
+void cCassa::init()
 {
     try
     {
