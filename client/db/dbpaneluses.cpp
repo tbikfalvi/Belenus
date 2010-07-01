@@ -30,7 +30,6 @@ void cDBPanelUses::init( const unsigned int p_uiId,
                              const unsigned int p_uiPanelId,
                              const unsigned int p_uiUseTime,
                              const unsigned int p_uiUsePrice,
-                             const bool p_bActive,
                              const string &p_stArchive ) throw()
 {
     m_uiId              = p_uiId;
