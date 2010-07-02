@@ -755,8 +755,10 @@ void cWndMain::on_action_EditActualPatient_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
 {
-    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanel() );
+    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanel()+1 );
 
     obDlgEdit.exec();
+
+    // PANEL FRISSITES !!!!
 }
 //====================================================================================

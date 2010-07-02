@@ -19,7 +19,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardadd.ui \
     dlgserialreg.ui \
     dlgcassa.ui \
-    dlgcassaaction.ui
+    dlgcassaaction.ui \
+    dlgpaneluseedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -76,6 +77,7 @@ HEADERS = belenus.h \
     edit/dlgpatientcardtypeedit.h \
     edit/dlgpatientcardedit.h \
     edit/dlgcassaedit.h \
+    edit/dlgpaneluseedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -144,6 +146,7 @@ SOURCES = main.cpp \
     edit/dlgpatientcardtypeedit.cpp \
     edit/dlgpatientcardedit.cpp \
     edit/dlgcassaedit.cpp \
+    edit/dlgpaneluseedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
@@ -166,6 +169,5 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-
-# CONFIG += console
+CONFIG += console
 win32:DEFINES -= UNICODE

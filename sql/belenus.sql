@@ -142,6 +142,7 @@ CREATE TABLE `panelUses` (
   `useTime`                 int(11)                 NOT NULL,
   `usePrice`                int(11)                 NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`panelUseId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

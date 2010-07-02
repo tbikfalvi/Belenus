@@ -17,6 +17,12 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     m_poSortedModel->setSourceModel( m_poModel );
     tbvCrud->setModel( m_poSortedModel );
 
+    m_poBtnSave = new QPushButton( tr( "&Save" ), this );
+    m_poBtnSave->setIcon( QIcon("./resources/40x40_ok.gif") );
+    m_poBtnSave->setFixedHeight( 30 );
+    m_poBtnSave->setIconSize( QSize(20,20) );
+    btbButtons->addButton( m_poBtnSave, QDialogButtonBox::ActionRole );
+
     m_poBtnNew = new QPushButton( tr( "&New" ), this );
     m_poBtnNew->setIcon( QIcon("./resources/40x40_new.gif") );
     m_poBtnNew->setFixedHeight( 30 );
@@ -41,6 +47,9 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     m_poBtnClose->setIconSize( QSize(20,20) );
     btbButtons->addButton( m_poBtnClose, QDialogButtonBox::AcceptRole );
 //    btbButtons->addButton( m_poBtnClose, QDialogButtonBox::ActionRole );
+
+    m_poBtnSave->setEnabled( false );
+    m_poBtnSave->setVisible( false );
 
     connect( m_poBtnNew, SIGNAL( clicked( bool ) ), this, SLOT( newClicked( bool ) ) );
     connect( m_poBtnDelete, SIGNAL( clicked( bool ) ), this, SLOT( deleteClicked( bool ) ) );

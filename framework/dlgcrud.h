@@ -23,6 +23,7 @@ protected:
     QPushButton            *m_poBtnDelete;
     QPushButton            *m_poBtnEdit;
     QPushButton            *m_poBtnClose;
+    QPushButton            *m_poBtnSave;
     unsigned int            m_uiSelectedId;
     int                     m_inSelectedRow;
 
