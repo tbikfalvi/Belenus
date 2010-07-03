@@ -32,6 +32,21 @@ int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
 
+    g_poDB     = new cQTMySQLConnection;
+
+    g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
+    g_poPrefs->setVersion( "1.0.0" );
+    g_poPrefs->setLangFilePrefix( "belenus_" );
+    g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
+
+    if( g_poPrefs->getLang() != "uk" )
+    {
+        QTranslator *poTrans = new QTranslator();
+        QString     qsTransFile = "lang/" + g_poPrefs->getLangFilePrefix() + g_poPrefs->getLang() + ".qm";
+        poTrans->load( qsTransFile );
+        apMainApp.installTranslator( poTrans );
+    }
+
     QPixmap          obPixmap("resources/splash.jpg");
     QSplashScreen    obSplash( obPixmap );
     QString          qsSpalsh;
@@ -43,45 +58,22 @@ int main( int argc, char *argv[] )
     obSplash.show();
     apMainApp.processEvents();
 
-    qsSpalsh += "Connecting to database ...";
-    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-    g_poDB     = new cQTMySQLConnection;
-
-    qsSpalsh += " CONNECTED.\n";
-    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-    qsSpalsh += "Loading application settings ...";
-    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-    g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
-    g_poPrefs->setVersion( "0.0.1" );
-    g_poPrefs->setLangFilePrefix( "belenus_" );
-    g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
-
     int r = 1;
     try
     {
+        qsSpalsh += "Connecting to database ...";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         g_poDB->open();
         g_obLogger.setDBConnection( g_poDB );
+        g_poPrefs->loadDBSettings();
+
+        qsSpalsh += " CONNECTED.\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_obLogger << cSeverity::INFO;
         g_obLogger << "Belenus Version " << g_poPrefs->getVersion().toStdString() << " started.";
         g_obLogger << cQTLogger::EOM;
-
-        if( g_poPrefs->getLang() != "uk" )
-        {
-            QTranslator obTrans;
-            QString     qsTransFile = "lang/" + g_poPrefs->getLangFilePrefix() + g_poPrefs->getLang() + ".qm";
-            g_obLogger << cSeverity::INFO;
-            obTrans.load( qsTransFile );
-            apMainApp.installTranslator( &obTrans );
-        }
-
-        g_poPrefs->loadDBSettings();
-
-        qsSpalsh += " LOADED\n";
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         qsSpalsh += "Connecting to Belenus server\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
