@@ -30,14 +30,15 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
         }
         ledName->setText( QString::fromStdString( m_poUser->name() ) );
         ledRealName->setText( QString::fromStdString( m_poUser->realName() ) );
-        ledGroups->setText( QString::fromStdString( m_poUser->groups() ) );
+        for( int i = cAccessGroup::MIN + 1; i < cAccessGroup::MAX; i++ )
+            if( g_obUser.isInGroup( (cAccessGroup::teAccessGroup)i ) ) cmbGroup->addItem( cAccessGroup::toStr( (cAccessGroup::teAccessGroup)i ) );
+        cmbGroup->setCurrentIndex( (int)p_poUser->group() - 1 );
         chbActive->setChecked( m_poUser->active() );
         pteComment->setPlainText( QString::fromStdString( m_poUser->comment() ) );
     }
 
-    if( !(g_obUser.isInGroup( "admin" )) )
+    if( !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )
     {
-        ledGroups->setEnabled( false );
         chbActive->setEnabled( false );
     }
 
@@ -56,7 +57,7 @@ void cDlgUserEdit::accept ()
     if( ledPwd->text() == ledRePwd->text() )
     {
         bool  boCanBeSaved = true;
-        if( (ledPwd->text() == "") && !(g_obUser.isInGroup( "admin" )) )
+        if( (ledPwd->text() == "") && !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )
         {
             boCanBeSaved = false;
             QMessageBox::critical( this, tr( "Error" ), tr( "Password cannot be empty." ) );
@@ -78,7 +79,7 @@ void cDlgUserEdit::accept ()
                     m_poUser->setPassword( QString( obPwdHash.toHex() ).toStdString() );
                 }
                 m_poUser->setRealName( ledRealName->text().toStdString() );
-                m_poUser->setGroups( ledGroups->text().toStdString() );
+                m_poUser->setGroup( (cAccessGroup::teAccessGroup)(cmbGroup->currentIndex() + 1) );
                 m_poUser->setActive( chbActive->isChecked() );
                 m_poUser->setComment( pteComment->toPlainText().toStdString() );
                 m_poUser->save();

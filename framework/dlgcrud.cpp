@@ -127,9 +127,3 @@ void cDlgCrud::itemSelectionChanged( const QItemSelection &p_obSelected,
 
     enableButtons();
 }
-/*
-void cDlgCrud::closeClicked( bool )
-{
-    QDialog::close();
-}
-*/

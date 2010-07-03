@@ -10,39 +10,46 @@ cDBUser::~cDBUser()
 {
 }
 
-void cDBUser::init( const unsigned int p_uiId, const string &p_stName,
-                  const string &p_stRealName, const string &p_stPassword,
-                  const string &p_stGroups, const bool p_boActive,
-                  const string &p_stComment ) throw()
+void cDBUser::init( const unsigned int p_uiId, const unsigned int p_uiLicenceId,
+                    const string &p_stName, const string &p_stRealName,
+                    const string &p_stPassword, const cAccessGroup::teAccessGroup p_enGroup,
+                    const bool p_boActive, const string &p_stComment,
+                    const string &p_stArchive ) throw()
 {
-    m_boLoggedIn = false;
-    m_uiId       = p_uiId;
-    m_stName     = p_stName;
+    m_boLoggedIn  = false;
+    m_uiId        = p_uiId;
+    m_uiLicenceId = p_uiLicenceId;
+    m_stName      = p_stName;
     if( p_stRealName != "" ) m_stRealName = p_stRealName;
     else m_stRealName = p_stName;
-    m_stPassword = p_stPassword;
-    m_stGroups   = p_stGroups;
-    m_boActive   = p_boActive;
-    m_stComment  = p_stComment;
+    m_stPassword  = p_stPassword;
+    m_enGroup     = p_enGroup;
+    m_boActive    = p_boActive;
+    m_stComment   = p_stComment;
+    m_stArchive   = p_stArchive;
 }
 
 void cDBUser::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int  inIdIdx   = p_obRecord.indexOf( "userId" );
-    int  inNameIdx = p_obRecord.indexOf( "name" );
-    int  inRNameIdx = p_obRecord.indexOf( "realName" );
-    int  inPwdIdx  = p_obRecord.indexOf( "password" );
-    int  inGrpIdx  = p_obRecord.indexOf( "groups" );
-    int  inActIdx  = p_obRecord.indexOf( "active" );
-    int  inCommIdx = p_obRecord.indexOf( "comment" );
+    int  inIdIdx        = p_obRecord.indexOf( "userId" );
+    int  inLicenceIdIdx = p_obRecord.indexOf( "licenceId" );
+    int  inNameIdx      = p_obRecord.indexOf( "name" );
+    int  inRNameIdx     = p_obRecord.indexOf( "realName" );
+    int  inPwdIdx       = p_obRecord.indexOf( "password" );
+    int  inGrpIdx       = p_obRecord.indexOf( "accgroup" );
+    int  inActIdx       = p_obRecord.indexOf( "active" );
+    int  inCommIdx      = p_obRecord.indexOf( "comment" );
+    int  inArchiveIdx   = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
+          p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString().toStdString(),
           p_obRecord.value( inRNameIdx ).toString().toStdString(),
           p_obRecord.value( inPwdIdx ).toString().toStdString(),
-          p_obRecord.value( inGrpIdx ).toString().toStdString(),
+          (cAccessGroup::teAccessGroup)(p_obRecord.value( inGrpIdx ).toInt()),
           p_obRecord.value( inActIdx ).toBool(),
-          p_obRecord.value( inCommIdx ).toString().toStdString() );
+          p_obRecord.value( inCommIdx ).toString().toStdString(),
+          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
 }
 
 void cDBUser::load( const unsigned int p_uiId ) throw( cSevException )
@@ -64,8 +71,8 @@ void cDBUser::load( const string &p_stName ) throw( cSevException )
 
     if( p_stName == "root" )
     {
-        init( 0, "root", "", "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922",
-              "root,admin,user", true, "Built-in root user" );
+        init( 0, 0, "root", "", "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922",
+              cAccessGroup::ROOT, true, "Built-in root user", "" );
     }
     else
     {
@@ -87,18 +94,27 @@ void cDBUser::save() throw( cSevException )
     if( m_uiId )
     {
         qsQuery = "UPDATE";
+
+        if( m_stArchive.compare("NEW") != 0 )
+        {
+            m_stArchive = "MOD";
+        }
     }
     else
     {
         qsQuery = "INSERT INTO";
+        m_stArchive = "NEW";
     }
+
     qsQuery += " users SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
     qsQuery += QString( "password = \"%1\", " ).arg( QString::fromStdString( m_stPassword ) );
     qsQuery += QString( "realName = \"%1\", " ).arg( QString::fromStdString( m_stRealName ) );
-    qsQuery += QString( "groups = \"%1\", " ).arg( QString::fromStdString( m_stGroups ) );
+    qsQuery += QString( "accgroup = %1, " ).arg( (int)m_enGroup );
     qsQuery += QString( "active = %1, " ).arg( m_boActive );
-    qsQuery += QString( "comment = \"%1\"" ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "archive = \"%1\"" ).arg( QString::fromStdString( m_stArchive ) );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE userId = %1" ).arg( m_uiId );
@@ -111,7 +127,7 @@ void cDBUser::save() throw( cSevException )
 
 void cDBUser::createNew() throw()
 {
-    init( 0, "", "", "", "user", 1, "" );
+    init( 0, 0, "", "", "", cAccessGroup::USER, 1, "", "" );
 }
 
 void cDBUser::logIn( const string &p_stPassword ) throw( cSevException )
@@ -171,40 +187,19 @@ void cDBUser::setRealName( const string &p_stRealName ) throw()
     m_stRealName = p_stRealName;
 }
 
-string cDBUser::groups() const throw()
+cAccessGroup::teAccessGroup cDBUser::group() const throw()
 {
-    return m_stGroups;
+    return m_enGroup;
 }
 
-void cDBUser::setGroups( const string &p_stGroups ) throw()
+void cDBUser::setGroup( const cAccessGroup::teAccessGroup p_enGroup ) throw()
 {
-    m_stGroups = p_stGroups;
+    m_enGroup = p_enGroup;
 }
 
-bool cDBUser::isInGroup( const string &p_stGroup ) const throw()
+bool cDBUser::isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const throw()
 {
-    //cTracer obTrace( "cDBUser::isInGroup", p_stGroup );
-
-    string::size_type  uiGroupStartLoc = 0;
-
-    while( uiGroupStartLoc < m_stGroups.size() )
-    {
-        //search for the next ',' in the string:
-        string::size_type  uiSeparatorLoc = m_stGroups.find( ',', uiGroupStartLoc );
-
-        //if there was no ',' left, point just behind the last character of the string
-        if( uiSeparatorLoc == string::npos ) uiSeparatorLoc = m_stGroups.length();
-
-        //the current group string length is SeparatorLoc - StartLoc
-        string::size_type  uiGroupLength = uiSeparatorLoc - uiGroupStartLoc;
-
-        if( m_stGroups.substr( uiGroupStartLoc, uiGroupLength ) == p_stGroup ) break;
-        else uiGroupStartLoc += uiGroupLength + 1;
-    }
-
-    bool boFound = (uiGroupStartLoc < m_stGroups.size());
-    //obTrace << boFound;
-    return boFound;
+    return ( p_enGroup <= m_enGroup );
 }
 
 bool cDBUser::active() const throw ()

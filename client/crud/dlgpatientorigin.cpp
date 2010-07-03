@@ -25,7 +25,7 @@ void cDlgPatientOrigin::setupTableView()
 
     cDlgCrud::setupTableView();
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
@@ -43,7 +43,7 @@ void cDlgPatientOrigin::refreshTable()
 {
     cTracer obTracer( "cDlgPatientOrigin::refreshTable" );
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_qsQuery = "SELECT patientOriginId, licenceId, name, active, archive FROM patientOrigin";
     }
@@ -59,9 +59,9 @@ void cDlgPatientOrigin::enableButtons()
 {
     cTracer obTracer( "cDlgPatientOrigin::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( "admin" ) );
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 }
 
 void cDlgPatientOrigin::newClicked( bool )

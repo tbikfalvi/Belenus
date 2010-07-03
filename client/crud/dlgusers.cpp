@@ -26,32 +26,33 @@ void cDlgUsers::setupTableView()
 
     cDlgCrud::setupTableView();
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Real Name" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Real Name" ) );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Real Name" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Real Name" ) );
     }
-    tbvCrud->resizeColumnToContents( 0 );
-    tbvCrud->resizeColumnToContents( 1 );
+    tbvCrud->resizeColumnToContents( 2 );
+    tbvCrud->resizeColumnToContents( 3 );
+    tbvCrud->setColumnHidden( 1, true );
 }
 
 void cDlgUsers::refreshTable()
 {
     cTracer obTracer( "cDlgUsers::refreshTable" );
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT userId AS id, active, name, realName FROM users";
+        m_qsQuery = "SELECT userId AS id, accgroup, active, name, realName FROM users";
     }
     else
     {
-        m_qsQuery = "SELECT userId AS id, name, realName FROM users WHERE active = 1";
+        m_qsQuery = "SELECT userId AS id, accgroup, name, realName FROM users WHERE active = 1";
     }
 
     cDlgCrud::refreshTable();
@@ -61,12 +62,16 @@ void cDlgUsers::enableButtons()
 {
     cTracer obTracer( "cDlgUsers::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "admin" ) );
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     if( m_uiSelectedId )
     {
-        m_poBtnDelete->setEnabled( g_obUser.isInGroup( "admin" ) && g_obUser.id() != m_uiSelectedId );
-        m_poBtnEdit->setEnabled( g_obUser.isInGroup( "admin" ) || g_obUser.id() == m_uiSelectedId );
+        m_poBtnDelete->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) &&
+                                   g_obUser.isInGroup( (cAccessGroup::teAccessGroup)(m_poSortedModel->index( m_inSelectedRow, 1 ).data().toUInt()) ) &&
+                                   g_obUser.id() != m_uiSelectedId );
+        m_poBtnEdit->setEnabled( (g_obUser.isInGroup( cAccessGroup::ADMIN ) &&
+                                  g_obUser.isInGroup( (cAccessGroup::teAccessGroup)(m_poSortedModel->index( m_inSelectedRow, 1 ).data().toUInt()) )) ||
+                                  g_obUser.id() == m_uiSelectedId );
     }
     else
     {
