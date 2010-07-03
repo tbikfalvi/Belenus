@@ -21,7 +21,8 @@ public:
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
-    void timerEvent(QTimerEvent *event);
+    void timerEvent( QTimerEvent *p_poEvent );
+    void closeEvent( QCloseEvent *p_poEvent );
 
 private:
     cMdiPanels         *mdiPanels;

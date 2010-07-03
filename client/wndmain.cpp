@@ -391,6 +391,23 @@ void cWndMain::timerEvent(QTimerEvent *)
     updateTitle();
 }
 //====================================================================================
+void cWndMain::closeEvent( QCloseEvent *p_poEvent )
+{
+    if( mdiPanels->isPanelWorking() )
+    {
+        QMessageBox::warning( this, "Exit", "At least one Panel is still working, please stop them before closing the application." );
+        p_poEvent->ignore();
+    }
+    else
+    {
+        if( QMessageBox::question( this, "Exit", "Are you sure you want to close the application?",
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            p_poEvent->accept();
+        else
+            p_poEvent->ignore();
+    }
+}
+//====================================================================================
 void cWndMain::on_action_Preferences_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Preferences_triggered" );

@@ -82,7 +82,6 @@ HEADERS = belenus.h \
     communication.h \
     communication_demo.h \
     frmpanel.h \
-    mainapp.h \
     mdipanels.h \
     preferences.h \
     wndmain.h \
@@ -151,7 +150,6 @@ SOURCES = main.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
-    mainapp.cpp \
     mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp \
