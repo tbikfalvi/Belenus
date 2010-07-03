@@ -74,6 +74,7 @@ HEADERS = belenus.h \
     communication.h \
     communication_demo.h \
     frmpanel.h \
+    mainapp.h \
     mdipanels.h \
     preferences.h \
     wndmain.h \
@@ -134,13 +135,14 @@ SOURCES = main.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
+    mainapp.cpp \
     mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp \
     ../framework/network/sqlResult.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/connection.cpp
-win32 { 
+win32 {
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }
