@@ -27,6 +27,7 @@ public:
     int  activePanel();
     bool isPanelWorking();
     bool isPanelWorking( const unsigned int p_uiPanel );
+    void reload();
 
 signals:
     void activePanelChanged( bool p_boActiveWorking ) const;

@@ -118,6 +118,11 @@ void cMdiPanels::next()
     m_obPanels.at( m_uiActivePanel )->next();
 }
 
+void cMdiPanels::reload()
+{
+    m_obPanels.at( m_uiActivePanel )->reload();
+}
+
 int cMdiPanels::activePanel()
 {
     return m_uiActivePanel;

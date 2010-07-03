@@ -36,6 +36,7 @@
 #include "crud/dlgpatientcardtype.h"
 #include "crud/dlgpatientcard.h"
 #include "crud/dlgpostponedpatientselect.h"
+#include "crud/dlgpanelsettings.h"
 
 //====================================================================================
 
@@ -377,7 +378,7 @@ void cWndMain::updateToolbar()
     action_DeviceSkipStatus->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
-    action_DeviceSettings->setEnabled( false );
+    action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
@@ -750,5 +751,15 @@ void cWndMain::on_action_EditActualPatient_triggered()
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
     obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
     obDlgEdit.exec();
+}
+//====================================================================================
+void cWndMain::on_action_DeviceSettings_triggered()
+{
+    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanel()+1 );
+
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        mdiPanels->reload();
+    }
 }
 //====================================================================================
