@@ -91,7 +91,8 @@ HEADERS = belenus.h \
     ../framework/network/connection.h \
     cassa.h \
     ledger.h \
-    crud/dlgpanelsettings.h
+    crud/dlgpanelsettings.h \
+    crud/dlgpostponedattendanceselect.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -158,7 +159,8 @@ SOURCES = main.cpp \
     ../framework/network/connection.cpp \
     cassa.cpp \
     ledger.cpp \
-    crud/dlgpanelsettings.cpp
+    crud/dlgpanelsettings.cpp \
+    crud/dlgpostponedattendanceselect.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

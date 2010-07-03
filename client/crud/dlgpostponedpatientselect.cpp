@@ -45,10 +45,10 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     pbSelect->setIconSize( QSize(20, 20) );
     pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
     btbButtonsSide->addButton( pbSelect, QDialogButtonBox::ActionRole );
-    pbCancel = new QPushButton( tr( "Exit" ), this );
+    pbCancel = new QPushButton( tr( "Cancel" ), this );
     pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
     pbCancel->setIconSize( QSize(20, 20) );
-    pbCancel->setIcon( QIcon("./resources/40x40_exit.gif") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
     setupTableView();
