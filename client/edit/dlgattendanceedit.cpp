@@ -4,7 +4,7 @@
 #include "dlgattendanceedit.h"
 #include "db/dbpostponed.h"
 
-cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_poAttendance )
+cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_poAttendance, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
 {
     setupUi( this );
@@ -14,6 +14,8 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
     pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.gif") );
 
     m_poAttendance = p_poAttendance;
+    m_poPostponed = p_poPostponed;
+
     if( m_poAttendance )
     {
         QSqlQuery *poQuery;
@@ -34,6 +36,11 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
         ledPulseStart->setText( QString::number(m_poAttendance->pulseStart()) );
         ledBPStop->setText( QString::number(m_poAttendance->bloodPressureStop()) );
         ledPulseStop->setText( QString::number(m_poAttendance->pulseStop()) );
+
+        if( m_poAttendance->id() > 0 )
+        {
+            pbFinishLater->setEnabled( false );
+        }
     }
 }
 
@@ -115,16 +122,15 @@ void cDlgAttendanceEdit::on_pbFinishLater_clicked()
     {
         if( SaveAttendanceData() )
         {
-            cDBPostponed    *pDBPostponed = new cDBPostponed();
+            if( m_poPostponed == NULL )
+            {
+                m_poPostponed = new cDBPostponed();
 
-            pDBPostponed->createNew();
-            pDBPostponed->setAttendanceId( m_poAttendance->id() );
-            pDBPostponed->save();
-            delete pDBPostponed;
-/*            QString qsQuery = QString( "INSERT INTO toBeFilled (attendanceId, patientId) VALUES (\"%1\", 0)" ).arg( m_poAttendance->id() );
-            poQuery = g_poDB->executeQTQuery( qsQuery );
-            delete poQuery;*/
-
+                m_poPostponed->createNew();
+                m_poPostponed->setAttendanceId( m_poAttendance->id() );
+                m_poPostponed->save();
+                delete m_poPostponed;
+            }
             QDialog::accept();
         }
     }

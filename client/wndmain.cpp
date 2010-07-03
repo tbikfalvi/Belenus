@@ -37,6 +37,7 @@
 #include "crud/dlgpatientcard.h"
 #include "crud/dlgpostponedpatientselect.h"
 #include "crud/dlgpanelsettings.h"
+#include "crud/dlgpostponedattendanceselect.h"
 
 //====================================================================================
 
@@ -658,6 +659,9 @@ void cWndMain::on_action_PostponedPatient_triggered()
 //====================================================================================
 void cWndMain::on_action_PostponedAttendance_triggered()
 {
+    cDlgPostponedAttendanceSelect   obDlgSelect( this );
+
+    obDlgSelect.exec();
 }
 //====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()

@@ -71,6 +71,19 @@ void cDBPostponed::loadPatient( const unsigned int p_uiId ) throw( cSevException
     init( poQuery->record() );
 }
 
+void cDBPostponed::loadAttendance( const unsigned int p_uiId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPostponed::loadAttendance", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM toBeFilled WHERE attendanceId = %1 AND patientId=0" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Postponed attendance record not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBPostponed::removePatient( const unsigned int p_uiPatientId ) throw( cSevException )
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "DELETE FROM toBeFilled WHERE patientId = %1" ).arg( p_uiPatientId ) );
