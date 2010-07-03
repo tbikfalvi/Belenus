@@ -29,27 +29,129 @@
     <message>
         <location filename="cassa.cpp" line="98"/>
         <source>Open new cassa record.</source>
-        <translation type="unfinished"></translation>
+        <translation>Új pénztár nyitás.</translation>
     </message>
     <message>
         <location filename="cassa.cpp" line="138"/>
         <source>Reopen cassa record.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lezárt pénztár folytatása.</translation>
     </message>
     <message>
         <location filename="cassa.cpp" line="157"/>
         <source>Close cassa record.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénztár zárás.</translation>
     </message>
     <message>
         <location filename="cassa.cpp" line="184"/>
         <source>Add money to cassa.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénztár bevétel.</translation>
     </message>
     <message>
         <location filename="cassa.cpp" line="209"/>
         <source>Remove money from cassa.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénztár kiadás.</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="64"/>
+        <source>Connecting to database ...</source>
+        <translation>Kapcsolódás az adatbázishoz ...</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="71"/>
+        <source> CONNECTED.
+</source>
+        <translation> SIKERÜLT.
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="78"/>
+        <source>Connecting to Belenus server
+</source>
+        <translation>Kapcsolódás a Belenus szerverhez
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="85"/>
+        <source>Waiting for response from Belenus server </source>
+        <translation>Várakozás a Belenus szervertől érkező válaszra </translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="102"/>
+        <source>Checking hardware connection ...</source>
+        <translation>Hardver kapcsolat ellenőrzése ...</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="109"/>
+        <source>FAILED
+</source>
+        <translation>SIKERTELEN
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="111"/>
+        <source>Starting application in DEMO mode.
+</source>
+        <translation>Alkalmazás indítása DEMÓ módban.
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="119"/>
+        <source>CONNECTED
+</source>
+        <translation>KAPCSOLÓDVA
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="122"/>
+        <source>Initializing hardware device ... </source>
+        <translation>Hardver eszköz beállítása ...</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="126"/>
+        <source>FINISHED
+</source>
+        <translation>BEFEJEZŐDÖTT
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="129"/>
+        <source>Caption stored in hardware: %1
+</source>
+        <translation>Hardver eszközben tárolt fejléc szöveg: %1
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="132"/>
+        <source>Number of hardware panels: %1
+</source>
+        <translation>Hardver panelok száma: %1
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="135"/>
+        <source>Checking hardware panels:
+</source>
+        <translation>Hardver panelok ellenőrzése:
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="140"/>
+        <source>     Checking hardware panel -%1- </source>
+        <translation>     Hardver panel ellenőrzése -%1-</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="145"/>
+        <source> SUCCEEDED
+</source>
+        <translation>SIKERES
+</translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="150"/>
+        <source> FAILED
+</source>
+        <translation>SIKERTELEN
+</translation>
     </message>
 </context>
 <context>
@@ -57,114 +159,114 @@
     <message>
         <location filename="crud/dlgattendance.cpp" line="10"/>
         <source>Attendance List</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezelések</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="29"/>
         <source>&lt;All patient&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Összes vendég&gt;</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="66"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="67"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="68"/>
         <location filename="crud/dlgattendance.cpp" line="75"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="69"/>
         <location filename="crud/dlgattendance.cpp" line="76"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Idő</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="70"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="71"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="119"/>
         <source>New Attendance</source>
-        <translation type="unfinished"></translation>
+        <translation>Új kezelés</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="139"/>
         <source>Edit attendance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezelés szerkesztése</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="160"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="161"/>
         <source>Are you sure you want to delete this Attendance?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ennek a kezelésnek az adatait?</translation>
     </message>
 </context>
 <context>
     <name>cDlgAttendanceEdit</name>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="53"/>
-        <location filename="edit/dlgattendanceedit.cpp" line="61"/>
-        <location filename="edit/dlgattendanceedit.cpp" line="72"/>
-        <location filename="edit/dlgattendanceedit.cpp" line="83"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="60"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="68"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="79"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="90"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="53"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="60"/>
         <source>Starting blood pressure must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kezdő vérnyomás értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="61"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="68"/>
         <source>Starting pulse value must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kezdő pulzus értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="72"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="79"/>
         <source>Ending blood pressure must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kezelés utáni vérnyomás értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="83"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="90"/>
         <source>Ending pulse value must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kezelés utáni pulzus értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="96"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="103"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="97"/>
+        <location filename="edit/dlgattendanceedit.cpp" line="104"/>
         <source>Do you want to add new attendance to database 
 and fill mandatory data later?</source>
-        <translation type="unfinished"></translation>
+        <translation>Létre akar hozni egy bejegyzést a kezelésnek\nés a további adatokat később akarja megadni?</translation>
     </message>
 </context>
 <context>
@@ -172,7 +274,7 @@ and fill mandatory data later?</source>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="11"/>
         <source>Cassa action</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénztár művelet</translation>
     </message>
 </context>
 <context>
@@ -180,40 +282,40 @@ and fill mandatory data later?</source>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="13"/>
         <source>Cassa</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénztár</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="85"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="86"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="87"/>
         <location filename="edit/dlgcassaedit.cpp" line="94"/>
         <source>Denomination</source>
-        <translation type="unfinished"></translation>
+        <translation>Címlet</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="88"/>
         <location filename="edit/dlgcassaedit.cpp" line="95"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="89"/>
         <location filename="edit/dlgcassaedit.cpp" line="96"/>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjegyzés</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="90"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Státusz</translation>
     </message>
 </context>
 <context>
@@ -221,27 +323,27 @@ and fill mandatory data later?</source>
     <message>
         <location filename="../framework/dlgcrud.cpp" line="20"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>Ú&amp;j</translation>
     </message>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="26"/>
+        <location filename="../framework/dlgcrud.cpp" line="28"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="32"/>
+        <location filename="../framework/dlgcrud.cpp" line="36"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../framework/dlgcrud.cpp" line="38"/>
-        <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Törlés</translation>
     </message>
     <message>
         <location filename="../framework/dlgcrud.cpp" line="44"/>
+        <source>&amp;Save</source>
+        <translation>&amp;Mentés</translation>
+    </message>
+    <message>
+        <location filename="../framework/dlgcrud.cpp" line="52"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bezárás</translation>
     </message>
 </context>
 <context>
@@ -249,12 +351,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="dlg/dlghardwaretest.cpp" line="209"/>
         <source>Hardware available</source>
-        <translation type="unfinished"></translation>
+        <translation>A hardver rendelkezésre áll</translation>
     </message>
     <message>
         <location filename="dlg/dlghardwaretest.cpp" line="213"/>
         <source>Hardware unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>A hardver nem elérhető</translation>
     </message>
 </context>
 <context>
@@ -262,30 +364,30 @@ and fill mandatory data later?</source>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="12"/>
         <source>Entering ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Adatbekérés ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="13"/>
         <source>Entering code ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kód beírása ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="40"/>
         <location filename="dlg/dlginputstart.cpp" line="105"/>
         <source>Entering time period ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Idő intervallum beírása ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="45"/>
         <location filename="dlg/dlginputstart.cpp" line="109"/>
         <source>Entering barcode ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalkód beírása ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="54"/>
         <location filename="dlg/dlginputstart.cpp" line="113"/>
         <source>Entering patient name ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vendég nevének beírása ...</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="129"/>
@@ -293,29 +395,29 @@ and fill mandatory data later?</source>
         <location filename="dlg/dlginputstart.cpp" line="156"/>
         <location filename="dlg/dlginputstart.cpp" line="181"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="130"/>
         <source>Barcode of patientcard should be %1 character length.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kártya vonalkódjának %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="149"/>
         <source>Invalid value entered.
 Please use only numbers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Érvénytelen a megadott érték.\nKérem csak számokat használjon.</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="157"/>
         <source>Invalid value entered.
 Time value can not be greater than %1 minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Érvénytelen a megadott érték.\nAz időintervallum nem lehet nagyobb, mint %1 perc.</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="181"/>
         <source>Please click on the desired button for the defined search value!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérem kattintson a megfelelő gombra a kívánt keresés indításához!</translation>
     </message>
 </context>
 <context>
@@ -323,22 +425,22 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="dlg/dlglogin.cpp" line="13"/>
         <source>&amp;Log In</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bejelentkezés</translation>
     </message>
     <message>
         <location filename="dlg/dlglogin.cpp" line="17"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <location filename="dlg/dlglogin.cpp" line="59"/>
         <source>Login failed</source>
-        <translation type="unfinished"></translation>
+        <translation>A bejelentkezés sikertelen</translation>
     </message>
     <message>
         <location filename="dlg/dlglogin.cpp" line="60"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem megfelelő felhasználó név és/vagy jelszó.\nKérem próbálkozzon újra.</translation>
     </message>
 </context>
 <context>
@@ -346,22 +448,22 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="dlg/dlglogs.cpp" line="36"/>
         <source>Date/Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum/Idő</translation>
     </message>
     <message>
         <location filename="dlg/dlglogs.cpp" line="37"/>
         <source>User</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználó</translation>
     </message>
     <message>
         <location filename="dlg/dlglogs.cpp" line="38"/>
         <source>Severity</source>
-        <translation type="unfinished"></translation>
+        <translation>Súlyosság</translation>
     </message>
     <message>
         <location filename="dlg/dlglogs.cpp" line="39"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Üzenet</translation>
     </message>
 </context>
 <context>
@@ -369,79 +471,79 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="10"/>
         <source>Panel settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép beállítások</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="22"/>
         <source>Title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fejléc:</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="31"/>
         <source>Type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="46"/>
         <source>Work time: </source>
-        <translation type="unfinished"></translation>
+        <translation>Üzemóra:</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="64"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mégsem</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="110"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="111"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="112"/>
         <location filename="crud/dlgpanelsettings.cpp" line="118"/>
         <source>Time length</source>
-        <translation type="unfinished"></translation>
+        <translation>Idő intervallum</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="113"/>
         <location filename="crud/dlgpanelsettings.cpp" line="119"/>
         <source>Price</source>
-        <translation type="unfinished"></translation>
+        <translation>Fizetendő</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="114"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="154"/>
         <source>New paneluse</source>
-        <translation type="unfinished"></translation>
+        <translation>Új kezelési idő</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="195"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="196"/>
         <source>Are you sure you want to delete this paneluse?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos, hogy törölni akarja ezt a kezelési időt?</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="225"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="225"/>
         <source>Title of panel can not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>A gépet azonosító fejléc szövege nem lehet üres.</translation>
     </message>
 </context>
 <context>
@@ -454,12 +556,12 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="30"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="31"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="32"/>
@@ -482,12 +584,12 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="35"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="36"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="77"/>
@@ -497,7 +599,7 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="118"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="119"/>
@@ -512,7 +614,7 @@ Time value can not be greater than %1 minutes.</source>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="71"/>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="81"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="65"/>
@@ -536,7 +638,7 @@ Please define a different one.</source>
     <message>
         <location filename="edit/dlgpaneltypeedit.cpp" line="33"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneltypeedit.cpp" line="33"/>
@@ -554,7 +656,7 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="29"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="30"/>
@@ -565,12 +667,12 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="31"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="32"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="71"/>
@@ -585,7 +687,7 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="112"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="113"/>
@@ -603,7 +705,7 @@ Please define a different one.</source>
         <location filename="edit/dlgpaneluseedit.cpp" line="59"/>
         <location filename="edit/dlgpaneluseedit.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="37"/>
@@ -646,12 +748,12 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatient.cpp" line="31"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="32"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="33"/>
@@ -668,12 +770,12 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatient.cpp" line="35"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="36"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="75"/>
@@ -683,7 +785,7 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatient.cpp" line="116"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="117"/>
@@ -716,12 +818,12 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="65"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="66"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="67"/>
@@ -750,12 +852,12 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="71"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="72"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="129"/>
@@ -765,7 +867,7 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="170"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="171"/>
@@ -783,7 +885,7 @@ Please define a different one.</source>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="42"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="42"/>
@@ -813,7 +915,7 @@ Please define a different one.</source>
         <location filename="edit/dlgpatientcardedit.cpp" line="163"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="171"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="107"/>
@@ -894,12 +996,12 @@ Press Ignore to skip other error messages.</source>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="31"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="32"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="33"/>
@@ -911,7 +1013,7 @@ Press Ignore to skip other error messages.</source>
         <location filename="crud/dlgpatientcardtype.cpp" line="34"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="42"/>
         <source>Price</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fizetendő</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="35"/>
@@ -922,12 +1024,12 @@ Press Ignore to skip other error messages.</source>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="36"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="37"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="78"/>
@@ -937,7 +1039,7 @@ Press Ignore to skip other error messages.</source>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="119"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="120"/>
@@ -947,7 +1049,7 @@ Press Ignore to skip other error messages.</source>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="128"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="129"/>
@@ -967,7 +1069,7 @@ There are patientcards attached to this card type.</source>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="119"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="87"/>
@@ -1014,7 +1116,7 @@ There are patientcards attached to this card type.</source>
         <location filename="edit/dlgpatientedit.cpp" line="126"/>
         <location filename="edit/dlgpatientedit.cpp" line="158"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="100"/>
@@ -1046,7 +1148,7 @@ Press Ignore to skip other error messages.</source>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="139"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="140"/>
@@ -1065,12 +1167,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="30"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="31"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="32"/>
@@ -1081,12 +1183,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="33"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="34"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="73"/>
@@ -1096,7 +1198,7 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="114"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="115"/>
@@ -1109,17 +1211,17 @@ and fill mandatory data later?</source>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="11"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mentés</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="12"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mégsem</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="45"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="45"/>
@@ -1157,12 +1259,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="79"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="80"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="81"/>
@@ -1175,6 +1277,52 @@ and fill mandatory data later?</source>
         <location filename="crud/dlgpatientselect.cpp" line="87"/>
         <source>UniqueId</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgPostponedAttendanceSelect</name>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="24"/>
+        <source>Select postponed attendance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="37"/>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="42"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="68"/>
+        <source>Id</source>
+        <translation type="unfinished">Id</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="69"/>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="75"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="70"/>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="76"/>
+        <source>Date</source>
+        <translation type="unfinished">Dátum</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="71"/>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="77"/>
+        <source>Time</source>
+        <translation type="unfinished">Idő</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedattendanceselect.cpp" line="130"/>
+        <source>Edit attendance</source>
+        <translation type="unfinished">Kezelés szerkesztése</translation>
     </message>
 </context>
 <context>
@@ -1191,18 +1339,18 @@ and fill mandatory data later?</source>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="48"/>
-        <source>Exit</source>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="76"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="77"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="78"/>
@@ -1240,12 +1388,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="dlg/dlgpwdconfirm.cpp" line="12"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mégsem</translation>
     </message>
     <message>
         <location filename="dlg/dlgpwdconfirm.cpp" line="25"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="dlg/dlgpwdconfirm.cpp" line="25"/>
@@ -1263,12 +1411,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="30"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Id</translation>
     </message>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="31"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="32"/>
@@ -1279,12 +1427,12 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="33"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="34"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="73"/>
@@ -1294,7 +1442,7 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="114"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="115"/>
@@ -1307,17 +1455,17 @@ and fill mandatory data later?</source>
     <message>
         <location filename="edit/dlgreasontovisitedit.cpp" line="11"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mentés</translation>
     </message>
     <message>
         <location filename="edit/dlgreasontovisitedit.cpp" line="12"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mégsem</translation>
     </message>
     <message>
         <location filename="edit/dlgreasontovisitedit.cpp" line="45"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgreasontovisitedit.cpp" line="45"/>
@@ -1338,18 +1486,18 @@ and fill mandatory data later?</source>
     <message>
         <location filename="edit/dlguseredit.cpp" line="44"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mentés</translation>
     </message>
     <message>
         <location filename="edit/dlguseredit.cpp" line="45"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mégsem</translation>
     </message>
     <message>
         <location filename="edit/dlguseredit.cpp" line="62"/>
         <location filename="edit/dlguseredit.cpp" line="97"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlguseredit.cpp" line="62"/>
@@ -1372,7 +1520,7 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgusers.cpp" line="31"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgusers.cpp" line="32"/>
@@ -1394,7 +1542,7 @@ and fill mandatory data later?</source>
     <message>
         <location filename="crud/dlgusers.cpp" line="130"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgusers.cpp" line="131"/>
@@ -1405,23 +1553,23 @@ and fill mandatory data later?</source>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="156"/>
+        <location filename="wndmain.cpp" line="157"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="157"/>
+        <location filename="wndmain.cpp" line="158"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="171"/>
-        <location filename="wndmain.cpp" line="681"/>
+        <location filename="wndmain.cpp" line="172"/>
+        <location filename="wndmain.cpp" line="702"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="172"/>
+        <location filename="wndmain.cpp" line="173"/>
         <source>The application has no valid serial key registered.
 The application will only control the hardware with DEMO serial key for 7 days.
 
@@ -1430,27 +1578,27 @@ Please note you need live internet connection for the registration process.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="201"/>
-        <location filename="wndmain.cpp" line="257"/>
-        <location filename="wndmain.cpp" line="450"/>
-        <location filename="wndmain.cpp" line="701"/>
-        <location filename="wndmain.cpp" line="711"/>
-        <location filename="wndmain.cpp" line="731"/>
+        <location filename="wndmain.cpp" line="202"/>
+        <location filename="wndmain.cpp" line="258"/>
+        <location filename="wndmain.cpp" line="468"/>
+        <location filename="wndmain.cpp" line="722"/>
+        <location filename="wndmain.cpp" line="732"/>
+        <location filename="wndmain.cpp" line="752"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kérdés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="202"/>
+        <location filename="wndmain.cpp" line="203"/>
         <source>Do you want to continue the previous cassa record?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="228"/>
+        <location filename="wndmain.cpp" line="229"/>
         <source>Warning</source>
         <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="229"/>
+        <location filename="wndmain.cpp" line="230"/>
         <source>The last cassa record is assigned to a different user.
 You are not able to start new cassa record assigned to you
 until the previous is still open.
@@ -1462,7 +1610,7 @@ the application can not record any money related action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="258"/>
+        <location filename="wndmain.cpp" line="259"/>
         <source>There is no data recorded in database for cassa.
 
 Do you want to start cassa recording with the current user?
@@ -1474,55 +1622,55 @@ and relogin with the desired user account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="321"/>
+        <location filename="wndmain.cpp" line="322"/>
         <source>Belenus </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="441"/>
+        <location filename="wndmain.cpp" line="459"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="442"/>
+        <location filename="wndmain.cpp" line="460"/>
         <source>This area is restricted for system administrators only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="451"/>
+        <location filename="wndmain.cpp" line="469"/>
         <source>Do you want to close your cassa?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="513"/>
+        <location filename="wndmain.cpp" line="531"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="563"/>
+        <location filename="wndmain.cpp" line="581"/>
         <source>New Attendance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Új kezelés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="682"/>
+        <location filename="wndmain.cpp" line="703"/>
         <source>There is no patient in the database with name like
 
 &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="702"/>
+        <location filename="wndmain.cpp" line="723"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="712"/>
+        <location filename="wndmain.cpp" line="733"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="732"/>
+        <location filename="wndmain.cpp" line="753"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
@@ -2131,7 +2279,7 @@ allergy :</source>
     <message>
         <location filename="dlgpatientcardedit.ui" line="158"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktív</translation>
     </message>
     <message>
         <location filename="dlgpatientcardedit.ui" line="172"/>
@@ -2625,7 +2773,7 @@ allergy :</source>
     <message>
         <location filename="wndmain.ui" line="38"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Szerkesztés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="42"/>
@@ -2861,7 +3009,7 @@ allergy :</source>
     <message>
         <location filename="wndmain.ui" line="342"/>
         <source>Cassa</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pénztár</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="347"/>
