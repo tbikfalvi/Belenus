@@ -234,28 +234,36 @@
         <source>Starting blood pressure must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation>A kezdő vérnyomás értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
+        <translation>A kezdő vérnyomás értéket meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgattendanceedit.cpp" line="68"/>
         <source>Starting pulse value must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation>A kezdő pulzus értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
+        <translation>A kezdő pulzus értéket meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgattendanceedit.cpp" line="79"/>
         <source>Ending blood pressure must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation>A kezelés utáni vérnyomás értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
+        <translation>A kezelés utáni vérnyomás értéket meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgattendanceedit.cpp" line="90"/>
         <source>Ending pulse value must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation>A kezelés utáni pulzus értéket meg kell adni.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
+        <translation>A kezelés utáni pulzus értéket meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgattendanceedit.cpp" line="103"/>
@@ -266,7 +274,8 @@ Press Ignore to skip other error messages.</source>
         <location filename="edit/dlgattendanceedit.cpp" line="104"/>
         <source>Do you want to add new attendance to database 
 and fill mandatory data later?</source>
-        <translation>Létre akar hozni egy bejegyzést a kezelésnek\nés a további adatokat később akarja megadni?</translation>
+        <translation>Létre akar hozni egy bejegyzést a kezelésnek
+és a további adatokat később akarja megadni?</translation>
     </message>
 </context>
 <context>
@@ -406,13 +415,15 @@ and fill mandatory data later?</source>
         <location filename="dlg/dlginputstart.cpp" line="149"/>
         <source>Invalid value entered.
 Please use only numbers.</source>
-        <translation>Érvénytelen a megadott érték.\nKérem csak számokat használjon.</translation>
+        <translation>Érvénytelen a megadott érték.
+Kérem csak számokat használjon.</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="157"/>
         <source>Invalid value entered.
 Time value can not be greater than %1 minutes.</source>
-        <translation>Érvénytelen a megadott érték.\nAz időintervallum nem lehet nagyobb, mint %1 perc.</translation>
+        <translation>Érvénytelen a megadott érték.
+Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
     </message>
     <message>
         <location filename="dlg/dlginputstart.cpp" line="181"/>
@@ -440,7 +451,8 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="dlg/dlglogin.cpp" line="60"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
-        <translation>Nem megfelelő felhasználó név és/vagy jelszó.\nKérem próbálkozzon újra.</translation>
+        <translation>Nem megfelelő felhasználó név és/vagy jelszó.
+Kérem próbálkozzon újra.</translation>
     </message>
 </context>
 <context>
@@ -533,7 +545,7 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="196"/>
         <source>Are you sure you want to delete this paneluse?</source>
-        <translation>Biztos, hogy törölni akarja ezt a kezelési időt?</translation>
+        <translation>Biztos benne, hogy törölni akarja ezt a kezelési időt?</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="225"/>
@@ -551,60 +563,60 @@ Time value can not be greater than %1 minutes.</source>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="10"/>
         <source>Panelstatus List</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép állapotok</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="30"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="31"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="32"/>
         <location filename="crud/dlgpanelstatuses.cpp" line="40"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="33"/>
         <location filename="crud/dlgpanelstatuses.cpp" line="41"/>
         <source>PanelType</source>
-        <translation type="unfinished"></translation>
+        <translation>Géptípus</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="34"/>
         <location filename="crud/dlgpanelstatuses.cpp" line="42"/>
         <source>Sequence order</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorrend</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="35"/>
         <source>Active</source>
-        <translation type="unfinished">Aktív</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="36"/>
         <source>Archive</source>
-        <translation type="unfinished">Státusz</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="77"/>
         <source>New Panelstatus</source>
-        <translation type="unfinished"></translation>
+        <translation>Új gépállapot</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="118"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="119"/>
         <source>Are you sure you want to delete this Panelstatus?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ezt a gépállapotot?</translation>
     </message>
 </context>
 <context>
@@ -614,23 +626,24 @@ Time value can not be greater than %1 minutes.</source>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="71"/>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="81"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="65"/>
         <source>Panelstatus name cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>A gépállapot neve nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="71"/>
         <source>Length of status process time cannot be zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>A gépállapothoz tartozó időintervallum nem lehet nulla.</translation>
     </message>
     <message>
         <location filename="edit/dlgpanelstatusesedit.cpp" line="81"/>
         <source>Another panelstatus has the same value for sequence order.
 Please define a different one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy másik gépállapothoz már hozzá van rendelve ez a sorszám.
+Kérem adjon meg egy másik sorszámot.</translation>
     </message>
 </context>
 <context>
@@ -638,12 +651,12 @@ Please define a different one.</source>
     <message>
         <location filename="edit/dlgpaneltypeedit.cpp" line="33"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneltypeedit.cpp" line="33"/>
         <source>Name of Panel Type can not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>A géptípus neve nem lehet üres.</translation>
     </message>
 </context>
 <context>
@@ -651,48 +664,48 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="10"/>
         <source>Panel Types List</source>
-        <translation type="unfinished"></translation>
+        <translation>Géptípusok</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="29"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="30"/>
         <location filename="crud/dlgpaneltypes.cpp" line="36"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="31"/>
         <source>Active</source>
-        <translation type="unfinished">Aktív</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="32"/>
         <source>Archive</source>
-        <translation type="unfinished">Státusz</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="71"/>
         <source>New Panel Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Új géptípus</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="91"/>
         <source>Edit paneltype</source>
-        <translation type="unfinished"></translation>
+        <translation>Géptípus szerkesztése</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="112"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="113"/>
         <source>Are you sure you want to delete this Panel Type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ezt a géptípust?</translation>
     </message>
 </context>
 <context>
@@ -705,37 +718,37 @@ Please define a different one.</source>
         <location filename="edit/dlgpaneluseedit.cpp" line="59"/>
         <location filename="edit/dlgpaneluseedit.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="37"/>
         <source>Use time can not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az időintervallum nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="42"/>
         <source>Use time value is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>A megadott időintervallum érték nem megfelelő.</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="47"/>
         <source>Use time must be greater than zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az időintervallum értéke nem lehet nulla.</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="54"/>
         <source>Use price can not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>A fizetendő összeg nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="59"/>
         <source>Use price value is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>A megadott fizetendő összeg értéke nem megfelelő.</translation>
     </message>
     <message>
         <location filename="edit/dlgpaneluseedit.cpp" line="64"/>
         <source>Use price must be greater than zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>A fizetendő összeg értéke nem lehet nulla.</translation>
     </message>
 </context>
 <context>
@@ -743,54 +756,54 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatient.cpp" line="11"/>
         <source>Patient List</source>
-        <translation type="unfinished"></translation>
+        <translation>Vendégek</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="31"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="32"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="33"/>
         <location filename="crud/dlgpatient.cpp" line="40"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="34"/>
         <location filename="crud/dlgpatient.cpp" line="41"/>
         <source>UniqueId</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi azonosító</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="35"/>
         <source>Active</source>
-        <translation type="unfinished">Aktív</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="36"/>
         <source>Archive</source>
-        <translation type="unfinished">Státusz</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="75"/>
         <source>New Patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Új vendég</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="116"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="117"/>
         <source>Are you sure you want to delete this Patient?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ezt a vendéget?</translation>
     </message>
 </context>
 <context>
@@ -798,81 +811,81 @@ Please define a different one.</source>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="10"/>
         <source>Patient Card List</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérletek</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="17"/>
         <source>Patientcard type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet típus:</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="26"/>
         <source>Barcode: </source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalkód:</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="38"/>
         <source>&lt;All patientcard type&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Összes bérlettípus&gt;</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="65"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="66"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="67"/>
         <location filename="crud/dlgpatientcard.cpp" line="76"/>
         <source>Barcode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalkód</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="68"/>
         <location filename="crud/dlgpatientcard.cpp" line="77"/>
         <source>Available units</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználható egységek</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="69"/>
         <location filename="crud/dlgpatientcard.cpp" line="78"/>
         <source>Patientcard type</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlettípus</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="70"/>
         <location filename="crud/dlgpatientcard.cpp" line="79"/>
         <source>All units</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes egység</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="71"/>
         <source>Active</source>
-        <translation type="unfinished">Aktív</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="72"/>
         <source>Archive</source>
-        <translation type="unfinished">Státusz</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="129"/>
         <source>New Patientcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Új bérlet</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="170"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="171"/>
         <source>Are you sure you want to delete this Patientcard?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ezt a bérletet?</translation>
     </message>
 </context>
 <context>
@@ -880,27 +893,27 @@ Please define a different one.</source>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="11"/>
         <source>Adding PatientCard to database</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet vonalkód regisztrálása az adatbázisba</translation>
     </message>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="42"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="42"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="43"/>
         <source>Barcode already saved into database.</source>
-        <translation type="unfinished"></translation>
+        <translation>A vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="57"/>
         <source>Patientcard saved to database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet vonalkód regisztrálva.</translation>
     </message>
 </context>
 <context>
@@ -915,28 +928,32 @@ Please define a different one.</source>
         <location filename="edit/dlgpatientcardedit.cpp" line="163"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="171"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="107"/>
         <source>Barcode cannot be empty.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A vonalkód nem lehet üres.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="115"/>
         <source>Invalid barcode. Barcode should be %1 character length.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem megfelelő a vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="128"/>
         <source>Invalid barcode. This barcode already saved into database.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem megfelelő a vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="139"/>
@@ -947,7 +964,13 @@ If you want to connect the card to this type,
 deactivate the card with unchecking the Active checkbox.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem megfelelő a bérlettípus.
+Aktív bérlethez kérem válasszon egy másik típust.
+
+Ha a bérletet ehhez a bérlettípushoz akarja kötni,
+deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="147"/>
@@ -956,14 +979,20 @@ For active patientcard an owner should be selected.
 
 If you don&apos;t want to add this card to any patient,
 press the Save button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérem válasszon egy vendéget bérlet tulajdonosnak.
+Aktív bérlethez ajánlott tulajdonost rendelni.
+
+Ha nem akar a bérlethez tulajdonost rendelni,
+kattintson a Save gombra.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="155"/>
         <source>Available units cannot be empty.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A felhasználható egységek száma nem lehet üres.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="163"/>
@@ -973,7 +1002,12 @@ If you want to reset the number of available units
 deactivate the card with unchecking the Active checkbox.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A felhasználható egységek száma nem lehet egynél kissebb.
+
+Ha le akarja nullázni a kártya egységeinek számát,
+deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="171"/>
@@ -983,7 +1017,12 @@ If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem megfelelő az érvényesség dátuma.
+
+Ha érvénytelenné akarja tenni a kártyát,
+deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
 </context>
 <context>
@@ -991,71 +1030,72 @@ Press Ignore to skip other error messages.</source>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="11"/>
         <source>Patient Cardtype List</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet típusok</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="31"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="32"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="33"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="41"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="34"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="42"/>
         <source>Price</source>
-        <translation type="unfinished">Fizetendő</translation>
+        <translation>Fizetendő</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="35"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="43"/>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Egységek</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="36"/>
         <source>Active</source>
-        <translation type="unfinished">Aktív</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="37"/>
         <source>Archive</source>
-        <translation type="unfinished">Státusz</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="78"/>
         <source>New PatientCard Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Új bérlet típus</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="119"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="120"/>
         <source>Are you sure you want to delete this PatientCard Type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ezt a bérlet típust?</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="128"/>
         <source>Attention</source>
-        <translation type="unfinished">Figyelmeztetés</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="129"/>
         <source>Unfortunatelly delete of this card type is not possible.
 There are patientcards attached to this card type.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bérlet típus törlése sajnos nem lehetséges.
+A bérlet típushoz bérletek vannak hozzárendelve.</translation>
     </message>
 </context>
 <context>
@@ -1069,42 +1109,42 @@ There are patientcards attached to this card type.</source>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="119"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="87"/>
         <source>Name of patientcard type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bérlet típus neve nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="92"/>
         <source>Price of patientcard type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bérlet típus ára nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="99"/>
         <source>Number of units of patientcard type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="104"/>
         <source>Unittime of patientcard type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az egységhez tartozó kezelési idő nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="109"/>
         <source>Number of validation days of patientcard type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bérlettípus érvényességét meghatározó napok száma nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
         <source>Invalid end date. End date must be in the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem megfelelő az érvényesség lejártát jelző dátum. A dátumnak a jövőbe kell mutatnia.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="119"/>
         <source>FROM date must be before TO date.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az érvényesség kezdeti dátumának meg kell előznie a lejárati dátumot.</translation>
     </message>
 </context>
 <context>
@@ -1116,45 +1156,52 @@ There are patientcards attached to this card type.</source>
         <location filename="edit/dlgpatientedit.cpp" line="126"/>
         <location filename="edit/dlgpatientedit.cpp" line="158"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="100"/>
         <location filename="edit/dlgpatientedit.cpp" line="158"/>
         <source>Patient name cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>A vendég neve nem lehet üres.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="107"/>
         <source>Patient gender must be selected.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A vendég nemét meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="118"/>
         <source>Patient date of birth must be set.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A vendég születési dátumát meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="126"/>
         <source>Patient unique identification value must be given.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>A beteg egyedi azonosító (TAJ) számát meg kell adni.
+
+Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="139"/>
         <source>Question</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientedit.cpp" line="140"/>
         <source>Do you want to add new patient to database 
 and fill mandatory data later?</source>
-        <translation type="unfinished"></translation>
+        <translation>El akarja menteni a beteget az adatbázisba most és 
+a további adatokat később akarja megadni?</translation>
     </message>
 </context>
 <context>
