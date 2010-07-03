@@ -44,7 +44,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             checkIndependent->setChecked( true );
 
-        if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )

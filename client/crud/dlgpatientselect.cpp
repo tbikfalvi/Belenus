@@ -74,7 +74,7 @@ void cDlgPatientSelect::setupTableView()
 
     cDlgCrud::setupTableView();
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
@@ -92,7 +92,7 @@ void cDlgPatientSelect::refreshTable()
 {
     cTracer obTracer( "cDlgPatientSelect::refreshTable" );
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_qsQuery = "SELECT patientId, licenceId, name, uniqueId FROM patients WHERE patientId>0";
     }

@@ -20,7 +20,7 @@ cDlgReasonToVisitEdit::cDlgReasonToVisitEdit( QWidget *p_poParent, cDBReasonToVi
         if( m_poReasonToVisit->licenceId() == 0 && m_poReasonToVisit->id() > 0 )
             checkIndependent->setChecked( true );
 
-        if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poReasonToVisit->licenceId() == 0 && m_poReasonToVisit->id() > 0 )

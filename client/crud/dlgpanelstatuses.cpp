@@ -25,7 +25,7 @@ void cDlgPanelStatuses::setupTableView()
 
     cDlgCrud::setupTableView();
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
@@ -47,7 +47,7 @@ void cDlgPanelStatuses::refreshTable()
 {
     cTracer obTracer( "cDlgPanelStatuses::refreshTable" );
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.active, panelStatuses.archive FROM panelStatuses, paneltypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
@@ -63,9 +63,9 @@ void cDlgPanelStatuses::enableButtons()
 {
     cTracer obTracer( "cDlgPanelStatuses::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( "system" ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( "admin" ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( "system" ) );
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 }
 
 void cDlgPanelStatuses::newClicked( bool )
