@@ -23,6 +23,7 @@ protected:
     QPushButton            *m_poBtnDelete;
     QPushButton            *m_poBtnEdit;
     QPushButton            *m_poBtnClose;
+    QPushButton            *m_poBtnSave;
     unsigned int            m_uiSelectedId;
     int                     m_inSelectedRow;
 
@@ -36,6 +37,7 @@ protected slots:
     virtual void newClicked( bool ) = 0;
     virtual void deleteClicked( bool ) = 0;
     virtual void editClicked( bool ) = 0;
+//    virtual void closeClicked( bool ) = 0;
 };
 
 #endif

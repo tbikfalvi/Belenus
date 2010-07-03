@@ -29,6 +29,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const string &p_stName,
                              const float p_fPrice,
+                             const int p_nVatpercent,
                              const int p_nUnits,
                              const string &p_stValidDateFrom,
                              const string &p_stValidDateTo,
@@ -41,6 +42,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
     m_uiLicenceId       = p_uiLicenceId;
     m_stName            = p_stName;
     m_fPrice            = p_fPrice;
+    m_nVatpercent       = p_nVatpercent;
     m_nUnits            = p_nUnits;
     m_stValidDateFrom   = p_stValidDateFrom;
     m_stValidDateTo     = p_stValidDateTo;
@@ -56,6 +58,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inPriceIdx          = p_obRecord.indexOf( "price" );
+    int inVatpercentIdx     = p_obRecord.indexOf( "vatpercent" );
     int inUnitsIdx          = p_obRecord.indexOf( "units" );
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
@@ -68,6 +71,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString().toStdString(),
           p_obRecord.value( inPriceIdx ).toFloat(),
+          p_obRecord.value( inVatpercentIdx ).toInt(),
           p_obRecord.value( inUnitsIdx ).toInt(),
           p_obRecord.value( inValidDateFromIdx ).toString().toStdString(),
           p_obRecord.value( inValidDateToIdx ).toString().toStdString(),
@@ -126,6 +130,7 @@ void cDBPatientCardType::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
     qsQuery += QString( "price = \"%1\", " ).arg( m_fPrice );
+    qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( QString::fromStdString( m_stValidDateFrom ) );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( QString::fromStdString( m_stValidDateTo ) );
@@ -204,6 +209,16 @@ float cDBPatientCardType::price() const throw()
 void cDBPatientCardType::setPrice( const float p_fPrice ) throw()
 {
     m_fPrice = p_fPrice;
+}
+
+int cDBPatientCardType::vatpercent() const throw()
+{
+    return m_nVatpercent;
+}
+
+void cDBPatientCardType::setVatpercent( const int p_nVatpercent ) throw()
+{
+    m_nVatpercent = p_nVatpercent;
 }
 
 int cDBPatientCardType::units() const throw()

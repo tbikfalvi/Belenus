@@ -26,10 +26,10 @@ cDBDenomination::~cDBDenomination()
 }
 
 void cDBDenomination::init( const unsigned int p_uiId,
-                             const unsigned int p_uiLicenceId,
-                             const unsigned int p_uiDenomination,
-                             const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                            const unsigned int p_uiLicenceId,
+                            const unsigned int p_uiDenomination,
+                            const bool p_bActive,
+                            const string &p_stArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
@@ -172,4 +172,3 @@ void cDBDenomination::setArchive( const string &p_stArchive ) throw()
 {
     m_stArchive = p_stArchive;
 }
-

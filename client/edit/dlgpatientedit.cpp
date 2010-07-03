@@ -60,7 +60,13 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             }
         }
         if( m_poPatient->id() == 0 )
+        {
             pbAttendances->setEnabled( false );
+        }
+        else
+        {
+            pbFinishLater->setEnabled( false );
+        }
 
         ledName->setText( QString::fromStdString(m_poPatient->name()) );
         if( m_poPatient->gender() == 1 ) rbGenderMale->setChecked(true);

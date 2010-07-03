@@ -8,7 +8,7 @@ TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
-CONFIG += console
+#CONFIG += console
 TRANSLATIONS = bsa_us.ts \
     bsa_hu.ts
 HEADERS += ../framework/dbconnection.h \

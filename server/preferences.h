@@ -23,13 +23,13 @@ public:
             setValue("database/host", "localhost");
 
         if ( value("database/schema")=="" )
-            setValue("database/schema", "belenus");
+            setValue("database/schema", "BelenusDB");
 
         if ( value("database/username")=="" )
-            setValue("database/username", "root");
+            setValue("database/username", "belenus_user");
 
         if ( value("database/password")=="" )
-            setValue("database/password", "");
+            setValue("database/password", "Sync205BW");
 
     }
 };

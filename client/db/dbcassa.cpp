@@ -78,6 +78,19 @@ void cDBCassa::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
+void cDBCassa::load() throw( cSevException )
+{
+    cTracer obTrace( "cDBCassa::load" );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassa ORDER BY cassaId DESC" ) );
+
+    if( poQuery->size() < 1 )
+        throw cSevException( cSeverity::ERROR, "Cassa table empty" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBCassa::save() throw( cSevException )
 {
     cTracer obTrace( "cDBCassa::save" );

@@ -61,7 +61,7 @@ void cDBCassaDenomination::load( const unsigned int p_uiDenominationId,
 {
     cTracer obTrace( "cDBCassaDenomination::load", QString( "id1: %1 id2: %2 id3: %3 " ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ).toStdString() );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaDenomination WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaDenominations WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Cassa denomination not found" );
@@ -78,7 +78,7 @@ void cDBCassaDenomination::save() throw( cSevException )
     if( !m_bNewRecord )
     {
         qsQuery = "UPDATE";
-        qsQuery += " cassaDenomination SET ";
+        qsQuery += " cassaDenominations SET ";
 
         if( m_stArchive.compare("NEW") != 0 )
         {
@@ -88,7 +88,7 @@ void cDBCassaDenomination::save() throw( cSevException )
     else
     {
         qsQuery = "INSERT INTO";
-        qsQuery += " cassaDenomination SET ";
+        qsQuery += " cassaDenominations SET ";
         qsQuery += QString( "denominationId = \"%1\", " ).arg( m_uiDenominationId );
         qsQuery += QString( "cassaId = \"%1\", " ).arg( m_uiCassaId );
         qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
@@ -117,11 +117,11 @@ void cDBCassaDenomination::remove() throw( cSevException )
 
         if( m_stArchive.compare( "NEW" ) == 0 )
         {
-            qsQuery = "DELETE FROM cassaDenomination ";
+            qsQuery = "DELETE FROM cassaDenominations ";
         }
         else
         {
-            qsQuery = "UPDATE cassaDenomination SET archive=\"DEL\" ";
+            qsQuery = "UPDATE cassaDenominations SET archive=\"DEL\" ";
         }
         qsQuery += QString( " WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( m_uiDenominationId ).arg( m_uiCassaId ).arg( m_uiLicenceId );
 

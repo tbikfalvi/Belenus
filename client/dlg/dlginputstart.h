@@ -14,13 +14,13 @@ public:
 
     void setInitialText( const QString &p_stText );
     void init();
+    QString getEditText();
 
     bool m_bTime;
     bool m_bCard;
     bool m_bPat;
 
 private:
-    QWidget *m_poParent;
     bool     m_bInitCalled;
 
 private slots:

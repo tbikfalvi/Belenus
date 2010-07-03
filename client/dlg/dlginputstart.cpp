@@ -9,8 +9,6 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
 {
     setupUi( this );
 
-    m_poParent      = p_poParent;
-
     setWindowTitle( tr("Entering ...") );
     lblAction->setText( tr("Entering code ...") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
@@ -41,12 +39,16 @@ void cDlgInputStart::init()
         pbTime->setEnabled( true );
         lblAction->setText( tr("Entering time period ...") );
     }
-    if( m_bCard )
+    else if( m_bCard )
     {
         pbCardcode->setEnabled( true );
         lblAction->setText( tr("Entering barcode ...") );
+        if( g_poPrefs->getBarcodePrefix().length() > 0 )
+        {
+            ledInputStart->setText( g_poPrefs->getBarcodePrefix() );
+        }
     }
-    if( m_bPat  )
+    else if( m_bPat  )
     {
         pbPatient->setEnabled( true );
         lblAction->setText( tr("Entering patient name ...") );
@@ -56,6 +58,11 @@ void cDlgInputStart::init()
 void cDlgInputStart::setInitialText( const QString &p_stText )
 {
     ledInputStart->setText( p_stText );
+}
+
+QString cDlgInputStart::getEditText()
+{
+    return ledInputStart->text();
 }
 
 void cDlgInputStart::on_ledInputStart_textChanged(QString )
@@ -109,21 +116,53 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 
 void cDlgInputStart::on_pbPatient_clicked()
 {
-    cDlgPatientSelect  obDlgPatientSelect( m_poParent );
-    obDlgPatientSelect.setSearchPatientName( ledInputStart->text() );
-
+    m_bPat = true;
+    m_bCard = false;
+    m_bTime = false;
     QDialog::accept();
-
-    obDlgPatientSelect.exec();
 }
 
 void cDlgInputStart::on_pbCardcode_clicked()
 {
+    if( ledInputStart->text().length() != g_poPrefs->getBarcodeLength() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Barcode of patientcard should be %1 character length.").arg(g_poPrefs->getBarcodeLength()) );
+        ledInputStart->setFocus();
+        return;
+    }
+    m_bPat = false;
+    m_bCard = true;
+    m_bTime = false;
     QDialog::accept();
 }
 
 void cDlgInputStart::on_pbTime_clicked()
 {
+    bool boIsANumber = false;
+
+    ledInputStart->text().toUInt( &boIsANumber );
+
+    if( !boIsANumber )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Invalid value entered.\n"
+                                 "Please use only numbers.") );
+        ledInputStart->setFocus();
+        return;
+    }
+    else if( ledInputStart->text().toUInt() > g_poPrefs->getMaxTreatLength() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Invalid value entered.\n"
+                                 "Time value can not be greater than %1 minutes.").arg(g_poPrefs->getMaxTreatLength()) );
+        ledInputStart->setFocus();
+        return;
+    }
+
+    m_bPat = false;
+    m_bCard = false;
+    m_bTime = true;
     QDialog::accept();
 }
 

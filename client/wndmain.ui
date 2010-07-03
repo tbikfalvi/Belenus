@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
+    <width>657</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>622</width>
+     <width>657</width>
      <height>20</height>
     </rect>
    </property>
@@ -146,6 +146,7 @@
    <addaction name="separator"/>
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
+   <addaction name="action_EditActualPatient"/>
    <addaction name="action_PatientNew"/>
    <addaction name="action_PostponedPatient"/>
    <addaction name="separator"/>
@@ -164,6 +165,8 @@
    <addaction name="action_PatientCardSell"/>
    <addaction name="action_DoctorSchedule"/>
    <addaction name="action_DeviceSchedule"/>
+   <addaction name="separator"/>
+   <addaction name="action_Cassa"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -390,6 +393,14 @@
   <action name="action_ValidateSerialKey">
    <property name="text">
     <string>Validate Serial key ...</string>
+   </property>
+  </action>
+  <action name="action_EditActualPatient">
+   <property name="text">
+    <string>Edit actual ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit actual patient</string>
    </property>
   </action>
  </widget>

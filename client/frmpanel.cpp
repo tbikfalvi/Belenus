@@ -164,7 +164,27 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 
         if( poQuery ) delete poQuery;
     }
+}
 
+void cFrmPanel::reload()
+{
+    QSqlQuery  *poQuery = NULL;
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
+        if( poQuery->size() )
+        {
+            poQuery->first();
+            lblTitle->setText( poQuery->value( 1 ).toString() );
+        }
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger << e.severity() << e.what() << cQTLogger::EOM;
+
+        if( poQuery ) delete poQuery;
+    }
 }
 
 void cFrmPanel::displayStatus()
@@ -187,7 +207,7 @@ void cFrmPanel::displayStatus()
         lblCurrTimer->setText( "" );
         lblNextStatusLen->setText( "" );
     }
-    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
+//    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
 
     // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
     // stilus valtas statuszonkent

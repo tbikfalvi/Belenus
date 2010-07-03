@@ -12,6 +12,7 @@ public:
     ~cDBCassa();
 
     void            load( const unsigned int p_uiId )                   throw( cSevException );
+    void            load()                                              throw( cSevException );
     void            save()                                              throw( cSevException );
     void            remove()                                            throw( cSevException );
     void            createNew()                                         throw();

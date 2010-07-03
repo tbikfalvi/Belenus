@@ -11,58 +11,66 @@ public:
     cPreferences( const QString &p_qsFileName );
     ~cPreferences();
 
-    void          setFileName( const QString &p_qsFileName );
-    QString       getFileName() const;
-    void          setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
-    QString       getVersion() const;
-    void          setLangFilePrefix( const QString &p_qsPrefix );
-    QString       getLangFilePrefix() const;
-    void          setLang( const QString &p_qsLang, bool p_boSaveNow = false );
-    QString       getLang() const;
-    void          setLastUser( const QString &p_qsLastUser, bool p_boSaveNow = false );
-    QString       getLastUser() const;
-    void          setPanelsPerRow( const unsigned int p_uiPanelsPerRow, bool p_boSaveNow = false );
-    unsigned int  getPanelsPerRow() const;
-    unsigned int  getPanelCount() const;
-    void          setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
-                                        const unsigned int p_uiMainWindowTop,
-                                        const unsigned int p_uiMainWindowWidth,
-                                        const unsigned int p_uiMainWindowHeight,
-                                        bool p_boSaveNow = false );
-    unsigned int  getMainWindowLeft() const;
-    unsigned int  getMainWindowTop() const;
-    unsigned int  getMainWindowWidth() const;
-    unsigned int  getMainWindowHeight() const;
-    void          setMainBackground( const QString &p_qsColor, bool p_boSaveNow = false );
-    QString       getMainBackground() const;
-    unsigned int  getLicenceId() const;
-    QString       getClientSerial() const;
-    void          setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
-    QString       getServerAddress() const;
-    void          setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
-    QString       getServerPort() const;
-    void          setCommunicationPort( const int p_inPortNumber, bool p_boSaveNow = false );
-    int           getCommunicationPort() const;
-    void          setBarcodeLength( const int p_inBarcodeLength, bool p_boSaveNow = false );
-    int           getBarcodeLength() const;
-    void          setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow = false );
-    QString       getBarcodePrefix() const;
-    void          setLogLevels( const unsigned int p_uiConLevel,
-                                const unsigned int p_uiDBLevel,
-                                const unsigned int p_uiGUILevel,
-                                bool p_boSaveNow = false );
-    void          getLogLevels( unsigned int *p_poConLevel = NULL,
-                                unsigned int *p_poDBLevel = NULL,
-                                unsigned int *p_poGUILevel = NULL ) const;
-    void          setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
-                               const QString &p_qsUser, const QString &p_qsPwd );
-    void          getDBAccess( QString *p_poHost = NULL, QString *p_poDB = NULL,
-                               QString *p_poUser = NULL, QString *p_poPwd = NULL) const;
+    void            setFileName( const QString &p_qsFileName );
+    QString         getFileName() const;
+    void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
+    QString         getVersion() const;
+    void            setLangFilePrefix( const QString &p_qsPrefix );
+    QString         getLangFilePrefix() const;
+    void            setLang( const QString &p_qsLang, bool p_boSaveNow = false );
+    QString         getLang() const;
+    void            setLastUser( const QString &p_qsLastUser, bool p_boSaveNow = false );
+    QString         getLastUser() const;
+    void            setPanelsPerRow( const unsigned int p_uiPanelsPerRow, bool p_boSaveNow = false );
+    unsigned int    getPanelsPerRow() const;
+    unsigned int    getPanelCount() const;
+    void            setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
+                                          const unsigned int p_uiMainWindowTop,
+                                          const unsigned int p_uiMainWindowWidth,
+                                          const unsigned int p_uiMainWindowHeight,
+                                          bool p_boSaveNow = false );
+    unsigned int    getMainWindowLeft() const;
+    unsigned int    getMainWindowTop() const;
+    unsigned int    getMainWindowWidth() const;
+    unsigned int    getMainWindowHeight() const;
+    void            setMainBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getMainBackground() const;
+    unsigned int    getLicenceId() const;
+    QString         getClientSerial() const;
+    void            setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
+    QString         getServerAddress() const;
+    void            setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
+    QString         getServerPort() const;
+    void            setCommunicationPort( const int p_inPortNumber, bool p_boSaveNow = false );
+    int             getCommunicationPort() const;
+    void            setBarcodeLength( const int p_inBarcodeLength, bool p_boSaveNow = false );
+    int             getBarcodeLength() const;
+    void            setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow = false );
+    QString         getBarcodePrefix() const;
+    void            setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow = false );
+    QString         getCurrencyShort() const;
+    void            setCurrencyLong( const QString &p_qsCurrencyLong, bool p_boSaveNow = false );
+    QString         getCurrencyLong() const;
+    void            setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow = false );
+    QString         getCurrencySeparator() const;
+    void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow = false );
+    unsigned int    getMaxTreatLength() const;
+    void            setLogLevels( const unsigned int p_uiConLevel,
+                                  const unsigned int p_uiDBLevel,
+                                  const unsigned int p_uiGUILevel,
+                                  bool p_boSaveNow = false );
+    void            getLogLevels( unsigned int *p_poConLevel = NULL,
+                                  unsigned int *p_poDBLevel = NULL,
+                                  unsigned int *p_poGUILevel = NULL ) const;
+    void            setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
+                                 const QString &p_qsUser, const QString &p_qsPwd );
+    void            getDBAccess( QString *p_poHost = NULL, QString *p_poDB = NULL,
+                                 QString *p_poUser = NULL, QString *p_poPwd = NULL) const;
 
 
-    void          loadConfFileSettings();
-    void          loadDBSettings() throw (cSevException);
-    void          save() const throw (cSevException);
+    void            loadConfFileSettings();
+    void            loadDBSettings() throw (cSevException);
+    void            save() const throw (cSevException);
 
     unsigned int    postponedPatients() const;
     void            setPostponedPatients( const unsigned int p_uiPostponedPatients );
@@ -91,6 +99,10 @@ private:
     QString         m_qsBarcodePrefix;
     unsigned int    m_uiPostponedPatients;
     unsigned int    m_uiPostponedAttendances;
+    QString         m_qsCurrencyShort;
+    QString         m_qsCurrencyLong;
+    QString         m_qsCurrencySeparator;
+    unsigned int    m_uiMaxTreatLength;
 
     void init();
 };

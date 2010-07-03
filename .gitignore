@@ -1,9 +1,3 @@
-
-
-
-
-
-
 belenus.exe
 BelenusServer.exe
 belenus
@@ -199,6 +193,10 @@ client/ui_dlgpatientcardtypeedit.h
 client/ui_dlgpatientcardedit.h
 client/ui_dlgpatientcardadd.h
 client/ui_dlgpanel.h
+client/ui_dlgserialreg.h
+client/ui_dlgcassa.h
+client/ui_dlgcassaaction.h
+client/ui_dlgpaneluseedit.h
 resources/Thumbs.db
 BelenusServer
 BelenusServer.exe
@@ -235,6 +233,7 @@ belenusserveradmin.ini
 serveradmin/Makefile.Debug
 serveradmin/Makefile.Release
 serveradmin/debug/
+serveradmin/release/
 serveradmin/object_script.BelenusServerAdmin.Debug
 serveradmin/object_script.BelenusServerAdmin.Release
 serveradmin/ui_mainwindow.h
@@ -257,3 +256,4 @@ serveradmin/moc_dlg_mainwindow.o
 serveradmin/moc_qtmysqlquerymodel.cpp
 serveradmin/moc_qtmysqlquerymodel.o
 serveradmin/ui_mainwindow.h
+lang/belenus_hu.qm
