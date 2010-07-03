@@ -256,3 +256,4 @@ serveradmin/moc_dlg_mainwindow.o
 serveradmin/moc_qtmysqlquerymodel.cpp
 serveradmin/moc_qtmysqlquerymodel.o
 serveradmin/ui_mainwindow.h
+lang/belenus_hu.qm
