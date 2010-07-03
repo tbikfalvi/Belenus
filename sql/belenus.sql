@@ -1,6 +1,6 @@
 -- -----------------------------------------------------------------------------------
 --
--- Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+-- Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 --
 -- -----------------------------------------------------------------------------------
 --

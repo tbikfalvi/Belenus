@@ -63,7 +63,7 @@ void cDlgPostponedAttendanceSelect::setupTableView()
 
     cDlgCrud::setupTableView();
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
@@ -82,7 +82,7 @@ void cDlgPostponedAttendanceSelect::refreshTable()
 {
     cTracer obTracer( "cDlgPostponedAttendanceSelect::refreshTable" );
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_qsQuery = "SELECT attendance.attendanceId, patients.name, attendance.date, attendance.length FROM attendance, patients, toBeFilled WHERE attendance.attendanceId>0 AND toBeFilled.patientId=0 AND attendance.patientId=patients.patientId AND attendance.attendanceId=toBeFilled.attendanceId";
     }
