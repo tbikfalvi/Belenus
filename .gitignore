@@ -11,6 +11,7 @@ client/debug/
 client/release/
 client/belenus.pro.user
 client/bs_connection.o
+client/cassa.o
 client/communication_demo.o
 client/connection.o
 client/dbattendance.o
@@ -19,6 +20,8 @@ client/dbcassadenomination.o
 client/dbcassahistory.o
 client/dbconnection.o
 client/dbdenomination.o
+client/dbledger.o
+client/dbledgerdevice.o
 client/dbpanelstatuses.o
 client/dbpaneltypes.o
 client/dbpaneluses.o
@@ -35,15 +38,19 @@ client/dbusercard.o
 client/dbusercardtype.o
 client/dlgattendance.o
 client/dlgattendanceedit.o
+client/dlgcassaaction.o
+client/dlgcassaedit.o
 client/dlgcrud.o
 client/dlghardwaretest.o
 client/dlginputstart.o
 client/dlglogin.o
 client/dlglogs.o
+client/dlgpanelsettings.o
 client/dlgpanelstatuses.o
 client/dlgpanelstatusesedit.o
 client/dlgpaneltypeedit.o
 client/dlgpaneltypes.o
+client/dlgpaneluseedit.o
 client/dlgpatient.o
 client/dlgpatientcard.o
 client/dlgpatientcardadd.o
@@ -71,6 +78,7 @@ client/dlgusercardtypes.o
 client/dlguseredit.o
 client/dlgusers.o
 client/frmpanel.o
+client/ledger.o
 client/main.o
 client/mdipanels.o
 client/packet.o
@@ -89,6 +97,10 @@ client/moc_dlgattendance.cpp
 client/moc_dlgattendance.o
 client/moc_dlgattendanceedit.cpp
 client/moc_dlgattendanceedit.o
+client/moc_dlgcassaaction.cpp
+client/moc_dlgcassaaction.o
+client/moc_dlgcassaedit.cpp
+client/moc_dlgcassaedit.o
 client/moc_dlgcrud.cpp
 client/moc_dlgcrud.o
 client/moc_dlghardwaretest.cpp
@@ -99,6 +111,8 @@ client/moc_dlglogin.cpp
 client/moc_dlglogin.o
 client/moc_dlglogs.cpp
 client/moc_dlglogs.o
+client/moc_dlgpanelsettings.cpp
+client/moc_dlgpanelsettings.o
 client/moc_dlgpanelstatuses.cpp
 client/moc_dlgpanelstatuses.o
 client/moc_dlgpanelstatusesedit.cpp
@@ -107,6 +121,8 @@ client/moc_dlgpaneltypeedit.cpp
 client/moc_dlgpaneltypeedit.o
 client/moc_dlgpaneltypes.cpp
 client/moc_dlgpaneltypes.o
+client/moc_dlgpaneluseedit.cpp
+client/moc_dlgpaneluseedit.o
 client/moc_dlgpatient.cpp
 client/moc_dlgpatient.o
 client/moc_dlgpatientcard.cpp
