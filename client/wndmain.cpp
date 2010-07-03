@@ -757,8 +757,9 @@ void cWndMain::on_action_DeviceSettings_triggered()
 {
     cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanel()+1 );
 
-    obDlgEdit.exec();
-
-    // PANEL FRISSITES !!!!
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        mdiPanels->reload();
+    }
 }
 //====================================================================================

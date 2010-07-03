@@ -17,12 +17,6 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     m_poSortedModel->setSourceModel( m_poModel );
     tbvCrud->setModel( m_poSortedModel );
 
-    m_poBtnSave = new QPushButton( tr( "&Save" ), this );
-    m_poBtnSave->setIcon( QIcon("./resources/40x40_ok.gif") );
-    m_poBtnSave->setFixedHeight( 30 );
-    m_poBtnSave->setIconSize( QSize(20,20) );
-    btbButtons->addButton( m_poBtnSave, QDialogButtonBox::ActionRole );
-
     m_poBtnNew = new QPushButton( tr( "&New" ), this );
     m_poBtnNew->setIcon( QIcon("./resources/40x40_new.gif") );
     m_poBtnNew->setFixedHeight( 30 );
@@ -41,11 +35,17 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     m_poBtnDelete->setIconSize( QSize(20,20) );
     btbButtons->addButton( m_poBtnDelete, QDialogButtonBox::ActionRole );
 
+    m_poBtnSave = new QPushButton( tr( "&Save" ), this );
+    m_poBtnSave->setIcon( QIcon("./resources/40x40_ok.gif") );
+    m_poBtnSave->setFixedHeight( 30 );
+    m_poBtnSave->setIconSize( QSize(20,20) );
+    btbButtons->addButton( m_poBtnSave, QDialogButtonBox::ActionRole );
+
     m_poBtnClose = new QPushButton( tr( "&Close" ), this );
     m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.gif") );
     m_poBtnClose->setFixedHeight( 30 );
     m_poBtnClose->setIconSize( QSize(20,20) );
-    btbButtons->addButton( m_poBtnClose, QDialogButtonBox::AcceptRole );
+    btbButtons->addButton( m_poBtnClose, QDialogButtonBox::RejectRole );
 //    btbButtons->addButton( m_poBtnClose, QDialogButtonBox::ActionRole );
 
     m_poBtnSave->setEnabled( false );

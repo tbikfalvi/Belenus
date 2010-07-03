@@ -23,6 +23,7 @@ public:
     void next();
     void inactivate();
     void activate();
+    void reload();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
