@@ -21,32 +21,41 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     m_poBtnNew->setIcon( QIcon("./resources/40x40_new.gif") );
     m_poBtnNew->setFixedHeight( 30 );
     m_poBtnNew->setIconSize( QSize(20,20) );
+    m_poBtnNew->setDefault( false );
+    m_poBtnNew->setAutoDefault( false );
     btbButtons->addButton( m_poBtnNew, QDialogButtonBox::ActionRole );
 
     m_poBtnEdit = new QPushButton( tr( "&Edit" ), this );
     m_poBtnEdit->setIcon( QIcon("./resources/40x40_edit.gif") );
     m_poBtnEdit->setFixedHeight( 30 );
     m_poBtnEdit->setIconSize( QSize(20,20) );
+    m_poBtnEdit->setDefault( false );
+    m_poBtnEdit->setAutoDefault( false );
     btbButtons->addButton( m_poBtnEdit, QDialogButtonBox::ActionRole );
 
     m_poBtnDelete = new QPushButton( tr( "&Delete" ), this );
     m_poBtnDelete->setIcon( QIcon("./resources/40x40_delete.gif") );
     m_poBtnDelete->setFixedHeight( 30 );
     m_poBtnDelete->setIconSize( QSize(20,20) );
+    m_poBtnDelete->setDefault( false );
+    m_poBtnDelete->setAutoDefault( false );
     btbButtons->addButton( m_poBtnDelete, QDialogButtonBox::ActionRole );
 
     m_poBtnSave = new QPushButton( tr( "&Save" ), this );
     m_poBtnSave->setIcon( QIcon("./resources/40x40_ok.gif") );
     m_poBtnSave->setFixedHeight( 30 );
     m_poBtnSave->setIconSize( QSize(20,20) );
+    m_poBtnSave->setDefault( false );
+    m_poBtnSave->setAutoDefault( false );
     btbButtons->addButton( m_poBtnSave, QDialogButtonBox::ActionRole );
 
     m_poBtnClose = new QPushButton( tr( "&Close" ), this );
     m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.gif") );
     m_poBtnClose->setFixedHeight( 30 );
     m_poBtnClose->setIconSize( QSize(20,20) );
+    m_poBtnClose->setDefault( false );
+    m_poBtnClose->setAutoDefault( false );
     btbButtons->addButton( m_poBtnClose, QDialogButtonBox::RejectRole );
-//    btbButtons->addButton( m_poBtnClose, QDialogButtonBox::ActionRole );
 
     m_poBtnSave->setEnabled( false );
     m_poBtnSave->setVisible( false );
@@ -54,7 +63,6 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     connect( m_poBtnNew, SIGNAL( clicked( bool ) ), this, SLOT( newClicked( bool ) ) );
     connect( m_poBtnDelete, SIGNAL( clicked( bool ) ), this, SLOT( deleteClicked( bool ) ) );
     connect( m_poBtnEdit, SIGNAL( clicked( bool ) ), this, SLOT( editClicked( bool ) ) );
-//    connect( m_poBtnClose, SIGNAL( clicked( bool ) ), this, SLOT( closeClicked( bool ) ) );
 }
 
 cDlgCrud::~cDlgCrud()
