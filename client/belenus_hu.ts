@@ -1209,48 +1209,48 @@ a további adatokat később akarja megadni?</translation>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="10"/>
         <source>Patient Origin List</source>
-        <translation type="unfinished"></translation>
+        <translation>Honnan értesült ...</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="30"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="31"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="32"/>
         <location filename="crud/dlgpatientorigin.cpp" line="38"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="33"/>
         <source>Active</source>
-        <translation type="unfinished">Aktív</translation>
+        <translation>Aktív</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="34"/>
         <source>Archive</source>
-        <translation type="unfinished">Státusz</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="73"/>
         <source>New Patient Origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Új értesülési forrás</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="114"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="115"/>
         <source>Are you sure you want to delete this Patient Origin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos benne, hogy törölni akarja ezt az értesülési forrást?</translation>
     </message>
 </context>
 <context>
@@ -1258,22 +1258,22 @@ a további adatokat később akarja megadni?</translation>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="11"/>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Mentés</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="12"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Mégsem</translation>
+        <translation>&amp;Mégsem</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="45"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="edit/dlgpatientoriginedit.cpp" line="45"/>
         <source>Patient origin cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Értesülési forrás nem lehet üres.</translation>
     </message>
 </context>
 <context>
@@ -1281,49 +1281,49 @@ a további adatokat később akarja megadni?</translation>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="8"/>
         <source>Select actual patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális vendég kiválasztása</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="25"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Név:</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="34"/>
         <source>Unique identifier: </source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi azonosító (TAJ):</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="41"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválaszt</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="46"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="79"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="80"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="81"/>
         <location filename="crud/dlgpatientselect.cpp" line="86"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="82"/>
         <location filename="crud/dlgpatientselect.cpp" line="87"/>
         <source>UniqueId</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi azonosító (TAJ)</translation>
     </message>
 </context>
 <context>
@@ -1331,45 +1331,45 @@ a további adatokat később akarja megadni?</translation>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="24"/>
         <source>Select postponed attendance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ki nem töltött kezelések</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="37"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválaszt</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="42"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="68"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="69"/>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="75"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="70"/>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="76"/>
         <source>Date</source>
-        <translation type="unfinished">Dátum</translation>
+        <translation>Dátum</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="71"/>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="77"/>
         <source>Time</source>
-        <translation type="unfinished">Idő</translation>
+        <translation>Idő</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedattendanceselect.cpp" line="130"/>
         <source>Edit attendance</source>
-        <translation type="unfinished">Kezelés szerkesztése</translation>
+        <translation>Kezelés szerkesztése</translation>
     </message>
 </context>
 <context>
@@ -1377,39 +1377,39 @@ a további adatokat később akarja megadni?</translation>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="10"/>
         <source>Select postponed patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Ki nem töltött vendégadatok</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="43"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválaszt</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="48"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="76"/>
         <source>Id</source>
-        <translation type="unfinished">Id</translation>
+        <translation>Id</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="77"/>
         <source>LicenceId</source>
-        <translation type="unfinished">LiszenszId</translation>
+        <translation>LiszenszId</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="78"/>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="83"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="79"/>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="84"/>
         <source>UniqueId</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi azonosító (TAJ)</translation>
     </message>
 </context>
 <context>
@@ -1417,7 +1417,7 @@ a további adatokat később akarja megadni?</translation>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="98"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Információ</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="99"/>
