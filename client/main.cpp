@@ -154,7 +154,7 @@ int main( int argc, char *argv[] )
         }
 #else
 
-        qsSpalsh += "Starting application in DEMO mode.\n";
+        qsSpalsh += tr("Starting application in DEMO mode.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Demo();

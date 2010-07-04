@@ -341,13 +341,13 @@ void cWndMain::updateTitle()
 
     if( g_obPatient.id() > 0 )
     {
-        qsTitle += " <=> Current patient: [";
+        qsTitle += tr(" <=> Current patient: [");
         qsTitle += QString::fromStdString( g_obPatient.name() );
         qsTitle += "]";
     }
     else
     {
-        qsTitle += " <=> NO PATIENT SELECTED";
+        qsTitle += tr(" <=> NO PATIENT SELECTED");
     }
 
     action_Paneltypes->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
@@ -396,16 +396,23 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
 {
     if( mdiPanels->isPanelWorking() )
     {
-        QMessageBox::warning( this, "Exit", "At least one Panel is still working, please stop them before closing the application." );
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("At least one Panel is still working.\n"
+                                 "Please stop them before closing the application.") );
         p_poEvent->ignore();
     }
     else
     {
-        if( QMessageBox::question( this, "Exit", "Are you sure you want to close the application?",
+        if( QMessageBox::question( this, tr("Attention"),
+                                   tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
             p_poEvent->accept();
+        }
         else
+        {
             p_poEvent->ignore();
+        }
     }
 }
 //====================================================================================
@@ -678,7 +685,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
     obDlgInputStart.init();
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
-
+        // _TO_BE_FINISHED_
     }
 }
 //====================================================================================
@@ -764,7 +771,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inSecond )
 {
-
+    // _TO_BE_FINISHED_
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()

@@ -132,7 +132,7 @@ void cDlgUsers::editClicked( bool )
 
 void cDlgUsers::deleteClicked( bool )
 {
-    if( QMessageBox::question( this, tr( "Confirmation" ),
+    if( QMessageBox::question( this, tr( "Question" ),
                                tr( "Are you sure you want to delete this User?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {

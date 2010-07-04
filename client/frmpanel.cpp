@@ -140,7 +140,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         }
         else
         {
-            lblTitle->setText( "Panel Not Found in Database" );
+            lblTitle->setText( tr("Panel Not Found in Database") );
         }
 
         delete poQuery;

@@ -228,28 +228,6 @@ void cDlgHardwareTest::on_pbRelayRunTest_clicked()
 {
     m_nRelayCount = 1;
     timerRelayTest->start(500);
-/*
-    for( int i=0; i<12+1; i++ )
-    {
-        g_poHardware->setRelayOn( i );
-        g_poHardware->HW_Kezel();
-#ifdef __WIN32__
-        Sleep(500);
-#else
-        sleep( 1 );
-#endif
-    }
-    for( int i=0; i<12+1; i++ )
-    {
-        g_poHardware->setRelayOff( i );
-        g_poHardware->HW_Kezel();
-#ifdef __WIN32__
-        Sleep(500);
-#else
-        sleep( 1 );
-#endif
-    }
-*/
 }
 
 void cDlgHardwareTest::on_pbSwitchRelay01_clicked()

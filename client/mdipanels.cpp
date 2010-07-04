@@ -26,7 +26,10 @@ void cMdiPanels::initPanels()
 
     if( g_poHardware->getPanelCount() < inPanelCount )
     {
-        QMessageBox::warning( this, "Panel count mismatch", QString( "There are more Panels defined in the database than supported by the current hardware. Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
+        QMessageBox::warning( this, tr("Attention"),
+                              tr( "There are more Panels defined in the database\n"
+                                  "than supported by the current hardware.\n"
+                                  "Only %1 panels will be displayed." ).arg( g_poHardware->getPanelCount() ) );
         inPanelCount = g_poHardware->getPanelCount();
     }
 

@@ -211,6 +211,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 m_poPatientCardType->price();
                 m_poPatientCard->barcode();
                 m_poPatientCard->comment();
+                // _TO_BE_FINISHED_
                 QMessageBox::information( this, "Info", "kartya eladas ..." );
             }
         }
