@@ -2621,99 +2621,99 @@ allergia :</translation>
     <message>
         <location filename="dlgpreferences.ui" line="42"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation> Nyomkövetés </translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="62"/>
         <source>&amp;Console Log Level:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Konzol log szint :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="93"/>
         <location filename="dlgpreferences.ui" line="166"/>
         <location filename="dlgpreferences.ui" line="239"/>
         <source>NONE</source>
-        <translation type="unfinished"></translation>
+        <translation>NONE</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="141"/>
         <source>&amp;DB Log Level:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Adatbázis log szint :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="214"/>
         <source>&amp;GUI Log Level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Program log szint :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="305"/>
         <source>Barcode length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalkód hossza :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="325"/>
         <source>Barcode prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonalkód automatikus előtag :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="352"/>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerver</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="360"/>
         <source>Server Host:</source>
-        <translation type="unfinished"></translation>
+        <translation>IP cím :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="370"/>
         <source>Server Port:</source>
-        <translation type="unfinished"></translation>
+        <translation>Port :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="396"/>
         <source>Hardware</source>
-        <translation type="unfinished"></translation>
+        <translation>Hardver</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="404"/>
         <source>COM Port:</source>
-        <translation type="unfinished"></translation>
+        <translation>COM Port :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="411"/>
         <source>COM</source>
-        <translation type="unfinished"></translation>
+        <translation>COM</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="440"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenés</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="457"/>
         <source>Number of &amp;panels in a row:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy sorban megjelenő &amp;panelok száma :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="477"/>
         <source>Main Window Background Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fő ablak hátterének színe :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="496"/>
         <source>Choose ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon ...</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="276"/>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation> Alkalmazás beállítások </translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="288"/>
         <source>&amp;Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nyelv :</translation>
     </message>
 </context>
 <context>
@@ -2721,17 +2721,17 @@ allergia :</translation>
     <message>
         <location filename="dlgpwdconfirm.ui" line="14"/>
         <source>Password Needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó szükséges</translation>
     </message>
     <message>
         <location filename="dlgpwdconfirm.ui" line="20"/>
         <source>For security reasons you need to provide your own current password to save the changes you made.</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztonsági szempontból kérjük írja be saját jelszavát a jogosultságának ellenőrzéséhez.</translation>
     </message>
     <message>
         <location filename="dlgpwdconfirm.ui" line="38"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó :</translation>
     </message>
 </context>
 <context>
@@ -2739,17 +2739,17 @@ allergia :</translation>
     <message>
         <location filename="dlgreasontovisitedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="dlgreasontovisitedit.ui" line="26"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation>Név :</translation>
     </message>
     <message>
         <location filename="dlgreasontovisitedit.ui" line="49"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Független a stúdiótól</translation>
     </message>
 </context>
 <context>
@@ -2757,22 +2757,22 @@ allergia :</translation>
     <message>
         <location filename="dlgserialreg.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="dlgserialreg.ui" line="26"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="dlgserialreg.ui" line="45"/>
         <source>Serial key</source>
-        <translation type="unfinished"></translation>
+        <translation>Liszensz kulcs</translation>
     </message>
     <message>
         <location filename="dlgserialreg.ui" line="58"/>
         <source>Validate</source>
-        <translation type="unfinished"></translation>
+        <translation>Érvényesítés</translation>
     </message>
 </context>
 <context>
@@ -2780,52 +2780,52 @@ allergia :</translation>
     <message>
         <location filename="dlguseredit.ui" line="14"/>
         <source>Edit User</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználó szerkesztése</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="25"/>
         <source>User Id:</source>
-        <translation type="unfinished"></translation>
+        <translation>Id :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="32"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="39"/>
         <source>Login &amp;Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bejelentkezési &amp;név :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="52"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="66"/>
         <source>Retype Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó megint :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="80"/>
         <source>&amp;Real Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valódi név :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="93"/>
         <source>User &amp;Groups:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Besorolás :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="106"/>
         <source>&amp;Active:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aktív :</translation>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="123"/>
         <source>&amp;Comment:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Megjegyzés :</translation>
     </message>
 </context>
 <context>
@@ -2833,320 +2833,320 @@ allergia :</translation>
     <message>
         <location filename="wndmain.ui" line="14"/>
         <source>Belenus</source>
-        <translation type="unfinished"></translation>
+        <translation>Belenus </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="30"/>
         <source>&amp;System</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rendszer</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="38"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Szerkesztés</translation>
+        <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="42"/>
         <source>Administrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Adminisztrátor</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="66"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nézet</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="76"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Beavatkozás</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="80"/>
         <source>Patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vendég</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="89"/>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="100"/>
         <source>Attendance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezelés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="106"/>
         <source>PatientCard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="127"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszköztár</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="173"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="178"/>
         <source>&amp;Preferences ...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Beállítások ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="183"/>
         <source>&amp;Logs ...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nyomkövetés ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="188"/>
         <source>Log &amp;Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Ki&amp;jelentkezés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="193"/>
         <source>&amp;Users ...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Felhasználók ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="198"/>
         <source>&amp;Hardware test ...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hardver teszt ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="203"/>
         <source>P&amp;anel types ...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gép típusok ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="208"/>
         <source>Patient origin ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Értesülési forrás ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="213"/>
         <source>Reason to visit ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Látogatási ok ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="218"/>
         <source>Start Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép indítás</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="221"/>
         <source>Start Current Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális gép indítása</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="226"/>
         <source>Reset Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép reset</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="229"/>
         <source>Reset Current Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális gép alap helyzetbe állítása</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="234"/>
         <source>DeviceSettings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép beállítások</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="237"/>
         <source>Current Device Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális gép beállításainak szerkesztése</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="242"/>
         <source>Patients ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vendégek ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="247"/>
         <location filename="wndmain.ui" line="276"/>
         <source>Create new ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Létrehozás ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="250"/>
         <source>Create new patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Új vendég felvétele</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="255"/>
         <source>Attendances ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezelések ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="260"/>
         <source>Select actual ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vendég kiválasztás ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="263"/>
         <source>Select actual patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális vendég kiválasztása</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="268"/>
         <source>Deselect actual</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális kiürítés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="271"/>
         <source>Deselect actual patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális vendég kiválasztásának visszavonása</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="279"/>
         <source>Add new attendance for actual patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális vendéghez új kezelés felvétele</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="284"/>
         <source>Cards ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérletek ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="287"/>
         <source>Patient cards</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérletek</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="292"/>
         <source>Use with card ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Géphasználat bérlettel ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="295"/>
         <source>Use device with patient card</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép használat indítása bérlettel</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="300"/>
         <source>Use by time ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Géphasználat ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="303"/>
         <source>Use device with defined time period</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép használat indítása idő megadásával</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="308"/>
         <source>Panel statuses ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép állapotok ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="313"/>
         <source>Card types ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet típusok ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="316"/>
         <source>Patientcard types</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet típusok</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="321"/>
         <source>Save to database ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés adatbázisba ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="326"/>
         <source>Activate existing ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiválás ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="331"/>
         <source>Accounting ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvelés ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="334"/>
         <source>Main accounting</source>
-        <translation type="unfinished"></translation>
+        <translation>Főkönyv</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="339"/>
         <source>Cassa ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pénztár ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="342"/>
         <source>Cassa</source>
-        <translation type="unfinished">Pénztár</translation>
+        <translation>Pénztár</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="347"/>
         <source>Skip status</source>
-        <translation type="unfinished"></translation>
+        <translation>Státusz kihagyása</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="350"/>
         <source>Skip actual status and step to next status</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális státusz kihagyása és ugrás a következő státuszra</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="355"/>
         <location filename="wndmain.ui" line="358"/>
         <source>Sell patientcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérlet eladás</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="363"/>
         <source>Doctor schedule</source>
-        <translation type="unfinished"></translation>
+        <translation>Orvos rendelési idő</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="366"/>
         <source>Schedule of doctor&apos;s consulting hours</source>
-        <translation type="unfinished"></translation>
+        <translation>Orvos rendelési idejének megtekintése / szerkesztése</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="371"/>
         <source>Device schedule</source>
-        <translation type="unfinished"></translation>
+        <translation>Gép előjegyzés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="374"/>
         <source>Schedule of device useability</source>
-        <translation type="unfinished"></translation>
+        <translation>Időpont lefoglalása kezeléshez</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="379"/>
         <location filename="wndmain.ui" line="387"/>
         <source>Fullfill postponed</source>
-        <translation type="unfinished"></translation>
+        <translation>Félrerakott vendégadat</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="382"/>
         <source>Fullfill data for postponed patients</source>
-        <translation type="unfinished"></translation>
+        <translation>Későbbi adatkitöltésre félrerakott vendégek</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="390"/>
         <source>Fullfill data for postponed attendances</source>
-        <translation type="unfinished"></translation>
+        <translation>Későbbi adatkitöltésre félrerakott kezelések</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="395"/>
         <source>Validate Serial key ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Liszensz kulcs érvényesítése ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="400"/>
         <source>Edit actual ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális szerkesztése ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="403"/>
         <source>Edit actual patient</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuális vendég adatainak szerkesztése</translation>
     </message>
 </context>
 </TS>
