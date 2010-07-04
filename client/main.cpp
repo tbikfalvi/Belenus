@@ -61,28 +61,28 @@ int main( int argc, char *argv[] )
     int r = 1;
     try
     {
-        qsSpalsh += "Connecting to database ...";
+        qsSpalsh += QObject::tr("Connecting to database ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
         g_obLogger.setDBConnection( g_poDB );
         g_poPrefs->loadDBSettings();
 
-        qsSpalsh += " CONNECTED.\n";
+        qsSpalsh += QObject::tr(" CONNECTED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_obLogger << cSeverity::INFO;
         g_obLogger << "Belenus Version " << g_poPrefs->getVersion().toStdString() << " started.";
         g_obLogger << cQTLogger::EOM;
 
-        qsSpalsh += "Connecting to Belenus server\n";
+        qsSpalsh += QObject::tr("Connecting to Belenus server\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poServer = new BelenusServerConnection();
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
         g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );
 
-        qsSpalsh += "Waiting for response from Belenus server ";
+        qsSpalsh += QObject::tr("Waiting for response from Belenus server ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         /*int nCount = 0;
@@ -99,16 +99,16 @@ int main( int argc, char *argv[] )
 
 #ifdef __WIN32__
 
-        qsSpalsh += "Checking hardware connection ...";
+        qsSpalsh += QObject::tr("Checking hardware connection ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Serial();
         g_poHardware->init( g_poPrefs->getCommunicationPort() );
         if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
         {
-            qsSpalsh += "FAILED\n";
+            qsSpalsh += QObject::tr("FAILED\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-            qsSpalsh += "Starting application in DEMO mode.\n";
+            qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             delete g_poHardware;
@@ -116,38 +116,38 @@ int main( int argc, char *argv[] )
         }
         else
         {
-            qsSpalsh += "CONNECTED\n";
+            qsSpalsh += QObject::tr("CONNECTED\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += "Initializing hardware device ... ";
+            qsSpalsh += QObject::tr("Initializing hardware device ... ");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
             g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
 
-            qsSpalsh += "FINISHED\n";
+            qsSpalsh += QObject::tr("FINISHED\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += QString("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
+            qsSpalsh += QObject::tr("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += QString("Number of hardware panels: %1\n").arg( g_poHardware->getHardwareModuleCount() );
+            qsSpalsh += QObject::tr("Number of hardware panels: %1\n").arg( g_poHardware->getHardwareModuleCount() );
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += "Checking hardware panels:\n";
+            qsSpalsh += QObject::tr("Checking hardware panels:\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             for( int i=0; i<g_poHardware->getPanelCount(); i++ )
             {
-                qsSpalsh += QString("     Checking hardware panel -%1- ").arg(i+1);
+                qsSpalsh += QObject::tr("     Checking hardware panel -%1- ").arg(i+1);
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
                 if( g_poHardware->checkHardwarePanel( i ) )
                 {
-                    qsSpalsh += " SUCCEEDED\n";
+                    qsSpalsh += QObject::tr(" SUCCEEDED\n");
                     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
                 }
                 else
                 {
-                    qsSpalsh += " FAILED\n";
+                    qsSpalsh += QObject::tr(" FAILED\n");
                     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
                 }
             }
