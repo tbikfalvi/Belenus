@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 belenus.exe
 BelenusServer.exe
 belenus
@@ -61,6 +68,7 @@ client/dlgpatientedit.o
 client/dlgpatientorigin.o
 client/dlgpatientoriginedit.o
 client/dlgpatientselect.o
+client/dlgpostponedattendanceselect.o
 client/dlgpostponedpatientselect.o
 client/dlgpreferences.o
 client/dlgproductedit.o
@@ -143,6 +151,8 @@ client/moc_dlgpatientoriginedit.cpp
 client/moc_dlgpatientoriginedit.o
 client/moc_dlgpatientselect.cpp
 client/moc_dlgpatientselect.o
+client/moc_dlgpostponedattendanceselect.cpp
+client/moc_dlgpostponedattendanceselect.o
 client/moc_dlgpostponedpatientselect.cpp
 client/moc_dlgpostponedpatientselect.o
 client/moc_dlgpreferences.cpp

@@ -762,7 +762,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     }
 }
 //====================================================================================
-void cWndMain::processInputTimePeriod( int p_inSecond )
+void cWndMain::processInputTimePeriod( int /* p_inSecond */ )
 {
 
 }

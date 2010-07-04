@@ -81,7 +81,7 @@ void cLedger::refillPatientCard( unsigned int p_uiPatientCardId )
     m_pLedger->setLedgerTypeId( 3 );
 }
 
-void cLedger::sellingProduct( unsigned int p_uiProductId )
+void cLedger::sellingProduct( unsigned int /* p_uiProductId */ )
 {
     m_pLedger->setLedgerTypeId( 4 );
 }
