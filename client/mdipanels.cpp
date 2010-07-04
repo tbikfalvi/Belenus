@@ -126,6 +126,21 @@ void cMdiPanels::reload()
     m_obPanels.at( m_uiActivePanel )->reload();
 }
 
+int cMdiPanels::mainProcessTime()
+{
+    return m_obPanels.at( m_uiActivePanel )->mainProcessTime();
+}
+
+void cMdiPanels::setMainProcessTime( const int p_inLength )
+{
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength );
+}
+
+void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
+{
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
+}
+
 int cMdiPanels::activePanel()
 {
     return m_uiActivePanel;

@@ -30,15 +30,19 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     lblCurrTimer     = new QLabel( this );
     lblNextStatusLen = new QLabel( this );
     lblInfo          = new QLabel( this );
-    spacer1          = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer1          = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer2          = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer3          = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
     verticalLayout->addWidget( lblTitle );
+    verticalLayout->addItem( spacer1 );
     verticalLayout->addWidget( lblCurrStatus );
+    verticalLayout->addItem( spacer2 );
     verticalLayout->addWidget( lblCurrTimer );
     verticalLayout->addWidget( lblNextStatusLen );
     verticalLayout->addWidget( lblInfo );
-    verticalLayout->addItem( spacer1 );
+    verticalLayout->addItem( spacer3 );
 
     setAutoFillBackground( true );
 
@@ -164,7 +168,6 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     else
     {
         activateNextStatus();
-        displayStatus();
     }
     g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter );
 }
@@ -249,7 +252,10 @@ void cFrmPanel::displayStatus()
     else
     {
         lblCurrStatus->setText( "" );
-        lblCurrTimer->setText( "" );
+        if( m_inMainProcessLength > 0 )
+            lblCurrTimer->setText( QString( "%1:%2" ).arg( m_inMainProcessLength / 60, 2, 10, QChar( '0' ) ).arg( m_inMainProcessLength % 60, 2, 10, QChar( '0' ) ) );
+        else
+            lblCurrTimer->setText( "" );
         lblNextStatusLen->setText( "" );
     }
 //    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
@@ -277,9 +283,22 @@ void cFrmPanel::displayStatus()
     }
     setPalette( obFramePalette );
 
+    QFont   obFont;
+
     lblCurrStatus->setAlignment( Qt::AlignCenter );
+    obFont = lblCurrStatus->font();
+    obFont.setBold( true );
+    obFont.setPixelSize( 18 );
+    lblCurrStatus->setFont( obFont );
+
     lblCurrTimer->setAlignment( Qt::AlignCenter );
+    obFont = lblCurrTimer->font();
+    obFont.setBold( true );
+    obFont.setPixelSize( 30 );
+    lblCurrTimer->setFont( obFont );
+
     lblNextStatusLen->setAlignment( Qt::AlignCenter );
+
     lblInfo->setAlignment( Qt::AlignCenter );
 }
 

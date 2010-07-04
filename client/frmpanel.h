@@ -61,6 +61,8 @@ private:
     QLabel                      *lblNextStatusLen;
     QLabel                      *lblInfo;
     QSpacerItem                 *spacer1;
+    QSpacerItem                 *spacer2;
+    QSpacerItem                 *spacer3;
 
     vector<cDBPanelStatuses*>    m_obStatuses;
 
