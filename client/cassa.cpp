@@ -99,7 +99,7 @@ void cCassa::createNew( unsigned int p_uiUserId )
         obDBCassaHistory.setActive( true );
         obDBCassaHistory.save();
 
-        cassaEnabled();
+        setEnabled();
     }
     catch( cSevException &e )
     {
@@ -139,7 +139,7 @@ void cCassa::cassaReOpen()
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();
 
-    cassaEnabled();
+    setEnabled();
 }
 
 void cCassa::cassaClose()
@@ -159,12 +159,12 @@ void cCassa::cassaClose()
     obDBCassaHistory.save();
 }
 
-void cCassa::cassaEnabled()
+void cCassa::setEnabled()
 {
     m_bCassaEnabled = true;
 }
 
-void cCassa::cassaDisabled()
+void cCassa::setDisabled()
 {
     m_bCassaEnabled = false;
 }

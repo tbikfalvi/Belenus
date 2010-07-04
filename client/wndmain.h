@@ -19,6 +19,11 @@ public:
     bool showLogIn();
     void initPanels();
 
+    void loginUser();
+    void logoutUser();
+
+    void checkDemoLicenceKey();
+
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
     void timerEvent( QTimerEvent *p_poEvent );

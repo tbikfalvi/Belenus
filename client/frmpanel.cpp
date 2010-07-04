@@ -146,6 +146,24 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     m_vrPatientCard.push_back( obTemp );
 }
 
+bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
+{
+    QSqlQuery   *poQuery;
+    bool         bRet = false;
+
+    *p_inPrice = 0;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT usePrice FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
+    if( poQuery->first() )
+    {
+        *p_inPrice = poQuery->value( 0 ).toInt();
+        bRet = true;
+    }
+    if( poQuery ) delete poQuery;
+
+    return bRet;
+}
+
 void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 {
     emit panelClicked( m_uiId - 1 );

@@ -164,115 +164,9 @@ bool cWndMain::showLogIn()
 
         updateTitle();
 
-        if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
-            QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
-                                                               // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
-        {
-            if( QMessageBox::warning( this,
-                                      tr("Attention"),
-                                      tr("The application has no valid serial key registered.\n"
-                                         "The application will only control the hardware with DEMO serial key for 7 days.\n\n"
-                                         "Do you want to enter a valid serial key and register the application?\n"
-                                         "Please note you need live internet connection for the registration process."),
-                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
-            {
-                cDlgSerialReg   obDlgSerialReg( this );
-                obDlgSerialReg.exec();
-            }
-        }
+        checkDemoLicenceKey();
+        loginUser();
 
-        //----------------------------------------------
-        // Penztar betoltese, ellenorzese
-        //----------------------------------------------
-        g_obCassa.init();
-
-        // Penztar ellenorzese
-        if( g_obCassa.isCassaExists() )
-        { // Penztar rekord letezik, utolso bejegyzes betoltve
-
-            // Penztar le van zarva?
-            if( g_obCassa.isCassaClosed() )
-            { // Penztar le van zarva
-
-                // Ugyanaz zarta le az elozo penztarat, aki most be van jelentkezve?
-                if( g_obUser.id() == g_obCassa.cassaOwner() )
-                { // Ugyanaz van bejelentkezve
-
-                    // Uj nap kezdodott, vagy visszajelentkezett
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr( "Do you want to continue the previous cassa record?" ),
-                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    { // Elozo penztar folytatasa
-
-                        g_obCassa.cassaReOpen();
-                    }
-                    else
-                    { // Uj penztar nyitasa
-
-                        g_obCassa.createNew( g_obUser.id() );
-                    }
-                } // Ugyanaz volt bejelentkezve
-                else
-                { // Mas jelentkezett be, uj penztar bejegyzes nyitasa
-
-                    g_obCassa.createNew( g_obUser.id() );
-                } // Mas volt bejelentkezve
-            } // Penztar le volt zarva
-            else
-            { // Penztar nincs lezarva
-
-                // Ugyanaz van bejelentkezve, aki a penztart eddig hasznalta?
-                if( g_obUser.id() != g_obCassa.cassaOwner() )
-                { // Mas jelentkezett be
-
-                    // Be akarja zarni a korabbi penztarat es indit egy ujat?
-                    if( QMessageBox::warning( this, tr("Warning"),
-                                              tr("The last cassa record is assigned to a different user.\n"
-                                                 "You are not able to start new cassa record assigned to you\n"
-                                                 "until the previous is still open.\n\n"
-                                                 "Do you want to close the previous cassa and start a new one?\n\n"
-                                                 "Please note if you don't open a cassa record assigned to you\n"
-                                                 "the application can not record any money related action."),
-                                              QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    { // Korabbi penztar bezarasa, uj nyitasa
-
-                        g_obCassa.cassaClose();
-                        g_obCassa.createNew( g_obUser.id() );
-                    } // Uj penztar nyitva
-                    else
-                    { // Korabbi penztar nem lesz lezarva, penztar szolgaltatasa letiltasa
-
-                        g_obCassa.cassaDisabled();
-                    } // Penztar letiltva
-                } // Mas volt bejelentkezve
-                else
-                { // Ugyanaz jelentkezett be
-
-                    g_obCassa.cassaEnabled();
-                } // Ugyanaz jelentkezett be
-            } // Penztar nem volt lezarva
-        } // Penztar rekord letezett
-        else
-        { // Penztar rekord nem letezik
-
-            if( QMessageBox::critical( this, tr("Question"),
-                                       tr("There is no data recorded in database for cassa.\n\n"
-                                          "Do you want to start cassa recording with the current user?\n\n"
-                                          "Please note the application can not record any money related\n"
-                                          "action without valid cassa data record.\n"
-                                          "If you want to start cassa with different user, please log out\n"
-                                          "and relogin with the desired user account."),
-                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-            { // Elso rekord letrehozasa
-
-                g_obCassa.createNew( g_obUser.id() );
-            } // Elso rekord letrehozva
-            else
-            { // Penztar szolgaltatas letiltasa
-
-                g_obCassa.cassaDisabled();
-            } // Penztar letiltva
-        } // Penztar rekord nem letezett
     } // if ( boLogInOK )
 
     obTrace << boLogInOK;
@@ -282,6 +176,137 @@ bool cWndMain::showLogIn()
 void cWndMain::initPanels()
 {
     mdiPanels->initPanels();
+}
+//====================================================================================
+void cWndMain::checkDemoLicenceKey()
+{
+    if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
+        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
+                                                           // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
+    {
+        if( QMessageBox::warning( this,
+                                  tr("Attention"),
+                                  tr("The application has no valid serial key registered.\n"
+                                     "The application will only control the hardware with DEMO serial key for 7 days.\n\n"
+                                     "Do you want to enter a valid serial key and register the application?\n"
+                                     "Please note you need live internet connection for the registration process."),
+                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+        {
+            cDlgSerialReg   obDlgSerialReg( this );
+            obDlgSerialReg.exec();
+        }
+    }
+}
+//====================================================================================
+void cWndMain::loginUser()
+{
+    //----------------------------------------------
+    // Penztar betoltese, ellenorzese
+    //----------------------------------------------
+    g_obCassa.init();
+
+    // Penztar ellenorzese
+    if( g_obCassa.isCassaExists() )
+    { // Penztar rekord letezik, utolso bejegyzes betoltve
+
+        // Penztar le van zarva?
+        if( g_obCassa.isCassaClosed() )
+        { // Penztar le van zarva
+
+            // Ugyanaz zarta le az elozo penztarat, aki most be van jelentkezve?
+            if( g_obUser.id() == g_obCassa.cassaOwner() )
+            { // Ugyanaz van bejelentkezve
+
+                // Uj nap kezdodott, vagy visszajelentkezett
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr( "Do you want to continue the previous cassa record?" ),
+                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                { // Elozo penztar folytatasa
+
+                    g_obCassa.cassaReOpen();
+                }
+                else
+                { // Uj penztar nyitasa
+
+                    g_obCassa.createNew( g_obUser.id() );
+                }
+            } // Ugyanaz volt bejelentkezve
+            else
+            { // Mas jelentkezett be, uj penztar bejegyzes nyitasa
+
+                g_obCassa.createNew( g_obUser.id() );
+            } // Mas volt bejelentkezve
+        } // Penztar le volt zarva
+        else
+        { // Penztar nincs lezarva
+
+            // Ugyanaz van bejelentkezve, aki a penztart eddig hasznalta?
+            if( g_obUser.id() != g_obCassa.cassaOwner() )
+            { // Mas jelentkezett be
+
+                // Be akarja zarni a korabbi penztarat es indit egy ujat?
+                if( QMessageBox::warning( this, tr("Warning"),
+                                          tr("The last cassa record is assigned to a different user.\n"
+                                             "You are not able to start new cassa record assigned to you\n"
+                                             "until the previous is still open.\n\n"
+                                             "Do you want to close the previous cassa and start a new one?\n\n"
+                                             "Please note if you don't open a cassa record assigned to you\n"
+                                             "the application can not record any money related action."),
+                                          QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                { // Korabbi penztar bezarasa, uj nyitasa
+
+                    g_obCassa.cassaClose();
+                    g_obCassa.createNew( g_obUser.id() );
+                } // Uj penztar nyitva
+                else
+                { // Korabbi penztar nem lesz lezarva, penztar szolgaltatasa letiltasa
+
+                    g_obCassa.setDisabled();
+                } // Penztar letiltva
+            } // Mas volt bejelentkezve
+            else
+            { // Ugyanaz jelentkezett be
+
+                g_obCassa.setEnabled();
+            } // Ugyanaz jelentkezett be
+        } // Penztar nem volt lezarva
+    } // Penztar rekord letezett
+    else
+    { // Penztar rekord nem letezik
+
+        if( QMessageBox::critical( this, tr("Question"),
+                                   tr("There is no data recorded in database for cassa.\n\n"
+                                      "Do you want to start cassa recording with the current user?\n\n"
+                                      "Please note the application can not record any money related\n"
+                                      "action without valid cassa data record.\n"
+                                      "If you want to start cassa with different user, please log out\n"
+                                      "and relogin with the desired user account."),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        { // Elso rekord letrehozasa
+
+            g_obCassa.createNew( g_obUser.id() );
+        } // Elso rekord letrehozva
+        else
+        { // Penztar szolgaltatas letiltasa
+
+            g_obCassa.setDisabled();
+        } // Penztar letiltva
+    } // Penztar rekord nem letezett
+}
+//====================================================================================
+void cWndMain::logoutUser()
+{
+    if( g_obCassa.isCassaEnabled() &&
+        g_obCassa.cassaOwner() == g_obUser.id() )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to close your cassa?"),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            on_action_Cassa_triggered();
+            g_obCassa.cassaClose();
+        }
+    }
 }
 //====================================================================================
 void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
@@ -403,6 +428,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
     }
     else
     {
+        logoutUser();
+
         if( QMessageBox::question( this, tr("Attention"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
@@ -472,13 +499,7 @@ void cWndMain::on_action_LogOut_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Log_Out_triggered" );
 
-    if( QMessageBox::question( this, tr("Question"),
-                               tr("Do you want to close your cassa?"),
-                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        on_action_Cassa_triggered();
-        g_obCassa.cassaClose();
-    }
+    logoutUser();
 
     g_obLogger << cSeverity::INFO;
     g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out";
@@ -706,9 +727,21 @@ void cWndMain::processInputPatient( QString p_stPatientName )
     }
     else
     {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("There is no patient in the database with name like\n\n"
-                              "\'%1\'").arg(p_stPatientName.trimmed()) );
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("There is no patient in the database with name like\n\n"
+                                      "\'%1\'\n\n"
+                                      "Do you want to create a new patient record with this name?").arg(p_stPatientName.trimmed()),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            cDBPatient  obDBPatient;
+
+            obDBPatient.createNew();
+            obDBPatient.setName( p_stPatientName.toStdString() );
+
+            cDlgPatientEdit  obDlgEdit( this, &obDBPatient );
+            obDlgEdit.setWindowTitle( QString::fromStdString( obDBPatient.name() ) );
+            obDlgEdit.exec();
+        }
     }
 }
 //====================================================================================
@@ -769,16 +802,31 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     }
 }
 //====================================================================================
-void cWndMain::processInputTimePeriod( int /* p_inSecond */ )
+void cWndMain::processInputTimePeriod( int p_inSecond )
 {
-    // _TO_BE_FINISHED_
+    int inPrice;
+
+    if( mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice ) )
+    {
+
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("This time period did not saved in the database\n"
+                                 "for the actually selected device.") );
+    }
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
 {
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
     obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
-    obDlgEdit.exec();
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        cDBPostponed    obDBPostponed;
+        obDBPostponed.removePatient( g_obPatient.id() );
+    }
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()

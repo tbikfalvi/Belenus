@@ -76,8 +76,8 @@ void cDlgPatient::newClicked( bool )
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         m_uiSelectedId = poPatient->id();
-        refreshTable();
     }
+    refreshTable();
 
     delete poPatient;
 }
@@ -95,8 +95,10 @@ void cDlgPatient::editClicked( bool )
         obDlgEdit.setWindowTitle( QString::fromStdString( poPatient->name() ) );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
-            refreshTable();
+            cDBPostponed    obDBPostponed;
+            obDBPostponed.removePatient( m_uiSelectedId );
         }
+        refreshTable();
 
         if( poPatient ) delete poPatient;
     }

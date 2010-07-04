@@ -33,6 +33,7 @@ public:
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
+    bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice );
 
 signals:
     void activePanelChanged( bool p_boActiveWorking ) const;

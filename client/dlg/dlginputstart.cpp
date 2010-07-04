@@ -87,7 +87,7 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
         m_bTime = false;
         pbTime->setEnabled( false );
     }
-    if( ledInputStart->text().length() == 0 ||
+    if( ledInputStart->text().length() < g_poPrefs->getBarcodeLength() ||
         ledInputStart->text().contains(' ') )
     {
         m_bCard = false;

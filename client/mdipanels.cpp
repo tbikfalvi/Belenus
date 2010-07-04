@@ -136,6 +136,11 @@ void cMdiPanels::setMainProcessTime( const int p_inLength )
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength );
 }
 
+bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
+{
+    return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice );
+}
+
 void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
 {
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
