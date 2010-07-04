@@ -39,7 +39,7 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
         /*if( m_poPanelStatuses->licenceId() == 0 && m_poPanelStatuses->id() > 0 )
             checkIndependent->setChecked( true );
 
-        if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poPanelStatuses->licenceId() == 0 && m_poPanelStatuses->id() > 0 )

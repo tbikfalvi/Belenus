@@ -20,7 +20,7 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
         if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
             checkIndependent->setChecked( true );
 
-        if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )

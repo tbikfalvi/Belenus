@@ -335,7 +335,7 @@ void cWndMain::updateTitle()
         qsTitle += " - ";
         qsTitle += QString::fromStdString( g_obUser.realName() );
         qsTitle += " [";
-        qsTitle += QString::fromStdString( g_obUser.groups() );
+        qsTitle += cAccessGroup::toStr( g_obUser.group() );
         qsTitle += "]";
     }
 
@@ -350,8 +350,8 @@ void cWndMain::updateTitle()
         qsTitle += " <=> NO PATIENT SELECTED";
     }
 
-    action_Paneltypes->setEnabled( g_obUser.isInGroup( "system" ) );
-    action_PanelStatuses->setEnabled( g_obUser.isInGroup( "admin" ) );
+    action_Paneltypes->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    action_PanelStatuses->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     setWindowTitle( qsTitle );
 
@@ -448,7 +448,7 @@ void cWndMain::on_action_Hardwaretest_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Hardwaretest_triggered" );
 
-    if( g_obUser.isInGroup( "system" ) )
+    if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
         cDlgHardwareTest  obDlgHardwareTest( this );
 

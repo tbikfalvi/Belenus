@@ -1,6 +1,6 @@
 -- -----------------------------------------------------------------------------------
 --
--- Belenus Server alkalmazas ? Pagony Multimedia Studio Bt - 2010
+-- Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 --
 -- -----------------------------------------------------------------------------------
 --
@@ -28,10 +28,10 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `groups`, `active`, `comment`) VALUES
-  ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin,user', 1, 'Gyógycentrum alapértelmezett felhasználója rendszergazdai jogosultságokkal.' );
-INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `groups`, `active`, `comment`) VALUES
-  ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 'user', 1, 'Gyógycentrum alapértelmezett felhasználója alap felhasználói jogosultságokkal' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
+  ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Gyógycentrum alapértelmezett felhasználója rendszergazdai jogosultságokkal.' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
+  ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Gyógycentrum alapértelmezett felhasználója alap felhasználói jogosultságokkal' );
 
 -- -----------------------------------------------------------------------------------
 

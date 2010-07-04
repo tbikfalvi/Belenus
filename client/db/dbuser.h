@@ -2,8 +2,34 @@
 #define DBUSER_H
 
 #include <QSqlRecord>
+#include <QString>
+#include <QObject>
 
 #include "../../framework/sevexception.h"
+
+class cAccessGroup
+{
+public:
+    enum teAccessGroup
+    {
+        MIN = 0,
+        USER,
+        ADMIN,
+        SYSTEM,
+        ROOT,
+        MAX
+    };
+
+    static QString toStr( teAccessGroup p_enGroup ) {
+        switch( p_enGroup ) {
+            case USER:    return QObject::tr( "User" );    break;
+            case ADMIN:   return QObject::tr( "Administrator" );   break;
+            case SYSTEM:  return QObject::tr( "System Administrator" ); break;
+            case ROOT:    return QObject::tr( "God" );    break;
+            default:      return QObject::tr( "Invalid" );
+        }
+    }
+};
 
 class cDBUser
 {
@@ -26,9 +52,9 @@ public:
     void            setPassword( const string &p_stPassword )       throw();
     string          realName() const                                throw();
     void            setRealName( const string &p_stRealName )       throw();
-    string          groups() const                                  throw();
-    void            setGroups( const string &p_stGroups)            throw();
-    bool            isInGroup( const string &p_stGroup ) const      throw();
+    cAccessGroup::teAccessGroup group() const                       throw();
+    void            setGroup( const cAccessGroup::teAccessGroup p_enGroup) throw();
+    bool            isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const  throw();
     bool            active() const                                  throw();
     void            setActive( const bool p_boActive )              throw();
     string          comment() const                                 throw();
@@ -37,20 +63,24 @@ public:
 private:
     bool          m_boLoggedIn;
     unsigned int  m_uiId;
+    unsigned int  m_uiLicenceId;
     string        m_stName;
     string        m_stRealName;
     string        m_stPassword;
-    string        m_stGroups;
+    cAccessGroup::teAccessGroup  m_enGroup;
     bool          m_boActive;
     string        m_stComment;
+    string        m_stArchive;
 
     void init( const unsigned int p_uiId = 0,
+               const unsigned int p_uiLicenceId = 0,
                const string &p_stName = "",
                const string &p_stRealName = "",
                const string &p_stPassword = "",
-               const string &p_stGroups = "",
+               const cAccessGroup::teAccessGroup p_enGroup = cAccessGroup::USER,
                const bool p_boActive = false,
-               const string &p_stComment = "" )        throw();
+               const string &p_stComment = "",
+               const string &p_stArchive = "NEW" )     throw();
     void init( const QSqlRecord &p_obRecord )          throw();
 };
 

@@ -18,8 +18,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
     cbActive->setChecked( true );
-    ledUnits->setEnabled( g_obUser.isInGroup( "admin" ) && !m_poPatientCard->id() );
-    teTimeLeft->setEnabled( g_obUser.isInGroup( "admin" ) && !m_poPatientCard->id() );
+    ledUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
+    teTimeLeft->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
 
     if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
     {
@@ -56,7 +56,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         if( m_poPatientCard->licenceId() == 0 && m_poPatientCard->id() > 0 )
             checkIndependent->setChecked( true );
 
-        if( !g_obUser.isInGroup( "root" ) && !g_obUser.isInGroup( "system" ) )
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poPatientCard->licenceId() == 0 && m_poPatientCard->id() > 0 )

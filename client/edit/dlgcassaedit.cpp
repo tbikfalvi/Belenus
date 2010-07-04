@@ -80,7 +80,7 @@ void cDlgCassaEdit::setupTableView()
     connect( tbvCassa->selectionModel(), SIGNAL( selectionChanged( const QItemSelection &, const QItemSelection & ) ),
              this, SLOT( itemSelectionChanged( const QItemSelection &, const QItemSelection & ) ) );
 
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
@@ -99,7 +99,7 @@ void cDlgCassaEdit::setupTableView()
 
 void cDlgCassaEdit::refreshTable()
 {
-    if( g_obUser.isInGroup( "root" ) )
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         m_qsQuery = QString( "SELECT cassadenominations.denominationId, cassadenominations.licenceId, denominations.denomination, cassadenominations.value, denominations.comment, cassadenominations.archive FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
     }
