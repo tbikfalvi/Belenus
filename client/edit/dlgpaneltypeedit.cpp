@@ -15,7 +15,7 @@ cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPa
 
     if( m_poPanelTypes )
     {
-        ledNameVal->setText( QString::fromStdString(m_poPanelTypes->name()) );
+        ledNameVal->setText( m_poPanelTypes->name() );
     }
 }
 
@@ -36,7 +36,7 @@ void cDlgPanelTypeEdit::on_pbSave_clicked()
     if( boCanBeSaved )
     {
         m_poPanelTypes->setLicenceId( g_poPrefs->getLicenceId() );
-        m_poPanelTypes->setName( ledNameVal->text().toStdString() );
+        m_poPanelTypes->setName( ledNameVal->text() );
         m_poPanelTypes->setActive( true );
         m_poPanelTypes->save();
         QDialog::accept();
