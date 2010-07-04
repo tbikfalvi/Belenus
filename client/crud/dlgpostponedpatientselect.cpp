@@ -24,7 +24,7 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     horizontalLayoutTop->setObjectName( QString::fromUtf8( "horizontalLayoutTop" ) );
     lblName = new QLabel( this );
     lblName->setObjectName( QString::fromUtf8( "lblName" ) );
-    lblName->setText( "Name: " );
+    lblName->setText( tr("Name: ") );
     horizontalLayoutTop->addWidget( lblName );
     ledName = new QLineEdit( this );
     ledName->setObjectName( QString::fromUtf8( "ledName" ) );
@@ -33,7 +33,7 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     horizontalLayoutTop->addItem( horizontalSpacerTop );
     lblUniqueId = new QLabel( this );
     lblUniqueId->setObjectName( QString::fromUtf8( "lblUniqueId" ) );
-    lblUniqueId->setText( "Unique identifier: " );
+    lblUniqueId->setText( tr("Unique identifier: ") );
     horizontalLayoutTop->addWidget( lblUniqueId );
     ledUniqueId = new QLineEdit( this );
     ledUniqueId->setObjectName( QString::fromUtf8( "ledUniqueId" ) );

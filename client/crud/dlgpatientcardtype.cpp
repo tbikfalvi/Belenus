@@ -116,7 +116,7 @@ void cDlgPatientCardType::deleteClicked( bool )
 {
     cDBPatientCardType  *poPatientCardType = NULL;
 
-    if( QMessageBox::question( this, tr( "Confirmation" ),
+    if( QMessageBox::question( this, tr( "Question" ),
                                tr( "Are you sure you want to delete this PatientCard Type?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {

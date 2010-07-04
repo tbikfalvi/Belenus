@@ -14,7 +14,7 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
     lblPatient = new QLabel( this );
     lblPatient->setObjectName( QString::fromUtf8( "lblPatient" ) );
-    lblPatient->setText( "Patient: " );
+    lblPatient->setText( tr("Patient: ") );
     horizontalLayout->addWidget( lblPatient );
     cmbPatient = new QComboBox( this );
     cmbPatient->setObjectName( QString::fromUtf8( "cmbPatient" ) );
@@ -157,7 +157,7 @@ void cDlgAttendance::deleteClicked( bool )
 {
     cDBAttendance  *poAttendance = NULL;
 
-    if( QMessageBox::question( this, tr( "Confirmation" ),
+    if( QMessageBox::question( this, tr( "Question" ),
                                tr( "Are you sure you want to delete this Attendance?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {

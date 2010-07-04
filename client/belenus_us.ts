@@ -119,12 +119,42 @@
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="db/dbuser.h" line="25"/>
+        <source>User</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="db/dbuser.h" line="26"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="db/dbuser.h" line="27"/>
+        <source>System Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="db/dbuser.h" line="28"/>
+        <source>God</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="db/dbuser.h" line="29"/>
+        <source>Invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>cDlgAttendance</name>
     <message>
         <location filename="crud/dlgattendance.cpp" line="10"/>
         <source>Attendance List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendance.cpp" line="17"/>
+        <source>Patient: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -176,7 +206,7 @@
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="160"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -493,7 +523,7 @@ Time value can not be greater than %1 minutes.</source>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="195"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -564,7 +594,7 @@ Time value can not be greater than %1 minutes.</source>
     </message>
     <message>
         <location filename="crud/dlgpanelstatuses.cpp" line="118"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -652,7 +682,7 @@ Please define a different one.</source>
     </message>
     <message>
         <location filename="crud/dlgpaneltypes.cpp" line="112"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -750,7 +780,7 @@ Please define a different one.</source>
     </message>
     <message>
         <location filename="crud/dlgpatient.cpp" line="116"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -832,7 +862,7 @@ Please define a different one.</source>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="170"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1004,7 +1034,7 @@ Press Ignore to skip other error messages.</source>
     </message>
     <message>
         <location filename="crud/dlgpatientcardtype.cpp" line="119"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1163,7 +1193,7 @@ and fill mandatory data later?</source>
     </message>
     <message>
         <location filename="crud/dlgpatientorigin.cpp" line="114"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1299,6 +1329,16 @@ and fill mandatory data later?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="crud/dlgpostponedpatientselect.cpp" line="27"/>
+        <source>Name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpostponedpatientselect.cpp" line="36"/>
+        <source>Unique identifier: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="crud/dlgpostponedpatientselect.cpp" line="43"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
@@ -1407,7 +1447,7 @@ and fill mandatory data later?</source>
     </message>
     <message>
         <location filename="crud/dlgreasontovisit.cpp" line="114"/>
-        <source>Confirmation</source>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1450,28 +1490,28 @@ and fill mandatory data later?</source>
 <context>
     <name>cDlgUserEdit</name>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="44"/>
+        <location filename="edit/dlguseredit.cpp" line="45"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="45"/>
+        <location filename="edit/dlguseredit.cpp" line="46"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="62"/>
-        <location filename="edit/dlguseredit.cpp" line="97"/>
+        <location filename="edit/dlguseredit.cpp" line="63"/>
+        <location filename="edit/dlguseredit.cpp" line="98"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="62"/>
+        <location filename="edit/dlguseredit.cpp" line="63"/>
         <source>Password cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="97"/>
+        <location filename="edit/dlguseredit.cpp" line="98"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1501,18 +1541,41 @@ and fill mandatory data later?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="84"/>
+        <location filename="crud/dlgusers.cpp" line="89"/>
         <source>New User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="130"/>
-        <source>Confirmation</source>
+        <location filename="crud/dlgusers.cpp" line="135"/>
+        <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="131"/>
+        <location filename="crud/dlgusers.cpp" line="136"/>
         <source>Are you sure you want to delete this User?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cFrmPanel</name>
+    <message>
+        <location filename="frmpanel.cpp" line="143"/>
+        <source>Panel Not Found in Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cMdiPanels</name>
+    <message>
+        <location filename="mdipanels.cpp" line="29"/>
+        <source>Attention</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mdipanels.cpp" line="30"/>
+        <source>There are more Panels defined in the database
+than supported by the current hardware.
+Only %1 panels will be displayed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1530,7 +1593,9 @@ and fill mandatory data later?</source>
     </message>
     <message>
         <location filename="wndmain.cpp" line="172"/>
-        <location filename="wndmain.cpp" line="702"/>
+        <location filename="wndmain.cpp" line="399"/>
+        <location filename="wndmain.cpp" line="406"/>
+        <location filename="wndmain.cpp" line="709"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1546,10 +1611,10 @@ Please note you need live internet connection for the registration process.</sou
     <message>
         <location filename="wndmain.cpp" line="202"/>
         <location filename="wndmain.cpp" line="258"/>
-        <location filename="wndmain.cpp" line="468"/>
-        <location filename="wndmain.cpp" line="722"/>
-        <location filename="wndmain.cpp" line="732"/>
-        <location filename="wndmain.cpp" line="752"/>
+        <location filename="wndmain.cpp" line="475"/>
+        <location filename="wndmain.cpp" line="729"/>
+        <location filename="wndmain.cpp" line="739"/>
+        <location filename="wndmain.cpp" line="759"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1593,50 +1658,71 @@ and relogin with the desired user account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="459"/>
+        <location filename="wndmain.cpp" line="344"/>
+        <source> &lt;=&gt; Current patient: [</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="350"/>
+        <source> &lt;=&gt; NO PATIENT SELECTED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="400"/>
+        <source>At least one Panel is still working.
+Please stop them before closing the application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="407"/>
+        <source>Are you sure you want to close the application?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="466"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="460"/>
+        <location filename="wndmain.cpp" line="467"/>
         <source>This area is restricted for system administrators only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="469"/>
+        <location filename="wndmain.cpp" line="476"/>
         <source>Do you want to close your cassa?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="531"/>
+        <location filename="wndmain.cpp" line="538"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="581"/>
+        <location filename="wndmain.cpp" line="588"/>
         <source>New Attendance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="703"/>
+        <location filename="wndmain.cpp" line="710"/>
         <source>There is no patient in the database with name like
 
 &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="723"/>
+        <location filename="wndmain.cpp" line="730"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="733"/>
+        <location filename="wndmain.cpp" line="740"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="753"/>
+        <location filename="wndmain.cpp" line="760"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
@@ -2710,7 +2796,8 @@ allergy :</source>
     </message>
     <message>
         <location filename="dlguseredit.ui" line="93"/>
-        <source>User &amp;Groups:</source>
+        <source>User &amp;Group:</source>
+        <oldsource>User &amp;Groups:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
