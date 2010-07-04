@@ -34,12 +34,21 @@ void cDlgPanelStatuses::setupTableView()
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sequence order" ) );
         m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
         m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+
+        tbvCrud->resizeColumnToContents( 1 );
+        tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "PanelType" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Sequence order" ) );
+
+        tbvCrud->resizeColumnToContents( 1 );
+        tbvCrud->resizeColumnToContents( 2 );
     }
 }
 
@@ -49,11 +58,11 @@ void cDlgPanelStatuses::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.active, panelStatuses.archive FROM panelStatuses, paneltypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
+        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, panelTypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.active, panelStatuses.archive FROM panelStatuses, panelTypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
     else
     {
-        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, paneltypes.name AS panelType, panelStatuses.seqNumber FROM panelStatuses, paneltypes WHERE panelStatuses.active=1 AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
+        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, panelTypes.name AS panelType, panelStatuses.seqNumber FROM panelStatuses, panelTypes WHERE panelStatuses.active=1 AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
 
     cDlgCrud::refreshTable();
@@ -94,7 +103,7 @@ void cDlgPanelStatuses::editClicked( bool )
         poPanelStatuses->load( m_uiSelectedId );
 
         cDlgPanelStatusesEdit  obDlgEdit( this, poPanelStatuses );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPanelStatuses->name() ) );
+        obDlgEdit.setWindowTitle( poPanelStatuses->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();

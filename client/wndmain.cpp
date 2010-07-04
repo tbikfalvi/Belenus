@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -769,7 +769,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     }
 }
 //====================================================================================
-void cWndMain::processInputTimePeriod( int p_inSecond )
+void cWndMain::processInputTimePeriod( int /* p_inSecond */ )
 {
     // _TO_BE_FINISHED_
 }

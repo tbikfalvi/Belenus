@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -29,21 +29,21 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const unsigned int p_uiPanelTypeId,
                              const unsigned int p_uiSequenceNumber,
-                             const string &p_stName,
+                             const QString &p_qsName,
                              const unsigned int p_uiLength,
                              const unsigned int p_uiActivateCommand,
                              const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                             const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPanelTypeId     = p_uiPanelTypeId;
     m_uiSequenceNumber  = p_uiSequenceNumber;
-    m_stName            = p_stName;
+    m_qsName            = p_qsName;
     m_uiLength          = p_uiLength;
     m_uiActivateCommand = p_uiActivateCommand;
     m_bActive           = p_bActive;
-    m_stArchive         = p_stArchive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
@@ -62,11 +62,11 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPanelTypeIdIdx ).toInt(),
           p_obRecord.value( inSequenceNumberIdx ).toInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inLengthIdx ).toInt(),
           p_obRecord.value( inActivateCommandIdx ).toInt(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBPanelStatuses::load( const unsigned int p_uiId ) throw( cSevException )
@@ -82,11 +82,11 @@ void cDBPanelStatuses::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBPanelStatuses::load( const string &p_stName ) throw( cSevException )
+void cDBPanelStatuses::load( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelStatuses::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPanelStatuses::load", "name: \""  + p_qsName.toStdString() + "\"" );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM panelStatuses WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM panelStatuses WHERE name = \"" + p_qsName + "\"" );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Panelstatus name not found" );
@@ -104,25 +104,25 @@ void cDBPanelStatuses::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " panelStatuses SET ";
     qsQuery += QString( "licenceId = %1, " ).arg( m_uiLicenceId );
     qsQuery += QString( "panelTypeId = %1, " ).arg( m_uiPanelTypeId );
     qsQuery += QString( "seqNumber = %1, " ).arg( m_uiSequenceNumber );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString(m_stName) );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "length = %1, " ).arg( m_uiLength );
     qsQuery += QString( "activateCmd = %1, " ).arg( m_uiActivateCommand );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE panelStatusId = %1" ).arg( m_uiId );
@@ -141,7 +141,7 @@ void cDBPanelStatuses::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive != "NEW" )
         {
             qsQuery = "DELETE FROM panelStatuses ";
         }
@@ -196,14 +196,14 @@ void cDBPanelStatuses::setSequenceNumber( const unsigned int p_uiSequenceNumber 
     m_uiSequenceNumber = p_uiSequenceNumber;
 }
 
-string cDBPanelStatuses::name() const throw()
+QString cDBPanelStatuses::name() const throw()
 {
-    return m_stName;
+    return m_qsName;
 }
 
-void cDBPanelStatuses::setName( const string &p_stName ) throw()
+void cDBPanelStatuses::setName( const QString &p_qsName ) throw()
 {
-    m_stName = p_stName;
+    m_qsName = p_qsName;
 }
 
 unsigned int cDBPanelStatuses::length() const throw()
@@ -236,13 +236,13 @@ void cDBPanelStatuses::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBPanelStatuses::archive() const throw()
+QString cDBPanelStatuses::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBPanelStatuses::setArchive( const string &p_stArchive ) throw()
+void cDBPanelStatuses::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

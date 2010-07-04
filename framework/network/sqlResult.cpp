@@ -45,14 +45,14 @@ QVariant SqlResult::headerData( int section, Qt::Orientation orientation, int ro
 
 
 
-int SqlResult::rowCount(const QModelIndex & parent) const
+int SqlResult::rowCount(const QModelIndex & /* parent */) const
 {
     return _data.size();
 }
 
 
 
-int SqlResult::columnCount(const QModelIndex & parent) const
+int SqlResult::columnCount(const QModelIndex & /* parent */ ) const
 {
     return _headers.size();
 }
