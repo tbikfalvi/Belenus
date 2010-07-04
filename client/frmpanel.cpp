@@ -1,7 +1,23 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : frmpanel.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Panelok kezeleset vegzo osztaly
+//====================================================================================
+
 #include <QPalette>
 
 #include "belenus.h"
 #include "frmpanel.h"
+#include "db/dbpatientcard.h"
 
 cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     : QFrame()
@@ -30,11 +46,15 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
 
-    m_uiId      = 0;
-    m_uiType    = 0;
-    m_uiStatus  = 0;
-    m_uiCounter = 0;
-    m_inTimerId = 0;
+    m_uiId                  = 0;
+    m_uiType                = 0;
+    m_uiStatus              = 0;
+    m_uiCounter             = 0;
+    m_inTimerId             = 0;
+
+    m_inMainProcessLength   = 0;
+
+    m_vrPatientCard.clear();
 
     load( p_uiPanelId );
 
@@ -56,6 +76,9 @@ bool cFrmPanel::isWorking() const
 
 void cFrmPanel::start()
 {
+    if( m_inMainProcessLength == 0 )
+        return;
+
     stringstream ssTrace;
     ssTrace << "Id: " << m_uiId;
     cTracer obTrace( "cFrmPanel::start", ssTrace.str() );
@@ -95,6 +118,28 @@ void cFrmPanel::activate()
     QPalette  obNewPalette = lblTitle->palette();
     obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#4387cb" ) ) );
     lblTitle->setPalette( obNewPalette );
+}
+
+int cFrmPanel::mainProcessTime()
+{
+    return m_inMainProcessLength;
+}
+
+void cFrmPanel::setMainProcessTime( const int p_inLength )
+{
+    m_inMainProcessLength += p_inLength;
+}
+
+void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
+{
+    stUsedPatientCard   obTemp;
+
+    obTemp.uiPatientCardId  = p_uiPatientCardId;
+    obTemp.inCountUnits     = p_inCountUnits;
+    obTemp.inUnitTime       = p_inLength;
+
+    m_inMainProcessLength += p_inLength;
+    m_vrPatientCard.push_back( obTemp );
 }
 
 void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
