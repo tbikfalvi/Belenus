@@ -191,7 +191,7 @@ void cFrmPanel::displayStatus()
 {
     if( m_uiStatus )
     {
-        lblCurrStatus->setText( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) );
+        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() );
 
         lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
         unsigned int uiNextLen = 0;

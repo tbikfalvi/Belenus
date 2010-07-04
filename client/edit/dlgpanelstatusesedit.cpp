@@ -18,7 +18,7 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
     {
         QSqlQuery *poQuery;
 
-        ledName->setText( QString::fromStdString( m_poPanelStatuses->name() ) );
+        ledName->setText( m_poPanelStatuses->name() );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
@@ -84,7 +84,7 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
         if( boCanBeSaved )
         {
             m_poPanelStatuses->setLicenceId( g_poPrefs->getLicenceId() );
-            m_poPanelStatuses->setName( ledName->text().toStdString() );
+            m_poPanelStatuses->setName( ledName->text() );
             m_poPanelStatuses->setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toInt() );
             m_poPanelStatuses->setSequenceNumber( sbSeqNumber->value() );
             m_poPanelStatuses->setLength( sbLength->value() );

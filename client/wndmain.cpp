@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //

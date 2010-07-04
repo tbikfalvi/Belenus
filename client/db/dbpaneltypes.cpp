@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -27,15 +27,15 @@ cDBPanelTypes::~cDBPanelTypes()
 
 void cDBPanelTypes::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
-                             const string &p_stName,
+                             const QString &p_qsName,
                              const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                             const QString &p_qsArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
-    m_stName        = p_stName;
+    m_qsName        = p_qsName;
     m_bActive       = p_bActive;
-    m_stArchive     = p_stArchive;
+    m_qsArchive     = p_qsArchive;
 }
 
 void cDBPanelTypes::init( const QSqlRecord &p_obRecord ) throw()
@@ -48,9 +48,9 @@ void cDBPanelTypes::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
@@ -66,11 +66,11 @@ void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBPanelTypes::load( const string &p_stName ) throw( cSevException )
+void cDBPanelTypes::load( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelTypes::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPanelTypes::load", "name: \""  + p_qsName.toStdString() + "\"" );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM panelTypes WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM panelTypes WHERE name = \"" + p_qsName + "\"" );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Paneltype name not found" );
@@ -88,21 +88,21 @@ void cDBPanelTypes::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " panelTypes SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE panelTypeId = %1" ).arg( m_uiId );
@@ -121,7 +121,7 @@ void cDBPanelTypes::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive != "NEW" )
         {
             qsQuery = "DELETE FROM panelTypes ";
         }
@@ -156,14 +156,14 @@ void cDBPanelTypes::setLicenceId( const unsigned int p_uiLicenceId ) throw()
     m_uiLicenceId = p_uiLicenceId;
 }
 
-string cDBPanelTypes::name() const throw()
+QString cDBPanelTypes::name() const throw()
 {
-    return m_stName;
+    return m_qsName;
 }
 
-void cDBPanelTypes::setName( const string &p_stName ) throw()
+void cDBPanelTypes::setName( const QString &p_qsName ) throw()
 {
-    m_stName = p_stName;
+    m_qsName = p_qsName;
 }
 
 bool cDBPanelTypes::active() const throw()
@@ -176,13 +176,12 @@ void cDBPanelTypes::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBPanelTypes::archive() const throw()
+QString cDBPanelTypes::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBPanelTypes::setArchive( const string &p_stArchive ) throw()
+void cDBPanelTypes::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
-
