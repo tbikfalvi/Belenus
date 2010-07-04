@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="hu_HU">
 <context>
@@ -2382,77 +2382,77 @@ allergia :</translation>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="26"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Független a stúdiótól</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="39"/>
         <source>Identification </source>
-        <translation type="unfinished"></translation>
+        <translation> Azonosítás </translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="61"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation>Név :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="75"/>
         <source> Useability </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="87"/>
         <source>Price :</source>
-        <translation type="unfinished"></translation>
+        <translation>Fizetendő :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="113"/>
         <source>Units :</source>
-        <translation type="unfinished"></translation>
+        <translation>Egységek :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="136"/>
         <source>Unit time :</source>
-        <translation type="unfinished"></translation>
+        <translation>Egység idő :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="159"/>
         <source>VAT percent :</source>
-        <translation type="unfinished"></translation>
+        <translation>ÁFA :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="183"/>
         <source>Valid ...</source>
-        <translation type="unfinished"></translation>
+        <translation> Érvényesség </translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="195"/>
         <source>Time interval :</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum (-tól -ig) :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="208"/>
         <source>No days:</source>
-        <translation type="unfinished"></translation>
+        <translation>Napok száma :</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="231"/>
         <source> -&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation> -&gt; </translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="265"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="284"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
@@ -2460,132 +2460,132 @@ allergia :</translation>
     <message>
         <location filename="dlgpatientedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="26"/>
         <source> Identification </source>
-        <translation type="unfinished"></translation>
+        <translation> Azonosítás </translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="38"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation>Név :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="61"/>
         <source>Gender :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="74"/>
         <source>Male</source>
-        <translation type="unfinished"></translation>
+        <translation>Férfi</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="87"/>
         <source>Female</source>
-        <translation type="unfinished"></translation>
+        <translation>Nő</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="100"/>
         <source>Date of birth :</source>
-        <translation type="unfinished"></translation>
+        <translation>Szül. dátum :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="133"/>
         <source>Unique identification :</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi azonosító (TAJ) :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="157"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Független a stúdiótól</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="170"/>
         <source>Finish later ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Befejezés később</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="189"/>
         <source> Address </source>
-        <translation type="unfinished"></translation>
+        <translation> Cím </translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="201"/>
         <source>Country :</source>
-        <translation type="unfinished"></translation>
+        <translation>Ország :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="224"/>
         <source>Region :</source>
-        <translation type="unfinished"></translation>
+        <translation>Megye :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="247"/>
         <source>City: </source>
-        <translation type="unfinished"></translation>
+        <translation>Város :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="270"/>
         <source>Zip :</source>
-        <translation type="unfinished"></translation>
+        <translation>Irányítószám :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="293"/>
         <source>Address :</source>
-        <translation type="unfinished"></translation>
+        <translation>Cím :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="317"/>
         <source> Additional data </source>
-        <translation type="unfinished"></translation>
+        <translation> Egyéb adatok </translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="329"/>
         <source>Phone number :</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefonszám :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="352"/>
         <source>E-Mail address :</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail cím :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="375"/>
         <source>Comment :</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjegyzés :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="399"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="418"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="437"/>
         <source> Statistical data </source>
-        <translation type="unfinished"></translation>
+        <translation> Statisztikai adatok </translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="449"/>
         <source>Place the patient comes from :</source>
-        <translation type="unfinished"></translation>
+        <translation>Honnan értesült a polarizáltfény terápiáról :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="472"/>
         <source>Reason of visit :</source>
-        <translation type="unfinished"></translation>
+        <translation>Milyen célból jött a kezelésre :</translation>
     </message>
     <message>
         <location filename="dlgpatientedit.ui" line="496"/>
         <source>Attendances ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezelések ...</translation>
     </message>
 </context>
 <context>
@@ -2593,17 +2593,17 @@ allergia :</translation>
     <message>
         <location filename="dlgpatientoriginedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <location filename="dlgpatientoriginedit.ui" line="26"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation>Név :</translation>
     </message>
     <message>
         <location filename="dlgpatientoriginedit.ui" line="49"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Független a stúdiótól</translation>
     </message>
 </context>
 <context>
@@ -2616,7 +2616,7 @@ allergia :</translation>
     <message>
         <location filename="dlgpreferences.ui" line="30"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="42"/>
