@@ -38,6 +38,7 @@
 #include "crud/dlgpostponedpatientselect.h"
 #include "crud/dlgpanelsettings.h"
 #include "crud/dlgpostponedattendanceselect.h"
+#include "crud/dlgattendanceselect.h"
 
 //====================================================================================
 
@@ -64,6 +65,8 @@ cWndMain::cWndMain( QWidget *parent )
     cTracer obTrace( "cWndMain::cWndMain" );
 
     setupUi( this );
+
+    g_uiPatientAttendanceId = 0;
 
     mdiPanels = new cMdiPanels( centralwidget );
     verticalLayout->addWidget(mdiPanels);
@@ -114,6 +117,9 @@ cWndMain::cWndMain( QWidget *parent )
     action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
     action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.gif" ) );
     action_EditActualPatient->setIcon( QIcon("./resources/40x40_patientedit.gif") );
+    action_SelectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_select.gif") );
+    action_DeselectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_deselect.gif") );
+    action_EditActualAttendance->setIcon( QIcon("./resources/40x40_attendance_edit.gif") );
 
     menuPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
     menuAttendance->setIcon( QIcon("./resources/40x40_attendance.gif") );
@@ -401,10 +407,18 @@ void cWndMain::updateToolbar()
     action_UseWithCard->setEnabled( true );
     action_UseByTime->setEnabled( true );
 
+    action_SelectActualAttendance->setEnabled( g_uiPatientAttendanceId == 0 && g_obPatient.id()>0 );
+    action_SelectActualAttendance->setVisible( g_uiPatientAttendanceId == 0 );
+    action_DeselectActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
+    action_DeselectActualAttendance->setVisible( g_uiPatientAttendanceId > 0 );
+    action_EditActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
+
     action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
     action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
 
-    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
+                                    g_obPatient.id() > 0 &&
+                                    g_uiPatientAttendanceId > 0 );
     action_DeviceSkipStatus->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
@@ -600,6 +614,7 @@ void cWndMain::on_action_PatientEmpty_triggered()
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obPatient.createNew();
+    g_uiPatientAttendanceId = 0;
     updateTitle();
 }
 //====================================================================================
@@ -841,5 +856,29 @@ void cWndMain::on_action_DeviceSettings_triggered()
     {
         mdiPanels->reload();
     }
+}
+//====================================================================================
+void cWndMain::on_action_SelectActualAttendance_triggered()
+{
+    cDlgAttendanceSelect    obDlgSelect( this );
+
+    obDlgSelect.exec();
+}
+//====================================================================================
+void cWndMain::on_action_DeselectActualAttendance_triggered()
+{
+    g_uiPatientAttendanceId = 0;
+    updateTitle();
+}
+//====================================================================================
+void cWndMain::on_action_EditActualAttendance_triggered()
+{
+    cDBAttendance   obDBAttendance;
+
+    obDBAttendance.load( g_uiPatientAttendanceId );
+
+    cDlgAttendanceEdit  obDlgEdit( this, &obDBAttendance );
+
+    obDlgEdit.exec();
 }
 //====================================================================================

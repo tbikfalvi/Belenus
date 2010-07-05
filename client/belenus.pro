@@ -30,6 +30,10 @@ HEADERS = belenus.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
     ../framework/tracer.h \
+    ../framework/network/sqlResult.h \
+    ../framework/network/protocolException.h \
+    ../framework/network/packet.h \
+    ../framework/network/connection.h \
     crud/dlgpaneltypes.h \
     crud/dlgusers.h \
     crud/dlgpatientorigin.h \
@@ -41,6 +45,9 @@ HEADERS = belenus.h \
     crud/dlgpatientcardtype.h \
     crud/dlgpatientcard.h \
     crud/dlgpostponedpatientselect.h \
+    crud/dlgpanelsettings.h \
+    crud/dlgpostponedattendanceselect.h \
+    crud/dlgattendanceselect.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -85,14 +92,8 @@ HEADERS = belenus.h \
     mdipanels.h \
     preferences.h \
     wndmain.h \
-    ../framework/network/sqlResult.h \
-    ../framework/network/protocolException.h \
-    ../framework/network/packet.h \
-    ../framework/network/connection.h \
     cassa.h \
-    ledger.h \
-    crud/dlgpanelsettings.h \
-    crud/dlgpostponedattendanceselect.h
+    ledger.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -100,6 +101,9 @@ SOURCES = main.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
     ../framework/tracer.cpp \
+    ../framework/network/sqlResult.cpp \
+    ../framework/network/packet.cpp \
+    ../framework/network/connection.cpp \
     crud/dlgpaneltypes.cpp \
     crud/dlgusers.cpp \
     crud/dlgpatientorigin.cpp \
@@ -111,6 +115,9 @@ SOURCES = main.cpp \
     crud/dlgpatientcardtype.cpp \
     crud/dlgpatientcard.cpp \
     crud/dlgpostponedpatientselect.cpp \
+    crud/dlgpanelsettings.cpp \
+    crud/dlgpostponedattendanceselect.cpp \
+    crud/dlgattendanceselect.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
@@ -154,13 +161,8 @@ SOURCES = main.cpp \
     mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp \
-    ../framework/network/sqlResult.cpp \
-    ../framework/network/packet.cpp \
-    ../framework/network/connection.cpp \
     cassa.cpp \
-    ledger.cpp \
-    crud/dlgpanelsettings.cpp \
-    crud/dlgpostponedattendanceselect.cpp
+    ledger.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

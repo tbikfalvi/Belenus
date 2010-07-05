@@ -71,6 +71,9 @@ private slots:
     void on_action_PatientCardSell_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
+    void on_action_SelectActualAttendance_triggered();
+    void on_action_DeselectActualAttendance_triggered();
+    void on_action_EditActualAttendance_triggered();
 };
 
 #endif

@@ -26,6 +26,7 @@ cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
 cDBPatient               g_obPatient;
+unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 
 int main( int argc, char *argv[] )
