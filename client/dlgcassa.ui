@@ -53,38 +53,12 @@
    <property name="title">
     <string> Cassa </string>
    </property>
-   <widget class="QLabel" name="lblStartDate">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>46</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Started :</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblStopDate">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>50</y>
-      <width>50</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Stopped :</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="lblBalance">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>20</y>
-      <width>46</width>
+      <x>300</x>
+      <y>24</y>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -95,10 +69,10 @@
    <widget class="QLabel" name="lblBalanceValue">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>140</width>
-      <height>20</height>
+      <x>369</x>
+      <y>21</y>
+      <width>151</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="font">
@@ -113,52 +87,6 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblOwner">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>70</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Responsible :</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblUser">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>90</y>
-      <width>270</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="dtStartDate">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>20</y>
-      <width>110</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="dtStopDate">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>50</y>
-      <width>110</width>
-      <height>20</height>
-     </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="pbMore">
@@ -182,6 +110,64 @@
     <property name="autoDefault">
      <bool>false</bool>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>188</width>
+      <height>48</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="lblStartDate">
+       <property name="text">
+        <string>Started :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="dtStartDate"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lblStopDate">
+       <property name="text">
+        <string>Stopped :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="dtStopDate"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>371</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="lblOwner">
+       <property name="text">
+        <string>Responsible :</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblUser">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QPushButton" name="pbClose">

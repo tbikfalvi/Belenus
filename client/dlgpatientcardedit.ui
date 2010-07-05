@@ -6,264 +6,171 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>451</width>
+    <width>379</width>
     <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QCheckBox" name="checkIndependent">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>348</y>
-     <width>280</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Independent from the local studio.</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pbCancel">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>60</y>
-     <width>120</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cancel</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>20</width>
-     <height>20</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pbSave">
-   <property name="geometry">
-    <rect>
-     <x>310</x>
-     <y>20</y>
-     <width>120</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ok</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>20</width>
-     <height>20</height>
-    </size>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="gbIdentification">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>281</width>
-     <height>134</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string> Identification </string>
-   </property>
-   <widget class="QLabel" name="lblBarcode">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>60</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Barcode :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="ledBarcode">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>20</y>
-      <width>190</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblCardType">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>70</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Cardtype :</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cmbCardType">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>70</y>
-      <width>190</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblPatient">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>70</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Owner :</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cmbPatient">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>100</y>
-      <width>190</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="cbActive">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>47</y>
-      <width>190</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Active</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="gbInformation">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>150</y>
-     <width>280</width>
-     <height>190</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string> Information </string>
-   </property>
-   <widget class="QLabel" name="lblUnits">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Available units :</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="ledUnits">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>20</y>
-      <width>50</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblTimeLeft">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Time left :</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="teTimeLeft">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>50</y>
-      <width>70</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblValidDate">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Valid till ... :</string>
-    </property>
-   </widget>
-   <widget class="QDateEdit" name="deValidDate">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>80</y>
-      <width>90</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblComment">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Comment :</string>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="pteComment">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>110</y>
-      <width>170</width>
-      <height>70</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="gbIdentification">
+       <property name="title">
+        <string> Identification </string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblBarcode">
+          <property name="text">
+           <string>Barcode :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ledBarcode"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblSpacer">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="cbActive">
+          <property name="text">
+           <string>Active</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblCardType">
+          <property name="text">
+           <string>Cardtype :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="cmbCardType"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblPatient">
+          <property name="text">
+           <string>Owner :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="cmbPatient"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbInformation">
+       <property name="title">
+        <string> Information </string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblUnits">
+          <property name="text">
+           <string>Available units :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ledUnits"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblTimeLeft">
+          <property name="text">
+           <string>Time left :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTimeEdit" name="teTimeLeft"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblValidDate">
+          <property name="text">
+           <string>Valid till ... :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QDateEdit" name="deValidDate"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblComment">
+          <property name="text">
+           <string>Comment :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPlainTextEdit" name="pteComment"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkIndependent">
+       <property name="text">
+        <string>Independent from the local studio.</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pbSave">
+       <property name="text">
+        <string>Ok</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbCancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>248</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <tabstops>
   <tabstop>ledBarcode</tabstop>

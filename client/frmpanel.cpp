@@ -109,6 +109,7 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setUserId( g_obUser.id() );
     m_pDBLedgerDevice->setPanelId( m_uiId );
     m_pDBLedgerDevice->setPatientId( g_obPatient.id() );
+    m_pDBLedgerDevice->setActive( true );
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
