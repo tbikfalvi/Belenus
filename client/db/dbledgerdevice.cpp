@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -29,33 +29,33 @@ void cDBLedgerDevice::init( const unsigned int p_uiId,
                       const unsigned int p_uiLicenceId,
                       const unsigned int p_uiUserId,
                       const unsigned int p_uiPanelId,
-                      const unsigned int p_uiPatientCardId,
+                      const unsigned int p_uiPatientId,
                       const int p_inUnits,
                       const int p_inCash,
                       const int p_inTimeReal,
                       const int p_inTimeLeft,
                       const int p_inTimeCard,
                       const int p_inTimeCash,
-                      const string &p_stLedgerTime,
-                      const string &p_stComment,
+                      const QString &p_qsLedgerTime,
+                      const QString &p_qsComment,
                       const bool p_bActive,
-                      const string &p_stArchive ) throw()
+                      const QString &p_qsArchive ) throw()
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
     m_uiUserId              = p_uiUserId;
     m_uiPanelId             = p_uiPanelId;
-    m_uiPatientCardId       = p_uiPatientCardId;
+    m_uiPatientId           = p_uiPatientId;
     m_inUnits               = p_inUnits;
     m_inCash                = p_inCash;
     m_inTimeReal            = p_inTimeReal;
     m_inTimeLeft            = p_inTimeLeft;
     m_inTimeCard            = p_inTimeCard;
     m_inTimeCash            = p_inTimeCash;
-    m_stLedgerTime          = p_stLedgerTime;
-    m_stComment             = p_stComment;
+    m_qsLedgerTime          = p_qsLedgerTime;
+    m_qsComment             = p_qsComment;
     m_bActive               = p_bActive;
-    m_stArchive             = p_stArchive;
+    m_qsArchive             = p_qsArchive;
 }
 
 void cDBLedgerDevice::init( const QSqlRecord &p_obRecord ) throw()
@@ -64,7 +64,7 @@ void cDBLedgerDevice::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inUserIdIdx             = p_obRecord.indexOf( "userId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
-    int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
+    int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
     int inCashIdx               = p_obRecord.indexOf( "cash" );
     int inTimeRealIdx           = p_obRecord.indexOf( "timeReal" );
@@ -80,17 +80,17 @@ void cDBLedgerDevice::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
-          p_obRecord.value( inPatientCardIdIdx ).toUInt(),
+          p_obRecord.value( inPatientIdIdx ).toUInt(),
           p_obRecord.value( inUnitsIdx ).toInt(),
           p_obRecord.value( inCashIdx ).toInt(),
           p_obRecord.value( inTimeRealIdx ).toInt(),
           p_obRecord.value( inTimeLeftIdx ).toInt(),
           p_obRecord.value( inTimeCardIdx ).toInt(),
           p_obRecord.value( inTimeCashIdx ).toInt(),
-          p_obRecord.value( inLedgerTimeIdx ).toString().toStdString(),
-          p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inLedgerTimeIdx ).toString(),
+          p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBLedgerDevice::load( const unsigned int p_uiId ) throw( cSevException )
@@ -115,30 +115,30 @@ void cDBLedgerDevice::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " ledgerDevice SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
-    qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
+    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "units = \"%1\", " ).arg( m_inUnits );
     qsQuery += QString( "cash = \"%1\", " ).arg( m_inCash );
     qsQuery += QString( "timeReal = \"%1\", " ).arg( m_inTimeReal );
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_inTimeLeft );
     qsQuery += QString( "timeCard = \"%1\", " ).arg( m_inTimeCard );
     qsQuery += QString( "timeCash = \"%1\", " ).arg( m_inTimeCash );
-    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE ledgerDeviceId = %1" ).arg( m_uiId );
@@ -157,7 +157,7 @@ void cDBLedgerDevice::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive == "NEW" )
         {
             qsQuery = "DELETE FROM ledgerDevice ";
         }
@@ -212,14 +212,14 @@ void cDBLedgerDevice::setPanelId( const unsigned int p_nPanelId ) throw()
     m_uiPanelId = p_nPanelId;
 }
 
-unsigned int cDBLedgerDevice::patientCardId() const throw()
+unsigned int cDBLedgerDevice::patientId() const throw()
 {
-    return m_uiPatientCardId;
+    return m_uiPatientId;
 }
 
-void cDBLedgerDevice::setPatientCardId( const unsigned int p_nPatientCardId ) throw()
+void cDBLedgerDevice::setPatientId( const unsigned int p_nPatientId ) throw()
 {
-    m_uiPatientCardId = p_nPatientCardId;
+    m_uiPatientId = p_nPatientId;
 }
 
 int cDBLedgerDevice::units() const throw()
@@ -282,24 +282,24 @@ void cDBLedgerDevice::setTimeCash( const int p_inTimeCash ) throw()
     m_inTimeCash = p_inTimeCash;
 }
 
-string cDBLedgerDevice::ledgerTime() const throw()
+QString cDBLedgerDevice::ledgerTime() const throw()
 {
-    return m_stLedgerTime;
+    return m_qsLedgerTime;
 }
 
-void cDBLedgerDevice::setLedgerTime( const string &p_stLedgerTime ) throw()
+void cDBLedgerDevice::setLedgerTime( const QString &p_qsLedgerTime ) throw()
 {
-    m_stLedgerTime = p_stLedgerTime;
+    m_qsLedgerTime = p_qsLedgerTime;
 }
 
-string cDBLedgerDevice::comment() const throw()
+QString cDBLedgerDevice::comment() const throw()
 {
-    return m_stComment;
+    return m_qsComment;
 }
 
-void cDBLedgerDevice::setComment( const string &p_stComment ) throw()
+void cDBLedgerDevice::setComment( const QString &p_qsComment ) throw()
 {
-    m_stComment = p_stComment;
+    m_qsComment = p_qsComment;
 }
 
 bool cDBLedgerDevice::active() const throw()
@@ -312,13 +312,13 @@ void cDBLedgerDevice::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBLedgerDevice::archive() const throw()
+QString cDBLedgerDevice::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBLedgerDevice::setArchive( const string &p_stArchive ) throw()
+void cDBLedgerDevice::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

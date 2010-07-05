@@ -336,6 +336,10 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 
         p_poEvent->ignore();
     }
+    else if( p_poEvent->key() == Qt::Key_Escape && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) )
+    {
+        mdiPanels->reset();
+    }
 
     QMainWindow::keyPressEvent( p_poEvent );
 }
@@ -808,7 +812,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 
     if( mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice ) )
     {
-
+        mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }
     else
     {

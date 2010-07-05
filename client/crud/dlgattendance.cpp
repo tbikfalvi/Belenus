@@ -24,7 +24,7 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
-    QSqlQuery *poQuery;
+    QSqlQuery *poQuery = NULL;
 
     cmbPatient->addItem( tr("<All patient>"), 0 );
     try

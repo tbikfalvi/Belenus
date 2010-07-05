@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -31,10 +31,10 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
                              const unsigned int p_uiUserId,
                              const int p_inActionValue,
                              const int p_inActionBalance,
-                             const string &p_stActionTime,
-                             const string &p_stComment,
+                             const QString &p_qsActionTime,
+                             const QString &p_qsComment,
                              const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                             const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
@@ -42,10 +42,10 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
     m_uiUserId          = p_uiUserId;
     m_inActionValue     = p_inActionValue;
     m_inActionBalance   = p_inActionBalance;
-    m_stActionTime      = p_stActionTime;
-    m_stComment         = p_stComment;
+    m_qsActionTime      = p_qsActionTime;
+    m_qsComment         = p_qsComment;
     m_bActive           = p_bActive;
-    m_stArchive         = p_stArchive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
@@ -67,10 +67,10 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inActionValueIdx ).toInt(),
           p_obRecord.value( inActionBalanceIdx ).toInt(),
-          p_obRecord.value( inActionTimeIdx ).toString().toStdString(),
-          p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inActionTimeIdx ).toString(),
+          p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBCassaHistory::load( const unsigned int p_uiId ) throw( cSevException )
@@ -95,15 +95,15 @@ void cDBCassaHistory::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " cassaHistory SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
@@ -111,9 +111,9 @@ void cDBCassaHistory::save() throw( cSevException )
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
     qsQuery += QString( "actionBalance = \"%1\", " ).arg( m_inActionBalance );
-    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE cassaHistoryId = %1" ).arg( m_uiId );
@@ -132,7 +132,7 @@ void cDBCassaHistory::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive == "NEW" )
         {
             qsQuery = "DELETE FROM cassaHistory ";
         }
@@ -207,24 +207,24 @@ void cDBCassaHistory::setActionBalance( const int p_inActionBalance ) throw()
     m_inActionBalance = p_inActionBalance;
 }
 
-string cDBCassaHistory::actionTime() const throw()
+QString cDBCassaHistory::actionTime() const throw()
 {
-    return m_stActionTime;
+    return m_qsActionTime;
 }
 
-void cDBCassaHistory::setActionTime( const string &p_stActionTime ) throw()
+void cDBCassaHistory::setActionTime( const QString &p_qsActionTime ) throw()
 {
-    m_stActionTime = p_stActionTime;
+    m_qsActionTime = p_qsActionTime;
 }
 
-string cDBCassaHistory::comment() const throw()
+QString cDBCassaHistory::comment() const throw()
 {
-    return m_stComment;
+    return m_qsComment;
 }
 
-void cDBCassaHistory::setComment( const string &p_stComment ) throw()
+void cDBCassaHistory::setComment( const QString &p_qsComment ) throw()
 {
-    m_stComment = p_stComment;
+    m_qsComment = p_qsComment;
 }
 
 bool cDBCassaHistory::active() const throw()
@@ -237,13 +237,13 @@ void cDBCassaHistory::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBCassaHistory::archive() const throw()
+QString cDBCassaHistory::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBCassaHistory::setArchive( const string &p_stArchive ) throw()
+void cDBCassaHistory::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

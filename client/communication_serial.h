@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas Â© Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -85,6 +85,7 @@ public:
     void setMainActionTime( const int p_nIndex, const int p_nTime );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
+    bool isHardwareStopped( const int p_nIndex );
 
     void HW_Kezel();
 

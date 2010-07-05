@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "db/dbpanelstatuses.h"
+#include "db/dbledgerdevice.h"
 
 typedef struct _used_patientcard
 {
@@ -34,8 +35,10 @@ public:
 
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
+    void            setMainProcessTime( const int p_inLength, const int p_inPrice );
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice );
+    void            cashPayed();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -52,8 +55,11 @@ private:
     int                          m_inTimerId;
     unsigned int                 m_uiPanelOrderCount;
 
+    cDBLedgerDevice             *m_pDBLedgerDevice;
     int                          m_inMainProcessLength;
     vector<stUsedPatientCard>    m_vrPatientCard;
+    int                          m_inCashToPay;
+    bool                         m_bHasToPay;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -64,12 +70,15 @@ private:
     QSpacerItem                 *spacer1;
     QSpacerItem                 *spacer2;
     QSpacerItem                 *spacer3;
+    QSpacerItem                 *spacer4;
 
     vector<cDBPanelStatuses*>    m_obStatuses;
 
     void load( const unsigned int p_uiPanelId );
     void displayStatus();
     void activateNextStatus();
+
+    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 };
 
 #endif // FRMPANEL_H

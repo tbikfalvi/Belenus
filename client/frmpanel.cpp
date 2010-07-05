@@ -32,7 +32,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     lblInfo          = new QLabel( this );
     spacer1          = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer2          = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    spacer3          = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer3          = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer4          = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
     verticalLayout->addWidget( lblTitle );
@@ -41,8 +42,9 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     verticalLayout->addItem( spacer2 );
     verticalLayout->addWidget( lblCurrTimer );
     verticalLayout->addWidget( lblNextStatusLen );
-    verticalLayout->addWidget( lblInfo );
     verticalLayout->addItem( spacer3 );
+    verticalLayout->addWidget( lblInfo );
+    verticalLayout->addItem( spacer4 );
 
     setAutoFillBackground( true );
 
@@ -57,8 +59,14 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inTimerId             = 0;
 
     m_inMainProcessLength   = 0;
+    m_inCashToPay           = 0;
+    m_bHasToPay             = false;
 
     m_vrPatientCard.clear();
+
+    m_pDBLedgerDevice       = new cDBLedgerDevice();
+
+    m_pDBLedgerDevice->createNew();
 
     load( p_uiPanelId );
 
@@ -69,6 +77,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
 cFrmPanel::~cFrmPanel()
 {
     cTracer obTrace( "cFrmPanel::~cFrmPanel" );
+
+    if( m_pDBLedgerDevice ) delete m_pDBLedgerDevice;
 
     for( unsigned int i = 0; i < m_obStatuses.size(); i ++ ) if( m_obStatuses.at( i ) ) delete m_obStatuses.at( i );
 }
@@ -87,6 +97,19 @@ void cFrmPanel::start()
     ssTrace << "Id: " << m_uiId;
     cTracer obTrace( "cFrmPanel::start", ssTrace.str() );
 
+    for( unsigned int i = 0; i < m_obStatuses.size(); i ++ )
+    {
+        if( m_obStatuses.at( i )->activateCommand() == 3 )
+        {
+            m_obStatuses.at( i )->setLength( m_inMainProcessLength );
+        }
+    }
+
+    m_pDBLedgerDevice->setLicenceId( g_poPrefs->getLicenceId() );
+    m_pDBLedgerDevice->setUserId( g_obUser.id() );
+    m_pDBLedgerDevice->setPanelId( m_uiId );
+    m_pDBLedgerDevice->setPatientId( g_obPatient.id() );
+
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
 }
@@ -96,6 +119,12 @@ void cFrmPanel::reset()
     stringstream ssTrace;
     ssTrace << "Id: " << m_uiId;
     cTracer obTrace( "cFrmPanel::reset", ssTrace.str() );
+
+    m_inMainProcessLength = 0;
+    if( !m_bHasToPay )
+    {
+        m_inCashToPay = 0;
+    }
 
     m_uiStatus = m_obStatuses.size() - 1;
     activateNextStatus();
@@ -132,6 +161,19 @@ int cFrmPanel::mainProcessTime()
 void cFrmPanel::setMainProcessTime( const int p_inLength )
 {
     m_inMainProcessLength += p_inLength;
+
+    displayStatus();
+}
+
+void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
+{
+    m_inCashToPay += p_inPrice;
+
+    m_pDBLedgerDevice->setCash( m_inCashToPay );
+    m_pDBLedgerDevice->setTimeCash( m_pDBLedgerDevice->timeCash()+p_inLength );
+    m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
+
+    setMainProcessTime( p_inLength );
 }
 
 void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
@@ -142,8 +184,13 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     obTemp.inCountUnits     = p_inCountUnits;
     obTemp.inUnitTime       = p_inLength;
 
-    m_inMainProcessLength += p_inLength;
     m_vrPatientCard.push_back( obTemp );
+
+    m_pDBLedgerDevice->setUnits( m_pDBLedgerDevice->units()+p_inCountUnits );
+    m_pDBLedgerDevice->setTimeCard( m_pDBLedgerDevice->timeCard()+p_inLength );
+    m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
+
+    setMainProcessTime( p_inLength );
 }
 
 bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
@@ -177,10 +224,22 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
         g_poHardware->setHardwareMovedNextStatus( m_uiId-1 );
         m_uiCounter = 0;
     }
+    if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
+    {
+        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() + tr("\n<< STOPPED >>") );
+    }
+    else
+    {
+        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() );
+    }
 
     if( m_uiCounter )
     {
         m_uiCounter--;
+
+        if( m_uiStatus == 3 )
+            m_inMainProcessLength--;
+
         lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
     }
     else
@@ -264,8 +323,12 @@ void cFrmPanel::displayStatus()
         if( m_uiStatus != m_obStatuses.size() - 1 )
         {
             uiNextLen = m_obStatuses.at( m_uiStatus + 1 )->length();
+            lblNextStatusLen->setText( QString( "%1:%2" ).arg( uiNextLen / 60, 2, 10, QChar( '0' ) ).arg( uiNextLen % 60, 2, 10, QChar( '0' ) ) );
         }
-        lblNextStatusLen->setText( QString( "%1:%2" ).arg( uiNextLen / 60, 2, 10, QChar( '0' ) ).arg( uiNextLen % 60, 2, 10, QChar( '0' ) ) );
+        else
+        {
+            lblNextStatusLen->setText( "" );
+        }
     }
     else
     {
@@ -276,7 +339,15 @@ void cFrmPanel::displayStatus()
             lblCurrTimer->setText( "" );
         lblNextStatusLen->setText( "" );
     }
-//    lblInfo->setText( QString( "Additional Info for status %1" ).arg( QString::fromStdString( m_obStatuses.at( m_uiStatus )->name() ) ) );
+
+    QString qsInfo = "";
+
+    if( m_inCashToPay > 0 )
+    {
+        qsInfo += tr("Cash to pay: ") + convertCurrency( m_inCashToPay, g_poPrefs->getCurrencyShort() );
+    }
+
+    lblInfo->setText( qsInfo );
 
     // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
     // stilus valtas statuszonkent
@@ -306,6 +377,7 @@ void cFrmPanel::displayStatus()
     lblCurrStatus->setAlignment( Qt::AlignCenter );
     obFont = lblCurrStatus->font();
     obFont.setBold( true );
+    obFont.setCapitalization( QFont::AllUppercase );
     obFont.setPixelSize( 18 );
     lblCurrStatus->setFont( obFont );
 
@@ -318,11 +390,53 @@ void cFrmPanel::displayStatus()
     lblNextStatusLen->setAlignment( Qt::AlignCenter );
 
     lblInfo->setAlignment( Qt::AlignCenter );
+    obFont = lblInfo->font();
+    obFont.setBold( true );
+    obFont.setPixelSize( 15 );
+    lblInfo->setFont( obFont );
+}
+
+QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+{
+    QString qsValue = QString::number( p_nCurrencyValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+    qsRet += " " + p_qsCurrency;
+
+    return qsRet;
 }
 
 void cFrmPanel::activateNextStatus()
 {
+    if( m_uiStatus == 3 )
+    {
+        // Kezeles vege
+        if( m_inCashToPay > 0 )
+        {
+            m_bHasToPay = true;
+        }
+        m_pDBLedgerDevice->setTimeLeft( m_inMainProcessLength );
+        m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()-m_inMainProcessLength );
+        if( m_inMainProcessLength > 0 )
+        {
+            m_pDBLedgerDevice->setComment( tr("Device usage stopped after %1 minutes. Unused time: %2 minutes.").arg(m_pDBLedgerDevice->timeReal()).arg(m_pDBLedgerDevice->timeLeft()) );
+        }
+        m_pDBLedgerDevice->save();
+        m_pDBLedgerDevice->createNew();
+    }
+
     m_uiStatus++;
+
     if( m_uiStatus == m_obStatuses.size() )
     {
         m_uiStatus  = 0;
@@ -335,6 +449,14 @@ void cFrmPanel::activateNextStatus()
         m_uiCounter = m_obStatuses.at( m_uiStatus )->length();
         g_poHardware->setCurrentCommand( m_uiId-1, m_obStatuses.at( m_uiStatus )->activateCommand() );
     }
+
+    displayStatus();
+}
+
+void cFrmPanel::cashPayed()
+{
+    m_inCashToPay = 0;
+    m_bHasToPay = false;
 
     displayStatus();
 }

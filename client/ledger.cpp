@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -113,15 +113,12 @@ void cLedger::createNewLedgerDevice(  unsigned int p_uiPanelId )
     m_pLedgerDevice->setPanelId( p_uiPanelId );
 }
 
-void cLedger::prepareLedgerDevice( unsigned int p_uiPatientCardId,
-                                   int p_inUnits,
+void cLedger::prepareLedgerDevice( int p_inUnits,
                                    int p_inCash,
                                    int p_inTimeLength )
 {
-    if( p_uiPatientCardId > 0 )
+    if( p_inUnits > 0 )
     {
-        if( m_pLedgerDevice->patientCardId() == 0 ) m_pLedgerDevice->setPatientCardId( p_uiPatientCardId );
-
         m_pLedgerDevice->setUnits( m_pLedgerDevice->units()+p_inUnits );
         m_pLedgerDevice->setTimeCard( m_pLedgerDevice->timeCard()+p_inTimeLength );
     }
@@ -168,7 +165,7 @@ void cLedger::finishLedgerDevice( int p_inTimeLength,
 
 void cLedger::setLedgerDeviceComment( QString p_qsComment )
 {
-    m_pLedgerDevice->setComment( p_qsComment.toStdString() );
+    m_pLedgerDevice->setComment( p_qsComment );
 }
 
 void cLedger::saveLedgerDevice()

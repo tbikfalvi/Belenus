@@ -1559,8 +1559,19 @@ and fill mandatory data later?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="209"/>
+        <location filename="frmpanel.cpp" line="199"/>
+        <source>
+&lt;&lt; STOPPED &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="238"/>
         <source>Panel Not Found in Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="317"/>
+        <source>Cash to pay: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -32,15 +32,15 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     QString m_qsStart = "";
     QString m_qsStop = "";
 
-    if( QString::fromStdString(obCassa.startDateTime()).length() > 0 )
+    if( obCassa.startDateTime().length() > 0 )
     {
-        m_qsStart = QString::fromStdString(obCassa.startDateTime());
+        m_qsStart = obCassa.startDateTime();
         m_qsStart.truncate( m_qsStart.length()-3 );
         m_qsStart.replace( 10, 1, " " );
     }
-    if( QString::fromStdString(obCassa.stopDateTime()).length() > 0 )
+    if( obCassa.stopDateTime().length() > 0 )
     {
-        m_qsStop = QString::fromStdString(obCassa.stopDateTime());
+        m_qsStop = obCassa.stopDateTime();
         m_qsStop.truncate( m_qsStop.length()-3 );
         m_qsStop.replace( 10, 1, " " );
     }

@@ -1680,9 +1680,21 @@ a további adatokat később akarja megadni?</translation>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="209"/>
+        <location filename="frmpanel.cpp" line="199"/>
+        <source>
+&lt;&lt; STOPPED &gt;&gt;</source>
+        <translation>
+&lt;&lt; SZÜNETEL &gt;&gt;</translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="238"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="317"/>
+        <source>Cash to pay: </source>
+        <translation>Fizetendő : </translation>
     </message>
 </context>
 <context>

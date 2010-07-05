@@ -575,7 +575,7 @@ CREATE TABLE `ledgerDevice` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `userId`                  int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
-  `patientCardId`           int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
   `units`                   int(11)                 NOT NULL,
   `cash`                    int(11)                 NOT NULL,
   `timeReal`                int(11)                 NOT NULL,
@@ -590,5 +590,5 @@ CREATE TABLE `ledgerDevice` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

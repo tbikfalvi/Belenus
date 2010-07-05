@@ -26,14 +26,14 @@ public:
     void            setActionValue( const int p_inActionValue )         throw();
     int             actionBalance() const                               throw();
     void            setActionBalance( const int p_inActionBalance )     throw();
-    string          actionTime() const                                  throw();
-    void            setActionTime( const string &p_stActionTime )       throw();
-    string          comment() const                                     throw();
-    void            setComment( const string &p_stComment )             throw();
+    QString         actionTime() const                                  throw();
+    void            setActionTime( const QString &p_qsActionTime )      throw();
+    QString         comment() const                                     throw();
+    void            setComment( const QString &p_qsComment )            throw();
     bool            active() const                                      throw();
     void            setActive( const bool p_bActive )                   throw();
-    string          archive() const                                     throw();
-    void            setArchive( const string &p_stArchive )             throw();
+    QString         archive() const                                     throw();
+    void            setArchive( const QString &p_qsArchive )            throw();
 
 private:
     unsigned int    m_uiId;
@@ -42,10 +42,10 @@ private:
     unsigned int    m_uiUserId;
     int             m_inActionValue;
     int             m_inActionBalance;
-    string          m_stActionTime;
-    string          m_stComment;
+    QString         m_qsActionTime;
+    QString         m_qsComment;
     bool            m_bActive;
-    string          m_stArchive;
+    QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
@@ -53,10 +53,10 @@ private:
                const unsigned int p_uiUserId = 0,
                const int p_inActionValue = 0,
                const int p_inActionBalance = 0,
-               const string &p_stActionTime = "",
-               const string &p_stComment = "",
+               const QString &p_qsActionTime = "",
+               const QString &p_qsComment = "",
                const bool p_bActive = false,
-               const string &p_stArchive = "NEW" )                  throw();
+               const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };
 

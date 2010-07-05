@@ -22,8 +22,8 @@ public:
     void            setUserId( const unsigned int p_uiUserId )                      throw();
     unsigned int    panelId() const                                                 throw();
     void            setPanelId( const unsigned int p_nPanelId )                     throw();
-    unsigned int    patientCardId() const                                           throw();
-    void            setPatientCardId( const unsigned int p_nPatientCardId )         throw();
+    unsigned int    patientId() const                                               throw();
+    void            setPatientId( const unsigned int p_nPatientId )                 throw();
     int             units() const                                                   throw();
     void            setUnits( const int p_inUnits )                                 throw();
     int             cash() const                                                    throw();
@@ -36,47 +36,47 @@ public:
     void            setTimeCard( const int p_inTimeCard )                           throw();
     int             timeCash() const                                                throw();
     void            setTimeCash( const int p_inTimeCash )                           throw();
-    string          ledgerTime() const                                              throw();
-    void            setLedgerTime( const string &p_stLedgerTime )                   throw();
-    string          comment() const                                                 throw();
-    void            setComment( const string &p_stComment )                         throw();
+    QString         ledgerTime() const                                              throw();
+    void            setLedgerTime( const QString &p_qsLedgerTime )                  throw();
+    QString         comment() const                                                 throw();
+    void            setComment( const QString &p_qsComment )                        throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
-    string          archive() const                                                 throw();
-    void            setArchive( const string &p_stArchive )                         throw();
+    QString         archive() const                                                 throw();
+    void            setArchive( const QString &p_qsArchive )                        throw();
 
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiUserId;
     unsigned int    m_uiPanelId;
-    unsigned int    m_uiPatientCardId;
+    unsigned int    m_uiPatientId;
     int             m_inUnits;
     int             m_inCash;
     int             m_inTimeReal;
     int             m_inTimeLeft;
     int             m_inTimeCard;
     int             m_inTimeCash;
-    string          m_stLedgerTime;
-    string          m_stComment;
+    QString         m_qsLedgerTime;
+    QString         m_qsComment;
     bool            m_bActive;
-    string          m_stArchive;
+    QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiUserId = 0,
                const unsigned int p_uiPanelId = 0,
-               const unsigned int p_uiPatientCardId = 0,
+               const unsigned int p_uiPatientId = 0,
                const int p_inUnits = 0,
                const int p_inCash = 0,
                const int p_inTimeReal = 0,
                const int p_inTimeLeft = 0,
                const int p_inTimeCard = 0,
                const int p_inTimeCash = 0,
-               const string &p_stLedgerTime = "",
-               const string &p_stComment = "",
+               const QString &p_qsLedgerTime = "",
+               const QString &p_qsComment = "",
                const bool p_bActive = false,
-               const string &p_stArchive = "NEW" )                  throw();
+               const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };
 

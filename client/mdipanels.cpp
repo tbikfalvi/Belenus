@@ -136,6 +136,11 @@ void cMdiPanels::setMainProcessTime( const int p_inLength )
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength );
 }
 
+void cMdiPanels::setMainProcessTime( const int p_inLength, const int p_inPrice )
+{
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength, p_inPrice );
+}
+
 bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
 {
     return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice );
@@ -217,4 +222,9 @@ void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
     }
 
     if( inNewPanel >= 0 && inNewPanel < (int)m_obPanels.size() && inNewPanel != (int)m_uiActivePanel ) activatePanel( (unsigned int)inNewPanel );
+}
+
+void cMdiPanels::cashPayed()
+{
+    m_obPanels.at( m_uiActivePanel )->cashPayed();
 }
