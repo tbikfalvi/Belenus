@@ -47,6 +47,7 @@
 #include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
 #include "edit/dlgcassaedit.h"
+#include "edit/dlgpatientcarduse.h"
 
 //====================================================================================
 
@@ -774,7 +775,40 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
         if( obDBPatientCard.active() )
         {
+            if( obDBPatientCard.patientId() != g_obPatient.id() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard has been assigned to a different patient.\n"
+                                              "Are you sure you want to use this patientcard?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+            }
+            cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
 
+            if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+            {
+                cDBAttendance   obDBAttendance;
+                QTime           tCurrent;
+                QTime           tLength;
+                QTime           tNewLength;
+                int             inNewLength;
+                int             inUnits;
+                QString         qsLength;
+
+                obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+
+                obDBAttendance.load( g_uiPatientAttendanceId );
+                tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
+                tLength  = QTime::fromString(qsLength,"mm:ss");
+                inNewLength = tCurrent.minute()*60 + tCurrent.second() +
+                              tLength.minute()*60 + tLength.second();
+                tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
+                obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
+                obDBAttendance.save();
+                mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+            }
         }
         else
         {
@@ -827,6 +861,13 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 
     if( mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice ) )
     {
+        cDBAttendance   obDBAttendance;
+        QTime           tLength;
+
+        obDBAttendance.load( g_uiPatientAttendanceId );
+        tLength = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
+        obDBAttendance.setLength( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
+        obDBAttendance.save();
         mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }
     else

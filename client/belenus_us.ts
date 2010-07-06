@@ -29,92 +29,92 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="64"/>
+        <location filename="main.cpp" line="65"/>
         <source>Connecting to database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="71"/>
+        <location filename="main.cpp" line="72"/>
         <source> CONNECTED.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="78"/>
+        <location filename="main.cpp" line="79"/>
         <source>Connecting to Belenus server
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="85"/>
+        <location filename="main.cpp" line="86"/>
         <source>Waiting for response from Belenus server </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="102"/>
+        <location filename="main.cpp" line="103"/>
         <source>Checking hardware connection ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="109"/>
+        <location filename="main.cpp" line="110"/>
         <source>FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="111"/>
+        <location filename="main.cpp" line="112"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="119"/>
+        <location filename="main.cpp" line="120"/>
         <source>CONNECTED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="122"/>
+        <location filename="main.cpp" line="123"/>
         <source>Initializing hardware device ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="126"/>
+        <location filename="main.cpp" line="127"/>
         <source>FINISHED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="129"/>
+        <location filename="main.cpp" line="130"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="132"/>
+        <location filename="main.cpp" line="133"/>
         <source>Number of hardware panels: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="135"/>
+        <location filename="main.cpp" line="136"/>
         <source>Checking hardware panels:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="140"/>
+        <location filename="main.cpp" line="141"/>
         <source>     Checking hardware panel -%1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="145"/>
+        <location filename="main.cpp" line="146"/>
         <source> SUCCEEDED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="150"/>
+        <location filename="main.cpp" line="151"/>
         <source> FAILED
 </source>
         <translation type="unfinished"></translation>
@@ -262,6 +262,47 @@ Press Ignore to skip other error messages.</source>
         <location filename="edit/dlgattendanceedit.cpp" line="104"/>
         <source>Do you want to add new attendance to database 
 and fill mandatory data later?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgAttendanceSelect</name>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="24"/>
+        <source>Select attendance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="37"/>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="42"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="70"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="71"/>
+        <location filename="crud/dlgattendanceselect.cpp" line="77"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="72"/>
+        <location filename="crud/dlgattendanceselect.cpp" line="78"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendanceselect.cpp" line="73"/>
+        <location filename="crud/dlgattendanceselect.cpp" line="79"/>
+        <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1559,19 +1600,24 @@ and fill mandatory data later?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="199"/>
+        <location filename="frmpanel.cpp" line="230"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="238"/>
+        <location filename="frmpanel.cpp" line="269"/>
         <source>Panel Not Found in Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="317"/>
+        <location filename="frmpanel.cpp" line="348"/>
         <source>Cash to pay: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="frmpanel.cpp" line="433"/>
+        <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1593,24 +1639,24 @@ Only %1 panels will be displayed.</source>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="157"/>
+        <location filename="wndmain.cpp" line="164"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="158"/>
+        <location filename="wndmain.cpp" line="165"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="188"/>
-        <location filename="wndmain.cpp" line="424"/>
-        <location filename="wndmain.cpp" line="433"/>
+        <location filename="wndmain.cpp" line="195"/>
+        <location filename="wndmain.cpp" line="443"/>
+        <location filename="wndmain.cpp" line="452"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="189"/>
+        <location filename="wndmain.cpp" line="196"/>
         <source>The application has no valid serial key registered.
 The application will only control the hardware with DEMO serial key for 7 days.
 
@@ -1619,29 +1665,30 @@ Please note you need live internet connection for the registration process.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="221"/>
-        <location filename="wndmain.cpp" line="277"/>
-        <location filename="wndmain.cpp" line="302"/>
-        <location filename="wndmain.cpp" line="730"/>
-        <location filename="wndmain.cpp" line="762"/>
-        <location filename="wndmain.cpp" line="772"/>
-        <location filename="wndmain.cpp" line="792"/>
+        <location filename="wndmain.cpp" line="228"/>
+        <location filename="wndmain.cpp" line="284"/>
+        <location filename="wndmain.cpp" line="309"/>
+        <location filename="wndmain.cpp" line="750"/>
+        <location filename="wndmain.cpp" line="780"/>
+        <location filename="wndmain.cpp" line="815"/>
+        <location filename="wndmain.cpp" line="825"/>
+        <location filename="wndmain.cpp" line="845"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="222"/>
+        <location filename="wndmain.cpp" line="229"/>
         <source>Do you want to continue the previous cassa record?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="248"/>
-        <location filename="wndmain.cpp" line="815"/>
+        <location filename="wndmain.cpp" line="255"/>
+        <location filename="wndmain.cpp" line="875"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="249"/>
+        <location filename="wndmain.cpp" line="256"/>
         <source>The last cassa record is assigned to a different user.
 You are not able to start new cassa record assigned to you
 until the previous is still open.
@@ -1653,7 +1700,7 @@ the application can not record any money related action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="278"/>
+        <location filename="wndmain.cpp" line="285"/>
         <source>There is no data recorded in database for cassa.
 
 Do you want to start cassa recording with the current user?
@@ -1665,43 +1712,43 @@ and relogin with the desired user account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="347"/>
+        <location filename="wndmain.cpp" line="358"/>
         <source>Belenus </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="369"/>
+        <location filename="wndmain.cpp" line="380"/>
         <source> &lt;=&gt; Current patient: [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="375"/>
+        <location filename="wndmain.cpp" line="386"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="425"/>
+        <location filename="wndmain.cpp" line="444"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="434"/>
+        <location filename="wndmain.cpp" line="453"/>
         <source>Are you sure you want to close the application?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="493"/>
+        <location filename="wndmain.cpp" line="512"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="494"/>
+        <location filename="wndmain.cpp" line="513"/>
         <source>This area is restricted for system administrators only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="731"/>
+        <location filename="wndmain.cpp" line="751"/>
         <source>There is no patient in the database with name like
 
 &apos;%1&apos;
@@ -1710,39 +1757,45 @@ Do you want to create a new patient record with this name?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="816"/>
+        <location filename="wndmain.cpp" line="781"/>
+        <source>This patientcard has been assigned to a different patient.
+Are you sure you want to use this patientcard?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="876"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="303"/>
+        <location filename="wndmain.cpp" line="310"/>
         <source>Do you want to close your cassa?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="559"/>
+        <location filename="wndmain.cpp" line="578"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="609"/>
+        <location filename="wndmain.cpp" line="629"/>
         <source>New Attendance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="763"/>
+        <location filename="wndmain.cpp" line="816"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="773"/>
+        <location filename="wndmain.cpp" line="826"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="793"/>
+        <location filename="wndmain.cpp" line="846"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
@@ -1862,47 +1915,47 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="26"/>
+        <location filename="dlgcassaaction.ui" line="22"/>
         <source>Money :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="55"/>
+        <location filename="dlgcassaaction.ui" line="95"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="77"/>
+        <location filename="dlgcassaaction.ui" line="46"/>
         <source>Create Invoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="90"/>
+        <location filename="dlgcassaaction.ui" line="111"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="112"/>
+        <location filename="dlgcassaaction.ui" line="39"/>
         <source>$</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="125"/>
+        <location filename="dlgcassaaction.ui" line="57"/>
         <source>Cash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="141"/>
+        <location filename="dlgcassaaction.ui" line="67"/>
         <source>Voucher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="154"/>
+        <location filename="dlgcassaaction.ui" line="74"/>
         <source>Credit card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="167"/>
+        <location filename="dlgcassaaction.ui" line="83"/>
         <source>Comment :</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1920,47 +1973,47 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="66"/>
+        <location filename="dlgcassa.ui" line="127"/>
         <source>Started :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="79"/>
+        <location filename="dlgcassa.ui" line="137"/>
         <source>Stopped :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="92"/>
+        <location filename="dlgcassa.ui" line="66"/>
         <source>Balance :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="112"/>
+        <location filename="dlgcassa.ui" line="86"/>
         <source>1,000,000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="128"/>
+        <location filename="dlgcassa.ui" line="159"/>
         <source>Responsible :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="174"/>
+        <location filename="dlgcassa.ui" line="102"/>
         <source>More &gt;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="197"/>
+        <location filename="dlgcassa.ui" line="183"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="219"/>
+        <location filename="dlgcassa.ui" line="205"/>
         <source>Add cash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="241"/>
+        <location filename="dlgcassa.ui" line="227"/>
         <source>Remove cash</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1981,130 +2034,130 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="26"/>
+        <location filename="dlghardwaretest.ui" line="22"/>
         <source> Hardware connection </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="38"/>
+        <location filename="dlghardwaretest.ui" line="54"/>
         <source>Test connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="63"/>
+        <location filename="dlghardwaretest.ui" line="43"/>
         <source>Unknown status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="76"/>
+        <location filename="dlghardwaretest.ui" line="30"/>
         <source>Status :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="89"/>
+        <location filename="dlghardwaretest.ui" line="67"/>
         <source>Reconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="109"/>
+        <location filename="dlghardwaretest.ui" line="474"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="128"/>
+        <location filename="dlghardwaretest.ui" line="85"/>
         <source> Relay test </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="140"/>
+        <location filename="dlghardwaretest.ui" line="439"/>
         <source>Run relay test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="159"/>
-        <location filename="dlghardwaretest.ui" line="172"/>
-        <location filename="dlghardwaretest.ui" line="185"/>
-        <location filename="dlghardwaretest.ui" line="198"/>
-        <location filename="dlghardwaretest.ui" line="211"/>
-        <location filename="dlghardwaretest.ui" line="224"/>
-        <location filename="dlghardwaretest.ui" line="237"/>
-        <location filename="dlghardwaretest.ui" line="250"/>
-        <location filename="dlghardwaretest.ui" line="263"/>
-        <location filename="dlghardwaretest.ui" line="276"/>
-        <location filename="dlghardwaretest.ui" line="289"/>
-        <location filename="dlghardwaretest.ui" line="302"/>
-        <location filename="dlghardwaretest.ui" line="525"/>
-        <location filename="dlghardwaretest.ui" line="541"/>
-        <location filename="dlghardwaretest.ui" line="557"/>
-        <location filename="dlghardwaretest.ui" line="573"/>
-        <location filename="dlghardwaretest.ui" line="589"/>
-        <location filename="dlghardwaretest.ui" line="605"/>
-        <location filename="dlghardwaretest.ui" line="621"/>
-        <location filename="dlghardwaretest.ui" line="637"/>
-        <location filename="dlghardwaretest.ui" line="653"/>
-        <location filename="dlghardwaretest.ui" line="669"/>
-        <location filename="dlghardwaretest.ui" line="685"/>
-        <location filename="dlghardwaretest.ui" line="701"/>
+        <location filename="dlghardwaretest.ui" line="106"/>
+        <location filename="dlghardwaretest.ui" line="116"/>
+        <location filename="dlghardwaretest.ui" line="136"/>
+        <location filename="dlghardwaretest.ui" line="146"/>
+        <location filename="dlghardwaretest.ui" line="166"/>
+        <location filename="dlghardwaretest.ui" line="176"/>
+        <location filename="dlghardwaretest.ui" line="196"/>
+        <location filename="dlghardwaretest.ui" line="206"/>
+        <location filename="dlghardwaretest.ui" line="226"/>
+        <location filename="dlghardwaretest.ui" line="236"/>
+        <location filename="dlghardwaretest.ui" line="256"/>
+        <location filename="dlghardwaretest.ui" line="266"/>
+        <location filename="dlghardwaretest.ui" line="286"/>
+        <location filename="dlghardwaretest.ui" line="296"/>
+        <location filename="dlghardwaretest.ui" line="316"/>
+        <location filename="dlghardwaretest.ui" line="326"/>
+        <location filename="dlghardwaretest.ui" line="346"/>
+        <location filename="dlghardwaretest.ui" line="356"/>
+        <location filename="dlghardwaretest.ui" line="370"/>
+        <location filename="dlghardwaretest.ui" line="380"/>
+        <location filename="dlghardwaretest.ui" line="394"/>
+        <location filename="dlghardwaretest.ui" line="404"/>
+        <location filename="dlghardwaretest.ui" line="418"/>
+        <location filename="dlghardwaretest.ui" line="428"/>
         <source>ON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="321"/>
+        <location filename="dlghardwaretest.ui" line="99"/>
         <source>Relay 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="340"/>
+        <location filename="dlghardwaretest.ui" line="129"/>
         <source>Relay 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="359"/>
+        <location filename="dlghardwaretest.ui" line="159"/>
         <source>Relay 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="378"/>
+        <location filename="dlghardwaretest.ui" line="189"/>
         <source>Relay 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="397"/>
+        <location filename="dlghardwaretest.ui" line="219"/>
         <source>Relay 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="416"/>
+        <location filename="dlghardwaretest.ui" line="249"/>
         <source>Relay 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="435"/>
+        <location filename="dlghardwaretest.ui" line="279"/>
         <source>Relay 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="454"/>
+        <location filename="dlghardwaretest.ui" line="309"/>
         <source>Relay 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="473"/>
+        <location filename="dlghardwaretest.ui" line="339"/>
         <source>Relay 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="486"/>
+        <location filename="dlghardwaretest.ui" line="363"/>
         <source>Relay 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="499"/>
+        <location filename="dlghardwaretest.ui" line="387"/>
         <source>Relay 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="512"/>
+        <location filename="dlghardwaretest.ui" line="411"/>
         <source>Relay 12</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2258,22 +2311,22 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="26"/>
+        <location filename="dlgpaneluseedit.ui" line="64"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="45"/>
+        <location filename="dlgpaneluseedit.ui" line="51"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="96"/>
+        <location filename="dlgpaneluseedit.ui" line="26"/>
         <source>Time :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="109"/>
+        <location filename="dlgpaneluseedit.ui" line="36"/>
         <source>Price :</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2286,22 +2339,22 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardadd.ui" line="26"/>
+        <location filename="dlgpatientcardadd.ui" line="75"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardadd.ui" line="48"/>
+        <location filename="dlgpatientcardadd.ui" line="62"/>
         <source>Save to database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardadd.ui" line="79"/>
+        <location filename="dlgpatientcardadd.ui" line="28"/>
         <source>Barcode to be saved :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardadd.ui" line="109"/>
+        <location filename="dlgpatientcardadd.ui" line="47"/>
         <source>sss</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2314,67 +2367,67 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="26"/>
+        <location filename="dlgpatientcardedit.ui" line="124"/>
         <source>Independent from the local studio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="39"/>
+        <location filename="dlgpatientcardedit.ui" line="148"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="58"/>
+        <location filename="dlgpatientcardedit.ui" line="135"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="77"/>
+        <location filename="dlgpatientcardedit.ui" line="22"/>
         <source> Identification </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="89"/>
+        <location filename="dlgpatientcardedit.ui" line="28"/>
         <source>Barcode :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="112"/>
+        <location filename="dlgpatientcardedit.ui" line="52"/>
         <source>Cardtype :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="135"/>
+        <location filename="dlgpatientcardedit.ui" line="62"/>
         <source>Owner :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="158"/>
+        <location filename="dlgpatientcardedit.ui" line="45"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="172"/>
+        <location filename="dlgpatientcardedit.ui" line="75"/>
         <source> Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="184"/>
+        <location filename="dlgpatientcardedit.ui" line="81"/>
         <source>Available units :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="207"/>
+        <location filename="dlgpatientcardedit.ui" line="91"/>
         <source>Time left :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="230"/>
+        <location filename="dlgpatientcardedit.ui" line="101"/>
         <source>Valid till ... :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="253"/>
+        <location filename="dlgpatientcardedit.ui" line="111"/>
         <source>Comment :</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2387,72 +2440,160 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="26"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="166"/>
         <source>Independent from the local studio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="39"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="22"/>
         <source>Identification </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="61"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="28"/>
         <source>Name :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="75"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="41"/>
         <source> Useability </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="87"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="47"/>
         <source>Price :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="113"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="70"/>
         <source>Units :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="136"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="80"/>
         <source>Unit time :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="159"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="60"/>
         <source>VAT percent :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="183"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="93"/>
         <source>Valid ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="195"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="101"/>
         <source>Time interval :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="208"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="131"/>
         <source>No days:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="231"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="117"/>
         <source> -&gt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="265"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="177"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="284"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="190"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dlgPatientCardUse</name>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="22"/>
+        <source> Identification </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="28"/>
+        <source>Barcode :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="45"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="52"/>
+        <source>Cardtype :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="62"/>
+        <source>Owner :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="75"/>
+        <source> Information </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="81"/>
+        <source>Available units :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="91"/>
+        <source>Time left :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="101"/>
+        <source>Valid till ... :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="111"/>
+        <source>Comment :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="124"/>
+        <source> Using ... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="130"/>
+        <source>Number of units :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="140"/>
+        <source>Time length :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="147"/>
+        <source>mm:ss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="161"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcarduse.ui" line="174"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2879,276 +3020,298 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="106"/>
+        <location filename="wndmain.ui" line="108"/>
         <source>PatientCard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="127"/>
+        <location filename="wndmain.ui" line="129"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="173"/>
+        <location filename="wndmain.ui" line="178"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="178"/>
+        <location filename="wndmain.ui" line="183"/>
         <source>&amp;Preferences ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="183"/>
+        <location filename="wndmain.ui" line="188"/>
         <source>&amp;Logs ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="188"/>
+        <location filename="wndmain.ui" line="193"/>
         <source>Log &amp;Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="193"/>
+        <location filename="wndmain.ui" line="198"/>
         <source>&amp;Users ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="198"/>
+        <location filename="wndmain.ui" line="203"/>
         <source>&amp;Hardware test ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="203"/>
+        <location filename="wndmain.ui" line="208"/>
         <source>P&amp;anel types ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="208"/>
+        <location filename="wndmain.ui" line="213"/>
         <source>Patient origin ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="213"/>
+        <location filename="wndmain.ui" line="218"/>
         <source>Reason to visit ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="218"/>
+        <location filename="wndmain.ui" line="223"/>
         <source>Start Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="221"/>
+        <location filename="wndmain.ui" line="226"/>
         <source>Start Current Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="226"/>
+        <location filename="wndmain.ui" line="231"/>
         <source>Reset Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="229"/>
+        <location filename="wndmain.ui" line="234"/>
         <source>Reset Current Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="234"/>
+        <location filename="wndmain.ui" line="239"/>
         <source>DeviceSettings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="237"/>
+        <location filename="wndmain.ui" line="242"/>
         <source>Current Device Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="242"/>
+        <location filename="wndmain.ui" line="247"/>
         <source>Patients ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="247"/>
-        <location filename="wndmain.ui" line="276"/>
+        <location filename="wndmain.ui" line="252"/>
+        <location filename="wndmain.ui" line="281"/>
         <source>Create new ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="250"/>
+        <location filename="wndmain.ui" line="255"/>
         <source>Create new patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="255"/>
+        <location filename="wndmain.ui" line="260"/>
         <source>Attendances ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="260"/>
+        <location filename="wndmain.ui" line="265"/>
+        <location filename="wndmain.ui" line="413"/>
         <source>Select actual ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="263"/>
+        <location filename="wndmain.ui" line="268"/>
         <source>Select actual patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="268"/>
+        <location filename="wndmain.ui" line="273"/>
         <source>Deselect actual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="271"/>
+        <location filename="wndmain.ui" line="276"/>
         <source>Deselect actual patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="279"/>
+        <location filename="wndmain.ui" line="284"/>
         <source>Add new attendance for actual patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="284"/>
+        <location filename="wndmain.ui" line="289"/>
         <source>Cards ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="287"/>
+        <location filename="wndmain.ui" line="292"/>
         <source>Patient cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="292"/>
+        <location filename="wndmain.ui" line="297"/>
         <source>Use with card ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="295"/>
+        <location filename="wndmain.ui" line="300"/>
         <source>Use device with patient card</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="300"/>
+        <location filename="wndmain.ui" line="305"/>
         <source>Use by time ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="303"/>
+        <location filename="wndmain.ui" line="308"/>
         <source>Use device with defined time period</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="308"/>
+        <location filename="wndmain.ui" line="313"/>
         <source>Panel statuses ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="313"/>
+        <location filename="wndmain.ui" line="318"/>
         <source>Card types ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="316"/>
+        <location filename="wndmain.ui" line="321"/>
         <source>Patientcard types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="321"/>
+        <location filename="wndmain.ui" line="326"/>
         <source>Save to database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="326"/>
+        <location filename="wndmain.ui" line="331"/>
         <source>Activate existing ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="331"/>
+        <location filename="wndmain.ui" line="336"/>
         <source>Accounting ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="334"/>
+        <location filename="wndmain.ui" line="339"/>
         <source>Main accounting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="339"/>
+        <location filename="wndmain.ui" line="344"/>
         <source>Cassa ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="342"/>
+        <location filename="wndmain.ui" line="347"/>
         <source>Cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="347"/>
+        <location filename="wndmain.ui" line="352"/>
         <source>Skip status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="350"/>
+        <location filename="wndmain.ui" line="355"/>
         <source>Skip actual status and step to next status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="355"/>
-        <location filename="wndmain.ui" line="358"/>
+        <location filename="wndmain.ui" line="360"/>
+        <location filename="wndmain.ui" line="363"/>
         <source>Sell patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="363"/>
+        <location filename="wndmain.ui" line="368"/>
         <source>Doctor schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="366"/>
+        <location filename="wndmain.ui" line="371"/>
         <source>Schedule of doctor&apos;s consulting hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="371"/>
+        <location filename="wndmain.ui" line="376"/>
         <source>Device schedule</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="374"/>
+        <location filename="wndmain.ui" line="379"/>
         <source>Schedule of device useability</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="379"/>
-        <location filename="wndmain.ui" line="387"/>
+        <location filename="wndmain.ui" line="384"/>
+        <location filename="wndmain.ui" line="392"/>
         <source>Fullfill postponed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="382"/>
+        <location filename="wndmain.ui" line="387"/>
         <source>Fullfill data for postponed patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="390"/>
+        <location filename="wndmain.ui" line="395"/>
         <source>Fullfill data for postponed attendances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="395"/>
+        <location filename="wndmain.ui" line="400"/>
         <source>Validate Serial key ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="400"/>
+        <location filename="wndmain.ui" line="405"/>
+        <location filename="wndmain.ui" line="429"/>
         <source>Edit actual ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="403"/>
+        <location filename="wndmain.ui" line="408"/>
         <source>Edit actual patient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="416"/>
+        <source>Select actual attendance for actual patient.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="421"/>
+        <source>Deselect actual ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="424"/>
+        <source>Deselect actual attendance of actual patient.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="432"/>
+        <source>Edit actual attendance of actual patient.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -20,7 +20,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgserialreg.ui \
     dlgcassa.ui \
     dlgcassaaction.ui \
-    dlgpaneluseedit.ui
+    dlgpaneluseedit.ui \
+    dlgpatientcarduse.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -85,6 +86,7 @@ HEADERS = belenus.h \
     edit/dlgpatientcardedit.h \
     edit/dlgcassaedit.h \
     edit/dlgpaneluseedit.h \
+    edit/dlgpatientcarduse.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -155,6 +157,7 @@ SOURCES = main.cpp \
     edit/dlgpatientcardedit.cpp \
     edit/dlgcassaedit.cpp \
     edit/dlgpaneluseedit.cpp \
+    edit/dlgpatientcarduse.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \

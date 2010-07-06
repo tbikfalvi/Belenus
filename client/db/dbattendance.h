@@ -20,10 +20,10 @@ public:
     void            setLicenceId( const unsigned int p_nLicenceId )     throw();
     unsigned int    patientId() const                                   throw();
     void            setPatientId( const unsigned int p_nPatientId )     throw();
-    string          date() const                                        throw();
-    void            setDate( const string &p_stDate )                   throw();
-    string          length() const                                      throw();
-    void            setLength( const string &p_stLength )               throw();
+    QString         date() const                                        throw();
+    void            setDate( const QString &p_qsDate )                  throw();
+    QString         length() const                                      throw();
+    void            setLength( const QString &p_qsLength )              throw();
     int             weight() const                                      throw();
     void            setWeight( const int p_nWeight )                    throw();
     int             height() const                                      throw();
@@ -36,51 +36,51 @@ public:
     void            setBloodPressureStop( const float p_fBPStop )       throw();
     float           pulseStop()                                         throw();
     void            setPulseStop( const float p_fPulseStop )            throw();
-    string          medicineCurrent()                                   throw();
-    void            setMedicineCurrent( const string &p_stMedicineC )   throw();
-    string          medicineAllergy()                                   throw();
-    void            setMedicineAllergy( const string &p_stMedicineA )   throw();
-    string          comment() const                                     throw();
-    void            setComment( const string &p_stComment )             throw();
+    QString         medicineCurrent()                                   throw();
+    void            setMedicineCurrent( const QString &p_qsMedicineC )  throw();
+    QString         medicineAllergy()                                   throw();
+    void            setMedicineAllergy( const QString &p_qsMedicineA )  throw();
+    QString         comment() const                                     throw();
+    void            setComment( const QString &p_qsComment )            throw();
     bool            active() const                                      throw();
     void            setActive( const bool p_bActive )                   throw();
-    string          archive() const                                     throw();
-    void            setArchive( const string &p_stArchive )             throw();
+    QString         archive() const                                     throw();
+    void            setArchive( const QString &p_qsArchive )            throw();
 
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientId;
-    string          m_stDate;
-    string          m_stLength;
+    QString         m_qsDate;
+    QString         m_qsLength;
     int             m_nWeight;
     int             m_nHeight;
     float           m_fBloodPressureStart;
     float           m_fPulseStart;
     float           m_fBloodPressureStop;
     float           m_fPulseStop;
-    string          m_stMedicineCurrent;
-    string          m_stMedicineAllergy;
-    string          m_stComment;
+    QString         m_qsMedicineCurrent;
+    QString         m_qsMedicineAllergy;
+    QString         m_qsComment;
     bool            m_bActive;
-    string          m_stArchive;
+    QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientId = 0,
-               const string &p_stDate = "1900-01-01",
-               const string &p_stLength = "00:00",
+               const QString &p_qsDate = "1900-01-01",
+               const QString &p_qsLength = "00:00",
                const int p_nWeight = 0,
                const int p_nHeight = 0,
                const float p_fBloodPressureStart = 0,
                const float p_fPulseStart = 0,
                const float p_fBloodPressureStop = 0,
                const float p_fPulseStop = 0,
-               const string &p_stMedicineCurrent = "",
-               const string &p_stMedicineAllergy = "",
-               const string &p_stComment = "",
+               const QString &p_qsMedicineCurrent = "",
+               const QString &p_qsMedicineAllergy = "",
+               const QString &p_qsComment = "",
                const bool p_bActive = true,
-               const string &p_stArchive = "NEW" )                      throw();
+               const QString &p_qsArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };
 
