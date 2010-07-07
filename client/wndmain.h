@@ -33,6 +33,9 @@ private:
     cMdiPanels         *mdiPanels;
     int                 m_nTimer;
 
+    unsigned int        m_uiPatientId;
+    unsigned int        m_uiAttendanceId;
+
     void updateTitle();
     void updateToolbar();
     void processInputPatient( QString p_stPatientName );

@@ -67,6 +67,8 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
+    m_uiPatientId           = 0;
+    m_uiAttendanceId        = 0;
     g_uiPatientAttendanceId = 0;
 
     mdiPanels = new cMdiPanels( centralwidget );
@@ -433,7 +435,13 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    updateTitle();
+    if( m_uiPatientId != g_obPatient.id() ||
+        m_uiAttendanceId != g_uiPatientAttendanceId )
+    {
+        m_uiPatientId = g_obPatient.id();
+        m_uiAttendanceId = g_uiPatientAttendanceId;
+        updateTitle();
+    }
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -578,6 +586,16 @@ void cWndMain::on_action_PatientNew_triggered()
     obDlgEdit.setWindowTitle( tr( "New Patient" ) );
     obDlgEdit.exec();
 
+    if( poPatient->id() > 0 )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to select the created patient as actual?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_obPatient.load( poPatient->id() );
+        }
+    }
+
     delete poPatient;
 }
 //====================================================================================
@@ -607,7 +625,6 @@ void cWndMain::on_action_PatientSelect_triggered()
     cDlgPatientSelect  obDlgPatientSelect( this );
 
     obDlgPatientSelect.exec();
-    updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
@@ -616,7 +633,6 @@ void cWndMain::on_action_PatientEmpty_triggered()
 
     g_obPatient.createNew();
     g_uiPatientAttendanceId = 0;
-    updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_AttendanceNew_triggered()
@@ -909,7 +925,7 @@ void cWndMain::on_action_SelectActualAttendance_triggered()
 void cWndMain::on_action_DeselectActualAttendance_triggered()
 {
     g_uiPatientAttendanceId = 0;
-    updateTitle();
+    //updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_EditActualAttendance_triggered()
