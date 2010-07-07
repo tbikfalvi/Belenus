@@ -149,7 +149,7 @@ Packet &Packet::operator <<( QString param )
 Packet &Packet::operator <<( char *param )
 {
     char *p = param;
-    while ( *(p++) );
+    while ( *(p++) ) ;
     int size = _data.size();
     _data.resize(_data.size() + p - param );
     _header.length = _data.size() - sizeof(PacketHeader);
