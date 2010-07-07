@@ -223,6 +223,7 @@ client/ui_dlgserialreg.h
 client/ui_dlgcassa.h
 client/ui_dlgcassaaction.h
 client/ui_dlgpaneluseedit.h
+client/ui_dlgpatientcarduse.h
 resources/Thumbs.db
 BelenusServer
 BelenusServer.exe
