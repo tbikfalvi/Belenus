@@ -1,6 +1,6 @@
 
 #include "connection.h"
-#include "../qtlogger.h"
+#include "qtlogger.h"
 
 extern cQTLogger g_obLogger;
 
