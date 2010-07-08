@@ -70,7 +70,7 @@ void cLedger::sellingPatientCard( unsigned int p_uiPatientCardId )
 
     m_pLedger->setLedgerTypeId( 2 );
     m_pLedger->setPatientCardTypeId( obPatientCard.patientCardTypeId() );
-    m_pLedger->setName( obPatientCard.barcode() );
+    m_pLedger->setName( obPatientCard.barcode().toStdString() );
     m_pLedger->setNetPrice( obPatientCardType.price() );
     m_pLedger->setVatpercent( obPatientCardType.vatpercent() );
 }

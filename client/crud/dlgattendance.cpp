@@ -121,6 +121,13 @@ void cDlgAttendance::newClicked( bool )
     {
         m_uiSelectedId = poAttendance->id();
         refreshTable();
+
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to select the created attendance as actual?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_uiPatientAttendanceId = poAttendance->id();
+        }
     }
 
     delete poAttendance;
@@ -140,6 +147,13 @@ void cDlgAttendance::editClicked( bool )
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to select the created attendance as actual?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                g_uiPatientAttendanceId = poAttendance->id();
+            }
         }
 
         if( poAttendance ) delete poAttendance;

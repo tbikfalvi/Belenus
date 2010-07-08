@@ -4,6 +4,7 @@
 
 #include "dlgpatientcardedit.h"
 #include "../db/dbpatientcardtype.h"
+#include "../dlg/dlgcassaaction.h"
 
 cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p_poPatientCard )
     : QDialog( p_poParent )
@@ -14,7 +15,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     m_poPatientCard = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
 
-    setWindowTitle( QString::fromStdString(m_poPatientCard->barcode()) );
+    setWindowTitle( m_poPatientCard->barcode() );
     pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
     cbActive->setChecked( true );
@@ -32,7 +33,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     {
         QSqlQuery *poQuery;
 
-        ledBarcode->setText( QString::fromStdString( m_poPatientCard->barcode() ) );
+        ledBarcode->setText( m_poPatientCard->barcode() );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
@@ -49,9 +50,9 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         }
         cbActive->setChecked( m_poPatientCard->active() );
         ledUnits->setText( QString::number(m_poPatientCard->units()) );
-        teTimeLeft->setTime( QTime::fromString(QString::fromStdString(m_poPatientCard->timeLeft()),"hh:mm:ss") );
-        deValidDate->setDate( QDate::fromString(QString::fromStdString(m_poPatientCard->validDate()),"yyyy-MM-dd") );
-        pteComment->setPlainText( QString::fromStdString( m_poPatientCard->comment() ) );
+        teTimeLeft->setTime( QTime::fromString(m_poPatientCard->timeLeft(),"hh:mm:ss") );
+        deValidDate->setDate( QDate::fromString(m_poPatientCard->validDate(),"yyyy-MM-dd") );
+        pteComment->setPlainText( m_poPatientCard->comment() );
 
         if( m_poPatientCard->licenceId() == 0 && m_poPatientCard->id() > 0 )
             checkIndependent->setChecked( true );
@@ -184,14 +185,14 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             if( !m_poPatientCard->active() && cbActive->isChecked() )
                 bIsCardActivated = true;
 
-            m_poPatientCard->setBarcode( ledBarcode->text().toStdString() );
+            m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setActive( cbActive->isChecked() );
             m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
-            m_poPatientCard->setTimeLeft( teTimeLeft->time().toString("hh:mm:ss").toStdString() );
-            m_poPatientCard->setValidDate( deValidDate->date().toString("yyyy-MM-dd").toStdString() );
-            m_poPatientCard->setComment( pteComment->toPlainText().toStdString() );
+            m_poPatientCard->setTimeLeft( teTimeLeft->time().toString("hh:mm:ss") );
+            m_poPatientCard->setValidDate( deValidDate->date().toString("yyyy-MM-dd") );
+            m_poPatientCard->setComment( pteComment->toPlainText() );
 
             if( checkIndependent->isChecked() )
             {
@@ -207,12 +208,21 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
             if( bIsCardActivated )
             {
-                m_poPatientCardType->name();
-                m_poPatientCardType->price();
-                m_poPatientCard->barcode();
-                m_poPatientCard->comment();
-                // _TO_BE_FINISHED_
-                QMessageBox::information( this, "Info", "kartya eladas ..." );
+                cDlgCassaAction     obDlgCassaAction(this);
+
+                obDlgCassaAction.setInitialMoney( m_poPatientCardType->price() );
+                obDlgCassaAction.setPayWithCash();
+                if( obDlgCassaAction.exec() == QDialog::Accepted )
+                {
+                    int     inPayType = 0;
+                    QString qsComment = tr("Sell/refill patientcard: [%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
+
+                    obDlgCassaAction.cassaResult( &inPayType, &qsComment );
+                    if( inPayType == 1 )
+                    {
+                        g_obCassa.cassaAddMoneyAction( m_poPatientCardType->price(), qsComment );
+                    }
+                }
             }
         }
         catch( cSevException &e )

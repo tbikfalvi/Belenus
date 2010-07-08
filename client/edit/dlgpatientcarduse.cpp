@@ -13,7 +13,7 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
     m_poPatientCard = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
 
-    setWindowTitle( QString::fromStdString(m_poPatientCard->barcode()) );
+    setWindowTitle( m_poPatientCard->barcode() );
     pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
 
@@ -21,7 +21,7 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
     {
         QSqlQuery *poQuery;
 
-        ledBarcode->setText( QString::fromStdString( m_poPatientCard->barcode() ) );
+        ledBarcode->setText( m_poPatientCard->barcode() );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name, unitTime FROM patientCardTypes WHERE archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
@@ -41,9 +41,9 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
         }
         cbActive->setChecked( m_poPatientCard->active() );
         ledUnits->setText( QString::number(m_poPatientCard->units()) );
-        teTimeLeft->setTime( QTime::fromString(QString::fromStdString(m_poPatientCard->timeLeft()),"hh:mm:ss") );
-        deValidDate->setDate( QDate::fromString(QString::fromStdString(m_poPatientCard->validDate()),"yyyy-MM-dd") );
-        pteComment->setPlainText( QString::fromStdString( m_poPatientCard->comment() ) );
+        teTimeLeft->setTime( QTime::fromString(m_poPatientCard->timeLeft(),"hh:mm:ss") );
+        deValidDate->setDate( QDate::fromString(m_poPatientCard->validDate(),"yyyy-MM-dd") );
+        pteComment->setPlainText( m_poPatientCard->comment() );
     }
     gbIdentification->setEnabled( false );
     gbInformation->setEnabled( false );

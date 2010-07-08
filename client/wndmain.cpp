@@ -435,11 +435,40 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    if( m_uiPatientId != g_obPatient.id() ||
-        m_uiAttendanceId != g_uiPatientAttendanceId )
+    bool    bUpdateTitle = false;
+
+    if( m_uiPatientId != g_obPatient.id() )
     {
+        bUpdateTitle = true;
+
         m_uiPatientId = g_obPatient.id();
+
+        if( m_uiPatientId )
+        {
+            switch( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to create new attendance for this patient?\n\n"
+                                          "Press the Ignore button to select an existing attendance\n"
+                                          "that saved previously for this patient."),
+                                       QMessageBox::Yes, QMessageBox::No, QMessageBox::Ignore ) )
+            {
+                case QMessageBox::Yes:
+                    on_action_AttendanceNew_triggered();
+                    break;
+
+                case QMessageBox::Ignore:
+                    on_action_SelectActualAttendance_triggered();
+                    break;
+            }
+        }
+    }
+    if( m_uiAttendanceId != g_uiPatientAttendanceId )
+    {
+        bUpdateTitle = true;
+
         m_uiAttendanceId = g_uiPatientAttendanceId;
+    }
+    if( bUpdateTitle )
+    {
         updateTitle();
     }
 }
@@ -645,6 +674,16 @@ void cWndMain::on_action_AttendanceNew_triggered()
     obDlgEdit.setWindowTitle( tr( "New Attendance" ) );
     obDlgEdit.exec();
 
+    if( poAttendance->id() )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to select the created attendance as actual?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_uiPatientAttendanceId = poAttendance->id();
+        }
+    }
+
     delete poAttendance;
 }
 //====================================================================================
@@ -787,7 +826,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
     try
     {
-        obDBPatientCard.load( p_stBarcode.toStdString() );
+        obDBPatientCard.load( p_stBarcode );
 
         if( obDBPatientCard.active() )
         {
@@ -864,7 +903,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
                 obDBPatientCard.createNew();
-                obDBPatientCard.setBarcode( p_stBarcode.toStdString() );
+                obDBPatientCard.setBarcode( p_stBarcode );
                 obDBPatientCard.save();
             }
         }
@@ -925,7 +964,6 @@ void cWndMain::on_action_SelectActualAttendance_triggered()
 void cWndMain::on_action_DeselectActualAttendance_triggered()
 {
     g_uiPatientAttendanceId = 0;
-    //updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_EditActualAttendance_triggered()
