@@ -958,40 +958,40 @@ Please define a different one.</source>
 <context>
     <name>cDlgPatientCardEdit</name>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="108"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="129"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="140"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="124"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="137"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="108"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
         <source>Barcode cannot be empty.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="124"/>
         <source>Invalid barcode. Barcode should be %1 character length.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="137"/>
         <source>Invalid barcode. This barcode already saved into database.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="140"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 
@@ -1002,7 +1002,7 @@ Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
         <source>Please select valid patient for the card.
 For active patientcard an owner should be selected.
 
@@ -1011,14 +1011,14 @@ press the Save button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
         <source>Available units cannot be empty.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
         <source>Number of available units can not be less then 1.
 
 If you want to reset the number of available units
@@ -1028,18 +1028,13 @@ Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
         <source>Incorrect validation date.
 
 If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.
 
 Press Ignore to skip other error messages.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="218"/>
-        <source>Sell/refill patientcard: [%1] - %2 - </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1620,23 +1615,23 @@ and fill mandatory data later?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="230"/>
+        <location filename="frmpanel.cpp" line="240"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="269"/>
+        <location filename="frmpanel.cpp" line="279"/>
         <source>Panel Not Found in Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="348"/>
+        <location filename="frmpanel.cpp" line="358"/>
         <source>Cash to pay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="433"/>
+        <location filename="frmpanel.cpp" line="479"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1033,19 +1033,19 @@ Kérem adjon meg egy másik sorszámot.</translation>
 <context>
     <name>cDlgPatientCardEdit</name>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="108"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="129"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="140"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="124"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="137"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
         <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="108"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
         <source>Barcode cannot be empty.
 
 Press Ignore to skip other error messages.</source>
@@ -1054,14 +1054,14 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="124"/>
         <source>Invalid barcode. Barcode should be %1 character length.
 
 Press Ignore to skip other error messages.</source>
         <translation>Nem megfelelő a vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.\n\nKattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="137"/>
         <source>Invalid barcode. This barcode already saved into database.
 
 Press Ignore to skip other error messages.</source>
@@ -1070,7 +1070,7 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="140"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 
@@ -1087,7 +1087,7 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
         <source>Please select valid patient for the card.
 For active patientcard an owner should be selected.
 
@@ -1100,7 +1100,7 @@ Ha nem akar a bérlethez tulajdonost rendelni,
 kattintson a Save gombra.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
         <source>Available units cannot be empty.
 
 Press Ignore to skip other error messages.</source>
@@ -1109,7 +1109,7 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
         <source>Number of available units can not be less then 1.
 
 If you want to reset the number of available units
@@ -1124,7 +1124,7 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
         <source>Incorrect validation date.
 
 If you want to reset the date of validation
@@ -1139,9 +1139,8 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="218"/>
         <source>Sell/refill patientcard: [%1] - %2 - </source>
-        <translation>Bérlet eladás/feltöltés: [%1] - %2 - </translation>
+        <translation type="obsolete">Bérlet eladás/feltöltés: [%1] - %2 - </translation>
     </message>
 </context>
 <context>
@@ -1745,24 +1744,24 @@ a további adatokat később akarja megadni?</translation>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="230"/>
+        <location filename="frmpanel.cpp" line="240"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation>
 &lt;&lt; SZÜNETEL &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="269"/>
+        <location filename="frmpanel.cpp" line="279"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="348"/>
+        <location filename="frmpanel.cpp" line="358"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="433"/>
+        <location filename="frmpanel.cpp" line="479"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
