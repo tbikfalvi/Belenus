@@ -417,7 +417,7 @@ void cWndMain::updateToolbar()
     action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
                                     g_obPatient.id() > 0 &&
                                     g_uiPatientAttendanceId > 0 );
-    action_DeviceSkipStatus->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
     action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );

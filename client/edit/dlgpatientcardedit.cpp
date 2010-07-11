@@ -5,6 +5,7 @@
 #include "dlgpatientcardedit.h"
 #include "../db/dbpatientcardtype.h"
 #include "../dlg/dlgcassaaction.h"
+#include "../db/dbledger.h"
 
 cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p_poPatientCard )
     : QDialog( p_poParent )
@@ -12,8 +13,15 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     setupUi( this );
 
     m_bDlgLoaded = false;
+    m_bNewCard = true;
+
     m_poPatientCard = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
+
+    if( m_poPatientCard->patientId() > 0 )
+    {
+        m_bNewCard = false;
+    }
 
     setWindowTitle( m_poPatientCard->barcode() );
     pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
@@ -209,19 +217,38 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             if( bIsCardActivated )
             {
                 cDlgCassaAction     obDlgCassaAction(this);
+                int                 inPriceTotal;
 
-                obDlgCassaAction.setInitialMoney( m_poPatientCardType->price() );
+                inPriceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
+                obDlgCassaAction.setInitialMoney( inPriceTotal );
                 obDlgCassaAction.setPayWithCash();
                 if( obDlgCassaAction.exec() == QDialog::Accepted )
                 {
                     int     inPayType = 0;
-                    QString qsComment = tr("Sell/refill patientcard: [%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
+                    QString qsComment = QString("[%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
 
                     obDlgCassaAction.cassaResult( &inPayType, &qsComment );
                     if( inPayType == 1 )
                     {
-                        g_obCassa.cassaAddMoneyAction( m_poPatientCardType->price(), qsComment );
+                        g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
                     }
+                    cDBLedger   obDBLedger;
+
+                    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+                    if( m_bNewCard )
+                        obDBLedger.setLedgerTypeId( 2 );
+                    else
+                        obDBLedger.setLedgerTypeId( 3 );
+                    obDBLedger.setUserId( g_obUser.id() );
+                    obDBLedger.setProductId( 0 );
+                    obDBLedger.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
+                    obDBLedger.setPanelId( 0 );
+                    obDBLedger.setName( m_poPatientCard->barcode() );
+                    obDBLedger.setNetPrice( m_poPatientCardType->price() );
+                    obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
+                    obDBLedger.setComment( qsComment );
+                    obDBLedger.setActive( true );
+                    obDBLedger.save();
                 }
             }
         }

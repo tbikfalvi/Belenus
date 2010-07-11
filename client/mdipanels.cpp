@@ -180,6 +180,11 @@ bool cMdiPanels::isPanelWorking( const unsigned int p_uiPanel )
         return false;
 }
 
+bool cMdiPanels::isStatusCanBeSkipped( const unsigned int p_uiPanel )
+{
+    return m_obPanels.at( p_uiPanel )->isStatusCanBeSkipped();
+}
+
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
     m_obPanels.at( m_uiActivePanel )->inactivate();

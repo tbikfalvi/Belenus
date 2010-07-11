@@ -48,7 +48,7 @@ void cLedger::sellingDeviceUsage( unsigned int p_uiPanelId )
         if( poQuery->size() )
         {
             poQuery->first();
-            m_pLedger->setName( poQuery->value( 0 ).toString().toStdString() );
+            m_pLedger->setName( poQuery->value( 0 ).toString() );
         }
         delete poQuery;
     }
@@ -70,7 +70,7 @@ void cLedger::sellingPatientCard( unsigned int p_uiPatientCardId )
 
     m_pLedger->setLedgerTypeId( 2 );
     m_pLedger->setPatientCardTypeId( obPatientCard.patientCardTypeId() );
-    m_pLedger->setName( obPatientCard.barcode().toStdString() );
+    m_pLedger->setName( obPatientCard.barcode() );
     m_pLedger->setNetPrice( obPatientCardType.price() );
     m_pLedger->setVatpercent( obPatientCardType.vatpercent() );
 }
@@ -90,12 +90,12 @@ void cLedger::prepareLedger( int p_inNetPrice, int p_inVatpercent, QString p_qsC
 {
     m_pLedger->setNetPrice( p_inNetPrice );
     m_pLedger->setVatpercent( p_inVatpercent );
-    m_pLedger->setComment( p_qsComment.toStdString() );
+    m_pLedger->setComment( p_qsComment );
 }
 
 void cLedger::prepareLedger( QString p_qsComment )
 {
-    m_pLedger->setComment( p_qsComment.toStdString() );
+    m_pLedger->setComment( p_qsComment );
 }
 
 void cLedger::saveLedger()

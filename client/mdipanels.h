@@ -28,6 +28,7 @@ public:
     int             activePanel();
     bool            isPanelWorking();
     bool            isPanelWorking( const unsigned int p_uiPanel );
+    bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );
     void            reload();
 
     int             mainProcessTime();

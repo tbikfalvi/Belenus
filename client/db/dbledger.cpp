@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -32,13 +32,13 @@ void cDBLedger::init( const unsigned int p_uiId,
                       const unsigned int p_uiProductId,
                       const unsigned int p_uiPatientCardTypeId,
                       const unsigned int p_uiPanelId,
-                      const string &p_stName,
+                      const QString &p_qsName,
                       const int p_nNetPrice,
                       const int p_nVatpercent,
-                      const string &p_stLedgerTime,
-                      const string &p_stComment,
+                      const QString &p_qsLedgerTime,
+                      const QString &p_qsComment,
                       const bool p_bActive,
-                      const string &p_stArchive ) throw()
+                      const QString &p_qsArchive ) throw()
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
@@ -47,13 +47,13 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_uiProductId           = p_uiProductId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
     m_uiPanelId             = p_uiPanelId;
-    m_stName                = p_stName;
+    m_qsName                = p_qsName;
     m_nNetPrice             = p_nNetPrice;
     m_nVatpercent           = p_nVatpercent;
-    m_stLedgerTime          = p_stLedgerTime;
-    m_stComment             = p_stComment;
+    m_qsLedgerTime          = p_qsLedgerTime;
+    m_qsComment             = p_qsComment;
     m_bActive               = p_bActive;
-    m_stArchive             = p_stArchive;
+    m_qsArchive             = p_qsArchive;
 }
 
 void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
@@ -80,13 +80,13 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inNetPriceIdx ).toInt(),
           p_obRecord.value( inVatpercentIdx ).toInt(),
-          p_obRecord.value( inLedgerTimeIdx ).toString().toStdString(),
-          p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inLedgerTimeIdx ).toString(),
+          p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBLedger::load( const unsigned int p_uiId ) throw( cSevException )
@@ -111,15 +111,15 @@ void cDBLedger::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " ledger SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
@@ -128,12 +128,12 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "netPrice = \"%1\", " ).arg( m_nNetPrice );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
-    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE ledgerId = %1" ).arg( m_uiId );
@@ -152,7 +152,7 @@ void cDBLedger::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive == "NEW" )
         {
             qsQuery = "DELETE FROM ledger ";
         }
@@ -237,14 +237,14 @@ void cDBLedger::setPanelId( const unsigned int p_nPanelId ) throw()
     m_uiPanelId = p_nPanelId;
 }
 
-string cDBLedger::name() const throw()
+QString cDBLedger::name() const throw()
 {
-    return m_stName;
+    return m_qsName;
 }
 
-void cDBLedger::setName( const string &p_stName ) throw()
+void cDBLedger::setName( const QString &p_qsName ) throw()
 {
-    m_stName = p_stName;
+    m_qsName = p_qsName;
 }
 
 int cDBLedger::netPrice() const throw()
@@ -267,24 +267,24 @@ void cDBLedger::setVatpercent( const int p_nVatpercent ) throw()
     m_nVatpercent = p_nVatpercent;
 }
 
-string cDBLedger::ledgerTime() const throw()
+QString cDBLedger::ledgerTime() const throw()
 {
-    return m_stLedgerTime;
+    return m_qsLedgerTime;
 }
 
-void cDBLedger::setLedgerTime( const string &p_stLedgerTime ) throw()
+void cDBLedger::setLedgerTime( const QString &p_qsLedgerTime ) throw()
 {
-    m_stLedgerTime = p_stLedgerTime;
+    m_qsLedgerTime = p_qsLedgerTime;
 }
 
-string cDBLedger::comment() const throw()
+QString cDBLedger::comment() const throw()
 {
-    return m_stComment;
+    return m_qsComment;
 }
 
-void cDBLedger::setComment( const string &p_stComment ) throw()
+void cDBLedger::setComment( const QString &p_qsComment ) throw()
 {
-    m_stComment = p_stComment;
+    m_qsComment = p_qsComment;
 }
 
 bool cDBLedger::active() const throw()
@@ -297,13 +297,13 @@ void cDBLedger::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBLedger::archive() const throw()
+QString cDBLedger::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBLedger::setArchive( const string &p_stArchive ) throw()
+void cDBLedger::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

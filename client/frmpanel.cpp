@@ -88,6 +88,11 @@ bool cFrmPanel::isWorking() const
     return (m_uiStatus > 0);
 }
 
+bool cFrmPanel::isStatusCanBeSkipped()
+{
+    return ( m_obStatuses.at(m_uiStatus)->activateCommand()!=3 ? true : false );
+}
+
 void cFrmPanel::start()
 {
     if( m_inMainProcessLength == 0 )
@@ -117,9 +122,14 @@ void cFrmPanel::start()
 
 void cFrmPanel::reset()
 {
-    stringstream ssTrace;
-    ssTrace << "Id: " << m_uiId;
-    cTracer obTrace( "cFrmPanel::reset", ssTrace.str() );
+//    stringstream ssTrace;
+//    ssTrace << "Id: " << m_uiId;
+//    cTracer obTrace( "cFrmPanel::reset", ssTrace.str() );
+
+    if( isMainProcess() )
+    {
+        closeAttendance();
+    }
 
     m_inMainProcessLength = 0;
     if( !m_bHasToPay )
@@ -238,7 +248,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     {
         m_uiCounter--;
 
-        if( m_uiStatus == 3 )
+        if( isMainProcess() )
             m_inMainProcessLength--;
 
         lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
@@ -362,13 +372,13 @@ void cFrmPanel::displayStatus()
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
             break;
         case 2:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
-            break;
-        case 3:
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::cyan ) );
             break;
+        case 3:
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
+            break;
         case 4:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::blue ) );
+            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
             break;
     }
     setPalette( obFramePalette );
@@ -419,21 +429,10 @@ QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 
 void cFrmPanel::activateNextStatus()
 {
-    if( m_uiStatus == 3 )
+    if( isMainProcess() )
     {
         // Kezeles vege
-        if( m_inCashToPay > 0 )
-        {
-            m_bHasToPay = true;
-        }
-        m_pDBLedgerDevice->setTimeLeft( m_inMainProcessLength );
-        m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()-m_inMainProcessLength );
-        if( m_inMainProcessLength > 0 )
-        {
-            m_pDBLedgerDevice->setComment( tr("Device usage stopped after %1 minutes. Unused time: %2 minutes.").arg(m_pDBLedgerDevice->timeReal()).arg(m_pDBLedgerDevice->timeLeft()) );
-        }
-        m_pDBLedgerDevice->save();
-        m_pDBLedgerDevice->createNew();
+        closeAttendance();
     }
 
     m_uiStatus++;
@@ -460,4 +459,25 @@ void cFrmPanel::cashPayed()
     m_bHasToPay = false;
 
     displayStatus();
+}
+
+bool cFrmPanel::isMainProcess()
+{
+    return ( m_obStatuses.at(m_uiStatus)->activateCommand()==3 ? true : false );
+}
+
+void cFrmPanel::closeAttendance()
+{
+    if( m_inCashToPay > 0 )
+    {
+        m_bHasToPay = true;
+    }
+    m_pDBLedgerDevice->setTimeLeft( m_inMainProcessLength );
+    m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()-m_inMainProcessLength );
+    if( m_inMainProcessLength > 0 )
+    {
+        m_pDBLedgerDevice->setComment( tr("Device usage stopped after %1 minutes. Unused time: %2 minutes.").arg(m_pDBLedgerDevice->timeReal()).arg(m_pDBLedgerDevice->timeLeft()) );
+    }
+    m_pDBLedgerDevice->save();
+    m_pDBLedgerDevice->createNew();
 }

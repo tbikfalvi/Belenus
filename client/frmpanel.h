@@ -26,6 +26,7 @@ public:
     ~cFrmPanel();
 
     bool            isWorking() const;
+    bool            isStatusCanBeSkipped();
     void            start();
     void            reset();
     void            next();
@@ -77,6 +78,8 @@ private:
     void load( const unsigned int p_uiPanelId );
     void displayStatus();
     void activateNextStatus();
+    bool isMainProcess();
+    void closeAttendance();
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 };
