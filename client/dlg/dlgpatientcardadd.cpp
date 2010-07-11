@@ -14,6 +14,11 @@ cDlgPatientCardAdd::cDlgPatientCardAdd( QWidget *p_poParent )
     pbSave->setIcon( QIcon("./resources/40x40_save.gif") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.gif") );
 
+    if( g_poPrefs->getBarcodePrefix().length() > 0 )
+    {
+        ledBarcode->setText( g_poPrefs->getBarcodePrefix() );
+    }
+
     lblInformation->setText( "" );
 
     m_pTimer = new QTimer(this);
@@ -54,8 +59,8 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPatientCard->save();
 
-            lblInformation->setText( tr("Patientcard saved to database.") );
-            m_pTimer->start(1000);
+            lblInformation->setText( tr("Patientcard successfully saved to database.") );
+            m_pTimer->start(500);
 
             delete m_poPatientCard;
         }

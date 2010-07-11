@@ -187,7 +187,8 @@ void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 
     m_uiActivePanel = p_uiPanel;
 
-    emit activePanelChanged( m_obPanels.at( m_uiActivePanel )->isWorking() );
+//    emit activePanelChanged( m_obPanels.at( m_uiActivePanel )->isWorking() );
+    emit activePanelChanged();
 }
 
 void cMdiPanels::resizeEvent ( QResizeEvent *p_poEvent )

@@ -93,9 +93,9 @@ void cFrmPanel::start()
     if( m_inMainProcessLength == 0 )
         return;
 
-    stringstream ssTrace;
-    ssTrace << "Id: " << m_uiId;
-    cTracer obTrace( "cFrmPanel::start", ssTrace.str() );
+//    stringstream ssTrace;
+//    ssTrace << "Id: " << m_uiId;
+//    cTracer obTrace( "cFrmPanel::start", ssTrace.str() );
 
     for( unsigned int i = 0; i < m_obStatuses.size(); i ++ )
     {

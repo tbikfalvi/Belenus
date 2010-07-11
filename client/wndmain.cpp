@@ -76,27 +76,22 @@ cWndMain::cWndMain( QWidget *parent )
 
     mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
+    connect( mdiPanels, SIGNAL( activePanelChanged() ), this, SLOT( updateToolbar() ) );
+
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
     action_LogOut->setIcon( QIcon("./resources/40x40_lock.gif") );
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
-
     action_Patients->setIcon( QIcon("./resources/40x40_patient.gif") );
-    //--------------------------------------------------------------------------------
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.gif") );
-        action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
-        action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
-        //----------------------------------------------------------------------------
-        action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
-        action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
-        //----------------------------------------------------------------------------
-        action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
-    //--------------------------------------------------------------------------------
+    action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
+    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
+    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
-
     action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
-
     action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
     action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
@@ -392,8 +387,6 @@ void cWndMain::updateTitle()
     action_PanelStatuses->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     setWindowTitle( qsTitle );
-
-    updateToolbar();
 }
 //====================================================================================
 void cWndMain::updateToolbar()
@@ -407,9 +400,6 @@ void cWndMain::updateToolbar()
     action_EditActualPatient->setEnabled( g_obPatient.id()>0 );
     action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
 
-    action_UseWithCard->setEnabled( true );
-    action_UseByTime->setEnabled( true );
-
     action_SelectActualAttendance->setEnabled( g_uiPatientAttendanceId == 0 && g_obPatient.id()>0 );
     action_SelectActualAttendance->setVisible( g_uiPatientAttendanceId == 0 );
     action_DeselectActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
@@ -418,6 +408,11 @@ void cWndMain::updateToolbar()
 
     action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
     action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
+
+    action_UseWithCard->setEnabled( g_obPatient.id() > 0 &&
+                                    g_uiPatientAttendanceId > 0 );
+    action_UseByTime->setEnabled( g_obPatient.id() > 0 &&
+                                  g_uiPatientAttendanceId > 0 );
 
     action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
                                     g_obPatient.id() > 0 &&
@@ -436,6 +431,8 @@ void cWndMain::updateToolbar()
 void cWndMain::timerEvent(QTimerEvent *)
 {
     bool    bUpdateTitle = false;
+
+    updateToolbar();
 
     if( m_uiPatientId != g_obPatient.id() )
     {
@@ -640,6 +637,8 @@ void cWndMain::on_action_Attendances_triggered()
 void cWndMain::on_action_DeviceStart_triggered()
 {
     mdiPanels->start();
+
+    on_action_PatientEmpty_triggered();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceReset_triggered()
@@ -700,8 +699,44 @@ void cWndMain::on_action_UseWithCard_triggered()
 
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
-    if( obDlgInputStart.exec() == QDialog::Accepted )
-        processInputPatientCard( obDlgInputStart.getEditText() );
+
+    QString      qsBarcode = "";
+    QSqlQuery   *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(g_obPatient.id()) );
+    if( poQuery->first() )
+    {
+        qsBarcode = poQuery->value(0).toString();
+
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("A patientcard with barcode [%1]\n"
+                                      "attached to the actual patient.\n\n"
+                                      "Do you want to use this patientcard?").arg(qsBarcode),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            processInputPatientCard( qsBarcode );
+        }
+        else
+        {
+            if( obDlgInputStart.exec() == QDialog::Accepted )
+                processInputPatientCard( obDlgInputStart.getEditText() );
+        }
+    }
+    else
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("There is no patientcard attached to the actual patient.\n"
+                                      "Do you want to sell a patientcard for the actual patient?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            on_action_PatientCardSell_triggered();
+        }
+        else
+        {
+            if( obDlgInputStart.exec() == QDialog::Accepted )
+                processInputPatientCard( obDlgInputStart.getEditText() );
+        }
+    }
 }
 //====================================================================================
 void cWndMain::on_action_UseByTime_triggered()
@@ -781,7 +816,45 @@ void cWndMain::on_action_PatientCardSell_triggered()
     obDlgInputStart.init();
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
-        // _TO_BE_FINISHED_
+        cDBPatientCard  obDBPatientCard;
+        try
+        {
+            obDBPatientCard.load( obDlgInputStart.getEditText() );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
+            {
+                g_obLogger << e.severity();
+                g_obLogger << e.what() << cQTLogger::EOM;
+            }
+            else
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This barcode has not found in the database.\n"
+                                              "Do you want to register it for a new patientcard?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCard.createNew();
+                    obDBPatientCard.setBarcode( obDlgInputStart.getEditText() );
+                    obDBPatientCard.save();
+                }
+            }
+        }
+        if( obDBPatientCard.active() != 0 && obDBPatientCard.units() > 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("This patientcard already sold.\n"
+                                     "Please select another inactive patientcard.") );
+        }
+        else
+        {
+            cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
+
+            obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
+            obDlgPatientCardEdit.activatePatientCard();
+            obDlgPatientCardEdit.exec();
+        }
     }
 }
 //====================================================================================

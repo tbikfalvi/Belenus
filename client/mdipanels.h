@@ -38,7 +38,8 @@ public:
     void            cashPayed();
 
 signals:
-    void activePanelChanged( bool p_boActiveWorking ) const;
+//    void activePanelChanged( bool p_boActiveWorking ) const;
+    void activePanelChanged() const;
 
 private:
     vector<cFrmPanel*>  m_obPanels;

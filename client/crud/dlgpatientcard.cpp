@@ -65,18 +65,40 @@ void cDlgPatientCard::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Available units" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Owner" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Patientcard type" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "All units" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Archive" ) );
+
+        tbvCrud->resizeColumnToContents( 0 );
+        tbvCrud->resizeColumnToContents( 1 );
+        tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
+        tbvCrud->resizeColumnToContents( 8 );
+
+        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Barcode" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Available units" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "All units" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Owner" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Patientcard type" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "All units" ) );
+
+        tbvCrud->resizeColumnToContents( 1 );
+        tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
+
+        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
 }
 
@@ -86,11 +108,11 @@ void cDlgPatientCard::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units, patientCards.active, patientCards.archive FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId";
+        m_qsQuery = "SELECT patientCards.patientCardId, patientCards.licenceId, patientCards.barcode, patients.name, patientCards.units, patientCardTypes.name, patientCardTypes.units, patientCards.active, patientCards.archive FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId";
     }
     else
     {
-        m_qsQuery = "SELECT patientCards.patientCardId AS Id, patientCards.barcode, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId";
+        m_qsQuery = "SELECT patientCards.patientCardId AS id, patientCards.barcode, patients.name, patientCards.units, patientCardTypes.name, patientCardTypes.units FROM patientCards, patientCardTypes, patients WHERE patientCards.patientCardTypeId=patientCardTypes.patientCardTypeId AND patientCards.patientId=patients.patientId";
     }
 
     int uiPatientCardTypeId = cmbPatientCardType->itemData( cmbPatientCardType->currentIndex() ).toInt();
