@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas Â© Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -15,11 +15,11 @@
 //====================================================================================
 
 #include <QtNetwork>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QTranslator>
 #include <iostream>
 
-#include "../framework/qtlogger.h"
+#include "qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
 #include "preferences.h"
 #include "serverthread.h"
@@ -76,9 +76,9 @@ void Server::connectionAvailable()
 //====================================================================================
 int main( int argc, char *argv[] )
 {
-    QApplication  app( argc, argv );
+    QCoreApplication  app( argc, argv );
 
-    g_obLogger.setMinSeverityLevels(cSeverity::MAX, cSeverity::MIN, cSeverity::MIN );
+    g_obLogger.setMinSeverityLevels(cSeverity::INFO);
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " started." << cQTLogger::EOM;
 
     g_db.setHostName( g_prefs.value("database/host") );

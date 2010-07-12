@@ -1,6 +1,6 @@
 # #====================================================================================
 # #
-# # Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+# # Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 # #
 # #====================================================================================
 # #
@@ -21,11 +21,8 @@ CONFIG += console
 TRANSLATIONS = bs_us.ts \
     bs_hu.ts
 HEADERS += ../framework/dbconnection.h \
-    ../framework/qtlogger.h \
     ../framework/qtmysqlconnection.h \
-    ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
-    ../framework/tracer.h \
     preferences.h \
     ../framework/network/packet.h \
     ../framework/network/connection.h \
@@ -33,17 +30,17 @@ HEADERS += ../framework/dbconnection.h \
     main.h \
     ../framework/preferences.h \
     ../framework/network/protocolException.h \
-    ../framework/network/sqlResult.h
+    ../framework/network/sqlResult.h \
+    qtlogger.h
 SOURCES += ../framework/dbconnection.cpp \
-    ../framework/qtlogger.cpp \
     ../framework/qtmysqlconnection.cpp \
-    ../framework/qtmysqlquerymodel.cpp \
-    ../framework/tracer.cpp \
     main.cpp \
     serverthread.cpp \
     ../framework/network/connection.cpp \
     ../framework/network/packet.cpp \
     ../framework/preferences.cpp \
-    ../framework/network/sqlResult.cpp
+    ../framework/network/sqlResult.cpp \
+    qtlogger.cpp
 QT += network
 QT += sql
+QT -= gui
