@@ -48,7 +48,7 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
 
     g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonResponse] code1=" << code1 << " code2=" << code2 << cQTLogger::EOM;
 
-    QSqlQuery *q = g_db.executeQTQuery(QString("SELECT clientId, code2 FROM clients WHERE code1='%1' AND active=1 LIMIT 2;").arg(code1));
+    QSqlQuery *q = g_db.executeQTQuery(QString("SELECT clientId, code2 FROM clients WHERE code1='%1' LIMIT 2;").arg(code1));
     if ( q->size()==1 ) {
         clientId = q->value(0).toInt();
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonResponse] clientId is " << clientId << cQTLogger::EOM;

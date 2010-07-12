@@ -100,6 +100,8 @@ protected:
     QList<Packet::Message> _allowedPackets;     /* list of packets which are allowed to be received. all other will cause connection to be dropped */
     QTcpSocket *_socket;
     QByteArray _buffer;
+    QHostAddress _addr;
+    qint16 _port;
 };
 
 

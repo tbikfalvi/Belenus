@@ -7,7 +7,8 @@ extern cQTLogger g_obLogger;
 
 Connection::Connection()
     :   QThread(),
-        _socket(0)
+        _socket(0),
+        _port(0)
 {
 }
 
@@ -47,9 +48,10 @@ void Connection::connectTo(QTcpSocket *s)
 void Connection::connectTo(QHostAddress addr, qint16 port)
 {
     g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] connecting to " << addr.toString().toStdString() << ":" << port << cQTLogger::EOM;
-    _socket = new QTcpSocket();
-    _connectSignalsToSocket();
-    _socket->connectToHost(addr, port);
+    _addr = addr;
+    _port = port;
+    start();
+    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] connecting..." << cQTLogger::EOM;
 }
 
 
@@ -76,7 +78,7 @@ void Connection::_disconnected()
 
 void Connection::_connected()
 {
-    start();
+    g_obLogger(cSeverity::DEBUG) << "[Connection::_connected] connect signal received" << cQTLogger::EOM;
     emit connected();
 }
 
@@ -113,73 +115,79 @@ void Connection::_handlePacket(Packet &packet)
         return; /* unhandled */
     }
 
-    switch ( packet.getId() ) {
+    try {
 
-        case Packet::MSG_HELLO: {
-                int version;
-                packet >> version;
-                _handleHello(version);
-            } break;
+        switch ( packet.getId() ) {
 
-        case Packet::MSG_LOGON_CHALLENGE: {
-            _handleLogonChallenge();
-            } break;
+            case Packet::MSG_HELLO: {
+                    int version;
+                    packet >> version;
+                    _handleHello(version);
+                } break;
 
-        case Packet::MSG_LOGON_ADMIN_RESPONSE: {
-                char *p1, *p2;
-                packet >> p1 >> p2;
-                _handleLogonAdminResponse(p1, p2);
-            } break;
+            case Packet::MSG_LOGON_CHALLENGE: {
+                _handleLogonChallenge();
+                } break;
 
-        case Packet::MSG_LOGON_RESPONSE: {
-                char *u, *p;
-                packet >> u >> p;
-                _handleLogonResponse(u, p);
-            } break;
+            case Packet::MSG_LOGON_ADMIN_RESPONSE: {
+                    char *p1, *p2;
+                    packet >> p1 >> p2;
+                    _handleLogonAdminResponse(p1, p2);
+                } break;
 
-        case Packet::MSG_LOGON_OK: {
-                _handleLogonOk();
-            } break;
+            case Packet::MSG_LOGON_RESPONSE: {
+                    char *u, *p;
+                    packet >> u >> p;
+                    _handleLogonResponse(u, p);
+                } break;
 
-        case Packet::MSG_DISCONNECT: {
-                Result r;
-                packet >> r;
-                _handleDisconnect(r);
-            } break;
+            case Packet::MSG_LOGON_OK: {
+                    _handleLogonOk();
+                } break;
 
-        case Packet::MSG_REGISTER_LICENSE_KEY: {
-                char* key;
-                packet >> key;
-                _handleRegisterKey(key);
-            } break;
+            case Packet::MSG_DISCONNECT: {
+                    Result r;
+                    packet >> r;
+                    _handleDisconnect(r);
+                } break;
 
-        case Packet::MSG_REGISTER_LICENSE_KEY_RESPONSE: {
-                Result r;
-                packet >> r;
-                _handleRegisterKeyResponse(r);
-            } break;
+            case Packet::MSG_REGISTER_LICENSE_KEY: {
+                    char* key;
+                    packet >> key;
+                    _handleRegisterKey(key);
+                } break;
 
-        case Packet::MSG_SQL_QUERY: {
-                int id;
-                char *u;
-                packet >> id >> u;
-                _handleSqlQuery(id,u);
-            } break;
+            case Packet::MSG_REGISTER_LICENSE_KEY_RESPONSE: {
+                    Result r;
+                    packet >> r;
+                    _handleRegisterKeyResponse(r);
+                } break;
 
-        case Packet::MSG_SQL_RESULT: {
-                int id;
-                bool status;
-                char* str;
-                packet >> id >> status >> str;
-                SqlResult *s = new SqlResult();
-                s->fromStringStream(str);
-                s->setValid(status);
-                _handleSqlQueryResult(id, s);
-            } break;
+            case Packet::MSG_SQL_QUERY: {
+                    int id;
+                    char *u;
+                    packet >> id >> u;
+                    _handleSqlQuery(id,u);
+                } break;
 
-        default:
-            g_obLogger << cSeverity::ERROR << "[Connection::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
-            break;
+            case Packet::MSG_SQL_RESULT: {
+                    int id;
+                    bool status;
+                    char* str;
+                    packet >> id >> status >> str;
+                    SqlResult *s = new SqlResult();
+                    s->fromStringStream(str);
+                    s->setValid(status);
+                    _handleSqlQueryResult(id, s);
+                } break;
+
+            default:
+                g_obLogger << cSeverity::ERROR << "[Connection::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
+                break;
+        }
+    } catch (cSevException e) {
+        g_obLogger(cSeverity::ERROR) << "[Connection::_handlePacket] exception caught("<<e.what()<<"). Closing connection." << cQTLogger::EOM;
+        _sendDisconnect(RESULT_UNKOWN);
     }
 }
 
@@ -199,8 +207,12 @@ void Connection::_error(QAbstractSocket::SocketError s)
  */
 void Connection::run()
 {
-    if ( !_socket )
-        throw 1; // exceptions todo
+    g_obLogger(cSeverity::DEBUG) << "[Connection::run] thread started" << cQTLogger::EOM;
+    if ( !_socket && _port ) {
+        _socket = new QTcpSocket();
+        _connectSignalsToSocket();
+        _socket->connectToHost(_addr, _port);
+    }
 
     connect( this, SIGNAL(finished()), this, SLOT(deleteLater()));
     _initialize();

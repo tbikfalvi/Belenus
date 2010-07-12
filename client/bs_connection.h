@@ -31,11 +31,20 @@ class BelenusServerConnection : public Connection
     Q_OBJECT
 
 public:
+    enum ConnectionStatus {
+        NOT_CONNECTED,
+        CONNECTING,
+        AUTHENTICATED,      // server connection is ok
+        LICENSE_FAILED,     // connected to server but license authentication failed
+        CONNECTION_FAILED,  // eg. socket error
+    };
+
 
     BelenusServerConnection();
     virtual ~BelenusServerConnection();
 
     void setLoginKeys(QString serial, QString code2);
+    ConnectionStatus    getStatus() { return _status; }
 
 private:
     void _initialize();
@@ -45,7 +54,7 @@ private:
 private:
     QString _serial;
     QString _code2;
-    bool _authenticated;
+    ConnectionStatus _status;
 };
 
 
