@@ -6,20 +6,28 @@
 #include "qtlogger.h"
 
 cQTLogger::cQTLogger()
+    : m_ssMessage(&m_string),
+      m_string("")
 {
     init();
 }
+
+
 
 cQTLogger::~cQTLogger()
 {
 }
 
+
+
 void cQTLogger::init( void ) throw ()
 {
     m_enMinConsoleSeverityLevel = cSeverity::NONE;
     m_enNextSeverityLevel       = cSeverity::NONE;
-    m_uiAppUser                 = 0;
+    m_uiAppUser = 0;
 }
+
+
 
 void cQTLogger::setMinSeverityLevels(
     const cSeverity::teSeverity p_enConsoleLevel = cSeverity::DEBUG )
@@ -27,6 +35,8 @@ void cQTLogger::setMinSeverityLevels(
 {
     m_enMinConsoleSeverityLevel = p_enConsoleLevel;
 }
+
+
 
 void cQTLogger::getMinSeverityLevels(
     cSeverity::teSeverity *p_poConsoleLevel ) const
@@ -47,8 +57,19 @@ unsigned int cQTLogger::getAppUser( void ) const
     return m_uiAppUser;
 }
 
+
+
 void cQTLogger::logMessage( const cSeverity::teSeverity  p_enLevel,
-                            const string                &p_stMessage )
+                            const string               &p_stMessage )
+     throw()
+{
+    logMessage(p_enLevel, QString(p_stMessage.c_str()));
+}
+
+
+
+void cQTLogger::logMessage( const cSeverity::teSeverity  p_enLevel,
+                            const QString               &p_stMessage )
      throw()
 {
     try
@@ -63,7 +84,7 @@ void cQTLogger::logMessage( const cSeverity::teSeverity  p_enLevel,
 }
 
 void cQTLogger::logToConsole( const cSeverity::teSeverity  p_enLevel,
-                              const string                &p_stMessage )
+                              const QString               &p_stMessage )
      throw()
 {
     time_t     ttTime;
@@ -79,6 +100,6 @@ void cQTLogger::logToConsole( const cSeverity::teSeverity  p_enLevel,
     cerr << setw(2) << setfill('0') << poTm->tm_sec << " ";
     cerr << cSeverity::toStr( p_enLevel );
     if( m_uiAppUser ) cerr << " User: " << m_uiAppUser << " ";
-    if( p_stMessage != "" ) cerr << " " << p_stMessage;
+    if( p_stMessage != "" ) cerr << " " << p_stMessage.toStdString();
     cerr << endl << flush;
 }

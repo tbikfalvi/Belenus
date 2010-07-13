@@ -16,6 +16,7 @@ TARGET = BelenusServer
 TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
+DEFINES += SERVER
 CONFIG += qt
 CONFIG += console
 TRANSLATIONS = bs_us.ts \

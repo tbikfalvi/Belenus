@@ -2,9 +2,8 @@
 #define QTLOGGER_H
 
 #include <string>
-#include <sstream>
 #include <QString>
-
+#include <QTextStream>
 #include "../framework/sevexception.h"
 
 using namespace std;
@@ -24,17 +23,12 @@ public:
     cQTLogger();
     ~cQTLogger();
 
-    void setMinSeverityLevels( const cSeverity::teSeverity  p_enConsoleLevel )
-            throw();
-    void getMinSeverityLevels( cSeverity::teSeverity *p_poConsoleLevel ) const
-            throw();
-
+    void setMinSeverityLevels( const cSeverity::teSeverity  p_enConsoleLevel ) throw();
+    void getMinSeverityLevels( cSeverity::teSeverity *p_poConsoleLevel ) const throw();
     void         setAppUser( const unsigned int p_uiUser ) throw();
     unsigned int getAppUser( void )  const                 throw();
-
-    void logMessage( const cSeverity::teSeverity  p_enLevel,
-                     const string                &p_stMessage )
-            throw();
+    void logMessage( const cSeverity::teSeverity  p_enLevel, const QString &p_stMessage )  throw();
+    void logMessage( const cSeverity::teSeverity  p_enLevel, const string &p_stMessage )  throw();
 
 
     cQTLogger &operator ()( const cSeverity::teSeverity p_enSev ) {
@@ -47,8 +41,9 @@ public:
         return *this;
     }
 
+
     cQTLogger &operator <<( const string p_stParam ) {
-        m_ssMessage << p_stParam;
+        m_ssMessage << p_stParam.c_str();
         return *this;
     }
 
@@ -57,16 +52,18 @@ public:
         m_enNextSeverityLevel = p_enSev;
         return *this;
     }
+
     cQTLogger &operator <<( const teLoggerManip p_enManip ) {
         switch( p_enManip )
         {
             case EOM:
-                logMessage( m_enNextSeverityLevel, m_ssMessage.str() );
+                logMessage( m_enNextSeverityLevel, *m_ssMessage.string() );
                 // There's no 'break' here because the EOM manipulator
                 // needs to do a 'CLEAR' as well
             case CLEAR:
                 m_enNextSeverityLevel = cSeverity::DEBUG;
-                m_ssMessage.str( "" );
+                m_string = "";
+                m_ssMessage.setString(&m_string);
                 break;
             default: ;
         }
@@ -76,12 +73,13 @@ public:
 private:
     cSeverity::teSeverity  m_enMinConsoleSeverityLevel;
     cSeverity::teSeverity  m_enNextSeverityLevel;
-    stringstream           m_ssMessage;
-    unsigned int           m_uiAppUser;
+    int                    m_uiAppUser;
+    QTextStream            m_ssMessage;
+    QString                m_string;
 
     void init( void ) throw ();
     void logToConsole( const cSeverity::teSeverity  p_enLevel,
-                       const string                &p_stMessage )
+                       const QString               &p_stMessage )
             throw();
 };
 

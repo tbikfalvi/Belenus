@@ -1,6 +1,11 @@
 
 #include "connection.h"
-#include "qtlogger.h"
+#ifdef SERVER
+#  include "../../server/qtlogger.h"
+#else
+#  include "../framework/qtlogger.h"
+#endif
+
 
 extern cQTLogger g_obLogger;
 

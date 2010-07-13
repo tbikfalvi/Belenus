@@ -78,7 +78,7 @@ int main( int argc, char *argv[] )
 {
     QCoreApplication  app( argc, argv );
 
-    g_obLogger.setMinSeverityLevels(cSeverity::INFO);
+    g_obLogger.setMinSeverityLevels(cSeverity::DEBUG);
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " started." << cQTLogger::EOM;
 
     g_db.setHostName( g_prefs.value("database/host") );
