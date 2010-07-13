@@ -126,6 +126,31 @@ void cMdiPanels::reload()
     m_obPanels.at( m_uiActivePanel )->reload();
 }
 
+int cMdiPanels::mainProcessTime()
+{
+    return m_obPanels.at( m_uiActivePanel )->mainProcessTime();
+}
+
+void cMdiPanels::setMainProcessTime( const int p_inLength )
+{
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength );
+}
+
+void cMdiPanels::setMainProcessTime( const int p_inLength, const int p_inPrice )
+{
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength, p_inPrice );
+}
+
+bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
+{
+    return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice );
+}
+
+void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
+{
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
+}
+
 int cMdiPanels::activePanel()
 {
     return m_uiActivePanel;
@@ -155,6 +180,11 @@ bool cMdiPanels::isPanelWorking( const unsigned int p_uiPanel )
         return false;
 }
 
+bool cMdiPanels::isStatusCanBeSkipped( const unsigned int p_uiPanel )
+{
+    return m_obPanels.at( p_uiPanel )->isStatusCanBeSkipped();
+}
+
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
     m_obPanels.at( m_uiActivePanel )->inactivate();
@@ -162,7 +192,8 @@ void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 
     m_uiActivePanel = p_uiPanel;
 
-    emit activePanelChanged( m_obPanels.at( m_uiActivePanel )->isWorking() );
+//    emit activePanelChanged( m_obPanels.at( m_uiActivePanel )->isWorking() );
+    emit activePanelChanged();
 }
 
 void cMdiPanels::resizeEvent ( QResizeEvent *p_poEvent )
@@ -197,4 +228,9 @@ void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
     }
 
     if( inNewPanel >= 0 && inNewPanel < (int)m_obPanels.size() && inNewPanel != (int)m_uiActivePanel ) activatePanel( (unsigned int)inNewPanel );
+}
+
+void cMdiPanels::cashPayed()
+{
+    m_obPanels.at( m_uiActivePanel )->cashPayed();
 }

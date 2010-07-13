@@ -40,6 +40,7 @@ public:
     virtual void setMainActionTime( const int p_nIndex, const int p_nTime ) = 0;
     virtual bool isHardwareMovedNextStatus( const int p_nIndex ) = 0;
     virtual void setHardwareMovedNextStatus( const int p_nIndex ) = 0;
+    virtual bool isHardwareStopped( const int p_nIndex ) = 0;
 
     virtual void HW_Kezel( void ) = 0;
 //-------------------------------------------------------------------

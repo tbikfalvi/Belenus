@@ -39,6 +39,7 @@ public:
     void setMainActionTime( const int p_nIndex, const int p_nTime );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
+    bool isHardwareStopped( const int p_nIndex );
 
     void HW_Kezel();
 };

@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -130,7 +130,7 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     SP_SendMessage( chMessage, 2 );
 
     bySerial_Error++;
-    Sleep( 100 ); //var, hogy a PIC tudjon válaszolni
+    Sleep( 100 ); //var, hogy a PIC tudjon vÃ¡laszolni
 
     if( HW_ReadMessage( chSerialIn, &nRecHossz, 5  ) )
     {
@@ -256,7 +256,7 @@ void CS_Communication_Serial::setApplicationModuleCount( int nCount )
 //    nCount      - kezelt szolariumok szama
 //---------------------------------------------------------------------------
 // Visszateresi ertek:
-//    TRUE        - ha sikerült a hardverben a szolariumok szamat
+//    TRUE        - ha sikerÃ¼lt a hardverben a szolariumok szamat
 //                  beallitani
 //    FALSE       - ha nem sikerult beallitani a hardverben a szolariumok
 //                  szamat
@@ -347,11 +347,15 @@ void CS_Communication_Serial::setHardwareMovedNextStatus( const int p_nIndex )
 {
     pPanel[p_nIndex].bJumpNextStatus = false;
 }
+bool CS_Communication_Serial::isHardwareStopped( const int p_nIndex )
+{
+    return pModul[p_nIndex].bStop;
+}
 
 //---------------------------------------------------------------------------
 // HW_Kezel
 //---------------------------------------------------------------------------
-// 300 sec-ként a foprogram hívja meg a fuggvenyt ami lekezeli es
+// 300 sec-kÃ©nt a foprogram hÃ­vja meg a fuggvenyt ami lekezeli es
 // tovabbkuldi a parancsokat, illetve szolgaltatja a szolariumok allapotat
 //---------------------------------------------------------------------------
 // Parameterek:
@@ -363,7 +367,7 @@ void CS_Communication_Serial::setHardwareMovedNextStatus( const int p_nIndex )
 void CS_Communication_Serial::HW_Kezel()
 {
    //---------------------------------------------------------------------------
-   // Demo illetve helytelen parameterbeallitas esetén nem foglalkozik a
+   // Demo illetve helytelen parameterbeallitas esetÃ©n nem foglalkozik a
    // hardware-al es kilep
    //---------------------------------------------------------------------------
    if( nHWModuleCount == 0 )
@@ -377,7 +381,7 @@ void CS_Communication_Serial::HW_Kezel()
    WORD wRelay = 0;
 
    //---------------------------------------------------
-   // Relay állapotok beállítása
+   // Relay Ã¡llapotok beÃ¡llÃ­tÃ¡sa
    //---------------------------------------------------
     if( !bTest )
     {
@@ -426,7 +430,7 @@ void CS_Communication_Serial::HW_Kezel()
     }
 
    //-------------------------------------------------------
-   // WDT frissités, ha nem volt kikuldve semmi akkor WDT
+   // WDT frissitÃ©s, ha nem volt kikuldve semmi akkor WDT
    //-------------------------------------------------------
    if( byHwWdtCounter > 0 )
     {
@@ -442,23 +446,23 @@ void CS_Communication_Serial::HW_Kezel()
     }
 
    //--------------------------------------------------------------------------------------
-   // Szoli LED Modul vezérlés
+   // Szoli LED Modul vezÃ©rlÃ©s
    //--------------------------------------------------------------------------------------
-   //Ha jó a soros komunikáció
+   //Ha jÃ³ a soros komunikÃ¡ciÃ³
    if( bySerial_Error == 0 )
    {
-      //és fel van kapcsolva a LED táp
+      //Ã©s fel van kapcsolva a LED tÃ¡p
       if( (byLedModulKikapcsTimer == 0) && !bTest )
       {
-         //Szoli LED Modul IRQ figyelés
+         //Szoli LED Modul IRQ figyelÃ©s
          if( SP_ReadMessage( chSerialIn, &nHossz ) )
          {
               if( chSerialIn[ nHossz-1 ] == MODUL_IRQ ||
                   chModulMessage == MODUL_IRQ )
               {
                   chModulMessage = 0;
-                  //mivel Modul IRQ akkor lekapcsolja az IRQ-üzenetet,
-                  // míg le nem kérdezi a status-okat
+                  //mivel Modul IRQ akkor lekapcsolja az IRQ-Ã¼zenetet,
+                  // mÃ­g le nem kÃ©rdezi a status-okat
                   DisableModulIRQ();
 
                   // Modul IRQ lekezeles
@@ -480,12 +484,12 @@ void CS_Communication_Serial::HW_Kezel()
                              {
                                  if( pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
                                  {
-                                     // Szauna megszakítása, következõ ciklus indítása
+                                     // Szauna megszakÃ­tÃ¡sa, kÃ¶vetkezÅ‘ ciklus indÃ­tÃ¡sa
                                      pPanel[i].bJumpNextStatus = true;
                                  }
                                  else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
                                  {
-                                     pModul[ i ].bStop = true; //Relay kikapcsolás
+                                     pModul[ i ].bStop = true; //Relay kikapcsolÃ¡s
                                  }
                              }
                              ///////////////////////////////////////////
@@ -493,12 +497,12 @@ void CS_Communication_Serial::HW_Kezel()
                              {
                                  if( pPanel[i].cCurrStatus == STATUS_VETKOZES )
                                  {
-                                     // Vetkõzés megszakítása, következõ ciklus indítása
+                                     // VetkÅ‘zÃ©s megszakÃ­tÃ¡sa, kÃ¶vetkezÅ‘ ciklus indÃ­tÃ¡sa
                                      pPanel[i].bJumpNextStatus = true;
                                  }
                                  else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
                                  {
-                                     pModul[ i ].bStop = false; //Relay bekapcsolás
+                                     pModul[ i ].bStop = false; //Relay bekapcsolÃ¡s
                                  }
                              }
 
@@ -515,7 +519,7 @@ void CS_Communication_Serial::HW_Kezel()
                           }
                           else//if( pHardware->bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
                           {
-                              //nincs válasz
+                              //nincs vÃ¡lasz
                               byLedModulOlvasasiHiba++;
                           }//if( bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
                       }//if( pModul[ i ].bVan )
@@ -523,21 +527,21 @@ void CS_Communication_Serial::HW_Kezel()
               }//if( chSerialIn[ nHossz-1 ] == MODUL_IRQ )
               else if( chSerialIn[ nHossz-1 ] == START_MESSAGE )
               {
-                  //ujraindult a Relay panel, mindent ki kell küldeni
+                  //ujraindult a Relay panel, mindent ki kell kÃ¼ldeni
                   wRelay_mem = 0;
               }
          }// nincs LED Modul IRQ
 
          ////////////////////////////////////////////////////////////////////////
-         //Szoli LED Modul vezérlés
+         //Szoli LED Modul vezÃ©rlÃ©s
 
-         //Elenörzi van-e küldenivaló adat
+         //ElenÃ¶rzi van-e kÃ¼ldenivalÃ³ adat
          bool bVanKuldeniValoAdat = false;
          for( i=0; i<nHWModuleCount; i++ )
          {
              if( pModul[ i ].bVan )
              {
-                 if( pPanel[i].cPrevStatus == STATUS_ALAP && pPanel[i].cCurrStatus == STATUS_VETKOZES )  //vetkõzés
+                 if( pPanel[i].cPrevStatus == STATUS_ALAP && pPanel[i].cCurrStatus == STATUS_VETKOZES )  //vetkÅ‘zÃ©s
                  {
                     pModul[ i ].bSendIras = true;
                  }
@@ -586,10 +590,10 @@ void CS_Communication_Serial::HW_Kezel()
              }
          }
 
-         //Adatok kiküldése a moduloknak
+         //Adatok kikÃ¼ldÃ©se a moduloknak
          if( bVanKuldeniValoAdat )
          {
-             // Letiltlja az IRQ-t, hogy ne zavarja meg a komunikációt
+             // Letiltlja az IRQ-t, hogy ne zavarja meg a komunikÃ¡ciÃ³t
              DisableModulIRQ();
 
              bool bHiba = false;
@@ -655,12 +659,12 @@ void CS_Communication_Serial::HW_Kezel()
                  byLedModulOlvasasiHiba++;
          }
 
-         // Engedélyezi az IRQ-t, ha le volt tiltva
+         // EngedÃ©lyezi az IRQ-t, ha le volt tiltva
          EnableModulIRQ();
       }//if( byLedModulKikapcsTimer == 0 )
 
 
-      // LED tápegység lekapcsolás/felkapcsolás hiba esetén próbálkozik úraindítással
+      // LED tÃ¡pegysÃ©g lekapcsolÃ¡s/felkapcsolÃ¡s hiba esetÃ©n prÃ³bÃ¡lkozik ÃºraindÃ­tÃ¡ssal
       if( byLedModulOlvasasiHiba > LED_MODUL_OLVASASI_HIBA )
       {
           // LED modul tap lekapcsolas
@@ -673,13 +677,13 @@ void CS_Communication_Serial::HW_Kezel()
           {
               byLedModulKikapcsTimer--;
 
-              // 0.9s-al korábban felkapcsolja, hogy magukhoz térjenek
+              // 0.9s-al korÃ¡bban felkapcsolja, hogy magukhoz tÃ©rjenek
               if( byLedModulKikapcsTimer == 3 )
                   bSendToModulPower_ON = true;
 
               if( byLedModulKikapcsTimer == 0 )
               {
-                  // LED modul tap visszakapcsolás ha még nem érte el a max.számot
+                  // LED modul tap visszakapcsolÃ¡s ha mÃ©g nem Ã©rte el a max.szÃ¡mot
                   if( byLedModulUjraindulas > 0 )
                   {
                       byLedModulOlvasasiHiba = 0;
@@ -692,8 +696,8 @@ void CS_Communication_Serial::HW_Kezel()
 
     __TO_BE_SOLVED__
 
-                      //Tamás felugrik egy figyelmeztetõ ablak
-                      //LED Modul komunikációs HIBA!
+                      //TamÃ¡s felugrik egy figyelmeztetÅ‘ ablak
+                      //LED Modul komunikÃ¡ciÃ³s HIBA!
                       if( !bErrorMessageDisplayed )
                       {
                          bErrorMessageDisplayed = true;
@@ -973,11 +977,11 @@ bool CS_Communication_Serial::HW_ReadMessage( char *chMessage, int *nHossz, int 
       }
    }while( !bRet && (nTimeOut-- > 0) );
 
-   Sleep( 2 ); //szükséges a hardware miatt
+   Sleep( 2 ); //szÃ¼ksÃ©ges a hardware miatt
 
    if( chMessage[ (*nHossz)-1 ] == START_MESSAGE )
    {
-      //ujraindult a Relay panel, mindent ki kell küldeni
+      //ujraindult a Relay panel, mindent ki kell kÃ¼ldeni
       wRelay_mem = 0;
       bRet = false;
    }
@@ -1002,7 +1006,7 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
    bool     bRet = false;
    unsigned char     byTimeOut;
 
-   //buffer ürítés
+   //buffer Ã¼rÃ­tÃ©s
    HW_EmptyBuffer();
 
    byCim++;
@@ -1011,8 +1015,8 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
    SP_SendMessage( chMessage, nSendHossz );
    *byStatus = 0;
 
-   //2 byte-os parancsnál 35 ms szukseges (60)
-   //4  byte-os parancsnál 70 ms szukseges (105)
+   //2 byte-os parancsnÃ¡l 35 ms szukseges (60)
+   //4  byte-os parancsnÃ¡l 70 ms szukseges (105)
    if( nSendHossz > 2 )
    {
       byTimeOut = 11;
@@ -1026,8 +1030,8 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
    {
       *byStatus = (unsigned char) chSerialIn[ nRecHossz-1 ];
       byHwWdtCounter = WDT_TIME;
-      bySerial_Error = 0; // sikeres válasz
-      if( (*byStatus>>4) == byCim )  //válasz ellenörzés
+      bySerial_Error = 0; // sikeres vÃ¡lasz
+      if( (*byStatus>>4) == byCim )  //vÃ¡lasz ellenÃ¶rzÃ©s
       {
          *byStatus &= 0x0b; //irq 0 stop start
          bRet = true;
@@ -1042,10 +1046,10 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
       bRet = false;
    }
 
-   //Hibás válasz
+   //HibÃ¡s vÃ¡lasz
    if( chSerialIn[ nRecHossz-1 ] == START_MESSAGE )
    {
-      //ujraindult a Relay panel, mindent ki kell küldeni
+      //ujraindult a Relay panel, mindent ki kell kÃ¼ldeni
       wRelay_mem = 0;
    }
 
@@ -1068,7 +1072,7 @@ bool CS_Communication_Serial::HW_SendRelayMessage( char *chMessage, int nSendHos
    char  chSerialIn[2048];
    int   nRecHossz;
 
-   //buffer ürítés
+   //buffer Ã¼rÃ­tÃ©s
    HW_EmptyBuffer();
 
    SP_SendMessage( chMessage, nSendHossz );  //Serial Send
@@ -1077,7 +1081,7 @@ bool CS_Communication_Serial::HW_SendRelayMessage( char *chMessage, int nSendHos
    if( HW_ReadMessage( chSerialIn, &nRecHossz, 5 ) )
    {
       byHwWdtCounter = WDT_TIME;
-      bySerial_Error = 0; // sikeres válasz
+      bySerial_Error = 0; // sikeres vÃ¡lasz
       if( byData != NULL )
       {
          byData[0] = chSerialIn[ nRecHossz-1 ];
@@ -1087,7 +1091,7 @@ bool CS_Communication_Serial::HW_SendRelayMessage( char *chMessage, int nSendHos
 
    if( chSerialIn[ nRecHossz-1 ] == START_MESSAGE )
    {
-      //ujraindult a Relay panel, mindent ki kell küldeni
+      //ujraindult a Relay panel, mindent ki kell kÃ¼ldeni
       wRelay_mem = 0;
    }
 
@@ -1126,7 +1130,7 @@ BOOL CS_Communication_Serial::HW_ReadEEProm( unsigned char byStartAddress, char 
       }
    }while( (chMessage[i++] != 0) && (i < 100) );
 
-   //0 a végére
+   //0 a vÃ©gÃ©re
    chMessage[i] = 0;
 
    return TRUE;
@@ -1162,7 +1166,7 @@ BOOL CS_Communication_Serial::HW_WriteEEProm( unsigned char byStartAddress, char
       }
    }
 
-   //0 a végére
+   //0 a vÃ©gÃ©re
    chSerialOut[0] = WRITE_EEPROM;
    chSerialOut[1] = byAddress;
    chSerialOut[2] = 0;

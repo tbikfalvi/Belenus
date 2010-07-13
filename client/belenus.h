@@ -14,6 +14,7 @@ extern cPreferences             *g_poPrefs;
 extern CS_Communication         *g_poHardware;
 extern BelenusServerConnection  *g_poServer;
 extern cDBPatient                g_obPatient;
+extern unsigned int              g_uiPatientAttendanceId;
 extern cCassa                    g_obCassa;
 
 #endif

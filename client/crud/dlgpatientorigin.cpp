@@ -32,10 +32,22 @@ void cDlgPatientOrigin::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Active" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+
+        tbvCrud->resizeColumnToContents( 0 );
+        tbvCrud->resizeColumnToContents( 1 );
+        tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+
+        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
+
+        tbvCrud->resizeColumnToContents( 1 );
+
+        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
 }
 

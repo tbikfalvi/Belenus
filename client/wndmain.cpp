@@ -38,6 +38,7 @@
 #include "crud/dlgpostponedpatientselect.h"
 #include "crud/dlgpanelsettings.h"
 #include "crud/dlgpostponedattendanceselect.h"
+#include "crud/dlgattendanceselect.h"
 
 //====================================================================================
 
@@ -46,6 +47,7 @@
 #include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
 #include "edit/dlgcassaedit.h"
+#include "edit/dlgpatientcarduse.h"
 
 //====================================================================================
 
@@ -65,32 +67,31 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
+    m_uiPatientId           = 0;
+    m_uiAttendanceId        = 0;
+    g_uiPatientAttendanceId = 0;
+
     mdiPanels = new cMdiPanels( centralwidget );
     verticalLayout->addWidget(mdiPanels);
 
     mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
+
+    connect( mdiPanels, SIGNAL( activePanelChanged() ), this, SLOT( updateToolbar() ) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
     action_LogOut->setIcon( QIcon("./resources/40x40_lock.gif") );
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
-
     action_Patients->setIcon( QIcon("./resources/40x40_patient.gif") );
-    //--------------------------------------------------------------------------------
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.gif") );
-        action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
-        action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
-        //----------------------------------------------------------------------------
-        action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
-        action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
-        //----------------------------------------------------------------------------
-        action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
-    //--------------------------------------------------------------------------------
+    action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
+    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
+    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
+    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
-
     action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
-
     action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
     action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
@@ -114,6 +115,9 @@ cWndMain::cWndMain( QWidget *parent )
     action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
     action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.gif" ) );
     action_EditActualPatient->setIcon( QIcon("./resources/40x40_patientedit.gif") );
+    action_SelectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_select.gif") );
+    action_DeselectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_deselect.gif") );
+    action_EditActualAttendance->setIcon( QIcon("./resources/40x40_attendance_edit.gif") );
 
     menuPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
     menuAttendance->setIcon( QIcon("./resources/40x40_attendance.gif") );
@@ -164,115 +168,9 @@ bool cWndMain::showLogIn()
 
         updateTitle();
 
-        if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
-            QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
-                                                               // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
-        {
-            if( QMessageBox::warning( this,
-                                      tr("Attention"),
-                                      tr("The application has no valid serial key registered.\n"
-                                         "The application will only control the hardware with DEMO serial key for 7 days.\n\n"
-                                         "Do you want to enter a valid serial key and register the application?\n"
-                                         "Please note you need live internet connection for the registration process."),
-                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
-            {
-                cDlgSerialReg   obDlgSerialReg( this );
-                obDlgSerialReg.exec();
-            }
-        }
+        checkDemoLicenceKey();
+        loginUser();
 
-        //----------------------------------------------
-        // Penztar betoltese, ellenorzese
-        //----------------------------------------------
-        g_obCassa.init();
-
-        // Penztar ellenorzese
-        if( g_obCassa.isCassaExists() )
-        { // Penztar rekord letezik, utolso bejegyzes betoltve
-
-            // Penztar le van zarva?
-            if( g_obCassa.isCassaClosed() )
-            { // Penztar le van zarva
-
-                // Ugyanaz zarta le az elozo penztarat, aki most be van jelentkezve?
-                if( g_obUser.id() == g_obCassa.cassaOwner() )
-                { // Ugyanaz van bejelentkezve
-
-                    // Uj nap kezdodott, vagy visszajelentkezett
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr( "Do you want to continue the previous cassa record?" ),
-                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    { // Elozo penztar folytatasa
-
-                        g_obCassa.cassaReOpen();
-                    }
-                    else
-                    { // Uj penztar nyitasa
-
-                        g_obCassa.createNew( g_obUser.id() );
-                    }
-                } // Ugyanaz volt bejelentkezve
-                else
-                { // Mas jelentkezett be, uj penztar bejegyzes nyitasa
-
-                    g_obCassa.createNew( g_obUser.id() );
-                } // Mas volt bejelentkezve
-            } // Penztar le volt zarva
-            else
-            { // Penztar nincs lezarva
-
-                // Ugyanaz van bejelentkezve, aki a penztart eddig hasznalta?
-                if( g_obUser.id() != g_obCassa.cassaOwner() )
-                { // Mas jelentkezett be
-
-                    // Be akarja zarni a korabbi penztarat es indit egy ujat?
-                    if( QMessageBox::warning( this, tr("Warning"),
-                                              tr("The last cassa record is assigned to a different user.\n"
-                                                 "You are not able to start new cassa record assigned to you\n"
-                                                 "until the previous is still open.\n\n"
-                                                 "Do you want to close the previous cassa and start a new one?\n\n"
-                                                 "Please note if you don't open a cassa record assigned to you\n"
-                                                 "the application can not record any money related action."),
-                                              QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    { // Korabbi penztar bezarasa, uj nyitasa
-
-                        g_obCassa.cassaClose();
-                        g_obCassa.createNew( g_obUser.id() );
-                    } // Uj penztar nyitva
-                    else
-                    { // Korabbi penztar nem lesz lezarva, penztar szolgaltatasa letiltasa
-
-                        g_obCassa.cassaDisabled();
-                    } // Penztar letiltva
-                } // Mas volt bejelentkezve
-                else
-                { // Ugyanaz jelentkezett be
-
-                    g_obCassa.cassaEnabled();
-                } // Ugyanaz jelentkezett be
-            } // Penztar nem volt lezarva
-        } // Penztar rekord letezett
-        else
-        { // Penztar rekord nem letezik
-
-            if( QMessageBox::critical( this, tr("Question"),
-                                       tr("There is no data recorded in database for cassa.\n\n"
-                                          "Do you want to start cassa recording with the current user?\n\n"
-                                          "Please note the application can not record any money related\n"
-                                          "action without valid cassa data record.\n"
-                                          "If you want to start cassa with different user, please log out\n"
-                                          "and relogin with the desired user account."),
-                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-            { // Elso rekord letrehozasa
-
-                g_obCassa.createNew( g_obUser.id() );
-            } // Elso rekord letrehozva
-            else
-            { // Penztar szolgaltatas letiltasa
-
-                g_obCassa.cassaDisabled();
-            } // Penztar letiltva
-        } // Penztar rekord nem letezett
     } // if ( boLogInOK )
 
     obTrace << boLogInOK;
@@ -282,6 +180,137 @@ bool cWndMain::showLogIn()
 void cWndMain::initPanels()
 {
     mdiPanels->initPanels();
+}
+//====================================================================================
+void cWndMain::checkDemoLicenceKey()
+{
+    if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
+        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
+                                                           // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
+    {
+        if( QMessageBox::warning( this,
+                                  tr("Attention"),
+                                  tr("The application has no valid serial key registered.\n"
+                                     "The application will only control the hardware with DEMO serial key for 7 days.\n\n"
+                                     "Do you want to enter a valid serial key and register the application?\n"
+                                     "Please note you need live internet connection for the registration process."),
+                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+        {
+            cDlgSerialReg   obDlgSerialReg( this );
+            obDlgSerialReg.exec();
+        }
+    }
+}
+//====================================================================================
+void cWndMain::loginUser()
+{
+    //----------------------------------------------
+    // Penztar betoltese, ellenorzese
+    //----------------------------------------------
+    g_obCassa.init();
+
+    // Penztar ellenorzese
+    if( g_obCassa.isCassaExists() )
+    { // Penztar rekord letezik, utolso bejegyzes betoltve
+
+        // Penztar le van zarva?
+        if( g_obCassa.isCassaClosed() )
+        { // Penztar le van zarva
+
+            // Ugyanaz zarta le az elozo penztarat, aki most be van jelentkezve?
+            if( g_obUser.id() == g_obCassa.cassaOwner() )
+            { // Ugyanaz van bejelentkezve
+
+                // Uj nap kezdodott, vagy visszajelentkezett
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr( "Do you want to continue the previous cassa record?" ),
+                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                { // Elozo penztar folytatasa
+
+                    g_obCassa.cassaReOpen();
+                }
+                else
+                { // Uj penztar nyitasa
+
+                    g_obCassa.createNew( g_obUser.id() );
+                }
+            } // Ugyanaz volt bejelentkezve
+            else
+            { // Mas jelentkezett be, uj penztar bejegyzes nyitasa
+
+                g_obCassa.createNew( g_obUser.id() );
+            } // Mas volt bejelentkezve
+        } // Penztar le volt zarva
+        else
+        { // Penztar nincs lezarva
+
+            // Ugyanaz van bejelentkezve, aki a penztart eddig hasznalta?
+            if( g_obUser.id() != g_obCassa.cassaOwner() )
+            { // Mas jelentkezett be
+
+                // Be akarja zarni a korabbi penztarat es indit egy ujat?
+                if( QMessageBox::warning( this, tr("Warning"),
+                                          tr("The last cassa record is assigned to a different user.\n"
+                                             "You are not able to start new cassa record assigned to you\n"
+                                             "until the previous is still open.\n\n"
+                                             "Do you want to close the previous cassa and start a new one?\n\n"
+                                             "Please note if you don't open a cassa record assigned to you\n"
+                                             "the application can not record any money related action."),
+                                          QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                { // Korabbi penztar bezarasa, uj nyitasa
+
+                    g_obCassa.cassaClose();
+                    g_obCassa.createNew( g_obUser.id() );
+                } // Uj penztar nyitva
+                else
+                { // Korabbi penztar nem lesz lezarva, penztar szolgaltatasa letiltasa
+
+                    g_obCassa.setDisabled();
+                } // Penztar letiltva
+            } // Mas volt bejelentkezve
+            else
+            { // Ugyanaz jelentkezett be
+
+                g_obCassa.setEnabled();
+            } // Ugyanaz jelentkezett be
+        } // Penztar nem volt lezarva
+    } // Penztar rekord letezett
+    else
+    { // Penztar rekord nem letezik
+
+        if( QMessageBox::critical( this, tr("Question"),
+                                   tr("There is no data recorded in database for cassa.\n\n"
+                                      "Do you want to start cassa recording with the current user?\n\n"
+                                      "Please note the application can not record any money related\n"
+                                      "action without valid cassa data record.\n"
+                                      "If you want to start cassa with different user, please log out\n"
+                                      "and relogin with the desired user account."),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        { // Elso rekord letrehozasa
+
+            g_obCassa.createNew( g_obUser.id() );
+        } // Elso rekord letrehozva
+        else
+        { // Penztar szolgaltatas letiltasa
+
+            g_obCassa.setDisabled();
+        } // Penztar letiltva
+    } // Penztar rekord nem letezett
+}
+//====================================================================================
+void cWndMain::logoutUser()
+{
+    if( g_obCassa.isCassaEnabled() &&
+        g_obCassa.cassaOwner() == g_obUser.id() )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to close your cassa?"),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            on_action_Cassa_triggered();
+            g_obCassa.cassaClose();
+        }
+    }
 }
 //====================================================================================
 void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
@@ -310,6 +339,10 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         }
 
         p_poEvent->ignore();
+    }
+    else if( p_poEvent->key() == Qt::Key_Escape && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) )
+    {
+        mdiPanels->reset();
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -354,8 +387,6 @@ void cWndMain::updateTitle()
     action_PanelStatuses->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     setWindowTitle( qsTitle );
-
-    updateToolbar();
 }
 //====================================================================================
 void cWndMain::updateToolbar()
@@ -369,14 +400,24 @@ void cWndMain::updateToolbar()
     action_EditActualPatient->setEnabled( g_obPatient.id()>0 );
     action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
 
-    action_UseWithCard->setEnabled( true );
-    action_UseByTime->setEnabled( true );
+    action_SelectActualAttendance->setEnabled( g_uiPatientAttendanceId == 0 && g_obPatient.id()>0 );
+    action_SelectActualAttendance->setVisible( g_uiPatientAttendanceId == 0 );
+    action_DeselectActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
+    action_DeselectActualAttendance->setVisible( g_uiPatientAttendanceId > 0 );
+    action_EditActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
 
     action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
     action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
 
-    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
-    action_DeviceSkipStatus->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_UseWithCard->setEnabled( g_obPatient.id() > 0 &&
+                                    g_uiPatientAttendanceId > 0 );
+    action_UseByTime->setEnabled( g_obPatient.id() > 0 &&
+                                  g_uiPatientAttendanceId > 0 );
+
+    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
+                                    g_obPatient.id() > 0 &&
+                                    g_uiPatientAttendanceId > 0 );
+    action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
     action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
@@ -389,7 +430,44 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    updateTitle();
+    bool    bUpdateTitle = false;
+
+    updateToolbar();
+
+    if( m_uiPatientId != g_obPatient.id() )
+    {
+        bUpdateTitle = true;
+
+        m_uiPatientId = g_obPatient.id();
+
+        if( m_uiPatientId )
+        {
+            switch( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to create new attendance for this patient?\n\n"
+                                          "Press the Ignore button to select an existing attendance\n"
+                                          "that saved previously for this patient."),
+                                       QMessageBox::Yes, QMessageBox::No, QMessageBox::Ignore ) )
+            {
+                case QMessageBox::Yes:
+                    on_action_AttendanceNew_triggered();
+                    break;
+
+                case QMessageBox::Ignore:
+                    on_action_SelectActualAttendance_triggered();
+                    break;
+            }
+        }
+    }
+    if( m_uiAttendanceId != g_uiPatientAttendanceId )
+    {
+        bUpdateTitle = true;
+
+        m_uiAttendanceId = g_uiPatientAttendanceId;
+    }
+    if( bUpdateTitle )
+    {
+        updateTitle();
+    }
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -403,6 +481,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
     }
     else
     {
+        logoutUser();
+
         if( QMessageBox::question( this, tr("Attention"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
@@ -472,13 +552,7 @@ void cWndMain::on_action_LogOut_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_Log_Out_triggered" );
 
-    if( QMessageBox::question( this, tr("Question"),
-                               tr("Do you want to close your cassa?"),
-                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        on_action_Cassa_triggered();
-        g_obCassa.cassaClose();
-    }
+    logoutUser();
 
     g_obLogger << cSeverity::INFO;
     g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out";
@@ -538,6 +612,16 @@ void cWndMain::on_action_PatientNew_triggered()
     obDlgEdit.setWindowTitle( tr( "New Patient" ) );
     obDlgEdit.exec();
 
+    if( poPatient->id() > 0 )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to select the created patient as actual?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_obPatient.load( poPatient->id() );
+        }
+    }
+
     delete poPatient;
 }
 //====================================================================================
@@ -553,6 +637,8 @@ void cWndMain::on_action_Attendances_triggered()
 void cWndMain::on_action_DeviceStart_triggered()
 {
     mdiPanels->start();
+
+    on_action_PatientEmpty_triggered();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceReset_triggered()
@@ -567,7 +653,6 @@ void cWndMain::on_action_PatientSelect_triggered()
     cDlgPatientSelect  obDlgPatientSelect( this );
 
     obDlgPatientSelect.exec();
-    updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
@@ -575,7 +660,7 @@ void cWndMain::on_action_PatientEmpty_triggered()
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obPatient.createNew();
-    updateTitle();
+    g_uiPatientAttendanceId = 0;
 }
 //====================================================================================
 void cWndMain::on_action_AttendanceNew_triggered()
@@ -587,6 +672,16 @@ void cWndMain::on_action_AttendanceNew_triggered()
     cDlgAttendanceEdit obDlgEdit( this, poAttendance );
     obDlgEdit.setWindowTitle( tr( "New Attendance" ) );
     obDlgEdit.exec();
+
+    if( poAttendance->id() )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Do you want to select the created attendance as actual?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_uiPatientAttendanceId = poAttendance->id();
+        }
+    }
 
     delete poAttendance;
 }
@@ -604,8 +699,44 @@ void cWndMain::on_action_UseWithCard_triggered()
 
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
-    if( obDlgInputStart.exec() == QDialog::Accepted )
-        processInputPatientCard( obDlgInputStart.getEditText() );
+
+    QString      qsBarcode = "";
+    QSqlQuery   *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(g_obPatient.id()) );
+    if( poQuery->first() )
+    {
+        qsBarcode = poQuery->value(0).toString();
+
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("A patientcard with barcode [%1]\n"
+                                      "attached to the actual patient.\n\n"
+                                      "Do you want to use this patientcard?").arg(qsBarcode),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            processInputPatientCard( qsBarcode );
+        }
+        else
+        {
+            if( obDlgInputStart.exec() == QDialog::Accepted )
+                processInputPatientCard( obDlgInputStart.getEditText() );
+        }
+    }
+    else
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("There is no patientcard attached to the actual patient.\n"
+                                      "Do you want to sell a patientcard for the actual patient?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            on_action_PatientCardSell_triggered();
+        }
+        else
+        {
+            if( obDlgInputStart.exec() == QDialog::Accepted )
+                processInputPatientCard( obDlgInputStart.getEditText() );
+        }
+    }
 }
 //====================================================================================
 void cWndMain::on_action_UseByTime_triggered()
@@ -685,7 +816,45 @@ void cWndMain::on_action_PatientCardSell_triggered()
     obDlgInputStart.init();
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
-        // _TO_BE_FINISHED_
+        cDBPatientCard  obDBPatientCard;
+        try
+        {
+            obDBPatientCard.load( obDlgInputStart.getEditText() );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
+            {
+                g_obLogger << e.severity();
+                g_obLogger << e.what() << cQTLogger::EOM;
+            }
+            else
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This barcode has not found in the database.\n"
+                                              "Do you want to register it for a new patientcard?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCard.createNew();
+                    obDBPatientCard.setBarcode( obDlgInputStart.getEditText() );
+                    obDBPatientCard.save();
+                }
+            }
+        }
+        if( obDBPatientCard.active() != 0 && obDBPatientCard.units() > 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("This patientcard already sold.\n"
+                                     "Please select another inactive patientcard.") );
+        }
+        else
+        {
+            cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
+
+            obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
+            obDlgPatientCardEdit.activatePatientCard();
+            obDlgPatientCardEdit.exec();
+        }
     }
 }
 //====================================================================================
@@ -706,9 +875,21 @@ void cWndMain::processInputPatient( QString p_stPatientName )
     }
     else
     {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("There is no patient in the database with name like\n\n"
-                              "\'%1\'").arg(p_stPatientName.trimmed()) );
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("There is no patient in the database with name like\n\n"
+                                      "\'%1\'\n\n"
+                                      "Do you want to create a new patient record with this name?").arg(p_stPatientName.trimmed()),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            cDBPatient  obDBPatient;
+
+            obDBPatient.createNew();
+            obDBPatient.setName( p_stPatientName.toStdString() );
+
+            cDlgPatientEdit  obDlgEdit( this, &obDBPatient );
+            obDlgEdit.setWindowTitle( QString::fromStdString( obDBPatient.name() ) );
+            obDlgEdit.exec();
+        }
     }
 }
 //====================================================================================
@@ -718,11 +899,44 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
     try
     {
-        obDBPatientCard.load( p_stBarcode.toStdString() );
+        obDBPatientCard.load( p_stBarcode );
 
         if( obDBPatientCard.active() )
         {
+            if( obDBPatientCard.patientId() != g_obPatient.id() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard has been assigned to a different patient.\n"
+                                              "Are you sure you want to use this patientcard?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+            }
+            cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
 
+            if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+            {
+                cDBAttendance   obDBAttendance;
+                QTime           tCurrent;
+                QTime           tLength;
+                QTime           tNewLength;
+                int             inNewLength;
+                int             inUnits;
+                QString         qsLength;
+
+                obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+
+                obDBAttendance.load( g_uiPatientAttendanceId );
+                tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
+                tLength  = QTime::fromString(qsLength,"mm:ss");
+                inNewLength = tCurrent.minute()*60 + tCurrent.second() +
+                              tLength.minute()*60 + tLength.second();
+                tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
+                obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
+                obDBAttendance.save();
+                mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+            }
         }
         else
         {
@@ -762,23 +976,45 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
                 obDBPatientCard.createNew();
-                obDBPatientCard.setBarcode( p_stBarcode.toStdString() );
+                obDBPatientCard.setBarcode( p_stBarcode );
                 obDBPatientCard.save();
             }
         }
     }
 }
 //====================================================================================
-void cWndMain::processInputTimePeriod( int /* p_inSecond */ )
+void cWndMain::processInputTimePeriod( int p_inSecond )
 {
-    // _TO_BE_FINISHED_
+    int inPrice;
+
+    if( mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice ) )
+    {
+        cDBAttendance   obDBAttendance;
+        QTime           tLength;
+
+        obDBAttendance.load( g_uiPatientAttendanceId );
+        tLength = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
+        obDBAttendance.setLength( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
+        obDBAttendance.save();
+        mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("This time period did not saved in the database\n"
+                                 "for the actually selected device.") );
+    }
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
 {
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
     obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
-    obDlgEdit.exec();
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        cDBPostponed    obDBPostponed;
+        obDBPostponed.removePatient( g_obPatient.id() );
+    }
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
@@ -789,5 +1025,28 @@ void cWndMain::on_action_DeviceSettings_triggered()
     {
         mdiPanels->reload();
     }
+}
+//====================================================================================
+void cWndMain::on_action_SelectActualAttendance_triggered()
+{
+    cDlgAttendanceSelect    obDlgSelect( this );
+
+    obDlgSelect.exec();
+}
+//====================================================================================
+void cWndMain::on_action_DeselectActualAttendance_triggered()
+{
+    g_uiPatientAttendanceId = 0;
+}
+//====================================================================================
+void cWndMain::on_action_EditActualAttendance_triggered()
+{
+    cDBAttendance   obDBAttendance;
+
+    obDBAttendance.load( g_uiPatientAttendanceId );
+
+    cDlgAttendanceEdit  obDlgEdit( this, &obDBAttendance );
+
+    obDlgEdit.exec();
 }
 //====================================================================================

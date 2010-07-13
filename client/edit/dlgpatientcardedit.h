@@ -22,6 +22,7 @@ protected:
 
 private:
     bool                 m_bDlgLoaded;
+    bool                 m_bNewCard;
 
 private slots:
     void on_cmbCardType_currentIndexChanged(int index);

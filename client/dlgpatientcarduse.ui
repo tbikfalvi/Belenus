@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>dlgPatientCardEdit</class>
- <widget class="QDialog" name="dlgPatientCardEdit">
+ <class>dlgPatientCardUse</class>
+ <widget class="QDialog" name="dlgPatientCardUse">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>379</width>
-    <height>375</height>
+    <width>391</width>
+    <height>453</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -119,10 +119,36 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkIndependent">
-       <property name="text">
-        <string>Independent from the local studio.</string>
+      <widget class="QGroupBox" name="gbUse">
+       <property name="title">
+        <string> Using ... </string>
        </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblNoUnits">
+          <property name="text">
+           <string>Number of units :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cmbNoUnits"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblTimeLength">
+          <property name="text">
+           <string>Time length :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTimeEdit" name="teTimeUse">
+          <property name="displayFormat">
+           <string>mm:ss</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -172,19 +198,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>ledBarcode</tabstop>
-  <tabstop>cbActive</tabstop>
-  <tabstop>cmbCardType</tabstop>
-  <tabstop>cmbPatient</tabstop>
-  <tabstop>ledUnits</tabstop>
-  <tabstop>teTimeLeft</tabstop>
-  <tabstop>deValidDate</tabstop>
-  <tabstop>pteComment</tabstop>
-  <tabstop>checkIndependent</tabstop>
-  <tabstop>pbSave</tabstop>
-  <tabstop>pbCancel</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

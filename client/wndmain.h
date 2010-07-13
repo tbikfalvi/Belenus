@@ -19,6 +19,11 @@ public:
     bool showLogIn();
     void initPanels();
 
+    void loginUser();
+    void logoutUser();
+
+    void checkDemoLicenceKey();
+
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
     void timerEvent( QTimerEvent *p_poEvent );
@@ -27,6 +32,9 @@ protected:
 private:
     cMdiPanels         *mdiPanels;
     int                 m_nTimer;
+
+    unsigned int        m_uiPatientId;
+    unsigned int        m_uiAttendanceId;
 
     void updateTitle();
     void updateToolbar();
@@ -66,6 +74,9 @@ private slots:
     void on_action_PatientCardSell_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
+    void on_action_SelectActualAttendance_triggered();
+    void on_action_DeselectActualAttendance_triggered();
+    void on_action_EditActualAttendance_triggered();
 };
 
 #endif

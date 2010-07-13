@@ -31,11 +31,15 @@ void cDlgUsers::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Active" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Real Name" ) );
+
+        tbvCrud->sortByColumn( 4, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Real Name" ) );
+
+        tbvCrud->sortByColumn( 3, Qt::AscendingOrder );
     }
     tbvCrud->resizeColumnToContents( 2 );
     tbvCrud->resizeColumnToContents( 3 );

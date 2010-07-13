@@ -25,13 +25,13 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
 
         ledName->setText( poQuery->value(0).toString() );
         ledUniqueId->setText( poQuery->value(1).toString() );
-        deDate->setDate( QDate::fromString(QString::fromStdString(m_poAttendance->date()),"yyyy-MM-dd") );
-        teLength->setTime( QTime::fromString(QString::fromStdString(m_poAttendance->length()),"hh:mm:ss") );
+        deDate->setDate( QDate::fromString(m_poAttendance->date(),"yyyy.MM.dd") );
+        teLength->setTime( QTime::fromString(m_poAttendance->length(),"hh:mm:ss") );
         ledHeight->setText( QString::number(m_poAttendance->height()) );
         ledWeight->setText( QString::number(m_poAttendance->weight()) );
-        ptMedicineCurrent->setPlainText( QString::fromStdString(m_poAttendance->medicineCurrent()) );
-        ptMedicineAllergy->setPlainText( QString::fromStdString(m_poAttendance->medicineAllergy()) );
-        ptComment->setPlainText( QString::fromStdString(m_poAttendance->comment()) );
+        ptMedicineCurrent->setPlainText( m_poAttendance->medicineCurrent() );
+        ptMedicineAllergy->setPlainText( m_poAttendance->medicineAllergy() );
+        ptComment->setPlainText( m_poAttendance->comment() );
         ledBPStart->setText( QString::number(m_poAttendance->bloodPressureStart()) );
         ledPulseStart->setText( QString::number(m_poAttendance->pulseStart()) );
         ledBPStop->setText( QString::number(m_poAttendance->bloodPressureStop()) );
@@ -151,13 +151,13 @@ bool cDlgAttendanceEdit::SaveAttendanceData()
     {
         m_poAttendance->setLicenceId( g_poPrefs->getLicenceId() );
         m_poAttendance->setPatientId( g_obPatient.id() );
-        m_poAttendance->setDate( deDate->date().toString("yyyy-MM-dd").toStdString() );
-        m_poAttendance->setLength( teLength->time().toString("hh:mm:ss").toStdString() );
+        m_poAttendance->setDate( deDate->date().toString("yyyy-MM-dd") );
+        m_poAttendance->setLength( teLength->time().toString("hh:mm:ss") );
         m_poAttendance->setHeight( ledHeight->text().toInt() );
         m_poAttendance->setWeight( ledWeight->text().toInt() );
-        m_poAttendance->setMedicineCurrent( ptMedicineCurrent->toPlainText().toStdString() );
-        m_poAttendance->setMedicineAllergy( ptMedicineAllergy->toPlainText().toStdString() );
-        m_poAttendance->setComment( ptComment->toPlainText().toStdString() );
+        m_poAttendance->setMedicineCurrent( ptMedicineCurrent->toPlainText() );
+        m_poAttendance->setMedicineAllergy( ptMedicineAllergy->toPlainText() );
+        m_poAttendance->setComment( ptComment->toPlainText() );
         m_poAttendance->setBloodPressureStart( ledBPStart->text().toFloat() );
         m_poAttendance->setPulseStart( ledPulseStart->text().toFloat() );
         m_poAttendance->setBloodPressureStop( ledBPStop->text().toFloat() );

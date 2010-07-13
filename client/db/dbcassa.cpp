@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -29,19 +29,19 @@ void cDBCassa::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const unsigned int p_uiUserId,
                              const int p_nCurrentBalance,
-                             const string p_stStartDateTime,
-                             const string p_stStopDateTime,
+                             const QString p_qsStartDateTime,
+                             const QString p_qsStopDateTime,
                              const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                             const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiUserId          = p_uiUserId;
     m_nCurrentBalance   = p_nCurrentBalance;
-    m_stStartDateTime   = p_stStartDateTime;
-    m_stStopDateTime    = p_stStopDateTime;
+    m_qsStartDateTime   = p_qsStartDateTime;
+    m_qsStopDateTime    = p_qsStopDateTime;
     m_bActive           = p_bActive;
-    m_stArchive         = p_stArchive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBCassa::init( const QSqlRecord &p_obRecord ) throw()
@@ -59,10 +59,10 @@ void cDBCassa::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inCurrentBalanceIdx ).toInt(),
-          p_obRecord.value( inStartDateTimeIdx ).toString().toStdString(),
-          p_obRecord.value( inStopDateTimeIdx ).toString().toStdString(),
+          p_obRecord.value( inStartDateTimeIdx ).toString(),
+          p_obRecord.value( inStopDateTimeIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBCassa::load( const unsigned int p_uiId ) throw( cSevException )
@@ -100,24 +100,24 @@ void cDBCassa::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " cassa SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "currentBalance = \"%1\", " ).arg( m_nCurrentBalance );
-    qsQuery += QString( "startDateTime = \"%1\", " ).arg( QString::fromStdString( m_stStartDateTime ) );
-    qsQuery += QString( "stopDateTime = \"%1\", " ).arg( QString::fromStdString( m_stStopDateTime ) );
+    qsQuery += QString( "startDateTime = \"%1\", " ).arg( m_qsStartDateTime );
+    qsQuery += QString( "stopDateTime = \"%1\", " ).arg( m_qsStopDateTime );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE cassaId = %1" ).arg( m_uiId );
@@ -136,7 +136,7 @@ void cDBCassa::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive == "NEW" )
         {
             qsQuery = "DELETE FROM cassa ";
         }
@@ -191,24 +191,24 @@ void cDBCassa::setCurrentBalance( const int p_nCurrentBalance ) throw()
     m_nCurrentBalance = p_nCurrentBalance;
 }
 
-string cDBCassa::startDateTime() const throw()
+QString cDBCassa::startDateTime() const throw()
 {
-    return m_stStartDateTime;
+    return m_qsStartDateTime;
 }
 
-void cDBCassa::setStartDateTime( const string &p_stStartDateTime ) throw()
+void cDBCassa::setStartDateTime( const QString &p_qsStartDateTime ) throw()
 {
-    m_stStartDateTime = p_stStartDateTime;
+    m_qsStartDateTime = p_qsStartDateTime;
 }
 
-string cDBCassa::stopDateTime() const throw()
+QString cDBCassa::stopDateTime() const throw()
 {
-    return m_stStopDateTime;
+    return m_qsStopDateTime;
 }
 
-void cDBCassa::setStopDateTime( const string &p_stStopDateTime ) throw()
+void cDBCassa::setStopDateTime( const QString &p_qsStopDateTime ) throw()
 {
-    m_stStopDateTime = p_stStopDateTime;
+    m_qsStopDateTime = p_qsStopDateTime;
 }
 
 bool cDBCassa::active() const throw()
@@ -221,13 +221,13 @@ void cDBCassa::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBCassa::archive() const throw()
+QString cDBCassa::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBCassa::setArchive( const string &p_stArchive ) throw()
+void cDBCassa::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

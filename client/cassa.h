@@ -24,12 +24,13 @@ public:
     unsigned int            cassaOwner();
     void                    cassaReOpen();
     void                    cassaClose();
-    void                    cassaEnabled();
-    void                    cassaDisabled();
+    void                    setEnabled();
+    void                    setDisabled();
     bool                    isCassaEnabled();
     unsigned int            cassaId();
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
+    void                    cassaAddMoneyAction( int p_nMoney, QString p_qsComment = "" );
 
 private:
     cDBCassa                *m_pCassa;

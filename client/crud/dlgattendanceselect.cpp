@@ -4,7 +4,7 @@
 //
 //====================================================================================
 //
-// Filename    : dlgpostponedattendanceselect.cpp
+// Filename    : dlgattendanceselect.cpp
 // AppVersion  : 1.0
 // FileVersion : 1.0
 // Author      : Bikfalvi Tamas
@@ -14,14 +14,14 @@
 //====================================================================================
 
 #include "belenus.h"
-#include "dlgpostponedattendanceselect.h"
+#include "dlgattendanceselect.h"
 #include "../edit/dlgattendanceedit.h"
-#include "../db/dbpostponed.h"
+//#include "../db/dbpostponed.h"
 
-cDlgPostponedAttendanceSelect::cDlgPostponedAttendanceSelect( QWidget *p_poParent )
+cDlgAttendanceSelect::cDlgAttendanceSelect( QWidget *p_poParent )
     : cDlgAttendance( p_poParent )
 {
-    setWindowTitle( tr( "Select postponed attendance" ) );
+    setWindowTitle( tr( "Select attendance" ) );
     setWindowIcon( QIcon("./resources/40x40_attendance.gif") );
 
     m_poBtnClose->setEnabled(false);
@@ -45,19 +45,21 @@ cDlgPostponedAttendanceSelect::cDlgPostponedAttendanceSelect( QWidget *p_poParen
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
+    cmbPatient->setEnabled( false );
+
     setupTableView();
 
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
 }
 
-cDlgPostponedAttendanceSelect::~cDlgPostponedAttendanceSelect()
+cDlgAttendanceSelect::~cDlgAttendanceSelect()
 {
 
 }
 
-void cDlgPostponedAttendanceSelect::setupTableView()
+void cDlgAttendanceSelect::setupTableView()
 {
-    cTracer obTracer( "cDlgPostponedAttendanceSelect::setupTableView" );
+    cTracer obTracer( "cDlgAttendanceSelect::setupTableView" );
 
     refreshTable();
 
@@ -75,7 +77,7 @@ void cDlgPostponedAttendanceSelect::setupTableView()
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
 
-        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
     else
     {
@@ -87,21 +89,21 @@ void cDlgPostponedAttendanceSelect::setupTableView()
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
 
-        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
 }
 
-void cDlgPostponedAttendanceSelect::refreshTable()
+void cDlgAttendanceSelect::refreshTable()
 {
-    cTracer obTracer( "cDlgPostponedAttendanceSelect::refreshTable" );
+    cTracer obTracer( "cDlgAttendanceSelect::refreshTable" );
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT attendance.attendanceId, patients.name, attendance.date, attendance.length FROM attendance, patients, toBeFilled WHERE attendance.attendanceId>0 AND toBeFilled.patientId=0 AND attendance.patientId=patients.patientId AND attendance.attendanceId=toBeFilled.attendanceId";
+        m_qsQuery = "SELECT attendance.attendanceId, patients.name, attendance.date, attendance.length FROM attendance, patients WHERE attendance.attendanceId>0 AND attendance.patientId=patients.patientId";
     }
     else
     {
-        m_qsQuery = "SELECT attendance.attendanceId as id, patients.name, attendance.date, attendance.length FROM attendance, patients, toBeFilled WHERE attendance.attendanceId>0 AND toBeFilled.patientId=0 AND attendance.patientId=patients.patientId AND attendance.attendanceId=toBeFilled.attendanceId AND patients.active=1";
+        m_qsQuery = "SELECT attendance.attendanceId as id, patients.name, attendance.date, attendance.length FROM attendance, patients WHERE attendance.attendanceId>0 AND attendance.patientId=patients.patientId AND patients.active=1";
     }
 
     unsigned int uiPatientId = cmbPatient->itemData( cmbPatient->currentIndex() ).toInt();
@@ -114,9 +116,9 @@ void cDlgPostponedAttendanceSelect::refreshTable()
     cDlgCrud::refreshTable();
 }
 
-void cDlgPostponedAttendanceSelect::enableButtons()
+void cDlgAttendanceSelect::enableButtons()
 {
-    cTracer obTracer( "cDlgPostponedAttendanceSelect::enableButtons" );
+    cTracer obTracer( "cDlgAttendanceSelect::enableButtons" );
 
     if( m_uiSelectedId )
     {
@@ -128,34 +130,9 @@ void cDlgPostponedAttendanceSelect::enableButtons()
     }
 }
 
-void cDlgPostponedAttendanceSelect::on_pbSelect_clicked()
+void cDlgAttendanceSelect::on_pbSelect_clicked()
 {
-    cDBAttendance   *poAttendance = NULL;
-    cDBPostponed    *poPostponed = new cDBPostponed;
-    try
-    {
-        poPostponed->loadAttendance( m_uiSelectedId );
+    g_uiPatientAttendanceId = m_uiSelectedId;
 
-        poAttendance = new cDBAttendance;
-        poAttendance->load( m_uiSelectedId );
-
-        cDlgAttendanceEdit  obDlgEdit( this, poAttendance, poPostponed );
-        obDlgEdit.setWindowTitle( tr("Edit attendance") );
-        if( obDlgEdit.exec() == QDialog::Accepted )
-        {
-            poPostponed->removeAttendance( m_uiSelectedId );
-        }
-        refreshTable();
-
-        if( poAttendance ) delete poAttendance;
-        if( poPostponed ) delete poPostponed;
-    }
-    catch( cSevException &e )
-    {
-        if( poAttendance ) delete poAttendance;
-        if( poPostponed ) delete poPostponed;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what() << cQTLogger::EOM;
-    }
+    QDialog::accept();
 }

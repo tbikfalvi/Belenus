@@ -21,8 +21,7 @@ public:
     void                saveLedger();
 
     void                createNewLedgerDevice( unsigned int p_uiPanelId );
-    void                prepareLedgerDevice( unsigned int p_uiPatientCardId,
-                                             int p_inUnits,
+    void                prepareLedgerDevice( int p_inUnits,
                                              int p_inCash,
                                              int p_inTimeLength );
     void                addLedgerDevice( int p_inUnits,

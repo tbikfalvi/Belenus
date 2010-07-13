@@ -40,6 +40,8 @@ void cDlgPanelStatuses::setupTableView()
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
+
+        tbvCrud->sortByColumn( 4, Qt::AscendingOrder );
     }
     else
     {
@@ -49,6 +51,8 @@ void cDlgPanelStatuses::setupTableView()
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
+
+        tbvCrud->sortByColumn( 3, Qt::AscendingOrder );
     }
 }
 
