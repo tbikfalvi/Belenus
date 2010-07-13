@@ -95,7 +95,7 @@ void cDBLedgerDevice::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBLedgerDevice::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBLedgerDevice::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBLedgerDevice::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledgerDevice WHERE ledgerDeviceId = %1" ).arg( p_uiId ) );
 

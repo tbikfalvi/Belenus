@@ -153,7 +153,7 @@ bool cWndMain::showLogIn()
     {
         g_obLogger.setAppUser( g_obUser.id() );
         g_obLogger << cSeverity::INFO;
-        g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in";
+        g_obLogger << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged in";
         g_obLogger << cQTLogger::EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
@@ -555,7 +555,7 @@ void cWndMain::on_action_LogOut_triggered()
     logoutUser();
 
     g_obLogger << cSeverity::INFO;
-    g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out";
+    g_obLogger << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged out";
     g_obLogger << cQTLogger::EOM;
 
     g_obUser.logOut();

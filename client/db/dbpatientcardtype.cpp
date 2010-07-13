@@ -83,7 +83,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPatientCardType::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientCardType::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPatientCardType::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardTypes WHERE patientCardTypeId = %1" ).arg( p_uiId ) );
 
@@ -96,7 +96,7 @@ void cDBPatientCardType::load( const unsigned int p_uiId ) throw( cSevException 
 
 void cDBPatientCardType::load( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientCardType::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPatientCardType::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCardTypes WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
 

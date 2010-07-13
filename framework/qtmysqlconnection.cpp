@@ -47,7 +47,7 @@ void cQTMySQLConnection::executeQuery( const string &p_stQuery,
     {
         g_obLogger << cSeverity::DEBUG;
         g_obLogger << "[cQTMySQLConnection::executeQuery]";
-        g_obLogger << p_stQuery << cQTLogger::EOM;
+        g_obLogger << p_stQuery.c_str() << cQTLogger::EOM;
     }
 
     QSqlQuery  obQuery;
@@ -62,7 +62,7 @@ QSqlQuery* cQTMySQLConnection::executeQTQuery( const QString &p_qsQuery )
                                throw( cSevException )
 {
     g_obLogger << cSeverity::DEBUG;
-    g_obLogger << p_qsQuery.toStdString() << cQTLogger::EOM;
+    g_obLogger << p_qsQuery << cQTLogger::EOM;
 
     if( !isOpen() )
         throw cSevException( cSeverity::ERROR,

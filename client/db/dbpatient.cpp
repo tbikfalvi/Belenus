@@ -107,7 +107,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPatient::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatient::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPatient::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patients WHERE patientId = %1" ).arg( p_uiId ) );
 
@@ -120,7 +120,7 @@ void cDBPatient::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBPatient::load( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatient::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
 
@@ -133,7 +133,7 @@ void cDBPatient::load( const string &p_stName ) throw( cSevException )
 
 unsigned int cDBPatient::getPatientCount( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatient::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name LIKE '\%" + QString::fromStdString( p_stName ) + "\%'" );
 

@@ -52,7 +52,7 @@ void cDlgLogIn::accept()
     catch( cSevException &e )
     {
         g_obLogger << cSeverity::INFO;
-        g_obLogger << "User " << cmbName->currentText().toStdString() << " failed to log in";
+        g_obLogger << "User " << cmbName->currentText() << " failed to log in";
         g_obLogger << cQTLogger::EOM;
 
         g_obUser.logOut();

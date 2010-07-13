@@ -1,10 +1,6 @@
 
 #include "connection.h"
-#ifdef SERVER
-#  include "../../server/qtlogger.h"
-#else
-#  include "../framework/qtlogger.h"
-#endif
+#include "../qtlogger.h"
 
 
 extern cQTLogger g_obLogger;
@@ -40,7 +36,7 @@ void Connection::_connectSignalsToSocket()
 void Connection::connectTo(QTcpSocket *s)
 {
     if ( !isFinished() ) {
-        g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] incoming from " << s->peerAddress().toString().toStdString() << ":" << s->peerPort() << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] incoming from " << s->peerAddress().toString() << ":" << s->peerPort() << cQTLogger::EOM;
 
         _socket = s;
         _connectSignalsToSocket();
@@ -52,7 +48,7 @@ void Connection::connectTo(QTcpSocket *s)
 
 void Connection::connectTo(QHostAddress addr, qint16 port)
 {
-    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] connecting to " << addr.toString().toStdString() << ":" << port << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Connection::connectTo] connecting to " << addr.toString() << ":" << port << cQTLogger::EOM;
     _addr = addr;
     _port = port;
     start();
@@ -100,7 +96,7 @@ void Connection::_recv()
 
     try {
         while ( Packet *p = Packet::createPacket(_buffer) ) {
-            g_obLogger(cSeverity::DEBUG) << "[Connection::_recv] received " << p->getPacketName() << ": "<< p->dump().toStdString() << cQTLogger::EOM;
+            g_obLogger(cSeverity::DEBUG) << "[Connection::_recv] received " << p->getPacketName() << ": "<< p->dump() << cQTLogger::EOM;
             _handlePacket(*p);
             delete p;
         }
@@ -229,7 +225,7 @@ void Connection::run()
 void Connection::send(Packet &p)
 {
     qint64 writtenBytes = _socket->write(p.getRawPacket());
-    g_obLogger(cSeverity::DEBUG) << "[Connection::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump().toStdString() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Connection::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
 }
 
 

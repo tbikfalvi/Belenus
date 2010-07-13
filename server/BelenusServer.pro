@@ -16,7 +16,6 @@ TARGET = BelenusServer
 TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
-DEFINES += SERVER
 CONFIG += qt
 CONFIG += console
 TRANSLATIONS = bs_us.ts \
@@ -32,7 +31,7 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/preferences.h \
     ../framework/network/protocolException.h \
     ../framework/network/sqlResult.h \
-    qtlogger.h
+    ../framework/qtlogger.h
 SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     main.cpp \
@@ -41,7 +40,7 @@ SOURCES += ../framework/dbconnection.cpp \
     ../framework/network/packet.cpp \
     ../framework/preferences.cpp \
     ../framework/network/sqlResult.cpp \
-    qtlogger.cpp
+    ../framework/qtlogger.cpp
 QT += network
 QT += sql
 QT -= gui

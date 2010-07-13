@@ -347,9 +347,9 @@ void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiGUILevel,
                                  bool p_boSaveNow )
 {
-    g_obLogger.setMinSeverityLevels( (cSeverity::teSeverity)p_uiConLevel,
-                                     (cSeverity::teSeverity)p_uiDBLevel,
-                                     (cSeverity::teSeverity)p_uiGUILevel );
+    //g_obLogger.setMinSeverityLevels( (cSeverity::teSeverity)p_uiConLevel,
+    //                                 (cSeverity::teSeverity)p_uiDBLevel,
+    //                                 (cSeverity::teSeverity)p_uiGUILevel );
 
     if( p_boSaveNow )
     {
@@ -367,7 +367,7 @@ void cPreferences::getLogLevels( unsigned int *p_poConLevel,
     cSeverity::teSeverity  enConLevel = cSeverity::DEBUG;
     cSeverity::teSeverity  enDBLevel  = cSeverity::DEBUG;
     cSeverity::teSeverity  enGUILevel = cSeverity::DEBUG;
-    g_obLogger.getMinSeverityLevels( &enConLevel, &enDBLevel, &enGUILevel );
+//    g_obLogger.getMinSeverityLevels( &enConLevel, &enDBLevel, &enGUILevel );
 
     if( p_poConLevel ) *p_poConLevel = enConLevel;
     if( p_poDBLevel )  *p_poDBLevel  = enDBLevel;
@@ -399,7 +399,7 @@ void cPreferences::loadConfFileSettings()
     if( obPrefFile.status() != QSettings::NoError )
     {
         g_obLogger << cSeverity::WARNING;
-        g_obLogger << "Failed to load preferences from file: " << m_qsFileName.toStdString();
+        g_obLogger << "Failed to load preferences from file: " << m_qsFileName;
         g_obLogger << cQTLogger::EOM;
     }
     else
@@ -438,7 +438,7 @@ void cPreferences::loadConfFileSettings()
             uiConsoleLevel = cSeverity::DEBUG;
 
             g_obLogger << cSeverity::WARNING;
-            g_obLogger << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName.toStdString();
+            g_obLogger << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName;
             g_obLogger << cQTLogger::EOM;
         }
 
@@ -449,7 +449,7 @@ void cPreferences::loadConfFileSettings()
             uiDBLevel = cSeverity::DEBUG;
 
             g_obLogger << cSeverity::WARNING;
-            g_obLogger << "Invalid DBLogLevel in preferences file: " << m_qsFileName.toStdString();
+            g_obLogger << "Invalid DBLogLevel in preferences file: " << m_qsFileName;
             g_obLogger << cQTLogger::EOM;
         }
 
@@ -460,7 +460,7 @@ void cPreferences::loadConfFileSettings()
             uiGUILevel = cSeverity::DEBUG;
 
             g_obLogger << cSeverity::WARNING;
-            g_obLogger << "Invalid GUILogLevel in preferences file: " << m_qsFileName.toStdString();
+            g_obLogger << "Invalid GUILogLevel in preferences file: " << m_qsFileName;
             g_obLogger << cQTLogger::EOM;
         }
 

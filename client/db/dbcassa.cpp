@@ -67,7 +67,7 @@ void cDBCassa::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBCassa::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBCassa::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBCassa::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassa WHERE cassaId = %1" ).arg( p_uiId ) );
 

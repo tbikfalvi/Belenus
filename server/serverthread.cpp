@@ -1,5 +1,5 @@
 
-#include "qtlogger.h"
+#include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
 #include "serverthread.h"
 

@@ -1,114 +1,93 @@
+#include <QDateTime>
 #include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <ctime>
-#include <QMessageBox>
-
 #include "qtlogger.h"
 
+
+
+void ConsoleWriter::_writeLog(const cSeverity::teSeverity sev, const QString &m) {
+    cerr << QDateTime::currentDateTime().toString(Qt::ISODate).toStdString() << " ";
+    cerr << cSeverity::toStr( sev );
+    if( !m.isEmpty() )
+        cerr << " " << m.toStdString();
+    cerr << endl << flush;
+}
+
+
+
+
 cQTLogger::cQTLogger()
+    : m_enNextSeverityLevel(cSeverity::DEBUG),
+      m_string(""),
+      m_ssMessage(&m_string),
+      m_uiAppUser(0)
 {
-    init();
 }
 
-cQTLogger::cQTLogger( cDBConnection *p_poDB )
-{
-    init();
 
-    m_poDB = p_poDB;
-}
 
 cQTLogger::~cQTLogger()
 {
 }
 
-void cQTLogger::init( void ) throw ()
-{
-    m_enMinConsoleSeverityLevel = cSeverity::NONE;
-    m_enMinDBSeverityLevel      = cSeverity::NONE;
-    m_enMinGUISeverityLevel     = cSeverity::NONE;
-    m_enNextSeverityLevel       = cSeverity::NONE;
-    m_uiAppUser                 = 0;
-}
 
-void cQTLogger::setDBConnection( cDBConnection * const p_poDB )
-{
-    m_poDB = p_poDB;
-}
-
-void cQTLogger::setMinSeverityLevels(
-    const cSeverity::teSeverity p_enConsoleLevel = cSeverity::DEBUG,
-    const cSeverity::teSeverity p_enDBLevel = cSeverity::DEBUG,
-    const cSeverity::teSeverity p_enGUILevel = cSeverity::DEBUG )
-    throw()
-{
-    m_enMinConsoleSeverityLevel = p_enConsoleLevel;
-    m_enMinDBSeverityLevel      = p_enDBLevel;
-    m_enMinGUISeverityLevel     = p_enGUILevel;
-}
-
-void cQTLogger::getMinSeverityLevels(
-    cSeverity::teSeverity *p_poConsoleLevel,
-    cSeverity::teSeverity *p_poDBLevel,
-    cSeverity::teSeverity *p_poGUILevel ) const
-    throw()
-{
-    *p_poConsoleLevel = m_enMinConsoleSeverityLevel;
-    *p_poDBLevel      = m_enMinDBSeverityLevel;
-    *p_poGUILevel     = m_enMinGUISeverityLevel;
-}
 
 void cQTLogger::setAppUser( const unsigned int p_uiUser )
-     throw()
 {
     m_uiAppUser = p_uiUser;
 }
 
+
+
 unsigned int cQTLogger::getAppUser( void ) const
-       throw()
 {
     return m_uiAppUser;
 }
 
+
+
 void cQTLogger::logMessage( const cSeverity::teSeverity  p_enLevel,
-                            const string                &p_stMessage )
-     throw()
+                            const QString               &p_stMessage )
 {
     try
     {
-        if( p_enLevel <= m_enMinConsoleSeverityLevel )
-            logToConsole( p_enLevel, p_stMessage );
-        if( p_enLevel <= m_enMinDBSeverityLevel )
-            logToDB( p_enLevel, p_stMessage );
-        if( p_enLevel <= m_enMinGUISeverityLevel )
-            logToGUI( p_enLevel, p_stMessage );
+        Writers::const_iterator it;
+        for (it = m_writers.begin(); it!=m_writers.end(); ++it)
+            if ( (*it) )
+                (*it)->_write(p_enLevel, p_stMessage);
     }
     catch( cSevException &e )
     {
-        logToConsole( e.severity(), e.what() );
+        // i dont knwo yet what to do
     }
 }
 
-void cQTLogger::logToConsole( const cSeverity::teSeverity  p_enLevel,
-                              const string                &p_stMessage )
-     throw()
-{
-    time_t     ttTime;
-    struct tm *poTm;
-    time( &ttTime );
-    poTm = localtime( &ttTime );
 
-    cerr << setw(2) << setfill('0') << poTm->tm_mday << ".";
-    cerr << setw(2) << setfill('0') << poTm->tm_mon + 1 << ".";
-    cerr << poTm->tm_year + 1900 << " ";
-    cerr << poTm->tm_hour << ":";
-    cerr << setw(2) << setfill('0') << poTm->tm_min << ":";
-    cerr << setw(2) << setfill('0') << poTm->tm_sec << " ";
-    cerr << cSeverity::toStr( p_enLevel );
-    if( m_uiAppUser ) cerr << " User: " << m_uiAppUser << " ";
-    if( p_stMessage != "" ) cerr << " " << p_stMessage;
-    cerr << endl << flush;
+
+void cQTLogger::attachWriter(const QString name, LogWriter *w)
+{
+    m_writers.insert(name, w);
 }
+
+
+
+void cQTLogger::detachWriter(const QString name)
+{
+    Writers::iterator it = m_writers.find(name);
+    if ( it!=m_writers.end() )
+        m_writers.erase(it);
+}
+
+
+
+void cQTLogger::setMinimumSeverity(const QString name, const cSeverity::teSeverity sev)
+{
+    Writers::iterator it = m_writers.find(name);
+    if ( it!=m_writers.end() )
+        (*it)->setMinimumSeverity(sev);
+}
+
+
+/*
 
 void cQTLogger::logToDB( const cSeverity::teSeverity  p_enLevel,
                          const string                &p_stMessage )
@@ -160,3 +139,4 @@ void cQTLogger::logToGUI( const cSeverity::teSeverity  p_enLevel,
                        QMessageBox::Ok );
     obMsg.exec();
 }
+*/

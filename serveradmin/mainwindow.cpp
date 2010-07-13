@@ -99,7 +99,7 @@ void MainWindow::on_bConnect_clicked()
         int port = g_prefs.value("server/port").toInt();
         QString host;
 
-        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host is " << host.toStdString() << ", port from config is " << port << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host is " << host << ", port from config is " << port << cQTLogger::EOM;
 
         int p = iHost->text().indexOf(':');
         if ( p>=0 ) {
@@ -116,7 +116,7 @@ void MainWindow::on_bConnect_clicked()
             return;
         }
 
-        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host="<< host.toStdString() << ", port=" << port << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host="<< host << ", port=" << port << cQTLogger::EOM;
 
         bConnect->setEnabled(false);
         bConnect->setText("Connecting");
@@ -163,7 +163,7 @@ void MainWindow::socketError(QAbstractSocket::SocketError socketError)
         default:err = "Unkown error"; break;
     }
 
-    g_obLogger << cSeverity::DEBUG << "[MainWindow::socketError] " << socketError << ": " << err.toStdString() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::socketError] " << socketError << ": " << err << cQTLogger::EOM;
     bConnect->setText("Connect");
     bConnect->setEnabled(true);
     log( tr("Socket error: %1").arg(err) );
@@ -181,7 +181,7 @@ void MainWindow::on_bRegister_clicked()
     if ( !iNewKey->text().length() )
         return;
 
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_pushButton_clicked] registering key " << iNewKey->text().toStdString() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_pushButton_clicked] registering key " << iNewKey->text() << cQTLogger::EOM;
     _connection.registerNewKey(iNewKey->text().toStdString().c_str());
 }
 
