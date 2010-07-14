@@ -398,9 +398,7 @@ void cPreferences::loadConfFileSettings()
 
     if( obPrefFile.status() != QSettings::NoError )
     {
-        g_obLogger << cSeverity::WARNING;
-        g_obLogger << "Failed to load preferences from file: " << m_qsFileName;
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << cQTLogger::EOM;
     }
     else
     {
@@ -436,10 +434,7 @@ void cPreferences::loadConfFileSettings()
             (uiConsoleLevel <= cSeverity::MIN) )
         {
             uiConsoleLevel = cSeverity::DEBUG;
-
-            g_obLogger << cSeverity::WARNING;
-            g_obLogger << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName;
-            g_obLogger << cQTLogger::EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName << cQTLogger::EOM;
         }
 
         unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::INFO ).toUInt();
@@ -448,9 +443,7 @@ void cPreferences::loadConfFileSettings()
         {
             uiDBLevel = cSeverity::DEBUG;
 
-            g_obLogger << cSeverity::WARNING;
-            g_obLogger << "Invalid DBLogLevel in preferences file: " << m_qsFileName;
-            g_obLogger << cQTLogger::EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid DBLogLevel in preferences file: " << m_qsFileName << cQTLogger::EOM;
         }
 
         unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::WARNING ).toUInt();
@@ -459,9 +452,7 @@ void cPreferences::loadConfFileSettings()
         {
             uiGUILevel = cSeverity::DEBUG;
 
-            g_obLogger << cSeverity::WARNING;
-            g_obLogger << "Invalid GUILogLevel in preferences file: " << m_qsFileName;
-            g_obLogger << cQTLogger::EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << cQTLogger::EOM;
         }
 
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel );
@@ -490,10 +481,7 @@ void cPreferences::loadDBSettings() throw (cSevException)
     catch( cSevException &e )
     {
         if( poQuery ) delete poQuery;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what();
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
 }

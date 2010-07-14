@@ -72,9 +72,7 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr(" CONNECTED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        g_obLogger << cSeverity::INFO;
-        g_obLogger << "Belenus Version " << g_poPrefs->getVersion() << " started.";
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << cQTLogger::EOM;
 
         qsSpalsh += QObject::tr("Connecting to Belenus server ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -210,16 +208,12 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        g_obLogger << e.severity();
-        g_obLogger << e.what();
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
 //    g_poServer->quit();
 
-    g_obLogger << cSeverity::INFO;
-    g_obLogger << "Belenus Version " << g_poPrefs->getVersion() << " ended.";
-    g_obLogger << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " ended." << cQTLogger::EOM;
 
     //delete m_ptcpSocket;
     //delete g_poServer;

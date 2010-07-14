@@ -154,8 +154,6 @@ void cDlgPostponedAttendanceSelect::on_pbSelect_clicked()
     {
         if( poAttendance ) delete poAttendance;
         if( poPostponed ) delete poPostponed;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 }

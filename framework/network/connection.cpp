@@ -183,7 +183,7 @@ void Connection::_handlePacket(Packet &packet)
                 } break;
 
             default:
-                g_obLogger << cSeverity::ERROR << "[Connection::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
+                g_obLogger(cSeverity::ERROR) << "[Connection::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
                 break;
         }
     } catch (cSevException e) {
@@ -242,7 +242,7 @@ void Connection::_assertSize(unsigned int size, Packet &p, AssertType type)
     if ( (type==EXACT && p.getLength() != size) || ( p.getLength()<size) ) {
         QString msg;
         msg = QString("for %3 length is %1, it should be %2").arg(p.getLength()).arg(size).arg(p.getPacketName());
-        g_obLogger << cSeverity::ERROR << "[Connection::_assertSize] for packet " << p.getPacketName() << " length should be "<< (type==EXACT?"exactly ":"minimum ") << size << ", but " << p.getLength() << " bytes received. " << cQTLogger::EOM;
+        g_obLogger(cSeverity::ERROR) << "[Connection::_assertSize] for packet " << p.getPacketName() << " length should be "<< (type==EXACT?"exactly ":"minimum ") << size << ", but " << p.getLength() << " bytes received. " << cQTLogger::EOM;
         throw ProtocolException(cSeverity::ERROR, PROTOCOL_PACKET_SIZE_MISMATCH, msg.toStdString() );
     }
 }

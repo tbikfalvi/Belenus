@@ -110,9 +110,7 @@ void cDlgPanelTypes::editClicked( bool )
     catch( cSevException &e )
     {
         if( poPanelTypes ) delete poPanelTypes;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 }
 
@@ -136,9 +134,7 @@ void cDlgPanelTypes::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poPanelTypes ) delete poPanelTypes;
-
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
         }
     }
 }

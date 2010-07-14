@@ -113,9 +113,7 @@ void cDlgPatientOrigin::editClicked( bool )
     catch( cSevException &e )
     {
         if( poPatientOrigin ) delete poPatientOrigin;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 }
 
@@ -139,9 +137,7 @@ void cDlgPatientOrigin::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poPatientOrigin ) delete poPatientOrigin;
-
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
         }
     }
 }

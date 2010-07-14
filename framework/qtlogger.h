@@ -10,6 +10,7 @@
 #include "dbconnection.h"
 
 
+class LogMessage;
 
 
 
@@ -24,18 +25,6 @@ protected:
     virtual void _write(const cSeverity::teSeverity sev, const QDateTime ts, const QString &msg)    { if (sev<=_minSeverity) _writeLog(sev,ts,msg); }
     virtual void _writeLog(const cSeverity::teSeverity severity, const QDateTime ts, const QString &msg) = 0;
     cSeverity::teSeverity _minSeverity;
-};
-
-
-
-
-
-
-class ConsoleWriter : public LogWriter {
-public:
-    ConsoleWriter(const cSeverity::teSeverity sev) : LogWriter(sev) {}
-protected:
-    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
 };
 
 
@@ -67,63 +56,50 @@ public:
     void detachWriter( const QString name );
     void setMinimumSeverity( const QString name, const cSeverity::teSeverity sev );
 
-
-    /*
-     * Operators
-     */
-
-    cQTLogger &operator ()( const cSeverity::teSeverity p_enSev ) {
-        m_enNextSeverityLevel = p_enSev;
-        return *this;
-    }
-
-    cQTLogger &operator <<( const cSeverity::teSeverity p_enSev ) {
-        m_enNextSeverityLevel = p_enSev;
-        return *this;
-    }
-
-
-    cQTLogger &operator <<( const int p_inParam ) {
-        m_ssMessage << p_inParam;
-        return *this;
-    }
-
-
-
-    cQTLogger &operator <<( const QString &p_inParam ) {
-        m_ssMessage << p_inParam;
-        return *this;
-    }
-
-
-    cQTLogger &operator <<( const teLoggerManip p_enManip ) {
-        switch( p_enManip )
-        {
-            case EOM:
-                logMessage( m_enNextSeverityLevel, m_string );
-                // There's no 'break' here because the EOM manipulator
-                // needs to do a 'CLEAR' as well
-            case CLEAR:
-                m_enNextSeverityLevel = cSeverity::DEBUG;
-                m_string = "";
-                m_ssMessage.setString(&m_string);
-                break;
-            default: ;
-        }
-        return *this;
-    }
-
-
-
+    LogMessage operator () ( const cSeverity::teSeverity p_enLevel );
 
 private:
     typedef QMap<QString, LogWriter*> Writers;
 
     Writers                m_writers;
+    unsigned int           m_uiAppUser;
+};
+
+
+
+
+
+
+class LogMessage {
+public:
+    LogMessage(const cSeverity::teSeverity sev, cQTLogger *logger);
+    LogMessage(const LogMessage &lm);
+    virtual ~LogMessage();
+
+    LogMessage &operator <<( const cSeverity::teSeverity p_enSev );
+    LogMessage &operator <<( const int p_inParam );
+    LogMessage &operator <<( const QString &p_inParam );
+    LogMessage &operator <<( const cQTLogger::teLoggerManip p_enManip );
+
+
+protected:
+    cQTLogger             *m_logger;
     cSeverity::teSeverity  m_enNextSeverityLevel;
     QString                m_string;
     QTextStream            m_ssMessage;
-    unsigned int           m_uiAppUser;
+};
+
+
+
+
+
+
+
+class ConsoleWriter : public LogWriter {
+public:
+    ConsoleWriter(const cSeverity::teSeverity sev) : LogWriter(sev) {}
+protected:
+    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
 };
 
 #endif
