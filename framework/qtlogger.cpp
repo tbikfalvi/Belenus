@@ -4,8 +4,8 @@
 
 
 
-void ConsoleWriter::_writeLog(const cSeverity::teSeverity sev, const QString &m) {
-    cerr << QDateTime::currentDateTime().toString(Qt::ISODate).toStdString() << " ";
+void ConsoleWriter::_writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m) {
+    cerr << ts.toString(Qt::ISODate).toStdString() << " ";
     cerr << cSeverity::toStr( sev );
     if( !m.isEmpty() )
         cerr << " " << m.toStdString();
@@ -50,10 +50,11 @@ void cQTLogger::logMessage( const cSeverity::teSeverity  p_enLevel,
 {
     try
     {
+        QDateTime curr = QDateTime::currentDateTime();
         Writers::const_iterator it;
         for (it = m_writers.begin(); it!=m_writers.end(); ++it)
             if ( (*it) )
-                (*it)->_write(p_enLevel, p_stMessage);
+                (*it)->_write(p_enLevel, curr, p_stMessage);
     }
     catch( cSevException &e )
     {

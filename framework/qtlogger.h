@@ -1,7 +1,7 @@
 #ifndef QTLOGGER_H
 #define QTLOGGER_H
 
-
+#include <QDateTime>
 #include <QTextStream>
 #include <QString>
 #include <QMap>
@@ -21,8 +21,8 @@ public:
     virtual void setMinimumSeverity(const cSeverity::teSeverity minSeverity) { _minSeverity = minSeverity; }
 
 protected:
-    virtual void _write(const cSeverity::teSeverity sev, const QString &msg)    { if (sev<=_minSeverity) _writeLog(sev,msg); }
-    virtual void _writeLog(const cSeverity::teSeverity severity, const QString &msg) = 0;
+    virtual void _write(const cSeverity::teSeverity sev, const QDateTime ts, const QString &msg)    { if (sev<=_minSeverity) _writeLog(sev,ts,msg); }
+    virtual void _writeLog(const cSeverity::teSeverity severity, const QDateTime ts, const QString &msg) = 0;
     cSeverity::teSeverity _minSeverity;
 };
 
@@ -35,7 +35,7 @@ class ConsoleWriter : public LogWriter {
 public:
     ConsoleWriter(const cSeverity::teSeverity sev) : LogWriter(sev) {}
 protected:
-    virtual void _writeLog(const cSeverity::teSeverity sev, const QString &m);
+    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
 };
 
 

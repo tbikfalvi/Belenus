@@ -22,9 +22,6 @@ int main( int argc, char *argv[] )
 {
     QApplication  apMainApp( argc, argv );
 
-    ConsoleWriter console(cSeverity::MAX);
-    g_obLogger.attachWriter("console", &console);
-
     int nRet = 1;
     try
     {
