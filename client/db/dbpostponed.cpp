@@ -47,7 +47,7 @@ void cDBPostponed::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPostponed::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPostponed::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPostponed::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM toBeFilled WHERE toBeFilledId = %1" ).arg( p_uiId ) );
 
@@ -60,7 +60,7 @@ void cDBPostponed::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBPostponed::loadPatient( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPostponed::loadPatient", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPostponed::loadPatient", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM toBeFilled WHERE patientId = %1 AND attendanceId=0" ).arg( p_uiId ) );
 
@@ -73,7 +73,7 @@ void cDBPostponed::loadPatient( const unsigned int p_uiId ) throw( cSevException
 
 void cDBPostponed::loadAttendance( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPostponed::loadAttendance", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPostponed::loadAttendance", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM toBeFilled WHERE attendanceId = %1 AND patientId=0" ).arg( p_uiId ) );
 

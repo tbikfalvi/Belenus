@@ -1,10 +1,6 @@
-
-
-
-
-
-
-
+.gitignore
+libmysql.dll
+dist/
 belenus.exe
 BelenusServer.exe
 belenus

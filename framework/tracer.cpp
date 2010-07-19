@@ -3,26 +3,22 @@
 
 unsigned int cTracer::m_uiIndent = 0;
 
-cTracer::cTracer( const string &p_stFuncName,
-                  const string &p_stInParams )
-        : m_stFuncName( p_stFuncName )
+cTracer::cTracer( const QString p_stFuncName,
+                  const QString p_stInParams )
+        : m_stFuncName( p_stFuncName ),
+          m_string(""),
+          m_ssOutParams(&m_string)
 {
-    string  stMessage( m_uiIndent++, ' ');
-    stMessage += p_stFuncName;
-    stMessage += "( ";
-    stMessage += p_stInParams;
-    stMessage += " ) >";
-
+    QString stMessage( m_uiIndent++, ' ');
+    stMessage += QString("%1( %2 ) >").arg(p_stFuncName).arg(p_stInParams);
     g_obLogger.logMessage( cSeverity::DEBUG, stMessage );
 }
 
+
+
 cTracer::~cTracer()
 {
-    string stMessage( --m_uiIndent, ' ' );
-    stMessage += m_stFuncName;
-    stMessage += "( ";
-    stMessage += m_ssOutParams.str();
-    stMessage += " ) <";
-
+    QString stMessage( --m_uiIndent, ' ' );
+    stMessage += QString("%1( %2 ) <").arg(m_stFuncName).arg(m_string);
     g_obLogger.logMessage( cSeverity::DEBUG, stMessage );
 }

@@ -22,12 +22,10 @@ int main( int argc, char *argv[] )
 {
     QApplication  apMainApp( argc, argv );
 
-    g_obLogger.setMinSeverityLevels(cSeverity::MAX, cSeverity::MIN, cSeverity::MIN );
-
     int nRet = 1;
     try
     {
-        g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version").toStdString() << " started." << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " started." << cQTLogger::EOM;
 
         MainWindow  wndMain;
         wndMain.show();
@@ -35,12 +33,10 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        g_obLogger << e.severity();
-        g_obLogger << e.what();
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
-    g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version").toStdString() << " ended." << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " ended." << cQTLogger::EOM;
 
     return nRet;
 }

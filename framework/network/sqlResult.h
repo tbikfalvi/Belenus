@@ -2,6 +2,7 @@
 #define _sql_result_h_
 
 #include <QVector>
+#include <QHash>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>

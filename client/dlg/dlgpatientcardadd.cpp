@@ -66,8 +66,7 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
         }
         catch( cSevException &e )
         {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
         }
     }
 }

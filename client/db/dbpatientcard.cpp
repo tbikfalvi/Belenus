@@ -83,7 +83,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientCard::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPatientCard::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardId = %1" ).arg( p_uiId ) );
 
@@ -96,7 +96,7 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientCard::load", "name: \""  + p_qsBarcode.toStdString() + "\"" );
+    cTracer obTrace( "cDBPatientCard::load", QString("name: \"%1\"").arg(p_qsBarcode) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE barcode = \"" + p_qsBarcode + "\"" );
 
@@ -173,7 +173,7 @@ void cDBPatientCard::remove() throw( cSevException )
 
 bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
 {
-    cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ).toStdString() );
+    cTracer obTrace( "cDBPatientCard::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
 

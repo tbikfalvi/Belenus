@@ -54,7 +54,7 @@ void cDBUser::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBUser::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBUser::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBUser::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE userId = %1" ).arg( p_uiId ) );
 
@@ -67,7 +67,7 @@ void cDBUser::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBUser::load( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBUser::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBUser::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
 
     if( p_stName == "root" )
     {

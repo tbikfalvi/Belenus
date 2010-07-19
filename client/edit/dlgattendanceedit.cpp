@@ -137,9 +137,7 @@ void cDlgAttendanceEdit::on_pbFinishLater_clicked()
     catch( cSevException &e )
     {
         if( poQuery ) delete poQuery;
-
-        g_obLogger << e.severity();
-        g_obLogger << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 }
 
@@ -169,8 +167,7 @@ bool cDlgAttendanceEdit::SaveAttendanceData()
     }
     catch( cSevException &e )
     {
-        g_obLogger << e.severity();
-        g_obLogger << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
     return bRet;

@@ -55,7 +55,7 @@ void cDBPanelTypes::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelTypes::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPanelTypes::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE panelTypesId = %1" ).arg( p_uiId ) );
 
@@ -68,7 +68,7 @@ void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBPanelTypes::load( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelTypes::load", "name: \""  + p_qsName.toStdString() + "\"" );
+    cTracer obTrace( "cDBPanelTypes::load", QString("name: \"%1\"").arg(p_qsName) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM panelTypes WHERE name = \"" + p_qsName + "\"" );
 

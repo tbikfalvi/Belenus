@@ -13,7 +13,6 @@ class MainWindow : public QDialog, protected Ui::UMainWindow
 public:
     MainWindow( QWidget *p_poParent = 0 );
     virtual ~MainWindow();
-    void log(QString msg);
 
 public slots:
     void connected();

@@ -59,7 +59,7 @@ void cDBPanelUses::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPanelUses::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelUses::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPanelUses::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelUseId = %1" ).arg( p_uiId ) );
 

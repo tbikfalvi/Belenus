@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas Â© Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -15,7 +15,7 @@
 //====================================================================================
 
 #include <QtNetwork>
-#include <QApplication>
+#include <QCoreApplication>
 #include <QTranslator>
 #include <iostream>
 
@@ -57,7 +57,7 @@ void Server::execute()
     if ( !_tcpServer.listen( QHostAddress(g_prefs.value("server/interface")), g_prefs.value("server/port").toInt() ) )
         throw cSevException(cSeverity::ERROR, "Unable to start listener");
 
-    g_obLogger(cSeverity::DEBUG) << "[Server::execute] listening on " << g_prefs.value("server/interface").toStdString() << ":" << g_prefs.value("server/port").toStdString() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[Server::execute] listening on " << g_prefs.value("server/interface") << ":" << g_prefs.value("server/port") << cQTLogger::EOM;
 }
 
 
@@ -76,10 +76,11 @@ void Server::connectionAvailable()
 //====================================================================================
 int main( int argc, char *argv[] )
 {
-    QApplication  app( argc, argv );
+    QCoreApplication  app( argc, argv );
 
-    g_obLogger.setMinSeverityLevels(cSeverity::MAX, cSeverity::MIN, cSeverity::MIN );
-    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " started." << cQTLogger::EOM;
+    ConsoleWriter _writer(cSeverity::DEBUG);
+    g_obLogger.attachWriter("console", &_writer);
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version") << " started." << cQTLogger::EOM;
 
     g_db.setHostName( g_prefs.value("database/host") );
     g_db.setDatabaseName( g_prefs.value("database/schema") );
@@ -98,11 +99,11 @@ int main( int argc, char *argv[] )
 //
 //        SqlResult sres;
 //        sres.copy(r);
-//        g_obLogger(cSeverity::DEBUG) << "CSV is\n" << sres.toStringStream().toStdString() << cQTLogger::EOM;
+//        g_obLogger(cSeverity::DEBUG) << "CSV is\n" << sres.toStringStream() << cQTLogger::EOM;
 //
 //        SqlResult sres2;
 //        sres2.fromStringStream( sres.toStringStream() );
-//        g_obLogger(cSeverity::DEBUG) << "CSV2 is\n" << sres2.toStringStream().toStdString() << cQTLogger::EOM;
+//        g_obLogger(cSeverity::DEBUG) << "CSV2 is\n" << sres2.toStringStream() << cQTLogger::EOM;
 
         g_obLogger(cSeverity::INFO) << "Starting app..." << cQTLogger::EOM;
         app.exec();
@@ -110,7 +111,7 @@ int main( int argc, char *argv[] )
         g_obLogger(cSeverity::ERROR) << "Exception: " << e.what() << cQTLogger::EOM;
     }
 
-    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version").toStdString() << " ended." << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version") << " ended." << cQTLogger::EOM;
 
     return 0;
 }

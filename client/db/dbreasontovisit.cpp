@@ -55,7 +55,7 @@ void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBReasonToVisit::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBReasonToVisit::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM reasonToVisit WHERE reasonToVisitId = %1" ).arg( p_uiId ) );
 
@@ -68,7 +68,7 @@ void cDBReasonToVisit::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBReasonToVisit::load( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBReasonToVisit::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM reasonToVisit WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
 
