@@ -167,7 +167,7 @@ int main( int argc, char *argv[] )
         }
 #else
 
-        qsSpalsh += tr("Starting application in DEMO mode.\n");
+        qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Demo();
@@ -211,12 +211,8 @@ int main( int argc, char *argv[] )
         g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
-//    g_poServer->quit();
-
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " ended." << cQTLogger::EOM;
 
-    //delete m_ptcpSocket;
-    //delete g_poServer;
     delete g_poPrefs;
     delete g_poDB;
 
