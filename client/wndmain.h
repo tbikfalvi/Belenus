@@ -23,6 +23,7 @@ public:
     void logoutUser();
 
     void checkDemoLicenceKey();
+    void startMainTimer();
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );

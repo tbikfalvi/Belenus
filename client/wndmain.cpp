@@ -130,8 +130,6 @@ cWndMain::cWndMain( QWidget *parent )
     g_poPrefs->setPostponedPatients( poDBPostPoned->countPostponedPatients() );
     g_poPrefs->setPostponedAttendances( poDBPostPoned->countPostponedAttendances() );
 
-    m_nTimer = startTimer( 300 );
-
     delete poDBPostPoned;
 }
 //====================================================================================
@@ -140,6 +138,11 @@ cWndMain::~cWndMain()
     cTracer obTrace( "cWndMain::~cWndMain" );
 
     killTimer( m_nTimer );
+}
+//====================================================================================
+void cWndMain::startMainTimer()
+{
+    m_nTimer = startTimer( 300 );
 }
 //====================================================================================
 bool cWndMain::showLogIn()

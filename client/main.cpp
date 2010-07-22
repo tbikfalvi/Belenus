@@ -192,6 +192,7 @@ int main( int argc, char *argv[] )
         if( obMainWindow.showLogIn() )
         {
             obMainWindow.initPanels();
+            obMainWindow.startMainTimer();
             r = apMainApp.exec();
         }
         else
