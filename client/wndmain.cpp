@@ -131,6 +131,23 @@ cWndMain::cWndMain( QWidget *parent )
     g_poPrefs->setPostponedAttendances( poDBPostPoned->countPostponedAttendances() );
 
     delete poDBPostPoned;
+
+    action_PatientEmpty->setEnabled( false );
+    action_PatientEmpty->setVisible( false );
+    action_EditActualPatient->setEnabled( false );
+    action_PostponedPatient->setEnabled( false );
+    action_SelectActualAttendance->setEnabled( false );
+    action_DeselectActualAttendance->setEnabled( false );
+    action_DeselectActualAttendance->setVisible( false );
+    action_EditActualAttendance->setEnabled( false );
+    action_AttendanceNew->setEnabled( false );
+    action_PostponedAttendance->setEnabled( false );
+    action_UseWithCard->setEnabled( false );
+    action_UseByTime->setEnabled( false );
+    action_DeviceStart->setEnabled( false );
+    action_DeviceReset->setEnabled( false );
+    action_DoctorSchedule->setEnabled( false );
+    action_DeviceSchedule->setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
