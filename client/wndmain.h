@@ -23,6 +23,7 @@ public:
     void logoutUser();
 
     void checkDemoLicenceKey();
+    void startMainTimer();
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
@@ -37,12 +38,12 @@ private:
     unsigned int        m_uiAttendanceId;
 
     void updateTitle();
-    void updateToolbar();
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
     void processInputTimePeriod( int p_inSecond );
 
 private slots:
+    void updateToolbar();
     void on_action_Preferences_triggered();
     void on_action_Users_triggered();
     void on_action_Logs_triggered();

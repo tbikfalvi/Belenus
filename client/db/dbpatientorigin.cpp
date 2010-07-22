@@ -55,7 +55,7 @@ void cDBPatientOrigin::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPatientOrigin::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientOrigin::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBPatientOrigin::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientOrigin WHERE patientOriginId = %1" ).arg( p_uiId ) );
 
@@ -68,7 +68,7 @@ void cDBPatientOrigin::load( const unsigned int p_uiId ) throw( cSevException )
 
 void cDBPatientOrigin::load( const string &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientOrigin::load", "name: \""  + p_stName + "\"" );
+    cTracer obTrace( "cDBPatientOrigin::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientOrigin WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
 

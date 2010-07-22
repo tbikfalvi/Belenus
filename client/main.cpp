@@ -66,37 +66,49 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
-        g_obLogger.setDBConnection( g_poDB );
+        // g_obLogger.setDBConnection( g_poDB );
         g_poPrefs->loadDBSettings();
 
         qsSpalsh += QObject::tr(" CONNECTED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        g_obLogger << cSeverity::INFO;
-        g_obLogger << "Belenus Version " << g_poPrefs->getVersion().toStdString() << " started.";
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << cQTLogger::EOM;
 
-        qsSpalsh += QObject::tr("Connecting to Belenus server\n");
+        qsSpalsh += QObject::tr("Connecting to Belenus server ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poServer = new BelenusServerConnection();
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
         g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );
 
-        qsSpalsh += QObject::tr("Waiting for response from Belenus server ");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        /*int nCount = 0;
-        while( g_poServer->isConnectionActive() )
+        int nCount = 0;
+        while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
         {
             QString qsTemp;
-            qsTemp.fill('.',++nCount/100);
-            obSplash.showMessage(qsSpalsh+qsTemp,Qt::AlignLeft,QColor(59,44, 75));
-            if( nCount > 399 ) nCount = 0;
-        }*/
+            qsTemp.fill('.', nCount%5+1);
+            obSplash.showMessage(qsSpalsh+qsTemp, Qt::AlignLeft, QColor(59,44, 75));
+            if( ++nCount > 20 ) // timeout handling: 20*500 = 10 sec
+                break;
+            QMutex dummy;
+            dummy.lock();
+            QWaitCondition waitCondition;
+            waitCondition.wait(&dummy, 500);
+        }
 
-        qsSpalsh += "\n";
+        switch (g_poServer->getStatus()) {
+            case BelenusServerConnection::AUTHENTICATED:
+                qsSpalsh += "Connected.\n";
+                break;
+            case BelenusServerConnection::LICENSE_FAILED:
+                qsSpalsh += "License key authentication not ok.\n";
+                break;
+            default:
+                qsSpalsh += "Connection failed. No internet connection?\n";
+                break;
+        }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+
 
 #ifdef __WIN32__
 
@@ -155,7 +167,7 @@ int main( int argc, char *argv[] )
         }
 #else
 
-        qsSpalsh += tr("Starting application in DEMO mode.\n");
+        qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Demo();
@@ -180,6 +192,7 @@ int main( int argc, char *argv[] )
         if( obMainWindow.showLogIn() )
         {
             obMainWindow.initPanels();
+            obMainWindow.startMainTimer();
             r = apMainApp.exec();
         }
         else
@@ -196,19 +209,11 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        g_obLogger << e.severity();
-        g_obLogger << e.what();
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
-//    g_poServer->quit();
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " ended." << cQTLogger::EOM;
 
-    g_obLogger << cSeverity::INFO;
-    g_obLogger << "Belenus Version " << g_poPrefs->getVersion().toStdString() << " ended.";
-    g_obLogger << cQTLogger::EOM;
-
-    //delete m_ptcpSocket;
-    //delete g_poServer;
     delete g_poPrefs;
     delete g_poDB;
 

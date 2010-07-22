@@ -55,7 +55,7 @@ void cDBDenomination::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBDenomination::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBDenomination::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBDenomination::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM denomination WHERE denominationId = %1" ).arg( p_uiId ) );
 

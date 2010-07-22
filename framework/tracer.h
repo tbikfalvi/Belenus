@@ -1,31 +1,32 @@
 #ifndef TRACER_H
 #define TRACER_H
 
-#include <string>
-#include <sstream>
+#include <QString>
+#include <QTextStream>
 
-using namespace std;
+
 
 class cTracer
 {
 public:
     static unsigned int m_uiIndent;
-    
-    cTracer( const string &p_stFuncName, const string &p_stInParams = "" );
+
+    cTracer( const QString p_stFuncName, const QString p_stInParams = "" );
     ~cTracer();
-    
-    cTracer &operator <<( int p_inParam ) {
-        m_ssOutParams << p_inParam;
+
+    cTracer &operator <<( const int p_inParam ) {
+        m_ssOutParams << p_inParam << ' ';
         return *this;
     }
-    cTracer &operator <<( string p_stParam ) {
-        m_ssOutParams << p_stParam;
+    cTracer &operator <<( const QString & p_stParam ) {
+        m_ssOutParams << p_stParam << ' ';
         return *this;
     }
-    
+
 private:
-    string        m_stFuncName;
-    stringstream  m_ssOutParams;
+    QString      m_stFuncName;
+    QString      m_string;
+    QTextStream  m_ssOutParams;
 };
 
 #endif

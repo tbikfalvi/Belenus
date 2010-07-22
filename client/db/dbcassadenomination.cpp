@@ -59,7 +59,7 @@ void cDBCassaDenomination::load( const unsigned int p_uiDenominationId,
                                  const unsigned int p_uiCassaId,
                                  const unsigned int p_uiLicenceId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBCassaDenomination::load", QString( "id1: %1 id2: %2 id3: %3 " ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ).toStdString() );
+    cTracer obTrace( "cDBCassaDenomination::load", QString( "id1: %1 id2: %2 id3: %3 " ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaDenominations WHERE denominationId = %1 AND cassaID = %2 AND licenceId = %3" ).arg( p_uiDenominationId ).arg( p_uiCassaId ).arg( p_uiLicenceId ) );
 

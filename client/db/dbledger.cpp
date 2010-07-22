@@ -91,7 +91,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBLedger::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBLedger::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBLedger::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger WHERE ledgerId = %1" ).arg( p_uiId ) );
 

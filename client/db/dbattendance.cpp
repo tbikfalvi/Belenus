@@ -99,7 +99,7 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBAttendance::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBAttendance::load", QString( "id: %1" ).arg( p_uiId ).toStdString() );
+    cTracer obTrace( "cDBAttendance::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM attendance WHERE attendanceId = %1" ).arg( p_uiId ) );
 

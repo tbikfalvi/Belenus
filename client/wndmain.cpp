@@ -130,9 +130,24 @@ cWndMain::cWndMain( QWidget *parent )
     g_poPrefs->setPostponedPatients( poDBPostPoned->countPostponedPatients() );
     g_poPrefs->setPostponedAttendances( poDBPostPoned->countPostponedAttendances() );
 
-    m_nTimer = startTimer( 300 );
-
     delete poDBPostPoned;
+
+    action_PatientEmpty->setEnabled( false );
+    action_PatientEmpty->setVisible( false );
+    action_EditActualPatient->setEnabled( false );
+    action_PostponedPatient->setEnabled( false );
+    action_SelectActualAttendance->setEnabled( false );
+    action_DeselectActualAttendance->setEnabled( false );
+    action_DeselectActualAttendance->setVisible( false );
+    action_EditActualAttendance->setEnabled( false );
+    action_AttendanceNew->setEnabled( false );
+    action_PostponedAttendance->setEnabled( false );
+    action_UseWithCard->setEnabled( false );
+    action_UseByTime->setEnabled( false );
+    action_DeviceStart->setEnabled( false );
+    action_DeviceReset->setEnabled( false );
+    action_DoctorSchedule->setEnabled( false );
+    action_DeviceSchedule->setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -140,6 +155,11 @@ cWndMain::~cWndMain()
     cTracer obTrace( "cWndMain::~cWndMain" );
 
     killTimer( m_nTimer );
+}
+//====================================================================================
+void cWndMain::startMainTimer()
+{
+    m_nTimer = startTimer( 300 );
 }
 //====================================================================================
 bool cWndMain::showLogIn()
@@ -152,9 +172,7 @@ bool cWndMain::showLogIn()
     if( boLogInOK )
     {
         g_obLogger.setAppUser( g_obUser.id() );
-        g_obLogger << cSeverity::INFO;
-        g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in";
-        g_obLogger << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged in" << cQTLogger::EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
         {
@@ -554,9 +572,7 @@ void cWndMain::on_action_LogOut_triggered()
 
     logoutUser();
 
-    g_obLogger << cSeverity::INFO;
-    g_obLogger << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out";
-    g_obLogger << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged out" << cQTLogger::EOM;
 
     g_obUser.logOut();
     g_obLogger.setAppUser( 0 );
@@ -825,8 +841,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
         {
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
-                g_obLogger << e.severity();
-                g_obLogger << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
             }
             else
             {
@@ -965,8 +980,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
-            g_obLogger << e.severity();
-            g_obLogger << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
         }
         else
         {

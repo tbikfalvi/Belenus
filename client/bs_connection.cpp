@@ -9,7 +9,7 @@ extern cQTLogger* g_obLogger;
 BelenusServerConnection::BelenusServerConnection()
     : _serial(""),
       _code2(""),
-      _authenticated(false)
+      _status(NOT_CONNECTED)
 {
 }
 
@@ -31,6 +31,7 @@ void BelenusServerConnection::setLoginKeys(QString serial, QString code2)
 
 void BelenusServerConnection::_initialize()
 {
+    _status = CONNECTING;
     _sendHello();
 }
 
@@ -45,6 +46,5 @@ void BelenusServerConnection::_handleLogonChallenge()
 
 void BelenusServerConnection::_handleLogonOk()
 {
-    _authenticated = true;
-
+    _status = AUTHENTICATED;
 }
