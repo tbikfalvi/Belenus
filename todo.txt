@@ -1,0 +1,2 @@
+- bérlet eladás/feltöltés rögzítése a könyvelésbe
+- kártyahasználat rögzítése adatbázisba

@@ -66,6 +66,7 @@ HEADERS = belenus.h \
     db/dbcassadenomination.h \
     db/dbledger.h \
     db/dbledgerdevice.h \
+    db/dbpatientcardhistory.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -137,6 +138,7 @@ SOURCES = main.cpp \
     db/dbcassadenomination.cpp \
     db/dbledger.cpp \
     db/dbledgerdevice.cpp \
+    db/dbpatientcardhistory.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

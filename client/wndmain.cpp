@@ -433,6 +433,7 @@ void cWndMain::updateToolbar()
                                   g_uiPatientAttendanceId > 0 );
 
     action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
+                                    mdiPanels->mainProcessTime() > 0 &&
                                     g_obPatient.id() > 0 &&
                                     g_uiPatientAttendanceId > 0 );
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
@@ -852,6 +853,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
                 {
                     obDBPatientCard.createNew();
                     obDBPatientCard.setBarcode( obDlgInputStart.getEditText() );
+                    obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                     obDBPatientCard.save();
                 }
             }
@@ -991,6 +993,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
             {
                 obDBPatientCard.createNew();
                 obDBPatientCard.setBarcode( p_stBarcode );
+                obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBPatientCard.save();
             }
         }

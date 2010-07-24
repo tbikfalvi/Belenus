@@ -1,15 +1,15 @@
-#ifndef DB_PATIENTCARD_H
-#define DB_PATIENTCARD_H
+#ifndef DB_PATIENTCARDHISTORY_H
+#define DB_PATIENTCARDHISTORY_H
 
 #include <QSqlRecord>
 
 #include "../../framework/sevexception.h"
 
-class cDBPatientCard
+class cDBPatientCardHistory
 {
 public:
-    cDBPatientCard();
-    ~cDBPatientCard();
+    cDBPatientCardHistory();
+    ~cDBPatientCardHistory();
 
     void            load( const unsigned int p_uiId )                           throw( cSevException );
     void            load( const QString &p_qsBarcode )                          throw( cSevException );

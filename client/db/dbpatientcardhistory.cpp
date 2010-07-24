@@ -1,0 +1,304 @@
+//====================================================================================
+//
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : dbpatientcardhistory.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+//
+//====================================================================================
+
+#include "belenus.h"
+#include "dbpatientcardhistory.h"
+
+cDBPatientCardHistory::cDBPatientCardHistory()
+{
+    init();
+}
+
+cDBPatientCardHistory::~cDBPatientCardHistory()
+{
+}
+
+void cDBPatientCardHistory::init( const unsigned int p_uiId,
+                           const unsigned int p_uiLicenceId,
+                           const unsigned int p_uiPatientCardTypeId,
+                           const unsigned int p_uiPatientId,
+                           const QString p_qsBarcode,
+                           const QString p_qsComment,
+                           const int p_nUnits,
+                           const QString p_qsTimeLeft,
+                           const QString p_qsValidDate,
+                           const QString p_qsPincode,
+                           const bool p_bActive,
+                           const QString &p_qsArchive ) throw()
+{
+    m_uiId                  = p_uiId;
+    m_uiLicenceId           = p_uiLicenceId;
+    m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiPatientId           = p_uiPatientId;
+    m_qsBarcode             = p_qsBarcode;
+    m_qsComment             = p_qsComment;
+    m_nUnits                = p_nUnits;
+    m_qsTimeLeft            = p_qsTimeLeft;
+    m_qsValidDate           = p_qsValidDate;
+    m_qsPincode             = p_qsPincode;
+    m_bActive               = p_bActive;
+    m_qsArchive             = p_qsArchive;
+}
+
+void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
+{
+    int inIdIdx                 = p_obRecord.indexOf( "patientCardId" );
+    int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
+    int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
+    int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inUnitsIdx              = p_obRecord.indexOf( "units" );
+    int inTimeLeftIdx           = p_obRecord.indexOf( "timeLeft" );
+    int inValidDateIdx          = p_obRecord.indexOf( "validDate" );
+    int inPincodeIdx            = p_obRecord.indexOf( "pincode" );
+    int inActiveIdx             = p_obRecord.indexOf( "active" );
+    int inArchiveIdx            = p_obRecord.indexOf( "archive" );
+
+    init( p_obRecord.value( inIdIdx ).toUInt(),
+          p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
+          p_obRecord.value( inPatientIdIdx ).toUInt(),
+          p_obRecord.value( inBarcodeIdx ).toString(),
+          p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inUnitsIdx ).toInt(),
+          p_obRecord.value( inTimeLeftIdx ).toString(),
+          p_obRecord.value( inValidDateIdx ).toString(),
+          p_obRecord.value( inPincodeIdx ).toString(),
+          p_obRecord.value( inActiveIdx ).toBool(),
+          p_obRecord.value( inArchiveIdx ).toString() );
+}
+
+void cDBPatientCardHistory::load( const unsigned int p_uiId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCardHistory::load", QString( "id: %1" ).arg( p_uiId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Patientcard id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+void cDBPatientCardHistory::load( const QString &p_qsBarcode ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCardHistory::load", QString("name: \"%1\"").arg(p_qsBarcode) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCards WHERE barcode = \"" + p_qsBarcode + "\"" );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Patientcard barcode not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+void cDBPatientCardHistory::save() throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCardHistory::save" );
+    QString  qsQuery;
+
+    if( m_uiId )
+    {
+        qsQuery = "UPDATE";
+
+        if( m_qsArchive != "NEW" )
+        {
+            m_qsArchive = "MOD";
+        }
+    }
+    else
+    {
+        qsQuery = "INSERT INTO";
+        m_qsArchive = "NEW";
+    }
+    qsQuery += " patientCards SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
+    qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
+    qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_qsTimeLeft );
+    qsQuery += QString( "validDate = \"%1\", " ).arg( m_qsValidDate );
+    qsQuery += QString( "pincode = \"%1\", " ).arg( m_qsPincode );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
+    if( m_uiId )
+    {
+        qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
+    }
+
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( poQuery ) delete poQuery;
+}
+
+void cDBPatientCardHistory::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCardHistory::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_qsArchive == "NEW" )
+        {
+            qsQuery = "DELETE FROM patientCards ";
+        }
+        else
+        {
+            qsQuery = "UPDATE patientCards SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
+bool cDBPatientCardHistory::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()
+{
+    cTracer obTrace( "cDBPatientCardHistory::isPatientCardTypeLinked", QString( "id: %1" ).arg( p_PCTId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardTypeId = %1" ).arg( p_PCTId ) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+void cDBPatientCardHistory::createNew() throw()
+{
+    init();
+}
+
+unsigned int cDBPatientCardHistory::id() const throw()
+{
+    return m_uiId;
+}
+
+unsigned int cDBPatientCardHistory::licenceId() const throw()
+{
+    return m_uiLicenceId;
+}
+
+void cDBPatientCardHistory::setLicenceId( const unsigned int p_uiLicenceId ) throw()
+{
+    m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBPatientCardHistory::patientCardTypeId() const throw()
+{
+    return m_uiPatientCardTypeId;
+}
+
+void cDBPatientCardHistory::setPatientCardTypeId( const unsigned int p_uiPCardTypeId ) throw()
+{
+    m_uiPatientCardTypeId = p_uiPCardTypeId;
+}
+
+unsigned int cDBPatientCardHistory::patientId() const throw()
+{
+    return m_uiPatientId;
+}
+
+void cDBPatientCardHistory::setPatientId( const unsigned int p_uiPatientId ) throw()
+{
+    m_uiPatientId = p_uiPatientId;
+}
+
+QString cDBPatientCardHistory::barcode() const throw()
+{
+    return m_qsBarcode;
+}
+
+void cDBPatientCardHistory::setBarcode( const QString &p_qsBarcode ) throw()
+{
+    m_qsBarcode = p_qsBarcode;
+}
+
+QString cDBPatientCardHistory::comment() const throw()
+{
+    return m_qsComment;
+}
+
+void cDBPatientCardHistory::setComment( const QString &p_qsComment ) throw()
+{
+    m_qsComment = p_qsComment;
+}
+
+int cDBPatientCardHistory::units() const throw()
+{
+    return m_nUnits;
+}
+
+void cDBPatientCardHistory::setUnits( const int p_nUnits ) throw()
+{
+    m_nUnits = p_nUnits;
+}
+
+QString cDBPatientCardHistory::timeLeft() const throw()
+{
+    return m_qsTimeLeft;
+}
+
+void cDBPatientCardHistory::setTimeLeft( const QString &p_qsTimeLeft ) throw()
+{
+    m_qsTimeLeft = p_qsTimeLeft;
+}
+
+QString cDBPatientCardHistory::validDate() const throw()
+{
+    return m_qsValidDate;
+}
+
+void cDBPatientCardHistory::setValidDate( const QString &p_qsValidDate ) throw()
+{
+    m_qsValidDate = p_qsValidDate;
+}
+
+QString cDBPatientCardHistory::pincode() const throw()
+{
+    return m_qsPincode;
+}
+
+void cDBPatientCardHistory::setPincode( const QString &p_qsPincode ) throw()
+{
+    m_qsPincode = p_qsPincode;
+}
+
+bool cDBPatientCardHistory::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBPatientCardHistory::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
+}
+
+QString cDBPatientCardHistory::archive() const throw()
+{
+    return m_qsArchive;
+}
+
+void cDBPatientCardHistory::setArchive( const QString &p_qsArchive ) throw()
+{
+    m_qsArchive = p_qsArchive;
+}
