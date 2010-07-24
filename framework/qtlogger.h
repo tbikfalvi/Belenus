@@ -62,7 +62,6 @@ private:
     typedef QMap<QString, LogWriter*> Writers;
 
     Writers                m_writers;
-    unsigned int           m_uiAppUser;
 };
 
 
@@ -89,18 +88,6 @@ protected:
     QTextStream            m_ssMessage;
 };
 
-
-
-
-
-
-
-class ConsoleWriter : public LogWriter {
-public:
-    ConsoleWriter(const cSeverity::teSeverity sev) : LogWriter(sev) {}
-protected:
-    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
-};
 
 #endif
 

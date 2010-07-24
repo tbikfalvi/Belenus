@@ -1,16 +1,5 @@
-#include <QDateTime>
-#include <iostream>
 #include "qtlogger.h"
 
-
-
-void ConsoleWriter::_writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m) {
-    cerr << ts.toString(Qt::ISODate).toStdString() << " ";
-    cerr << cSeverity::toStr( sev );
-    if( !m.isEmpty() )
-        cerr << " " << m.toStdString();
-    cerr << endl << flush;
-}
 
 
 
@@ -77,7 +66,6 @@ LogMessage &LogMessage::operator <<( const cQTLogger::teLoggerManip p_enManip ) 
 
 
 cQTLogger::cQTLogger()
-    : m_uiAppUser(0)
 {
 }
 
@@ -85,20 +73,6 @@ cQTLogger::cQTLogger()
 
 cQTLogger::~cQTLogger()
 {
-}
-
-
-
-void cQTLogger::setAppUser( const unsigned int p_uiUser )
-{
-    m_uiAppUser = p_uiUser;
-}
-
-
-
-unsigned int cQTLogger::getAppUser( void ) const
-{
-    return m_uiAppUser;
 }
 
 
@@ -151,57 +125,3 @@ LogMessage cQTLogger::operator () ( const cSeverity::teSeverity p_enLevel ) {
     return LogMessage(p_enLevel, this);
 }
 
-
-/*
-
-void cQTLogger::logToDB( const cSeverity::teSeverity  p_enLevel,
-                         const string                &p_stMessage )
-     throw( cSevException )
-{
-    if( m_poDB && m_poDB->isOpen() )
-    {
-        stringstream  ssSql;
-        ssSql << "INSERT INTO logs ( ";
-        if( m_uiAppUser ) ssSql << "`userId`, ";
-        ssSql << "`severity`";
-        if( p_stMessage != "" ) ssSql << ", `message`";
-        ssSql << " ) VALUES ( ";
-        if( m_uiAppUser ) ssSql << m_uiAppUser << ", ";
-        ssSql << (int)p_enLevel;
-        if( p_stMessage != "" ) ssSql << ", \"" << p_stMessage << "\"";
-        ssSql << " )";
-
-        m_poDB->executeQuery( ssSql.str() );
-    }
-}
-
-void cQTLogger::logToGUI( const cSeverity::teSeverity  p_enLevel,
-                        const string                &p_stMessage )
-                    throw()
-{
-    QMessageBox::Icon  enIcon  = QMessageBox::NoIcon;
-    QString            obTitle = "";
-    switch( p_enLevel )
-    {
-        case cSeverity::ERROR:   enIcon  = QMessageBox::Critical;
-                                 obTitle = "Error";
-                                 break;
-        case cSeverity::WARNING: enIcon  = QMessageBox::Warning;
-                                 obTitle = "Warning";
-                                 break;
-        case cSeverity::INFO:    enIcon  = QMessageBox::Information;
-                                 obTitle = "Information";
-                                 break;
-        case cSeverity::DEBUG:   enIcon  = QMessageBox::Information;
-                                 obTitle = "Debug message";
-                                 break;
-        default:                 enIcon  = QMessageBox::NoIcon;
-                                 obTitle = "Message";
-    }
-
-    QMessageBox obMsg( enIcon, obTitle,
-                       QString::fromStdString( p_stMessage ),
-                       QMessageBox::Ok );
-    obMsg.exec();
-}
-*/

@@ -40,7 +40,6 @@ void Connection::connectTo(QTcpSocket *s)
 
         _socket = s;
         _connectSignalsToSocket();
-        start();
     }
 }
 
@@ -80,6 +79,7 @@ void Connection::_disconnected()
 void Connection::_connected()
 {
     g_obLogger(cSeverity::DEBUG) << "[Connection::_connected] connect signal received" << cQTLogger::EOM;
+    start();
     emit connected();
 }
 

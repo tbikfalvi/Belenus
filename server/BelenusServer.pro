@@ -31,7 +31,9 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/preferences.h \
     ../framework/network/protocolException.h \
     ../framework/network/sqlResult.h \
-    ../framework/qtlogger.h
+    ../framework/qtlogger.h \
+    ../framework/logger/ConsoleWriter.h \
+    ../framework/logger/DatabaseWriter.h
 SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     main.cpp \
@@ -40,7 +42,9 @@ SOURCES += ../framework/dbconnection.cpp \
     ../framework/network/packet.cpp \
     ../framework/preferences.cpp \
     ../framework/network/sqlResult.cpp \
-    ../framework/qtlogger.cpp
+    ../framework/qtlogger.cpp \
+    ../framework/logger/ConsoleWriter.cpp \
+    ../framework/logger/DatabaseWriter.cpp
 QT += network
 QT += sql
 QT -= gui
