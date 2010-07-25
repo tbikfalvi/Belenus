@@ -20,6 +20,7 @@
 #include "belenus.h"
 #include "frmpanel.h"
 #include "db/dbpatientcard.h"
+#include "db/dbpatientcardhistory.h"
 
 //====================================================================================
 cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
@@ -490,7 +491,8 @@ void cFrmPanel::closeAttendance()
 
     for( unsigned int i=0; i < m_vrPatientCard.size(); i++ )
     {
-        cDBPatientCard  obDBPatientCard;
+        cDBPatientCard          obDBPatientCard;
+        cDBPatientCardHistory   obDBPatientCardHistory;
 
         obDBPatientCard.load( m_vrPatientCard.at(i).uiPatientCardId );
 
@@ -501,6 +503,17 @@ void cFrmPanel::closeAttendance()
         obDBPatientCard.setTimeLeft( m_qtTemp.toString("hh:mm:ss") );
 
         obDBPatientCard.save();
+
+        m_qtTemp = QTime( 0, m_vrPatientCard.at(i).inUnitTime/60, m_vrPatientCard.at(i).inUnitTime%60, 0 );
+
+        obDBPatientCardHistory.createNew();
+        obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBPatientCardHistory.setPatientCardId( obDBPatientCard.id() );
+        obDBPatientCardHistory.setUnits( obDBPatientCard.units() );
+        obDBPatientCardHistory.setTime( m_qtTemp.toString("hh:mm:ss") );
+        obDBPatientCardHistory.setActive( true );
+
+        obDBPatientCardHistory.save();
     }
 
     m_pDBLedgerDevice->createNew();

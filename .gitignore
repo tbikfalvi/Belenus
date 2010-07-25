@@ -226,6 +226,7 @@ client/moc_dlgattendanceselect.cpp
 client/moc_dlgattendanceselect.o
 client/moc_dlgpatientcarduse.cpp
 client/moc_dlgpatientcarduse.o
+client/dbpatientcardhistory.o
 resources/Thumbs.db
 BelenusServer
 BelenusServer.exe
