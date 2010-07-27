@@ -113,7 +113,7 @@ void cDlgReasonToVisit::editClicked( bool )
     catch( cSevException &e )
     {
         if( poReasonToVisit ) delete poReasonToVisit;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -137,7 +137,7 @@ void cDlgReasonToVisit::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poReasonToVisit ) delete poReasonToVisit;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

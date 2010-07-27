@@ -1,5 +1,11 @@
 
+#include "../qtlogger.h"
 #include "CommunicationProtocol.h"
+
+
+extern cQTLogger g_obLogger;
+
+
 
 
 CommunicationProtocol::CommunicationProtocol(QTcpSocket *socket)
@@ -21,8 +27,6 @@ void CommunicationProtocol::setTcpConnection(QTcpSocket *socket)
         return;
 
     m_socket = socket;
-
-    connect( m_socket,   SIGNAL(readyRead()),   this, SLOT(read()) );
 }
 
 
@@ -34,19 +38,19 @@ void CommunicationProtocol::read()
 
     qint64 size = m_buffer.size();
     m_buffer.resize( size + m_socket->bytesAvailable() );
-    qint64 bytesRead = m_socket->read( m_buffer.data() + size, _socket->bytesAvailable() );
+    qint64 bytesRead = m_socket->read( m_buffer.data() + size, m_socket->bytesAvailable() );
 
     if ( bytesRead <= 0 )
         return;
 
     try {
         while ( Packet *p = Packet::createPacket(m_buffer) ) {
-            g_obLogger(cSeverity::DEBUG) << "[CommunicationProtocol::read] received " << p->getPacketName() << ": "<< p->dump() << cQTLogger::EOM;
+            g_obLogger(cSeverity::DEBUG) << "[CommunicationProtocol::read] received " << p->getPacketName() << ": "<< p->dump() << EOM;
             _handlePacket(*p);
             delete p;
         }
     } catch ( ProtocolException &e ) {
-        g_obLogger(cSeverity::ERROR) << "[CommunicationProtocol::read] exception: " << e.what() << cQTLogger::EOM;
+        g_obLogger(cSeverity::ERROR) << "[CommunicationProtocol::read] exception: " << e.what() << EOM;
         sendDisconnect(Result::UNKNOWN);
     }
 }
@@ -86,7 +90,7 @@ void CommunicationProtocol::_handlePacket(Packet &packet)
                 } break;
 
             case Packet::MSG_DISCONNECT: {
-                    Result r;
+                    Result::ResultCode r;
                     packet >> r;
                     _handleDisconnect(r);
                 } break;
@@ -98,7 +102,7 @@ void CommunicationProtocol::_handlePacket(Packet &packet)
                 } break;
 
             case Packet::MSG_REGISTER_LICENSE_KEY_RESPONSE: {
-                    Result r;
+                    Result::ResultCode r;
                     packet >> r;
                     _handleRegisterKeyResponse(r);
                 } break;
@@ -122,111 +126,111 @@ void CommunicationProtocol::_handlePacket(Packet &packet)
                 } break;
 
             default:
-                g_obLogger(cSeverity::ERROR) << "[CommunicationProtocol::_handlePacket] packet unhandled:  " << packet.getId() << cQTLogger::EOM;
+                g_obLogger(cSeverity::ERROR) << "[CommunicationProtocol::_handlePacket] packet unhandled:  " << packet.getId() << EOM;
                 break;
         }
     } catch (cSevException e) {
-        g_obLogger(cSeverity::ERROR) << "[CommunicationProtocol::_handlePacket] exception caught("<<e.what()<<"). Closing connection." << cQTLogger::EOM;
-        _sendDisconnect(Result::UNKOWN);
+        g_obLogger(cSeverity::ERROR) << "[CommunicationProtocol::_handlePacket] exception caught("<<e.what()<<"). Closing connection." << EOM;
+        sendDisconnect(Result::UNKNOWN);
     }
 }
 
 
 
-void CommunicationProtocol::send(Packet &p)
+void CommunicationProtocol::_send(Packet &p)
 {
     qint64 writtenBytes = m_socket->write(p.getRawPacket());
-    g_obLogger(cSeverity::DEBUG) << "[CommunicationProtocol::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump() << ". Bytes written " << writtenBytes << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[CommunicationProtocol::send] sending "<< p.getPacketName() << "(" << p.getId() << ")" << ". " << p.dump() << ". Bytes written " << writtenBytes << EOM;
 }
 
 
 
-void CommunicationProtocol::_sendHello()
+void CommunicationProtocol::sendHello()
 {
     Packet p(Packet::MSG_HELLO);
     p << VERSION;
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendDisconnect(Result reason)
+void CommunicationProtocol::sendDisconnect(Result::ResultCode reason)
 {
     Packet p(Packet::MSG_DISCONNECT);
     p << reason;
-    send(p);
-    _socket->disconnectFromHost();
+    _send(p);
+    m_socket->disconnectFromHost();
 }
 
 
 
-void CommunicationProtocol::_sendLogonChallenge()
+void CommunicationProtocol::sendLogonChallenge()
 {
     Packet p(Packet::MSG_LOGON_CHALLENGE);
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendLogonResponse(const char* code1, const char *code2)
+void CommunicationProtocol::sendLogonResponse(const char* code1, const char *code2)
 {
     Packet p(Packet::MSG_LOGON_RESPONSE);
     p << code1 << code2;
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendLogonAdminResponse(const char* username, const char* password)
+void CommunicationProtocol::sendLogonAdminResponse(const char* username, const char* password)
 {
     Packet p(Packet::MSG_LOGON_ADMIN_RESPONSE);
     p << username << password;
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendLogonOk()
+void CommunicationProtocol::sendLogonOk()
 {
     Packet p(Packet::MSG_LOGON_OK);
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendRegisterKey(const char *key)
+void CommunicationProtocol::sendRegisterKey(const char *key)
 {
     Packet p(Packet::MSG_REGISTER_LICENSE_KEY);
     p << key;
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendRegisterKeyResponse(Result reason)
+void CommunicationProtocol::sendRegisterKeyResponse(Result::ResultCode reason)
 {
     Packet p(Packet::MSG_REGISTER_LICENSE_KEY_RESPONSE);
     p << reason;
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendSqlQuery(int queryId, const char *query)
+void CommunicationProtocol::sendSqlQuery(int queryId, const char *query)
 {
     Packet p(Packet::MSG_SQL_QUERY);
     p << queryId << query;
-    send(p);
+    _send(p);
 }
 
 
 
-void CommunicationProtocol::_sendSqlQueryResult(int queryId, SqlResult &b)
+void CommunicationProtocol::sendSqlQueryResult(int queryId, SqlResult &b)
 {
     Packet p(Packet::MSG_SQL_RESULT);
     p << queryId << b.isValid();
     p << b.toStringStream();
 
-    send(p);
+    _send(p);
 }
 

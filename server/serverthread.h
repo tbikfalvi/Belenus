@@ -1,12 +1,14 @@
 #ifndef SERVERTHREAD_H
 #define SERVERTHREAD_H
 
-
+#include <QThread>
 #include "../framework/network/CommunicationProtocol.h"
 
 
 
 class ServerThread : public QThread, public CommunicationProtocol {
+    Q_OBJECT
+
 
 public:
     ServerThread(QTcpSocket*);
@@ -15,6 +17,7 @@ public:
 protected slots:
     void error(QAbstractSocket::SocketError);
     void disconnected();
+    virtual void read() { CommunicationProtocol::read(); }
 
 protected:
     virtual void run();

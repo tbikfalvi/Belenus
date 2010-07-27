@@ -122,7 +122,7 @@ void cDlgPatientCardType::editClicked( bool )
     catch( cSevException &e )
     {
         if( poPatientCardType ) delete poPatientCardType;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -155,7 +155,7 @@ void cDlgPatientCardType::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poPatientCardType ) delete poPatientCardType;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

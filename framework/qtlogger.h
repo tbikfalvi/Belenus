@@ -34,7 +34,7 @@ public:
     LogMessage &operator <<( const cSeverity::teSeverity p_enSev );
     LogMessage &operator <<( const int p_inParam );
     LogMessage &operator <<( const QString &p_inParam );
-    LogMessage &operator <<( const cQTLogger::teLoggerManip p_enManip );
+    LogMessage &operator <<( const teLoggerManip p_enManip );
 
 
 protected:

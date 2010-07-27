@@ -43,15 +43,15 @@ LogMessage &LogMessage::operator <<( const QString &p_inParam ) {
 
 
 
-LogMessage &LogMessage::operator <<( const cQTLogger::teLoggerManip p_enManip ) {
+LogMessage &LogMessage::operator <<( const teLoggerManip p_enManip ) {
     switch( p_enManip )
     {
-        case cQTLogger::EOM:
+        case EOM:
             if ( m_logger )
                 m_logger->logMessage( m_enNextSeverityLevel, m_string );
             // There's no 'break' here because the EOM manipulator
             // needs to do a 'CLEAR' as well
-        case cQTLogger::CLEAR:
+        case CLEAR:
             m_string = "";
             m_ssMessage.setString(&m_string);
             break;

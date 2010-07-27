@@ -254,7 +254,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
         }
         catch( cSevException &e )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }
@@ -280,7 +280,7 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
     {
         m_poPatientCardType->load( cmbCardType->itemData( index ).toInt() );
 
-        g_obLogger(cSeverity::DEBUG) << "Unittime: " << m_poPatientCardType->units()*m_poPatientCardType->unitTime() << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "Unittime: " << m_poPatientCardType->units()*m_poPatientCardType->unitTime() << EOM;
         ledUnits->setText( QString::number(m_poPatientCardType->units()) );
         teTimeLeft->setTime( QTime(m_poPatientCardType->units()*m_poPatientCardType->unitTime()/60,m_poPatientCardType->units()*m_poPatientCardType->unitTime()%60,0,0) );
         if( m_poPatientCardType->validDays() > 0 )

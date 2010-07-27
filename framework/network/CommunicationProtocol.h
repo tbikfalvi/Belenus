@@ -4,13 +4,14 @@
 #include <QByteArray>
 #include <QTcpSocket>
 #include "packet.h"
+#include "sqlResult.h"
 
 
 
 namespace Result {
     enum ResultCode {
         OK,
-        UNKOWN,
+        UNKNOWN,
         INVALID_VERSION,
         INVALID_LICENSE_KEY,
         INVALID_SECOND_ID,
@@ -31,11 +32,8 @@ public:
     CommunicationProtocol(QTcpSocket *socket = 0);
     virtual ~CommunicationProtocol();
     void setTcpConnection(QTcpSocket *socket);
-
-public slots:
     virtual void read();
 
-public:
     virtual void sendHello();
     virtual void sendDisconnect(Result::ResultCode reason);
     virtual void sendLogonChallenge();

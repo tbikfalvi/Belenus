@@ -159,6 +159,6 @@ void cDlgPatientSelect::on_pbSelect_clicked()
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }

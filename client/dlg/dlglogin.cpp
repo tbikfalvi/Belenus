@@ -51,7 +51,7 @@ void cDlgLogIn::accept()
     }
     catch( cSevException &e )
     {
-        g_obLogger(cSeverity::INFO) << "User " << cmbName->currentText() << " failed to log in" << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "User " << cmbName->currentText() << " failed to log in" << EOM;
 
         g_obUser.logOut();
         QMessageBox::critical( this, tr( "Login failed" ),

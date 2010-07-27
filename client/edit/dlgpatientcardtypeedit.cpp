@@ -146,7 +146,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         }
         catch( cSevException &e )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
 
         QDialog::accept();

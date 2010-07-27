@@ -57,7 +57,7 @@ MainWindow::MainWindow( QWidget *p_poParent )
     connect( &_connection, SIGNAL(sqlResultReady(int, SqlResult*)), this, SLOT(on_sqlResult(int,SqlResult*)) );
 
     g_obLogger.attachWriter( "gui", new ListBoxWriter(listStatus, cSeverity::DEBUG) );
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::MainWindow] constructed" << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::MainWindow] constructed" << EOM;
 }
 
 
@@ -100,16 +100,16 @@ void MainWindow::on_iPassword_textChanged(QString )
 
 void MainWindow::on_bConnect_clicked()
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] enter" << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] enter" << EOM;
 
     if ( _connection.isConnected() ) {
-        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] connection is valid. disconnecting" << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] connection is valid. disconnecting" << EOM;
         _connection.abortConnection();
     } else {
         int port = g_prefs.value("server/port").toInt();
         QString host;
 
-        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] port from config is " << port << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] port from config is " << port << EOM;
 
         int p = iHost->text().indexOf(':');
         if ( p>=0 ) {
@@ -122,11 +122,11 @@ void MainWindow::on_bConnect_clicked()
             host = iHost->text();
 
         if ( host.isEmpty() ) {
-            g_obLogger(cSeverity::INFO) << "Host is empty. aborting." << cQTLogger::EOM;
+            g_obLogger(cSeverity::INFO) << "Host is empty. aborting." << EOM;
             return;
         }
 
-        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host="<< host << ", port=" << port << cQTLogger::EOM;
+        g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] host="<< host << ", port=" << port << EOM;
 
         bConnect->setEnabled(false);
         bConnect->setText("Connecting");
@@ -139,22 +139,22 @@ void MainWindow::on_bConnect_clicked()
 
 void MainWindow::connected()
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::connected()] enter" << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::connected()] enter" << EOM;
 
     bConnect->setText("Disconnect");
     bConnect->setEnabled(true);
 
-    g_obLogger(cSeverity::INFO) << "Connected to server" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Connected to server" << EOM;
 }
 
 
 
 void MainWindow::disconnected()
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::disconnected] called" << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::disconnected] called" << EOM;
     bConnect->setText("Connect");
     bConnect->setEnabled(true);
-    g_obLogger(cSeverity::INFO) << "Disconnected. Invalid credentials?" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Disconnected. Invalid credentials?" << EOM;
 }
 
 
@@ -173,7 +173,7 @@ void MainWindow::socketError(QAbstractSocket::SocketError socketError)
         default:err = "Unkown error"; break;
     }
 
-    g_obLogger(cSeverity::INFO) << "SocketError: " << socketError << ": " << err << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "SocketError: " << socketError << ": " << err << EOM;
     bConnect->setText("Connect");
     bConnect->setEnabled(true);
 }
@@ -183,14 +183,14 @@ void MainWindow::socketError(QAbstractSocket::SocketError socketError)
 void MainWindow::on_bRegister_clicked()
 {
     if ( !_connection.isConnected() ) {
-        g_obLogger(cSeverity::ERROR) << "Not connected to server" << cQTLogger::EOM;
+        g_obLogger(cSeverity::ERROR) << "Not connected to server" << EOM;
         return;
     }
 
     if ( !iNewKey->text().length() )
         return;
 
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_pushButton_clicked] registering key " << iNewKey->text() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_pushButton_clicked] registering key " << iNewKey->text() << EOM;
     _connection.registerNewKey(iNewKey->text().toStdString().c_str());
 }
 
@@ -198,36 +198,36 @@ void MainWindow::on_bRegister_clicked()
 
 void MainWindow::on_sqlResult(int id, SqlResult *res)
 {
-    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->rowCount() << cQTLogger::EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_sqlResult] result with id " << id << " received. Rows=" << res->rowCount() << EOM;
 
     switch (id) {
 
     case AdminClientThread::Q_GET_KEYS:
-        g_obLogger(cSeverity::INFO) << "Received license keys result. Rows=" << res->rowCount() << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "Received license keys result. Rows=" << res->rowCount() << EOM;
         licenseKeys->setModel(res);
         break;
 
     case AdminClientThread::Q_GET_LOGS:
-        g_obLogger(cSeverity::INFO) << "Received log result. Rows=" << res->rowCount() << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "Received log result. Rows=" << res->rowCount() << EOM;
         logs->setModel(res);
         break;
 
     case AdminClientThread::Q_RESET_CODE2:
         if (res->isValid())
-            g_obLogger(cSeverity::INFO) << "Code2 was successfully reseted" << cQTLogger::EOM;
+            g_obLogger(cSeverity::INFO) << "Code2 was successfully reseted" << EOM;
         else
-            g_obLogger(cSeverity::INFO) << "Failed to reset code2" << cQTLogger::EOM;
+            g_obLogger(cSeverity::INFO) << "Failed to reset code2" << EOM;
         break;
 
     case AdminClientThread::Q_REMOVE_LICENSE_KEY:
         if (res->isValid())
-            g_obLogger(cSeverity::INFO) << "License key was successfully removed" << cQTLogger::EOM;
+            g_obLogger(cSeverity::INFO) << "License key was successfully removed" << EOM;
         else
-            g_obLogger(cSeverity::INFO) << "Failed to remove license key" << cQTLogger::EOM;
+            g_obLogger(cSeverity::INFO) << "Failed to remove license key" << EOM;
         break;
 
     default:
-        g_obLogger(cSeverity::ERROR) << "Unknown query result received. Id is " << id << ", result has " << res->rowCount() << " rows" << cQTLogger::EOM;
+        g_obLogger(cSeverity::ERROR) << "Unknown query result received. Id is " << id << ", result has " << res->rowCount() << " rows" << EOM;
         break;
     }
 }
@@ -244,7 +244,7 @@ void MainWindow::on_bResetCode2_clicked()
         return;
 
     int clientId = licenseKeys->model()->index(indexes.at(0).row(), 0).data().toInt();
-    g_obLogger(cSeverity::INFO) << "Reseting code2 for client #" << clientId << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Reseting code2 for client #" << clientId << EOM;
     _connection.resetCode2( clientId );
 }
 
@@ -253,7 +253,7 @@ void MainWindow::on_bResetCode2_clicked()
 void MainWindow::on_pushButton_clicked()
 {
     // load the keys from server
-    g_obLogger(cSeverity::INFO) << "Getting licenses from server" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Getting licenses from server" << EOM;
     _connection.queryLicenseKeys();
 }
 
@@ -261,7 +261,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_bGetLogs_clicked()
 {
-    g_obLogger(cSeverity::INFO) << "Getting logs from server" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Getting logs from server" << EOM;
     _connection.queryLogs( static_cast<cSeverity::teSeverity>(logLevel->itemData(logLevel->currentIndex()).toInt()), logCount->value());
 }
 
@@ -277,7 +277,7 @@ void MainWindow::on_bRemoveKey_clicked()
         return;
 
     int clientId = licenseKeys->model()->index(indexes.at(0).row(), 0).data().toInt();
-    g_obLogger(cSeverity::INFO) << "Removing license of client #" << clientId << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Removing license of client #" << clientId << EOM;
     _connection.removeKey( clientId );
 }
 
