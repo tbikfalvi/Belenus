@@ -25,7 +25,7 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
 
         ledName->setText( poQuery->value(0).toString() );
         ledUniqueId->setText( poQuery->value(1).toString() );
-        deDate->setDate( QDate::fromString(m_poAttendance->date(),"yyyy.MM.dd") );
+        deDate->setDate( QDate::fromString(m_poAttendance->date(),"yyyy-MM-dd") );
         teLength->setTime( QTime::fromString(m_poAttendance->length(),"hh:mm:ss") );
         ledHeight->setText( QString::number(m_poAttendance->height()) );
         ledWeight->setText( QString::number(m_poAttendance->weight()) );

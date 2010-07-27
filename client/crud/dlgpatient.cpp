@@ -106,7 +106,7 @@ void cDlgPatient::editClicked( bool )
         poPatient->load( m_uiSelectedId );
 
         cDlgPatientEdit  obDlgEdit( this, poPatient );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatient->name() ) );
+        obDlgEdit.setWindowTitle( poPatient->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             cDBPostponed    obDBPostponed;

@@ -49,9 +49,9 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx                 = p_obRecord.indexOf( "patientCardHistoryId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
-    int inDateTimeIdx           = p_obRecord.indexOf( "dateTime" );
+    int inDateTimeIdx           = p_obRecord.indexOf( "dateTimeUsed" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
-    int inTimeIdx               = p_obRecord.indexOf( "timeLeft" );
+    int inTimeIdx               = p_obRecord.indexOf( "time" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -100,9 +100,8 @@ void cDBPatientCardHistory::save() throw( cSevException )
     qsQuery += " patientCardHistories SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
-    qsQuery += QString( "dateTime = \"%1\", " ).arg( m_qsDateTime );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
-    qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_qsTime );
+    qsQuery += QString( "time = \"%1\", " ).arg( m_qsTime );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -110,18 +109,9 @@ void cDBPatientCardHistory::save() throw( cSevException )
         qsQuery += QString( " WHERE patientCardHistoryId = %1" ).arg( m_uiId );
     }
 
-    try
-    {
-        g_obLogger(cSeverity::INFO) << "SQL: [" << qsQuery << "]" << cQTLogger::EOM;
-
-        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-        if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
-        if( poQuery ) delete poQuery;
-    }
-    catch( cSevException &e )
-    {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
-    }
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( poQuery ) delete poQuery;
 }
 
 void cDBPatientCardHistory::remove() throw( cSevException )

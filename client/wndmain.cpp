@@ -94,7 +94,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
     action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
-    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance_new.gif") );
     action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
     action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
@@ -393,7 +393,7 @@ void cWndMain::updateTitle()
     if( g_obPatient.id() > 0 )
     {
         qsTitle += tr(" <=> Current patient: [");
-        qsTitle += QString::fromStdString( g_obPatient.name() );
+        qsTitle += g_obPatient.name();
         qsTitle += "]";
     }
     else
@@ -449,13 +449,11 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    bool    bUpdateTitle = false;
-
     updateToolbar();
 
     if( m_uiPatientId != g_obPatient.id() )
     {
-        bUpdateTitle = true;
+        updateTitle();
 
         m_uiPatientId = g_obPatient.id();
 
@@ -479,13 +477,7 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
     if( m_uiAttendanceId != g_uiPatientAttendanceId )
     {
-        bUpdateTitle = true;
-
         m_uiAttendanceId = g_uiPatientAttendanceId;
-    }
-    if( bUpdateTitle )
-    {
-        updateTitle();
     }
 }
 //====================================================================================
@@ -878,7 +870,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
 void cWndMain::processInputPatient( QString p_stPatientName )
 {
     cDBPatient      obDBPatient;
-    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed().toStdString());
+    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed());
 
     if( uiPatientCount > 1 )
     {
@@ -901,10 +893,10 @@ void cWndMain::processInputPatient( QString p_stPatientName )
             cDBPatient  obDBPatient;
 
             obDBPatient.createNew();
-            obDBPatient.setName( p_stPatientName.toStdString() );
+            obDBPatient.setName( p_stPatientName );
 
             cDlgPatientEdit  obDlgEdit( this, &obDBPatient );
-            obDlgEdit.setWindowTitle( QString::fromStdString( obDBPatient.name() ) );
+            obDlgEdit.setWindowTitle( obDBPatient.name() );
             obDlgEdit.exec();
         }
     }
@@ -920,6 +912,19 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
         if( obDBPatientCard.active() )
         {
+            if( g_obPatient.id() == 0 && obDBPatientCard.patientId() > 0 )
+            {
+                cDBPatient  obDBPatient;
+                obDBPatient.load( obDBPatientCard.patientId() );
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard assigned to patient:\n\n"
+                                              "%1\n\n"
+                                              "Do you want to select this patient as actual?").arg(obDBPatient.name()),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    g_obPatient.load( obDBPatientCard.patientId() );
+                }
+            }
             if( obDBPatientCard.patientId() != g_obPatient.id() )
             {
                 if( QMessageBox::question( this, tr("Question"),
@@ -1026,7 +1031,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 void cWndMain::on_action_EditActualPatient_triggered()
 {
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
-    obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
+    obDlgEdit.setWindowTitle( g_obPatient.name() );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         cDBPostponed    obDBPostponed;

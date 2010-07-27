@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -29,39 +29,39 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const unsigned int p_uiLicenceId,
                        const unsigned int p_uiPatientOriginId,
                        const unsigned int p_uiReasonToVisitId,
-                       const string &p_stName,
+                       const QString &p_qsName,
                        const int p_nGender,
-                       const string &p_stDateBirth,
-                       const string &p_stUniqueId,
-                       const string &p_stCountry,
-                       const string &p_stRegion,
-                       const string &p_stCity,
-                       const string &p_stZip,
-                       const string &p_stAddress,
-                       const string &p_stEmail,
-                       const string &p_stPhone,
-                       const string &p_stComment,
+                       const QString &p_qsDateBirth,
+                       const QString &p_qsUniqueId,
+                       const QString &p_qsCountry,
+                       const QString &p_qsRegion,
+                       const QString &p_qsCity,
+                       const QString &p_qsZip,
+                       const QString &p_qsAddress,
+                       const QString &p_qsEmail,
+                       const QString &p_qsPhone,
+                       const QString &p_qsComment,
                        const bool p_bActive,
-                       const string &p_stArchive ) throw()
+                       const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPatientOriginId = p_uiPatientOriginId;
     m_uiReasonToVisitId = p_uiReasonToVisitId;
-    m_stName            = p_stName;
+    m_qsName            = p_qsName;
     m_nGender           = p_nGender;
-    m_stDateBirth       = p_stDateBirth;
-    m_stUniqueId        = p_stUniqueId;
-    m_stCountry         = p_stCountry;
-    m_stRegion          = p_stRegion;
-    m_stCity            = p_stCity;
-    m_stZip             = p_stZip;
-    m_stAddress         = p_stAddress;
-    m_stEmail           = p_stEmail;
-    m_stPhone           = p_stPhone;
-    m_stComment         = p_stComment;
+    m_qsDateBirth       = p_qsDateBirth;
+    m_qsUniqueId        = p_qsUniqueId;
+    m_qsCountry         = p_qsCountry;
+    m_qsRegion          = p_qsRegion;
+    m_qsCity            = p_qsCity;
+    m_qsZip             = p_qsZip;
+    m_qsAddress         = p_qsAddress;
+    m_qsEmail           = p_qsEmail;
+    m_qsPhone           = p_qsPhone;
+    m_qsComment         = p_qsComment;
     m_bActive           = p_bActive;
-    m_stArchive         = p_stArchive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
@@ -89,20 +89,20 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientOriginIdIdx ).toInt(),
           p_obRecord.value( inReasonToVisitIdIdx ).toInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inGenderIdx ).toInt(),
-          p_obRecord.value( inDateBirthIdx ).toString().toStdString(),
-          p_obRecord.value( inUniqueIdIdx ).toString().toStdString(),
-          p_obRecord.value( inCountryIdx ).toString().toStdString(),
-          p_obRecord.value( inRegionIdx ).toString().toStdString(),
-          p_obRecord.value( inCityIdx ).toString().toStdString(),
-          p_obRecord.value( inZipIdx ).toString().toStdString(),
-          p_obRecord.value( inAddressIdx ).toString().toStdString(),
-          p_obRecord.value( inEmailIdx ).toString().toStdString(),
-          p_obRecord.value( inPhoneIdx ).toString().toStdString(),
-          p_obRecord.value( inCommentIdx ).toString().toStdString(),
+          p_obRecord.value( inDateBirthIdx ).toString(),
+          p_obRecord.value( inUniqueIdIdx ).toString(),
+          p_obRecord.value( inCountryIdx ).toString(),
+          p_obRecord.value( inRegionIdx ).toString(),
+          p_obRecord.value( inCityIdx ).toString(),
+          p_obRecord.value( inZipIdx ).toString(),
+          p_obRecord.value( inAddressIdx ).toString(),
+          p_obRecord.value( inEmailIdx ).toString(),
+          p_obRecord.value( inPhoneIdx ).toString(),
+          p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBPatient::load( const unsigned int p_uiId ) throw( cSevException )
@@ -118,11 +118,11 @@ void cDBPatient::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBPatient::load( const string &p_stName ) throw( cSevException )
+void cDBPatient::load( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
+    cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_qsName) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name = \"" + p_qsName + "\"" );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Patient name not found" );
@@ -131,11 +131,11 @@ void cDBPatient::load( const string &p_stName ) throw( cSevException )
     init( poQuery->record() );
 }
 
-unsigned int cDBPatient::getPatientCount( const string &p_stName ) throw( cSevException )
+unsigned int cDBPatient::getPatientCount( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
+    cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_qsName) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name LIKE '\%" + QString::fromStdString( p_stName ) + "\%'" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patients WHERE name LIKE '\%" + p_qsName + "\%'" );
 
     if( poQuery->size() == 1 )
     {
@@ -155,34 +155,34 @@ void cDBPatient::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " patients SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientOriginId = \"%1\", " ).arg( m_uiPatientOriginId );
     qsQuery += QString( "reasonToVisitId = \"%1\", " ).arg( m_uiReasonToVisitId );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "gender = \"%1\", " ).arg( m_nGender );
-    qsQuery += QString( "dateBirth = \"%1\", " ).arg( QString::fromStdString( m_stDateBirth ) );
-    qsQuery += QString( "uniqueId = \"%1\", " ).arg( QString::fromStdString( m_stUniqueId ) );
-    qsQuery += QString( "country = \"%1\", " ).arg( QString::fromStdString( m_stCountry ) );
-    qsQuery += QString( "region = \"%1\", " ).arg( QString::fromStdString( m_stRegion ) );
-    qsQuery += QString( "city = \"%1\", " ).arg( QString::fromStdString( m_stCity ) );
-    qsQuery += QString( "zip = \"%1\", " ).arg( QString::fromStdString( m_stZip ) );
-    qsQuery += QString( "address = \"%1\", " ).arg( QString::fromStdString( m_stAddress ) );
-    qsQuery += QString( "email = \"%1\", " ).arg( QString::fromStdString( m_stEmail ) );
-    qsQuery += QString( "phone = \"%1\", " ).arg( QString::fromStdString( m_stPhone ) );
-    qsQuery += QString( "comment = \"%1\", " ).arg( QString::fromStdString( m_stComment ) );
+    qsQuery += QString( "dateBirth = \"%1\", " ).arg( m_qsDateBirth );
+    qsQuery += QString( "uniqueId = \"%1\", " ).arg( m_qsUniqueId );
+    qsQuery += QString( "country = \"%1\", " ).arg( m_qsCountry );
+    qsQuery += QString( "region = \"%1\", " ).arg( m_qsRegion );
+    qsQuery += QString( "city = \"%1\", " ).arg( m_qsCity );
+    qsQuery += QString( "zip = \"%1\", " ).arg( m_qsZip );
+    qsQuery += QString( "address = \"%1\", " ).arg( m_qsAddress );
+    qsQuery += QString( "email = \"%1\", " ).arg( m_qsEmail );
+    qsQuery += QString( "phone = \"%1\", " ).arg( m_qsPhone );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE patientId = %1" ).arg( m_uiId );
@@ -201,7 +201,7 @@ void cDBPatient::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive == "NEW" )
         {
             qsQuery = "DELETE FROM patients ";
         }
@@ -256,14 +256,14 @@ void cDBPatient::setReasonToVisitId( const unsigned int p_nReasonToVisitId ) thr
     m_uiReasonToVisitId = p_nReasonToVisitId;
 }
 
-string cDBPatient::name() const throw()
+QString cDBPatient::name() const throw()
 {
-    return m_stName;
+    return m_qsName;
 }
 
-void cDBPatient::setName( const string &p_stName ) throw()
+void cDBPatient::setName( const QString &p_qsName ) throw()
 {
-    m_stName = p_stName;
+    m_qsName = p_qsName;
 }
 
 int cDBPatient::gender() const throw()
@@ -276,104 +276,104 @@ void cDBPatient::setGender( const int p_nGender ) throw()
     m_nGender = p_nGender;
 }
 
-string cDBPatient::dateBirth() const throw()
+QString cDBPatient::dateBirth() const throw()
 {
-    return m_stDateBirth;
+    return m_qsDateBirth;
 }
 
-void cDBPatient::setDateBirth( const string &p_stDateBirth ) throw()
+void cDBPatient::setDateBirth( const QString &p_qsDateBirth ) throw()
 {
-    m_stDateBirth = p_stDateBirth;
+    m_qsDateBirth = p_qsDateBirth;
 }
 
-string cDBPatient::uniqueId() const throw()
+QString cDBPatient::uniqueId() const throw()
 {
-    return m_stUniqueId;
+    return m_qsUniqueId;
 }
 
-void cDBPatient::setUniqueId( const string &p_stUniqueId ) throw()
+void cDBPatient::setUniqueId( const QString &p_qsUniqueId ) throw()
 {
-    m_stUniqueId = p_stUniqueId;
+    m_qsUniqueId = p_qsUniqueId;
 }
 
-string cDBPatient::country() const throw()
+QString cDBPatient::country() const throw()
 {
-    return m_stCountry;
+    return m_qsCountry;
 }
 
-void cDBPatient::setCountry( const string &p_stCountry ) throw()
+void cDBPatient::setCountry( const QString &p_qsCountry ) throw()
 {
-    m_stCountry = p_stCountry;
+    m_qsCountry = p_qsCountry;
 }
 
-string cDBPatient::region() const throw()
+QString cDBPatient::region() const throw()
 {
-    return m_stRegion;
+    return m_qsRegion;
 }
 
-void cDBPatient::setRegion( const string &p_stRegion ) throw()
+void cDBPatient::setRegion( const QString &p_qsRegion ) throw()
 {
-    m_stRegion = p_stRegion;
+    m_qsRegion = p_qsRegion;
 }
 
-string cDBPatient::city() const throw()
+QString cDBPatient::city() const throw()
 {
-    return m_stCity;
+    return m_qsCity;
 }
 
-void cDBPatient::setCity( const string &p_stCity ) throw()
+void cDBPatient::setCity( const QString &p_qsCity ) throw()
 {
-    m_stCity = p_stCity;
+    m_qsCity = p_qsCity;
 }
 
-string cDBPatient::zip() const throw()
+QString cDBPatient::zip() const throw()
 {
-    return m_stZip;
+    return m_qsZip;
 }
 
-void cDBPatient::setZip( const string &p_stZip ) throw()
+void cDBPatient::setZip( const QString &p_qsZip ) throw()
 {
-    m_stZip = p_stZip;
+    m_qsZip = p_qsZip;
 }
 
-string cDBPatient::address() const throw()
+QString cDBPatient::address() const throw()
 {
-    return m_stAddress;
+    return m_qsAddress;
 }
 
-void cDBPatient::setAddress( const string &p_stAddress ) throw()
+void cDBPatient::setAddress( const QString &p_qsAddress ) throw()
 {
-    m_stAddress = p_stAddress;
+    m_qsAddress = p_qsAddress;
 }
 
-string cDBPatient::email() const throw()
+QString cDBPatient::email() const throw()
 {
-    return m_stEmail;
+    return m_qsEmail;
 }
 
-void cDBPatient::setEmail( const string &p_stEmail ) throw()
+void cDBPatient::setEmail( const QString &p_qsEmail ) throw()
 {
-    m_stEmail = p_stEmail;
+    m_qsEmail = p_qsEmail;
 }
 
-string cDBPatient::phone() const throw()
+QString cDBPatient::phone() const throw()
 {
-    return m_stPhone;
+    return m_qsPhone;
 }
 
-void cDBPatient::setPhone( const string &p_stPhone ) throw()
+void cDBPatient::setPhone( const QString &p_qsPhone ) throw()
 {
-    m_stPhone = p_stPhone;
+    m_qsPhone = p_qsPhone;
 }
 
-string cDBPatient::comment() const throw()
+QString cDBPatient::comment() const throw()
 {
-    return m_stComment;
+    return m_qsComment;
 }
 
-void cDBPatient::setComment( const string &p_stComment ) throw()
+void cDBPatient::setComment( const QString &p_qsComment ) throw()
 {
-    m_stComment = p_stComment;
+    m_qsComment = p_qsComment;
 }
 
 bool cDBPatient::active() const throw()
@@ -386,13 +386,13 @@ void cDBPatient::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBPatient::archive() const throw()
+QString cDBPatient::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBPatient::setArchive( const string &p_stArchive ) throw()
+void cDBPatient::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

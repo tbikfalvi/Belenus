@@ -158,7 +158,7 @@ void cDlgPostponedPatientSelect::on_pbSelect_clicked()
         poPatient->load( m_uiSelectedId );
 
         cDlgPatientEdit  obDlgEdit( this, poPatient, poPostponed );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatient->name() ) );
+        obDlgEdit.setWindowTitle( poPatient->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             poPostponed->removePatient( m_uiSelectedId );
