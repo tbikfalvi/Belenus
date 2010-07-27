@@ -9,8 +9,8 @@ extern cQTMySQLConnection g_db;
 
 
 
-ServerThread::ServerThread() :
-        Connection(),
+ServerThread::ServerThread(QTcpSocket *tcpSocket) :
+        CommunicationProtocol(tcpSocket),
         _isAuthenticated(false),
         _isAdmin(false)
 {
@@ -149,3 +149,28 @@ void ServerThread::_handleSqlQuery(int queryId, const char *query)
 }
 
 
+void ServerThread::run()
+{
+    if ( !m_socket )
+        return;
+
+    connect( m_socket,   SIGNAL(disconnected()),                       this, SLOT(disconnected()) );
+    connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),  this, SLOT(error(QAbstractSocket::SocketError)) );
+    connect( this,      SIGNAL(finished()),     this, SLOT(deleteLater()));
+
+    exec(); // start event processing loop
+}
+
+
+
+void ServerThread::error(QAbstractSocket::SocketError err)
+{
+    g_obLogger(cSeverity::ERROR) << "[Serverthread::error] " << err << cQTLogger::EOM;
+}
+
+
+
+void ServerThread::disconnected()
+{
+    g_obLogger(cSeverity::ERROR) << "[Serverthread::disconnected] " << cQTLogger::EOM;
+}

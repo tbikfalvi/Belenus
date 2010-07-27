@@ -46,7 +46,6 @@ void Server::execute()
 {
     connect(&_tcpServer, SIGNAL(newConnection()), this, SLOT(connectionAvailable()));
 
-
     if ( !_tcpServer.listen( QHostAddress(g_prefs.value("server/interface")), g_prefs.value("server/port").toInt() ) )
         throw cSevException(cSeverity::ERROR, "Unable to start listener");
 
@@ -59,8 +58,8 @@ void Server::connectionAvailable()
 {
     g_obLogger(cSeverity::DEBUG) << "[Server::connectionAvailable] new connection" << cQTLogger::EOM;
 
-    ServerThread *connectionThread = new ServerThread();
-    connectionThread->connectTo(_tcpServer.nextPendingConnection());
+    ServerThread *connectionThread = new ServerThread(_tcpServer.nextPendingConnection());
+    connectionThread->start();
 }
 
 

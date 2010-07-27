@@ -2,17 +2,22 @@
 #define SERVERTHREAD_H
 
 
-#include "../framework/network/connection.h"
+#include "../framework/network/CommunicationProtocol.h"
 
 
 
-class ServerThread : public Connection {
+class ServerThread : public QThread, public CommunicationProtocol {
 
 public:
-    ServerThread();
+    ServerThread(QTcpSocket*);
     ~ServerThread();
 
+protected slots:
+    void error(QAbstractSocket::SocketError);
+    void disconnected();
+
 protected:
+    virtual void run();
     void _handleHello(int version);
     void _handleLogonResponse(const char* code1, const char* code2);
     void _handleLogonAdminResponse(const char* username, const char* password);

@@ -119,9 +119,3 @@ void cQTLogger::setMinimumSeverity(const QString name, const cSeverity::teSeveri
         (*it)->setMinimumSeverity(sev);
 }
 
-
-
-LogMessage cQTLogger::operator () ( const cSeverity::teSeverity p_enLevel ) {
-    return LogMessage(p_enLevel, this);
-}
-
