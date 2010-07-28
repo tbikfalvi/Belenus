@@ -50,9 +50,9 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
     lblUser->setText( QString::fromStdString(obUser.realName()) );
 
-    pbClose->setIcon( QIcon("./resources/40x40_exit.gif") );
-    pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.gif") );
-    pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.gif") );
+    pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
+    pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );
+    pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.png") );
 
     pbMore->setEnabled( false );
 

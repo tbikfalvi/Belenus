@@ -9,7 +9,7 @@ cDlgPatient::cDlgPatient( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patient.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
     setupTableView();
 }

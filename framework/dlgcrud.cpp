@@ -18,7 +18,7 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     tbvCrud->setModel( m_poSortedModel );
 
     m_poBtnNew = new QPushButton( tr( "&New" ), this );
-    m_poBtnNew->setIcon( QIcon("./resources/40x40_new.gif") );
+    m_poBtnNew->setIcon( QIcon("./resources/40x40_new.png") );
     m_poBtnNew->setFixedHeight( 30 );
     m_poBtnNew->setIconSize( QSize(20,20) );
     m_poBtnNew->setDefault( false );
@@ -26,7 +26,7 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     btbButtons->addButton( m_poBtnNew, QDialogButtonBox::ActionRole );
 
     m_poBtnEdit = new QPushButton( tr( "&Edit" ), this );
-    m_poBtnEdit->setIcon( QIcon("./resources/40x40_edit.gif") );
+    m_poBtnEdit->setIcon( QIcon("./resources/40x40_edit.png") );
     m_poBtnEdit->setFixedHeight( 30 );
     m_poBtnEdit->setIconSize( QSize(20,20) );
     m_poBtnEdit->setDefault( false );
@@ -34,7 +34,7 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     btbButtons->addButton( m_poBtnEdit, QDialogButtonBox::ActionRole );
 
     m_poBtnDelete = new QPushButton( tr( "&Delete" ), this );
-    m_poBtnDelete->setIcon( QIcon("./resources/40x40_delete.gif") );
+    m_poBtnDelete->setIcon( QIcon("./resources/40x40_delete.png") );
     m_poBtnDelete->setFixedHeight( 30 );
     m_poBtnDelete->setIconSize( QSize(20,20) );
     m_poBtnDelete->setDefault( false );
@@ -42,7 +42,7 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     btbButtons->addButton( m_poBtnDelete, QDialogButtonBox::ActionRole );
 
     m_poBtnSave = new QPushButton( tr( "&Save" ), this );
-    m_poBtnSave->setIcon( QIcon("./resources/40x40_ok.gif") );
+    m_poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     m_poBtnSave->setFixedHeight( 30 );
     m_poBtnSave->setIconSize( QSize(20,20) );
     m_poBtnSave->setDefault( false );
@@ -50,7 +50,7 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
     btbButtons->addButton( m_poBtnSave, QDialogButtonBox::ActionRole );
 
     m_poBtnClose = new QPushButton( tr( "&Close" ), this );
-    m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.gif") );
+    m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.png") );
     m_poBtnClose->setFixedHeight( 30 );
     m_poBtnClose->setIconSize( QSize(20,20) );
     m_poBtnClose->setDefault( false );

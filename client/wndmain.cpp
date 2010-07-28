@@ -393,7 +393,7 @@ void cWndMain::updateTitle()
     if( g_obPatient.id() > 0 )
     {
         qsTitle += tr(" <=> Current patient: [");
-        qsTitle += QString::fromStdString( g_obPatient.name() );
+        qsTitle += g_obPatient.name();
         qsTitle += "]";
     }
     else
@@ -876,7 +876,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
 void cWndMain::processInputPatient( QString p_stPatientName )
 {
     cDBPatient      obDBPatient;
-    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed().toStdString());
+    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed());
 
     if( uiPatientCount > 1 )
     {
@@ -899,10 +899,10 @@ void cWndMain::processInputPatient( QString p_stPatientName )
             cDBPatient  obDBPatient;
 
             obDBPatient.createNew();
-            obDBPatient.setName( p_stPatientName.toStdString() );
+            obDBPatient.setName( p_stPatientName );
 
             cDlgPatientEdit  obDlgEdit( this, &obDBPatient );
-            obDlgEdit.setWindowTitle( QString::fromStdString( obDBPatient.name() ) );
+            obDlgEdit.setWindowTitle( obDBPatient.name() );
             obDlgEdit.exec();
         }
     }
@@ -1023,7 +1023,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 void cWndMain::on_action_EditActualPatient_triggered()
 {
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
-    obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
+    obDlgEdit.setWindowTitle( g_obPatient.name() );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         cDBPostponed    obDBPostponed;

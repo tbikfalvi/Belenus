@@ -9,7 +9,7 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Attendance List" ) );
-    setWindowIcon( QIcon("./resources/40x40_attendance.gif") );
+    setWindowIcon( QIcon("./resources/40x40_attendance.png") );
 
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );

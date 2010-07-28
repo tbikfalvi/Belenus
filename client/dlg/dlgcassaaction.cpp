@@ -10,8 +10,8 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent )
 
     setWindowTitle( tr("Cassa action") );
 
-    pbOk->setIcon( QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     lblCurrencyShort->setText( g_poPrefs->getCurrencyShort() );
 }

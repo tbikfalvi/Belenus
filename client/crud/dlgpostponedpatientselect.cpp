@@ -8,7 +8,7 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     cTracer obTrace( "cDlgPostponedPatientSelect::cDlgPostponedPatientSelect" );
 
     setWindowTitle( tr( "Select postponed patient" ) );
-    setWindowIcon( QIcon("./resources/40x40_patient.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
@@ -43,12 +43,12 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     pbSelect = new QPushButton( tr( "Select" ), this );
     pbSelect->setObjectName( QString::fromUtf8( "pbSelect" ) );
     pbSelect->setIconSize( QSize(20, 20) );
-    pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
+    pbSelect->setIcon( QIcon("./resources/40x40_ok.png") );
     btbButtonsSide->addButton( pbSelect, QDialogButtonBox::ActionRole );
     pbCancel = new QPushButton( tr( "Cancel" ), this );
     pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
     pbCancel->setIconSize( QSize(20, 20) );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
     setupTableView();

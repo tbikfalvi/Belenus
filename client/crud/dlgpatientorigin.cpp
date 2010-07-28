@@ -8,7 +8,7 @@ cDlgPatientOrigin::cDlgPatientOrigin( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Origin List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientorigin.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patientorigin.png") );
 
     setupTableView();
 }

@@ -24,8 +24,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     }
 
     setWindowTitle( m_poPatientCard->barcode() );
-    pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     cbActive->setChecked( true );
     ledUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
     teTimeLeft->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );

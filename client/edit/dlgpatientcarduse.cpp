@@ -14,8 +14,8 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
     m_poPatientCardType = new cDBPatientCardType;
 
     setWindowTitle( m_poPatientCard->barcode() );
-    pbSave->setIcon( QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     if( m_poPatientCard )
     {

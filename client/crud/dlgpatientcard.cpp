@@ -8,7 +8,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Card List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientcard.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
 
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );

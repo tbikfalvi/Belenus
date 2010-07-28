@@ -12,12 +12,12 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     cTracer obTrace( "cDlgPatientEdit::cDlgPatientEdit" );
 
     setupUi( this );
-    setWindowIcon( QIcon("./resources/40x40_patient.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.gif") );
-    pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.gif") );
-    pbAttendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
+    pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.png") );
+    pbAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
 
     m_poPostponed = p_poPostponed;
     m_poPatient = p_poPatient;
