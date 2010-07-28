@@ -1,26 +1,9 @@
-//====================================================================================
-//
-// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
-//
-//====================================================================================
-//
-// Filename    : main.cpp
-// AppVersion  : 1.0
-// FileVersion : 1.0
-// Author      : Ballok Peter, Bikfalvi Tamas
-//
-//====================================================================================
-// Alkalmazas fo allomanya.
-//====================================================================================
-
 #include <QApplication>
 #include <QString>
 #include <QSettings>
 #include <QMessageBox>
 #include <QTranslator>
 #include <QSplashScreen>
-
-//====================================================================================
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
@@ -36,8 +19,6 @@
 #endif
 #include "wndmain.h"
 
-//====================================================================================
-
 cQTLogger                g_obLogger;
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
@@ -48,7 +29,6 @@ cDBPatient               g_obPatient;
 unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 
-//====================================================================================
 int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
@@ -68,7 +48,7 @@ int main( int argc, char *argv[] )
         apMainApp.installTranslator( poTrans );
     }
 
-    QPixmap          obPixmap("resources/splash.jpg");
+    QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
     QString          qsSpalsh;
 
@@ -93,7 +73,7 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << cQTLogger::EOM;
-/*
+
         qsSpalsh += QObject::tr("Connecting to Belenus server ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
@@ -117,17 +97,19 @@ int main( int argc, char *argv[] )
 
         switch (g_poServer->getStatus()) {
             case BelenusServerConnection::AUTHENTICATED:
-                qsSpalsh += QObject::tr(" CONNECTED.\n");
+                qsSpalsh += "Connected.\n";
                 break;
             case BelenusServerConnection::LICENSE_FAILED:
-                qsSpalsh += QObject::tr(" FAILED\nLicense key authentication not ok.\n");
+                qsSpalsh += "License key authentication not ok.\n";
                 break;
             default:
-                qsSpalsh += QObject::tr(" FAILED\nProbably no internet connection?\n");
+                qsSpalsh += "Connection failed. No internet connection?\n";
                 break;
         }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-*/
+
+
+
 #ifdef __WIN32__
 
         qsSpalsh += QObject::tr("Checking hardware connection ...");
