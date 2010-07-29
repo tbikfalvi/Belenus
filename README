@@ -20,24 +20,26 @@ DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
 PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesekkel (attendance)
 CurrentPatient		- Csak akkor lehet kezelni bizonyos reszeket, ha van aktualis paciens
 			  kivalasztva. Ezt oldja meg.
-HardwareInit		- Hardver kezelés alapjai. Csatlakozás, inicializálás. Hardver teszt
-			  relék kapcsolálásval.
-PanelStatus		- Panelok mûködését meghatározó panel status-ok kezelése.
+HardwareInit		- Hardver kezelÃ©s alapjai. CsatlakozÃ¡s, inicializÃ¡lÃ¡s. Hardver teszt
+			  relÃ©k kapcsolÃ¡lÃ¡sval.
+PanelStatus		- Panelok mÃ»kÃ¶dÃ©sÃ©t meghatÃ¡rozÃ³ panel status-ok kezelÃ©se.
 PatientCard		- Pacienseknek altal hasznalt kartyak es kartyatipusok kezelese
 PanelManagement		- Panelok es rajta keresztul a hardver kezelese
-Preferences		- Beállítások módosítására szolgáló dialog
-Toolbar			- Toolbar gombok rendberakása. Engedélyezésük, tiltásuk timer által
-			  meghívott függvény állítja. Néhány még nem mûködõ gomb alapból tiltva.
-DatabaseFinal		- Az 'active' mezõ felvétele az adatbázis táblákba és ennek lekezelése
+Preferences		- BeÃ¡llÃ­tÃ¡sok mÃ³dosÃ­tÃ¡sÃ¡ra szolgÃ¡lÃ³ dialog
+Toolbar			- Toolbar gombok rendberakÃ¡sa. EngedÃ©lyezÃ©sÃ¼k, tiltÃ¡suk timer Ã¡ltal
+			  meghÃ­vott fÃ¼ggvÃ©ny Ã¡llÃ­tja. NÃ©hÃ¡ny mÃ©g nem mÃ»kÃ¶dÃµ gomb alapbÃ³l tiltva.
+DatabaseFinal		- Az 'active' mezÃµ felvÃ©tele az adatbÃ¡zis tÃ¡blÃ¡kba Ã©s ennek lekezelÃ©se
 			  Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
-PostponedPatient	- Ha a páciens adatait a kezelõ késõbb akarja kitölteni, akkor a
-			  postponed (toBeFilled) temp táblába kerül az ID-ja
+PostponedPatient	- Ha a pÃ¡ciens adatait a kezelÃµ kÃ©sÃµbb akarja kitÃ¶lteni, akkor a
+			  postponed (toBeFilled) temp tÃ¡blÃ¡ba kerÃ¼l az ID-ja
 Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
 ApplicationStart	- Program inditasa utan ellenorizni kell, hogy, ha a HW kapcsolat OK,
 			  ne mukodjon a program DEMO kulccsal csak 7 napig. Ugyanugy, mint
 			  rossz internet kapcsolat, vagy szunnapok eseten
-ServerAdmin		- Szerver adminisztrátor program
-Server			- Szerver program változtatásai mostantól IDE menjenek!!!
+ServerAdmin		- Szerver adminisztrÃ¡tor program
+Server			- Szerver program vÃ¡ltoztatÃ¡sai mostantÃ³l IDE menjenek!!!
 PanelSettings		- Panelok megjelenitesevel kapcsolatos valtoztatasok
-Translations		- A program alap (angol) nyelvtõl eltérõ nyelvekre fordítása
+Translations		- A program alap (angol) nyelvtÃµl eltÃ©rÃµ nyelvekre fordÃ­tÃ¡sa
 			  Elmeletileg kesz.
+PanelManagement		- Panelok vezÃ©rlÃ©sevel Ã©s egyÃ©b panelokhoz kÃ¶thetÅ‘ dolgokkal
+			  kapcsolatos vÃ¡ltoztatÃ¡sok
