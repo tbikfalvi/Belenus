@@ -15,10 +15,14 @@
 
 #include <QPalette>
 
+//====================================================================================
+
 #include "belenus.h"
 #include "frmpanel.h"
 #include "db/dbpatientcard.h"
+#include "db/dbpatientcardhistory.h"
 
+//====================================================================================
 cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     : QFrame()
 {
@@ -73,7 +77,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     inactivate();
     displayStatus();
 }
-
+//====================================================================================
 cFrmPanel::~cFrmPanel()
 {
     cTracer obTrace( "cFrmPanel::~cFrmPanel" );
@@ -82,17 +86,22 @@ cFrmPanel::~cFrmPanel()
 
     for( unsigned int i = 0; i < m_obStatuses.size(); i ++ ) if( m_obStatuses.at( i ) ) delete m_obStatuses.at( i );
 }
-
+//====================================================================================
 bool cFrmPanel::isWorking() const
 {
     return (m_uiStatus > 0);
 }
-
+//====================================================================================
 bool cFrmPanel::isStatusCanBeSkipped()
 {
-    return ( m_obStatuses.at(m_uiStatus)->activateCommand()!=3 ? true : false );
-}
+    bool bRet = false;
 
+    if( m_obStatuses.at(m_uiStatus)->activateCommand() != 3 && m_uiStatus > 0 )
+        bRet = true;
+
+    return bRet;
+}
+//====================================================================================
 void cFrmPanel::start()
 {
     if( m_inMainProcessLength == 0 )
@@ -119,7 +128,7 @@ void cFrmPanel::start()
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
 }
-
+//====================================================================================
 void cFrmPanel::reset()
 {
 //    stringstream ssTrace;
@@ -131,6 +140,9 @@ void cFrmPanel::reset()
         closeAttendance();
     }
 
+    m_pDBLedgerDevice->createNew();
+    m_vrPatientCard.clear();
+
     m_inMainProcessLength = 0;
     if( !m_bHasToPay )
     {
@@ -140,12 +152,12 @@ void cFrmPanel::reset()
     m_uiStatus = m_obStatuses.size() - 1;
     activateNextStatus();
 }
-
+//====================================================================================
 void cFrmPanel::next()
 {
     activateNextStatus();
 }
-
+//====================================================================================
 void cFrmPanel::inactivate()
 {
     setFrameShadow( QFrame::Sunken );
@@ -154,7 +166,7 @@ void cFrmPanel::inactivate()
     obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#b9b9b9") ) );
     lblTitle->setPalette( obNewPalette );
 }
-
+//====================================================================================
 void cFrmPanel::activate()
 {
     setFrameShadow( QFrame::Raised );
@@ -163,30 +175,30 @@ void cFrmPanel::activate()
     obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#4387cb" ) ) );
     lblTitle->setPalette( obNewPalette );
 }
-
+//====================================================================================
 int cFrmPanel::mainProcessTime()
 {
     return m_inMainProcessLength;
 }
-
+//====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength )
 {
     m_inMainProcessLength += p_inLength;
+    m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
 
     displayStatus();
 }
-
+//====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
     m_inCashToPay += p_inPrice;
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
     m_pDBLedgerDevice->setTimeCash( m_pDBLedgerDevice->timeCash()+p_inLength );
-    m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
 
     setMainProcessTime( p_inLength );
 }
-
+//====================================================================================
 void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
 {
     stUsedPatientCard   obTemp;
@@ -199,11 +211,10 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
 
     m_pDBLedgerDevice->setUnits( m_pDBLedgerDevice->units()+p_inCountUnits );
     m_pDBLedgerDevice->setTimeCard( m_pDBLedgerDevice->timeCard()+p_inLength );
-    m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
 
     setMainProcessTime( p_inLength );
 }
-
+//====================================================================================
 bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
 {
     QSqlQuery   *poQuery;
@@ -221,13 +232,13 @@ bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
 
     return bRet;
 }
-
+//====================================================================================
 void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 {
     emit panelClicked( m_uiId - 1 );
     p_poEvent->ignore();
 }
-
+//====================================================================================
 void cFrmPanel::timerEvent ( QTimerEvent * )
 {
     if( g_poHardware->isHardwareMovedNextStatus( m_uiId-1 ) )
@@ -259,7 +270,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter );
 }
-
+//====================================================================================
 void cFrmPanel::load( const unsigned int p_uiPanelId )
 {
     m_uiId = p_uiPanelId;
@@ -300,7 +311,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         if( poQuery ) delete poQuery;
     }
 }
-
+//====================================================================================
 void cFrmPanel::reload()
 {
     QSqlQuery  *poQuery = NULL;
@@ -320,7 +331,7 @@ void cFrmPanel::reload()
         if( poQuery ) delete poQuery;
     }
 }
-
+//====================================================================================
 void cFrmPanel::displayStatus()
 {
     if( m_uiStatus )
@@ -404,7 +415,7 @@ void cFrmPanel::displayStatus()
     obFont.setPixelSize( 15 );
     lblInfo->setFont( obFont );
 }
-
+//====================================================================================
 QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
@@ -424,7 +435,7 @@ QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 
     return qsRet;
 }
-
+//====================================================================================
 void cFrmPanel::activateNextStatus()
 {
     if( isMainProcess() )
@@ -450,7 +461,7 @@ void cFrmPanel::activateNextStatus()
 
     displayStatus();
 }
-
+//====================================================================================
 void cFrmPanel::cashPayed()
 {
     m_inCashToPay = 0;
@@ -458,12 +469,12 @@ void cFrmPanel::cashPayed()
 
     displayStatus();
 }
-
+//====================================================================================
 bool cFrmPanel::isMainProcess()
 {
     return ( m_obStatuses.at(m_uiStatus)->activateCommand()==3 ? true : false );
 }
-
+//====================================================================================
 void cFrmPanel::closeAttendance()
 {
     if( m_inCashToPay > 0 )
@@ -477,5 +488,35 @@ void cFrmPanel::closeAttendance()
         m_pDBLedgerDevice->setComment( tr("Device usage stopped after %1 minutes. Unused time: %2 minutes.").arg(m_pDBLedgerDevice->timeReal()).arg(m_pDBLedgerDevice->timeLeft()) );
     }
     m_pDBLedgerDevice->save();
+
+    for( unsigned int i=0; i < m_vrPatientCard.size(); i++ )
+    {
+        cDBPatientCard          obDBPatientCard;
+        cDBPatientCardHistory   obDBPatientCardHistory;
+
+        obDBPatientCard.load( m_vrPatientCard.at(i).uiPatientCardId );
+
+        obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.at(i).inCountUnits );
+
+        QTime m_qtTemp = QTime::fromString( obDBPatientCard.timeLeft(), "hh:mm:ss" );
+        m_qtTemp = m_qtTemp.addSecs( -m_vrPatientCard.at(i).inUnitTime );
+        obDBPatientCard.setTimeLeft( m_qtTemp.toString("hh:mm:ss") );
+
+        obDBPatientCard.save();
+
+        m_qtTemp = QTime( 0, m_vrPatientCard.at(i).inUnitTime/60, m_vrPatientCard.at(i).inUnitTime%60, 0 );
+
+        obDBPatientCardHistory.createNew();
+        obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBPatientCardHistory.setPatientCardId( obDBPatientCard.id() );
+        obDBPatientCardHistory.setUnits( m_vrPatientCard.at(i).inCountUnits );
+        obDBPatientCardHistory.setTime( m_qtTemp.toString("hh:mm:ss") );
+        obDBPatientCardHistory.setActive( true );
+
+        obDBPatientCardHistory.save();
+    }
+
+    m_vrPatientCard.clear();
     m_pDBLedgerDevice->createNew();
 }
+//====================================================================================

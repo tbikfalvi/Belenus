@@ -12,7 +12,7 @@ public:
     ~cDBPatientCard();
 
     void            load( const unsigned int p_uiId )                           throw( cSevException );
-    void            load( const QString &p_qsBarcode )                           throw( cSevException );
+    void            load( const QString &p_qsBarcode )                          throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();
@@ -24,36 +24,36 @@ public:
     void            setPatientCardTypeId( const unsigned int p_uiPCardTypeId )  throw();
     unsigned int    patientId() const                                           throw();
     void            setPatientId( const unsigned int p_uiPatientId )            throw();
-    QString          barcode() const                                             throw();
-    void            setBarcode( const QString &p_qsBarcode )                     throw();
-    QString          comment() const                                             throw();
-    void            setComment( const QString &p_qsComment )                     throw();
+    QString         barcode() const                                             throw();
+    void            setBarcode( const QString &p_qsBarcode )                    throw();
+    QString         comment() const                                             throw();
+    void            setComment( const QString &p_qsComment )                    throw();
     int             units() const                                               throw();
     void            setUnits( const int p_nUnits )                              throw();
-    QString          timeLeft() const                                            throw();
-    void            setTimeLeft( const QString &p_qsTimeLeft )                   throw();
-    QString          validDate() const                                           throw();
-    void            setValidDate( const QString &p_qsValidDate )                 throw();
-    QString          pincode() const                                             throw();
-    void            setPincode( const QString &p_qsPincode )                     throw();
+    QString         timeLeft() const                                            throw();
+    void            setTimeLeft( const QString &p_qsTimeLeft )                  throw();
+    QString         validDate() const                                           throw();
+    void            setValidDate( const QString &p_qsValidDate )                throw();
+    QString         pincode() const                                             throw();
+    void            setPincode( const QString &p_qsPincode )                    throw();
     bool            active() const                                              throw();
     void            setActive( const bool p_bActive )                           throw();
-    QString          archive() const                                             throw();
-    void            setArchive( const QString &p_qsArchive )                     throw();
+    QString         archive() const                                             throw();
+    void            setArchive( const QString &p_qsArchive )                    throw();
 
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientCardTypeId;
     unsigned int    m_uiPatientId;
-    QString          m_qsBarcode;
-    QString          m_qsComment;
+    QString         m_qsBarcode;
+    QString         m_qsComment;
     int             m_nUnits;
-    QString          m_qsTimeLeft;
-    QString          m_qsValidDate;
-    QString          m_qsPincode;
+    QString         m_qsTimeLeft;
+    QString         m_qsValidDate;
+    QString         m_qsPincode;
     bool            m_bActive;
-    QString          m_qsArchive;
+    QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
@@ -66,8 +66,8 @@ private:
                const QString p_qsValidDate = "",
                const QString p_qsPincode = "",
                const bool p_bActive = false,
-               const QString &p_qsArchive = "NEW" )                  throw();
-    void init( const QSqlRecord &p_obRecord )                       throw();
+               const QString &p_qsArchive = "NEW" )                             throw();
+    void init( const QSqlRecord &p_obRecord )                                   throw();
 };
 
 #endif

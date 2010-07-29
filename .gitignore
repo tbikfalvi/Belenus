@@ -226,6 +226,7 @@ client/moc_dlgattendanceselect.cpp
 client/moc_dlgattendanceselect.o
 client/moc_dlgpatientcarduse.cpp
 client/moc_dlgpatientcarduse.o
+client/dbpatientcardhistory.o
 resources/Thumbs.db
 BelenusServer
 BelenusServer.exe
@@ -295,5 +296,18 @@ serveradmin/moc_dlg_mainwindow.o
 serveradmin/moc_qtmysqlquerymodel.cpp
 serveradmin/moc_qtmysqlquerymodel.o
 serveradmin/ui_mainwindow.h
+serveradmin/adminClientThread.o
+serveradmin/connection.o
+serveradmin/mainwindow.o
+serveradmin/moc_adminClientThread.cpp
+serveradmin/moc_adminClientThread.o
+serveradmin/moc_connection.cpp
+serveradmin/moc_connection.o
+serveradmin/moc_mainwindow.cpp
+serveradmin/moc_mainwindow.o
+serveradmin/moc_sqlResult.cpp
+serveradmin/moc_sqlResult.o
+serveradmin/packet.o
+serveradmin/sqlResult.o
 lang/belenus_hu.qm
 

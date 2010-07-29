@@ -12,12 +12,12 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     cTracer obTrace( "cDlgPatientEdit::cDlgPatientEdit" );
 
     setupUi( this );
-    setWindowIcon( QIcon("./resources/40x40_patient.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.gif") );
-    pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.gif") );
-    pbAttendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
+    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
+    pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.png") );
+    pbAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
 
     m_poPostponed = p_poPostponed;
     m_poPatient = p_poPatient;
@@ -68,19 +68,19 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             pbFinishLater->setEnabled( false );
         }
 
-        ledName->setText( QString::fromStdString(m_poPatient->name()) );
+        ledName->setText( m_poPatient->name() );
         if( m_poPatient->gender() == 1 ) rbGenderMale->setChecked(true);
         else if( m_poPatient->gender() == 2 ) rbGenderFemale->setChecked(true);
-        deDateBirth->setDate( QDate::fromString(QString::fromStdString(m_poPatient->dateBirth()),"yyyy-MM-dd") );
-        ledUniqueId->setText( QString::fromStdString(m_poPatient->uniqueId()) );
-        ledCountry->setText( QString::fromStdString(m_poPatient->country()) );
-        ledRegion->setText( QString::fromStdString(m_poPatient->region()) );
-        ledCity->setText( QString::fromStdString(m_poPatient->city()) );
-        ledZip->setText( QString::fromStdString(m_poPatient->zip()) );
-        ledAddress->setText( QString::fromStdString(m_poPatient->address()) );
-        ledPhone->setText( QString::fromStdString(m_poPatient->phone()) );
-        ledEmail->setText( QString::fromStdString(m_poPatient->email()) );
-        ptComment->setPlainText( QString::fromStdString(m_poPatient->comment()) );
+        deDateBirth->setDate( QDate::fromString(m_poPatient->dateBirth(),"yyyy-MM-dd") );
+        ledUniqueId->setText( m_poPatient->uniqueId() );
+        ledCountry->setText( m_poPatient->country() );
+        ledRegion->setText( m_poPatient->region() );
+        ledCity->setText( m_poPatient->city() );
+        ledZip->setText( m_poPatient->zip() );
+        ledAddress->setText( m_poPatient->address() );
+        ledPhone->setText( m_poPatient->phone() );
+        ledEmail->setText( m_poPatient->email() );
+        ptComment->setPlainText( m_poPatient->comment() );
     }
 }
 
@@ -200,21 +200,21 @@ bool cDlgPatientEdit::SavePatientData()
         }
         m_poPatient->setPatientOriginId( cmbPatientOrigin->itemData( cmbPatientOrigin->currentIndex() ).toInt() );
         m_poPatient->setReasonToVisitId( cmbReasonToVisit->itemData( cmbReasonToVisit->currentIndex() ).toInt() );
-        m_poPatient->setName( ledName->text().toStdString() );
+        m_poPatient->setName( ledName->text() );
         if( rbGenderMale->isChecked() )
             m_poPatient->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poPatient->setGender( 2 );
-        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-MM-dd").toStdString() );
-        m_poPatient->setUniqueId( ledUniqueId->text().toStdString() );
-        m_poPatient->setCountry( ledCountry->text().toStdString() );
-        m_poPatient->setRegion( ledRegion->text().toStdString() );
-        m_poPatient->setCity( ledCity->text().toStdString() );
-        m_poPatient->setZip( ledZip->text().toStdString() );
-        m_poPatient->setAddress( ledAddress->text().toStdString() );
-        m_poPatient->setEmail( ledEmail ->text().toStdString() );
-        m_poPatient->setPhone( ledPhone->text().toStdString() );
-        m_poPatient->setComment( ptComment->toPlainText().toStdString() );
+        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-MM-dd") );
+        m_poPatient->setUniqueId( ledUniqueId->text() );
+        m_poPatient->setCountry( ledCountry->text() );
+        m_poPatient->setRegion( ledRegion->text() );
+        m_poPatient->setCity( ledCity->text() );
+        m_poPatient->setZip( ledZip->text() );
+        m_poPatient->setAddress( ledAddress->text() );
+        m_poPatient->setEmail( ledEmail ->text() );
+        m_poPatient->setPhone( ledPhone->text() );
+        m_poPatient->setComment( ptComment->toPlainText() );
 
         m_poPatient->save();
 

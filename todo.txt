@@ -1,0 +1,6 @@
+- bérlet eladás/feltöltés rögzítése a könyvelésbe
+- bérlet feltöltés
+- már eladott bérletet nem lehet eladni másnak
+- ha bérlet használatot kezdeményez és elad bérletet, akkor bérlet eladás után ugorjon vissza a bérlet használathoz
+- gépállapotok alapján toolbar gombok elérhetőségének tisztázása
+

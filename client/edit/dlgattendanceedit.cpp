@@ -9,9 +9,9 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
 {
     setupUi( this );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.gif") );
-    pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.gif") );
+    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
+    pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.png") );
 
     m_poAttendance = p_poAttendance;
     m_poPostponed = p_poPostponed;
@@ -25,7 +25,7 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
 
         ledName->setText( poQuery->value(0).toString() );
         ledUniqueId->setText( poQuery->value(1).toString() );
-        deDate->setDate( QDate::fromString(m_poAttendance->date(),"yyyy.MM.dd") );
+        deDate->setDate( QDate::fromString(m_poAttendance->date(),"yyyy-MM-dd") );
         teLength->setTime( QTime::fromString(m_poAttendance->length(),"hh:mm:ss") );
         ledHeight->setText( QString::number(m_poAttendance->height()) );
         ledWeight->setText( QString::number(m_poAttendance->weight()) );

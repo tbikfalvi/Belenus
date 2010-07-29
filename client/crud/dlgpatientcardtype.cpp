@@ -9,7 +9,7 @@ cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Cardtype List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientcardtype.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
 
     setupTableView();
 }

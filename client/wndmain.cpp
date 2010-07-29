@@ -81,49 +81,49 @@ cWndMain::cWndMain( QWidget *parent )
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
-    action_LogOut->setIcon( QIcon("./resources/40x40_lock.gif") );
-    action_Exit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
-    action_Patients->setIcon( QIcon("./resources/40x40_patient.gif") );
-    menuAdministrator->setIcon( QIcon("./resources/40x40_key.gif") );
-    action_Users->setIcon( QIcon("./resources/40x40_user.gif") );
-    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.gif") );
-    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.gif") );
-    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.gif") );
-    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.gif") );
-    action_Preferences->setIcon( QIcon("./resources/40x40_settings.gif") );
-    action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.gif") );
-    action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.gif") );
-    action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.gif") );
-    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.gif") );
-    action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.gif" ) );
-    action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.gif" ) );
-    action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
-    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.gif" ) );
-    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.gif" ) );
-    action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.gif" ) );
-    action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.gif" ) );
-    action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.gif" ) );
-    action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
-    action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.gif" ) );
-    action_Accounting->setIcon( QIcon( "./resources/40x40_book.gif" ) );
-    action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.gif" ) );
-    action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.gif") );
-    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
-    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.gif") );
-    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.gif") );
-    action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.gif") );
-    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.gif") );
-    action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.gif" ) );
-    action_EditActualPatient->setIcon( QIcon("./resources/40x40_patientedit.gif") );
-    action_SelectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_select.gif") );
-    action_DeselectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_deselect.gif") );
-    action_EditActualAttendance->setIcon( QIcon("./resources/40x40_attendance_edit.gif") );
+    action_LogOut->setIcon( QIcon("./resources/40x40_lock.png") );
+    action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
+    action_Patients->setIcon( QIcon("./resources/40x40_patient.png") );
+    menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
+    action_Users->setIcon( QIcon("./resources/40x40_user.png") );
+    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.png") );
+    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.png") );
+    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.png") );
+    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
+    action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.png") );
+    action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.png") );
+    action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.png") );
+    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.png") );
+    action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.png" ) );
+    action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
+    action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
+    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.png" ) );
+    action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+    action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
+    action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
+    action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
+    action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
+    action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.png" ) );
+    action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.png") );
+    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
+    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
+    action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.png") );
+    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.png") );
+    action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
+    action_EditActualPatient->setIcon( QIcon("./resources/40x40_patientedit.png") );
+    action_SelectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_select.png") );
+    action_DeselectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_deselect.png") );
+    action_EditActualAttendance->setIcon( QIcon("./resources/40x40_attendance_edit.png") );
 
-    menuPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
-    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.gif") );
-    menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.gif") );
-    menuDevice->setIcon( QIcon( "./resources/40x40_device.gif" ) );
-    action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.gif") );
+    menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
+    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.png") );
+    menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
+    action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
 
     cDBPostponed    *poDBPostPoned = new cDBPostponed();
 
@@ -393,7 +393,7 @@ void cWndMain::updateTitle()
     if( g_obPatient.id() > 0 )
     {
         qsTitle += tr(" <=> Current patient: [");
-        qsTitle += QString::fromStdString( g_obPatient.name() );
+        qsTitle += g_obPatient.name();
         qsTitle += "]";
     }
     else
@@ -448,13 +448,11 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    bool    bUpdateTitle = false;
-
     updateToolbar();
 
     if( m_uiPatientId != g_obPatient.id() )
     {
-        bUpdateTitle = true;
+        updateTitle();
 
         m_uiPatientId = g_obPatient.id();
 
@@ -478,13 +476,7 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
     if( m_uiAttendanceId != g_uiPatientAttendanceId )
     {
-        bUpdateTitle = true;
-
         m_uiAttendanceId = g_uiPatientAttendanceId;
-    }
-    if( bUpdateTitle )
-    {
-        updateTitle();
     }
 }
 //====================================================================================
@@ -876,7 +868,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
 void cWndMain::processInputPatient( QString p_stPatientName )
 {
     cDBPatient      obDBPatient;
-    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed().toStdString());
+    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed());
 
     if( uiPatientCount > 1 )
     {
@@ -899,10 +891,10 @@ void cWndMain::processInputPatient( QString p_stPatientName )
             cDBPatient  obDBPatient;
 
             obDBPatient.createNew();
-            obDBPatient.setName( p_stPatientName.toStdString() );
+            obDBPatient.setName( p_stPatientName );
 
             cDlgPatientEdit  obDlgEdit( this, &obDBPatient );
-            obDlgEdit.setWindowTitle( QString::fromStdString( obDBPatient.name() ) );
+            obDlgEdit.setWindowTitle( obDBPatient.name() );
             obDlgEdit.exec();
         }
     }
@@ -1023,7 +1015,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 void cWndMain::on_action_EditActualPatient_triggered()
 {
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
-    obDlgEdit.setWindowTitle( QString::fromStdString( g_obPatient.name() ) );
+    obDlgEdit.setWindowTitle( g_obPatient.name() );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         cDBPostponed    obDBPostponed;

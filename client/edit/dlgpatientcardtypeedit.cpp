@@ -14,8 +14,8 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
     setupUi( this );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.gif") );
+    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 
     deValidDateFrom->setDate( QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) );
     deValidDateTo->setDate( QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) );

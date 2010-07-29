@@ -9,10 +9,10 @@ cDlgPatientCardAdd::cDlgPatientCardAdd( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Adding PatientCard to database") );
-    setWindowIcon( QIcon( "./resources/40x40_patientcardadd.gif" ) );
+    setWindowIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
 
-    pbSave->setIcon( QIcon("./resources/40x40_save.gif") );
-    pbExit->setIcon( QIcon("./resources/40x40_exit.gif") );
+    pbSave->setIcon( QIcon("./resources/40x40_save.png") );
+    pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
     if( g_poPrefs->getBarcodePrefix().length() > 0 )
     {
