@@ -448,13 +448,11 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
-    bool    bUpdateTitle = false;
-
     updateToolbar();
 
     if( m_uiPatientId != g_obPatient.id() )
     {
-        bUpdateTitle = true;
+        updateTitle();
 
         m_uiPatientId = g_obPatient.id();
 
@@ -478,13 +476,7 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
     if( m_uiAttendanceId != g_uiPatientAttendanceId )
     {
-        bUpdateTitle = true;
-
         m_uiAttendanceId = g_uiPatientAttendanceId;
-    }
-    if( bUpdateTitle )
-    {
-        updateTitle();
     }
 }
 //====================================================================================

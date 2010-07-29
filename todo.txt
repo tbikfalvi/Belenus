@@ -3,5 +3,4 @@
 - már eladott bérletet nem lehet eladni másnak
 - ha bérlet használatot kezdeményez és elad bérletet, akkor bérlet eladás után ugorjon vissza a bérlet használathoz
 - gépállapotok alapján toolbar gombok elérhetőségének tisztázása
-- vendég kiválasztásakor rögtön frissüljön a fejléc
-- pénztár ablak rendezése
+
