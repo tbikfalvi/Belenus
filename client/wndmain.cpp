@@ -434,7 +434,8 @@ void cWndMain::updateToolbar()
 
     action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
                                     g_obPatient.id() > 0 &&
-                                    g_uiPatientAttendanceId > 0 );
+                                    g_uiPatientAttendanceId > 0 &&
+                                    mdiPanels->mainProcessTime() > 0 );
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
@@ -843,12 +844,13 @@ void cWndMain::on_action_PatientCardSell_triggered()
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
                     obDBPatientCard.createNew();
+                    obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                     obDBPatientCard.setBarcode( obDlgInputStart.getEditText() );
                     obDBPatientCard.save();
                 }
             }
         }
-        if( obDBPatientCard.active() != 0 && obDBPatientCard.units() > 0 )
+        if( obDBPatientCard.active() && obDBPatientCard.patientId() > 0 )
         {
             QMessageBox::warning( this, tr("Attention"),
                                   tr("This patientcard already sold.\n"
@@ -982,6 +984,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
                 obDBPatientCard.createNew();
+                obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBPatientCard.setBarcode( p_stBarcode );
                 obDBPatientCard.save();
             }

@@ -130,6 +130,16 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (4 , '0', 'Termék eladás', '1', 'ARC'),
  (5 , '0', 'Egyéb', '1', 'ARC');
 
+INSERT INTO `productTypes` (`productTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (NULL, '0', 'Összes termék', '1', 'ARC');
+UPDATE `productTypes` SET `productTypeId`=0 WHERE `productTypeId`=1;
+ ALTER TABLE `productTypes` auto_increment=1;
+
+INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
+ (NULL, '0', '0', '', '0', '0', '1', 'ARC');
+UPDATE `products` SET `productId`='0' WHERE `productId`=1;
+ALTER TABLE `products` auto_increment=1;
+
 -- -----------------------------------------------------------------------------------
 -- Tablak feltoltese teszt adatokkal
 --
