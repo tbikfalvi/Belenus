@@ -1,9 +1,26 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : main.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Alkalmazas fo allomanya.
+//====================================================================================
+
 #include <QApplication>
 #include <QString>
 #include <QSettings>
 #include <QMessageBox>
 #include <QTranslator>
 #include <QSplashScreen>
+
+//====================================================================================
 
 #include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
@@ -19,6 +36,8 @@
 #endif
 #include "wndmain.h"
 
+//====================================================================================
+
 cQTLogger                g_obLogger;
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
@@ -29,6 +48,7 @@ cDBPatient               g_obPatient;
 unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 
+//====================================================================================
 int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
@@ -95,20 +115,19 @@ int main( int argc, char *argv[] )
             waitCondition.wait(&dummy, 500);
         }
 
-        switch (g_poServer->getStatus()) {
+        switch (g_poServer->getStatus())
+        {
             case BelenusServerConnection::AUTHENTICATED:
-                qsSpalsh += "Connected.\n";
+                qsSpalsh += QObject::tr(" CONNECTED.\n");
                 break;
             case BelenusServerConnection::LICENSE_FAILED:
-                qsSpalsh += "License key authentication not ok.\n";
+                qsSpalsh += QObject::tr(" FAILED\nLicense key authentication not ok.\n");
                 break;
             default:
-                qsSpalsh += "Connection failed. No internet connection?\n";
+                qsSpalsh += QObject::tr(" FAILED\nProbably no internet connection?\n");
                 break;
         }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-
 
 #ifdef __WIN32__
 
