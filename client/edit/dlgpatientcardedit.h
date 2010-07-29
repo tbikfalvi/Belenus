@@ -24,6 +24,8 @@ private:
     bool                 m_bDlgLoaded;
     bool                 m_bNewCard;
 
+    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+
 private slots:
     void on_cmbCardType_currentIndexChanged(int index);
     void on_cbActive_toggled(bool checked);

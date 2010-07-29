@@ -29,6 +29,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     cbActive->setChecked( true );
     ledUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
     teTimeLeft->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
+    ledPrice->setEnabled( false );
 
     if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
     {
@@ -291,5 +292,27 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         {
             deValidDate->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateTo()),"yyyy-MM-dd") );
         }
+        int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
+        ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
     }
+}
+
+QString cDlgPatientCardEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+{
+    QString qsValue = QString::number( p_nCurrencyValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+    qsRet += " " + p_qsCurrency;
+
+    return qsRet;
 }

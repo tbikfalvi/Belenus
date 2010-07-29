@@ -29,82 +29,87 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="85"/>
+        <location filename="main.cpp" line="65"/>
         <source>Connecting to database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="92"/>
+        <location filename="main.cpp" line="72"/>
         <source> CONNECTED.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="133"/>
+        <location filename="main.cpp" line="77"/>
+        <source>Connecting to Belenus server ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main.cpp" line="115"/>
         <source>Checking hardware connection ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="140"/>
+        <location filename="main.cpp" line="122"/>
         <source>FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="142"/>
-        <location filename="main.cpp" line="188"/>
+        <location filename="main.cpp" line="124"/>
+        <location filename="main.cpp" line="170"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="150"/>
+        <location filename="main.cpp" line="132"/>
         <source>CONNECTED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="153"/>
+        <location filename="main.cpp" line="135"/>
         <source>Initializing hardware device ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="157"/>
+        <location filename="main.cpp" line="139"/>
         <source>FINISHED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="160"/>
+        <location filename="main.cpp" line="142"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="163"/>
+        <location filename="main.cpp" line="145"/>
         <source>Number of hardware panels: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="166"/>
+        <location filename="main.cpp" line="148"/>
         <source>Checking hardware panels:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="171"/>
+        <location filename="main.cpp" line="153"/>
         <source>     Checking hardware panel -%1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="176"/>
+        <location filename="main.cpp" line="158"/>
         <source> SUCCEEDED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="181"/>
+        <location filename="main.cpp" line="163"/>
         <source> FAILED
 </source>
         <translation type="unfinished"></translation>
@@ -138,77 +143,87 @@
 <context>
     <name>cDlgAttendance</name>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="10"/>
+        <location filename="crud/dlgattendance.cpp" line="11"/>
         <source>Attendance List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="17"/>
+        <location filename="crud/dlgattendance.cpp" line="18"/>
         <source>Patient: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="29"/>
+        <location filename="crud/dlgattendance.cpp" line="30"/>
         <source>&lt;All patient&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="65"/>
+        <location filename="crud/dlgattendance.cpp" line="66"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="66"/>
-        <source>LicenceId</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="crud/dlgattendance.cpp" line="67"/>
-        <location filename="crud/dlgattendance.cpp" line="83"/>
-        <source>Date</source>
+        <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="68"/>
         <location filename="crud/dlgattendance.cpp" line="84"/>
-        <source>Time</source>
+        <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="69"/>
-        <source>Active</source>
+        <location filename="crud/dlgattendance.cpp" line="85"/>
+        <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="70"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendance.cpp" line="71"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="132"/>
+        <location filename="crud/dlgattendance.cpp" line="133"/>
         <source>New Attendance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendance.cpp" line="140"/>
+        <location filename="crud/dlgattendance.cpp" line="166"/>
+        <source>Do you want to select the created attendance as actual?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendance.cpp" line="160"/>
+        <source>Edit attendance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgattendance.cpp" line="139"/>
         <location filename="crud/dlgattendance.cpp" line="165"/>
-        <source>Do you want to select the created attendance as actual?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="159"/>
-        <source>Edit attendance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="138"/>
-        <location filename="crud/dlgattendance.cpp" line="164"/>
-        <location filename="crud/dlgattendance.cpp" line="185"/>
+        <location filename="crud/dlgattendance.cpp" line="193"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgattendance.cpp" line="186"/>
+        <location filename="crud/dlgattendance.cpp" line="188"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendance.cpp" line="189"/>
+        <source>Deleting the actual attendance is not allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgattendance.cpp" line="194"/>
         <source>Are you sure you want to delete this Attendance?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -948,40 +963,40 @@ Please define a different one.</source>
 <context>
     <name>cDlgPatientCardEdit</name>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="124"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="137"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="117"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="125"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="138"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="149"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="157"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="165"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="173"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="181"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="116"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="117"/>
         <source>Barcode cannot be empty.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="124"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="125"/>
         <source>Invalid barcode. Barcode should be %1 character length.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="137"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="138"/>
         <source>Invalid barcode. This barcode already saved into database.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="149"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 
@@ -992,7 +1007,7 @@ Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="157"/>
         <source>Please select valid patient for the card.
 For active patientcard an owner should be selected.
 
@@ -1001,14 +1016,14 @@ press the Save button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="164"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="165"/>
         <source>Available units cannot be empty.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="172"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="173"/>
         <source>Number of available units can not be less then 1.
 
 If you want to reset the number of available units
@@ -1018,7 +1033,7 @@ Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="181"/>
         <source>Incorrect validation date.
 
 If you want to reset the date of validation
@@ -1669,9 +1684,9 @@ Only %1 panels will be displayed.</source>
     </message>
     <message>
         <location filename="wndmain.cpp" line="210"/>
-        <location filename="wndmain.cpp" line="496"/>
-        <location filename="wndmain.cpp" line="505"/>
-        <location filename="wndmain.cpp" line="863"/>
+        <location filename="wndmain.cpp" line="495"/>
+        <location filename="wndmain.cpp" line="504"/>
+        <location filename="wndmain.cpp" line="861"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1688,18 +1703,17 @@ Please note you need live internet connection for the registration process.</sou
         <location filename="wndmain.cpp" line="243"/>
         <location filename="wndmain.cpp" line="299"/>
         <location filename="wndmain.cpp" line="324"/>
-        <location filename="wndmain.cpp" line="464"/>
-        <location filename="wndmain.cpp" line="634"/>
-        <location filename="wndmain.cpp" line="695"/>
-        <location filename="wndmain.cpp" line="728"/>
-        <location filename="wndmain.cpp" line="744"/>
-        <location filename="wndmain.cpp" line="849"/>
-        <location filename="wndmain.cpp" line="895"/>
-        <location filename="wndmain.cpp" line="927"/>
-        <location filename="wndmain.cpp" line="938"/>
-        <location filename="wndmain.cpp" line="973"/>
-        <location filename="wndmain.cpp" line="983"/>
-        <location filename="wndmain.cpp" line="1002"/>
+        <location filename="wndmain.cpp" line="463"/>
+        <location filename="wndmain.cpp" line="633"/>
+        <location filename="wndmain.cpp" line="694"/>
+        <location filename="wndmain.cpp" line="727"/>
+        <location filename="wndmain.cpp" line="743"/>
+        <location filename="wndmain.cpp" line="848"/>
+        <location filename="wndmain.cpp" line="893"/>
+        <location filename="wndmain.cpp" line="923"/>
+        <location filename="wndmain.cpp" line="958"/>
+        <location filename="wndmain.cpp" line="968"/>
+        <location filename="wndmain.cpp" line="987"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1710,7 +1724,7 @@ Please note you need live internet connection for the registration process.</sou
     </message>
     <message>
         <location filename="wndmain.cpp" line="270"/>
-        <location filename="wndmain.cpp" line="1033"/>
+        <location filename="wndmain.cpp" line="1017"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1754,7 +1768,7 @@ and relogin with the desired user account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="465"/>
+        <location filename="wndmain.cpp" line="464"/>
         <source>Do you want to create new attendance for this patient?
 
 Press the Ignore button to select an existing attendance
@@ -1762,38 +1776,38 @@ that saved previously for this patient.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="497"/>
+        <location filename="wndmain.cpp" line="496"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="506"/>
+        <location filename="wndmain.cpp" line="505"/>
         <source>Are you sure you want to close the application?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="565"/>
+        <location filename="wndmain.cpp" line="564"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="566"/>
+        <location filename="wndmain.cpp" line="565"/>
         <source>This area is restricted for system administrators only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="635"/>
+        <location filename="wndmain.cpp" line="634"/>
         <source>Do you want to select the created patient as actual?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="696"/>
+        <location filename="wndmain.cpp" line="695"/>
         <source>Do you want to select the created attendance as actual?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="729"/>
+        <location filename="wndmain.cpp" line="728"/>
         <source>A patientcard with barcode [%1]
 attached to the actual patient.
 
@@ -1805,19 +1819,19 @@ Do you want to use this patientcard?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="745"/>
+        <location filename="wndmain.cpp" line="744"/>
         <source>There is no patientcard attached to the actual patient.
 Do you want to sell a patientcard for the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="864"/>
+        <location filename="wndmain.cpp" line="862"/>
         <source>This patientcard already sold.
 Please select another inactive patientcard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="896"/>
+        <location filename="wndmain.cpp" line="894"/>
         <source>There is no patient in the database with name like
 
 &apos;%1&apos;
@@ -1826,22 +1840,13 @@ Do you want to create a new patient record with this name?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="928"/>
-        <source>This patientcard assigned to patient:
-
-%1
-
-Do you want to select this patient as actual?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="939"/>
+        <location filename="wndmain.cpp" line="924"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1034"/>
+        <location filename="wndmain.cpp" line="1018"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation type="unfinished"></translation>
@@ -1852,29 +1857,29 @@ for the actually selected device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="629"/>
+        <location filename="wndmain.cpp" line="628"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="690"/>
+        <location filename="wndmain.cpp" line="689"/>
         <source>New Attendance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="974"/>
+        <location filename="wndmain.cpp" line="959"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="984"/>
+        <location filename="wndmain.cpp" line="969"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="850"/>
-        <location filename="wndmain.cpp" line="1003"/>
+        <location filename="wndmain.cpp" line="849"/>
+        <location filename="wndmain.cpp" line="988"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
@@ -2446,17 +2451,17 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="128"/>
+        <location filename="dlgpatientcardedit.ui" line="138"/>
         <source>Independent from the local studio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="152"/>
+        <location filename="dlgpatientcardedit.ui" line="162"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="139"/>
+        <location filename="dlgpatientcardedit.ui" line="149"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2476,7 +2481,7 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="62"/>
+        <location filename="dlgpatientcardedit.ui" line="72"/>
         <source>Owner :</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2486,32 +2491,37 @@ allergy :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="75"/>
+        <location filename="dlgpatientcardedit.ui" line="62"/>
+        <source>Price :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpatientcardedit.ui" line="85"/>
         <source> Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="81"/>
+        <location filename="dlgpatientcardedit.ui" line="91"/>
         <source>Available units :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="91"/>
+        <location filename="dlgpatientcardedit.ui" line="101"/>
         <source>Time left :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="98"/>
+        <location filename="dlgpatientcardedit.ui" line="108"/>
         <source>hh:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="105"/>
+        <location filename="dlgpatientcardedit.ui" line="115"/>
         <source>Valid till ... :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardedit.ui" line="115"/>
+        <location filename="dlgpatientcardedit.ui" line="125"/>
         <source>Comment :</source>
         <translation type="unfinished"></translation>
     </message>

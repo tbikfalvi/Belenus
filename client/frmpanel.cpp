@@ -509,13 +509,14 @@ void cFrmPanel::closeAttendance()
         obDBPatientCardHistory.createNew();
         obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
         obDBPatientCardHistory.setPatientCardId( obDBPatientCard.id() );
-        obDBPatientCardHistory.setUnits( obDBPatientCard.units() );
+        obDBPatientCardHistory.setUnits( m_vrPatientCard.at(i).inCountUnits );
         obDBPatientCardHistory.setTime( m_qtTemp.toString("hh:mm:ss") );
         obDBPatientCardHistory.setActive( true );
 
         obDBPatientCardHistory.save();
     }
 
+    m_vrPatientCard.clear();
     m_pDBLedgerDevice->createNew();
 }
 //====================================================================================
