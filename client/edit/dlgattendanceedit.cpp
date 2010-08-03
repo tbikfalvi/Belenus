@@ -145,10 +145,13 @@ bool cDlgAttendanceEdit::SaveAttendanceData()
 {
     bool bRet = false;
 
+    if( m_poAttendance->patientId() == 0 )
+        m_poAttendance->setPatientId( g_obPatient.id() );
+
     try
     {
         m_poAttendance->setLicenceId( g_poPrefs->getLicenceId() );
-        m_poAttendance->setPatientId( g_obPatient.id() );
+        m_poAttendance->setPatientId( m_poAttendance->patientId() );
         m_poAttendance->setDate( deDate->date().toString("yyyy-MM-dd") );
         m_poAttendance->setLength( teLength->time().toString("hh:mm:ss") );
         m_poAttendance->setHeight( ledHeight->text().toInt() );

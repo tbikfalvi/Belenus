@@ -22,6 +22,7 @@
 #include "db/dbpostponed.h"
 #include "db/dbpatient.h"
 #include "db/dbpatientcard.h"
+#include "db/dbledger.h"
 
 //====================================================================================
 
@@ -58,6 +59,7 @@
 #include "dlg/dlginputstart.h"
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
+#include "dlg/dlgcassaaction.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -113,6 +115,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
     action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
 
+    action_PayCash->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
     //--------------------------------------------------------------------------------
@@ -177,6 +180,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
 
+    action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 }
 //====================================================================================
@@ -391,6 +395,12 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     else if( p_poEvent->key() == Qt::Key_Escape && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) )
     {
         mdiPanels->reset();
+
+        cDBAttendance   obDBAttendance;
+
+        obDBAttendance.load( g_uiPatientAttendanceId );
+        obDBAttendance.setLength( "00:00:00" );
+        obDBAttendance.save();
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -478,6 +488,7 @@ void cWndMain::updateToolbar()
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
 
+    action_PayCash->setEnabled( mdiPanels->isHasToPay() );
     action_Cassa->setEnabled( g_obCassa.isCassaEnabled() );
 }
 //====================================================================================
@@ -1091,5 +1102,44 @@ void cWndMain::on_action_EditActualAttendance_triggered()
     cDlgAttendanceEdit  obDlgEdit( this, &obDBAttendance );
 
     obDlgEdit.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PayCash_triggered()
+{
+    cDlgCassaAction     obDlgCassaAction(this);
+    int                 inPriceTotal;
+    unsigned int        uiPatientId;
+
+    mdiPanels->getPanelCashData( &uiPatientId, &inPriceTotal );
+
+    obDlgCassaAction.setInitialMoney( inPriceTotal );
+    obDlgCassaAction.setPayWithCash();
+    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    {
+        int     inPayType = 0;
+        QString qsComment = "";
+
+        obDlgCassaAction.cassaResult( &inPayType, &qsComment );
+        if( inPayType == 1 )
+        {
+            g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
+        }
+        cDBLedger   obDBLedger;
+
+        obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBLedger.setLedgerTypeId( 1 );
+        obDBLedger.setUserId( g_obUser.id() );
+        obDBLedger.setProductId( 0 );
+        obDBLedger.setPatientCardTypeId( 0 );
+        obDBLedger.setPanelId( mdiPanels->activePanel()+1 );
+        obDBLedger.setName( mdiPanels->getActivePanelCaption() );
+        obDBLedger.setNetPrice( inPriceTotal );
+        obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
+        obDBLedger.setComment( qsComment );
+        obDBLedger.setActive( true );
+        obDBLedger.save();
+
+        mdiPanels->cashPayed();
+    }
 }
 //====================================================================================

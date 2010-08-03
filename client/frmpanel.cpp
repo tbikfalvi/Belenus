@@ -65,6 +65,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inMainProcessLength   = 0;
     m_inCashToPay           = 0;
     m_bHasToPay             = false;
+    m_uiPatientToPay        = 0;
 
     m_vrPatientCard.clear();
 
@@ -147,6 +148,7 @@ void cFrmPanel::reset()
     if( !m_bHasToPay )
     {
         m_inCashToPay = 0;
+        m_uiPatientToPay = 0;
     }
 
     m_uiStatus = m_obStatuses.size() - 1;
@@ -192,6 +194,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength )
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
     m_inCashToPay += p_inPrice;
+    m_uiPatientToPay = g_obPatient.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
     m_pDBLedgerDevice->setTimeCash( m_pDBLedgerDevice->timeCash()+p_inLength );
@@ -225,7 +228,7 @@ bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
     poQuery = g_poDB->executeQTQuery( QString( "SELECT usePrice FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
     if( poQuery->first() )
     {
-        *p_inPrice = poQuery->value( 0 ).toInt();
+        *p_inPrice  = poQuery->value( 0 ).toInt();
         bRet = true;
     }
     if( poQuery ) delete poQuery;
@@ -466,6 +469,7 @@ void cFrmPanel::cashPayed()
 {
     m_inCashToPay = 0;
     m_bHasToPay = false;
+    m_uiPatientToPay = 0;
 
     displayStatus();
 }
@@ -481,6 +485,7 @@ void cFrmPanel::closeAttendance()
     {
         m_bHasToPay = true;
     }
+
     m_pDBLedgerDevice->setTimeLeft( m_inMainProcessLength );
     m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()-m_inMainProcessLength );
     if( m_inMainProcessLength > 0 )
@@ -518,5 +523,21 @@ void cFrmPanel::closeAttendance()
 
     m_vrPatientCard.clear();
     m_pDBLedgerDevice->createNew();
+}
+//====================================================================================
+void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )
+{
+    *p_uiPatientId  = m_uiPatientToPay;
+    *p_inPrice      = m_inCashToPay;
+}
+//====================================================================================
+bool cFrmPanel::isHasToPay()
+{
+    return ( m_inCashToPay > 0 ? true : false );
+}
+//====================================================================================
+QString cFrmPanel::getPanelName()
+{
+    return lblTitle->text();
 }
 //====================================================================================

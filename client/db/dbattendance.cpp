@@ -181,7 +181,7 @@ void cDBAttendance::remove() throw( cSevException )
 void cDBAttendance::createNew() throw()
 {
     init();
-    setDate( QDate::currentDate().toString( "yyyy.MM.dd" ) );
+    setDate( QDate::currentDate().toString( "yyyy-MM-dd" ) );
 }
 
 unsigned int cDBAttendance::id() const throw()

@@ -138,7 +138,7 @@ void cDBLedger::save() throw( cSevException )
     {
         qsQuery += QString( " WHERE ledgerId = %1" ).arg( m_uiId );
     }
-QMessageBox::information(NULL,"info",qsQuery);
+
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;

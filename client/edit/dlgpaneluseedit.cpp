@@ -11,6 +11,9 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
 
     setupUi( this );
 
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     m_poPanelUses   = p_poPanelUses;
     m_inPanelId     = p_inPanelId;
 

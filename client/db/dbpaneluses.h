@@ -24,8 +24,8 @@ public:
     void            setUseTime( const unsigned int p_uiUseTime )                    throw();
     unsigned int    usePrice() const                                                throw();
     void            setUsePrice( const unsigned int p_uiUsePrice )                  throw();
-    string          archive() const                                                 throw();
-    void            setArchive( const string &p_stArchive )                         throw();
+    QString         archive() const                                                 throw();
+    void            setArchive( const QString &p_qsArchive )                        throw();
 
 private:
     unsigned int    m_uiId;
@@ -33,15 +33,15 @@ private:
     unsigned int    m_uiPanelId;
     unsigned int    m_uiUseTime;
     unsigned int    m_uiUsePrice;
-    string          m_stArchive;
+    QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPanelId = 0,
                const unsigned int p_uiUseTime = 0,
                const unsigned int p_uiUsePrice = 0,
-               const string &p_stArchive = "NEW" )                      throw();
-    void init( const QSqlRecord &p_obRecord )                           throw();
+               const QString &p_qsArchive = "NEW" )                                 throw();
+    void init( const QSqlRecord &p_obRecord )                                       throw();
 };
 
 #endif

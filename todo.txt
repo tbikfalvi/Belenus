@@ -1,6 +1,4 @@
 - bérlet feltöltés
-- ha bérlet használatot kezdeményez és elad bérletet, akkor bérlet eladás után ugorjon vissza a bérlet használathoz
 - gépállapotok alapján toolbar gombok elérhetőségének tisztázása
-- gép készpénzes használat kifizetésének lekezelése
-
+- ha a panelt használat elött ESC-el lenullázzuk, a kezelés is nullázódjon
 
