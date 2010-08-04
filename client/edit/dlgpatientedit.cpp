@@ -5,6 +5,7 @@
 #include "belenus.h"
 #include "../framework/sevexception.h"
 #include "db/dbpostponed.h"
+#include <iostream>
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -26,14 +27,14 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     {
         QSqlQuery *poQuery;
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientoriginid, name FROM patientorigin WHERE archive<>\"DEL\" ORDER BY name" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientOriginId, name FROM patientOrigin WHERE archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
             cmbPatientOrigin->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
             if( m_poPatient->patientOriginId() == poQuery->value( 0 ) )
                 cmbPatientOrigin->setCurrentIndex( cmbPatientOrigin->count()-1 );
         }
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT reasontovisitid, name FROM reasontovisit WHERE archive<>\"DEL\" ORDER BY name" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT reasonToVisitId, name FROM reasonToVisit WHERE archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
             cmbReasonToVisit->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
