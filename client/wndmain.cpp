@@ -115,7 +115,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
     action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
 
-    action_PayCash->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
+    action_PayCash->setIcon( QIcon( "./resources/40x40_paycash.png" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
     //--------------------------------------------------------------------------------
