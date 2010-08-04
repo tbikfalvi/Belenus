@@ -37,6 +37,9 @@ public:
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice );
     void            cashPayed();
+    void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice );
+    bool            isHasToPay();
+    QString         getActivePanelCaption();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;

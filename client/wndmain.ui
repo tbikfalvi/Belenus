@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1148</width>
+    <width>899</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,8 +21,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1148</width>
-     <height>20</height>
+     <width>899</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -117,6 +117,8 @@
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
     <addaction name="menuDevice"/>
+    <addaction name="separator"/>
+    <addaction name="action_ValidateSerialKey"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
@@ -146,16 +148,16 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
+   <addaction name="action_PatientNew"/>
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
    <addaction name="action_EditActualPatient"/>
-   <addaction name="action_PatientNew"/>
    <addaction name="action_PostponedPatient"/>
    <addaction name="separator"/>
+   <addaction name="action_AttendanceNew"/>
    <addaction name="action_SelectActualAttendance"/>
    <addaction name="action_DeselectActualAttendance"/>
    <addaction name="action_EditActualAttendance"/>
-   <addaction name="action_AttendanceNew"/>
    <addaction name="action_PostponedAttendance"/>
    <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
@@ -171,6 +173,7 @@
    <addaction name="action_DoctorSchedule"/>
    <addaction name="action_DeviceSchedule"/>
    <addaction name="separator"/>
+   <addaction name="action_PayCash"/>
    <addaction name="action_Cassa"/>
   </widget>
   <action name="action_Exit">
@@ -430,6 +433,14 @@
    </property>
    <property name="toolTip">
     <string>Edit actual attendance of actual patient.</string>
+   </property>
+  </action>
+  <action name="action_PayCash">
+   <property name="text">
+    <string>PayCash</string>
+   </property>
+   <property name="toolTip">
+    <string>Pay cash usage of panel</string>
    </property>
   </action>
  </widget>

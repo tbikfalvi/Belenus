@@ -1,5 +1,22 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : frmpanel.h
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Panelok kezeleset vegzo osztaly
+//====================================================================================
+
 #ifndef FRMPANEL_H
 #define FRMPANEL_H
+
+//====================================================================================
 
 #include <QFrame>
 #include <QVBoxLayout>
@@ -7,8 +24,12 @@
 #include <QMouseEvent>
 #include <vector>
 
+//====================================================================================
+
 #include "db/dbpanelstatuses.h"
 #include "db/dbledgerdevice.h"
+
+//====================================================================================
 
 typedef struct _used_patientcard
 {
@@ -16,6 +37,8 @@ typedef struct _used_patientcard
     int             inCountUnits;
     int             inUnitTime;
 } stUsedPatientCard;
+
+//====================================================================================
 
 class cFrmPanel : public QFrame
 {
@@ -40,6 +63,9 @@ public:
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice );
     void            cashPayed();
+    void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice );
+    bool            isHasToPay();
+    QString         getPanelName();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -61,6 +87,7 @@ private:
     vector<stUsedPatientCard>    m_vrPatientCard;
     int                          m_inCashToPay;
     bool                         m_bHasToPay;
+    unsigned int                 m_uiPatientToPay;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

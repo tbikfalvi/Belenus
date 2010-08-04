@@ -151,6 +151,16 @@ void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
 }
 
+void cMdiPanels::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )
+{
+    m_obPanels.at( m_uiActivePanel )->getPanelCashData( p_uiPatientId, p_inPrice );
+}
+
+bool cMdiPanels::isHasToPay()
+{
+    return m_obPanels.at( m_uiActivePanel )->isHasToPay();
+}
+
 int cMdiPanels::activePanel()
 {
     return m_uiActivePanel;
@@ -233,4 +243,9 @@ void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
 void cMdiPanels::cashPayed()
 {
     m_obPanels.at( m_uiActivePanel )->cashPayed();
+}
+
+QString cMdiPanels::getActivePanelCaption()
+{
+    return m_obPanels.at( m_uiActivePanel )->getPanelName();
 }

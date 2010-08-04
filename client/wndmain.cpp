@@ -22,6 +22,7 @@
 #include "db/dbpostponed.h"
 #include "db/dbpatient.h"
 #include "db/dbpatientcard.h"
+#include "db/dbledger.h"
 
 //====================================================================================
 
@@ -58,6 +59,7 @@
 #include "dlg/dlginputstart.h"
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
+#include "dlg/dlgcassaaction.h"
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -81,49 +83,67 @@ cWndMain::cWndMain( QWidget *parent )
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
-    action_LogOut->setIcon( QIcon("./resources/40x40_lock.png") );
+    //--------------------------------------------------------------------------------
+    // Toolbar buttons
+    //--------------------------------------------------------------------------------
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
-    action_Patients->setIcon( QIcon("./resources/40x40_patient.png") );
-    menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
-    action_Users->setIcon( QIcon("./resources/40x40_user.png") );
-    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.png") );
-    action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.png") );
-    action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.png") );
-    action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
-    action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
-    action_PatientNew->setIcon( QIcon("./resources/40x40_patientnew.png") );
+    action_LogOut->setIcon( QIcon("./resources/40x40_lock.png") );
+
     action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.png") );
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.png") );
-    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance.png") );
-    action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.png" ) );
-    action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
-    action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
-    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
-    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.png" ) );
-    action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
-    action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
-    action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
-    action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
-    action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
-    action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
-    action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.png" ) );
+    action_EditActualPatient->setIcon( QIcon("./resources/40x40_patient_edit.png") );
     action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.png") );
-    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
-    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
-    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
     action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.png") );
-    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.png") );
-    action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
-    action_EditActualPatient->setIcon( QIcon("./resources/40x40_patientedit.png") );
+
     action_SelectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_select.png") );
     action_DeselectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_deselect.png") );
     action_EditActualAttendance->setIcon( QIcon("./resources/40x40_attendance_edit.png") );
+    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance_new.png") );
+    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.png") );
+
+    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
+    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.png" ) );
+
+    action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.png" ) );
+    action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.png" ) );
+    action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
+
+    action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+
+    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+
+    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
+    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
+
+    action_PayCash->setIcon( QIcon( "./resources/40x40_paycash.png" ) );
+    action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
+
+    //--------------------------------------------------------------------------------
+    // Menu items
+    //--------------------------------------------------------------------------------
+    action_Patients->setIcon( QIcon("./resources/40x40_patient.png") );
+    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.png") );
+    action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
+    action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
+        action_Users->setIcon( QIcon("./resources/40x40_user.png") );
+        action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.png") );
+        action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.png") );
+        action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
+        action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+        action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
+    action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
     menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
     menuAttendance->setIcon( QIcon("./resources/40x40_attendance.png") );
     menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
+        action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
+        action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
-    action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+
+    action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
+    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
 
     cDBPostponed    *poDBPostPoned = new cDBPostponed();
 
@@ -132,8 +152,12 @@ cWndMain::cWndMain( QWidget *parent )
 
     delete poDBPostPoned;
 
+    action_Exit->setEnabled( false );
+    action_LogOut->setEnabled( false );
+    action_PatientSelect->setEnabled( false );
     action_PatientEmpty->setEnabled( false );
     action_PatientEmpty->setVisible( false );
+    action_PatientNew->setEnabled( false );
     action_EditActualPatient->setEnabled( false );
     action_PostponedPatient->setEnabled( false );
     action_SelectActualAttendance->setEnabled( false );
@@ -145,9 +169,19 @@ cWndMain::cWndMain( QWidget *parent )
     action_UseWithCard->setEnabled( false );
     action_UseByTime->setEnabled( false );
     action_DeviceStart->setEnabled( false );
+    action_DeviceSkipStatus->setEnabled( false );
     action_DeviceReset->setEnabled( false );
+    action_DeviceSettings->setEnabled( false );
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
+
+    action_PatientCardSell->setEnabled( false );
+
+    action_DoctorSchedule->setEnabled( false );
+    action_DeviceSchedule->setEnabled( false );
+
+    action_PayCash->setEnabled( false );
+    action_Cassa->setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -361,6 +395,12 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     else if( p_poEvent->key() == Qt::Key_Escape && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) )
     {
         mdiPanels->reset();
+
+        cDBAttendance   obDBAttendance;
+
+        obDBAttendance.load( g_uiPatientAttendanceId );
+        obDBAttendance.setLength( "00:00:00" );
+        obDBAttendance.save();
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -410,11 +450,13 @@ void cWndMain::updateTitle()
 void cWndMain::updateToolbar()
 {
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
+    action_LogOut->setEnabled( true );
 
     action_PatientSelect->setEnabled( !(g_obPatient.id()>0) );
     action_PatientSelect->setVisible( !(g_obPatient.id()>0) );
     action_PatientEmpty->setEnabled( g_obPatient.id()>0 );
     action_PatientEmpty->setVisible( g_obPatient.id()>0 );
+    action_PatientNew->setEnabled( true );
     action_EditActualPatient->setEnabled( g_obPatient.id()>0 );
     action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
 
@@ -434,15 +476,19 @@ void cWndMain::updateToolbar()
 
     action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
                                     g_obPatient.id() > 0 &&
-                                    g_uiPatientAttendanceId > 0 );
+                                    g_uiPatientAttendanceId > 0 &&
+                                    mdiPanels->mainProcessTime() > 0 );
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
     action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
+    action_PatientCardSell->setEnabled( true );
+
     action_DoctorSchedule->setEnabled( false );
     action_DeviceSchedule->setEnabled( false );
 
+    action_PayCash->setEnabled( mdiPanels->isHasToPay() );
     action_Cassa->setEnabled( g_obCassa.isCassaEnabled() );
 }
 //====================================================================================
@@ -843,12 +889,13 @@ void cWndMain::on_action_PatientCardSell_triggered()
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
                     obDBPatientCard.createNew();
+                    obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                     obDBPatientCard.setBarcode( obDlgInputStart.getEditText() );
                     obDBPatientCard.save();
                 }
             }
         }
-        if( obDBPatientCard.active() != 0 && obDBPatientCard.units() > 0 )
+        if( obDBPatientCard.active() && obDBPatientCard.patientId() > 0 )
         {
             QMessageBox::warning( this, tr("Attention"),
                                   tr("This patientcard already sold.\n"
@@ -910,7 +957,21 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
         if( obDBPatientCard.active() )
         {
-            if( obDBPatientCard.patientId() != g_obPatient.id() )
+            if( g_obPatient.id() == 0 )
+            {
+                cDBPatient  obDBPatient;
+
+                obDBPatient.load( obDBPatientCard.patientId() );
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard has been assigned to the following patient.\n\n"
+                                              "%1\n\n"
+                                              "Do you want to select this patient as actual?").arg( obDBPatient.name() ),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    g_obPatient.load( obDBPatientCard.patientId() );
+                }
+            }
+            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard has been assigned to a different patient.\n"
@@ -920,29 +981,32 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     return;
                 }
             }
-            cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
-
-            if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+            if( g_obPatient.id() > 0 )
             {
-                cDBAttendance   obDBAttendance;
-                QTime           tCurrent;
-                QTime           tLength;
-                QTime           tNewLength;
-                int             inNewLength;
-                int             inUnits;
-                QString         qsLength;
+                cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
 
-                obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+                if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+                {
+                    cDBAttendance   obDBAttendance;
+                    QTime           tCurrent;
+                    QTime           tLength;
+                    QTime           tNewLength;
+                    int             inNewLength;
+                    int             inUnits;
+                    QString         qsLength;
 
-                obDBAttendance.load( g_uiPatientAttendanceId );
-                tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
-                tLength  = QTime::fromString(qsLength,"mm:ss");
-                inNewLength = tCurrent.minute()*60 + tCurrent.second() +
-                              tLength.minute()*60 + tLength.second();
-                tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
-                obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
-                obDBAttendance.save();
-                mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+                    obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+
+                    obDBAttendance.load( g_uiPatientAttendanceId );
+                    tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
+                    tLength  = QTime::fromString(qsLength,"mm:ss");
+                    inNewLength = tCurrent.minute()*60 + tCurrent.second() +
+                                  tLength.minute()*60 + tLength.second();
+                    tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
+                    obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
+                    obDBAttendance.save();
+                    mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+                }
             }
         }
         else
@@ -982,6 +1046,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
                 obDBPatientCard.createNew();
+                obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBPatientCard.setBarcode( p_stBarcode );
                 obDBPatientCard.save();
             }
@@ -1054,5 +1119,46 @@ void cWndMain::on_action_EditActualAttendance_triggered()
     cDlgAttendanceEdit  obDlgEdit( this, &obDBAttendance );
 
     obDlgEdit.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PayCash_triggered()
+{
+    cDlgCassaAction     obDlgCassaAction(this);
+    int                 inPriceTotal;
+    unsigned int        uiPatientId;
+
+    mdiPanels->getPanelCashData( &uiPatientId, &inPriceTotal );
+
+    obDlgCassaAction.setInitialMoney( inPriceTotal );
+    obDlgCassaAction.setPayWithCash();
+    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    {
+        int     inPayType = 0;
+        QString qsComment = "";
+
+        obDlgCassaAction.cassaResult( &inPayType, &qsComment );
+        if( inPayType == 1 )
+        {
+            g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
+        }
+        int inPriceNet = (inPriceTotal / (100 + g_poPrefs->getDeviceUseVAT()))*100;
+
+        cDBLedger   obDBLedger;
+
+        obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBLedger.setLedgerTypeId( 1 );
+        obDBLedger.setUserId( g_obUser.id() );
+        obDBLedger.setProductId( 0 );
+        obDBLedger.setPatientCardTypeId( 0 );
+        obDBLedger.setPanelId( mdiPanels->activePanel()+1 );
+        obDBLedger.setName( mdiPanels->getActivePanelCaption() );
+        obDBLedger.setNetPrice( inPriceNet );
+        obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
+        obDBLedger.setComment( qsComment );
+        obDBLedger.setActive( true );
+        obDBLedger.save();
+
+        mdiPanels->cashPayed();
+    }
 }
 //====================================================================================

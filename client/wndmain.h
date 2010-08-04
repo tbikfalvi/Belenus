@@ -78,6 +78,7 @@ private slots:
     void on_action_SelectActualAttendance_triggered();
     void on_action_DeselectActualAttendance_triggered();
     void on_action_EditActualAttendance_triggered();
+    void on_action_PayCash_triggered();
 };
 
 #endif
