@@ -957,7 +957,21 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
         if( obDBPatientCard.active() )
         {
-            if( obDBPatientCard.patientId() != g_obPatient.id() )
+            if( g_obPatient.id() == 0 )
+            {
+                cDBPatient  obDBPatient;
+
+                obDBPatient.load( obDBPatientCard.patientId() );
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard has been assigned to the following patient.\n\n"
+                                              "%1\n\n"
+                                              "Do you want to select this patient as actual?").arg( obDBPatient.name() ),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    g_obPatient.load( obDBPatientCard.patientId() );
+                }
+            }
+            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard has been assigned to a different patient.\n"
@@ -967,29 +981,32 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     return;
                 }
             }
-            cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
-
-            if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+            if( g_obPatient.id() > 0 )
             {
-                cDBAttendance   obDBAttendance;
-                QTime           tCurrent;
-                QTime           tLength;
-                QTime           tNewLength;
-                int             inNewLength;
-                int             inUnits;
-                QString         qsLength;
+                cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
 
-                obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+                if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+                {
+                    cDBAttendance   obDBAttendance;
+                    QTime           tCurrent;
+                    QTime           tLength;
+                    QTime           tNewLength;
+                    int             inNewLength;
+                    int             inUnits;
+                    QString         qsLength;
 
-                obDBAttendance.load( g_uiPatientAttendanceId );
-                tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
-                tLength  = QTime::fromString(qsLength,"mm:ss");
-                inNewLength = tCurrent.minute()*60 + tCurrent.second() +
-                              tLength.minute()*60 + tLength.second();
-                tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
-                obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
-                obDBAttendance.save();
-                mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+                    obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+
+                    obDBAttendance.load( g_uiPatientAttendanceId );
+                    tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
+                    tLength  = QTime::fromString(qsLength,"mm:ss");
+                    inNewLength = tCurrent.minute()*60 + tCurrent.second() +
+                                  tLength.minute()*60 + tLength.second();
+                    tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
+                    obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
+                    obDBAttendance.save();
+                    mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+                }
             }
         }
         else
@@ -1124,6 +1141,8 @@ void cWndMain::on_action_PayCash_triggered()
         {
             g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
         }
+        int inPriceNet = (inPriceTotal / (100 + g_poPrefs->getDeviceUseVAT()))*100;
+
         cDBLedger   obDBLedger;
 
         obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
@@ -1133,7 +1152,7 @@ void cWndMain::on_action_PayCash_triggered()
         obDBLedger.setPatientCardTypeId( 0 );
         obDBLedger.setPanelId( mdiPanels->activePanel()+1 );
         obDBLedger.setName( mdiPanels->getActivePanelCaption() );
-        obDBLedger.setNetPrice( inPriceTotal );
+        obDBLedger.setNetPrice( inPriceNet );
         obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
         obDBLedger.setComment( qsComment );
         obDBLedger.setActive( true );

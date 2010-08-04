@@ -35,9 +35,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     cmbPanelType->setObjectName( QString::fromUtf8( "cmbPanelType" ) );
     horizontalLayout1->addWidget( cmbPanelType );
 
-//    horizontalSpacer1 = new QSpacerItem( 5, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-//    horizontalLayout1->addItem( horizontalSpacer1 );
-
     horizontalLayout2 = new QHBoxLayout();
     horizontalLayout2->setObjectName( QString::fromUtf8( "horizontalLayout2" ) );
 
@@ -61,7 +58,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     m_poBtnSave->setEnabled( true );
     m_poBtnSave->setVisible( true );
-    m_poBtnClose->setText( tr("&Cancel") );
 
     connect( m_poBtnSave, SIGNAL( clicked( bool ) ), this, SLOT( saveClicked( bool ) ) );
 

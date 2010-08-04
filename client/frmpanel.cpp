@@ -193,7 +193,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
-    m_inCashToPay += p_inPrice;
+    m_inCashToPay += p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT();
     m_uiPatientToPay = g_obPatient.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
@@ -493,6 +493,24 @@ void cFrmPanel::closeAttendance()
         m_pDBLedgerDevice->setComment( tr("Device usage stopped after %1 minutes. Unused time: %2 minutes.").arg(m_pDBLedgerDevice->timeReal()).arg(m_pDBLedgerDevice->timeLeft()) );
     }
     m_pDBLedgerDevice->save();
+
+    QSqlQuery *poQuery;
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT workTime FROM panels WHERE panelId=%1" ).arg(m_uiId) );
+    poQuery->first();
+
+    unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
+
+    QString  qsQuery;
+
+    qsQuery = "UPDATE panels SET ";
+
+    qsQuery += QString( "workTime = \"%1\", " ).arg( uiWorkTime );
+    qsQuery += QString( "archive = \"%1\" " ).arg( "MOD" );
+    qsQuery += QString( " WHERE panelId = %1" ).arg( m_uiId );
+
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    if( poQuery ) delete poQuery;
 
     for( unsigned int i=0; i < m_vrPatientCard.size(); i++ )
     {

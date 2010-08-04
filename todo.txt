@@ -1,4 +1,2 @@
 - bérlet feltöltés
-- gépállapotok alapján toolbar gombok elérhetőségének tisztázása
-- ha a panelt használat elött ESC-el lenullázzuk, a kezelés is nullázódjon
 
