@@ -30,8 +30,10 @@ public:
     void            setComment( const QString &p_qsComment )                    throw();
     int             units() const                                               throw();
     void            setUnits( const int p_nUnits )                              throw();
-    QString         timeLeft() const                                            throw();
-    void            setTimeLeft( const QString &p_qsTimeLeft )                  throw();
+    unsigned int    timeLeft() const                                            throw();
+    void            setTimeLeft( const unsigned int p_uiTimeLeft )              throw();
+    QString         timeLeftStr() const                                         throw();
+    void            setTimeLeftStr( const QString &p_qsTimeLeft )               throw();
     QString         validDate() const                                           throw();
     void            setValidDate( const QString &p_qsValidDate )                throw();
     QString         pincode() const                                             throw();
@@ -49,7 +51,7 @@ private:
     QString         m_qsBarcode;
     QString         m_qsComment;
     int             m_nUnits;
-    QString         m_qsTimeLeft;
+    unsigned int    m_uiTimeLeft;
     QString         m_qsValidDate;
     QString         m_qsPincode;
     bool            m_bActive;
@@ -62,7 +64,7 @@ private:
                const QString p_qsBarcode = "",
                const QString p_qsComment = "",
                const int p_nUnits = 0,
-               const QString p_qsTimeLeft = "",
+               const unsigned int p_uiTimeLeft = 0,
                const QString p_qsValidDate = "",
                const QString p_qsPincode = "",
                const bool p_bActive = false,

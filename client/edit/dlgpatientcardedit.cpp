@@ -12,10 +12,11 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 {
     setupUi( this );
 
-    m_bDlgLoaded = false;
-    m_bNewCard = true;
+    m_bDlgLoaded        = false;
+    m_bNewCard          = true;
+    m_bRefillCard       = false;
 
-    m_poPatientCard = p_poPatientCard;
+    m_poPatientCard     = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
 
     if( m_poPatientCard->patientId() > 0 )
@@ -59,7 +60,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         }
         cbActive->setChecked( m_poPatientCard->active() );
         ledUnits->setText( QString::number(m_poPatientCard->units()) );
-        teTimeLeft->setTime( QTime::fromString(m_poPatientCard->timeLeft(),"hh:mm:ss") );
+        teTimeLeft->setTime( QTime( m_poPatientCard->timeLeft()/3600, (m_poPatientCard->timeLeft()%3600)/60, (m_poPatientCard->timeLeft()%3600)%60, 0 ) );
         deValidDate->setDate( QDate::fromString(m_poPatientCard->validDate(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );
 
@@ -86,6 +87,17 @@ cDlgPatientCardEdit::~cDlgPatientCardEdit()
 void cDlgPatientCardEdit::activatePatientCard()
 {
     cbActive->setChecked( true );
+    cmbCardType->setFocus();
+}
+
+void cDlgPatientCardEdit::refillPatientCard()
+{
+    m_bRefillCard = true;
+
+    ledBarcode->setEnabled( false );
+    cmbCardType->setCurrentIndex( 0 );
+    ledPrice->setText( convertCurrency(0,g_poPrefs->getCurrencyShort()) );
+    cmbPatient->setEnabled( false );
     cmbCardType->setFocus();
 }
 
@@ -199,7 +211,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
-            m_poPatientCard->setTimeLeft( teTimeLeft->time().toString("hh:mm:ss") );
+            m_poPatientCard->setTimeLeftStr( teTimeLeft->time().toString("hh:mm:ss") );
             m_poPatientCard->setValidDate( deValidDate->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setComment( pteComment->toPlainText() );
 
@@ -277,11 +289,32 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
     if( !m_bDlgLoaded )
         return;
 
-    if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
+    if( m_bRefillCard )
     {
         m_poPatientCardType->load( cmbCardType->itemData( index ).toInt() );
 
-        g_obLogger(cSeverity::DEBUG) << "Unittime: " << m_poPatientCardType->units()*m_poPatientCardType->unitTime() << cQTLogger::EOM;
+        if( m_poPatientCardType->unitTime() > 0 )
+        {
+            ledUnits->setText( QString::number(m_poPatientCard->timeLeft()/(m_poPatientCardType->unitTime()*60)) );
+        }
+        else
+        {
+            ledUnits->setText( "0" );
+        }
+        if( m_poPatientCardType->validDays() > 0 )
+        {
+            deValidDate->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
+        }
+        else
+        {
+            deValidDate->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateTo()),"yyyy-MM-dd") );
+        }
+    }
+    else if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
+    {
+        m_poPatientCardType->load( cmbCardType->itemData( index ).toInt() );
+
+//        g_obLogger(cSeverity::DEBUG) << "Unittime: " << m_poPatientCardType->units()*m_poPatientCardType->unitTime() << cQTLogger::EOM;
         ledUnits->setText( QString::number(m_poPatientCardType->units()) );
         teTimeLeft->setTime( QTime(m_poPatientCardType->units()*m_poPatientCardType->unitTime()/60,m_poPatientCardType->units()*m_poPatientCardType->unitTime()%60,0,0) );
         if( m_poPatientCardType->validDays() > 0 )

@@ -337,7 +337,7 @@ CREATE TABLE `patientCards` (
   `barcode`                 varchar(20)             NOT NULL,
   `comment`                 varchar(50)             DEFAULT NULL,
   `units`                   int(11)                 NOT NULL,
-  `timeLeft`                time                    NOT NULL,
+  `timeLeft`                int(10) unsigned        NOT NULL,
   `validDate`               date                    NOT NULL,
   `pincode`                 varchar(5)              DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,

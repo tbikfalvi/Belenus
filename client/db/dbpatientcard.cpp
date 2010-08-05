@@ -32,7 +32,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
                            const QString p_qsBarcode,
                            const QString p_qsComment,
                            const int p_nUnits,
-                           const QString p_qsTimeLeft,
+                           const unsigned int p_uiTimeLeft,
                            const QString p_qsValidDate,
                            const QString p_qsPincode,
                            const bool p_bActive,
@@ -45,7 +45,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_qsBarcode             = p_qsBarcode;
     m_qsComment             = p_qsComment;
     m_nUnits                = p_nUnits;
-    m_qsTimeLeft            = p_qsTimeLeft;
+    m_uiTimeLeft            = p_uiTimeLeft;
     m_qsValidDate           = p_qsValidDate;
     m_qsPincode             = p_qsPincode;
     m_bActive               = p_bActive;
@@ -74,7 +74,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inBarcodeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inUnitsIdx ).toInt(),
-          p_obRecord.value( inTimeLeftIdx ).toString(),
+          p_obRecord.value( inTimeLeftIdx ).toUInt(),
           p_obRecord.value( inValidDateIdx ).toString(),
           p_obRecord.value( inPincodeIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
@@ -133,7 +133,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
-    qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_qsTimeLeft );
+    qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
     qsQuery += QString( "validDate = \"%1\", " ).arg( m_qsValidDate );
     qsQuery += QString( "pincode = \"%1\", " ).arg( m_qsPincode );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
@@ -253,14 +253,28 @@ void cDBPatientCard::setUnits( const int p_nUnits ) throw()
     m_nUnits = p_nUnits;
 }
 
-QString cDBPatientCard::timeLeft() const throw()
+unsigned int cDBPatientCard::timeLeft() const throw()
 {
-    return m_qsTimeLeft;
+    return m_uiTimeLeft;
 }
 
-void cDBPatientCard::setTimeLeft( const QString &p_qsTimeLeft ) throw()
+void cDBPatientCard::setTimeLeft( const unsigned int p_uiTimeLeft ) throw()
 {
-    m_qsTimeLeft = p_qsTimeLeft;
+    m_uiTimeLeft = p_uiTimeLeft;
+}
+
+QString cDBPatientCard::timeLeftStr() const throw()
+{
+    QTime   qtTemp( m_uiTimeLeft/3600, (m_uiTimeLeft%3600)/60, (m_uiTimeLeft%3600)%60, 0 );
+
+    return qtTemp.toString( "hh:mm:ss" );
+}
+
+void cDBPatientCard::setTimeLeftStr( const QString &p_qsTimeLeft ) throw()
+{
+    QTime   qtTemp = QTime::fromString( p_qsTimeLeft, "hh:mm:ss" );
+
+    m_uiTimeLeft = qtTemp.hour()*3600 + qtTemp.minute()*60 + qtTemp.second();
 }
 
 QString cDBPatientCard::validDate() const throw()

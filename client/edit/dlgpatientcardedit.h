@@ -14,6 +14,7 @@ public:
     cDlgPatientCardEdit( QWidget *p_poParent = 0, cDBPatientCard *p_poPatientCard = NULL );
     virtual ~cDlgPatientCardEdit();
     void activatePatientCard();
+    void refillPatientCard();
     void setPatientCardOwner( const unsigned int p_uiPatientId );
 
 protected:
@@ -23,6 +24,7 @@ protected:
 private:
     bool                 m_bDlgLoaded;
     bool                 m_bNewCard;
+    bool                 m_bRefillCard;
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 

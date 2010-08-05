@@ -27,6 +27,7 @@ public:
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
+    void keyReleaseEvent ( QKeyEvent *p_poEvent );
     void timerEvent( QTimerEvent *p_poEvent );
     void closeEvent( QCloseEvent *p_poEvent );
 
@@ -36,6 +37,8 @@ private:
 
     unsigned int        m_uiPatientId;
     unsigned int        m_uiAttendanceId;
+
+    bool                m_bCtrlPressed;
 
     void updateTitle();
     void processInputPatient( QString p_stPatientName );

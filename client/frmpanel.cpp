@@ -521,13 +521,14 @@ void cFrmPanel::closeAttendance()
 
         obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.at(i).inCountUnits );
 
-        QTime m_qtTemp = QTime::fromString( obDBPatientCard.timeLeft(), "hh:mm:ss" );
+/*        QTime m_qtTemp = QTime::fromString( obDBPatientCard.timeLeft(), "hh:mm:ss" );
         m_qtTemp = m_qtTemp.addSecs( -m_vrPatientCard.at(i).inUnitTime );
-        obDBPatientCard.setTimeLeft( m_qtTemp.toString("hh:mm:ss") );
+        obDBPatientCard.setTimeLeft( m_qtTemp.toString("hh:mm:ss") );*/
+        obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft()-m_vrPatientCard.at(i).inUnitTime );
 
         obDBPatientCard.save();
 
-        m_qtTemp = QTime( 0, m_vrPatientCard.at(i).inUnitTime/60, m_vrPatientCard.at(i).inUnitTime%60, 0 );
+        QTime m_qtTemp = QTime( 0, m_vrPatientCard.at(i).inUnitTime/60, m_vrPatientCard.at(i).inUnitTime%60, 0 );
 
         obDBPatientCardHistory.createNew();
         obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
