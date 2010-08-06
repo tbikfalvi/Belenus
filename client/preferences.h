@@ -57,6 +57,8 @@ public:
     unsigned int    getMaxTreatLength() const;
     void            setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow = false );
     int             getDeviceUseVAT() const;
+    void            setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow = false );
+    bool            getCassaAutoClose() const;
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -106,6 +108,7 @@ private:
     QString         m_qsCurrencySeparator;
     unsigned int    m_uiMaxTreatLength;
     int             m_inDeviceUseVAT;
+    bool            m_bCassaAutoClose;
 
     void init();
 };

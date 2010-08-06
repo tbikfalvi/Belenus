@@ -61,6 +61,10 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+
+    chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
+
+//    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -112,6 +116,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setCommunicationPort( spbCOM->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
+
+    g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
 
     g_poPrefs->save();
 

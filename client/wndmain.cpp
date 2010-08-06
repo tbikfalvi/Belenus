@@ -357,11 +357,19 @@ void cWndMain::logoutUser()
     if( g_obCassa.isCassaEnabled() &&
         g_obCassa.cassaOwner() == g_obUser.id() )
     {
-        if( QMessageBox::question( this, tr("Question"),
-                                   tr("Do you want to close your cassa?"),
-                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        if( !g_poPrefs->getCassaAutoClose() )
         {
-            on_action_Cassa_triggered();
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to close your cassa?"),
+                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            {
+//                on_action_Cassa_triggered();
+                g_obCassa.cassaClose();
+            }
+        }
+        else
+        {
+//                on_action_Cassa_triggered();
             g_obCassa.cassaClose();
         }
     }

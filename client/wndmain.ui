@@ -102,6 +102,7 @@
      <addaction name="action_AttendanceNew"/>
      <addaction name="separator"/>
      <addaction name="action_SelectActualAttendance"/>
+     <addaction name="action_DeselectActualAttendance"/>
     </widget>
     <widget class="QMenu" name="menuPatientCard">
      <property name="title">
@@ -252,7 +253,7 @@
   </action>
   <action name="action_PatientNew">
    <property name="text">
-    <string>Create new ...</string>
+    <string>Create new patient ...</string>
    </property>
    <property name="toolTip">
     <string>Create new patient</string>
@@ -265,7 +266,7 @@
   </action>
   <action name="action_PatientSelect">
    <property name="text">
-    <string>Select actual ...</string>
+    <string>Select actual patient...</string>
    </property>
    <property name="toolTip">
     <string>Select actual patient</string>
@@ -273,7 +274,7 @@
   </action>
   <action name="action_PatientEmpty">
    <property name="text">
-    <string>Deselect actual</string>
+    <string>Deselect actual patient</string>
    </property>
    <property name="toolTip">
     <string>Deselect actual patient</string>
@@ -281,7 +282,7 @@
   </action>
   <action name="action_AttendanceNew">
    <property name="text">
-    <string>Create new ...</string>
+    <string>Create new attendance ...</string>
    </property>
    <property name="toolTip">
     <string>Add new attendance for actual patient</string>
@@ -360,10 +361,10 @@
   </action>
   <action name="action_PatientCardSell">
    <property name="text">
-    <string>Sell patientcard</string>
+    <string>Sell / refill patientcard</string>
    </property>
    <property name="toolTip">
-    <string>Sell patientcard</string>
+    <string>Sell inactive or refill active patientcard</string>
    </property>
   </action>
   <action name="action_DoctorSchedule">
@@ -384,7 +385,7 @@
   </action>
   <action name="action_PostponedPatient">
    <property name="text">
-    <string>Fullfill postponed</string>
+    <string>Fullfill postponed patient</string>
    </property>
    <property name="toolTip">
     <string>Fullfill data for postponed patients</string>
@@ -392,7 +393,7 @@
   </action>
   <action name="action_PostponedAttendance">
    <property name="text">
-    <string>Fullfill postponed</string>
+    <string>Fullfill postponed attendance</string>
    </property>
    <property name="toolTip">
     <string>Fullfill data for postponed attendances</string>
@@ -413,7 +414,7 @@
   </action>
   <action name="action_SelectActualAttendance">
    <property name="text">
-    <string>Select actual ...</string>
+    <string>Select actual attendance...</string>
    </property>
    <property name="toolTip">
     <string>Select actual attendance for actual patient.</string>
@@ -421,7 +422,7 @@
   </action>
   <action name="action_DeselectActualAttendance">
    <property name="text">
-    <string>Deselect actual ...</string>
+    <string>Deselect actual attendance...</string>
    </property>
    <property name="toolTip">
     <string>Deselect actual attendance of actual patient.</string>
@@ -429,7 +430,7 @@
   </action>
   <action name="action_EditActualAttendance">
    <property name="text">
-    <string>Edit actual ...</string>
+    <string>Edit actual attendance...</string>
    </property>
    <property name="toolTip">
     <string>Edit actual attendance of actual patient.</string>

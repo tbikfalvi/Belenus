@@ -19,25 +19,27 @@ cPreferences::~cPreferences()
 
 void cPreferences::init()
 {
-    m_qsFileName          = "";
-    m_qsVersion           = "";
-    m_qsLangFilePrefix    = "";
-    m_qsLang              = "";
-    m_qsLastUser          = "";
-    m_uiPanelsPerRow      = 0;
-    m_uiPanelCount        = 0;
-    m_uiMainWindowLeft    = 0;
-    m_uiMainWindowTop     = 0;
-    m_uiMainWindowWidth   = 0;
-    m_uiMainWindowHeight  = 0;
-    m_uiLicenceId         = 0;
-    m_qsClientSerial      = "";
-    m_qsServerAddress     = "";
-    m_qsServerPort        = "";
-    m_qsMainBackground    = "";
-    m_inCommunicationPort = 1;
-    m_inBarcodeLength     = 12;
-    m_qsBarcodePrefix     = "";
+    m_qsFileName            = "";
+    m_qsVersion             = "";
+    m_qsLangFilePrefix      = "";
+    m_qsLang                = "";
+    m_qsLastUser            = "";
+    m_uiPanelsPerRow        = 0;
+    m_uiPanelCount          = 0;
+    m_uiMainWindowLeft      = 0;
+    m_uiMainWindowTop       = 0;
+    m_uiMainWindowWidth     = 0;
+    m_uiMainWindowHeight    = 0;
+    m_uiLicenceId           = 0;
+    m_qsClientSerial        = "";
+    m_qsServerAddress       = "";
+    m_qsServerPort          = "";
+    m_qsMainBackground      = "";
+    m_inCommunicationPort   = 1;
+    m_inBarcodeLength       = 12;
+    m_qsBarcodePrefix       = "";
+
+    m_bCassaAutoClose       = false;
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -358,6 +360,22 @@ int cPreferences::getDeviceUseVAT() const
     return m_inDeviceUseVAT;
 }
 
+void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow )
+{
+    m_bCassaAutoClose = p_bCassaAutoClose;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
+    }
+}
+
+bool cPreferences::getCassaAutoClose() const
+{
+    return m_bCassaAutoClose;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -423,6 +441,7 @@ void cPreferences::loadConfFileSettings()
         m_uiPanelsPerRow      = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
         m_inBarcodeLength     = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
         m_qsBarcodePrefix     = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        m_bCassaAutoClose     = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );
         if( !boIsANumber ) m_qsBarcodePrefix = "";
@@ -512,6 +531,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
     obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
     obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
+    obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );

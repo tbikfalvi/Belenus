@@ -1,4 +1,2 @@
 - adatbázis konvertálás
-- menüpontok ellenőrzése
-- dialog-ok ellenőrzése (ikon, ENTER stb)
 - szűz gépre telepítés -> ellenőrzés, folyamat leírása, "install pack" összerakása
