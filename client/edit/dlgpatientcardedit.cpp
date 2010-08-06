@@ -12,6 +12,9 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Patient card" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
+
     m_bDlgLoaded        = false;
     m_bNewCard          = true;
     m_bRefillCard       = false;
@@ -24,7 +27,6 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         m_bNewCard = false;
     }
 
-    setWindowTitle( m_poPatientCard->barcode() );
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     cbActive->setChecked( true );

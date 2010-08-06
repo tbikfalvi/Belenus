@@ -13,6 +13,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     cTracer obTrace( "cDlgPatientEdit::cDlgPatientEdit" );
 
     setupUi( this );
+
+    setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );

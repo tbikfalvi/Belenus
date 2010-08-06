@@ -9,6 +9,7 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Cassa action") );
+    setWindowIcon( QIcon("./resources/40x40_cassa.png") );
 
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );

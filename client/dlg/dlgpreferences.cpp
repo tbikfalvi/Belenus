@@ -18,6 +18,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     setupUi( this );
 
+    setWindowTitle( tr( "Preferences" ) );
+    setWindowIcon( QIcon("./resources/40x40_settings.png") );
+
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
     sliConsoleLogLevel->setValue( uiConLevel );

@@ -9,6 +9,9 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
 {
     setupUi( this );
 
+    setWindowTitle( tr( "User" ) );
+    setWindowIcon( QIcon("./resources/40x40_user.png") );
+
     m_qsDefaultPwd = "pppppppp";
 
     m_poUser = p_poUser;

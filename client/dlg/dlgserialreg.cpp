@@ -9,6 +9,7 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Validate Serial key") );
+    setWindowIcon( QIcon("./resources/40x40_key.png") );
 
     pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );

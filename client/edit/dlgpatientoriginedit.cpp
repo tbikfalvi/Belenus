@@ -8,6 +8,9 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Patient origin" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientorigin.png") );
+
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );

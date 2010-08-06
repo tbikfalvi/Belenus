@@ -10,10 +10,12 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Patient card use" ) );
+    setWindowIcon( QIcon("./resources/40x40_device_withcard.png") );
+
     m_poPatientCard = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
 
-    setWindowTitle( m_poPatientCard->barcode() );
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 

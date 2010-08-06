@@ -11,6 +11,9 @@ cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPa
 
     setupUi( this );
 
+    setWindowTitle( tr( "Panel Type" ) );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+
     m_poPanelTypes = p_poPanelTypes;
 
     if( m_poPanelTypes )

@@ -8,6 +8,9 @@ cDlgPwdConfirm::cDlgPwdConfirm( QWidget *p_poParent )
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Password check" ) );
+    setWindowIcon( QIcon("./resources/belenus.ico") );
+
     QPushButton  *poBtnOk = new QPushButton( tr( "&Ok" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnOk, QDialogButtonBox::AcceptRole );

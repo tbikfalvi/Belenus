@@ -10,6 +10,8 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Entering ...") );
+    setWindowIcon( QIcon("./resources/belenus.ico") );
+
     lblAction->setText( tr("Entering code ...") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbPatient->setIcon( QIcon("./resources/40x40_patient.png") );

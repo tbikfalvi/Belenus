@@ -10,6 +10,9 @@ cDlgLogIn::cDlgLogIn( QWidget *p_poParent ) : QDialog( p_poParent )
 
     setupUi( this );
 
+    setWindowTitle( tr( "Log In" ) );
+    setWindowIcon( QIcon("./resources/belenus.ico") );
+
     QPushButton *poBtnLogin = new QPushButton( tr( "&Log In" ), this );
     poBtnLogin->setIcon( QIcon("./resources/40x40_ok.png") );
     btbButtons->addButton( poBtnLogin, QDialogButtonBox::AcceptRole );

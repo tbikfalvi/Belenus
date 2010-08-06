@@ -11,6 +11,8 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Cassa") );
+    setWindowIcon( QIcon("./resources/40x40_cassa.png") );
+
     resize( width(), 148 );
     tbvCassa->setEnabled( false );
 

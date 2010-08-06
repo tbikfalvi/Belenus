@@ -14,6 +14,9 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
     setupUi( this );
 
+    setWindowTitle( tr( "Patient card type" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
+
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 

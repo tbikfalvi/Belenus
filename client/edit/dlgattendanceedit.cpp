@@ -9,6 +9,9 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Attendance" ) );
+    setWindowIcon( QIcon("./resources/40x40_attendance.png") );
+
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
     pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.png") );

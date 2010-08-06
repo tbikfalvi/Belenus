@@ -11,6 +11,9 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
 
     setupUi( this );
 
+    setWindowTitle( tr( "Device use" ) );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 

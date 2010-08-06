@@ -8,6 +8,9 @@ cDlgReasonToVisitEdit::cDlgReasonToVisitEdit( QWidget *p_poParent, cDBReasonToVi
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Reason to visit" ) );
+    setWindowIcon( QIcon("./resources/40x40_reasontovisit.png") );
+
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );

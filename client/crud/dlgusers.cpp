@@ -8,6 +8,7 @@ cDlgUsers::cDlgUsers( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "User List" ) );
+    setWindowIcon( QIcon("./resources/40x40_user.png") );
 
     m_uiSelectedId = g_obUser.id();
 
