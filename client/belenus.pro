@@ -96,7 +96,8 @@ HEADERS = belenus.h \
     preferences.h \
     wndmain.h \
     cassa.h \
-    ledger.h
+    ledger.h \
+    crud/dlgpaneluseselect.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -167,7 +168,8 @@ SOURCES = main.cpp \
     preferences.cpp \
     wndmain.cpp \
     cassa.cpp \
-    ledger.cpp
+    ledger.cpp \
+    crud/dlgpaneluseselect.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

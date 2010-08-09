@@ -40,6 +40,7 @@
 #include "crud/dlgpanelsettings.h"
 #include "crud/dlgpostponedattendanceselect.h"
 #include "crud/dlgattendanceselect.h"
+#include "crud/dlgpaneluseselect.h"
 
 //====================================================================================
 
@@ -413,12 +414,12 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     }
     else if( p_poEvent->key() == Qt::Key_Escape && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) )
     {
-        mdiPanels->reset();
+        mdiPanels->clear();
 
         cDBAttendance   obDBAttendance;
 
         obDBAttendance.load( g_uiPatientAttendanceId );
-        obDBAttendance.setLength( "00:00:00" );
+        obDBAttendance.setLength( 0 );
         obDBAttendance.save();
     }
 
@@ -1115,12 +1116,12 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
 
                     obDBAttendance.load( g_uiPatientAttendanceId );
-                    tCurrent = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
-                    tLength  = QTime::fromString(qsLength,"mm:ss");
+                    tCurrent = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
+                    tLength  = QTime::fromString(qsLength,"hh:mm:ss");
                     inNewLength = tCurrent.minute()*60 + tCurrent.second() +
                                   tLength.minute()*60 + tLength.second();
                     tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
-                    obDBAttendance.setLength( tNewLength.toString("hh:mm:ss") );
+                    obDBAttendance.setLength( tNewLength.hour()*60+tNewLength.minute() );
                     obDBAttendance.save();
                     mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
                 }
@@ -1183,15 +1184,30 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
     }
 
     int inPrice;
+    int inCount;
 
-    if( mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice ) )
+    mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice, &inCount );
+    if( inCount > 0 )
     {
+        if( inCount > 1 )
+        {
+            cDlgPanelUseSelect  obDlgPanelUseSelect( this, mdiPanels->activePanel()+1, p_inSecond );
+
+            if( obDlgPanelUseSelect.exec() == QDialog::Accepted )
+            {
+                inPrice = obDlgPanelUseSelect.getPanelUsePrice();
+            }
+            else
+            {
+                return;
+            }
+        }
         cDBAttendance   obDBAttendance;
         QTime           tLength;
 
         obDBAttendance.load( g_uiPatientAttendanceId );
-        tLength = QTime::fromString(obDBAttendance.length(),"hh:mm:ss");
-        obDBAttendance.setLength( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
+        tLength = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
+        obDBAttendance.setLengthStr( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
         obDBAttendance.save();
         mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }

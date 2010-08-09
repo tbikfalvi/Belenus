@@ -105,27 +105,31 @@ void cDlgPanelSettings::setupTableView()
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Time length" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Time length" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Price" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Time length" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Time length" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
 
-        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
 }
 
@@ -135,11 +139,11 @@ void cDlgPanelSettings::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString("SELECT panelUseId, licenceId, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
     else
     {
-        m_qsQuery = QString("SELECT panelUseId AS id, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
 
     cDlgCrud::refreshTable();

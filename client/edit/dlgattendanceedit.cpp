@@ -29,7 +29,7 @@ cDlgAttendanceEdit::cDlgAttendanceEdit( QWidget *p_poParent, cDBAttendance *p_po
         ledName->setText( poQuery->value(0).toString() );
         ledUniqueId->setText( poQuery->value(1).toString() );
         deDate->setDate( QDate::fromString(m_poAttendance->date(),"yyyy-MM-dd") );
-        teLength->setTime( QTime::fromString(m_poAttendance->length(),"hh:mm:ss") );
+        teLength->setTime( QTime::fromString(m_poAttendance->lengthStr(),"hh:mm:ss") );
         ledHeight->setText( QString::number(m_poAttendance->height()) );
         ledWeight->setText( QString::number(m_poAttendance->weight()) );
         ptMedicineCurrent->setPlainText( m_poAttendance->medicineCurrent() );
@@ -156,7 +156,7 @@ bool cDlgAttendanceEdit::SaveAttendanceData()
         m_poAttendance->setLicenceId( g_poPrefs->getLicenceId() );
         m_poAttendance->setPatientId( m_poAttendance->patientId() );
         m_poAttendance->setDate( deDate->date().toString("yyyy-MM-dd") );
-        m_poAttendance->setLength( teLength->time().toString("hh:mm:ss") );
+        m_poAttendance->setLength( teLength->time().hour()*60+teLength->time().minute() );
         m_poAttendance->setHeight( ledHeight->text().toInt() );
         m_poAttendance->setWeight( ledWeight->text().toInt() );
         m_poAttendance->setMedicineCurrent( ptMedicineCurrent->toPlainText() );

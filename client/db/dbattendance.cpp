@@ -29,7 +29,7 @@ void cDBAttendance::init( const unsigned int p_uiId,
                           const unsigned int p_uiLicenceId,
                           const unsigned int p_uiPatientId,
                           const QString &p_qsDate,
-                          const QString &p_qsLength,
+                          const int &p_inLength,
                           const int p_nWeight,
                           const int p_nHeight,
                           const float p_fBloodPressureStart,
@@ -46,7 +46,7 @@ void cDBAttendance::init( const unsigned int p_uiId,
     m_uiLicenceId           = p_uiLicenceId;
     m_uiPatientId           = p_uiPatientId;
     m_qsDate                = p_qsDate;
-    m_qsLength              = p_qsLength;
+    m_inLength              = p_inLength;
     m_nWeight               = p_nWeight;
     m_nHeight               = p_nHeight;
     m_fBloodPressureStart   = p_fBloodPressureStart;
@@ -83,7 +83,7 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientIdx ).toInt(),
           p_obRecord.value( inDateIdx ).toString(),
-          p_obRecord.value( inLengthIdx ).toString(),
+          p_obRecord.value( inLengthIdx ).toInt(),
           p_obRecord.value( inWeightIdx ).toInt(),
           p_obRecord.value( inHeightIdx ).toInt(),
           p_obRecord.value( inBPStartIdx ).toFloat(),
@@ -133,7 +133,7 @@ void cDBAttendance::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "date = \"%1\", " ).arg( m_qsDate );
-    qsQuery += QString( "length = \"%1\", " ).arg( m_qsLength );
+    qsQuery += QString( "length = \"%1\", " ).arg( m_inLength );
     qsQuery += QString( "weight = \"%1\", " ).arg( m_nWeight );
     qsQuery += QString( "height = \"%1\", " ).arg( m_nHeight );
     qsQuery += QString( "bloodPressureStart = \"%1\", " ).arg( m_fBloodPressureStart );
@@ -219,14 +219,28 @@ void cDBAttendance::setDate( const QString &p_qsDate ) throw()
     m_qsDate = p_qsDate;
 }
 
-QString cDBAttendance::length() const throw()
+int cDBAttendance::length() const throw()
 {
-    return m_qsLength;
+    return m_inLength;
 }
 
-void cDBAttendance::setLength( const QString &p_qsLength ) throw()
+void cDBAttendance::setLength( const int &p_inLength ) throw()
 {
-    m_qsLength = p_qsLength;
+    m_inLength = p_inLength;
+}
+
+QString cDBAttendance::lengthStr() const throw()
+{
+    QTime   qtTemp( m_inLength/60, (m_inLength%60), 0, 0 );
+
+    return qtTemp.toString( "hh:mm:ss" );
+}
+
+void cDBAttendance::setLengthStr( const QString &p_qsLength ) throw()
+{
+    QTime   qtTemp = QTime::fromString( p_qsLength, "hh:mm:ss" );
+
+    m_inLength = qtTemp.hour()*60 + qtTemp.minute();
 }
 
 int cDBAttendance::weight() const throw()

@@ -312,3 +312,7 @@ serveradmin/sqlResult.o
 lang/belenus_hu.qm
 BelenusReportViewer
 BelenusConverter
+client/dlgpaneluseselect.o
+client/moc_dlgpaneluseselect.cpp
+client/moc_dlgpaneluseselect.o
+

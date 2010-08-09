@@ -160,6 +160,20 @@ void cFrmPanel::reset()
 */    activateNextStatus();
 }
 //====================================================================================
+void cFrmPanel::clear()
+{
+    m_pDBLedgerDevice->createNew();
+    m_vrPatientCard.clear();
+
+    m_inMainProcessLength = 0;
+    if( !m_bHasToPay )
+    {
+        m_inCashToPay = 0;
+        m_uiPatientToPay = 0;
+    }
+    displayStatus();
+}
+//====================================================================================
 void cFrmPanel::next()
 {
     activateNextStatus();
@@ -223,17 +237,26 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     setMainProcessTime( p_inLength );
 }
 //====================================================================================
-bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
+bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount )
 {
     QSqlQuery   *poQuery;
     bool         bRet = false;
 
     *p_inPrice = 0;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT usePrice FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT usePrice, COUNT(usePrice) FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
     if( poQuery->first() )
     {
-        *p_inPrice  = poQuery->value( 0 ).toInt();
+        *p_inCount  = poQuery->value( 1 ).toInt();
+        if( *p_inCount > 0 )
+        {
+            *p_inPrice  = poQuery->value( 0 ).toInt();
+        }
+        else
+        {
+            *p_inPrice  = 0;
+        }
+
         bRet = true;
     }
     if( poQuery ) delete poQuery;
@@ -389,12 +412,9 @@ void cFrmPanel::displayStatus()
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
             break;
         case 2:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::cyan ) );
-            break;
-        case 3:
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
             break;
-        case 4:
+        case 3:
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
             break;
     }
@@ -547,6 +567,8 @@ void cFrmPanel::closeAttendance()
 
     m_vrPatientCard.clear();
     m_pDBLedgerDevice->createNew();
+
+    m_inMainProcessLength = 0;
 }
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )

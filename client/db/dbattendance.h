@@ -22,8 +22,10 @@ public:
     void            setPatientId( const unsigned int p_nPatientId )     throw();
     QString         date() const                                        throw();
     void            setDate( const QString &p_qsDate )                  throw();
-    QString         length() const                                      throw();
-    void            setLength( const QString &p_qsLength )              throw();
+    int             length() const                                      throw();
+    void            setLength( const int &p_inLength )                  throw();
+    QString         lengthStr() const                                   throw();
+    void            setLengthStr( const QString &p_qsLength )           throw();
     int             weight() const                                      throw();
     void            setWeight( const int p_nWeight )                    throw();
     int             height() const                                      throw();
@@ -52,7 +54,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientId;
     QString         m_qsDate;
-    QString         m_qsLength;
+    int             m_inLength;
     int             m_nWeight;
     int             m_nHeight;
     float           m_fBloodPressureStart;
@@ -69,7 +71,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientId = 0,
                const QString &p_qsDate = "1900-01-01",
-               const QString &p_qsLength = "00:00",
+               const int &p_inLength = 0,
                const int p_nWeight = 0,
                const int p_nHeight = 0,
                const float p_fBloodPressureStart = 0,

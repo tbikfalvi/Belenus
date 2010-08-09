@@ -28,6 +28,7 @@ cDBPanelUses::~cDBPanelUses()
 void cDBPanelUses::init( const unsigned int p_uiId,
                          const unsigned int p_uiLicenceId,
                          const unsigned int p_uiPanelId,
+                         const QString &p_qsName,
                          const unsigned int p_uiUseTime,
                          const unsigned int p_uiUsePrice,
                          const QString &p_qsArchive ) throw()
@@ -35,6 +36,7 @@ void cDBPanelUses::init( const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPanelId         = p_uiPanelId;
+    m_qsName            = p_qsName;
     m_uiUseTime         = p_uiUseTime;
     m_uiUsePrice        = p_uiUsePrice;
     m_qsArchive         = p_qsArchive;
@@ -45,6 +47,7 @@ void cDBPanelUses::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "panelUseId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inPanelIdIdx        = p_obRecord.indexOf( "panelId" );
+    int inNameIdx           = p_obRecord.indexOf( "name" );
     int inUseTimeIdx        = p_obRecord.indexOf( "useTime" );
     int inUsePriceIdx       = p_obRecord.indexOf( "usePrice" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -52,6 +55,7 @@ void cDBPanelUses::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inUseTimeIdx ).toUInt(),
           p_obRecord.value( inUsePriceIdx ).toUInt(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -92,6 +96,7 @@ void cDBPanelUses::save() throw( cSevException )
     qsQuery += " panelUses SET ";
     qsQuery += QString( "licenceId = %1, " ).arg( m_uiLicenceId );
     qsQuery += QString( "panelId = %1, " ).arg( m_uiPanelId );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "useTime = %1, " ).arg( m_uiUseTime );
     qsQuery += QString( "usePrice = %1, " ).arg( m_uiUsePrice );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -156,6 +161,16 @@ unsigned int cDBPanelUses::panelId() const throw()
 void cDBPanelUses::setPanelId( const unsigned int p_uiPanelId ) throw()
 {
     m_uiPanelId = p_uiPanelId;
+}
+
+QString cDBPanelUses::name() const throw()
+{
+    return m_qsName;
+}
+
+void cDBPanelUses::setName( const QString &p_qsName ) throw()
+{
+    m_qsName = p_qsName;
 }
 
 unsigned int cDBPanelUses::useTime() const throw()

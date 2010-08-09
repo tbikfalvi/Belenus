@@ -116,6 +116,11 @@ void cMdiPanels::reset()
     m_obPanels.at( m_uiActivePanel )->reset();
 }
 
+void cMdiPanels::clear()
+{
+    m_obPanels.at( m_uiActivePanel )->clear();
+}
+
 void cMdiPanels::next()
 {
     m_obPanels.at( m_uiActivePanel )->next();
@@ -146,9 +151,9 @@ void cMdiPanels::setMainProcessTime( const int p_inLength, const int p_inPrice )
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength, p_inPrice );
 }
 
-bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
+bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount )
 {
-    return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice );
+    return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice, p_inCount );
 }
 
 void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )

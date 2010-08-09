@@ -80,16 +80,15 @@ ALTER TABLE `patientCardTypes` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelTypes` ( `licenceId`, `name`, `active`, `archive` ) VALUES
- ( 1, "Sensolite gyógyterápiás gép", 1, "ARC" );
+ ( 0, "Sensolite gyógyterápiás gép", 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `active`, `archive` ) VALUES
- ( 1, 1, 1, "Alap állapot", 0, 0, 1, "ARC" ),
- ( 1, 1, 2, "Előkészület/Vetkőzés", 60, 1, 1, "ARC" ),
- ( 1, 1, 3, "Várakozás", 3, 9, 1, "ARC" ),
- ( 1, 1, 4, "Kezelés", 0, 3, 1, "ARC" ),
- ( 1, 1, 5, "Utóhűtés", 60, 4, 1, "ARC" );
+ ( 0, 1, 1, "Alap állapot", 0, 0, 1, "ARC" ),
+ ( 0, 1, 2, "Előkészület/Vetkőzés", 60, 1, 1, "ARC" ),
+ ( 0, 1, 3, "Kezelés", 0, 3, 1, "ARC" ),
+ ( 0, 1, 4, "Utóhűtés", 60, 4, 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
@@ -141,7 +140,7 @@ UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
 
 INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `active`, `archive` ) VALUES
-  ( 0, 1, "", 0, "ARC" ),
+  ( 0, 1, "", 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
 
@@ -161,7 +160,14 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `active`, `archive` 
   ( 1, 1, "6-os gép", 1, "ARC" ),
   ( 1, 1, "7-es gép", 1, "ARC" ),
   ( 1, 1, "8-as gép", 1, "ARC" );
-UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
+
+INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `archive`) VALUES
+  (0, 1, 'Csecsemő A', 5, 1600, 'ARC'),
+  (0, 1, 'Csecsemő B', 5, 2400, 'ARC'),
+  (0, 1, 'Gyermek B', 10, 3200, 'ARC'),
+  (0, 1, 'Gyermek A', 15, 4000, 'ARC'),
+  (0, 1, 'Nyugdíjas', 20, 3840, 'ARC'),
+  (0, 1, 'Felnőtt', 20, 4800, 'ARC');
 
 INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `active`, `archive`) VALUES
 (1, 1, 0, 0, 'Kovács Géza', 1, '1980-02-11', '1980 0211', '', '', '', '', '', '', '', '', 1, 'NEW'),
