@@ -50,7 +50,7 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     dtStartDate->setText( m_qsStart );
     dtStopDate->setText( m_qsStop );
     lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
-    lblUser->setText( QString::fromStdString(obUser.realName()) );
+    lblUser->setText( obUser.realName() );
 
     pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );

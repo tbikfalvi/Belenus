@@ -309,7 +309,7 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         }
         else
         {
-            deValidDate->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateTo()),"yyyy-MM-dd") );
+            deValidDate->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
     }
     else if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
@@ -325,7 +325,7 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         }
         else
         {
-            deValidDate->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateTo()),"yyyy-MM-dd") );
+            deValidDate->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
         int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
         ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );

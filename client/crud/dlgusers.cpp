@@ -118,7 +118,7 @@ void cDlgUsers::editClicked( bool )
         }
 
         cDlgUserEdit  obDlgEdit( this, poUser );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poUser->realName() ) );
+        obDlgEdit.setWindowTitle( poUser->realName() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();

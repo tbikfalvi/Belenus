@@ -57,6 +57,7 @@ public:
     void            activate();
     void            reload();
 
+    bool            isMainProcess();
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
@@ -105,7 +106,6 @@ private:
     void load( const unsigned int p_uiPanelId );
     void displayStatus();
     void activateNextStatus();
-    bool isMainProcess();
     void closeAttendance();
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );

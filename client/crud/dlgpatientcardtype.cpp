@@ -111,7 +111,7 @@ void cDlgPatientCardType::editClicked( bool )
         poPatientCardType->load( m_uiSelectedId );
 
         cDlgPatientCardTypeEdit  obDlgEdit( this, poPatientCardType );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatientCardType->name() ) );
+        obDlgEdit.setWindowTitle( poPatientCardType->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();

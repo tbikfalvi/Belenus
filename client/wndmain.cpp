@@ -208,7 +208,7 @@ bool cWndMain::showLogIn()
     if( boLogInOK )
     {
         g_obLogger.setAppUser( g_obUser.id() );
-        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged in" << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << cQTLogger::EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
         {
@@ -216,7 +216,7 @@ bool cWndMain::showLogIn()
                                   tr( "Your password is empty. Please change it to a valid password." ) );
 
             cDlgUserEdit  obDlgEdit( this, &g_obUser );
-            obDlgEdit.setWindowTitle( QString::fromStdString( g_obUser.realName() ) );
+            obDlgEdit.setWindowTitle( g_obUser.realName() );
             obDlgEdit.exec();
         }
 
@@ -453,7 +453,7 @@ void cWndMain::updateTitle()
     if( g_obUser.isLoggedIn() )
     {
         qsTitle += " - ";
-        qsTitle += QString::fromStdString( g_obUser.realName() );
+        qsTitle += g_obUser.realName();
         qsTitle += " [";
         qsTitle += cAccessGroup::toStr( g_obUser.group() );
         qsTitle += "]";
@@ -508,7 +508,7 @@ void cWndMain::updateToolbar()
                                     g_uiPatientAttendanceId > 0 &&
                                     mdiPanels->mainProcessTime() > 0 );
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
-    action_DeviceReset->setEnabled( mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+    action_DeviceReset->setEnabled( mdiPanels->isMainProcess() );
 
     action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
@@ -639,7 +639,7 @@ void cWndMain::on_action_LogOut_triggered()
 
     logoutUser();
 
-    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged out" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << cQTLogger::EOM;
 
     g_obUser.logOut();
     g_obLogger.setAppUser( 0 );
@@ -866,7 +866,12 @@ void cWndMain::on_action_Accounting_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceSkipStatus_triggered()
 {
-    mdiPanels->next();
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Do you want to jump to the next status of the device?"),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+    {
+        mdiPanels->next();
+    }
 }
 //====================================================================================
 void cWndMain::on_action_PostponedPatient_triggered()

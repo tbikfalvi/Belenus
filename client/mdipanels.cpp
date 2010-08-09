@@ -126,6 +126,11 @@ void cMdiPanels::reload()
     m_obPanels.at( m_uiActivePanel )->reload();
 }
 
+bool cMdiPanels::isMainProcess()
+{
+    return m_obPanels.at( m_uiActivePanel )->isMainProcess();
+}
+
 int cMdiPanels::mainProcessTime()
 {
     return m_obPanels.at( m_uiActivePanel )->mainProcessTime();

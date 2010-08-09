@@ -24,7 +24,7 @@ cDlgPwdConfirm::~cDlgPwdConfirm()
 void cDlgPwdConfirm::accept ()
 {
     QByteArray  obPwdHash = QCryptographicHash::hash( ledPwd->text().toAscii(), QCryptographicHash::Sha1 );
-    if( QString( obPwdHash.toHex() ).toStdString() != g_obUser.password() )
+    if( QString( obPwdHash.toHex() ) != g_obUser.password() )
         QMessageBox::critical( this, tr( "Error" ), tr( "Incorrect password" ) );
     else
         QDialog::accept();

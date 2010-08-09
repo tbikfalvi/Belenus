@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -27,29 +27,29 @@ cDBPatientCardType::~cDBPatientCardType()
 
 void cDBPatientCardType::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
-                             const string &p_stName,
+                             const QString &p_qsName,
                              const float p_fPrice,
                              const int p_nVatpercent,
                              const int p_nUnits,
-                             const string &p_stValidDateFrom,
-                             const string &p_stValidDateTo,
+                             const QString &p_qsValidDateFrom,
+                             const QString &p_qsValidDateTo,
                              const int p_nValidDays,
                              const int p_nUnitTime,
                              const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                             const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
-    m_stName            = p_stName;
+    m_qsName            = p_qsName;
     m_fPrice            = p_fPrice;
     m_nVatpercent       = p_nVatpercent;
     m_nUnits            = p_nUnits;
-    m_stValidDateFrom   = p_stValidDateFrom;
-    m_stValidDateTo     = p_stValidDateTo;
+    m_qsValidDateFrom   = p_qsValidDateFrom;
+    m_qsValidDateTo     = p_qsValidDateTo;
     m_nValidDays        = p_nValidDays;
     m_nUnitTime         = p_nUnitTime;
     m_bActive           = p_bActive;
-    m_stArchive         = p_stArchive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
@@ -69,16 +69,16 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inPriceIdx ).toFloat(),
           p_obRecord.value( inVatpercentIdx ).toInt(),
           p_obRecord.value( inUnitsIdx ).toInt(),
-          p_obRecord.value( inValidDateFromIdx ).toString().toStdString(),
-          p_obRecord.value( inValidDateToIdx ).toString().toStdString(),
+          p_obRecord.value( inValidDateFromIdx ).toString(),
+          p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inValidDaysIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBPatientCardType::load( const unsigned int p_uiId ) throw( cSevException )
@@ -94,11 +94,11 @@ void cDBPatientCardType::load( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
-void cDBPatientCardType::load( const string &p_stName ) throw( cSevException )
+void cDBPatientCardType::load( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientCardType::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
+    cTracer obTrace( "cDBPatientCardType::load", QString("name: \"%1\"").arg(p_qsName) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCardTypes WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientCardTypes WHERE name = \"" + p_qsName + "\"" );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Patiencard type name not found" );
@@ -116,28 +116,28 @@ void cDBPatientCardType::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
 
-        if( m_stArchive.compare("NEW") != 0 )
+        if( m_qsArchive != "NEW" )
         {
-            m_stArchive = "MOD";
+            m_qsArchive = "MOD";
         }
     }
     else
     {
         qsQuery = "INSERT INTO";
-        m_stArchive = "NEW";
+        m_qsArchive = "NEW";
     }
     qsQuery += " patientCardTypes SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "price = \"%1\", " ).arg( m_fPrice );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
-    qsQuery += QString( "validDateFrom = \"%1\", " ).arg( QString::fromStdString( m_stValidDateFrom ) );
-    qsQuery += QString( "validDateTo = \"%1\", " ).arg( QString::fromStdString( m_stValidDateTo ) );
+    qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
+    qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "validDays = \"%1\", " ).arg( m_nValidDays );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE patientCardTypeId = %1" ).arg( m_uiId );
@@ -156,7 +156,7 @@ void cDBPatientCardType::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_stArchive.compare( "NEW" ) == 0 )
+        if( m_qsArchive == "NEW" )
         {
             qsQuery = "DELETE FROM patientCardTypes ";
         }
@@ -191,14 +191,14 @@ void cDBPatientCardType::setLicenceId( const unsigned int p_uiLicenceId ) throw(
     m_uiLicenceId = p_uiLicenceId;
 }
 
-string cDBPatientCardType::name() const throw()
+QString cDBPatientCardType::name() const throw()
 {
-    return m_stName;
+    return m_qsName;
 }
 
-void cDBPatientCardType::setName( const string &p_stName ) throw()
+void cDBPatientCardType::setName( const QString &p_qsName ) throw()
 {
-    m_stName = p_stName;
+    m_qsName = p_qsName;
 }
 
 float cDBPatientCardType::price() const throw()
@@ -231,24 +231,24 @@ void cDBPatientCardType::setUnits( const int p_nUnits ) throw()
     m_nUnits = p_nUnits;
 }
 
-string cDBPatientCardType::validDateFrom() const throw()
+QString cDBPatientCardType::validDateFrom() const throw()
 {
-    return m_stValidDateFrom;
+    return m_qsValidDateFrom;
 }
 
-void cDBPatientCardType::setValidDateFrom( const string &p_stVDFrom ) throw()
+void cDBPatientCardType::setValidDateFrom( const QString &p_qsVDFrom ) throw()
 {
-    m_stValidDateFrom = p_stVDFrom;
+    m_qsValidDateFrom = p_qsVDFrom;
 }
 
-string cDBPatientCardType::validDateTo() const throw()
+QString cDBPatientCardType::validDateTo() const throw()
 {
-    return m_stValidDateTo;
+    return m_qsValidDateTo;
 }
 
-void cDBPatientCardType::setValidDateTo( const string &p_stVDTo ) throw()
+void cDBPatientCardType::setValidDateTo( const QString &p_qsVDTo ) throw()
 {
-    m_stValidDateTo = p_stVDTo;
+    m_qsValidDateTo = p_qsVDTo;
 }
 
 int cDBPatientCardType::validDays() const throw()
@@ -281,13 +281,13 @@ void cDBPatientCardType::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBPatientCardType::archive() const throw()
+QString cDBPatientCardType::archive() const throw()
 {
-    return m_stArchive;
+    return m_qsArchive;
 }
 
-void cDBPatientCardType::setArchive( const string &p_stArchive ) throw()
+void cDBPatientCardType::setArchive( const QString &p_qsArchive ) throw()
 {
-    m_stArchive = p_stArchive;
+    m_qsArchive = p_qsArchive;
 }
 

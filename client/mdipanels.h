@@ -31,6 +31,7 @@ public:
     bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );
     void            reload();
 
+    bool            isMainProcess();
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );

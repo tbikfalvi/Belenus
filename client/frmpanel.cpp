@@ -126,6 +126,8 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setPatientId( g_obPatient.id() );
     m_pDBLedgerDevice->setActive( true );
 
+    g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
+
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
 }
@@ -136,7 +138,10 @@ void cFrmPanel::reset()
 //    ssTrace << "Id: " << m_uiId;
 //    cTracer obTrace( "cFrmPanel::reset", ssTrace.str() );
 
-    if( isMainProcess() )
+    if( !isMainProcess() )
+        return;
+
+/*    if( isMainProcess() )
     {
         closeAttendance();
     }
@@ -152,7 +157,7 @@ void cFrmPanel::reset()
     }
 
     m_uiStatus = m_obStatuses.size() - 1;
-    activateNextStatus();
+*/    activateNextStatus();
 }
 //====================================================================================
 void cFrmPanel::next()

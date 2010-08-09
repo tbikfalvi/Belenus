@@ -44,9 +44,9 @@ void cDlgLogIn::accept()
     {
         string  stName = cmbName->currentText().toStdString();
         stName = stName.substr( 0, stName.find( '(' ) - 1 );
-        g_obUser.load( stName );
+        g_obUser.load( QString::fromStdString(stName) );
         QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
-        g_obUser.logIn( QString( obPwdHash.toHex() ).toStdString() );
+        g_obUser.logIn( QString( obPwdHash.toHex() ) );
 
         g_poPrefs->setLastUser( cmbName->currentText(), true );
 
