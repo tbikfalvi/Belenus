@@ -1049,7 +1049,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     g_obPatient.load( obDBPatientCard.patientId() );
                 }
             }
-            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 )
+            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 && obDBPatientCard.patientId() > 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard has been assigned to a different patient.\n"
@@ -1057,6 +1057,17 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {
                     return;
+                }
+            }
+            else if( g_obPatient.id() > 0 && obDBPatientCard.patientId() == 0 )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("There is no patient assigned to this patientcard.\n"
+                                              "Do you want to assign this patientcard to the actual patient?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCard.setPatientId( g_obPatient.id() );
+                    obDBPatientCard.save();
                 }
             }
             if( g_obPatient.id() > 0 )

@@ -376,6 +376,22 @@ bool cPreferences::getCassaAutoClose() const
     return m_bCassaAutoClose;
 }
 
+void cPreferences::setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow )
+{
+    m_qsDefaultCountry = p_qsDefaultCountry;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
+    }
+}
+
+QString cPreferences::getDefaultCountry() const
+{
+    return m_qsDefaultCountry;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,

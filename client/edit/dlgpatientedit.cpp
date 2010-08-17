@@ -106,6 +106,11 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         ledEmail->setText( m_poPatient->email() );
         ptComment->setPlainText( m_poPatient->comment() );
     }
+
+    if( g_poPrefs->getDefaultCountry().length() > 0 && m_poPatient->id() == 0 )
+    {
+        ledCountry->setText( g_poPrefs->getDefaultCountry() );
+    }
 }
 
 cDlgPatientEdit::~cDlgPatientEdit()

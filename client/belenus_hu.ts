@@ -1406,22 +1406,22 @@ Kérem töltse fel a kártyát további használat elött.</translation>
         <translation>Nincs jogosultsága módosítani a vendég adatait.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="124"/>
-        <location filename="edit/dlgpatientedit.cpp" line="131"/>
-        <location filename="edit/dlgpatientedit.cpp" line="142"/>
-        <location filename="edit/dlgpatientedit.cpp" line="150"/>
-        <location filename="edit/dlgpatientedit.cpp" line="182"/>
+        <location filename="edit/dlgpatientedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientedit.cpp" line="136"/>
+        <location filename="edit/dlgpatientedit.cpp" line="147"/>
+        <location filename="edit/dlgpatientedit.cpp" line="155"/>
+        <location filename="edit/dlgpatientedit.cpp" line="187"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="124"/>
-        <location filename="edit/dlgpatientedit.cpp" line="182"/>
+        <location filename="edit/dlgpatientedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientedit.cpp" line="187"/>
         <source>Patient name cannot be empty.</source>
         <translation>A vendég neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="131"/>
+        <location filename="edit/dlgpatientedit.cpp" line="136"/>
         <source>Patient gender must be selected.
 
 Press Ignore to skip other error messages.</source>
@@ -1430,7 +1430,7 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="142"/>
+        <location filename="edit/dlgpatientedit.cpp" line="147"/>
         <source>Patient date of birth must be set.
 
 Press Ignore to skip other error messages.</source>
@@ -1439,7 +1439,7 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="150"/>
+        <location filename="edit/dlgpatientedit.cpp" line="155"/>
         <source>Patient unique identification value must be given.
 
 Press Ignore to skip other error messages.</source>
@@ -1448,12 +1448,12 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="163"/>
+        <location filename="edit/dlgpatientedit.cpp" line="168"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="164"/>
+        <location filename="edit/dlgpatientedit.cpp" line="169"/>
         <source>Do you want to add new patient to database 
 and fill mandatory data later?</source>
         <translation>El akarja menteni a beteget az adatbázisba most és 
@@ -1695,12 +1695,12 @@ a további adatokat később akarja megadni?</translation>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="107"/>
+        <location filename="dlg/dlgpreferences.cpp" line="109"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="108"/>
+        <location filename="dlg/dlgpreferences.cpp" line="110"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
@@ -1990,10 +1990,11 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="1010"/>
         <location filename="wndmain.cpp" line="1043"/>
         <location filename="wndmain.cpp" line="1054"/>
-        <location filename="wndmain.cpp" line="1072"/>
-        <location filename="wndmain.cpp" line="1132"/>
-        <location filename="wndmain.cpp" line="1142"/>
-        <location filename="wndmain.cpp" line="1161"/>
+        <location filename="wndmain.cpp" line="1064"/>
+        <location filename="wndmain.cpp" line="1083"/>
+        <location filename="wndmain.cpp" line="1143"/>
+        <location filename="wndmain.cpp" line="1153"/>
+        <location filename="wndmain.cpp" line="1172"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -2004,8 +2005,8 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
     </message>
     <message>
         <location filename="wndmain.cpp" line="307"/>
-        <location filename="wndmain.cpp" line="1179"/>
-        <location filename="wndmain.cpp" line="1216"/>
+        <location filename="wndmain.cpp" line="1190"/>
+        <location filename="wndmain.cpp" line="1227"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -2134,7 +2135,7 @@ El akar adni egy bérletet a vendégnek?</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="941"/>
-        <location filename="wndmain.cpp" line="1070"/>
+        <location filename="wndmain.cpp" line="1081"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation>A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
@@ -2188,7 +2189,14 @@ Do you want to select this patient as actual?</source>
 Ki akarja választani a vendéget aktuálisnak?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1073"/>
+        <location filename="wndmain.cpp" line="1065"/>
+        <source>There is no patient assigned to this patientcard.
+Do you want to assign this patientcard to the actual patient?</source>
+        <translation>Ehhez a bérlethez nincs vendég társítva.
+Hozzá akarja rendelni a bérletet az aktuális vendéghez?</translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="1084"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -2203,14 +2211,14 @@ Felhasználható idő: %2 (óó:pp:mm)
 Fel akarja most tölteni a bérletet?%3</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1180"/>
+        <location filename="wndmain.cpp" line="1191"/>
         <source>There is no actual attendance selected.
 Please select first a patient and then an attendance.</source>
         <translation>Nincs aktuális kezelés kiválasztva.
 Kérem először válasszon ki egy vendéget és hozzá egy kezelést.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1279"/>
+        <location filename="wndmain.cpp" line="1290"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation>Géphasználat: %1 - </translation>
@@ -2254,7 +2262,7 @@ Felhasználható idő: %2 (óó:pp:mm)
 Fel akarja most tölteni a bérletet?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1217"/>
+        <location filename="wndmain.cpp" line="1228"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation>Ez az idő intervallum nem szerepel az adatbázisban
@@ -2284,20 +2292,20 @@ az aktuálisan kiválasztott géphez.</translation>
 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1133"/>
+        <location filename="wndmain.cpp" line="1144"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation>Ez a vonalkód még nincs aktiválva.
 Akarja aktiválni most?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1143"/>
+        <location filename="wndmain.cpp" line="1154"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation>Hozzá akarja rendelni ezt a bérletet az aktuális vendéghez?</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="922"/>
-        <location filename="wndmain.cpp" line="1162"/>
+        <location filename="wndmain.cpp" line="1173"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.
@@ -3394,97 +3402,102 @@ allergia :</translation>
         <translation>Program log szint :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="441"/>
+        <location filename="dlgpreferences.ui" line="308"/>
+        <source>Default country : </source>
+        <translation>Alapértelmezett ország :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="451"/>
         <source>Patientcard</source>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="447"/>
+        <location filename="dlgpreferences.ui" line="457"/>
         <source> Barcode </source>
         <translation> Vonalkód </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="453"/>
+        <location filename="dlgpreferences.ui" line="463"/>
         <source>Barcode length:</source>
         <translation>Vonalkód hossza :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="473"/>
+        <location filename="dlgpreferences.ui" line="483"/>
         <source>Barcode prefix:</source>
         <translation>Vonalkód automatikus előtag :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="407"/>
+        <location filename="dlgpreferences.ui" line="417"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="415"/>
+        <location filename="dlgpreferences.ui" line="425"/>
         <source>VAT percent for device usage :</source>
         <translation>Géphasználat ÁFA kulcs (%):</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="500"/>
+        <location filename="dlgpreferences.ui" line="510"/>
         <source>Cassa</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="506"/>
+        <location filename="dlgpreferences.ui" line="516"/>
         <source>Automatically close cassa when user log out</source>
         <translation>A pénztár automatikusan legyen lezárva a felhasználó kilépésekor</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="509"/>
+        <location filename="dlgpreferences.ui" line="519"/>
         <source>Auto close cassa</source>
         <translation>Pénztár zárás automatikusan</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="530"/>
+        <location filename="dlgpreferences.ui" line="540"/>
         <source>Server</source>
         <translation>Szerver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="538"/>
+        <location filename="dlgpreferences.ui" line="548"/>
         <source>Server Host:</source>
         <translation>IP cím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="548"/>
+        <location filename="dlgpreferences.ui" line="558"/>
         <source>Server Port:</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="574"/>
+        <location filename="dlgpreferences.ui" line="584"/>
         <source>Hardware</source>
         <translation>Hardver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="582"/>
+        <location filename="dlgpreferences.ui" line="592"/>
         <source>COM Port:</source>
         <translation>COM Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="589"/>
+        <location filename="dlgpreferences.ui" line="599"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="325"/>
+        <location filename="dlgpreferences.ui" line="335"/>
         <source>Appearance</source>
         <translation>Megjelenés</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="342"/>
+        <location filename="dlgpreferences.ui" line="352"/>
         <source>Number of &amp;panels in a row:</source>
         <translation>Egy sorban megjelenő &amp;panelok száma :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="362"/>
+        <location filename="dlgpreferences.ui" line="372"/>
         <source>Main Window Background Color: </source>
         <translation>Fő ablak hátterének színe :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="381"/>
+        <location filename="dlgpreferences.ui" line="391"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
@@ -3495,7 +3508,8 @@ allergia :</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="291"/>
-        <source>&amp;Language:</source>
+        <source>&amp;Language :</source>
+        <oldsource>&amp;Language:</oldsource>
         <translation>&amp;Nyelv :</translation>
     </message>
 </context>

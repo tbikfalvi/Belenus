@@ -59,6 +59,8 @@ public:
     int             getDeviceUseVAT() const;
     void            setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow = false );
     bool            getCassaAutoClose() const;
+    void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
+    QString         getDefaultCountry() const;
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -109,6 +111,7 @@ private:
     unsigned int    m_uiMaxTreatLength;
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;
+    QString         m_qsDefaultCountry;
 
     void init();
 };

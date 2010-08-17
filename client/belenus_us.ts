@@ -1262,48 +1262,48 @@ Please refill the patientcard before use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="124"/>
-        <location filename="edit/dlgpatientedit.cpp" line="131"/>
-        <location filename="edit/dlgpatientedit.cpp" line="142"/>
-        <location filename="edit/dlgpatientedit.cpp" line="150"/>
-        <location filename="edit/dlgpatientedit.cpp" line="182"/>
+        <location filename="edit/dlgpatientedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientedit.cpp" line="136"/>
+        <location filename="edit/dlgpatientedit.cpp" line="147"/>
+        <location filename="edit/dlgpatientedit.cpp" line="155"/>
+        <location filename="edit/dlgpatientedit.cpp" line="187"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="124"/>
-        <location filename="edit/dlgpatientedit.cpp" line="182"/>
+        <location filename="edit/dlgpatientedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientedit.cpp" line="187"/>
         <source>Patient name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="131"/>
+        <location filename="edit/dlgpatientedit.cpp" line="136"/>
         <source>Patient gender must be selected.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="142"/>
+        <location filename="edit/dlgpatientedit.cpp" line="147"/>
         <source>Patient date of birth must be set.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="150"/>
+        <location filename="edit/dlgpatientedit.cpp" line="155"/>
         <source>Patient unique identification value must be given.
 
 Press Ignore to skip other error messages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="163"/>
+        <location filename="edit/dlgpatientedit.cpp" line="168"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="164"/>
+        <location filename="edit/dlgpatientedit.cpp" line="169"/>
         <source>Do you want to add new patient to database 
 and fill mandatory data later?</source>
         <translation type="unfinished"></translation>
@@ -1540,12 +1540,12 @@ and fill mandatory data later?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="107"/>
+        <location filename="dlg/dlgpreferences.cpp" line="109"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="108"/>
+        <location filename="dlg/dlgpreferences.cpp" line="110"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1820,10 +1820,11 @@ Please note you need live internet connection for the registration process.</sou
         <location filename="wndmain.cpp" line="1010"/>
         <location filename="wndmain.cpp" line="1043"/>
         <location filename="wndmain.cpp" line="1054"/>
-        <location filename="wndmain.cpp" line="1072"/>
-        <location filename="wndmain.cpp" line="1132"/>
-        <location filename="wndmain.cpp" line="1142"/>
-        <location filename="wndmain.cpp" line="1161"/>
+        <location filename="wndmain.cpp" line="1064"/>
+        <location filename="wndmain.cpp" line="1083"/>
+        <location filename="wndmain.cpp" line="1143"/>
+        <location filename="wndmain.cpp" line="1153"/>
+        <location filename="wndmain.cpp" line="1172"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1834,8 +1835,8 @@ Please note you need live internet connection for the registration process.</sou
     </message>
     <message>
         <location filename="wndmain.cpp" line="307"/>
-        <location filename="wndmain.cpp" line="1179"/>
-        <location filename="wndmain.cpp" line="1216"/>
+        <location filename="wndmain.cpp" line="1190"/>
+        <location filename="wndmain.cpp" line="1227"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1942,7 +1943,7 @@ Do you want to sell a patientcard for the actual patient?</source>
     </message>
     <message>
         <location filename="wndmain.cpp" line="941"/>
-        <location filename="wndmain.cpp" line="1070"/>
+        <location filename="wndmain.cpp" line="1081"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation type="unfinished"></translation>
@@ -1988,19 +1989,25 @@ Are you sure you want to use this patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1180"/>
+        <location filename="wndmain.cpp" line="1065"/>
+        <source>There is no patient assigned to this patientcard.
+Do you want to assign this patientcard to the actual patient?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="1191"/>
         <source>There is no actual attendance selected.
 Please select first a patient and then an attendance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1279"/>
+        <location filename="wndmain.cpp" line="1290"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1217"/>
+        <location filename="wndmain.cpp" line="1228"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation type="unfinished"></translation>
@@ -2021,7 +2028,7 @@ for the actually selected device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1073"/>
+        <location filename="wndmain.cpp" line="1084"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -2031,19 +2038,19 @@ Do you want to refill the patientcard now?%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1133"/>
+        <location filename="wndmain.cpp" line="1144"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1143"/>
+        <location filename="wndmain.cpp" line="1154"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="922"/>
-        <location filename="wndmain.cpp" line="1162"/>
+        <location filename="wndmain.cpp" line="1173"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
@@ -3097,97 +3104,102 @@ Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="441"/>
+        <location filename="dlgpreferences.ui" line="308"/>
+        <source>Default country : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="451"/>
         <source>Patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="447"/>
+        <location filename="dlgpreferences.ui" line="457"/>
         <source> Barcode </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="453"/>
+        <location filename="dlgpreferences.ui" line="463"/>
         <source>Barcode length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="473"/>
+        <location filename="dlgpreferences.ui" line="483"/>
         <source>Barcode prefix:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="407"/>
+        <location filename="dlgpreferences.ui" line="417"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="415"/>
+        <location filename="dlgpreferences.ui" line="425"/>
         <source>VAT percent for device usage :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="500"/>
+        <location filename="dlgpreferences.ui" line="510"/>
         <source>Cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="506"/>
+        <location filename="dlgpreferences.ui" line="516"/>
         <source>Automatically close cassa when user log out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="509"/>
+        <location filename="dlgpreferences.ui" line="519"/>
         <source>Auto close cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="530"/>
+        <location filename="dlgpreferences.ui" line="540"/>
         <source>Server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="538"/>
+        <location filename="dlgpreferences.ui" line="548"/>
         <source>Server Host:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="548"/>
+        <location filename="dlgpreferences.ui" line="558"/>
         <source>Server Port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="574"/>
+        <location filename="dlgpreferences.ui" line="584"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="582"/>
+        <location filename="dlgpreferences.ui" line="592"/>
         <source>COM Port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="589"/>
+        <location filename="dlgpreferences.ui" line="599"/>
         <source>COM</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="325"/>
+        <location filename="dlgpreferences.ui" line="335"/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="342"/>
+        <location filename="dlgpreferences.ui" line="352"/>
         <source>Number of &amp;panels in a row:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="362"/>
+        <location filename="dlgpreferences.ui" line="372"/>
         <source>Main Window Background Color: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="381"/>
+        <location filename="dlgpreferences.ui" line="391"/>
         <source>Choose ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3198,7 +3210,8 @@ Do you want to register it for a new patientcard?</source>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="291"/>
-        <source>&amp;Language:</source>
+        <source>&amp;Language :</source>
+        <oldsource>&amp;Language:</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

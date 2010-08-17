@@ -64,6 +64,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
 
+    ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
+
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
 }
 
@@ -118,6 +120,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
+
+    g_poPrefs->setDefaultCountry( ledDefaultCountry->text() );
 
     g_poPrefs->save();
 
