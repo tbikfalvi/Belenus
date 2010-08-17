@@ -52,10 +52,31 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             checkIndependent->setEnabled( false );
             if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             {
-                gbIdentification->setEnabled( false );
-                gbAddress->setEnabled( false );
-                gbVisit->setEnabled( false );
-                gbAdditionalData->setEnabled( false );
+                tbwPatient->setToolTip( tr("You are not allowed to change this patient data.") );
+
+                ledName->setEnabled( false );
+                rbGenderFemale->setEnabled( false );
+                rbGenderMale->setEnabled( false );
+                deDateBirth->setEnabled( false );
+                ledUniqueId->setEnabled( false );
+
+                ledHeight->setEnabled( false );
+                ledWeight->setEnabled( false );
+                cmbIllnessGroup->setEnabled( false );
+                ptMedicineCurrent->setEnabled( false );
+                ptMedicineAllergy->setEnabled( false );
+
+                cmbPatientOrigin->setEnabled( false );
+                cmbReasonToVisit->setEnabled( false );
+
+                ledCountry->setEnabled( false );
+                ledRegion->setEnabled( false );
+                cmbZip->setEnabled( false );
+                ledCity->setEnabled( false );
+                ledAddress->setEnabled( false );
+                ledPhone->setEnabled( false );
+                ledEmail->setEnabled( false );
+                ptComment->setEnabled( false );
 
                 pbSave->setEnabled( false );
                 pbFinishLater->setEnabled( false );
@@ -79,7 +100,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         ledCountry->setText( m_poPatient->country() );
         ledRegion->setText( m_poPatient->region() );
         ledCity->setText( m_poPatient->city() );
-        ledZip->setText( m_poPatient->zip() );
+//        cmbZip->setText( m_poPatient->zip() );
         ledAddress->setText( m_poPatient->address() );
         ledPhone->setText( m_poPatient->phone() );
         ledEmail->setText( m_poPatient->email() );
@@ -213,7 +234,7 @@ bool cDlgPatientEdit::SavePatientData()
         m_poPatient->setCountry( ledCountry->text() );
         m_poPatient->setRegion( ledRegion->text() );
         m_poPatient->setCity( ledCity->text() );
-        m_poPatient->setZip( ledZip->text() );
+//        m_poPatient->setZip( cmbZip->text() );
         m_poPatient->setAddress( ledAddress->text() );
         m_poPatient->setEmail( ledEmail ->text() );
         m_poPatient->setPhone( ledPhone->text() );

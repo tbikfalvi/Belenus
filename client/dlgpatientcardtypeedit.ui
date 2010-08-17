@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>279</height>
+    <width>491</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,7 +77,7 @@
         <item row="1" column="2">
          <widget class="QLabel" name="lblUnitTime">
           <property name="text">
-           <string>Unit time :</string>
+           <string>Unit time (sec):</string>
           </property>
          </widget>
         </item>
@@ -128,7 +128,7 @@
           <item>
            <widget class="QRadioButton" name="rbDays">
             <property name="text">
-             <string>No days:</string>
+             <string>No° days:</string>
             </property>
            </widget>
           </item>
