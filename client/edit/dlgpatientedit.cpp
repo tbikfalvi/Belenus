@@ -1,11 +1,13 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSqlQuery>
+#include <iostream>
+
 #include "dlgpatientedit.h"
 #include "belenus.h"
 #include "../framework/sevexception.h"
-#include "db/dbpostponed.h"
-#include <iostream>
+#include "../db/dbpostponed.h"
+#include "../db/dbzipregioncity.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -71,7 +73,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
 
                 ledCountry->setEnabled( false );
                 ledRegion->setEnabled( false );
-                cmbZip->setEnabled( false );
+                ledZip->setEnabled( false );
                 ledCity->setEnabled( false );
                 ledAddress->setEnabled( false );
                 ledPhone->setEnabled( false );
@@ -100,7 +102,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         ledCountry->setText( m_poPatient->country() );
         ledRegion->setText( m_poPatient->region() );
         ledCity->setText( m_poPatient->city() );
-//        cmbZip->setText( m_poPatient->zip() );
+        ledZip->setText( m_poPatient->zip() );
         ledAddress->setText( m_poPatient->address() );
         ledPhone->setText( m_poPatient->phone() );
         ledEmail->setText( m_poPatient->email() );
@@ -239,7 +241,7 @@ bool cDlgPatientEdit::SavePatientData()
         m_poPatient->setCountry( ledCountry->text() );
         m_poPatient->setRegion( ledRegion->text() );
         m_poPatient->setCity( ledCity->text() );
-//        m_poPatient->setZip( cmbZip->text() );
+        m_poPatient->setZip( ledZip->text() );
         m_poPatient->setAddress( ledAddress->text() );
         m_poPatient->setEmail( ledEmail ->text() );
         m_poPatient->setPhone( ledPhone->text() );
@@ -255,4 +257,61 @@ bool cDlgPatientEdit::SavePatientData()
     }
 
     return bRet;
+}
+
+void cDlgPatientEdit::on_ledZip_textEdited(QString )
+{
+    if( ledZip->text().left(1) == "1" )
+    {
+        cDBZipRegionCity    obDBZipRegionCity;
+
+        obDBZipRegionCity.load( "1" );
+        ledCity->setText( obDBZipRegionCity.city() );
+    }
+    else if( ledZip->text().length() == g_poPrefs->getZipLength() )
+    {
+        cDBZipRegionCity    obDBZipRegionCity;
+
+        try
+        {
+            obDBZipRegionCity.load( ledZip->text() );
+            ledCity->setText( obDBZipRegionCity.city() );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            }
+            else
+            {
+                ledCity->setText( "" );
+            }
+        }
+    }
+}
+
+void cDlgPatientEdit::on_pbCitySearch_clicked()
+{
+    cDBZipRegionCity    obDBZipRegionCity;
+
+    try
+    {
+        obDBZipRegionCity.loadCity( ledCity->text() );
+        ledZip->setText( obDBZipRegionCity.zip() );
+        ledCity->setText( obDBZipRegionCity.city() );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("ZipRegionCity city not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        }
+        else
+        {
+            QMessageBox::information( this, tr("Information"),
+                                      tr("There is no city in database like\n\n\"%1\"").arg(ledCity->text()) );
+            ledZip->setText( "" );
+        }
+    }
 }

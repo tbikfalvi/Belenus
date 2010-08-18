@@ -224,6 +224,22 @@ CREATE TABLE `reasonToVisit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- zipRegionCity tabla. Opcionalis. Azokat a helyeket tartalmazza, ahonnan a paciens
+-- ertesulhetett a studio-rol.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `zipRegionCity` (
+  `zipRegionCityId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `zip`                     varchar(100)            NOT NULL,
+  `region`                  varchar(100)            NOT NULL,
+  `city`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`zipRegionCityId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Paciens tabla. Opcionalis. A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (

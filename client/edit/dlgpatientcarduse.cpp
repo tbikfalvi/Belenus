@@ -59,6 +59,7 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
     {
         cmbNoUnits->addItem( QString::number(i+1), m_inUnitLength*(i+1) );
     }
+    cmbNoUnits->setEnabled( false );
     if( m_poPatientCard->units() < 1 )
     {
         QMessageBox::warning( this, tr("Warning"),

@@ -61,6 +61,8 @@ public:
     bool            getCassaAutoClose() const;
     void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
     QString         getDefaultCountry() const;
+    void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
+    int             getZipLength() const;
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -112,6 +114,7 @@ private:
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;
     QString         m_qsDefaultCountry;
+    int             m_inZipLength;
 
     void init();
 };
