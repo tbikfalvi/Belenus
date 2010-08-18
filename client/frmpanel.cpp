@@ -95,10 +95,14 @@ bool cFrmPanel::isWorking() const
 //====================================================================================
 bool cFrmPanel::isStatusCanBeSkipped()
 {
-    bool bRet = false;
+    bool bRet = true;
 
-    if( m_obStatuses.at(m_uiStatus)->activateCommand() != 3 && m_uiStatus > 0 )
-        bRet = true;
+    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 3 ||
+        m_uiStatus == 0 ||
+        m_obStatuses.at(m_uiStatus)->activateCommand() == 4 && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+    {
+        bRet = false;
+    }
 
     return bRet;
 }
