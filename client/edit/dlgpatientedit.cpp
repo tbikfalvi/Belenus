@@ -45,6 +45,13 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             if( m_poPatient->reasonToVisitId() == poQuery->value( 0 ) )
                 cmbReasonToVisit->setCurrentIndex( cmbReasonToVisit->count()-1 );
         }
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT illnessGroupId, name FROM illnessGroups WHERE archive<>\"DEL\" ORDER BY name" ) );
+        while( poQuery->next() )
+        {
+            cmbIllnessGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( m_poPatient->illnessGroupId() == poQuery->value( 0 ) )
+                cmbIllnessGroup->setCurrentIndex( cmbIllnessGroup->count()-1 );
+        }
 
         if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             checkIndependent->setChecked( true );
@@ -99,6 +106,21 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         else if( m_poPatient->gender() == 2 ) rbGenderFemale->setChecked(true);
         deDateBirth->setDate( QDate::fromString(m_poPatient->dateBirth(),"yyyy-MM-dd") );
         ledUniqueId->setText( m_poPatient->uniqueId() );
+        if( deDateBirth->date().year() != 1900 )
+        {
+            QDate   qdDays = deDateBirth->date();
+            QDate   qdAge  = QDate( 1900, 1, 1 );
+
+            qdAge = qdAge.addDays( qdDays.daysTo(QDate::currentDate()) );
+
+            ledAge->setText( QString::number(qdAge.year()-1900) );
+        }
+
+        ledHeight->setText( QString::number(m_poPatient->height()) );
+        ledWeight->setText( QString::number(m_poPatient->weight()) );
+        ptMedicineCurrent->setPlainText( m_poPatient->medicineCurrent() );
+        ptMedicineAllergy->setPlainText( m_poPatient->medicineAllergy() );
+
         ledCountry->setText( m_poPatient->country() );
         ledRegion->setText( m_poPatient->region() );
         ledCity->setText( m_poPatient->city() );

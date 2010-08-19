@@ -58,6 +58,13 @@ ALTER TABLE `reasonToVisit` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `illnessGroups` (`illnessGroupId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `illnessGroups` SET `illnessGroupId`=0 WHERE `illnessGroupId`=1;
+ALTER TABLE `illnessGroups` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
 INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `active`, `archive`) VALUES
  (0, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
@@ -65,8 +72,8 @@ ALTER TABLE `patients` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `weight`, `height`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `medicineCurrent`, `medicineAllergy`, `comment`, `active`, `archive`) VALUES
- (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'ARC');
+INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `comment`, `active`, `archive`) VALUES
+ (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'ARC');
 UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
 ALTER TABLE `attendance` auto_increment=1;
 
