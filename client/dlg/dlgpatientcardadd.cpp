@@ -14,6 +14,10 @@ cDlgPatientCardAdd::cDlgPatientCardAdd( QWidget *p_poParent )
     pbSave->setIcon( QIcon("./resources/40x40_save.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
+    m_poPatientCard = new cDBPatientCard;
+
+    m_poPatientCard->createNew();
+
     if( g_poPrefs->getBarcodePrefix().length() > 0 )
     {
         ledBarcode->setText( g_poPrefs->getBarcodePrefix() );
@@ -27,6 +31,9 @@ cDlgPatientCardAdd::cDlgPatientCardAdd( QWidget *p_poParent )
 
 cDlgPatientCardAdd::~cDlgPatientCardAdd()
 {
+    if( m_poPatientCard != NULL )
+        delete m_poPatientCard;
+
     delete m_pTimer;
 }
 
@@ -63,6 +70,7 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
             m_pTimer->start(500);
 
             delete m_poPatientCard;
+            m_poPatientCard = NULL;
         }
         catch( cSevException &e )
         {
