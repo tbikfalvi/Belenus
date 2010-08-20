@@ -89,7 +89,9 @@ private:
     cDBLedgerDevice             *m_pDBLedgerDevice;
     int                          m_inMainProcessLength;
     int                          m_inCashLength;
-    vector<stUsedPatientCard>    m_vrPatientCard;
+    int                          m_inCashTimeRemains;
+    stUsedPatientCard            m_vrPatientCard;
+    int                          m_inCardTimeRemains;
     int                          m_inCashToPay;
     bool                         m_bHasToPay;
     unsigned int                 m_uiPatientToPay;
