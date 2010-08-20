@@ -1,45 +1,19 @@
--------------------------------------------------------------------------------------------
-Belenus Project
--------------------------------------------------------------------------------------------
-Branch neve               Magyarazat
--------------------------------------------------------------------------------------------
+HIBA, JAVITAS
 
-Kepek_ikonok            - Menukhoz, ablakokhoz, toolbar-hoz kepek es ikonok felvetele
-Adatbazis_veglegesites  - A belenus.sql frissitese es az adatbazist letrehozo SQL script-ek
-                          aktualizalasa. Kiegeszult testdata.sql-el, ami nem csak teszt
-                          adatokat, hanem telepiteskor beszurando adatokat is tartalmaz
-Panels                  - Foablakban megjeleno panelok megjelenitese es kezelese
-Main_menu_1             - Foablak menujenek atalakitasa
-PatientOrigin           - Honnan ertesult a paciens a studiorol kerdesre ezekbol az adatokbol
-                          tud valasztani a kezelo paciens adatok megadasakor.
-SourceOrder		- A korabban letrehozott file-ok (usercard, usercardtype, product ... stb
-			  kitorlese. Edit dialog-ok atmozgatasa az uj edit alkonyvtarba
-			  Az egesz lenyege a jobban atlathato kodreszek csoportositasa
-ReasonToVisit		- Miert jott a paciens a studioba kerdesre valaszok
-DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
-PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesekkel (attendance)
-CurrentPatient		- Csak akkor lehet kezelni bizonyos reszeket, ha van aktualis paciens
-			  kivalasztva. Ezt oldja meg.
-HardwareInit		- Hardver kezelés alapjai. Csatlakozás, inicializálás. Hardver teszt
-			  relék kapcsolálásval.
-PanelStatus		- Panelok mûködését meghatározó panel status-ok kezelése.
-PatientCard		- Pacienseknek altal hasznalt kartyak es kartyatipusok kezelese
-PanelManagement		- Panelok es rajta keresztul a hardver kezelese
-Preferences		- Beállítások módosítására szolgáló dialog
-Toolbar			- Toolbar gombok rendberakása. Engedélyezésük, tiltásuk timer által
-			  meghívott függvény állítja. Néhány még nem mûködõ gomb alapból tiltva.
-DatabaseFinal		- Az 'active' mezõ felvétele az adatbázis táblákba és ennek lekezelése
-			  Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
-PostponedPatient	- Ha a páciens adatait a kezelõ késõbb akarja kitölteni, akkor a
-			  postponed (toBeFilled) temp táblába kerül az ID-ja
-Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
-ApplicationStart	- Program inditasa utan ellenorizni kell, hogy, ha a HW kapcsolat OK,
-			  ne mukodjon a program DEMO kulccsal csak 7 napig. Ugyanugy, mint
-			  rossz internet kapcsolat, vagy szunnapok eseten
-ServerAdmin		- Szerver adminisztrátor program
-Server			- Szerver program változtatásai mostantól IDE menjenek!!!
-PanelSettings		- Panelok megjelenitesevel kapcsolatos valtoztatasok
-Translations		- A program alap (angol) nyelvtõl eltérõ nyelvekre fordítása
-			  Elmeletileg kesz.
-PanelManagement		- Panelok vezérlésevel és egyéb panelokhoz köthető dolgokkal
-			  kapcsolatos változtatások
+- ÁFA -> ÁFA kulcs
+- egységnyi idõ bérletnél PERC
+- pénztár aut nyitás ?
+- bérlet mentés ?
+- ha nincs tulajdonosa a bérletnek, rendelhesse az aktuálishoz
+- Irányítószámból város automatikusan
+- Beállítások között nyelv mellett def. ország
+- magasság, súly, gyógyszer, allergia -> alapadat  + 'betegségcsoport', mint "honnan jött" + életkor kijelzés
+- bérlethasználatnál max 1 egységet lehet használni
+- gép indítása bérlettel ????!!!!
+- Utóhűtést kezelő ne tudja leállítani
+- szerviz kártyatípus
+- ki nem fizetett használat -> új használat -> ESC
+- csak egyszer lehessen megadni, hogy mennyi a végleges kezelési idő  =>   bérlet+kp OK  kp+kp  vagy bérlet+bérlet FAIL
+- ha a gépen STOP-ot nyomnak, akkor a álljon meg a kezelés, ne vonjon le több időt, ha véglegesen is leáll a kezelés, illetve lehessen folytatni onnan, ne pörögjön a számláló
+- időpontoknál, idő intervallumoknál MINDENHOL legyen kiírva a mértékegység
+- globalis adatok
