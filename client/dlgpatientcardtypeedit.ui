@@ -77,7 +77,7 @@
         <item row="1" column="2">
          <widget class="QLabel" name="lblUnitTime">
           <property name="text">
-           <string>Unit time (sec):</string>
+           <string>Unit time (min):</string>
           </property>
          </widget>
         </item>

@@ -259,3 +259,13 @@ QString cMdiPanels::getActivePanelCaption()
 {
     return m_obPanels.at( m_uiActivePanel )->getPanelName();
 }
+
+bool cMdiPanels::isCanBeStartedByTime()
+{
+    return m_obPanels.at( m_uiActivePanel )->isCanBeStartedByTime();
+}
+
+bool cMdiPanels::isCanBeStartedByCard()
+{
+    return m_obPanels.at( m_uiActivePanel )->isCanBeStartedByCard();
+}

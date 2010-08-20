@@ -83,6 +83,8 @@ INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price
  (0, 0, 'Inaktív kártyák', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
 UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
+INSERT INTO `patientCardTypes` (`licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
+ (0, 'Szervíz kártyák', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

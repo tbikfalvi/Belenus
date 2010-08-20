@@ -18,6 +18,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     m_bDlgLoaded        = false;
     m_bNewCard          = true;
     m_bRefillCard       = false;
+    m_bIsCardActivated  = false;
 
     m_poPatientCard     = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
@@ -203,10 +204,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     {
         try
         {
-            bool bIsCardActivated = false;
-
             if( !m_poPatientCard->active() && cbActive->isChecked() )
-                bIsCardActivated = true;
+                m_bIsCardActivated = true;
 
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setActive( cbActive->isChecked() );
@@ -225,11 +224,10 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             {
                 m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             }
-            m_poPatientCard->save();
 
-            QDialog::accept();
-
-            if( bIsCardActivated )
+            // Kartya aktivalva lett, tehat el kell adni
+            // Szerviz kartyat nem kell eladni
+            if( m_bIsCardActivated && m_poPatientCard->patientCardTypeId() > 1 )
             {
                 cDlgCassaAction     obDlgCassaAction(this);
                 int                 inPriceTotal;
@@ -265,7 +263,17 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDBLedger.setActive( true );
                     obDBLedger.save();
                 }
+                else
+                {
+                    // Nem tortent meg az eladas
+                    return;
+                }
             }
+
+            m_poPatientCard->save();
+
+            QDialog::accept();
+
         }
         catch( cSevException &e )
         {
@@ -329,6 +337,17 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         }
         int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
         ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
+
+        if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("You are not allowed to create System Service Patientcard.") );
+            pbSave->setEnabled( false );
+        }
+        else
+        {
+            pbSave->setEnabled( true );
+        }
     }
 }
 

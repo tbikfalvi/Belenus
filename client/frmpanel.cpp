@@ -14,6 +14,7 @@
 //====================================================================================
 
 #include <QPalette>
+#include <QMessageBox>
 
 //====================================================================================
 
@@ -66,6 +67,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inCashToPay           = 0;
     m_bHasToPay             = false;
     m_uiPatientToPay        = 0;
+    m_inCashLength          = 0;
 
     m_vrPatientCard.clear();
 
@@ -138,30 +140,10 @@ void cFrmPanel::start()
 //====================================================================================
 void cFrmPanel::reset()
 {
-//    stringstream ssTrace;
-//    ssTrace << "Id: " << m_uiId;
-//    cTracer obTrace( "cFrmPanel::reset", ssTrace.str() );
-
     if( !isMainProcess() )
         return;
 
-/*    if( isMainProcess() )
-    {
-        closeAttendance();
-    }
-
-    m_pDBLedgerDevice->createNew();
-    m_vrPatientCard.clear();
-
-    m_inMainProcessLength = 0;
-    if( !m_bHasToPay )
-    {
-        m_inCashToPay = 0;
-        m_uiPatientToPay = 0;
-    }
-
-    m_uiStatus = m_obStatuses.size() - 1;
-*/    activateNextStatus();
+    activateNextStatus();
 }
 //====================================================================================
 void cFrmPanel::clear()
@@ -170,6 +152,7 @@ void cFrmPanel::clear()
     m_vrPatientCard.clear();
 
     m_inMainProcessLength = 0;
+    m_inCashLength = 0;
     if( !m_bHasToPay )
     {
         m_inCashToPay = 0;
@@ -216,6 +199,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
+    m_inCashLength += p_inLength;
     m_inCashToPay += p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT();
     m_uiPatientToPay = g_obPatient.id();
 
@@ -548,14 +532,14 @@ void cFrmPanel::closeAttendance()
 
         obDBPatientCard.load( m_vrPatientCard.at(i).uiPatientCardId );
 
-        obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.at(i).inCountUnits );
+        // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
+        if( obDBPatientCard.patientCardTypeId() > 1 )
+        {
+            obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.at(i).inCountUnits );
+            obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft()-m_vrPatientCard.at(i).inUnitTime );
 
-/*        QTime m_qtTemp = QTime::fromString( obDBPatientCard.timeLeft(), "hh:mm:ss" );
-        m_qtTemp = m_qtTemp.addSecs( -m_vrPatientCard.at(i).inUnitTime );
-        obDBPatientCard.setTimeLeft( m_qtTemp.toString("hh:mm:ss") );*/
-        obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft()-m_vrPatientCard.at(i).inUnitTime );
-
-        obDBPatientCard.save();
+            obDBPatientCard.save();
+        }
 
         QTime m_qtTemp = QTime( 0, m_vrPatientCard.at(i).inUnitTime/60, m_vrPatientCard.at(i).inUnitTime%60, 0 );
 
@@ -573,6 +557,7 @@ void cFrmPanel::closeAttendance()
     m_pDBLedgerDevice->createNew();
 
     m_inMainProcessLength = 0;
+    m_inCashLength = 0;
 }
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )
@@ -591,3 +576,30 @@ QString cFrmPanel::getPanelName()
     return lblTitle->text();
 }
 //====================================================================================
+bool cFrmPanel::isCanBeStartedByTime()
+{
+    bool    bRet = true;
+
+    if( g_obPatient.id() == 0 ||
+        g_uiPatientAttendanceId == 0 ||
+        m_inCashLength > 0 )
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+
+bool cFrmPanel::isCanBeStartedByCard()
+{
+    bool    bRet = true;
+
+    if( g_obPatient.id() == 0 ||
+        g_uiPatientAttendanceId == 0 ||
+        m_vrPatientCard.size() > 0 )
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}

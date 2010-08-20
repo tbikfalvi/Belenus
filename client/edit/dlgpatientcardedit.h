@@ -25,6 +25,7 @@ private:
     bool                 m_bDlgLoaded;
     bool                 m_bNewCard;
     bool                 m_bRefillCard;
+    bool                 m_bIsCardActivated;
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 

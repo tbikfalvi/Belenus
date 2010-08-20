@@ -52,7 +52,8 @@ void cDlgAttendanceEdit::on_pbSave_clicked()
     bool  boCanBeSaved = true;
     bool  boSkipErrorMessages = false;
 
-    if( ledBPStart->text() == "" )
+    if( (ledBPStart->text() == "" || ledBPStart->text().toInt() < 1) &&
+        !boSkipErrorMessages)
     {
         boCanBeSaved = false;
         if( QMessageBox::critical( this, tr( "Error" ), tr( "Starting blood pressure must be set.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
@@ -60,7 +61,8 @@ void cDlgAttendanceEdit::on_pbSave_clicked()
             boSkipErrorMessages = true;
         }
     }
-    if( ledPulseStart->text() == "" )
+    if( (ledPulseStart->text() == "" || ledPulseStart->text().toInt() < 1) &&
+        !boSkipErrorMessages)
     {
         boCanBeSaved = false;
         if( QMessageBox::critical( this, tr( "Error" ), tr( "Starting pulse value must be set.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
@@ -68,10 +70,8 @@ void cDlgAttendanceEdit::on_pbSave_clicked()
             boSkipErrorMessages = true;
         }
     }
-    if( (teLength->time().hour() > 0 ||
-         teLength->time().minute() > 0 ||
-         teLength->time().second() > 0) &&
-        ledBPStop->text() == "" )
+    if( (ledBPStop->text() == "" || ledBPStop->text().toInt() < 1) &&
+        !boSkipErrorMessages)
     {
         boCanBeSaved = false;
         if( QMessageBox::critical( this, tr( "Error" ), tr( "Ending blood pressure must be set.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
@@ -79,10 +79,8 @@ void cDlgAttendanceEdit::on_pbSave_clicked()
             boSkipErrorMessages = true;
         }
     }
-    if( (teLength->time().hour() > 0 ||
-         teLength->time().minute() > 0 ||
-         teLength->time().second() > 0) &&
-        ledPulseStop->text() == "" )
+    if( (ledPulseStop->text() == "" || ledPulseStop->text().toInt() < 1) &&
+        !boSkipErrorMessages )
     {
         boCanBeSaved = false;
         if( QMessageBox::critical( this, tr( "Error" ), tr( "Ending pulse value must be set.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
@@ -119,17 +117,19 @@ void cDlgAttendanceEdit::on_pbFinishLater_clicked()
     try
     {
         if( SaveAttendanceData() )
-        {
+        {            
             if( m_poPostponed == NULL )
             {
                 m_poPostponed = new cDBPostponed();
+
+                m_poPostponed->removeAttendance( m_poAttendance->id() );
 
                 m_poPostponed->createNew();
                 m_poPostponed->setAttendanceId( m_poAttendance->id() );
                 m_poPostponed->save();
                 delete m_poPostponed;
             }
-            QDialog::accept();
+            QDialog::reject();
         }
     }
     catch( cSevException &e )
