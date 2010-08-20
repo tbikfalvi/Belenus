@@ -499,10 +499,8 @@ void cWndMain::updateToolbar()
     action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
     action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
 
-    action_UseWithCard->setEnabled( g_obPatient.id() > 0 &&
-                                    g_uiPatientAttendanceId > 0 );
-    action_UseByTime->setEnabled( g_obPatient.id() > 0 &&
-                                  g_uiPatientAttendanceId > 0 );
+    action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
+    action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
 
     action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
                                     g_obPatient.id() > 0 &&
@@ -720,6 +718,14 @@ void cWndMain::on_action_Attendances_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
 {
+    if( mdiPanels->isHasToPay() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The device usage has to be payed.\n"
+                                 "Please process the payment first.") );
+        return;
+    }
+
     mdiPanels->start();
 
     on_action_PatientEmpty_triggered();
@@ -1027,6 +1033,15 @@ void cWndMain::processInputPatient( QString p_stPatientName )
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
+    if( !mdiPanels->isCanBeStartedByCard() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("This device already prepared with a patientcard.\n"
+                                 "To start the device with other conditions, please\n"
+                                 "reset the device first with pushing the ESC button.") );
+        return;
+    }
+
     cDBPatientCard  obDBPatientCard;
 
     try
@@ -1049,7 +1064,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     g_obPatient.load( obDBPatientCard.patientId() );
                 }
             }
-            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 )
+            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 && obDBPatientCard.patientId() > 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard has been assigned to a different patient.\n"
@@ -1057,6 +1072,17 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {
                     return;
+                }
+            }
+            else if( g_obPatient.id() > 0 && obDBPatientCard.patientId() == 0 )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("There is no patient assigned to this patientcard.\n"
+                                              "Do you want to assign this patientcard to the actual patient?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCard.setPatientId( g_obPatient.id() );
+                    obDBPatientCard.save();
                 }
             }
             if( g_obPatient.id() > 0 )
@@ -1117,7 +1143,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
                     obDBAttendance.load( g_uiPatientAttendanceId );
                     tCurrent = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
-                    tLength  = QTime::fromString(qsLength,"hh:mm:ss");
+                    tLength  = QTime::fromString(qsLength,"mm:ss");
                     inNewLength = tCurrent.minute()*60 + tCurrent.second() +
                                   tLength.minute()*60 + tLength.second();
                     tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
@@ -1179,7 +1205,21 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
         QMessageBox::warning( this, tr("Warning"),
                               tr("There is no actual attendance selected.\n"
                                  "Please select first a patient and then an attendance.") );
-
+        return;
+    }
+    if( !mdiPanels->isCanBeStartedByTime() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("This device already prepared with a time period.\n"
+                                 "To start the device with other conditions, please\n"
+                                 "reset the device first with pushing the ESC button.") );
+        return;
+    }
+    if( mdiPanels->isHasToPay() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The device usage has to be payed.\n"
+                                 "Please process the payment first.") );
         return;
     }
 

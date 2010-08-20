@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
-    <height>488</height>
+    <width>509</width>
+    <height>323</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,104 +58,43 @@
        <property name="title">
         <string> Data </string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <layout class="QFormLayout" name="formLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="lblDate">
-              <property name="text">
-               <string>Date :</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QDateEdit" name="deDate">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lblHeight">
-              <property name="text">
-               <string>Height :</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="ledHeight"/>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QFormLayout" name="formLayout_3">
-            <item row="0" column="0">
-             <widget class="QLabel" name="lblLength">
-              <property name="text">
-               <string>Duration :</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QTimeEdit" name="teLength">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="displayFormat">
-               <string>mm:ss</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lblWeight">
-              <property name="text">
-               <string>Weight :</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="ledWeight"/>
-            </item>
-           </layout>
-          </item>
-         </layout>
+         <widget class="QLabel" name="lblDate">
+          <property name="text">
+           <string>Date :</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <layout class="QFormLayout" name="formLayout_4">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lblMedicines">
-            <property name="text">
-             <string>Medicines :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QPlainTextEdit" name="ptMedicineCurrent"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lblAllergy">
-            <property name="text">
-             <string>Medicine 
-allergy :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPlainTextEdit" name="ptMedicineAllergy"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lblComment">
-            <property name="text">
-             <string>Comment :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPlainTextEdit" name="ptComment"/>
-          </item>
-         </layout>
+         <widget class="QDateEdit" name="deDate">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="displayFormat">
+           <string>yyyy/MM/dd</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblLength">
+          <property name="text">
+           <string>Duration :</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTimeEdit" name="teLength">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>minutes : seconds</string>
+          </property>
+          <property name="displayFormat">
+           <string>mm:ss</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -194,7 +133,7 @@ allergy :</string>
        <property name="title">
         <string> Stop </string>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="lblBPStop">
           <property name="text">
@@ -221,7 +160,7 @@ allergy :</string>
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="pbSave">
        <property name="minimumSize">
@@ -268,7 +207,7 @@ allergy :</string>
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>7</height>
+         <height>13</height>
         </size>
        </property>
       </spacer>
@@ -300,7 +239,7 @@ allergy :</string>
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>340</height>
+         <height>147</height>
         </size>
        </property>
       </spacer>
@@ -314,11 +253,6 @@ allergy :</string>
   <tabstop>ledUniqueId</tabstop>
   <tabstop>deDate</tabstop>
   <tabstop>teLength</tabstop>
-  <tabstop>ledHeight</tabstop>
-  <tabstop>ledWeight</tabstop>
-  <tabstop>ptMedicineCurrent</tabstop>
-  <tabstop>ptMedicineAllergy</tabstop>
-  <tabstop>ptComment</tabstop>
   <tabstop>ledBPStart</tabstop>
   <tabstop>ledPulseStart</tabstop>
   <tabstop>ledBPStop</tabstop>

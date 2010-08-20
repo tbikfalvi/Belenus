@@ -24,6 +24,8 @@ public:
     void            setPatientOriginId( const unsigned int p_nPatientOriginId ) throw();
     unsigned int    reasonToVisitId() const                                     throw();
     void            setReasonToVisitId( const unsigned int p_nReasonToVisitId ) throw();
+    unsigned int    illnessGroupId() const                                      throw();
+    void            setIllnessGroupId( const unsigned int p_nIllnessGroupId )   throw();
     QString         name() const                                                throw();
     void            setName( const QString &p_qsName )                          throw();
     int             gender() const                                              throw();
@@ -46,6 +48,14 @@ public:
     void            setEmail( const QString &p_qsEmail )                        throw();
     QString         phone() const                                               throw();
     void            setPhone( const QString &p_qsPhone )                        throw();
+    int             weight() const                                              throw();
+    void            setWeight( const int p_nWeight )                            throw();
+    int             height() const                                              throw();
+    void            setHeight( const int p_nHeight )                            throw();
+    QString         medicineCurrent()                                           throw();
+    void            setMedicineCurrent( const QString &p_qsMedicineC )          throw();
+    QString         medicineAllergy()                                           throw();
+    void            setMedicineAllergy( const QString &p_qsMedicineA )          throw();
     QString         comment() const                                             throw();
     void            setComment( const QString &p_qsComment )                    throw();
     bool            active() const                                              throw();
@@ -58,6 +68,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientOriginId;
     unsigned int    m_uiReasonToVisitId;
+    unsigned int    m_uiIllnessGroupId;
     QString         m_qsName;
     int             m_nGender;
     QString         m_qsDateBirth;
@@ -69,6 +80,10 @@ private:
     QString         m_qsAddress;
     QString         m_qsEmail;
     QString         m_qsPhone;
+    int             m_nWeight;
+    int             m_nHeight;
+    QString         m_qsMedicineCurrent;
+    QString         m_qsMedicineAllergy;
     QString         m_qsComment;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -77,6 +92,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientOriginId = 0,
                const unsigned int p_uiReasonToVisitId = 0,
+               const unsigned int p_uiIllnessGroupId = 0,
                const QString &p_qsName = "",
                const int p_nGender = 0,
                const QString &p_qsDateBirth = "",
@@ -88,6 +104,10 @@ private:
                const QString &p_qsAddress = "",
                const QString &p_qsEmail = "",
                const QString &p_qsPhone = "",
+               const int p_nWeight = 0,
+               const int p_nHeight = 0,
+               const QString &p_qsMedicineCurrent = "",
+               const QString &p_qsMedicineAllergy = "",
                const QString &p_qsComment = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();

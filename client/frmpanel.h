@@ -68,6 +68,8 @@ public:
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice );
     bool            isHasToPay();
     QString         getPanelName();
+    bool            isCanBeStartedByTime();
+    bool            isCanBeStartedByCard();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -86,6 +88,7 @@ private:
 
     cDBLedgerDevice             *m_pDBLedgerDevice;
     int                          m_inMainProcessLength;
+    int                          m_inCashLength;
     vector<stUsedPatientCard>    m_vrPatientCard;
     int                          m_inCashToPay;
     bool                         m_bHasToPay;

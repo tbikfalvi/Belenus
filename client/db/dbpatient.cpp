@@ -29,6 +29,7 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const unsigned int p_uiLicenceId,
                        const unsigned int p_uiPatientOriginId,
                        const unsigned int p_uiReasonToVisitId,
+                       const unsigned int p_uiIllnessGroupId,
                        const QString &p_qsName,
                        const int p_nGender,
                        const QString &p_qsDateBirth,
@@ -40,6 +41,10 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const QString &p_qsAddress,
                        const QString &p_qsEmail,
                        const QString &p_qsPhone,
+                       const int p_nWeight,
+                       const int p_nHeight,
+                       const QString &p_qsMedicineCurrent,
+                       const QString &p_qsMedicineAllergy,
                        const QString &p_qsComment,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
@@ -48,6 +53,7 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPatientOriginId = p_uiPatientOriginId;
     m_uiReasonToVisitId = p_uiReasonToVisitId;
+    m_uiIllnessGroupId  = p_uiIllnessGroupId;
     m_qsName            = p_qsName;
     m_nGender           = p_nGender;
     m_qsDateBirth       = p_qsDateBirth;
@@ -59,6 +65,10 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_qsAddress         = p_qsAddress;
     m_qsEmail           = p_qsEmail;
     m_qsPhone           = p_qsPhone;
+    m_nWeight           = p_nWeight;
+    m_nHeight           = p_nHeight;
+    m_qsMedicineCurrent = p_qsMedicineCurrent;
+    m_qsMedicineAllergy = p_qsMedicineAllergy;
     m_qsComment         = p_qsComment;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
@@ -70,6 +80,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPatientOriginIdIdx    = p_obRecord.indexOf( "patientOriginId" );
     int inReasonToVisitIdIdx    = p_obRecord.indexOf( "reasonToVisitId" );
+    int inIllnessGroupIdIdx     = p_obRecord.indexOf( "illnessGroupId" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inGenderIdx             = p_obRecord.indexOf( "gender" );
     int inDateBirthIdx          = p_obRecord.indexOf( "dateBirth" );
@@ -81,6 +92,10 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inAddressIdx            = p_obRecord.indexOf( "address" );
     int inEmailIdx              = p_obRecord.indexOf( "email" );
     int inPhoneIdx              = p_obRecord.indexOf( "phone" );
+    int inWeightIdx             = p_obRecord.indexOf( "weight" );
+    int inHeightIdx             = p_obRecord.indexOf( "height" );
+    int inMedCurrentIdx         = p_obRecord.indexOf( "medicineCurrent" );
+    int inMedAllergyIdx         = p_obRecord.indexOf( "medicineAllergy" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
@@ -89,6 +104,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientOriginIdIdx ).toInt(),
           p_obRecord.value( inReasonToVisitIdIdx ).toInt(),
+          p_obRecord.value( inIllnessGroupIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inGenderIdx ).toInt(),
           p_obRecord.value( inDateBirthIdx ).toString(),
@@ -100,6 +116,10 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inAddressIdx ).toString(),
           p_obRecord.value( inEmailIdx ).toString(),
           p_obRecord.value( inPhoneIdx ).toString(),
+          p_obRecord.value( inWeightIdx ).toInt(),
+          p_obRecord.value( inHeightIdx ).toInt(),
+          p_obRecord.value( inMedCurrentIdx ).toString(),
+          p_obRecord.value( inMedAllergyIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -169,6 +189,7 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientOriginId = \"%1\", " ).arg( m_uiPatientOriginId );
     qsQuery += QString( "reasonToVisitId = \"%1\", " ).arg( m_uiReasonToVisitId );
+    qsQuery += QString( "illnessGroupId = \"%1\", " ).arg( m_uiIllnessGroupId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "gender = \"%1\", " ).arg( m_nGender );
     qsQuery += QString( "dateBirth = \"%1\", " ).arg( m_qsDateBirth );
@@ -180,6 +201,10 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "address = \"%1\", " ).arg( m_qsAddress );
     qsQuery += QString( "email = \"%1\", " ).arg( m_qsEmail );
     qsQuery += QString( "phone = \"%1\", " ).arg( m_qsPhone );
+    qsQuery += QString( "weight = \"%1\", " ).arg( m_nWeight );
+    qsQuery += QString( "height = \"%1\", " ).arg( m_nHeight );
+    qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( m_qsMedicineCurrent );
+    qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( m_qsMedicineAllergy );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -254,6 +279,16 @@ unsigned int cDBPatient::reasonToVisitId() const throw()
 void cDBPatient::setReasonToVisitId( const unsigned int p_nReasonToVisitId ) throw()
 {
     m_uiReasonToVisitId = p_nReasonToVisitId;
+}
+
+unsigned int cDBPatient::illnessGroupId() const throw()
+{
+    return m_uiIllnessGroupId;
+}
+
+void cDBPatient::setIllnessGroupId( const unsigned int p_uiIllnessGroupId ) throw()
+{
+    m_uiIllnessGroupId = p_uiIllnessGroupId;
 }
 
 QString cDBPatient::name() const throw()
@@ -364,6 +399,46 @@ QString cDBPatient::phone() const throw()
 void cDBPatient::setPhone( const QString &p_qsPhone ) throw()
 {
     m_qsPhone = p_qsPhone;
+}
+
+int cDBPatient::weight() const throw()
+{
+    return m_nWeight;
+}
+
+void cDBPatient::setWeight( const int p_nWeight ) throw()
+{
+    m_nWeight = p_nWeight;
+}
+
+int cDBPatient::height() const throw()
+{
+    return m_nHeight;
+}
+
+void cDBPatient::setHeight( const int p_nHeight ) throw()
+{
+    m_nHeight = p_nHeight;
+}
+
+QString cDBPatient::medicineCurrent() throw()
+{
+    return m_qsMedicineCurrent;
+}
+
+void cDBPatient::setMedicineCurrent( const QString &p_qsMedicineC ) throw()
+{
+    m_qsMedicineCurrent = p_qsMedicineC;
+}
+
+QString cDBPatient::medicineAllergy() throw()
+{
+    return m_qsMedicineAllergy;
+}
+
+void cDBPatient::setMedicineAllergy( const QString &p_qsMedicineA ) throw()
+{
+    m_qsMedicineAllergy = p_qsMedicineA;
 }
 
 QString cDBPatient::comment() const throw()

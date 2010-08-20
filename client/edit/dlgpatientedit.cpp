@@ -1,11 +1,13 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSqlQuery>
+#include <iostream>
+
 #include "dlgpatientedit.h"
 #include "belenus.h"
 #include "../framework/sevexception.h"
-#include "db/dbpostponed.h"
-#include <iostream>
+#include "../db/dbpostponed.h"
+#include "../db/dbzipregioncity.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -43,6 +45,13 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             if( m_poPatient->reasonToVisitId() == poQuery->value( 0 ) )
                 cmbReasonToVisit->setCurrentIndex( cmbReasonToVisit->count()-1 );
         }
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT illnessGroupId, name FROM illnessGroups WHERE archive<>\"DEL\" ORDER BY name" ) );
+        while( poQuery->next() )
+        {
+            cmbIllnessGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( m_poPatient->illnessGroupId() == poQuery->value( 0 ) )
+                cmbIllnessGroup->setCurrentIndex( cmbIllnessGroup->count()-1 );
+        }
 
         if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             checkIndependent->setChecked( true );
@@ -52,10 +61,31 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             checkIndependent->setEnabled( false );
             if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             {
-                gbIdentification->setEnabled( false );
-                gbAddress->setEnabled( false );
-                gbVisit->setEnabled( false );
-                gbAdditionalData->setEnabled( false );
+                tbwPatient->setToolTip( tr("You are not allowed to change this patient data.") );
+
+                ledName->setEnabled( false );
+                rbGenderFemale->setEnabled( false );
+                rbGenderMale->setEnabled( false );
+                deDateBirth->setEnabled( false );
+                ledUniqueId->setEnabled( false );
+
+                ledHeight->setEnabled( false );
+                ledWeight->setEnabled( false );
+                cmbIllnessGroup->setEnabled( false );
+                ptMedicineCurrent->setEnabled( false );
+                ptMedicineAllergy->setEnabled( false );
+
+                cmbPatientOrigin->setEnabled( false );
+                cmbReasonToVisit->setEnabled( false );
+
+                ledCountry->setEnabled( false );
+                ledRegion->setEnabled( false );
+                ledZip->setEnabled( false );
+                ledCity->setEnabled( false );
+                ledAddress->setEnabled( false );
+                ledPhone->setEnabled( false );
+                ledEmail->setEnabled( false );
+                ptComment->setEnabled( false );
 
                 pbSave->setEnabled( false );
                 pbFinishLater->setEnabled( false );
@@ -76,6 +106,21 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         else if( m_poPatient->gender() == 2 ) rbGenderFemale->setChecked(true);
         deDateBirth->setDate( QDate::fromString(m_poPatient->dateBirth(),"yyyy-MM-dd") );
         ledUniqueId->setText( m_poPatient->uniqueId() );
+        if( deDateBirth->date().year() != 1900 )
+        {
+            QDate   qdDays = deDateBirth->date();
+            QDate   qdAge  = QDate( 1900, 1, 1 );
+
+            qdAge = qdAge.addDays( qdDays.daysTo(QDate::currentDate()) );
+
+            ledAge->setText( QString::number(qdAge.year()-1900) );
+        }
+
+        ledHeight->setText( QString::number(m_poPatient->height()) );
+        ledWeight->setText( QString::number(m_poPatient->weight()) );
+        ptMedicineCurrent->setPlainText( m_poPatient->medicineCurrent() );
+        ptMedicineAllergy->setPlainText( m_poPatient->medicineAllergy() );
+
         ledCountry->setText( m_poPatient->country() );
         ledRegion->setText( m_poPatient->region() );
         ledCity->setText( m_poPatient->city() );
@@ -84,6 +129,11 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         ledPhone->setText( m_poPatient->phone() );
         ledEmail->setText( m_poPatient->email() );
         ptComment->setPlainText( m_poPatient->comment() );
+    }
+
+    if( g_poPrefs->getDefaultCountry().length() > 0 && m_poPatient->id() == 0 )
+    {
+        ledCountry->setText( g_poPrefs->getDefaultCountry() );
     }
 }
 
@@ -229,4 +279,61 @@ bool cDlgPatientEdit::SavePatientData()
     }
 
     return bRet;
+}
+
+void cDlgPatientEdit::on_ledZip_textEdited(QString )
+{
+    if( ledZip->text().left(1) == "1" )
+    {
+        cDBZipRegionCity    obDBZipRegionCity;
+
+        obDBZipRegionCity.load( "1" );
+        ledCity->setText( obDBZipRegionCity.city() );
+    }
+    else if( ledZip->text().length() == g_poPrefs->getZipLength() )
+    {
+        cDBZipRegionCity    obDBZipRegionCity;
+
+        try
+        {
+            obDBZipRegionCity.load( ledZip->text() );
+            ledCity->setText( obDBZipRegionCity.city() );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            }
+            else
+            {
+                ledCity->setText( "" );
+            }
+        }
+    }
+}
+
+void cDlgPatientEdit::on_pbCitySearch_clicked()
+{
+    cDBZipRegionCity    obDBZipRegionCity;
+
+    try
+    {
+        obDBZipRegionCity.loadCity( ledCity->text() );
+        ledZip->setText( obDBZipRegionCity.zip() );
+        ledCity->setText( obDBZipRegionCity.city() );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("ZipRegionCity city not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        }
+        else
+        {
+            QMessageBox::information( this, tr("Information"),
+                                      tr("There is no city in database like\n\n\"%1\"").arg(ledCity->text()) );
+            ledZip->setText( "" );
+        }
+    }
 }

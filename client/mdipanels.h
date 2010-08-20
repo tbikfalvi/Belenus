@@ -42,6 +42,8 @@ public:
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice );
     bool            isHasToPay();
     QString         getActivePanelCaption();
+    bool            isCanBeStartedByTime();
+    bool            isCanBeStartedByCard();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;

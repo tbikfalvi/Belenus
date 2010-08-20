@@ -315,4 +315,5 @@ BelenusConverter
 client/dlgpaneluseselect.o
 client/moc_dlgpaneluseselect.cpp
 client/moc_dlgpaneluseselect.o
+client/dbzipregioncity.o
 

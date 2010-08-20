@@ -360,6 +360,23 @@ int cPreferences::getDeviceUseVAT() const
     return m_inDeviceUseVAT;
 }
 
+void cPreferences::setZipLength( const int p_inZip, bool p_boSaveNow )
+{
+    m_inZipLength = p_inZip;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
+    }
+}
+
+int cPreferences::getZipLength() const
+{
+    return m_inZipLength;
+}
+
+
 void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow )
 {
     m_bCassaAutoClose = p_bCassaAutoClose;
@@ -374,6 +391,22 @@ void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSav
 bool cPreferences::getCassaAutoClose() const
 {
     return m_bCassaAutoClose;
+}
+
+void cPreferences::setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow )
+{
+    m_qsDefaultCountry = p_qsDefaultCountry;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
+    }
+}
+
+QString cPreferences::getDefaultCountry() const
+{
+    return m_qsDefaultCountry;
 }
 
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
@@ -442,6 +475,9 @@ void cPreferences::loadConfFileSettings()
         m_inBarcodeLength     = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
         m_qsBarcodePrefix     = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
         m_bCassaAutoClose     = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
+        m_qsDefaultCountry    = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
+        m_inZipLength         = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
+
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );
         if( !boIsANumber ) m_qsBarcodePrefix = "";
@@ -532,6 +568,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
     obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
     obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
+    obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
+    obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
