@@ -75,6 +75,7 @@ void cDlgUserEdit::accept ()
         {
             try
             {
+                m_poUser->setLicenceId( g_poPrefs->getLicenceId() );
                 m_poUser->setName( ledName->text() );
                 if( ledPwd->text() != m_qsDefaultPwd )
                 {

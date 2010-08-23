@@ -82,6 +82,7 @@ private slots:
     void on_action_DeselectActualAttendance_triggered();
     void on_action_EditActualAttendance_triggered();
     void on_action_PayCash_triggered();
+    void on_action_IllnessGroup_triggered();
 };
 
 #endif

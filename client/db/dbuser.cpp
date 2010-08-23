@@ -157,6 +157,16 @@ unsigned int cDBUser::id() const throw()
     return m_uiId;
 }
 
+unsigned int cDBUser::licenceId() const throw()
+{
+    return m_uiLicenceId;
+}
+
+void cDBUser::setLicenceId( const unsigned int p_uiLicenceId ) throw()
+{
+    m_uiLicenceId = p_uiLicenceId;
+}
+
 QString cDBUser::name() const throw()
 {
     return m_qsName;

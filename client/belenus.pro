@@ -21,6 +21,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlgcassa.ui \
     dlgcassaaction.ui \
     dlgpaneluseedit.ui \
+    dlgillnessgroupedit.ui \
     dlgpatientcarduse.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -49,6 +50,7 @@ HEADERS = belenus.h \
     crud/dlgpanelsettings.h \
     crud/dlgpostponedattendanceselect.h \
     crud/dlgattendanceselect.h \
+    crud/dlgillnessgroup.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -68,6 +70,7 @@ HEADERS = belenus.h \
     db/dbledgerdevice.h \
     db/dbpatientcardhistory.h \
     db/dbzipregioncity.h \
+    db/dbillnessgroup.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -89,6 +92,7 @@ HEADERS = belenus.h \
     edit/dlgcassaedit.h \
     edit/dlgpaneluseedit.h \
     edit/dlgpatientcarduse.h \
+    edit/dlgillnessgroupedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -123,6 +127,7 @@ SOURCES = main.cpp \
     crud/dlgpanelsettings.cpp \
     crud/dlgpostponedattendanceselect.cpp \
     crud/dlgattendanceselect.cpp \
+    crud/dlgillnessgroup.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
@@ -142,6 +147,7 @@ SOURCES = main.cpp \
     db/dbledgerdevice.cpp \
     db/dbpatientcardhistory.cpp \
     db/dbzipregioncity.cpp \
+    db/dbillnessgroup.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -163,6 +169,7 @@ SOURCES = main.cpp \
     edit/dlgcassaedit.cpp \
     edit/dlgpaneluseedit.cpp \
     edit/dlgpatientcarduse.cpp \
+    edit/dlgillnessgroupedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \

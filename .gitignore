@@ -316,4 +316,12 @@ client/dlgpaneluseselect.o
 client/moc_dlgpaneluseselect.cpp
 client/moc_dlgpaneluseselect.o
 client/dbzipregioncity.o
+client/dbillnessgroup.o
+client/dlgillnessgroup.o
+client/dlgillnessgroupedit.o
+client/moc_dlgillnessgroup.cpp
+client/moc_dlgillnessgroup.o
+client/moc_dlgillnessgroupedit.cpp
+client/moc_dlgillnessgroupedit.o
+client/ui_dlgillnessgroupedit.h
 

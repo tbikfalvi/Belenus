@@ -41,6 +41,7 @@
 #include "crud/dlgpostponedattendanceselect.h"
 #include "crud/dlgattendanceselect.h"
 #include "crud/dlgpaneluseselect.h"
+#include "crud/dlgillnessgroup.h"
 
 //====================================================================================
 
@@ -556,27 +557,34 @@ void cWndMain::timerEvent(QTimerEvent *)
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
 {
+    bool    bIsShutdown = true;
+
     if( mdiPanels->isPanelWorking() )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("At least one Panel is still working.\n"
                                  "Please stop them before closing the application.") );
         p_poEvent->ignore();
+        bIsShutdown = false;
     }
     else
     {
-        logoutUser();
-
         if( QMessageBox::question( this, tr("Attention"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
+            logoutUser();            
             p_poEvent->accept();
         }
         else
         {
             p_poEvent->ignore();
+            bIsShutdown = false;
         }
+    }
+    if( !bIsShutdown && g_obUser.id() < 1 )
+    {
+        on_action_LogOut_triggered();
     }
 }
 //====================================================================================
@@ -1342,5 +1350,14 @@ void cWndMain::on_action_PayCash_triggered()
 
         mdiPanels->cashPayed();
     }
+}
+//====================================================================================
+void cWndMain::on_action_IllnessGroup_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
+
+    cDlgIllnessGroup  obDlgIllnessGroup( this );
+
+    obDlgIllnessGroup.exec();
 }
 //====================================================================================

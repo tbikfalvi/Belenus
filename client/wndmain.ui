@@ -45,6 +45,7 @@
      <addaction name="separator"/>
      <addaction name="action_Patientorigin"/>
      <addaction name="action_ReasonToVisit"/>
+     <addaction name="action_IllnessGroup"/>
      <addaction name="separator"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
@@ -442,6 +443,11 @@
    </property>
    <property name="toolTip">
     <string>Pay cash usage of panel</string>
+   </property>
+  </action>
+  <action name="action_IllnessGroup">
+   <property name="text">
+    <string>Illness group ...</string>
    </property>
   </action>
  </widget>

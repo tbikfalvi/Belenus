@@ -37,40 +37,42 @@ public:
     cDBUser();
     ~cDBUser();
 
-    void            load( const unsigned int p_uiId )               throw( cSevException );
-    void            load( const QString &p_qsName )                  throw( cSevException );
-    void            save()                                          throw( cSevException );
-    void            remove()                                        throw( cSevException );
-    void            createNew()                                     throw();
-    void            logIn( const QString &p_qsPassword )             throw( cSevException );
-    void            logOut()                                        throw();
-    bool            isLoggedIn() const                              throw();
-    unsigned int    id() const                                      throw();
-    QString          name() const                                    throw();
-    void            setName( const QString &p_qsName )               throw();
-    QString          password() const                                throw();
-    void            setPassword( const QString &p_qsPassword )       throw();
-    QString          realName() const                                throw();
-    void            setRealName( const QString &p_qsRealName )       throw();
-    cAccessGroup::teAccessGroup group() const                       throw();
-    void            setGroup( const cAccessGroup::teAccessGroup p_enGroup) throw();
-    bool            isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const  throw();
-    bool            active() const                                  throw();
-    void            setActive( const bool p_boActive )              throw();
-    QString          comment() const                                 throw();
-    void            setComment( const QString &p_qsComment )         throw();
+    void                        load( const unsigned int p_uiId )                               throw( cSevException );
+    void                        load( const QString &p_qsName )                                 throw( cSevException );
+    void                        save()                                                          throw( cSevException );
+    void                        remove()                                                        throw( cSevException );
+    void                        createNew()                                                     throw();
+    void                        logIn( const QString &p_qsPassword )                            throw( cSevException );
+    void                        logOut()                                                        throw();
+    bool                        isLoggedIn() const                                              throw();
+    unsigned int                id() const                                                      throw();
+    unsigned int                licenceId() const                                               throw();
+    void                        setLicenceId( const unsigned int p_nLicenceId )                 throw();
+    QString                     name() const                                                    throw();
+    void                        setName( const QString &p_qsName )                              throw();
+    QString                     password() const                                                throw();
+    void                        setPassword( const QString &p_qsPassword )                      throw();
+    QString                     realName() const                                                throw();
+    void                        setRealName( const QString &p_qsRealName )                      throw();
+    cAccessGroup::teAccessGroup group() const                                                   throw();
+    void                        setGroup( const cAccessGroup::teAccessGroup p_enGroup)          throw();
+    bool                        isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const  throw();
+    bool                        active() const                                                  throw();
+    void                        setActive( const bool p_boActive )                              throw();
+    QString                     comment() const                                                 throw();
+    void                        setComment( const QString &p_qsComment )                        throw();
 
 private:
-    bool          m_boLoggedIn;
-    unsigned int  m_uiId;
-    unsigned int  m_uiLicenceId;
-    QString        m_qsName;
-    QString        m_qsRealName;
-    QString        m_qsPassword;
-    cAccessGroup::teAccessGroup  m_enGroup;
-    bool          m_boActive;
-    QString        m_qsComment;
-    QString        m_qsArchive;
+    bool                        m_boLoggedIn;
+    unsigned int                m_uiId;
+    unsigned int                m_uiLicenceId;
+    QString                     m_qsName;
+    QString                     m_qsRealName;
+    QString                     m_qsPassword;
+    cAccessGroup::teAccessGroup m_enGroup;
+    bool                        m_boActive;
+    QString                     m_qsComment;
+    QString                     m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
