@@ -210,7 +210,7 @@ bool cWndMain::showLogIn()
     if( boLogInOK )
     {
         g_obLogger.setAppUser( g_obUser.id() );
-        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
         {
@@ -646,7 +646,7 @@ void cWndMain::on_action_LogOut_triggered()
 
     logoutUser();
 
-    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
 
     g_obUser.logOut();
     g_obLogger.setAppUser( 0 );
@@ -928,7 +928,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
         {
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
             else
             {
@@ -1188,7 +1188,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
         else
         {

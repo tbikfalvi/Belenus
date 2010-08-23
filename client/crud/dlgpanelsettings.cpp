@@ -195,7 +195,7 @@ void cDlgPanelSettings::editClicked( bool )
     catch( cSevException &e )
     {
         if( poPanelUse ) delete poPanelUse;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -219,7 +219,7 @@ void cDlgPanelSettings::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poPanelUse ) delete poPanelUse;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

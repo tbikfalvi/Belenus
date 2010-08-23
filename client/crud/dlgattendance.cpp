@@ -40,7 +40,7 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
     if( poQuery ) delete poQuery;
 
@@ -175,7 +175,7 @@ void cDlgAttendance::editClicked( bool )
     catch( cSevException &e )
     {
         if( poAttendance ) delete poAttendance;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -210,7 +210,7 @@ void cDlgAttendance::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poAttendance ) delete poAttendance;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }
