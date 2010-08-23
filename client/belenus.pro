@@ -184,7 +184,7 @@ win32 {
     SOURCES += communication_serial.cpp
 }
 TRANSLATIONS = belenus_us.ts \
-    belenus_hu.ts
+               belenus_hu.ts
 DESTDIR = ..
 QT += sql
 QT += network
