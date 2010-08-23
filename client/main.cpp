@@ -167,7 +167,7 @@ int main( int argc, char *argv[] )
         }
 #else
 
-        qsSpalsh += tr("Starting application in DEMO mode.\n");
+        qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poHardware = new CS_Communication_Demo();
@@ -192,6 +192,7 @@ int main( int argc, char *argv[] )
         if( obMainWindow.showLogIn() )
         {
             obMainWindow.initPanels();
+            obMainWindow.startMainTimer();
             r = apMainApp.exec();
         }
         else
@@ -215,8 +216,6 @@ int main( int argc, char *argv[] )
 
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " ended." << EOM;
 
-    //delete m_ptcpSocket;
-    //delete g_poServer;
     delete g_poPrefs;
     delete g_poDB;
 
