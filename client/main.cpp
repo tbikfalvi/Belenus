@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include <QSplashScreen>
+#include <iostream>
 
 //====================================================================================
 
@@ -51,14 +52,22 @@ cCassa                   g_obCassa;
 //====================================================================================
 int main( int argc, char *argv[] )
 {
+    cerr << ">> Start Belenus application" << endl << flush;;
+
     QApplication     apMainApp( argc, argv );
 
+    cerr << ">> Create cQTMySQLConnection" << endl << flush;;
+
     g_poDB     = new cQTMySQLConnection;
+
+    cerr << ">> Create and open cPreferences" << endl << flush;;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
     g_poPrefs->setVersion( "1.0.0" );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
+
+    cerr << ">> Open, load hungarian language." << endl << flush;;
 
     if( g_poPrefs->getLang() != "uk" )
     {
@@ -67,6 +76,8 @@ int main( int argc, char *argv[] )
         poTrans->load( qsTransFile );
         apMainApp.installTranslator( poTrans );
     }
+
+    cerr << ">> Create Splash window" << endl << flush;;
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -82,12 +93,21 @@ int main( int argc, char *argv[] )
     int r = 1;
     try
     {
+        cerr << ">> Connecting to database" << endl << flush;;
+
         qsSpalsh += QObject::tr("Connecting to database ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        cerr << ">> g_poDB->open()" << endl << flush;;
+
         g_poDB->open();
         // g_obLogger.setDBConnection( g_poDB );
+
+        cerr << ">> g_poPrefs->loadDBSettings()" << endl << flush;;
+
         g_poPrefs->loadDBSettings();
+
+        cerr << ">> Database connected." << endl << flush;;
 
         qsSpalsh += QObject::tr(" CONNECTED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
