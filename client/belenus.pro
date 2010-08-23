@@ -189,5 +189,5 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-CONFIG += console
+#CONFIG += console
 win32:DEFINES -= UNICODE
