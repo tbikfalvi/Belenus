@@ -98,7 +98,6 @@ void cDBZipRegionCity::loadCity( const QString &p_qsCity ) throw( cSevException 
 
     QString qsQuery = QString("SELECT * FROM zipRegionCity WHERE city LIKE \"%1\"").arg(qsCity);
 
-    QMessageBox::information(0,"",qsQuery);
     QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
 
     if( poQuery->size() < 1 )
