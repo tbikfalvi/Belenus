@@ -248,6 +248,8 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
+        cerr << ">> " << e.what() << endl << flush;;
+
         g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
