@@ -337,3 +337,8 @@ void cDlgPatientEdit::on_pbCitySearch_clicked()
         }
     }
 }
+
+void cDlgPatientEdit::on_pbAttendances_clicked()
+{
+
+}

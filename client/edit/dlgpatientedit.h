@@ -24,6 +24,7 @@ protected:
     cDBPostponed    *m_poPostponed;
 
 private slots:
+    void on_pbAttendances_clicked();
     void on_pbCitySearch_clicked();
     void on_ledZip_textEdited(QString );
     void on_pbFinishLater_clicked();
