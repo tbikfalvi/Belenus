@@ -36,7 +36,7 @@ Server::Server()
 
 Server::~Server()
 {
-    _tcpServer.close();
+    //_tcpServer.close();
     g_obLogger(cSeverity::DEBUG) << "[Server::~Server] finished" << EOM;
 }
 
@@ -70,11 +70,12 @@ int main( int argc, char *argv[] )
 {
     QCoreApplication  app( argc, argv );
 
-    ConsoleWriter _writer(cSeverity::DEBUG);
-    DatabaseWriter _dbWriter(cSeverity::INFO);
-    _dbWriter.setDBConnection(&g_db);
-    g_obLogger.attachWriter("console", &_writer);
-    g_obLogger.attachWriter("db", &_dbWriter);
+    ConsoleWriter *_writer = new ConsoleWriter(cSeverity::DEBUG);
+    DatabaseWriter *_dbWriter = new DatabaseWriter(cSeverity::INFO);
+    _dbWriter->setDBConnection(&g_db);
+    g_obLogger.attachWriter("console", _writer);
+    g_obLogger.attachWriter("db", _dbWriter);
+    g_obLogger.setMinimumSeverity("db", cSeverity::ERROR);
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version") << " started." << EOM;
 
     g_db.setHostName( g_prefs.value("database/host") );

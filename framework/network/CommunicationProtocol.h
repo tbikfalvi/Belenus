@@ -48,7 +48,6 @@ public:
 protected:
     virtual void _send(Packet &);
     virtual void _handlePacket(Packet &);
-    virtual void _initialize() {};              /* called when connection established to initialize protocol */
     virtual void _handleHello(int /*version*/) {};
     virtual void _handleLogonChallenge() {};
     virtual void _handleLogonAdminResponse(const char* /*username*/, const char* /*password*/) {};

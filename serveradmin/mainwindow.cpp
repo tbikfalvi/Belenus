@@ -5,7 +5,7 @@
 //====================================================================================
 
 
-#include <QMessageBox>
+#include <QHostAddress>
 #include "../framework/qtlogger.h"
 #include "mainwindow.h"
 #include "preferences.h"
@@ -57,6 +57,8 @@ MainWindow::MainWindow( QWidget *p_poParent )
     connect( &_connection, SIGNAL(sqlResultReady(int, SqlResult*)), this, SLOT(on_sqlResult(int,SqlResult*)) );
 
     g_obLogger.attachWriter( "gui", new ListBoxWriter(listStatus, cSeverity::DEBUG) );
+
+    _connection.start();
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::MainWindow] constructed" << EOM;
 }
 
@@ -64,6 +66,7 @@ MainWindow::MainWindow( QWidget *p_poParent )
 
 MainWindow::~MainWindow()
 {
+    g_obLogger.detachWriter("gui");
 }
 
 
@@ -104,7 +107,7 @@ void MainWindow::on_bConnect_clicked()
 
     if ( _connection.isConnected() ) {
         g_obLogger(cSeverity::DEBUG) << "[MainWindow::on_bConnect_clicked] connection is valid. disconnecting" << EOM;
-        _connection.abortConnection();
+        _connection.abort();
     } else {
         int port = g_prefs.value("server/port").toInt();
         QString host;
