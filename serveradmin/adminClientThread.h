@@ -35,6 +35,7 @@ public:
 signals:
     void connected();
     void disconnected();
+    void error(QAbstractSocket::SocketError);
     void sqlResultReady(int, SqlResult*);
 
 protected slots:

@@ -21,8 +21,10 @@ public:
     ListBoxWriter(QListWidget *listBox, const cSeverity::teSeverity sev) : LogWriter(sev), _listBox(listBox) {}
 protected:
     virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &msg) {
-        if ( _listBox )
+        if ( _listBox ) {
             _listBox->addItem( QString("[%1] %2").arg(ts.toString("hh:mm:ss.zzz")).arg(msg) );
+            _listBox->scrollToBottom();
+        }
     }
 
     QListWidget *_listBox;
@@ -157,26 +159,13 @@ void MainWindow::disconnected()
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::disconnected] called" << EOM;
     bConnect->setText("Connect");
     bConnect->setEnabled(true);
-    g_obLogger(cSeverity::INFO) << "Disconnected. Invalid credentials?" << EOM;
 }
 
 
 
 void MainWindow::socketError(QAbstractSocket::SocketError socketError)
 {
-    QString err;
-    switch (socketError) {
-        case 0: err = "Connection refused"; break;
-        case 1: err = "Remote host closed the connection"; break;
-        case 2: err = "Host not found"; break;
-        case 3: err = "Socket access error"; break;
-        case 4: err = "Socket resource error"; break;
-        case 5: err = "Socket timeout"; break;
-        case 7: err = "Network error"; break;
-        default:err = "Unkown error"; break;
-    }
-
-    g_obLogger(cSeverity::INFO) << "SocketError: " << socketError << ": " << err << EOM;
+    g_obLogger(cSeverity::DEBUG) << "[MainWindow::socketError] called" << EOM;
     bConnect->setText("Connect");
     bConnect->setEnabled(true);
 }

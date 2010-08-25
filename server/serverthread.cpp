@@ -1,4 +1,4 @@
-
+#include <QHostAddress>
 #include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
 #include "serverthread.h"
@@ -166,12 +166,24 @@ void ServerThread::run()
 
 void ServerThread::error(QAbstractSocket::SocketError err)
 {
-    g_obLogger(cSeverity::ERROR) << "[Serverthread::error] " << err << EOM;
+    QString errStr;
+    switch (err) {
+        case 0: errStr = "Connection refused"; break;
+        case 1: errStr = "Remote host closed the connection"; break;
+        case 2: errStr = "Host not found"; break;
+        case 3: errStr = "Socket access error"; break;
+        case 4: errStr = "Socket resource error"; break;
+        case 5: errStr = "Socket timeout"; break;
+        case 7: errStr = "Network error"; break;
+        default:errStr = "Unkown error"; break;
+    }
+
+    g_obLogger(cSeverity::ERROR) << "[Serverthread::error] (" << err <<") " << errStr << EOM;
 }
 
 
 
 void ServerThread::disconnected()
 {
-    g_obLogger(cSeverity::ERROR) << "[Serverthread::disconnected] " << EOM;
+    g_obLogger(cSeverity::INFO) << "[Serverthread::disconnected] " << m_socket->peerAddress().toString() << ":" << m_socket->peerPort() << EOM;
 }

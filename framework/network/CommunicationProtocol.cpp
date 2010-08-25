@@ -1,3 +1,4 @@
+#include <QHostAddress>
 
 #include "../qtlogger.h"
 #include "CommunicationProtocol.h"
@@ -28,6 +29,8 @@ void CommunicationProtocol::setTcpConnection(QTcpSocket *socket)
         return;
 
     m_socket = socket;
+    if ( m_socket->state()==QAbstractSocket::ConnectedState )
+        g_obLogger(cSeverity::INFO) << "Connection from "<< m_socket->peerAddress().toString() << ":" << m_socket->peerPort();
 }
 
 

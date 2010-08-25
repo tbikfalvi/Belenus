@@ -148,7 +148,22 @@ void AdminClientThread::_connected()
 
 void AdminClientThread::_error(QAbstractSocket::SocketError err)
 {
-    g_obLogger(cSeverity::ERROR) << "[AdminClientThread::error] " << err << EOM;
+    QString errStr;
+    switch (err) {
+        case 0: errStr = "Connection refused"; break;
+        case 1: errStr = "Remote host closed the connection"; break;
+        case 2: errStr = "Host not found"; break;
+        case 3: errStr = "Socket access error"; break;
+        case 4: errStr = "Socket resource error"; break;
+        case 5: errStr = "Socket timeout"; break;
+        case 7: errStr = "Network error"; break;
+        default:errStr = "Unkown error"; break;
+    }
+
+    g_obLogger(cSeverity::INFO) << "[AdminClientThread::_error] " << err << ": " << errStr << EOM;
+    m_socket->deleteLater();
+    m_socket = 0;
+    emit error(err);
 }
 
 
@@ -156,7 +171,7 @@ void AdminClientThread::_error(QAbstractSocket::SocketError err)
 void AdminClientThread::_disconnected()
 {
     g_obLogger(cSeverity::ERROR) << "[AdminClientThread::disconnected] " << EOM;
-    delete m_socket;
+    m_socket->deleteLater();
     m_socket = 0;
 
     emit disconnected();
