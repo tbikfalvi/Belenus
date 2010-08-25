@@ -4,11 +4,11 @@
 //
 //====================================================================================
 
-
 #include <QtNetwork>
 #include <QCoreApplication>
 #include <QTranslator>
 #include <iostream>
+
 
 #include "../framework/qtlogger.h"
 #include "../framework/logger/ConsoleWriter.h"
@@ -17,6 +17,8 @@
 #include "preferences.h"
 #include "serverthread.h"
 #include "main.h"
+#include "sigc.h"
+
 
 cQTLogger            g_obLogger;
 ServerPreferences    g_prefs;
@@ -62,12 +64,18 @@ void Server::connectionAvailable()
     connectionThread->start();
 }
 
+void sigc_handler(int)
+{
+    g_obLogger(cSeverity::DEBUG) << "[Server] SIGC caught" << EOM;
+    QCoreApplication::exit();
+}
 
 
 
 //====================================================================================
 int main( int argc, char *argv[] )
 {
+    installSIGCHandler();
     QCoreApplication  app( argc, argv );
 
     ConsoleWriter *_writer = new ConsoleWriter(cSeverity::DEBUG);
