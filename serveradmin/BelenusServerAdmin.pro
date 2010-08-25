@@ -18,7 +18,7 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/sevexception.h \
     ../framework/tracer.h \
     mainwindow.h \
-    ../framework/network/connection.h \
+    ../framework/network/CommunicationProtocol.h \
     ../framework/network/packet.h \
     adminClientThread.h \
     preferences.h \
@@ -33,7 +33,7 @@ SOURCES += ../framework/dbconnection.cpp \
     main.cpp \
     mainwindow.cpp \
     adminClientThread.cpp \
-    ../framework/network/connection.cpp \
+    ../framework/network/CommunicationProtocol.cpp \
     ../framework/network/packet.cpp \
     ../framework/preferences.cpp \
     ../framework/network/sqlResult.cpp

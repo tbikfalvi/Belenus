@@ -1,12 +1,15 @@
 
+#include <QCryptographicHash>
 #include "adminClientThread.h"
 #include "../framework/qtlogger.h"
 
 extern cQTLogger g_obLogger;
 
 
+
+
 AdminClientThread::AdminClientThread()
-    :   Connection(),
+    :   CommunicationProtocol(),
         _loggedIn(false)
 {
 }
@@ -21,13 +24,6 @@ void AdminClientThread::setCredentials(QString username, QString password)
 
 
 
-void AdminClientThread::_initialize()
-{
-    _sendHello();
-}
-
-
-
 void AdminClientThread::_handleHello(int version)
 {
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleHello] server version is " << version << EOM;
@@ -37,12 +33,12 @@ void AdminClientThread::_handleHello(int version)
 
 void AdminClientThread::_handleLogonChallenge()
 {
-    _sendLogonAdminResponse(_username.toStdString().c_str(), QString(QCryptographicHash::hash(_password.toAscii(), QCryptographicHash::Sha1).toHex()).toStdString().c_str() );
+    sendLogonAdminResponse(_username.toStdString().c_str(), QString(QCryptographicHash::hash(_password.toAscii(), QCryptographicHash::Sha1).toHex()).toStdString().c_str() );
 }
 
 
 
-void AdminClientThread::_handleRegisterKeyResponse(Result res)
+void AdminClientThread::_handleRegisterKeyResponse(Result::ResultCode res)
 {
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleRegisterKeyResult] result is " << res << EOM;
     queryLicenseKeys();
@@ -63,7 +59,7 @@ void AdminClientThread::registerNewKey(const char *key)
     if ( !_loggedIn )
         return;
 
-    _sendRegisterKey(key);
+    sendRegisterKey(key);
 }
 
 
@@ -74,7 +70,7 @@ void AdminClientThread::queryLicenseKeys()
         return;
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLicenseKeys] entered " << EOM;
-    _sendSqlQuery(Q_GET_KEYS, "SELECT clientId, code1, code2, dateCreated, lastLogin, licenceId, serial, country, region, city, zip, address, studio, contact, active FROM clients LEFT JOIN licences ON clients.code1=SHA1(serial)");
+    sendSqlQuery(Q_GET_KEYS, "SELECT clientId, code1, code2, dateCreated, lastLogin, licenceId, serial, country, region, city, zip, address, studio, contact, active FROM clients LEFT JOIN licences ON clients.code1=SHA1(serial)");
 }
 
 
@@ -85,7 +81,7 @@ void AdminClientThread::resetCode2(int clientId)
         return;
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::resetCode2] reseting code2 of client " << clientId << EOM;
-    _sendSqlQuery(Q_RESET_CODE2, QString("UPDATE clients SET code2=NULL WHERE clientId=%1").arg(clientId).toStdString().c_str());
+    sendSqlQuery(Q_RESET_CODE2, QString("UPDATE clients SET code2=NULL WHERE clientId=%1").arg(clientId).toStdString().c_str());
 }
 
 
@@ -96,7 +92,7 @@ void AdminClientThread::queryLogs(cSeverity::teSeverity minSeverity, int last)
         return;
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLogs] getting logs from server sev=" << (int)minSeverity << " last=" << last << EOM;
-    _sendSqlQuery(Q_GET_LOGS, QString("SELECT * FROM logs WHERE severity<=%1 ORDER BY date DESC LIMIT %2").arg(minSeverity).arg(last).toStdString().c_str());
+    sendSqlQuery(Q_GET_LOGS, QString("SELECT * FROM logs WHERE severity<=%1 ORDER BY date DESC LIMIT %2").arg(minSeverity).arg(last).toStdString().c_str());
 }
 
 
@@ -107,5 +103,77 @@ void AdminClientThread::removeKey(int clientId)
         return;
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::removeKey] removing license key for client " << clientId << EOM;
-    _sendSqlQuery(Q_RESET_CODE2, QString("DELETE FROM clients WHERE clientID=%1").arg(clientId).toStdString().c_str());
+    sendSqlQuery(Q_RESET_CODE2, QString("DELETE FROM clients WHERE clientID=%1").arg(clientId).toStdString().c_str());
+}
+
+
+
+void AdminClientThread::run()
+{
+    exec();
+}
+
+
+
+void AdminClientThread::connectTo(const QHostAddress addr, int port)
+{
+    if (m_socket) {
+        g_obLogger(cSeverity::ERROR) << "[AdminClientThread::connectTo] m_socket should be closed before new connection attempt" << EOM;
+        return;
+    }
+
+    QTcpSocket *socket = new QTcpSocket();
+    setTcpConnection(socket);
+
+    connect( m_socket,   SIGNAL(connected()),                           this, SLOT(_connected()) );
+    connect( m_socket,   SIGNAL(disconnected()),                        this, SLOT(_disconnected()) );
+    connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   this, SLOT(_error(QAbstractSocket::SocketError)) );
+    connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(_read()) );
+    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
+
+    m_socket->connectToHost(addr, port);
+}
+
+
+
+void AdminClientThread::_connected()
+{
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::connected] entered" << EOM;
+    sendHello();
+
+    emit connected();
+}
+
+
+
+void AdminClientThread::_error(QAbstractSocket::SocketError err)
+{
+    g_obLogger(cSeverity::ERROR) << "[AdminClientThread::error] " << err << EOM;
+}
+
+
+
+void AdminClientThread::_disconnected()
+{
+    g_obLogger(cSeverity::ERROR) << "[AdminClientThread::disconnected] " << EOM;
+    delete m_socket;
+    m_socket = 0;
+
+    emit disconnected();
+}
+
+
+
+void AdminClientThread::_handleSqlQueryResult(int queryId, SqlResult *res)
+{
+    g_obLogger(cSeverity::ERROR) << "[AdminClientThread::_handleSqlQueryResult] result for queryid "<< queryId << " has " << res->rowCount() << " rows" << EOM;
+    emit sqlResultReady(queryId, res);
+}
+
+
+
+void AdminClientThread::abort()
+{
+    if (m_socket)
+        m_socket->abort();
 }

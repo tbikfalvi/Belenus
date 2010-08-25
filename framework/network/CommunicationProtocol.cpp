@@ -9,6 +9,7 @@ extern cQTLogger g_obLogger;
 
 
 CommunicationProtocol::CommunicationProtocol(QTcpSocket *socket)
+    : m_socket(0)
 {
     setTcpConnection(socket);
 }
