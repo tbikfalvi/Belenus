@@ -252,7 +252,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout_3">
+           <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0">
              <widget class="QCheckBox" name="chkHealthInsurance">
               <property name="text">
@@ -261,7 +261,24 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QComboBox" name="cmbHealthInsurance"/>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QComboBox" name="cmbHealthInsurance"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pbHealthInsurance">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item row="1" column="0">
              <widget class="QCheckBox" name="chkCompany">
@@ -271,7 +288,24 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QComboBox" name="cmbCompany"/>
+             <layout class="QHBoxLayout" name="horizontalLayout_16">
+              <item>
+               <widget class="QComboBox" name="cmbCompany"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pbCompany">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
             <item row="2" column="0">
              <widget class="QCheckBox" name="chkDoctorProposed">
@@ -281,7 +315,24 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QComboBox" name="cmbDoctor"/>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QComboBox" name="cmbDoctor"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pbDoctor">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -406,13 +457,13 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QLineEdit" name="ledAddress"/>
+             <widget class="QLineEdit" name="ledStreet"/>
             </item>
             <item>
              <widget class="QComboBox" name="cmbStreet"/>
             </item>
             <item>
-             <widget class="QLineEdit" name="ledHouseNumber">
+             <widget class="QLineEdit" name="ledStreetNumber">
               <property name="maximumSize">
                <size>
                 <width>50</width>
@@ -498,7 +549,20 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="ledPhone"/>
+           <widget class="QLineEdit" name="ledPhone">
+            <property name="maximumSize">
+             <size>
+              <width>130</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>20</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblEmail">
@@ -508,7 +572,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="ledEmail"/>
+           <widget class="QLineEdit" name="ledEmail1"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblAt">
+            <property name="text">
+             <string>@</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledEmail2"/>
           </item>
          </layout>
         </widget>
@@ -643,7 +717,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="ptIllness_2"/>
+            <widget class="QPlainTextEdit" name="ptSymptom"/>
            </item>
           </layout>
          </item>

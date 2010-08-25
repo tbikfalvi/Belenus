@@ -65,8 +65,43 @@ ALTER TABLE `illnessGroups` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `name`, `gender`, `dateBirth`, `uniqueId`, `country`, `region`, `city`, `zip`, `address`, `email`, `phone`, `comment`, `active`, `archive`) VALUES
- (0, 0, 0, 0, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'ARC');
+INSERT INTO  `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `publicPlaces` SET `publicPlaceId`=0 WHERE `publicPlaceId`=1;
+ALTER TABLE `publicPlaces` auto_increment=1;
+INSERT INTO `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'út', 1, 'ARC'),
+ (2, 0, 'utca', 1, 'ARC'),
+ (3, 0, 'körút', 1, 'ARC'),
+ (4, 0, 'köz', 1, 'ARC'),
+ (5, 0, 'tér', 1, 'ARC'),
+ (6, 0, 'dűlő', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `healthInsurances` (`healthInsuranceId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `healthInsurances` SET `healthInsuranceId`=0 WHERE `healthInsuranceId`=1;
+ALTER TABLE `healthInsurances` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `companies` (`companyId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `companies` SET `companyId`=0 WHERE `companyId`=1;
+ALTER TABLE `companies` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `doctors` (`doctorId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
+ALTER TABLE `doctors` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `illnessGroupId`, `healthInsuranceId`, `companyId`, `doctorId`, `name`, `gender`, `dateBirth`, `uniqueId`, `email`, `phone`, `weight`, `height`, `medicineCurrent`, `medicineAllergy`, `regularCustomer`, `employee`, `service`, `healthInsurance`, `company`, `doctorProposed`, `comment`, `active`, `archive`) VALUES
+ ('0', '0', '0', '0', '0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '0', 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
 ALTER TABLE `patients` auto_increment=1;
 
@@ -160,3 +195,4 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `active`, `archive` 
   ( 0, 1, "", 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
+

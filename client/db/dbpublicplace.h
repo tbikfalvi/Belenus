@@ -1,15 +1,15 @@
-#ifndef DB_PATIENT_ORIGIN_H
-#define DB_PATIENT_ORIGIN_H
+#ifndef DB_PUBLIC_PLACE_H
+#define DB_PUBLIC_PLACE_H
 
 #include <QSqlRecord>
 
 #include "../../framework/sevexception.h"
 
-class cDBPatientOrigin
+class cDBPublicPlace
 {
 public:
-    cDBPatientOrigin();
-    ~cDBPatientOrigin();
+    cDBPublicPlace();
+    ~cDBPublicPlace();
 
     void            load( const unsigned int p_uiId )               throw( cSevException );
     void            load( const QString &p_qsName )                 throw( cSevException );

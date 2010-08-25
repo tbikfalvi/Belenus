@@ -324,4 +324,5 @@ client/moc_dlgillnessgroup.o
 client/moc_dlgillnessgroupedit.cpp
 client/moc_dlgillnessgroupedit.o
 client/ui_dlgillnessgroupedit.h
-
+client/dbaddress.o
+client/dbpublicplace.o

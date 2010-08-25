@@ -253,6 +253,39 @@ CREATE TABLE `zipRegionCity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+CREATE TABLE `publicPlaces` (
+  `publicPlaceId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`publicPlaceId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `healthInsurances` (
+  `healthInsuranceId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`healthInsuranceId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `companies` (
+  `companyId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`companyId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Paciens tabla. Opcionalis. A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
@@ -261,18 +294,13 @@ CREATE TABLE `patients` (
   `patientOriginId`         int(10) unsigned        NOT NULL,
   `reasonToVisitId`         int(10) unsigned        NOT NULL,
   `illnessGroupId`          int(10) unsigned        NOT NULL,
+  `healthInsuranceId`       int(10) unsigned        NOT NULL,
+  `companyId`               int(10) unsigned        NOT NULL,
+  `doctorId`                int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `gender`                  int(11)                 DEFAULT NULL,
   `dateBirth`               date                    DEFAULT NULL,
   `uniqueId`                varchar(20)             DEFAULT NULL,
-  `country`                 varchar(100)            DEFAULT NULL,
-  `region`                  varchar(100)            DEFAULT NULL,
-  `city`                    varchar(100)            DEFAULT NULL,
-  `zip`                     varchar(10)             DEFAULT NULL,
-  `street`                  varchar(50)             DEFAULT NULL,
-  `streetNumber`            varchar(10)             DEFAULT NULL,
-  `floor`                   varchar(10)             DEFAULT NULL,
-  `door`                    varchar(10)             DEFAULT NULL,
   `email`                   varchar(100)            DEFAULT NULL,
   `phone`                   varchar(100)            DEFAULT NULL,
   `weight`                  int(11)                 DEFAULT NULL,
@@ -283,11 +311,8 @@ CREATE TABLE `patients` (
   `employee`                tinyint(1)              DEFAULT 0,
   `service`                 tinyint(1)              DEFAULT 0,
   `healthInsurance`         tinyint(1)              DEFAULT 0,
-  `healthInsuranceId`       int(10) unsigned        NOT NULL,
   `company`                 tinyint(1)              DEFAULT 0,
-  `companyId`               int(10) unsigned        NOT NULL,
   `doctorProposed`          tinyint(1)              DEFAULT 0,
-  `doctorId`                int(10) unsigned        NOT NULL,
   `comment`                 text                    DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -295,30 +320,36 @@ CREATE TABLE `patients` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientOriginId`) REFERENCES `patientOrigin` (`patientOriginId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`reasonToVisitId`) REFERENCES `reasonToVisit` (`reasonToVisitId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`illnessGroupId`) REFERENCES `illnessGroups` (`illnessGroupId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`illnessGroupId`) REFERENCES `illnessGroups` (`illnessGroupId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`healthInsuranceId`) REFERENCES `healthInsurances` (`healthInsuranceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`doctorId`) REFERENCES `doctors` (`doctorId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`doctorId`) REFERENCES `doctors` (`doctorId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Pacienshez kotheto egyeb cimek: pl. szamlazas miatt
+-- Pacienshez kotheto cimek
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `patientAddress` (
-  `patientAddressId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `patientId`               int(10) unsigned        NOT NULL,
+CREATE TABLE `address` (
+  `addressId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `publicPlaceId`           int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `country`                 varchar(100)            DEFAULT NULL,
   `region`                  varchar(100)            DEFAULT NULL,
   `city`                    varchar(100)            DEFAULT NULL,
   `zip`                     varchar(10)             DEFAULT NULL,
-  `address`                 varchar(100)            DEFAULT NULL,
+  `street`                  varchar(50)             DEFAULT NULL,
+  `streetNumber`            varchar(10)             DEFAULT NULL,
+  `floor`                   varchar(10)             DEFAULT NULL,
+  `door`                    varchar(10)             DEFAULT NULL,
+  `primaryAddress`          tinyint(1)              DEFAULT 0,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`patientAddressId`,`licenceID`),
+  PRIMARY KEY (`addressId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`publicPlaceId`) REFERENCES `publicPlaces` (`publicPlaceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------

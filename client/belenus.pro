@@ -71,6 +71,8 @@ HEADERS = belenus.h \
     db/dbpatientcardhistory.h \
     db/dbzipregioncity.h \
     db/dbillnessgroup.h \
+    db/dbaddress.h \
+    db/dbpublicplace.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -148,6 +150,8 @@ SOURCES = main.cpp \
     db/dbpatientcardhistory.cpp \
     db/dbzipregioncity.cpp \
     db/dbillnessgroup.cpp \
+    db/dbaddress.cpp \
+    db/dbpublicplace.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

@@ -4,7 +4,7 @@
 //
 //====================================================================================
 //
-// Filename    : dbpatientorigin.cpp
+// Filename    : dbpublicplace.cpp
 // AppVersion  : 1.0
 // FileVersion : 1.0
 // Author      : Bikfalvi Tamas
@@ -14,18 +14,18 @@
 //====================================================================================
 
 #include "belenus.h"
-#include "dbpatientorigin.h"
+#include "dbpublicplace.h"
 
-cDBPatientOrigin::cDBPatientOrigin()
+cDBPublicPlace::cDBPublicPlace()
 {
     init();
 }
 
-cDBPatientOrigin::~cDBPatientOrigin()
+cDBPublicPlace::~cDBPublicPlace()
 {
 }
 
-void cDBPatientOrigin::init( const unsigned int p_uiId,
+void cDBPublicPlace::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const QString &p_qsName,
                              const bool p_bActive,
@@ -38,9 +38,9 @@ void cDBPatientOrigin::init( const unsigned int p_uiId,
     m_qsArchive     = p_qsArchive;
 }
 
-void cDBPatientOrigin::init( const QSqlRecord &p_obRecord ) throw()
+void cDBPublicPlace::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "patientOriginId" );
+    int inIdIdx         = p_obRecord.indexOf( "publicPlaceId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
@@ -53,35 +53,35 @@ void cDBPatientOrigin::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inArchiveIdx ).toString() );
 }
 
-void cDBPatientOrigin::load( const unsigned int p_uiId ) throw( cSevException )
+void cDBPublicPlace::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientOrigin::load", QString( "id: %1" ).arg( p_uiId ) );
+    cTracer obTrace( "cDBPublicPlace::load", QString( "id: %1" ).arg( p_uiId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientOrigin WHERE patientOriginId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM publicPlaces WHERE publicPlaceId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
-        throw cSevException( cSeverity::ERROR, "Patientorigin id not found" );
+        throw cSevException( cSeverity::ERROR, "Publicplace id not found" );
 
     poQuery->first();
     init( poQuery->record() );
 }
 
-void cDBPatientOrigin::load( const QString &p_qsName ) throw( cSevException )
+void cDBPublicPlace::load( const QString &p_qsName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientOrigin::load", QString("name: \"%1\"").arg(p_qsName) );
+    cTracer obTrace( "cDBPublicPlace::load", QString("name: \"%1\"").arg(p_qsName) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM patientOrigin WHERE name = \"" + p_qsName + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM publicPlaces WHERE name = \"" + p_qsName + "\"" );
 
     if( poQuery->size() != 1 )
-        throw cSevException( cSeverity::ERROR, "Patientorigin name not found" );
+        throw cSevException( cSeverity::ERROR, "Publicplace name not found" );
 
     poQuery->first();
     init( poQuery->record() );
 }
 
-void cDBPatientOrigin::save() throw( cSevException )
+void cDBPublicPlace::save() throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientOrigin::save" );
+    cTracer obTrace( "cDBPublicPlace::save" );
     QString  qsQuery;
 
     if( m_uiId )
@@ -98,14 +98,14 @@ void cDBPatientOrigin::save() throw( cSevException )
         qsQuery = "INSERT INTO";
         m_qsArchive = "NEW";
     }
-    qsQuery += " patientOrigin SET ";
+    qsQuery += " publicPlaces SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
-        qsQuery += QString( " WHERE patientOriginId = %1" ).arg( m_uiId );
+        qsQuery += QString( " WHERE publicPlaceId = %1" ).arg( m_uiId );
     }
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -113,9 +113,9 @@ void cDBPatientOrigin::save() throw( cSevException )
     if( poQuery ) delete poQuery;
 }
 
-void cDBPatientOrigin::remove() throw( cSevException )
+void cDBPublicPlace::remove() throw( cSevException )
 {
-    cTracer obTrace( "cDBPatientOrigin::remove" );
+    cTracer obTrace( "cDBPublicPlace::remove" );
 
     if( m_uiId )
     {
@@ -123,65 +123,65 @@ void cDBPatientOrigin::remove() throw( cSevException )
 
         if( m_qsArchive.compare( "NEW" ) == 0 )
         {
-            qsQuery = "DELETE FROM patientOrigin ";
+            qsQuery = "DELETE FROM publicPlaces ";
         }
         else
         {
-            qsQuery = "UPDATE patientOrigin SET active=0, archive=\"MOD\" ";
+            qsQuery = "UPDATE publicPlaces SET active=0, archive=\"MOD\" ";
         }
-        qsQuery += QString( " WHERE patientOriginId = %1" ).arg( m_uiId );
+        qsQuery += QString( " WHERE publicPlaceId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
 }
 
-void cDBPatientOrigin::createNew() throw()
+void cDBPublicPlace::createNew() throw()
 {
     init();
 }
 
-unsigned int cDBPatientOrigin::id() const throw()
+unsigned int cDBPublicPlace::id() const throw()
 {
     return m_uiId;
 }
 
-unsigned int cDBPatientOrigin::licenceId() const throw()
+unsigned int cDBPublicPlace::licenceId() const throw()
 {
     return m_uiLicenceId;
 }
 
-void cDBPatientOrigin::setLicenceId( const unsigned int p_uiLicenceId ) throw()
+void cDBPublicPlace::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
 }
 
-QString cDBPatientOrigin::name() const throw()
+QString cDBPublicPlace::name() const throw()
 {
     return m_qsName;
 }
 
-void cDBPatientOrigin::setName( const QString &p_qsName ) throw()
+void cDBPublicPlace::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
 }
 
-bool cDBPatientOrigin::active() const throw()
+bool cDBPublicPlace::active() const throw()
 {
     return m_bActive;
 }
 
-void cDBPatientOrigin::setActive( const bool p_bActive ) throw()
+void cDBPublicPlace::setActive( const bool p_bActive ) throw()
 {
     m_bActive = p_bActive;
 }
 
-QString cDBPatientOrigin::archive() const throw()
+QString cDBPublicPlace::archive() const throw()
 {
     return m_qsArchive;
 }
 
-void cDBPatientOrigin::setArchive( const QString &p_qsArchive ) throw()
+void cDBPublicPlace::setArchive( const QString &p_qsArchive ) throw()
 {
     m_qsArchive = p_qsArchive;
 }

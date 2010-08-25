@@ -53,6 +53,18 @@ cDlgAttendance::~cDlgAttendance()
 {
 }
 
+void cDlgAttendance::setPatientId( const unsigned int p_uiPatientId )
+{
+    for( int i=0; i<cmbPatient->count(); i++ )
+    {
+        if( cmbPatient->itemData( i ).toUInt() == p_uiPatientId )
+        {
+            cmbPatient->setCurrentIndex( i );
+            break;
+        }
+    }
+}
+
 void cDlgAttendance::setupTableView()
 {
     cTracer obTracer( "cDlgAttendance::setupTableView" );

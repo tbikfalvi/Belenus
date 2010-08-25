@@ -1041,20 +1041,22 @@ void cWndMain::processInputPatient( QString p_stPatientName )
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
-    if( !mdiPanels->isCanBeStartedByCard() )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("This device already prepared with a patientcard.\n"
-                                 "To start the device with other conditions, please\n"
-                                 "reset the device first with pushing the ESC button.") );
-        return;
-    }
-
     cDBPatientCard  obDBPatientCard;
 
     try
     {
         obDBPatientCard.load( p_stBarcode );
+
+        if( !mdiPanels->isCanBeStartedByCard() &&
+            g_obPatient.id() > 0 &&
+            g_uiPatientAttendanceId > 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("This device already prepared with a patientcard.\n"
+                                     "To start the device with other conditions, please\n"
+                                     "reset the device first with pushing the ESC button.") );
+            return;
+        }
 
         if( obDBPatientCard.active() )
         {

@@ -19,7 +19,7 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
     m_poPatientOrigin = p_poPatientOrigin;
     if( m_poPatientOrigin )
     {
-        ledName->setText( QString::fromStdString( m_poPatientOrigin->name() ) );
+        ledName->setText( m_poPatientOrigin->name() );
         if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
             checkIndependent->setChecked( true );
 
@@ -52,7 +52,7 @@ void cDlgPatientOriginEdit::accept ()
     {
         try
         {
-            m_poPatientOrigin->setName( ledName->text().toStdString() );
+            m_poPatientOrigin->setName( ledName->text() );
             if( checkIndependent->isChecked() )
             {
                 m_poPatientOrigin->setLicenceId( 0 );

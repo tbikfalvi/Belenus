@@ -3,8 +3,10 @@
 
 #include "belenus.h"
 #include "ui_dlgpatientedit.h"
-#include "db/dbpatient.h"
-#include "db/dbpostponed.h"
+#include "../db/dbpatient.h"
+#include "../db/dbpostponed.h"
+#include "../db/dbaddress.h"
+#include "../db/dbpatientcard.h"
 
 class cDlgPatientEdit : public QDialog, private Ui::dlgPatientEdit
 {
@@ -22,8 +24,13 @@ private:
 protected:
     cDBPatient      *m_poPatient;
     cDBPostponed    *m_poPostponed;
+    cDBAddress      *m_poAddress;
+    cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbDoctor_clicked();
+    void on_pbCompany_clicked();
+    void on_pbHealthInsurance_clicked();
     void on_pbAttendances_clicked();
     void on_pbCitySearch_clicked();
     void on_ledZip_textEdited(QString );
