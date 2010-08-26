@@ -100,8 +100,8 @@ ALTER TABLE `doctors` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `illnessGroupId`, `healthInsuranceId`, `companyId`, `doctorId`, `name`, `gender`, `dateBirth`, `uniqueId`, `email`, `phone`, `weight`, `height`, `medicineCurrent`, `medicineAllergy`, `regularCustomer`, `employee`, `service`, `healthInsurance`, `company`, `doctorProposed`, `comment`, `active`, `archive`) VALUES
- ('0', '0', '0', '0', '0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '0', 'ARC');
+INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `illnessGroupId`, `healthInsuranceId`, `companyId`, `doctorId`, `name`, `gender`, `dateBirth`, `uniqueId`, `email`, `phone`, `weight`, `height`, `illnesses`, `symptoms`, `medicineCurrent`, `medicineAllergy`, `regularCustomer`, `employee`, `service`, `healthInsurance`, `company`, `doctorProposed`, `comment`, `active`, `archive`) VALUES
+ ('0', '0', '0', '0', '0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '0', 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
 ALTER TABLE `patients` auto_increment=1;
 
@@ -120,6 +120,11 @@ UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
 INSERT INTO `patientCardTypes` (`licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
  (0, 'Szervíz kártyák', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', NULL, 0, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -196,3 +201,23 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `active`, `archive` 
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
 
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `active`, `archive`) VALUES
+  ('0', '0', '', '0', '0', '1', 'ARC');
+UPDATE `panelUses` SET `panelUseId`='0' WHERE `panelUseId`=1;
+ALTER TABLE `panelUses` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `discounts` (`discountId`, `licenceId`, `healthInsuranceId`, `companyId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `active`, `archive`) VALUES
+ (NULL, '0', NULL, NULL, '0', '0', '0', '', '', '', 1, "ARC" );
+UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
+ALTER TABLE `discounts` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `address` (`addressId`, `licenceId`, `patientId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `active`, `archive`) VALUES
+ (NULL, '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '1', 'ARC');
+UPDATE `address` SET `addressId`='0' WHERE `addressId`=1;
+ALTER TABLE `address` auto_increment=1;

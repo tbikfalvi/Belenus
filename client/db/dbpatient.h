@@ -48,6 +48,10 @@ public:
     void            setWeight( const int p_nWeight )                                throw();
     int             height() const                                                  throw();
     void            setHeight( const int p_nHeight )                                throw();
+    QString         illnesses()                                                     throw();
+    void            setIllnesses( const QString &p_qsIllnesses )                    throw();
+    QString         symptoms()                                                      throw();
+    void            setSymptoms( const QString &p_qsSymptoms )                      throw();
     QString         medicineCurrent()                                               throw();
     void            setMedicineCurrent( const QString &p_qsMedicineC )              throw();
     QString         medicineAllergy()                                               throw();
@@ -88,6 +92,8 @@ private:
     QString         m_qsPhone;
     int             m_nWeight;
     int             m_nHeight;
+    QString         m_qsIllnesses;
+    QString         m_qsSymptoms;
     QString         m_qsMedicineCurrent;
     QString         m_qsMedicineAllergy;
     bool            m_bRegularCustomer;
@@ -116,6 +122,8 @@ private:
                const QString &p_qsPhone = "",
                const int p_nWeight = 0,
                const int p_nHeight = 0,
+               const QString &p_qsIllnesses = "",
+               const QString &p_qsSymptoms = "",
                const QString &p_qsMedicineCurrent = "",
                const QString &p_qsMedicineAllergy = "",
                const bool p_bRegularCustomer = true,

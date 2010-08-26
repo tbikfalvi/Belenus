@@ -197,6 +197,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
 
         ledHeight->setText( QString::number(m_poPatient->height()) );
         ledWeight->setText( QString::number(m_poPatient->weight()) );
+        ptIllness->setPlainText( m_poPatient->illnesses() );
+        ptSymptom->setPlainText( m_poPatient->symptoms() );
         ptMedicineCurrent->setPlainText( m_poPatient->medicineCurrent() );
         ptMedicineAllergy->setPlainText( m_poPatient->medicineAllergy() );
         ledCountry->setText( m_poAddress->country() );
@@ -343,26 +345,57 @@ bool cDlgPatientEdit::SavePatientData()
         {
             m_poPatient->setLicenceId( g_poPrefs->getLicenceId() );
         }
-        m_poPatient->setPatientOriginId( cmbPatientOrigin->itemData( cmbPatientOrigin->currentIndex() ).toInt() );
-        m_poPatient->setReasonToVisitId( cmbReasonToVisit->itemData( cmbReasonToVisit->currentIndex() ).toInt() );
         m_poPatient->setName( ledName->text() );
         if( rbGenderMale->isChecked() )
             m_poPatient->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poPatient->setGender( 2 );
-        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-MM-dd") );
         m_poPatient->setUniqueId( ledUniqueId->text() );
-/*        m_poPatient->setCountry( ledCountry->text() );
-        m_poPatient->setRegion( ledRegion->text() );
-        m_poPatient->setCity( ledCity->text() );
-        m_poPatient->setZip( ledZip->text() );
-*/
-//      m_poPatient->setAddress( ledAddress->text() );
-
-        m_poPatient->setEmail( ledEmail1->text()+QString("@")+ledEmail2->text() );
-        m_poPatient->setPhone( ledPhone->text() );
+        m_poPatient->setDateBirth( deDateBirth->date().toString("yyyy-MM-dd") );
+        m_poPatient->setRegularCustomer( chkRegularCustomer->isChecked() );
+        m_poPatient->setEmployee( chkEmployee->isChecked() );
+        m_poPatient->setService( chkService->isChecked() );
+        m_poPatient->setHealthInsurance( chkHealthInsurance->isChecked() );
+        if( chkHealthInsurance->isChecked() )
+            m_poPatient->setHealthInsuranceId( cmbHealthInsurance->itemData( cmbHealthInsurance->currentIndex() ).toUInt() );
+        else
+            m_poPatient->setHealthInsuranceId( 0 );
+        m_poPatient->setCompany( chkCompany->isChecked() );
+        if( chkCompany->isChecked() )
+            m_poPatient->setCompanyId( cmbCompany->itemData( cmbCompany->currentIndex() ).toUInt() );
+        else
+            m_poPatient->setCompanyId( 0 );
+        m_poPatient->setDoctorProposed( chkDoctorProposed->isChecked() );
+        if( chkDoctorProposed->isChecked() )
+            m_poPatient->setDoctorId( cmbDoctor->itemData( cmbDoctor->currentIndex() ).toUInt() );
+        else
+            m_poPatient->setDoctorId( 0 );
         m_poPatient->setComment( ptComment->toPlainText() );
 
+        m_poAddress->setPatientId( m_poPatient->id() );
+        m_poAddress->setCountry( ledCountry->text() );
+        m_poAddress->setRegion( ledRegion->text() );
+        m_poAddress->setZip( ledZip->text() );
+        m_poAddress->setCity( ledCity->text() );
+        m_poAddress->setStreet( ledStreet->text() );
+        m_poAddress->setPublicPlaceId( cmbStreet->itemData( cmbStreet->currentIndex() ).toUInt() );
+        m_poAddress->setStreetNumber( ledStreetNumber->text() );
+        m_poAddress->setFloor( ledFloor->text() );
+        m_poAddress->setDoor( ledDoor->text() );
+        m_poPatient->setPhone( ledPhone->text() );
+        m_poPatient->setEmail( ledEmail1->text()+QString("@")+ledEmail2->text() );
+
+        m_poPatient->setHeight( ledHeight->text().toInt() );
+        m_poPatient->setWeight( ledWeight->text().toInt() );
+        m_poPatient->setIllnesses( ptIllness->toPlainText() );
+        m_poPatient->setSymptoms( ptSymptom->toPlainText() );
+        m_poPatient->setMedicineCurrent( ptMedicineCurrent->toPlainText() );
+        m_poPatient->setMedicineAllergy( ptMedicineAllergy->toPlainText() );
+
+        m_poPatient->setPatientOriginId( cmbPatientOrigin->itemData( cmbPatientOrigin->currentIndex() ).toUInt() );
+        m_poPatient->setReasonToVisitId( cmbReasonToVisit->itemData( cmbReasonToVisit->currentIndex() ).toUInt() );
+
+        m_poAddress->save();
         m_poPatient->save();
 
         bRet = true;

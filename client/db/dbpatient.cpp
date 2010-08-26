@@ -13,6 +13,7 @@
 //
 //====================================================================================
 
+#include <QMessageBox>
 #include "belenus.h"
 #include "dbpatient.h"
 
@@ -41,6 +42,8 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const QString &p_qsPhone,
                        const int p_nWeight,
                        const int p_nHeight,
+                       const QString &p_qsIllnesses,
+                       const QString &p_qsSymptoms,
                        const QString &p_qsMedicineCurrent,
                        const QString &p_qsMedicineAllergy,
                        const bool p_bRegularCustomer,
@@ -69,6 +72,8 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_qsPhone               = p_qsPhone;
     m_nWeight               = p_nWeight;
     m_nHeight               = p_nHeight;
+    m_qsIllnesses           = p_qsIllnesses;
+    m_qsSymptoms            = p_qsSymptoms;
     m_qsMedicineCurrent     = p_qsMedicineCurrent;
     m_qsMedicineAllergy     = p_qsMedicineAllergy;
     m_bRegularCustomer      = p_bRegularCustomer;
@@ -100,6 +105,8 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inPhoneIdx              = p_obRecord.indexOf( "phone" );
     int inWeightIdx             = p_obRecord.indexOf( "weight" );
     int inHeightIdx             = p_obRecord.indexOf( "height" );
+    int inIllnessesIdx          = p_obRecord.indexOf( "illnesses" );
+    int inSymptomsIdx           = p_obRecord.indexOf( "symptoms" );
     int inMedCurrentIdx         = p_obRecord.indexOf( "medicineCurrent" );
     int inMedAllergyIdx         = p_obRecord.indexOf( "medicineAllergy" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
@@ -128,6 +135,8 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPhoneIdx ).toString(),
           p_obRecord.value( inWeightIdx ).toInt(),
           p_obRecord.value( inHeightIdx ).toInt(),
+          p_obRecord.value( inIllnessesIdx ).toString(),
+          p_obRecord.value( inSymptomsIdx ).toString(),
           p_obRecord.value( inMedCurrentIdx ).toString(),
           p_obRecord.value( inMedAllergyIdx ).toString(),
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
@@ -217,6 +226,8 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "phone = \"%1\", " ).arg( m_qsPhone );
     qsQuery += QString( "weight = \"%1\", " ).arg( m_nWeight );
     qsQuery += QString( "height = \"%1\", " ).arg( m_nHeight );
+    qsQuery += QString( "illnesses = \"%1\", " ).arg( m_qsIllnesses );
+    qsQuery += QString( "symptoms = \"%1\", " ).arg( m_qsSymptoms );
     qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( m_qsMedicineCurrent );
     qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( m_qsMedicineAllergy );
     qsQuery += QString( "regularCustomer = %1, " ).arg( m_bRegularCustomer );
@@ -232,7 +243,7 @@ void cDBPatient::save() throw( cSevException )
     {
         qsQuery += QString( " WHERE patientId = %1" ).arg( m_uiId );
     }
-
+    QMessageBox::information(0,"",qsQuery);
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
@@ -419,6 +430,26 @@ int cDBPatient::height() const throw()
 void cDBPatient::setHeight( const int p_nHeight ) throw()
 {
     m_nHeight = p_nHeight;
+}
+
+QString cDBPatient::illnesses() throw()
+{
+    return m_qsIllnesses;
+}
+
+void cDBPatient::setIllnesses( const QString &p_qsIllnesses ) throw()
+{
+    m_qsIllnesses = p_qsIllnesses;
+}
+
+QString cDBPatient::symptoms() throw()
+{
+    return m_qsSymptoms;
+}
+
+void cDBPatient::setSymptoms( const QString &p_qsSymptoms ) throw()
+{
+    m_qsSymptoms = p_qsSymptoms;
 }
 
 QString cDBPatient::medicineCurrent() throw()

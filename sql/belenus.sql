@@ -28,8 +28,7 @@ USE `belenus`;
 -- -----------------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------------
--- Liszensz tabla. Ez tartalmazza a kliens alkalmazas liszensz kulcsat es a Studio
--- egyedi adatait.
+-- A kliens alkalmazas liszensz kulcsat es a Studio egyedi adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `licences` (
   `licenceId`               int(10) unsigned        NOT NULL,
@@ -47,8 +46,8 @@ CREATE TABLE `licences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Kliens tabla. A szerver alkalmazasnal van szerepe. Kliens install-nal nincs ra
--- szukseg. A kliens program nem hasznalja.
+-- A szerver alkalmazasnal van szerepe. Kliens install-nal nincs ra szukseg.
+-- A kliens program nem hasznalja.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `clients` (
   `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -61,7 +60,7 @@ CREATE TABLE `clients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- -----------------------------------------------------------------------------------
--- Doktor tabla. A studioban rendelo doktorok adatait tartalmazza.
+-- A studioban rendelo doktorok adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `doctors` (
   `doctorId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -76,7 +75,7 @@ CREATE TABLE `doctors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Doktorok rendelesi idejet tartalmazo tabla.
+-- A doktorok rendelesi idejet tartalmazo tabla.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `doctorSchedule` (
   `doctorScheduleId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -103,7 +102,7 @@ CREATE TABLE `logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Panel tipus tabla. A kliens alkalmazasban mukodtetett panelok tipusait tartalmazza.
+-- A kliens alkalmazasban mukodtetett panelok tipusait tartalmazza.
 -- Paneltipus hatarozza meg az adott panel mukodeset.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panelTypes` (
@@ -117,7 +116,7 @@ CREATE TABLE `panelTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Panel tabla. A kliens alkalmazasban mukodtetett panelokat tartalmazza.
+-- A kliens alkalmazasban mukodtetett panelokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panels` (
   `panelId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -133,7 +132,8 @@ CREATE TABLE `panels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Panel tabla. A kliens alkalmazasban mukodtetett panelokat tartalmazza.
+-- A panelok (gepek) hasznalatait tartalmazo tabla.
+-- Minden egyes hasznalat egy rekordban van rogzitve.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panelUses` (
   `panelUseId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -142,6 +142,7 @@ CREATE TABLE `panelUses` (
   `name`                    varchar(50)             NOT NULL,
   `useTime`                 int(11)                 NOT NULL,
   `usePrice`                int(11)                 NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelUseId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -149,7 +150,7 @@ CREATE TABLE `panelUses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- activateCommand tabla. A statuszokhoz tartozo parancsokat tartalmazza.
+-- A panel statuszokhoz tartozo parancsokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `activateCommand` (
   `activateCommandId`       int(10) unsigned        NOT NULL,
@@ -158,8 +159,8 @@ CREATE TABLE `activateCommand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Panel status tabla. A kliens alkalmazasban mukodtetett panelok kulonbozo status-ait
--- tartalmazza, melyek panel tipusokhoz kapcsolodnak.
+-- A kliens alkalmazasban mukodtetett panelok kulonbozo status-ait tartalmazza.
+-- A statusok a panel tipusokhoz kapcsolodnak.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panelStatuses` (
   `panelStatusId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -177,7 +178,7 @@ CREATE TABLE `panelStatuses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Kartya tipus tabla. A studioban eladott kartyak tipusait tartalmazza.
+-- A studioban hasznalhato kartyak tipusait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patientCardTypes` (
   `patientCardTypeId`       int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -197,8 +198,8 @@ CREATE TABLE `patientCardTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- patientOrigin tabla. Opcionalis. Azokat a helyeket tartalmazza, ahonnan a paciens
--- ertesulhetett a studio-rol.
+-- Opcionalis.
+-- Azokat a helyeket tartalmazza, ahonnan a paciens ertesulhetett a studio-rol.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patientOrigin` (
   `patientOriginId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -211,7 +212,8 @@ CREATE TABLE `patientOrigin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- reasonToVisit tabla. Opcionalis. Az indokokat tartalmazza, amiert jott a paciens
+-- Opcionalis.
+-- Az indokokat tartalmazza, amiert jott a paciens
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `reasonToVisit` (
   `reasonToVisitId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -224,7 +226,8 @@ CREATE TABLE `reasonToVisit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- illnessGroups tabla. Opcionalis.
+-- Opcionalis.
+-- A vendegekhez kotheto betegsegcsoportokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `illnessGroups` (
   `illnessGroupId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -237,8 +240,9 @@ CREATE TABLE `illnessGroups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- zipRegionCity tabla. Opcionalis. Azokat a helyeket tartalmazza, ahonnan a paciens
--- ertesulhetett a studio-rol.
+-- Opcionalis.
+-- A vendegekhez kotheto cimekhez elore feltoltott megye, telepules es iranyitoszam
+-- rekordokat tartalmaz.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `zipRegionCity` (
   `zipRegionCityId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -253,9 +257,12 @@ CREATE TABLE `zipRegionCity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- A vendegekhez kotheto cimekhez a kozteruletek neveit tartalmazza
+-- -----------------------------------------------------------------------------------
 CREATE TABLE `publicPlaces` (
   `publicPlaceId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        DEFAULT 0,
   `name`                    varchar(100)            NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -263,6 +270,9 @@ CREATE TABLE `publicPlaces` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- A vendegekhez kotheto egeszsegpenztarak neveit tartalmazza
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `healthInsurances` (
   `healthInsuranceId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -275,6 +285,9 @@ CREATE TABLE `healthInsurances` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- A vendegekhez kotheto cegek neveit tartalmazza.
+-- -----------------------------------------------------------------------------------
 CREATE TABLE `companies` (
   `companyId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
@@ -286,7 +299,8 @@ CREATE TABLE `companies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Paciens tabla. Opcionalis. A studio vendegeinek adatait tartalmazza.
+-- Opcionalis.
+-- A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
   `patientId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -305,6 +319,8 @@ CREATE TABLE `patients` (
   `phone`                   varchar(100)            DEFAULT NULL,
   `weight`                  int(11)                 DEFAULT NULL,
   `height`                  int(11)                 DEFAULT NULL,
+  `illnesses`               varchar(500)            DEFAULT NULL,
+  `symptoms`                varchar(500)            DEFAULT NULL,
   `medicineCurrent`         varchar(500)            DEFAULT NULL,
   `medicineAllergy`         varchar(500)            DEFAULT NULL,
   `regularCustomer`         tinyint(1)              DEFAULT 0,
@@ -327,10 +343,11 @@ CREATE TABLE `patients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Pacienshez kotheto cimek
+-- Opcionalis.
+-- A vendegekhez kotheto cimeket tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `address` (
-  `addressId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `addressId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        NOT NULL,
   `publicPlaceId`           int(10) unsigned        NOT NULL,
@@ -353,7 +370,7 @@ CREATE TABLE `address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Paciensek altal lefoglalt idopontokat tartalmazo tabla.
+-- Paciensek altal lefoglalt idopontokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `attendanceSchedule` (
   `attendanceScheduleId`    int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -371,7 +388,8 @@ CREATE TABLE `attendanceSchedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- attendance tabla. Opcionalis. A paciensek kezeleseit nyilvantarto tabla
+-- Opcionalis.
+-- A vendegek kezeleseit nyilvantarto tabla
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `attendance` (
   `attendanceId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -392,8 +410,8 @@ CREATE TABLE `attendance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- toBeFilled tabla. Opcionalis. A nem kitoltott paciensek illetve kezelesekre
--- mutato rekordok
+-- Opcionalis.
+-- A nem kitoltott paciensek illetve kezelesekre mutato rekordok
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `toBeFilled` (
   `toBeFilledId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -405,7 +423,7 @@ CREATE TABLE `toBeFilled` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Kartya tabla. A studioban eladott kartyak adatait tartalmazza.
+-- A studioban rogzitett, eladott kartyak adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patientCards` (
   `patientCardId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -427,6 +445,7 @@ CREATE TABLE `patientCards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Opcionalis.
 -- Pacienseket es kartyakat osszekoto tabla arra az esetre, ha nem a kartyatulajdonos
 -- hasznalja a kartyat
 -- -----------------------------------------------------------------------------------
@@ -442,7 +461,7 @@ CREATE TABLE `connectPatientWithCard` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Kartya tortenet tabla. A studioban eladott kartyak hasznalatait tartalmazza.
+-- A studioban eladott kartyak hasznalatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patientCardHistories` (
   `patientCardHistoryId`    int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -459,8 +478,8 @@ CREATE TABLE `patientCardHistories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Termek tipus tabla. Opcionalis. A studioban forgalmazott termekek csoportjait
--- tartalmazza.
+-- Opcionalis.
+-- A studioban forgalmazott termekek csoportjait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `productTypes` (
   `productTypeId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -473,7 +492,8 @@ CREATE TABLE `productTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Termek tabla. Opcionalis. A studioban forgalmazott termekeket tartalmazza.
+-- Opcionalis.
+-- A studioban forgalmazott termekeket tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `products` (
   `productId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -490,7 +510,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Felhasznalo tabla. A kliens alkalmazast uzemelteto felhasznalok adatait tartalmazza
+-- A kliens alkalmazast uzemelteto felhasznalok adatait tartalmazza
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `users` (
   `userId`                  int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -508,7 +528,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Penztar tabla.
+-- A kliens alkalmazas napi penzforgalmanak egyenleget tartalmazza.
+-- Minden rekord egy felhasznalohoz kotheto.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `cassa` (
   `cassaId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -525,7 +546,8 @@ CREATE TABLE `cassa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Penztar tabla.
+-- A kliens alkalmazas penzforgalmat tartalmazza.
+-- Minden egyes penzforgalom egy kulon rekord.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `cassaHistory` (
   `cassaHistoryId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -545,7 +567,7 @@ CREATE TABLE `cassaHistory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Penztar tabla.
+-- Penz cimleteket tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `denominations` (
   `denominationId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -559,7 +581,7 @@ CREATE TABLE `denominations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Penztar tabla.
+-- A kulonbozo penztarak zarasaihoz tartalmazo cimleteket tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `cassaDenominations` (
   `denominationId`          int(10) unsigned        NOT NULL,
@@ -574,36 +596,52 @@ CREATE TABLE `cassaDenominations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Szamla tabla.
+-- Kulonbozo a rendszerbe felvett kedvezmenyeket tartalmazza.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `invoices` (
-  `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+CREATE TABLE `discounts` (
+  `discountId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `healthInsuranceId`       int(10) unsigned        DEFAULT NULL,
+  `companyId`               int(10) unsigned        DEFAULT NULL,
+  `regularCustomer`         tinyint(1)              DEFAULT 0,
+  `employee`                tinyint(1)              DEFAULT 0,
+  `service`                 tinyint(1)              DEFAULT 0,
   `name`                    varchar(100)            NOT NULL,
-  `country`                 varchar(100)            DEFAULT NULL,
-  `region`                  varchar(100)            NOT NULL,
-  `city`                    varchar(100)            NOT NULL,
-  `zip`                     varchar(10)             NOT NULL,
-  `address`                 varchar(100)            NOT NULL,
-  `product`                 varchar(100)            NOT NULL,
-  `netPrice`                int(11)                 NOT NULL,
-  `vatpercent`              int(11)                 NOT NULL,
-  `totalPrice`              int(11)                 NOT NULL,
-  `invoiceReady`            tinyint(1)              DEFAULT 0,
-  PRIMARY KEY (`invoiceId`)
+  `discountValue`           int(11)                 NOT NULL,
+  `discountPercent`         int(11)                 NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`discountId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`healthInsuranceId`) REFERENCES `healthInsurances` (`healthInsuranceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Kosar tabla.
+-- A studio szamlakiadasahoz tartozo adatokat tartalmazza.
+-- Minden egyes rekord egy onallo egyseget ir le a szamlaban, azaz minden rekord
+-- egy sor a szamlaban.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `carts` (
-  `cartId`                  int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `panelId`                 int(10) unsigned        NOT NULL,
-  `productId`               int(10) unsigned        NOT NULL,
-  `patientCardTypeId`       int(10) unsigned        NOT NULL,
-  PRIMARY KEY (`cartId`),
-  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+CREATE TABLE `invoices` (
+  `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `addressId`               int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        DEFAULT NULL,
+  `patientCardId`           int(10) unsigned        DEFAULT NULL,
+  `panelUseId`              int(10) unsigned        DEFAULT NULL,
+  `discountId`              int(10) unsigned        DEFAULT NULL,
+  `netPrice`                int(11)                 NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
+  `vat`                     int(11)                 NOT NULL,
+  `totalPrice`              int(11)                 NOT NULL,
+  `invoiceReady`            tinyint(1)              DEFAULT 0,
+  PRIMARY KEY (`invoiceId`),
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`addressId`) REFERENCES `address` (`addressId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelUseId`) REFERENCES `panelUses` (`panelUseId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`discountId`) REFERENCES `discounts` (`discountId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
