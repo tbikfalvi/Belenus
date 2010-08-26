@@ -7,7 +7,7 @@
 
 class ConsoleWriter : public LogWriter {
 public:
-    ConsoleWriter(const cSeverity::teSeverity sev) : LogWriter(sev) {}
+    ConsoleWriter(const cSeverity::teSeverity sev = cSeverity::WARNING) : LogWriter(sev) {}
 protected:
     virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
 };

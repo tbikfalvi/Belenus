@@ -27,6 +27,9 @@ HEADERS = belenus.h \
     ../framework/dlgcrud.h \
     ../framework/qtframework.h \
     ../framework/qtlogger.h \
+    ../framework/logger/DatabaseWriter.h \
+    ../framework/logger/GUIWriter.h \
+    ../framework/logger/ConsoleWriter.h \
     ../framework/qtmysqlconnection.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
@@ -34,7 +37,7 @@ HEADERS = belenus.h \
     ../framework/network/sqlResult.h \
     ../framework/network/protocolException.h \
     ../framework/network/packet.h \
-    ../framework/network/connection.h \
+    ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
     crud/dlgusers.h \
     crud/dlgpatientorigin.h \
@@ -100,12 +103,15 @@ SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
     ../framework/qtlogger.cpp \
+    ../framework/logger/DatabaseWriter.cpp \
+    ../framework/logger/GUIWriter.cpp \
+    ../framework/logger/ConsoleWriter.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
     ../framework/tracer.cpp \
     ../framework/network/sqlResult.cpp \
     ../framework/network/packet.cpp \
-    ../framework/network/connection.cpp \
+    ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
     crud/dlgusers.cpp \
     crud/dlgpatientorigin.cpp \
@@ -166,7 +172,7 @@ SOURCES = main.cpp \
     wndmain.cpp \
     cassa.cpp \
     ledger.cpp
-win32 { 
+win32 {
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }

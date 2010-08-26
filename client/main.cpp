@@ -6,6 +6,9 @@
 #include <QSplashScreen>
 
 #include "../framework/qtlogger.h"
+#include "../framework/logger/GUIWriter.h"
+#include "../framework/logger/DatabaseWriter.h"
+#include "../framework/logger/ConsoleWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "db/dbuser.h"
 #include "preferences.h"
@@ -20,6 +23,9 @@
 #include "wndmain.h"
 
 cQTLogger                g_obLogger;
+DatabaseWriter           g_obLogDBWriter;
+GUIWriter                g_obLogGUIWriter;
+ConsoleWriter            g_obLogConsoleWriter;
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
@@ -33,6 +39,10 @@ int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
 
+    g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
+    g_obLogger.attachWriter("db", &g_obLogDBWriter);
+    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
+    g_obLogger.setMinimumSeverity("console", cSeverity::DEBUG);
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
@@ -66,7 +76,7 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
-        // g_obLogger.setDBConnection( g_poDB );
+        g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
         qsSpalsh += QObject::tr(" CONNECTED.\n");
@@ -78,6 +88,7 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poServer = new BelenusServerConnection();
+        g_poServer->start();
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
         g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );
 

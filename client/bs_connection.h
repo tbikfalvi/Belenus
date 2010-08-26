@@ -20,13 +20,15 @@
 
 #include <QString>
 #include <QtNetwork>
-#include "../framework/network/connection.h"
+#include <QThread>
+#include <QHostAddress>
+#include "../framework/network/CommunicationProtocol.h"
 #include "../framework/qtlogger.h"
 
 
 
 //====================================================================================
-class BelenusServerConnection : public Connection
+class BelenusServerConnection : public QThread, CommunicationProtocol
 {
     Q_OBJECT
 
@@ -43,11 +45,27 @@ public:
     BelenusServerConnection();
     virtual ~BelenusServerConnection();
 
+    void connectTo(const QHostAddress adr, int port);
+
     void setLoginKeys(QString serial, QString code2);
     ConnectionStatus    getStatus() { return _status; }
 
-private:
-    void _initialize();
+
+signals:
+    void connected();
+    void disconnected();
+    void error(QAbstractSocket::SocketError);
+
+protected slots:
+    void _error(QAbstractSocket::SocketError);
+    void _disconnected();
+    void _connected();
+    virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
+
+
+protected:
+    virtual void run();
+
     void _handleLogonChallenge();
     void _handleLogonOk();
 

@@ -16,6 +16,7 @@
 #include <QMessageBox>
 
 #include "wndmain.h"
+#include "../framework/logger/DatabaseWriter.h"
 
 //====================================================================================
 
@@ -58,6 +59,10 @@
 #include "dlg/dlginputstart.h"
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
+
+
+extern DatabaseWriter g_obLogDBWriter;
+
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -171,7 +176,7 @@ bool cWndMain::showLogIn()
 
     if( boLogInOK )
     {
-        g_obLogger.setAppUser( g_obUser.id() );
+        g_obLogDBWriter.setAppUser( g_obUser.id() );
         g_obLogger(cSeverity::INFO) << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged in" << EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
@@ -575,7 +580,7 @@ void cWndMain::on_action_LogOut_triggered()
     g_obLogger(cSeverity::INFO) << "User " << g_obUser.name().c_str() << " (" << g_obUser.realName().c_str() << ") logged out" << EOM;
 
     g_obUser.logOut();
-    g_obLogger.setAppUser( 0 );
+    g_obLogDBWriter.setAppUser( 0 );
     updateTitle();
 
     if( !showLogIn() ) close();

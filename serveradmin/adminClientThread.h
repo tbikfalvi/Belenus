@@ -48,7 +48,6 @@ protected:
     virtual void run();
 
 
-    void _initialize();
     void _handleHello(int version);
     void _handleLogonChallenge();
     void _handleLogonOk();

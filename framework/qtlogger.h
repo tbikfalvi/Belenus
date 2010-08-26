@@ -70,9 +70,6 @@ public:
     cQTLogger();
     ~cQTLogger();
 
-    void         setAppUser( const unsigned int p_uiUser );
-    unsigned int getAppUser( void ) const;
-
     void logMessage( const cSeverity::teSeverity p_enLevel, const QString &p_stMessage );
 
     void attachWriter( const QString name, LogWriter* );
