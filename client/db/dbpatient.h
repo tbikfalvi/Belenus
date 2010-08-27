@@ -32,6 +32,7 @@ public:
     void            setCompanyId( const unsigned int p_nCompanyId )                 throw();
     unsigned int    doctorId() const                                                throw();
     void            setDoctorId( const unsigned int p_nDoctorId )                   throw();
+    QString         dateCreated() const                                             throw();
     QString         name() const                                                    throw();
     void            setName( const QString &p_qsName )                              throw();
     int             gender() const                                                  throw();
@@ -84,6 +85,7 @@ private:
     unsigned int    m_uiHealthInsuranceId;
     unsigned int    m_uiCompanyId;
     unsigned int    m_uiDoctorId;
+    QString         m_qsDateCreated;
     QString         m_qsName;
     int             m_nGender;
     QString         m_qsDateBirth;
@@ -114,6 +116,7 @@ private:
                const unsigned int p_uiHealthInsuranceId = 0,
                const unsigned int p_uiCompanyId = 0,
                const unsigned int p_uiDoctorId = 0,
+               const QString &p_qsDateCreated = "",
                const QString &p_qsName = "",
                const int p_nGender = 0,
                const QString &p_qsDateBirth = "",

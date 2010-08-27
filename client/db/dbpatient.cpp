@@ -34,6 +34,7 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const unsigned int p_uiHealthInsuranceId,
                        const unsigned int p_uiCompanyId,
                        const unsigned int p_uiDoctorId,
+                       const QString &p_qsDateCreated,
                        const QString &p_qsName,
                        const int p_nGender,
                        const QString &p_qsDateBirth,
@@ -64,6 +65,7 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_uiHealthInsuranceId   = p_uiHealthInsuranceId;
     m_uiCompanyId           = p_uiCompanyId;
     m_uiDoctorId            = p_uiDoctorId;
+    m_qsDateCreated         = p_qsDateCreated;
     m_qsName                = p_qsName;
     m_nGender               = p_nGender;
     m_qsDateBirth           = p_qsDateBirth;
@@ -97,6 +99,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inHealthInsuranceIdIdx  = p_obRecord.indexOf( "healthInsuranceId" );
     int inCompanyIdIdx          = p_obRecord.indexOf( "companyId" );
     int inDoctorIdIdx           = p_obRecord.indexOf( "doctorId" );
+    int inDateCreatedIdx        = p_obRecord.indexOf( "created" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inGenderIdx             = p_obRecord.indexOf( "gender" );
     int inDateBirthIdx          = p_obRecord.indexOf( "dateBirth" );
@@ -127,6 +130,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inHealthInsuranceIdIdx ).toInt(),
           p_obRecord.value( inCompanyIdIdx ).toInt(),
           p_obRecord.value( inDoctorIdIdx ).toInt(),
+          p_obRecord.value( inDateCreatedIdx ).toString(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inGenderIdx ).toInt(),
           p_obRecord.value( inDateBirthIdx ).toString(),
@@ -195,6 +199,7 @@ void cDBPatient::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatient::save" );
     QString  qsQuery;
+    QString qsDateCreated = "";
 
     if( m_uiId )
     {
@@ -204,11 +209,13 @@ void cDBPatient::save() throw( cSevException )
         {
             m_qsArchive = "MOD";
         }
+        qsDateCreated = m_qsDateCreated;
     }
     else
     {
         qsQuery = "INSERT INTO";
         m_qsArchive = "NEW";
+        qsDateCreated = QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") );
     }
     qsQuery += " patients SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
@@ -218,6 +225,7 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( m_uiHealthInsuranceId );
     qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );
     qsQuery += QString( "doctorId = \"%1\", " ).arg( m_uiDoctorId );
+    qsQuery += QString( "created = \"%1\", " ).arg( qsDateCreated );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "gender = \"%1\", " ).arg( m_nGender );
     qsQuery += QString( "dateBirth = \"%1\", " ).arg( m_qsDateBirth );
@@ -243,7 +251,7 @@ void cDBPatient::save() throw( cSevException )
     {
         qsQuery += QString( " WHERE patientId = %1" ).arg( m_uiId );
     }
-    QMessageBox::information(0,"",qsQuery);
+
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
@@ -350,6 +358,11 @@ unsigned int cDBPatient::doctorId() const throw()
 void cDBPatient::setDoctorId( const unsigned int p_nDoctorId ) throw()
 {
     m_uiDoctorId = p_nDoctorId;
+}
+
+QString cDBPatient::dateCreated() const throw()
+{
+    return m_qsDateCreated;
 }
 
 QString cDBPatient::name() const throw()

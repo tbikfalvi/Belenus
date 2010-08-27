@@ -311,6 +311,7 @@ CREATE TABLE `patients` (
   `healthInsuranceId`       int(10) unsigned        NOT NULL,
   `companyId`               int(10) unsigned        NOT NULL,
   `doctorId`                int(10) unsigned        NOT NULL,
+  `created`                 datetime                NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `gender`                  int(11)                 DEFAULT NULL,
   `dateBirth`               date                    DEFAULT NULL,
