@@ -20,6 +20,9 @@ public slots:
 
 private:
     bool SavePatientData();
+    void FillHealthInsuranceCombo();
+    void FillCompanyCombo();
+    void FillDoctorCombo();
 
 protected:
     cDBPatient      *m_poPatient;
@@ -28,6 +31,7 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbAddressAdd_clicked();
     void on_pbDoctor_clicked();
     void on_pbCompany_clicked();
     void on_pbHealthInsurance_clicked();

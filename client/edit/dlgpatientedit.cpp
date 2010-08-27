@@ -10,6 +10,10 @@
 #include "../db/dbzipregioncity.h"
 #include "../crud/dlgattendance.h"
 #include "../db/dbpatientcardtype.h"
+#include "../crud/dlgaddress.h"
+#include "crud/dlgcompany.h"
+#include "crud/dlgdoctor.h"
+#include "crud/dlghealthinsurance.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -171,29 +175,11 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         chkEmployee->setChecked( m_poPatient->employee() );
         chkService->setChecked( m_poPatient->service() );
         chkHealthInsurance->setChecked( m_poPatient->healthInsurance() );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT healthInsuranceId, name FROM healthInsurances WHERE archive<>\"DEL\" ORDER BY name" ) );
-        while( poQuery->next() )
-        {
-            cmbHealthInsurance->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-            if( m_poPatient->healthInsuranceId() == poQuery->value( 0 ) )
-                cmbHealthInsurance->setCurrentIndex( cmbHealthInsurance->count()-1 );
-        }
+        FillHealthInsuranceCombo();
         chkCompany->setChecked( m_poPatient->company() );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT companyId, name FROM companies WHERE archive<>\"DEL\" ORDER BY name" ) );
-        while( poQuery->next() )
-        {
-            cmbCompany->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-            if( m_poPatient->companyId() == poQuery->value( 0 ) )
-                cmbCompany->setCurrentIndex( cmbCompany->count()-1 );
-        }
+        FillCompanyCombo();
         chkDoctorProposed->setChecked( m_poPatient->doctorProposed() );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT doctorId, name FROM doctors WHERE archive<>\"DEL\" ORDER BY name" ) );
-        while( poQuery->next() )
-        {
-            cmbDoctor->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-            if( m_poPatient->doctorId() == poQuery->value( 0 ) )
-                cmbDoctor->setCurrentIndex( cmbDoctor->count()-1 );
-        }
+        FillDoctorCombo();
 
         ledHeight->setText( QString::number(m_poPatient->height()) );
         ledWeight->setText( QString::number(m_poPatient->weight()) );
@@ -477,15 +463,72 @@ void cDlgPatientEdit::on_pbAttendances_clicked()
 
 void cDlgPatientEdit::on_pbHealthInsurance_clicked()
 {
+    cDlgHealthInsurance  obDlgHealthInsurance( this );
 
+    obDlgHealthInsurance.exec();
+    FillHealthInsuranceCombo();
 }
 
 void cDlgPatientEdit::on_pbCompany_clicked()
 {
+    cDlgCompany  obDlgCompany( this );
 
+    obDlgCompany.exec();
+    FillCompanyCombo();
 }
 
 void cDlgPatientEdit::on_pbDoctor_clicked()
 {
+    cDlgDoctor  obDlgDoctor( this );
 
+    obDlgDoctor.exec();
+    FillDoctorCombo();
+}
+
+void cDlgPatientEdit::on_pbAddressAdd_clicked()
+{
+    cDlgAddress     obDlgAddress( this );
+
+    obDlgAddress.setPatientId( m_poPatient->id() );
+
+    obDlgAddress.exec();
+}
+
+void cDlgPatientEdit::FillHealthInsuranceCombo()
+{
+    QSqlQuery *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT healthInsuranceId, name FROM healthInsurances WHERE archive<>\"DEL\" ORDER BY name" ) );
+    while( poQuery->next() )
+    {
+        cmbHealthInsurance->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( m_poPatient->healthInsuranceId() == poQuery->value( 0 ) )
+            cmbHealthInsurance->setCurrentIndex( cmbHealthInsurance->count()-1 );
+    }
+}
+
+void cDlgPatientEdit::FillCompanyCombo()
+{
+    QSqlQuery *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT companyId, name FROM companies WHERE archive<>\"DEL\" ORDER BY name" ) );
+    while( poQuery->next() )
+    {
+        cmbCompany->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( m_poPatient->companyId() == poQuery->value( 0 ) )
+            cmbCompany->setCurrentIndex( cmbCompany->count()-1 );
+    }
+}
+
+void cDlgPatientEdit::FillDoctorCombo()
+{
+    QSqlQuery *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT doctorId, name FROM doctors WHERE archive<>\"DEL\" ORDER BY name" ) );
+    while( poQuery->next() )
+    {
+        cmbDoctor->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( m_poPatient->doctorId() == poQuery->value( 0 ) )
+            cmbDoctor->setCurrentIndex( cmbDoctor->count()-1 );
+    }
 }

@@ -1,32 +1,32 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-#include "dlgpatientoriginedit.h"
+#include "dlgcompanyedit.h"
 
-cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOrigin *p_poPatientOrigin )
+cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
     : QDialog( p_poParent )
 {
     setupUi( this );
 
-    setWindowTitle( tr( "Patient origin" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientorigin.png") );
+    setWindowTitle( tr( "Company" ) );
+    setWindowIcon( QIcon("./resources/40x40_company.png") );
 
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
 
-    m_poPatientOrigin = p_poPatientOrigin;
-    if( m_poPatientOrigin )
+    m_poCompany = p_poCompany;
+    if( m_poCompany )
     {
-        ledName->setText( m_poPatientOrigin->name() );
-        if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
+        ledName->setText( m_poCompany->name() );
+        if( m_poCompany->licenceId() == 0 && m_poCompany->id() > 0 )
             checkIndependent->setChecked( true );
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
-            if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
+            if( m_poCompany->licenceId() == 0 && m_poCompany->id() > 0 )
             {
                 ledName->setEnabled( false );
                 poBtnSave->setEnabled( false );
@@ -35,17 +35,17 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
     }
 }
 
-cDlgPatientOriginEdit::~cDlgPatientOriginEdit()
+cDlgCompanyEdit::~cDlgCompanyEdit()
 {
 }
 
-void cDlgPatientOriginEdit::accept ()
+void cDlgCompanyEdit::accept ()
 {
     bool  boCanBeSaved = true;
     if( (ledName->text() == "") )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Patient origin cannot be empty." ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Company name cannot be empty." ) );
     }
 
     if( boCanBeSaved )
@@ -54,15 +54,15 @@ void cDlgPatientOriginEdit::accept ()
         {
             if( checkIndependent->isChecked() )
             {
-                m_poPatientOrigin->setLicenceId( 0 );
+                m_poCompany->setLicenceId( 0 );
             }
             else
             {
-                m_poPatientOrigin->setLicenceId( g_poPrefs->getLicenceId() );
+                m_poCompany->setLicenceId( g_poPrefs->getLicenceId() );
             }
-            m_poPatientOrigin->setName( ledName->text() );
-            m_poPatientOrigin->setActive( true );
-            m_poPatientOrigin->save();
+            m_poCompany->setName( ledName->text() );
+            m_poCompany->setActive( true );
+            m_poCompany->save();
         }
         catch( cSevException &e )
         {

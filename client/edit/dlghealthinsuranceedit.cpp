@@ -1,32 +1,32 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-#include "dlgpatientoriginedit.h"
+#include "dlghealthinsuranceedit.h"
 
-cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOrigin *p_poPatientOrigin )
+cDlgHealthInsuranceEdit::cDlgHealthInsuranceEdit( QWidget *p_poParent, cDBHealthInsurance *p_poHealthInsurance )
     : QDialog( p_poParent )
 {
     setupUi( this );
 
-    setWindowTitle( tr( "Patient origin" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientorigin.png") );
+    setWindowTitle( tr( "Health Insurance Fund" ) );
+    setWindowIcon( QIcon("./resources/40x40_healthinsurance.png") );
 
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
 
-    m_poPatientOrigin = p_poPatientOrigin;
-    if( m_poPatientOrigin )
+    m_poHealthInsurance = p_poHealthInsurance;
+    if( m_poHealthInsurance )
     {
-        ledName->setText( m_poPatientOrigin->name() );
-        if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
+        ledName->setText( m_poHealthInsurance->name() );
+        if( m_poHealthInsurance->licenceId() == 0 && m_poHealthInsurance->id() > 0 )
             checkIndependent->setChecked( true );
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
-            if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
+            if( m_poHealthInsurance->licenceId() == 0 && m_poHealthInsurance->id() > 0 )
             {
                 ledName->setEnabled( false );
                 poBtnSave->setEnabled( false );
@@ -35,17 +35,17 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
     }
 }
 
-cDlgPatientOriginEdit::~cDlgPatientOriginEdit()
+cDlgHealthInsuranceEdit::~cDlgHealthInsuranceEdit()
 {
 }
 
-void cDlgPatientOriginEdit::accept ()
+void cDlgHealthInsuranceEdit::accept ()
 {
     bool  boCanBeSaved = true;
     if( (ledName->text() == "") )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Patient origin cannot be empty." ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Health insurance fund name cannot be empty." ) );
     }
 
     if( boCanBeSaved )
@@ -54,15 +54,15 @@ void cDlgPatientOriginEdit::accept ()
         {
             if( checkIndependent->isChecked() )
             {
-                m_poPatientOrigin->setLicenceId( 0 );
+                m_poHealthInsurance->setLicenceId( 0 );
             }
             else
             {
-                m_poPatientOrigin->setLicenceId( g_poPrefs->getLicenceId() );
+                m_poHealthInsurance->setLicenceId( g_poPrefs->getLicenceId() );
             }
-            m_poPatientOrigin->setName( ledName->text() );
-            m_poPatientOrigin->setActive( true );
-            m_poPatientOrigin->save();
+            m_poHealthInsurance->setName( ledName->text() );
+            m_poHealthInsurance->setActive( true );
+            m_poHealthInsurance->save();
         }
         catch( cSevException &e )
         {
