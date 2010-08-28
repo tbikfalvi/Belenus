@@ -124,6 +124,7 @@ CREATE TABLE `panels` (
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
+  `maxWorkTime`             int(10) unsigned        NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelId`,`licenceID`),

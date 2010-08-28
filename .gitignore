@@ -360,4 +360,4 @@ client/moc_dlgdoctor.cpp
 client/moc_dlgdoctor.o
 client/moc_dlghealthinsurance.cpp
 client/moc_dlghealthinsurance.o
-
+client/dbpanels.o

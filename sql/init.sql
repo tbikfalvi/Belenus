@@ -196,8 +196,8 @@ ALTER TABLE `products` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `active`, `archive` ) VALUES
-  ( 0, 1, "", 0, "ARC" );
+INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 0, 1, "", 0, 0, 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
 

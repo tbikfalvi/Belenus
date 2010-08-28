@@ -84,6 +84,7 @@ HEADERS = belenus.h \
     db/dbcompany.h \
     db/dbhealthinsurance.h \
     db/dbpublicplace.h \
+    db/dbpanels.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -174,6 +175,7 @@ SOURCES = main.cpp \
     db/dbcompany.cpp \
     db/dbhealthinsurance.cpp \
     db/dbpublicplace.cpp \
+    db/dbpanels.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

@@ -22,6 +22,8 @@ public:
     QHBoxLayout     *horizontalLayout2;
     QLabel          *lblWorkTime;
     QLineEdit       *ledWorkTime;
+    QLabel          *lblMaxWorkTime;
+    QLineEdit       *ledMaxWorkTime;
     QSpacerItem     *horizontalSpacer2;
 
     cDlgPanelSettings( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );

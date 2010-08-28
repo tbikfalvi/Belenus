@@ -15,15 +15,15 @@
 
 USE `belenus`;
 
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `active`, `archive` ) VALUES
-  ( 1, 1, "1-es gép", 1, "ARC" ),
-  ( 1, 1, "2-es gép", 1, "ARC" ),
-  ( 1, 1, "3-as gép", 1, "ARC" ),
-  ( 1, 1, "4-es gép", 1, "ARC" ),
-  ( 1, 1, "5-ös gép", 1, "ARC" ),
-  ( 1, 1, "6-os gép", 1, "ARC" ),
-  ( 1, 1, "7-es gép", 1, "ARC" ),
-  ( 1, 1, "8-as gép", 1, "ARC" );
+INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 1, 1, "1-es gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "2-es gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "3-as gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "4-es gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "5-ös gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "6-os gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "7-es gép", 0, 0, 1, "ARC" ),
+  ( 1, 1, "8-as gép", 0, 0, 1, "ARC" );
 
 INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
 (2, 1, '10 alkalmas felnőtt bérlet', 60000, 0, 13, '2010-08-26', '2010-08-26', 365, 20, 1, 'NEW'),
