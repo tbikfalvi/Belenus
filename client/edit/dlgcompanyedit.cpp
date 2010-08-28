@@ -15,6 +15,8 @@ cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_poCompany = p_poCompany;
     if( m_poCompany )

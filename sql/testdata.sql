@@ -45,7 +45,3 @@ INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, 
 
 INSERT INTO `address` (`addressId`, `licenceId`, `patientId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `active`, `archive`) VALUES
  (1, 1, 1, 4, 'Teszt Vásárló', 'Magyarország', 'Pest', 'Budapest', '1234', 'Próba', '1', NULL, NULL, 1, 1, 'ARC');
-
-INSERT INTO `belenus`.`invoices` (`invoiceId`, `patientId`, `addressId`, `productId`, `patientCardId`, `panelUseId`, `discountId`, `netPrice`, `vatpercent`, `totalPrice`, `invoiceReady`) VALUES
- (NULL, '1', '1', '0', '1', '0', '0', '60000', '0', '60000', '0');
-

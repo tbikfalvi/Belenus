@@ -116,7 +116,6 @@
       <string>PatientCard</string>
      </property>
      <addaction name="action_PCSaveToDatabase"/>
-     <addaction name="action_PCActivate"/>
     </widget>
     <addaction name="menuPatient"/>
     <addaction name="separator"/>

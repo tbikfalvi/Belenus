@@ -21,6 +21,13 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
+    QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
+    QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
+    btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
+    btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
     sliConsoleLogLevel->setValue( uiConLevel );

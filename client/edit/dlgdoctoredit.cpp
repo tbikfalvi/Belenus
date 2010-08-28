@@ -15,6 +15,8 @@ cDlgDoctorEdit::cDlgDoctorEdit( QWidget *p_poParent, cDBDoctor *p_poDoctor )
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_poDoctor = p_poDoctor;
     if( m_poDoctor )
