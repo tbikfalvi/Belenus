@@ -88,6 +88,7 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poServer = new BelenusServerConnection();
+        g_poServer->moveToThread(g_poServer);
         g_poServer->start();
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
         g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );

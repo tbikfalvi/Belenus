@@ -62,7 +62,6 @@ protected slots:
     void _connected();
     virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
 
-
 protected:
     virtual void run();
 

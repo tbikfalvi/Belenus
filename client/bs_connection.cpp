@@ -11,6 +11,7 @@ BelenusServerConnection::BelenusServerConnection()
       _code2(""),
       _status(NOT_CONNECTED)
 {
+    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
 }
 
 
@@ -46,9 +47,9 @@ void BelenusServerConnection::_handleLogonOk()
 void BelenusServerConnection::run()
 {
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::run] connection thread started" << EOM;
+
     exec();
 }
-
 
 
 
@@ -59,16 +60,16 @@ void BelenusServerConnection::connectTo(const QHostAddress addr, int port)
         return;
     }
 
-    QTcpSocket *socket = new QTcpSocket(this);
+    QTcpSocket *socket = new QTcpSocket();
     setTcpConnection(socket);
 
     connect( m_socket,   SIGNAL(connected()),                           this, SLOT(_connected()) );
     connect( m_socket,   SIGNAL(disconnected()),                        this, SLOT(_disconnected()) );
     connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   this, SLOT(_error(QAbstractSocket::SocketError)) );
     connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(_read()) );
-    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
 
     m_socket->connectToHost(addr, port);
+    m_socket->moveToThread(this);
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::connectTo] status is CONNECTING" << EOM;
     _status = CONNECTING;
 }
