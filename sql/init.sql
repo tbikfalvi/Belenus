@@ -49,12 +49,24 @@ INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, 
 UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
 ALTER TABLE `patientOrigin` auto_increment=1;
 
+INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'Ismerős/barát ajánlotta', 1, 'ARC'),
+ (2, 0, 'Szórólap', 1, 'ARC'),
+ (3, 0, 'Internet', 1, 'ARC'),
+ (4, 0, 'TV', 1, 'ARC'),
+ (5, 0, 'Újság', 1, 'ARC'),
+ (6, 0, 'Egyéb', 1, 'ARC');
+
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
  (0, 0, '<Nincs megadva>', 1, 'ARC');
 UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
 ALTER TABLE `reasonToVisit` auto_increment=1;
+
+INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'Gyógyulás betegségből', 1, 'ARC'),
+ (2, 0, 'Immunerősítés / regenerálódás', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -141,19 +153,17 @@ INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 1, 'Ismerős/barát ajánlotta', 1, 'ARC'),
- (2, 1, 'Szórólap', 1, 'ARC'),
- (3, 1, 'Internet', 1, 'ARC'),
- (4, 1, 'TV', 1, 'ARC'),
- (5, 1, 'Újság', 1, 'ARC'),
- (6, 1, 'Egyéb', 1, 'ARC');
+INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 0, 1, "", 0, 0, 0, "ARC" );
+UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
+ALTER TABLE `panels` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 1, 'Gyógyulás betegségből', 1, 'ARC'),
- (2, 1, 'Immunerősítés / regenerálódás', 1, 'ARC');
+INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `active`, `archive`) VALUES
+  ('0', '0', '', '0', '0', '1', 'ARC');
+UPDATE `panelUses` SET `panelUseId`='0' WHERE `panelUseId`=1;
+ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
@@ -193,20 +203,6 @@ INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netP
  (NULL, '0', '0', '', '0', '0', '1', 'ARC');
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 0, 1, "", 0, 0, 0, "ARC" );
-UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
-ALTER TABLE `panels` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `active`, `archive`) VALUES
-  ('0', '0', '', '0', '0', '1', 'ARC');
-UPDATE `panelUses` SET `panelUseId`='0' WHERE `panelUseId`=1;
-ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
