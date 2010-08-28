@@ -24,6 +24,8 @@ cDlgAddress::cDlgAddress( QWidget *p_poParent )
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
+    cmbPatient->setEnabled( false );
+
     QSqlQuery *poQuery = NULL;
 
     cmbPatient->addItem( tr("<All patient>"), 0 );
@@ -60,6 +62,7 @@ void cDlgAddress::setPatientId( const unsigned int p_uiPatientId )
             break;
         }
     }
+    setupTableView();
 }
 
 void cDlgAddress::setupTableView()
@@ -74,11 +77,14 @@ void cDlgAddress::setupTableView()
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "City" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Zip" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Address" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "City" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Address" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Public place" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Number" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -86,16 +92,24 @@ void cDlgAddress::setupTableView()
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
+        tbvCrud->resizeColumnToContents( 8 );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "City" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Zip" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Address" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "City" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Address" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Public place" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Number" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
     }
 }
 
@@ -105,17 +119,19 @@ void cDlgAddress::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT addressId, licenceId, city, zip, street, active, archive FROM address";
+        m_qsQuery = "SELECT address.addressId, addressId.licenceId, address.name, address.zip, address.city, address.street, publicPlaces.name, address.streetNumber, address.active FROM address, publicPlaces WHERE AND address.publicPlaceId = publicPlaces.publicPlaceID";
     }
     else
     {
-        m_qsQuery = "SELECT addressId AS id, city, zip, street FROM address WHERE active=1";
+        m_qsQuery = "SELECT address.addressId AS id, address.name, address.zip, address.city, address.street, publicPlaces.name, address.streetNumber FROM address, publicPlaces WHERE address.active = 1 AND address.publicPlaceId = publicPlaces.publicPlaceID";
     }
-    unsigned int uiPatientId = cmbPatient->itemData( cmbPatient->currentIndex() ).toInt();
+    unsigned int uiPatientId = cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt();
     if( uiPatientId > 0 )
     {
-        m_qsQuery += " AND ";
+        m_qsQuery += " AND (";
         m_qsQuery += QString( "patientId=%1" ).arg( uiPatientId );
+        m_qsQuery += " OR ";
+        m_qsQuery += QString( "patientId=0 )" );
     }
 
     cDlgCrud::refreshTable();

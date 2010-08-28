@@ -45,7 +45,7 @@ void cDBAddress::init( const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPatientId       = p_uiPatientId;
-    m_uiPublicPlace     = p_uiPublicPlaceId;
+    m_uiPublicPlaceId   = p_uiPublicPlaceId;
     m_qsName            = p_qsName;
     m_qsCountry         = p_qsCountry;
     m_qsRegion          = p_qsRegion;
@@ -163,6 +163,7 @@ void cDBAddress::save() throw( cSevException )
     qsQuery += QString( "city = \"%1\", " ).arg( m_qsCity );
     qsQuery += QString( "zip = \"%1\", " ).arg( m_qsZip );
     qsQuery += QString( "street = \"%1\", " ).arg( m_qsStreet );
+    qsQuery += QString( "publicPlaceId = \"%1\", " ).arg( m_uiPublicPlaceId );
     qsQuery += QString( "streetNumber = \"%1\", " ).arg( m_qsStreetNumber );
     qsQuery += QString( "floor = \"%1\", " ).arg( m_qsFloor );
     qsQuery += QString( "door = \"%1\", " ).arg( m_qsDoor );
@@ -234,12 +235,12 @@ void cDBAddress::setPatientId( const unsigned int p_uiPatientId ) throw()
 
 unsigned int cDBAddress::publicPlaceId() const throw()
 {
-    return m_uiPublicPlace;
+    return m_uiPublicPlaceId;
 }
 
 void cDBAddress::setPublicPlaceId( const unsigned int p_uiPublicPlace ) throw()
 {
-    m_uiPublicPlace = p_uiPublicPlace;
+    m_uiPublicPlaceId = p_uiPublicPlace;
 }
 
 QString cDBAddress::name() const throw()

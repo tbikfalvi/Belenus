@@ -53,7 +53,7 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientId;
-    unsigned int    m_uiPublicPlace;
+    unsigned int    m_uiPublicPlaceId;
     QString         m_qsName;
     QString         m_qsCountry;
     QString         m_qsRegion;

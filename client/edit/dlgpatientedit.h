@@ -23,6 +23,8 @@ private:
     void FillHealthInsuranceCombo();
     void FillCompanyCombo();
     void FillDoctorCombo();
+    void FillDefaultAddress();
+    void FillPhoneNumber();
 
 protected:
     cDBPatient      *m_poPatient;
@@ -31,6 +33,10 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_deDateBirth_dateChanged(QDate date);
+    void on_cmbDoctor_currentIndexChanged(int index);
+    void on_cmbCompany_currentIndexChanged(int index);
+    void on_cmbHealthInsurance_currentIndexChanged(int index);
     void on_pbAddressAdd_clicked();
     void on_pbDoctor_clicked();
     void on_pbCompany_clicked();

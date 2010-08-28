@@ -18,6 +18,10 @@ public slots:
 
 protected:
     cDBAddress *m_poAddress;
+
+private slots:
+    void on_ledZip_textEdited(QString );
+    void on_pbCitySearch_clicked();
 };
 
 #endif
