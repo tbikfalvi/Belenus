@@ -22,7 +22,11 @@ FORMS = ../framework/dlgcrud.ui \
     dlgcassaaction.ui \
     dlgpaneluseedit.ui \
     dlgillnessgroupedit.ui \
-    dlgpatientcarduse.ui
+    dlgpatientcarduse.ui \
+    dlgaddressedit.ui \
+    dlghealthinsuranceedit.ui \
+    dlgcompanyedit.ui \
+    dlgdoctoredit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -51,6 +55,10 @@ HEADERS = belenus.h \
     crud/dlgpostponedattendanceselect.h \
     crud/dlgattendanceselect.h \
     crud/dlgillnessgroup.h \
+    crud/dlgaddress.h \
+    crud/dlgdoctor.h \
+    crud/dlgcompany.h \
+    crud/dlghealthinsurance.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -71,6 +79,12 @@ HEADERS = belenus.h \
     db/dbpatientcardhistory.h \
     db/dbzipregioncity.h \
     db/dbillnessgroup.h \
+    db/dbaddress.h \
+    db/dbdoctor.h \
+    db/dbcompany.h \
+    db/dbhealthinsurance.h \
+    db/dbpublicplace.h \
+    db/dbpanels.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -93,6 +107,10 @@ HEADERS = belenus.h \
     edit/dlgpaneluseedit.h \
     edit/dlgpatientcarduse.h \
     edit/dlgillnessgroupedit.h \
+    edit/dlgaddressedit.h \
+    edit/dlghealthinsuranceedit.h \
+    edit/dlgcompanyedit.h \
+    edit/dlgdoctoredit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -128,6 +146,10 @@ SOURCES = main.cpp \
     crud/dlgpostponedattendanceselect.cpp \
     crud/dlgattendanceselect.cpp \
     crud/dlgillnessgroup.cpp \
+    crud/dlgaddress.cpp \
+    crud/dlgdoctor.cpp \
+    crud/dlgcompany.cpp \
+    crud/dlghealthinsurance.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
@@ -148,6 +170,12 @@ SOURCES = main.cpp \
     db/dbpatientcardhistory.cpp \
     db/dbzipregioncity.cpp \
     db/dbillnessgroup.cpp \
+    db/dbaddress.cpp \
+    db/dbdoctor.cpp \
+    db/dbcompany.cpp \
+    db/dbhealthinsurance.cpp \
+    db/dbpublicplace.cpp \
+    db/dbpanels.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -170,6 +198,10 @@ SOURCES = main.cpp \
     edit/dlgpaneluseedit.cpp \
     edit/dlgpatientcarduse.cpp \
     edit/dlgillnessgroupedit.cpp \
+    edit/dlgaddressedit.cpp \
+    edit/dlghealthinsuranceedit.cpp \
+    edit/dlgcompanyedit.cpp \
+    edit/dlgdoctoredit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
@@ -189,5 +221,6 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-#CONFIG += console
+
+# CONFIG += console
 win32:DEFINES -= UNICODE

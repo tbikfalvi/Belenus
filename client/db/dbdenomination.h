@@ -36,7 +36,7 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiDenomination = 0,
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const string &p_stArchive = "NEW" )                          throw();
     void init( const QSqlRecord &p_obRecord )                               throw();
 };

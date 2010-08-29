@@ -48,7 +48,7 @@ private:
                const int p_nCurrentBalance = 0,
                const QString p_qsStartDateTime = "",
                const QString p_qsStopDateTime = "",
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };

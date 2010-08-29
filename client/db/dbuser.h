@@ -80,7 +80,7 @@ private:
                const QString &p_qsRealName = "",
                const QString &p_qsPassword = "",
                const cAccessGroup::teAccessGroup p_enGroup = cAccessGroup::USER,
-               const bool p_boActive = false,
+               const bool p_boActive = true,
                const QString &p_qsComment = "",
                const QString &p_qsArchive = "NEW" )     throw();
     void init( const QSqlRecord &p_obRecord )          throw();

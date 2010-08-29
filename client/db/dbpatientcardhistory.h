@@ -47,7 +47,7 @@ private:
                const QString p_qsDateTime = "",
                const int p_nUnits = 0,
                const QString p_qsTime = "",
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                             throw();
     void init( const QSqlRecord &p_obRecord )                                   throw();
 };

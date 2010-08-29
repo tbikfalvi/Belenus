@@ -107,6 +107,19 @@ void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
     init( poQuery->record() );
 }
 
+void cDBPatientCard::loadPatient( const unsigned int p_uiId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientCard::loadPatient", QString( "id: %1" ).arg( p_uiId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() < 1 )
+        throw cSevException( cSeverity::ERROR, "Patient id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBPatientCard::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatientCard::save" );

@@ -3,6 +3,7 @@
 #include "belenus.h"
 #include "dlgpanelsettings.h"
 #include "../edit/dlgpaneluseedit.h"
+#include "../db/dbpanels.h"
 
 cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId )
     : cDlgCrud( p_poParent )
@@ -40,12 +41,26 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     lblWorkTime = new QLabel( this );
     lblWorkTime->setObjectName( QString::fromUtf8( "lblWorkTime" ) );
-    lblWorkTime->setText( tr("Work time: ") );
+    lblWorkTime->setText( tr("Work time (hh:mm:ss): ") );
     horizontalLayout2->addWidget( lblWorkTime );
 
     ledWorkTime = new QLineEdit( this );
     ledWorkTime->setObjectName( QString::fromUtf8( "ledWorkTime" ) );
+    ledWorkTime->setMinimumWidth( 70 );
+    ledWorkTime->setMaximumWidth( 70 );
     horizontalLayout2->addWidget( ledWorkTime );
+
+    lblMaxWorkTime = new QLabel( this );
+    lblMaxWorkTime->setObjectName( QString::fromUtf8( "lblMaxWorkTime" ) );
+    lblMaxWorkTime->setText( tr("Maximum work time (hour): ") );
+    horizontalLayout2->addWidget( lblMaxWorkTime );
+
+    ledMaxWorkTime = new QLineEdit( this );
+    ledMaxWorkTime->setObjectName( QString::fromUtf8( "ledMaxWorkTime" ) );
+    ledMaxWorkTime->setMinimumWidth( 40 );
+    ledMaxWorkTime->setMaximumWidth( 40 );
+    ledMaxWorkTime->setInputMask( "0" );
+    horizontalLayout2->addWidget( ledMaxWorkTime );
 
     horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
@@ -63,25 +78,29 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     if( p_uiPanelId > 0 )
     {
-        QSqlQuery *poQuery;
+        cDBPanel    obDBPanel;
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE panelId=%1" ).arg(p_uiPanelId) );
-        if( poQuery->first() )
+        obDBPanel.load( m_uiPanelId );
+
+        unsigned int hour       = obDBPanel.workTime()/3600;
+        unsigned int minute     = (obDBPanel.workTime()-(hour*3600))/60;
+        unsigned int second     = (obDBPanel.workTime()-(hour*3600))%60;
+
+        QTime   workTime = QTime( hour, minute, second, 0 );
+
+        ledTitle->setText( obDBPanel.title() );
+        ledWorkTime->setText( workTime.toString("hh:mm:ss") );
+        ledMaxWorkTime->setText( QString::number(obDBPanel.maxWorkTime()) );
+
+        QSqlQuery *poQueryType;
+        poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE active=1" ) );
+        while( poQueryType->next() )
         {
-            ledTitle->setText( poQuery->value( 3 ).toString() );
-            ledWorkTime->setText( poQuery->value( 4 ).toString() );
-
-            QSqlQuery *poQueryType;
-            poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE active=1" ) );
-            while( poQueryType->next() )
-            {
-                cmbPanelType->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
-                if( poQueryType->value( 0 ).toUInt() == poQuery->value( 2 ).toUInt() )
-                    cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
-            }
-            if( poQueryType ) delete poQueryType;
+            cmbPanelType->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
+            if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelTypeId() )
+                cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
         }
-        if( poQuery ) delete poQuery;
+        if( poQueryType ) delete poQueryType;
     }
 
     setupTableView();
@@ -233,10 +252,30 @@ void cDlgPanelSettings::saveClicked( bool )
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Title of panel can not be empty." ), QMessageBox::Ok );
     }
+    if( ledMaxWorkTime->text() == "" )
+    {
+        boCanBeSaved = false;
+        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime of panel can not be empty." ), QMessageBox::Ok );
+    }
+    else if( ledMaxWorkTime->text().toUInt() < 1 )
+    {
+        boCanBeSaved = false;
+        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime has to be greater than zero." ), QMessageBox::Ok );
+    }
 
     if( boCanBeSaved )
     {
-        QString  qsQuery;
+        QTime   workTime = QTime::fromString(ledWorkTime->text(),"hh:mm:ss");
+
+        cDBPanel    obDBPanel;
+
+        obDBPanel.load( m_uiPanelId );
+        obDBPanel.setTitle( ledTitle->text() );
+        obDBPanel.setWorkTime( workTime.hour()*3600 + workTime.minute()*60 + workTime.second() );
+        obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+        obDBPanel.save();
+
+/*        QString  qsQuery;
 
         qsQuery = "UPDATE panels SET ";
 
@@ -247,7 +286,7 @@ void cDlgPanelSettings::saveClicked( bool )
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         if( poQuery ) delete poQuery;
-
+*/
         QDialog::accept();
     }
 }

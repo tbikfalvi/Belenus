@@ -13,6 +13,7 @@ public:
 
     void            load( const unsigned int p_uiId )                           throw( cSevException );
     void            load( const QString &p_qsBarcode )                          throw( cSevException );
+    void            loadPatient( const unsigned int p_uiId )                    throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();

@@ -83,6 +83,9 @@ private slots:
     void on_action_EditActualAttendance_triggered();
     void on_action_PayCash_triggered();
     void on_action_IllnessGroup_triggered();
+    void on_action_Company_triggered();
+    void on_action_Doctor_triggered();
+    void on_action_HealthInsurance_triggered();
 };
 
 #endif

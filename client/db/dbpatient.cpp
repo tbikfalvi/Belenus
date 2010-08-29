@@ -13,6 +13,7 @@
 //
 //====================================================================================
 
+#include <QMessageBox>
 #include "belenus.h"
 #include "dbpatient.h"
 
@@ -30,48 +31,62 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const unsigned int p_uiPatientOriginId,
                        const unsigned int p_uiReasonToVisitId,
                        const unsigned int p_uiIllnessGroupId,
+                       const unsigned int p_uiHealthInsuranceId,
+                       const unsigned int p_uiCompanyId,
+                       const unsigned int p_uiDoctorId,
+                       const QString &p_qsDateCreated,
                        const QString &p_qsName,
                        const int p_nGender,
                        const QString &p_qsDateBirth,
                        const QString &p_qsUniqueId,
-                       const QString &p_qsCountry,
-                       const QString &p_qsRegion,
-                       const QString &p_qsCity,
-                       const QString &p_qsZip,
-                       const QString &p_qsAddress,
                        const QString &p_qsEmail,
                        const QString &p_qsPhone,
                        const int p_nWeight,
                        const int p_nHeight,
+                       const QString &p_qsIllnesses,
+                       const QString &p_qsSymptoms,
                        const QString &p_qsMedicineCurrent,
                        const QString &p_qsMedicineAllergy,
+                       const bool p_bRegularCustomer,
+                       const bool p_bEmployee,
+                       const bool p_bService,
+                       const bool p_bHealthInsurance,
+                       const bool p_bCompany,
+                       const bool p_bDoctorProposed,
                        const QString &p_qsComment,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
 {
-    m_uiId              = p_uiId;
-    m_uiLicenceId       = p_uiLicenceId;
-    m_uiPatientOriginId = p_uiPatientOriginId;
-    m_uiReasonToVisitId = p_uiReasonToVisitId;
-    m_uiIllnessGroupId  = p_uiIllnessGroupId;
-    m_qsName            = p_qsName;
-    m_nGender           = p_nGender;
-    m_qsDateBirth       = p_qsDateBirth;
-    m_qsUniqueId        = p_qsUniqueId;
-    m_qsCountry         = p_qsCountry;
-    m_qsRegion          = p_qsRegion;
-    m_qsCity            = p_qsCity;
-    m_qsZip             = p_qsZip;
-    m_qsAddress         = p_qsAddress;
-    m_qsEmail           = p_qsEmail;
-    m_qsPhone           = p_qsPhone;
-    m_nWeight           = p_nWeight;
-    m_nHeight           = p_nHeight;
-    m_qsMedicineCurrent = p_qsMedicineCurrent;
-    m_qsMedicineAllergy = p_qsMedicineAllergy;
-    m_qsComment         = p_qsComment;
-    m_bActive           = p_bActive;
-    m_qsArchive         = p_qsArchive;
+    m_uiId                  = p_uiId;
+    m_uiLicenceId           = p_uiLicenceId;
+    m_uiPatientOriginId     = p_uiPatientOriginId;
+    m_uiReasonToVisitId     = p_uiReasonToVisitId;
+    m_uiIllnessGroupId      = p_uiIllnessGroupId;
+    m_uiHealthInsuranceId   = p_uiHealthInsuranceId;
+    m_uiCompanyId           = p_uiCompanyId;
+    m_uiDoctorId            = p_uiDoctorId;
+    m_qsDateCreated         = p_qsDateCreated;
+    m_qsName                = p_qsName;
+    m_nGender               = p_nGender;
+    m_qsDateBirth           = p_qsDateBirth;
+    m_qsUniqueId            = p_qsUniqueId;
+    m_qsEmail               = p_qsEmail;
+    m_qsPhone               = p_qsPhone;
+    m_nWeight               = p_nWeight;
+    m_nHeight               = p_nHeight;
+    m_qsIllnesses           = p_qsIllnesses;
+    m_qsSymptoms            = p_qsSymptoms;
+    m_qsMedicineCurrent     = p_qsMedicineCurrent;
+    m_qsMedicineAllergy     = p_qsMedicineAllergy;
+    m_bRegularCustomer      = p_bRegularCustomer;
+    m_bEmployee             = p_bEmployee;
+    m_bService              = p_bService;
+    m_bHealthInsurance      = p_bHealthInsurance;
+    m_bCompany              = p_bCompany;
+    m_bDoctorProposed       = p_bDoctorProposed;
+    m_qsComment             = p_qsComment;
+    m_bActive               = p_bActive;
+    m_qsArchive             = p_qsArchive;
 }
 
 void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
@@ -81,21 +96,28 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inPatientOriginIdIdx    = p_obRecord.indexOf( "patientOriginId" );
     int inReasonToVisitIdIdx    = p_obRecord.indexOf( "reasonToVisitId" );
     int inIllnessGroupIdIdx     = p_obRecord.indexOf( "illnessGroupId" );
+    int inHealthInsuranceIdIdx  = p_obRecord.indexOf( "healthInsuranceId" );
+    int inCompanyIdIdx          = p_obRecord.indexOf( "companyId" );
+    int inDoctorIdIdx           = p_obRecord.indexOf( "doctorId" );
+    int inDateCreatedIdx        = p_obRecord.indexOf( "created" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inGenderIdx             = p_obRecord.indexOf( "gender" );
     int inDateBirthIdx          = p_obRecord.indexOf( "dateBirth" );
     int inUniqueIdIdx           = p_obRecord.indexOf( "uniqueId" );
-    int inCountryIdx            = p_obRecord.indexOf( "country" );
-    int inRegionIdx             = p_obRecord.indexOf( "region" );
-    int inCityIdx               = p_obRecord.indexOf( "city" );
-    int inZipIdx                = p_obRecord.indexOf( "zip" );
-    int inAddressIdx            = p_obRecord.indexOf( "address" );
     int inEmailIdx              = p_obRecord.indexOf( "email" );
     int inPhoneIdx              = p_obRecord.indexOf( "phone" );
     int inWeightIdx             = p_obRecord.indexOf( "weight" );
     int inHeightIdx             = p_obRecord.indexOf( "height" );
+    int inIllnessesIdx          = p_obRecord.indexOf( "illnesses" );
+    int inSymptomsIdx           = p_obRecord.indexOf( "symptoms" );
     int inMedCurrentIdx         = p_obRecord.indexOf( "medicineCurrent" );
     int inMedAllergyIdx         = p_obRecord.indexOf( "medicineAllergy" );
+    int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
+    int inEmployeeIdx           = p_obRecord.indexOf( "employee" );
+    int inServiceIdx            = p_obRecord.indexOf( "service" );
+    int inHealthInsuranceIdx    = p_obRecord.indexOf( "healthInsurance" );
+    int inCompanyIdx            = p_obRecord.indexOf( "company" );
+    int inDoctorProposedIdx     = p_obRecord.indexOf( "doctorProposed" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
@@ -105,21 +127,28 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPatientOriginIdIdx ).toInt(),
           p_obRecord.value( inReasonToVisitIdIdx ).toInt(),
           p_obRecord.value( inIllnessGroupIdIdx ).toInt(),
+          p_obRecord.value( inHealthInsuranceIdIdx ).toInt(),
+          p_obRecord.value( inCompanyIdIdx ).toInt(),
+          p_obRecord.value( inDoctorIdIdx ).toInt(),
+          p_obRecord.value( inDateCreatedIdx ).toString(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inGenderIdx ).toInt(),
           p_obRecord.value( inDateBirthIdx ).toString(),
           p_obRecord.value( inUniqueIdIdx ).toString(),
-          p_obRecord.value( inCountryIdx ).toString(),
-          p_obRecord.value( inRegionIdx ).toString(),
-          p_obRecord.value( inCityIdx ).toString(),
-          p_obRecord.value( inZipIdx ).toString(),
-          p_obRecord.value( inAddressIdx ).toString(),
           p_obRecord.value( inEmailIdx ).toString(),
           p_obRecord.value( inPhoneIdx ).toString(),
           p_obRecord.value( inWeightIdx ).toInt(),
           p_obRecord.value( inHeightIdx ).toInt(),
+          p_obRecord.value( inIllnessesIdx ).toString(),
+          p_obRecord.value( inSymptomsIdx ).toString(),
           p_obRecord.value( inMedCurrentIdx ).toString(),
           p_obRecord.value( inMedAllergyIdx ).toString(),
+          p_obRecord.value( inRegularCustomerIdx ).toBool(),
+          p_obRecord.value( inEmployeeIdx ).toBool(),
+          p_obRecord.value( inServiceIdx ).toBool(),
+          p_obRecord.value( inHealthInsuranceIdx ).toBool(),
+          p_obRecord.value( inCompanyIdx ).toBool(),
+          p_obRecord.value( inDoctorProposedIdx ).toBool(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -170,6 +199,7 @@ void cDBPatient::save() throw( cSevException )
 {
     cTracer obTrace( "cDBPatient::save" );
     QString  qsQuery;
+    QString qsDateCreated = "";
 
     if( m_uiId )
     {
@@ -179,32 +209,41 @@ void cDBPatient::save() throw( cSevException )
         {
             m_qsArchive = "MOD";
         }
+        qsDateCreated = m_qsDateCreated;
     }
     else
     {
         qsQuery = "INSERT INTO";
         m_qsArchive = "NEW";
+        qsDateCreated = QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") );
     }
     qsQuery += " patients SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientOriginId = \"%1\", " ).arg( m_uiPatientOriginId );
     qsQuery += QString( "reasonToVisitId = \"%1\", " ).arg( m_uiReasonToVisitId );
     qsQuery += QString( "illnessGroupId = \"%1\", " ).arg( m_uiIllnessGroupId );
+    qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( m_uiHealthInsuranceId );
+    qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );
+    qsQuery += QString( "doctorId = \"%1\", " ).arg( m_uiDoctorId );
+    qsQuery += QString( "created = \"%1\", " ).arg( qsDateCreated );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "gender = \"%1\", " ).arg( m_nGender );
     qsQuery += QString( "dateBirth = \"%1\", " ).arg( m_qsDateBirth );
     qsQuery += QString( "uniqueId = \"%1\", " ).arg( m_qsUniqueId );
-    qsQuery += QString( "country = \"%1\", " ).arg( m_qsCountry );
-    qsQuery += QString( "region = \"%1\", " ).arg( m_qsRegion );
-    qsQuery += QString( "city = \"%1\", " ).arg( m_qsCity );
-    qsQuery += QString( "zip = \"%1\", " ).arg( m_qsZip );
-    qsQuery += QString( "address = \"%1\", " ).arg( m_qsAddress );
     qsQuery += QString( "email = \"%1\", " ).arg( m_qsEmail );
     qsQuery += QString( "phone = \"%1\", " ).arg( m_qsPhone );
     qsQuery += QString( "weight = \"%1\", " ).arg( m_nWeight );
     qsQuery += QString( "height = \"%1\", " ).arg( m_nHeight );
+    qsQuery += QString( "illnesses = \"%1\", " ).arg( m_qsIllnesses );
+    qsQuery += QString( "symptoms = \"%1\", " ).arg( m_qsSymptoms );
     qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( m_qsMedicineCurrent );
     qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( m_qsMedicineAllergy );
+    qsQuery += QString( "regularCustomer = %1, " ).arg( m_bRegularCustomer );
+    qsQuery += QString( "employee = %1, " ).arg( m_bEmployee );
+    qsQuery += QString( "service = %1, " ).arg( m_bService );
+    qsQuery += QString( "healthInsurance = %1, " ).arg( m_bHealthInsurance );
+    qsQuery += QString( "company = %1, " ).arg( m_bCompany );
+    qsQuery += QString( "doctorProposed = %1, " ).arg( m_bDoctorProposed );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -291,6 +330,41 @@ void cDBPatient::setIllnessGroupId( const unsigned int p_uiIllnessGroupId ) thro
     m_uiIllnessGroupId = p_uiIllnessGroupId;
 }
 
+unsigned int cDBPatient::healthInsuranceId() const throw()
+{
+    return m_uiHealthInsuranceId;
+}
+
+void cDBPatient::setHealthInsuranceId( const unsigned int p_nHealthInsuranceId ) throw()
+{
+    m_uiHealthInsuranceId = p_nHealthInsuranceId;
+}
+
+unsigned int cDBPatient::companyId() const throw()
+{
+    return m_uiCompanyId;
+}
+
+void cDBPatient::setCompanyId( const unsigned int p_nCompanyId ) throw()
+{
+    m_uiCompanyId = p_nCompanyId;
+}
+
+unsigned int cDBPatient::doctorId() const throw()
+{
+    return m_uiDoctorId;
+}
+
+void cDBPatient::setDoctorId( const unsigned int p_nDoctorId ) throw()
+{
+    m_uiDoctorId = p_nDoctorId;
+}
+
+QString cDBPatient::dateCreated() const throw()
+{
+    return m_qsDateCreated;
+}
+
 QString cDBPatient::name() const throw()
 {
     return m_qsName;
@@ -329,56 +403,6 @@ QString cDBPatient::uniqueId() const throw()
 void cDBPatient::setUniqueId( const QString &p_qsUniqueId ) throw()
 {
     m_qsUniqueId = p_qsUniqueId;
-}
-
-QString cDBPatient::country() const throw()
-{
-    return m_qsCountry;
-}
-
-void cDBPatient::setCountry( const QString &p_qsCountry ) throw()
-{
-    m_qsCountry = p_qsCountry;
-}
-
-QString cDBPatient::region() const throw()
-{
-    return m_qsRegion;
-}
-
-void cDBPatient::setRegion( const QString &p_qsRegion ) throw()
-{
-    m_qsRegion = p_qsRegion;
-}
-
-QString cDBPatient::city() const throw()
-{
-    return m_qsCity;
-}
-
-void cDBPatient::setCity( const QString &p_qsCity ) throw()
-{
-    m_qsCity = p_qsCity;
-}
-
-QString cDBPatient::zip() const throw()
-{
-    return m_qsZip;
-}
-
-void cDBPatient::setZip( const QString &p_qsZip ) throw()
-{
-    m_qsZip = p_qsZip;
-}
-
-QString cDBPatient::address() const throw()
-{
-    return m_qsAddress;
-}
-
-void cDBPatient::setAddress( const QString &p_qsAddress ) throw()
-{
-    m_qsAddress = p_qsAddress;
 }
 
 QString cDBPatient::email() const throw()
@@ -421,6 +445,26 @@ void cDBPatient::setHeight( const int p_nHeight ) throw()
     m_nHeight = p_nHeight;
 }
 
+QString cDBPatient::illnesses() throw()
+{
+    return m_qsIllnesses;
+}
+
+void cDBPatient::setIllnesses( const QString &p_qsIllnesses ) throw()
+{
+    m_qsIllnesses = p_qsIllnesses;
+}
+
+QString cDBPatient::symptoms() throw()
+{
+    return m_qsSymptoms;
+}
+
+void cDBPatient::setSymptoms( const QString &p_qsSymptoms ) throw()
+{
+    m_qsSymptoms = p_qsSymptoms;
+}
+
 QString cDBPatient::medicineCurrent() throw()
 {
     return m_qsMedicineCurrent;
@@ -439,6 +483,66 @@ QString cDBPatient::medicineAllergy() throw()
 void cDBPatient::setMedicineAllergy( const QString &p_qsMedicineA ) throw()
 {
     m_qsMedicineAllergy = p_qsMedicineA;
+}
+
+bool cDBPatient::regularCustomer() const throw()
+{
+    return m_bRegularCustomer;
+}
+
+void cDBPatient::setRegularCustomer( const bool p_bRegularCustomer ) throw()
+{
+    m_bRegularCustomer = p_bRegularCustomer;
+}
+
+bool cDBPatient::employee() const throw()
+{
+    return m_bEmployee;
+}
+
+void cDBPatient::setEmployee( const bool p_bEmployee ) throw()
+{
+    m_bEmployee = p_bEmployee;
+}
+
+bool cDBPatient::service() const throw()
+{
+    return m_bService;
+}
+
+void cDBPatient::setService( const bool p_bService ) throw()
+{
+    m_bService = p_bService;
+}
+
+bool cDBPatient::healthInsurance() const throw()
+{
+    return m_bHealthInsurance;
+}
+
+void cDBPatient::setHealthInsurance( const bool p_bHealthInsurance ) throw()
+{
+    m_bHealthInsurance = p_bHealthInsurance;
+}
+
+bool cDBPatient::company() const throw()
+{
+    return m_bCompany;
+}
+
+void cDBPatient::setCompany( const bool p_bCompany ) throw()
+{
+    m_bCompany = p_bCompany;
+}
+
+bool cDBPatient::doctorProposed() const throw()
+{
+    return m_bDoctorProposed;
+}
+
+void cDBPatient::setDoctorProposed( const bool p_bDoctorProposed ) throw()
+{
+    m_bDoctorProposed = p_bDoctorProposed;
 }
 
 QString cDBPatient::comment() const throw()

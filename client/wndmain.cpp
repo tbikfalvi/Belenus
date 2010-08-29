@@ -42,6 +42,9 @@
 #include "crud/dlgattendanceselect.h"
 #include "crud/dlgpaneluseselect.h"
 #include "crud/dlgillnessgroup.h"
+#include "crud/dlgcompany.h"
+#include "crud/dlgdoctor.h"
+#include "crud/dlghealthinsurance.h"
 
 //====================================================================================
 
@@ -1041,20 +1044,22 @@ void cWndMain::processInputPatient( QString p_stPatientName )
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
-    if( !mdiPanels->isCanBeStartedByCard() )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("This device already prepared with a patientcard.\n"
-                                 "To start the device with other conditions, please\n"
-                                 "reset the device first with pushing the ESC button.") );
-        return;
-    }
-
     cDBPatientCard  obDBPatientCard;
 
     try
     {
         obDBPatientCard.load( p_stBarcode );
+
+        if( !mdiPanels->isCanBeStartedByCard() &&
+            g_obPatient.id() > 0 &&
+            g_uiPatientAttendanceId > 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("This device already prepared with a patientcard.\n"
+                                     "To start the device with other conditions, please\n"
+                                     "reset the device first with pushing the ESC button.") );
+            return;
+        }
 
         if( obDBPatientCard.active() )
         {
@@ -1354,10 +1359,37 @@ void cWndMain::on_action_PayCash_triggered()
 //====================================================================================
 void cWndMain::on_action_IllnessGroup_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
+    cTracer obTrace( "cWndMain::on_action_IllnessGroup_triggered" );
 
     cDlgIllnessGroup  obDlgIllnessGroup( this );
 
     obDlgIllnessGroup.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Company_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Company_triggered" );
+
+    cDlgCompany  obDlgCompany( this );
+
+    obDlgCompany.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Doctor_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Doctor_triggered" );
+
+    cDlgDoctor  obDlgDoctor( this );
+
+    obDlgDoctor.exec();
+}
+//====================================================================================
+void cWndMain::on_action_HealthInsurance_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_HealthInsurance_triggered" );
+
+    cDlgHealthInsurance  obDlgHealthInsurance( this );
+
+    obDlgHealthInsurance.exec();
 }
 //====================================================================================

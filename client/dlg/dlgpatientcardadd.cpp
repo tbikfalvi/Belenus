@@ -59,8 +59,6 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
     {
         try
         {
-            m_poPatientCard = new cDBPatientCard;
-
             m_poPatientCard->createNew();
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
@@ -68,9 +66,6 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
 
             lblInformation->setText( tr("Patientcard successfully saved to database.") );
             m_pTimer->start(500);
-
-            delete m_poPatientCard;
-            m_poPatientCard = NULL;
         }
         catch( cSevException &e )
         {

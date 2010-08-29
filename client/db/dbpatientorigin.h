@@ -12,32 +12,32 @@ public:
     ~cDBPatientOrigin();
 
     void            load( const unsigned int p_uiId )               throw( cSevException );
-    void            load( const string &p_stName )                  throw( cSevException );
+    void            load( const QString &p_qsName )                 throw( cSevException );
     void            save()                                          throw( cSevException );
     void            remove()                                        throw( cSevException );
     void            createNew()                                     throw();
     unsigned int    id() const                                      throw();
     unsigned int    licenceId() const                               throw();
     void            setLicenceId( const unsigned int p_nLicenceId ) throw();
-    string          name() const                                    throw();
-    void            setName( const string &p_stName )               throw();
+    QString         name() const                                    throw();
+    void            setName( const QString &p_qsName )              throw();
     bool            active() const                                  throw();
     void            setActive( const bool p_bActive )               throw();
-    string          archive() const                                 throw();
-    void            setArchive( const string &p_stArchive )         throw();
+    QString         archive() const                                 throw();
+    void            setArchive( const QString &p_qsArchive )        throw();
 
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
-    string          m_stName;
+    QString         m_qsName;
     bool            m_bActive;
-    string          m_stArchive;
+    QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
-               const string &p_stName = "",
-               const bool p_bActive = false,
-               const string &p_stArchive = "NEW" )                  throw();
+               const QString &p_qsName = "",
+               const bool p_bActive = true,
+               const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };
 

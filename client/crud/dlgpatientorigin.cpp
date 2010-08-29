@@ -102,7 +102,7 @@ void cDlgPatientOrigin::editClicked( bool )
         poPatientOrigin->load( m_uiSelectedId );
 
         cDlgPatientOriginEdit  obDlgEdit( this, poPatientOrigin );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatientOrigin->name() ) );
+        obDlgEdit.setWindowTitle( poPatientOrigin->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();

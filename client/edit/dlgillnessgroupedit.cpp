@@ -15,6 +15,8 @@ cDlgIllnessGroupEdit::cDlgIllnessGroupEdit( QWidget *p_poParent, cDBIllnessGroup
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_poIllnessGroup = p_poIllnessGroup;
     if( m_poIllnessGroup )

@@ -75,7 +75,7 @@ private:
                const int p_inTimeCash = 0,
                const QString &p_qsLedgerTime = "",
                const QString &p_qsComment = "",
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };

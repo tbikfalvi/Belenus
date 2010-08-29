@@ -43,8 +43,14 @@
      </property>
      <addaction name="action_Users"/>
      <addaction name="separator"/>
+     <addaction name="action_Doctor"/>
+     <addaction name="separator"/>
+     <addaction name="action_Company"/>
+     <addaction name="action_HealthInsurance"/>
+     <addaction name="separator"/>
      <addaction name="action_Patientorigin"/>
      <addaction name="action_ReasonToVisit"/>
+     <addaction name="separator"/>
      <addaction name="action_IllnessGroup"/>
      <addaction name="separator"/>
      <addaction name="action_Paneltypes"/>
@@ -110,7 +116,6 @@
       <string>PatientCard</string>
      </property>
      <addaction name="action_PCSaveToDatabase"/>
-     <addaction name="action_PCActivate"/>
     </widget>
     <addaction name="menuPatient"/>
     <addaction name="separator"/>
@@ -448,6 +453,21 @@
   <action name="action_IllnessGroup">
    <property name="text">
     <string>Illness group ...</string>
+   </property>
+  </action>
+  <action name="action_Company">
+   <property name="text">
+    <string>Companies ...</string>
+   </property>
+  </action>
+  <action name="action_Doctor">
+   <property name="text">
+    <string>Doctors ...</string>
+   </property>
+  </action>
+  <action name="action_HealthInsurance">
+   <property name="text">
+    <string>Health Insurance Funds ...</string>
    </property>
   </action>
  </widget>
