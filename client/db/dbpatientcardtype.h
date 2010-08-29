@@ -64,7 +64,7 @@ private:
                const QString &p_qsValidDateTo = "",
                const int p_nValidDays = 0,
                const int p_nUnitTime = 0,
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };

@@ -216,6 +216,6 @@ ALTER TABLE `discounts` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `address` (`addressId`, `licenceId`, `patientId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `active`, `archive`) VALUES
- (NULL, '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '1', 'ARC');
+ (NULL, '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 'ARC');
 UPDATE `address` SET `addressId`='0' WHERE `addressId`=1;
 ALTER TABLE `address` auto_increment=1;

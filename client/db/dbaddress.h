@@ -81,7 +81,7 @@ private:
                const QString &p_qsFloor = "",
                const QString &p_qsDoor = "",
                const bool p_bPrimaryAddress = false,
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                 throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };

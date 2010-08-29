@@ -44,7 +44,7 @@ private:
                const QString &p_qsName = "",
                const QString &p_qsLicence = "",
                const QString &p_qsData = "",
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };

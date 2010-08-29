@@ -45,7 +45,7 @@ private:
                const QString &p_qsZip = "",
                const QString &p_qsRegion = "",
                const QString &p_qsCity = "",
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();
 };

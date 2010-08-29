@@ -40,7 +40,7 @@ private:
                const unsigned int p_uiCassaId = 0,
                const unsigned int p_uiLicenceId = 0,
                const int p_inValue = 0,
-               const string &p_stArchive = "" )                                 throw();
+               const string &p_stArchive = "NEW" )                              throw();
     void init( const QSqlRecord &p_obRecord )                                   throw();
 };
 
