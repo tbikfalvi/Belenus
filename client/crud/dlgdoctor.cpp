@@ -30,8 +30,9 @@ void cDlgDoctor::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Licence" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -44,6 +45,7 @@ void cDlgDoctor::setupTableView()
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Licence" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
 
@@ -57,11 +59,11 @@ void cDlgDoctor::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT doctorId, licenceId, name, active, archive FROM doctors";
+        m_qsQuery = "SELECT doctorId, licenceId, name, doctorLicence, active, archive FROM doctors";
     }
     else
     {
-        m_qsQuery = "SELECT doctorId AS id, name FROM doctors WHERE active=1";
+        m_qsQuery = "SELECT doctorId AS id, name, doctorLicence FROM doctors WHERE active=1";
     }
 
     cDlgCrud::refreshTable();
