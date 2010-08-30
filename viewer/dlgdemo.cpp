@@ -1,5 +1,4 @@
 #include <QString>
-#include <iostream>
 
 #include "../framework/qtframework.h"
 #include "dlgdemo.h"
@@ -19,18 +18,12 @@ cDlgDemo::cDlgDemo( QWidget *parent )
     cmbRegion->setCurrentIndex( 0 );
     if( poRegions ) delete poRegions;
 
-    m_poModel       = new cQTMySQLQueryModel( this );
+    m_poModel       = new QStandardItemModel( this );
     m_poSortedModel = new QSortFilterProxyModel();
     m_poSortedModel->setSourceModel( m_poModel );
     tbvReport->setModel( m_poSortedModel );
 
     refreshTable();
-
-    m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Zip" ) );
-    m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Region" ) );
-    m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "City" ) );
-    tbvReport->resizeColumnToContents( 0 );
-    tbvReport->resizeColumnToContents( 1 );
 
     connect( cmbRegion, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledMinPC, SIGNAL(editingFinished()), this, SLOT(refreshTable()) );
@@ -52,7 +45,23 @@ void cDlgDemo::refreshTable()
     }
     qsQuery += QString( "zip > %1" ).arg( ledMinPC->text() );
 
-    std::cout << qsQuery.toStdString() << std::endl;
+    m_poModel->clear();
 
-    m_poModel->setQuery( qsQuery );
+    m_poModel->setColumnCount( 3 );
+    m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Zip" ) );
+    m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Region" ) );
+    m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "City" ) );
+    tbvReport->resizeColumnToContents( 0 );
+    tbvReport->resizeColumnToContents( 1 );
+
+    QSqlQuery  *poReportResult = NULL;
+    poReportResult = g_poDB->executeQTQuery( qsQuery );
+    while( poReportResult->next() )
+    {
+        QList<QStandardItem*>  obReportRow;
+        obReportRow.append( new QStandardItem( poReportResult->value( 0 ).toString() ) );
+        obReportRow.append( new QStandardItem( poReportResult->value( 1 ).toString() ) );
+        obReportRow.append( new QStandardItem( poReportResult->value( 2 ).toString() ) );
+        m_poModel->appendRow( obReportRow );
+    }
 }

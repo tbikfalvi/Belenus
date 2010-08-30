@@ -2,6 +2,7 @@
 #define DLGDEMO_H
 
 #include <QDialog>
+#include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 
 #include "ui_dlgdemo.h"
@@ -17,7 +18,7 @@ public:
     ~cDlgDemo();
 
 private:
-    cQTMySQLQueryModel     *m_poModel;
+    QStandardItemModel     *m_poModel;
     QSortFilterProxyModel  *m_poSortedModel;
 
 protected slots:
