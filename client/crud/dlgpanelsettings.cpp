@@ -50,6 +50,17 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledWorkTime->setMaximumWidth( 70 );
     horizontalLayout2->addWidget( ledWorkTime );
 
+    pbWTReset = new QPushButton( this );
+    pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
+    pbWTReset->setMinimumHeight( 30 );
+    pbWTReset->setMaximumHeight( 30 );
+    pbWTReset->setText( tr("Reset") );
+    pbWTReset->setToolTip( tr("Reset the worktime of the device.") );
+    pbWTReset->setIconSize( QSize(20,20) );
+    pbWTReset->setIcon( QIcon("./resources/40x40_hourglass.png") );
+    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    horizontalLayout2->addWidget( pbWTReset );
+
     lblMaxWorkTime = new QLabel( this );
     lblMaxWorkTime->setObjectName( QString::fromUtf8( "lblMaxWorkTime" ) );
     lblMaxWorkTime->setText( tr("Maximum work time (hour): ") );
@@ -57,16 +68,34 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     ledMaxWorkTime = new QLineEdit( this );
     ledMaxWorkTime->setObjectName( QString::fromUtf8( "ledMaxWorkTime" ) );
-    ledMaxWorkTime->setMinimumWidth( 40 );
-    ledMaxWorkTime->setMaximumWidth( 40 );
-    ledMaxWorkTime->setInputMask( "0" );
+    ledMaxWorkTime->setMinimumWidth( 50 );
+    ledMaxWorkTime->setMaximumWidth( 50 );
+    ledMaxWorkTime->setInputMask( "0000" );
     horizontalLayout2->addWidget( ledMaxWorkTime );
 
     horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
 
+    horizontalLayout3 = new QHBoxLayout();
+    horizontalLayout3->setObjectName( QString::fromUtf8( "horizontalLayout3" ) );
+
+    horizontalSpacer3 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout3->addItem( horizontalSpacer3 );
+
+    pbCopyToAll = new QPushButton( this );
+    pbCopyToAll->setObjectName( QString::fromUtf8( "pbCopyToAll" ) );
+    pbCopyToAll->setMinimumHeight( 30 );
+    pbCopyToAll->setMaximumHeight( 30 );
+    pbCopyToAll->setText( tr("Copy to all") );
+    pbCopyToAll->setToolTip( tr("Copy and assign all device usages to all other devices.") );
+    pbCopyToAll->setIconSize( QSize(20,20) );
+    pbCopyToAll->setIcon( QIcon("./resources/40x40_save.png") );
+    pbCopyToAll->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    horizontalLayout3->addWidget( pbCopyToAll );
+
     verticalLayout->insertLayout( 0, horizontalLayout1 );
     verticalLayout->insertLayout( 1, horizontalLayout2 );
+    verticalLayout->insertLayout( 3, horizontalLayout3 );
 
     cmbPanelType->setEnabled( false );
     ledWorkTime->setEnabled( false );
@@ -75,6 +104,8 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     m_poBtnSave->setVisible( true );
 
     connect( m_poBtnSave, SIGNAL( clicked( bool ) ), this, SLOT( saveClicked( bool ) ) );
+    connect( pbWTReset, SIGNAL( clicked( bool ) ), this, SLOT( on_pbWTReset_clicked( bool ) ) );
+    connect( pbCopyToAll, SIGNAL( clicked( bool ) ), this, SLOT( on_pbCopyToAll_clicked( bool ) ) );
 
     if( p_uiPanelId > 0 )
     {
@@ -275,18 +306,29 @@ void cDlgPanelSettings::saveClicked( bool )
         obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
         obDBPanel.save();
 
-/*        QString  qsQuery;
-
-        qsQuery = "UPDATE panels SET ";
-
-        qsQuery += QString( "title = \"%1\", " ).arg( ledTitle->text() );
-        qsQuery += QString( "archive = \"%1\" " ).arg( "MOD" );
-        qsQuery += QString( " WHERE panelId = %1" ).arg( m_uiPanelId );
-
-        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-
-        if( poQuery ) delete poQuery;
-*/
         QDialog::accept();
     }
+}
+
+void cDlgPanelSettings::on_pbWTReset_clicked( bool )
+{
+    ledWorkTime->setText( "00:00:00" );
+}
+
+void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
+{
+    for( unsigned int i=1; i<g_poPrefs->getPanelCount()+1; i++ )
+    {
+        if( i != m_uiPanelId )
+        {
+            QString qsQuery = QString( "INSERT INTO panelUses (licenceId, panelId, name, useTime, usePrice, active, archive) "
+                                       "SELECT panelUses.licenceId, %1, panelUses.name, panelUses.useTime, panelUses.usePrice, 1, \"NEW\" "
+                                       "FROM panelUses, panels WHERE panelUses.panelId=panels.panelId AND panels.panelId=%2" ).arg(i).arg(m_uiPanelId);
+
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+            if( poQuery ) delete poQuery;
+        }
+    }
+    QMessageBox::information( this, tr("Information"),
+                              tr("Device usage copy process finished.") );
 }

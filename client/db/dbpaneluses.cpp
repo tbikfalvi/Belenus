@@ -31,6 +31,7 @@ void cDBPanelUses::init( const unsigned int p_uiId,
                          const QString &p_qsName,
                          const unsigned int p_uiUseTime,
                          const unsigned int p_uiUsePrice,
+                         const bool p_bActive,
                          const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
@@ -39,6 +40,7 @@ void cDBPanelUses::init( const unsigned int p_uiId,
     m_qsName            = p_qsName;
     m_uiUseTime         = p_uiUseTime;
     m_uiUsePrice        = p_uiUsePrice;
+    m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
 
@@ -50,6 +52,7 @@ void cDBPanelUses::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inUseTimeIdx        = p_obRecord.indexOf( "useTime" );
     int inUsePriceIdx       = p_obRecord.indexOf( "usePrice" );
+    int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
@@ -58,6 +61,7 @@ void cDBPanelUses::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inUseTimeIdx ).toUInt(),
           p_obRecord.value( inUsePriceIdx ).toUInt(),
+          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
 
@@ -99,6 +103,7 @@ void cDBPanelUses::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "useTime = %1, " ).arg( m_uiUseTime );
     qsQuery += QString( "usePrice = %1, " ).arg( m_uiUsePrice );
+    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
@@ -124,7 +129,7 @@ void cDBPanelUses::remove() throw( cSevException )
         }
         else
         {
-            qsQuery = "UPDATE panelUses SET archive=\"DEL\" ";
+            qsQuery = "UPDATE panelUses SET active=0, archive=\"MOD\" ";
         }
         qsQuery += QString( " WHERE panelUseId = %1" ).arg( m_uiId );
 
@@ -191,6 +196,16 @@ unsigned int cDBPanelUses::usePrice() const throw()
 void cDBPanelUses::setUsePrice( const unsigned int p_uiUsePrice ) throw()
 {
     m_uiUsePrice = p_uiUsePrice;
+}
+
+bool cDBPanelUses::active() const throw()
+{
+    return m_bActive;
+}
+
+void cDBPanelUses::setActive( const bool p_bActive ) throw()
+{
+    m_bActive = p_bActive;
 }
 
 QString cDBPanelUses::archive() const throw()

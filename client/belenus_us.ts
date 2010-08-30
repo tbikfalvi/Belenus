@@ -992,73 +992,93 @@ Time value can not be greater than %1 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="125"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="78"/>
+        <source>Copy to all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="79"/>
+        <source>Copy and assign all device usages to all other devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="144"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="126"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="145"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="127"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="143"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="146"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="162"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="128"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="144"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="147"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="163"/>
         <source>Time length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="129"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="145"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="148"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="164"/>
         <source>Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="130"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="149"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="186"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="205"/>
         <source>New paneluse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="225"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="244"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="226"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="245"/>
         <source>Are you sure you want to delete this paneluse?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="253"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="258"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="263"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="272"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="277"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="282"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="253"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="272"/>
         <source>Title of panel can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="258"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="277"/>
         <source>Maximum worktime of panel can not be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="263"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="282"/>
         <source>Maximum worktime has to be greater than zero.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="327"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="328"/>
+        <source>Device usage copy process finished.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1446,6 +1466,7 @@ Please define a different one.</source>
     </message>
     <message>
         <location filename="dlg/dlgpatientcardadd.cpp" line="54"/>
+        <location filename="dlg/dlgpatientcardadd.cpp" line="63"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1460,7 +1481,18 @@ Please define a different one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpatientcardadd.cpp" line="67"/>
+        <location filename="dlg/dlgpatientcardadd.cpp" line="64"/>
+        <source>Invalid barcode length.
+The length of the new barcode should be %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardadd.cpp" line="66"/>
+        <source>Invalid barcode length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpatientcardadd.cpp" line="80"/>
         <source>Patientcard successfully saved to database.</source>
         <oldsource>Patientcard saved to database.</oldsource>
         <translation type="unfinished"></translation>
@@ -3223,8 +3255,8 @@ Do you want to register it for a new patientcard?</source>
     </message>
     <message>
         <location filename="dlgpaneluseedit.ui" line="36"/>
-        <source>Time (sec):</source>
-        <oldsource>Time :</oldsource>
+        <source>Time (min):</source>
+        <oldsource>Time (sec):</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>

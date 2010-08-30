@@ -33,7 +33,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="lblUseTime">
         <property name="text">
-         <string>Time (sec):</string>
+         <string>Time (min):</string>
         </property>
        </widget>
       </item>

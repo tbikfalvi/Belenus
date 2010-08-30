@@ -53,6 +53,19 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. This barcode already saved into database." ) );
         lblInformation->setText( tr("Barcode already saved into database.") );
+        ledBarcode->setFocus();
+    }
+    else
+    {
+        if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+        {
+            boCanBeSaved = false;
+            QMessageBox::warning( this, tr( "Error" ),
+                                  tr( "Invalid barcode length.\n"
+                                      "The length of the new barcode should be %1." ).arg(g_poPrefs->getBarcodeLength()) );
+            lblInformation->setText( tr("Invalid barcode length.") );
+            ledBarcode->setFocus();
+        }
     }
 
     if( boCanBeSaved )
@@ -81,6 +94,7 @@ void cDlgPatientCardAdd::on_pbExit_clicked()
 
 void cDlgPatientCardAdd::updateInformation()
 {
+    ledBarcode->setFocus();
     ledBarcode->selectAll();
     m_pTimer->stop();
 }
