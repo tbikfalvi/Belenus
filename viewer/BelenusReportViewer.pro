@@ -14,10 +14,20 @@ TRANSLATIONS = brv_us.ts \
     brv_hu.ts
 FORMS = wndmain.ui \
         dlgdemo.ui
-HEADERS = belenusReportViewer.h \
+HEADERS = ../framework/dbconnection.h \
+    ../framework/qtmysqlconnection.h \
+    ../framework/qtmysqlquerymodel.h \
+    ../framework/qtlogger.h \
+    ../framework/tracer.h \
+    belenusReportViewer.h \
     wndmain.h \
     dlgdemo.h
-SOURCES = main.cpp \
+SOURCES = ../framework/dbconnection.cpp \
+    ../framework/qtmysqlconnection.cpp \
+    ../framework/qtmysqlquerymodel.cpp \
+    ../framework/qtlogger.cpp \
+    ../framework/tracer.cpp \
+    main.cpp \
     wndmain.cpp \
     dlgdemo.cpp
 QT += network

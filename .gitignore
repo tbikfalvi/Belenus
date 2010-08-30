@@ -361,6 +361,7 @@ client/moc_dlgdoctor.o
 client/moc_dlghealthinsurance.cpp
 client/moc_dlghealthinsurance.o
 client/dbpanels.o
+viewer/BelenusReportViewer.pro.user
 viewer/Makefile
 viewer/dlgdemo.o
 viewer/moc_dlgdemo.cpp
@@ -371,3 +372,10 @@ viewer/wndmain.o
 viewer/moc_wndmain.cpp
 viewer/moc_wndmain.o
 viewer/ui_wndmain.h
+viewer/dbconnection.o
+viewer/moc_qtmysqlquerymodel.cpp
+viewer/moc_qtmysqlquerymodel.o
+viewer/qtlogger.o
+viewer/qtmysqlconnection.o
+viewer/qtmysqlquerymodel.o
+viewer/tracer.o
