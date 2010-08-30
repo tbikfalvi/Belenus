@@ -304,7 +304,7 @@ void cWndMain::loginUser()
 
                     // Folytatni akarja a mai nap korabban lezart penztarat?
                     if( QMessageBox::question( this, tr("Question"),
-                                               tr( "Do you want to continue the previous cassa record closed today?" ),
+                                               tr( "Do you want to continue the previous cassa record?" ),
                                                QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                     { // Elozo penztar folytatasa
                         g_obCassa.cassaReOpen( uiCassaId );

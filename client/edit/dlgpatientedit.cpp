@@ -25,11 +25,13 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbFinishLater->setIcon( QIcon("./resources/40x40_hourglass.png") );
     pbAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
     pbAddressAdd->setIcon( QIcon("./resources/40x40_address.png") );
+    pbCitySearch->setIcon( QIcon("./resources/40x40_search.png") );
+    pbVerifyAddress->setIcon( QIcon("./resources/40x40_question.png") );
 
     m_poPostponed = p_poPostponed;
     m_poPatient = p_poPatient;
@@ -66,6 +68,64 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
 
         if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             checkIndependent->setChecked( true );
+
+        if( m_poPatient->id() == 0 )
+        {
+            pbAttendances->setEnabled( false );
+        }
+        else
+        {
+            pbFinishLater->setEnabled( false );
+        }
+
+        ledName->setText( m_poPatient->name() );
+        if( m_poPatient->gender() == 1 ) rbGenderMale->setChecked(true);
+        else if( m_poPatient->gender() == 2 ) rbGenderFemale->setChecked(true);
+        deDateBirth->setDate( QDate::fromString(m_poPatient->dateBirth(),"yyyy-MM-dd") );
+        ledUniqueId->setText( m_poPatient->uniqueId() );
+        try
+        {
+            m_poPatientCard->loadPatient( m_poPatient->id() );
+            ledBarcode->setText( m_poPatientCard->barcode() );
+
+            cDBPatientCardType  obDBPatientCardType;
+
+            obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
+            ledPatientcardType->setText( obDBPatientCardType.name() );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Patient id not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            }
+        }
+        chkRegularCustomer->setChecked( m_poPatient->regularCustomer() );
+        chkEmployee->setChecked( m_poPatient->employee() );
+        chkService->setChecked( m_poPatient->service() );
+        chkHealthInsurance->setChecked( m_poPatient->healthInsurance() );
+        FillHealthInsuranceCombo();
+        chkCompany->setChecked( m_poPatient->company() );
+        FillCompanyCombo();
+        chkDoctorProposed->setChecked( m_poPatient->doctorProposed() );
+        FillDoctorCombo();
+
+        ledHeight->setText( QString::number(m_poPatient->height()) );
+        ledWeight->setText( QString::number(m_poPatient->weight()) );
+        ptIllness->setPlainText( m_poPatient->illnesses() );
+        ptSymptom->setPlainText( m_poPatient->symptoms() );
+        ptMedicineCurrent->setPlainText( m_poPatient->medicineCurrent() );
+        ptMedicineAllergy->setPlainText( m_poPatient->medicineAllergy() );
+        FillDefaultAddress();
+        FillPhoneNumber();
+        ledEmail1->setText( m_poPatient->email().left(m_poPatient->email().indexOf("@")) );
+        ledEmail2->setText( m_poPatient->email().mid(m_poPatient->email().indexOf("@")+1) );
+        ptComment->setPlainText( m_poPatient->comment() );
+
+        if( ledZip->text().length() )
+            pbCitySearch->setEnabled( false );
+        else
+            pbCitySearch->setEnabled( true );
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
@@ -122,58 +182,6 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
                 pbAttendances->setEnabled( false );
             }
         }
-        if( m_poPatient->id() == 0 )
-        {
-            pbAttendances->setEnabled( false );
-        }
-        else
-        {
-            pbFinishLater->setEnabled( false );
-        }
-
-        ledName->setText( m_poPatient->name() );
-        if( m_poPatient->gender() == 1 ) rbGenderMale->setChecked(true);
-        else if( m_poPatient->gender() == 2 ) rbGenderFemale->setChecked(true);
-        deDateBirth->setDate( QDate::fromString(m_poPatient->dateBirth(),"yyyy-MM-dd") );
-        ledUniqueId->setText( m_poPatient->uniqueId() );
-        try
-        {
-            m_poPatientCard->loadPatient( m_poPatient->id() );
-            ledBarcode->setText( m_poPatientCard->barcode() );
-
-            cDBPatientCardType  obDBPatientCardType;
-
-            obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
-            ledPatientcardType->setText( obDBPatientCardType.name() );
-        }
-        catch( cSevException &e )
-        {
-            if( QString(e.what()).compare("Patient id not found") != 0 )
-            {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
-            }
-        }
-        chkRegularCustomer->setChecked( m_poPatient->regularCustomer() );
-        chkEmployee->setChecked( m_poPatient->employee() );
-        chkService->setChecked( m_poPatient->service() );
-        chkHealthInsurance->setChecked( m_poPatient->healthInsurance() );
-        FillHealthInsuranceCombo();
-        chkCompany->setChecked( m_poPatient->company() );
-        FillCompanyCombo();
-        chkDoctorProposed->setChecked( m_poPatient->doctorProposed() );
-        FillDoctorCombo();
-
-        ledHeight->setText( QString::number(m_poPatient->height()) );
-        ledWeight->setText( QString::number(m_poPatient->weight()) );
-        ptIllness->setPlainText( m_poPatient->illnesses() );
-        ptSymptom->setPlainText( m_poPatient->symptoms() );
-        ptMedicineCurrent->setPlainText( m_poPatient->medicineCurrent() );
-        ptMedicineAllergy->setPlainText( m_poPatient->medicineAllergy() );
-        FillDefaultAddress();
-        FillPhoneNumber();
-        ledEmail1->setText( m_poPatient->email().left(m_poPatient->email().indexOf("@")) );
-        ledEmail2->setText( m_poPatient->email().mid(m_poPatient->email().indexOf("@")+1) );
-        ptComment->setPlainText( m_poPatient->comment() );
     }
 
     if( g_poPrefs->getDefaultCountry().length() > 0 && m_poPatient->id() == 0 )
@@ -329,7 +337,8 @@ bool cDlgPatientEdit::SavePatientData()
         QString  qsQuery = QString( "UPDATE address SET primaryAddress = 0 WHERE patientId = %1" ).arg( m_poPatient->id() );
         g_poDB->executeQTQuery( qsQuery );
 
-        m_poAddress->setPatientId( m_poPatient->id() );
+        m_poAddress->setLicenceId( g_poPrefs->getLicenceId() );
+        m_poAddress->setName( m_poPatient->name() );
         m_poAddress->setPrimaryAddress( true );
         m_poAddress->setActive( true );
         m_poAddress->setCountry( ledCountry->text() );
@@ -354,8 +363,10 @@ bool cDlgPatientEdit::SavePatientData()
         m_poPatient->setPatientOriginId( cmbPatientOrigin->itemData( cmbPatientOrigin->currentIndex() ).toUInt() );
         m_poPatient->setReasonToVisitId( cmbReasonToVisit->itemData( cmbReasonToVisit->currentIndex() ).toUInt() );
 
-        m_poAddress->save();
         m_poPatient->save();
+
+        m_poAddress->setPatientId( m_poPatient->id() );
+        m_poAddress->save();
 
         bRet = true;
     }
@@ -391,6 +402,10 @@ void cDlgPatientEdit::on_ledZip_textEdited(QString )
             }
         }
     }
+    if( ledZip->text().length() )
+        pbCitySearch->setEnabled( false );
+    else
+        pbCitySearch->setEnabled( true );
 }
 
 void cDlgPatientEdit::on_pbCitySearch_clicked()
@@ -563,6 +578,7 @@ void cDlgPatientEdit::FillDefaultAddress()
     ledCity->setText( m_poAddress->city() );
     ledZip->setText( m_poAddress->zip() );
     ledStreet->setText( m_poAddress->street() );
+    cmbStreet->clear();
     poQuery = g_poDB->executeQTQuery( QString( "SELECT publicPlaceId, name FROM publicPlaces WHERE archive<>\"DEL\" ORDER BY name" ) );
     while( poQuery->next() )
     {
@@ -583,4 +599,9 @@ void cDlgPatientEdit::FillPhoneNumber()
     ledPhoneCountry->setText( m_poPatient->phone().left(inRegionStart) );
     ledPhoneRegion->setText( m_poPatient->phone().mid(inRegionStart+1,inPhoneStart-inRegionStart-1) );
     ledPhone->setText( m_poPatient->phone().mid(inPhoneStart+1) );
+}
+
+void cDlgPatientEdit::on_pbVerifyAddress_clicked()
+{
+
 }

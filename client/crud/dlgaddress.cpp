@@ -141,9 +141,9 @@ void cDlgAddress::enableButtons()
 {
     cTracer obTracer( "cDlgAddress::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnNew->setEnabled( true );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
 }
 
 void cDlgAddress::newClicked( bool )

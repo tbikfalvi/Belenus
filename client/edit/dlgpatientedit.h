@@ -33,6 +33,7 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbVerifyAddress_clicked();
     void on_deDateBirth_dateChanged(QDate date);
     void on_cmbDoctor_currentIndexChanged(int index);
     void on_cmbCompany_currentIndexChanged(int index);

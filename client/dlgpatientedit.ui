@@ -443,12 +443,31 @@
              <widget class="QPushButton" name="pbCitySearch">
               <property name="maximumSize">
                <size>
-                <width>30</width>
+                <width>40</width>
                 <height>16777215</height>
                </size>
               </property>
+              <property name="toolTip">
+               <string>Search the string defined in 'city' field in database for region and zip code.</string>
+              </property>
               <property name="text">
-               <string>?</string>
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbVerifyAddress">
+              <property name="maximumSize">
+               <size>
+                <width>35</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Verify region-zip-city fields with values stored in database.</string>
+              </property>
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>
