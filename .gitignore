@@ -361,3 +361,13 @@ client/moc_dlgdoctor.o
 client/moc_dlghealthinsurance.cpp
 client/moc_dlghealthinsurance.o
 client/dbpanels.o
+viewer/Makefile
+viewer/dlgdemo.o
+viewer/moc_dlgdemo.cpp
+viewer/moc_dlgdemo.o
+viewer/ui_dlgdemo.h
+viewer/main.o
+viewer/wndmain.o
+viewer/moc_wndmain.cpp
+viewer/moc_wndmain.o
+viewer/ui_wndmain.h

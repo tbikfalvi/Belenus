@@ -8,11 +8,17 @@ TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
-#CONFIG += console
+
+# CONFIG += console
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
-HEADERS += belenusReportViewer.h
-SOURCES += main.cpp
+FORMS = wndmain.ui \
+        dlgdemo.ui
+HEADERS = belenusReportViewer.h \
+    wndmain.h \
+    dlgdemo.h
+SOURCES = main.cpp \
+    wndmain.cpp \
+    dlgdemo.cpp
 QT += network
 QT += sql
-#FORMS += mainwindow.ui
