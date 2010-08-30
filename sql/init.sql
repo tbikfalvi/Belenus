@@ -22,25 +22,25 @@ USE `belenus`;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`, `archive`) VALUES
-  ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarorsz√°g', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1, 'ARC');
+  ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarorsz·g', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1, 'ARC');
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`, `archive`) VALUES
-  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarorsz√°g', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1, 'ARC');
+  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarorsz·g', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
-  ( 1, 'admin', 'Adminisztr√°tor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Gy√≥gycentrum alap√©rtelmezett felhaszn√°l√≥ja rendszergazdai jogosults√°gokkal.' );
+  ( 1, 'admin', 'Adminisztr·tor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'GyÛgycentrum alapÈrtelmezett felhaszn·lÛja rendszergazdai jogosults·gokkal.' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
-  ( 1, 'kezelo', 'Kezel≈ë', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Gy√≥gycentrum alap√©rtelmezett felhaszn√°l√≥ja alap felhaszn√°l√≥i jogosults√°gokkal' );
+  ( 1, 'kezelo', 'Kezelı', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'GyÛgycentrum alapÈrtelmezett felhaszn·lÛja alap felhaszn·lÛi jogosults·gokkal' );
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `activateCommand` (`activateCommandId`, `name`) VALUES
- (0, 'Alap √°llapot'),
- (1, 'El≈ëk√©sz√≠t√©s'),
- (3, 'Kezel√©s'),
- (4, 'Ut√≥h≈±t√©s'),
- (9, 'V√°rakoz√°s');
+ (0, 'Alap ·llapot'),
+ (1, 'ElıkÈszÌtÈs'),
+ (3, 'KezelÈs'),
+ (4, 'UtÛh˚tÈs'),
+ (9, 'V·rakoz·s');
 
 -- -----------------------------------------------------------------------------------
 
@@ -50,12 +50,12 @@ UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
 ALTER TABLE `patientOrigin` auto_increment=1;
 
 INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'Ismer≈ës/bar√°t aj√°nlotta', 1, 'ARC'),
- (2, 0, 'Sz√≥r√≥lap', 1, 'ARC'),
+ (1, 0, 'Ismerıs/bar·t aj·nlotta', 1, 'ARC'),
+ (2, 0, 'SzÛrÛlap', 1, 'ARC'),
  (3, 0, 'Internet', 1, 'ARC'),
  (4, 0, 'TV', 1, 'ARC'),
- (5, 0, '√öjs√°g', 1, 'ARC'),
- (6, 0, 'Egy√©b', 1, 'ARC');
+ (5, 0, '⁄js·g', 1, 'ARC'),
+ (6, 0, 'EgyÈb', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -65,8 +65,8 @@ UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
 ALTER TABLE `reasonToVisit` auto_increment=1;
 
 INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'Gy√≥gyul√°s betegs√©gb≈ël', 1, 'ARC'),
- (2, 0, 'Immuner≈ës√≠t√©s / regener√°l√≥d√°s', 1, 'ARC');
+ (1, 0, 'GyÛgyul·s betegsÈgbıl', 1, 'ARC'),
+ (2, 0, 'ImmunerısÌtÈs / regener·lÛd·s', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -82,12 +82,12 @@ INSERT INTO  `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `ar
 UPDATE `publicPlaces` SET `publicPlaceId`=0 WHERE `publicPlaceId`=1;
 ALTER TABLE `publicPlaces` auto_increment=1;
 INSERT INTO `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, '√∫t', 1, 'ARC'),
+ (1, 0, '˙t', 1, 'ARC'),
  (2, 0, 'utca', 1, 'ARC'),
- (3, 0, 'k√∂r√∫t', 1, 'ARC'),
- (4, 0, 'k√∂z', 1, 'ARC'),
- (5, 0, 't√©r', 1, 'ARC'),
- (6, 0, 'd≈±l≈ë', 1, 'ARC');
+ (3, 0, 'kˆr˙t', 1, 'ARC'),
+ (4, 0, 'kˆz', 1, 'ARC'),
+ (5, 0, 'tÈr', 1, 'ARC'),
+ (6, 0, 'd˚lı', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -127,11 +127,11 @@ ALTER TABLE `attendance` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (0, 0, 'Inakt√≠v k√°rty√°k', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
+ (0, 0, 'InaktÌv k·rty·k', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
 UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
 INSERT INTO `patientCardTypes` (`licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (0, 'Szerv√≠z k√°rty√°k', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
+ (0, 'SzervÌz k·rty·k', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -143,15 +143,15 @@ ALTER TABLE `patientCards` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelTypes` ( `licenceId`, `name`, `active`, `archive` ) VALUES
- ( 0, "Sensolite gy√≥gyter√°pi√°s g√©p", 1, "ARC" );
+ ( 0, "Sensolite gyÛgyter·pi·s gÈp", 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `active`, `archive` ) VALUES
- ( 0, 1, 1, "Alap √°llapot", 0, 0, 1, "ARC" ),
- ( 0, 1, 2, "El≈ëk√©sz√ºlet/Vetk≈ëz√©s", 60, 1, 1, "ARC" ),
- ( 0, 1, 3, "Kezel√©s", 0, 3, 1, "ARC" ),
- ( 0, 1, 4, "Ut√≥h≈±t√©s", 60, 4, 1, "ARC" );
+ ( 0, 1, 1, "Alap ·llapot", 0, 0, 1, "ARC" ),
+ ( 0, 1, 2, "ElıkÈsz¸let/VetkızÈs", 60, 1, 1, "ARC" ),
+ ( 0, 1, 3, "KezelÈs", 0, 3, 1, "ARC" ),
+ ( 0, 1, 4, "UtÛh˚tÈs", 60, 4, 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
@@ -186,16 +186,16 @@ INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `com
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
- (1 , '0', 'G√©phaszn√°lat', '1', 'ARC'),
- (2 , '0', 'B√©rlet elad√°s', '1', 'ARC'),
- (3 , '0', 'B√©rlet felt√∂lt√©s', '1', 'ARC'),
- (4 , '0', 'Term√©k elad√°s', '1', 'ARC'),
- (5 , '0', 'Egy√©b', '1', 'ARC');
+ (1 , '0', 'GÈphaszn·lat', '1', 'ARC'),
+ (2 , '0', 'BÈrlet elad·s', '1', 'ARC'),
+ (3 , '0', 'BÈrlet feltˆltÈs', '1', 'ARC'),
+ (4 , '0', 'TermÈk elad·s', '1', 'ARC'),
+ (5 , '0', 'EgyÈb', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `productTypes` (`productTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (NULL, '0', '√ñsszes term√©k', '1', 'ARC');
+ (NULL, '0', '÷sszes termÈk', '1', 'ARC');
 UPDATE `productTypes` SET `productTypeId`=0 WHERE `productTypeId`=1;
  ALTER TABLE `productTypes` auto_increment=1;
 

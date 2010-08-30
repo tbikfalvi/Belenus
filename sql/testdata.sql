@@ -15,33 +15,23 @@
 
 USE `belenus`;
 
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 1, 1, "1-es g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "2-es g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "3-as g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "4-es g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "5-√∂s g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "6-os g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "7-es g√©p", 0, 0, 1, "ARC" ),
-  ( 1, 1, "8-as g√©p", 0, 0, 1, "ARC" );
-
 INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
-(2, 1, '10 alkalmas feln≈ëtt b√©rlet', 60000, 0, 13, '2010-08-26', '2010-08-26', 365, 20, 1, 'NEW'),
-(3, 1, '10 alkalmas nyugd√≠jas b√©rlet', 37000, 0, 10, '2010-08-26', '2010-08-26', 365, 20, 1, 'NEW');
+(2, 1, '10 alkalmas felnıtt bÈrlet', 60000, 0, 13, '2010-08-26', '2010-08-26', 365, 20, 1, 'NEW'),
+(3, 1, '10 alkalmas nyugdÌjas bÈrlet', 37000, 0, 10, '2010-08-26', '2010-08-26', 365, 20, 1, 'NEW');
 
 INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `illnessGroupId`, `healthInsuranceId`, `companyId`, `doctorId`, `name`, `gender`, `dateBirth`, `uniqueId`, `email`, `phone`, `weight`, `height`, `medicineCurrent`, `medicineAllergy`, `regularCustomer`, `employee`, `service`, `healthInsurance`, `company`, `doctorProposed`, `comment`, `active`, `archive`) VALUES
- (NULL, '1', '0', '0', '0', '0', '0', '0', 'Teszt V√°s√°rl√≥', '1', '1988-07-11', '123 456 789', NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '1', 'ARC');
+ (NULL, '1', '0', '0', '0', '0', '0', '0', 'Teszt V·s·rlÛ', '1', '1988-07-11', '123 456 789', NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '1', 'ARC');
 
 INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES
 (1, 1, 2, 1, '11111', '', 13, 15600, '2011-08-26', '', 1, 'NEW');
 
 INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `archive`) VALUES
-  (0, 1, 'Csecsem≈ë A', 5, 1600, 'ARC'),
-  (0, 1, 'Csecsem≈ë B', 5, 2400, 'ARC'),
+  (0, 1, 'Csecsemı A', 5, 1600, 'ARC'),
+  (0, 1, 'Csecsemı B', 5, 2400, 'ARC'),
   (0, 1, 'Gyermek B', 10, 3200, 'ARC'),
   (0, 1, 'Gyermek A', 15, 4000, 'ARC'),
-  (0, 1, 'Nyugd√≠jas', 20, 3840, 'ARC'),
-  (0, 1, 'Feln≈ëtt', 20, 4800, 'ARC');
+  (0, 1, 'NyugdÌjas', 20, 3840, 'ARC'),
+  (0, 1, 'Felnıtt', 20, 4800, 'ARC');
 
 INSERT INTO `address` (`addressId`, `licenceId`, `patientId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `active`, `archive`) VALUES
- (1, 1, 1, 4, 'Teszt V√°s√°rl√≥', 'Magyarorsz√°g', 'Pest', 'Budapest', '1234', 'Pr√≥ba', '1', NULL, NULL, 1, 1, 'ARC');
+ (1, 1, 1, 4, 'Teszt V·s·rlÛ', 'Magyarorsz·g', 'Pest', 'Budapest', '1234', 'PrÛba', '1', NULL, NULL, 1, 1, 'ARC');
