@@ -295,9 +295,31 @@ void cWndMain::loginUser()
                 }
             } // Ugyanaz volt bejelentkezve
             else
-            { // Mas jelentkezett be, uj penztar bejegyzes nyitasa
+            { // Mas jelentkezett be
 
-                g_obCassa.createNew( g_obUser.id() );
+                // Volt az aktualis napon mar korabbi penztara?
+                unsigned int uiCassaId = g_obCassa.isCassaClosedToday(  g_obUser.id() );
+                if( uiCassaId )
+                { // Volt mar az aktualis napon lezart penztara
+
+                    // Folytatni akarja a mai nap korabban lezart penztarat?
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr( "Do you want to continue the previous cassa record closed today?" ),
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    { // Elozo penztar folytatasa
+                        g_obCassa.cassaReOpen( uiCassaId );
+                    }
+                    else
+                    { // Uj penztar nyitasa
+                        g_obCassa.createNew( g_obUser.id() );
+                    }
+                } // Volt aktualis napon lezart penztar
+                else
+                { // Nem volt aktualis napon lezart penztar
+
+                    // Uj penztar nyitasa
+                    g_obCassa.createNew( g_obUser.id() );
+                }
             } // Mas volt bejelentkezve
         } // Penztar le volt zarva
         else
