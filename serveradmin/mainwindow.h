@@ -36,7 +36,8 @@ private slots:
     void on_iHost_textChanged(QString );
 
     /* slots for signals from Connection */
-    void on_sqlResult(int id, SqlResult *res);
+    void onSqlResult(int id, SqlResult *res);
+    void onLogMessage(QString msg);
 
 protected:
 

@@ -15,6 +15,8 @@ ServerThread::ServerThread(QTcpSocket *tcpSocket) :
         _isAdmin(false)
 {
     g_obLogger(cSeverity::INFO) << "[ServerThread::ServerThread] initialized" << EOM;
+
+    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
 }
 
 
@@ -22,6 +24,15 @@ ServerThread::ServerThread(QTcpSocket *tcpSocket) :
 ServerThread::~ServerThread()
 {
 }
+
+
+
+void ServerThread::read()
+{
+    g_obLogger(cSeverity::DEBUG) << "[serverthread::read]" << EOM;
+    CommunicationProtocol::read();
+}
+
 
 
 void ServerThread::_handleHello(int version)
@@ -50,12 +61,13 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
 
     QSqlQuery *q = g_db.executeQTQuery(QString("SELECT clientId, code2 FROM clients WHERE code1='%1' LIMIT 2;").arg(code1));
     if ( q->size()==1 ) {
+        q->first();
         clientId = q->value(0).toInt();
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonResponse] clientId is " << clientId << EOM;
 
-        // if code2 is null, user not logined yet, so store its key for next use
+        // if code2 is null (or empty), user not logined yet, so store its key for next use
         // otherwise check if code2 matches with the stored one
-        if ( !q->value(1).isNull() && QString::compare(q->value(1).toString(), code2, Qt::CaseInsensitive)!=0 ) {
+        if ( !(q->value(1).isNull() || q->value(1).toString().isEmpty()) && QString::compare(q->value(1).toString(), code2, Qt::CaseInsensitive)!=0 ) {
             sendDisconnect(Result::INVALID_SECOND_ID);
         } else {
             // update lastlogin and set code2
@@ -154,12 +166,15 @@ void ServerThread::run()
     if ( !m_socket )
         return;
 
+    g_obLogger(cSeverity::DEBUG) << "[ServerThread::run] entered" << EOM;
+
+    m_socket->setParent(this);
+
     connect( m_socket,   SIGNAL(disconnected()),                        this, SLOT(disconnected()) );
     connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   this, SLOT(error(QAbstractSocket::SocketError)) );
     connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(read()) );
-    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
-    exec(); // start event processing loop
 
+    exec(); // start event processing loop
 }
 
 

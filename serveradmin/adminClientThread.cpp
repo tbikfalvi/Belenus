@@ -12,6 +12,9 @@ AdminClientThread::AdminClientThread()
     :   CommunicationProtocol(),
         _loggedIn(false)
 {
+    connect( this, SIGNAL(__connectTo(QString, int)), this, SLOT(_connectTo(QString, int)) );
+
+    connect( this, SIGNAL(finished()), this, SLOT(deleteLater()));
 }
 
 
@@ -115,8 +118,19 @@ void AdminClientThread::run()
 
 
 
-void AdminClientThread::connectTo(const QHostAddress addr, int port)
+void AdminClientThread::connectTo(const QString addr, int port)
 {
+    emit __connectTo(addr, port);
+}
+
+
+/*
+  this is called only the thread of adminclientthread.
+ */
+void AdminClientThread::_connectTo(const QString addr, int port)
+{
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::connectTo] entering. connect to " << addr << ":" << port << EOM;
+
     if (m_socket) {
         g_obLogger(cSeverity::ERROR) << "[AdminClientThread::connectTo] m_socket should be closed before new connection attempt" << EOM;
         return;
@@ -129,7 +143,6 @@ void AdminClientThread::connectTo(const QHostAddress addr, int port)
     connect( m_socket,   SIGNAL(disconnected()),                        this, SLOT(_disconnected()) );
     connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   this, SLOT(_error(QAbstractSocket::SocketError)) );
     connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(_read()) );
-    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
 
     m_socket->connectToHost(addr, port);
 }
@@ -189,6 +202,9 @@ void AdminClientThread::_handleSqlQueryResult(int queryId, SqlResult *res)
 
 void AdminClientThread::abort()
 {
-    if (m_socket)
+    if (m_socket) {
+        m_socket->deleteLater();
+        m_socket = 0;
         m_socket->abort();
+    }
 }

@@ -107,16 +107,22 @@ int main( int argc, char *argv[] )
             waitCondition.wait(&dummy, 500);
         }
 
-        switch (g_poServer->getStatus()) {
-            case BelenusServerConnection::AUTHENTICATED:
-                qsSpalsh += "Connected.\n";
-                break;
-            case BelenusServerConnection::LICENSE_FAILED:
-                qsSpalsh += "License key authentication not ok.\n";
-                break;
-            default:
-                qsSpalsh += "Connection failed. No internet connection?\n";
-                break;
+        if ( g_poServer->getStatus()==BelenusServerConnection::AUTHENTICATED ) {
+            qsSpalsh += QObject::tr("Connected. License ok.") + "\n";
+        } else if ( g_poServer->getStatus()==BelenusServerConnection::CONNECTING ) {
+            qsSpalsh += QObject::tr("Still connecting. Unable to check license.") + "\n";
+        } else if ( g_poServer->getStatus()==BelenusServerConnection::CONNECTION_FAILED ) {
+            QString s;
+            switch (g_poServer->getLastResult()) {
+                case Result::INVALID_VERSION: s = QObject::tr("Server has different version. Unable to connect."); break;
+                case Result::INVALID_LICENSE_KEY: s = QObject::tr("License key authentication failed"); break;
+                case Result::INVALID_SECOND_ID: s = QObject::tr("Server authentication failed. Call service."); break;
+                default: s = QObject::tr("Unable to connect to server"); break;
+            }
+            qsSpalsh += s + "\n";
+        } else { /* NOT_CONNECTED state should not happen as a connectTo() automatically transfers to CONNECTING state */
+            qsSpalsh += QObject::tr("Unknown connection error") + "\n";
+            g_obLogger(cSeverity::INFO) << "[main::splash] unknown status when connecting to server" << g_poServer->getStatus() << EOM;
         }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
@@ -129,7 +135,7 @@ int main( int argc, char *argv[] )
 
         g_poHardware = new CS_Communication_Serial();
         g_poHardware->init( g_poPrefs->getCommunicationPort() );
-        if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
+        if( !g_poHardware->isHardwareConnected() || !g_poServer->isLicenseValid() )
         {
             qsSpalsh += QObject::tr("FAILED\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

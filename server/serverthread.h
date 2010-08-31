@@ -11,13 +11,13 @@ class ServerThread : public QThread, public CommunicationProtocol {
 
 
 public:
-    ServerThread(QTcpSocket*);
+    ServerThread(QTcpSocket* socket = 0);
     ~ServerThread();
 
 protected slots:
     void error(QAbstractSocket::SocketError);
     void disconnected();
-    virtual void read() { CommunicationProtocol::read(); }
+    virtual void read();
 
 protected:
     virtual void run();

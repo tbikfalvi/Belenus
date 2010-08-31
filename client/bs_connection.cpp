@@ -9,7 +9,9 @@ extern cQTLogger g_obLogger;
 BelenusServerConnection::BelenusServerConnection()
     : _serial(""),
       _code2(""),
-      _status(NOT_CONNECTED)
+      _status(NOT_CONNECTED),
+      _lastResult(Result::OK),
+      _isLicenseValid(false)
 {
     connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
 }
@@ -22,9 +24,9 @@ BelenusServerConnection::~BelenusServerConnection()
 
 
 
-void BelenusServerConnection::setLoginKeys(QString serial, QString code2)
+void BelenusServerConnection::setLoginKeys(const QString serial, const QString code2)
 {
-    _serial = serial;
+    _serial = QCryptographicHash::hash(serial.toAscii(), QCryptographicHash::Sha1).toHex();
     _code2 = code2;
 }
 
@@ -40,6 +42,7 @@ void BelenusServerConnection::_handleLogonChallenge()
 void BelenusServerConnection::_handleLogonOk()
 {
     _status = AUTHENTICATED;
+    _isLicenseValid = true;
 }
 
 
@@ -72,6 +75,7 @@ void BelenusServerConnection::connectTo(const QHostAddress addr, int port)
     m_socket->moveToThread(this);
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::connectTo] status is CONNECTING" << EOM;
     _status = CONNECTING;
+    _isLicenseValid = false;
 }
 
 
@@ -120,3 +124,9 @@ void BelenusServerConnection::_disconnected()
 }
 
 
+
+void BelenusServerConnection::_handleDisconnect(Result::ResultCode reason)
+{
+    _lastResult = reason;
+    _status = CONNECTION_FAILED;
+}

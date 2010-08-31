@@ -38,7 +38,7 @@ Server::Server()
 
 Server::~Server()
 {
-    //_tcpServer.close();
+    _tcpServer.close();
     g_obLogger(cSeverity::DEBUG) << "[Server::~Server] finished" << EOM;
 }
 
@@ -60,8 +60,15 @@ void Server::connectionAvailable()
 {
     g_obLogger(cSeverity::DEBUG) << "[Server::connectionAvailable] new connection" << EOM;
 
-    ServerThread *connectionThread = new ServerThread(_tcpServer.nextPendingConnection());
+    QTcpSocket *socket = _tcpServer.nextPendingConnection();
+
+    ServerThread *connectionThread = new ServerThread();
+    socket->setParent(0);
+    socket->moveToThread(connectionThread);
+    connectionThread->moveToThread(connectionThread);
+    connectionThread->setTcpConnection(socket);
     connectionThread->start();
+
 }
 
 void sigc_handler(int)

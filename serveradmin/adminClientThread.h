@@ -7,7 +7,7 @@
 
 
 
-class AdminClientThread : public QThread, CommunicationProtocol
+class AdminClientThread : public QThread, public CommunicationProtocol
 {
     Q_OBJECT
 
@@ -21,7 +21,7 @@ public:
 
 
     AdminClientThread();
-    void connectTo(const QHostAddress adr, int port);
+    void connectTo(const QString adr, int port);
     bool isConnected() { return m_socket!=0; }
     void abort();
 
@@ -37,12 +37,14 @@ signals:
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void sqlResultReady(int, SqlResult*);
+    void __connectTo(QString, int);    /* for internal use */
 
 protected slots:
     void _error(QAbstractSocket::SocketError);
     void _disconnected();
     void _connected();
     virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overwritten */
+    void _connectTo(QString, int);
 
 protected:
     virtual void run();

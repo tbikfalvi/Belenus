@@ -15,7 +15,7 @@ namespace Result {
         INVALID_VERSION,
         INVALID_LICENSE_KEY,
         INVALID_SECOND_ID,
-        AUTHENTICATION_FAILED,
+        AUTHENTICATION_FAILED,      /* sent when admin auth failed or operation needs admin rights but client is not admin */
         ALREADY_REGISTERED,
     };
 };

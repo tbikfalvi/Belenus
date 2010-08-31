@@ -28,7 +28,7 @@
 
 
 //====================================================================================
-class BelenusServerConnection : public QThread, CommunicationProtocol
+class BelenusServerConnection : public QThread, public CommunicationProtocol
 {
     Q_OBJECT
 
@@ -37,7 +37,6 @@ public:
         NOT_CONNECTED,
         CONNECTING,
         AUTHENTICATED,      // server connection is ok
-        LICENSE_FAILED,     // connected to server but license authentication failed
         CONNECTION_FAILED,  // eg. socket error
     };
 
@@ -46,10 +45,10 @@ public:
     virtual ~BelenusServerConnection();
 
     void connectTo(const QHostAddress adr, int port);
-
-    void setLoginKeys(QString serial, QString code2);
-    ConnectionStatus    getStatus() { return _status; }
-
+    void setLoginKeys(const QString serial, const QString code2);
+    ConnectionStatus getStatus() { return _status; }
+    Result::ResultCode getLastResult() { return _lastResult; }
+    bool isLicenseValid() { return _isLicenseValid; }        /* true if connected to server and server accepted license and key2 */
 
 signals:
     void connected();
@@ -67,11 +66,14 @@ protected:
 
     void _handleLogonChallenge();
     void _handleLogonOk();
+    void _handleDisconnect(Result::ResultCode reason);
 
 private:
     QString _serial;
     QString _code2;
     ConnectionStatus _status;
+    Result::ResultCode _lastResult;
+    bool _isLicenseValid;
 };
 
 
