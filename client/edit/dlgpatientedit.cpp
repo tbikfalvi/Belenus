@@ -559,6 +559,9 @@ void cDlgPatientEdit::on_deDateBirth_dateChanged(QDate)
 
 void cDlgPatientEdit::FillDefaultAddress()
 {
+    if( m_poPatient->id() == 0 )
+        return;
+
     QSqlQuery *poQuery;
 
     try
