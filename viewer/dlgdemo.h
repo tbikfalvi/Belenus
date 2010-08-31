@@ -2,12 +2,8 @@
 #define DLGDEMO_H
 
 #include <QDialog>
-#include <QStandardItemModel>
-#include <QSortFilterProxyModel>
 
 #include "ui_dlgdemo.h"
-
-#include "../framework/qtmysqlquerymodel.h"
 
 class cDlgDemo : public QDialog, private Ui::dlgDemo
 {
@@ -17,12 +13,8 @@ public:
     cDlgDemo( QWidget *parent = 0 );
     ~cDlgDemo();
 
-private:
-    QStandardItemModel     *m_poModel;
-    QSortFilterProxyModel  *m_poSortedModel;
-
 protected slots:
-    virtual void refreshTable();
+    virtual void showReport();
 };
 
 #endif // DLGDEMO_H

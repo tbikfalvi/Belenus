@@ -13,15 +13,16 @@ CONFIG += qt
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
 FORMS = wndmain.ui \
-        dlgdemo.ui
+    dlgdemo.ui \
+    dlgpreview.ui
 HEADERS = ../framework/dbconnection.h \
     ../framework/qtmysqlconnection.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/qtlogger.h \
     ../framework/tracer.h \
-    belenusReportViewer.h \
     wndmain.h \
-    dlgdemo.h
+    dlgdemo.h \
+    dlgpreview.h
 SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
@@ -29,6 +30,7 @@ SOURCES = ../framework/dbconnection.cpp \
     ../framework/tracer.cpp \
     main.cpp \
     wndmain.cpp \
-    dlgdemo.cpp
+    dlgdemo.cpp \
+    dlgpreview.cpp
 QT += network
 QT += sql

@@ -379,3 +379,7 @@ viewer/qtlogger.o
 viewer/qtmysqlconnection.o
 viewer/qtmysqlquerymodel.o
 viewer/tracer.o
+viewer/dlgpreview.o
+viewer/moc_dlgpreview.cpp
+viewer/moc_dlgpreview.o
+viewer/ui_dlgpreview.h

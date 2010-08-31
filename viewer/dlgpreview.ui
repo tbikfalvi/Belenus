@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dlgPreview</class>
+ <widget class="QDialog" name="dlgPreview">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Report Preview</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTextEdit" name="tedPreview">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="btbButtons">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::NoButton</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btbButtons</sender>
+   <signal>rejected()</signal>
+   <receiver>dlgPreview</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>290</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,7 +1,10 @@
-#include <QString>
+#include <QPushButton>
+#include <QDialogButtonBox>
+#include <QSqlQuery>
 
 #include "../framework/qtframework.h"
 #include "dlgdemo.h"
+#include "dlgpreview.h"
 
 cDlgDemo::cDlgDemo( QWidget *parent )
     : QDialog( parent )
@@ -18,23 +21,23 @@ cDlgDemo::cDlgDemo( QWidget *parent )
     cmbRegion->setCurrentIndex( 0 );
     if( poRegions ) delete poRegions;
 
-    m_poModel       = new QStandardItemModel( this );
-    m_poSortedModel = new QSortFilterProxyModel();
-    m_poSortedModel->setSourceModel( m_poModel );
-    tbvReport->setModel( m_poSortedModel );
+    QPushButton *poShowButton = btbButtons->addButton( tr( "&Show" ), QDialogButtonBox::ActionRole );
+    btbButtons->addButton( tr( "&Close" ), QDialogButtonBox::RejectRole );
 
-    refreshTable();
-
-    connect( cmbRegion, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
-    connect( ledMinPC, SIGNAL(editingFinished()), this, SLOT(refreshTable()) );
+    connect( poShowButton, SIGNAL(clicked()), this, SLOT(showReport()) );
 }
 
 cDlgDemo::~cDlgDemo()
 {
-    if( m_poSortedModel ) delete m_poSortedModel;
-    if( m_poModel ) delete m_poModel;
 }
 
+void cDlgDemo::showReport()
+{
+    cDlgPreview obPreview( this );
+    obPreview.exec();
+}
+
+/*
 void cDlgDemo::refreshTable()
 {
     QString qsQuery = "SELECT zip,region,city from zipRegionCity WHERE ";
@@ -80,3 +83,4 @@ void cDlgDemo::refreshTable()
     tbvReport->resizeColumnToContents( 0 );
     tbvReport->resizeColumnToContents( 1 );
 }
+*/
