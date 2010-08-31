@@ -10,12 +10,15 @@ cDlgLogIn::cDlgLogIn( QWidget *p_poParent ) : QDialog( p_poParent )
 
     setupUi( this );
 
+    setWindowTitle( tr( "Log In" ) );
+    setWindowIcon( QIcon("./resources/belenus.ico") );
+
     QPushButton *poBtnLogin = new QPushButton( tr( "&Log In" ), this );
-    poBtnLogin->setIcon( QIcon("./resources/40x40_ok.gif") );
+    poBtnLogin->setIcon( QIcon("./resources/40x40_ok.png") );
     btbButtons->addButton( poBtnLogin, QDialogButtonBox::AcceptRole );
 
     QPushButton *poBtnQuit  = new QPushButton( tr( "&Quit" ), this );
-    poBtnQuit->setIcon( QIcon("./resources/40x40_shutdown.gif") );
+    poBtnQuit->setIcon( QIcon("./resources/40x40_shutdown.png") );
     btbButtons->addButton( poBtnQuit, QDialogButtonBox::RejectRole );
 
     m_poModel = new cQTMySQLQueryModel( this );
@@ -41,9 +44,9 @@ void cDlgLogIn::accept()
     {
         string  stName = cmbName->currentText().toStdString();
         stName = stName.substr( 0, stName.find( '(' ) - 1 );
-        g_obUser.load( stName );
+        g_obUser.load( QString::fromStdString(stName) );
         QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
-        g_obUser.logIn( QString( obPwdHash.toHex() ).toStdString() );
+        g_obUser.logIn( QString( obPwdHash.toHex() ) );
 
         g_poPrefs->setLastUser( cmbName->currentText(), true );
 

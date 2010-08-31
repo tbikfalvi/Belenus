@@ -8,7 +8,7 @@ cDlgPanelStatuses::cDlgPanelStatuses( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Panelstatus List" ) );
-    setWindowIcon( QIcon("./resources/40x40_device_settings.gif") );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
     setupTableView();
 }

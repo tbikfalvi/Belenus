@@ -116,6 +116,22 @@ bool cCassa::isCassaClosed()
         return true;
 }
 
+unsigned int cCassa::isCassaClosedToday( unsigned int p_uiUserId )
+{
+    unsigned int uiRet = 0;
+
+    QString qsQuery = QString( "SELECT * FROM cassa WHERE userId=%1 AND stopDateTime>\"%2 00:00:00\"" ).arg(p_uiUserId).arg(QDate::currentDate().toString("yyyy-MM-dd"));
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    if( poQuery->size() > 0 )
+    {
+        poQuery->first();
+        uiRet = poQuery->value( 0 ).toUInt();
+    }
+
+    return uiRet;
+}
+
 unsigned int cCassa::cassaOwner()
 {
     return m_pCassa->userId();
@@ -138,6 +154,12 @@ void cCassa::cassaReOpen()
     obDBCassaHistory.save();
 
     setEnabled();
+}
+
+void cCassa::cassaReOpen( unsigned int p_uiCassaId )
+{
+    m_pCassa->load( p_uiCassaId );
+    cassaReOpen();
 }
 
 void cCassa::cassaClose()

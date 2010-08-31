@@ -9,7 +9,7 @@ cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Cardtype List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientcardtype.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
 
     setupTableView();
 }
@@ -81,8 +81,8 @@ void cDlgPatientCardType::enableButtons()
     cTracer obTracer( "cDlgPatientCardType::enableButtons" );
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 1 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 1 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 }
 
 void cDlgPatientCardType::newClicked( bool )
@@ -111,7 +111,7 @@ void cDlgPatientCardType::editClicked( bool )
         poPatientCardType->load( m_uiSelectedId );
 
         cDlgPatientCardTypeEdit  obDlgEdit( this, poPatientCardType );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatientCardType->name() ) );
+        obDlgEdit.setWindowTitle( poPatientCardType->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();

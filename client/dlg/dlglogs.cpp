@@ -24,6 +24,9 @@ cDlgLogs::cDlgLogs( QWidget *p_poParent )
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Logs" ) );
+    setWindowIcon( QIcon("./resources/40x40_settings.png") );
+
     daeStartDate->setDate( QDate::currentDate() );
     daeEndDate->setDate( QDate::currentDate() );
 

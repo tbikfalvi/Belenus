@@ -21,6 +21,8 @@ public:
     cDlgAttendance( QWidget *p_poParent = 0 );
     virtual ~cDlgAttendance();
 
+    void setPatientId( const unsigned int p_uiPatientId );
+
 protected:
     virtual void setupTableView();
     virtual void enableButtons();

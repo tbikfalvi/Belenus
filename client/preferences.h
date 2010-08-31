@@ -55,6 +55,14 @@ public:
     QString         getCurrencySeparator() const;
     void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow = false );
     unsigned int    getMaxTreatLength() const;
+    void            setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow = false );
+    int             getDeviceUseVAT() const;
+    void            setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow = false );
+    bool            getCassaAutoClose() const;
+    void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
+    QString         getDefaultCountry() const;
+    void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
+    int             getZipLength() const;
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -103,6 +111,10 @@ private:
     QString         m_qsCurrencyLong;
     QString         m_qsCurrencySeparator;
     unsigned int    m_uiMaxTreatLength;
+    int             m_inDeviceUseVAT;
+    bool            m_bCassaAutoClose;
+    QString         m_qsDefaultCountry;
+    int             m_inZipLength;
 
     void init();
 };

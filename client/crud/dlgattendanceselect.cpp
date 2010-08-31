@@ -22,7 +22,7 @@ cDlgAttendanceSelect::cDlgAttendanceSelect( QWidget *p_poParent )
     : cDlgAttendance( p_poParent )
 {
     setWindowTitle( tr( "Select attendance" ) );
-    setWindowIcon( QIcon("./resources/40x40_attendance.gif") );
+    setWindowIcon( QIcon("./resources/40x40_attendance.png") );
 
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
@@ -37,12 +37,12 @@ cDlgAttendanceSelect::cDlgAttendanceSelect( QWidget *p_poParent )
     pbSelect = new QPushButton( tr( "Select" ), this );
     pbSelect->setObjectName( QString::fromUtf8( "pbSelect" ) );
     pbSelect->setIconSize( QSize(20, 20) );
-    pbSelect->setIcon( QIcon("./resources/40x40_ok.gif") );
+    pbSelect->setIcon( QIcon("./resources/40x40_ok.png") );
     btbButtonsSide->addButton( pbSelect, QDialogButtonBox::ActionRole );
     pbCancel = new QPushButton( tr( "Cancel" ), this );
     pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
     pbCancel->setIconSize( QSize(20, 20) );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
     cmbPatient->setEnabled( false );

@@ -29,15 +29,11 @@ void cDBAttendance::init( const unsigned int p_uiId,
                           const unsigned int p_uiLicenceId,
                           const unsigned int p_uiPatientId,
                           const QString &p_qsDate,
-                          const QString &p_qsLength,
-                          const int p_nWeight,
-                          const int p_nHeight,
+                          const int &p_inLength,
                           const float p_fBloodPressureStart,
                           const float p_fPulseStart,
                           const float p_fBloodPressureStop,
                           const float p_fPulseStop,
-                          const QString &p_qsMedicineCurrent,
-                          const QString &p_qsMedicineAllergy,
                           const QString &p_qsComment,
                           const bool p_bActive,
                           const QString &p_qsArchive ) throw()
@@ -46,15 +42,11 @@ void cDBAttendance::init( const unsigned int p_uiId,
     m_uiLicenceId           = p_uiLicenceId;
     m_uiPatientId           = p_uiPatientId;
     m_qsDate                = p_qsDate;
-    m_qsLength              = p_qsLength;
-    m_nWeight               = p_nWeight;
-    m_nHeight               = p_nHeight;
+    m_inLength              = p_inLength;
     m_fBloodPressureStart   = p_fBloodPressureStart;
     m_fPulseStart           = p_fPulseStart;
     m_fBloodPressureStop    = p_fBloodPressureStop;
     m_fPulseStop            = p_fPulseStop;
-    m_qsMedicineCurrent     = p_qsMedicineCurrent;
-    m_qsMedicineAllergy     = p_qsMedicineAllergy;
     m_qsComment             = p_qsComment;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
@@ -67,14 +59,10 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
     int inPatientIdx        = p_obRecord.indexOf( "patientId" );
     int inDateIdx           = p_obRecord.indexOf( "date" );
     int inLengthIdx         = p_obRecord.indexOf( "length" );
-    int inWeightIdx         = p_obRecord.indexOf( "weight" );
-    int inHeightIdx         = p_obRecord.indexOf( "height" );
     int inBPStartIdx        = p_obRecord.indexOf( "bloodPressureStart" );
     int inPulseStartIdx     = p_obRecord.indexOf( "pulseStart" );
     int inBPStopIdx         = p_obRecord.indexOf( "bloodPressureStop" );
     int inPulseStopIdx      = p_obRecord.indexOf( "pulseStop" );
-    int inMedCurrentIdx     = p_obRecord.indexOf( "medicineCurrent" );
-    int inMedAllergyIdx     = p_obRecord.indexOf( "medicineAllergy" );
     int inCommentIdx        = p_obRecord.indexOf( "comment" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -83,15 +71,11 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientIdx ).toInt(),
           p_obRecord.value( inDateIdx ).toString(),
-          p_obRecord.value( inLengthIdx ).toString(),
-          p_obRecord.value( inWeightIdx ).toInt(),
-          p_obRecord.value( inHeightIdx ).toInt(),
+          p_obRecord.value( inLengthIdx ).toInt(),
           p_obRecord.value( inBPStartIdx ).toFloat(),
           p_obRecord.value( inPulseStartIdx ).toFloat(),
           p_obRecord.value( inBPStopIdx ).toFloat(),
           p_obRecord.value( inPulseStopIdx ).toFloat(),
-          p_obRecord.value( inMedCurrentIdx ).toString(),
-          p_obRecord.value( inMedAllergyIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -133,15 +117,11 @@ void cDBAttendance::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "date = \"%1\", " ).arg( m_qsDate );
-    qsQuery += QString( "length = \"%1\", " ).arg( m_qsLength );
-    qsQuery += QString( "weight = \"%1\", " ).arg( m_nWeight );
-    qsQuery += QString( "height = \"%1\", " ).arg( m_nHeight );
+    qsQuery += QString( "length = \"%1\", " ).arg( m_inLength );
     qsQuery += QString( "bloodPressureStart = \"%1\", " ).arg( m_fBloodPressureStart );
     qsQuery += QString( "pulseStart = \"%1\", " ).arg( m_fPulseStart );
     qsQuery += QString( "bloodPressureStop = \"%1\", " ).arg( m_fBloodPressureStop );
     qsQuery += QString( "pulseStop = \"%1\", " ).arg( m_fPulseStop );
-    qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( m_qsMedicineCurrent );
-    qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( m_qsMedicineAllergy );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -181,7 +161,7 @@ void cDBAttendance::remove() throw( cSevException )
 void cDBAttendance::createNew() throw()
 {
     init();
-    setDate( QDate::currentDate().toString( "yyyy.MM.dd" ) );
+    setDate( QDate::currentDate().toString( "yyyy-MM-dd" ) );
 }
 
 unsigned int cDBAttendance::id() const throw()
@@ -219,34 +199,28 @@ void cDBAttendance::setDate( const QString &p_qsDate ) throw()
     m_qsDate = p_qsDate;
 }
 
-QString cDBAttendance::length() const throw()
+int cDBAttendance::length() const throw()
 {
-    return m_qsLength;
+    return m_inLength;
 }
 
-void cDBAttendance::setLength( const QString &p_qsLength ) throw()
+void cDBAttendance::setLength( const int &p_inLength ) throw()
 {
-    m_qsLength = p_qsLength;
+    m_inLength = p_inLength;
 }
 
-int cDBAttendance::weight() const throw()
+QString cDBAttendance::lengthStr() const throw()
 {
-    return m_nWeight;
+    QTime   qtTemp( m_inLength/60, (m_inLength%60), 0, 0 );
+
+    return qtTemp.toString( "hh:mm:ss" );
 }
 
-void cDBAttendance::setWeight( const int p_nWeight ) throw()
+void cDBAttendance::setLengthStr( const QString &p_qsLength ) throw()
 {
-    m_nWeight = p_nWeight;
-}
+    QTime   qtTemp = QTime::fromString( p_qsLength, "hh:mm:ss" );
 
-int cDBAttendance::height() const throw()
-{
-    return m_nHeight;
-}
-
-void cDBAttendance::setHeight( const int p_nHeight ) throw()
-{
-    m_nHeight = p_nHeight;
+    m_inLength = qtTemp.hour()*60 + qtTemp.minute();
 }
 
 float cDBAttendance::bloodPressureStart() throw()
@@ -287,26 +261,6 @@ float cDBAttendance::pulseStop() throw()
 void cDBAttendance::setPulseStop( const float p_fPulseStop ) throw()
 {
     m_fPulseStop = p_fPulseStop;
-}
-
-QString cDBAttendance::medicineCurrent() throw()
-{
-    return m_qsMedicineCurrent;
-}
-
-void cDBAttendance::setMedicineCurrent( const QString &p_qsMedicineC ) throw()
-{
-    m_qsMedicineCurrent = p_qsMedicineC;
-}
-
-QString cDBAttendance::medicineAllergy() throw()
-{
-    return m_qsMedicineAllergy;
-}
-
-void cDBAttendance::setMedicineAllergy( const QString &p_qsMedicineA ) throw()
-{
-    m_qsMedicineAllergy = p_qsMedicineA;
 }
 
 QString cDBAttendance::comment() const throw()

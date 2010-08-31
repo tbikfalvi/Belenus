@@ -8,6 +8,7 @@ cDlgPanelTypes::cDlgPanelTypes( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Panel Types List" ) );
+    setWindowIcon( QIcon("./resources/40x40_device.png") );
 
     setupTableView();
 }

@@ -9,7 +9,7 @@ cDlgPatient::cDlgPatient( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patient.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
     setupTableView();
 }
@@ -106,7 +106,7 @@ void cDlgPatient::editClicked( bool )
         poPatient->load( m_uiSelectedId );
 
         cDlgPatientEdit  obDlgEdit( this, poPatient );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatient->name() ) );
+        obDlgEdit.setWindowTitle( poPatient->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             cDBPostponed    obDBPostponed;

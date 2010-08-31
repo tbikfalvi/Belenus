@@ -8,7 +8,7 @@ cDlgPatientOrigin::cDlgPatientOrigin( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Origin List" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientorigin.gif") );
+    setWindowIcon( QIcon("./resources/40x40_patientorigin.png") );
 
     setupTableView();
 }
@@ -102,7 +102,7 @@ void cDlgPatientOrigin::editClicked( bool )
         poPatientOrigin->load( m_uiSelectedId );
 
         cDlgPatientOriginEdit  obDlgEdit( this, poPatientOrigin );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poPatientOrigin->name() ) );
+        obDlgEdit.setWindowTitle( poPatientOrigin->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();

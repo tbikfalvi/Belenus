@@ -11,9 +11,12 @@ cDlgHardwareTest::cDlgHardwareTest( QWidget *p_poParent )
 
     setupUi( this );
 
-    pbTestHardwareConnection->setIcon( QIcon("./resources/40x40_hardware_test.gif") );
-    pbReconnect->setIcon( QIcon("./resources/40x40_hadware_reconnect.gif") );
-    pbExit->setIcon( QIcon("./resources/40x40_exit.gif") );
+    setWindowTitle( tr( "Hardware Test" ) );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+
+    pbTestHardwareConnection->setIcon( QIcon("./resources/40x40_hardware_test.png") );
+    pbReconnect->setIcon( QIcon("./resources/40x40_hadware_reconnect.png") );
+    pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
     on_pbTestHardwareConnection_clicked();
 

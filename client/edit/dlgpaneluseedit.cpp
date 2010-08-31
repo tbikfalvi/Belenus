@@ -11,11 +11,18 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
 
     setupUi( this );
 
+    setWindowTitle( tr( "Device uses" ) );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     m_poPanelUses   = p_poPanelUses;
     m_inPanelId     = p_inPanelId;
 
     if( m_poPanelUses )
     {
+        ledUseName->setText( m_poPanelUses->name() );
         ledUseTime->setText( QString::number(m_poPanelUses->useTime()) );
         ledUsePrice->setText( QString::number(m_poPanelUses->usePrice()) );
     }
@@ -29,6 +36,12 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
     bool  bIsNumber = false;
+
+    if( ledUseName->text() == "" )
+    {
+        boCanBeSaved = false;
+        QMessageBox::critical( this, tr( "Error" ), tr( "Name can not be empty." ), QMessageBox::Ok );
+    }
 
     ledUseTime->text().toInt( &bIsNumber );
     if( ledUseTime->text() == "" )
@@ -68,6 +81,7 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
     {
         m_poPanelUses->setLicenceId( g_poPrefs->getLicenceId() );
         m_poPanelUses->setPanelId( m_inPanelId );
+        m_poPanelUses->setName( ledUseName->text() );
         m_poPanelUses->setUseTime( ledUseTime->text().toInt() );
         m_poPanelUses->setUsePrice( ledUsePrice->text().toInt() );
         m_poPanelUses->save();

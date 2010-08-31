@@ -1,3 +1,18 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : main.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Alkalmazas fo allomanya.
+//====================================================================================
+
 #include <QApplication>
 #include <QString>
 #include <QSettings>
@@ -22,6 +37,8 @@
 #endif
 #include "wndmain.h"
 
+//====================================================================================
+
 cQTLogger                g_obLogger;
 DatabaseWriter           g_obLogDBWriter;
 GUIWriter                g_obLogGUIWriter;
@@ -35,6 +52,7 @@ cDBPatient               g_obPatient;
 unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 
+//====================================================================================
 int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
@@ -58,7 +76,7 @@ int main( int argc, char *argv[] )
         apMainApp.installTranslator( poTrans );
     }
 
-    QPixmap          obPixmap("resources/splash.jpg");
+    QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
     QString          qsSpalsh;
 
@@ -125,7 +143,6 @@ int main( int argc, char *argv[] )
             g_obLogger(cSeverity::INFO) << "[main::splash] unknown status when connecting to server" << g_poServer->getStatus() << EOM;
         }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
 
 
 #ifdef __WIN32__

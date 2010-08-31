@@ -14,8 +14,11 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
     setupUi( this );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.gif") );
+    setWindowTitle( tr( "Patient card type" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
+
+    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 
     deValidDateFrom->setDate( QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) );
     deValidDateTo->setDate( QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) );
@@ -24,13 +27,13 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
     if( m_poPatientCardType )
     {
-        ledName->setText( QString::fromStdString( m_poPatientCardType->name() ) );
+        ledName->setText( m_poPatientCardType->name() );
         ledPrice->setText( QString::number(m_poPatientCardType->price()) );
         ledVatpercent->setText( QString::number(m_poPatientCardType->vatpercent()) );
         ledUnits->setText( QString::number(m_poPatientCardType->units()) );
         ledUnitTime->setText( QString::number(m_poPatientCardType->unitTime()) );
-        deValidDateFrom->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateFrom()),"yyyy-MM-dd") );
-        deValidDateTo->setDate( QDate::fromString(QString::fromStdString(m_poPatientCardType->validDateTo()),"yyyy-MM-dd") );
+        deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
+        deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         ledValidDays->setText( QString::number(m_poPatientCardType->validDays()) );
 
         if( m_poPatientCardType->validDays() == 0 )
@@ -123,13 +126,13 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
     {
         try
         {
-            m_poPatientCardType->setName( ledName->text().toStdString() );
+            m_poPatientCardType->setName( ledName->text() );
             m_poPatientCardType->setPrice( ledPrice->text().toUInt() );
             m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
             m_poPatientCardType->setUnitTime( ledUnitTime->text().toUInt() );
-            m_poPatientCardType->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd").toStdString() );
-            m_poPatientCardType->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd").toStdString() );
+            m_poPatientCardType->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
+            m_poPatientCardType->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             m_poPatientCardType->setValidDays( ledValidDays->text().toUInt() );
             m_poPatientCardType->setActive( true );
 

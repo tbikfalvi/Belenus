@@ -3,12 +3,13 @@
 #include "belenus.h"
 #include "dlgattendance.h"
 #include "../edit/dlgattendanceedit.h"
+#include "db/dbpostponed.h"
 
 cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Attendance List" ) );
-    setWindowIcon( QIcon("./resources/40x40_attendance.gif") );
+    setWindowIcon( QIcon("./resources/40x40_attendance.png") );
 
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
@@ -50,6 +51,18 @@ cDlgAttendance::cDlgAttendance( QWidget *p_poParent )
 
 cDlgAttendance::~cDlgAttendance()
 {
+}
+
+void cDlgAttendance::setPatientId( const unsigned int p_uiPatientId )
+{
+    for( int i=0; i<cmbPatient->count(); i++ )
+    {
+        if( cmbPatient->itemData( i ).toUInt() == p_uiPatientId )
+        {
+            cmbPatient->setCurrentIndex( i );
+            break;
+        }
+    }
 }
 
 void cDlgAttendance::setupTableView()
@@ -118,7 +131,7 @@ void cDlgAttendance::enableButtons()
     cTracer obTracer( "cDlgAttendance::enableButtons" );
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) && m_uiSelectedId != g_uiPatientAttendanceId );
     m_poBtnEdit->setEnabled( m_uiSelectedId > 0 );
 }
 
@@ -182,12 +195,23 @@ void cDlgAttendance::deleteClicked( bool )
 {
     cDBAttendance  *poAttendance = NULL;
 
+    if( m_uiSelectedId == g_uiPatientAttendanceId )
+    {
+        QMessageBox::critical( this, tr("Error"),
+                               tr("Deleting the actual attendance is not allowed.") );
+        return;
+    }
+
     if( QMessageBox::question( this, tr( "Question" ),
                                tr( "Are you sure you want to delete this Attendance?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         try
         {
+            cDBPostponed    obDBPostponed;
+
+            obDBPostponed.removeAttendance( m_uiSelectedId );
+
             poAttendance = new cDBAttendance;
             poAttendance->load( m_uiSelectedId );
             poAttendance->remove();

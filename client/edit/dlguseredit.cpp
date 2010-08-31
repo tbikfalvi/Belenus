@@ -9,6 +9,9 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
 {
     setupUi( this );
 
+    setWindowTitle( tr( "User" ) );
+    setWindowIcon( QIcon("./resources/40x40_user.png") );
+
     m_qsDefaultPwd = "pppppppp";
 
     m_poUser = p_poUser;
@@ -28,13 +31,13 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
         {
             lblUserIdValue->setText( "?" );
         }
-        ledName->setText( QString::fromStdString( m_poUser->name() ) );
-        ledRealName->setText( QString::fromStdString( m_poUser->realName() ) );
+        ledName->setText( m_poUser->name() );
+        ledRealName->setText( m_poUser->realName() );
         for( int i = cAccessGroup::MIN + 1; i < cAccessGroup::MAX; i++ )
             if( g_obUser.isInGroup( (cAccessGroup::teAccessGroup)i ) ) cmbGroup->addItem( cAccessGroup::toStr( (cAccessGroup::teAccessGroup)i ) );
         cmbGroup->setCurrentIndex( (int)p_poUser->group() - 1 );
         chbActive->setChecked( m_poUser->active() );
-        pteComment->setPlainText( QString::fromStdString( m_poUser->comment() ) );
+        pteComment->setPlainText( m_poUser->comment() );
     }
 
     if( !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )
@@ -46,6 +49,8 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 }
 
 cDlgUserEdit::~cDlgUserEdit()
@@ -72,16 +77,17 @@ void cDlgUserEdit::accept ()
         {
             try
             {
-                m_poUser->setName( ledName->text().toStdString() );
+                m_poUser->setLicenceId( g_poPrefs->getLicenceId() );
+                m_poUser->setName( ledName->text() );
                 if( ledPwd->text() != m_qsDefaultPwd )
                 {
                     QByteArray  obPwdHash = QCryptographicHash::hash( ledPwd->text().toAscii(), QCryptographicHash::Sha1 );
-                    m_poUser->setPassword( QString( obPwdHash.toHex() ).toStdString() );
+                    m_poUser->setPassword( QString( obPwdHash.toHex() ) );
                 }
-                m_poUser->setRealName( ledRealName->text().toStdString() );
+                m_poUser->setRealName( ledRealName->text() );
                 m_poUser->setGroup( (cAccessGroup::teAccessGroup)(cmbGroup->currentIndex() + 1) );
                 m_poUser->setActive( chbActive->isChecked() );
-                m_poUser->setComment( pteComment->toPlainText().toStdString() );
+                m_poUser->setComment( pteComment->toPlainText() );
                 m_poUser->save();
             }
             catch( cSevException &e )

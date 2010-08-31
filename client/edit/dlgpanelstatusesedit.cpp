@@ -8,8 +8,11 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
 {
     setupUi( this );
 
-    pbOk->setIcon(     QIcon("./resources/40x40_ok.gif") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    setWindowTitle( tr( "Panel status" ) );
+    setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
+
+    pbOk->setIcon(     QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     checkIndependent->setEnabled( false );
     checkIndependent->setVisible( false );
 

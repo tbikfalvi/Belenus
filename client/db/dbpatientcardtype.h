@@ -12,60 +12,60 @@ public:
     ~cDBPatientCardType();
 
     void            load( const unsigned int p_uiId )                   throw( cSevException );
-    void            load( const string &p_stName )                      throw( cSevException );
+    void            load( const QString &p_qsName )                      throw( cSevException );
     void            save()                                              throw( cSevException );
     void            remove()                                            throw( cSevException );
     void            createNew()                                         throw();
     unsigned int    id() const                                          throw();
     unsigned int    licenceId() const                                   throw();
     void            setLicenceId( const unsigned int p_nLicenceId )     throw();
-    string          name() const                                        throw();
-    void            setName( const string &p_stName )                   throw();
+    QString          name() const                                        throw();
+    void            setName( const QString &p_qsName )                   throw();
     float           price() const                                       throw();
     void            setPrice( const float p_fPrice )                    throw();
     int             vatpercent() const                                  throw();
     void            setVatpercent( const int p_nVatpercent )            throw();
     int             units() const                                       throw();
     void            setUnits( const int p_nUnits )                      throw();
-    string          validDateFrom() const                               throw();
-    void            setValidDateFrom( const string &p_stVDFrom )        throw();
-    string          validDateTo() const                                 throw();
-    void            setValidDateTo( const string &p_stVDTo )            throw();
+    QString          validDateFrom() const                               throw();
+    void            setValidDateFrom( const QString &p_qsVDFrom )        throw();
+    QString          validDateTo() const                                 throw();
+    void            setValidDateTo( const QString &p_qsVDTo )            throw();
     int             validDays() const                                   throw();
     void            setValidDays( const int p_nValidDays )              throw();
     int             unitTime() const                                    throw();
     void            setUnitTime( const int p_nUnitTime )                throw();
     bool            active() const                                              throw();
     void            setActive( const bool p_bActive )                           throw();
-    string          archive() const                                     throw();
-    void            setArchive( const string &p_stArchive )             throw();
+    QString          archive() const                                     throw();
+    void            setArchive( const QString &p_qsArchive )             throw();
 
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
-    string          m_stName;
+    QString          m_qsName;
     float           m_fPrice;
     int             m_nVatpercent;
     int             m_nUnits;
-    string          m_stValidDateFrom;
-    string          m_stValidDateTo;
+    QString          m_qsValidDateFrom;
+    QString          m_qsValidDateTo;
     int             m_nValidDays;
     int             m_nUnitTime;
     bool            m_bActive;
-    string          m_stArchive;
+    QString          m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
-               const string &p_stName = "",
+               const QString &p_qsName = "",
                const float p_fPrice = 0,
                const int p_nVatpercent = 0,
                const int p_nUnits = 0,
-               const string &p_stValidDateFrom = "",
-               const string &p_stValidDateTo = "",
+               const QString &p_qsValidDateFrom = "",
+               const QString &p_qsValidDateTo = "",
                const int p_nValidDays = 0,
                const int p_nUnitTime = 0,
-               const bool p_bActive = false,
-               const string &p_stArchive = "NEW" )                      throw();
+               const bool p_bActive = true,
+               const QString &p_qsArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();
 };
 

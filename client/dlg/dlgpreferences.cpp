@@ -18,6 +18,16 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     setupUi( this );
 
+    setWindowTitle( tr( "Preferences" ) );
+    setWindowIcon( QIcon("./resources/40x40_settings.png") );
+
+    QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
+    QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
+    btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
+    btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
     sliConsoleLogLevel->setValue( uiConLevel );
@@ -56,6 +66,14 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
+
+    ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+
+    chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
+
+    ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
+
+//    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -105,6 +123,12 @@ void cDlgPreferences::accept()
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );
     g_poPrefs->setCommunicationPort( spbCOM->value() );
+
+    g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
+
+    g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
+
+    g_poPrefs->setDefaultCountry( ledDefaultCountry->text() );
 
     g_poPrefs->save();
 

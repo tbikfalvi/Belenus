@@ -11,6 +11,8 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Cassa") );
+    setWindowIcon( QIcon("./resources/40x40_cassa.png") );
+
     resize( width(), 148 );
     tbvCassa->setEnabled( false );
 
@@ -48,11 +50,11 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     dtStartDate->setText( m_qsStart );
     dtStopDate->setText( m_qsStop );
     lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
-    lblUser->setText( QString::fromStdString(obUser.realName()) );
+    lblUser->setText( obUser.realName() );
 
-    pbClose->setIcon( QIcon("./resources/40x40_exit.gif") );
-    pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.gif") );
-    pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.gif") );
+    pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
+    pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );
+    pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.png") );
 
     pbMore->setEnabled( false );
 

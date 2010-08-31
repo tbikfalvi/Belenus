@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1148</width>
+    <width>899</width>
     <height>579</height>
    </rect>
   </property>
@@ -21,8 +21,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1148</width>
-     <height>20</height>
+     <width>899</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -43,8 +43,15 @@
      </property>
      <addaction name="action_Users"/>
      <addaction name="separator"/>
+     <addaction name="action_Doctor"/>
+     <addaction name="separator"/>
+     <addaction name="action_Company"/>
+     <addaction name="action_HealthInsurance"/>
+     <addaction name="separator"/>
      <addaction name="action_Patientorigin"/>
      <addaction name="action_ReasonToVisit"/>
+     <addaction name="separator"/>
+     <addaction name="action_IllnessGroup"/>
      <addaction name="separator"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
@@ -102,13 +109,13 @@
      <addaction name="action_AttendanceNew"/>
      <addaction name="separator"/>
      <addaction name="action_SelectActualAttendance"/>
+     <addaction name="action_DeselectActualAttendance"/>
     </widget>
     <widget class="QMenu" name="menuPatientCard">
      <property name="title">
       <string>PatientCard</string>
      </property>
      <addaction name="action_PCSaveToDatabase"/>
-     <addaction name="action_PCActivate"/>
     </widget>
     <addaction name="menuPatient"/>
     <addaction name="separator"/>
@@ -117,6 +124,8 @@
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
     <addaction name="menuDevice"/>
+    <addaction name="separator"/>
+    <addaction name="action_ValidateSerialKey"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
@@ -146,16 +155,16 @@
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
    <addaction name="separator"/>
+   <addaction name="action_PatientNew"/>
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
    <addaction name="action_EditActualPatient"/>
-   <addaction name="action_PatientNew"/>
    <addaction name="action_PostponedPatient"/>
    <addaction name="separator"/>
+   <addaction name="action_AttendanceNew"/>
    <addaction name="action_SelectActualAttendance"/>
    <addaction name="action_DeselectActualAttendance"/>
    <addaction name="action_EditActualAttendance"/>
-   <addaction name="action_AttendanceNew"/>
    <addaction name="action_PostponedAttendance"/>
    <addaction name="separator"/>
    <addaction name="action_UseWithCard"/>
@@ -171,6 +180,7 @@
    <addaction name="action_DoctorSchedule"/>
    <addaction name="action_DeviceSchedule"/>
    <addaction name="separator"/>
+   <addaction name="action_PayCash"/>
    <addaction name="action_Cassa"/>
   </widget>
   <action name="action_Exit">
@@ -249,7 +259,7 @@
   </action>
   <action name="action_PatientNew">
    <property name="text">
-    <string>Create new ...</string>
+    <string>Create new patient ...</string>
    </property>
    <property name="toolTip">
     <string>Create new patient</string>
@@ -262,7 +272,7 @@
   </action>
   <action name="action_PatientSelect">
    <property name="text">
-    <string>Select actual ...</string>
+    <string>Select actual patient...</string>
    </property>
    <property name="toolTip">
     <string>Select actual patient</string>
@@ -270,7 +280,7 @@
   </action>
   <action name="action_PatientEmpty">
    <property name="text">
-    <string>Deselect actual</string>
+    <string>Deselect actual patient</string>
    </property>
    <property name="toolTip">
     <string>Deselect actual patient</string>
@@ -278,7 +288,7 @@
   </action>
   <action name="action_AttendanceNew">
    <property name="text">
-    <string>Create new ...</string>
+    <string>Create new attendance ...</string>
    </property>
    <property name="toolTip">
     <string>Add new attendance for actual patient</string>
@@ -357,10 +367,10 @@
   </action>
   <action name="action_PatientCardSell">
    <property name="text">
-    <string>Sell patientcard</string>
+    <string>Sell / refill patientcard</string>
    </property>
    <property name="toolTip">
-    <string>Sell patientcard</string>
+    <string>Sell inactive or refill active patientcard</string>
    </property>
   </action>
   <action name="action_DoctorSchedule">
@@ -381,7 +391,7 @@
   </action>
   <action name="action_PostponedPatient">
    <property name="text">
-    <string>Fullfill postponed</string>
+    <string>Fullfill postponed patient</string>
    </property>
    <property name="toolTip">
     <string>Fullfill data for postponed patients</string>
@@ -389,7 +399,7 @@
   </action>
   <action name="action_PostponedAttendance">
    <property name="text">
-    <string>Fullfill postponed</string>
+    <string>Fullfill postponed attendance</string>
    </property>
    <property name="toolTip">
     <string>Fullfill data for postponed attendances</string>
@@ -410,7 +420,7 @@
   </action>
   <action name="action_SelectActualAttendance">
    <property name="text">
-    <string>Select actual ...</string>
+    <string>Select actual attendance...</string>
    </property>
    <property name="toolTip">
     <string>Select actual attendance for actual patient.</string>
@@ -418,7 +428,7 @@
   </action>
   <action name="action_DeselectActualAttendance">
    <property name="text">
-    <string>Deselect actual ...</string>
+    <string>Deselect actual attendance...</string>
    </property>
    <property name="toolTip">
     <string>Deselect actual attendance of actual patient.</string>
@@ -426,10 +436,38 @@
   </action>
   <action name="action_EditActualAttendance">
    <property name="text">
-    <string>Edit actual ...</string>
+    <string>Edit actual attendance...</string>
    </property>
    <property name="toolTip">
     <string>Edit actual attendance of actual patient.</string>
+   </property>
+  </action>
+  <action name="action_PayCash">
+   <property name="text">
+    <string>PayCash</string>
+   </property>
+   <property name="toolTip">
+    <string>Pay cash usage of panel</string>
+   </property>
+  </action>
+  <action name="action_IllnessGroup">
+   <property name="text">
+    <string>Illness group ...</string>
+   </property>
+  </action>
+  <action name="action_Company">
+   <property name="text">
+    <string>Companies ...</string>
+   </property>
+  </action>
+  <action name="action_Doctor">
+   <property name="text">
+    <string>Doctors ...</string>
+   </property>
+  </action>
+  <action name="action_HealthInsurance">
+   <property name="text">
+    <string>Health Insurance Funds ...</string>
    </property>
   </action>
  </widget>

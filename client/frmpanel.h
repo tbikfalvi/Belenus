@@ -1,5 +1,22 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : frmpanel.h
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//====================================================================================
+// Panelok kezeleset vegzo osztaly
+//====================================================================================
+
 #ifndef FRMPANEL_H
 #define FRMPANEL_H
+
+//====================================================================================
 
 #include <QFrame>
 #include <QVBoxLayout>
@@ -7,8 +24,12 @@
 #include <QMouseEvent>
 #include <vector>
 
+//====================================================================================
+
 #include "db/dbpanelstatuses.h"
 #include "db/dbledgerdevice.h"
+
+//====================================================================================
 
 typedef struct _used_patientcard
 {
@@ -16,6 +37,8 @@ typedef struct _used_patientcard
     int             inCountUnits;
     int             inUnitTime;
 } stUsedPatientCard;
+
+//====================================================================================
 
 class cFrmPanel : public QFrame
 {
@@ -29,17 +52,24 @@ public:
     bool            isStatusCanBeSkipped();
     void            start();
     void            reset();
+    void            clear();
     void            next();
     void            inactivate();
     void            activate();
     void            reload();
 
+    bool            isMainProcess();
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
-    bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice );
+    bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
     void            cashPayed();
+    void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice );
+    bool            isHasToPay();
+    QString         getPanelName();
+    bool            isCanBeStartedByTime();
+    bool            isCanBeStartedByCard();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -58,9 +88,13 @@ private:
 
     cDBLedgerDevice             *m_pDBLedgerDevice;
     int                          m_inMainProcessLength;
-    vector<stUsedPatientCard>    m_vrPatientCard;
+    int                          m_inCashLength;
+    int                          m_inCashTimeRemains;
+    stUsedPatientCard            m_vrPatientCard;
+    int                          m_inCardTimeRemains;
     int                          m_inCashToPay;
     bool                         m_bHasToPay;
+    unsigned int                 m_uiPatientToPay;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -78,7 +112,6 @@ private:
     void load( const unsigned int p_uiPanelId );
     void displayStatus();
     void activateNextStatus();
-    bool isMainProcess();
     void closeAttendance();
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );

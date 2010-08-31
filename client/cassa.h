@@ -21,8 +21,10 @@ public:
     bool                    isCassaExists();
     void                    createNew( unsigned int p_uiUserId );
     bool                    isCassaClosed();
+    unsigned int            isCassaClosedToday( unsigned int p_uiUserId );
     unsigned int            cassaOwner();
     void                    cassaReOpen();
+    void                    cassaReOpen( unsigned int p_uiCassaId );
     void                    cassaClose();
     void                    setEnabled();
     void                    setDisabled();

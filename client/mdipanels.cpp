@@ -116,6 +116,11 @@ void cMdiPanels::reset()
     m_obPanels.at( m_uiActivePanel )->reset();
 }
 
+void cMdiPanels::clear()
+{
+    m_obPanels.at( m_uiActivePanel )->clear();
+}
+
 void cMdiPanels::next()
 {
     m_obPanels.at( m_uiActivePanel )->next();
@@ -124,6 +129,11 @@ void cMdiPanels::next()
 void cMdiPanels::reload()
 {
     m_obPanels.at( m_uiActivePanel )->reload();
+}
+
+bool cMdiPanels::isMainProcess()
+{
+    return m_obPanels.at( m_uiActivePanel )->isMainProcess();
 }
 
 int cMdiPanels::mainProcessTime()
@@ -141,14 +151,24 @@ void cMdiPanels::setMainProcessTime( const int p_inLength, const int p_inPrice )
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_inLength, p_inPrice );
 }
 
-bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice )
+bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount )
 {
-    return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice );
+    return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice, p_inCount );
 }
 
 void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
 {
     m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
+}
+
+void cMdiPanels::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )
+{
+    m_obPanels.at( m_uiActivePanel )->getPanelCashData( p_uiPatientId, p_inPrice );
+}
+
+bool cMdiPanels::isHasToPay()
+{
+    return m_obPanels.at( m_uiActivePanel )->isHasToPay();
 }
 
 int cMdiPanels::activePanel()
@@ -233,4 +253,19 @@ void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
 void cMdiPanels::cashPayed()
 {
     m_obPanels.at( m_uiActivePanel )->cashPayed();
+}
+
+QString cMdiPanels::getActivePanelCaption()
+{
+    return m_obPanels.at( m_uiActivePanel )->getPanelName();
+}
+
+bool cMdiPanels::isCanBeStartedByTime()
+{
+    return m_obPanels.at( m_uiActivePanel )->isCanBeStartedByTime();
+}
+
+bool cMdiPanels::isCanBeStartedByCard()
+{
+    return m_obPanels.at( m_uiActivePanel )->isCanBeStartedByCard();
 }

@@ -3,14 +3,15 @@
 #include "belenus.h"
 #include "dlgpanelsettings.h"
 #include "../edit/dlgpaneluseedit.h"
+#include "../db/dbpanels.h"
 
 cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Panel settings" ) );
-    setWindowIcon( QIcon("./resources/40x40_device.gif") );
+    setWindowIcon( QIcon("./resources/40x40_device.png") );
 
-    m_poBtnClose->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    m_poBtnClose->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_uiPanelId = p_uiPanelId;
 
@@ -35,57 +36,102 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     cmbPanelType->setObjectName( QString::fromUtf8( "cmbPanelType" ) );
     horizontalLayout1->addWidget( cmbPanelType );
 
-//    horizontalSpacer1 = new QSpacerItem( 5, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-//    horizontalLayout1->addItem( horizontalSpacer1 );
-
     horizontalLayout2 = new QHBoxLayout();
     horizontalLayout2->setObjectName( QString::fromUtf8( "horizontalLayout2" ) );
 
     lblWorkTime = new QLabel( this );
     lblWorkTime->setObjectName( QString::fromUtf8( "lblWorkTime" ) );
-    lblWorkTime->setText( tr("Work time: ") );
+    lblWorkTime->setText( tr("Work time (hh:mm:ss): ") );
     horizontalLayout2->addWidget( lblWorkTime );
 
     ledWorkTime = new QLineEdit( this );
     ledWorkTime->setObjectName( QString::fromUtf8( "ledWorkTime" ) );
+    ledWorkTime->setMinimumWidth( 70 );
+    ledWorkTime->setMaximumWidth( 70 );
     horizontalLayout2->addWidget( ledWorkTime );
+
+    pbWTReset = new QPushButton( this );
+    pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
+    pbWTReset->setMinimumHeight( 30 );
+    pbWTReset->setMaximumHeight( 30 );
+    pbWTReset->setText( tr("Reset") );
+    pbWTReset->setToolTip( tr("Reset the worktime of the device.") );
+    pbWTReset->setIconSize( QSize(20,20) );
+    pbWTReset->setIcon( QIcon("./resources/40x40_hourglass.png") );
+    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    horizontalLayout2->addWidget( pbWTReset );
+
+    lblMaxWorkTime = new QLabel( this );
+    lblMaxWorkTime->setObjectName( QString::fromUtf8( "lblMaxWorkTime" ) );
+    lblMaxWorkTime->setText( tr("Maximum work time (hour): ") );
+    horizontalLayout2->addWidget( lblMaxWorkTime );
+
+    ledMaxWorkTime = new QLineEdit( this );
+    ledMaxWorkTime->setObjectName( QString::fromUtf8( "ledMaxWorkTime" ) );
+    ledMaxWorkTime->setMinimumWidth( 50 );
+    ledMaxWorkTime->setMaximumWidth( 50 );
+    ledMaxWorkTime->setInputMask( "0000" );
+    horizontalLayout2->addWidget( ledMaxWorkTime );
 
     horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
 
+    horizontalLayout3 = new QHBoxLayout();
+    horizontalLayout3->setObjectName( QString::fromUtf8( "horizontalLayout3" ) );
+
+    horizontalSpacer3 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout3->addItem( horizontalSpacer3 );
+
+    pbCopyToAll = new QPushButton( this );
+    pbCopyToAll->setObjectName( QString::fromUtf8( "pbCopyToAll" ) );
+    pbCopyToAll->setMinimumHeight( 30 );
+    pbCopyToAll->setMaximumHeight( 30 );
+    pbCopyToAll->setText( tr("Copy to all") );
+    pbCopyToAll->setToolTip( tr("Copy and assign all device usages to all other devices.") );
+    pbCopyToAll->setIconSize( QSize(20,20) );
+    pbCopyToAll->setIcon( QIcon("./resources/40x40_save.png") );
+    pbCopyToAll->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    horizontalLayout3->addWidget( pbCopyToAll );
+
     verticalLayout->insertLayout( 0, horizontalLayout1 );
     verticalLayout->insertLayout( 1, horizontalLayout2 );
+    verticalLayout->insertLayout( 3, horizontalLayout3 );
 
     cmbPanelType->setEnabled( false );
     ledWorkTime->setEnabled( false );
 
     m_poBtnSave->setEnabled( true );
     m_poBtnSave->setVisible( true );
-    m_poBtnClose->setText( tr("&Cancel") );
 
     connect( m_poBtnSave, SIGNAL( clicked( bool ) ), this, SLOT( saveClicked( bool ) ) );
+    connect( pbWTReset, SIGNAL( clicked( bool ) ), this, SLOT( on_pbWTReset_clicked( bool ) ) );
+    connect( pbCopyToAll, SIGNAL( clicked( bool ) ), this, SLOT( on_pbCopyToAll_clicked( bool ) ) );
 
     if( p_uiPanelId > 0 )
     {
-        QSqlQuery *poQuery;
+        cDBPanel    obDBPanel;
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE panelId=%1" ).arg(p_uiPanelId) );
-        if( poQuery->first() )
+        obDBPanel.load( m_uiPanelId );
+
+        unsigned int hour       = obDBPanel.workTime()/3600;
+        unsigned int minute     = (obDBPanel.workTime()-(hour*3600))/60;
+        unsigned int second     = (obDBPanel.workTime()-(hour*3600))%60;
+
+        QTime   workTime = QTime( hour, minute, second, 0 );
+
+        ledTitle->setText( obDBPanel.title() );
+        ledWorkTime->setText( workTime.toString("hh:mm:ss") );
+        ledMaxWorkTime->setText( QString::number(obDBPanel.maxWorkTime()) );
+
+        QSqlQuery *poQueryType;
+        poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE active=1" ) );
+        while( poQueryType->next() )
         {
-            ledTitle->setText( poQuery->value( 3 ).toString() );
-            ledWorkTime->setText( poQuery->value( 4 ).toString() );
-
-            QSqlQuery *poQueryType;
-            poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE active=1" ) );
-            while( poQueryType->next() )
-            {
-                cmbPanelType->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
-                if( poQueryType->value( 0 ).toUInt() == poQuery->value( 2 ).toUInt() )
-                    cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
-            }
-            if( poQueryType ) delete poQueryType;
+            cmbPanelType->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
+            if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelTypeId() )
+                cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
         }
-        if( poQuery ) delete poQuery;
+        if( poQueryType ) delete poQueryType;
     }
 
     setupTableView();
@@ -109,27 +155,31 @@ void cDlgPanelSettings::setupTableView()
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Time length" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Time length" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Price" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Time length" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Time length" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
 
-        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
 }
 
@@ -139,11 +189,11 @@ void cDlgPanelSettings::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString("SELECT panelUseId, licenceId, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
     else
     {
-        m_qsQuery = QString("SELECT panelUseId AS id, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
 
     cDlgCrud::refreshTable();
@@ -233,21 +283,52 @@ void cDlgPanelSettings::saveClicked( bool )
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Title of panel can not be empty." ), QMessageBox::Ok );
     }
+    if( ledMaxWorkTime->text() == "" )
+    {
+        boCanBeSaved = false;
+        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime of panel can not be empty." ), QMessageBox::Ok );
+    }
+    else if( ledMaxWorkTime->text().toUInt() < 1 )
+    {
+        boCanBeSaved = false;
+        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime has to be greater than zero." ), QMessageBox::Ok );
+    }
 
     if( boCanBeSaved )
     {
-        QString  qsQuery;
+        QTime   workTime = QTime::fromString(ledWorkTime->text(),"hh:mm:ss");
 
-        qsQuery = "UPDATE panels SET ";
+        cDBPanel    obDBPanel;
 
-        qsQuery += QString( "title = \"%1\", " ).arg( ledTitle->text() );
-        qsQuery += QString( "archive = \"%1\" " ).arg( "MOD" );
-        qsQuery += QString( " WHERE panelId = %1" ).arg( m_uiPanelId );
-
-        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-
-        if( poQuery ) delete poQuery;
+        obDBPanel.load( m_uiPanelId );
+        obDBPanel.setTitle( ledTitle->text() );
+        obDBPanel.setWorkTime( workTime.hour()*3600 + workTime.minute()*60 + workTime.second() );
+        obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+        obDBPanel.save();
 
         QDialog::accept();
     }
+}
+
+void cDlgPanelSettings::on_pbWTReset_clicked( bool )
+{
+    ledWorkTime->setText( "00:00:00" );
+}
+
+void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
+{
+    for( unsigned int i=1; i<g_poPrefs->getPanelCount()+1; i++ )
+    {
+        if( i != m_uiPanelId )
+        {
+            QString qsQuery = QString( "INSERT INTO panelUses (licenceId, panelId, name, useTime, usePrice, active, archive) "
+                                       "SELECT panelUses.licenceId, %1, panelUses.name, panelUses.useTime, panelUses.usePrice, 1, \"NEW\" "
+                                       "FROM panelUses, panels WHERE panelUses.panelId=panels.panelId AND panels.panelId=%2" ).arg(i).arg(m_uiPanelId);
+
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+            if( poQuery ) delete poQuery;
+        }
+    }
+    QMessageBox::information( this, tr("Information"),
+                              tr("Device usage copy process finished.") );
 }

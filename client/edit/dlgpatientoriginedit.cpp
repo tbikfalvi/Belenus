@@ -8,15 +8,20 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Patient origin" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientorigin.png") );
+
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_poPatientOrigin = p_poPatientOrigin;
     if( m_poPatientOrigin )
     {
-        ledName->setText( QString::fromStdString( m_poPatientOrigin->name() ) );
+        ledName->setText( m_poPatientOrigin->name() );
         if( m_poPatientOrigin->licenceId() == 0 && m_poPatientOrigin->id() > 0 )
             checkIndependent->setChecked( true );
 
@@ -49,7 +54,6 @@ void cDlgPatientOriginEdit::accept ()
     {
         try
         {
-            m_poPatientOrigin->setName( ledName->text().toStdString() );
             if( checkIndependent->isChecked() )
             {
                 m_poPatientOrigin->setLicenceId( 0 );
@@ -58,6 +62,8 @@ void cDlgPatientOriginEdit::accept ()
             {
                 m_poPatientOrigin->setLicenceId( g_poPrefs->getLicenceId() );
             }
+            m_poPatientOrigin->setName( ledName->text() );
+            m_poPatientOrigin->setActive( true );
             m_poPatientOrigin->save();
         }
         catch( cSevException &e )

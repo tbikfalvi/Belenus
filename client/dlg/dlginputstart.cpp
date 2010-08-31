@@ -10,11 +10,13 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Entering ...") );
+    setWindowIcon( QIcon("./resources/belenus.ico") );
+
     lblAction->setText( tr("Entering code ...") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
-    pbPatient->setIcon( QIcon("./resources/40x40_patient.gif") );
-    pbCardcode->setIcon( QIcon("./resources/40x40_patientcard.gif") );
-    pbTime->setIcon( QIcon("./resources/40x40_clock.gif") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbPatient->setIcon( QIcon("./resources/40x40_patient.png") );
+    pbCardcode->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    pbTime->setIcon( QIcon("./resources/40x40_clock.png") );
 
     m_bTime         = false;
     m_bCard         = false;

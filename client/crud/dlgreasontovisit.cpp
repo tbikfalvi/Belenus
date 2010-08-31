@@ -8,7 +8,7 @@ cDlgReasonToVisit::cDlgReasonToVisit( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Reason List" ) );
-    setWindowIcon( QIcon("./resources/40x40_reasontovisit.gif") );
+    setWindowIcon( QIcon("./resources/40x40_reasontovisit.png") );
 
     setupTableView();
 }

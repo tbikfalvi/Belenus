@@ -9,9 +9,10 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent )
     setupUi( this );
 
     setWindowTitle( tr("Validate Serial key") );
+    setWindowIcon( QIcon("./resources/40x40_key.png") );
 
-    pbValidate->setIcon( QIcon("./resources/40x40_edit.gif") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.gif") );
+    pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     ledSerial->setText( g_poPrefs->getClientSerial() );
     ledSerial->setFocus();
@@ -24,7 +25,7 @@ cDlgSerialReg::~cDlgSerialReg()
 
 void cDlgSerialReg::on_pbValidate_clicked()
 {
-    // GABOR : IDE J÷N A SERIAL KEY VALID¡L¡SA
+    // GABOR : IDE J√ñN A SERIAL KEY VALID√ÅL√ÅSA
 
     QDialog::accept();
 }

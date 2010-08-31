@@ -19,25 +19,27 @@ cPreferences::~cPreferences()
 
 void cPreferences::init()
 {
-    m_qsFileName          = "";
-    m_qsVersion           = "";
-    m_qsLangFilePrefix    = "";
-    m_qsLang              = "";
-    m_qsLastUser          = "";
-    m_uiPanelsPerRow      = 0;
-    m_uiPanelCount        = 0;
-    m_uiMainWindowLeft    = 0;
-    m_uiMainWindowTop     = 0;
-    m_uiMainWindowWidth   = 0;
-    m_uiMainWindowHeight  = 0;
-    m_uiLicenceId         = 0;
-    m_qsClientSerial      = "";
-    m_qsServerAddress     = "";
-    m_qsServerPort        = "";
-    m_qsMainBackground    = "";
-    m_inCommunicationPort = 1;
-    m_inBarcodeLength     = 12;
-    m_qsBarcodePrefix     = "";
+    m_qsFileName            = "";
+    m_qsVersion             = "";
+    m_qsLangFilePrefix      = "";
+    m_qsLang                = "";
+    m_qsLastUser            = "";
+    m_uiPanelsPerRow        = 0;
+    m_uiPanelCount          = 0;
+    m_uiMainWindowLeft      = 0;
+    m_uiMainWindowTop       = 0;
+    m_uiMainWindowWidth     = 0;
+    m_uiMainWindowHeight    = 0;
+    m_uiLicenceId           = 0;
+    m_qsClientSerial        = "";
+    m_qsServerAddress       = "";
+    m_qsServerPort          = "";
+    m_qsMainBackground      = "";
+    m_inCommunicationPort   = 1;
+    m_inBarcodeLength       = 12;
+    m_qsBarcodePrefix       = "";
+
+    m_bCassaAutoClose       = false;
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -342,6 +344,71 @@ unsigned int cPreferences::getMaxTreatLength() const
     return m_uiMaxTreatLength;
 }
 
+void cPreferences::setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow )
+{
+    m_inDeviceUseVAT = p_inVAT;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
+    }
+}
+
+int cPreferences::getDeviceUseVAT() const
+{
+    return m_inDeviceUseVAT;
+}
+
+void cPreferences::setZipLength( const int p_inZip, bool p_boSaveNow )
+{
+    m_inZipLength = p_inZip;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
+    }
+}
+
+int cPreferences::getZipLength() const
+{
+    return m_inZipLength;
+}
+
+
+void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow )
+{
+    m_bCassaAutoClose = p_bCassaAutoClose;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
+    }
+}
+
+bool cPreferences::getCassaAutoClose() const
+{
+    return m_bCassaAutoClose;
+}
+
+void cPreferences::setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow )
+{
+    m_qsDefaultCountry = p_qsDefaultCountry;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
+    }
+}
+
+QString cPreferences::getDefaultCountry() const
+{
+    return m_qsDefaultCountry;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -407,6 +474,10 @@ void cPreferences::loadConfFileSettings()
         m_uiPanelsPerRow      = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
         m_inBarcodeLength     = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
         m_qsBarcodePrefix     = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        m_bCassaAutoClose     = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
+        m_qsDefaultCountry    = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
+        m_inZipLength         = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
+
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );
         if( !boIsANumber ) m_qsBarcodePrefix = "";
@@ -428,6 +499,7 @@ void cPreferences::loadConfFileSettings()
         m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
 
         m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
+        m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -495,6 +567,9 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
     obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
     obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
+    obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
+    obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
+    obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
@@ -514,6 +589,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
 
     obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
+    obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
 }
 
 unsigned int cPreferences::postponedPatients() const

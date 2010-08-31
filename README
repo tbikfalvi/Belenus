@@ -1,43 +1,19 @@
--------------------------------------------------------------------------------------------
-Belenus Project
--------------------------------------------------------------------------------------------
-Branch neve               Magyarazat
--------------------------------------------------------------------------------------------
+HIBA, JAVITAS
 
-Kepek_ikonok            - Menukhoz, ablakokhoz, toolbar-hoz kepek es ikonok felvetele
-Adatbazis_veglegesites  - A belenus.sql frissitese es az adatbazist letrehozo SQL script-ek
-                          aktualizalasa. Kiegeszult testdata.sql-el, ami nem csak teszt
-                          adatokat, hanem telepiteskor beszurando adatokat is tartalmaz
-Panels                  - Foablakban megjeleno panelok megjelenitese es kezelese
-Main_menu_1             - Foablak menujenek atalakitasa
-PatientOrigin           - Honnan ertesult a paciens a studiorol kerdesre ezekbol az adatokbol
-                          tud valasztani a kezelo paciens adatok megadasakor.
-SourceOrder		- A korabban letrehozott file-ok (usercard, usercardtype, product ... stb
-			  kitorlese. Edit dialog-ok atmozgatasa az uj edit alkonyvtarba
-			  Az egesz lenyege a jobban atlathato kodreszek csoportositasa
-ReasonToVisit		- Miert jott a paciens a studioba kerdesre valaszok
-DatabaseInit		- Install program altal lefuttatando beallitasok, adatok stb
-PatientEdit		- Paciensek kezelese kiegeszitve a Kezelesekkel (attendance)
-CurrentPatient		- Csak akkor lehet kezelni bizonyos reszeket, ha van aktualis paciens
-			  kivalasztva. Ezt oldja meg.
-HardwareInit		- Hardver kezelÈs alapjai. Csatlakoz·s, inicializ·l·s. Hardver teszt
-			  relÈk kapcsol·l·sval.
-PanelStatus		- Panelok m˚kˆdÈsÈt meghat·rozÛ panel status-ok kezelÈse.
-PatientCard		- Pacienseknek altal hasznalt kartyak es kartyatipusok kezelese
-PanelManagement		- Panelok es rajta keresztul a hardver kezelese
-Preferences		- Be·llÌt·sok mÛdosÌt·s·ra szolg·lÛ dialog
-Toolbar			- Toolbar gombok rendberak·sa. EngedÈlyezÈs¸k, tilt·suk timer ·ltal
-			  meghÌvott f¸ggvÈny ·llÌtja. NÈh·ny mÈg nem m˚kˆdı gomb alapbÛl tiltva.
-DatabaseFinal		- Az 'active' mezı felvÈtele az adatb·zis t·bl·kba Ès ennek lekezelÈse
-			  Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
-PostponedPatient	- Ha a p·ciens adatait a kezelı kÈsıbb akarja kitˆlteni, akkor a
-			  postponed (toBeFilled) temp t·bl·ba ker¸l az ID-ja
-Penztar			- Penzbevetel kezelesere szolgalo tablak, adatok kezelese stb
-ApplicationStart	- Program inditasa utan ellenorizni kell, hogy, ha a HW kapcsolat OK,
-			  ne mukodjon a program DEMO kulccsal csak 7 napig. Ugyanugy, mint
-			  rossz internet kapcsolat, vagy szunnapok eseten
-ServerAdmin		- Szerver adminisztr·tor program
-Server			- Szerver program v·ltoztat·sai mostantÛl IDE menjenek!!!
-PanelSettings		- Panelok megjelenitesevel kapcsolatos valtoztatasok
-Translations		- A program alap (angol) nyelvtıl eltÈrı nyelvekre fordÌt·sa
-			  Elmeletileg kesz.
+- √ÅFA -> √ÅFA kulcs
+- egys√©gnyi id√µ b√©rletn√©l PERC
+- p√©nzt√°r aut nyit√°s ?
+- b√©rlet ment√©s ?
+- ha nincs tulajdonosa a b√©rletnek, rendelhesse az aktu√°lishoz
+- Ir√°ny√≠t√≥sz√°mb√≥l v√°ros automatikusan
+- Be√°ll√≠t√°sok k√∂z√∂tt nyelv mellett def. orsz√°g
+- magass√°g, s√∫ly, gy√≥gyszer, allergia -> alapadat  + 'betegs√©gcsoport', mint "honnan j√∂tt" + √©letkor kijelz√©s
+- b√©rlethaszn√°latn√°l max 1 egys√©get lehet haszn√°lni
+- g√©p ind√≠t√°sa b√©rlettel ????!!!!
+- Ut√≥h≈±t√©st kezel≈ë ne tudja le√°ll√≠tani
+- szerviz k√°rtyat√≠pus
+- ki nem fizetett haszn√°lat -> √∫j haszn√°lat -> ESC
+- csak egyszer lehessen megadni, hogy mennyi a v√©gleges kezel√©si id≈ë  =>   b√©rlet+kp OK  kp+kp  vagy b√©rlet+b√©rlet FAIL
+- ha a g√©pen STOP-ot nyomnak, akkor a √°lljon meg a kezel√©s, ne vonjon le t√∂bb id≈ët, ha v√©glegesen is le√°ll a kezel√©s, illetve lehessen folytatni onnan, ne p√∂r√∂gj√∂n a sz√°ml√°l√≥
+- id≈ëpontokn√°l, id≈ë intervallumokn√°l MINDENHOL legyen ki√≠rva a m√©rt√©kegys√©g
+- globalis adatok

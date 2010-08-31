@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QSpacerItem>
 #include <QComboBox>
+#include <QPushButton>
 
 #include "../framework/dlgcrud.h"
 
@@ -22,15 +23,22 @@ public:
     QHBoxLayout     *horizontalLayout2;
     QLabel          *lblWorkTime;
     QLineEdit       *ledWorkTime;
+    QPushButton     *pbWTReset;
+    QLabel          *lblMaxWorkTime;
+    QLineEdit       *ledMaxWorkTime;
     QSpacerItem     *horizontalSpacer2;
+    QSpacerItem     *horizontalSpacer3;
+    QPushButton     *pbCopyToAll;
+    QHBoxLayout     *horizontalLayout3;
 
     cDlgPanelSettings( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
     virtual ~cDlgPanelSettings();
 
 private:
-    unsigned int    m_uiPanelId;
 
 protected:
+    unsigned int    m_uiPanelId;
+
     virtual void setupTableView();
     virtual void enableButtons();
 
@@ -40,6 +48,8 @@ protected slots:
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
     virtual void saveClicked( bool );
+    virtual void on_pbWTReset_clicked( bool );
+    virtual void on_pbCopyToAll_clicked( bool );
 };
 
 #endif // DLGPANELSETTINGS_H
