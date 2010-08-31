@@ -51,8 +51,6 @@ void cDlgDemo::refreshTable()
     m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Zip" ) );
     m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Region" ) );
     m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "City" ) );
-    tbvReport->resizeColumnToContents( 0 );
-    tbvReport->resizeColumnToContents( 1 );
 
     QSqlQuery  *poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
@@ -64,4 +62,21 @@ void cDlgDemo::refreshTable()
         obReportRow.append( new QStandardItem( poReportResult->value( 2 ).toString() ) );
         m_poModel->appendRow( obReportRow );
     }
+
+    QList<QStandardItem*>  obTotalRow;
+    obTotalRow.append( new QStandardItem( tr( "Total" ) ) );
+
+    int inRegionCount = 1;
+    if( cmbRegion->currentIndex() == 0 ) inRegionCount = cmbRegion->count() - 1;
+    if( inRegionCount > 1 ) obTotalRow.append( new QStandardItem( QString( tr( "%1 Regions" ) ).arg( inRegionCount ) ) );
+    else obTotalRow.append( new QStandardItem( tr( "1 Region" ) ) );
+
+    int inCityCount = m_poModel->rowCount();
+    if( inCityCount > 1 ) obTotalRow.append( new QStandardItem( QString( tr( "%1 Cities" ) ).arg( inCityCount ) ) );
+    else obTotalRow.append( new QStandardItem( tr( "1 City" ) ) );
+
+    m_poModel->appendRow( obTotalRow );
+
+    tbvReport->resizeColumnToContents( 0 );
+    tbvReport->resizeColumnToContents( 1 );
 }
