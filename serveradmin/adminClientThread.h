@@ -43,7 +43,7 @@ protected slots:
     void _error(QAbstractSocket::SocketError);
     void _disconnected();
     void _connected();
-    virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overwritten */
+    void _read() { CommunicationProtocol::read(); } /* slots cannot be overwritten */
     void _connectTo(QString, int);
 
 protected:

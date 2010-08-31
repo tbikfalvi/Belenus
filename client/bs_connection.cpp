@@ -13,7 +13,8 @@ BelenusServerConnection::BelenusServerConnection()
       _lastResult(Result::OK),
       _isLicenseValid(false)
 {
-    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
+    connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
+    connect( this, SIGNAL(__connectTo(QString,int)), this, SLOT(__connectTo_(QString,int)) );
 }
 
 
@@ -50,13 +51,19 @@ void BelenusServerConnection::_handleLogonOk()
 void BelenusServerConnection::run()
 {
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::run] connection thread started" << EOM;
-
     exec();
 }
 
 
 
-void BelenusServerConnection::connectTo(const QHostAddress addr, int port)
+void BelenusServerConnection::connectTo(const QString adr, const int port)
+{
+    emit __connectTo(adr,port);
+}
+
+
+
+void BelenusServerConnection::__connectTo_(QString addr, int port)
 {
     if (m_socket) {
         g_obLogger(cSeverity::ERROR) << "[BelenusServerConnection::connectTo] m_socket should be closed before new connection attempt" << EOM;

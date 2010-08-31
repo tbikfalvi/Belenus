@@ -13,7 +13,6 @@ AdminClientThread::AdminClientThread()
         _loggedIn(false)
 {
     connect( this, SIGNAL(__connectTo(QString, int)), this, SLOT(_connectTo(QString, int)) );
-
     connect( this, SIGNAL(finished()), this, SLOT(deleteLater()));
 }
 
@@ -139,10 +138,10 @@ void AdminClientThread::_connectTo(const QString addr, int port)
     QTcpSocket *socket = new QTcpSocket();
     setTcpConnection(socket);
 
-    connect( m_socket,   SIGNAL(connected()),                           this, SLOT(_connected()) );
-    connect( m_socket,   SIGNAL(disconnected()),                        this, SLOT(_disconnected()) );
-    connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   this, SLOT(_error(QAbstractSocket::SocketError)) );
-    connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(_read()) );
+    connect( m_socket,   SIGNAL(connected()),                           SLOT(_connected()) );
+    connect( m_socket,   SIGNAL(disconnected()),                        SLOT(_disconnected()) );
+    connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   SLOT(_error(QAbstractSocket::SocketError)) );
+    connect( m_socket,   SIGNAL(readyRead()),                           SLOT(_read()) );
 
     m_socket->connectToHost(addr, port);
 }

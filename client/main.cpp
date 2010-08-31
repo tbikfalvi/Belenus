@@ -91,7 +91,7 @@ int main( int argc, char *argv[] )
         g_poServer->moveToThread(g_poServer);
         g_poServer->start();
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
-        g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );
+        g_poServer->connectTo( g_poPrefs->getServerAddress(), g_poPrefs->getServerPort().toInt() );
 
         int nCount = 0;
         while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )

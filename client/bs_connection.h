@@ -44,7 +44,7 @@ public:
     BelenusServerConnection();
     virtual ~BelenusServerConnection();
 
-    void connectTo(const QHostAddress adr, int port);
+    void connectTo(const QString adr, int port);
     void setLoginKeys(const QString serial, const QString code2);
     ConnectionStatus getStatus() { return _status; }
     Result::ResultCode getLastResult() { return _lastResult; }
@@ -54,12 +54,14 @@ signals:
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
+    void __connectTo(QString adr, int port);
 
 protected slots:
     void _error(QAbstractSocket::SocketError);
     void _disconnected();
     void _connected();
     virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
+    void __connectTo_(QString, int);
 
 protected:
     virtual void run();
