@@ -38,6 +38,7 @@ private slots:
     /* slots for signals from Connection */
     void onSqlResult(int id, SqlResult *res);
     void onLogMessage(QString msg);
+    void onRegisterKeyResponse(Result::ResultCode);
 
 protected:
 

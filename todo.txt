@@ -1,2 +1,6 @@
 - adatbázis konvertálás
 - szűz gépre telepítés -> ellenőrzés, folyamat leírása, "install pack" összerakása
+- server config file olvasas
+- logger file iro
+- file-cout loggereket mutexxel vedeni
+- loggernel threadId-t mint mezo kezelni

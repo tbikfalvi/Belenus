@@ -21,30 +21,37 @@ public:
 
 
     AdminClientThread();
+
     void connectTo(const QString adr, int port);
     bool isConnected() { return m_socket!=0; }
     void abort();
-
     void setCredentials(QString username, QString password);
-    void registerNewKey(const char* key);
-    void queryLicenseKeys();
+    void registerNewKey(const QString key);
     void resetCode2(int clientId);
-    void queryLogs(cSeverity::teSeverity minSeverity = cSeverity::DEBUG, int last = 50);
     void removeKey(int clientId);
+    void queryLicenseKeys();
+    void queryLogs(cSeverity::teSeverity minSeverity = cSeverity::DEBUG, int last = 50);
 
 signals:
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void sqlResultReady(int, SqlResult*);
-    void __connectTo(QString, int);    /* for internal use */
+    void registerKeyResponse(Result::ResultCode);
+
 
 protected slots:
     void _error(QAbstractSocket::SocketError);
     void _disconnected();
     void _connected();
-    void _read() { CommunicationProtocol::read(); } /* slots cannot be overwritten */
+    void _read() { CommunicationProtocol::read(); } /* slots cannot be overwritten (probably because CP does not come from QObject) */
     void _connectTo(QString, int);
+    void _registerNewKey(QString key);
+    void _resetCode2(int clientId);
+    void _removeKey(int clientId);
+    void _queryLicenseKeys();
+    void _queryLogs(cSeverity::teSeverity minSeverity, int last);
+
 
 protected:
     virtual void run();

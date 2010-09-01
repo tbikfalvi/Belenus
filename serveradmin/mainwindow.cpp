@@ -47,6 +47,7 @@ MainWindow::MainWindow( QWidget *p_poParent )
     connect( &_connection, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(socketError(QAbstractSocket::SocketError)));
     connect( &_connection, SIGNAL(connected()), this, SLOT(connected()) );
     connect( &_connection, SIGNAL(sqlResultReady(int, SqlResult*)), this, SLOT(onSqlResult(int,SqlResult*)) );
+    connect( &_connection, SIGNAL(registerKeyResponse(Result::ResultCode)), this, SLOT(onRegisterKeyResponse(Result::ResultCode)) );
 
     enableConnectionButton();
 
@@ -209,9 +210,10 @@ void MainWindow::onSqlResult(int id, SqlResult *res)
         break;
 
     case AdminClientThread::Q_REMOVE_LICENSE_KEY:
-        if (res->isValid())
+        if (res->isValid()) {
             g_obLogger(cSeverity::INFO) << "License key was successfully removed" << EOM;
-        else
+            _connection.queryLicenseKeys();
+        } else
             g_obLogger(cSeverity::INFO) << "Failed to remove license key" << EOM;
         break;
 
@@ -219,6 +221,16 @@ void MainWindow::onSqlResult(int id, SqlResult *res)
         g_obLogger(cSeverity::ERROR) << "Unknown query result received. Id is " << id << ", result has " << res->rowCount() << " rows" << EOM;
         break;
     }
+}
+
+
+
+void MainWindow::onRegisterKeyResponse(Result::ResultCode r)
+{
+    if ( r!=Result::OK ) {
+        g_obLogger(cSeverity::INFO) << "Registering new key was not successful. Returned code = " << r << EOM;
+    } else
+        _connection.queryLicenseKeys();
 }
 
 
@@ -269,6 +281,8 @@ void MainWindow::on_bRemoveKey_clicked()
     g_obLogger(cSeverity::INFO) << "Removing license of client #" << clientId << EOM;
     _connection.removeKey( clientId );
 }
+
+
 
 void MainWindow::on_pbExit_clicked()
 {

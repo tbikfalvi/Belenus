@@ -6,14 +6,14 @@
 extern cQTLogger g_obLogger;
 
 
-
-
 AdminClientThread::AdminClientThread()
     :   CommunicationProtocol(),
         _loggedIn(false)
 {
-    connect( this, SIGNAL(__connectTo(QString, int)), this, SLOT(_connectTo(QString, int)) );
     connect( this, SIGNAL(finished()), this, SLOT(deleteLater()));
+
+    qRegisterMetaType<cSeverity::teSeverity>("cSeverity::teSeverity");
+    qRegisterMetaType<Result::ResultCode>("Result::ResultCode");
 }
 
 
@@ -43,33 +43,52 @@ void AdminClientThread::_handleLogonChallenge()
 void AdminClientThread::_handleRegisterKeyResponse(Result::ResultCode res)
 {
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleRegisterKeyResult] result is " << res << EOM;
-    queryLicenseKeys();
+    emit registerKeyResponse(res);
 }
 
 
 
 void AdminClientThread::_handleLogonOk()
 {
+    g_obLogger(cSeverity::INFO) << "[AdminClientThread::_handleLogonOk] logged in successfully" << EOM;
     _loggedIn = true;
 }
 
 
 
-void AdminClientThread::registerNewKey(const char *key)
+void AdminClientThread::registerNewKey(const QString key)
 {
-    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::registerNewKey] key to register is " << key << EOM;
-    if ( !_loggedIn )
-        return;
+    QMetaObject::invokeMethod(this, "_registerNewKey", Qt::QueuedConnection, Q_ARG(QString, key) );
+}
 
-    sendRegisterKey(key);
+
+
+void AdminClientThread::_registerNewKey(QString key)
+{
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_registerNewKey] key to register is " << key << EOM;
+    if ( !_loggedIn ) {
+        g_obLogger(cSeverity::ERROR) << "Not logged in yet" << EOM;
+        return;
+    }
+
+    sendRegisterKey(key.toStdString().c_str());
 }
 
 
 
 void AdminClientThread::queryLicenseKeys()
 {
-    if ( !_loggedIn )
+    QMetaObject::invokeMethod(this, "_queryLicenseKeys", Qt::QueuedConnection );
+}
+
+
+
+void AdminClientThread::_queryLicenseKeys()
+{
+    if ( !_loggedIn ) {
+        g_obLogger(cSeverity::ERROR) << "Not logged in yet" << EOM;
         return;
+    }
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLicenseKeys] entered " << EOM;
     sendSqlQuery(Q_GET_KEYS, "SELECT clientId, code1, code2, dateCreated, lastLogin, licenceId, serial, country, region, city, zip, address, studio, contact, active FROM clients LEFT JOIN licences ON clients.code1=SHA1(serial)");
@@ -79,8 +98,17 @@ void AdminClientThread::queryLicenseKeys()
 
 void AdminClientThread::resetCode2(int clientId)
 {
-    if ( !_loggedIn )
+    QMetaObject::invokeMethod(this, "_resetCode2", Qt::QueuedConnection, Q_ARG(int,clientId) );
+}
+
+
+
+void AdminClientThread::_resetCode2(int clientId)
+{
+    if ( !_loggedIn ) {
+        g_obLogger(cSeverity::ERROR) << "Not logged in yet" << EOM;
         return;
+    }
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::resetCode2] reseting code2 of client " << clientId << EOM;
     sendSqlQuery(Q_RESET_CODE2, QString("UPDATE clients SET code2=NULL WHERE clientId=%1").arg(clientId).toStdString().c_str());
@@ -90,8 +118,17 @@ void AdminClientThread::resetCode2(int clientId)
 
 void AdminClientThread::queryLogs(cSeverity::teSeverity minSeverity, int last)
 {
-    if ( !_loggedIn )
+    QMetaObject::invokeMethod(this, "_queryLogs", Qt::QueuedConnection, Q_ARG(cSeverity::teSeverity,minSeverity), Q_ARG(int,last) );
+}
+
+
+
+void AdminClientThread::_queryLogs(cSeverity::teSeverity minSeverity, int last)
+{
+    if ( !_loggedIn ) {
+        g_obLogger(cSeverity::ERROR) << "Not logged in yet" << EOM;
         return;
+    }
 
     g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::queryLogs] getting logs from server sev=" << (int)minSeverity << " last=" << last << EOM;
     sendSqlQuery(Q_GET_LOGS, QString("SELECT * FROM logs WHERE severity<=%1 ORDER BY date DESC LIMIT %2").arg(minSeverity).arg(last).toStdString().c_str());
@@ -101,11 +138,20 @@ void AdminClientThread::queryLogs(cSeverity::teSeverity minSeverity, int last)
 
 void AdminClientThread::removeKey(int clientId)
 {
-    if ( !_loggedIn )
-        return;
+    QMetaObject::invokeMethod(this, "_removeKey", Qt::QueuedConnection, Q_ARG(int,clientId) );
+}
 
-    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::removeKey] removing license key for client " << clientId << EOM;
-    sendSqlQuery(Q_RESET_CODE2, QString("DELETE FROM clients WHERE clientID=%1").arg(clientId).toStdString().c_str());
+
+
+void AdminClientThread::_removeKey(int clientId)
+{
+    if ( !_loggedIn ) {
+        g_obLogger(cSeverity::ERROR) << "Not logged in yet" << EOM;
+        return;
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_removeKey] removing license key for client " << clientId << EOM;
+    sendSqlQuery(Q_REMOVE_LICENSE_KEY, QString("DELETE FROM clients WHERE clientID=%1").arg(clientId).toStdString().c_str());
 }
 
 
@@ -119,7 +165,7 @@ void AdminClientThread::run()
 
 void AdminClientThread::connectTo(const QString addr, int port)
 {
-    emit __connectTo(addr, port);
+    QMetaObject::invokeMethod(this, "_connectTo", Qt::QueuedConnection, Q_ARG(QString,addr), Q_ARG(int, port) );
 }
 
 
@@ -193,7 +239,7 @@ void AdminClientThread::_disconnected()
 
 void AdminClientThread::_handleSqlQueryResult(int queryId, SqlResult *res)
 {
-    g_obLogger(cSeverity::ERROR) << "[AdminClientThread::_handleSqlQueryResult] result for queryid "<< queryId << " has " << res->rowCount() << " rows" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleSqlQueryResult] result for queryid "<< queryId << " has " << res->rowCount() << " rows" << EOM;
     emit sqlResultReady(queryId, res);
 }
 
