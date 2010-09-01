@@ -54,14 +54,13 @@ signals:
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
-    void __connectTo(QString adr, int port);
 
 protected slots:
     void _error(QAbstractSocket::SocketError);
     void _disconnected();
     void _connected();
     virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
-    void __connectTo_(QString, int);
+    void _connectTo(QString, int);
 
 protected:
     virtual void run();

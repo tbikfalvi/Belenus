@@ -17,3 +17,4 @@ HIBA, JAVITAS
 - ha a gépen STOP-ot nyomnak, akkor a álljon meg a kezelés, ne vonjon le több időt, ha véglegesen is leáll a kezelés, illetve lehessen folytatni onnan, ne pörögjön a számláló
 - időpontoknál, idő intervallumoknál MINDENHOL legyen kiírva a mértékegység
 - globalis adatok
+- loginnal kiakarsz lepnire nem a valasz, es megegyszer quit-et nyomok, egybol kilep, ekkor mar kerdes nelkul

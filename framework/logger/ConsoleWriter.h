@@ -1,6 +1,7 @@
 #ifndef CONSOLEWRITER_H
 #define CONSOLEWRITER_H
 
+#include <QMutex>
 #include "../qtlogger.h"
 
 
@@ -10,6 +11,8 @@ public:
     ConsoleWriter(const cSeverity::teSeverity sev = cSeverity::WARNING) : LogWriter(sev) {}
 protected:
     virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
+
+    QMutex _coutLogGuard;
 };
 
 

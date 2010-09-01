@@ -58,12 +58,12 @@ void BelenusServerConnection::run()
 
 void BelenusServerConnection::connectTo(const QString adr, const int port)
 {
-    emit __connectTo(adr,port);
+    QMetaObject::invokeMethod(this, "_connectTo", Qt::QueuedConnection, Q_ARG(QString, adr), Q_ARG(int, port) );
 }
 
 
 
-void BelenusServerConnection::__connectTo_(QString addr, int port)
+void BelenusServerConnection::_connectTo(QString addr, int port)
 {
     if (m_socket) {
         g_obLogger(cSeverity::ERROR) << "[BelenusServerConnection::connectTo] m_socket should be closed before new connection attempt" << EOM;
@@ -79,7 +79,7 @@ void BelenusServerConnection::__connectTo_(QString addr, int port)
     connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(_read()) );
 
     m_socket->connectToHost(addr, port);
-    m_socket->moveToThread(this);
+
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::connectTo] status is CONNECTING" << EOM;
     _status = CONNECTING;
     _isLicenseValid = false;

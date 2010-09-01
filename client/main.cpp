@@ -106,8 +106,8 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poServer = new BelenusServerConnection();
-        g_poServer->moveToThread(g_poServer);
-        g_poServer->start();
+        g_poServer->moveToThread(g_poServer)        g_poServer->start();
+
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
         g_poServer->connectTo( g_poPrefs->getServerAddress(), g_poPrefs->getServerPort().toInt() );
 
@@ -125,8 +125,9 @@ int main( int argc, char *argv[] )
             waitCondition.wait(&dummy, 500);
         }
 
+        qsSpalsh += "    ";
         if ( g_poServer->getStatus()==BelenusServerConnection::AUTHENTICATED ) {
-            qsSpalsh += QObject::tr("Connected. License ok.") + "\n";
+            qsSpalsh += QObject::tr("Connected. License OK.") + "\n";
         } else if ( g_poServer->getStatus()==BelenusServerConnection::CONNECTING ) {
             qsSpalsh += QObject::tr("Still connecting. Unable to check license.") + "\n";
         } else if ( g_poServer->getStatus()==BelenusServerConnection::CONNECTION_FAILED ) {

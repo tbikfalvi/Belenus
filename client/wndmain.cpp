@@ -249,8 +249,7 @@ void cWndMain::initPanels()
 void cWndMain::checkDemoLicenceKey()
 {
     if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
-        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
-                                                           // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
+        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
