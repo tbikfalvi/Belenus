@@ -26,7 +26,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgaddressedit.ui \
     dlghealthinsuranceedit.ui \
     dlgcompanyedit.ui \
-    dlgdoctoredit.ui
+    dlgdoctoredit.ui \
+    dlgzipregioncityedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -59,6 +60,8 @@ HEADERS = belenus.h \
     crud/dlgdoctor.h \
     crud/dlgcompany.h \
     crud/dlghealthinsurance.h \
+    crud/dlgzipregioncity.h \
+    crud/dlgzipregioncityselect.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -111,6 +114,7 @@ HEADERS = belenus.h \
     edit/dlghealthinsuranceedit.h \
     edit/dlgcompanyedit.h \
     edit/dlgdoctoredit.h \
+    edit/dlgzipregioncityedit.h \
     bs_connection.h \
     communication.h \
     communication_demo.h \
@@ -150,6 +154,8 @@ SOURCES = main.cpp \
     crud/dlgdoctor.cpp \
     crud/dlgcompany.cpp \
     crud/dlghealthinsurance.cpp \
+    crud/dlgzipregioncity.cpp \
+    crud/dlgzipregioncityselect.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
@@ -202,6 +208,7 @@ SOURCES = main.cpp \
     edit/dlghealthinsuranceedit.cpp \
     edit/dlgcompanyedit.cpp \
     edit/dlgdoctoredit.cpp \
+    edit/dlgzipregioncityedit.cpp \
     bs_connection.cpp \
     communication_demo.cpp \
     frmpanel.cpp \

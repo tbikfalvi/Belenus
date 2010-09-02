@@ -45,7 +45,7 @@ void cDBZipRegionCity::init( const unsigned int p_uiId,
 
 void cDBZipRegionCity::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "patientOriginId" );
+    int inIdIdx         = p_obRecord.indexOf( "zipRegionCityId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inZipIdx        = p_obRecord.indexOf( "zip" );
     int inRegionIdx     = p_obRecord.indexOf( "region" );
@@ -81,7 +81,7 @@ void cDBZipRegionCity::load( const QString &p_qsZip ) throw( cSevException )
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM zipRegionCity WHERE zip = \"" + p_qsZip + "\"" );
 
-    if( poQuery->size() != 1 )
+    if( poQuery->size() < 1 )
         throw cSevException( cSeverity::ERROR, "ZipRegionCity zip not found" );
 
     poQuery->first();

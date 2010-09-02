@@ -11,6 +11,11 @@ public:
     cDlgPanelStatuses( QWidget *p_poParent = 0 );
     virtual ~cDlgPanelStatuses();
 
+    bool isStatusChanged();
+
+private:
+    bool    m_bStatusChanged;
+
 protected:
     virtual void setupTableView();
     virtual void enableButtons();

@@ -361,3 +361,14 @@ client/moc_dlgdoctor.o
 client/moc_dlghealthinsurance.cpp
 client/moc_dlghealthinsurance.o
 client/dbpanels.o
+client/dlgzipregioncity.o
+client/dlgzipregioncityedit.o
+client/dlgzipregioncityselect.o
+client/moc_dlgzipregioncity.cpp
+client/moc_dlgzipregioncity.o
+client/moc_dlgzipregioncityedit.cpp
+client/moc_dlgzipregioncityedit.o
+client/moc_dlgzipregioncityselect.cpp
+client/moc_dlgzipregioncityselect.o
+client/ui_dlgzipregioncityedit.h
+

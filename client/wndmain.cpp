@@ -45,6 +45,7 @@
 #include "crud/dlgcompany.h"
 #include "crud/dlgdoctor.h"
 #include "crud/dlghealthinsurance.h"
+#include "crud/dlgzipregioncity.h"
 
 //====================================================================================
 
@@ -814,6 +815,12 @@ void cWndMain::on_action_PanelStatuses_triggered()
     cDlgPanelStatuses   obDlgPanelStatuses( this );
 
     obDlgPanelStatuses.exec();
+    if( obDlgPanelStatuses.isStatusChanged() )
+    {
+        QMessageBox::information( this, tr( "Information" ),
+                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    }
+
 }
 //====================================================================================
 void cWndMain::on_action_UseWithCard_triggered()
@@ -1413,5 +1420,14 @@ void cWndMain::on_action_HealthInsurance_triggered()
     cDlgHealthInsurance  obDlgHealthInsurance( this );
 
     obDlgHealthInsurance.exec();
+}
+//====================================================================================
+void cWndMain::on_action_RegionZipCity_triggered()
+{
+    setCursor( Qt::WaitCursor);
+    cDlgZipRegionCity   obDlgZipRegionCity( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgZipRegionCity.exec();
 }
 //====================================================================================

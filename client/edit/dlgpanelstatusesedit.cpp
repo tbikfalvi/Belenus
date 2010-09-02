@@ -53,6 +53,11 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
             }
         }*/
     }
+    ledName->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    sbSeqNumber->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    sbLength->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    cmbActivateCmd->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 }
 
 cDlgPanelStatusesEdit::~cDlgPanelStatusesEdit()

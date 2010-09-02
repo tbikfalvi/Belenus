@@ -25,6 +25,7 @@ private:
     void FillDoctorCombo();
     void FillDefaultAddress();
     void FillPhoneNumber();
+    void checkRegionZipCity();
 
 protected:
     cDBPatient      *m_poPatient;
