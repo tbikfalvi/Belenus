@@ -107,6 +107,25 @@ void cDBZipRegionCity::loadCity( const QString &p_qsCity ) throw( cSevException 
     init( poQuery->record() );
 }
 
+void cDBZipRegionCity::loadZipCity( const QString &p_qsZip, const QString &p_qsCity ) throw( cSevException )
+{
+    cTracer obTrace( "cDBZipRegionCity::load", QString("zip: %1 city: \"%2\"").arg(p_qsZip).arg(p_qsCity) );
+
+    QString qsCity = p_qsCity;
+
+    qsCity.replace( "*", "\%" );
+
+    QString qsQuery = QString("SELECT * FROM zipRegionCity WHERE zip = %1 AND city = \"%2\"").arg(p_qsZip).arg(qsCity);
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    if( poQuery->size() < 1 )
+        throw cSevException( cSeverity::ERROR, "ZipRegionCity city not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBZipRegionCity::save() throw( cSevException )
 {
     cTracer obTrace( "cDBZipRegionCity::save" );

@@ -14,6 +14,8 @@ public:
     void            load( const unsigned int p_uiId )               throw( cSevException );
     void            load( const QString &p_qsZip )                  throw( cSevException );
     void            loadCity( const QString &p_qsCity )             throw( cSevException );
+    void            loadZipCity( const QString &p_qsZip,
+                                 const QString &p_qsCity )          throw( cSevException );
     void            save()                                          throw( cSevException );
     void            remove()                                        throw( cSevException );
     void            createNew()                                     throw();
