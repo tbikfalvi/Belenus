@@ -113,7 +113,7 @@ void cDlgHealthInsurance::editClicked( bool )
     catch( cSevException &e )
     {
         if( poHealthInsurance ) delete poHealthInsurance;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -137,7 +137,7 @@ void cDlgHealthInsurance::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poHealthInsurance ) delete poHealthInsurance;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

@@ -341,7 +341,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
         if( poQuery ) delete poQuery;
     }
 }
@@ -361,7 +361,7 @@ void cFrmPanel::reload()
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
         if( poQuery ) delete poQuery;
     }
 }

@@ -19,11 +19,11 @@
 #include <QMessageBox>
 #include <QTranslator>
 #include <QSplashScreen>
-#include <iostream>
-
-//====================================================================================
 
 #include "../framework/qtlogger.h"
+#include "../framework/logger/GUIWriter.h"
+#include "../framework/logger/DatabaseWriter.h"
+#include "../framework/logger/ConsoleWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "db/dbuser.h"
 #include "preferences.h"
@@ -40,6 +40,9 @@
 //====================================================================================
 
 cQTLogger                g_obLogger;
+DatabaseWriter           g_obLogDBWriter;
+GUIWriter                g_obLogGUIWriter;
+ConsoleWriter            g_obLogConsoleWriter;
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
@@ -54,6 +57,10 @@ int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
 
+    g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
+    g_obLogger.attachWriter("db", &g_obLogDBWriter);
+    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
+    g_obLogger.setMinimumSeverity("console", cSeverity::DEBUG);
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
@@ -87,21 +94,22 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
-        // g_obLogger.setDBConnection( g_poDB );
-
+        g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
         qsSpalsh += QObject::tr(" CONNECTED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << cQTLogger::EOM;
-/*
+        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
+
         qsSpalsh += QObject::tr("Connecting to Belenus server ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poServer = new BelenusServerConnection();
+        g_poServer->moveToThread(g_poServer)        g_poServer->start();
+
         g_poServer->setLoginKeys(g_poPrefs->getClientSerial(), "yipiee-code2");
-        g_poServer->connectTo( QHostAddress(g_poPrefs->getServerAddress()), g_poPrefs->getServerPort().toInt() );
+        g_poServer->connectTo( g_poPrefs->getServerAddress(), g_poPrefs->getServerPort().toInt() );
 
         int nCount = 0;
         while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
@@ -117,20 +125,27 @@ int main( int argc, char *argv[] )
             waitCondition.wait(&dummy, 500);
         }
 
-        switch (g_poServer->getStatus())
-        {
-            case BelenusServerConnection::AUTHENTICATED:
-                qsSpalsh += QObject::tr(" CONNECTED.\n");
-                break;
-            case BelenusServerConnection::LICENSE_FAILED:
-                qsSpalsh += QObject::tr(" FAILED\nLicense key authentication not ok.\n");
-                break;
-            default:
-                qsSpalsh += QObject::tr(" FAILED\nProbably no internet connection?\n");
-                break;
+        qsSpalsh += "    ";
+        if ( g_poServer->getStatus()==BelenusServerConnection::AUTHENTICATED ) {
+            qsSpalsh += QObject::tr("Connected. License OK.") + "\n";
+        } else if ( g_poServer->getStatus()==BelenusServerConnection::CONNECTING ) {
+            qsSpalsh += QObject::tr("Still connecting. Unable to check license.") + "\n";
+        } else if ( g_poServer->getStatus()==BelenusServerConnection::CONNECTION_FAILED ) {
+            QString s;
+            switch (g_poServer->getLastResult()) {
+                case Result::INVALID_VERSION: s = QObject::tr("Server has different version. Unable to connect."); break;
+                case Result::INVALID_LICENSE_KEY: s = QObject::tr("License key authentication failed"); break;
+                case Result::INVALID_SECOND_ID: s = QObject::tr("Server authentication failed. Call service."); break;
+                default: s = QObject::tr("Unable to connect to server"); break;
+            }
+            qsSpalsh += s + "\n";
+        } else { /* NOT_CONNECTED state should not happen as a connectTo() automatically transfers to CONNECTING state */
+            qsSpalsh += QObject::tr("Unknown connection error") + "\n";
+            g_obLogger(cSeverity::INFO) << "[main::splash] unknown status when connecting to server" << g_poServer->getStatus() << EOM;
         }
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-*/
+
+
 #ifdef __WIN32__
 
         qsSpalsh += QObject::tr("Checking hardware connection ...");
@@ -138,7 +153,7 @@ int main( int argc, char *argv[] )
 
         g_poHardware = new CS_Communication_Serial();
         g_poHardware->init( g_poPrefs->getCommunicationPort() );
-        if( !g_poHardware->isHardwareConnected() /*|| !g_poServer->isSerialValid()*/ )
+        if( !g_poHardware->isHardwareConnected() || !g_poServer->isLicenseValid() )
         {
             qsSpalsh += QObject::tr("FAILED\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -230,12 +245,12 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        cerr << ">> " << e.what() << endl << flush;;
-
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 
-    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " ended." << cQTLogger::EOM;
+//    g_poServer->quit();
+
+    g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " ended." << EOM;
 
     delete g_poPrefs;
     delete g_poDB;

@@ -20,13 +20,15 @@
 
 #include <QString>
 #include <QtNetwork>
-#include "../framework/network/connection.h"
+#include <QThread>
+#include <QHostAddress>
+#include "../framework/network/CommunicationProtocol.h"
 #include "../framework/qtlogger.h"
 
 
 
 //====================================================================================
-class BelenusServerConnection : public Connection
+class BelenusServerConnection : public QThread, public CommunicationProtocol
 {
     Q_OBJECT
 
@@ -35,7 +37,6 @@ public:
         NOT_CONNECTED,
         CONNECTING,
         AUTHENTICATED,      // server connection is ok
-        LICENSE_FAILED,     // connected to server but license authentication failed
         CONNECTION_FAILED,  // eg. socket error
     };
 
@@ -43,18 +44,37 @@ public:
     BelenusServerConnection();
     virtual ~BelenusServerConnection();
 
-    void setLoginKeys(QString serial, QString code2);
-    ConnectionStatus    getStatus() { return _status; }
+    void connectTo(const QString adr, int port);
+    void setLoginKeys(const QString serial, const QString code2);
+    ConnectionStatus getStatus() { return _status; }
+    Result::ResultCode getLastResult() { return _lastResult; }
+    bool isLicenseValid() { return _isLicenseValid; }        /* true if connected to server and server accepted license and key2 */
 
-private:
-    void _initialize();
+signals:
+    void connected();
+    void disconnected();
+    void error(QAbstractSocket::SocketError);
+
+protected slots:
+    void _error(QAbstractSocket::SocketError);
+    void _disconnected();
+    void _connected();
+    virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
+    void _connectTo(QString, int);
+
+protected:
+    virtual void run();
+
     void _handleLogonChallenge();
     void _handleLogonOk();
+    void _handleDisconnect(Result::ResultCode reason);
 
 private:
     QString _serial;
     QString _code2;
     ConnectionStatus _status;
+    Result::ResultCode _lastResult;
+    bool _isLicenseValid;
 };
 
 

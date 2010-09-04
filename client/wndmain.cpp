@@ -16,6 +16,7 @@
 #include <QMessageBox>
 
 #include "wndmain.h"
+#include "../framework/logger/DatabaseWriter.h"
 
 //====================================================================================
 
@@ -65,6 +66,10 @@
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
+
+
+extern DatabaseWriter g_obLogDBWriter;
+
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -212,8 +217,8 @@ bool cWndMain::showLogIn()
 
     if( boLogInOK )
     {
-        g_obLogger.setAppUser( g_obUser.id() );
-        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << cQTLogger::EOM;
+        g_obLogDBWriter.setAppUser( g_obUser.id() );
+        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
         {
@@ -244,8 +249,7 @@ void cWndMain::initPanels()
 void cWndMain::checkDemoLicenceKey()
 {
     if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
-        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) != 0 )
-                                                           // GABOR : ezt allitsd at == -re, hogy tesztelni tudd
+        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
@@ -598,7 +602,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            logoutUser();            
+            logoutUser();
             p_poEvent->accept();
         }
         else
@@ -671,10 +675,10 @@ void cWndMain::on_action_LogOut_triggered()
 
     logoutUser();
 
-    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
 
     g_obUser.logOut();
-    g_obLogger.setAppUser( 0 );
+    g_obLogDBWriter.setAppUser( 0 );
     updateTitle();
 
     if( !showLogIn() ) close();
@@ -953,7 +957,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
         {
             if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
             else
             {
@@ -1215,7 +1219,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
         else
         {

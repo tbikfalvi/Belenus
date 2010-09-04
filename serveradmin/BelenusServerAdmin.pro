@@ -8,7 +8,7 @@ TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
-#CONFIG += console
+CONFIG += console
 TRANSLATIONS = bsa_us.ts \
     bsa_hu.ts
 HEADERS += ../framework/dbconnection.h \
@@ -17,8 +17,10 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
     ../framework/tracer.h \
+    ../framework/logger/ConsoleWriter.h \
+    ../framework/logger/LogEmitter.h \
     mainwindow.h \
-    ../framework/network/connection.h \
+    ../framework/network/CommunicationProtocol.h \
     ../framework/network/packet.h \
     adminClientThread.h \
     preferences.h \
@@ -27,13 +29,14 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/network/sqlResult.h
 SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtlogger.cpp \
+    ../framework/logger/ConsoleWriter.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
     ../framework/tracer.cpp \
     main.cpp \
     mainwindow.cpp \
     adminClientThread.cpp \
-    ../framework/network/connection.cpp \
+    ../framework/network/CommunicationProtocol.cpp \
     ../framework/network/packet.cpp \
     ../framework/preferences.cpp \
     ../framework/network/sqlResult.cpp

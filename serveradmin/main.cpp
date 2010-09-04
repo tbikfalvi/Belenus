@@ -25,7 +25,7 @@ int main( int argc, char *argv[] )
     int nRet = 1;
     try
     {
-        g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " started." << cQTLogger::EOM;
+        g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " started." << EOM;
 
         MainWindow  wndMain;
         wndMain.show();
@@ -33,10 +33,10 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 
-    g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " ended." << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " ended." << EOM;
 
     return nRet;
 }

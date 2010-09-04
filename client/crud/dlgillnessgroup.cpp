@@ -113,7 +113,7 @@ void cDlgIllnessGroup::editClicked( bool )
     catch( cSevException &e )
     {
         if( poIllnessGroup ) delete poIllnessGroup;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -137,7 +137,7 @@ void cDlgIllnessGroup::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poIllnessGroup ) delete poIllnessGroup;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

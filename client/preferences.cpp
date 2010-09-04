@@ -465,7 +465,7 @@ void cPreferences::loadConfFileSettings()
 
     if( obPrefFile.status() != QSettings::NoError )
     {
-        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << cQTLogger::EOM;
+        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << EOM;
     }
     else
     {
@@ -506,7 +506,7 @@ void cPreferences::loadConfFileSettings()
             (uiConsoleLevel <= cSeverity::MIN) )
         {
             uiConsoleLevel = cSeverity::DEBUG;
-            g_obLogger(cSeverity::WARNING) << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName << cQTLogger::EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName << EOM;
         }
 
         unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::INFO ).toUInt();
@@ -515,7 +515,7 @@ void cPreferences::loadConfFileSettings()
         {
             uiDBLevel = cSeverity::DEBUG;
 
-            g_obLogger(cSeverity::WARNING) << "Invalid DBLogLevel in preferences file: " << m_qsFileName << cQTLogger::EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid DBLogLevel in preferences file: " << m_qsFileName << EOM;
         }
 
         unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::WARNING ).toUInt();
@@ -524,7 +524,7 @@ void cPreferences::loadConfFileSettings()
         {
             uiGUILevel = cSeverity::DEBUG;
 
-            g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << cQTLogger::EOM;
+            g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << EOM;
         }
 
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel );
@@ -553,7 +553,7 @@ void cPreferences::loadDBSettings() throw (cSevException)
     catch( cSevException &e )
     {
         if( poQuery ) delete poQuery;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 
 }

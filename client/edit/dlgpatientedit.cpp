@@ -97,7 +97,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         {
             if( QString(e.what()).compare("Patient id not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
         }
         chkRegularCustomer->setChecked( m_poPatient->regularCustomer() );
@@ -289,7 +289,7 @@ void cDlgPatientEdit::on_pbFinishLater_clicked()
     catch( cSevException &e )
     {
         if( poQuery ) delete poQuery;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -372,7 +372,7 @@ bool cDlgPatientEdit::SavePatientData()
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 
     return bRet;
@@ -394,7 +394,7 @@ void cDlgPatientEdit::on_ledZip_textEdited(QString )
         {
             if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
             else
             {
@@ -422,7 +422,7 @@ void cDlgPatientEdit::on_pbCitySearch_clicked()
     {
         if( QString(e.what()).compare("ZipRegionCity city not found") != 0 )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
         else
         {
@@ -569,7 +569,7 @@ void cDlgPatientEdit::FillDefaultAddress()
     {
         if( QString(e.what()).compare("Primary address not found") != 0 )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 

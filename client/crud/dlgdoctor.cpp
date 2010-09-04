@@ -115,7 +115,7 @@ void cDlgDoctor::editClicked( bool )
     catch( cSevException &e )
     {
         if( poDoctor ) delete poDoctor;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -139,7 +139,7 @@ void cDlgDoctor::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poDoctor ) delete poDoctor;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

@@ -10,7 +10,39 @@
 #include "dbconnection.h"
 
 
-class LogMessage;
+enum teLoggerManip
+{
+    MIN = 0,
+    EOM,
+    CLEAR,
+    MAX
+};
+
+
+
+class cQTLogger;
+
+
+
+
+class LogMessage {
+public:
+    LogMessage(const cSeverity::teSeverity sev, cQTLogger *logger);
+    LogMessage(const LogMessage &lm);
+    virtual ~LogMessage();
+
+    LogMessage &operator <<( const cSeverity::teSeverity p_enSev );
+    LogMessage &operator <<( const int p_inParam );
+    LogMessage &operator <<( const QString &p_inParam );
+    LogMessage &operator <<( const teLoggerManip p_enManip );
+
+
+protected:
+    cQTLogger             *m_logger;
+    cSeverity::teSeverity  m_enNextSeverityLevel;
+    QString                m_string;
+    QTextStream            m_ssMessage;
+};
 
 
 
@@ -35,20 +67,8 @@ class cQTLogger
 {
 
 public:
-
-    enum teLoggerManip
-    {
-        MIN = 0,
-        EOM,
-        CLEAR,
-        MAX
-    };
-
     cQTLogger();
     ~cQTLogger();
-
-    void         setAppUser( const unsigned int p_uiUser );
-    unsigned int getAppUser( void ) const;
 
     void logMessage( const cSeverity::teSeverity p_enLevel, const QString &p_stMessage );
 
@@ -56,51 +76,17 @@ public:
     void detachWriter( const QString name );
     void setMinimumSeverity( const QString name, const cSeverity::teSeverity sev );
 
-    LogMessage operator () ( const cSeverity::teSeverity p_enLevel );
+    inline LogMessage operator () ( const cSeverity::teSeverity p_enLevel ) {
+        return LogMessage(p_enLevel, this);
+    }
+
 
 private:
     typedef QMap<QString, LogWriter*> Writers;
 
     Writers                m_writers;
-    unsigned int           m_uiAppUser;
 };
 
-
-
-
-
-
-class LogMessage {
-public:
-    LogMessage(const cSeverity::teSeverity sev, cQTLogger *logger);
-    LogMessage(const LogMessage &lm);
-    virtual ~LogMessage();
-
-    LogMessage &operator <<( const cSeverity::teSeverity p_enSev );
-    LogMessage &operator <<( const int p_inParam );
-    LogMessage &operator <<( const QString &p_inParam );
-    LogMessage &operator <<( const cQTLogger::teLoggerManip p_enManip );
-
-
-protected:
-    cQTLogger             *m_logger;
-    cSeverity::teSeverity  m_enNextSeverityLevel;
-    QString                m_string;
-    QTextStream            m_ssMessage;
-};
-
-
-
-
-
-
-
-class ConsoleWriter : public LogWriter {
-public:
-    ConsoleWriter(const cSeverity::teSeverity sev) : LogWriter(sev) {}
-protected:
-    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
-};
 
 #endif
 

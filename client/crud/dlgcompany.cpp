@@ -113,7 +113,7 @@ void cDlgCompany::editClicked( bool )
     catch( cSevException &e )
     {
         if( poCompany ) delete poCompany;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -137,7 +137,7 @@ void cDlgCompany::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poCompany ) delete poCompany;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }
