@@ -115,6 +115,7 @@ HEADERS = belenus.h \
     edit/dlgcompanyedit.h \
     edit/dlgdoctoredit.h \
     bs_connection.h \
+    licenceManager.h \
     communication.h \
     communication_demo.h \
     frmpanel.h \
@@ -209,6 +210,7 @@ SOURCES = main.cpp \
     edit/dlgcompanyedit.cpp \
     edit/dlgdoctoredit.cpp \
     bs_connection.cpp \
+    licenceManager.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
     mdipanels.cpp \
@@ -228,5 +230,5 @@ QT += sql
 QT += network
 CONFIG += qt
 
-# CONFIG += console
+CONFIG += console
 win32:DEFINES -= UNICODE

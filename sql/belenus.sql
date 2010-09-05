@@ -41,6 +41,7 @@ CREATE TABLE `licences` (
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
+  `lastValidated`           DATE               NULL DEFAULT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

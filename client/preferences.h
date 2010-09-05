@@ -36,7 +36,7 @@ public:
     void            setMainBackground( const QString &p_qsColor, bool p_boSaveNow = false );
     QString         getMainBackground() const;
     unsigned int    getLicenceId() const;
-    QString         getClientSerial() const;
+    void            setLicenceId( const int licenceId );
     void            setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow = false );
     QString         getServerAddress() const;
     void            setServerPort( const QString &p_qsServerPort, bool p_boSaveNow = false );
@@ -99,7 +99,6 @@ private:
     unsigned int    m_uiMainWindowHeight;
     QString         m_qsMainBackground;
     unsigned int    m_uiLicenceId;
-    QString         m_qsClientSerial;
     QString         m_qsServerAddress;
     QString         m_qsServerPort;
     int             m_inCommunicationPort;

@@ -39,7 +39,7 @@ public:
     virtual void sendLogonChallenge();
     virtual void sendLogonResponse(const char* code1, const char *code2);
     virtual void sendLogonAdminResponse(const char* username, const char* password);
-    virtual void sendLogonOk();
+    virtual void sendLogonResult(Result::ResultCode res, const int licenceId);
     virtual void sendRegisterKey(const char* key);
     virtual void sendRegisterKeyResponse(Result::ResultCode result);
     virtual void sendSqlQuery(int queryId, const char *query);
@@ -52,7 +52,7 @@ protected:
     virtual void _handleLogonChallenge() {};
     virtual void _handleLogonAdminResponse(const char* /*username*/, const char* /*password*/) {};
     virtual void _handleLogonResponse(const char* /*code1*/, const char* /*code2*/) {};
-    virtual void _handleLogonOk() {};
+    virtual void _handleLogonResult(Result::ResultCode res, int licenceId) {};
     virtual void _handleDisconnect(Result::ResultCode /*reason*/) {};
     virtual void _handleRegisterKey(const char* /*key*/) {};
     virtual void _handleRegisterKeyResponse(Result::ResultCode /*result*/) {};

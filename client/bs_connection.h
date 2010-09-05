@@ -35,46 +35,60 @@ class BelenusServerConnection : public QThread, public CommunicationProtocol
 public:
     enum ConnectionStatus {
         NOT_CONNECTED,
-        CONNECTING,
-        AUTHENTICATED,      // server connection is ok
         CONNECTION_FAILED,  // eg. socket error
+        CONNECTING,
+        CONNECTED,          // connected but not authenticated
+        AUTHENTICATED,      // server connection is ok
     };
 
 
     BelenusServerConnection();
     virtual ~BelenusServerConnection();
 
-    void connectTo(const QString adr, int port);
-    void setLoginKeys(const QString serial, const QString code2);
+    void setServerAddress(const QString addr, const int port);
+    void connectTo();
     ConnectionStatus getStatus() { return _status; }
-    Result::ResultCode getLastResult() { return _lastResult; }
-    bool isLicenseValid() { return _isLicenseValid; }        /* true if connected to server and server accepted license and key2 */
+    bool isConnected() { return _status==CONNECTED || _status==AUTHENTICATED; }
+
+    /* licence management */
+    void setLoginKeys(const QString serial, const QString code2);
+    Result::ResultCode getLicenceResult() { return _licenceResult; }    // can return UNKNOWN, OK, INVALID_LICENCE_KEY or INVALID_SECOND_ID
+    bool isLicenseValid();                                              // true if connected to server and server accepted license and key2 */
+    int getClientId();                                                  // if lic auth succeeded, returns the clientId stored FROM server
+
+
 
 signals:
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
+    void licenceStatusChanged(Result::ResultCode, int clientId);
+
 
 protected slots:
     void _error(QAbstractSocket::SocketError);
     void _disconnected();
     void _connected();
     virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
-    void _connectTo(QString, int);
+    void _connectTo();
 
 protected:
     virtual void run();
 
     void _handleLogonChallenge();
-    void _handleLogonOk();
+    void _handleLogonResult(Result::ResultCode res, int licenceId);
     void _handleDisconnect(Result::ResultCode reason);
 
 private:
+    QString _host;
+    int _port;
     QString _serial;
     QString _code2;
     ConnectionStatus _status;
+    Result::ResultCode _licenceResult;
     Result::ResultCode _lastResult;
     bool _isLicenseValid;
+    int _clientId;
 };
 
 

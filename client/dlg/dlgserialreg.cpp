@@ -2,6 +2,12 @@
 #include <QMessageBox>
 
 #include "dlgserialreg.h"
+#include "../licenceManager.h"
+
+extern LicenceManager g_obLicenceManager;
+
+
+
 
 cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -14,7 +20,7 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent )
     pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    ledSerial->setText( g_poPrefs->getClientSerial() );
+    ledSerial->setText( g_obLicenceManager.getClientSerial() );
     ledSerial->setFocus();
     ledSerial->selectAll();
 }

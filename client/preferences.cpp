@@ -31,7 +31,6 @@ void cPreferences::init()
     m_uiMainWindowWidth     = 0;
     m_uiMainWindowHeight    = 0;
     m_uiLicenceId           = 0;
-    m_qsClientSerial        = "";
     m_qsServerAddress       = "";
     m_qsServerPort          = "";
     m_qsMainBackground      = "";
@@ -194,9 +193,9 @@ unsigned int cPreferences::getLicenceId() const
     return m_uiLicenceId;
 }
 
-QString cPreferences::getClientSerial() const
+void cPreferences::setLicenceId( const int licenceId )
 {
-    return m_qsClientSerial;
+    m_uiLicenceId = licenceId;
 }
 
 void cPreferences::setServerAddress( const QString &p_qsServerAddress, bool p_boSaveNow )
@@ -541,14 +540,6 @@ void cPreferences::loadDBSettings() throw (cSevException)
         m_uiPanelCount = poQuery->value( 0 ).toInt();
 
         delete poQuery;
-        poQuery = NULL;
-
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial FROM licences WHERE active=1 ORDER BY licenceId DESC" ) );
-        if( poQuery->first() )
-        {
-            m_uiLicenceId    = poQuery->value( 0 ).toInt();
-            m_qsClientSerial = poQuery->value( 1 ).toString();
-        }
     }
     catch( cSevException &e )
     {

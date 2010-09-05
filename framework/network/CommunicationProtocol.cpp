@@ -89,8 +89,11 @@ void CommunicationProtocol::_handlePacket(Packet &packet)
                     _handleLogonResponse(u, p);
                 } break;
 
-            case Packet::MSG_LOGON_OK: {
-                    _handleLogonOk();
+            case Packet::MSG_LOGON_RESULT: {
+                    int licenceId;
+                    Result::ResultCode r;
+                    packet >> r >> licenceId;
+                    _handleLogonResult(r, licenceId);
                 } break;
 
             case Packet::MSG_DISCONNECT: {
@@ -194,9 +197,10 @@ void CommunicationProtocol::sendLogonAdminResponse(const char* username, const c
 
 
 
-void CommunicationProtocol::sendLogonOk()
+void CommunicationProtocol::sendLogonResult(Result::ResultCode res, const int licenceId)
 {
-    Packet p(Packet::MSG_LOGON_OK);
+    Packet p(Packet::MSG_LOGON_RESULT);
+    p << res << licenceId;
     _send(p);
 }
 

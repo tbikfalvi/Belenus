@@ -1,26 +1,38 @@
 
 #include "bs_connection.h"
+#include "preferences.h"
 
 
 extern cQTLogger g_obLogger;
-
+extern cPreferences *g_poPrefs;
 
 
 BelenusServerConnection::BelenusServerConnection()
-    : _serial(""),
+    : _host(""),
+      _port(0),
+      _serial(""),
       _code2(""),
       _status(NOT_CONNECTED),
-      _lastResult(Result::OK),
-      _isLicenseValid(false)
+      _licenceResult(Result::UNKNOWN),
+      _clientId(0)
 {
+    qRegisterMetaType<Result::ResultCode>("Result::ResultCode");
     connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
-    connect( this, SIGNAL(__connectTo(QString,int)), this, SLOT(__connectTo_(QString,int)) );
 }
 
 
 
 BelenusServerConnection::~BelenusServerConnection()
 {
+}
+
+
+
+void BelenusServerConnection::setServerAddress(const QString addr, const int port)
+{
+    g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::setServerAddress] host=" << addr << " port=" << port << EOM;
+    _host = addr;
+    _port = port;
 }
 
 
@@ -40,10 +52,13 @@ void BelenusServerConnection::_handleLogonChallenge()
 
 
 
-void BelenusServerConnection::_handleLogonOk()
+void BelenusServerConnection::_handleLogonResult(Result::ResultCode res, int licenceId)
 {
-    _status = AUTHENTICATED;
-    _isLicenseValid = true;
+    // licence auth ok
+    if ( res == Result::OK )
+        _status = AUTHENTICATED;
+    _licenceResult = res;
+    emit licenceStatusChanged(res, licenceId);
 }
 
 
@@ -56,17 +71,23 @@ void BelenusServerConnection::run()
 
 
 
-void BelenusServerConnection::connectTo(const QString adr, const int port)
+void BelenusServerConnection::connectTo()
 {
-    QMetaObject::invokeMethod(this, "_connectTo", Qt::QueuedConnection, Q_ARG(QString, adr), Q_ARG(int, port) );
+    setServerAddress( g_poPrefs->getServerAddress(), g_poPrefs->getServerPort().toInt() );
+    QMetaObject::invokeMethod(this, "_connectTo", Qt::QueuedConnection );
 }
 
 
 
-void BelenusServerConnection::_connectTo(QString addr, int port)
+void BelenusServerConnection::_connectTo()
 {
     if (m_socket) {
         g_obLogger(cSeverity::ERROR) << "[BelenusServerConnection::connectTo] m_socket should be closed before new connection attempt" << EOM;
+        return;
+    }
+
+    if ( _host.isEmpty() || _port<1 || _port>65535 ) {
+        g_obLogger(cSeverity::ERROR) << "[BelenusServerConnection::connectTo] invalid server address host=" << _host << " port=" << _port << EOM;
         return;
     }
 
@@ -78,11 +99,12 @@ void BelenusServerConnection::_connectTo(QString addr, int port)
     connect( m_socket,   SIGNAL(error(QAbstractSocket::SocketError)),   this, SLOT(_error(QAbstractSocket::SocketError)) );
     connect( m_socket,   SIGNAL(readyRead()),                           this, SLOT(_read()) );
 
-    m_socket->connectToHost(addr, port);
+    m_socket->connectToHost(_host, _port);
 
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::connectTo] status is CONNECTING" << EOM;
     _status = CONNECTING;
-    _isLicenseValid = false;
+    // init licence to invalid
+    _licenceResult = Result::INVALID_LICENSE_KEY;
 }
 
 
@@ -91,8 +113,8 @@ void BelenusServerConnection::_connectTo(QString addr, int port)
 void BelenusServerConnection::_connected()
 {
     g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::connected] entered" << EOM;
+    _status = CONNECTED;
     sendHello();
-
     emit connected();
 }
 
@@ -116,6 +138,7 @@ void BelenusServerConnection::_error(QAbstractSocket::SocketError err)
     m_socket->deleteLater();
     m_socket = 0;
     _status = CONNECTION_FAILED;
+    _lastResult = Result::UNKNOWN;
     emit error(err);
 }
 
@@ -127,6 +150,7 @@ void BelenusServerConnection::_disconnected()
     m_socket->deleteLater();
     m_socket = 0;
     _status = CONNECTION_FAILED;
+    _lastResult = Result::UNKNOWN;
     emit disconnected();
 }
 
@@ -135,5 +159,14 @@ void BelenusServerConnection::_disconnected()
 void BelenusServerConnection::_handleDisconnect(Result::ResultCode reason)
 {
     _lastResult = reason;
-    _status = CONNECTION_FAILED;
+    // if disconnect occured because of licence reasons, store them
+    if ( reason == Result::INVALID_SECOND_ID || reason == Result::INVALID_LICENSE_KEY )
+        _licenceResult = reason;
+}
+
+
+
+bool BelenusServerConnection::isLicenseValid()
+{
+    return _licenceResult == Result::OK ;
 }

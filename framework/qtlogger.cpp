@@ -10,7 +10,7 @@ LogMessage::LogMessage(cSeverity::teSeverity sev, cQTLogger *logger)
       m_string(""),
       m_ssMessage(&m_string)
 {
-    m_string = QString("(%1) ").arg((int)QThread::currentThread(), 0, 16);
+    m_string = QString("(%1) ").arg(reinterpret_cast<int>(QThread::currentThread()), 0, 16);
 }
 
 

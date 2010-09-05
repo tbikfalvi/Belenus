@@ -16,6 +16,7 @@
 #include <QMessageBox>
 
 #include "wndmain.h"
+#include "licenceManager.h"
 #include "../framework/logger/DatabaseWriter.h"
 
 //====================================================================================
@@ -69,7 +70,7 @@
 
 
 extern DatabaseWriter g_obLogDBWriter;
-
+extern LicenceManager g_obLicenceManager;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -245,11 +246,13 @@ void cWndMain::initPanels()
 {
     mdiPanels->initPanels();
 }
+
+
+
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
-    if( g_poPrefs->getClientSerial().compare("BLNS_SERIAL_DEMO") == 0 &&
-        QString::fromStdString( g_poHardware->getCustomCaption() ).compare( "DEMO" ) == 0 )
+    if( g_obLicenceManager.isDemo() )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
