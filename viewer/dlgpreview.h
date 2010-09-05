@@ -16,6 +16,7 @@ public:
     ~cDlgPreview();
 
 protected:
+    QString       m_qsReportName;
     QTextDocument m_tdReport;
 
 protected slots:

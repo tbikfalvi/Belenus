@@ -8,6 +8,8 @@ cDlgPreview::cDlgPreview( QWidget *parent )
 {
     setupUi( this );
 
+    m_qsReportName = "";
+
     QPushButton *poPrintButton = btbButtons->addButton( tr( "&Print ..." ), QDialogButtonBox::ActionRole );
     btbButtons->addButton( tr( "&Close" ), QDialogButtonBox::RejectRole );
 
@@ -23,8 +25,8 @@ cDlgPreview::~cDlgPreview()
 
 void cDlgPreview::setReportTitle( const QString &p_qsTitle )
 {
-    setWindowTitle( windowTitle() + " - " + p_qsTitle );
-    m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, p_qsTitle );
+    m_qsReportName = p_qsTitle;
+    setWindowTitle( windowTitle() + " - " + m_qsReportName );
 }
 
 void cDlgPreview::refreshReport()
