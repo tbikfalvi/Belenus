@@ -3,9 +3,9 @@
 
 #include <QDialog>
 
-#include "ui_dlgdemo.h"
+#include "dlgpreview.h"
 
-class cDlgDemo : public QDialog, private Ui::dlgDemo
+class cDlgDemo : public cDlgPreview
 {
     Q_OBJECT
 
@@ -14,7 +14,7 @@ public:
     ~cDlgDemo();
 
 protected slots:
-    virtual void showReport();
+    virtual void refreshReport();
 };
 
 #endif // DLGDEMO_H

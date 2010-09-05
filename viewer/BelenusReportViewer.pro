@@ -13,7 +13,6 @@ CONFIG += qt
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
 FORMS = wndmain.ui \
-    dlgdemo.ui \
     dlgpreview.ui
 HEADERS = ../framework/dbconnection.h \
     ../framework/qtmysqlconnection.h \
