@@ -9,9 +9,7 @@ LogMessage::LogMessage(cSeverity::teSeverity sev, cQTLogger *logger)
       m_enNextSeverityLevel(sev),
       m_string(""),
       m_ssMessage(&m_string)
-{
-    m_string = QString("(%1) ").arg(reinterpret_cast<int>(QThread::currentThread()), 0, 16);
-}
+{}
 
 
 LogMessage::LogMessage(const LogMessage &lm)
@@ -85,10 +83,12 @@ void cQTLogger::logMessage( const cSeverity::teSeverity  p_enLevel,
     try
     {
         QDateTime curr = QDateTime::currentDateTime();
+        void * threadId = QThread::currentThread();
+
         Writers::const_iterator it;
         for (it = m_writers.begin(); it!=m_writers.end(); ++it)
             if ( (*it) )
-                (*it)->_write(p_enLevel, curr, p_stMessage);
+                (*it)->_write(p_enLevel, curr, p_stMessage, threadId);
     }
     catch( cSevException &e )
     {

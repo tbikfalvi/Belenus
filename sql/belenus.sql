@@ -67,6 +67,7 @@ CREATE TABLE `logs` (
   `date`                    timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userId`                  int(10) unsigned        DEFAULT NULL,
   `severity`                int(1)                  NOT NULL DEFAULT 5,
+  `threadId`                VARCHAR( 20 )           NOT NULL,
   `message`                 text                    DEFAULT NULL,
   INDEX logs_date(`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

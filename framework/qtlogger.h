@@ -54,8 +54,8 @@ public:
     virtual void setMinimumSeverity(const cSeverity::teSeverity minSeverity) { _minSeverity = minSeverity; }
 
 protected:
-    virtual void _write(const cSeverity::teSeverity sev, const QDateTime ts, const QString &msg)    { if (sev<=_minSeverity) _writeLog(sev,ts,msg); }
-    virtual void _writeLog(const cSeverity::teSeverity severity, const QDateTime ts, const QString &msg) = 0;
+    virtual void _write(const cSeverity::teSeverity sev, const QDateTime ts, const QString &msg, const void * threadId)    { if (sev<=_minSeverity) _writeLog(sev,ts,msg,threadId); }
+    virtual void _writeLog(const cSeverity::teSeverity severity, const QDateTime ts, const QString &msg, const void *threadId) = 0;
     cSeverity::teSeverity _minSeverity;
 };
 
@@ -84,7 +84,7 @@ public:
 private:
     typedef QMap<QString, LogWriter*> Writers;
 
-    Writers                m_writers;
+    Writers  m_writers;
 };
 
 

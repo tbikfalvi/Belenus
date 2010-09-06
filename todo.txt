@@ -1,5 +1,4 @@
 - adatbázis konvertálás
 - szűz gépre telepítés -> ellenőrzés, folyamat leírása, "install pack" összerakása
-- logger file iro. mutexxel vedeni.
-- loggernel threadId-t mint mezo kezelni
 - licence megadasnal eltunjon a kisablak vagy adjon visszajelzest h sikerult v nem. jelenleg beirod es eltunik minden uzenet nelkul
+- inifilebol logger levelet server es serveradminnak

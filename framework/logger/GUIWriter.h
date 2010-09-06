@@ -8,7 +8,7 @@ class GUIWriter : public LogWriter {
 public:
     GUIWriter(const cSeverity::teSeverity minSev = cSeverity::WARNING) : LogWriter(minSev) {}
 protected:
-    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
+    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m, const void * threadId);
 };
 
 #endif
