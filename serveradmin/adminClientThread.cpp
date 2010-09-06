@@ -14,6 +14,7 @@ AdminClientThread::AdminClientThread()
 
     qRegisterMetaType<cSeverity::teSeverity>("cSeverity::teSeverity");
     qRegisterMetaType<Result::ResultCode>("Result::ResultCode");
+    qRegisterMetaType<QAbstractSocket::SocketError>("QAbstractSocket::SocketError");
 }
 
 
@@ -221,7 +222,7 @@ void AdminClientThread::_error(QAbstractSocket::SocketError err)
         default:errStr = "Unkown error"; break;
     }
 
-    g_obLogger(cSeverity::INFO) << "[AdminClientThread::_error] " << err << ": " << errStr << EOM;
+    g_obLogger(cSeverity::WARNING) << "[AdminClientThread::_error] " << err << ": " << errStr << EOM;
     m_socket->deleteLater();
     m_socket = 0;
     emit error(err);
@@ -231,7 +232,7 @@ void AdminClientThread::_error(QAbstractSocket::SocketError err)
 
 void AdminClientThread::_disconnected()
 {
-    g_obLogger(cSeverity::ERROR) << "[AdminClientThread::disconnected] " << EOM;
+    g_obLogger(cSeverity::WARNING) << "[AdminClientThread::disconnected] " << EOM;
     m_socket->deleteLater();
     m_socket = 0;
 

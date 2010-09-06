@@ -22,10 +22,10 @@ MainWindow::MainWindow( QWidget *p_poParent )
 {
     setupUi( this );
 
-    LogEmitter *emitter = new LogEmitter(cSeverity::DEBUG);
+    LogEmitter *emitter = new LogEmitter(static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/gui").toInt()));
     connect(emitter, SIGNAL(logMessage(QString)), this, SLOT(onLogMessage(QString)));
     g_obLogger.attachWriter( "gui", emitter );
-    g_obLogger.attachWriter( "console", new ConsoleWriter(cSeverity::DEBUG) );
+    g_obLogger.attachWriter( "console", new ConsoleWriter(static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/console").toInt())) );
 
 
     setWindowIcon( QIcon("./resources/belenus.ico") );
