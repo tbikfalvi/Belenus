@@ -8,9 +8,11 @@ class ServerPreferences : public Preferences
 {
 
 public:
-    ServerPreferences() : Preferences()
+    ServerPreferences() : Preferences("BelenusServer.ini") { checkAndSetDefaults(); }
+
+    void checkAndSetDefaults()
     {
-        setValue("version", "0.0.1");
+        setValue("version", "0.1");
 
         if ( value("server/interface")=="" )
             setValue("server/interface", "127.0.0.1");
@@ -30,8 +32,8 @@ public:
 
         if ( value("database/password")=="" )
             setValue("database/password", "Sync205BW");
-
     }
+
 };
 
 

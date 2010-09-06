@@ -9,16 +9,19 @@ class Preferences
     typedef QMap<QString, QString> PreferencesList;
 
 public:
-    Preferences();
+    Preferences(const QString filename = "");
     virtual ~Preferences();
 
-    void loadFromFile( const QString filename );
-    void saveFile( const QString filename = "" );
+    void setFilename(const QString filename);
+    void loadFile();
+    void saveFile();
 
     void setValue(QString key, QString value);
     QString value(QString key, QString def = "");
 
 protected:
+    virtual void checkAndSetDefaults() = 0;
+
     PreferencesList _preferences;
     QString _filename;
 };

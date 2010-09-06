@@ -1,15 +1,5 @@
 - adatbázis konvertálás
 - szűz gépre telepítés -> ellenőrzés, folyamat leírása, "install pack" összerakása
-- server config file olvasas
 - logger file iro. mutexxel vedeni.
 - loggernel threadId-t mint mezo kezelni
-- GABOR reszeket kicserelni a kliens kodban
-- code2 legyen a windows v etc konyvtar letrehozasanak datuma
-- license kezeles:
-  + startkor szerverkapcsolat + licensz ellenorzese 
-   + ha rossz a licensz -> DEMO mod
-   + ha DEMO licensz van beallitva -> DEMO mod
-   + ha nincs kapcsolat, de van licensz beallitva
-    + 7 nap eltelt a legutolso ellenorzes ota -> szolni h letelt + DEMO mod
-    + meg nem telt le a 7 nap -> szolni h hany nap van hatra + engedelyezes kulccsal
-  + ha sikerult, frissiteni kell az utolso ellenorzes datumat
+- licence megadasnal eltunjon a kisablak vagy adjon visszajelzest h sikerult v nem. jelenleg beirod es eltunik minden uzenet nelkul

@@ -85,6 +85,8 @@ int main( int argc, char *argv[] )
     installSIGCHandler();
     QCoreApplication  app( argc, argv );
 
+    g_prefs.loadFile();
+
     ConsoleWriter *_writer = new ConsoleWriter(cSeverity::DEBUG);
     DatabaseWriter *_dbWriter = new DatabaseWriter(cSeverity::INFO);
     _dbWriter->setDBConnection(&g_db);
@@ -111,6 +113,7 @@ int main( int argc, char *argv[] )
         g_obLogger(cSeverity::ERROR) << "Exception: " << e.what() << EOM;
     }
 
+    g_prefs.saveFile();
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version") << " ended." << EOM;
 
     return 0;
