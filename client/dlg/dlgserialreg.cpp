@@ -31,7 +31,7 @@ cDlgSerialReg::~cDlgSerialReg()
 
 void cDlgSerialReg::on_pbValidate_clicked()
 {
-    // GABOR : IDE JÖN A SERIAL KEY VALIDÁLÁSA
+    g_obLicenceManager.validateLicence(ledSerial->text());
 
     QDialog::accept();
 }

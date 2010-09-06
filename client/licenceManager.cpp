@@ -24,7 +24,7 @@ LicenceManager::LicenceManager()
 
 bool LicenceManager::isDemo()
 {
-    return _type==DEMO || _type==VALID_EXPIRED || _type==NOT_VALID || _type==VALID_CODE_2_ERROR;
+    return _type==DEMO || _type==VALID_EXPIRED || _type==NOT_VALID || _type==VALID_CODE_2_EXPIRED;
 }
 
 
@@ -42,7 +42,7 @@ void LicenceManager::initialize()
             _licenceKey = poQuery->value( 1 ).toString();
             licenceId = poQuery->value( 0 ).toInt();
             if ( licenceId>1 ) {
-                _type = VALID_SERVER_ERROR;
+                _type = VALID_SERVER_ERROR;     // init as server-error as server-connection comes after init only
                 checkValidity();
             }
             g_poPrefs->setLicenceId(licenceId);
@@ -81,9 +81,11 @@ void LicenceManager::validateLicence(const QString serial)
     QString code2 = QCryptographicHash::hash(QString("SALT:%1").arg(info.created().toString()).toAscii(), QCryptographicHash::Sha1).toHex();
 
     connect(g_poServer, SIGNAL(licenceStatusChanged(Result::ResultCode, int)),
-            this, SLOT(handleServerResponse(Result::ResultCode, int)) );
+            this, SLOT(handleServerResponse(Result::ResultCode, int)),
+            Qt::DirectConnection );
 
-    g_poServer->setLoginKeys(serial, code2);
+    _licenceKey = serial;
+    g_poServer->setLoginKeys(_licenceKey, code2);
     g_poServer->connectTo();
 
     g_obLogger(cSeverity::DEBUG) << "[LicenceManager::validateLicence] connection called with "<< serial << " and " << code2 << EOM;
@@ -133,6 +135,7 @@ void LicenceManager::handleServerResponse(const Result::ResultCode res, const in
                     g_obLogger(cSeverity::ERROR) << "[LicenceManager::handleServerResponse] unable to insert new licenceId" << EOM;
                 delete a;
             }
+            _lastValidated = QDate::currentDate();
             delete query;
         } catch( cSevException &e ) {
             if( query ) delete query;

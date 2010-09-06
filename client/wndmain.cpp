@@ -252,14 +252,33 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
-    if( g_obLicenceManager.isDemo() )
+    if ( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ) {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("The application has valid serial key registered but was not able to validate it with the server.\n"
+                                 "Please note that without validation the application will work only for the next %1 days\n\n"
+                                 "Please also note you need live internet connection for the validation process.").arg(g_obLicenceManager.getDaysRemaining()) );
+    } else if ( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR ) {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("The application has valid serial key registered but failed to validate the installation with the server.\n"
+                                 "Please call Service to validate your installation.\n\n"
+                                 "Note that without validation the application will work only for the next %1 days").arg(g_obLicenceManager.getDaysRemaining()) );
+    } else if ( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED || g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED ) {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Your licence key has expired.\n"
+                                 "The application has a serial key registered but failed to validate it with the server since the last %1 days.\n\n"
+                                 "Please note you need live internet connection for the validation process.").arg(LicenceManager::EXPIRE_IN_DAYS) );
+    } else if ( g_obLicenceManager.getType()==LicenceManager::NOT_VALID ) {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Your licence key validation has failed.\n"
+                                 "Please call Service") );
+    } else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
                                   tr("The application has no valid serial key registered.\n"
-                                     "The application will only control the hardware with DEMO serial key for 7 days.\n\n"
+                                     "The application will only control the hardware with DEMO serial key for %1 days.\n\n"
                                      "Do you want to enter a valid serial key and register the application?\n"
-                                     "Please note you need live internet connection for the registration process."),
+                                     "Please note you need live internet connection for the registration process.").arg(LicenceManager::EXPIRE_IN_DAYS),
                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
         {
             cDlgSerialReg   obDlgSerialReg( this );

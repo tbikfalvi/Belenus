@@ -113,22 +113,23 @@ int main( int argc, char *argv[] )
         g_poServer->start();
 
         g_obLicenceManager.initialize();
-        g_obLicenceManager.validateLicence();     // begins connection
+        if ( g_obLicenceManager.getType()!=LicenceManager::DEMO ) {  // start server connection only if licence key is provided. Do not try to validate demo licence
+            g_obLicenceManager.validateLicence();     // begins connection
 
-        int nCount = 0;
-        while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
-        {
-            QString qsTemp;
-            qsTemp.fill('.', nCount%5+1);
-            obSplash.showMessage(qsSpalsh+qsTemp, Qt::AlignLeft, QColor(59,44, 75));
-            if( ++nCount > 20 ) // timeout handling: 20*500 = 10 sec
-                break;
-            QMutex dummy;
-            dummy.lock();
-            QWaitCondition waitCondition;
-            waitCondition.wait(&dummy, 500);
+            int nCount = 0;
+            while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
+            {
+                QString qsTemp;
+                qsTemp.fill('.', nCount%5+1);
+                obSplash.showMessage(qsSpalsh+qsTemp, Qt::AlignLeft, QColor(59,44, 75));
+                if( ++nCount > 20 ) // timeout handling: 20*500 = 10 sec
+                    break;
+                QMutex dummy;
+                dummy.lock();
+                QWaitCondition waitCondition;
+                waitCondition.wait(&dummy, 500);
+            }
         }
-
 
         qsSpalsh += "  ";
         if ( g_poServer->isConnected() ) {
@@ -158,7 +159,6 @@ int main( int argc, char *argv[] )
             qsSpalsh += QObject::tr(" (licence not accepted by server)");
         }
         qsSpalsh += "\n";
-
 
 
 #ifdef __WIN32__
