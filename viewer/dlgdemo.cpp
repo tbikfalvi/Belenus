@@ -1,6 +1,7 @@
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
+#include <QTextTableFormat>
 
 #include "../framework/qtframework.h"
 #include "dlgdemo.h"
@@ -77,4 +78,40 @@ void cDlgDemo::refreshReport()
     tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
     tcReport.insertText( QString( " | %1" ).arg( cmbEventType->currentText() ) );
     tcReport.insertHtml( "<hr>" );
+
+    QTextTableFormat obTableFormat;
+    obTableFormat.setHeaderRowCount( 1 );
+    obTableFormat.setBorderStyle( QTextFrameFormat::BorderStyle_None );
+
+    QSqlQuery *poReportResult = NULL;
+    poReportResult = g_poDB->executeQTQuery( "SELECT DATE(l.ledgerTime), u.name, lt.name, p.title, pct.name, l.netPrice FROM users u, ledger l, ledgerTypes lt, panels p, patientCardTypes pct WHERE l.userId=u.userId AND l.ledgerTypeId=lt.ledgerTypeId AND l.panelId=p.panelId AND l.patientCardTypeId=pct.patientCardTypeId" );
+
+    unsigned int uiColumnCount = 6;
+    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormat );
+    tcReport.insertText( tr( "Date" ), obHeaderFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.insertText( tr( "Operator" ), obHeaderFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.insertText( tr( "Event" ), obHeaderFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.insertText( tr( "Device" ), obHeaderFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.insertText( tr( "Pass Type" ), obHeaderFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.insertText( tr( "Amount" ), obHeaderFormat );
+
+    long liTotal = 0;
+    while( poReportResult->next() )
+    {
+        for( unsigned int i = 0; i < uiColumnCount; i++ )
+        {
+            tcReport.movePosition( QTextCursor::NextCell );
+            tcReport.insertText( poReportResult->value( i ).toString(), obTextFormat );
+        }
+        liTotal += poReportResult->value( 5 ).toInt();
+    }
+    delete poReportResult;
+
+    for( int i = 0; i < uiColumnCount; i++ ) tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.insertText( QString::number( liTotal ), obHeaderFormat );
 }
