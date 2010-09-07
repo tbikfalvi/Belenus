@@ -1966,7 +1966,7 @@ Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translat
         <location filename="edit/dlgpatientedit.cpp" line="654"/>
         <location filename="edit/dlgpatientedit.cpp" line="678"/>
         <location filename="edit/dlgpatientedit.cpp" line="690"/>
-        <location filename="edit/dlgpatientedit.cpp" line="717"/>
+        <location filename="edit/dlgpatientedit.cpp" line="718"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -2072,7 +2072,7 @@ Település : %4
 új adatként az adatbázisba?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="718"/>
+        <location filename="edit/dlgpatientedit.cpp" line="719"/>
         <source>The defined data did not found in the database
 
 Region : %1
@@ -3813,7 +3813,7 @@ allergia :</translation>
     <message>
         <location filename="dlgpanelstatusesedit.ui" line="78"/>
         <source> sec</source>
-        <translation> mp</translation>
+        <translation> perc</translation>
     </message>
     <message>
         <source>s</source>

@@ -414,6 +414,14 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     {
         close();
     }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_S )
+    {
+        on_action_DeviceStart_triggered();
+    }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F )
+    {
+        on_action_PayCash_triggered();
+    }
     else if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
              (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
              (p_poEvent->key() == Qt::Key_Space) )
@@ -752,6 +760,9 @@ void cWndMain::on_action_Attendances_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
 {
+    if( !action_DeviceStart->isEnabled() )
+        return;
+
     if( mdiPanels->isHasToPay() )
     {
         QMessageBox::warning( this, tr("Warning"),

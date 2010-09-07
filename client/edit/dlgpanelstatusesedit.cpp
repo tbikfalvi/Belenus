@@ -30,7 +30,7 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
                 cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
         }
         sbSeqNumber->setValue( m_poPanelStatuses->sequenceNumber() );
-        sbLength->setValue( m_poPanelStatuses->length() );
+        sbLength->setValue( m_poPanelStatuses->length()/60 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT activateCommandId, name FROM activateCommand ORDER BY activateCommandId" ) );
         while( poQuery->next() )
         {
@@ -73,7 +73,7 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
         QMessageBox::critical( this, tr( "Error" ), tr( "Panelstatus name cannot be empty." ) );
     }
 
-    if( sbLength->value() == 0 && cmbActivateCmd->currentIndex() > 0 )
+    if( sbLength->value() == 0 && cmbActivateCmd->currentIndex() > 0 && cmbActivateCmd->currentIndex() != 3 )
     {
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Length of status process time cannot be zero." ) );
@@ -95,7 +95,7 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
             m_poPanelStatuses->setName( ledName->text() );
             m_poPanelStatuses->setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toInt() );
             m_poPanelStatuses->setSequenceNumber( sbSeqNumber->value() );
-            m_poPanelStatuses->setLength( sbLength->value() );
+            m_poPanelStatuses->setLength( sbLength->value()*60 );
             m_poPanelStatuses->setActivateCommand( cmbActivateCmd->itemData( cmbActivateCmd->currentIndex() ).toInt() );
 
             /*if( checkIndependent->isChecked() )
