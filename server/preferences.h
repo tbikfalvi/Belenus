@@ -8,15 +8,20 @@ class ServerPreferences : public Preferences
 {
 
 public:
-    ServerPreferences() : Preferences()
+    ServerPreferences() : Preferences("BelenusServer.ini") { checkAndSetDefaults(); }
+
+    void checkAndSetDefaults()
     {
-        setValue("version", "0.0.1");
+        int t;
+        QString v;
+        setValue("version", "0.1");
 
         if ( value("server/interface")=="" )
             setValue("server/interface", "127.0.0.1");
 
-        int port = value("server/port").toInt();
-        if ( port<=0 || port>65535 )
+        v = value("server/port");
+        t = v.toInt();
+        if ( v.isEmpty() || t<=0 || t>65535 )
             setValue("server/port", "4000");
 
         if ( value("database/host")=="" )
@@ -31,7 +36,17 @@ public:
         if ( value("database/password")=="" )
             setValue("database/password", "Sync205BW");
 
+        v = value("loglevel/console");
+        t = v.toInt();
+        if ( v.isEmpty() || t<cSeverity::MIN || t>cSeverity::MAX )
+            setValue("loglevel/console", "3");
+
+        v = value("loglevel/db");
+        t = v.toInt();
+        if ( v.isEmpty() || t<cSeverity::MIN || t>cSeverity::MAX )
+            setValue("loglevel/db", "3");
     }
+
 };
 
 

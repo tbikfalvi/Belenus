@@ -12,7 +12,7 @@ public:
     void setDBConnection(cQTMySQLConnection * db) { m_poDB = db; }
 
 protected:
-    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m);
+    virtual void _writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m, const void * threadId);
 
     unsigned int           m_uiAppUser;
     cQTMySQLConnection    *m_poDB;

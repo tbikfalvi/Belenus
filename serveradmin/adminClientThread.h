@@ -59,7 +59,7 @@ protected:
 
     void _handleHello(int version);
     void _handleLogonChallenge();
-    void _handleLogonOk();
+    void _handleLogonResult(Result::ResultCode, int clientId);
     void _handleRegisterKeyResponse(Result::ResultCode res);
     void _handleSqlQueryResult(int /*queryId*/, SqlResult *);
 

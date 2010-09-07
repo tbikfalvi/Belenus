@@ -2,7 +2,7 @@
 #include <QMessageBox>
 
 
-void GUIWriter::_writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m) {
+void GUIWriter::_writeLog(const cSeverity::teSeverity sev, const QDateTime ts, const QString &m, const void * threadId) {
     QMessageBox::Icon  enIcon  = QMessageBox::NoIcon;
     QString            obTitle = "";
 

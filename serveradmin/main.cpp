@@ -21,6 +21,8 @@ AdminPreferences     g_prefs;
 int main( int argc, char *argv[] )
 {
     QApplication  apMainApp( argc, argv );
+    g_prefs.loadFile();
+
 
     int nRet = 1;
     try
@@ -36,6 +38,7 @@ int main( int argc, char *argv[] )
         g_obLogger(e.severity()) << e.what() << EOM;
     }
 
+    g_prefs.saveFile();
     g_obLogger(cSeverity::INFO) << "Belenus Server Admin Version " << g_prefs.value("version") << " ended." << EOM;
 
     return nRet;

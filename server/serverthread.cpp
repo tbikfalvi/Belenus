@@ -16,7 +16,7 @@ ServerThread::ServerThread(QTcpSocket *tcpSocket) :
 {
     g_obLogger(cSeverity::INFO) << "[ServerThread::ServerThread] initialized" << EOM;
 
-    connect( this,       SIGNAL(finished()),                            this, SLOT(deleteLater()));
+    connect( this, SIGNAL(finished()),   this, SLOT(deleteLater()));
 }
 
 
@@ -68,17 +68,19 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
         // if code2 is null (or empty), user not logined yet, so store its key for next use
         // otherwise check if code2 matches with the stored one
         if ( !(q->value(1).isNull() || q->value(1).toString().isEmpty()) && QString::compare(q->value(1).toString(), code2, Qt::CaseInsensitive)!=0 ) {
+            sendLogonResult(Result::INVALID_SECOND_ID, clientId);
             sendDisconnect(Result::INVALID_SECOND_ID);
         } else {
             // update lastlogin and set code2
             QSqlQuery *r = g_db.executeQTQuery(QString("UPDATE clients SET code2='%1', lastLogin=NOW() WHERE clientId='%2'").arg(code2).arg(clientId));
             delete r;
 
-            sendLogonOk();
+            sendLogonResult(Result::OK, clientId);
             _isAuthenticated = true;
         }
     } else {
         g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonResponse] no active client has been found" << EOM;
+        sendLogonResult(Result::INVALID_LICENSE_KEY, 0);
         sendDisconnect(Result::INVALID_LICENSE_KEY);
     }
 
@@ -96,7 +98,7 @@ void ServerThread::_handleLogonAdminResponse(const char* username, const char* p
         sendDisconnect(Result::AUTHENTICATION_FAILED);
     } else {
         g_obLogger(cSeverity::INFO) << "[ServerThread::_handleLogonAdminResponse] admin authenticated" << EOM;
-        sendLogonOk();
+        sendLogonResult(Result::OK, 0);
         _isAdmin = true;
         _isAuthenticated = true;
     }
