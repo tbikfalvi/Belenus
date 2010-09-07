@@ -179,12 +179,12 @@ void cDBAddress::save() throw( cSevException )
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
 }
-
-void cDBAddress::remove() throw( cSevException )
+#include <QMessageBox>
+void cDBAddress::remove( const unsigned int p_uiPatientId ) throw( cSevException )
 {
     cTracer obTrace( "cDBAddress::remove" );
 
-    if( m_uiId )
+    if( m_uiId || p_uiPatientId )
     {
         QString  qsQuery;
 
@@ -196,11 +196,19 @@ void cDBAddress::remove() throw( cSevException )
         {
             qsQuery = "UPDATE address SET active=0, archive=\"MOD\" ";
         }
-        qsQuery += QString( " WHERE addressId = %1" ).arg( m_uiId );
-
+        if( p_uiPatientId == 0 )
+            qsQuery += QString( " WHERE addressId = %1" ).arg( m_uiId );
+        else
+            qsQuery += QString( " WHERE patientId = %1" ).arg( p_uiPatientId );
+QMessageBox::information(0,"",qsQuery);
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+void cDBAddress::removePatient( const unsigned int p_uiPatientId ) throw( cSevException )
+{
+    remove( p_uiPatientId );
 }
 
 void cDBAddress::createNew() throw()

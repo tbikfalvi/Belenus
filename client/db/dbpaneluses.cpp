@@ -13,6 +13,8 @@
 //
 //====================================================================================
 
+#include <QMessageBox>
+
 #include "belenus.h"
 #include "dbpaneluses.h"
 
@@ -176,6 +178,7 @@ QString cDBPanelUses::name() const throw()
 void cDBPanelUses::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 unsigned int cDBPanelUses::useTime() const throw()

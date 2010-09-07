@@ -53,6 +53,8 @@
      <addaction name="separator"/>
      <addaction name="action_IllnessGroup"/>
      <addaction name="separator"/>
+     <addaction name="action_RegionZipCity"/>
+     <addaction name="separator"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
      <addaction name="separator"/>
@@ -468,6 +470,11 @@
   <action name="action_HealthInsurance">
    <property name="text">
     <string>Health Insurance Funds ...</string>
+   </property>
+  </action>
+  <action name="action_RegionZipCity">
+   <property name="text">
+    <string>Region, Zip, City ...</string>
    </property>
   </action>
  </widget>

@@ -327,6 +327,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         delete poQuery;
         poQuery = NULL;
 
+        m_obStatuses.clear();
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, panelTypeId, seqNumber from panelStatuses WHERE panelTypeId=%1 ORDER BY seqNumber" ).arg( m_uiType ) );
         while( poQuery->next() )
         {

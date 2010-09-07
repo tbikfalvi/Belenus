@@ -47,6 +47,7 @@
 #include "crud/dlgcompany.h"
 #include "crud/dlgdoctor.h"
 #include "crud/dlghealthinsurance.h"
+#include "crud/dlgzipregioncity.h"
 
 //====================================================================================
 
@@ -439,6 +440,14 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     {
         close();
     }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_S )
+    {
+        on_action_DeviceStart_triggered();
+    }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F )
+    {
+        on_action_PayCash_triggered();
+    }
     else if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
              (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
              (p_poEvent->key() == Qt::Key_Space) )
@@ -777,6 +786,9 @@ void cWndMain::on_action_Attendances_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
 {
+    if( !action_DeviceStart->isEnabled() )
+        return;
+
     if( mdiPanels->isHasToPay() )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -840,6 +852,12 @@ void cWndMain::on_action_PanelStatuses_triggered()
     cDlgPanelStatuses   obDlgPanelStatuses( this );
 
     obDlgPanelStatuses.exec();
+    if( obDlgPanelStatuses.isStatusChanged() )
+    {
+        QMessageBox::information( this, tr( "Information" ),
+                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    }
+
 }
 //====================================================================================
 void cWndMain::on_action_UseWithCard_triggered()
@@ -1439,5 +1457,14 @@ void cWndMain::on_action_HealthInsurance_triggered()
     cDlgHealthInsurance  obDlgHealthInsurance( this );
 
     obDlgHealthInsurance.exec();
+}
+//====================================================================================
+void cWndMain::on_action_RegionZipCity_triggered()
+{
+    setCursor( Qt::WaitCursor);
+    cDlgZipRegionCity   obDlgZipRegionCity( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgZipRegionCity.exec();
 }
 //====================================================================================

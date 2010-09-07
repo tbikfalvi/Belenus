@@ -11,9 +11,10 @@
 #include "../crud/dlgattendance.h"
 #include "../db/dbpatientcardtype.h"
 #include "../crud/dlgaddress.h"
-#include "crud/dlgcompany.h"
-#include "crud/dlgdoctor.h"
-#include "crud/dlghealthinsurance.h"
+#include "../crud/dlgcompany.h"
+#include "../crud/dlgdoctor.h"
+#include "../crud/dlghealthinsurance.h"
+#include "../crud/dlgzipregioncityselect.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -40,10 +41,17 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     m_poPatientCard = new cDBPatientCard();
     m_poPatientCard->createNew();
 
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT region FROM zipRegionCity WHERE active=1 GROUP BY region ORDER BY region" ) );
+    while( poQuery->next() )
+    {
+        cmbRegion->addItem( poQuery->value( 0 ).toString() );
+    }
+    cmbRegion->setEditText( "" );
+
     if( m_poPatient )
     {
-        QSqlQuery *poQuery;
-
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientOriginId, name FROM patientOrigin WHERE archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
@@ -151,7 +159,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
                 ptComment->setEnabled( false );
 
                 ledCountry->setEnabled( false );
-                ledRegion->setEnabled( false );
+                cmbRegion->setEnabled( false );
                 ledZip->setEnabled( false );
                 ledCity->setEnabled( false );
                 ledStreet->setEnabled( false );
@@ -188,6 +196,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     {
         ledCountry->setText( g_poPrefs->getDefaultCountry() );
     }
+
+    if( poQuery ) delete poQuery;
 }
 
 cDlgPatientEdit::~cDlgPatientEdit()
@@ -337,12 +347,14 @@ bool cDlgPatientEdit::SavePatientData()
         QString  qsQuery = QString( "UPDATE address SET primaryAddress = 0 WHERE patientId = %1" ).arg( m_poPatient->id() );
         g_poDB->executeQTQuery( qsQuery );
 
+        checkRegionZipCity();
+
         m_poAddress->setLicenceId( g_poPrefs->getLicenceId() );
         m_poAddress->setName( m_poPatient->name() );
         m_poAddress->setPrimaryAddress( true );
         m_poAddress->setActive( true );
         m_poAddress->setCountry( ledCountry->text() );
-        m_poAddress->setRegion( ledRegion->text() );
+        m_poAddress->setRegion( cmbRegion->currentText() );
         m_poAddress->setZip( ledZip->text() );
         m_poAddress->setCity( ledCity->text() );
         m_poAddress->setStreet( ledStreet->text() );
@@ -387,8 +399,8 @@ void cDlgPatientEdit::on_ledZip_textEdited(QString )
         try
         {
             obDBZipRegionCity.load( ledZip->text() );
+            cmbRegion->setEditText( obDBZipRegionCity.region() );
             ledCity->setText( obDBZipRegionCity.city() );
-            ledRegion->setText( obDBZipRegionCity.region() );
         }
         catch( cSevException &e )
         {
@@ -396,10 +408,11 @@ void cDlgPatientEdit::on_ledZip_textEdited(QString )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
             }
-            else
-            {
-                ledCity->setText( "" );
-            }
+//            else
+//            {
+//                cmbRegion->setEditText( "" );
+//                ledCity->setText( "" );
+//            }
         }
     }
     if( ledZip->text().length() )
@@ -414,9 +427,15 @@ void cDlgPatientEdit::on_pbCitySearch_clicked()
 
     try
     {
-        obDBZipRegionCity.loadCity( ledCity->text() );
-        ledZip->setText( obDBZipRegionCity.zip() );
-        ledCity->setText( obDBZipRegionCity.city() );
+        cDlgZipRegionCitySelect obDlgZipRegionCitySelect( this, ledCity->text() );
+
+        if( obDlgZipRegionCitySelect.exec() == QDialog::Accepted )
+        {
+            obDBZipRegionCity.load( obDlgZipRegionCitySelect.selected() );
+            ledCity->setText( obDBZipRegionCity.city() );
+            cmbRegion->setEditText( obDBZipRegionCity.region() );
+            ledZip->setText( obDBZipRegionCity.zip() );
+        }
     }
     catch( cSevException &e )
     {
@@ -559,6 +578,9 @@ void cDlgPatientEdit::on_deDateBirth_dateChanged(QDate)
 
 void cDlgPatientEdit::FillDefaultAddress()
 {
+    if( m_poPatient->id() == 0 )
+        return;
+
     QSqlQuery *poQuery;
 
     try
@@ -574,7 +596,7 @@ void cDlgPatientEdit::FillDefaultAddress()
     }
 
     ledCountry->setText( m_poAddress->country() );
-    ledRegion->setText( m_poAddress->region() );
+    cmbRegion->setEditText( m_poAddress->region() );
     ledCity->setText( m_poAddress->city() );
     ledZip->setText( m_poAddress->zip() );
     ledStreet->setText( m_poAddress->street() );
@@ -603,5 +625,115 @@ void cDlgPatientEdit::FillPhoneNumber()
 
 void cDlgPatientEdit::on_pbVerifyAddress_clicked()
 {
+    checkRegionZipCity();
+}
 
+void cDlgPatientEdit::checkRegionZipCity()
+{
+    cDBZipRegionCity    obDBCheck;
+
+    if( ledZip->text().length() == g_poPrefs->getZipLength() )
+    {
+        try
+        {
+            obDBCheck.load( ledZip->text() );
+
+            if( cmbRegion->currentText() != obDBCheck.region() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("The defined zip code already saved into the database with\n\n"
+                                              "Region : %1\n\n"
+                                              "Do you want to overwrite the region entered with this one?").arg(obDBCheck.region()),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    cmbRegion->setEditText( obDBCheck.region() );
+                }
+            }
+            if( ledCity->text() != obDBCheck.city() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("The defined zip code already saved into the database with\n\n"
+                                              "City : %1\n\n"
+                                              "Do you want to overwrite the city entered with this one?").arg(obDBCheck.city()),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    ledCity->setText( obDBCheck.city() );
+                }
+            }
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            }
+            else
+            {
+                try
+                {
+                    obDBCheck.loadCity( ledCity->text() );
+
+                    if( cmbRegion->currentText() != obDBCheck.region() )
+                    {
+                        if( QMessageBox::question( this, tr("Question"),
+                                                   tr("The defined city already assigned to a different region\n\n"
+                                                      "Region : %1\n\n"
+                                                      "Do you want to correct the defined region?").arg(obDBCheck.region()),
+                                                   QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                        {
+                            cmbRegion->setEditText( obDBCheck.region() );
+                        }
+                    }
+
+                    if( ledZip->text() != obDBCheck.zip() )
+                    {
+                        if( QMessageBox::question( this, tr("Question"),
+                                                   tr("The defined city already assigned to a different zip code\n\n"
+                                                      "Zip : %1\n\n"
+                                                      "Do you save the following data\n\n"
+                                                      "Region : %2\n"
+                                                      "Zip : %3\n"
+                                                      "City : %4\n\n"
+                                                      "as new into the database?").arg(obDBCheck.zip()).arg(cmbRegion->currentText()).arg(ledZip->text()).arg(ledCity->text()),
+                                                   QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                        {
+                            obDBCheck.createNew();
+                            obDBCheck.setLicenceId( g_poPrefs->getLicenceId() );
+                            obDBCheck.setRegion( cmbRegion->currentText() );
+                            obDBCheck.setZip( ledZip->text() );
+                            obDBCheck.setCity( ledCity->text() );
+                            obDBCheck.setActive( true );
+                            obDBCheck.save();
+                        }
+                    }
+                }
+                catch( cSevException &e )
+                {
+                    if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
+                    {
+                        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                    }
+                    else
+                    {
+                        if( QMessageBox::question( this, tr("Question"),
+                                                   tr("The defined data did not found in the database\n\n"
+                                                      "Region : %1\n"
+                                                      "Zip : %2\n"
+                                                      "City : %3\n\n"
+                                                      "Do you want to save them as new into the database?").arg(cmbRegion->currentText()).arg(ledZip->text()).arg(ledCity->text()),
+                                                   QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                        {
+                            obDBCheck.createNew();
+                            obDBCheck.setLicenceId( g_poPrefs->getLicenceId() );
+                            obDBCheck.setRegion( cmbRegion->currentText() );
+                            obDBCheck.setZip( ledZip->text() );
+                            obDBCheck.setCity( ledCity->text() );
+                            obDBCheck.setActive( true );
+                            obDBCheck.save();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

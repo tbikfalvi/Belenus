@@ -10,6 +10,8 @@ cDlgPanelStatuses::cDlgPanelStatuses( QWidget *p_poParent )
     setWindowTitle( tr( "Panelstatus List" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
+    m_bStatusChanged = false;
+
     setupTableView();
 }
 
@@ -92,6 +94,7 @@ void cDlgPanelStatuses::newClicked( bool )
     {
         m_uiSelectedId = poPanelStatuses->id();
         refreshTable();
+        m_bStatusChanged = true;
     }
 
     delete poPanelStatuses;
@@ -111,6 +114,7 @@ void cDlgPanelStatuses::editClicked( bool )
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();
+            m_bStatusChanged = true;
         }
 
         if( poPanelStatuses ) delete poPanelStatuses;
@@ -138,6 +142,7 @@ void cDlgPanelStatuses::deleteClicked( bool )
             m_uiSelectedId = 0;
             refreshTable();
             if( poPanelStatuses ) delete poPanelStatuses;
+            m_bStatusChanged = true;
         }
         catch( cSevException &e )
         {
@@ -145,4 +150,9 @@ void cDlgPanelStatuses::deleteClicked( bool )
             g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
+}
+
+bool cDlgPanelStatuses::isStatusChanged()
+{
+    return m_bStatusChanged;
 }

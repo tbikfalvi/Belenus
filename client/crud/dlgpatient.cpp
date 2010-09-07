@@ -136,6 +136,9 @@ void cDlgPatient::deleteClicked( bool )
             cDBPostponed    obDBPostponed;
             obDBPostponed.removePatient( m_uiSelectedId );
 
+            cDBAddress      obDBAddress;
+            obDBAddress.removePatient( m_uiSelectedId );
+
             poPatient = new cDBPatient;
             poPatient->load( m_uiSelectedId );
             poPatient->remove();
