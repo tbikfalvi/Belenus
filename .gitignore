@@ -388,4 +388,6 @@ server/DatabaseWriter.o
 server/moc_serverthread.cpp
 server/moc_serverthread.o
 server/sigc.o
+BelenusServer.ini
+BelenusServerAdmin.ini
 

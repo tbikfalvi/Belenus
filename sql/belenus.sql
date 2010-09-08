@@ -478,7 +478,7 @@ CREATE TABLE `ledgerTypes` (
   `name`                    varchar(100)            NOT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`ledgerTypeId`),
+  PRIMARY KEY (`ledgerTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -530,7 +530,7 @@ CREATE TABLE `discounts` (
   `discountPercent`         int(11)                 NOT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`discountId`),
+  PRIMARY KEY (`discountId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`healthInsuranceId`) REFERENCES `healthInsurances` (`healthInsuranceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -643,7 +643,7 @@ CREATE TABLE `paymentMethods` (
   `name`                    varchar(50)             NOT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`paymentMethodId`),
+  PRIMARY KEY (`paymentMethodId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -690,7 +690,7 @@ CREATE TABLE `ledger` (
   `comment`                 text                    DEFAULT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`ledgerId`),
+  PRIMARY KEY (`ledgerId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`ledgerTypeId`) REFERENCES `ledgerTypes` (`ledgerTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -718,7 +718,7 @@ CREATE TABLE `ledgerDevice` (
   `comment`                 text                    DEFAULT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`ledgerDeviceId`),
+  PRIMARY KEY (`ledgerDeviceId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
