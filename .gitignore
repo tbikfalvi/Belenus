@@ -382,4 +382,10 @@ serveradmin/CommunicationProtocol.o
 serveradmin/ConsoleWriter.o
 serveradmin/moc_LogEmitter.cpp
 serveradmin/moc_LogEmitter.o
+server/CommunicationProtocol.o
+server/ConsoleWriter.o
+server/DatabaseWriter.o
+server/moc_serverthread.cpp
+server/moc_serverthread.o
+server/sigc.o
 

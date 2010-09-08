@@ -52,7 +52,7 @@ protected:
     virtual void _handleLogonChallenge() {};
     virtual void _handleLogonAdminResponse(const char* /*username*/, const char* /*password*/) {};
     virtual void _handleLogonResponse(const char* /*code1*/, const char* /*code2*/) {};
-    virtual void _handleLogonResult(Result::ResultCode res, int licenceId) {};
+    virtual void _handleLogonResult(Result::ResultCode /*res*/, int /*licenceId*/) {};
     virtual void _handleDisconnect(Result::ResultCode /*reason*/) {};
     virtual void _handleRegisterKey(const char* /*key*/) {};
     virtual void _handleRegisterKeyResponse(Result::ResultCode /*result*/) {};

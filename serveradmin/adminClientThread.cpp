@@ -49,7 +49,7 @@ void AdminClientThread::_handleRegisterKeyResponse(Result::ResultCode res)
 
 
 
-void AdminClientThread::_handleLogonResult(Result::ResultCode res, int clientId)
+void AdminClientThread::_handleLogonResult(Result::ResultCode res, int /*clientId*/)
 {
     if ( res == Result::OK ) {
         g_obLogger(cSeverity::INFO) << "[AdminClientThread::_handleLogonResult] logged in successfully" << EOM;

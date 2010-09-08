@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server Admin alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server Admin alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 
@@ -161,7 +161,7 @@ void MainWindow::disconnected()
 
 
 
-void MainWindow::socketError(QAbstractSocket::SocketError socketError)
+void MainWindow::socketError(QAbstractSocket::SocketError /*socketError*/)
 {
     g_obLogger(cSeverity::DEBUG) << "[MainWindow::socketError] called" << EOM;
     bConnect->setText("Connect");
