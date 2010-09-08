@@ -665,7 +665,7 @@ void cDlgPatientEdit::checkRegionZipCity()
         {
             if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
             else
             {
@@ -711,7 +711,7 @@ void cDlgPatientEdit::checkRegionZipCity()
                 {
                     if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
                     {
-                        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                        g_obLogger(e.severity()) << e.what() << EOM;
                     }
                     else
                     {

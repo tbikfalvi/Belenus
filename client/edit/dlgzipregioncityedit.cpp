@@ -81,7 +81,7 @@ void cDlgZipRegionCityEdit::accept ()
         {
             if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
         }
     }
@@ -108,7 +108,7 @@ void cDlgZipRegionCityEdit::accept ()
         {
             if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
             {
-                g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+                g_obLogger(e.severity()) << e.what() << EOM;
             }
         }
     }
@@ -126,7 +126,7 @@ void cDlgZipRegionCityEdit::accept ()
         }
         catch( cSevException &e )
         {
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
 
         QDialog::accept();

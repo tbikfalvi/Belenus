@@ -38,7 +38,7 @@ cDlgZipRegionCity::cDlgZipRegionCity( QWidget *p_poParent )
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
     if( poQuery ) delete poQuery;
 
@@ -160,7 +160,7 @@ void cDlgZipRegionCity::editClicked( bool )
     catch( cSevException &e )
     {
         if( poZipRegionCity ) delete poZipRegionCity;
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -184,7 +184,7 @@ void cDlgZipRegionCity::deleteClicked( bool )
         catch( cSevException &e )
         {
             if( poZipRegionCity ) delete poZipRegionCity;
-            g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }
