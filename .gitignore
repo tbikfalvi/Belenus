@@ -371,4 +371,15 @@ client/moc_dlgzipregioncityedit.o
 client/moc_dlgzipregioncityselect.cpp
 client/moc_dlgzipregioncityselect.o
 client/ui_dlgzipregioncityedit.h
+client/CommunicationProtocol.o
+client/ConsoleWriter.o
+client/DatabaseWriter.o
+client/GUIWriter.o
+client/licenceManager.o
+client/moc_licenceManager.cpp
+client/moc_licenceManager.o
+serveradmin/CommunicationProtocol.o
+serveradmin/ConsoleWriter.o
+serveradmin/moc_LogEmitter.cpp
+serveradmin/moc_LogEmitter.o
 
