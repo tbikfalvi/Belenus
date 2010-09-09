@@ -184,18 +184,33 @@ CREATE TABLE `companies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A studioban rendelo doktorok adatait tartalmazza.
+-- Opcionalis.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `doctorTypes` (
+  `doctorTypeId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`doctorTypeId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A vendeget bekuldo orvos, akarki adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `doctors` (
   `doctorId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `doctorTypeId`            int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `doctorLicence`           varchar(50)             NOT NULL,
   `data`                    text                    NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`doctorId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`doctorTypeId`) REFERENCES `doctorTypes` (`doctorTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -648,31 +663,6 @@ CREATE TABLE `paymentMethods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A studioban keszitett szamlakat tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `invoices` (
-  `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `addressId`               int(10) unsigned        NOT NULL,
-  `paymentMethodId`         int(10) unsigned        NOT NULL,
-  `dateCreated`             date                    NOT NULL,
-  `invoiceReady`            tinyint(1)              DEFAULT 0,
-  `invoicePrinted`          tinyint(1)              DEFAULT 0,
-  PRIMARY KEY (`invoiceId`),
-  FOREIGN KEY (`addressId`) REFERENCES `address` (`addressId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- A studioban keszitett szamlak teteleit tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `invoiceRecords` (
-  `invoiceRecordId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `invoiceId`               int(10) unsigned        NOT NULL,
-  PRIMARY KEY (`invoiceRecordId`),
-  FOREIGN KEY (`invoiceId`) REFERENCES `invoices` (`invoiceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
 -- Konyveles tabla.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `ledger` (
@@ -682,6 +672,7 @@ CREATE TABLE `ledger` (
   `userId`                  int(10) unsigned        NOT NULL,
   `productId`               int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `netPrice`                int(11)                 NOT NULL,
@@ -696,6 +687,7 @@ CREATE TABLE `ledger` (
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -724,3 +716,33 @@ CREATE TABLE `ledgerDevice` (
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A studioban keszitett szamlakat tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `invoices` (
+  `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `addressId`               int(10) unsigned        NOT NULL,
+  `paymentMethodId`         int(10) unsigned        NOT NULL,
+  `dateCreated`             date                    NOT NULL,
+  `invoiceReady`            tinyint(1)              DEFAULT 0,
+  `invoicePrinted`          tinyint(1)              DEFAULT 0,
+  PRIMARY KEY (`invoiceId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`addressId`) REFERENCES `address` (`addressId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A studioban keszitett szamlak teteleit tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `invoiceRecords` (
+  `invoiceRecordId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `invoiceId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`invoiceRecordId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`invoiceId`) REFERENCES `invoices` (`invoiceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
