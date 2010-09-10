@@ -45,6 +45,15 @@ public:
         t = v.toInt();
         if ( v.isEmpty() || t<cSeverity::MIN || t>cSeverity::MAX )
             setValue("loglevel/db", "3");
+
+        v = value("loglevel/file");
+        t = v.toInt();
+        if ( v.isEmpty() || t<cSeverity::MIN || t>cSeverity::MAX )
+            setValue("loglevel/file", "3");
+
+        if ( value("log/file")=="" )
+            setValue("log/file", "logs_%1_%2.log");
+
     }
 
 };

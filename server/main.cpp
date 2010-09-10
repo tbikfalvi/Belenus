@@ -13,6 +13,7 @@
 #include "../framework/qtlogger.h"
 #include "../framework/logger/ConsoleWriter.h"
 #include "../framework/logger/DatabaseWriter.h"
+#include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "preferences.h"
 #include "serverthread.h"
@@ -89,11 +90,12 @@ int main( int argc, char *argv[] )
 
     ConsoleWriter *_writer = new ConsoleWriter( static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/console").toInt()) );
     DatabaseWriter *_dbWriter = new DatabaseWriter( static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/db").toInt()) );
+    FileWriter *_fWriter = new FileWriter( g_prefs.value("log/file"), static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/file").toInt()) );
 
     _dbWriter->setDBConnection(&g_db);
     g_obLogger.attachWriter("console", _writer);
     g_obLogger.attachWriter("db", _dbWriter);
-
+    g_obLogger.attachWriter("file", _fWriter);
 
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version") << " started." << EOM;
 
@@ -114,6 +116,8 @@ int main( int argc, char *argv[] )
     } catch(cSevException e) {
         g_obLogger(cSeverity::ERROR) << "Exception: " << e.what() << EOM;
     }
+
+    g_obLogger.detachWriter("db");
 
     g_prefs.saveFile();
     g_obLogger(cSeverity::INFO) << "Belenus Version " << g_prefs.value("version") << " ended." << EOM;

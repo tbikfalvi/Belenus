@@ -34,6 +34,7 @@ HEADERS += ../framework/dbconnection.h \
     ../framework/qtlogger.h \
     ../framework/logger/ConsoleWriter.h \
     ../framework/logger/DatabaseWriter.h \
+    ../framework/logger/FileWriter.h \
     sigc.h
 SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
@@ -46,6 +47,7 @@ SOURCES += ../framework/dbconnection.cpp \
     ../framework/qtlogger.cpp \
     ../framework/logger/ConsoleWriter.cpp \
     ../framework/logger/DatabaseWriter.cpp \
+    ../framework/logger/FileWriter.cpp \
     sigc.cpp
 QT += network
 QT += sql
