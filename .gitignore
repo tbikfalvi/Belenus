@@ -390,4 +390,26 @@ server/moc_serverthread.o
 server/sigc.o
 BelenusServer.ini
 BelenusServerAdmin.ini
+viewer/BelenusReportViewer.pro.user
+viewer/Makefile
+viewer/dlgdemo.o
+viewer/moc_dlgdemo.cpp
+viewer/moc_dlgdemo.o
+viewer/ui_dlgdemo.h
+viewer/main.o
+viewer/wndmain.o
+viewer/moc_wndmain.cpp
+viewer/moc_wndmain.o
+viewer/ui_wndmain.h
+viewer/dbconnection.o
+viewer/moc_qtmysqlquerymodel.cpp
+viewer/moc_qtmysqlquerymodel.o
+viewer/qtlogger.o
+viewer/qtmysqlconnection.o
+viewer/qtmysqlquerymodel.o
+viewer/tracer.o
+viewer/dlgpreview.o
+viewer/moc_dlgpreview.cpp
+viewer/moc_dlgpreview.o
+viewer/ui_dlgpreview.h
 

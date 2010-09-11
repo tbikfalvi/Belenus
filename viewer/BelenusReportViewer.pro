@@ -8,11 +8,28 @@ TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
-#CONFIG += console
+
+# CONFIG += console
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
-HEADERS += belenusReportViewer.h
-SOURCES += main.cpp
+FORMS = wndmain.ui \
+    dlgpreview.ui
+HEADERS = ../framework/dbconnection.h \
+    ../framework/qtmysqlconnection.h \
+    ../framework/qtmysqlquerymodel.h \
+    ../framework/qtlogger.h \
+    ../framework/tracer.h \
+    wndmain.h \
+    dlgdemo.h \
+    dlgpreview.h
+SOURCES = ../framework/dbconnection.cpp \
+    ../framework/qtmysqlconnection.cpp \
+    ../framework/qtmysqlquerymodel.cpp \
+    ../framework/qtlogger.cpp \
+    ../framework/tracer.cpp \
+    main.cpp \
+    wndmain.cpp \
+    dlgdemo.cpp \
+    dlgpreview.cpp
 QT += network
 QT += sql
-#FORMS += mainwindow.ui

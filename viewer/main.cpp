@@ -6,38 +6,52 @@
 
 #include <QApplication>
 #include <QTranslator>
+#include <iostream>
 
+#include "wndmain.h"
 //====================================================================================
 
 #include "../framework/qtframework.h"
 
 //====================================================================================
 
-//cQTLogger            g_obLogger;
+cQTLogger            g_obLogger;
+cQTMySQLConnection  *g_poDB;
+
+using namespace std;
 
 //====================================================================================
 int main( int argc, char *argv[] )
 {
-//    QApplication  apMainApp( argc, argv );
+    QApplication  apMainApp( argc, argv );
 
     int nRet = 1;
 
-/*
+    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer started." << cQTLogger::EOM;
+
     try
     {
-        g_obLogger(cSeverity::INFO) << "Belenus Report Viewer Version " << g_prefs.value("version") << " started." << cQTLogger::EOM;
+        g_poDB = new cQTMySQLConnection;
+        g_poDB->setHostName( "localhost" );
+        g_poDB->setDatabaseName( "belenus" );
+        g_poDB->setUserName( "belenus" );
+        g_poDB->setPassword( "belenus" );
+        g_poDB->open();
 
-        MainWindow  wndMain;
-        wndMain.show();
-        nRet = wndMain.exec();
+        cWndMain  obMainWindow;
+        obMainWindow.show();
+        nRet = apMainApp.exec();
     }
     catch( cSevException &e )
     {
+        cerr << ">> " << e.what() << endl << flush;;
+
         g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
     }
 
-    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer Version " << g_prefs.value("version") << " ended." << cQTLogger::EOM;
-*/
+    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer ended." << cQTLogger::EOM;
+
+    delete g_poDB;
 
     return nRet;
 }
