@@ -100,7 +100,7 @@ int main( int argc, char *argv[] )
         g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
-        qsSpalsh += QObject::tr(" CONNECTED.\n");
+        qsSpalsh += QObject::tr(" SUCCEEDED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
@@ -113,7 +113,10 @@ int main( int argc, char *argv[] )
         g_poServer->start();
 
         g_obLicenceManager.initialize();
-        if ( g_obLicenceManager.getType()!=LicenceManager::DEMO ) {  // start server connection only if licence key is provided. Do not try to validate demo licence
+
+        if( g_obLicenceManager.getType() != LicenceManager::DEMO )
+        {  // start server connection only if licence key is provided. Do not try to validate demo licence
+
             g_obLicenceManager.validateLicence();     // begins connection
 
             int nCount = 0;
@@ -132,10 +135,13 @@ int main( int argc, char *argv[] )
         }
 
         qsSpalsh += "  ";
-        if ( g_poServer->isConnected() ) {
-            qsSpalsh += QObject::tr("Connected");
-        } else {
-            qsSpalsh += QObject::tr("Not connected.");
+        if ( g_poServer->isConnected() )
+        {
+            qsSpalsh += QObject::tr("SUCCEEDED");
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("FAILED");
         }
         qsSpalsh += "\n";
 
@@ -231,9 +237,9 @@ int main( int argc, char *argv[] )
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
 #ifdef __WIN32__
-        Sleep(3000);
+        Sleep(8000);
 #else
-        sleep( 3 );
+        sleep( 8 );
 #endif
 
         obSplash.finish( &obMainWindow );

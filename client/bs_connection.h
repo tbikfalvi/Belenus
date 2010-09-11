@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Server Admin alkalmazas © Pagony Multimedia Studio Bt - 2010
+// Belenus Server Admin alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //

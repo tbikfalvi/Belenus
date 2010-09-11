@@ -35,8 +35,10 @@
     </message>
     <message>
         <location filename="main.cpp" line="103"/>
-        <source> CONNECTED.
+        <source> SUCCEEDED.
 </source>
+        <oldsource> CONNECTED.
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -45,111 +47,111 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="136"/>
-        <source>Connected</source>
+        <location filename="main.cpp" line="140"/>
+        <source>SUCCEEDED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="138"/>
-        <source>Not connected.</source>
+        <location filename="main.cpp" line="144"/>
+        <source>FAILED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="143"/>
+        <location filename="main.cpp" line="149"/>
         <source>License is ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="145"/>
+        <location filename="main.cpp" line="151"/>
         <source>DEMO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="147"/>
+        <location filename="main.cpp" line="153"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="152"/>
+        <location filename="main.cpp" line="158"/>
         <source> (needs server validation in %1 days)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="157"/>
+        <location filename="main.cpp" line="163"/>
         <source> (licence validation limit expired)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="159"/>
+        <location filename="main.cpp" line="165"/>
         <source> (licence not accepted by server)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="166"/>
+        <location filename="main.cpp" line="172"/>
         <source>Checking hardware connection ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="173"/>
+        <location filename="main.cpp" line="179"/>
         <source>FAILED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="175"/>
-        <location filename="main.cpp" line="221"/>
+        <location filename="main.cpp" line="181"/>
+        <location filename="main.cpp" line="227"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="183"/>
+        <location filename="main.cpp" line="189"/>
         <source>CONNECTED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="186"/>
+        <location filename="main.cpp" line="192"/>
         <source>Initializing hardware device ... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="190"/>
+        <location filename="main.cpp" line="196"/>
         <source>FINISHED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="193"/>
+        <location filename="main.cpp" line="199"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="196"/>
+        <location filename="main.cpp" line="202"/>
         <source>Number of hardware panels: %1
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="199"/>
+        <location filename="main.cpp" line="205"/>
         <source>Checking hardware panels:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="204"/>
+        <location filename="main.cpp" line="210"/>
         <source>     Checking hardware panel -%1- </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="209"/>
+        <location filename="main.cpp" line="215"/>
         <source> SUCCEEDED
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="214"/>
+        <location filename="main.cpp" line="220"/>
         <source> FAILED
 </source>
         <translation type="unfinished"></translation>

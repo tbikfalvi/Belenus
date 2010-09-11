@@ -34,21 +34,25 @@ void LicenceManager::initialize()
     int licenceId = 0;
     QSqlQuery *poQuery = NULL;
 
-    try {
+    try
+    {
         poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences WHERE active=1 ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
             _lastValidated = poQuery->value( 2 ).toDate();
             _licenceKey = poQuery->value( 1 ).toString();
             licenceId = poQuery->value( 0 ).toInt();
-            if ( licenceId>1 ) {
+            if( licenceId > 1 )
+            {
                 _type = VALID_SERVER_ERROR;     // init as server-error as server-connection comes after init only
                 checkValidity();
             }
-            g_poPrefs->setLicenceId(licenceId);
+            g_poPrefs->setLicenceId( licenceId );
             g_obLogger(cSeverity::DEBUG) << "[LicenceManager::initialize] initialized with "<< _licenceKey << " and " << licenceId << ". Last validated = " << _lastValidated.toString() << EOM;
         }
-    } catch( cSevException &e ) {
+    }
+    catch( cSevException &e )
+    {
         if( poQuery ) delete poQuery;
         g_obLogger(e.severity()) << e.what() << EOM;
     }
