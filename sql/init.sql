@@ -21,10 +21,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`, `archive`) VALUES
-  ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `active`, `archive`) VALUES
-  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
+  ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
+  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -105,8 +105,21 @@ ALTER TABLE `companies` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO  `doctors` (`doctorId`, `licenceId`, `name`, `active`, `archive`) VALUES
+INSERT INTO  `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
  (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `doctorTypes` SET `doctorTypeId`=0 WHERE `doctorTypeId`=1;
+ALTER TABLE `doctorTypes` auto_increment=1;
+
+INSERT INTO `belenus`.`doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, '0', 'Orvos', '1', 'ARC');
+ (2, '0', 'Gyógyszerész', '1', 'ARC');
+ (3, '0', 'Gyógytornász', '1', 'ARC');
+ (4, '0', 'Védõnõ', '1', 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `doctors` (`doctorId`, `licenceId`, `doctorTypeId`, `name`, `active`, `archive`) VALUES
+ (0, 0, 0, '<Nincs megadva>', 1, 'ARC');
 UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
 ALTER TABLE `doctors` auto_increment=1;
 
@@ -127,11 +140,12 @@ ALTER TABLE `attendance` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (0, 0, 'Inaktív kártyák', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
+ (0, 0, '', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
 UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
 ALTER TABLE `patientCardTypes` auto_increment=1;
-INSERT INTO `patientCardTypes` (`licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (0, 'Szervíz kártyák', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
+
+INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
+ (1, 0, 'Szervíz kártyák', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -142,8 +156,13 @@ ALTER TABLE `patientCards` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panelTypes` ( `licenceId`, `name`, `active`, `archive` ) VALUES
- ( 0, "Sensolite gyógyterápiás gép", 1, "ARC" );
+INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES
+  ( 0, 0, "", 0, "ARC" );
+UPDATE `panelTypes` SET `panelTypeId`='0' WHERE `panelTypeId`=1;
+ALTER TABLE `panelTypes` auto_increment=1;
+
+INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES
+ ( 1, 0, "Sensolite gyógyterápiás gép", 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
@@ -155,8 +174,8 @@ INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 0, 1, "", 0, 0, 0, "ARC" );
+INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 0, 0, 0, "", 0, 0, 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
 
@@ -195,27 +214,27 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `productTypes` (`productTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (NULL, '0', 'Összes termék', '1', 'ARC');
+ ('0', '0', '', '0', 'ARC');
 UPDATE `productTypes` SET `productTypeId`=0 WHERE `productTypeId`=1;
- ALTER TABLE `productTypes` auto_increment=1;
+ALTER TABLE `productTypes` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
- (NULL, '0', '0', '', '0', '0', '1', 'ARC');
+ ('0', '0', '0', '', '0', '0', '1', 'ARC');
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `discounts` (`discountId`, `licenceId`, `healthInsuranceId`, `companyId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `active`, `archive`) VALUES
- (NULL, '0', NULL, NULL, '0', '0', '0', '', '', '', 1, "ARC" );
+ ('0', '0', NULL, NULL, '0', '0', '0', '', '', '', 0, "ARC" );
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
 ALTER TABLE `discounts` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `address` (`addressId`, `licenceId`, `patientId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `active`, `archive`) VALUES
- (NULL, '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 'ARC');
+ ('0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 'ARC');
 UPDATE `address` SET `addressId`='0' WHERE `addressId`=1;
 ALTER TABLE `address` auto_increment=1;

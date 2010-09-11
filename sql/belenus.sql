@@ -40,25 +40,11 @@ CREATE TABLE `licences` (
   `address`                 varchar(100)            DEFAULT NULL,
   `studio`                  varchar(100)            DEFAULT NULL,
   `contact`                 varchar(100)            DEFAULT NULL,
+  `lastValidated`           DATE                    NULL DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
-  `lastValidated`           DATE               NULL DEFAULT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- A szerver alkalmazasnal van szerepe. Kliens install-nal nincs ra szukseg.
--- A kliens program nem hasznalja.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `clients` (
-  `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `code1`                   varchar(50)             NOT NULL,
-  `code2`                   varchar(50)             NOT NULL,
-  `dateCreated`             datetime                NOT NULL,
-  `lastLogin`               datetime                NOT NULL,
-  PRIMARY KEY (`clientId`),
-  UNIQUE (`code1`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- -----------------------------------------------------------------------------------
 -- Log tabla. A program mukodese soran keletkezo log-okat tartalmazza.
@@ -160,7 +146,7 @@ CREATE TABLE `publicPlaces` (
 -- A vendegekhez kotheto egeszsegpenztarak neveit tartalmazza
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `healthInsurances` (
-  `healthInsuranceId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `healthInsuranceId`       int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
@@ -174,7 +160,7 @@ CREATE TABLE `healthInsurances` (
 -- A vendegekhez kotheto cegek neveit tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `companies` (
-  `companyId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `companyId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
@@ -717,6 +703,15 @@ CREATE TABLE `ledgerDevice` (
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- -----------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
+-- EZEK A TABLAK MEG NEM VEGLEGESEK
+-- -----------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------------
+
 -- -----------------------------------------------------------------------------------
 -- A studioban keszitett szamlakat tartalmazza.
 -- -----------------------------------------------------------------------------------
@@ -728,6 +723,8 @@ CREATE TABLE `invoices` (
   `dateCreated`             date                    NOT NULL,
   `invoiceReady`            tinyint(1)              DEFAULT 0,
   `invoicePrinted`          tinyint(1)              DEFAULT 0,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`invoiceId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`addressId`) REFERENCES `address` (`addressId`) ON UPDATE CASCADE ON DELETE RESTRICT,
@@ -741,6 +738,8 @@ CREATE TABLE `invoiceRecords` (
   `invoiceRecordId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `invoiceId`               int(10) unsigned        NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`invoiceRecordId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`invoiceId`) REFERENCES `invoices` (`invoiceId`) ON UPDATE CASCADE ON DELETE RESTRICT
