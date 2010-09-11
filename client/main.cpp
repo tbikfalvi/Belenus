@@ -7,7 +7,7 @@
 // Filename    : main.cpp
 // AppVersion  : 1.0
 // FileVersion : 1.0
-// Author      : Ballok Peter, Bikfalvi Tamas
+// Author      : Ballok Peter, Bikfalvi Tamas, Kovacs Gabor
 //
 //====================================================================================
 // Alkalmazas fo allomanya.
@@ -67,7 +67,7 @@ int main( int argc, char *argv[] )
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
-    g_poPrefs->setVersion( "1.0.0" );
+    g_poPrefs->setVersion( "1.0.2" );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 
