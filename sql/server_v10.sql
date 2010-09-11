@@ -18,7 +18,49 @@
 USE `BelenusDB`;
 
 -- -----------------------------------------------------------------------------------
--- Tablak letrehozasa
+-- Tablak torlese
+-- -----------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ledgerDevice`;
+DROP TABLE IF EXISTS `ledger`;
+DROP TABLE IF EXISTS `paymentMethods`;
+DROP TABLE IF EXISTS `cassaDenominations`;
+DROP TABLE IF EXISTS `cassaHistory`;
+DROP TABLE IF EXISTS `cassa`;
+DROP TABLE IF EXISTS `address`;
+DROP TABLE IF EXISTS `zipRegionCity`;
+DROP TABLE IF EXISTS `discounts`;
+DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `productTypes`;
+DROP TABLE IF EXISTS `ledgerTypes`;
+DROP TABLE IF EXISTS `denominations`;
+DROP TABLE IF EXISTS `attendanceSchedule`;
+DROP TABLE IF EXISTS `panelUses`;
+DROP TABLE IF EXISTS `panels`;
+DROP TABLE IF EXISTS `panelStatuses`;
+DROP TABLE IF EXISTS `panelTypes`;
+DROP TABLE IF EXISTS `patientCardHistories`;
+DROP TABLE IF EXISTS `connectPatientWithCard`;
+DROP TABLE IF EXISTS `patientCards`;
+DROP TABLE IF EXISTS `patientCardTypes`;
+DROP TABLE IF EXISTS `attendance`;
+DROP TABLE IF EXISTS `patients`;
+DROP TABLE IF EXISTS `doctorSchedule`;
+DROP TABLE IF EXISTS `doctors`;
+DROP TABLE IF EXISTS `doctorTypes`;
+DROP TABLE IF EXISTS `companies`;
+DROP TABLE IF EXISTS `healthInsurances`;
+DROP TABLE IF EXISTS `publicPlaces`;
+DROP TABLE IF EXISTS `illnessGroups`;
+DROP TABLE IF EXISTS `reasonToVisit`;
+DROP TABLE IF EXISTS `patientOrigin`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `logs`;
+DROP TABLE IF EXISTS `clients`;
+DROP TABLE IF EXISTS `licences`;
+
+-- -----------------------------------------------------------------------------------
+-- Tablak letrehozasa es kezdo tartalommal feltoltese
 -- -----------------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------------
@@ -60,6 +102,16 @@ CREATE TABLE `clients` (
   PRIMARY KEY (`clientId`),
   UNIQUE (`code1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `clients` (`clientId`, `code1`, `code2`, `dateCreated`, `lastLogin`) VALUES
+ (0, 'b5234d73c694e3a1132f748ff1c9e8c7876d70f1', '', '2010-09-01 11:00:00', '2010-09-01 11:00:00');
+UPDATE `clients` SET `clientId`=0 WHERE `clientId`=1;
+ALTER TABLE `clients` auto_increment=1;
+
+INSERT INTO `clients` (`clientId`, `code1`, `code2`, `dateCreated`, `lastLogin`) VALUES
+ (1, '873ad9accf298d60c235650389bfb6de692ae280', '', '2010-09-01 11:00:00', '2010-09-01 11:00:00');
 
 -- -----------------------------------------------------------------------------------
 -- Log tabla. A program mukodese soran keletkezo log-okat tartalmazza.
@@ -256,10 +308,10 @@ INSERT INTO  `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `arch
 UPDATE `doctorTypes` SET `doctorTypeId`=0 WHERE `doctorTypeId`=1;
 ALTER TABLE `doctorTypes` auto_increment=1;
 
-INSERT INTO `belenus`.`doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, '0', 'Orvos', '1', 'ARC');
- (2, '0', 'Gyógyszerész', '1', 'ARC');
- (3, '0', 'Gyógytornász', '1', 'ARC');
+INSERT INTO `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, '0', 'Orvos', '1', 'ARC'),
+ (2, '0', 'Gyógyszerész', '1', 'ARC'),
+ (3, '0', 'Gyógytornász', '1', 'ARC'),
  (4, '0', 'Védõnõ', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
