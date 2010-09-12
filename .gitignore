@@ -413,4 +413,10 @@ viewer/moc_dlgpreview.cpp
 viewer/moc_dlgpreview.o
 viewer/ui_dlgpreview.h
 server/FileWriter.o
-
+BelenusConverter-build-desktop/
+BelenusServer-build-desktop/
+BelenusServerAdmin-build-desktop/
+belenus-build-desktop/
+converter/BelenusImport-build-desktop/
+converter/BelenusImport.exe
+converter/BelenusImport.pro.user
