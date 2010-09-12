@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
-    <height>504</height>
+    <width>450</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -107,7 +107,41 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDateEdit" name="deValidDate"/>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QDateEdit" name="deValidDateFrom">
+            <property name="displayFormat">
+             <string>yyyy/MM/dd</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblFromTo">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>500</height>
+             </size>
+            </property>
+            <property name="text">
+             <string> -&gt; </string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="deValidDateTo">
+            <property name="displayFormat">
+             <string>yyyy/MM/dd</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="lblComment">
@@ -128,6 +162,9 @@
         <string> Using ... </string>
        </property>
        <layout class="QFormLayout" name="formLayout_3">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="lblNoUnits">
           <property name="text">

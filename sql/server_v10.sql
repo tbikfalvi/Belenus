@@ -477,7 +477,8 @@ CREATE TABLE `patientCards` (
   `comment`                 varchar(50)             DEFAULT NULL,
   `units`                   int(11)                 NOT NULL,
   `timeLeft`                int(10) unsigned        NOT NULL,
-  `validDate`               date                    NOT NULL,
+  `validDateFrom`           date                    NOT NULL,
+  `validDateTo`             date                    NOT NULL,
   `pincode`                 varchar(5)              DEFAULT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -489,8 +490,8 @@ CREATE TABLE `patientCards` (
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES
- (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', NULL, 0, 'ARC');
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
 UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
 

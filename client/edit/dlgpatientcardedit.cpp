@@ -39,7 +39,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     {
         ledUnits->setEnabled( false );
         teTimeLeft->setEnabled( false );
-        deValidDate->setEnabled( false );
+        deValidDateFrom->setEnabled( false );
+        deValidDateTo->setEnabled( false );
     }
 
     if( m_poPatientCard )
@@ -64,7 +65,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         cbActive->setChecked( m_poPatientCard->active() );
         ledUnits->setText( QString::number(m_poPatientCard->units()) );
         teTimeLeft->setTime( QTime( m_poPatientCard->timeLeft()/3600, (m_poPatientCard->timeLeft()%3600)/60, (m_poPatientCard->timeLeft()%3600)%60, 0 ) );
-        deValidDate->setDate( QDate::fromString(m_poPatientCard->validDate(),"yyyy-MM-dd") );
+        deValidDateFrom->setDate( QDate::fromString(m_poPatientCard->validDateFrom(),"yyyy-MM-dd") );
+        deValidDateTo->setDate( QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );
 
         if( m_poPatientCard->licenceId() == 0 && m_poPatientCard->id() > 0 )
@@ -190,7 +192,9 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 boSkipErrorMessages = true;
             }
         }
-        if( deValidDate->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) && !boSkipErrorMessages )
+        if( (deValidDateFrom->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) ||
+             deValidDateFrom->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday)) &&
+            !boSkipErrorMessages )
         {
             boCanBeSaved = false;
             if( QMessageBox::critical( this, tr( "Error" ), tr( "Incorrect validation date.\n\nIf you want to reset the date of validation\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
@@ -213,7 +217,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
             m_poPatientCard->setTimeLeftStr( teTimeLeft->time().toString("hh:mm:ss") );
-            m_poPatientCard->setValidDate( deValidDate->date().toString("yyyy-MM-dd") );
+            m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
+            m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setComment( pteComment->toPlainText() );
 
             if( checkIndependent->isChecked() )
@@ -313,11 +318,13 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         }
         if( m_poPatientCardType->validDays() > 0 )
         {
-            deValidDate->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
+            deValidDateFrom->setDate( QDate::currentDate() );
+            deValidDateTo->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
         }
         else
         {
-            deValidDate->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
+            deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
+            deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
     }
     else if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
@@ -330,11 +337,13 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         teTimeLeft->setTime( QTime(m_poPatientCardType->units()*m_poPatientCardType->unitTime()/60,m_poPatientCardType->units()*m_poPatientCardType->unitTime()%60,0,0) );
         if( m_poPatientCardType->validDays() > 0 )
         {
-            deValidDate->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
+            deValidDateFrom->setDate( QDate::currentDate() );
+            deValidDateTo->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
         }
         else
         {
-            deValidDate->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
+            deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
+            deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
         int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
         ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );

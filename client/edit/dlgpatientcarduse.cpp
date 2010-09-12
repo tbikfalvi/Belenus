@@ -44,7 +44,8 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
         cbActive->setChecked( m_poPatientCard->active() );
         ledUnits->setText( QString::number(m_poPatientCard->units()) );
         teTimeLeft->setTime( QTime( m_poPatientCard->timeLeft()/3600, (m_poPatientCard->timeLeft()%3600)/60, (m_poPatientCard->timeLeft()%3600)%60, 0 ) );
-        deValidDate->setDate( QDate::fromString(m_poPatientCard->validDate(),"yyyy-MM-dd") );
+        deValidDateFrom->setDate( QDate::fromString(m_poPatientCard->validDateFrom(),"yyyy-MM-dd") );
+        deValidDateTo->setDate( QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );
         teTimeUse->setMaximumTime( QTime( m_poPatientCard->timeLeft()/3600, (m_poPatientCard->timeLeft()%3600)/60, (m_poPatientCard->timeLeft()%3600)%60, 0 ) );
     }

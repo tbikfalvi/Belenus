@@ -35,8 +35,10 @@ public:
     void            setTimeLeft( const unsigned int p_uiTimeLeft )              throw();
     QString         timeLeftStr() const                                         throw();
     void            setTimeLeftStr( const QString &p_qsTimeLeft )               throw();
-    QString         validDate() const                                           throw();
-    void            setValidDate( const QString &p_qsValidDate )                throw();
+    QString         validDateFrom() const                                       throw();
+    void            setValidDateFrom( const QString &p_qsValidDateFrom )        throw();
+    QString         validDateTo() const                                         throw();
+    void            setValidDateTo( const QString &p_qsValidDateTo )            throw();
     QString         pincode() const                                             throw();
     void            setPincode( const QString &p_qsPincode )                    throw();
     bool            active() const                                              throw();
@@ -53,7 +55,8 @@ private:
     QString         m_qsComment;
     int             m_nUnits;
     unsigned int    m_uiTimeLeft;
-    QString         m_qsValidDate;
+    QString         m_qsValidDateFrom;
+    QString         m_qsValidDateTo;
     QString         m_qsPincode;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -66,9 +69,10 @@ private:
                const QString p_qsComment = "",
                const int p_nUnits = 0,
                const unsigned int p_uiTimeLeft = 0,
-               const QString p_qsValidDate = "",
+               const QString p_qsValidDateFrom = "0000-00-00",
+               const QString p_qsValidDateTo = "0000-00-00",
                const QString p_qsPincode = "",
-               const bool p_bActive = false,
+               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                             throw();
     void init( const QSqlRecord &p_obRecord )                                   throw();
 };
