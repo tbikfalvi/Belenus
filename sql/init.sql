@@ -45,7 +45,7 @@ INSERT INTO `activateCommand` (`activateCommandId`, `name`) VALUES
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
 ALTER TABLE `patientOrigin` auto_increment=1;
 
@@ -60,7 +60,7 @@ INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
 ALTER TABLE `reasonToVisit` auto_increment=1;
 
@@ -71,14 +71,14 @@ INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `illnessGroups` (`illnessGroupId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `illnessGroups` SET `illnessGroupId`=0 WHERE `illnessGroupId`=1;
 ALTER TABLE `illnessGroups` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO  `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `publicPlaces` SET `publicPlaceId`=0 WHERE `publicPlaceId`=1;
 ALTER TABLE `publicPlaces` auto_increment=1;
 INSERT INTO `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
@@ -92,34 +92,34 @@ INSERT INTO `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `arc
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO  `healthInsurances` (`healthInsuranceId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `healthInsurances` SET `healthInsuranceId`=0 WHERE `healthInsuranceId`=1;
 ALTER TABLE `healthInsurances` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO  `companies` (`companyId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `companies` SET `companyId`=0 WHERE `companyId`=1;
 ALTER TABLE `companies` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO  `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, '', 0, 'ARC');
 UPDATE `doctorTypes` SET `doctorTypeId`=0 WHERE `doctorTypeId`=1;
 ALTER TABLE `doctorTypes` auto_increment=1;
 
 INSERT INTO `belenus`.`doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, '0', 'Orvos', '1', 'ARC');
- (2, '0', 'Gyógyszerész', '1', 'ARC');
- (3, '0', 'Gyógytornász', '1', 'ARC');
+ (1, '0', 'Orvos', '1', 'ARC'),
+ (2, '0', 'Gyógyszerész', '1', 'ARC'),
+ (3, '0', 'Gyógytornász', '1', 'ARC'),
  (4, '0', 'Védõnõ', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO  `doctors` (`doctorId`, `licenceId`, `doctorTypeId`, `name`, `active`, `archive`) VALUES
- (0, 0, 0, '<Nincs megadva>', 1, 'ARC');
+ (0, 0, 0, '', 0, 'ARC');
 UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
 ALTER TABLE `doctors` auto_increment=1;
 
@@ -182,7 +182,7 @@ ALTER TABLE `panels` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `active`, `archive`) VALUES
-  ('0', '0', '', '0', '0', '1', 'ARC');
+  ('0', '0', '', '0', '0', '0', 'ARC');
 UPDATE `panelUses` SET `panelUseId`='0' WHERE `panelUseId`=1;
 ALTER TABLE `panelUses` auto_increment=1;
 
@@ -221,7 +221,7 @@ ALTER TABLE `productTypes` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '0', '0', '1', 'ARC');
+ ('0', '0', '0', '', '0', '0', '0', 'ARC');
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
 
