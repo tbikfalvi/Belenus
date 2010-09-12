@@ -105,8 +105,15 @@ ALTER TABLE `companies` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO  `doctors` (`doctorId`, `licenceId`, `name`, `active`, `archive`) VALUES
+INSERT INTO  `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
  (0, 0, '<Nincs megadva>', 1, 'ARC');
+UPDATE `doctorTypes` SET `doctorTypeId`=0 WHERE `doctorTypeId`=1;
+ALTER TABLE `doctorTypes` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `doctors` (`doctorId`, `licenceId`, `doctorTypeId`, `name`, `active`, `archive`) VALUES
+ (0, 0, 0, '<Nincs megadva>', 1, 'ARC');
 UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
 ALTER TABLE `doctors` auto_increment=1;
 

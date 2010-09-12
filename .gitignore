@@ -390,4 +390,10 @@ server/moc_serverthread.o
 server/sigc.o
 BelenusServer.ini
 BelenusServerAdmin.ini
-
+BelenusConverter-build-desktop/
+BelenusServer-build-desktop/
+BelenusServerAdmin-build-desktop/
+belenus-build-desktop/
+converter/BelenusImport-build-desktop/
+converter/BelenusImport.exe
+converter/BelenusImport.pro.user
