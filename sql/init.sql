@@ -142,8 +142,8 @@ INSERT INTO `patientCardTypes` (`licenceId`, `name`, `price`, `vatpercent`, `uni
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES
- (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', NULL, 0, 'ARC');
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
 UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
 

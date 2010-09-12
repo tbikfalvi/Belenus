@@ -73,7 +73,8 @@ public:
 private:
     Ui::cDlgMain *ui;
 
-    QString     m_qsDbPath;
+    QString     m_qsDATPath;
+    QString     m_qsSQLPath;
     QString     m_qsAppPath;
     QString     m_qsFullName;
 

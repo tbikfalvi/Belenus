@@ -24,7 +24,8 @@ cDlgMain::cDlgMain(QWidget *parent) :
 
     m_qsAppPath = QDir::currentPath();
 
-    ledPath->setText( m_qsAppPath );
+    ledImportPath->setText( m_qsAppPath );
+    ledExportPath->setText( m_qsAppPath );
 
     pbImportPatientCardTypes->setEnabled( false );
     pbImportPatientCards->setEnabled( false );
@@ -56,7 +57,7 @@ bool cDlgMain::checkFile( QString p_qsFileName )
     QFile   *obQFTemp = NULL;
     bool     bRet = false;
 
-    m_qsFullName = m_qsDbPath + (!m_qsDbPath.right(1).compare("\\")?QString(""):QString("\\")) + p_qsFileName;
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + p_qsFileName;
     obQFTemp = new QFile( m_qsFullName );
     if( obQFTemp->exists() )
     {
@@ -77,26 +78,13 @@ void cDlgMain::on_pbCheckFiles_clicked()
 {
     listLog->clear();
 
-    m_qsDbPath = ledPath->text();
-    m_qsDbPath = m_qsDbPath.replace( "/", "\\" );
+    m_qsDATPath = ledImportPath->text();
+    m_qsDATPath = m_qsDATPath.replace( "/", "\\" );
 
-    if( QDir::setCurrent( m_qsDbPath ) )
+    if( QDir::setCurrent( m_qsDATPath ) )
     {
         QDir::setCurrent( m_qsAppPath );
-
         listLog->addItem( tr( "Path of the DAT files checked." ) );
-
-        listLog->addItem( tr("Checking files") );
-
-        if( checkFile( "brlttpsfsv.dat" ) )
-            pbImportPatientCardTypes->setEnabled( true );
-        else
-            pbImportPatientCardTypes->setEnabled( false );
-
-        if( checkFile( "brltfsv.dat") )
-            pbImportPatientCards->setEnabled( true );
-        else
-            pbImportPatientCards->setEnabled( false );
     }
     else
     {
@@ -105,8 +93,56 @@ void cDlgMain::on_pbCheckFiles_clicked()
                               tr("The defined path of the DAT files is\n"
                                  "invalid or not exists.\n"
                                  "Please check the defined path.") );
-        ledPath->setFocus();
+        ledImportPath->setFocus();
+        return;
     }
+
+    m_qsSQLPath = ledExportPath->text();
+    m_qsSQLPath = m_qsSQLPath.replace( "/", "\\" );
+
+    if( QDir::setCurrent( m_qsSQLPath ) )
+    {
+        QDir::setCurrent( m_qsAppPath );
+        listLog->addItem( tr( "Path of the SQL files checked." ) );
+    }
+    else
+    {
+        listLog->addItem( tr( "Invalid path defined for SQL files." ) );
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The defined path of the SQL files is\n"
+                                 "invalid or not exists.\n"
+                                 "Please check the defined path.") );
+        ledExportPath->setFocus();
+        return;
+    }
+
+    bool    bIsPCTOK    = checkFile( "brlttpsfsv.dat" );
+    bool    bIsPCOK     = checkFile( "brltfsv.dat");
+    bool    bIsOk       = false;
+
+    if( !bIsPCTOK && !bIsPCOK )
+        return;
+
+    ledLicenceId->text().toInt( &bIsOk );
+    if( !bIsOk )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The defined LicenceId is invalid.\n"
+                                 "Please use only numerical characters.") );
+        listLog->addItem( tr("LicenceId is invalid.") );
+        ledLicenceId->setFocus();
+        return;
+    }
+
+    if( bIsPCTOK )
+        pbImportPatientCardTypes->setEnabled( true );
+    else
+        pbImportPatientCardTypes->setEnabled( false );
+
+    if( bIsPCOK )
+        pbImportPatientCards->setEnabled( true );
+    else
+        pbImportPatientCards->setEnabled( false );
 }
 
 void cDlgMain::on_pbExit_clicked()
@@ -133,7 +169,7 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
     char           strTemp[10];
     unsigned int   nCount = 0;
 
-    m_qsFullName = m_qsDbPath + (!m_qsDbPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brlttpsfsv.dat" );
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brlttpsfsv.dat" );
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -201,7 +237,9 @@ bool cDlgMain::createPCTFile()
     FILE    *file = NULL;
     bool    bRet = true;
 
-    file = fopen( "patientcardtypes.sql", "wt" );
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcardtypes.sql" );
+
+    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
     fputs( m_qsPatientCardTypes.toStdString().c_str(), file );
     fclose( file );
 
@@ -210,17 +248,6 @@ bool cDlgMain::createPCTFile()
 
 void cDlgMain::on_pbImportPatientCards_clicked()
 {
-    bool    bIsOk = false;
-
-    ledLicenceId->text().toInt( &bIsOk );
-    if( !bIsOk )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("The defined LicenceId is invalid.\n"
-                                 "Please use only numerical characters.") );
-        return;
-    }
-
     m_qsPatientCards.clear();
 
     FILE           *file = NULL;
@@ -228,7 +255,7 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     unsigned int   nCount = 0;
     QString         qsQuery;
 
-    m_qsFullName = m_qsDbPath + (!m_qsDbPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv.dat" );
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv.dat" );
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -285,7 +312,9 @@ bool cDlgMain::createPCFile()
     FILE    *file = NULL;
     bool    bRet = true;
 
-    file = fopen( "patientcards.sql", "wt" );
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcards.sql" );
+
+    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
     fputs( m_qsPatientCards.toStdString().c_str(), file );
     fclose( file );
 
