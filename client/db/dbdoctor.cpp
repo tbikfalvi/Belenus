@@ -27,33 +27,37 @@ cDBDoctor::~cDBDoctor()
 
 void cDBDoctor::init( const unsigned int p_uiId,
                       const unsigned int p_uiLicenceId,
+                      const unsigned int p_uiDoctorTypeId,
                       const QString &p_qsName,
                       const QString &p_qsLicence,
                       const QString &p_qsData,
                       const bool p_bActive,
                       const QString &p_qsArchive ) throw()
 {
-    m_uiId          = p_uiId;
-    m_uiLicenceId   = p_uiLicenceId;
-    m_qsName        = p_qsName;
-    m_qsLicence     = p_qsLicence;
-    m_qsData        = p_qsData;
-    m_bActive       = p_bActive;
-    m_qsArchive     = p_qsArchive;
+    m_uiId              = p_uiId;
+    m_uiLicenceId       = p_uiLicenceId;
+    m_uiDoctorTypeId    = p_uiDoctorTypeId;
+    m_qsName            = p_qsName;
+    m_qsLicence         = p_qsLicence;
+    m_qsData            = p_qsData;
+    m_bActive           = p_bActive;
+    m_qsArchive         = p_qsArchive;
 }
 
 void cDBDoctor::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "doctorId" );
-    int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
-    int inNameIdx       = p_obRecord.indexOf( "name" );
-    int inLicenceIdx    = p_obRecord.indexOf( "doctorLicence" );
-    int inDataIdx       = p_obRecord.indexOf( "data" );
-    int inActiveIdx     = p_obRecord.indexOf( "active" );
-    int inArchiveIdx    = p_obRecord.indexOf( "archive" );
+    int inIdIdx             = p_obRecord.indexOf( "doctorId" );
+    int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
+    int inDoctorTypeIdIdx   = p_obRecord.indexOf( "doctorTypeId" );
+    int inNameIdx           = p_obRecord.indexOf( "name" );
+    int inLicenceIdx        = p_obRecord.indexOf( "doctorLicence" );
+    int inDataIdx           = p_obRecord.indexOf( "data" );
+    int inActiveIdx         = p_obRecord.indexOf( "active" );
+    int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
-          p_obRecord.value( inLicenceIdIdx ).toInt(),
+          p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inDoctorTypeIdIdx ).toUInt(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inLicenceIdx ).toString(),
           p_obRecord.value( inDataIdx ).toString(),
@@ -108,6 +112,7 @@ void cDBDoctor::save() throw( cSevException )
     }
     qsQuery += " doctors SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "doctorTypeId = \"%1\", " ).arg( m_uiDoctorTypeId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "doctorLicence = \"%1\", " ).arg( m_qsLicence );
     qsQuery += QString( "data = \"%1\", " ).arg( m_qsData );
@@ -164,6 +169,16 @@ unsigned int cDBDoctor::licenceId() const throw()
 void cDBDoctor::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBDoctor::doctorTypeId() const throw()
+{
+    return m_uiDoctorTypeId;
+}
+
+void cDBDoctor::setDoctorTypeId( const unsigned int p_uiDoctorTypeId ) throw()
+{
+    m_uiDoctorTypeId = p_uiDoctorTypeId;
 }
 
 QString cDBDoctor::name() const throw()

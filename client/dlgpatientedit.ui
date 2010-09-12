@@ -317,6 +317,9 @@
             <item row="2" column="1">
              <layout class="QHBoxLayout" name="horizontalLayout_17">
               <item>
+               <widget class="QComboBox" name="cmbDoctorType"/>
+              </item>
+              <item>
                <widget class="QComboBox" name="cmbDoctor"/>
               </item>
               <item>
