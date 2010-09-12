@@ -52,13 +52,13 @@ typedef struct _typ_berlet
 //====================================================================================
 typedef struct _typ_user
 {
-   DWORD    dID;
-   char     strAzonosito[20];
-   char     strLoginNev[20];
-   char     strNevCsalad[100];
-   char     strJelszo[20];
-   char     strMegjegyzes[1000];
-   int      nUserLevel;
+   unsigned int     dID;
+   char             strAzonosito[20];
+   char             strLoginNev[20];
+   char             strNevCsalad[100];
+   char             strJelszo[20];
+   char             strMegjegyzes[1000];
+   int              nUserLevel;
 } typ_user;
 
 //====================================================================================
@@ -71,8 +71,6 @@ public:
     ~cDlgMain();
 
 private:
-    Ui::cDlgMain *ui;
-
     QString     m_qsDATPath;
     QString     m_qsSQLPath;
     QString     m_qsAppPath;
@@ -80,6 +78,7 @@ private:
 
     QString     m_qsPatientCardTypes;
     QString     m_qsPatientCards;
+    QString     m_qsUsers;
 
     void        EnCode( char *str, int size );
     void        DeCode( char *str, int size );
@@ -88,6 +87,7 @@ private:
     bool        createPCFile();
 
 private slots:
+    void on_pbImportUsers_clicked();
     void on_pbExportDatabase_clicked();
     void on_pbImportPatientCards_clicked();
     void on_pbImportPatientCardTypes_clicked();

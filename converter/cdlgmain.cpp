@@ -20,6 +20,7 @@ cDlgMain::cDlgMain(QWidget *parent) :
     pbCheckFiles->setIcon( QIcon("./check.png") );
     pbImportPatientCardTypes->setIcon( QIcon("./patientcards.png") );
     pbImportPatientCards->setIcon( QIcon("./patientcard.png") );
+    pbImportUsers->setIcon( QIcon("./user.png") );
     pbExit->setIcon( QIcon("./exit.png") );
 
     m_qsAppPath = QDir::currentPath();
@@ -29,11 +30,11 @@ cDlgMain::cDlgMain(QWidget *parent) :
 
     pbImportPatientCardTypes->setEnabled( false );
     pbImportPatientCards->setEnabled( false );
+    pbImportUsers->setEnabled( false );
 }
 
 cDlgMain::~cDlgMain()
 {
-    delete ui;
 }
 
 void cDlgMain::EnCode( char *str, int size )
@@ -284,7 +285,7 @@ void cDlgMain::on_pbImportPatientCards_clicked()
 
                 QDate   qdDate( stTemp.nErvEv, stTemp.nErvHo, stTemp.nErvNap );
 
-                m_qsPatientCards += "INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES";
+                m_qsPatientCards += QString( "INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES" );
                 m_qsPatientCards += QString( " ( " );
                 m_qsPatientCards += QString( "NULL, " );
                 m_qsPatientCards += QString( "\'%1\', " ).arg( ledLicenceId->text().toInt() );
@@ -303,7 +304,7 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     }
     else
     {
-        listLog->addItem( QString( "HIBA: Nem sikerült megnyitni: brltfsv.dat\n" ) );
+        listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
     }
 }
 
@@ -321,6 +322,63 @@ bool cDlgMain::createPCFile()
     return bRet;
 }
 
+void cDlgMain::on_pbImportUsers_clicked()
+{
+    m_qsUsers.clear();
+
+    FILE           *file = NULL;
+    char           strTemp[10];
+    unsigned int   nCount = 0;
+    QString         qsQuery;
+
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "srfsv.dat" );
+
+    file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( strTemp, 0, sizeof(strTemp) );
+        fread( strTemp, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        listLog->addItem( tr("Count of users to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_user   stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.dID, 4, 1, file );
+                fread( stTemp.strAzonosito, 20, 1, file );
+                fread( stTemp.strLoginNev, 20, 1, file );
+                fread( stTemp.strNevCsalad, 100, 1, file );
+                fread( stTemp.strJelszo, 20, 1, file );
+                fread( stTemp.strMegjegyzes, 1000, 1, file );
+                fread( &stTemp.nUserLevel, 4, 1, file );
+                DeCode( stTemp.strAzonosito, sizeof(stTemp.strAzonosito) );
+                DeCode( stTemp.strLoginNev, sizeof(stTemp.strLoginNev) );
+                DeCode( stTemp.strNevCsalad, sizeof(stTemp.strNevCsalad) );
+                DeCode( stTemp.strJelszo, sizeof(stTemp.strJelszo) );
+                DeCode( stTemp.strMegjegyzes, sizeof(stTemp.strMegjegyzes) );
+
+                m_qsUsers += QString( "INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `comment`, `active`, `archive`) VALUES" );
+                m_qsUsers += QString( " ( " );
+                m_qsUsers += QString( "\'%1\', " ).arg( ledLicenceId->text().toInt() );
+                m_qsUsers += QString( "\"%1\", " ).arg( stTemp.strLoginNev );
+                m_qsUsers += QString( "\"%1\", " ).arg( stTemp.strNevCsalad );
+                m_qsUsers += QString( "\"%1\", " ).arg( stTemp.strJelszo );
+                m_qsUsers += QString( "\'%1\', " ).arg( (stTemp.nUserLevel==3?1:2) );
+                m_qsUsers += QString( "\"%1\", " ).arg( stTemp.strMegjegyzes );
+                m_qsUsers += QString( "\'1\', \"NEW\" ); \n" );
+            }
+        }
+        fclose( file );
+        listLog->addItem( tr("Importing users finished.") );
+    }
+    else
+    {
+        listLog->addItem( tr( "Error occured during opening srfsv.dat file." ) );
+    }
+}
 
 void cDlgMain::on_pbExportDatabase_clicked()
 {

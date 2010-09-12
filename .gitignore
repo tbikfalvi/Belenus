@@ -420,3 +420,12 @@ belenus-build-desktop/
 converter/BelenusImport-build-desktop/
 converter/BelenusImport.exe
 converter/BelenusImport.pro.user
+BelenusImport
+converter/Makefile
+converter/cdlgmain.o
+converter/main.o
+converter/moc_cdlgmain.cpp
+converter/moc_cdlgmain.o
+converter/ui_cdlgmain.h
+*.log
+
