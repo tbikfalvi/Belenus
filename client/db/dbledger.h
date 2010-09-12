@@ -26,6 +26,8 @@ public:
     void            setProductId( const unsigned int p_nProductId )                 throw();
     unsigned int    patientCardTypeId() const                                       throw();
     void            setPatientCardTypeId( const unsigned int p_nPatientCardTypeId ) throw();
+    unsigned int    patientCardId() const                                           throw();
+    void            setPatientCardId( const unsigned int p_nPatientCardId )         throw();
     unsigned int    panelId() const                                                 throw();
     void            setPanelId( const unsigned int p_nPanelId )                     throw();
     QString         name() const                                                    throw();
@@ -50,6 +52,7 @@ private:
     unsigned int    m_uiUserId;
     unsigned int    m_uiProductId;
     unsigned int    m_uiPatientCardTypeId;
+    unsigned int    m_uiPatientCardId;
     unsigned int    m_uiPanelId;
     QString         m_qsName;
     int             m_nNetPrice;
@@ -65,6 +68,7 @@ private:
                const unsigned int p_uiUserId = 0,
                const unsigned int p_uiProductId = 0,
                const unsigned int p_uiPatientCardTypeId = 0,
+               const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiPanelId = 0,
                const QString &p_qsName = "",
                const int p_nNetPrice = 0,

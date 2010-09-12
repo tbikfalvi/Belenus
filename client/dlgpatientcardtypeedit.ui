@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
+    <width>525</width>
     <height>319</height>
    </rect>
   </property>
@@ -103,7 +103,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QDateEdit" name="deValidDateFrom"/>
+           <widget class="QDateEdit" name="deValidDateFrom">
+            <property name="displayFormat">
+             <string>yyyy/MM/dd</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblFromTo">
@@ -119,7 +126,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QDateEdit" name="deValidDateTo"/>
+           <widget class="QDateEdit" name="deValidDateTo">
+            <property name="displayFormat">
+             <string>yyyy/MM/dd</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

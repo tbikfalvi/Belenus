@@ -48,14 +48,16 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         QSqlQuery *poQuery;
 
         ledBarcode->setText( m_poPatientCard->barcode() );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" ) );
+        cmbCardType->addItem( tr("<Not selected>"), 0 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
             if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE archive<>\"DEL\"" ) );
+        cmbPatient->addItem( tr("<Not selected>"), 0 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
             cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
@@ -260,6 +262,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDBLedger.setUserId( g_obUser.id() );
                     obDBLedger.setProductId( 0 );
                     obDBLedger.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
+                    obDBLedger.setPatientCardId( m_poPatientCard->id() );
                     obDBLedger.setPanelId( 0 );
                     obDBLedger.setName( m_poPatientCard->barcode() );
                     obDBLedger.setNetPrice( m_poPatientCardType->price() );

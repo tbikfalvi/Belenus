@@ -31,6 +31,7 @@ void cDBLedger::init( const unsigned int p_uiId,
                       const unsigned int p_uiUserId,
                       const unsigned int p_uiProductId,
                       const unsigned int p_uiPatientCardTypeId,
+                      const unsigned int p_uiPatientCardId,
                       const unsigned int p_uiPanelId,
                       const QString &p_qsName,
                       const int p_nNetPrice,
@@ -46,6 +47,7 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_uiUserId              = p_uiUserId;
     m_uiProductId           = p_uiProductId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiPatientCardId       = p_uiPatientCardId;
     m_uiPanelId             = p_uiPanelId;
     m_qsName                = p_qsName;
     m_nNetPrice             = p_nNetPrice;
@@ -64,6 +66,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     int inUserIdIdx             = p_obRecord.indexOf( "userId" );
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inNetPriceIdx           = p_obRecord.indexOf( "netPrice" );
@@ -79,6 +82,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
+          p_obRecord.value( inPatientCardIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inNetPriceIdx ).toInt(),
@@ -127,6 +131,7 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "netPrice = \"%1\", " ).arg( m_nNetPrice );
@@ -225,6 +230,16 @@ unsigned int cDBLedger::patientCardTypeId() const throw()
 void cDBLedger::setPatientCardTypeId( const unsigned int p_nPatientCardTypeId ) throw()
 {
     m_uiPatientCardTypeId = p_nPatientCardTypeId;
+}
+
+unsigned int cDBLedger::patientCardId() const throw()
+{
+    return m_uiPatientCardId;
+}
+
+void cDBLedger::setPatientCardId( const unsigned int p_nPatientCardId ) throw()
+{
+    m_uiPatientCardId = p_nPatientCardId;
 }
 
 unsigned int cDBLedger::panelId() const throw()

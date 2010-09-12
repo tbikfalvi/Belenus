@@ -1411,6 +1411,7 @@ void cWndMain::on_action_PayCash_triggered()
         obDBLedger.setUserId( g_obUser.id() );
         obDBLedger.setProductId( 0 );
         obDBLedger.setPatientCardTypeId( 0 );
+        obDBLedger.setPatientCardId( 0 );
         obDBLedger.setPanelId( mdiPanels->activePanel()+1 );
         obDBLedger.setName( mdiPanels->getActivePanelCaption() );
         obDBLedger.setNetPrice( inPriceNet );
