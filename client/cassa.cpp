@@ -242,7 +242,7 @@ void cCassa::cassaDecreaseMoney( int p_nMoney, QString p_qsComment )
     obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( g_obUser.id() );
-    obDBCassaHistory.setActionValue( p_nMoney );
+    obDBCassaHistory.setActionValue( -p_nMoney );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( m_qsComment );
     obDBCassaHistory.setActive( true );

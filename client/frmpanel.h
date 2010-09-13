@@ -50,6 +50,7 @@ public:
 
     bool            isWorking() const;
     bool            isStatusCanBeSkipped();
+    bool            isStatusCanBeReseted();
     void            start();
     void            reset();
     void            clear();

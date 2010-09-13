@@ -473,7 +473,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 
         p_poEvent->ignore();
     }
-    else if( p_poEvent->key() == Qt::Key_Escape && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) )
+    else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
     {
         mdiPanels->clear();
 

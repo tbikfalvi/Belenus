@@ -22,6 +22,7 @@
 #include "frmpanel.h"
 #include "db/dbpatientcard.h"
 #include "db/dbpatientcardhistory.h"
+#include "db/dbledger.h"
 
 #include <iostream>
 
@@ -115,6 +116,19 @@ bool cFrmPanel::isStatusCanBeSkipped()
     return bRet;
 }
 //====================================================================================
+bool cFrmPanel::isStatusCanBeReseted()
+{
+    bool bRet = false;
+
+    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 ||
+        m_uiStatus == 0 )
+    {
+        bRet = true;
+    }
+
+    return bRet;
+}
+//====================================================================================
 void cFrmPanel::start()
 {
     if( m_inMainProcessLength == 0 )
@@ -150,7 +164,6 @@ void cFrmPanel::reset()
 //====================================================================================
 void cFrmPanel::clear()
 {
-    m_pDBLedgerDevice->createNew();
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;
@@ -161,9 +174,51 @@ void cFrmPanel::clear()
     m_inCardTimeRemains     = 0;
     if( !m_bHasToPay )
     {
+        if( m_pDBLedgerDevice->cash() > 0 )
+        {
+            int inPriceTotal = m_pDBLedgerDevice->cash();
+            QString qsComment = tr( "Revoking device (%1) usage." ).arg(getPanelName());
+
+            if( QMessageBox::warning( this,
+                                      tr("Question"),
+                                      tr("The device usage has been payed before.\n"
+                                         "Do you want to revoke the payment from the cassa?"),
+                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+            {
+                g_obCassa.cassaDecreaseMoney( inPriceTotal, qsComment );
+            }
+
+            int inPriceNet = (inPriceTotal / (100 + g_poPrefs->getDeviceUseVAT()))*100;
+
+            cDBLedger   obDBLedger;
+
+            obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBLedger.setLedgerTypeId( 1 );
+            obDBLedger.setUserId( g_obUser.id() );
+            obDBLedger.setProductId( 0 );
+            obDBLedger.setPatientCardTypeId( 0 );
+            obDBLedger.setPatientCardId( 0 );
+            obDBLedger.setPanelId( m_uiId );
+            obDBLedger.setName( getPanelName() );
+            obDBLedger.setNetPrice( -inPriceNet );
+            obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
+            obDBLedger.setComment( qsComment );
+            obDBLedger.setActive( true );
+            obDBLedger.save();
+        }
         m_inCashToPay = 0;
         m_uiPatientToPay = 0;
     }
+    m_pDBLedgerDevice->createNew();
+
+    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 )
+    {
+        m_uiStatus  = 0;
+        m_uiCounter = 0;
+        killTimer( m_inTimerId );
+        g_poHardware->setCurrentCommand( m_uiId-1, 0 );
+    }
+
     displayStatus();
 }
 //====================================================================================

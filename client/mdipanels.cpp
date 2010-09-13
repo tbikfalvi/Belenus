@@ -205,6 +205,11 @@ bool cMdiPanels::isStatusCanBeSkipped( const unsigned int p_uiPanel )
     return m_obPanels.at( p_uiPanel )->isStatusCanBeSkipped();
 }
 
+bool cMdiPanels::isStatusCanBeReseted()
+{
+    return m_obPanels.at( m_uiActivePanel )->isStatusCanBeReseted();
+}
+
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
     m_obPanels.at( m_uiActivePanel )->inactivate();

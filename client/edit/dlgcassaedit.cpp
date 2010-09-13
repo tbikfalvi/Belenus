@@ -103,11 +103,11 @@ void cDlgCassaEdit::refreshTable()
 {
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString( "SELECT cassadenominations.denominationId, cassadenominations.licenceId, denominations.denomination, cassadenominations.value, denominations.comment, cassadenominations.archive FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaDenominations.denominationId, cassaDenominations.licenceId, denominations.denomination, cassaDenominations.value, denominations.comment, cassaDenominations.archive FROM cassaDenominations, denominations WHERE denominations.denominationId=cassaDenominations.denominationId AND cassaDenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
     }
     else
     {
-        m_qsQuery = QString( "SELECT cassadenominations.denominationId as id, denominations.denomination, cassadenominations.value, denominations.comment FROM cassadenominations, denominations WHERE denominations.denominationId=cassadenominations.denominationId AND cassadenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaDenominations.denominationId as id, denominations.denomination, cassaDenominations.value, denominations.comment FROM cassaDenominations, denominations WHERE denominations.denominationId=cassaDenominations.denominationId AND cassaDenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
     }
 
     tbvCassa->selectionModel()->blockSignals( true );
