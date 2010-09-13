@@ -1206,7 +1206,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                         }
                     }
                 }
-                cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard );
+                cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );
 
                 if( obDlgPatientCardUse.exec() == QDialog::Accepted )
                 {

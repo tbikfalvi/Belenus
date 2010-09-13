@@ -5,7 +5,7 @@
 #include "dlgpatientcarduse.h"
 #include "../db/dbpatientcardtype.h"
 
-cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_poPatientCard )
+cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_poPatientCard, unsigned int p_uiPanelId )
     : QDialog( p_poParent )
 {
     setupUi( this );
@@ -47,7 +47,17 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCard->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );
-        teTimeUse->setMaximumTime( QTime( m_poPatientCard->timeLeft()/3600, (m_poPatientCard->timeLeft()%3600)/60, (m_poPatientCard->timeLeft()%3600)%60, 0 ) );
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT name, useTime FROM panelUses WHERE active=1 AND archive<>\"DEL\" AND panelId=%1 ORDER BY useTime" ).arg(p_uiPanelId) );
+        cmbTimeUse->addItem( tr("%1 sec").arg(m_inUnitLength), m_inUnitLength );
+        while( poQuery->next() )
+        {
+            if( poQuery->value(1).toInt() != m_inUnitLength &&
+                poQuery->value(1).toUInt()*60 <= m_poPatientCard->timeLeft() )
+            {
+                cmbTimeUse->addItem( tr("%1 sec").arg(poQuery->value(1).toString()), poQuery->value(1) );
+            }
+        }
     }
     else
     {
@@ -68,6 +78,15 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
                                  "Please refill the patientcard before use."));
         pbSave->setEnabled( false );
     }
+    else if( QDate::currentDate() < deValidDateFrom->date() ||
+             QDate::currentDate() > deValidDateTo->date() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("This patientcard can not be used today.\n"
+                                 "Please check it's validation date."));
+        pbSave->setEnabled( false );
+        cmbTimeUse->setEnabled( false );
+    }
 }
 
 cDlgPatientCardUse::~cDlgPatientCardUse()
@@ -83,7 +102,6 @@ void cDlgPatientCardUse::getUseUnitsTime( int *p_inUnitsUse, QString *p_qsTimeUs
 
 void cDlgPatientCardUse::on_pbSave_clicked()
 {
-    m_qsTimeUse     = teTimeUse->time().toString("mm:ss");
 
     QDialog::accept();
 }
@@ -95,6 +113,23 @@ void cDlgPatientCardUse::on_pbCancel_clicked()
 
 void cDlgPatientCardUse::on_cmbNoUnits_currentIndexChanged(int index)
 {
-    teTimeUse->setTime( QTime( 0, cmbNoUnits->itemData(index).toInt(), 0, 0 ) );
+    //teTimeUse->setTime( QTime( 0, cmbNoUnits->itemData(index).toInt(), 0, 0 ) );
     m_inUnitsUse = cmbNoUnits->itemText(index).toInt();
+}
+
+void cDlgPatientCardUse::on_cmbTimeUse_currentIndexChanged(int)
+{
+    if( cmbTimeUse->itemData(cmbTimeUse->currentIndex()).toUInt()*60 > m_poPatientCard->timeLeft() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("This patientcard has less time to use.\n"
+                                 "Please select another time interval or\n"
+                                 "refill the patientcard before use."));
+        pbSave->setEnabled( false );
+    }
+    else
+    {
+        pbSave->setEnabled( true );
+    }
+    m_qsTimeUse = QTime(0,cmbTimeUse->itemData(cmbTimeUse->currentIndex()).toInt(),0,0).toString("mm:ss");
 }
