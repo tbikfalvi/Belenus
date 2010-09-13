@@ -24,6 +24,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
 
     setupUi( this );
 
+    m_bInit = true;
+
     setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
@@ -120,6 +122,7 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         chkCompany->setChecked( m_poPatient->company() );
         FillCompanyCombo();
         chkDoctorProposed->setChecked( m_poPatient->doctorProposed() );
+        FillDoctorTypeCombo();
         FillDoctorCombo();
 
         ledHeight->setText( QString::number(m_poPatient->height()) );
@@ -202,6 +205,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     }
 
     if( poQuery ) delete poQuery;
+
+    m_bInit = false;
 }
 
 cDlgPatientEdit::~cDlgPatientEdit()
@@ -531,8 +536,30 @@ void cDlgPatientEdit::FillCompanyCombo()
     }
 }
 
-void cDlgPatientEdit::FillDoctorCombo()
+void cDlgPatientEdit::on_cmbDoctorType_currentIndexChanged(int /*index*/)
 {
+    cTracer obTrace( "cDlgPatientEdit::on_cmbDoctorType_currentIndexChanged" );
+
+    if( m_bInit )
+        return;
+
+    FillDoctorCombo();
+
+    if( cmbDoctor->currentIndex() > 0 )
+        chkDoctorProposed->setChecked( true );
+    else
+        chkDoctorProposed->setChecked( false );
+}
+
+void cDlgPatientEdit::on_cmbDoctor_currentIndexChanged( int )
+{
+    cTracer obTrace( "cDlgPatientEdit::on_cmbDoctor_currentIndexChanged" );
+
+    if( !m_bInit && cmbDoctor->count() > 0 )
+        m_poPatient->setDoctorId( cmbDoctor->itemData( cmbDoctor->currentIndex() ).toUInt() );
+
+    g_obLogger(cSeverity::INFO) << "on_cmbDoctor_currentIndexChanged> DoctorId: " << QString::number(m_poPatient->doctorId()) << EOM;
+
     cDBDoctor   obDBDoctor;
 
     obDBDoctor.createNew();
@@ -541,6 +568,15 @@ void cDlgPatientEdit::FillDoctorCombo()
         if( m_poPatient->doctorId() > 0 )
         {
             obDBDoctor.load( m_poPatient->doctorId() );
+
+            for( int i=0; i<cmbDoctorType->count(); i++ )
+            {
+                if( cmbDoctorType->itemData( i ).toUInt() == obDBDoctor.doctorTypeId() )
+                {
+                    cmbDoctorType->setCurrentIndex( i );
+                    break;
+                }
+            }
         }
     }
     catch( cSevException &e )
@@ -551,6 +587,16 @@ void cDlgPatientEdit::FillDoctorCombo()
         }
     }
 
+    if( cmbDoctor->currentIndex() > 0 )
+        chkDoctorProposed->setChecked( true );
+    else
+        chkDoctorProposed->setChecked( false );
+}
+
+void cDlgPatientEdit::FillDoctorTypeCombo()
+{
+    cTracer obTrace( "cDlgPatientEdit::FillDoctorTypeCombo" );
+
     QSqlQuery *poQuery;
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT doctorTypeId, name FROM doctorTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
@@ -559,21 +605,31 @@ void cDlgPatientEdit::FillDoctorCombo()
     while( poQuery->next() )
     {
         cmbDoctorType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-        if( obDBDoctor.doctorTypeId() == poQuery->value( 0 ) )
-            cmbDoctorType->setCurrentIndex( cmbDoctorType->count()-1 );
     }
+}
 
-    QString qsQuery = QString( "SELECT doctorId, doctorLicence FROM doctors WHERE active=1 AND archive<>\"DEL\"" );
+void cDlgPatientEdit::FillDoctorCombo()
+{
+    cTracer obTrace( "cDlgPatientEdit::FillDoctorCombo" );
 
-    if( obDBDoctor.doctorTypeId() > 0 )
+    QSqlQuery   *poQuery;
+    QString      qsQuery = QString( "SELECT doctorId, doctorLicence FROM doctors WHERE active=1 AND archive<>\"DEL\"" );
+
+    if( cmbDoctorType->currentIndex() > 0 )
     {
-        qsQuery += QString( " AND doctorTypeId=%1" ).arg(obDBDoctor.doctorTypeId());
+        qsQuery += QString( " AND doctorTypeId=%1" ).arg(cmbDoctorType->itemData( cmbDoctorType->currentIndex() ).toUInt());
+    }
+    else if( m_poPatient->doctorId() > 0 )
+    {
+        qsQuery += QString( " AND doctorTypeId=(SELECT doctorTypeId FROM doctors WHERE doctorId=%1)" ).arg(m_poPatient->doctorId());
     }
     qsQuery += QString( " ORDER BY doctorLicence" );
 
     poQuery = g_poDB->executeQTQuery( qsQuery );
+    m_bInit = true;
     cmbDoctor->clear();
     cmbDoctor->addItem( tr("<Not selected>"), 0 );
+    m_bInit = false;
     while( poQuery->next() )
     {
         cmbDoctor->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
@@ -596,14 +652,6 @@ void cDlgPatientEdit::on_cmbCompany_currentIndexChanged(int)
         chkCompany->setChecked( true );
     else
         chkCompany->setChecked( false );
-}
-
-void cDlgPatientEdit::on_cmbDoctor_currentIndexChanged(int)
-{
-    if( cmbDoctor->currentIndex() > 0 )
-        chkDoctorProposed->setChecked( true );
-    else
-        chkDoctorProposed->setChecked( false );
 }
 
 void cDlgPatientEdit::on_deDateBirth_dateChanged(QDate)

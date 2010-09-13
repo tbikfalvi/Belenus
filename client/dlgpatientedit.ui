@@ -313,7 +313,7 @@
             <item row="2" column="0">
              <widget class="QCheckBox" name="chkDoctorProposed">
               <property name="text">
-               <string>Proposed by doctor :</string>
+               <string>Proposed by ... :</string>
               </property>
              </widget>
             </item>

@@ -19,9 +19,12 @@ public:
 public slots:
 
 private:
+    bool m_bInit;
+
     bool SavePatientData();
     void FillHealthInsuranceCombo();
     void FillCompanyCombo();
+    void FillDoctorTypeCombo();
     void FillDoctorCombo();
     void FillDefaultAddress();
     void FillPhoneNumber();
@@ -34,6 +37,7 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_cmbDoctorType_currentIndexChanged(int index);
     void on_pbVerifyAddress_clicked();
     void on_deDateBirth_dateChanged(QDate date);
     void on_cmbDoctor_currentIndexChanged(int index);

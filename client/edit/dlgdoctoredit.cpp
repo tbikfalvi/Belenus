@@ -8,7 +8,7 @@ cDlgDoctorEdit::cDlgDoctorEdit( QWidget *p_poParent, cDBDoctor *p_poDoctor )
 {
     setupUi( this );
 
-    setWindowTitle( tr( "Doctor" ) );
+    setWindowTitle( tr( "Advisor" ) );
     setWindowIcon( QIcon("./resources/40x40_doctor.png") );
 
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
@@ -19,6 +19,18 @@ cDlgDoctorEdit::cDlgDoctorEdit( QWidget *p_poParent, cDBDoctor *p_poDoctor )
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_poDoctor = p_poDoctor;
+
+    QSqlQuery *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT doctorTypeId, name FROM doctorTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
+    cmbDoctorType->addItem( tr("<Not selected>"), 0 );
+    while( poQuery->next() )
+    {
+        cmbDoctorType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( m_poDoctor->doctorTypeId() == poQuery->value( 0 ) )
+            cmbDoctorType->setCurrentIndex( cmbDoctorType->count()-1 );
+    }
+
     if( m_poDoctor )
     {
         ledName->setText( m_poDoctor->name() );
@@ -46,10 +58,21 @@ cDlgDoctorEdit::~cDlgDoctorEdit()
 void cDlgDoctorEdit::accept ()
 {
     bool  boCanBeSaved = true;
+
     if( (ledName->text() == "") )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Doctor name cannot be empty." ) );
+        QMessageBox::warning( this, tr( "Warning" ), tr( "Advisor name cannot be empty." ) );
+    }
+    if( (ledLicence->text() == "") )
+    {
+        boCanBeSaved = false;
+        QMessageBox::warning( this, tr( "Warning" ), tr( "Advisor's licence cannot be empty." ) );
+    }
+    if( cmbDoctorType->currentIndex() < 1 )
+    {
+        boCanBeSaved = false;
+        QMessageBox::warning( this, tr( "Warning" ), tr( "The advisor must be member one of the groups." ) );
     }
 
     if( boCanBeSaved )
@@ -66,6 +89,7 @@ void cDlgDoctorEdit::accept ()
             }
             m_poDoctor->setName( ledName->text() );
             m_poDoctor->setLicence( ledLicence->text() );
+            m_poDoctor->setDoctorTypeId( cmbDoctorType->itemData( cmbDoctorType->currentIndex() ).toUInt() );
             m_poDoctor->setData( ptData->toPlainText() );
             m_poDoctor->setActive( true );
             m_poDoctor->save();

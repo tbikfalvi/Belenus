@@ -7,7 +7,7 @@
 cDlgDoctor::cDlgDoctor( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
-    setWindowTitle( tr( "Doctor List" ) );
+    setWindowTitle( tr( "Advisor List" ) );
     setWindowIcon( QIcon("./resources/40x40_doctor.png") );
 
     setupTableView();

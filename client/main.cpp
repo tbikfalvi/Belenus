@@ -237,9 +237,9 @@ int main( int argc, char *argv[] )
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
 #ifdef __WIN32__
-        Sleep(8000);
+        Sleep(5000);
 #else
-        sleep( 8 );
+        sleep( 5 );
 #endif
 
         obSplash.finish( &obMainWindow );
