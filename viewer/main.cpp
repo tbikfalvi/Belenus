@@ -27,7 +27,7 @@ int main( int argc, char *argv[] )
 
     int nRet = 1;
 
-    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer started." << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer started." << EOM;
 
     try
     {
@@ -46,10 +46,10 @@ int main( int argc, char *argv[] )
     {
         cerr << ">> " << e.what() << endl << flush;;
 
-        g_obLogger(e.severity()) << e.what() << cQTLogger::EOM;
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 
-    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer ended." << cQTLogger::EOM;
+    g_obLogger(cSeverity::INFO) << "Belenus Report Viewer ended." << EOM;
 
     delete g_poDB;
 

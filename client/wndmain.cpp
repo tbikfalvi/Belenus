@@ -69,6 +69,11 @@
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
 
+//====================================================================================
+
+#include "report/repledgermain.h"
+
+//====================================================================================
 
 extern DatabaseWriter g_obLogDBWriter;
 extern LicenceManager g_obLicenceManager;
@@ -946,6 +951,9 @@ void cWndMain::on_action_Cassa_triggered()
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
 {
+    cDlgLedgerMain  obDlgLedgerMain;
+
+    obDlgLedgerMain.exec();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSkipStatus_triggered()

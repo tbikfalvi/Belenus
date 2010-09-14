@@ -428,4 +428,11 @@ converter/moc_cdlgmain.cpp
 converter/moc_cdlgmain.o
 converter/ui_cdlgmain.h
 *.log
+client/dlgpreview.o
+client/moc_dlgpreview.cpp
+client/moc_dlgpreview.o
+client/moc_repledgermain.cpp
+client/moc_repledgermain.o
+client/repledgermain.o
+client/ui_dlgpreview.h
 

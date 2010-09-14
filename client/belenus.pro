@@ -1,5 +1,6 @@
 TEMPLATE = app
 FORMS = ../framework/dlgcrud.ui \
+    report/dlgpreview.ui \
     dlghardwaretest.ui \
     dlglogin.ui \
     dlglogs.ui \
@@ -118,6 +119,7 @@ HEADERS = belenus.h \
     edit/dlgcompanyedit.h \
     edit/dlgdoctoredit.h \
     edit/dlgzipregioncityedit.h \
+    report/dlgpreview.h \
     bs_connection.h \
     licenceManager.h \
     communication.h \
@@ -128,7 +130,8 @@ HEADERS = belenus.h \
     wndmain.h \
     cassa.h \
     ledger.h \
-    crud/dlgpaneluseselect.h
+    crud/dlgpaneluseselect.h \
+    report/repledgermain.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -216,6 +219,7 @@ SOURCES = main.cpp \
     edit/dlgcompanyedit.cpp \
     edit/dlgdoctoredit.cpp \
     edit/dlgzipregioncityedit.cpp \
+    report/dlgpreview.cpp \
     bs_connection.cpp \
     licenceManager.cpp \
     communication_demo.cpp \
@@ -225,7 +229,8 @@ SOURCES = main.cpp \
     wndmain.cpp \
     cassa.cpp \
     ledger.cpp \
-    crud/dlgpaneluseselect.cpp
+    crud/dlgpaneluseselect.cpp \
+    report/repledgermain.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
@@ -236,6 +241,5 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-
 CONFIG += console
 win32:DEFINES -= UNICODE
