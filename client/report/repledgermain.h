@@ -6,6 +6,7 @@
 #include <QDateTimeEdit>
 #include <QComboBox>
 
+#include "belenus.h"
 #include "dlgpreview.h"
 
 class cDlgLedgerMain : public cDlgPreview
@@ -15,6 +16,13 @@ class cDlgLedgerMain : public cDlgPreview
 public:
     cDlgLedgerMain( QWidget *parent = 0 );
     ~cDlgLedgerMain();
+
+private:
+    QSqlQuery       *poReportResult;
+    QString          qsQuery;
+    unsigned int     uiColumnCount;
+
+    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 protected:
     QLabel*        lblDate;
