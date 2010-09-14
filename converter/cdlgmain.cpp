@@ -206,13 +206,15 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
                 DeCode( stTemp.strNev, sizeof(stTemp.strNev) );
                 QDate   qdFrom( stTemp.nErvTolEv, stTemp.nErvTolHo, stTemp.nErvTolNap );
                 QDate   qdTo( stTemp.nErvIgEv, stTemp.nErvIgHo, stTemp.nErvIgNap );
+                QString qsNev = QString( stTemp.strNev );
+                qsNev = qsNev.replace( QString("\""), QString("\\\"") );
 
                 m_qsPatientCardTypes += QString( "ALTER TABLE `patientCardTypes` auto_increment=%1;\n" ).arg(stTemp.nID);
                 m_qsPatientCardTypes += QString( "INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES" );
                 m_qsPatientCardTypes += QString( " ( " );
                 m_qsPatientCardTypes += QString( "\'%1\', " ).arg(stTemp.nID);
                 m_qsPatientCardTypes += QString( "\'%1\', " ).arg( ledLicenceId->text().toInt() );
-                m_qsPatientCardTypes += QString( "\"%1\", " ).arg(stTemp.strNev);
+                m_qsPatientCardTypes += QString( "\"%1\", " ).arg(qsNev);
                 m_qsPatientCardTypes += QString( "\'%1\', " ).arg(stTemp.nAr);
                 m_qsPatientCardTypes += QString( "\'0\', " );
                 m_qsPatientCardTypes += QString( "\'%1\', " ).arg(stTemp.nEgyseg);
@@ -284,17 +286,20 @@ void cDlgMain::on_pbImportPatientCards_clicked()
                 DeCode( stTemp.strMegjegyzes, sizeof(stTemp.strMegjegyzes) );
 
                 QDate   qdDate( stTemp.nErvEv, stTemp.nErvHo, stTemp.nErvNap );
+                QString qsMegjegyzes = QString( stTemp.strMegjegyzes );
+                qsMegjegyzes = qsMegjegyzes.replace( QString("\""), QString("\\\"") );
 
-                m_qsPatientCards += QString( "INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDate`, `pincode`, `active`, `archive`) VALUES" );
+                m_qsPatientCards += QString( "INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES" );
                 m_qsPatientCards += QString( " ( " );
                 m_qsPatientCards += QString( "NULL, " );
                 m_qsPatientCards += QString( "\'%1\', " ).arg( ledLicenceId->text().toInt() );
                 m_qsPatientCards += QString( "%1, " ).arg(stTemp.nBerletTipus);
                 m_qsPatientCards += QString( "0, " );
                 m_qsPatientCards += QString( "\"%1\", " ).arg(stTemp.strVonalkod);
-                m_qsPatientCards += QString( "\"%1\", " ).arg(stTemp.strMegjegyzes);
+                m_qsPatientCards += QString( "\"%1\", " ).arg(qsMegjegyzes);
                 m_qsPatientCards += QString( "%1, ").arg(stTemp.nEgyseg);
                 m_qsPatientCards += QString( "0, ");
+                m_qsPatientCards += QString( "\"2008-01-01\", ");
                 m_qsPatientCards += QString( "\"%1\", ").arg(qdDate.toString("yyyy-MM-dd"));
                 m_qsPatientCards += QString( "NULL, 1, \"NEW\" ); \n" );
             }
