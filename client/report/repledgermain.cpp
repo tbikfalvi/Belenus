@@ -10,6 +10,8 @@
 cDlgLedgerMain::cDlgLedgerMain( QWidget *parent )
     : cDlgPreview( parent )
 {
+    cTracer obTrace( "cDlgLedgerMain::cDlgLedgerMain" );
+
     setReportTitle( tr( "Main ledger" ) );
 
     lblDate = new QLabel( tr("Date:"), grpFilters );
@@ -38,10 +40,35 @@ cDlgLedgerMain::cDlgLedgerMain( QWidget *parent )
 
 cDlgLedgerMain::~cDlgLedgerMain()
 {
+    cTracer obTrace( "cDlgLedgerMain::~cDlgLedgerMain" );
+}
+
+QString cDlgLedgerMain::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+{
+    QString qsValue = QString::number( p_nCurrencyValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+    qsRet += " " + p_qsCurrency;
+
+    return qsRet;
 }
 
 void cDlgLedgerMain::refreshReport()
 {
+    cTracer obTrace( "cDlgLedgerMain::refreshReport()" );
+
+    setCursor( Qt::WaitCursor);
+
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
 
@@ -57,10 +84,15 @@ void cDlgLedgerMain::refreshReport()
     obBoldFormat.setFontPointSize( 10.0 );
     obBoldFormat.setFontWeight( QFont::Bold );
 
-    QTextTableFormat obTableFormat;
-    obTableFormat.setHeaderRowCount( 1 );
-    obTableFormat.setBorderStyle( QTextFrameFormat::BorderStyle_None );
-    obTableFormat.setAlignment( Qt::AlignHCenter );
+    QTextTableFormat obTableFormatCenter;
+    obTableFormatCenter.setHeaderRowCount( 1 );
+    obTableFormatCenter.setBorderStyle( QTextFrameFormat::BorderStyle_None );
+    obTableFormatCenter.setAlignment( Qt::AlignHCenter );
+
+    QTextTableFormat obTableFormatLeft;
+    obTableFormatLeft.setHeaderRowCount( 1 );
+    obTableFormatLeft.setBorderStyle( QTextFrameFormat::BorderStyle_None );
+    obTableFormatLeft.setAlignment( Qt::AlignLeft );
 
     QTextBlockFormat obLeftCellFormat;
     obLeftCellFormat.setLeftMargin( 10 );
@@ -97,7 +129,7 @@ void cDlgLedgerMain::refreshReport()
 
     uiColumnCount = 9;
 
-    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormat );
+    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatCenter );
 
     //------------------------------------------------------------------------------------------------------
 
@@ -309,9 +341,9 @@ void cDlgLedgerMain::refreshReport()
     poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
 
-    uiColumnCount = 9;
+    uiColumnCount = 5;
 
-    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormat );
+    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
 
     //------------------------------------------------------------------------------------------------------
 
@@ -340,25 +372,180 @@ void cDlgLedgerMain::refreshReport()
 
     //------------------------------------------------------------------------------------------------------
 
+    int     inSumCount  = 0;
+    int     inSumNet    = 0;
+    int     inSumTotal  = 0;
 
-}
+    //------------------------------------------------------------------------------------------------------
 
-QString cDlgLedgerMain::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
-{
-    QString qsValue = QString::number( p_nCurrencyValue );
-    QString qsRet = "";
-
-    if( qsValue.length() > 3 )
+    while( poReportResult->next() )
     {
-        while( qsValue.length() > 3 )
-        {
-            qsRet.insert( 0, qsValue.right(3) );
-            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
-            qsValue.truncate( qsValue.length()-3 );
-        }
-    }
-    qsRet.insert( 0, qsValue );
-    qsRet += " " + p_qsCurrency;
+        int     inColumn = 0;
 
-    return qsRet;
+        // Type
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value( inColumn ).toString(), obNormalFormat );
+        inColumn++;
+
+        // Device
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value( inColumn ).toString(), obNormalFormat );
+        inColumn++;
+
+        // Count
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value( inColumn ).toString(), obNormalFormat );
+        inSumCount += poReportResult->value( inColumn ).toInt();
+        inColumn++;
+
+        // Net
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
+        inSumNet += poReportResult->value( inColumn ).toInt();
+        inColumn++;
+
+        // Total
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
+        inSumTotal += poReportResult->value( inColumn ).toInt();
+        inColumn++;
+    }
+    delete poReportResult;
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( QString::number( inSumCount ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( convertCurrency( inSumNet, g_poPrefs->getCurrencyShort() ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( convertCurrency( inSumTotal, g_poPrefs->getCurrencyShort() ), obBoldFormat );
+
+    //======================================================================================================
+    //
+    //======================================================================================================
+
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertHtml( "<hr>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+
+    //======================================================================================================
+    //
+    //
+    //
+    //======================================================================================================
+    qsQuery = "";
+    qsQuery += QString( "SELECT pct.name AS PatientCardType, COUNT(l.netPrice) AS Count, SUM(l.netPrice) AS SumNet, SUM(l.totalPrice) AS SumTotal FROM ledger l, patientCardTypes pct WHERE l.patientCardTypeId=pct.patientCardTypeId AND l.patientCardTypeId>0 ");
+    qsQuery += QString( "AND DATE(l.ledgerTime) >= \"%1\" AND DATE(l.ledgerTime) <= \"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    qsQuery += QString( "GROUP BY PatientCardType " );
+
+    poReportResult = NULL;
+    poReportResult = g_poDB->executeQTQuery( qsQuery );
+
+    uiColumnCount = 4;
+
+    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Patientcard Type" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Count" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Sum of net income" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Sum of total income" ), obBoldFormat );
+
+    //------------------------------------------------------------------------------------------------------
+
+    inSumCount  = 0;
+    inSumNet    = 0;
+    inSumTotal  = 0;
+
+    //------------------------------------------------------------------------------------------------------
+
+    while( poReportResult->next() )
+    {
+        int     inColumn = 0;
+
+        // Type
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value( inColumn ).toString(), obNormalFormat );
+        inColumn++;
+
+        // Count
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value( inColumn ).toString(), obNormalFormat );
+        inSumCount += poReportResult->value( inColumn ).toInt();
+        inColumn++;
+
+        // Net
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
+        inSumNet += poReportResult->value( inColumn ).toInt();
+        inColumn++;
+
+        // Total
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
+        inSumTotal += poReportResult->value( inColumn ).toInt();
+        inColumn++;
+    }
+    delete poReportResult;
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( QString::number( inSumCount ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( convertCurrency( inSumNet, g_poPrefs->getCurrencyShort() ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( convertCurrency( inSumTotal, g_poPrefs->getCurrencyShort() ), obBoldFormat );
+
+    //======================================================================================================
+    //
+    //======================================================================================================
+
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertHtml( "<hr>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+
+    //======================================================================================================
+                                                                                                                                                                                                                //======================================================================================================
+    setCursor( Qt::ArrowCursor);
 }

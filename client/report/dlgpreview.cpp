@@ -6,6 +6,8 @@
 cDlgPreview::cDlgPreview( QWidget *parent )
     : QDialog( parent )
 {
+    cTracer obTrace( "cDlgPreview::cDlgPreview" );
+
     setupUi( this );
 
     m_qsReportName = "";
@@ -21,6 +23,7 @@ cDlgPreview::cDlgPreview( QWidget *parent )
 
 cDlgPreview::~cDlgPreview()
 {
+    cTracer obTrace( "cDlgPreview::~cDlgPreview" );
 }
 
 void cDlgPreview::setReportTitle( const QString &p_qsTitle )

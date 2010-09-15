@@ -72,7 +72,7 @@ private:
                const QString p_qsValidDateFrom = "0000-00-00",
                const QString p_qsValidDateTo = "0000-00-00",
                const QString p_qsPincode = "",
-               const bool p_bActive = true,
+               const bool p_bActive = false,
                const QString &p_qsArchive = "NEW" )                             throw();
     void init( const QSqlRecord &p_obRecord )                                   throw();
 };

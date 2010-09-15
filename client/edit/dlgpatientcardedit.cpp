@@ -123,11 +123,6 @@ void cDlgPatientCardEdit::setPatientCardOwner( const unsigned int p_uiPatientId 
 void cDlgPatientCardEdit::on_pbSave_clicked()
 {
     bool  boSkipErrorMessages = false;
-    time_t     ttTime;
-    struct tm *poTm;
-    time( &ttTime );
-    poTm = localtime( &ttTime );
-
     bool  boCanBeSaved = true;
 
     if( ledBarcode->text() == "" )
@@ -194,9 +189,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 boSkipErrorMessages = true;
             }
         }
-        if( (deValidDateFrom->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) ||
-             deValidDateFrom->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday)) &&
-            !boSkipErrorMessages )
+        if( deValidDateTo->date() < QDate::currentDate() && !boSkipErrorMessages )
         {
             boCanBeSaved = false;
             if( QMessageBox::critical( this, tr( "Error" ), tr( "Incorrect validation date.\n\nIf you want to reset the date of validation\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )

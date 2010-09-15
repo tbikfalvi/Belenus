@@ -7,11 +7,6 @@
 cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatientCardType *p_poPatientCardType )
     : QDialog( p_poParent )
 {
-    time_t     ttTime;
-    struct tm *poTm;
-    time( &ttTime );
-    poTm = localtime( &ttTime );
-
     setupUi( this );
 
     setWindowTitle( tr( "Patient card type" ) );
@@ -20,8 +15,8 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 
-    deValidDateFrom->setDate( QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) );
-    deValidDateTo->setDate( QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) );
+    deValidDateFrom->setDate( QDate(2000,1,1) );
+    deValidDateTo->setDate( QDate(2000,1,1) );
 
     m_poPatientCardType = p_poPatientCardType;
 
@@ -36,10 +31,20 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         ledValidDays->setText( QString::number(m_poPatientCardType->validDays()) );
 
-        if( m_poPatientCardType->validDays() == 0 )
+        if( m_poPatientCardType->validDays() < 1 )
+        {
             rbInterval->setChecked( true );
+            deValidDateFrom->setEnabled( true );
+            deValidDateTo->setEnabled( true );
+            ledValidDays->setEnabled( false );
+        }
         else
+        {
             rbDays->setChecked( true );
+            deValidDateFrom->setEnabled( false );
+            deValidDateTo->setEnabled( false );
+            ledValidDays->setEnabled( true );
+        }
 
         if( m_poPatientCardType->licenceId() == 0 && m_poPatientCardType->id() > 0 )
             checkIndependent->setChecked( true );
@@ -79,10 +84,6 @@ void cDlgPatientCardTypeEdit::on_rbInterval_toggled(bool checked)
 void cDlgPatientCardTypeEdit::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
-    time_t     ttTime;
-    struct tm *poTm;
-    time( &ttTime );
-    poTm = localtime( &ttTime );
 
     if( ledName->text() == "" )
     {
@@ -111,7 +112,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Number of validation days of patientcard type must be set." ) );
     }
-    else if( rbInterval->isChecked() && deValidDateTo->date() <= QDate(poTm->tm_year+1900,poTm->tm_mon+1,poTm->tm_mday) )
+    else if( rbInterval->isChecked() && deValidDateTo->date() <= QDate::currentDate() )
     {
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Invalid end date. End date must be in the future." ) );
@@ -131,8 +132,8 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
             m_poPatientCardType->setUnitTime( ledUnitTime->text().toUInt() );
-            m_poPatientCardType->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
-            m_poPatientCardType->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
+            m_poPatientCardType->setValidDateFrom( (rbDays->isChecked()?"2000-01-01":deValidDateFrom->date().toString("yyyy-MM-dd")) );
+            m_poPatientCardType->setValidDateTo( (rbDays->isChecked()?"2000-01-01":deValidDateTo->date().toString("yyyy-MM-dd")) );
             m_poPatientCardType->setValidDays( ledValidDays->text().toUInt() );
             m_poPatientCardType->setActive( true );
 
