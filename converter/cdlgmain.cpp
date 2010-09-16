@@ -20,6 +20,7 @@ cDlgMain::cDlgMain(QWidget *parent) :
     pbCheckFiles->setIcon( QIcon("./check.png") );
     pbImportPatientCardTypes->setIcon( QIcon("./patientcards.png") );
     pbImportPatientCards->setIcon( QIcon("./patientcard.png") );
+    pbImportPatientCardUsages->setIcon( QIcon("./patientcard.png") );
     pbImportUsers->setIcon( QIcon("./user.png") );
     pbExit->setIcon( QIcon("./exit.png") );
 
@@ -30,6 +31,7 @@ cDlgMain::cDlgMain(QWidget *parent) :
 
     pbImportPatientCardTypes->setEnabled( false );
     pbImportPatientCards->setEnabled( false );
+    pbImportPatientCardUsages->setEnabled( false );
     pbImportUsers->setEnabled( false );
 }
 
@@ -51,6 +53,11 @@ void cDlgMain::DeCode( char *str, int size )
    {
       str[i] ^= 11;
    }
+}
+
+unsigned int cDlgMain::patientCardId( QString /*p_qsBarcode*/ )
+{
+    return 0;
 }
 
 bool cDlgMain::checkFile( QString p_qsFileName )
@@ -119,9 +126,10 @@ void cDlgMain::on_pbCheckFiles_clicked()
 
     bool    bIsPCTOK    = checkFile( "brlttpsfsv.dat" );
     bool    bIsPCOK     = checkFile( "brltfsv.dat");
+    bool    bIsPCHOK    = checkFile( "brlthsznltfsv.dat");
     bool    bIsOk       = false;
 
-    if( !bIsPCTOK && !bIsPCOK )
+    if( !bIsPCTOK && !bIsPCOK && bIsPCHOK )
         return;
 
     ledLicenceId->text().toInt( &bIsOk );
@@ -144,6 +152,11 @@ void cDlgMain::on_pbCheckFiles_clicked()
         pbImportPatientCards->setEnabled( true );
     else
         pbImportPatientCards->setEnabled( false );
+
+    if( bIsPCHOK )
+        pbImportPatientCardUsages->setEnabled( true );
+    else
+        pbImportPatientCardUsages->setEnabled( false );
 }
 
 void cDlgMain::on_pbExit_clicked()
@@ -320,6 +333,64 @@ bool cDlgMain::createPCFile()
     fclose( file );
 
     return bRet;
+}
+
+void cDlgMain::on_pbImportPatientCardUsages_clicked()
+{
+    m_qsPatientCardUse.clear();
+
+    FILE           *file = NULL;
+    char           strTemp[10];
+    unsigned int   nCount = 0;
+    QString         qsQuery;
+
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brlthsznltfsv.dat" );
+
+    file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( strTemp, 0, sizeof(strTemp) );
+        fread( strTemp, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        listLog->addItem( tr("Count of patientcard uses to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_berlethasznalat   stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( stTemp.strVonalkod, 20, 1, file );
+                fread( &stTemp.nEv, 4, 1, file );
+                fread( &stTemp.nHo, 4, 1, file );
+                fread( &stTemp.nNap, 4, 1, file );
+                fread( &stTemp.nOra, 4, 1, file );
+                fread( &stTemp.nPerc, 4, 1, file );
+                fread( &stTemp.nEgyseg, 4, 1, file );
+                DeCode( stTemp.strVonalkod, sizeof(stTemp.strVonalkod) );
+
+                QDate       tmpDate( stTemp.nEv, stTemp.nHo, stTemp.nNap );
+                QTime       tmpTime( stTemp.nOra, stTemp.nPerc, 0, 0 );
+                QDateTime   qdtDate( tmpDate, tmpTime );
+
+                m_qsPatientCardUse += QString( "INSERT INTO `patientCardHistories` (`patientCardHistoryId`, `licenceId`, `patientCardId`, `dateTimeUsed`, `units`, `time`, `active`, `archive`) VALUES" );
+                m_qsPatientCardUse += QString( " ( " );
+                m_qsPatientCardUse += QString( "NULL, " );
+                m_qsPatientCardUse += QString( "\'%1\', " ).arg( ledLicenceId->text().toInt() );
+                m_qsPatientCardUse += QString( "\"%1\", " ).arg(patientCardId(stTemp.strVonalkod));
+                m_qsPatientCardUse += QString( "\"%1\", " ).arg(qdtDate.toString(("yyyy-MM-dd hh:mm:ss")));
+                m_qsPatientCardUse += QString( "%1, ").arg(stTemp.nEgyseg);
+                m_qsPatientCardUse += QString( "\"00:00:00\", ");
+                m_qsPatientCardUse += QString( "1, \"NEW\" ); \n" );
+            }
+        }
+        fclose( file );
+        listLog->addItem( tr("Importing patientcard uses finished.") );
+    }
+    else
+    {
+        listLog->addItem( tr( "Error occured during opening brlthsznltfsv.dat file." ) );
+    }
 }
 
 void cDlgMain::on_pbImportUsers_clicked()

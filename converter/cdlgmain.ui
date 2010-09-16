@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>645</width>
-    <height>443</height>
+    <width>725</width>
+    <height>511</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -143,6 +143,13 @@
          <widget class="QPushButton" name="pbImportPatientCards">
           <property name="text">
            <string>Import Patientcards</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbImportPatientCardUsages">
+          <property name="text">
+           <string>Import Patientcard Uses</string>
           </property>
          </widget>
         </item>

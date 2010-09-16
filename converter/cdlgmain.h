@@ -60,6 +60,19 @@ typedef struct _typ_user
    char             strMegjegyzes[1000];
    int              nUserLevel;
 } typ_user;
+//====================================================================================
+//    BERLETHASZNALAT structure
+//====================================================================================
+typedef struct _typ_berlethasznalat
+{
+   char  strVonalkod[20];
+   int   nEv;
+   int   nHo;
+   int   nNap;
+   int   nOra;
+   int   nPerc;
+   int   nEgyseg;
+} typ_berlethasznalat;
 
 //====================================================================================
 class cDlgMain : public QDialog, protected Ui_cDlgMain
@@ -79,12 +92,14 @@ private:
     QString     m_qsPatientCardTypes;
     QString     m_qsPatientCards;
     QString     m_qsUsers;
+    QString     m_qsPatientCardUse;
 
-    void        EnCode( char *str, int size );
-    void        DeCode( char *str, int size );
-    bool        checkFile( QString p_qsFileName);
-    bool        createPCTFile();
-    bool        createPCFile();
+    void            EnCode( char *str, int size );
+    void            DeCode( char *str, int size );
+    bool            checkFile( QString p_qsFileName);
+    bool            createPCTFile();
+    bool            createPCFile();
+    unsigned int    patientCardId( QString p_qsBarcode );
 
 private slots:
     void on_pbImportUsers_clicked();
@@ -93,6 +108,7 @@ private slots:
     void on_pbImportPatientCardTypes_clicked();
     void on_pbExit_clicked();
     void on_pbCheckFiles_clicked();
+    void on_pbImportPatientCardUsages_clicked();
 };
 
 #endif // CDLGMAIN_H
