@@ -109,6 +109,8 @@ private slots:
     void on_pbExit_clicked();
     void on_pbCheckFiles_clicked();
     void on_pbImportPatientCardUsages_clicked();
+    void on_pbConnect_clicked();
+    void on_pbDisconnect_clicked();
 };
 
 #endif // CDLGMAIN_H

@@ -435,4 +435,11 @@ client/moc_repledgermain.cpp
 client/moc_repledgermain.o
 client/repledgermain.o
 client/ui_dlgpreview.h
+converter/dbconnection.o
+converter/moc_qtmysqlquerymodel.cpp
+converter/moc_qtmysqlquerymodel.o
+converter/qtlogger.o
+converter/qtmysqlconnection.o
+converter/qtmysqlquerymodel.o
+converter/tracer.o
 

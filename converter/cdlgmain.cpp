@@ -7,6 +7,8 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "../framework/qtframework.h"
+
 #include "cdlgmain.h"
 #include "ui_cdlgmain.h"
 
@@ -33,10 +35,14 @@ cDlgMain::cDlgMain(QWidget *parent) :
     pbImportPatientCards->setEnabled( false );
     pbImportPatientCardUsages->setEnabled( false );
     pbImportUsers->setEnabled( false );
+    pbDisconnect->setEnabled( false );
+
+    g_poDB = new cQTMySQLConnection;
 }
 
 cDlgMain::~cDlgMain()
 {
+    if( g_poDB ) delete g_poDB;
 }
 
 void cDlgMain::EnCode( char *str, int size )
@@ -460,4 +466,37 @@ void cDlgMain::on_pbExportDatabase_clicked()
 {
     createPCTFile();
     createPCFile();
+}
+
+void cDlgMain::on_pbConnect_clicked()
+{
+    g_poDB->setHostName( "localhost" );
+    g_poDB->setDatabaseName( ledDatabase->text() );
+    g_poDB->setUserName( ledUser->text() );
+    g_poDB->setPassword( ledPassword->text() );
+
+    try
+    {
+        g_poDB->open();
+
+        listLog->addItem( tr("Database connection established.") );
+
+        pbConnect->setEnabled( false );
+        pbDisconnect->setEnabled( true );
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+
+void cDlgMain::on_pbDisconnect_clicked()
+{
+    g_poDB->close();
+
+    listLog->addItem( tr("Database connection closed.") );
+
+    pbConnect->setEnabled( true );
+    pbDisconnect->setEnabled( false );
 }
