@@ -435,11 +435,17 @@ client/moc_repledgermain.cpp
 client/moc_repledgermain.o
 client/repledgermain.o
 client/ui_dlgpreview.h
-converter/dbconnection.o
-converter/moc_qtmysqlquerymodel.cpp
-converter/moc_qtmysqlquerymodel.o
-converter/qtlogger.o
-converter/qtmysqlconnection.o
-converter/qtmysqlquerymodel.o
-converter/tracer.o
+dbtool/dbconnection.o
+dbtool/moc_qtmysqlquerymodel.cpp
+dbtool/moc_qtmysqlquerymodel.o
+dbtool/qtlogger.o
+dbtool/qtmysqlconnection.o
+dbtool/qtmysqlquerymodel.o
+dbtool/tracer.o
+BelenusDBTool
+dbtool/BelenusDBTool.pro.user
+dbtool/cdlgmain.o
+dbtool/main.o
+dbtool/moc_cdlgmain.cpp
+dbtool/moc_cdlgmain.o
 
