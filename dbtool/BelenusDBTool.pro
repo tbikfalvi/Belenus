@@ -3,7 +3,7 @@
 # -------------------------------------------------
 QT += core \
     gui
-TARGET = BelenusImport
+TARGET = BelenusDBTool
 TEMPLATE = app
 SOURCES += main.cpp \
     cdlgmain.cpp \
