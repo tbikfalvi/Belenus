@@ -73,6 +73,12 @@ cDlgMain::cDlgMain(QWidget *parent) : QDialog(parent)
     pbImportUsers->setIcon( QIcon("./user.png") );
     pbImportUsers->setEnabled( false );
 
+    // Patientcard tab
+    pbImportFromPCUse->setIcon( QIcon("./patientcards.png") );
+    pbImportFromPCUse->setEnabled( false );
+    pbSaveNext->setIcon( QIcon("./patientcard.png") );
+    pbSaveNext->setEnabled( false );
+
     pbExit->setIcon( QIcon("./exit.png") );
 }
 //====================================================================================
@@ -273,6 +279,8 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
         return;
     }
 
+    setCursor( Qt::WaitCursor);
+
     m_qsPatientCardTypes.clear();
 
     FILE           *file = NULL;
@@ -339,7 +347,13 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
                 {
                     try
                     {
-                        g_poDB->executeQTQuery( m_qsQuery );
+                        poQuery = g_poDB->executeQTQuery( QString("SELECT * from berlettipus WHERE nID=%1").arg(stTemp.nID) );
+                        if( !poQuery->first() )
+                        {
+                            g_poDB->executeQTQuery( m_qsQuery );
+                        }
+                        if( poQuery ) delete poQuery;
+                        poQuery = NULL;
                     }
                     catch( cSevException &e )
                     {
@@ -372,6 +386,8 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
     {
         listLog->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
     }
+
+    setCursor( Qt::ArrowCursor);
 }
 //====================================================================================
 void cDlgMain::on_pbImportPatientCards_clicked()
@@ -389,6 +405,8 @@ void cDlgMain::on_pbImportPatientCards_clicked()
 #else
     m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brltfsv.dat" );
 #endif
+
+    setCursor( Qt::WaitCursor);
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -419,6 +437,37 @@ void cDlgMain::on_pbImportPatientCards_clicked()
                 QString qsMegjegyzes = QString( stTemp.strMegjegyzes );
                 qsMegjegyzes = qsMegjegyzes.replace( QString("\""), QString("\\\"") );
 
+                m_qsQuery = "";
+                m_qsQuery += QString( "INSERT INTO `berlet` (`strVonalkod`, `strMegjegyzes`, `nBerletTipus`, `nEgyseg`, `nErvEv`, `nErvHo`, `nErvNap`, `nPin`) VALUES" );
+                m_qsQuery += QString( " ( " );
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.strVonalkod);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.strMegjegyzes);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nBerletTipus);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nEgyseg);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvEv);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvHo);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvNap);
+                m_qsQuery += QString( "\'%1\' ) " ).arg(stTemp.nPin);
+
+                if( chkImportToDb->isChecked() )
+                {
+                    try
+                    {
+                        poQuery = g_poDB->executeQTQuery( QString("SELECT * from berlet WHERE strVonalkod=\"%1\"").arg(stTemp.strVonalkod) );
+                        if( !poQuery->first() )
+                        {
+                            g_poDB->executeQTQuery( m_qsQuery );
+                        }
+                        if( poQuery ) delete poQuery;
+                        poQuery = NULL;
+                    }
+                    catch( cSevException &e )
+                    {
+                        listLog->addItem( e.what() );
+                        g_obLogger(e.severity()) << e.what() << EOM;
+                    }
+                }
+
                 m_qsPatientCards += QString( "INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES" );
                 m_qsPatientCards += QString( " ( " );
                 m_qsPatientCards += QString( "NULL, " );
@@ -441,6 +490,8 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     {
         listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
     }
+
+    setCursor( Qt::ArrowCursor);
 }
 //====================================================================================
 void cDlgMain::on_pbImportPatientCardUsages_clicked()
@@ -458,6 +509,8 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
 #else
     m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brlthsznltfsv.dat" );
 #endif
+
+    setCursor( Qt::WaitCursor);
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -486,6 +539,36 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
                 QTime       tmpTime( stTemp.nOra, stTemp.nPerc, 0, 0 );
                 QDateTime   qdtDate( tmpDate, tmpTime );
 
+                m_qsQuery = "";
+                m_qsQuery += QString( "INSERT INTO `berlethasznalat` (`id`, `strVonalkod`, `nEv`, `nHo`, `nNap`, `nOra`, `nPerc`, `nEgyseg`) VALUES" );
+                m_qsQuery += QString( " ( NULL, " );
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.strVonalkod);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nEv);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nHo);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nNap);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nOra);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nPerc);
+                m_qsQuery += QString( "\'%1\' ) " ).arg(stTemp.nEgyseg);
+
+                if( chkImportToDb->isChecked() )
+                {
+                    try
+                    {
+                        poQuery = g_poDB->executeQTQuery( QString("SELECT * from berlethasznalat WHERE strVonalkod=\"%1\" AND nEv=%2 AND nHo=%3 AND nNap=%4 AND nOra=%5 AND nPerc=%6" ).arg(stTemp.strVonalkod).arg(stTemp.nEv).arg(stTemp.nHo).arg(stTemp.nNap).arg(stTemp.nOra).arg(stTemp.nPerc) );
+                        if( !poQuery->first() )
+                        {
+                            g_poDB->executeQTQuery( m_qsQuery );
+                        }
+                        if( poQuery ) delete poQuery;
+                        poQuery = NULL;
+                    }
+                    catch( cSevException &e )
+                    {
+                        listLog->addItem( e.what() );
+                        g_obLogger(e.severity()) << e.what() << EOM;
+                    }
+                }
+
                 m_qsPatientCardUse += QString( "INSERT INTO `patientCardHistories` (`patientCardHistoryId`, `licenceId`, `patientCardId`, `dateTimeUsed`, `units`, `time`, `active`, `archive`) VALUES" );
                 m_qsPatientCardUse += QString( " ( " );
                 m_qsPatientCardUse += QString( "NULL, " );
@@ -504,6 +587,8 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
     {
         listLog->addItem( tr( "Error occured during opening brlthsznltfsv.dat file." ) );
     }
+
+    setCursor( Qt::ArrowCursor);
 }
 //====================================================================================
 void cDlgMain::on_pbImportUsers_clicked()
@@ -565,9 +650,37 @@ void cDlgMain::on_pbImportUsers_clicked()
     }
 }
 //====================================================================================
+void cDlgMain::on_pbImportFromPCUse_clicked()
+//====================================================================================
+{
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString("SELECT strVonalkod, nEv, nHo, nOra, nPerc, SUM(nEgyseg) AS nEgyseg FROM berlethasznalat GROUP BY strVonalkod") );
+        pbSaveNext->setEnabled( true );
+        getNextNewPatientCard();
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+        poQuery = NULL;
+        pbSaveNext->setEnabled( false );
+    }
+}
+//====================================================================================
+void cDlgMain::on_pbSaveNext_clicked()
+//====================================================================================
+{
+}
+//====================================================================================
 void cDlgMain::on_pbExit_clicked()
 //====================================================================================
 {
+    if( m_bDatabaseConnected )
+    {
+        on_pbDisconnect_clicked();
+    }
+
     close();
 }
 //====================================================================================
@@ -650,6 +763,31 @@ bool cDlgMain::createPCFile()
     file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
     fputs( m_qsPatientCards.toStdString().c_str(), file );
     fclose( file );
+
+    return bRet;
+}
+//====================================================================================
+bool cDlgMain::getNextNewPatientCard()
+//====================================================================================
+{
+    bool bRet = false;
+
+    if( !poQuery->next() )
+        return bRet;
+
+    QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * FROM berlet WHERE strVonalkod=\"%1\"").arg(poQuery->value( 0 ).toString()) );
+
+    if( !poQBerlet->first() )
+    {
+        ledBarcode->setText( poQuery->value(0).toString() );
+        ledUnitsLeft->setText( poQuery->value(5).toString() );
+        deValid->setDate( QDate(poQuery->value(1).toInt(),poQuery->value(2).toInt(),poQuery->value(3).toInt()) );
+    }
+    else
+    {
+        getNextNewPatientCard();
+    }
+    if( poQBerlet ) delete poQBerlet;
 
     return bRet;
 }

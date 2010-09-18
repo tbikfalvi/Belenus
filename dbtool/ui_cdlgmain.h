@@ -15,6 +15,8 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
+#include <QtGui/QComboBox>
+#include <QtGui/QDateEdit>
 #include <QtGui/QDialog>
 #include <QtGui/QFormLayout>
 #include <QtGui/QGroupBox>
@@ -91,6 +93,33 @@ public:
     QPushButton *pbImportUsers;
     QSpacerItem *horizontalSpacer_5;
     QSpacerItem *verticalSpacer_4;
+    QWidget *tab_4;
+    QHBoxLayout *horizontalLayout_10;
+    QVBoxLayout *verticalLayout_8;
+    QHBoxLayout *horizontalLayout_8;
+    QPushButton *pbImportFromPCUse;
+    QSpacerItem *horizontalSpacer_7;
+    QGroupBox *gbPatientCard;
+    QFormLayout *formLayout_4;
+    QLabel *lblBarcode;
+    QLineEdit *ledBarcode;
+    QLabel *lblType;
+    QLabel *lblUnitsLeft;
+    QHBoxLayout *horizontalLayout_9;
+    QComboBox *cmbType;
+    QLabel *lblUnits;
+    QLineEdit *ledUnits;
+    QSpacerItem *horizontalSpacer_8;
+    QLineEdit *ledUnitsLeft;
+    QLabel *lblComment;
+    QLineEdit *ledComment;
+    QLabel *lblValid;
+    QDateEdit *deValid;
+    QSpacerItem *verticalSpacer_7;
+    QGroupBox *gbPCAction;
+    QVBoxLayout *verticalLayout_9;
+    QSpacerItem *verticalSpacer_6;
+    QPushButton *pbSaveNext;
     QGroupBox *gbInfo;
     QVBoxLayout *verticalLayout;
     QListWidget *listLog;
@@ -103,7 +132,7 @@ public:
     {
         if (cDlgMain->objectName().isEmpty())
             cDlgMain->setObjectName(QString::fromUtf8("cDlgMain"));
-        cDlgMain->resize(915, 511);
+        cDlgMain->resize(915, 588);
         horizontalLayout_4 = new QHBoxLayout(cDlgMain);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -373,6 +402,141 @@ public:
         verticalLayout_6->addItem(verticalSpacer_4);
 
         tabWidget->addTab(tab_3, QString());
+        tab_4 = new QWidget();
+        tab_4->setObjectName(QString::fromUtf8("tab_4"));
+        horizontalLayout_10 = new QHBoxLayout(tab_4);
+        horizontalLayout_10->setSpacing(6);
+        horizontalLayout_10->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_10->setObjectName(QString::fromUtf8("horizontalLayout_10"));
+        verticalLayout_8 = new QVBoxLayout();
+        verticalLayout_8->setSpacing(6);
+        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setSpacing(6);
+        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
+        pbImportFromPCUse = new QPushButton(tab_4);
+        pbImportFromPCUse->setObjectName(QString::fromUtf8("pbImportFromPCUse"));
+
+        horizontalLayout_8->addWidget(pbImportFromPCUse);
+
+        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_8->addItem(horizontalSpacer_7);
+
+
+        verticalLayout_8->addLayout(horizontalLayout_8);
+
+        gbPatientCard = new QGroupBox(tab_4);
+        gbPatientCard->setObjectName(QString::fromUtf8("gbPatientCard"));
+        formLayout_4 = new QFormLayout(gbPatientCard);
+        formLayout_4->setSpacing(6);
+        formLayout_4->setContentsMargins(11, 11, 11, 11);
+        formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
+        lblBarcode = new QLabel(gbPatientCard);
+        lblBarcode->setObjectName(QString::fromUtf8("lblBarcode"));
+
+        formLayout_4->setWidget(0, QFormLayout::LabelRole, lblBarcode);
+
+        ledBarcode = new QLineEdit(gbPatientCard);
+        ledBarcode->setObjectName(QString::fromUtf8("ledBarcode"));
+        ledBarcode->setMaximumSize(QSize(150, 16777215));
+
+        formLayout_4->setWidget(0, QFormLayout::FieldRole, ledBarcode);
+
+        lblType = new QLabel(gbPatientCard);
+        lblType->setObjectName(QString::fromUtf8("lblType"));
+
+        formLayout_4->setWidget(4, QFormLayout::LabelRole, lblType);
+
+        lblUnitsLeft = new QLabel(gbPatientCard);
+        lblUnitsLeft->setObjectName(QString::fromUtf8("lblUnitsLeft"));
+
+        formLayout_4->setWidget(6, QFormLayout::LabelRole, lblUnitsLeft);
+
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setSpacing(6);
+        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        cmbType = new QComboBox(gbPatientCard);
+        cmbType->setObjectName(QString::fromUtf8("cmbType"));
+
+        horizontalLayout_9->addWidget(cmbType);
+
+        lblUnits = new QLabel(gbPatientCard);
+        lblUnits->setObjectName(QString::fromUtf8("lblUnits"));
+
+        horizontalLayout_9->addWidget(lblUnits);
+
+        ledUnits = new QLineEdit(gbPatientCard);
+        ledUnits->setObjectName(QString::fromUtf8("ledUnits"));
+        ledUnits->setEnabled(false);
+        ledUnits->setMaximumSize(QSize(50, 16777215));
+
+        horizontalLayout_9->addWidget(ledUnits);
+
+        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_9->addItem(horizontalSpacer_8);
+
+
+        formLayout_4->setLayout(4, QFormLayout::FieldRole, horizontalLayout_9);
+
+        ledUnitsLeft = new QLineEdit(gbPatientCard);
+        ledUnitsLeft->setObjectName(QString::fromUtf8("ledUnitsLeft"));
+        ledUnitsLeft->setMaximumSize(QSize(50, 16777215));
+
+        formLayout_4->setWidget(6, QFormLayout::FieldRole, ledUnitsLeft);
+
+        lblComment = new QLabel(gbPatientCard);
+        lblComment->setObjectName(QString::fromUtf8("lblComment"));
+
+        formLayout_4->setWidget(2, QFormLayout::LabelRole, lblComment);
+
+        ledComment = new QLineEdit(gbPatientCard);
+        ledComment->setObjectName(QString::fromUtf8("ledComment"));
+
+        formLayout_4->setWidget(2, QFormLayout::FieldRole, ledComment);
+
+        lblValid = new QLabel(gbPatientCard);
+        lblValid->setObjectName(QString::fromUtf8("lblValid"));
+
+        formLayout_4->setWidget(8, QFormLayout::LabelRole, lblValid);
+
+        deValid = new QDateEdit(gbPatientCard);
+        deValid->setObjectName(QString::fromUtf8("deValid"));
+        deValid->setMaximumSize(QSize(120, 16777215));
+        deValid->setCalendarPopup(true);
+
+        formLayout_4->setWidget(8, QFormLayout::FieldRole, deValid);
+
+
+        verticalLayout_8->addWidget(gbPatientCard);
+
+        verticalSpacer_7 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_8->addItem(verticalSpacer_7);
+
+
+        horizontalLayout_10->addLayout(verticalLayout_8);
+
+        gbPCAction = new QGroupBox(tab_4);
+        gbPCAction->setObjectName(QString::fromUtf8("gbPCAction"));
+        verticalLayout_9 = new QVBoxLayout(gbPCAction);
+        verticalLayout_9->setSpacing(6);
+        verticalLayout_9->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
+        verticalSpacer_6 = new QSpacerItem(20, 225, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_9->addItem(verticalSpacer_6);
+
+        pbSaveNext = new QPushButton(gbPCAction);
+        pbSaveNext->setObjectName(QString::fromUtf8("pbSaveNext"));
+
+        verticalLayout_9->addWidget(pbSaveNext);
+
+
+        horizontalLayout_10->addWidget(gbPCAction);
+
+        tabWidget->addTab(tab_4, QString());
 
         verticalLayout_3->addWidget(tabWidget);
 
@@ -414,7 +578,7 @@ public:
 
         retranslateUi(cDlgMain);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(cDlgMain);
@@ -447,6 +611,18 @@ public:
         chkImportToDb->setText(QApplication::translate("cDlgMain", "Import to SQL DB", 0, QApplication::UnicodeUTF8));
         pbImportUsers->setText(QApplication::translate("cDlgMain", "Import Users", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("cDlgMain", "Import", 0, QApplication::UnicodeUTF8));
+        pbImportFromPCUse->setText(QApplication::translate("cDlgMain", "Import cards from usage table", 0, QApplication::UnicodeUTF8));
+        gbPatientCard->setTitle(QApplication::translate("cDlgMain", "Patientcard data", 0, QApplication::UnicodeUTF8));
+        lblBarcode->setText(QApplication::translate("cDlgMain", "Barcode : ", 0, QApplication::UnicodeUTF8));
+        lblType->setText(QApplication::translate("cDlgMain", "Type : ", 0, QApplication::UnicodeUTF8));
+        lblUnitsLeft->setText(QApplication::translate("cDlgMain", "Units left : ", 0, QApplication::UnicodeUTF8));
+        lblUnits->setText(QApplication::translate("cDlgMain", "Original units : ", 0, QApplication::UnicodeUTF8));
+        lblComment->setText(QApplication::translate("cDlgMain", "Comment : ", 0, QApplication::UnicodeUTF8));
+        lblValid->setText(QApplication::translate("cDlgMain", "Valid till ...", 0, QApplication::UnicodeUTF8));
+        deValid->setDisplayFormat(QApplication::translate("cDlgMain", "yyyy/MM/dd", 0, QApplication::UnicodeUTF8));
+        gbPCAction->setTitle(QString());
+        pbSaveNext->setText(QApplication::translate("cDlgMain", "Save and jump to next", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("cDlgMain", "PatientCard", 0, QApplication::UnicodeUTF8));
         gbInfo->setTitle(QApplication::translate("cDlgMain", " Log information ", 0, QApplication::UnicodeUTF8));
         gbExit->setTitle(QString());
         pbExit->setText(QApplication::translate("cDlgMain", "Exit application", 0, QApplication::UnicodeUTF8));

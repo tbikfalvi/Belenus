@@ -20,6 +20,7 @@
 
 //====================================================================================
 
+#include "../framework/qtframework.h"
 #include "ui_cdlgmain.h"
 
 //====================================================================================
@@ -95,6 +96,7 @@ public:
     ~cDlgMain();
 
 private:
+    QSqlQuery      *poQuery;
     QString         m_qsQuery;
     QString         m_qsDATPath;
     QString         m_qsSQLPath;
@@ -114,6 +116,7 @@ private:
     bool            createPCTFile();
     bool            createPCFile();
     unsigned int    patientCardId( QString p_qsBarcode );
+    bool            getNextNewPatientCard();
 
 private slots:
     void on_rbBelenusConvert_clicked();
@@ -126,6 +129,8 @@ private slots:
     void on_pbImportPatientCards_clicked();
     void on_pbImportPatientCardUsages_clicked();
     void on_pbImportUsers_clicked();
+    void on_pbImportFromPCUse_clicked();
+    void on_pbSaveNext_clicked();
     void on_pbExit_clicked();
 };
 //====================================================================================
