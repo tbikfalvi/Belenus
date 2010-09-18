@@ -1,21 +1,12 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-09-12T14:55:28
 # -------------------------------------------------
-QT += core \
-    gui
-TARGET = BelenusDBTool
+
 TEMPLATE = app
-SOURCES += main.cpp \
-    ../framework/dbconnection.cpp \
-    ../framework/qtlogger.cpp \
-    ../framework/logger/DatabaseWriter.cpp \
-    ../framework/logger/GUIWriter.cpp \
-    ../framework/logger/ConsoleWriter.cpp \
-    ../framework/qtmysqlconnection.cpp \
-    ../framework/qtmysqlquerymodel.cpp \
-    ../framework/tracer.cpp \
-    cdlgmain.cpp
-HEADERS += cdlgmain.h \
+
+FORMS = cdlgmain.ui
+
+HEADERS = belenusdbtool.h \
     ../framework/dbconnection.h \
     ../framework/qtframework.h \
     ../framework/qtlogger.h \
@@ -26,9 +17,22 @@ HEADERS += cdlgmain.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
     ../framework/tracer.h \
-FORMS += cdlgmain.ui \
-    belenusdbtool.h
-DESTDIR = ..
+    cdlgmain.h
 
-QT += network
+SOURCES += main.cpp \
+    ../framework/dbconnection.cpp \
+    ../framework/qtlogger.cpp \
+    ../framework/logger/DatabaseWriter.cpp \
+    ../framework/logger/GUIWriter.cpp \
+    ../framework/logger/ConsoleWriter.cpp \
+    ../framework/qtmysqlconnection.cpp \
+    ../framework/qtmysqlquerymodel.cpp \
+    ../framework/tracer.cpp \
+    cdlgmain.cpp
+
+DESTDIR = ..
 QT += sql
+QT += network
+CONFIG += qt
+CONFIG += console
+win32:DEFINES -= UNICODE 
