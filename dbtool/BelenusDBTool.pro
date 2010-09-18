@@ -6,21 +6,29 @@ QT += core \
 TARGET = BelenusDBTool
 TEMPLATE = app
 SOURCES += main.cpp \
-    cdlgmain.cpp \
-    ../framework/tracer.cpp \
-    ../framework/qtmysqlquerymodel.cpp \
-    ../framework/qtmysqlconnection.cpp \
+    ../framework/dbconnection.cpp \
     ../framework/qtlogger.cpp \
-    ../framework/dbconnection.cpp
+    ../framework/logger/DatabaseWriter.cpp \
+    ../framework/logger/GUIWriter.cpp \
+    ../framework/logger/ConsoleWriter.cpp \
+    ../framework/qtmysqlconnection.cpp \
+    ../framework/qtmysqlquerymodel.cpp \
+    ../framework/tracer.cpp \
+    cdlgmain.cpp
 HEADERS += cdlgmain.h \
-    ../framework/tracer.h \
-    ../framework/qtmysqlquerymodel.h \
-    ../framework/qtmysqlconnection.h \
+    ../framework/dbconnection.h \
+    ../framework/qtframework.h \
     ../framework/qtlogger.h \
-    ../framework/dbconnection.h
-FORMS += cdlgmain.ui
+    ../framework/logger/DatabaseWriter.h \
+    ../framework/logger/GUIWriter.h \
+    ../framework/logger/ConsoleWriter.h \
+    ../framework/qtmysqlconnection.h \
+    ../framework/qtmysqlquerymodel.h \
+    ../framework/sevexception.h \
+    ../framework/tracer.h \
+FORMS += cdlgmain.ui \
+    belenusdbtool.h
 DESTDIR = ..
 
 QT += network
 QT += sql
-

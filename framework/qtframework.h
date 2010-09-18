@@ -1,9 +1,9 @@
 #ifndef QTFRAMEWORK_H
 #define QTFRAMEWORK_H
 
-#include "../framework/qtlogger.h"
-#include "../framework/tracer.h"
-#include "../framework/qtmysqlconnection.h"
+#include "qtlogger.h"
+#include "tracer.h"
+#include "qtmysqlconnection.h"
 
 extern cQTLogger                 g_obLogger;
 extern cQTMySQLConnection       *g_poDB;
