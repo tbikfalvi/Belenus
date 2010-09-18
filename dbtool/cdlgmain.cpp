@@ -1,99 +1,162 @@
+//====================================================================================
+//
+// Belenus DB Tool alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : cdlgmain.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
 
 #include <QMessageBox>
 #include <QFile>
 #include <QDate>
 #include <QDir>
 
+//====================================================================================
+
 #include <iostream>
 #include <stdio.h>
 
-#include "../framework/qtframework.h"
+//====================================================================================
 
+#include "../framework/qtframework.h"
 #include "cdlgmain.h"
 #include "ui_cdlgmain.h"
 
-cDlgMain::cDlgMain(QWidget *parent) :
-    QDialog(parent)
+//====================================================================================
+//
+//====================================================================================
+cDlgMain::cDlgMain(QWidget *parent) : QDialog(parent)
 {
     setupUi(this);
 
+    g_poDB                  = new cQTMySQLConnection;
+
+    m_qsAppPath             = QDir::currentPath();
+    m_bDatabaseConnected    = false;
+
+    tabWidget->setCurrentIndex( 0 );
+
     setWindowIcon( QIcon("./device.png") );
 
-    pbCheckFiles->setIcon( QIcon("./check.png") );
-    pbImportPatientCardTypes->setIcon( QIcon("./patientcards.png") );
-    pbImportPatientCards->setIcon( QIcon("./patientcard.png") );
-    pbImportPatientCardUsages->setIcon( QIcon("./patientcard.png") );
-    pbImportUsers->setIcon( QIcon("./user.png") );
-    pbExit->setIcon( QIcon("./exit.png") );
-
-    m_qsAppPath = QDir::currentPath();
-
-    ledImportPath->setText( m_qsAppPath );
-    ledExportPath->setText( m_qsAppPath );
-
-    pbImportPatientCardTypes->setEnabled( false );
-    pbImportPatientCards->setEnabled( false );
-    pbImportPatientCardUsages->setEnabled( false );
-    pbImportUsers->setEnabled( false );
+    // SQL Connection tab
+    ledDatabase->setText( "belenusconvert" );
+    ledUser->setText( "root" );
+    ledPassword->setText( "" );
+    rbBelenusConvert->setChecked( true );
+    rbBelenus->setChecked( false );
+    pbConnect->setIcon( QIcon("./check.png") );
+    pbConnect->setEnabled( true );
+    pbDisconnect->setIcon( QIcon("./check.png") );
     pbDisconnect->setEnabled( false );
 
-    g_poDB = new cQTMySQLConnection;
-}
+    // Import settings tab
+    ledImportPath->setText( m_qsAppPath );
+    ledExportPath->setText( m_qsAppPath );
+    pbCheckFiles->setIcon( QIcon("./check.png") );
+    pbCheckFiles->setEnabled( true );
 
+    // Import tab
+    pbClearDatabase->setIcon( QIcon("./check.png") );
+    pbClearDatabase->setEnabled( false );
+    pbImportPatientCardTypes->setIcon( QIcon("./patientcards.png") );
+    pbImportPatientCardTypes->setEnabled( false );
+    pbImportPatientCards->setIcon( QIcon("./patientcard.png") );
+    pbImportPatientCards->setEnabled( false );
+    pbImportPatientCardUsages->setIcon( QIcon("./patientcard.png") );
+    pbImportPatientCardUsages->setEnabled( false );
+    chkImportToDb->setEnabled( false );
+    pbImportUsers->setIcon( QIcon("./user.png") );
+    pbImportUsers->setEnabled( false );
+
+    pbExit->setIcon( QIcon("./exit.png") );
+}
+//====================================================================================
+//
+//====================================================================================
 cDlgMain::~cDlgMain()
 {
     if( g_poDB ) delete g_poDB;
 }
-
-void cDlgMain::EnCode( char *str, int size )
+//====================================================================================
+void cDlgMain::on_rbBelenusConvert_clicked()
+//====================================================================================
 {
-   for(int i=0;i<size;i++)
-   {
-      str[i] ^= 11;
-   }
+    ledDatabase->setText( "belenusconvert" );
+    ledUser->setText( "root" );
+    ledPassword->setText( "" );
 }
-
-void cDlgMain::DeCode( char *str, int size )
+//====================================================================================
+void cDlgMain::on_rbBelenus_clicked()
+//====================================================================================
 {
-   for(int i=0;i<size;i++)
-   {
-      str[i] ^= 11;
-   }
+    ledDatabase->setText( "belenus" );
+    ledUser->setText( "belenus" );
+    ledPassword->setText( "" );
 }
-
-unsigned int cDlgMain::patientCardId( QString /*p_qsBarcode*/ )
+//====================================================================================
+void cDlgMain::on_pbConnect_clicked()
+//====================================================================================
 {
-    return 0;
-}
+    g_poDB->setHostName( "localhost" );
+    g_poDB->setDatabaseName( ledDatabase->text() );
+    g_poDB->setUserName( ledUser->text() );
+    g_poDB->setPassword( ledPassword->text() );
 
-bool cDlgMain::checkFile( QString p_qsFileName )
-{
-    QFile   *obQFTemp = NULL;
-    bool     bRet = false;
-
-    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + p_qsFileName;
-    obQFTemp = new QFile( m_qsFullName );
-    if( obQFTemp->exists() )
+    try
     {
-        listLog->addItem( tr("The %1 file exists.").arg(p_qsFileName) );
-        bRet = true;
+        g_poDB->open();
+
+        listLog->addItem( tr("Database connection established.") );
+
+        pbConnect->setEnabled( false );
+        pbDisconnect->setEnabled( true );
+        if( ledDatabase->text().compare( "belenusconvert" ) == 0 )
+        {
+            pbClearDatabase->setEnabled( true );
+        }
+        else
+        {
+            pbClearDatabase->setEnabled( false );
+        }
+
+        m_bDatabaseConnected = true;
+
+        tabWidget->setCurrentIndex( 1 );
     }
-    else
+    catch( cSevException &e )
     {
-        listLog->addItem( tr("The %1.dat file not found.").arg(p_qsFileName) );
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
-
-    if( obQFTemp ) delete obQFTemp;
-
-    return bRet;
 }
+//====================================================================================
+void cDlgMain::on_pbDisconnect_clicked()
+//====================================================================================
+{
+    g_poDB->close();
 
+    listLog->addItem( tr("Database connection closed.") );
+
+    pbConnect->setEnabled( true );
+    pbDisconnect->setEnabled( false );
+
+    m_bDatabaseConnected = false;
+}
+//====================================================================================
 void cDlgMain::on_pbCheckFiles_clicked()
+//====================================================================================
 {
     listLog->clear();
 
     m_qsDATPath = ledImportPath->text();
+#ifdef __WIN32__
     m_qsDATPath = m_qsDATPath.replace( "/", "\\" );
+#endif
 
     if( QDir::setCurrent( m_qsDATPath ) )
     {
@@ -112,7 +175,9 @@ void cDlgMain::on_pbCheckFiles_clicked()
     }
 
     m_qsSQLPath = ledExportPath->text();
+#ifdef __WIN32__
     m_qsSQLPath = m_qsSQLPath.replace( "/", "\\" );
+#endif
 
     if( QDir::setCurrent( m_qsSQLPath ) )
     {
@@ -133,9 +198,10 @@ void cDlgMain::on_pbCheckFiles_clicked()
     bool    bIsPCTOK    = checkFile( "brlttpsfsv.dat" );
     bool    bIsPCOK     = checkFile( "brltfsv.dat");
     bool    bIsPCHOK    = checkFile( "brlthsznltfsv.dat");
+    bool    bIsUOK      = checkFile( "srfsv.dat" );
     bool    bIsOk       = false;
 
-    if( !bIsPCTOK && !bIsPCOK && bIsPCHOK )
+    if( !bIsPCTOK && !bIsPCOK && !bIsPCHOK && !bIsUOK )
         return;
 
     ledLicenceId->text().toInt( &bIsOk );
@@ -163,14 +229,38 @@ void cDlgMain::on_pbCheckFiles_clicked()
         pbImportPatientCardUsages->setEnabled( true );
     else
         pbImportPatientCardUsages->setEnabled( false );
-}
 
-void cDlgMain::on_pbExit_clicked()
+    if( bIsUOK )
+        pbImportUsers->setEnabled( true );
+    else
+        pbImportUsers->setEnabled( false );
+
+    chkImportToDb->setEnabled( m_bDatabaseConnected );
+
+    tabWidget->setCurrentIndex( 2 );
+}
+//====================================================================================
+void cDlgMain::on_pbClearDatabase_clicked()
+//====================================================================================
 {
-    close();
+    try
+    {
+        g_poDB->executeQTQuery( QString( "TRUNCATE TABLE berlet" ) );
+        listLog->addItem( tr("Table 'berlet' cleared.") );
+        g_poDB->executeQTQuery( QString( "TRUNCATE TABLE berlethasznalat" ) );
+        listLog->addItem( tr("Table 'berlethasznalat' cleared.") );
+        g_poDB->executeQTQuery( QString( "TRUNCATE TABLE berlettipus" ) );
+        listLog->addItem( tr("Table 'berlettipus' cleared.") );
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
-
+//====================================================================================
 void cDlgMain::on_pbImportPatientCardTypes_clicked()
+//====================================================================================
 {
     bool    bIsOk = false;
 
@@ -189,7 +279,11 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
     char           strTemp[10];
     unsigned int   nCount = 0;
 
+#ifdef __WIN32__
     m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brlttpsfsv.dat" );
+#else
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brlttpsfsv.dat" );
+#endif
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -228,6 +322,36 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
                 QString qsNev = QString( stTemp.strNev );
                 qsNev = qsNev.replace( QString("\""), QString("\\\"") );
 
+                m_qsQuery = "";
+                m_qsQuery += QString( "INSERT INTO `berlettipus` (`nId`, `nAr`, `nEgyseg`, `strNev`, `nErvTolEv`, `nErvTolHo`, `nErvTolNap`, `nErvIgEv`, `nErvIgHo`, `nErvIgNap`, `nErvNapok`, `bSzolariumHaszn`, `nEgysegIdo`) VALUES" );
+                m_qsQuery += QString( " ( " );
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nID);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nAr);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nEgyseg);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.strNev);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvTolEv);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvTolHo);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvTolNap);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvIgHo);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvIgEv);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvIgNap);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.nErvNapok);
+                m_qsQuery += QString( "\'%1\', " ).arg(stTemp.bSzolariumHaszn);
+                m_qsQuery += QString( "\'%1\' ) " ).arg(stTemp.nEgysegIdo);
+
+                if( chkImportToDb->isChecked() )
+                {
+                    try
+                    {
+                        g_poDB->executeQTQuery( m_qsQuery );
+                    }
+                    catch( cSevException &e )
+                    {
+                        listLog->addItem( e.what() );
+                        g_obLogger(e.severity()) << e.what() << EOM;
+                    }
+                }
+
                 m_qsPatientCardTypes += QString( "ALTER TABLE `patientCardTypes` auto_increment=%1;\n" ).arg(stTemp.nID);
                 m_qsPatientCardTypes += QString( "INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES" );
                 m_qsPatientCardTypes += QString( " ( " );
@@ -253,22 +377,9 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
         listLog->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
     }
 }
-
-bool cDlgMain::createPCTFile()
-{
-    FILE    *file = NULL;
-    bool    bRet = true;
-
-    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcardtypes.sql" );
-
-    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
-    fputs( m_qsPatientCardTypes.toStdString().c_str(), file );
-    fclose( file );
-
-    return bRet;
-}
-
+//====================================================================================
 void cDlgMain::on_pbImportPatientCards_clicked()
+//====================================================================================
 {
     m_qsPatientCards.clear();
 
@@ -277,7 +388,11 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     unsigned int   nCount = 0;
     QString         qsQuery;
 
+#ifdef __WIN32__
     m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv.dat" );
+#else
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brltfsv.dat" );
+#endif
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -331,22 +446,9 @@ void cDlgMain::on_pbImportPatientCards_clicked()
         listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
     }
 }
-
-bool cDlgMain::createPCFile()
-{
-    FILE    *file = NULL;
-    bool    bRet = true;
-
-    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcards.sql" );
-
-    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
-    fputs( m_qsPatientCards.toStdString().c_str(), file );
-    fclose( file );
-
-    return bRet;
-}
-
+//====================================================================================
 void cDlgMain::on_pbImportPatientCardUsages_clicked()
+//====================================================================================
 {
     m_qsPatientCardUse.clear();
 
@@ -355,7 +457,11 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
     unsigned int   nCount = 0;
     QString         qsQuery;
 
+#ifdef __WIN32__
     m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brlthsznltfsv.dat" );
+#else
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brlthsznltfsv.dat" );
+#endif
 
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -403,8 +509,9 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
         listLog->addItem( tr( "Error occured during opening brlthsznltfsv.dat file." ) );
     }
 }
-
+//====================================================================================
 void cDlgMain::on_pbImportUsers_clicked()
+//====================================================================================
 {
     m_qsUsers.clear();
 
@@ -461,42 +568,93 @@ void cDlgMain::on_pbImportUsers_clicked()
         listLog->addItem( tr( "Error occured during opening srfsv.dat file." ) );
     }
 }
-
-void cDlgMain::on_pbExportDatabase_clicked()
+//====================================================================================
+void cDlgMain::on_pbExit_clicked()
+//====================================================================================
 {
-    createPCTFile();
-    createPCFile();
+    close();
 }
-
-void cDlgMain::on_pbConnect_clicked()
+//====================================================================================
+void cDlgMain::EnCode( char *str, int size )
+//====================================================================================
 {
-    g_poDB->setHostName( "localhost" );
-    g_poDB->setDatabaseName( ledDatabase->text() );
-    g_poDB->setUserName( ledUser->text() );
-    g_poDB->setPassword( ledPassword->text() );
+   for(int i=0;i<size;i++)
+   {
+      str[i] ^= 11;
+   }
+}
+//====================================================================================
+void cDlgMain::DeCode( char *str, int size )
+//====================================================================================
+{
+   for(int i=0;i<size;i++)
+   {
+      str[i] ^= 11;
+   }
+}
+//====================================================================================
+unsigned int cDlgMain::patientCardId( QString /*p_qsBarcode*/ )
+//====================================================================================
+{
+    return 0;
+}
+//====================================================================================
+bool cDlgMain::checkFile( QString p_qsFileName )
+//====================================================================================
+{
+    QFile   *obQFTemp = NULL;
+    bool     bRet = false;
 
-    try
+#ifdef __WIN32__
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + p_qsFileName;
+#else
+    m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("/")?QString(""):QString("/")) + p_qsFileName;
+#endif
+    obQFTemp = new QFile( m_qsFullName );
+    if( obQFTemp->exists() )
     {
-        g_poDB->open();
-
-        listLog->addItem( tr("Database connection established.") );
-
-        pbConnect->setEnabled( false );
-        pbDisconnect->setEnabled( true );
+        listLog->addItem( tr("The %1 file exists.").arg(p_qsFileName) );
+        bRet = true;
     }
-    catch( cSevException &e )
+    else
     {
-        listLog->addItem( e.what() );
-        g_obLogger(e.severity()) << e.what() << EOM;
+        listLog->addItem( tr("The %1.dat file not found.").arg(p_qsFileName) );
     }
-}
 
-void cDlgMain::on_pbDisconnect_clicked()
+    if( obQFTemp ) delete obQFTemp;
+
+    return bRet;
+}
+//====================================================================================
+//
+//====================================================================================
+bool cDlgMain::createPCTFile()
 {
-    g_poDB->close();
+    FILE    *file = NULL;
+    bool    bRet = true;
 
-    listLog->addItem( tr("Database connection closed.") );
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcardtypes.sql" );
 
-    pbConnect->setEnabled( true );
-    pbDisconnect->setEnabled( false );
+    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
+    fputs( m_qsPatientCardTypes.toStdString().c_str(), file );
+    fclose( file );
+
+    return bRet;
 }
+//====================================================================================
+//
+//====================================================================================
+bool cDlgMain::createPCFile()
+{
+    FILE    *file = NULL;
+    bool    bRet = true;
+
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcards.sql" );
+
+    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
+    fputs( m_qsPatientCards.toStdString().c_str(), file );
+    fclose( file );
+
+    return bRet;
+}
+//====================================================================================

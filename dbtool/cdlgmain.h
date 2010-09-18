@@ -1,17 +1,32 @@
+//====================================================================================
+//
+// Belenus DB Tool alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : cdlgmain.h
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #ifndef CDLGMAIN_H
 #define CDLGMAIN_H
 
+//====================================================================================
+
 #include <QDialog>
+
+//====================================================================================
 
 #ifdef __WIN32__
     #include <windows.h>
 #endif
 
-#include "ui_cdlgmain.h"
+//====================================================================================
 
-//namespace Ui {
-//    class cDlgMain;
-//}
+#include "ui_cdlgmain.h"
 
 //====================================================================================
 // BERLETTIPUS structure
@@ -75,6 +90,8 @@ typedef struct _typ_berlethasznalat
 } typ_berlethasznalat;
 
 //====================================================================================
+//
+//====================================================================================
 class cDlgMain : public QDialog, protected Ui_cDlgMain
 {
     Q_OBJECT
@@ -84,15 +101,18 @@ public:
     ~cDlgMain();
 
 private:
-    QString     m_qsDATPath;
-    QString     m_qsSQLPath;
-    QString     m_qsAppPath;
-    QString     m_qsFullName;
+    QString         m_qsQuery;
+    QString         m_qsDATPath;
+    QString         m_qsSQLPath;
+    QString         m_qsAppPath;
+    QString         m_qsFullName;
 
-    QString     m_qsPatientCardTypes;
-    QString     m_qsPatientCards;
-    QString     m_qsUsers;
-    QString     m_qsPatientCardUse;
+    QString         m_qsPatientCardTypes;
+    QString         m_qsPatientCards;
+    QString         m_qsUsers;
+    QString         m_qsPatientCardUse;
+
+    bool            m_bDatabaseConnected;
 
     void            EnCode( char *str, int size );
     void            DeCode( char *str, int size );
@@ -102,15 +122,18 @@ private:
     unsigned int    patientCardId( QString p_qsBarcode );
 
 private slots:
-    void on_pbImportUsers_clicked();
-    void on_pbExportDatabase_clicked();
-    void on_pbImportPatientCards_clicked();
-    void on_pbImportPatientCardTypes_clicked();
-    void on_pbExit_clicked();
-    void on_pbCheckFiles_clicked();
-    void on_pbImportPatientCardUsages_clicked();
+    void on_rbBelenusConvert_clicked();
+    void on_rbBelenus_clicked();
     void on_pbConnect_clicked();
     void on_pbDisconnect_clicked();
+    void on_pbCheckFiles_clicked();
+    void on_pbClearDatabase_clicked();
+    void on_pbImportPatientCardTypes_clicked();
+    void on_pbImportPatientCards_clicked();
+    void on_pbImportPatientCardUsages_clicked();
+    void on_pbImportUsers_clicked();
+    void on_pbExit_clicked();
 };
+//====================================================================================
 
 #endif // CDLGMAIN_H

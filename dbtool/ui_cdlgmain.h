@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
 #include <QtGui/QFormLayout>
 #include <QtGui/QGroupBox>
@@ -23,6 +24,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QListWidget>
 #include <QtGui/QPushButton>
+#include <QtGui/QRadioButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QTabWidget>
 #include <QtGui/QVBoxLayout>
@@ -47,6 +49,11 @@ public:
     QLineEdit *ledUser;
     QLabel *lblPassword;
     QLineEdit *ledPassword;
+    QGroupBox *gbDatabaseSelect;
+    QVBoxLayout *verticalLayout_7;
+    QRadioButton *rbBelenusConvert;
+    QRadioButton *rbBelenus;
+    QSpacerItem *verticalSpacer_5;
     QSpacerItem *horizontalSpacer_2;
     QSpacerItem *verticalSpacer_2;
     QHBoxLayout *horizontalLayout_2;
@@ -70,24 +77,27 @@ public:
     QSpacerItem *horizontalSpacer_4;
     QPushButton *pbCheckFiles;
     QWidget *tab_3;
-    QGroupBox *gbInfo;
-    QVBoxLayout *verticalLayout;
-    QListWidget *listLog;
-    QVBoxLayout *verticalLayout_5;
-    QGroupBox *gbAction;
-    QVBoxLayout *verticalLayout_7;
+    QVBoxLayout *verticalLayout_6;
+    QHBoxLayout *horizontalLayout_7;
+    QPushButton *pbClearDatabase;
+    QSpacerItem *horizontalSpacer_6;
+    QHBoxLayout *horizontalLayout_5;
     QPushButton *pbImportPatientCardTypes;
     QPushButton *pbImportPatientCards;
     QPushButton *pbImportPatientCardUsages;
+    QCheckBox *chkImportToDb;
+    QSpacerItem *horizontalSpacer;
+    QHBoxLayout *horizontalLayout_6;
     QPushButton *pbImportUsers;
-    QSpacerItem *verticalSpacer;
-    QPushButton *pbExportDatabase;
-    QGroupBox *gbSpacer;
-    QVBoxLayout *verticalLayout_8;
+    QSpacerItem *horizontalSpacer_5;
     QSpacerItem *verticalSpacer_4;
+    QGroupBox *gbInfo;
+    QVBoxLayout *verticalLayout;
+    QListWidget *listLog;
     QGroupBox *gbExit;
-    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *verticalLayout_5;
     QPushButton *pbExit;
+    QSpacerItem *verticalSpacer;
 
     void setupUi(QDialog *cDlgMain)
     {
@@ -137,6 +147,7 @@ public:
         ledUser = new QLineEdit(gbSQLConnect);
         ledUser->setObjectName(QString::fromUtf8("ledUser"));
         ledUser->setMinimumSize(QSize(200, 0));
+        ledUser->setEchoMode(QLineEdit::Password);
 
         formLayout_2->setWidget(1, QFormLayout::FieldRole, ledUser);
 
@@ -155,7 +166,30 @@ public:
 
         horizontalLayout->addWidget(gbSQLConnect);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        gbDatabaseSelect = new QGroupBox(tab);
+        gbDatabaseSelect->setObjectName(QString::fromUtf8("gbDatabaseSelect"));
+        verticalLayout_7 = new QVBoxLayout(gbDatabaseSelect);
+        verticalLayout_7->setSpacing(6);
+        verticalLayout_7->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        rbBelenusConvert = new QRadioButton(gbDatabaseSelect);
+        rbBelenusConvert->setObjectName(QString::fromUtf8("rbBelenusConvert"));
+
+        verticalLayout_7->addWidget(rbBelenusConvert);
+
+        rbBelenus = new QRadioButton(gbDatabaseSelect);
+        rbBelenus->setObjectName(QString::fromUtf8("rbBelenus"));
+
+        verticalLayout_7->addWidget(rbBelenus);
+
+        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_7->addItem(verticalSpacer_5);
+
+
+        horizontalLayout->addWidget(gbDatabaseSelect);
+
+        horizontalSpacer_2 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer_2);
 
@@ -270,6 +304,74 @@ public:
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        verticalLayout_6 = new QVBoxLayout(tab_3);
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        pbClearDatabase = new QPushButton(tab_3);
+        pbClearDatabase->setObjectName(QString::fromUtf8("pbClearDatabase"));
+
+        horizontalLayout_7->addWidget(pbClearDatabase);
+
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_7->addItem(horizontalSpacer_6);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_7);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        pbImportPatientCardTypes = new QPushButton(tab_3);
+        pbImportPatientCardTypes->setObjectName(QString::fromUtf8("pbImportPatientCardTypes"));
+
+        horizontalLayout_5->addWidget(pbImportPatientCardTypes);
+
+        pbImportPatientCards = new QPushButton(tab_3);
+        pbImportPatientCards->setObjectName(QString::fromUtf8("pbImportPatientCards"));
+
+        horizontalLayout_5->addWidget(pbImportPatientCards);
+
+        pbImportPatientCardUsages = new QPushButton(tab_3);
+        pbImportPatientCardUsages->setObjectName(QString::fromUtf8("pbImportPatientCardUsages"));
+
+        horizontalLayout_5->addWidget(pbImportPatientCardUsages);
+
+        chkImportToDb = new QCheckBox(tab_3);
+        chkImportToDb->setObjectName(QString::fromUtf8("chkImportToDb"));
+
+        horizontalLayout_5->addWidget(chkImportToDb);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_5->addItem(horizontalSpacer);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_5);
+
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        pbImportUsers = new QPushButton(tab_3);
+        pbImportUsers->setObjectName(QString::fromUtf8("pbImportUsers"));
+
+        horizontalLayout_6->addWidget(pbImportUsers);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_6->addItem(horizontalSpacer_5);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_6);
+
+        verticalSpacer_4 = new QSpacerItem(20, 172, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_6->addItem(verticalSpacer_4);
+
         tabWidget->addTab(tab_3, QString());
 
         verticalLayout_3->addWidget(tabWidget);
@@ -291,81 +393,28 @@ public:
 
         horizontalLayout_4->addLayout(verticalLayout_3);
 
-        verticalLayout_5 = new QVBoxLayout();
-        verticalLayout_5->setSpacing(6);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        gbAction = new QGroupBox(cDlgMain);
-        gbAction->setObjectName(QString::fromUtf8("gbAction"));
-        verticalLayout_7 = new QVBoxLayout(gbAction);
-        verticalLayout_7->setSpacing(6);
-        verticalLayout_7->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
-        pbImportPatientCardTypes = new QPushButton(gbAction);
-        pbImportPatientCardTypes->setObjectName(QString::fromUtf8("pbImportPatientCardTypes"));
-
-        verticalLayout_7->addWidget(pbImportPatientCardTypes);
-
-        pbImportPatientCards = new QPushButton(gbAction);
-        pbImportPatientCards->setObjectName(QString::fromUtf8("pbImportPatientCards"));
-
-        verticalLayout_7->addWidget(pbImportPatientCards);
-
-        pbImportPatientCardUsages = new QPushButton(gbAction);
-        pbImportPatientCardUsages->setObjectName(QString::fromUtf8("pbImportPatientCardUsages"));
-
-        verticalLayout_7->addWidget(pbImportPatientCardUsages);
-
-        pbImportUsers = new QPushButton(gbAction);
-        pbImportUsers->setObjectName(QString::fromUtf8("pbImportUsers"));
-
-        verticalLayout_7->addWidget(pbImportUsers);
-
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_7->addItem(verticalSpacer);
-
-        pbExportDatabase = new QPushButton(gbAction);
-        pbExportDatabase->setObjectName(QString::fromUtf8("pbExportDatabase"));
-
-        verticalLayout_7->addWidget(pbExportDatabase);
-
-
-        verticalLayout_5->addWidget(gbAction);
-
-        gbSpacer = new QGroupBox(cDlgMain);
-        gbSpacer->setObjectName(QString::fromUtf8("gbSpacer"));
-        verticalLayout_8 = new QVBoxLayout(gbSpacer);
-        verticalLayout_8->setSpacing(6);
-        verticalLayout_8->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
-        verticalSpacer_4 = new QSpacerItem(20, 133, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_8->addItem(verticalSpacer_4);
-
-
-        verticalLayout_5->addWidget(gbSpacer);
-
         gbExit = new QGroupBox(cDlgMain);
         gbExit->setObjectName(QString::fromUtf8("gbExit"));
-        verticalLayout_6 = new QVBoxLayout(gbExit);
-        verticalLayout_6->setSpacing(6);
-        verticalLayout_6->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        verticalLayout_5 = new QVBoxLayout(gbExit);
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         pbExit = new QPushButton(gbExit);
         pbExit->setObjectName(QString::fromUtf8("pbExit"));
 
-        verticalLayout_6->addWidget(pbExit);
+        verticalLayout_5->addWidget(pbExit);
+
+        verticalSpacer = new QSpacerItem(20, 421, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_5->addItem(verticalSpacer);
 
 
-        verticalLayout_5->addWidget(gbExit);
-
-
-        horizontalLayout_4->addLayout(verticalLayout_5);
+        horizontalLayout_4->addWidget(gbExit);
 
 
         retranslateUi(cDlgMain);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(cDlgMain);
@@ -373,11 +422,14 @@ public:
 
     void retranslateUi(QDialog *cDlgMain)
     {
-        cDlgMain->setWindowTitle(QApplication::translate("cDlgMain", "Belenus Import application (c) Pagony Multimedia Studio Bt.", 0, QApplication::UnicodeUTF8));
+        cDlgMain->setWindowTitle(QApplication::translate("cDlgMain", "Belenus DB Tool application (c) Pagony Multimedia Studio Bt.", 0, QApplication::UnicodeUTF8));
         gbSQLConnect->setTitle(QApplication::translate("cDlgMain", " Settings ", 0, QApplication::UnicodeUTF8));
         lblDatabase->setText(QApplication::translate("cDlgMain", "Database : ", 0, QApplication::UnicodeUTF8));
         lblUser->setText(QApplication::translate("cDlgMain", "User name : ", 0, QApplication::UnicodeUTF8));
         lblPassword->setText(QApplication::translate("cDlgMain", "Password : ", 0, QApplication::UnicodeUTF8));
+        gbDatabaseSelect->setTitle(QApplication::translate("cDlgMain", " Select database ", 0, QApplication::UnicodeUTF8));
+        rbBelenusConvert->setText(QApplication::translate("cDlgMain", "Belenus convert", 0, QApplication::UnicodeUTF8));
+        rbBelenus->setText(QApplication::translate("cDlgMain", "Belenus main", 0, QApplication::UnicodeUTF8));
         pbConnect->setText(QApplication::translate("cDlgMain", "Connect to database", 0, QApplication::UnicodeUTF8));
         pbDisconnect->setText(QApplication::translate("cDlgMain", "Disconnect", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("cDlgMain", "SQL Connection", 0, QApplication::UnicodeUTF8));
@@ -388,15 +440,14 @@ public:
         lblLicence->setText(QApplication::translate("cDlgMain", "Licence Id : ", 0, QApplication::UnicodeUTF8));
         pbCheckFiles->setText(QApplication::translate("cDlgMain", "Check parameters", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("cDlgMain", "Import settings", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("cDlgMain", "Patiencard merge", 0, QApplication::UnicodeUTF8));
-        gbInfo->setTitle(QApplication::translate("cDlgMain", " Log information ", 0, QApplication::UnicodeUTF8));
-        gbAction->setTitle(QString());
+        pbClearDatabase->setText(QApplication::translate("cDlgMain", "Clear database (apply only BelenusConvert)", 0, QApplication::UnicodeUTF8));
         pbImportPatientCardTypes->setText(QApplication::translate("cDlgMain", "Import Patientcard Types", 0, QApplication::UnicodeUTF8));
         pbImportPatientCards->setText(QApplication::translate("cDlgMain", "Import Patientcards", 0, QApplication::UnicodeUTF8));
         pbImportPatientCardUsages->setText(QApplication::translate("cDlgMain", "Import Patientcard Uses", 0, QApplication::UnicodeUTF8));
+        chkImportToDb->setText(QApplication::translate("cDlgMain", "Import to SQL DB", 0, QApplication::UnicodeUTF8));
         pbImportUsers->setText(QApplication::translate("cDlgMain", "Import Users", 0, QApplication::UnicodeUTF8));
-        pbExportDatabase->setText(QApplication::translate("cDlgMain", "Export to SQL files", 0, QApplication::UnicodeUTF8));
-        gbSpacer->setTitle(QString());
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("cDlgMain", "Import", 0, QApplication::UnicodeUTF8));
+        gbInfo->setTitle(QApplication::translate("cDlgMain", " Log information ", 0, QApplication::UnicodeUTF8));
         gbExit->setTitle(QString());
         pbExit->setText(QApplication::translate("cDlgMain", "Exit application", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
