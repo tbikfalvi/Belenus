@@ -295,13 +295,9 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
         listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
         if( nCount > 0 )
         {
-//            listLog->addItem( tr("Imported 0 record.") );
-//            QListWidgetItem *obListItem = listLog->item( listLog->count()-1 );
-
             typ_berlettipus stTemp;
             for( unsigned int i=0; i<nCount; i++ )
             {
-//                obListItem->setText( tr("Imported %1 record.").arg(i+1) );
                 fread( &stTemp.nID, 4, 1, file );
                 fread( &stTemp.nAr, 4, 1, file );
                 fread( &stTemp.nEgyseg, 4, 1, file );
