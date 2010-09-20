@@ -30,6 +30,8 @@ SOURCES += main.cpp \
     ../framework/tracer.cpp \
     cdlgmain.cpp
 
+TRANSLATIONS = BelenusDBTool_us.ts \
+               BelenusDBTool_hu.ts
 DESTDIR = ..
 QT += sql
 QT += network

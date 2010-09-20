@@ -658,6 +658,7 @@ void cDlgMain::on_pbImportUsers_clicked()
 void cDlgMain::on_pbImportFromPCUse_clicked()
 //====================================================================================
 {
+    cmbType->clear();
     poQuery = g_poDB->executeQTQuery( QString("SELECT nId, strNev FROM berlettipus") );
     cmbType->addItem( tr("<Not selected>"), 0 );
     while( poQuery->next() )
@@ -827,9 +828,9 @@ void cDlgMain::on_pbExportToPCDat_clicked()
         FILE    *file = NULL;
 
 #ifdef __WIN32__
-        m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv_new.sql" );
+        m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv_new.dat" );
 #else
-        m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brltfsv_new.sql" );
+        m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brltfsv_new.dat" );
 #endif
 
         file = fopen( m_qsFullName.toStdString().c_str(), "wb" );
@@ -852,7 +853,15 @@ void cDlgMain::on_pbExportToPCDat_clicked()
             EnCode( stTemp.strVonalkod, 20 );
             EnCode( stTemp.strMegjegyzes, 50 );
 
-            fwrite( &stTemp, 94, 1, file );
+            //fwrite( &stTemp, 94, 1, file );
+            fwrite( stTemp.strVonalkod, 20, 1, file );
+            fwrite( stTemp.strMegjegyzes, 50, 1, file );
+            fwrite( &stTemp.nBerletTipus, 4, 1, file );
+            fwrite( &stTemp.nEgyseg, 4, 1, file );
+            fwrite( &stTemp.nErvEv, 4, 1, file );
+            fwrite( &stTemp.nErvHo, 4, 1, file );
+            fwrite( &stTemp.nErvNap, 4, 1, file );
+            fwrite( &stTemp.nPin, 4, 1, file );
         }
         fclose( file );
     }
