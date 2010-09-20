@@ -300,7 +300,7 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
     {
-        memset( strTemp, 0, sizeof(strTemp) );
+        memset( strTemp, 0, 10 );
         fread( strTemp, 10, 1, file );
         nCount = 0;
         fread( &nCount, 4, 1, file );
@@ -324,7 +324,9 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
                 fread( &stTemp.bSzolariumHaszn, 1, 1, file );
                 fread( &stTemp.nEgysegIdo, 4, 1, file );
 
-                DeCode( stTemp.strNev, sizeof(stTemp.strNev) );
+                fseek( file, -4, SEEK_CUR );
+
+                DeCode( stTemp.strNev, 50 );
                 QDate   qdFrom( stTemp.nErvTolEv, stTemp.nErvTolHo, stTemp.nErvTolNap );
                 QDate   qdTo( stTemp.nErvIgEv, stTemp.nErvIgHo, stTemp.nErvIgNap );
                 QString qsNev = QString( stTemp.strNev );
@@ -381,7 +383,6 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
                 m_qsPatientCardTypes += QString( "\'%1\', " ).arg(stTemp.nEgysegIdo);
                 m_qsPatientCardTypes += QString( "\'1\', \"NEW\" ); \n" );
             }
-//            if( obListItem ) delete obListItem;
         }
         fclose( file );
         listLog->addItem( tr("Importing patientcard types finished.") );
@@ -415,7 +416,7 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
     {
-        memset( strTemp, 0, sizeof(strTemp) );
+        memset( strTemp, 0, 10 );
         fread( strTemp, 10, 1, file );
 
         nCount = 0;
@@ -434,8 +435,8 @@ void cDlgMain::on_pbImportPatientCards_clicked()
                 fread( &stTemp.nErvHo, 4, 1, file );
                 fread( &stTemp.nErvNap, 4, 1, file );
                 fread( &stTemp.nPin, 4, 1, file );
-                DeCode( stTemp.strVonalkod, sizeof(stTemp.strVonalkod) );
-                DeCode( stTemp.strMegjegyzes, sizeof(stTemp.strMegjegyzes) );
+                DeCode( stTemp.strVonalkod, 20 );
+                DeCode( stTemp.strMegjegyzes, 50 );
 
                 QDate   qdDate( stTemp.nErvEv, stTemp.nErvHo, stTemp.nErvNap );
                 QString qsMegjegyzes = QString( stTemp.strMegjegyzes );
@@ -519,7 +520,7 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
     {
-        memset( strTemp, 0, sizeof(strTemp) );
+        memset( strTemp, 0, 10 );
         fread( strTemp, 10, 1, file );
 
         nCount = 0;
@@ -537,7 +538,7 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
                 fread( &stTemp.nOra, 4, 1, file );
                 fread( &stTemp.nPerc, 4, 1, file );
                 fread( &stTemp.nEgyseg, 4, 1, file );
-                DeCode( stTemp.strVonalkod, sizeof(stTemp.strVonalkod) );
+                DeCode( stTemp.strVonalkod, 20 );
 
                 QDate       tmpDate( stTemp.nEv, stTemp.nHo, stTemp.nNap );
                 QTime       tmpTime( stTemp.nOra, stTemp.nPerc, 0, 0 );
@@ -610,7 +611,7 @@ void cDlgMain::on_pbImportUsers_clicked()
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
     {
-        memset( strTemp, 0, sizeof(strTemp) );
+        memset( strTemp, 0, 10 );
         fread( strTemp, 10, 1, file );
 
         nCount = 0;
@@ -628,11 +629,11 @@ void cDlgMain::on_pbImportUsers_clicked()
                 fread( stTemp.strJelszo, 20, 1, file );
                 fread( stTemp.strMegjegyzes, 1000, 1, file );
                 fread( &stTemp.nUserLevel, 4, 1, file );
-                DeCode( stTemp.strAzonosito, sizeof(stTemp.strAzonosito) );
-                DeCode( stTemp.strLoginNev, sizeof(stTemp.strLoginNev) );
-                DeCode( stTemp.strNevCsalad, sizeof(stTemp.strNevCsalad) );
-                DeCode( stTemp.strJelszo, sizeof(stTemp.strJelszo) );
-                DeCode( stTemp.strMegjegyzes, sizeof(stTemp.strMegjegyzes) );
+                DeCode( stTemp.strAzonosito, 20 );
+                DeCode( stTemp.strLoginNev, 20 );
+                DeCode( stTemp.strNevCsalad, 100 );
+                DeCode( stTemp.strJelszo, 20 );
+                DeCode( stTemp.strMegjegyzes, 1000 );
 
                 m_qsUsers += QString( "INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `comment`, `active`, `archive`) VALUES" );
                 m_qsUsers += QString( " ( " );
@@ -817,7 +818,11 @@ bool cDlgMain::createPCTFile()
     FILE    *file = NULL;
     bool    bRet = true;
 
+#ifdef __WIN32__
     m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcardtypes.sql" );
+#else
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("/")?QString(""):QString("/")) + QString( "patientcardtypes.sql" );
+#endif
 
     file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
     fputs( m_qsPatientCardTypes.toStdString().c_str(), file );
@@ -833,7 +838,11 @@ bool cDlgMain::createPCFile()
     FILE    *file = NULL;
     bool    bRet = true;
 
+#ifdef __WIN32__
     m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcards.sql" );
+#else
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("/")?QString(""):QString("/")) + QString( "patientcards.sql" );
+#endif
 
     file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
     fputs( m_qsPatientCards.toStdString().c_str(), file );

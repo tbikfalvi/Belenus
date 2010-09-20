@@ -39,7 +39,7 @@ typedef struct _typ_berlettipus
    int   nErvIgHo;
    int   nErvIgNap;
    int   nErvNapok;
-   bool  bSzolariumHaszn;
+   char  bSzolariumHaszn;
    int   nEgysegIdo;
 } typ_berlettipus;
 
