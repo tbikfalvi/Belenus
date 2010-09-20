@@ -76,6 +76,8 @@ cDlgMain::cDlgMain(QWidget *parent) : QDialog(parent)
     // Patientcard tab
     pbImportFromPCUse->setIcon( QIcon("./patientcards.png") );
     pbImportFromPCUse->setEnabled( false );
+    pbNext->setIcon( QIcon("./patientcard.png") );
+    pbNext->setEnabled( false );
     pbSaveNext->setIcon( QIcon("./patientcard.png") );
     pbSaveNext->setEnabled( false );
 
@@ -124,10 +126,12 @@ void cDlgMain::on_pbConnect_clicked()
         if( ledDatabase->text().compare( "belenusconvert" ) == 0 )
         {
             pbClearDatabase->setEnabled( true );
+            pbImportFromPCUse->setEnabled( true );
         }
         else
         {
             pbClearDatabase->setEnabled( false );
+            pbImportFromPCUse->setEnabled( false );
         }
 
         m_bDatabaseConnected = true;
@@ -653,11 +657,26 @@ void cDlgMain::on_pbImportUsers_clicked()
 void cDlgMain::on_pbImportFromPCUse_clicked()
 //====================================================================================
 {
+    poQuery = g_poDB->executeQTQuery( QString("SELECT nId, strNev FROM berlettipus") );
+    cmbType->addItem( tr("<Not selected>"), 0 );
+    while( poQuery->next() )
+    {
+        cmbType->addItem( poQuery->value(1).toString(), poQuery->value(0).toInt() );
+    }
+    poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString("SELECT strVonalkod, nEv, nHo, nOra, nPerc, SUM(nEgyseg) AS nEgyseg FROM berlethasznalat GROUP BY strVonalkod") );
-        pbSaveNext->setEnabled( true );
-        getNextNewPatientCard();
+        poQuery = g_poDB->executeQTQuery( QString("SELECT strVonalkod, nEv, nHo, nNap, SUM(nEgyseg) AS nEgyseg FROM berlethasznalat GROUP BY strVonalkod") );
+        if( getNextNewPatientCard() )
+        {
+            pbNext->setEnabled( true );
+            pbSaveNext->setEnabled( true );
+        }
+        else
+        {
+            pbNext->setEnabled( false );
+            pbSaveNext->setEnabled( false );
+        }
     }
     catch( cSevException &e )
     {
@@ -668,9 +687,58 @@ void cDlgMain::on_pbImportFromPCUse_clicked()
     }
 }
 //====================================================================================
+void cDlgMain::on_pbNext_clicked()
+//====================================================================================
+{
+    if( getNextNewPatientCard() )
+    {
+        pbNext->setEnabled( true );
+        pbSaveNext->setEnabled( true );
+    }
+    else
+    {
+        pbNext->setEnabled( false );
+        pbSaveNext->setEnabled( false );
+    }
+}
+//====================================================================================
 void cDlgMain::on_pbSaveNext_clicked()
 //====================================================================================
 {
+    if( ledBarcode->text() == "" )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Barcode of the patientcard can not be empty.\n"
+                                 "Please define a valid barcode."));
+        ledBarcode->setFocus();
+        return;
+    }
+    else
+    {
+        QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * FROM berlet WHERE strVonalkod=\"%1\"").arg(ledBarcode->text()) );
+
+        if( poQBerlet->first() )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("This barcode already saved in database.\n"
+                                     "Please jump to the next unsaved patientcard or define another valid barcode."));
+            ledBarcode->setFocus();
+            return;
+        }
+    }
+    if( cmbType->itemData( cmbType->currentIndex() ) == 0 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The patientcard can not be saved with no patientcard type selected.\n"
+                                 "Please select a valid patientcard type."));
+        cmbType->setFocus();
+        return;
+    }
+    if( ledUnitsLeft->text() == "" ||
+        ledUnitsLeft->text().toInt() < 0 )
+    {
+        ledUnitsLeft->setText( "0" );
+    }
 }
 //====================================================================================
 void cDlgMain::on_pbExit_clicked()
@@ -780,12 +848,15 @@ bool cDlgMain::getNextNewPatientCard()
     if( !poQBerlet->first() )
     {
         ledBarcode->setText( poQuery->value(0).toString() );
-        ledUnitsLeft->setText( poQuery->value(5).toString() );
-        deValid->setDate( QDate(poQuery->value(1).toInt(),poQuery->value(2).toInt(),poQuery->value(3).toInt()) );
+        lblUnitsLeft->setText( tr("Number of uses : ") );
+        ledUnitsLeft->setText( poQuery->value(4).toString() );
+        ledFirstUse->setText( QDate(poQuery->value(1).toInt(),poQuery->value(2).toInt(),poQuery->value(3).toInt()).toString("yyyy/MM/dd") );
+        deValid->setDate( QDate::fromString(ledFirstUse->text(),"yyyy/MM/dd").addDays(365) );
+        bRet = true;
     }
     else
     {
-        getNextNewPatientCard();
+        bRet = getNextNewPatientCard();
     }
     if( poQBerlet ) delete poQBerlet;
 

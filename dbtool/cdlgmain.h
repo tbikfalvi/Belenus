@@ -130,6 +130,7 @@ private slots:
     void on_pbImportPatientCardUsages_clicked();
     void on_pbImportUsers_clicked();
     void on_pbImportFromPCUse_clicked();
+    void on_pbNext_clicked();
     void on_pbSaveNext_clicked();
     void on_pbExit_clicked();
 };

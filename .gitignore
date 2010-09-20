@@ -448,4 +448,9 @@ dbtool/cdlgmain.o
 dbtool/main.o
 dbtool/moc_cdlgmain.cpp
 dbtool/moc_cdlgmain.o
+dbtool/ConsoleWriter.o
+dbtool/DatabaseWriter.o
+dbtool/GUIWriter.o
+dbtool/Makefile
+dbtool/ui_cdlgmain.h
 
