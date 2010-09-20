@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `berlet` (
   `nErvNap` int(11) NOT NULL,
   `nPin` int(11) NOT NULL,
   PRIMARY KEY (`strVonalkod`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `berlethasznalat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `berlethasznalat` (
   `nPerc` int(11) NOT NULL,
   `nEgyseg` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `berlettipus` (
@@ -44,5 +44,5 @@ CREATE TABLE IF NOT EXISTS `berlettipus` (
   `bSzolariumHaszn` tinyint(1) NOT NULL,
   `nEgysegIdo` int(11) NOT NULL,
   PRIMARY KEY (`nId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

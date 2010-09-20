@@ -132,6 +132,7 @@ private slots:
     void on_pbImportFromPCUse_clicked();
     void on_pbNext_clicked();
     void on_pbSaveNext_clicked();
+    void on_pbExportToSQL_clicked();
     void on_pbExit_clicked();
 };
 //====================================================================================
