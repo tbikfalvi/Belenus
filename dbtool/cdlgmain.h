@@ -108,6 +108,8 @@ private:
     QString         m_qsUsers;
     QString         m_qsPatientCardUse;
 
+    char            m_strPatiencardVersion[10];
+
     bool            m_bDatabaseConnected;
 
     void            EnCode( char *str, int size );
@@ -130,9 +132,11 @@ private slots:
     void on_pbImportPatientCardUsages_clicked();
     void on_pbImportUsers_clicked();
     void on_pbImportFromPCUse_clicked();
+    void on_cmbType_currentIndexChanged(int index);
     void on_pbNext_clicked();
     void on_pbSaveNext_clicked();
     void on_pbExportToSQL_clicked();
+    void on_pbExportToPCDat_clicked();
     void on_pbExit_clicked();
 };
 //====================================================================================

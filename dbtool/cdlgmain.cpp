@@ -322,9 +322,10 @@ void cDlgMain::on_pbImportPatientCardTypes_clicked()
                 fread( &stTemp.nErvIgNap, 4, 1, file );
                 fread( &stTemp.nErvNapok, 4, 1, file );
                 fread( &stTemp.bSzolariumHaszn, 1, 1, file );
-                fread( &stTemp.nEgysegIdo, 4, 1, file );
-
-                fseek( file, -4, SEEK_CUR );
+                if( rbSensolite->isChecked() )
+                    fread( &stTemp.nEgysegIdo, 4, 1, file );
+                else
+                    stTemp.nEgysegIdo = 0;
 
                 DeCode( stTemp.strNev, 50 );
                 QDate   qdFrom( stTemp.nErvTolEv, stTemp.nErvTolHo, stTemp.nErvTolNap );
@@ -401,9 +402,7 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     m_qsPatientCards.clear();
 
     FILE           *file = NULL;
-    char           strTemp[10];
     unsigned int   nCount = 0;
-    QString         qsQuery;
 
 #ifdef __WIN32__
     m_qsFullName = m_qsDATPath + (!m_qsDATPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv.dat" );
@@ -416,8 +415,9 @@ void cDlgMain::on_pbImportPatientCards_clicked()
     file = fopen( m_qsFullName.toStdString().c_str(), "rb" );
     if( file != NULL )
     {
-        memset( strTemp, 0, 10 );
-        fread( strTemp, 10, 1, file );
+        memset( m_strPatiencardVersion, 0, 10 );
+        fread( m_strPatiencardVersion, 10, 1, file );
+        ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
@@ -688,6 +688,24 @@ void cDlgMain::on_pbImportFromPCUse_clicked()
     }
 }
 //====================================================================================
+void cDlgMain::on_cmbType_currentIndexChanged(int)
+//====================================================================================
+{
+    if( cmbType->currentIndex() )
+    {
+        QSqlQuery *poPCTQuery = g_poDB->executeQTQuery( QString("SELECT nEgyseg FROM berlettipus WHERE nId=%1").arg(cmbType->itemData(cmbType->currentIndex()).toInt()) );
+        poPCTQuery->first();
+        ledUnits->setText( poPCTQuery->value(0).toString() );
+        int inUnitsLeft = ledUnits->text().toInt()-ledUnitsUsed->text().toInt();
+        ledUnitsLeft->setText( QString::number(inUnitsLeft) );
+    }
+    else
+    {
+        ledUnits->setText( "" );
+        ledUnitsLeft->setText( "" );
+    }
+}
+//====================================================================================
 void cDlgMain::on_pbNext_clicked()
 //====================================================================================
 {
@@ -740,6 +758,34 @@ void cDlgMain::on_pbSaveNext_clicked()
     {
         ledUnitsLeft->setText( "0" );
     }
+
+    m_qsQuery = "";
+    m_qsQuery += QString( "INSERT INTO `berlet` (`strVonalkod`, `strMegjegyzes`, `nBerletTipus`, `nEgyseg`, `nErvEv`, `nErvHo`, `nErvNap`, `nPin`) VALUES" );
+    m_qsQuery += QString( " ( " );
+    m_qsQuery += QString( "\'%1\', " ).arg(ledBarcode->text());
+    m_qsQuery += QString( "\'%1\', " ).arg(ledComment->text());
+    m_qsQuery += QString( "\'%1\', " ).arg(cmbType->itemData(cmbType->currentIndex()).toInt());
+    m_qsQuery += QString( "\'%1\', " ).arg(ledUnitsLeft->text().toInt());
+    m_qsQuery += QString( "\'%1\', " ).arg(deValid->date().year());
+    m_qsQuery += QString( "\'%1\', " ).arg(deValid->date().month());
+    m_qsQuery += QString( "\'%1\', " ).arg(deValid->date().day());
+    m_qsQuery += QString( "\'%1\' ) " ).arg(0);
+
+    try
+    {
+        QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * from berlet WHERE strVonalkod=\"%1\"").arg(ledBarcode->text()) );
+        if( !poQBerlet->first() )
+        {
+            g_poDB->executeQTQuery( m_qsQuery );
+        }
+        if( poQBerlet ) delete poQBerlet;
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+    on_pbNext_clicked();
 }
 //====================================================================================
 void cDlgMain::on_pbExportToSQL_clicked()
@@ -747,6 +793,74 @@ void cDlgMain::on_pbExportToSQL_clicked()
 {
     createPCTFile();
     createPCFile();
+}
+//====================================================================================
+void cDlgMain::on_pbExportToPCDat_clicked()
+//====================================================================================
+{
+    ledBarcode->setText( "" );
+    ledComment->setText( "" );
+    cmbType->setCurrentIndex( 0 );
+    ledUnitsUsed->setText( "" );
+    ledFirstUse->setText( "" );
+    deValid->setDate( QDate(2000,1,1) );
+
+    pbNext->setEnabled( false );
+    pbSaveNext->setEnabled( false );
+
+    if( ledVersionPCDAT->text().length() != 9 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The version number of newly created patientcard file is invalid."));
+        return;
+    }
+
+    try
+    {
+        memset( m_strPatiencardVersion, 0, 10 );
+        strncpy( m_strPatiencardVersion, ledVersionPCDAT->text().toStdString().c_str(), 9 );
+
+        poQuery = g_poDB->executeQTQuery( QString("SELECT COUNT(strVonalkod) FROM berlet") );
+        poQuery->first();
+
+        int     inBerletCount = poQuery->value(0).toInt();
+        FILE    *file = NULL;
+
+#ifdef __WIN32__
+        m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "brltfsv_new.sql" );
+#else
+        m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("/")?QString(""):QString("/")) + QString( "brltfsv_new.sql" );
+#endif
+
+        file = fopen( m_qsFullName.toStdString().c_str(), "wb" );
+        fwrite( m_strPatiencardVersion, 10, 1, file );
+        fwrite( &inBerletCount, 4, 1, file );
+        poQuery = g_poDB->executeQTQuery( QString("SELECT * FROM berlet") );
+
+        typ_berlet   stTemp;
+
+        while( poQuery->next() )
+        {
+            strcpy( stTemp.strVonalkod, poQuery->value(0).toString().toStdString().c_str() );
+            strcpy( stTemp.strMegjegyzes, poQuery->value(1).toString().toStdString().c_str() );
+            stTemp.nBerletTipus = poQuery->value(2).toInt();
+            stTemp.nEgyseg = poQuery->value(3).toInt();
+            stTemp.nErvEv = poQuery->value(4).toInt();
+            stTemp.nErvHo = poQuery->value(5).toInt();;
+            stTemp.nErvNap = poQuery->value(6).toInt();
+            stTemp.nPin = poQuery->value(7).toInt();
+            EnCode( stTemp.strVonalkod, 20 );
+            EnCode( stTemp.strMegjegyzes, 50 );
+
+            fwrite( &stTemp, 94, 1, file );
+        }
+        fclose( file );
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 //====================================================================================
 void cDlgMain::on_pbExit_clicked()
@@ -856,6 +970,13 @@ bool cDlgMain::getNextNewPatientCard()
 {
     bool bRet = false;
 
+    ledBarcode->setText( "" );
+    ledComment->setText( "" );
+    cmbType->setCurrentIndex( 0 );
+    ledUnitsUsed->setText( "" );
+    ledFirstUse->setText( "" );
+    deValid->setDate( QDate(2000,1,1) );
+
     if( !poQuery->next() )
         return bRet;
 
@@ -864,8 +985,7 @@ bool cDlgMain::getNextNewPatientCard()
     if( !poQBerlet->first() )
     {
         ledBarcode->setText( poQuery->value(0).toString() );
-        lblUnitsLeft->setText( tr("Number of uses : ") );
-        ledUnitsLeft->setText( poQuery->value(4).toString() );
+        ledUnitsUsed->setText( poQuery->value(4).toString() );
         ledFirstUse->setText( QDate(poQuery->value(1).toInt(),poQuery->value(2).toInt(),poQuery->value(3).toInt()).toString("yyyy/MM/dd") );
         deValid->setDate( QDate::fromString(ledFirstUse->text(),"yyyy/MM/dd").addDays(365) );
         bRet = true;
