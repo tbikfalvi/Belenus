@@ -111,6 +111,7 @@ private:
     char            m_strPatiencardVersion[10];
 
     bool            m_bDatabaseConnected;
+    bool            m_bSaveAborted;
 
     void            EnCode( char *str, int size );
     void            DeCode( char *str, int size );
@@ -132,6 +133,8 @@ private slots:
     void on_pbImportPatientCardUsages_clicked();
     void on_pbImportUsers_clicked();
     void on_pbImportFromPCUse_clicked();
+    void on_pbUpdate_clicked();
+    void on_pbUpdateUsage_clicked();
     void on_cmbType_currentIndexChanged(int index);
     void on_pbNext_clicked();
     void on_pbSaveNext_clicked();

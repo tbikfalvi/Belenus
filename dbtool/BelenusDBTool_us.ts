@@ -154,87 +154,107 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="500"/>
+        <location filename="cdlgmain.ui" line="485"/>
+        <source>Update partially filled cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.ui" line="507"/>
         <source>Patientcard data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="506"/>
+        <location filename="cdlgmain.ui" line="513"/>
         <source>Barcode : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="523"/>
+        <location filename="cdlgmain.ui" line="530"/>
         <source>Comment : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="533"/>
+        <location filename="cdlgmain.ui" line="540"/>
         <source>Type : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="552"/>
+        <location filename="cdlgmain.ui" line="559"/>
         <source>Original units : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="574"/>
+        <location filename="cdlgmain.ui" line="581"/>
         <source>Units left : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="596"/>
+        <location filename="cdlgmain.ui" line="603"/>
         <source>Units used : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="631"/>
+        <location filename="cdlgmain.ui" line="638"/>
         <source>Valid till ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="646"/>
+        <location filename="cdlgmain.ui" line="653"/>
         <source>yyyy/MM/dd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="656"/>
+        <location filename="cdlgmain.ui" line="663"/>
         <source>First use of card : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="734"/>
-        <source>Jump to next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="cdlgmain.ui" line="741"/>
-        <source>Save and jump to next</source>
+        <source>Next means :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="752"/>
+        <location filename="cdlgmain.ui" line="748"/>
+        <source>next patientcard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.ui" line="758"/>
+        <source>next usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.ui" line="778"/>
+        <source>Jump to &amp;next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.ui" line="785"/>
+        <source>&amp;Save and jump to next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.ui" line="796"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="760"/>
+        <location filename="cdlgmain.ui" line="804"/>
         <source>Export to SQL files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="784"/>
+        <location filename="cdlgmain.ui" line="828"/>
         <source>Version string of patientcard DAT : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="801"/>
+        <location filename="cdlgmain.ui" line="845"/>
         <source>Export patientcards to DAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="854"/>
+        <location filename="cdlgmain.ui" line="898"/>
         <source>Exit application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -244,178 +264,178 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="153"/>
+        <location filename="cdlgmain.cpp" line="161"/>
         <source>Database connection closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="174"/>
+        <location filename="cdlgmain.cpp" line="182"/>
         <source>Path of the DAT files checked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="178"/>
+        <location filename="cdlgmain.cpp" line="186"/>
         <source>Invalid path defined for DAT files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="179"/>
-        <location filename="cdlgmain.cpp" line="200"/>
-        <location filename="cdlgmain.cpp" line="220"/>
-        <location filename="cdlgmain.cpp" line="280"/>
-        <location filename="cdlgmain.cpp" line="730"/>
-        <location filename="cdlgmain.cpp" line="742"/>
-        <location filename="cdlgmain.cpp" line="751"/>
-        <location filename="cdlgmain.cpp" line="814"/>
+        <location filename="cdlgmain.cpp" line="187"/>
+        <location filename="cdlgmain.cpp" line="208"/>
+        <location filename="cdlgmain.cpp" line="228"/>
+        <location filename="cdlgmain.cpp" line="288"/>
+        <location filename="cdlgmain.cpp" line="758"/>
+        <location filename="cdlgmain.cpp" line="770"/>
+        <location filename="cdlgmain.cpp" line="779"/>
+        <location filename="cdlgmain.cpp" line="873"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="180"/>
+        <location filename="cdlgmain.cpp" line="188"/>
         <source>The defined path of the DAT files is
 invalid or not exists.
 Please check the defined path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="195"/>
+        <location filename="cdlgmain.cpp" line="203"/>
         <source>Path of the SQL files checked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="199"/>
+        <location filename="cdlgmain.cpp" line="207"/>
         <source>Invalid path defined for SQL files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="201"/>
+        <location filename="cdlgmain.cpp" line="209"/>
         <source>The defined path of the SQL files is
 invalid or not exists.
 Please check the defined path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="221"/>
-        <location filename="cdlgmain.cpp" line="281"/>
+        <location filename="cdlgmain.cpp" line="229"/>
+        <location filename="cdlgmain.cpp" line="289"/>
         <source>The defined LicenceId is invalid.
 Please use only numerical characters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="223"/>
+        <location filename="cdlgmain.cpp" line="231"/>
         <source>LicenceId is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="259"/>
+        <location filename="cdlgmain.cpp" line="267"/>
         <source>Table &apos;berlet&apos; cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="261"/>
+        <location filename="cdlgmain.cpp" line="269"/>
         <source>Table &apos;berlethasznalat&apos; cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="263"/>
+        <location filename="cdlgmain.cpp" line="271"/>
         <source>Table &apos;berlettipus&apos; cleared.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="307"/>
+        <location filename="cdlgmain.cpp" line="315"/>
         <source>Count of patientcard types to be imported: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="389"/>
+        <location filename="cdlgmain.cpp" line="397"/>
         <source>Importing patientcard types finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="393"/>
+        <location filename="cdlgmain.cpp" line="401"/>
         <source>Error occured during opening brlttpsfsv.dat file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="424"/>
+        <location filename="cdlgmain.cpp" line="432"/>
         <source>Count of patientcards to be imported: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="492"/>
+        <location filename="cdlgmain.cpp" line="500"/>
         <source>Importing patientcards finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="496"/>
+        <location filename="cdlgmain.cpp" line="504"/>
         <source>Error occured during opening brltfsv.dat file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="528"/>
+        <location filename="cdlgmain.cpp" line="536"/>
         <source>Count of patientcard uses to be imported: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="589"/>
+        <location filename="cdlgmain.cpp" line="597"/>
         <source>Importing patientcard uses finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="593"/>
+        <location filename="cdlgmain.cpp" line="601"/>
         <source>Error occured during opening brlthsznltfsv.dat file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="619"/>
+        <location filename="cdlgmain.cpp" line="627"/>
         <source>Count of users to be imported: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="650"/>
+        <location filename="cdlgmain.cpp" line="658"/>
         <source>Importing users finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="654"/>
+        <location filename="cdlgmain.cpp" line="662"/>
         <source>Error occured during opening srfsv.dat file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="663"/>
+        <location filename="cdlgmain.cpp" line="132"/>
         <source>&lt;Not selected&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="731"/>
+        <location filename="cdlgmain.cpp" line="759"/>
         <source>Barcode of the patientcard can not be empty.
 Please define a valid barcode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="743"/>
+        <location filename="cdlgmain.cpp" line="771"/>
         <source>This barcode already saved in database.
 Please jump to the next unsaved patientcard or define another valid barcode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="752"/>
+        <location filename="cdlgmain.cpp" line="780"/>
         <source>The patientcard can not be saved with no patientcard type selected.
 Please select a valid patientcard type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="815"/>
+        <location filename="cdlgmain.cpp" line="874"/>
         <source>The version number of newly created patientcard file is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="924"/>
+        <location filename="cdlgmain.cpp" line="983"/>
         <source>The %1 file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="929"/>
+        <location filename="cdlgmain.cpp" line="988"/>
         <source>The %1.dat file not found.</source>
         <translation type="unfinished"></translation>
     </message>

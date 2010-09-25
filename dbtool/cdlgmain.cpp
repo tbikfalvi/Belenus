@@ -127,6 +127,14 @@ void cDlgMain::on_pbConnect_clicked()
         {
             pbClearDatabase->setEnabled( true );
             pbImportFromPCUse->setEnabled( true );
+            cmbType->clear();
+            poQuery = g_poDB->executeQTQuery( QString("SELECT nId, strNev FROM berlettipus") );
+            cmbType->addItem( tr("<Not selected>"), 0 );
+            while( poQuery->next() )
+            {
+                cmbType->addItem( poQuery->value(1).toString(), poQuery->value(0).toInt() );
+            }
+            poQuery = NULL;
         }
         else
         {
@@ -658,21 +666,81 @@ void cDlgMain::on_pbImportUsers_clicked()
 void cDlgMain::on_pbImportFromPCUse_clicked()
 //====================================================================================
 {
-    cmbType->clear();
-    poQuery = g_poDB->executeQTQuery( QString("SELECT nId, strNev FROM berlettipus") );
-    cmbType->addItem( tr("<Not selected>"), 0 );
-    while( poQuery->next() )
-    {
-        cmbType->addItem( poQuery->value(1).toString(), poQuery->value(0).toInt() );
-    }
-    poQuery = NULL;
     try
     {
         poQuery = g_poDB->executeQTQuery( QString("SELECT strVonalkod, nEv, nHo, nNap, SUM(nEgyseg) AS nEgyseg FROM berlethasznalat GROUP BY strVonalkod") );
+        rbNextPCUse->setChecked( true );
         if( getNextNewPatientCard() )
         {
             pbNext->setEnabled( true );
             pbSaveNext->setEnabled( true );
+        }
+        else
+        {
+            pbNext->setEnabled( false );
+            pbSaveNext->setEnabled( false );
+        }
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+        poQuery = NULL;
+        pbSaveNext->setEnabled( false );
+    }
+}
+//====================================================================================
+void cDlgMain::on_pbUpdate_clicked()
+//====================================================================================
+{
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString("SELECT * from berlet WHERE strMegjegyzes=\"\" ORDER BY strVonalkod") );
+        rbNextPatientCard->setChecked( true );
+        if( getNextNewPatientCard() )
+        {
+            pbNext->setEnabled( true );
+            pbSaveNext->setEnabled( true );
+        }
+        else
+        {
+            pbNext->setEnabled( false );
+            pbSaveNext->setEnabled( false );
+        }
+    }
+    catch( cSevException &e )
+    {
+        listLog->addItem( e.what() );
+        g_obLogger(e.severity()) << e.what() << EOM;
+        poQuery = NULL;
+        pbSaveNext->setEnabled( false );
+    }
+}
+//====================================================================================
+void cDlgMain::on_pbUpdateUsage_clicked()
+//====================================================================================
+{
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString("SELECT * from berlet ORDER BY strVonalkod") );
+        rbNextPatientCard->setChecked( true );
+        if( getNextNewPatientCard() )
+        {
+            pbNext->setEnabled( true );
+            pbSaveNext->setEnabled( true );
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to start patientcard usage update based on berlethasznalat table?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+            {
+                while( pbSaveNext->isEnabled() )
+                {
+                    on_pbSaveNext_clicked();
+                    if( m_bSaveAborted )
+                    {
+                        break;
+                    }
+                }
+            }
         }
         else
         {
@@ -725,15 +793,17 @@ void cDlgMain::on_pbNext_clicked()
 void cDlgMain::on_pbSaveNext_clicked()
 //====================================================================================
 {
+    m_bSaveAborted = true;
     if( ledBarcode->text() == "" )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Barcode of the patientcard can not be empty.\n"
                                  "Please define a valid barcode."));
         ledBarcode->setFocus();
+        m_bSaveAborted = false;
         return;
     }
-    else
+    else if( rbNextPCUse->isChecked() )
     {
         QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * FROM berlet WHERE strVonalkod=\"%1\"").arg(ledBarcode->text()) );
 
@@ -743,6 +813,7 @@ void cDlgMain::on_pbSaveNext_clicked()
                                   tr("This barcode already saved in database.\n"
                                      "Please jump to the next unsaved patientcard or define another valid barcode."));
             ledBarcode->setFocus();
+            m_bSaveAborted = false;
             return;
         }
     }
@@ -752,6 +823,7 @@ void cDlgMain::on_pbSaveNext_clicked()
                               tr("The patientcard can not be saved with no patientcard type selected.\n"
                                  "Please select a valid patientcard type."));
         cmbType->setFocus();
+        m_bSaveAborted = false;
         return;
     }
     if( ledUnitsLeft->text() == "" ||
@@ -761,32 +833,65 @@ void cDlgMain::on_pbSaveNext_clicked()
     }
 
     m_qsQuery = "";
-    m_qsQuery += QString( "INSERT INTO `berlet` (`strVonalkod`, `strMegjegyzes`, `nBerletTipus`, `nEgyseg`, `nErvEv`, `nErvHo`, `nErvNap`, `nPin`) VALUES" );
-    m_qsQuery += QString( " ( " );
-    m_qsQuery += QString( "\'%1\', " ).arg(ledBarcode->text());
-    m_qsQuery += QString( "\'%1\', " ).arg(ledComment->text());
-    m_qsQuery += QString( "\'%1\', " ).arg(cmbType->itemData(cmbType->currentIndex()).toInt());
-    m_qsQuery += QString( "\'%1\', " ).arg(ledUnitsLeft->text().toInt());
-    m_qsQuery += QString( "\'%1\', " ).arg(deValid->date().year());
-    m_qsQuery += QString( "\'%1\', " ).arg(deValid->date().month());
-    m_qsQuery += QString( "\'%1\', " ).arg(deValid->date().day());
-    m_qsQuery += QString( "\'%1\' ) " ).arg(0);
-
-    try
+    if( rbNextPCUse->isChecked() )
     {
-        QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * from berlet WHERE strVonalkod=\"%1\"").arg(ledBarcode->text()) );
-        if( !poQBerlet->first() )
+        m_qsQuery += QString( "INSERT INTO " );
+    }
+    else if( rbNextPatientCard->isChecked() )
+    {
+        m_qsQuery += QString( "UPDATE " );
+    }
+    m_qsQuery += QString( "berlet SET " );
+
+    if( rbNextPCUse->isChecked() )
+        m_qsQuery += QString( "strVonalkod = \'%1\', " ).arg(ledBarcode->text());
+
+    m_qsQuery += QString( "strMegjegyzes = \'%1\', " ).arg(ledComment->text());
+    m_qsQuery += QString( "nBerletTipus = \'%1\', " ).arg(cmbType->itemData(cmbType->currentIndex()).toInt());
+    m_qsQuery += QString( "nEgyseg = \'%1\', " ).arg(ledUnitsLeft->text().toInt());
+    m_qsQuery += QString( "nErvEv = \'%1\', " ).arg(deValid->date().year());
+    m_qsQuery += QString( "nErvHo = \'%1\', " ).arg(deValid->date().month());
+    m_qsQuery += QString( "nErvNap = \'%1\', " ).arg(deValid->date().day());
+    m_qsQuery += QString( "nPin = \'%1\' " ).arg(0);
+    if( rbNextPatientCard->isChecked() )
+    {
+        m_qsQuery += QString( " WHERE strVonalkod=\"%1\" " ).arg( ledBarcode->text() );
+    }
+    //listLog->addItem(m_qsQuery);
+
+    if( rbNextPCUse->isChecked() )
+    {
+        try
+        {
+            QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * from berlet WHERE strVonalkod=\"%1\"").arg(ledBarcode->text()) );
+            if( !poQBerlet->first() )
+            {
+                g_poDB->executeQTQuery( m_qsQuery );
+            }
+            if( poQBerlet ) delete poQBerlet;
+        }
+        catch( cSevException &e )
+        {
+            listLog->addItem( e.what() );
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+    else if( rbNextPatientCard->isChecked() )
+    {
+        try
         {
             g_poDB->executeQTQuery( m_qsQuery );
         }
-        if( poQBerlet ) delete poQBerlet;
+        catch( cSevException &e )
+        {
+            listLog->addItem( e.what() );
+            g_obLogger(e.severity()) << e.what() << EOM;
+            m_bSaveAborted = false;
+        }
     }
-    catch( cSevException &e )
-    {
-        listLog->addItem( e.what() );
-        g_obLogger(e.severity()) << e.what() << EOM;
-    }
+
     on_pbNext_clicked();
+    ledComment->setFocus();
 }
 //====================================================================================
 void cDlgMain::on_pbExportToSQL_clicked()
@@ -836,7 +941,7 @@ void cDlgMain::on_pbExportToPCDat_clicked()
         file = fopen( m_qsFullName.toStdString().c_str(), "wb" );
         fwrite( m_strPatiencardVersion, 10, 1, file );
         fwrite( &inBerletCount, 4, 1, file );
-        poQuery = g_poDB->executeQTQuery( QString("SELECT * FROM berlet") );
+        poQuery = g_poDB->executeQTQuery( QString("SELECT * FROM berlet ORDER BY strVonalkod") );
 
         typ_berlet   stTemp;
 
@@ -989,21 +1094,49 @@ bool cDlgMain::getNextNewPatientCard()
     if( !poQuery->next() )
         return bRet;
 
-    QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * FROM berlet WHERE strVonalkod=\"%1\"").arg(poQuery->value( 0 ).toString()) );
+    if( rbNextPCUse->isChecked() )
+    {
+        QSqlQuery *poQBerlet = g_poDB->executeQTQuery( QString("SELECT * FROM berlet WHERE strVonalkod=\"%1\"").arg(poQuery->value( 0 ).toString()) );
 
-    if( !poQBerlet->first() )
+        if( !poQBerlet->first() )
+        {
+            ledBarcode->setText( poQuery->value(0).toString() );
+            ledUnitsUsed->setText( poQuery->value(4).toString() );
+            ledFirstUse->setText( QDate(poQuery->value(1).toInt(),poQuery->value(2).toInt(),poQuery->value(3).toInt()).toString("yyyy/MM/dd") );
+            deValid->setDate( QDate::fromString(ledFirstUse->text(),"yyyy/MM/dd").addDays(365) );
+            bRet = true;
+        }
+        else
+        {
+            bRet = getNextNewPatientCard();
+        }
+        if( poQBerlet ) delete poQBerlet;
+    }
+    else if( rbNextPatientCard->isChecked() )
     {
+        QSqlQuery *poQPCUse = g_poDB->executeQTQuery( QString("SELECT SUM(nEgyseg) AS nEgyseg FROM berlethasznalat WHERE strVonalkod='%1'").arg(poQuery->value(0).toString()) );
+
+        poQPCUse->first();
         ledBarcode->setText( poQuery->value(0).toString() );
-        ledUnitsUsed->setText( poQuery->value(4).toString() );
-        ledFirstUse->setText( QDate(poQuery->value(1).toInt(),poQuery->value(2).toInt(),poQuery->value(3).toInt()).toString("yyyy/MM/dd") );
-        deValid->setDate( QDate::fromString(ledFirstUse->text(),"yyyy/MM/dd").addDays(365) );
+        ledComment->setText( poQuery->value(1).toString() );
+        if( poQPCUse->value(0).toInt() > 0 )
+            ledUnitsUsed->setText( QString::number(poQPCUse->value(0).toInt()) );
+        else
+            ledUnitsUsed->setText( "0" );
+        for( int i=0; i<cmbType->count(); i++ )
+        {
+            if( cmbType->itemData(i).toInt() == poQuery->value(2).toInt() )
+            {
+                cmbType->setCurrentIndex(i);
+                break;
+            }
+        }
+        if( poQuery->value(3).toInt() > 0 )
+            ledUnitsLeft->setText( poQuery->value(3).toString() );
+        deValid->setDate( QDate(poQuery->value(4).toInt(),poQuery->value(5).toInt(),poQuery->value(6).toInt()) );
         bRet = true;
+        if( poQPCUse ) delete poQPCUse;
     }
-    else
-    {
-        bRet = getNextNewPatientCard();
-    }
-    if( poQBerlet ) delete poQBerlet;
 
     return bRet;
 }
