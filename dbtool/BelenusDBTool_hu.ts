@@ -159,77 +159,82 @@
         <translation>Hiányos bérletek kiegészítése</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="507"/>
+        <location filename="cdlgmain.ui" line="492"/>
+        <source>Update cards refer to uses</source>
+        <translation>Bérlet frissítése használat alapján</translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.ui" line="514"/>
         <source>Patientcard data</source>
         <translation> Bérlet adatok </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="513"/>
+        <location filename="cdlgmain.ui" line="520"/>
         <source>Barcode : </source>
         <translation>Vonalkód : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="530"/>
+        <location filename="cdlgmain.ui" line="537"/>
         <source>Comment : </source>
         <translation>Megjegyzés : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="540"/>
+        <location filename="cdlgmain.ui" line="547"/>
         <source>Type : </source>
         <translation>Bérlettípus : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="559"/>
+        <location filename="cdlgmain.ui" line="566"/>
         <source>Original units : </source>
         <translation>Egységek száma : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="581"/>
+        <location filename="cdlgmain.ui" line="588"/>
         <source>Units left : </source>
         <translation>Felhasználható egységek : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="603"/>
+        <location filename="cdlgmain.ui" line="610"/>
         <source>Units used : </source>
         <translation>Felhasznált egységek : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="638"/>
+        <location filename="cdlgmain.ui" line="645"/>
         <source>Valid till ...</source>
         <translation>Érvényes ... : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="653"/>
+        <location filename="cdlgmain.ui" line="660"/>
         <source>yyyy/MM/dd</source>
         <translation>yyyy/MM/dd</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="663"/>
+        <location filename="cdlgmain.ui" line="670"/>
         <source>First use of card : </source>
         <translation>Első használat : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="741"/>
+        <location filename="cdlgmain.ui" line="748"/>
         <source>Next means :</source>
         <translation>A &apos;Következő&apos; jelentése : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="748"/>
+        <location filename="cdlgmain.ui" line="758"/>
         <source>next patientcard</source>
         <translation>következő bérlet</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="758"/>
+        <location filename="cdlgmain.ui" line="771"/>
         <source>next usage</source>
         <translation>következő bérlethasználat</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="778"/>
+        <location filename="cdlgmain.ui" line="791"/>
         <source>Jump to &amp;next</source>
         <translation>&amp;Ugrás a következőre</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="785"/>
+        <location filename="cdlgmain.ui" line="798"/>
         <source>&amp;Save and jump to next</source>
         <translation>&amp;Mentés és ugrás a következőre</translation>
     </message>
@@ -242,27 +247,27 @@
         <translation type="obsolete">Mentés és ugrás a következőre</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="796"/>
+        <location filename="cdlgmain.ui" line="809"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="804"/>
+        <location filename="cdlgmain.ui" line="817"/>
         <source>Export to SQL files</source>
         <translation>Exportálás SQL állományokba</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="828"/>
+        <location filename="cdlgmain.ui" line="841"/>
         <source>Version string of patientcard DAT : </source>
         <translation>A brltfsv.dat verziószáma : </translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="845"/>
+        <location filename="cdlgmain.ui" line="858"/>
         <source>Export patientcards to DAT</source>
         <translation>Bérletek exportálása DAT állományba</translation>
     </message>
     <message>
-        <location filename="cdlgmain.ui" line="898"/>
+        <location filename="cdlgmain.ui" line="911"/>
         <source>Exit application</source>
         <translation>Kilépés a programból</translation>
     </message>
@@ -291,10 +296,10 @@
         <location filename="cdlgmain.cpp" line="208"/>
         <location filename="cdlgmain.cpp" line="228"/>
         <location filename="cdlgmain.cpp" line="288"/>
-        <location filename="cdlgmain.cpp" line="758"/>
-        <location filename="cdlgmain.cpp" line="770"/>
-        <location filename="cdlgmain.cpp" line="779"/>
-        <location filename="cdlgmain.cpp" line="873"/>
+        <location filename="cdlgmain.cpp" line="799"/>
+        <location filename="cdlgmain.cpp" line="812"/>
+        <location filename="cdlgmain.cpp" line="822"/>
+        <location filename="cdlgmain.cpp" line="919"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -420,38 +425,48 @@ Kérem csak számokat használjon.</translation>
         <translation>&lt;Nincs kiválasztva &gt;</translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="759"/>
+        <location filename="cdlgmain.cpp" line="731"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.cpp" line="732"/>
+        <source>Do you want to start patientcard usage update based on berlethasznalat table?</source>
+        <translation>Meg akarja kezdeni a bérlet használati adatok frissítését a &apos;berlethasznalat&apos; tábla alapján?</translation>
+    </message>
+    <message>
+        <location filename="cdlgmain.cpp" line="800"/>
         <source>Barcode of the patientcard can not be empty.
 Please define a valid barcode.</source>
         <translation>A bérlet vonalkódja nem lehet üres.
 Kérem adjon meg egy létező vonalkódot.</translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="771"/>
+        <location filename="cdlgmain.cpp" line="813"/>
         <source>This barcode already saved in database.
 Please jump to the next unsaved patientcard or define another valid barcode.</source>
         <translation>A megadott vonalkód már szerepel az adatbázisban.
 Kérem ugorjon a következő bérletre, vagy adjon meg egy másik vonalkódot.</translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="780"/>
+        <location filename="cdlgmain.cpp" line="823"/>
         <source>The patientcard can not be saved with no patientcard type selected.
 Please select a valid patientcard type.</source>
         <translation>A bérlethez nincs bérlettípus rendelve.
 Kérem válasszon egy bérlettípust a bérlethez.</translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="874"/>
+        <location filename="cdlgmain.cpp" line="920"/>
         <source>The version number of newly created patientcard file is invalid.</source>
         <translation>Az újonnan létrehozandó bérlet állomány verziószáma nem megfelelő.</translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="983"/>
+        <location filename="cdlgmain.cpp" line="1029"/>
         <source>The %1 file exists.</source>
         <translation>A %1 állomány létezik.</translation>
     </message>
     <message>
-        <location filename="cdlgmain.cpp" line="988"/>
+        <location filename="cdlgmain.cpp" line="1034"/>
         <source>The %1.dat file not found.</source>
         <translation>A %1.dat állomány nem található.</translation>
     </message>
