@@ -260,6 +260,14 @@ void cFrmPanel::setMainProcessTime( const int p_inLength )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( NULL, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
     m_inCashToPay += p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT();

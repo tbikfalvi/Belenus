@@ -36,6 +36,7 @@ void cDBLedger::init( const unsigned int p_uiId,
                       const QString &p_qsName,
                       const int p_nNetPrice,
                       const int p_nVatpercent,
+                      const int p_nTotalPrice,
                       const QString &p_qsLedgerTime,
                       const QString &p_qsComment,
                       const bool p_bActive,
@@ -52,6 +53,7 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_qsName                = p_qsName;
     m_nNetPrice             = p_nNetPrice;
     m_nVatpercent           = p_nVatpercent;
+    m_nTotalPrice           = p_nTotalPrice;
     m_qsLedgerTime          = p_qsLedgerTime;
     m_qsComment             = p_qsComment;
     m_bActive               = p_bActive;
@@ -71,6 +73,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inNetPriceIdx           = p_obRecord.indexOf( "netPrice" );
     int inVatpercentIdx         = p_obRecord.indexOf( "vatpercent" );
+    int inTotalPriceIdx         = p_obRecord.indexOf( "totalPrice" );
     int inLedgerTimeIdx         = p_obRecord.indexOf( "ledgerTime" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
@@ -87,6 +90,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inNetPriceIdx ).toInt(),
           p_obRecord.value( inVatpercentIdx ).toInt(),
+          p_obRecord.value( inTotalPriceIdx ).toInt(),
           p_obRecord.value( inLedgerTimeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
@@ -110,6 +114,8 @@ void cDBLedger::save() throw( cSevException )
 {
     cTracer obTrace( "cDBLedger::save" );
     QString  qsQuery;
+
+    m_nTotalPrice = m_nNetPrice + (m_nNetPrice/100)*m_nVatpercent;
 
     if( m_uiId )
     {
@@ -136,6 +142,7 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "netPrice = \"%1\", " ).arg( m_nNetPrice );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
+    qsQuery += QString( "totalPrice = \"%1\", " ).arg( m_nTotalPrice );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -281,6 +288,16 @@ int cDBLedger::vatpercent() const throw()
 void cDBLedger::setVatpercent( const int p_nVatpercent ) throw()
 {
     m_nVatpercent = p_nVatpercent;
+}
+
+int cDBLedger::totalPrice() const throw()
+{
+    return m_nTotalPrice;
+}
+
+void cDBLedger::setTotalPrice( const int p_nTotalPrice ) throw()
+{
+    m_nTotalPrice = p_nTotalPrice;
 }
 
 QString cDBLedger::ledgerTime() const throw()

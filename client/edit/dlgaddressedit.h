@@ -13,11 +13,14 @@ public:
     cDlgAddressEdit( QWidget *p_poParent = 0, cDBAddress *p_poAddress = NULL );
     virtual ~cDlgAddressEdit();
 
-public slots:
-    virtual void accept ();
-
 protected:
     cDBAddress *m_poAddress;
+
+private:
+    void checkRegionZipCity();
+
+public slots:
+    virtual void accept ();
 
 private slots:
     void on_ledZip_textEdited(QString );

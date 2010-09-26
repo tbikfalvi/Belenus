@@ -229,6 +229,14 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             // Szerviz kartyat nem kell eladni
             if( m_bIsCardActivated && m_poPatientCard->patientCardTypeId() > 1 )
             {
+                if( !g_obCassa.isCassaEnabled() )
+                {
+                    QMessageBox::warning( this, tr("Attention"),
+                                          tr("Cassa is disabled!\n\n"
+                                             "Please relogin to enable cassa.") );
+                    return;
+                }
+
                 cDlgCassaAction     obDlgCassaAction(this);
                 int                 inPriceTotal;
 

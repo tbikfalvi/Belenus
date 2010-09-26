@@ -14,11 +14,18 @@ cDlgAddressEdit::cDlgAddressEdit( QWidget *p_poParent, cDBAddress *p_poAddress )
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT region FROM zipRegionCity WHERE active=1 GROUP BY region ORDER BY region" ) );
+    while( poQuery->next() )
+    {
+        cmbRegion->addItem( poQuery->value( 0 ).toString() );
+    }
+    cmbRegion->setEditText( "" );
+
     m_poAddress = p_poAddress;
     if( m_poAddress )
     {
-        QSqlQuery *poQuery;
-
         cmbPatient->addItem( tr("<Independent address>"), 0 );
         if( m_poAddress->patientId() == 0 )
             cmbPatient->setCurrentIndex( 0 );
@@ -38,7 +45,7 @@ cDlgAddressEdit::cDlgAddressEdit( QWidget *p_poParent, cDBAddress *p_poAddress )
         {
             ledCountry->setText( m_poAddress->country() );
         }
-        ledRegion->setText( m_poAddress->region() );
+        cmbRegion->setEditText( m_poAddress->region() );
         ledZip->setText( m_poAddress->zip() );
         ledCity->setText( m_poAddress->city() );
         ledStreet->setText( m_poAddress->street() );
@@ -68,6 +75,8 @@ void cDlgAddressEdit::accept ()
         QMessageBox::critical( this, tr( "Error" ), tr( "Address cannot be empty." ) );
     }
 
+    checkRegionZipCity();
+
     if( boCanBeSaved )
     {
         try
@@ -76,7 +85,7 @@ void cDlgAddressEdit::accept ()
             m_poAddress->setLicenceId( g_poPrefs->getLicenceId() );
             m_poAddress->setName( ledName->text() );
             m_poAddress->setCountry( ledCountry->text() );
-            m_poAddress->setRegion( ledRegion->text() );
+            m_poAddress->setRegion( cmbRegion->currentText() );
             m_poAddress->setZip( ledZip->text() );
             m_poAddress->setCity( ledCity->text() );
             m_poAddress->setStreet( ledStreet->text() );
@@ -132,7 +141,7 @@ void cDlgAddressEdit::on_ledZip_textEdited(QString )
         {
             obDBZipRegionCity.load( ledZip->text() );
             ledCity->setText( obDBZipRegionCity.city() );
-            ledRegion->setText( obDBZipRegionCity.region() );
+            cmbRegion->setEditText( obDBZipRegionCity.region() );
         }
         catch( cSevException &e )
         {
@@ -143,6 +152,116 @@ void cDlgAddressEdit::on_ledZip_textEdited(QString )
             else
             {
                 ledCity->setText( "" );
+            }
+        }
+    }
+}
+
+void cDlgAddressEdit::checkRegionZipCity()
+{
+    cDBZipRegionCity    obDBCheck;
+
+    if( ledZip->text().length() == g_poPrefs->getZipLength() )
+    {
+        try
+        {
+            obDBCheck.load( ledZip->text() );
+
+            if( cmbRegion->currentText() != obDBCheck.region() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("The defined zip code already saved into the database with\n\n"
+                                              "Region : %1\n\n"
+                                              "Do you want to overwrite the region entered with this one?").arg(obDBCheck.region()),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    cmbRegion->setEditText( obDBCheck.region() );
+                }
+            }
+            if( ledCity->text() != obDBCheck.city() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("The defined zip code already saved into the database with\n\n"
+                                              "City : %1\n\n"
+                                              "Do you want to overwrite the city entered with this one?").arg(obDBCheck.city()),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    ledCity->setText( obDBCheck.city() );
+                }
+            }
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
+            else
+            {
+                try
+                {
+                    obDBCheck.loadCity( ledCity->text() );
+
+                    if( cmbRegion->currentText() != obDBCheck.region() )
+                    {
+                        if( QMessageBox::question( this, tr("Question"),
+                                                   tr("The defined city already assigned to a different region\n\n"
+                                                      "Region : %1\n\n"
+                                                      "Do you want to correct the defined region?").arg(obDBCheck.region()),
+                                                   QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                        {
+                            cmbRegion->setEditText( obDBCheck.region() );
+                        }
+                    }
+
+                    if( ledZip->text() != obDBCheck.zip() )
+                    {
+                        if( QMessageBox::question( this, tr("Question"),
+                                                   tr("The defined city already assigned to a different zip code\n\n"
+                                                      "Zip : %1\n\n"
+                                                      "Do you save the following data\n\n"
+                                                      "Region : %2\n"
+                                                      "Zip : %3\n"
+                                                      "City : %4\n\n"
+                                                      "as new into the database?").arg(obDBCheck.zip()).arg(cmbRegion->currentText()).arg(ledZip->text()).arg(ledCity->text()),
+                                                   QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                        {
+                            obDBCheck.createNew();
+                            obDBCheck.setLicenceId( g_poPrefs->getLicenceId() );
+                            obDBCheck.setRegion( cmbRegion->currentText() );
+                            obDBCheck.setZip( ledZip->text() );
+                            obDBCheck.setCity( ledCity->text() );
+                            obDBCheck.setActive( true );
+                            obDBCheck.save();
+                        }
+                    }
+                }
+                catch( cSevException &e )
+                {
+                    if( QString(e.what()).compare("ZipRegionCity zip not found") != 0 )
+                    {
+                        g_obLogger(e.severity()) << e.what() << EOM;
+                    }
+                    else
+                    {
+                        if( QMessageBox::question( this, tr("Question"),
+                                                   tr("The defined data did not found in the database\n\n"
+                                                      "Region : %1\n"
+                                                      "Zip : %2\n"
+                                                      "City : %3\n\n"
+                                                      "Do you want to save them as new into the database?").arg(cmbRegion->currentText()).arg(ledZip->text()).arg(ledCity->text()),
+                                                   QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                        {
+                            obDBCheck.createNew();
+                            obDBCheck.setLicenceId( g_poPrefs->getLicenceId() );
+                            obDBCheck.setRegion( cmbRegion->currentText() );
+                            obDBCheck.setZip( ledZip->text() );
+                            obDBCheck.setCity( ledCity->text() );
+                            obDBCheck.setActive( true );
+                            obDBCheck.save();
+                        }
+                    }
+                }
             }
         }
     }

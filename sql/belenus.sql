@@ -664,6 +664,7 @@ CREATE TABLE `ledger` (
   `name`                    varchar(100)            NOT NULL,
   `netPrice`                int(11)                 NOT NULL,
   `vatpercent`              int(11)                 NOT NULL,
+  `totalPrice`              int(11)                 NOT NULL,
   `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment`                 text                    DEFAULT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,

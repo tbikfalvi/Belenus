@@ -36,6 +36,8 @@ public:
     void            setNetPrice( const int p_nNetPrice )                            throw();
     int             vatpercent() const                                              throw();
     void            setVatpercent( const int p_nVatpercent )                        throw();
+    int             totalPrice() const                                              throw();
+    void            setTotalPrice( const int p_nTotalPrice )                        throw();
     QString         ledgerTime() const                                              throw();
     void            setLedgerTime( const QString &p_qsLedgerTime )                  throw();
     QString         comment() const                                                 throw();
@@ -57,6 +59,7 @@ private:
     QString         m_qsName;
     int             m_nNetPrice;
     int             m_nVatpercent;
+    int             m_nTotalPrice;
     QString         m_qsLedgerTime;
     QString         m_qsComment;
     bool            m_bActive;
@@ -73,6 +76,7 @@ private:
                const QString &p_qsName = "",
                const int p_nNetPrice = 0,
                const int p_nVatpercent = 0,
+               const int p_nTotalPrice = 0,
                const QString &p_qsLedgerTime = "",
                const QString &p_qsComment = "",
                const bool p_bActive = true,

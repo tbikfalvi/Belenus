@@ -300,6 +300,13 @@ void cWndMain::loginUser()
     //----------------------------------------------
     g_obCassa.init();
 
+    // Felhasznalo ellenorzese
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) )
+    { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
+        g_obCassa.setDisabled();
+        return;
+    }
+
     // Penztar ellenorzese
     if( g_obCassa.isCassaExists() )
     { // Penztar rekord letezik, utolso bejegyzes betoltve
@@ -1394,6 +1401,14 @@ void cWndMain::on_action_EditActualAttendance_triggered()
 //====================================================================================
 void cWndMain::on_action_PayCash_triggered()
 {
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
     cDlgCassaAction     obDlgCassaAction(this);
     int                 inPriceTotal;
     unsigned int        uiPatientId;

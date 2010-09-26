@@ -184,6 +184,14 @@ void cDlgCassaEdit::on_pbClose_clicked()
 
 void cDlgCassaEdit::on_pbCashAdd_clicked()
 {
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
     cDlgCassaAction     obDlgCassaAction( this );
 
     obDlgCassaAction.setCassaAction();
@@ -202,6 +210,14 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
 
 void cDlgCassaEdit::on_pbCashGet_clicked()
 {
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
     cDlgCassaAction     obDlgCassaAction( this );
 
     obDlgCassaAction.setCassaAction();
