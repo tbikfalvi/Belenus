@@ -213,6 +213,7 @@ QString cDBZipRegionCity::zip() const throw()
 void cDBZipRegionCity::setZip( const QString &p_qsZip ) throw()
 {
     m_qsZip = p_qsZip;
+    m_qsZip = m_qsZip.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBZipRegionCity::region() const throw()
@@ -223,6 +224,7 @@ QString cDBZipRegionCity::region() const throw()
 void cDBZipRegionCity::setRegion( const QString &p_qsRegion ) throw()
 {
     m_qsRegion = p_qsRegion;
+    m_qsRegion = m_qsRegion.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBZipRegionCity::city() const throw()
@@ -233,6 +235,7 @@ QString cDBZipRegionCity::city() const throw()
 void cDBZipRegionCity::setCity( const QString &p_qsCity ) throw()
 {
     m_qsCity = p_qsCity;
+    m_qsCity = m_qsCity.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBZipRegionCity::active() const throw()

@@ -204,6 +204,7 @@ QString cDBPanelStatuses::name() const throw()
 void cDBPanelStatuses::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 unsigned int cDBPanelStatuses::length() const throw()

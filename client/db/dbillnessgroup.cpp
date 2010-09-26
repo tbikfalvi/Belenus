@@ -164,6 +164,7 @@ QString cDBIllnessGroup::name() const throw()
 void cDBIllnessGroup::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBIllnessGroup::active() const throw()

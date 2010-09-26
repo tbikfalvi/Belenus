@@ -176,6 +176,7 @@ QString cDBPanel::title() const throw()
 void cDBPanel::setTitle( const QString &p_qsTitle ) throw()
 {
     m_qsTitle = p_qsTitle;
+    m_qsTitle = m_qsTitle.replace( QString("\""), QString("\\\"") );
 }
 
 unsigned int cDBPanel::workTime() const throw()

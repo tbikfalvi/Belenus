@@ -225,6 +225,7 @@ QString cDBCassaHistory::comment() const throw()
 void cDBCassaHistory::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBCassaHistory::active() const throw()

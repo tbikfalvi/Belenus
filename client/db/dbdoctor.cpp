@@ -189,6 +189,7 @@ QString cDBDoctor::name() const throw()
 void cDBDoctor::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBDoctor::licence() const throw()
@@ -199,6 +200,7 @@ QString cDBDoctor::licence() const throw()
 void cDBDoctor::setLicence( const QString &p_qsLicence ) throw()
 {
     m_qsLicence = p_qsLicence;
+    m_qsLicence = m_qsLicence.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBDoctor::data() const throw()
@@ -209,6 +211,7 @@ QString cDBDoctor::data() const throw()
 void cDBDoctor::setData( const QString &p_qsData ) throw()
 {
     m_qsData = p_qsData;
+    m_qsData = m_qsData.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBDoctor::active() const throw()

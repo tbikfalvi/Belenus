@@ -179,7 +179,7 @@ void cDBAddress::save() throw( cSevException )
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
 }
-#include <QMessageBox>
+
 void cDBAddress::remove( const unsigned int p_uiPatientId ) throw( cSevException )
 {
     cTracer obTrace( "cDBAddress::remove" );
@@ -200,7 +200,7 @@ void cDBAddress::remove( const unsigned int p_uiPatientId ) throw( cSevException
             qsQuery += QString( " WHERE addressId = %1" ).arg( m_uiId );
         else
             qsQuery += QString( " WHERE patientId = %1" ).arg( p_uiPatientId );
-QMessageBox::information(0,"",qsQuery);
+
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
@@ -259,6 +259,7 @@ QString cDBAddress::name() const throw()
 void cDBAddress::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::country() const throw()
@@ -269,6 +270,7 @@ QString cDBAddress::country() const throw()
 void cDBAddress::setCountry( const QString &p_qsCountry ) throw()
 {
     m_qsCountry = p_qsCountry;
+    m_qsCountry = m_qsCountry.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::region() const throw()
@@ -279,6 +281,7 @@ QString cDBAddress::region() const throw()
 void cDBAddress::setRegion( const QString &p_qsRegion ) throw()
 {
     m_qsRegion = p_qsRegion;
+    m_qsRegion = m_qsRegion.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::city() const throw()
@@ -289,6 +292,7 @@ QString cDBAddress::city() const throw()
 void cDBAddress::setCity( const QString &p_qsCity ) throw()
 {
     m_qsCity = p_qsCity;
+    m_qsCity = m_qsCity.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::zip() const throw()
@@ -299,6 +303,7 @@ QString cDBAddress::zip() const throw()
 void cDBAddress::setZip( const QString &p_qsZip ) throw()
 {
     m_qsZip = p_qsZip;
+    m_qsZip = m_qsZip.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::street() const throw()
@@ -309,6 +314,7 @@ QString cDBAddress::street() const throw()
 void cDBAddress::setStreet( const QString &p_qsStreet ) throw()
 {
     m_qsStreet = p_qsStreet;
+    m_qsStreet = m_qsStreet.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::streetNumber() const throw()
@@ -319,6 +325,7 @@ QString cDBAddress::streetNumber() const throw()
 void cDBAddress::setStreetNumber( const QString &p_qsStreetNumber ) throw()
 {
     m_qsStreetNumber = p_qsStreetNumber;
+    m_qsStreetNumber = m_qsStreetNumber.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::floor() const throw()
@@ -329,6 +336,7 @@ QString cDBAddress::floor() const throw()
 void cDBAddress::setFloor( const QString &p_qsFloor ) throw()
 {
     m_qsFloor = p_qsFloor;
+    m_qsFloor = m_qsFloor.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBAddress::door() const throw()
@@ -339,6 +347,7 @@ QString cDBAddress::door() const throw()
 void cDBAddress::setDoor( const QString &p_qsDoor ) throw()
 {
     m_qsDoor = p_qsDoor;
+    m_qsDoor = m_qsDoor.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBAddress::primaryAddress() const throw()

@@ -260,6 +260,7 @@ QString cDBLedger::name() const throw()
 void cDBLedger::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBLedger::netPrice() const throw()
@@ -300,6 +301,7 @@ QString cDBLedger::comment() const throw()
 void cDBLedger::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBLedger::active() const throw()

@@ -453,4 +453,7 @@ dbtool/DatabaseWriter.o
 dbtool/GUIWriter.o
 dbtool/Makefile
 dbtool/ui_cdlgmain.h
+client/moc_reppatients.cpp
+client/moc_reppatients.o
+client/reppatients.o
 

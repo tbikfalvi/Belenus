@@ -300,6 +300,7 @@ QString cDBLedgerDevice::comment() const throw()
 void cDBLedgerDevice::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBLedgerDevice::active() const throw()

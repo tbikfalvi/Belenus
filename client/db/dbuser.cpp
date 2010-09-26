@@ -175,6 +175,7 @@ QString cDBUser::name() const throw()
 void cDBUser::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBUser::password() const throw()
@@ -185,6 +186,7 @@ QString cDBUser::password() const throw()
 void cDBUser::setPassword( const QString &p_qsPassword ) throw()
 {
     m_qsPassword = p_qsPassword;
+    m_qsPassword = m_qsPassword.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBUser::realName() const throw()
@@ -195,6 +197,7 @@ QString cDBUser::realName() const throw()
 void cDBUser::setRealName( const QString &p_qsRealName ) throw()
 {
     m_qsRealName = p_qsRealName;
+    m_qsRealName = m_qsRealName.replace( QString("\""), QString("\\\"") );
 }
 
 cAccessGroup::teAccessGroup cDBUser::group() const throw()
@@ -230,4 +233,5 @@ QString cDBUser::comment() const throw ()
 void cDBUser::setComment( const QString &p_qsComment ) throw ()
 {
     m_qsComment = p_qsComment;
+    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }

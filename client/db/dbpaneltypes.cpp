@@ -164,6 +164,7 @@ QString cDBPanelTypes::name() const throw()
 void cDBPanelTypes::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBPanelTypes::active() const throw()

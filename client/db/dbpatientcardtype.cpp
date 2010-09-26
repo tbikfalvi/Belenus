@@ -199,6 +199,7 @@ QString cDBPatientCardType::name() const throw()
 void cDBPatientCardType::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 float cDBPatientCardType::price() const throw()

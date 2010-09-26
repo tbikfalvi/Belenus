@@ -271,6 +271,7 @@ QString cDBAttendance::comment() const throw()
 void cDBAttendance::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBAttendance::active() const throw()

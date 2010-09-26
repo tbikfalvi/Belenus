@@ -373,6 +373,7 @@ QString cDBPatient::name() const throw()
 void cDBPatient::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBPatient::gender() const throw()
@@ -403,6 +404,7 @@ QString cDBPatient::uniqueId() const throw()
 void cDBPatient::setUniqueId( const QString &p_qsUniqueId ) throw()
 {
     m_qsUniqueId = p_qsUniqueId;
+    m_qsUniqueId = m_qsUniqueId.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatient::email() const throw()
@@ -413,6 +415,7 @@ QString cDBPatient::email() const throw()
 void cDBPatient::setEmail( const QString &p_qsEmail ) throw()
 {
     m_qsEmail = p_qsEmail;
+    m_qsEmail = m_qsEmail.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatient::phone() const throw()
@@ -423,6 +426,7 @@ QString cDBPatient::phone() const throw()
 void cDBPatient::setPhone( const QString &p_qsPhone ) throw()
 {
     m_qsPhone = p_qsPhone;
+    m_qsPhone = m_qsPhone.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBPatient::weight() const throw()
@@ -453,6 +457,7 @@ QString cDBPatient::illnesses() throw()
 void cDBPatient::setIllnesses( const QString &p_qsIllnesses ) throw()
 {
     m_qsIllnesses = p_qsIllnesses;
+    m_qsIllnesses = m_qsIllnesses.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatient::symptoms() throw()
@@ -463,6 +468,7 @@ QString cDBPatient::symptoms() throw()
 void cDBPatient::setSymptoms( const QString &p_qsSymptoms ) throw()
 {
     m_qsSymptoms = p_qsSymptoms;
+    m_qsSymptoms = m_qsSymptoms.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatient::medicineCurrent() throw()
@@ -473,6 +479,7 @@ QString cDBPatient::medicineCurrent() throw()
 void cDBPatient::setMedicineCurrent( const QString &p_qsMedicineC ) throw()
 {
     m_qsMedicineCurrent = p_qsMedicineC;
+    m_qsMedicineCurrent = m_qsMedicineCurrent.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBPatient::medicineAllergy() throw()
@@ -483,6 +490,7 @@ QString cDBPatient::medicineAllergy() throw()
 void cDBPatient::setMedicineAllergy( const QString &p_qsMedicineA ) throw()
 {
     m_qsMedicineAllergy = p_qsMedicineA;
+    m_qsMedicineAllergy = m_qsMedicineAllergy.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBPatient::regularCustomer() const throw()
@@ -553,6 +561,7 @@ QString cDBPatient::comment() const throw()
 void cDBPatient::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
+    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBPatient::active() const throw()

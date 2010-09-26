@@ -164,6 +164,7 @@ QString cDBHealthInsurance::name() const throw()
 void cDBHealthInsurance::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
+    m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
 bool cDBHealthInsurance::active() const throw()

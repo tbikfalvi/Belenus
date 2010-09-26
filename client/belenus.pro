@@ -131,7 +131,8 @@ HEADERS = belenus.h \
     cassa.h \
     ledger.h \
     crud/dlgpaneluseselect.h \
-    report/repledgermain.h
+    report/repledgermain.h \
+    report/reppatients.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -230,7 +231,8 @@ SOURCES = main.cpp \
     cassa.cpp \
     ledger.cpp \
     crud/dlgpaneluseselect.cpp \
-    report/repledgermain.cpp
+    report/repledgermain.cpp \
+    report/reppatients.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
