@@ -23,7 +23,10 @@ private:
     unsigned int     uiColumnCount;
 
 protected:
-
+    QLabel          *lblDate;
+    QDateTimeEdit   *dteStartDate;
+    QLabel          *lblTo;
+    QDateTimeEdit   *dteEndDate;
 
 protected slots:
     virtual void refreshReport();

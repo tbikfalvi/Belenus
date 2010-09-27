@@ -13,7 +13,30 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
 {
     cTracer obTrace( "cDlgReportPatients::cDlgReportPatients" );
 
-    setReportTitle( tr( "Main ledger" ) );
+    setReportTitle( tr( "Patients" ) );
+
+    lblDate = new QLabel( tr("Entered into database :"), grpFilters );
+    lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );
+
+    dteStartDate = new QDateTimeEdit();
+    dteStartDate->setObjectName( QString::fromUtf8( "dteStartDate" ) );
+    dteStartDate->setCalendarPopup( true );
+    dteStartDate->setDate( QDate::currentDate() );
+    dteStartDate->setDisplayFormat( "yyyy-MM-dd" );
+
+    lblTo = new QLabel( "->", grpFilters );
+    lblTo->setObjectName( QString::fromUtf8( "lblTo" ) );
+
+    dteEndDate = new QDateTimeEdit();
+    dteEndDate->setObjectName( QString::fromUtf8( "dteEndDate" ) );
+    dteEndDate->setCalendarPopup( true );
+    dteEndDate->setDate( QDate::currentDate() );
+    dteEndDate->setDisplayFormat( "yyyy-MM-dd" );
+
+    horizontalLayout->insertWidget( 0, dteEndDate );
+    horizontalLayout->insertWidget( 0, lblTo );
+    horizontalLayout->insertWidget( 0, dteStartDate );
+    horizontalLayout->insertWidget( 0, lblDate );
 }
 
 cDlgReportPatients::~cDlgReportPatients()
@@ -66,6 +89,8 @@ void cDlgReportPatients::refreshReport()
 
     tcReport.insertText( m_qsReportName + "   ", obTitleFormat );
     tcReport.setCharFormat( obNormalFormat );
+    tcReport.insertText( QString( "%1 %2 -> " ).arg( tr( "Date:" ) ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ) );
+    tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
 
     tcReport.insertHtml( "<hr>" );
 
@@ -74,6 +99,15 @@ void cDlgReportPatients::refreshReport()
     //
     //
     //======================================================================================================
+
+    qsQuery = "";
+    qsQuery += QString( "SELECT * FROM patients WHERE active=1 " );
+    qsQuery += QString( "AND created>=\"%1\" AND created<=\"%2\" " );
+
+    //------------------------------------------------------------------------------------------------------
+
+    poReportResult = NULL;
+    poReportResult = g_poDB->executeQTQuery( qsQuery );
 
     //======================================================================================================
 
