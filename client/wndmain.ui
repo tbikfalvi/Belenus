@@ -72,17 +72,16 @@
    </widget>
    <widget class="QMenu" name="menu_View">
     <property name="title">
-     <string>&amp;View</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="action_Cassa"/>
-    <addaction name="action_Accounting"/>
     <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
    <widget class="QMenu" name="menuAction">
     <property name="title">
-     <string>Action</string>
+     <string>&amp;Action</string>
     </property>
     <widget class="QMenu" name="menuPatient">
      <property name="title">
@@ -129,9 +128,17 @@
     <addaction name="separator"/>
     <addaction name="action_ValidateSerialKey"/>
    </widget>
+   <widget class="QMenu" name="menu_View_2">
+    <property name="title">
+     <string>&amp;Reports</string>
+    </property>
+    <addaction name="action_Accounting"/>
+    <addaction name="action_ReportPatients"/>
+   </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
    <addaction name="menuAction"/>
+   <addaction name="menu_View_2"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -475,6 +482,14 @@
   <action name="action_RegionZipCity">
    <property name="text">
     <string>Region, Zip, City ...</string>
+   </property>
+  </action>
+  <action name="action_ReportPatients">
+   <property name="text">
+    <string>Patients</string>
+   </property>
+   <property name="toolTip">
+    <string>Report of patients</string>
    </property>
   </action>
  </widget>

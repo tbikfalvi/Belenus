@@ -87,6 +87,7 @@ private slots:
     void on_action_Doctor_triggered();
     void on_action_HealthInsurance_triggered();
     void on_action_RegionZipCity_triggered();
+    void on_action_ReportPatients_triggered();
 };
 
 #endif

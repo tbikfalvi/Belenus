@@ -456,4 +456,7 @@ dbtool/ui_cdlgmain.h
 client/moc_reppatients.cpp
 client/moc_reppatients.o
 client/reppatients.o
+client/moc_repcassalist.cpp
+client/moc_repcassalist.o
+client/repcassalist.o
 

@@ -132,7 +132,8 @@ HEADERS = belenus.h \
     ledger.h \
     crud/dlgpaneluseselect.h \
     report/repledgermain.h \
-    report/reppatients.h
+    report/reppatients.h \
+    report/repcassalist.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -232,7 +233,8 @@ SOURCES = main.cpp \
     ledger.cpp \
     crud/dlgpaneluseselect.cpp \
     report/repledgermain.cpp \
-    report/reppatients.cpp
+    report/reppatients.cpp \
+    report/repcassalist.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
@@ -243,5 +245,6 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-#CONFIG += console
+
+# CONFIG += console
 win32:DEFINES -= UNICODE

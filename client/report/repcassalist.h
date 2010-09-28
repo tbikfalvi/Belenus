@@ -1,5 +1,5 @@
-#ifndef REPPATIENTS_H
-#define REPPATIENTS_H
+#ifndef REPCASSALIST_H
+#define REPCASSALIST_H
 
 #include <QDialog>
 #include <QLabel>
@@ -9,13 +9,13 @@
 #include "belenus.h"
 #include "dlgpreview.h"
 
-class cDlgReportPatients : public cDlgPreview
+class cDlgReportCassaList : public cDlgPreview
 {
     Q_OBJECT
 
 public:
-    cDlgReportPatients( QWidget *parent = 0 );
-    ~cDlgReportPatients();
+    cDlgReportCassaList( QWidget *parent = 0 );
+    ~cDlgReportCassaList();
 
 private:
     QSqlQuery       *poReportResult;
@@ -27,11 +27,9 @@ protected:
     QDateTimeEdit   *dteStartDate;
     QLabel          *lblTo;
     QDateTimeEdit   *dteEndDate;
-    QLabel          *lblAge;
-    QComboBox       *cmbAge;
 
 protected slots:
     virtual void refreshReport();
 };
 
-#endif // REPPATIENTS_H
+#endif // REPCASSALIST_H

@@ -72,6 +72,7 @@
 //====================================================================================
 
 #include "report/repledgermain.h"
+#include "report/reppatients.h"
 
 //====================================================================================
 
@@ -959,7 +960,7 @@ void cWndMain::on_action_Cassa_triggered()
 void cWndMain::on_action_Accounting_triggered()
 {
     setCursor( Qt::WaitCursor);
-    cDlgLedgerMain  obDlgLedgerMain;
+    cDlgLedgerMain  obDlgLedgerMain( this );
     setCursor( Qt::ArrowCursor);
 
     obDlgLedgerMain.exec();
@@ -1492,5 +1493,15 @@ void cWndMain::on_action_RegionZipCity_triggered()
     setCursor( Qt::ArrowCursor);
 
     obDlgZipRegionCity.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ReportPatients_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgReportPatients  obDlgReportPatients( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgReportPatients.exec();
 }
 //====================================================================================

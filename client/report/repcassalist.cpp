@@ -5,17 +5,17 @@
 #include <QTextBlockFormat>
 
 #include "../framework/qtframework.h"
-#include "reppatients.h"
+#include "repcassalist.h"
 
 
-cDlgReportPatients::cDlgReportPatients( QWidget *parent )
+cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
     : cDlgPreview( parent )
 {
-    cTracer obTrace( "cDlgReportPatients::cDlgReportPatients" );
+    cTracer obTrace( "cDlgReportCassaList::cDlgReportCassaList" );
 
-    setReportTitle( tr( "Patients" ) );
+    setReportTitle( tr( "Cassa list" ) );
 
-    lblDate = new QLabel( tr("Entered into database :"), grpFilters );
+    lblDate = new QLabel( tr("Date :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );
 
     dteStartDate = new QDateTimeEdit();
@@ -33,39 +33,20 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     dteEndDate->setDate( QDate::currentDate() );
     dteEndDate->setDisplayFormat( "yyyy-MM-dd" );
 
-    lblAge = new QLabel( tr("Age :"), grpFilters );
-    lblAge->setObjectName( QString::fromUtf8( "lblAge" ) );
-
-    cmbAge = new QComboBox();
-    cmbAge->setObjectName( QString::fromUtf8( "cmbAge" ) );
-    cmbAge->addItem( tr("<All patients>") );
-    cmbAge->addItem( tr("0 year to 10 years") );
-    cmbAge->addItem( tr("10 year to 20 years") );
-    cmbAge->addItem( tr("20 year to 30 years") );
-    cmbAge->addItem( tr("30 year to 40 years") );
-    cmbAge->addItem( tr("40 year to 50 years") );
-    cmbAge->addItem( tr("50 year to 60 years") );
-    cmbAge->addItem( tr("60 year to 70 years") );
-    cmbAge->addItem( tr("70 year to 80 years") );
-    cmbAge->addItem( tr("80 year to 90 years") );
-    cmbAge->addItem( tr("90 year to 100 years") );
-
-    horizontalLayout->insertWidget( 0, cmbAge );
-    horizontalLayout->insertWidget( 0, lblAge );
     horizontalLayout->insertWidget( 0, dteEndDate );
     horizontalLayout->insertWidget( 0, lblTo );
     horizontalLayout->insertWidget( 0, dteStartDate );
     horizontalLayout->insertWidget( 0, lblDate );
 }
 
-cDlgReportPatients::~cDlgReportPatients()
+cDlgReportCassaList::~cDlgReportCassaList()
 {
-    cTracer obTrace( "cDlgReportPatients::~cDlgReportPatients" );
+    cTracer obTrace( "cDlgReportCassaList::~cDlgReportCassaList" );
 }
 
-void cDlgReportPatients::refreshReport()
+void cDlgReportCassaList::refreshReport()
 {
-    cTracer obTrace( "cDlgReportPatients::refreshReport()" );
+    cTracer obTrace( "cDlgReportCassaList::refreshReport()" );
 
     setCursor( Qt::WaitCursor);
 
@@ -120,8 +101,9 @@ void cDlgReportPatients::refreshReport()
     //======================================================================================================
 
     qsQuery = "";
-    qsQuery += QString( "SELECT * FROM patients WHERE active=1 " );
-    qsQuery += QString( "AND created>=\"%1\" AND created<=\"%2\" " );
+    qsQuery += QString( "SELECT ch.actionTime, ch.actionValue, ch.comment, u.name FROM cassaHistory ch, users u WHERE ch.userId=u.userId AND ch.actionValue<>0 " );
+    qsQuery += QString( " AND ch.actionTime>=\"%1\" AND ch.actionTime<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    qsQuery += QString( " ORDER BY ch.actionTime " );
 
     //------------------------------------------------------------------------------------------------------
 
@@ -132,3 +114,4 @@ void cDlgReportPatients::refreshReport()
 
     setCursor( Qt::ArrowCursor);
 }
+
