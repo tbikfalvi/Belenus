@@ -73,6 +73,7 @@
 
 #include "report/repledgermain.h"
 #include "report/reppatients.h"
+#include "report/repcassalist.h"
 
 //====================================================================================
 
@@ -1505,3 +1506,12 @@ void cWndMain::on_action_ReportPatients_triggered()
     obDlgReportPatients.exec();
 }
 //====================================================================================
+void cWndMain::on_action_CassaHistory_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgReportCassaList  obDlgReportCassaList( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgReportCassaList.exec();
+}

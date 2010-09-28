@@ -76,6 +76,10 @@ void cDlgLedgerMain::refreshReport()
     obTitleFormat.setFontPointSize( 14.0 );
     obTitleFormat.setFontWeight( QFont::Bold );
 
+    QTextCharFormat obSubTitleFormat;
+    obSubTitleFormat.setFontPointSize( 12.0 );
+    obSubTitleFormat.setFontWeight( QFont::Bold );
+
     QTextCharFormat obNormalFormat;
     obNormalFormat.setFontPointSize( 10.0 );
     obNormalFormat.setFontWeight( QFont::Normal );
@@ -111,6 +115,10 @@ void cDlgLedgerMain::refreshReport()
     tcReport.insertText( QString( "%1 %2 -> " ).arg( tr( "Date:" ) ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ) );
     tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
     tcReport.insertHtml( "<hr>" );
+    tcReport.insertHtml( "<br>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertText( tr("Use of devices"), obSubTitleFormat );
+    tcReport.movePosition( QTextCursor::NextBlock );
 
     //======================================================================================================
     //
@@ -326,6 +334,9 @@ void cDlgLedgerMain::refreshReport()
 
     tcReport.movePosition( QTextCursor::NextBlock );
     tcReport.insertHtml( "<hr>" );
+    tcReport.insertHtml( "<br>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertText( tr("List of incomes"), obSubTitleFormat );
     tcReport.movePosition( QTextCursor::NextBlock );
 
     //======================================================================================================
@@ -441,6 +452,9 @@ void cDlgLedgerMain::refreshReport()
 
     tcReport.movePosition( QTextCursor::NextBlock );
     tcReport.insertHtml( "<hr>" );
+    tcReport.insertHtml( "<br>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertText( tr("List of sold patientcard types"), obSubTitleFormat );
     tcReport.movePosition( QTextCursor::NextBlock );
 
     //======================================================================================================

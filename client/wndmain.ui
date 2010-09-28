@@ -134,6 +134,7 @@
     </property>
     <addaction name="action_Accounting"/>
     <addaction name="action_ReportPatients"/>
+    <addaction name="action_CassaHistory"/>
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
@@ -490,6 +491,14 @@
    </property>
    <property name="toolTip">
     <string>Report of patients</string>
+   </property>
+  </action>
+  <action name="action_CassaHistory">
+   <property name="text">
+    <string>Cassa history</string>
+   </property>
+   <property name="toolTip">
+    <string>History of cassa actions</string>
    </property>
   </action>
  </widget>

@@ -44,6 +44,26 @@ cDlgReportCassaList::~cDlgReportCassaList()
     cTracer obTrace( "cDlgReportCassaList::~cDlgReportCassaList" );
 }
 
+QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+{
+    QString qsValue = QString::number( p_nCurrencyValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+    qsRet += " " + p_qsCurrency;
+
+    return qsRet;
+}
+
 void cDlgReportCassaList::refreshReport()
 {
     cTracer obTrace( "cDlgReportCassaList::refreshReport()" );
@@ -109,6 +129,88 @@ void cDlgReportCassaList::refreshReport()
 
     poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
+
+    uiColumnCount = 4;
+
+    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Time" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Amount" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Comment" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Cassa owner" ), obBoldFormat );
+
+    //------------------------------------------------------------------------------------------------------
+
+    int     inSumAmount  = 0;
+
+    //------------------------------------------------------------------------------------------------------
+
+    while( poReportResult->next() )
+    {
+        int         inColumn = 0;
+        QDateTime   qdtTemp;
+
+        // Time
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString().right(8), obNormalFormat );
+        inColumn++;
+
+        // Amount
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
+        inSumAmount += poReportResult->value(inColumn).toInt();
+        inColumn++;
+
+        // Comment
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+
+        // Cassa owner
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+    }
+    delete poReportResult;
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( convertCurrency( inSumAmount, g_poPrefs->getCurrencyShort() ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    //======================================================================================================
+    //
+    //======================================================================================================
+
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertHtml( "<hr>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
 
     //======================================================================================================
 

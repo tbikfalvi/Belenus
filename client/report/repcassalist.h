@@ -22,6 +22,8 @@ private:
     QString          qsQuery;
     unsigned int     uiColumnCount;
 
+    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+
 protected:
     QLabel          *lblDate;
     QDateTimeEdit   *dteStartDate;
