@@ -5,13 +5,13 @@
 #include <QTextBlockFormat>
 
 #include "../framework/qtframework.h"
-#include "repcassalist.h"
+#include "rep_sample_.h"
 
 
-cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
+cDlgReportSAMPLE::cDlgReportSAMPLE( QWidget *parent )
     : cDlgPreview( parent )
 {
-    cTracer obTrace( "cDlgReportCassaList::cDlgReportCassaList" );
+    cTracer obTrace( "cDlgReportSAMPLE::cDlgReportSAMPLE" );
 
     setReportTitle( tr( "Cassa list" ) );
 
@@ -39,12 +39,12 @@ cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
     horizontalLayout->insertWidget( 0, lblDate );
 }
 
-cDlgReportCassaList::~cDlgReportCassaList()
+cDlgReportSAMPLE::~cDlgReportSAMPLE()
 {
-    cTracer obTrace( "cDlgReportCassaList::~cDlgReportCassaList" );
+    cTracer obTrace( "cDlgReportSAMPLE::~cDlgReportSAMPLE" );
 }
 
-QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+QString cDlgReportSAMPLE::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -64,9 +64,9 @@ QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qs
     return qsRet;
 }
 
-void cDlgReportCassaList::refreshReport()
+void cDlgReportSAMPLE::refreshReport()
 {
-    cTracer obTrace( "cDlgReportCassaList::refreshReport()" );
+    cTracer obTrace( "cDlgReportSAMPLE::refreshReport()" );
 
     setCursor( Qt::WaitCursor);
 
@@ -121,9 +121,6 @@ void cDlgReportCassaList::refreshReport()
     //======================================================================================================
 
     qsQuery = "";
-    qsQuery += QString( "SELECT ch.actionTime, ch.actionValue, ch.comment, u.name FROM cassaHistory ch, users u WHERE ch.userId=u.userId AND ch.actionValue<>0 " );
-    qsQuery += QString( " AND ch.actionTime>=\"%1\" AND ch.actionTime<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
-    qsQuery += QString( " ORDER BY ch.actionTime " );
 
     //------------------------------------------------------------------------------------------------------
 
@@ -135,73 +132,43 @@ void cDlgReportCassaList::refreshReport()
     tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
 
     //------------------------------------------------------------------------------------------------------
-
-    tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Time" ), obBoldFormat );
-
-    tcReport.movePosition( QTextCursor::NextCell );
-
-    tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Amount" ), obBoldFormat );
-
-    tcReport.movePosition( QTextCursor::NextCell );
-
-    tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Comment" ), obBoldFormat );
-
-    tcReport.movePosition( QTextCursor::NextCell );
-
-    tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Cassa owner" ), obBoldFormat );
+    // Headers
 
     //------------------------------------------------------------------------------------------------------
+    // Summary variables
 
-    int     inSumAmount  = 0;
+//    int     inSumSample  = 0;
 
     //------------------------------------------------------------------------------------------------------
 
     while( poReportResult->next() )
     {
-        int         inColumn = 0;
-
-        // Time
-        tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obLeftCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString().right(8), obNormalFormat );
-        inColumn++;
-
-        // Amount
-        tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obRightCellFormat );
-        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
-        inSumAmount += poReportResult->value(inColumn).toInt();
-        inColumn++;
+//        int         inColumn = 0;
 
         // Comment
+/*
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obLeftCellFormat );
         tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
         inColumn++;
-
-        // Cassa owner
-        tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obLeftCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
-        inColumn++;
+*/
     }
     delete poReportResult;
 
     //------------------------------------------------------------------------------------------------------
+    // Summary fields
 
+/*
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.movePosition( QTextCursor::NextCell );
     tcReport.setBlockFormat( obRightCellFormat );
-    tcReport.insertText( convertCurrency( inSumAmount, g_poPrefs->getCurrencyShort() ), obBoldFormat );
+    tcReport.insertText( convertCurrency( inSumSample, g_poPrefs->getCurrencyShort() ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.movePosition( QTextCursor::NextCell );
+*/
 
     //======================================================================================================
     //

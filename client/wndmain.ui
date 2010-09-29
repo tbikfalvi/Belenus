@@ -133,7 +133,10 @@
      <string>&amp;Reports</string>
     </property>
     <addaction name="action_Accounting"/>
+    <addaction name="separator"/>
     <addaction name="action_ReportPatients"/>
+    <addaction name="action_ReportAttendances"/>
+    <addaction name="separator"/>
     <addaction name="action_CassaHistory"/>
    </widget>
    <addaction name="menu_System"/>
@@ -499,6 +502,14 @@
    </property>
    <property name="toolTip">
     <string>History of cassa actions</string>
+   </property>
+  </action>
+  <action name="action_ReportAttendances">
+   <property name="text">
+    <string>Attendances</string>
+   </property>
+   <property name="toolTip">
+    <string>Report of attendances</string>
    </property>
   </action>
  </widget>

@@ -5,15 +5,15 @@
 #include <QTextBlockFormat>
 
 #include "../framework/qtframework.h"
-#include "repcassalist.h"
+#include "repattendance.h"
 
 
-cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
+cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
     : cDlgPreview( parent )
 {
-    cTracer obTrace( "cDlgReportCassaList::cDlgReportCassaList" );
+    cTracer obTrace( "cDlgReportAttendance::cDlgReportAttendance" );
 
-    setReportTitle( tr( "Cassa list" ) );
+    setReportTitle( tr( "Attendances" ) );
 
     lblDate = new QLabel( tr("Date :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );
@@ -33,18 +33,43 @@ cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
     dteEndDate->setDate( QDate::currentDate() );
     dteEndDate->setDisplayFormat( "yyyy-MM-dd" );
 
+    lblPatient = new QLabel( tr("Patient :"), grpFilters );
+    lblPatient->setObjectName( QString::fromUtf8( "lblPatient" ) );
+
+    cmbPatient = new QComboBox();
+    cmbPatient->setObjectName( QString::fromUtf8( "cmbPatient" ) );
+
+    horizontalLayout->insertWidget( 0, cmbPatient );
+    horizontalLayout->insertWidget( 0, lblPatient );
     horizontalLayout->insertWidget( 0, dteEndDate );
     horizontalLayout->insertWidget( 0, lblTo );
     horizontalLayout->insertWidget( 0, dteStartDate );
     horizontalLayout->insertWidget( 0, lblDate );
+
+    QSqlQuery *poQuery = NULL;
+
+    cmbPatient->addItem( tr("<All patients>") );
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
+        while( poQuery->next() )
+        {
+            cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+    if( poQuery ) delete poQuery;
 }
 
-cDlgReportCassaList::~cDlgReportCassaList()
+cDlgReportAttendance::~cDlgReportAttendance()
 {
-    cTracer obTrace( "cDlgReportCassaList::~cDlgReportCassaList" );
+    cTracer obTrace( "cDlgReportAttendance::~cDlgReportAttendance" );
 }
 
-QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+QString cDlgReportAttendance::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -64,9 +89,9 @@ QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qs
     return qsRet;
 }
 
-void cDlgReportCassaList::refreshReport()
+void cDlgReportAttendance::refreshReport()
 {
-    cTracer obTrace( "cDlgReportCassaList::refreshReport()" );
+    cTracer obTrace( "cDlgReportAttendance::refreshReport()" );
 
     setCursor( Qt::WaitCursor);
 
@@ -111,6 +136,8 @@ void cDlgReportCassaList::refreshReport()
     tcReport.setCharFormat( obNormalFormat );
     tcReport.insertText( QString( "%1 %2 -> " ).arg( tr( "Date:" ) ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ) );
     tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
+        tcReport.insertText( tr(" | Patient: %1").arg(cmbPatient->itemText(cmbPatient->currentIndex())) );
 
     tcReport.insertHtml( "<hr>" );
 
@@ -121,42 +148,47 @@ void cDlgReportCassaList::refreshReport()
     //======================================================================================================
 
     qsQuery = "";
-    qsQuery += QString( "SELECT ch.actionTime, ch.actionValue, ch.comment, u.name FROM cassaHistory ch, users u WHERE ch.userId=u.userId AND ch.actionValue<>0 " );
-    qsQuery += QString( " AND ch.actionTime>=\"%1\" AND ch.actionTime<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
-    qsQuery += QString( " ORDER BY ch.actionTime " );
+    qsQuery += QString( "SELECT date, bloodPressureStart, bloodPressureStop, pulseStart, pulseStop FROM attendance WHERE active=1 " );
+    qsQuery += QString( " AND date>=\"%1\" AND date<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
+    {
+        qsQuery += QString( " AND patientId=%1 " ).arg(cmbPatient->itemData(cmbPatient->currentIndex()).toInt());
+    }
 
     //------------------------------------------------------------------------------------------------------
 
     poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
 
-    uiColumnCount = 4;
+    uiColumnCount = 5;
 
     tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
 
     //------------------------------------------------------------------------------------------------------
+    // Headers
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Time" ), obBoldFormat );
+    tcReport.insertText( tr( "Date" ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Amount" ), obBoldFormat );
+    tcReport.insertText( tr( "Blood pressure start" ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Comment" ), obBoldFormat );
+    tcReport.insertText( tr( "Blood pressure stop" ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Cassa owner" ), obBoldFormat );
+    tcReport.insertText( tr( "Pulse start" ), obBoldFormat );
 
-    //------------------------------------------------------------------------------------------------------
+    tcReport.movePosition( QTextCursor::NextCell );
 
-    int     inSumAmount  = 0;
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Pulse stop" ), obBoldFormat );
 
     //------------------------------------------------------------------------------------------------------
 
@@ -164,41 +196,42 @@ void cDlgReportCassaList::refreshReport()
     {
         int         inColumn = 0;
 
-        // Time
+        // Date
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obLeftCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString().right(8), obNormalFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
         inColumn++;
 
-        // Amount
+        // Bloodpressure start
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obRightCellFormat );
-        tcReport.insertText( convertCurrency( poReportResult->value( inColumn ).toInt(), g_poPrefs->getCurrencyShort() ), obNormalFormat );
-        inSumAmount += poReportResult->value(inColumn).toInt();
-        inColumn++;
-
-        // Comment
-        tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obLeftCellFormat );
         tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
         inColumn++;
 
-        // Cassa owner
+        // Bloodpressure stop
         tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.setBlockFormat( obRightCellFormat );
         tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
         inColumn++;
+
+        // Pulse start
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+
+        // Pulse stop
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+
     }
     delete poReportResult;
 
-    //------------------------------------------------------------------------------------------------------
-
     tcReport.movePosition( QTextCursor::NextCell );
-
     tcReport.movePosition( QTextCursor::NextCell );
-    tcReport.setBlockFormat( obRightCellFormat );
-    tcReport.insertText( convertCurrency( inSumAmount, g_poPrefs->getCurrencyShort() ), obBoldFormat );
-
+    tcReport.movePosition( QTextCursor::NextCell );
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.movePosition( QTextCursor::NextCell );

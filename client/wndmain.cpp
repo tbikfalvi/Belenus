@@ -74,6 +74,7 @@
 #include "report/repledgermain.h"
 #include "report/reppatients.h"
 #include "report/repcassalist.h"
+#include "report/repattendance.h"
 
 //====================================================================================
 
@@ -1514,4 +1515,14 @@ void cWndMain::on_action_CassaHistory_triggered()
     setCursor( Qt::ArrowCursor);
 
     obDlgReportCassaList.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ReportAttendances_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgReportAttendance  obDlgReportAttendance( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgReportAttendance.exec();
 }

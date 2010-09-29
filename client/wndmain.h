@@ -89,6 +89,7 @@ private slots:
     void on_action_RegionZipCity_triggered();
     void on_action_ReportPatients_triggered();
     void on_action_CassaHistory_triggered();
+    void on_action_ReportAttendances_triggered();
 };
 
 #endif

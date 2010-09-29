@@ -459,4 +459,10 @@ client/reppatients.o
 client/moc_repcassalist.cpp
 client/moc_repcassalist.o
 client/repcassalist.o
+client/moc_rep_sample_.cpp
+client/moc_rep_sample_.o
+client/moc_repattendance.cpp
+client/moc_repattendance.o
+client/rep_sample_.o
+client/repattendance.o
 

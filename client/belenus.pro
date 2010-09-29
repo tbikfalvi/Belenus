@@ -133,7 +133,9 @@ HEADERS = belenus.h \
     crud/dlgpaneluseselect.h \
     report/repledgermain.h \
     report/reppatients.h \
-    report/repcassalist.h
+    report/repcassalist.h \
+    report/rep_sample_.h \
+    report/repattendance.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -234,7 +236,9 @@ SOURCES = main.cpp \
     crud/dlgpaneluseselect.cpp \
     report/repledgermain.cpp \
     report/reppatients.cpp \
-    report/repcassalist.cpp
+    report/repcassalist.cpp \
+    report/rep_sample_.cpp \
+    report/repattendance.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
