@@ -137,7 +137,7 @@ void cDlgReportCassaList::refreshReport()
     //------------------------------------------------------------------------------------------------------
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Time" ), obBoldFormat );
+    tcReport.insertText( tr( "Date" ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
@@ -164,10 +164,12 @@ void cDlgReportCassaList::refreshReport()
     {
         int         inColumn = 0;
 
-        // Time
+        // Date time
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obLeftCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString().right(8), obNormalFormat );
+//        tcReport.insertText( poReportResult->value(inColumn).toString().right(8), obNormalFormat );
+        QString qsTemp = poReportResult->value(inColumn).toString();
+        tcReport.insertText( qsTemp.replace(10,1,' '), obNormalFormat );
         inColumn++;
 
         // Amount

@@ -233,7 +233,7 @@ void cDlgReportCardUses::refreshReport()
     // Headers
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Date" ), obBoldFormat );
+    tcReport.insertText( tr( "Date time" ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
