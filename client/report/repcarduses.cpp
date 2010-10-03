@@ -5,15 +5,15 @@
 #include <QTextBlockFormat>
 
 #include "../framework/qtframework.h"
-#include "repattendance.h"
+#include "repcarduses.h"
 
 
-cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
+cDlgReportCardUses::cDlgReportCardUses( QWidget *parent )
     : cDlgPreview( parent )
 {
-    cTracer obTrace( "cDlgReportAttendance::cDlgReportAttendance" );
+    cTracer obTrace( "cDlgReportCardUses::cDlgReportCardUses" );
 
-    setReportTitle( tr( "Attendances" ) );
+    setReportTitle( tr( "Patientcard uses" ) );
 
     lblDate = new QLabel( tr("Date :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );
@@ -33,14 +33,22 @@ cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
     dteEndDate->setDate( QDate::currentDate() );
     dteEndDate->setDisplayFormat( "yyyy-MM-dd" );
 
-    lblPatient = new QLabel( tr("Patient :"), grpFilters );
+    lblPatientCard = new QLabel( tr("Patientcard :"), grpFilters );
+    lblPatientCard->setObjectName( QString::fromUtf8( "lblPatientCard" ) );
+
+    cmbPatientCard = new QComboBox();
+    cmbPatientCard->setObjectName( QString::fromUtf8( "cmbPatientCard" ) );
+
+/*    lblPatient = new QLabel( tr("Patient :"), grpFilters );
     lblPatient->setObjectName( QString::fromUtf8( "lblPatient" ) );
 
     cmbPatient = new QComboBox();
-    cmbPatient->setObjectName( QString::fromUtf8( "cmbPatient" ) );
+    cmbPatient->setObjectName( QString::fromUtf8( "cmbPatient" ) );*/
 
-    horizontalLayout->insertWidget( 0, cmbPatient );
-    horizontalLayout->insertWidget( 0, lblPatient );
+//    horizontalLayout->insertWidget( 0, cmbPatient );
+//    horizontalLayout->insertWidget( 0, lblPatient );
+    horizontalLayout->insertWidget( 0, cmbPatientCard );
+    horizontalLayout->insertWidget( 0, lblPatientCard );
     horizontalLayout->insertWidget( 0, dteEndDate );
     horizontalLayout->insertWidget( 0, lblTo );
     horizontalLayout->insertWidget( 0, dteStartDate );
@@ -48,7 +56,7 @@ cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
 
     QSqlQuery *poQuery = NULL;
 
-    cmbPatient->addItem( tr("<All patients>") );
+    /*cmbPatient->addItem( tr("<All patients>") );
     try
     {
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
@@ -60,16 +68,30 @@ cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
+    }*/
+
+    cmbPatientCard->addItem( tr("<All patientcards>") );
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId, barcode FROM patientCards WHERE active=1 AND patientCardId>0" ) );
+        while( poQuery->next() )
+        {
+            cmbPatientCard->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
     if( poQuery ) delete poQuery;
 }
 
-cDlgReportAttendance::~cDlgReportAttendance()
+cDlgReportCardUses::~cDlgReportCardUses()
 {
-    cTracer obTrace( "cDlgReportAttendance::~cDlgReportAttendance" );
+    cTracer obTrace( "cDlgReportCardUses::~cDlgReportCardUses" );
 }
 
-QString cDlgReportAttendance::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+QString cDlgReportCardUses::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -89,9 +111,9 @@ QString cDlgReportAttendance::convertCurrency( int p_nCurrencyValue, QString p_q
     return qsRet;
 }
 
-void cDlgReportAttendance::refreshReport()
+void cDlgReportCardUses::refreshReport()
 {
-    cTracer obTrace( "cDlgReportAttendance::refreshReport()" );
+    cTracer obTrace( "cDlgReportCardUses::refreshReport()" );
 
     setCursor( Qt::WaitCursor);
 
@@ -130,14 +152,21 @@ void cDlgReportAttendance::refreshReport()
     obRightCellFormat.setRightMargin( 10 );
     obRightCellFormat.setAlignment( Qt::AlignRight );
 
+    QTextBlockFormat obCenterCellFormat;
+    obCenterCellFormat.setLeftMargin( 10 );
+    obCenterCellFormat.setRightMargin( 10 );
+    obCenterCellFormat.setAlignment( Qt::AlignCenter );
+
     QTextCursor tcReport( &m_tdReport );
 
     tcReport.insertText( m_qsReportName + "   ", obTitleFormat );
     tcReport.setCharFormat( obNormalFormat );
     tcReport.insertText( QString( "%1 %2 -> " ).arg( tr( "Date:" ) ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ) );
     tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
-        tcReport.insertText( tr(" | Patient: %1").arg(cmbPatient->itemText(cmbPatient->currentIndex())) );
+    if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() > 0 )
+        tcReport.insertText( tr(" | Patientcard barcode: %1").arg(cmbPatientCard->itemText(cmbPatientCard->currentIndex())) );
+/*    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
+        tcReport.insertText( tr(" | Patient: %1").arg(cmbPatient->itemText(cmbPatient->currentIndex())) );*/
 
     tcReport.insertHtml( "<hr>" );
 
@@ -148,40 +177,55 @@ void cDlgReportAttendance::refreshReport()
     //======================================================================================================
 
     qsQuery = "";
-    qsQuery += QString( "SELECT a.date, a.bloodPressureStart, a.bloodPressureStop, a.pulseStart, a.pulseStop" );
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
+    qsQuery += QString( "SELECT DISTINCT pch.dateTimeUsed, pch.units, pch.time" );
+    if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() <= 0 )
     {
-        qsQuery += QString( ", p.name " );
+        qsQuery += QString( ", pc.barcode" );
     }
-    qsQuery += QString( " FROM attendance a" );
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
+    /*else if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
+    {
+        qsQuery += QString( ", (SELECT p.name FROM patientCards pc, patients p WHERE pc.patientCardId=1 AND p.patientId=pc.patientId ) AS name" );
+    }*/
+    qsQuery += QString( " FROM patientCardHistories pch" );
+    if( /*cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 && */
+        cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() > 0 )
     {
         qsQuery += QString( " WHERE active=1 " );
-        qsQuery += QString( " AND date>=\"%1\" AND date<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+        qsQuery += QString( " AND dateTimeUsed>=\"%1\" AND dateTimeUsed<=\"%2 23:59:59\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
     }
     else
     {
-        qsQuery += QString( ", patients p WHERE a.active=1 " );
-        qsQuery += QString( " AND a.date>=\"%1\" AND a.date<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+        qsQuery += QString( ", patientCards pc WHERE pch.active=1 " ); // , patients p
+        qsQuery += QString( " AND pch.dateTimeUsed>=\"%1\" AND pch.dateTimeUsed<=\"%2 23:59:59\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
     }
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
+    if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() > 0 )
+    {
+        qsQuery += QString( " AND pch.patientCardId=%1 " ).arg(cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt());
+    }
+    else
+    {
+        qsQuery += QString( " AND pch.patientCardId=pc.patientCardId " );
+    }
+/*    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
     {
         qsQuery += QString( " AND patientId=%1 " ).arg(cmbPatient->itemData(cmbPatient->currentIndex()).toInt());
     }
     else
     {
         qsQuery += QString( " AND a.patientId=p.patientId " );
-    }
+    }*/
 
     //------------------------------------------------------------------------------------------------------
 
     poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
 
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() > 0 )
-        uiColumnCount = 5;
-    else
-        uiColumnCount = 6;
+    uiColumnCount = 3;
+
+    /*if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
+        uiColumnCount++;*/
+    if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() <= 0 )
+        uiColumnCount++;
 
     tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
 
@@ -194,30 +238,35 @@ void cDlgReportAttendance::refreshReport()
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Blood pressure start" ), obBoldFormat );
+    tcReport.insertText( tr( "No units" ), obBoldFormat );
 
     tcReport.movePosition( QTextCursor::NextCell );
 
     tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Blood pressure stop" ), obBoldFormat );
+    tcReport.insertText( tr( "Length" ), obBoldFormat );
 
-    tcReport.movePosition( QTextCursor::NextCell );
+    if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() <= 0 )
+    {
+        tcReport.movePosition( QTextCursor::NextCell );
 
-    tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Pulse start" ), obBoldFormat );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( tr( "Patientcard" ), obBoldFormat );
+    }
 
-    tcReport.movePosition( QTextCursor::NextCell );
-
-    tcReport.setBlockFormat( obLeftCellFormat );
-    tcReport.insertText( tr( "Pulse stop" ), obBoldFormat );
-
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
+    /*if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
     {
         tcReport.movePosition( QTextCursor::NextCell );
 
         tcReport.setBlockFormat( obLeftCellFormat );
         tcReport.insertText( tr( "Patient" ), obBoldFormat );
-    }
+    }*/
+
+    //------------------------------------------------------------------------------------------------------
+    // Summary variables
+
+    QTime   qtTemp;
+    int     inSumUnits  = 0;
+    int     inSumLength = 0;
 
     //------------------------------------------------------------------------------------------------------
 
@@ -228,52 +277,64 @@ void cDlgReportAttendance::refreshReport()
         // Date
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obLeftCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        QString qsTemp = poReportResult->value(inColumn).toString();
+        tcReport.insertText( qsTemp.replace(10,1,' '), obNormalFormat );
         inColumn++;
 
-        // Bloodpressure start
+        // Units
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obRightCellFormat );
         tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inSumUnits += poReportResult->value(inColumn).toInt();
         inColumn++;
 
-        // Bloodpressure stop
+        // Length
         tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.setBlockFormat( obCenterCellFormat );
         tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        qtTemp = QTime::fromString(poReportResult->value(inColumn).toString(),"hh:mm:ss");
+        inSumLength += qtTemp.hour()*3600 + qtTemp.minute()*60 + qtTemp.second();
         inColumn++;
 
-        // Pulse start
-        tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obRightCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
-        inColumn++;
+        if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() <= 0 )
+        {
+            // PatientCard
+            tcReport.movePosition( QTextCursor::NextCell );
+            tcReport.setBlockFormat( obLeftCellFormat );
+            tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+            inColumn++;
+        }
 
-        // Pulse stop
-        tcReport.movePosition( QTextCursor::NextCell );
-        tcReport.setBlockFormat( obRightCellFormat );
-        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
-        inColumn++;
-
-        if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
+        /*if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
         {
             // Patient
             tcReport.movePosition( QTextCursor::NextCell );
             tcReport.setBlockFormat( obLeftCellFormat );
             tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
             inColumn++;
-        }
+        }*/
     }
     delete poReportResult;
 
-    tcReport.movePosition( QTextCursor::NextCell );
-    tcReport.movePosition( QTextCursor::NextCell );
-    tcReport.movePosition( QTextCursor::NextCell );
-    tcReport.movePosition( QTextCursor::NextCell );
-    if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
-        tcReport.movePosition( QTextCursor::NextCell );
+    //------------------------------------------------------------------------------------------------------
+    // Summary fields
 
     tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( QString::number(inSumUnits), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obCenterCellFormat );
+    qtTemp = QTime( inSumLength/3600, (inSumLength%3600)/60, (inSumLength%3600)%60 );
+    tcReport.insertText( qtTemp.toString("hh:mm:ss"), obBoldFormat );
+
+    if( cmbPatientCard->itemData(cmbPatientCard->currentIndex()).toInt() <= 0 )
+        tcReport.movePosition( QTextCursor::NextCell );
+
+    /*if( cmbPatient->itemData(cmbPatient->currentIndex()).toInt() <= 0 )
+        tcReport.movePosition( QTextCursor::NextCell );*/
 
     //======================================================================================================
     //

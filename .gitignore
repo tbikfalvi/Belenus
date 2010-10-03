@@ -465,4 +465,11 @@ client/moc_repattendance.cpp
 client/moc_repattendance.o
 client/rep_sample_.o
 client/repattendance.o
-
+client/dlglicenceedit.o
+client/dlglicenceedit.ui
+client/moc_dlglicenceedit.cpp
+client/moc_dlglicenceedit.o
+client/moc_repcarduses.cpp
+client/moc_repcarduses.o
+client/repcarduses.o
+client/ui_dlglicenceedit.h

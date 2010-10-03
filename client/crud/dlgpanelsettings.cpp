@@ -11,7 +11,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     setWindowTitle( tr( "Panel settings" ) );
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
-    m_poBtnClose->setIcon( QIcon("./resources/40x40_cancel.png") );
+    m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.png") );
 
     m_uiPanelId = p_uiPanelId;
 

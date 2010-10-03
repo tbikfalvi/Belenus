@@ -57,6 +57,7 @@
 #include "edit/dlgpatientcardedit.h"
 #include "edit/dlgcassaedit.h"
 #include "edit/dlgpatientcarduse.h"
+#include "edit/dlglicenceedit.h"
 
 //====================================================================================
 
@@ -75,6 +76,7 @@
 #include "report/reppatients.h"
 #include "report/repcassalist.h"
 #include "report/repattendance.h"
+#include "report/repcarduses.h"
 
 //====================================================================================
 
@@ -1525,4 +1527,22 @@ void cWndMain::on_action_ReportAttendances_triggered()
     setCursor( Qt::ArrowCursor);
 
     obDlgReportAttendance.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ReportPatientcardUses_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgReportCardUses  obDlgReportCardUses( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgReportCardUses.exec();
+}
+//====================================================================================
+void cWndMain::on_action_EditLicenceInformation_triggered()
+//====================================================================================
+{
+    dlgLicenceEdit  obDlgLicenceEdit( this );
+
+    obDlgLicenceEdit.exec();
 }

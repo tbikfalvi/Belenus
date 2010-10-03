@@ -76,6 +76,9 @@
     </property>
     <addaction name="action_Cassa"/>
     <addaction name="separator"/>
+    <addaction name="action_ValidateSerialKey"/>
+    <addaction name="action_EditLicenceInformation"/>
+    <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
@@ -125,8 +128,6 @@
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
     <addaction name="menuDevice"/>
-    <addaction name="separator"/>
-    <addaction name="action_ValidateSerialKey"/>
    </widget>
    <widget class="QMenu" name="menu_View_2">
     <property name="title">
@@ -136,6 +137,8 @@
     <addaction name="separator"/>
     <addaction name="action_ReportPatients"/>
     <addaction name="action_ReportAttendances"/>
+    <addaction name="separator"/>
+    <addaction name="action_ReportPatientcardUses"/>
     <addaction name="separator"/>
     <addaction name="action_CassaHistory"/>
    </widget>
@@ -510,6 +513,22 @@
    </property>
    <property name="toolTip">
     <string>Report of attendances</string>
+   </property>
+  </action>
+  <action name="action_ReportPatientcardUses">
+   <property name="text">
+    <string>Patientcard uses</string>
+   </property>
+   <property name="toolTip">
+    <string>List of patientcard uses</string>
+   </property>
+  </action>
+  <action name="action_EditLicenceInformation">
+   <property name="text">
+    <string>Edit Licence information</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit Licence information such as Studio name, address, contact person etc.</string>
    </property>
   </action>
  </widget>

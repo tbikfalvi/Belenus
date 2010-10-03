@@ -28,7 +28,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlghealthinsuranceedit.ui \
     dlgcompanyedit.ui \
     dlgdoctoredit.ui \
-    dlgzipregioncityedit.ui
+    dlgzipregioncityedit.ui \
+    dlglicenceedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -135,7 +136,9 @@ HEADERS = belenus.h \
     report/reppatients.h \
     report/repcassalist.h \
     report/rep_sample_.h \
-    report/repattendance.h
+    report/repattendance.h \
+    report/repcarduses.h \
+    edit/dlglicenceedit.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -223,6 +226,7 @@ SOURCES = main.cpp \
     edit/dlgcompanyedit.cpp \
     edit/dlgdoctoredit.cpp \
     edit/dlgzipregioncityedit.cpp \
+    edit/dlglicenceedit.cpp \
     report/dlgpreview.cpp \
     bs_connection.cpp \
     licenceManager.cpp \
@@ -238,7 +242,8 @@ SOURCES = main.cpp \
     report/reppatients.cpp \
     report/repcassalist.cpp \
     report/rep_sample_.cpp \
-    report/repattendance.cpp
+    report/repattendance.cpp \
+    report/repcarduses.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

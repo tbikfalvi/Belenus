@@ -48,7 +48,7 @@ cDlgPostponedPatientSelect::cDlgPostponedPatientSelect( QWidget *p_poParent )
     pbCancel = new QPushButton( tr( "Cancel" ), this );
     pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
     pbCancel->setIconSize( QSize(20, 20) );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
     setupTableView();
