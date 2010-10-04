@@ -473,3 +473,6 @@ client/moc_repcarduses.cpp
 client/moc_repcarduses.o
 client/repcarduses.o
 client/ui_dlglicenceedit.h
+client/moc_reppatientcards.cpp
+client/moc_reppatientcards.o
+client/reppatientcards.o

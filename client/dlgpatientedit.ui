@@ -522,6 +522,9 @@
                 <height>16777215</height>
                </size>
               </property>
+              <property name="maxLength">
+               <number>10</number>
+              </property>
              </widget>
             </item>
             <item>
@@ -538,6 +541,9 @@
                 <width>50</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="maxLength">
+               <number>10</number>
               </property>
              </widget>
             </item>
@@ -601,10 +607,10 @@
              <string>Country calling code</string>
             </property>
             <property name="inputMask">
-             <string>+000; </string>
+             <string>+; </string>
             </property>
             <property name="maxLength">
-             <number>4</number>
+             <number>1</number>
             </property>
            </widget>
           </item>
@@ -626,7 +632,10 @@
              <string>Region calling code</string>
             </property>
             <property name="inputMask">
-             <string>000; </string>
+             <string/>
+            </property>
+            <property name="maxLength">
+             <number>3</number>
             </property>
            </widget>
           </item>

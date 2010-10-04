@@ -5,23 +5,23 @@
 #include <QTextBlockFormat>
 
 #include "../framework/qtframework.h"
-#include "rep_sample_.h"
+#include "reppatientcards.h"
 
 
-cDlgReportSAMPLE::cDlgReportSAMPLE( QWidget *parent )
+cDlgReportPatientCard::cDlgReportPatientCard( QWidget *parent )
     : cDlgPreview( parent )
 {
-    cTracer obTrace( "cDlgReportSAMPLE::cDlgReportSAMPLE" );
+    cTracer obTrace( "cDlgReportPatientCard::cDlgReportPatientCard" );
 
-    setReportTitle( tr( "_X_TITLE_X_" ) );
+    setReportTitle( tr( "Patientcards" ) );
 
-    lblDate = new QLabel( tr("Date :"), grpFilters );
+    lblDate = new QLabel( tr("Valid between dates :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );
 
     dteStartDate = new QDateTimeEdit();
     dteStartDate->setObjectName( QString::fromUtf8( "dteStartDate" ) );
     dteStartDate->setCalendarPopup( true );
-    dteStartDate->setDate( QDate::currentDate() );
+    dteStartDate->setDate( QDate::currentDate().addYears(-1) );
     dteStartDate->setDisplayFormat( "yyyy-MM-dd" );
 
     lblTo = new QLabel( "->", grpFilters );
@@ -39,12 +39,12 @@ cDlgReportSAMPLE::cDlgReportSAMPLE( QWidget *parent )
     horizontalLayout->insertWidget( 0, lblDate );
 }
 
-cDlgReportSAMPLE::~cDlgReportSAMPLE()
+cDlgReportPatientCard::~cDlgReportPatientCard()
 {
-    cTracer obTrace( "cDlgReportSAMPLE::~cDlgReportSAMPLE" );
+    cTracer obTrace( "cDlgReportPatientCard::~cDlgReportPatientCard" );
 }
 
-QString cDlgReportSAMPLE::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+QString cDlgReportPatientCard::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -64,9 +64,9 @@ QString cDlgReportSAMPLE::convertCurrency( int p_nCurrencyValue, QString p_qsCur
     return qsRet;
 }
 
-void cDlgReportSAMPLE::refreshReport()
+void cDlgReportPatientCard::refreshReport()
 {
-    cTracer obTrace( "cDlgReportSAMPLE::refreshReport()" );
+    cTracer obTrace( "cDlgReportPatientCard::refreshReport()" );
 
     setCursor( Qt::WaitCursor);
 
@@ -126,18 +126,48 @@ void cDlgReportSAMPLE::refreshReport()
     //======================================================================================================
 
     qsQuery = "";
+    qsQuery += QString( "SELECT pc.barcode, pc.units, pc.timeLeft, pc.validDateFrom, pc.validDateTo, pct.name, p.name FROM patientCards pc, patientCardTypes pct, patients p WHERE pc.active=1 AND pc.patientCardTypeId=pct.patientCardTypeId AND pc.patientId=p.patientId" );
+    qsQuery += QString( " AND ((pc.validDateFrom>=\"%1\" AND pc.validDateFrom<=\"%2\") OR (pc.validDateTo>=\"%1\" AND pc.validDateTo<=\"%2\")) " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    qsQuery += QString( "ORDER BY pc.barcode" );
 
     //------------------------------------------------------------------------------------------------------
 
     poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
 
-    uiColumnCount = 4;
+    uiColumnCount = 6;
 
     tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
 
     //------------------------------------------------------------------------------------------------------
     // Headers
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Barcode" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obCenterCellFormat );
+    tcReport.insertText( tr( "Units left" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obCenterCellFormat );
+    tcReport.insertText( tr( "Time left" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obCenterCellFormat );
+    tcReport.insertText( tr( "Valid" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Type" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Owner" ), obBoldFormat );
 
     //------------------------------------------------------------------------------------------------------
     // Summary variables
@@ -148,32 +178,63 @@ void cDlgReportSAMPLE::refreshReport()
 
     while( poReportResult->next() )
     {
-//        int         inColumn = 0;
+        QString     qsTemp;
+        QTime       qtTemp;
+        int         inColumn = 0;
 
-        // Comment
-/*
+        // Barcode
         tcReport.movePosition( QTextCursor::NextCell );
         tcReport.setBlockFormat( obLeftCellFormat );
         tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
         inColumn++;
-*/
+
+        // Units left
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+
+        // Time left
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        qtTemp = QTime( poReportResult->value(inColumn).toInt()/3600,
+                        (poReportResult->value(inColumn).toInt()%3600)/60,
+                        (poReportResult->value(inColumn).toInt()%3600)%60);
+        tcReport.insertText( qtTemp.toString("hh:mm:ss"), obNormalFormat );
+        inColumn++;
+
+        // Valid
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        qsTemp = poReportResult->value(inColumn).toString();
+        qsTemp += " => ";
+        inColumn++;
+        qsTemp += poReportResult->value(inColumn).toString();
+        tcReport.insertText( qsTemp, obNormalFormat );
+        inColumn++;
+
+        // Type
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+
+        // Owner
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
     }
     delete poReportResult;
 
     //------------------------------------------------------------------------------------------------------
     // Summary fields
-
-/*
     tcReport.movePosition( QTextCursor::NextCell );
-
     tcReport.movePosition( QTextCursor::NextCell );
-    tcReport.setBlockFormat( obRightCellFormat );
-    tcReport.insertText( convertCurrency( inSumSample, g_poPrefs->getCurrencyShort() ), obBoldFormat );
-
     tcReport.movePosition( QTextCursor::NextCell );
-
     tcReport.movePosition( QTextCursor::NextCell );
-*/
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.movePosition( QTextCursor::NextCell );
 
     //======================================================================================================
     //

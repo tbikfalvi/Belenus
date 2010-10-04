@@ -77,6 +77,7 @@
 #include "report/repcassalist.h"
 #include "report/repattendance.h"
 #include "report/repcarduses.h"
+#include "report/reppatientcards.h"
 
 //====================================================================================
 
@@ -1545,4 +1546,14 @@ void cWndMain::on_action_EditLicenceInformation_triggered()
     dlgLicenceEdit  obDlgLicenceEdit( this );
 
     obDlgLicenceEdit.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ReportPatientcards_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgReportPatientCard  obDlgReportPatientCard( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgReportPatientCard.exec();
 }

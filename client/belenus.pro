@@ -121,6 +121,7 @@ HEADERS = belenus.h \
     edit/dlgdoctoredit.h \
     edit/dlgzipregioncityedit.h \
     report/dlgpreview.h \
+    report/reppatientcards.h \
     bs_connection.h \
     licenceManager.h \
     communication.h \
@@ -227,6 +228,7 @@ SOURCES = main.cpp \
     edit/dlgdoctoredit.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
+    report/reppatientcards.cpp \
     report/dlgpreview.cpp \
     bs_connection.cpp \
     licenceManager.cpp \
