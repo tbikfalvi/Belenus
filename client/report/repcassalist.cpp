@@ -122,7 +122,7 @@ void cDlgReportCassaList::refreshReport()
 
     qsQuery = "";
     qsQuery += QString( "SELECT ch.actionTime, ch.actionValue, ch.comment, u.name FROM cassaHistory ch, users u WHERE ch.userId=u.userId AND ch.actionValue<>0 " );
-    qsQuery += QString( " AND ch.actionTime>=\"%1\" AND ch.actionTime<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    qsQuery += QString( " AND ch.actionTime>=\"%1\" AND ch.actionTime<=\"%2 23:59:59\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
     qsQuery += QString( " ORDER BY ch.actionTime " );
 
     //------------------------------------------------------------------------------------------------------

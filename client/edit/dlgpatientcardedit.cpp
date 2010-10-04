@@ -83,6 +83,10 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
             }
         }
     }
+    if( m_poPatientCard->patientId() > 0 )
+    {
+        cmbPatient->setEnabled( false );
+    }
     m_bDlgLoaded = true;
 }
 

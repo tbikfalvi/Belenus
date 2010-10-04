@@ -59,11 +59,11 @@ void cDlgDoctorEdit::accept ()
 {
     bool  boCanBeSaved = true;
 
-    if( (ledName->text() == "") )
+    /*if( (ledName->text() == "") )
     {
         boCanBeSaved = false;
         QMessageBox::warning( this, tr( "Warning" ), tr( "Advisor name cannot be empty." ) );
-    }
+    }*/
     if( (ledLicence->text() == "") )
     {
         boCanBeSaved = false;

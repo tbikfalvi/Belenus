@@ -96,6 +96,7 @@ private:
     int                          m_inCashToPay;
     bool                         m_bHasToPay;
     unsigned int                 m_uiPatientToPay;
+    unsigned int                 m_uiAttendanceId;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

@@ -16,6 +16,7 @@
 #include "../crud/dlghealthinsurance.h"
 #include "../crud/dlgzipregioncityselect.h"
 #include "../db/dbdoctor.h"
+#include "../crud/dlgillnessgroup.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -36,6 +37,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
     pbAddressAdd->setIcon( QIcon("./resources/40x40_address.png") );
     pbCitySearch->setIcon( QIcon("./resources/40x40_search.png") );
     pbVerifyAddress->setIcon( QIcon("./resources/40x40_question.png") );
+
+    tbwPatient->setCurrentIndex( 0 );
 
     m_poPostponed = p_poPostponed;
     m_poPatient = p_poPatient;
@@ -71,14 +74,15 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             if( m_poPatient->reasonToVisitId() == poQuery->value( 0 ) )
                 cmbReasonToVisit->setCurrentIndex( cmbReasonToVisit->count()-1 );
         }
-        cmbIllnessGroup->addItem( tr("<Not selected>"), 0 );
+        FillIllnessGroupCombo();
+/*        cmbIllnessGroup->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT illnessGroupId, name FROM illnessGroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
         while( poQuery->next() )
         {
             cmbIllnessGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
             if( m_poPatient->illnessGroupId() == poQuery->value( 0 ) )
                 cmbIllnessGroup->setCurrentIndex( cmbIllnessGroup->count()-1 );
-        }
+        }*/
 
         if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
             checkIndependent->setChecked( true );
@@ -376,6 +380,7 @@ bool cDlgPatientEdit::SavePatientData()
 
         m_poPatient->setHeight( ledHeight->text().toInt() );
         m_poPatient->setWeight( ledWeight->text().toInt() );
+        m_poPatient->setIllnessGroupId( cmbIllnessGroup->itemData( cmbIllnessGroup->currentIndex() ).toUInt() );
         m_poPatient->setIllnesses( ptIllness->toPlainText() );
         m_poPatient->setSymptoms( ptSymptom->toPlainText() );
         m_poPatient->setMedicineCurrent( ptMedicineCurrent->toPlainText() );
@@ -518,6 +523,21 @@ void cDlgPatientEdit::FillHealthInsuranceCombo()
         cmbHealthInsurance->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
         if( m_poPatient->healthInsuranceId() == poQuery->value( 0 ) )
             cmbHealthInsurance->setCurrentIndex( cmbHealthInsurance->count()-1 );
+    }
+}
+
+void cDlgPatientEdit::FillIllnessGroupCombo()
+{
+    QSqlQuery *poQuery;
+
+    cmbIllnessGroup->clear();
+    cmbIllnessGroup->addItem( tr("<Not selected>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT illnessGroupId, name FROM illnessGroups WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
+    while( poQuery->next() )
+    {
+        cmbIllnessGroup->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( m_poPatient->illnessGroupId() == poQuery->value( 0 ) )
+            cmbIllnessGroup->setCurrentIndex( cmbIllnessGroup->count()-1 );
     }
 }
 
@@ -827,4 +847,12 @@ void cDlgPatientEdit::checkRegionZipCity()
             }
         }
     }
+}
+
+void cDlgPatientEdit::on_pbIllnessGroup_clicked()
+{
+    cDlgIllnessGroup  obDlgIllnessGroup( this );
+
+    obDlgIllnessGroup.exec();
+    FillIllnessGroupCombo();
 }

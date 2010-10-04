@@ -23,6 +23,7 @@
 #include "db/dbpatientcard.h"
 #include "db/dbpatientcardhistory.h"
 #include "db/dbledger.h"
+#include "db/dbattendance.h"
 
 #include <iostream>
 
@@ -77,6 +78,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;
+
+    m_uiAttendanceId        = 0;
 
     m_pDBLedgerDevice       = new cDBLedgerDevice();
 
@@ -150,6 +153,8 @@ void cFrmPanel::start()
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
 
+    m_uiAttendanceId = g_uiPatientAttendanceId;
+
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
 }
@@ -164,6 +169,14 @@ void cFrmPanel::reset()
 //====================================================================================
 void cFrmPanel::clear()
 {
+    cDBAttendance   obDBAttendance;
+
+    obDBAttendance.load( m_uiAttendanceId );
+    obDBAttendance.setLength( 0 );
+    obDBAttendance.save();
+
+    m_uiAttendanceId        = 0;
+
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;

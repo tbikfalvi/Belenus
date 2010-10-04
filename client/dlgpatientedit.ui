@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tbwPatient">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -88,6 +88,9 @@
                 <width>211</width>
                 <height>0</height>
                </size>
+              </property>
+              <property name="maxLength">
+               <number>10</number>
               </property>
              </widget>
             </item>
@@ -323,7 +326,11 @@
                <widget class="QComboBox" name="cmbDoctorType"/>
               </item>
               <item>
-               <widget class="QComboBox" name="cmbDoctor"/>
+               <widget class="QComboBox" name="cmbDoctor">
+                <property name="editable">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pbDoctor">
@@ -771,6 +778,19 @@
           <widget class="QComboBox" name="cmbIllnessGroup"/>
          </item>
          <item>
+          <widget class="QPushButton" name="pbIllnessGroup">
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1008,11 +1028,60 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tbwPatient</tabstop>
+  <tabstop>ledName</tabstop>
+  <tabstop>rbGenderMale</tabstop>
+  <tabstop>rbGenderFemale</tabstop>
+  <tabstop>ledUniqueId</tabstop>
+  <tabstop>deDateBirth</tabstop>
+  <tabstop>ledAge</tabstop>
+  <tabstop>ledBarcode</tabstop>
+  <tabstop>ledPatientcardType</tabstop>
+  <tabstop>chkRegularCustomer</tabstop>
+  <tabstop>chkEmployee</tabstop>
+  <tabstop>chkService</tabstop>
+  <tabstop>chkHealthInsurance</tabstop>
+  <tabstop>cmbHealthInsurance</tabstop>
+  <tabstop>pbHealthInsurance</tabstop>
+  <tabstop>chkCompany</tabstop>
+  <tabstop>cmbCompany</tabstop>
+  <tabstop>pbCompany</tabstop>
+  <tabstop>chkDoctorProposed</tabstop>
+  <tabstop>cmbDoctorType</tabstop>
+  <tabstop>cmbDoctor</tabstop>
+  <tabstop>pbDoctor</tabstop>
+  <tabstop>ptComment</tabstop>
   <tabstop>checkIndependent</tabstop>
   <tabstop>pbSave</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbFinishLater</tabstop>
   <tabstop>pbAttendances</tabstop>
+  <tabstop>ledCountry</tabstop>
+  <tabstop>cmbRegion</tabstop>
+  <tabstop>ledZip</tabstop>
+  <tabstop>ledCity</tabstop>
+  <tabstop>pbCitySearch</tabstop>
+  <tabstop>pbVerifyAddress</tabstop>
+  <tabstop>ledStreet</tabstop>
+  <tabstop>cmbStreet</tabstop>
+  <tabstop>ledStreetNumber</tabstop>
+  <tabstop>ledFloor</tabstop>
+  <tabstop>ledDoor</tabstop>
+  <tabstop>pbAddressAdd</tabstop>
+  <tabstop>ledPhoneCountry</tabstop>
+  <tabstop>ledPhoneRegion</tabstop>
+  <tabstop>ledPhone</tabstop>
+  <tabstop>ledEmail1</tabstop>
+  <tabstop>ledEmail2</tabstop>
+  <tabstop>ledHeight</tabstop>
+  <tabstop>ledWeight</tabstop>
+  <tabstop>cmbIllnessGroup</tabstop>
+  <tabstop>ptIllness</tabstop>
+  <tabstop>ptSymptom</tabstop>
+  <tabstop>ptMedicineCurrent</tabstop>
+  <tabstop>ptMedicineAllergy</tabstop>
+  <tabstop>cmbPatientOrigin</tabstop>
+  <tabstop>cmbReasonToVisit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

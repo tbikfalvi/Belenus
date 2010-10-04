@@ -28,6 +28,7 @@ private:
     void FillDoctorCombo();
     void FillDefaultAddress();
     void FillPhoneNumber();
+    void FillIllnessGroupCombo();
     void checkRegionZipCity();
 
 protected:
@@ -37,6 +38,7 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbIllnessGroup_clicked();
     void on_cmbDoctorType_currentIndexChanged(int index);
     void on_pbVerifyAddress_clicked();
     void on_deDateBirth_dateChanged(QDate date);

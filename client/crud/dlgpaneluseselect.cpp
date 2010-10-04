@@ -34,13 +34,21 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
     lblWorkTime->setVisible(false);
     ledWorkTime->setEnabled( false );
     ledWorkTime->setVisible(false);
+    lblMaxWorkTime->setEnabled(false);
+    lblMaxWorkTime->setVisible(false);
+    ledMaxWorkTime->setEnabled(false);
+    ledMaxWorkTime->setVisible(false);
+    pbCopyToAll->setEnabled(false);
+    pbCopyToAll->setVisible(false);
 
+    pbWTReset->setEnabled(false);
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
     m_poBtnEdit->setEnabled(false);
     m_poBtnNew->setEnabled(false);
     m_poBtnSave->setEnabled( false );
 
+    pbWTReset->setVisible(false);
     m_poBtnClose->setVisible(false);
     m_poBtnDelete->setVisible(false);
     m_poBtnEdit->setVisible(false);
