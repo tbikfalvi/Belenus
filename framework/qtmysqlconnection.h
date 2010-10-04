@@ -3,11 +3,15 @@
 
 #include <QtSql>
 #include <QString>
+#include <QDateTime>
 
 #include "dbconnection.h"
 
 class cQTMySQLConnection : public cDBConnection
 {
+    // these are mysql specific errors
+    static const int CR_SERVER_GONE_ERROR = 2006;
+    static const int CR_SERVER_LOST = 2013;
 public:
     cQTMySQLConnection();
     virtual ~cQTMySQLConnection();
