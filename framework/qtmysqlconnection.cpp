@@ -49,10 +49,23 @@ void cQTMySQLConnection::executeQuery( const string &p_stQuery,
     }
 
     QSqlQuery  obQuery;
-    if( !obQuery.exec( QString::fromStdString( p_stQuery ) ) )
-    {
-        throw cSevException( cSeverity::ERROR,
-                "Error executing query: " + obQuery.lastError().text().toStdString() );
+    bool triedToReConnect = false;
+    for(;;) {
+        if( !obQuery.exec( QString::fromStdString( p_stQuery ) ) )
+        {
+            // in case server dropped connection because of idle time, try to reconnect and re-exec the query
+            // if second attempt does not work, does not try again. Open() also will throw exception if error occurred
+            if ( !triedToReConnect && (obQuery.lastError().number()==CR_SERVER_GONE_ERROR || obQuery.lastError().number()==CR_SERVER_LOST) ) {
+                g_obLogger(cSeverity::DEBUG) << "[cQTMySQLConnection::executeQuery] server has gone. Trying to reconnect..." << EOM;
+                m_boOpen = false;
+                open();
+                triedToReConnect = true;  // try to reconnect only once
+                continue;
+            }
+
+            throw cSevException( cSeverity::ERROR, "Error executing query: " + obQuery.lastError().text().toStdString() );
+        }
+        break;  // if we are here, status is ok. So quit the FOR
     }
 }
 
@@ -60,19 +73,30 @@ QSqlQuery* cQTMySQLConnection::executeQTQuery( const QString &p_qsQuery )
                                throw( cSevException )
 {
     g_obLogger(cSeverity::DEBUG) << p_qsQuery << EOM;
-
     if( !isOpen() )
         throw cSevException( cSeverity::ERROR,
                 "Error executing query: Database is not open" );
 
     QSqlQuery*  poQuery = new QSqlQuery;
-    if( !poQuery->exec( p_qsQuery ) )
-    {
-        QString  qsError = poQuery->lastError().text();
-        delete poQuery;
+    bool triedToReConnect = false;
+    for(;;) {
+        if( !poQuery->exec( p_qsQuery ) )
+        {
+            QString qsError = poQuery->lastError().text();
+            // in case server dropped connection because of idle time, try to reconnect and re-exec the query
+            // if second attempt does not work, does not try again. Open() also will throw exception if error occurred
+            if ( !triedToReConnect && (poQuery->lastError().number()==CR_SERVER_GONE_ERROR || poQuery->lastError().number()==CR_SERVER_LOST) ) {
+                g_obLogger(cSeverity::DEBUG) << "[cQTMySQLConnection::executeQuery] server has gone. Trying to reconnect..." << EOM;
+                m_boOpen = false;
+                open();
+                triedToReConnect = true;  // try to reconnect only once
+                continue;
+            }
 
-        throw cSevException( cSeverity::ERROR,
-                "Error executing query: " + qsError.toStdString() );
+            delete poQuery;
+            throw cSevException( cSeverity::ERROR, "Error executing query: " + qsError.toStdString() );
+        }
+        break;  // if we are here, status is ok. So quit the FOR
     }
 
     return poQuery;
