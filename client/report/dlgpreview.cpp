@@ -1,10 +1,12 @@
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QPushButton>
 
 #include "../../framework/qtframework.h"
 #include "dlgpreview.h"
 
 cDlgPreview::cDlgPreview( QWidget *parent )
-    : QDialog( parent )
+    : QDialog( parent, Qt::WindowMaximizeButtonHint )
 {
     cTracer obTrace( "cDlgPreview::cDlgPreview" );
 
@@ -38,4 +40,11 @@ void cDlgPreview::refreshReport()
 
 void cDlgPreview::printReport()
 {
+    QPrinter obPrinter( QPrinter::HighResolution );
+    QPrintDialog obPrintDlg( &obPrinter, this );
+
+    if( obPrintDlg.exec() == QDialog::Accepted )
+    {
+        m_tdReport.print( &obPrinter );
+    }
 }
