@@ -1,3 +1,5 @@
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QPushButton>
 
 #include "../../framework/qtframework.h"
@@ -38,4 +40,11 @@ void cDlgPreview::refreshReport()
 
 void cDlgPreview::printReport()
 {
+    QPrinter obPrinter( QPrinter::HighResolution );
+    QPrintDialog obPrintDlg( &obPrinter, this );
+
+    if( obPrintDlg.exec() == QDialog::Accepted )
+    {
+        m_tdReport.print( &obPrinter );
+    }
 }
