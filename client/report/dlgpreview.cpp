@@ -4,7 +4,7 @@
 #include "dlgpreview.h"
 
 cDlgPreview::cDlgPreview( QWidget *parent )
-    : QDialog( parent )
+    : QDialog( parent, Qt::WindowMaximizeButtonHint )
 {
     cTracer obTrace( "cDlgPreview::cDlgPreview" );
 
