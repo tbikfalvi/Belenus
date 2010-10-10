@@ -16,8 +16,15 @@ public:
 public slots:
     virtual void accept ();
 
+private:
+    void checkRegionZipCity();
+
 protected:
     cDBCompany *m_poCompany;
+
+private slots:
+    void on_pbCitySearch_clicked();
+    void on_ledZip_textEdited(QString );
 };
 
 #endif

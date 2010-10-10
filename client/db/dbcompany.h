@@ -39,10 +39,6 @@ public:
     void            setValidDateFrom( const QString &p_qsValidDateFrom )            throw();
     QString         validDateTo() const                                             throw();
     void            setValidDateTo( const QString &p_qsValidDateTo )                throw();
-    int             discountType() const                                            throw();
-    void            setDiscountType( const int p_nDiscountType )                    throw();
-    int             discount() const                                                throw();
-    void            setDiscount( const int p_nDiscount )                            throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
     QString         archive() const                                                 throw();
