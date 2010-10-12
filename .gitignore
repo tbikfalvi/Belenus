@@ -475,3 +475,4 @@ client/ui_dlglicenceedit.h
 client/moc_reppatientcards.cpp
 client/moc_reppatientcards.o
 client/reppatientcards.o
+client/dbdiscount.o

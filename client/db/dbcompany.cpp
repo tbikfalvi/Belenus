@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbcompany.h"
+#include "dbdiscount.h"
 
 cDBCompany::cDBCompany()
 {
@@ -154,17 +155,59 @@ void cDBCompany::save() throw( cSevException )
     qsQuery += QString( "contractId = \"%1\", " ).arg( m_qsContractId );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
-    qsQuery += QString( "discountType = \"%1\", " ).arg( m_nDiscountType );
-    qsQuery += QString( "discount = \"%1\", " ).arg( m_nDiscount );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE companyId = %1" ).arg( m_uiId );
+        try
+        {
+            cDBDiscount obDBDiscount;
+
+            obDBDiscount.loadCompany( m_uiId );
+            if( m_nDiscountType == 1 )
+            {
+                obDBDiscount.setDiscountValue( m_nDiscount );
+                obDBDiscount.setDiscountPercent( 0 );
+            }
+            else if( m_nDiscountType == 2 )
+            {
+                obDBDiscount.setDiscountValue( 0 );
+                obDBDiscount.setDiscountPercent( m_nDiscount );
+            }
+            obDBDiscount.save();
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Discount id not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
+            else
+            {
+                cDBDiscount obDBDiscount;
+
+                obDBDiscount.createNew();
+                obDBDiscount.setLicenceId( g_poPrefs->getLicenceId() );
+                obDBDiscount.setCompanyId( m_uiId);
+                if( m_nDiscountType == 1 )
+                {
+                    obDBDiscount.setDiscountValue( m_nDiscount );
+                }
+                else if( m_nDiscountType == 2 )
+                {
+                    obDBDiscount.setDiscountPercent( m_nDiscount );
+                }
+                obDBDiscount.save();
+            }
+        }
     }
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-    if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    if( !m_uiId && poQuery )
+    {
+        m_uiId = poQuery->lastInsertId().toUInt();
+    }
     if( poQuery ) delete poQuery;
 }
 

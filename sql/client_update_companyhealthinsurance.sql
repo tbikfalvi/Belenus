@@ -7,9 +7,7 @@ ALTER TABLE `companies`
  ADD `contactPerson` VARCHAR( 100 ) NOT NULL AFTER `address` ,
  ADD `contractId` VARCHAR( 100 ) NOT NULL AFTER `contactPerson` ,
  ADD `validDateFrom` DATE NOT NULL AFTER `contractId` ,
- ADD `validDateTo` DATE NOT NULL AFTER `validDateFrom` ,
- ADD `discountType` INT NOT NULL AFTER `validDateTo` ,
- ADD `discount` INT NOT NULL AFTER `discountType`;
+ ADD `validDateTo` DATE NOT NULL AFTER `validDateFrom` ;
 
 ALTER TABLE `healthInsurances`
  ADD `country` VARCHAR( 100 ) NOT NULL AFTER `name` ,
@@ -20,7 +18,5 @@ ALTER TABLE `healthInsurances`
  ADD `contactPerson` VARCHAR( 100 ) NOT NULL AFTER `address` ,
  ADD `contractId` VARCHAR( 100 ) NOT NULL AFTER `contactPerson` ,
  ADD `validDateFrom` DATE NOT NULL AFTER `contractId` ,
- ADD `validDateTo` DATE NOT NULL AFTER `validDateFrom` ,
- ADD `discountType` INT NOT NULL AFTER `validDateTo` ,
- ADD `discount` INT NOT NULL AFTER `discountType`;
+ ADD `validDateTo` DATE NOT NULL AFTER `validDateFrom` ;
 
