@@ -75,10 +75,32 @@ void cDBCompany::init( const QSqlRecord &p_obRecord ) throw()
     int inContractIdIdx     = p_obRecord.indexOf( "contractId" );
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
-    int inDiscountTypeIdx   = p_obRecord.indexOf( "discountType" );
-    int inDiscountIdx       = p_obRecord.indexOf( "discount" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
+
+    int p_nDiscountType = 0;
+    int p_nDiscount     = 0;
+
+    try
+    {
+        cDBDiscount obDBDiscount;
+
+        obDBDiscount.loadCompany( inIdIdx );
+        if( obDBDiscount.discountValue() > 0 )
+        {
+            p_nDiscountType = 1;
+            p_nDiscount = obDBDiscount.discountValue();
+        }
+        else if( obDBDiscount.discountPercent() > 0 )
+        {
+            p_nDiscountType = 2;
+            p_nDiscount = obDBDiscount.discountPercent();
+        }
+    }
+    catch( cSevException &e )
+    {
+    }
+
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
@@ -92,8 +114,8 @@ void cDBCompany::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inContractIdIdx ).toString(),
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
-          p_obRecord.value( inDiscountTypeIdx ).toInt(),
-          p_obRecord.value( inDiscountIdx ).toInt(),
+          p_nDiscountType,
+          p_nDiscount,
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
