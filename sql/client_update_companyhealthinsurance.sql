@@ -20,3 +20,5 @@ ALTER TABLE `healthInsurances`
  ADD `validDateFrom` DATE NOT NULL AFTER `contractId` ,
  ADD `validDateTo` DATE NOT NULL AFTER `validDateFrom` ;
 
+ALTER TABLE `patients`
+ ADD `discountType` INT NOT NULL AFTER `doctorProposed`;

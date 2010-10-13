@@ -722,6 +722,7 @@ void cDlgPatientEdit::FillDefaultAddress()
     ledStreetNumber->setText( m_poAddress->streetNumber() );
     ledFloor->setText( m_poAddress->floor() );
     ledDoor->setText( m_poAddress->door() );
+    if( poQuery ) delete poQuery;
 }
 
 void cDlgPatientEdit::FillPhoneNumber()
@@ -855,4 +856,62 @@ void cDlgPatientEdit::on_pbIllnessGroup_clicked()
 
     obDlgIllnessGroup.exec();
     FillIllnessGroupCombo();
+}
+
+void cDlgPatientEdit::on_rbDiscountValue_clicked()
+{
+    calculateDiscount(1);
+}
+
+void cDlgPatientEdit::on_rbDiscountPercent_clicked()
+{
+    calculateDiscount(2);
+}
+
+void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
+{
+    QSqlQuery   *poQuery;
+    QString      m_qsQuery = "";
+    int          m_inMax = 0;
+    int          m_inValueIdx = 0;
+
+    m_qsQuery += QString( "SELECT * FROM discounts WHERE " );
+
+    if( p_inDiscountType == 1 )
+    {
+        m_qsQuery += QString( "discountValue>0 " );
+        m_inValueIdx = 8;
+    }
+    else if( p_inDiscountType == 2 )
+    {
+        m_qsQuery += QString( "discountPercent>0 " );
+        m_inValueIdx = 9;
+    }
+    if( chkRegularCustomer->isChecked() || chkEmployee->isChecked() || chkService->isChecked() ||
+        chkCompany->isChecked() || chkHealthInsurance->isChecked() )
+    {
+        m_qsQuery += QString( "AND ( " );
+        if( chkRegularCustomer->isChecked() )
+            m_qsQuery += QString( "regularCustomer>0 OR " );
+        if( chkEmployee->isChecked() )
+            m_qsQuery += QString( "employee>0 OR " );
+        if( chkService->isChecked() )
+            m_qsQuery += QString( "service>0 OR " );
+        if( chkCompany->isChecked() )
+            m_qsQuery += QString( " OR " );
+        if( chkHealthInsurance->isChecked() )
+            m_qsQuery += QString( " OR " );
+        m_qsQuery += QString( ") " );
+    }
+    m_qsQuery += QString( "AND active=1" );
+
+    poQuery = g_poDB->executeQTQuery( m_qsQuery );
+    while( poQuery->next() )
+    {
+        if( m_inMax < poQuery->value( m_inValueIdx ).toInt() )
+        {
+            m_inMax = poQuery->value( m_inValueIdx ).toInt();
+        }
+    }
+    if( poQuery ) delete poQuery;
 }

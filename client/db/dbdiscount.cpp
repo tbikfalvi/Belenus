@@ -109,7 +109,7 @@ void cDBDiscount::load( const QString &p_qsName ) throw( cSevException )
 
 void cDBDiscount::loadHealthInsurance( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBDiscount::load", QString( "id: %1" ).arg( p_uiId ) );
+    cTracer obTrace( "cDBDiscount::loadHealthInsurance", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE healthInsuranceId = %1" ).arg( p_uiId ) );
 
@@ -122,7 +122,7 @@ void cDBDiscount::loadHealthInsurance( const unsigned int p_uiId ) throw( cSevEx
 
 void cDBDiscount::loadCompany( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBDiscount::load", QString( "id: %1" ).arg( p_uiId ) );
+    cTracer obTrace( "cDBDiscount::loadCompany", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE companyId = %1" ).arg( p_uiId ) );
 
@@ -152,7 +152,7 @@ void cDBDiscount::save() throw( cSevException )
         qsQuery = "INSERT INTO";
         m_qsArchive = "NEW";
     }
-    qsQuery += " discount SET ";
+    qsQuery += " discounts SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( m_uiHealthInsuranceId );
     qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );

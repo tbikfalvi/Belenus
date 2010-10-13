@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbhealthinsurance.h"
+#include "dbdiscount.h"
 
 cDBHealthInsurance::cDBHealthInsurance()
 {
@@ -74,10 +75,31 @@ void cDBHealthInsurance::init( const QSqlRecord &p_obRecord ) throw()
     int inContractIdIdx     = p_obRecord.indexOf( "contractId" );
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
-    int inDiscountTypeIdx   = p_obRecord.indexOf( "discountType" );
-    int inDiscountIdx       = p_obRecord.indexOf( "discount" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
+
+    int p_nDiscountType = 0;
+    int p_nDiscount     = 0;
+
+    try
+    {
+        cDBDiscount obDBDiscount;
+
+        obDBDiscount.loadHealthInsurance( p_obRecord.value( inIdIdx ).toInt() );
+        if( obDBDiscount.discountValue() > 0 )
+        {
+            p_nDiscountType = 1;
+            p_nDiscount = obDBDiscount.discountValue();
+        }
+        else if( obDBDiscount.discountPercent() > 0 )
+        {
+            p_nDiscountType = 2;
+            p_nDiscount = obDBDiscount.discountPercent();
+        }
+    }
+    catch( cSevException &e )
+    {
+    }
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
@@ -91,8 +113,8 @@ void cDBHealthInsurance::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inContractIdIdx ).toString(),
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
-          p_obRecord.value( inDiscountTypeIdx ).toInt(),
-          p_obRecord.value( inDiscountIdx ).toInt(),
+          p_nDiscountType,
+          p_nDiscount,
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -154,17 +176,55 @@ void cDBHealthInsurance::save() throw( cSevException )
     qsQuery += QString( "contractId = \"%1\", " ).arg( m_qsContractId );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
-    qsQuery += QString( "discountType = \"%1\", " ).arg( m_nDiscountType );
-    qsQuery += QString( "discount = \"%1\", " ).arg( m_nDiscount );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE healthInsuranceId = %1" ).arg( m_uiId );
     }
-
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    try
+    {
+        cDBDiscount obDBDiscount;
+
+        obDBDiscount.loadHealthInsurance( m_uiId );
+        if( m_nDiscountType == 1 )
+        {
+            obDBDiscount.setDiscountValue( m_nDiscount );
+            obDBDiscount.setDiscountPercent( 0 );
+        }
+        else if( m_nDiscountType == 2 )
+        {
+            obDBDiscount.setDiscountValue( 0 );
+            obDBDiscount.setDiscountPercent( m_nDiscount );
+        }
+        obDBDiscount.save();
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Discount id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            cDBDiscount obDBDiscount;
+
+            obDBDiscount.createNew();
+            obDBDiscount.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBDiscount.setHealthInsuranceId( m_uiId);
+            if( m_nDiscountType == 1 )
+            {
+                obDBDiscount.setDiscountValue( m_nDiscount );
+            }
+            else if( m_nDiscountType == 2 )
+            {
+                obDBDiscount.setDiscountPercent( m_nDiscount );
+            }
+            obDBDiscount.save();
+        }
+    }
     if( poQuery ) delete poQuery;
 }
 
