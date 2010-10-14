@@ -31,6 +31,7 @@ private:
     void FillIllnessGroupCombo();
     void checkRegionZipCity();
     void calculateDiscount(int p_inDiscountType);
+    void updateDiscount();
 
 protected:
     cDBPatient      *m_poPatient;
@@ -39,6 +40,9 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_chkService_stateChanged(int );
+    void on_chkEmployee_stateChanged(int );
+    void on_chkRegularCustomer_stateChanged(int );
     void on_rbDiscountPercent_clicked();
     void on_rbDiscountValue_clicked();
     void on_pbIllnessGroup_clicked();

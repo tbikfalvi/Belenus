@@ -53,6 +53,7 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const bool p_bHealthInsurance,
                        const bool p_bCompany,
                        const bool p_bDoctorProposed,
+                       const int p_inDiscountType,
                        const QString &p_qsComment,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
@@ -84,6 +85,7 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_bHealthInsurance      = p_bHealthInsurance;
     m_bCompany              = p_bCompany;
     m_bDoctorProposed       = p_bDoctorProposed;
+    m_inDiscountType        = p_inDiscountType;
     m_qsComment             = p_qsComment;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
@@ -118,6 +120,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inHealthInsuranceIdx    = p_obRecord.indexOf( "healthInsurance" );
     int inCompanyIdx            = p_obRecord.indexOf( "company" );
     int inDoctorProposedIdx     = p_obRecord.indexOf( "doctorProposed" );
+    int inDiscountTypeIdx       = p_obRecord.indexOf( "discountType" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
@@ -149,6 +152,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inHealthInsuranceIdx ).toBool(),
           p_obRecord.value( inCompanyIdx ).toBool(),
           p_obRecord.value( inDoctorProposedIdx ).toBool(),
+          p_obRecord.value( inDiscountTypeIdx ).toInt(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -244,6 +248,7 @@ void cDBPatient::save() throw( cSevException )
     qsQuery += QString( "healthInsurance = %1, " ).arg( m_bHealthInsurance );
     qsQuery += QString( "company = %1, " ).arg( m_bCompany );
     qsQuery += QString( "doctorProposed = %1, " ).arg( m_bDoctorProposed );
+    qsQuery += QString( "discountType = %1, " ).arg( m_inDiscountType );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -551,6 +556,16 @@ bool cDBPatient::doctorProposed() const throw()
 void cDBPatient::setDoctorProposed( const bool p_bDoctorProposed ) throw()
 {
     m_bDoctorProposed = p_bDoctorProposed;
+}
+
+int cDBPatient::discountType() const throw()
+{
+    return m_inDiscountType;
+}
+
+void cDBPatient::setDiscountType( const int p_inDiscountType ) throw()
+{
+    m_inDiscountType = p_inDiscountType;
 }
 
 QString cDBPatient::comment() const throw()

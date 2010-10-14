@@ -69,6 +69,8 @@ public:
     void            setCompany( const bool p_bCompany )                             throw();
     bool            doctorProposed() const                                          throw();
     void            setDoctorProposed( const bool p_bDoctorProposed )               throw();
+    int             discountType() const                                            throw();
+    void            setDiscountType( const int p_inDiscountType )                   throw();
     QString         comment() const                                                 throw();
     void            setComment( const QString &p_qsComment )                        throw();
     bool            active() const                                                  throw();
@@ -104,6 +106,7 @@ private:
     bool            m_bHealthInsurance;
     bool            m_bCompany;
     bool            m_bDoctorProposed;
+    int             m_inDiscountType;
     QString         m_qsComment;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -135,6 +138,7 @@ private:
                const bool p_bHealthInsurance = false,
                const bool p_bCompany = false,
                const bool p_bDoctorProposed = false,
+               const int p_inDiscountType = 2,
                const QString &p_qsComment = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();

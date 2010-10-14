@@ -146,6 +146,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
         else
             pbCitySearch->setEnabled( true );
 
+        ( m_poPatient->discountType() == 1 ? rbDiscountValue->setChecked( true ) : rbDiscountPercent->setChecked( true) );
+
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
@@ -482,6 +484,7 @@ void cDlgPatientEdit::on_pbHealthInsurance_clicked()
     obDlgHealthInsurance.exec();
     m_poPatient->setHealthInsuranceId( cmbHealthInsurance->itemData(cmbHealthInsurance->currentIndex()).toUInt() );
     FillHealthInsuranceCombo();
+    updateDiscount();
 }
 
 void cDlgPatientEdit::on_pbCompany_clicked()
@@ -491,6 +494,7 @@ void cDlgPatientEdit::on_pbCompany_clicked()
     obDlgCompany.exec();
     m_poPatient->setCompanyId( cmbCompany->itemData( cmbCompany->currentIndex() ).toUInt() );
     FillCompanyCombo();
+    updateDiscount();
 }
 
 void cDlgPatientEdit::on_pbDoctor_clicked()
@@ -500,6 +504,7 @@ void cDlgPatientEdit::on_pbDoctor_clicked()
     obDlgDoctor.exec();
     m_poPatient->setDoctorId( cmbDoctor->itemData( cmbDoctor->currentIndex() ).toUInt() );
     FillDoctorCombo();
+    updateDiscount();
 }
 
 void cDlgPatientEdit::on_pbAddressAdd_clicked()
@@ -569,6 +574,7 @@ void cDlgPatientEdit::on_cmbDoctorType_currentIndexChanged(int /*index*/)
         chkDoctorProposed->setChecked( true );
     else
         chkDoctorProposed->setChecked( false );
+    updateDiscount();
 }
 
 void cDlgPatientEdit::on_cmbDoctor_currentIndexChanged( int )
@@ -611,6 +617,7 @@ void cDlgPatientEdit::on_cmbDoctor_currentIndexChanged( int )
         chkDoctorProposed->setChecked( true );
     else
         chkDoctorProposed->setChecked( false );
+    updateDiscount();
 }
 
 void cDlgPatientEdit::FillDoctorTypeCombo()
@@ -664,6 +671,7 @@ void cDlgPatientEdit::on_cmbHealthInsurance_currentIndexChanged(int)
         chkHealthInsurance->setChecked( true );
     else
         chkHealthInsurance->setChecked( false );
+    updateDiscount();
 }
 
 void cDlgPatientEdit::on_cmbCompany_currentIndexChanged(int)
@@ -672,6 +680,7 @@ void cDlgPatientEdit::on_cmbCompany_currentIndexChanged(int)
         chkCompany->setChecked( true );
     else
         chkCompany->setChecked( false );
+    updateDiscount();
 }
 
 void cDlgPatientEdit::on_deDateBirth_dateChanged(QDate)
@@ -870,6 +879,13 @@ void cDlgPatientEdit::on_rbDiscountPercent_clicked()
 
 void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
 {
+    if( !chkRegularCustomer->isChecked() && !chkEmployee->isChecked() && !chkService->isChecked() &&
+        !chkCompany->isChecked() && !chkHealthInsurance->isChecked() && !chkDoctorProposed->isChecked() )
+    {
+        ledDiscountValue->setText( "0" );
+        return;
+    }
+
     QSqlQuery   *poQuery;
     QString      m_qsQuery = "";
     int          m_inMax = 0;
@@ -898,9 +914,10 @@ void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
         if( chkService->isChecked() )
             m_qsQuery += QString( "service>0 OR " );
         if( chkCompany->isChecked() )
-            m_qsQuery += QString( " OR " );
+            m_qsQuery += QString( "companyId=%1 OR " ).arg(cmbCompany->itemData(cmbCompany->currentIndex()).toUInt());
         if( chkHealthInsurance->isChecked() )
-            m_qsQuery += QString( " OR " );
+            m_qsQuery += QString( "healthInsuranceId=%1 OR " ).arg(cmbHealthInsurance->itemData(cmbHealthInsurance->currentIndex()).toUInt());
+        m_qsQuery.chop(3);
         m_qsQuery += QString( ") " );
     }
     m_qsQuery += QString( "AND active=1" );
@@ -914,4 +931,29 @@ void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
         }
     }
     if( poQuery ) delete poQuery;
+
+    ledDiscountValue->setText( QString::number(m_inMax) );
+}
+
+void cDlgPatientEdit::updateDiscount()
+{
+    if( rbDiscountValue->isChecked() )
+        calculateDiscount(1);
+    else if( rbDiscountPercent->isChecked() )
+        calculateDiscount(2);
+}
+
+void cDlgPatientEdit::on_chkRegularCustomer_stateChanged(int )
+{
+    updateDiscount();
+}
+
+void cDlgPatientEdit::on_chkEmployee_stateChanged(int )
+{
+    updateDiscount();
+}
+
+void cDlgPatientEdit::on_chkService_stateChanged(int )
+{
+    updateDiscount();
 }

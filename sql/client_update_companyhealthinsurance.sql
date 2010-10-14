@@ -1,4 +1,23 @@
-ALTER TABLE `companies` 
+-- -----------------------------------------------------------------------------------
+--
+-- Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+--
+-- -----------------------------------------------------------------------------------
+--
+-- Filename : client_update_companyhealthinsurance.sql
+-- AppVersion : 1.0
+-- FileVersion : 1.0
+-- Author : Bikfalvi Tamas
+--
+-- -----------------------------------------------------------------------------------
+-- Tablak upgrade-je a kedvezmenyekhez
+--
+-- -----------------------------------------------------------------------------------
+
+USE `belenus`;
+
+-- -----------------------------------------------------------------------------------
+ALTER TABLE `companies`
  ADD `country` VARCHAR( 100 ) NOT NULL AFTER `name` ,
  ADD `region` VARCHAR( 100 ) NOT NULL AFTER `country` ,
  ADD `city` VARCHAR( 100 ) NOT NULL AFTER `region` ,
