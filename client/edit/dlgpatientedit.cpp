@@ -17,6 +17,7 @@
 #include "../crud/dlgzipregioncityselect.h"
 #include "../db/dbdoctor.h"
 #include "../crud/dlgillnessgroup.h"
+#include "../crud/dlgdiscount.h"
 
 cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, cDBPostponed *p_poPostponed )
     : QDialog( p_poParent )
@@ -889,8 +890,14 @@ void cDlgPatientEdit::on_rbDiscountPercent_clicked()
 
 void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
 {
-    if( !chkRegularCustomer->isChecked() && !chkEmployee->isChecked() && !chkService->isChecked() &&
-        !chkCompany->isChecked() && !chkHealthInsurance->isChecked() && !chkDoctorProposed->isChecked() )
+    cTracer obTrace( "cDlgPatientEdit::calculateDiscount" );
+
+    if( !chkRegularCustomer->isChecked() &&
+        !chkEmployee->isChecked() &&
+        !chkService->isChecked() &&
+        (!chkCompany->isChecked() || (chkCompany->isChecked() && cmbCompany->currentIndex() == 0)) &&
+        (!chkHealthInsurance->isChecked() || (chkHealthInsurance->isChecked() && cmbHealthInsurance->currentIndex() == 0)) &&
+        (!chkDoctorProposed->isChecked() || (chkDoctorProposed->isChecked() && cmbDoctor->currentIndex() == 0)) )
     {
         ledDiscountValue->setText( "0" );
         return;
@@ -906,15 +913,19 @@ void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
     if( p_inDiscountType == 1 )
     {
         m_qsQuery += QString( "discountValue>0 " );
-        m_inValueIdx = 8;
+        m_inValueIdx = 9;
     }
     else if( p_inDiscountType == 2 )
     {
         m_qsQuery += QString( "discountPercent>0 " );
-        m_inValueIdx = 9;
+        m_inValueIdx = 10;
     }
-    if( chkRegularCustomer->isChecked() || chkEmployee->isChecked() || chkService->isChecked() ||
-        chkCompany->isChecked() || chkHealthInsurance->isChecked() )
+    if( chkRegularCustomer->isChecked() ||
+        chkEmployee->isChecked() ||
+        chkService->isChecked() ||
+        (chkCompany->isChecked() && cmbCompany->currentIndex() > 0) ||
+        (chkHealthInsurance->isChecked() && cmbHealthInsurance->currentIndex() > 0 ) ||
+        (chkDoctorProposed->isChecked() && cmbDoctor->currentIndex() > 0 ) )
     {
         m_qsQuery += QString( "AND ( " );
         if( chkRegularCustomer->isChecked() )
@@ -923,10 +934,12 @@ void cDlgPatientEdit::calculateDiscount(int p_inDiscountType)
             m_qsQuery += QString( "employee>0 OR " );
         if( chkService->isChecked() )
             m_qsQuery += QString( "service>0 OR " );
-        if( chkCompany->isChecked() )
+        if( chkCompany->isChecked() && cmbCompany->currentIndex() > 0 )
             m_qsQuery += QString( "companyId=%1 OR " ).arg(cmbCompany->itemData(cmbCompany->currentIndex()).toUInt());
-        if( chkHealthInsurance->isChecked() )
+        if( chkHealthInsurance->isChecked() && cmbHealthInsurance->currentIndex() > 0 )
             m_qsQuery += QString( "healthInsuranceId=%1 OR " ).arg(cmbHealthInsurance->itemData(cmbHealthInsurance->currentIndex()).toUInt());
+        if( chkDoctorProposed->isChecked() && cmbDoctor->currentIndex() > 0 )
+            m_qsQuery += QString( "doctorId=%1 OR " ).arg(cmbDoctor->itemData(cmbDoctor->currentIndex()).toUInt());
         m_qsQuery.chop(3);
         m_qsQuery += QString( ") " );
     }
@@ -980,5 +993,15 @@ void cDlgPatientEdit::on_chkCompany_stateChanged(int )
 
 void cDlgPatientEdit::on_chkDoctorProposed_stateChanged(int )
 {
+    updateDiscount();
+}
+
+void cDlgPatientEdit::on_pbDiscount_clicked()
+{
+    setCursor( Qt::WaitCursor);
+    cDlgDiscount  obDlgDiscount( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgDiscount.exec();
     updateDiscount();
 }

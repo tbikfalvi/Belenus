@@ -40,6 +40,7 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbDiscount_clicked();
     void on_chkDoctorProposed_stateChanged(int );
     void on_chkCompany_stateChanged(int );
     void on_chkHealthInsurance_stateChanged(int );
