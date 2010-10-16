@@ -2621,43 +2621,43 @@ Kérem válasszon egy másik időintervallumot vagy töltse fel a kártyát.</tr
 <context>
     <name>cDlgPatientEdit</name>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="30"/>
+        <location filename="edit/dlgpatientedit.cpp" line="31"/>
         <source>Attendance List</source>
         <translation>Kezelések</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="61"/>
-        <location filename="edit/dlgpatientedit.cpp" line="69"/>
-        <location filename="edit/dlgpatientedit.cpp" line="531"/>
-        <location filename="edit/dlgpatientedit.cpp" line="546"/>
-        <location filename="edit/dlgpatientedit.cpp" line="563"/>
-        <location filename="edit/dlgpatientedit.cpp" line="640"/>
-        <location filename="edit/dlgpatientedit.cpp" line="667"/>
+        <location filename="edit/dlgpatientedit.cpp" line="62"/>
+        <location filename="edit/dlgpatientedit.cpp" line="70"/>
+        <location filename="edit/dlgpatientedit.cpp" line="532"/>
+        <location filename="edit/dlgpatientedit.cpp" line="547"/>
+        <location filename="edit/dlgpatientedit.cpp" line="564"/>
+        <location filename="edit/dlgpatientedit.cpp" line="641"/>
+        <location filename="edit/dlgpatientedit.cpp" line="668"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="156"/>
+        <location filename="edit/dlgpatientedit.cpp" line="157"/>
         <source>You are not allowed to change this patient data.</source>
         <translation>Nincs jogosultsága módosítani a vendég adatait.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="236"/>
-        <location filename="edit/dlgpatientedit.cpp" line="243"/>
-        <location filename="edit/dlgpatientedit.cpp" line="254"/>
-        <location filename="edit/dlgpatientedit.cpp" line="262"/>
-        <location filename="edit/dlgpatientedit.cpp" line="294"/>
+        <location filename="edit/dlgpatientedit.cpp" line="237"/>
+        <location filename="edit/dlgpatientedit.cpp" line="244"/>
+        <location filename="edit/dlgpatientedit.cpp" line="255"/>
+        <location filename="edit/dlgpatientedit.cpp" line="263"/>
+        <location filename="edit/dlgpatientedit.cpp" line="295"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="236"/>
-        <location filename="edit/dlgpatientedit.cpp" line="294"/>
+        <location filename="edit/dlgpatientedit.cpp" line="237"/>
+        <location filename="edit/dlgpatientedit.cpp" line="295"/>
         <source>Patient name cannot be empty.</source>
         <translation>A vendég neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="243"/>
+        <location filename="edit/dlgpatientedit.cpp" line="244"/>
         <source>Patient gender must be selected.
 
 Press Ignore to skip other error messages.</source>
@@ -2666,7 +2666,7 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="254"/>
+        <location filename="edit/dlgpatientedit.cpp" line="255"/>
         <source>Patient date of birth must be set.
 
 Press Ignore to skip other error messages.</source>
@@ -2675,7 +2675,7 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="262"/>
+        <location filename="edit/dlgpatientedit.cpp" line="263"/>
         <source>Patient unique identification value must be given.
 
 Press Ignore to skip other error messages.</source>
@@ -2684,29 +2684,29 @@ Press Ignore to skip other error messages.</source>
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="275"/>
-        <location filename="edit/dlgpatientedit.cpp" line="774"/>
-        <location filename="edit/dlgpatientedit.cpp" line="785"/>
-        <location filename="edit/dlgpatientedit.cpp" line="809"/>
-        <location filename="edit/dlgpatientedit.cpp" line="821"/>
-        <location filename="edit/dlgpatientedit.cpp" line="849"/>
+        <location filename="edit/dlgpatientedit.cpp" line="276"/>
+        <location filename="edit/dlgpatientedit.cpp" line="775"/>
+        <location filename="edit/dlgpatientedit.cpp" line="786"/>
+        <location filename="edit/dlgpatientedit.cpp" line="810"/>
+        <location filename="edit/dlgpatientedit.cpp" line="822"/>
+        <location filename="edit/dlgpatientedit.cpp" line="850"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="276"/>
+        <location filename="edit/dlgpatientedit.cpp" line="277"/>
         <source>Do you want to add new patient to database 
 and fill mandatory data later?</source>
         <translation>El akarja menteni a beteget az adatbázisba most és 
 a további adatokat később akarja megadni?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="470"/>
+        <location filename="edit/dlgpatientedit.cpp" line="471"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="471"/>
+        <location filename="edit/dlgpatientedit.cpp" line="472"/>
         <source>There is no city in database like
 
 &quot;%1&quot;</source>
@@ -2715,7 +2715,7 @@ a további adatokat később akarja megadni?</translation>
 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="775"/>
+        <location filename="edit/dlgpatientedit.cpp" line="776"/>
         <source>The defined zip code already saved into the database with
 
 Region : %1
@@ -2728,7 +2728,7 @@ Do you want to overwrite the region entered with this one?</source>
 Felülírja a megadott megyét ezzel a megyével?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="786"/>
+        <location filename="edit/dlgpatientedit.cpp" line="787"/>
         <source>The defined zip code already saved into the database with
 
 City : %1
@@ -2741,7 +2741,7 @@ Do you want to overwrite the city entered with this one?</source>
 Felülírja a megadott települést ezzel a településsel?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="810"/>
+        <location filename="edit/dlgpatientedit.cpp" line="811"/>
         <source>The defined city already assigned to a different region
 
 Region : %1
@@ -2759,7 +2759,7 @@ Do you want to correct the defined region?</oldsource>
 Kijavítja a megadott megyét erre a megyére?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="822"/>
+        <location filename="edit/dlgpatientedit.cpp" line="823"/>
         <source>The defined city already assigned to a different zip code
 
 Zip : %1
@@ -2795,7 +2795,7 @@ Település : %4
 új adatként az adatbázisba?</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientedit.cpp" line="850"/>
+        <location filename="edit/dlgpatientedit.cpp" line="851"/>
         <source>The defined data did not found in the database
 
 Region : %1
@@ -5867,27 +5867,27 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">Súly :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="858"/>
+        <location filename="dlgpatientedit.ui" line="871"/>
         <source>Illness group :</source>
         <translation>Betegség csoport :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="932"/>
+        <location filename="dlgpatientedit.ui" line="945"/>
         <source>Medicines :</source>
         <translation>Gyógyszerek :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="949"/>
+        <location filename="dlgpatientedit.ui" line="962"/>
         <source>Medicine allergy :</source>
         <translation>Gógyszer allergia :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="980"/>
+        <location filename="dlgpatientedit.ui" line="993"/>
         <source>Statistical data</source>
         <translation>Statisztikai adatok</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="444"/>
+        <location filename="dlgpatientedit.ui" line="457"/>
         <source>Additional data</source>
         <translation>Kiegészítő adatok</translation>
     </message>
@@ -5935,7 +5935,8 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <location filename="dlgpatientedit.ui" line="283"/>
         <location filename="dlgpatientedit.ui" line="310"/>
         <location filename="dlgpatientedit.ui" line="344"/>
-        <location filename="dlgpatientedit.ui" line="874"/>
+        <location filename="dlgpatientedit.ui" line="420"/>
+        <location filename="dlgpatientedit.ui" line="887"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -5955,37 +5956,37 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">?</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="593"/>
+        <location filename="dlgpatientedit.ui" line="606"/>
         <source>floor</source>
         <translation>emelet</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="613"/>
+        <location filename="dlgpatientedit.ui" line="626"/>
         <source>door</source>
         <translation>ajtó</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="650"/>
+        <location filename="dlgpatientedit.ui" line="663"/>
         <source>Addresses ...</source>
         <translation>Címek ...</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="662"/>
+        <location filename="dlgpatientedit.ui" line="675"/>
         <source> Accessibility </source>
         <translation> Elérhetőség </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="690"/>
+        <location filename="dlgpatientedit.ui" line="703"/>
         <source>+; </source>
         <translation>+; </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="767"/>
+        <location filename="dlgpatientedit.ui" line="780"/>
         <source> Comment </source>
         <translation> Megjegyzés </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="547"/>
+        <location filename="dlgpatientedit.ui" line="560"/>
         <source>Search the string defined in &apos;city&apos; field in database for region and zip code.</source>
         <translation>A megadott településnév kikeresése az adatbázisból a hozzá tartozó megye és irányítószám kitöltéséhez.</translation>
     </message>
@@ -6015,12 +6016,12 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>  Kedvezmény mértéke : </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="563"/>
+        <location filename="dlgpatientedit.ui" line="576"/>
         <source>Verify region-zip-city fields with values stored in database.</source>
         <translation>A megadott Megye / Irányítószám / Település adathármas ellenőrzése az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="687"/>
+        <location filename="dlgpatientedit.ui" line="700"/>
         <source>Country calling code</source>
         <translation>Országhívószám</translation>
     </message>
@@ -6029,7 +6030,7 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">+000</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="712"/>
+        <location filename="dlgpatientedit.ui" line="725"/>
         <source>Region calling code</source>
         <translation>Körzetszám</translation>
     </message>
@@ -6038,47 +6039,47 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">000</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="731"/>
+        <location filename="dlgpatientedit.ui" line="744"/>
         <source>Phone number</source>
         <translation>Telefonszám</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="754"/>
+        <location filename="dlgpatientedit.ui" line="767"/>
         <source>@</source>
         <translation>@</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="793"/>
+        <location filename="dlgpatientedit.ui" line="806"/>
         <source>Actual condition</source>
         <translation> Aktuális állapot </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="801"/>
+        <location filename="dlgpatientedit.ui" line="814"/>
         <source>Height (cm):</source>
         <translation>Magasság (cm):</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="821"/>
+        <location filename="dlgpatientedit.ui" line="834"/>
         <source>Weight (kg):</source>
         <translation>Súly (kg):</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="900"/>
+        <location filename="dlgpatientedit.ui" line="913"/>
         <source>Illness(es) :</source>
         <translation>Betegség(ek) :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="914"/>
+        <location filename="dlgpatientedit.ui" line="927"/>
         <source>Symptom(s) :</source>
         <translation>Tünet(ek) :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="1109"/>
+        <location filename="dlgpatientedit.ui" line="1122"/>
         <source>Independent from the local studio.</source>
         <translation>Független a stúdiótól</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="1068"/>
+        <location filename="dlgpatientedit.ui" line="1081"/>
         <source>Finish later ...</source>
         <translation>Befejezés később</translation>
     </message>
@@ -6087,27 +6088,27 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">Azonosítás</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="450"/>
+        <location filename="dlgpatientedit.ui" line="463"/>
         <source> Address </source>
         <translation> Cím </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="458"/>
+        <location filename="dlgpatientedit.ui" line="471"/>
         <source>Country :</source>
         <translation>Ország :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="468"/>
+        <location filename="dlgpatientedit.ui" line="481"/>
         <source>Region :</source>
         <translation>Megye :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="524"/>
+        <location filename="dlgpatientedit.ui" line="537"/>
         <source>City: </source>
         <translation>Város :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="492"/>
+        <location filename="dlgpatientedit.ui" line="505"/>
         <source>Zip :</source>
         <translation>Irányítószám :</translation>
     </message>
@@ -6120,12 +6121,12 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete"> Egyéb adatok </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="668"/>
+        <location filename="dlgpatientedit.ui" line="681"/>
         <source>Phone number :</source>
         <translation>Telefonszám :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="744"/>
+        <location filename="dlgpatientedit.ui" line="757"/>
         <source>E-Mail address :</source>
         <translation>E-Mail cím :</translation>
     </message>
@@ -6134,12 +6135,12 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete">Megjegyzés :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="1029"/>
+        <location filename="dlgpatientedit.ui" line="1042"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="1042"/>
+        <location filename="dlgpatientedit.ui" line="1055"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -6148,17 +6149,17 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation type="obsolete"> Statisztikai adatok </translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="988"/>
+        <location filename="dlgpatientedit.ui" line="1001"/>
         <source>Place the patient comes from :</source>
         <translation>Honnan értesült a polarizáltfény terápiáról :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="998"/>
+        <location filename="dlgpatientedit.ui" line="1011"/>
         <source>Reason of visit :</source>
         <translation>Milyen célból jött a kezelésre :</translation>
     </message>
     <message>
-        <location filename="dlgpatientedit.ui" line="1081"/>
+        <location filename="dlgpatientedit.ui" line="1094"/>
         <source>Attendances ...</source>
         <translation>Kezelések ...</translation>
     </message>
