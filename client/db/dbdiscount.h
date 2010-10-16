@@ -15,6 +15,13 @@ public:
     void            load( const QString &p_qsName )                                     throw( cSevException );
     void            loadHealthInsurance( const unsigned int p_uiId )                    throw( cSevException );
     void            loadCompany( const unsigned int p_uiId )                            throw( cSevException );
+    void            loadDoctor( const unsigned int p_uiId )                             throw( cSevException );
+    bool            isRegularCustomerExists()                                           throw( cSevException );
+    bool            isEmployeeExists()                                                  throw( cSevException );
+    bool            isServiceExists()                                                   throw( cSevException );
+    bool            isHealthInsuranceExists( const unsigned int p_uiId )                throw( cSevException );
+    bool            isCompanyExists( const unsigned int p_uiId )                        throw( cSevException );
+    bool            isDoctorExists( const unsigned int p_uiId )                         throw( cSevException );
     void            save()                                                              throw( cSevException );
     void            remove()                                                            throw( cSevException );
     void            createNew()                                                         throw();

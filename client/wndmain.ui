@@ -544,7 +544,7 @@
   </action>
   <action name="action_Discounts">
    <property name="text">
-    <string>Discounts</string>
+    <string>Discounts ...</string>
    </property>
    <property name="toolTip">
     <string>Different type of discounts</string>

@@ -535,6 +535,7 @@ void cDlgPatientEdit::FillHealthInsuranceCombo()
         if( m_poPatient->healthInsuranceId() == poQuery->value( 0 ) )
             cmbHealthInsurance->setCurrentIndex( cmbHealthInsurance->count()-1 );
     }
+    if( poQuery ) delete poQuery;
 }
 
 void cDlgPatientEdit::FillIllnessGroupCombo()
@@ -550,6 +551,7 @@ void cDlgPatientEdit::FillIllnessGroupCombo()
         if( m_poPatient->illnessGroupId() == poQuery->value( 0 ) )
             cmbIllnessGroup->setCurrentIndex( cmbIllnessGroup->count()-1 );
     }
+    if( poQuery ) delete poQuery;
 }
 
 void cDlgPatientEdit::FillCompanyCombo()
@@ -565,6 +567,7 @@ void cDlgPatientEdit::FillCompanyCombo()
         if( m_poPatient->companyId() == poQuery->value( 0 ) )
             cmbCompany->setCurrentIndex( cmbCompany->count()-1 );
     }
+    if( poQuery ) delete poQuery;
 }
 
 void cDlgPatientEdit::on_cmbDoctorType_currentIndexChanged(int /*index*/)
@@ -646,7 +649,7 @@ void cDlgPatientEdit::FillDoctorCombo()
     cTracer obTrace( "cDlgPatientEdit::FillDoctorCombo" );
 
     QSqlQuery   *poQuery;
-    QString      qsQuery = QString( "SELECT doctorId, doctorLicence FROM doctors WHERE active=1 AND archive<>\"DEL\"" );
+    QString      qsQuery = QString( "SELECT doctorId, doctorLicence, name FROM doctors WHERE active=1 AND archive<>\"DEL\"" );
 
     if( cmbDoctorType->currentIndex() > 0 )
     {
@@ -665,7 +668,8 @@ void cDlgPatientEdit::FillDoctorCombo()
     m_bInit = false;
     while( poQuery->next() )
     {
-        cmbDoctor->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        QString qsDoc = QString( "%1 (%2)" ).arg( poQuery->value( 1 ).toString() ).arg( poQuery->value( 2 ).toString() );
+        cmbDoctor->addItem( qsDoc, poQuery->value( 0 ) );
         if( m_poPatient->doctorId() == poQuery->value( 0 ) )
             cmbDoctor->setCurrentIndex( cmbDoctor->count()-1 );
     }

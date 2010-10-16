@@ -137,6 +137,79 @@ void cDBDiscount::loadCompany( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
+void cDBDiscount::loadDoctor( const unsigned int p_uiId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBDiscount::loadDoctor", QString( "id: %1" ).arg( p_uiId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE doctorId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Discount id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+bool cDBDiscount::isRegularCustomerExists() throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE regularCustomer > 0 AND discountId<>%1" ).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isEmployeeExists() throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE employee > 0 AND discountId<>%1" ).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isServiceExists() throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE service > 0 AND discountId<>%1" ).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isHealthInsuranceExists( const unsigned int p_uiId ) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE healthInsuranceId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isCompanyExists( const unsigned int p_uiId ) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE companyId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isDoctorExists( const unsigned int p_uiId ) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE doctorId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
 void cDBDiscount::save() throw( cSevException )
 {
     cTracer obTrace( "cDBDiscount::save" );
@@ -189,11 +262,11 @@ void cDBDiscount::remove() throw( cSevException )
 
         if( m_qsArchive.compare( "NEW" ) == 0 )
         {
-            qsQuery = "DELETE FROM discount ";
+            qsQuery = "DELETE FROM discounts ";
         }
         else
         {
-            qsQuery = "UPDATE discount SET active=0, archive=\"MOD\" ";
+            qsQuery = "UPDATE discounts SET active=0, archive=\"MOD\" ";
         }
         qsQuery += QString( " WHERE discountId = %1" ).arg( m_uiId );
 
