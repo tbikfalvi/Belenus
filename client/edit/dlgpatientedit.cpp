@@ -212,6 +212,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
 
     if( poQuery ) delete poQuery;
 
+    updateDiscount();
+
     m_bInit = false;
 }
 
@@ -357,7 +359,10 @@ bool cDlgPatientEdit::SavePatientData()
             m_poPatient->setDoctorId( cmbDoctor->itemData( cmbDoctor->currentIndex() ).toUInt() );
         else
             m_poPatient->setDoctorId( 0 );
-        m_poPatient->setComment( ptComment->toPlainText() );
+        if( rbDiscountValue->isChecked() )
+            m_poPatient->setDiscountType( 1 );
+        else if( rbDiscountPercent->isChecked() )
+            m_poPatient->setDiscountType( 2 );
 
         QString  qsQuery = QString( "UPDATE address SET primaryAddress = 0 WHERE patientId = %1" ).arg( m_poPatient->id() );
         g_poDB->executeQTQuery( qsQuery );
@@ -379,6 +384,7 @@ bool cDlgPatientEdit::SavePatientData()
         m_poAddress->setDoor( ledDoor->text() );
         m_poPatient->setPhone( QString("%1 %2 %3").arg(ledPhoneCountry->text()).arg(ledPhoneRegion->text()).arg(ledPhone->text()) );
         m_poPatient->setEmail( ledEmail1->text()+QString("@")+ledEmail2->text() );
+        m_poPatient->setComment( ptComment->toPlainText() );
 
         m_poPatient->setHeight( ledHeight->text().toInt() );
         m_poPatient->setWeight( ledWeight->text().toInt() );
@@ -954,6 +960,21 @@ void cDlgPatientEdit::on_chkEmployee_stateChanged(int )
 }
 
 void cDlgPatientEdit::on_chkService_stateChanged(int )
+{
+    updateDiscount();
+}
+
+void cDlgPatientEdit::on_chkHealthInsurance_stateChanged(int )
+{
+    updateDiscount();
+}
+
+void cDlgPatientEdit::on_chkCompany_stateChanged(int )
+{
+    updateDiscount();
+}
+
+void cDlgPatientEdit::on_chkDoctorProposed_stateChanged(int )
 {
     updateDiscount();
 }

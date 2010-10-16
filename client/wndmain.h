@@ -93,6 +93,7 @@ private slots:
     void on_action_ReportPatientcardUses_triggered();
     void on_action_EditLicenceInformation_triggered();
     void on_action_ReportPatientcards_triggered();
+    void on_action_Discounts_triggered();
 };
 
 #endif

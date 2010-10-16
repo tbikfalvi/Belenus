@@ -48,6 +48,8 @@
      <addaction name="action_Company"/>
      <addaction name="action_HealthInsurance"/>
      <addaction name="separator"/>
+     <addaction name="action_Discounts"/>
+     <addaction name="separator"/>
      <addaction name="action_Patientorigin"/>
      <addaction name="action_ReasonToVisit"/>
      <addaction name="separator"/>
@@ -538,6 +540,14 @@
    </property>
    <property name="toolTip">
     <string>List of active patientcards</string>
+   </property>
+  </action>
+  <action name="action_Discounts">
+   <property name="text">
+    <string>Discounts</string>
+   </property>
+   <property name="toolTip">
+    <string>Different type of discounts</string>
    </property>
   </action>
  </widget>

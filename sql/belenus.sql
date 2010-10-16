@@ -542,6 +542,7 @@ CREATE TABLE `discounts` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `healthInsuranceId`       int(10) unsigned        DEFAULT NULL,
   `companyId`               int(10) unsigned        DEFAULT NULL,
+  `doctorId`                int(10) unsigned        DEFAULT NULL,
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,
   `service`                 tinyint(1)              DEFAULT 0,
@@ -553,6 +554,7 @@ CREATE TABLE `discounts` (
   PRIMARY KEY (`discountId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`healthInsuranceId`) REFERENCES `healthInsurances` (`healthInsuranceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`doctorId`) REFERENCES `doctors` (`doctorId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

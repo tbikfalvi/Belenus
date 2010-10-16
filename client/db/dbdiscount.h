@@ -25,6 +25,8 @@ public:
     void            setHealthInsuranceId( const unsigned int p_uiHealthInsuranceId )    throw();
     unsigned int    companyId() const                                                   throw();
     void            setCompanyId( const unsigned int p_uiCompanyId )                    throw();
+    unsigned int    doctorId() const                                                    throw();
+    void            setDoctorId( const unsigned int p_uiDoctorId )                      throw();
     bool            regularCustomer() const                                             throw();
     void            setRegularCustomer( const bool p_bRegularCustomer )                 throw();
     bool            employee() const                                                    throw();
@@ -47,6 +49,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiHealthInsuranceId;
     unsigned int    m_uiCompanyId;
+    unsigned int    m_uiDoctorId;
     bool            m_bRegularCustomer;
     bool            m_bEmployee;
     bool            m_bService;
@@ -60,6 +63,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiHealthInsuranceId = 0,
                const unsigned int p_uiCompanyId = 0,
+               const unsigned int p_uiDoctorId = 0,
                const bool p_bRegularCustomer = false,
                const bool p_bEmployee = false,
                const bool p_bService = false,

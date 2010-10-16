@@ -29,7 +29,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgcompanyedit.ui \
     dlgdoctoredit.ui \
     dlgzipregioncityedit.ui \
-    dlglicenceedit.ui
+    dlglicenceedit.ui \
+    dlgdiscountedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -67,6 +68,7 @@ HEADERS = belenus.h \
     crud/dlghealthinsurance.h \
     crud/dlgzipregioncity.h \
     crud/dlgzipregioncityselect.h \
+    crud/dlgdiscount.h \
     db/dbpatientorigin.h \
     db/dbreasontovisit.h \
     db/dbpatient.h \
@@ -121,6 +123,7 @@ HEADERS = belenus.h \
     edit/dlgcompanyedit.h \
     edit/dlgdoctoredit.h \
     edit/dlgzipregioncityedit.h \
+    edit/dlgdiscountedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     bs_connection.h \
@@ -175,6 +178,7 @@ SOURCES = main.cpp \
     crud/dlghealthinsurance.cpp \
     crud/dlgzipregioncity.cpp \
     crud/dlgzipregioncityselect.cpp \
+    crud/dlgdiscount.cpp \
     db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatient.cpp \
@@ -230,6 +234,7 @@ SOURCES = main.cpp \
     edit/dlgdoctoredit.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
+    edit/dlgdiscountedit.cpp \
     report/reppatientcards.cpp \
     report/dlgpreview.cpp \
     bs_connection.cpp \

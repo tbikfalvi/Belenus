@@ -41,3 +41,6 @@ ALTER TABLE `healthInsurances`
 
 ALTER TABLE `patients`
  ADD `discountType` INT NOT NULL AFTER `doctorProposed`;
+
+ALTER TABLE `discounts`
+ ADD `doctorId` INT UNSIGNED NOT NULL AFTER `companyId`;

@@ -29,6 +29,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
                         const unsigned int p_uiLicenceId,
                         const unsigned int p_uiHealthInsuranceId,
                         const unsigned int p_uiCompanyId,
+                        const unsigned int p_uiDoctorId,
                         const bool p_bRegularCustomer,
                         const bool p_bEmployee,
                         const bool p_bService,
@@ -42,6 +43,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
     m_uiLicenceId           = p_uiLicenceId;
     m_uiHealthInsuranceId   = p_uiHealthInsuranceId;
     m_uiCompanyId           = p_uiCompanyId;
+    m_uiDoctorId            = p_uiDoctorId;
     m_bRegularCustomer      = p_bRegularCustomer;
     m_bEmployee             = p_bEmployee;
     m_bService              = p_bService;
@@ -58,6 +60,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inHealthInsuranceIdIdx  = p_obRecord.indexOf( "healthInsuranceId" );
     int inCompanyIdIdx          = p_obRecord.indexOf( "companyId" );
+    int inDoctorIdIdx           = p_obRecord.indexOf( "doctorId" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
     int inEmpoyeeIdx            = p_obRecord.indexOf( "employee" );
     int inServiceIdx            = p_obRecord.indexOf( "service" );
@@ -71,6 +74,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inHealthInsuranceIdIdx ).toUInt(),
           p_obRecord.value( inCompanyIdIdx ).toUInt(),
+          p_obRecord.value( inDoctorIdIdx ).toUInt(),
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
           p_obRecord.value( inEmpoyeeIdx ).toBool(),
           p_obRecord.value( inServiceIdx ).toBool(),
@@ -156,6 +160,7 @@ void cDBDiscount::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( m_uiHealthInsuranceId );
     qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );
+    qsQuery += QString( "doctorId = \"%1\", " ).arg( m_uiDoctorId );
     qsQuery += QString( "regularCustomer = \"%1\", " ).arg( m_bRegularCustomer );
     qsQuery += QString( "employee = \"%1\", " ).arg( m_bEmployee );
     qsQuery += QString( "service = \"%1\", " ).arg( m_bService );
@@ -235,6 +240,16 @@ unsigned int cDBDiscount::companyId() const throw()
 void cDBDiscount::setCompanyId( const unsigned int p_uiCompanyId ) throw()
 {
     m_uiCompanyId = p_uiCompanyId;
+}
+
+unsigned int cDBDiscount::doctorId() const throw()
+{
+    return m_uiDoctorId;
+}
+
+void cDBDiscount::setDoctorId( const unsigned int p_uiDoctorId ) throw()
+{
+    m_uiDoctorId = p_uiDoctorId;
 }
 
 bool cDBDiscount::regularCustomer() const throw()

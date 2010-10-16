@@ -48,6 +48,7 @@
 #include "crud/dlgdoctor.h"
 #include "crud/dlghealthinsurance.h"
 #include "crud/dlgzipregioncity.h"
+#include "crud/dlgdiscount.h"
 
 //====================================================================================
 
@@ -1557,3 +1558,14 @@ void cWndMain::on_action_ReportPatientcards_triggered()
 
     obDlgReportPatientCard.exec();
 }
+//====================================================================================
+void cWndMain::on_action_Discounts_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgDiscount  obDlgDiscount( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgDiscount.exec();
+}
+//====================================================================================

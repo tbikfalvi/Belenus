@@ -202,6 +202,7 @@ void cDBCompany::save() throw( cSevException )
             obDBDiscount.setDiscountValue( 0 );
             obDBDiscount.setDiscountPercent( m_nDiscount );
         }
+        obDBDiscount.setName( m_qsName );
         obDBDiscount.save();
     }
     catch( cSevException &e )
@@ -225,6 +226,7 @@ void cDBCompany::save() throw( cSevException )
             {
                 obDBDiscount.setDiscountPercent( m_nDiscount );
             }
+            obDBDiscount.setName( m_qsName );
             obDBDiscount.save();
         }
     }

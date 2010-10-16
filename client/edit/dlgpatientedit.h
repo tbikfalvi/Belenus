@@ -40,6 +40,9 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_chkDoctorProposed_stateChanged(int );
+    void on_chkCompany_stateChanged(int );
+    void on_chkHealthInsurance_stateChanged(int );
     void on_chkService_stateChanged(int );
     void on_chkEmployee_stateChanged(int );
     void on_chkRegularCustomer_stateChanged(int );
