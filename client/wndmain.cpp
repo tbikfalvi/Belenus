@@ -1352,6 +1352,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
         tLength = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
         obDBAttendance.setLengthStr( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
         obDBAttendance.save();
+        inPrice = g_obPatient.getDiscountPrice( inPrice );
         mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }
     else

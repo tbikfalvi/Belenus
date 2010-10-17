@@ -483,4 +483,4 @@ client/moc_dlgdiscount.o
 client/moc_dlgdiscountedit.cpp
 client/moc_dlgdiscountedit.o
 client/ui_dlgdiscountedit.h
-
+client/general.o

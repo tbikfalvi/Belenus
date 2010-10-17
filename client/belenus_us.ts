@@ -1018,18 +1018,18 @@ Please use only numbers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="70"/>
-        <location filename="edit/dlgdoctoredit.cpp" line="75"/>
+        <location filename="edit/dlgdoctoredit.cpp" line="72"/>
+        <location filename="edit/dlgdoctoredit.cpp" line="77"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="70"/>
+        <location filename="edit/dlgdoctoredit.cpp" line="72"/>
         <source>Advisor&apos;s licence cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="75"/>
+        <location filename="edit/dlgdoctoredit.cpp" line="77"/>
         <source>The advisor must be member one of the groups.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4349,6 +4349,21 @@ Do you want to register it for a new patientcard?</source>
     </message>
     <message>
         <location filename="dlgdoctoredit.ui" line="64"/>
+        <source> Discount </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgdoctoredit.ui" line="70"/>
+        <source>Exact value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgdoctoredit.ui" line="77"/>
+        <source>Percent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgdoctoredit.ui" line="113"/>
         <source>Independent from the local studio.</source>
         <translation type="unfinished"></translation>
     </message>

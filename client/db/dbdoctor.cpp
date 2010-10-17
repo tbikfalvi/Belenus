@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbdoctor.h"
+#include "dbdiscount.h"
 
 cDBDoctor::cDBDoctor()
 {
@@ -31,6 +32,8 @@ void cDBDoctor::init( const unsigned int p_uiId,
                       const QString &p_qsName,
                       const QString &p_qsLicence,
                       const QString &p_qsData,
+                      const int p_nDiscountType,
+                      const int p_nDiscount,
                       const bool p_bActive,
                       const QString &p_qsArchive ) throw()
 {
@@ -40,6 +43,8 @@ void cDBDoctor::init( const unsigned int p_uiId,
     m_qsName            = p_qsName;
     m_qsLicence         = p_qsLicence;
     m_qsData            = p_qsData;
+    m_nDiscountType     = p_nDiscountType;
+    m_nDiscount         = p_nDiscount;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -55,12 +60,37 @@ void cDBDoctor::init( const QSqlRecord &p_obRecord ) throw()
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
+    int p_nDiscountType = 0;
+    int p_nDiscount     = 0;
+
+    try
+    {
+        cDBDiscount obDBDiscount;
+
+        obDBDiscount.loadDoctor( p_obRecord.value( inIdIdx ).toInt() );
+        if( obDBDiscount.discountValue() > 0 )
+        {
+            p_nDiscountType = 1;
+            p_nDiscount = obDBDiscount.discountValue();
+        }
+        else if( obDBDiscount.discountPercent() > 0 )
+        {
+            p_nDiscountType = 2;
+            p_nDiscount = obDBDiscount.discountPercent();
+        }
+    }
+    catch( cSevException &e )
+    {
+    }
+
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inDoctorTypeIdIdx ).toUInt(),
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inLicenceIdx ).toString(),
           p_obRecord.value( inDataIdx ).toString(),
+          p_nDiscountType,
+          p_nDiscount,
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -125,6 +155,49 @@ void cDBDoctor::save() throw( cSevException )
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+    try
+    {
+        cDBDiscount obDBDiscount;
+
+        obDBDiscount.loadDoctor( m_uiId );
+        if( m_nDiscountType == 1 )
+        {
+            obDBDiscount.setDiscountValue( m_nDiscount );
+            obDBDiscount.setDiscountPercent( 0 );
+        }
+        else if( m_nDiscountType == 2 )
+        {
+            obDBDiscount.setDiscountValue( 0 );
+            obDBDiscount.setDiscountPercent( m_nDiscount );
+        }
+        obDBDiscount.setName( m_qsName );
+        obDBDiscount.save();
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Discount id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            cDBDiscount obDBDiscount;
+
+            obDBDiscount.createNew();
+            obDBDiscount.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBDiscount.setDoctorId( m_uiId);
+            if( m_nDiscountType == 1 )
+            {
+                obDBDiscount.setDiscountValue( m_nDiscount );
+            }
+            else if( m_nDiscountType == 2 )
+            {
+                obDBDiscount.setDiscountPercent( m_nDiscount );
+            }
+            obDBDiscount.setName( m_qsName );
+            obDBDiscount.save();
+        }
+    }
     if( poQuery ) delete poQuery;
 }
 
@@ -212,6 +285,26 @@ void cDBDoctor::setData( const QString &p_qsData ) throw()
 {
     m_qsData = p_qsData;
     m_qsData = m_qsData.replace( QString("\""), QString("\\\"") );
+}
+
+int cDBDoctor::discountType() const throw()
+{
+    return m_nDiscountType;
+}
+
+void cDBDoctor::setDiscountType( const int p_nDiscountType ) throw()
+{
+    m_nDiscountType = p_nDiscountType;
+}
+
+int cDBDoctor::discount() const throw()
+{
+    return m_nDiscount;
+}
+
+void cDBDoctor::setDiscount( const int p_nDiscount ) throw()
+{
+    m_nDiscount = p_nDiscount;
 }
 
 bool cDBDoctor::active() const throw()

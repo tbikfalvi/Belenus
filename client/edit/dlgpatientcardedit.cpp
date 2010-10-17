@@ -245,6 +245,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 int                 inPriceTotal;
 
                 inPriceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
+                inPriceTotal = g_obPatient.getDiscountPrice( inPriceTotal );
                 obDlgCassaAction.setInitialMoney( inPriceTotal );
                 obDlgCassaAction.setPayWithCash();
                 if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -354,7 +355,11 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
         int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
-        ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
+        int discount = g_obPatient.getDiscountPrice( priceTotal );
+        if( discount != priceTotal )
+            ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
+        else
+            ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
 
         if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {

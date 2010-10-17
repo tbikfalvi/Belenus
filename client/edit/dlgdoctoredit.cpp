@@ -38,6 +38,8 @@ cDlgDoctorEdit::cDlgDoctorEdit( QWidget *p_poParent, cDBDoctor *p_poDoctor )
         ptData->setPlainText( m_poDoctor->data() );
         if( m_poDoctor->licenceId() == 0 && m_poDoctor->id() > 0 )
             checkIndependent->setChecked( true );
+        ( m_poDoctor->discountType()==1?rbDiscountValue->setChecked(true):rbDiscountPercent->setChecked(true) );
+        ledDiscount->setText( QString::number(m_poDoctor->discount()) );
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
@@ -91,6 +93,10 @@ void cDlgDoctorEdit::accept ()
             m_poDoctor->setLicence( ledLicence->text() );
             m_poDoctor->setDoctorTypeId( cmbDoctorType->itemData( cmbDoctorType->currentIndex() ).toUInt() );
             m_poDoctor->setData( ptData->toPlainText() );
+            if( rbDiscountValue->isChecked() ) m_poDoctor->setDiscountType( 1 );
+            else if ( rbDiscountPercent->isChecked() ) m_poDoctor->setDiscountType( 2 );
+            m_poDoctor->setDiscount( ledDiscount->text().toInt() );
+
             m_poDoctor->setActive( true );
             m_poDoctor->save();
         }

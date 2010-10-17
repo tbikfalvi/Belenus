@@ -17,15 +17,18 @@
 #include "belenus.h"
 #include "dbpatient.h"
 
+//====================================================================================
 cDBPatient::cDBPatient()
+//====================================================================================
 {
     init();
 }
-
+//====================================================================================
 cDBPatient::~cDBPatient()
+//====================================================================================
 {
 }
-
+//====================================================================================
 void cDBPatient::init( const unsigned int p_uiId,
                        const unsigned int p_uiLicenceId,
                        const unsigned int p_uiPatientOriginId,
@@ -57,6 +60,7 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const QString &p_qsComment,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
+//====================================================================================
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
@@ -90,8 +94,9 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
-
+//====================================================================================
 void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
+//====================================================================================
 {
     int inIdIdx                 = p_obRecord.indexOf( "patientId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
@@ -157,8 +162,9 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
-
+//====================================================================================
 void cDBPatient::load( const unsigned int p_uiId ) throw( cSevException )
+//====================================================================================
 {
     cTracer obTrace( "cDBPatient::load", QString( "id: %1" ).arg( p_uiId ) );
 
@@ -170,8 +176,9 @@ void cDBPatient::load( const unsigned int p_uiId ) throw( cSevException )
     poQuery->first();
     init( poQuery->record() );
 }
-
+//====================================================================================
 void cDBPatient::load( const QString &p_qsName ) throw( cSevException )
+//====================================================================================
 {
     cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_qsName) );
 
@@ -183,8 +190,9 @@ void cDBPatient::load( const QString &p_qsName ) throw( cSevException )
     poQuery->first();
     init( poQuery->record() );
 }
-
+//====================================================================================
 unsigned int cDBPatient::getPatientCount( const QString &p_qsName ) throw( cSevException )
+//====================================================================================
 {
     cTracer obTrace( "cDBPatient::load", QString("name: \"%1\"").arg(p_qsName) );
 
@@ -198,8 +206,91 @@ unsigned int cDBPatient::getPatientCount( const QString &p_qsName ) throw( cSevE
 
     return poQuery->size();
 }
+//====================================================================================
+int cDBPatient::getDiscountPrice( const int p_inPriceTotal ) throw( cSevException )
+//====================================================================================
+{
+    if( !m_bRegularCustomer &&
+        !m_bEmployee &&
+        !m_bService &&
+        (!m_bCompany || (m_bCompany && m_uiCompanyId == 0)) &&
+        (!m_bHealthInsurance || (m_bHealthInsurance && m_uiHealthInsuranceId == 0)) &&
+        (!m_bDoctorProposed || (m_bDoctorProposed && m_uiDoctorId == 0)) )
+    {
+        return p_inPriceTotal;
+    }
 
+    QSqlQuery   *poQuery;
+    QString      m_qsQuery = "";
+    int          m_inMax = 0;
+    int          m_inValueIdx = 0;
+
+    m_qsQuery += QString( "SELECT * FROM discounts WHERE " );
+
+    if( m_inDiscountType == 1 )
+    {
+        m_qsQuery += QString( "discountValue>0 " );
+        m_inValueIdx = 9;
+    }
+    else if( m_inDiscountType == 2 )
+    {
+        m_qsQuery += QString( "discountPercent>0 " );
+        m_inValueIdx = 10;
+    }
+    if( m_bRegularCustomer ||
+        m_bEmployee ||
+        m_bService ||
+        (m_bCompany && m_uiCompanyId > 0) ||
+        (m_bHealthInsurance && m_uiHealthInsuranceId > 0 ) ||
+        (m_bDoctorProposed && m_uiDoctorId > 0 ) )
+    {
+        m_qsQuery += QString( "AND ( " );
+        if( m_bRegularCustomer )
+            m_qsQuery += QString( "regularCustomer>0 OR " );
+        if( m_bEmployee )
+            m_qsQuery += QString( "employee>0 OR " );
+        if( m_bService )
+            m_qsQuery += QString( "service>0 OR " );
+        if( m_bCompany && m_uiCompanyId )
+            m_qsQuery += QString( "companyId=%1 OR " ).arg(m_uiCompanyId);
+        if( m_bHealthInsurance && m_uiHealthInsuranceId )
+            m_qsQuery += QString( "healthInsuranceId=%1 OR " ).arg(m_uiHealthInsuranceId);
+        if( m_bDoctorProposed && m_uiDoctorId > 0 )
+            m_qsQuery += QString( "doctorId=%1 OR " ).arg(m_uiDoctorId);
+        m_qsQuery.chop(3);
+        m_qsQuery += QString( ") " );
+    }
+    m_qsQuery += QString( "AND active=1" );
+
+    poQuery = g_poDB->executeQTQuery( m_qsQuery );
+    while( poQuery->next() )
+    {
+        if( m_inMax < poQuery->value( m_inValueIdx ).toInt() )
+        {
+            m_inMax = poQuery->value( m_inValueIdx ).toInt();
+        }
+    }
+    if( poQuery ) delete poQuery;
+
+    int inRet = 0;
+    if( m_inDiscountType == 1 )
+    {
+        inRet = p_inPriceTotal - m_inMax;
+    }
+    else if( m_inDiscountType == 2 )
+    {
+        inRet = p_inPriceTotal - ((p_inPriceTotal/100)*m_inMax);
+    }
+    else
+    {
+        inRet = p_inPriceTotal;
+    }
+
+    return inRet;
+}
+//====================================================================================
 void cDBPatient::save() throw( cSevException )
+//====================================================================================
 {
     cTracer obTrace( "cDBPatient::save" );
     QString  qsQuery;
@@ -261,8 +352,9 @@ void cDBPatient::save() throw( cSevException )
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
 }
-
+//====================================================================================
 void cDBPatient::remove() throw( cSevException )
+//====================================================================================
 {
     cTracer obTrace( "cDBPatient::remove" );
 

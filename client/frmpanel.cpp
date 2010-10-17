@@ -69,7 +69,6 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
 
     m_inMainProcessLength   = 0;
     m_inCashToPay           = 0;
-    m_bHasToPay             = false;
     m_uiPatientToPay        = 0;
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
@@ -185,7 +184,7 @@ void cFrmPanel::clear()
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
-    if( !m_bHasToPay )
+    if( m_inCashToPay == 0 )
     {
         if( m_pDBLedgerDevice->cash() > 0 )
         {
@@ -219,9 +218,9 @@ void cFrmPanel::clear()
             obDBLedger.setActive( true );
             obDBLedger.save();
         }
-        m_inCashToPay = 0;
-        m_uiPatientToPay = 0;
     }
+    m_inCashToPay = 0;
+    m_uiPatientToPay = 0;
     m_pDBLedgerDevice->createNew();
 
     if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 )
@@ -573,7 +572,6 @@ void cFrmPanel::activateNextStatus()
 void cFrmPanel::cashPayed()
 {
     m_inCashToPay = 0;
-    m_bHasToPay = false;
     m_uiPatientToPay = 0;
 
     displayStatus();
@@ -586,11 +584,6 @@ bool cFrmPanel::isMainProcess()
 //====================================================================================
 void cFrmPanel::closeAttendance()
 {
-    if( m_inCashToPay > 0 )
-    {
-        m_bHasToPay = true;
-    }
-
     m_pDBLedgerDevice->setTimeLeft( m_inMainProcessLength );
     m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()-m_inMainProcessLength );
     if( m_inMainProcessLength > 0 )
