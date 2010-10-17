@@ -28,6 +28,16 @@ cDlgPreview::~cDlgPreview()
     cTracer obTrace( "cDlgPreview::~cDlgPreview" );
 }
 
+/*void cDlgPreview::keyPressEvent( QKeyEvent *p_poEvent )
+{
+    if( p_poEvent->key() == Qt::Key_F5 )
+    {
+        refreshReport();
+    }
+
+    QDialog::keyPressEvent( p_poEvent );
+}*/
+
 void cDlgPreview::setReportTitle( const QString &p_qsTitle )
 {
     m_qsReportName = p_qsTitle;

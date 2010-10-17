@@ -484,3 +484,7 @@ client/moc_dlgdiscountedit.cpp
 client/moc_dlgdiscountedit.o
 client/ui_dlgdiscountedit.h
 client/general.o
+client/moc_reppatientcardsobs.cpp
+client/moc_reppatientcardsobs.o
+client/reppatientcardsobs.o
+

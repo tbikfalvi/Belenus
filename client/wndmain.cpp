@@ -79,6 +79,7 @@
 #include "report/repattendance.h"
 #include "report/repcarduses.h"
 #include "report/reppatientcards.h"
+#include "report/reppatientcardsobs.h"
 
 //====================================================================================
 
@@ -1568,5 +1569,15 @@ void cWndMain::on_action_Discounts_triggered()
     setCursor( Qt::ArrowCursor);
 
     obDlgDiscount.exec();
+}
+//====================================================================================
+void cWndMain::on_action_PatientcardsObsolete_triggered()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+    cDlgReportPatientCardObs  obDlgReportPatientCardObs( this );
+    setCursor( Qt::ArrowCursor);
+
+    obDlgReportPatientCardObs.exec();
 }
 //====================================================================================

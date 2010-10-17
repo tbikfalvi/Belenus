@@ -21,7 +21,7 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     dteStartDate = new QDateTimeEdit();
     dteStartDate->setObjectName( QString::fromUtf8( "dteStartDate" ) );
     dteStartDate->setCalendarPopup( true );
-    dteStartDate->setDate( QDate::currentDate() );
+    dteStartDate->setDate( QDate::currentDate().addMonths(-1) );
     dteStartDate->setDisplayFormat( "yyyy-MM-dd" );
 
     lblTo = new QLabel( "->", grpFilters );
@@ -104,6 +104,11 @@ void cDlgReportPatients::refreshReport()
     obRightCellFormat.setRightMargin( 10 );
     obRightCellFormat.setAlignment( Qt::AlignRight );
 
+    QTextBlockFormat obCenterCellFormat;
+    obCenterCellFormat.setLeftMargin( 10 );
+    obCenterCellFormat.setRightMargin( 10 );
+    obCenterCellFormat.setAlignment( Qt::AlignCenter );
+
     QTextCursor tcReport( &m_tdReport );
 
     tcReport.insertText( m_qsReportName + "   ", obTitleFormat );
@@ -120,13 +125,78 @@ void cDlgReportPatients::refreshReport()
     //======================================================================================================
 
     qsQuery = "";
-    qsQuery += QString( "SELECT * FROM patients WHERE active=1 " );
-    qsQuery += QString( "AND created>=\"%1\" AND created<=\"%2\" " );
+    qsQuery += QString( "SELECT name, gender, dateBirth FROM patients WHERE active=1 " );
+    qsQuery += QString( "AND created>=\"%1\" AND created<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
 
     //------------------------------------------------------------------------------------------------------
 
     poReportResult = NULL;
     poReportResult = g_poDB->executeQTQuery( qsQuery );
+
+    uiColumnCount = 3;
+
+    tcReport.insertTable( poReportResult->size() + 2, uiColumnCount, obTableFormatLeft );
+
+    //------------------------------------------------------------------------------------------------------
+    // Headers
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Name" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Gender" ), obBoldFormat );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Date of birth" ), obBoldFormat );
+
+    //------------------------------------------------------------------------------------------------------
+    // Summary variables
+
+    //------------------------------------------------------------------------------------------------------
+
+    while( poReportResult->next() )
+    {
+        int         inColumn = 0;
+
+        // Name
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+
+        // Gender
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        if( poReportResult->value(inColumn).toInt() == 1 )
+            tcReport.insertText( tr("Male"), obNormalFormat );
+        else if( poReportResult->value(inColumn).toInt() == 2 )
+            tcReport.insertText( tr("Female"), obNormalFormat );
+        inColumn++;
+
+        // Date of birth
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( poReportResult->value(inColumn).toString(), obNormalFormat );
+        inColumn++;
+    }
+    delete poReportResult;
+
+    //------------------------------------------------------------------------------------------------------
+    // Summary fields
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    //======================================================================================================
+    //
+    //======================================================================================================
+
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertHtml( "<hr>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
 
     //======================================================================================================
 

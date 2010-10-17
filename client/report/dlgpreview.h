@@ -19,6 +19,8 @@ protected:
     QString       m_qsReportName;
     QTextDocument m_tdReport;
 
+//    void keyPressEvent ( QKeyEvent *p_poEvent );
+
 protected slots:
     virtual void setReportTitle( const QString &p_qsTitle );
 

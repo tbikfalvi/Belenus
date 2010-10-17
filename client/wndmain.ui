@@ -141,6 +141,7 @@
     <addaction name="action_ReportAttendances"/>
     <addaction name="separator"/>
     <addaction name="action_ReportPatientcards"/>
+    <addaction name="action_PatientcardsObsolete"/>
     <addaction name="action_ReportPatientcardUses"/>
     <addaction name="separator"/>
     <addaction name="action_CassaHistory"/>
@@ -548,6 +549,14 @@
    </property>
    <property name="toolTip">
     <string>Different type of discounts</string>
+   </property>
+  </action>
+  <action name="action_PatientcardsObsolete">
+   <property name="text">
+    <string>Obsolete Patientcards</string>
+   </property>
+   <property name="toolTip">
+    <string>List of patientcards will be obsolete in the near future.</string>
    </property>
   </action>
  </widget>
