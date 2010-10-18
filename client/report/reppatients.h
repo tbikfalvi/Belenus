@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QDateTimeEdit>
 #include <QComboBox>
+#include <QRadioButton>
 
 #include "belenus.h"
 #include "dlgpreview.h"
@@ -23,12 +24,21 @@ private:
     unsigned int     uiColumnCount;
 
 protected:
+    QVBoxLayout     *verticalLayout1;
+    QHBoxLayout     *horizontalLayout1;
+    QHBoxLayout     *horizontalLayout2;
+    QSpacerItem     *horizontalSpacer1;
+    QSpacerItem     *horizontalSpacer2;
     QLabel          *lblDate;
     QDateTimeEdit   *dteStartDate;
     QLabel          *lblTo;
     QDateTimeEdit   *dteEndDate;
     QLabel          *lblAge;
     QComboBox       *cmbAge;
+    QLabel          *lblGender;
+    QRadioButton    *rbBoth;
+    QRadioButton    *rbMale;
+    QRadioButton    *rbFemale;
 
 protected slots:
     virtual void refreshReport();

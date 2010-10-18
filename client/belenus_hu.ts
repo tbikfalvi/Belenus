@@ -3474,97 +3474,114 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Vendég</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="18"/>
+        <location filename="report/reppatients.cpp" line="24"/>
         <source>Entered into database :</source>
         <translation>Adatbázisba került : </translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="36"/>
+        <location filename="report/reppatients.cpp" line="52"/>
         <source>Age :</source>
         <translation>Életkor : </translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="41"/>
+        <location filename="report/reppatients.cpp" line="58"/>
         <source>&lt;All patients&gt;</source>
         <translation>&lt;Összes vendég&gt;</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="42"/>
+        <location filename="report/reppatients.cpp" line="59"/>
         <source>0 year to 10 years</source>
         <translation>0 és 10 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="43"/>
+        <location filename="report/reppatients.cpp" line="60"/>
         <source>10 year to 20 years</source>
         <translation>10 és 20 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="44"/>
+        <location filename="report/reppatients.cpp" line="61"/>
         <source>20 year to 30 years</source>
         <translation>20 és 30 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="45"/>
+        <location filename="report/reppatients.cpp" line="62"/>
         <source>30 year to 40 years</source>
         <translation>30 és 40 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="46"/>
+        <location filename="report/reppatients.cpp" line="63"/>
         <source>40 year to 50 years</source>
         <translation>40 és 50 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="47"/>
+        <location filename="report/reppatients.cpp" line="64"/>
         <source>50 year to 60 years</source>
         <translation>50 és 60 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="48"/>
+        <location filename="report/reppatients.cpp" line="65"/>
         <source>60 year to 70 years</source>
         <translation>60 és 70 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="49"/>
+        <location filename="report/reppatients.cpp" line="66"/>
         <source>70 year to 80 years</source>
         <translation>70 és 80 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="50"/>
+        <location filename="report/reppatients.cpp" line="67"/>
         <source>80 year to 90 years</source>
         <translation>80 és 90 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="51"/>
+        <location filename="report/reppatients.cpp" line="68"/>
         <source>90 year to 100 years</source>
         <translation>90 és 100 éves kor között</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="116"/>
+        <location filename="report/reppatients.cpp" line="71"/>
+        <source>Gender :</source>
+        <translation>Nem:</translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="75"/>
+        <source>All</source>
+        <translation>Összes</translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="152"/>
         <source>Date:</source>
         <translation>Dátum : </translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="143"/>
+        <location filename="report/reppatients.cpp" line="194"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="148"/>
+        <location filename="report/reppatients.cpp" line="201"/>
         <source>Gender</source>
         <translation>Neme</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="153"/>
+        <location filename="report/reppatients.cpp" line="207"/>
         <source>Date of birth</source>
         <translation>Születési idő</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="174"/>
+        <location filename="report/reppatients.cpp" line="212"/>
+        <source>Age</source>
+        <translation>Életkor</translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="80"/>
+        <location filename="report/reppatients.cpp" line="235"/>
         <source>Male</source>
         <translation>Férfi</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="176"/>
+        <location filename="report/reppatients.cpp" line="84"/>
+        <location filename="report/reppatients.cpp" line="237"/>
         <source>Female</source>
         <translation>Nő</translation>
     </message>
