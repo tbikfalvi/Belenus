@@ -6,6 +6,7 @@
 #include <QDateTimeEdit>
 #include <QComboBox>
 #include <QRadioButton>
+#include <QCheckBox>
 
 #include "belenus.h"
 #include "dlgpreview.h"
@@ -26,19 +27,36 @@ private:
 protected:
     QVBoxLayout     *verticalLayout1;
     QHBoxLayout     *horizontalLayout1;
-    QHBoxLayout     *horizontalLayout2;
-    QSpacerItem     *horizontalSpacer1;
-    QSpacerItem     *horizontalSpacer2;
     QLabel          *lblDate;
     QDateTimeEdit   *dteStartDate;
     QLabel          *lblTo;
     QDateTimeEdit   *dteEndDate;
+    QSpacerItem     *horizontalSpacer1;
+    QHBoxLayout     *horizontalLayout2;
     QLabel          *lblAge;
     QComboBox       *cmbAge;
     QLabel          *lblGender;
     QRadioButton    *rbBoth;
     QRadioButton    *rbMale;
     QRadioButton    *rbFemale;
+    QSpacerItem     *horizontalSpacer2;
+    QHBoxLayout     *horizontalLayout3;
+    QCheckBox       *chkRegularCustomer;
+    QCheckBox       *chkEmployee;
+    QCheckBox       *chkService;
+    QSpacerItem     *horizontalSpacer3;
+    QHBoxLayout     *horizontalLayout4;
+    QLabel          *lblHealthInsurance;
+    QComboBox       *cmbHealthInsurance;
+    QSpacerItem     *horizontalSpacer4;
+    QHBoxLayout     *horizontalLayout5;
+    QLabel          *lblCompany;
+    QComboBox       *cmbCompany;
+    QSpacerItem     *horizontalSpacer5;
+    QHBoxLayout     *horizontalLayout6;
+    QLabel          *lblDoctor;
+    QComboBox       *cmbDoctor;
+    QSpacerItem     *horizontalSpacer6;
 
 protected slots:
     virtual void refreshReport();

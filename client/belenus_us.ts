@@ -3118,119 +3118,209 @@ as new into the database?</oldsource>
 <context>
     <name>cDlgReportPatients</name>
     <message>
-        <location filename="report/reppatients.cpp" line="16"/>
+        <location filename="report/reppatients.cpp" line="18"/>
         <source>Patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="24"/>
+        <location filename="report/reppatients.cpp" line="30"/>
         <source>Entered into database :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="52"/>
+        <location filename="report/reppatients.cpp" line="60"/>
         <source>Age :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="58"/>
+        <location filename="report/reppatients.cpp" line="66"/>
         <source>&lt;All patients&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="59"/>
+        <location filename="report/reppatients.cpp" line="67"/>
         <source>0 year to 10 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="60"/>
+        <location filename="report/reppatients.cpp" line="68"/>
         <source>10 year to 20 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="61"/>
+        <location filename="report/reppatients.cpp" line="69"/>
         <source>20 year to 30 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="62"/>
+        <location filename="report/reppatients.cpp" line="70"/>
         <source>30 year to 40 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="63"/>
+        <location filename="report/reppatients.cpp" line="71"/>
         <source>40 year to 50 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="64"/>
+        <location filename="report/reppatients.cpp" line="72"/>
         <source>50 year to 60 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="65"/>
+        <location filename="report/reppatients.cpp" line="73"/>
         <source>60 year to 70 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="66"/>
+        <location filename="report/reppatients.cpp" line="74"/>
         <source>70 year to 80 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="67"/>
+        <location filename="report/reppatients.cpp" line="75"/>
         <source>80 year to 90 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="68"/>
+        <location filename="report/reppatients.cpp" line="76"/>
         <source>90 year to 100 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="71"/>
+        <location filename="report/reppatients.cpp" line="79"/>
         <source>Gender :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="75"/>
+        <location filename="report/reppatients.cpp" line="83"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="report/reppatients.cpp" line="104"/>
+        <source>Regular customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="108"/>
+        <source>Employee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="112"/>
+        <source>Service person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="124"/>
+        <source>Health Insurance Fund :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="130"/>
+        <source>&lt;All Health Insurance Fund&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="146"/>
+        <source>Company :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="report/reppatients.cpp" line="152"/>
+        <source>&lt;All Company&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="168"/>
+        <source>Proposal person :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="174"/>
+        <source>&lt;All proposal person&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="254"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="194"/>
+        <location filename="report/reppatients.cpp" line="335"/>
+        <source>Total number of patients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="358"/>
+        <source>Number of male patients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="379"/>
+        <source>Number of female patients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="403"/>
+        <source>Number of regular customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="427"/>
+        <source>Number of employees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="451"/>
+        <source>Number of service persons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="475"/>
+        <source>Number of health insurance fund&apos;s members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="499"/>
+        <source>Number of company employees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="523"/>
+        <source>Number of patients proposed by ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="570"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="201"/>
+        <location filename="report/reppatients.cpp" line="577"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="207"/>
+        <location filename="report/reppatients.cpp" line="583"/>
         <source>Date of birth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="212"/>
+        <location filename="report/reppatients.cpp" line="588"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="80"/>
-        <location filename="report/reppatients.cpp" line="235"/>
+        <location filename="report/reppatients.cpp" line="88"/>
+        <location filename="report/reppatients.cpp" line="611"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="84"/>
-        <location filename="report/reppatients.cpp" line="237"/>
+        <location filename="report/reppatients.cpp" line="92"/>
+        <location filename="report/reppatients.cpp" line="613"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>

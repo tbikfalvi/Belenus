@@ -13,10 +13,16 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
 {
     cTracer obTrace( "cDlgReportPatients::cDlgReportPatients" );
 
+    QSqlQuery *poQuery;
+
     setReportTitle( tr( "Patients" ) );
+
+    //======================================================================================================
 
     verticalLayout1 = new QVBoxLayout( grpFilters );
     verticalLayout1->setObjectName( QString::fromUtf8( "verticalLayout1" ) );
+
+    //======================================================================================================
 
     horizontalLayout1 = new QHBoxLayout( grpFilters );
     horizontalLayout1->setObjectName( QString::fromUtf8( "horizontalLayout1" ) );
@@ -45,6 +51,8 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
 
     horizontalSpacer1 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout1->addItem( horizontalSpacer1 );
+
+    //======================================================================================================
 
     horizontalLayout2 = new QHBoxLayout( grpFilters );
     horizontalLayout2->setObjectName( QString::fromUtf8( "horizontalLayout2" ) );
@@ -88,10 +96,104 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
 
+    //======================================================================================================
+
+    horizontalLayout3 = new QHBoxLayout( grpFilters );
+    horizontalLayout3->setObjectName( QString::fromUtf8( "horizontalLayout3" ) );
+
+    chkRegularCustomer = new QCheckBox( tr("Regular customer"), grpFilters );
+    chkRegularCustomer->setObjectName( QString::fromUtf8( "chkRegularCustomer" ) );
+    horizontalLayout3->addWidget( chkRegularCustomer );
+
+    chkEmployee = new QCheckBox( tr("Employee"), grpFilters );
+    chkEmployee->setObjectName( QString::fromUtf8( "chkEmployee" ) );
+    horizontalLayout3->addWidget( chkEmployee );
+
+    chkService = new QCheckBox( tr("Service person"), grpFilters );
+    chkService->setObjectName( QString::fromUtf8( "chkService" ) );
+    horizontalLayout3->addWidget( chkService );
+
+    horizontalSpacer3 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout3->addItem( horizontalSpacer3 );
+
+    //======================================================================================================
+
+    horizontalLayout4 = new QHBoxLayout( grpFilters );
+    horizontalLayout4->setObjectName( QString::fromUtf8( "horizontalLayout4" ) );
+
+    lblHealthInsurance = new QLabel( tr("Health Insurance Fund :"), grpFilters );
+    lblHealthInsurance->setObjectName( QString::fromUtf8( "lblHealthInsurance" ) );
+    horizontalLayout4->addWidget( lblHealthInsurance );
+
+    cmbHealthInsurance = new QComboBox( grpFilters );
+    cmbHealthInsurance->setObjectName( QString::fromUtf8( "cmbHealthInsurance" ) );
+    cmbHealthInsurance->addItem( tr("<All Health Insurance Fund>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT healthInsuranceId, name FROM healthInsurances WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
+    while( poQuery->next() )
+    {
+        cmbHealthInsurance->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+    horizontalLayout4->addWidget( cmbHealthInsurance );
+
+    horizontalSpacer4 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout4->addItem( horizontalSpacer4 );
+
+    //======================================================================================================
+
+    horizontalLayout5 = new QHBoxLayout( grpFilters );
+    horizontalLayout5->setObjectName( QString::fromUtf8( "horizontalLayout5" ) );
+
+    lblCompany = new QLabel( tr("Company :"), grpFilters );
+    lblCompany->setObjectName( QString::fromUtf8( "lblCompany" ) );
+    horizontalLayout5->addWidget( lblCompany );
+
+    cmbCompany = new QComboBox( grpFilters );
+    cmbCompany->setObjectName( QString::fromUtf8( "cmbCompany" ) );
+    cmbCompany->addItem( tr("<All Company>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT companyId, name FROM companies WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
+    while( poQuery->next() )
+    {
+        cmbCompany->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+    horizontalLayout5->addWidget( cmbCompany );
+
+    horizontalSpacer5 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout5->addItem( horizontalSpacer5 );
+
+    //======================================================================================================
+
+    horizontalLayout6 = new QHBoxLayout( grpFilters );
+    horizontalLayout6->setObjectName( QString::fromUtf8( "horizontalLayout6" ) );
+
+    lblDoctor = new QLabel( tr("Proposal person :"), grpFilters );
+    lblDoctor->setObjectName( QString::fromUtf8( "lblDoctor" ) );
+    horizontalLayout6->addWidget( lblDoctor );
+
+    cmbDoctor = new QComboBox( grpFilters );
+    cmbDoctor->setObjectName( QString::fromUtf8( "cmbDoctor" ) );
+    cmbDoctor->addItem( tr("<All proposal person>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT doctorId, doctorLicence, name FROM doctors WHERE active=1 AND archive<>\"DEL\" ORDER BY doctorLicence" ) );
+    while( poQuery->next() )
+    {
+        cmbDoctor->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+    horizontalLayout6->addWidget( cmbDoctor );
+
+    horizontalSpacer6 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout6->addItem( horizontalSpacer6 );
+
+    //======================================================================================================
+
     verticalLayout1->insertLayout( 0, horizontalLayout1 );
     verticalLayout1->insertLayout( 1, horizontalLayout2 );
+    verticalLayout1->insertLayout( 2, horizontalLayout3 );
+    verticalLayout1->insertLayout( 3, horizontalLayout4 );
+    verticalLayout1->insertLayout( 4, horizontalLayout5 );
+    verticalLayout1->insertLayout( 5, horizontalLayout6 );
 
     horizontalLayout->insertLayout( 0, verticalLayout1 );
+
+    if( poQuery ) delete poQuery;
 }
 
 cDlgReportPatients::~cDlgReportPatients()
@@ -160,21 +262,295 @@ void cDlgReportPatients::refreshReport()
     //
     //======================================================================================================
 
-    qsQuery = "";
-    qsQuery += QString( "SELECT name, gender, dateBirth FROM patients WHERE active=1 " );
-    qsQuery += QString( "AND created>=\"%1\" AND created<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    QString qsCondition = "";
+
+    qsCondition += QString( "AND created>=\"%1\" AND created<=\"%2\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
     if( cmbAge->currentIndex() > 0 )
     {
-        qsQuery += QString( "AND dateBirth>\"%1\" AND dateBirth<\"%2\" " ).arg( QDate::currentDate().addYears(-(cmbAge->currentIndex()*10)).toString("yyyy-MM-dd") ).arg( QDate::currentDate().addYears(-((cmbAge->currentIndex()-1)*10)).toString("yyyy-MM-dd") );
+        qsCondition += QString( "AND dateBirth>\"%1\" AND dateBirth<\"%2\" " ).arg( QDate::currentDate().addYears(-(cmbAge->currentIndex()*10)).toString("yyyy-MM-dd") ).arg( QDate::currentDate().addYears(-((cmbAge->currentIndex()-1)*10)).toString("yyyy-MM-dd") );
     }
     if( rbMale->isChecked() )
     {
-        qsQuery += QString( "AND gender=1 " );
+        qsCondition += QString( "AND gender=1 " );
     }
     else if( rbFemale->isChecked() )
     {
-        qsQuery += QString( "AND gender=2 " );
+        qsCondition += QString( "AND gender=2 " );
     }
+    if( chkRegularCustomer->isChecked() )
+    {
+        qsCondition += QString( "AND regularCustomer>0 " );
+    }
+    if( chkEmployee->isChecked() )
+    {
+        qsCondition += QString( "AND employee>0 " );
+    }
+    if( chkService->isChecked() )
+    {
+        qsCondition += QString( "AND service>0 " );
+    }
+    if( cmbHealthInsurance->currentIndex() > 0 )
+    {
+        qsCondition += QString( "AND healthInsuranceId>0 " );
+    }
+    if( cmbCompany->currentIndex() > 0 )
+    {
+        qsCondition += QString( "AND companyId>0 " );
+    }
+    if( cmbDoctor->currentIndex() > 0 )
+    {
+        qsCondition += QString( "AND doctorId>0 " );
+    }
+
+    QString qsCellTitle = "";
+    int     inRowCount = 1;
+
+    if( rbBoth->isChecked() )
+        inRowCount += 2;
+    if( !chkRegularCustomer->isChecked() )
+        inRowCount++;
+    if( !chkEmployee->isChecked() )
+        inRowCount++;
+    if( !chkService->isChecked() )
+        inRowCount++;
+    if( cmbHealthInsurance->currentIndex() == 0 )
+        inRowCount++;
+    if( cmbCompany->currentIndex() == 0 )
+        inRowCount++;
+    if( cmbDoctor->currentIndex() == 0 )
+        inRowCount++;
+
+    //======================================================================================================
+    //
+    //
+    //
+    //======================================================================================================
+
+    tcReport.insertTable( inRowCount, 3, obTableFormatLeft );
+
+    qsQuery = "";
+    qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+    qsQuery += qsCondition;
+
+    qsCellTitle = tr( "Total number of patients" );
+
+    poReportResult = NULL;
+    poReportResult = g_poDB->executeQTQuery( qsQuery );
+    poReportResult->first();
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( qsCellTitle, obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obCenterCellFormat );
+    tcReport.insertText( ":", obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+    tcReport.setBlockFormat( obRightCellFormat );
+    tcReport.insertText( poReportResult->value(0).toString(), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    //------------------------------------------------------------------------------------------------------
+    if( !qsCondition.contains("gender=", Qt::CaseInsensitive) )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND gender=1 " );
+
+        qsCellTitle = tr( "Number of male patients" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+
+        //------------------------------------------------------------------------------------------------------
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND gender=2 " );
+
+        qsCellTitle = tr( "Number of female patients" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+    if( !qsCondition.contains("regularCustomer>0", Qt::CaseInsensitive) )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND regularCustomer>0 " );
+
+        qsCellTitle = tr( "Number of regular customers" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+    if( !qsCondition.contains("employee>0", Qt::CaseInsensitive) )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND employee>0 " );
+
+        qsCellTitle = tr( "Number of employees" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+    if( !qsCondition.contains("service>0", Qt::CaseInsensitive) )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND service>0 " );
+
+        qsCellTitle = tr( "Number of service persons" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+    if( cmbHealthInsurance->currentIndex() == 0 )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND healthInsuranceId>0 " );
+
+        qsCellTitle = tr( "Number of health insurance fund's members" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+    if( cmbCompany->currentIndex() == 0 )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND companyId>0 " );
+
+        qsCellTitle = tr( "Number of company employees" );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+    if( cmbDoctor->currentIndex() == 0 )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT COUNT(name) FROM patients WHERE active=1 " );
+        qsQuery += qsCondition;
+        qsQuery += QString( "AND doctorId>0 " );
+
+        qsCellTitle = tr( "Number of patients proposed by ..." );
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        poReportResult->first();
+        tcReport.setBlockFormat( obLeftCellFormat );
+        tcReport.insertText( qsCellTitle, obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( ":", obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+        tcReport.setBlockFormat( obRightCellFormat );
+        tcReport.insertText( poReportResult->value(0).toString(), obNormalFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertHtml( "<hr>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+
+    //======================================================================================================
+    //
+    //
+    //
+    //======================================================================================================
+
+    qsQuery = "";
+    qsQuery += QString( "SELECT name, gender, dateBirth FROM patients WHERE active=1 " );
+    qsQuery += qsCondition;
 
     //------------------------------------------------------------------------------------------------------
 
