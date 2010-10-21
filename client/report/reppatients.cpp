@@ -93,6 +93,18 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     rbFemale->setObjectName( QString::fromUtf8( "rbFemale" ) );
     horizontalLayout2->addWidget( rbFemale );
 
+    chkRegularCustomer = new QCheckBox( tr("Regular customer"), grpFilters );
+    chkRegularCustomer->setObjectName( QString::fromUtf8( "chkRegularCustomer" ) );
+    horizontalLayout2->addWidget( chkRegularCustomer );
+
+    chkEmployee = new QCheckBox( tr("Employee"), grpFilters );
+    chkEmployee->setObjectName( QString::fromUtf8( "chkEmployee" ) );
+    horizontalLayout2->addWidget( chkEmployee );
+
+    chkService = new QCheckBox( tr("Service person"), grpFilters );
+    chkService->setObjectName( QString::fromUtf8( "chkService" ) );
+    horizontalLayout2->addWidget( chkService );
+
     horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
 
@@ -101,29 +113,9 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     horizontalLayout3 = new QHBoxLayout( grpFilters );
     horizontalLayout3->setObjectName( QString::fromUtf8( "horizontalLayout3" ) );
 
-    chkRegularCustomer = new QCheckBox( tr("Regular customer"), grpFilters );
-    chkRegularCustomer->setObjectName( QString::fromUtf8( "chkRegularCustomer" ) );
-    horizontalLayout3->addWidget( chkRegularCustomer );
-
-    chkEmployee = new QCheckBox( tr("Employee"), grpFilters );
-    chkEmployee->setObjectName( QString::fromUtf8( "chkEmployee" ) );
-    horizontalLayout3->addWidget( chkEmployee );
-
-    chkService = new QCheckBox( tr("Service person"), grpFilters );
-    chkService->setObjectName( QString::fromUtf8( "chkService" ) );
-    horizontalLayout3->addWidget( chkService );
-
-    horizontalSpacer3 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout3->addItem( horizontalSpacer3 );
-
-    //======================================================================================================
-
-    horizontalLayout4 = new QHBoxLayout( grpFilters );
-    horizontalLayout4->setObjectName( QString::fromUtf8( "horizontalLayout4" ) );
-
     lblHealthInsurance = new QLabel( tr("Health Insurance Fund :"), grpFilters );
     lblHealthInsurance->setObjectName( QString::fromUtf8( "lblHealthInsurance" ) );
-    horizontalLayout4->addWidget( lblHealthInsurance );
+    horizontalLayout3->addWidget( lblHealthInsurance );
 
     cmbHealthInsurance = new QComboBox( grpFilters );
     cmbHealthInsurance->setObjectName( QString::fromUtf8( "cmbHealthInsurance" ) );
@@ -133,19 +125,11 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     {
         cmbHealthInsurance->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
-    horizontalLayout4->addWidget( cmbHealthInsurance );
-
-    horizontalSpacer4 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout4->addItem( horizontalSpacer4 );
-
-    //======================================================================================================
-
-    horizontalLayout5 = new QHBoxLayout( grpFilters );
-    horizontalLayout5->setObjectName( QString::fromUtf8( "horizontalLayout5" ) );
+    horizontalLayout3->addWidget( cmbHealthInsurance );
 
     lblCompany = new QLabel( tr("Company :"), grpFilters );
     lblCompany->setObjectName( QString::fromUtf8( "lblCompany" ) );
-    horizontalLayout5->addWidget( lblCompany );
+    horizontalLayout3->addWidget( lblCompany );
 
     cmbCompany = new QComboBox( grpFilters );
     cmbCompany->setObjectName( QString::fromUtf8( "cmbCompany" ) );
@@ -155,19 +139,11 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     {
         cmbCompany->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
-    horizontalLayout5->addWidget( cmbCompany );
-
-    horizontalSpacer5 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout5->addItem( horizontalSpacer5 );
-
-    //======================================================================================================
-
-    horizontalLayout6 = new QHBoxLayout( grpFilters );
-    horizontalLayout6->setObjectName( QString::fromUtf8( "horizontalLayout6" ) );
+    horizontalLayout3->addWidget( cmbCompany );
 
     lblDoctor = new QLabel( tr("Proposal person :"), grpFilters );
     lblDoctor->setObjectName( QString::fromUtf8( "lblDoctor" ) );
-    horizontalLayout6->addWidget( lblDoctor );
+    horizontalLayout3->addWidget( lblDoctor );
 
     cmbDoctor = new QComboBox( grpFilters );
     cmbDoctor->setObjectName( QString::fromUtf8( "cmbDoctor" ) );
@@ -177,19 +153,43 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
     {
         cmbDoctor->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
-    horizontalLayout6->addWidget( cmbDoctor );
+    horizontalLayout3->addWidget( cmbDoctor );
+
+    horizontalSpacer3 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout3->addItem( horizontalSpacer3 );
+
+    //======================================================================================================
+/*
+    horizontalLayout4 = new QHBoxLayout( grpFilters );
+    horizontalLayout4->setObjectName( QString::fromUtf8( "horizontalLayout4" ) );
+
+    horizontalSpacer4 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout4->addItem( horizontalSpacer4 );
+
+    //======================================================================================================
+
+    horizontalLayout5 = new QHBoxLayout( grpFilters );
+    horizontalLayout5->setObjectName( QString::fromUtf8( "horizontalLayout5" ) );
+
+    horizontalSpacer5 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout5->addItem( horizontalSpacer5 );
+
+    //======================================================================================================
+
+    horizontalLayout6 = new QHBoxLayout( grpFilters );
+    horizontalLayout6->setObjectName( QString::fromUtf8( "horizontalLayout6" ) );
 
     horizontalSpacer6 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout6->addItem( horizontalSpacer6 );
-
+*/
     //======================================================================================================
 
     verticalLayout1->insertLayout( 0, horizontalLayout1 );
     verticalLayout1->insertLayout( 1, horizontalLayout2 );
     verticalLayout1->insertLayout( 2, horizontalLayout3 );
-    verticalLayout1->insertLayout( 3, horizontalLayout4 );
-    verticalLayout1->insertLayout( 4, horizontalLayout5 );
-    verticalLayout1->insertLayout( 5, horizontalLayout6 );
+//    verticalLayout1->insertLayout( 3, horizontalLayout4 );
+//    verticalLayout1->insertLayout( 4, horizontalLayout5 );
+//    verticalLayout1->insertLayout( 5, horizontalLayout6 );
 
     horizontalLayout->insertLayout( 0, verticalLayout1 );
 
