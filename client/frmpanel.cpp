@@ -69,6 +69,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
 
     m_inMainProcessLength   = 0;
     m_inCashToPay           = 0;
+    m_inCashNetToPay        = 0;
     m_uiPatientToPay        = 0;
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
@@ -79,6 +80,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_vrPatientCard.inUnitTime       = 0;
 
     m_uiAttendanceId        = 0;
+    m_uiLedgerId            = 0;
 
     m_pDBLedgerDevice       = new cDBLedgerDevice();
 
@@ -220,7 +222,9 @@ void cFrmPanel::clear()
         }
     }
     m_inCashToPay = 0;
+    m_inCashNetToPay = 0;
     m_uiPatientToPay = 0;
+    m_uiLedgerId = 0;
     m_pDBLedgerDevice->createNew();
 
     if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 )
@@ -283,6 +287,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
     m_inCashToPay += p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT();
+    m_inCashNetToPay += p_inPrice;
     m_uiPatientToPay = g_obPatient.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
@@ -569,10 +574,12 @@ void cFrmPanel::activateNextStatus()
     displayStatus();
 }
 //====================================================================================
-void cFrmPanel::cashPayed()
+void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
 {
     m_inCashToPay = 0;
+    m_inCashNetToPay = 0;
     m_uiPatientToPay = 0;
+    m_uiLedgerId = p_uiLedgerId;
 
     displayStatus();
 }
@@ -591,6 +598,23 @@ void cFrmPanel::closeAttendance()
         m_pDBLedgerDevice->setComment( tr("Device usage stopped after %1 minutes. Unused time: %2 minutes.").arg(m_pDBLedgerDevice->timeReal()).arg(m_pDBLedgerDevice->timeLeft()) );
     }
     m_pDBLedgerDevice->save();
+
+    if( m_uiLedgerId > 0 )
+    {
+        try
+        {
+            cDBLedger   obDBLedger;
+
+            obDBLedger.load( m_uiLedgerId );
+            obDBLedger.setLedgerDeviceId( m_pDBLedgerDevice->id() );
+            obDBLedger.save();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        m_uiLedgerId = 0;
+    }
 
     QSqlQuery *poQuery;
     poQuery = g_poDB->executeQTQuery( QString( "SELECT workTime FROM panels WHERE panelId=%1" ).arg(m_uiId) );
@@ -652,7 +676,7 @@ void cFrmPanel::closeAttendance()
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )
 {
     *p_uiPatientId  = m_uiPatientToPay;
-    *p_inPrice      = m_inCashToPay;
+    *p_inPrice      = m_inCashNetToPay;
 }
 //====================================================================================
 bool cFrmPanel::isHasToPay()

@@ -255,9 +255,9 @@ void cMdiPanels::keyPressEvent ( QKeyEvent *p_poEvent )
     if( inNewPanel >= 0 && inNewPanel < (int)m_obPanels.size() && inNewPanel != (int)m_uiActivePanel ) activatePanel( (unsigned int)inNewPanel );
 }
 
-void cMdiPanels::cashPayed()
+void cMdiPanels::cashPayed( const unsigned int p_uiLedgerId )
 {
-    m_obPanels.at( m_uiActivePanel )->cashPayed();
+    m_obPanels.at( m_uiActivePanel )->cashPayed( p_uiLedgerId );
 }
 
 QString cMdiPanels::getActivePanelCaption()

@@ -265,6 +265,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                         obDBLedger.setLedgerTypeId( 2 );
                     else
                         obDBLedger.setLedgerTypeId( 3 );
+                    obDBLedger.setLedgerDeviceId( 0 );
+                    obDBLedger.setPaymentMethod( inPayType );
                     obDBLedger.setUserId( g_obUser.id() );
                     obDBLedger.setProductId( 0 );
                     obDBLedger.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );

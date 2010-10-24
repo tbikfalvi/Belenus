@@ -1420,10 +1420,12 @@ void cWndMain::on_action_PayCash_triggered()
 
     cDlgCassaAction     obDlgCassaAction(this);
     int                 inPriceTotal;
+    int                 inPriceNet;
     unsigned int        uiPatientId;
 
-    mdiPanels->getPanelCashData( &uiPatientId, &inPriceTotal );
+    mdiPanels->getPanelCashData( &uiPatientId, &inPriceNet );
 
+    inPriceTotal = inPriceNet + (inPriceNet/100) * g_poPrefs->getDeviceUseVAT();
     obDlgCassaAction.setInitialMoney( inPriceTotal );
     obDlgCassaAction.setPayWithCash();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -1436,12 +1438,14 @@ void cWndMain::on_action_PayCash_triggered()
         {
             g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
         }
-        int inPriceNet = (inPriceTotal / (100 + g_poPrefs->getDeviceUseVAT()))*100;
+//        int inPriceNet = inPriceTotal*100 / (100 + g_poPrefs->getDeviceUseVAT());
 
         cDBLedger   obDBLedger;
 
         obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
         obDBLedger.setLedgerTypeId( 1 );
+        obDBLedger.setLedgerDeviceId( 0 );
+        obDBLedger.setPaymentMethod( inPayType );
         obDBLedger.setUserId( g_obUser.id() );
         obDBLedger.setProductId( 0 );
         obDBLedger.setPatientCardTypeId( 0 );
@@ -1454,7 +1458,7 @@ void cWndMain::on_action_PayCash_triggered()
         obDBLedger.setActive( true );
         obDBLedger.save();
 
-        mdiPanels->cashPayed();
+        mdiPanels->cashPayed( obDBLedger.id() );
     }
 }
 //====================================================================================

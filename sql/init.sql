@@ -204,6 +204,19 @@ INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `com
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `ledgerDevice` (`ledgerDeviceId`, `licenceId`, `userId`, `panelId`, `patientId`, `units`, `cash`, `timeReal`, `timeLeft`, `timeCard`, `timeCash`, `ledgerTime`, `comment`, `active`, `archive`) VALUES
+ (0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, '2010-10-23 11:45:07', NULL, 0, 'ARC');
+UPDATE `ledgerDevice` SET `ledgerDeviceId`=0 WHERE `ledgerDeviceId`=1;
+ALTER TABLE `ledgerDevice` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'Készpénzes fizetés', 1, 'ARC'),
+ (2, 0, 'Fizetés utalvánnyal', 1, 'ARC'),
+ (3, 0, 'Fizetés bankkártyával', 1, 'ARC');
+-- -----------------------------------------------------------------------------------
+
 INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
  (1 , '0', 'Géphasználat', '1', 'ARC'),
  (2 , '0', 'Bérlet eladás', '1', 'ARC'),

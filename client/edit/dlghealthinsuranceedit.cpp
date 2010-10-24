@@ -28,6 +28,9 @@ cDlgHealthInsuranceEdit::cDlgHealthInsuranceEdit( QWidget *p_poParent, cDBHealth
     }
     cmbRegion->setEditText( "" );
 
+    deValidDateFrom->setDate( QDate::currentDate() );
+    deValidDateTo->setDate( QDate::currentDate() );
+
     m_poHealthInsurance = p_poHealthInsurance;
     if( m_poHealthInsurance )
     {

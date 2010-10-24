@@ -28,6 +28,8 @@ cDBLedger::~cDBLedger()
 void cDBLedger::init( const unsigned int p_uiId,
                       const unsigned int p_uiLicenceId,
                       const unsigned int p_uiLedgerTypeId,
+                      const unsigned int p_uiLedgerDeviceId,
+                      const unsigned int p_uiPaymentMethodId,
                       const unsigned int p_uiUserId,
                       const unsigned int p_uiProductId,
                       const unsigned int p_uiPatientCardTypeId,
@@ -45,6 +47,8 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
     m_uiLedgerTypeId        = p_uiLedgerTypeId;
+    m_uiLedgerDeviceId      = p_uiLedgerDeviceId;
+    m_uiPaymentMethod       = p_uiPaymentMethodId;
     m_uiUserId              = p_uiUserId;
     m_uiProductId           = p_uiProductId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
@@ -65,6 +69,8 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx                 = p_obRecord.indexOf( "ledgerId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inLedgerTypeIdIdx       = p_obRecord.indexOf( "ledgerTypeId" );
+    int inLedgerDeviceIdIdx     = p_obRecord.indexOf( "ledgerDeviceId" );
+    int inPaymentMethodIdx      = p_obRecord.indexOf( "paymentMethodId" );
     int inUserIdIdx             = p_obRecord.indexOf( "userId" );
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
@@ -82,6 +88,8 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inLedgerTypeIdIdx ).toUInt(),
+          p_obRecord.value( inLedgerDeviceIdIdx ).toUInt(),
+          p_obRecord.value( inPaymentMethodIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
@@ -134,6 +142,8 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += " ledger SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
+    qsQuery += QString( "ledgerDeviceId = \"%1\", " ).arg( m_uiLedgerDeviceId );
+    qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( m_uiPaymentMethod );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
@@ -207,6 +217,26 @@ unsigned int cDBLedger::ledgerTypeId() const throw()
 void cDBLedger::setLedgerTypeId( const unsigned int p_uiLedgerTypeId ) throw()
 {
     m_uiLedgerTypeId = p_uiLedgerTypeId;
+}
+
+unsigned int cDBLedger::ledgerDeviceId() const throw()
+{
+    return m_uiLedgerDeviceId;
+}
+
+void cDBLedger::setLedgerDeviceId( const unsigned int p_uiLedgerDeviceId ) throw()
+{
+    m_uiLedgerDeviceId = p_uiLedgerDeviceId;
+}
+
+unsigned int cDBLedger::paymentMethod() const throw()
+{
+    return m_uiPaymentMethod;
+}
+
+void cDBLedger::setPaymentMethod( const unsigned int p_nPaymentMethod ) throw()
+{
+    m_uiPaymentMethod = p_nPaymentMethod;
 }
 
 unsigned int cDBLedger::userId() const throw()

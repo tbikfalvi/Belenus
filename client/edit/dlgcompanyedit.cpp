@@ -28,6 +28,9 @@ cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
     }
     cmbRegion->setEditText( "" );
 
+    deValidDateFrom->setDate( QDate::currentDate() );
+    deValidDateTo->setDate( QDate::currentDate() );
+
     m_poCompany = p_poCompany;
     if( m_poCompany )
     {

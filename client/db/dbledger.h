@@ -20,6 +20,10 @@ public:
     void            setLicenceId( const unsigned int p_nLicenceId )                 throw();
     unsigned int    ledgerTypeId() const                                            throw();
     void            setLedgerTypeId( const unsigned int p_nLedgerTypeId )           throw();
+    unsigned int    ledgerDeviceId() const                                          throw();
+    void            setLedgerDeviceId( const unsigned int p_nLedgerDeviceId )       throw();
+    unsigned int    paymentMethod() const                                           throw();
+    void            setPaymentMethod( const unsigned int p_nPaymentMethod )         throw();
     unsigned int    userId() const                                                  throw();
     void            setUserId( const unsigned int p_uiUserId )                      throw();
     unsigned int    productId() const                                               throw();
@@ -51,6 +55,8 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiLedgerTypeId;
+    unsigned int    m_uiLedgerDeviceId;
+    unsigned int    m_uiPaymentMethod;
     unsigned int    m_uiUserId;
     unsigned int    m_uiProductId;
     unsigned int    m_uiPatientCardTypeId;
@@ -68,6 +74,8 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiLedgerTypeId = 0,
+               const unsigned int p_uiLedgerDeviceId = 0,
+               const unsigned int p_uiPaymentMethodId = 0,
                const unsigned int p_uiUserId = 0,
                const unsigned int p_uiProductId = 0,
                const unsigned int p_uiPatientCardTypeId = 0,
