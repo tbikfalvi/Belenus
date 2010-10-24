@@ -38,6 +38,8 @@ public:
     void            setName( const QString &p_qsName )                              throw();
     int             netPrice() const                                                throw();
     void            setNetPrice( const int p_nNetPrice )                            throw();
+    int             discount() const                                                throw();
+    void            setDiscount( const int p_inDiscount )                           throw();
     int             vatpercent() const                                              throw();
     void            setVatpercent( const int p_nVatpercent )                        throw();
     int             totalPrice() const                                              throw();
@@ -64,6 +66,7 @@ private:
     unsigned int    m_uiPanelId;
     QString         m_qsName;
     int             m_nNetPrice;
+    int             m_inDiscount;
     int             m_nVatpercent;
     int             m_nTotalPrice;
     QString         m_qsLedgerTime;
@@ -83,6 +86,7 @@ private:
                const unsigned int p_uiPanelId = 0,
                const QString &p_qsName = "",
                const int p_nNetPrice = 0,
+               const int p_inDiscount = 0,
                const int p_nVatpercent = 0,
                const int p_nTotalPrice = 0,
                const QString &p_qsLedgerTime = "",

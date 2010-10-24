@@ -1353,7 +1353,6 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
         tLength = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
         obDBAttendance.setLengthStr( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
         obDBAttendance.save();
-        inPrice = g_obPatient.getDiscountPrice( inPrice );
         mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }
     else
@@ -1421,11 +1420,12 @@ void cWndMain::on_action_PayCash_triggered()
     cDlgCassaAction     obDlgCassaAction(this);
     int                 inPriceTotal;
     int                 inPriceNet;
+    int                 inPriceDiscount;
     unsigned int        uiPatientId;
 
-    mdiPanels->getPanelCashData( &uiPatientId, &inPriceNet );
+    mdiPanels->getPanelCashData( &uiPatientId, &inPriceNet, &inPriceDiscount );
 
-    inPriceTotal = inPriceNet + (inPriceNet/100) * g_poPrefs->getDeviceUseVAT();
+    inPriceTotal = (inPriceNet-inPriceDiscount) + ((inPriceNet-inPriceDiscount)/100) * g_poPrefs->getDeviceUseVAT();
     obDlgCassaAction.setInitialMoney( inPriceTotal );
     obDlgCassaAction.setPayWithCash();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -1439,6 +1439,7 @@ void cWndMain::on_action_PayCash_triggered()
             g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
         }
 //        int inPriceNet = inPriceTotal*100 / (100 + g_poPrefs->getDeviceUseVAT());
+        mdiPanels->setPaymentMethod( inPayType );
 
         cDBLedger   obDBLedger;
 
@@ -1452,7 +1453,8 @@ void cWndMain::on_action_PayCash_triggered()
         obDBLedger.setPatientCardId( 0 );
         obDBLedger.setPanelId( mdiPanels->activePanel()+1 );
         obDBLedger.setName( mdiPanels->getActivePanelCaption() );
-        obDBLedger.setNetPrice( inPriceNet );
+        obDBLedger.setNetPrice( inPriceNet-inPriceDiscount );
+        obDBLedger.setDiscount( inPriceDiscount );
         obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
         obDBLedger.setComment( qsComment );
         obDBLedger.setActive( true );

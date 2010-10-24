@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QDateTimeEdit>
 #include <QComboBox>
+#include <QCheckBox>
 
 #include "belenus.h"
 #include "dlgpreview.h"
@@ -25,10 +26,11 @@ private:
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 protected:
-    QLabel*        lblDate;
-    QDateTimeEdit* dteStartDate;
-    QLabel*        lblTo;
-    QDateTimeEdit* dteEndDate;
+    QLabel          *lblDate;
+    QDateTimeEdit   *dteStartDate;
+    QLabel          *lblTo;
+    QDateTimeEdit   *dteEndDate;
+    QCheckBox       *chkShowTimes;
 
 protected slots:
     virtual void refreshReport();

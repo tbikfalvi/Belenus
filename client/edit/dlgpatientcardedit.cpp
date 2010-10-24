@@ -242,10 +242,13 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 }
 
                 cDlgCassaAction     obDlgCassaAction(this);
+                int                 inPriceNet;
                 int                 inPriceTotal;
+                int                 inPriceDiscount;
 
-                inPriceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
-                inPriceTotal = g_obPatient.getDiscountPrice( inPriceTotal );
+                inPriceNet = m_poPatientCardType->price();
+                inPriceDiscount = inPriceNet - g_obPatient.getDiscountPrice( inPriceNet );
+                inPriceTotal = g_obPatient.getDiscountPrice(inPriceNet) + (g_obPatient.getDiscountPrice(inPriceNet)/100)*m_poPatientCardType->vatpercent();
                 obDlgCassaAction.setInitialMoney( inPriceTotal );
                 obDlgCassaAction.setPayWithCash();
                 if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -273,7 +276,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDBLedger.setPatientCardId( m_poPatientCard->id() );
                     obDBLedger.setPanelId( 0 );
                     obDBLedger.setName( m_poPatientCard->barcode() );
-                    obDBLedger.setNetPrice( m_poPatientCardType->price() );
+                    obDBLedger.setNetPrice( g_obPatient.getDiscountPrice(inPriceNet) );
+                    obDBLedger.setDiscount( inPriceDiscount );
                     obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
                     obDBLedger.setComment( qsComment );
                     obDBLedger.setActive( true );

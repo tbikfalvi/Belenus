@@ -70,10 +70,13 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inMainProcessLength   = 0;
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
+    m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
+
+    m_uiPaymentMethodId     = 0;
 
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
@@ -193,38 +196,41 @@ void cFrmPanel::clear()
             int inPriceTotal = m_pDBLedgerDevice->cash();
             QString qsComment = tr( "Revoking device (%1) usage." ).arg(getPanelName());
 
-            if( QMessageBox::warning( this,
+/*            if( QMessageBox::warning( this,
                                       tr("Question"),
                                       tr("The device usage has been payed before.\n"
                                          "Do you want to revoke the payment from the cassa?"),
-                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )*/
+            if( m_uiPaymentMethodId == 1 )
             {
                 g_obCassa.cassaDecreaseMoney( inPriceTotal, qsComment );
             }
-
-            int inPriceNet = (inPriceTotal / (100 + g_poPrefs->getDeviceUseVAT()))*100;
 
             cDBLedger   obDBLedger;
 
             obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
             obDBLedger.setLedgerTypeId( 1 );
+            obDBLedger.setPaymentMethod( m_uiPaymentMethodId );
             obDBLedger.setUserId( g_obUser.id() );
             obDBLedger.setProductId( 0 );
             obDBLedger.setPatientCardTypeId( 0 );
             obDBLedger.setPatientCardId( 0 );
             obDBLedger.setPanelId( m_uiId );
             obDBLedger.setName( getPanelName() );
-            obDBLedger.setNetPrice( -inPriceNet );
+            obDBLedger.setNetPrice( -(m_inCashNetToPay-m_inCashDiscountToPay) );
+            obDBLedger.setDiscount( m_inCashDiscountToPay );
             obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
             obDBLedger.setComment( qsComment );
             obDBLedger.setActive( true );
             obDBLedger.save();
         }
     }
-    m_inCashToPay = 0;
-    m_inCashNetToPay = 0;
-    m_uiPatientToPay = 0;
-    m_uiLedgerId = 0;
+    m_inCashToPay           = 0;
+    m_inCashNetToPay        = 0;
+    m_inCashDiscountToPay   = 0;
+    m_uiPatientToPay        = 0;
+    m_uiLedgerId            = 0;
+    m_uiPaymentMethodId     = 0;
     m_pDBLedgerDevice->createNew();
 
     if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 )
@@ -286,8 +292,9 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
-    m_inCashToPay += p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT();
     m_inCashNetToPay += p_inPrice;
+    m_inCashDiscountToPay += p_inPrice - g_obPatient.getDiscountPrice( p_inPrice );
+    m_inCashToPay += g_obPatient.getDiscountPrice(p_inPrice) + (g_obPatient.getDiscountPrice(p_inPrice)/100)*g_poPrefs->getDeviceUseVAT();
     m_uiPatientToPay = g_obPatient.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
@@ -576,9 +583,10 @@ void cFrmPanel::activateNextStatus()
 //====================================================================================
 void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
 {
-    m_inCashToPay = 0;
-    m_inCashNetToPay = 0;
-    m_uiPatientToPay = 0;
+    m_inCashToPay           = 0;
+//    m_inCashNetToPay        = 0;
+//    m_inCashDiscountToPay   = 0;
+    m_uiPatientToPay        = 0;
     m_uiLedgerId = p_uiLedgerId;
 
     displayStatus();
@@ -665,6 +673,10 @@ void cFrmPanel::closeAttendance()
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;
+    m_inCashToPay           = 0;
+    m_inCashNetToPay        = 0;
+    m_inCashDiscountToPay   = 0;
+    m_uiPaymentMethodId     = 0;
     m_pDBLedgerDevice->createNew();
 
     m_inMainProcessLength   = 0;
@@ -673,10 +685,11 @@ void cFrmPanel::closeAttendance()
     m_inCardTimeRemains     = 0;
 }
 //====================================================================================
-void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice )
+void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )
 {
     *p_uiPatientId  = m_uiPatientToPay;
     *p_inPrice      = m_inCashNetToPay;
+    *p_inDiscount   = m_inCashDiscountToPay;
 }
 //====================================================================================
 bool cFrmPanel::isHasToPay()
@@ -715,4 +728,10 @@ bool cFrmPanel::isCanBeStartedByCard()
     }
 
     return bRet;
+}
+
+void cFrmPanel::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
+{
+    m_uiPaymentMethodId = p_uiPaymentMethodId;
+    m_pDBLedgerDevice->setPaymentMethod( m_uiPaymentMethodId );
 }

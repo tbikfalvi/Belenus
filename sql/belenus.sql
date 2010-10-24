@@ -679,6 +679,7 @@ CREATE TABLE `ledgerDevice` (
   `userId`                  int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        NOT NULL,
+  `paymentMethodId`         int(10) unsigned        NOT NULL,
   `units`                   int(11)                 NOT NULL,
   `cash`                    int(11)                 NOT NULL,
   `timeReal`                int(11)                 NOT NULL,
@@ -693,7 +694,8 @@ CREATE TABLE `ledgerDevice` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -712,6 +714,7 @@ CREATE TABLE `ledger` (
   `panelId`                 int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `netPrice`                int(11)                 NOT NULL,
+  `discount`                int(11)                 NOT NULL,
   `vatpercent`              int(11)                 NOT NULL,
   `totalPrice`              int(11)                 NOT NULL,
   `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,

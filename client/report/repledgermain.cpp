@@ -32,6 +32,11 @@ cDlgLedgerMain::cDlgLedgerMain( QWidget *parent )
     dteEndDate->setDate( QDate::currentDate() );
     dteEndDate->setDisplayFormat( "yyyy-MM-dd" );
 
+    chkShowTimes = new QCheckBox( grpFilters );
+    chkShowTimes->setObjectName( QString::fromUtf8( "chkShowTimes" ) );
+    chkShowTimes->setText( tr("Show time intervall of different usages") );
+
+    horizontalLayout->insertWidget( 0, chkShowTimes );
     horizontalLayout->insertWidget( 0, dteEndDate );
     horizontalLayout->insertWidget( 0, lblTo );
     horizontalLayout->insertWidget( 0, dteStartDate );
@@ -108,6 +113,11 @@ void cDlgLedgerMain::refreshReport()
     obRightCellFormat.setRightMargin( 10 );
     obRightCellFormat.setAlignment( Qt::AlignRight );
 
+    QTextBlockFormat obCenterCellFormat;
+    obCenterCellFormat.setLeftMargin( 10 );
+    obCenterCellFormat.setRightMargin( 10 );
+    obCenterCellFormat.setAlignment( Qt::AlignCenter );
+
     QTextCursor tcReport( &m_tdReport );
 
     tcReport.insertText( m_qsReportName + "   ", obTitleFormat );
@@ -125,6 +135,77 @@ void cDlgLedgerMain::refreshReport()
     //
     //
     //======================================================================================================
+
+    uiColumnCount = 7;
+    if( chkShowTimes->isChecked() )
+        uiColumnCount += 2;
+
+    tcReport.insertTable( g_poPrefs->getPanelCount() + 2, uiColumnCount, obTableFormatCenter );
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Device" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    if( chkShowTimes->isChecked() )
+    {
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( tr( "Device usage\nwith card / with payment" ), obBoldFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+
+        tcReport.setBlockFormat( obCenterCellFormat );
+        tcReport.insertText( tr( "Device usage\nused time / interrupted time" ), obBoldFormat );
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Patients" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Card usages" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Payed usages" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Cash usages" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Credit card usages" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.setBlockFormat( obLeftCellFormat );
+    tcReport.insertText( tr( "Sum of cash usage" ), obBoldFormat );
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    //------------------------------------------------------------------------------------------------------
+
+    for( int i=0; i<g_poPrefs->getPanelCount(); i++ )
+    {
+        qsQuery = "";
+        qsQuery += QString( "SELECT " );
+        qsQuery += QString( "p.title, " );
+        if( chkShowTimes->isChecked() )
+        {
+            qsQuery += QString( "" );
+            qsQuery += QString( "" );
+        }
+        qsQuery += QString( "" );
+        qsQuery += QString( "" );
+        qsQuery += QString( "" );
+        qsQuery += QString( "" );
+        qsQuery += QString( "" );
+        qsQuery += QString( "" );
+    }
+
+    //------------------------------------------------------------------------------------------------------
+
+/*
     qsQuery = "";
     qsQuery += QString( "SELECT p.title AS Panel, ld.timeCard AS TimeCard, ld.timeCash AS TimeCash, ld.timeLeft AS TimeUnused, ld.timeReal AS TimeUsed, count(case when ld.units = 1 then 1 else null end) AS UseCard, count(case when ld.cash > 0 then 1 else null end) AS UseCash, COUNT(ld.patientId) AS Patient, SUM(ld.cash) AS SumCash, ld.ledgerTime AS LedgerDate FROM panels p LEFT JOIN ledgerDevice ld ON p.panelId=ld.panelId WHERE p.active=1 " );
     qsQuery += QString( "AND (ISNULL(ld.ledgerTime) OR (DATE(ld.ledgerTime) >= \"%1\" AND DATE(ld.ledgerTime) <= \"%2\")) " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
@@ -550,7 +631,7 @@ void cDlgLedgerMain::refreshReport()
     tcReport.movePosition( QTextCursor::NextCell );
     tcReport.setBlockFormat( obRightCellFormat );
     tcReport.insertText( convertCurrency( inSumTotal, g_poPrefs->getCurrencyShort() ), obBoldFormat );
-
+*/
     //======================================================================================================
     //
     //======================================================================================================

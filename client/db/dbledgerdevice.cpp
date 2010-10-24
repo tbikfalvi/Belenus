@@ -30,6 +30,7 @@ void cDBLedgerDevice::init( const unsigned int p_uiId,
                       const unsigned int p_uiUserId,
                       const unsigned int p_uiPanelId,
                       const unsigned int p_uiPatientId,
+                      const unsigned int p_uiPaymentMethodId,
                       const int p_inUnits,
                       const int p_inCash,
                       const int p_inTimeReal,
@@ -46,6 +47,7 @@ void cDBLedgerDevice::init( const unsigned int p_uiId,
     m_uiUserId              = p_uiUserId;
     m_uiPanelId             = p_uiPanelId;
     m_uiPatientId           = p_uiPatientId;
+    m_uiPaymentMethod       = p_uiPaymentMethodId;
     m_inUnits               = p_inUnits;
     m_inCash                = p_inCash;
     m_inTimeReal            = p_inTimeReal;
@@ -65,6 +67,7 @@ void cDBLedgerDevice::init( const QSqlRecord &p_obRecord ) throw()
     int inUserIdIdx             = p_obRecord.indexOf( "userId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
+    int inPaymentMethodIdx      = p_obRecord.indexOf( "paymentMethodId" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
     int inCashIdx               = p_obRecord.indexOf( "cash" );
     int inTimeRealIdx           = p_obRecord.indexOf( "timeReal" );
@@ -81,6 +84,7 @@ void cDBLedgerDevice::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
           p_obRecord.value( inPatientIdIdx ).toUInt(),
+          p_obRecord.value( inPaymentMethodIdx ).toUInt(),
           p_obRecord.value( inUnitsIdx ).toInt(),
           p_obRecord.value( inCashIdx ).toInt(),
           p_obRecord.value( inTimeRealIdx ).toInt(),
@@ -130,6 +134,7 @@ void cDBLedgerDevice::save() throw( cSevException )
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
+    qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( m_uiPaymentMethod );
     qsQuery += QString( "units = \"%1\", " ).arg( m_inUnits );
     qsQuery += QString( "cash = \"%1\", " ).arg( m_inCash );
     qsQuery += QString( "timeReal = \"%1\", " ).arg( m_inTimeReal );
@@ -220,6 +225,16 @@ unsigned int cDBLedgerDevice::patientId() const throw()
 void cDBLedgerDevice::setPatientId( const unsigned int p_nPatientId ) throw()
 {
     m_uiPatientId = p_nPatientId;
+}
+
+unsigned int cDBLedgerDevice::paymentMethod() const throw()
+{
+    return m_uiPaymentMethod;
+}
+
+void cDBLedgerDevice::setPaymentMethod( const unsigned int p_nPaymentMethod ) throw()
+{
+    m_uiPaymentMethod = p_nPaymentMethod;
 }
 
 int cDBLedgerDevice::units() const throw()

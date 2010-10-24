@@ -24,6 +24,8 @@ public:
     void            setPanelId( const unsigned int p_nPanelId )                     throw();
     unsigned int    patientId() const                                               throw();
     void            setPatientId( const unsigned int p_nPatientId )                 throw();
+    unsigned int    paymentMethod() const                                           throw();
+    void            setPaymentMethod( const unsigned int p_nPaymentMethod )         throw();
     int             units() const                                                   throw();
     void            setUnits( const int p_inUnits )                                 throw();
     int             cash() const                                                    throw();
@@ -51,6 +53,7 @@ private:
     unsigned int    m_uiUserId;
     unsigned int    m_uiPanelId;
     unsigned int    m_uiPatientId;
+    unsigned int    m_uiPaymentMethod;
     int             m_inUnits;
     int             m_inCash;
     int             m_inTimeReal;
@@ -67,6 +70,7 @@ private:
                const unsigned int p_uiUserId = 0,
                const unsigned int p_uiPanelId = 0,
                const unsigned int p_uiPatientId = 0,
+               const unsigned int p_uiPaymentMethodId = 0,
                const int p_inUnits = 0,
                const int p_inCash = 0,
                const int p_inTimeReal = 0,
