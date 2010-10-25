@@ -677,38 +677,38 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="79"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="82"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="79"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="82"/>
         <source>Company name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="165"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="168"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="166"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="169"/>
         <source>There is no city in database like
 
 &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="184"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="195"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="219"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="231"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="259"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="187"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="198"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="222"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="234"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="262"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="185"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="188"/>
         <source>The defined zip code already saved into the database with
 
 Region : %1
@@ -717,7 +717,7 @@ Do you want to overwrite the region entered with this one?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="196"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="199"/>
         <source>The defined zip code already saved into the database with
 
 City : %1
@@ -726,7 +726,7 @@ Do you want to overwrite the city entered with this one?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="220"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="223"/>
         <source>The defined city already assigned to a different region
 
 Region : %1
@@ -735,7 +735,7 @@ Do you want to correct the defined region?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="232"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="235"/>
         <source>The defined city already assigned to a different zip code
 
 Zip : %1
@@ -750,7 +750,7 @@ as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="260"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="263"/>
         <source>The defined data did not found in the database
 
 Region : %1
@@ -1119,38 +1119,38 @@ Please use only numbers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="79"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="82"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="79"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="82"/>
         <source>Health insurance fund name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="165"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="168"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="166"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="169"/>
         <source>There is no city in database like
 
 &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="184"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="195"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="219"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="231"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="259"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="187"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="198"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="222"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="234"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="262"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="185"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="188"/>
         <source>The defined zip code already saved into the database with
 
 Region : %1
@@ -1159,7 +1159,7 @@ Do you want to overwrite the region entered with this one?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="196"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="199"/>
         <source>The defined zip code already saved into the database with
 
 City : %1
@@ -1168,7 +1168,7 @@ Do you want to overwrite the city entered with this one?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="220"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="223"/>
         <source>The defined city already assigned to a different region
 
 Region : %1
@@ -1177,7 +1177,7 @@ Do you want to correct the defined region?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="232"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="235"/>
         <source>The defined city already assigned to a different zip code
 
 Zip : %1
@@ -1192,7 +1192,7 @@ as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="260"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="263"/>
         <source>The defined data did not found in the database
 
 Region : %1
@@ -1350,105 +1350,66 @@ Time value can not be greater than %1 minutes.</source>
     </message>
     <message>
         <location filename="report/repledgermain.cpp" line="17"/>
-        <location filename="report/repledgermain.cpp" line="115"/>
+        <location filename="report/repledgermain.cpp" line="125"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="120"/>
+        <location filename="report/repledgermain.cpp" line="37"/>
+        <source>Show time intervall of different usages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="130"/>
         <source>Use of devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="145"/>
-        <location filename="report/repledgermain.cpp" line="367"/>
+        <location filename="report/repledgermain.cpp" line="148"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="150"/>
-        <source>Card usage</source>
+        <location filename="report/repledgermain.cpp" line="154"/>
+        <source>Device usage
+with card / with payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="155"/>
-        <source>Cash usage</source>
+        <location filename="report/repledgermain.cpp" line="158"/>
+        <source>Device usage
+used time / interrupted time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="160"/>
-        <source>Unused time</source>
+        <location filename="report/repledgermain.cpp" line="163"/>
+        <source>Patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="165"/>
-        <source>Used time</source>
+        <location filename="report/repledgermain.cpp" line="167"/>
+        <source>Card usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="170"/>
-        <source>No card usage</source>
+        <location filename="report/repledgermain.cpp" line="171"/>
+        <source>Payed usages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="179"/>
+        <source>Credit card usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="report/repledgermain.cpp" line="175"/>
-        <source>No cash usage</source>
+        <source>Cash usages</source>
+        <oldsource>No cash usage</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="180"/>
-        <source>No patients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="185"/>
+        <location filename="report/repledgermain.cpp" line="183"/>
         <source>Sum of cash usage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="339"/>
-        <source>List of incomes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="362"/>
-        <source>Ledger type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="372"/>
-        <location filename="report/repledgermain.cpp" line="485"/>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="377"/>
-        <source>Net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="382"/>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="457"/>
-        <source>List of sold patientcard types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="480"/>
-        <source>Patientcard Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="490"/>
-        <source>Sum of net income</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="report/repledgermain.cpp" line="495"/>
-        <source>Sum of total income</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2158,12 +2119,12 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="366"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="372"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="367"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="373"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3198,47 +3159,47 @@ as new into the database?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="104"/>
+        <location filename="report/reppatients.cpp" line="96"/>
         <source>Regular customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="108"/>
+        <location filename="report/reppatients.cpp" line="100"/>
         <source>Employee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="112"/>
+        <location filename="report/reppatients.cpp" line="104"/>
         <source>Service person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="124"/>
+        <location filename="report/reppatients.cpp" line="116"/>
         <source>Health Insurance Fund :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="130"/>
+        <location filename="report/reppatients.cpp" line="122"/>
         <source>&lt;All Health Insurance Fund&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="146"/>
+        <location filename="report/reppatients.cpp" line="130"/>
         <source>Company :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="152"/>
+        <location filename="report/reppatients.cpp" line="136"/>
         <source>&lt;All Company&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="168"/>
+        <location filename="report/reppatients.cpp" line="144"/>
         <source>Proposal person :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="174"/>
+        <location filename="report/reppatients.cpp" line="150"/>
         <source>&lt;All proposal person&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3619,51 +3580,40 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="192"/>
+        <location filename="frmpanel.cpp" line="197"/>
         <source>Revoking device (%1) usage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="195"/>
-        <source>Question</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="frmpanel.cpp" line="196"/>
-        <source>The device usage has been payed before.
-Do you want to revoke the payment from the cassa?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="frmpanel.cpp" line="277"/>
+        <location filename="frmpanel.cpp" line="287"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="278"/>
+        <location filename="frmpanel.cpp" line="288"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="349"/>
+        <location filename="frmpanel.cpp" line="361"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="399"/>
+        <location filename="frmpanel.cpp" line="411"/>
         <source>Panel Not Found in Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="477"/>
+        <location filename="frmpanel.cpp" line="489"/>
         <source>Cash to pay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="591"/>
+        <location filename="frmpanel.cpp" line="606"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3706,7 +3656,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1085"/>
         <location filename="wndmain.cpp" line="1148"/>
         <location filename="wndmain.cpp" line="1316"/>
-        <location filename="wndmain.cpp" line="1415"/>
+        <location filename="wndmain.cpp" line="1414"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3745,7 +3695,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="814"/>
         <location filename="wndmain.cpp" line="1309"/>
         <location filename="wndmain.cpp" line="1324"/>
-        <location filename="wndmain.cpp" line="1361"/>
+        <location filename="wndmain.cpp" line="1360"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3937,20 +3887,20 @@ reset the device first with pushing the ESC button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1416"/>
+        <location filename="wndmain.cpp" line="1415"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1432"/>
+        <location filename="wndmain.cpp" line="1434"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1362"/>
+        <location filename="wndmain.cpp" line="1361"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation type="unfinished"></translation>

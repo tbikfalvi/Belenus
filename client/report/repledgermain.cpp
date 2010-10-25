@@ -185,23 +185,129 @@ void cDlgLedgerMain::refreshReport()
 
     //------------------------------------------------------------------------------------------------------
 
-    for( int i=0; i<g_poPrefs->getPanelCount(); i++ )
+    int inSumUsedWithCard       = 0;
+    int inSumUsedWithPayment    = 0;
+    int inSumTimeReal           = 0;
+    int inSumTimeInterrupted    = 0;
+
+    //------------------------------------------------------------------------------------------------------
+
+    for( int i=0; i<(int)g_poPrefs->getPanelCount(); i++ )
     {
+        int     inColumn = 0;
+
         qsQuery = "";
         qsQuery += QString( "SELECT " );
         qsQuery += QString( "p.title, " );
         if( chkShowTimes->isChecked() )
         {
-            qsQuery += QString( "" );
-            qsQuery += QString( "" );
+            qsQuery += QString( "ld.timeCard AS TimeCard, ld.timeCash AS TimeCash, " );
+            qsQuery += QString( "ld.timeReal AS TimeUsed, ld.timeLeft AS TimeUnused, " );
         }
-        qsQuery += QString( "" );
-        qsQuery += QString( "" );
-        qsQuery += QString( "" );
-        qsQuery += QString( "" );
-        qsQuery += QString( "" );
-        qsQuery += QString( "" );
+        qsQuery += QString( "COUNT(ld.patientId) AS Patient, " );
+        qsQuery += QString( "COUNT(case when ld.units = 1 then 1 else null end) AS UseCard, " );
+        qsQuery += QString( "COUNT(case when ld.cash > 0 then 1 else null end) AS UsePayed, " );
+        qsQuery += QString( "COUNT(case when ld.paymentMethodId = 1 then 1 else null end) AS UseCash, " );
+        qsQuery += QString( "COUNT(case when ld.paymentMethodId = 3 then 1 else null end) AS UseCreditCard, " );
+        qsQuery += QString( "SUM(ld.cash) " );
+        qsQuery += QString( "FROM ledgerDevice ld, panels p " );
+        qsQuery += QString( "WHERE " );
+        qsQuery += QString( "DATE(ld.ledgerTime) >= \"%1\" " ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) );
+        qsQuery += QString( "AND " );
+        qsQuery += QString( "DATE(ld.ledgerTime) <= \"%1\" " ).arg( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+        qsQuery += QString( "AND " );
+        qsQuery += QString( "ld.panelId=p.panelId " );
+        qsQuery += QString( "AND " );
+        qsQuery += QString( "ld.panelId=%1 " ).arg(i+1);
+
+        poReportResult = NULL;
+        poReportResult = g_poDB->executeQTQuery( qsQuery );
+        if( poReportResult->first() )
+        {
+            // Device
+            tcReport.setBlockFormat( obLeftCellFormat );
+            tcReport.insertText( poReportResult->value( inColumn ).toString(), obNormalFormat );
+            inColumn++;
+            tcReport.movePosition( QTextCursor::NextCell );
+
+            if( chkShowTimes->isChecked() )
+            {
+                QString qsCell = "";
+                QTime   qtTemp;
+
+                // Device usage with card / payment
+                qtTemp = QTime( poReportResult->value( inColumn ).toInt()/3600,
+                                (poReportResult->value( inColumn ).toInt()%3600)/60,
+                                (poReportResult->value( inColumn ).toInt()%3600)%60, 0 );
+                inSumUsedWithCard += poReportResult->value( inColumn ).toInt();
+                qsCell += qtTemp.toString("hh:mm:ss");
+                qsCell += QString( " - " );
+                inColumn++;
+                qtTemp = QTime( poReportResult->value( inColumn ).toInt()/3600,
+                                (poReportResult->value( inColumn ).toInt()%3600)/60,
+                                (poReportResult->value( inColumn ).toInt()%3600)%60, 0 );
+                inSumUsedWithPayment += poReportResult->value( inColumn ).toInt();
+                qsCell += qtTemp.toString("hh:mm:ss");
+                inColumn++;
+                tcReport.setBlockFormat( obCenterCellFormat );
+                tcReport.insertText( qsCell, obNormalFormat );
+                tcReport.movePosition( QTextCursor::NextCell );
+
+                // Device usage real / interrupted
+                qtTemp = QTime( poReportResult->value( inColumn ).toInt()/3600,
+                                (poReportResult->value( inColumn ).toInt()%3600)/60,
+                                (poReportResult->value( inColumn ).toInt()%3600)%60, 0 );
+                inSumTimeReal += poReportResult->value( inColumn ).toInt();
+                qsCell += qtTemp.toString("hh:mm:ss");
+                qsCell += QString( " - " );
+                inColumn++;
+                qtTemp = QTime( poReportResult->value( inColumn ).toInt()/3600,
+                                (poReportResult->value( inColumn ).toInt()%3600)/60,
+                                (poReportResult->value( inColumn ).toInt()%3600)%60, 0 );
+                inSumTimeInterrupted += poReportResult->value( inColumn ).toInt();
+                qsCell += qtTemp.toString("hh:mm:ss");
+                inColumn++;
+                tcReport.setBlockFormat( obCenterCellFormat );
+                tcReport.insertText( qsCell, obNormalFormat );
+                tcReport.movePosition( QTextCursor::NextCell );
+            }
+
+            tcReport.movePosition( QTextCursor::NextCell );
+
+            tcReport.movePosition( QTextCursor::NextCell );
+
+            tcReport.movePosition( QTextCursor::NextCell );
+
+            tcReport.movePosition( QTextCursor::NextCell );
+
+            tcReport.movePosition( QTextCursor::NextCell );
+
+            tcReport.movePosition( QTextCursor::NextCell );
+        }
     }
+
+    //------------------------------------------------------------------------------------------------------
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    if( chkShowTimes->isChecked() )
+    {
+        tcReport.movePosition( QTextCursor::NextCell );
+
+        tcReport.movePosition( QTextCursor::NextCell );
+    }
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
+
+    tcReport.movePosition( QTextCursor::NextCell );
 
     //------------------------------------------------------------------------------------------------------
 

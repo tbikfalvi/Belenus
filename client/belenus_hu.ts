@@ -789,22 +789,22 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="79"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="82"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="79"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="82"/>
         <source>Company name cannot be empty.</source>
         <translation>A cégnév nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="165"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="168"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="166"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="169"/>
         <source>There is no city in database like
 
 &quot;%1&quot;</source>
@@ -813,16 +813,16 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="184"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="195"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="219"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="231"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="259"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="187"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="198"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="222"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="234"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="262"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="185"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="188"/>
         <source>The defined zip code already saved into the database with
 
 Region : %1
@@ -835,7 +835,7 @@ Do you want to overwrite the region entered with this one?</source>
 Felülírja a megadott megyét ezzel a megyével?</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="196"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="199"/>
         <source>The defined zip code already saved into the database with
 
 City : %1
@@ -848,7 +848,7 @@ Do you want to overwrite the city entered with this one?</source>
 Felülírja a megadott települést ezzel a településsel?</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="220"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="223"/>
         <source>The defined city already assigned to a different region
 
 Region : %1
@@ -861,7 +861,7 @@ Do you want to correct the defined region?</source>
 Kijavítja a megadott megyét erre a megyére?</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="232"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="235"/>
         <source>The defined city already assigned to a different zip code
 
 Zip : %1
@@ -886,7 +886,7 @@ Település : %4
 új adatként az adatbázisba?</translation>
     </message>
     <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="260"/>
+        <location filename="edit/dlgcompanyedit.cpp" line="263"/>
         <source>The defined data did not found in the database
 
 Region : %1
@@ -1292,22 +1292,22 @@ Kérem csak számokat használjon.</translation>
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="79"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="82"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="79"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="82"/>
         <source>Health insurance fund name cannot be empty.</source>
         <translation>Az egészségpénztár neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="165"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="168"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="166"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="169"/>
         <source>There is no city in database like
 
 &quot;%1&quot;</source>
@@ -1316,16 +1316,16 @@ Kérem csak számokat használjon.</translation>
 &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="184"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="195"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="219"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="231"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="259"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="187"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="198"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="222"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="234"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="262"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="185"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="188"/>
         <source>The defined zip code already saved into the database with
 
 Region : %1
@@ -1338,7 +1338,7 @@ Do you want to overwrite the region entered with this one?</source>
 Felülírja a megadott megyét ezzel a megyével?</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="196"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="199"/>
         <source>The defined zip code already saved into the database with
 
 City : %1
@@ -1351,7 +1351,7 @@ Do you want to overwrite the city entered with this one?</source>
 Felülírja a megadott települést ezzel a településsel?</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="220"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="223"/>
         <source>The defined city already assigned to a different region
 
 Region : %1
@@ -1364,7 +1364,7 @@ Do you want to correct the defined region?</source>
 Kijavítja a megadott megyét erre a megyére?</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="232"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="235"/>
         <source>The defined city already assigned to a different zip code
 
 Zip : %1
@@ -1389,7 +1389,7 @@ Település : %4
 új adatként az adatbázisba?</translation>
     </message>
     <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="260"/>
+        <location filename="edit/dlghealthinsuranceedit.cpp" line="263"/>
         <source>The defined data did not found in the database
 
 Region : %1
@@ -1559,106 +1559,129 @@ Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
     </message>
     <message>
         <location filename="report/repledgermain.cpp" line="17"/>
-        <location filename="report/repledgermain.cpp" line="115"/>
+        <location filename="report/repledgermain.cpp" line="125"/>
         <source>Date:</source>
         <translation>Dátum : </translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="120"/>
+        <location filename="report/repledgermain.cpp" line="37"/>
+        <source>Show time intervall of different usages</source>
+        <translation>Jelenjenek meg a géphasználatok is</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="130"/>
         <source>Use of devices</source>
         <translation>Géphasználat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="145"/>
-        <location filename="report/repledgermain.cpp" line="367"/>
+        <location filename="report/repledgermain.cpp" line="148"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="150"/>
+        <location filename="report/repledgermain.cpp" line="154"/>
+        <source>Device usage
+with card / with payment</source>
+        <translation>Géphasználat
+kártyával / fizetéssel</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="158"/>
+        <source>Device usage
+used time / interrupted time</source>
+        <translation>Géphasználat
+tényleges / megszakított</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="163"/>
+        <source>Patients</source>
+        <translation>Vendégek</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="167"/>
+        <source>Card usages</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="171"/>
+        <source>Payed usages</source>
+        <translation>Kifizetett használatok</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="179"/>
+        <source>Credit card usages</source>
+        <translation>Bérlet használatok</translation>
+    </message>
+    <message>
         <source>Card usage</source>
-        <translation>Bérlethasználat</translation>
+        <translation type="obsolete">Bérlethasználat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="155"/>
         <source>Cash usage</source>
-        <translation>Készpénzes használat</translation>
+        <translation type="obsolete">Készpénzes használat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="160"/>
         <source>Unused time</source>
-        <translation>Megszakított idő</translation>
+        <translation type="obsolete">Megszakított idő</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="165"/>
         <source>Used time</source>
-        <translation>Felhasznált idő</translation>
+        <translation type="obsolete">Felhasznált idő</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="170"/>
         <source>No card usage</source>
-        <translation>Bérlethasználatok</translation>
+        <translation type="obsolete">Bérlethasználatok</translation>
     </message>
     <message>
         <location filename="report/repledgermain.cpp" line="175"/>
-        <source>No cash usage</source>
+        <source>Cash usages</source>
+        <oldsource>No cash usage</oldsource>
         <translation>Készpénzes használatok</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="180"/>
         <source>No patients</source>
-        <translation>Vendégek száma</translation>
+        <translation type="obsolete">Vendégek száma</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="185"/>
+        <location filename="report/repledgermain.cpp" line="183"/>
         <source>Sum of cash usage</source>
         <translation>Készpénzes használat össz.</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="339"/>
         <source>List of incomes</source>
-        <translation>Pénztárforgalom</translation>
+        <translation type="obsolete">Pénztárforgalom</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="362"/>
         <source>Ledger type</source>
-        <translation>Megnevezés</translation>
+        <translation type="obsolete">Megnevezés</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="372"/>
-        <location filename="report/repledgermain.cpp" line="485"/>
         <source>Count</source>
-        <translation>Darabszám</translation>
+        <translation type="obsolete">Darabszám</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="377"/>
         <source>Net</source>
-        <translation>Nettó</translation>
+        <translation type="obsolete">Nettó</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="382"/>
         <source>Total</source>
-        <translation>Bruttó</translation>
+        <translation type="obsolete">Bruttó</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="457"/>
         <source>List of sold patientcard types</source>
-        <translation>Eladott bérlettípusok</translation>
+        <translation type="obsolete">Eladott bérlettípusok</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="480"/>
         <source>Patientcard Type</source>
-        <translation>Bérlet típus</translation>
+        <translation type="obsolete">Bérlet típus</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="490"/>
         <source>Sum of net income</source>
-        <translation>Nettó összesen</translation>
+        <translation type="obsolete">Nettó összesen</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="495"/>
         <source>Sum of total income</source>
-        <translation>Bruttó összesen</translation>
+        <translation type="obsolete">Bruttó összesen</translation>
     </message>
 </context>
 <context>
@@ -2430,12 +2453,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="366"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="372"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="367"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="373"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
@@ -3549,47 +3572,47 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Összes</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="104"/>
+        <location filename="report/reppatients.cpp" line="96"/>
         <source>Regular customer</source>
         <translation>Törzsvendég</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="108"/>
+        <location filename="report/reppatients.cpp" line="100"/>
         <source>Employee</source>
         <translation>Alkalmazott</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="112"/>
+        <location filename="report/reppatients.cpp" line="104"/>
         <source>Service person</source>
         <translation>Szerviz szakember</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="124"/>
+        <location filename="report/reppatients.cpp" line="116"/>
         <source>Health Insurance Fund :</source>
         <translation>Egészségpénztár :</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="130"/>
+        <location filename="report/reppatients.cpp" line="122"/>
         <source>&lt;All Health Insurance Fund&gt;</source>
         <translation>&lt;Összes Egészségpénztár&gt;</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="146"/>
+        <location filename="report/reppatients.cpp" line="130"/>
         <source>Company :</source>
         <translation>Cég :</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="152"/>
+        <location filename="report/reppatients.cpp" line="136"/>
         <source>&lt;All Company&gt;</source>
         <translation>&lt;Összes Cég&gt;</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="168"/>
+        <location filename="report/reppatients.cpp" line="144"/>
         <source>Proposal person :</source>
         <translation>Beutaló személy :</translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="174"/>
+        <location filename="report/reppatients.cpp" line="150"/>
         <source>&lt;All proposal person&gt;</source>
         <translation>&lt;Összes beutaló személy&gt;</translation>
     </message>
@@ -3987,29 +4010,27 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="192"/>
+        <location filename="frmpanel.cpp" line="197"/>
         <source>Revoking device (%1) usage.</source>
         <translation>Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="195"/>
         <source>Question</source>
-        <translation>Kérdés</translation>
+        <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="196"/>
         <source>The device usage has been payed before.
 Do you want to revoke the payment from the cassa?</source>
-        <translation>A géphasználat már ki lett fizetve.
+        <translation type="obsolete">A géphasználat már ki lett fizetve.
 Vissza akarja vonni a pénztárbevételt?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="277"/>
+        <location filename="frmpanel.cpp" line="287"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="278"/>
+        <location filename="frmpanel.cpp" line="288"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -4018,24 +4039,24 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="349"/>
+        <location filename="frmpanel.cpp" line="361"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation>
 &lt;&lt; SZÜNETEL &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="399"/>
+        <location filename="frmpanel.cpp" line="411"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="477"/>
+        <location filename="frmpanel.cpp" line="489"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="591"/>
+        <location filename="frmpanel.cpp" line="606"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
@@ -4080,7 +4101,7 @@ Az alkalmazás csak %1 gép kezelését teszi lehetővé.</translation>
         <location filename="wndmain.cpp" line="1085"/>
         <location filename="wndmain.cpp" line="1148"/>
         <location filename="wndmain.cpp" line="1316"/>
-        <location filename="wndmain.cpp" line="1415"/>
+        <location filename="wndmain.cpp" line="1414"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -4131,7 +4152,7 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="814"/>
         <location filename="wndmain.cpp" line="1309"/>
         <location filename="wndmain.cpp" line="1324"/>
-        <location filename="wndmain.cpp" line="1361"/>
+        <location filename="wndmain.cpp" line="1360"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -4375,7 +4396,7 @@ Ha más paraméterekkel akarja indítani a gépet,
 kérem az ESC gomb lenyomásával törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1416"/>
+        <location filename="wndmain.cpp" line="1415"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -4384,7 +4405,7 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1432"/>
+        <location filename="wndmain.cpp" line="1434"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation>Géphasználat: %1 - </translation>
@@ -4428,7 +4449,7 @@ Felhasználható idő: %2 (óó:pp:mm)
 Fel akarja most tölteni a bérletet?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1362"/>
+        <location filename="wndmain.cpp" line="1361"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation>Ez az idő intervallum nem szerepel az adatbázisban
