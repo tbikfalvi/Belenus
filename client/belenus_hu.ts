@@ -1553,64 +1553,73 @@ Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
 <context>
     <name>cDlgLedgerMain</name>
     <message>
-        <location filename="report/repledgermain.cpp" line="15"/>
+        <location filename="report/repledgermain.cpp" line="16"/>
         <source>Main ledger</source>
         <translation>Főkönyv</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="17"/>
-        <location filename="report/repledgermain.cpp" line="125"/>
+        <location filename="report/repledgermain.cpp" line="18"/>
+        <location filename="report/repledgermain.cpp" line="126"/>
         <source>Date:</source>
         <translation>Dátum : </translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="37"/>
+        <location filename="report/repledgermain.cpp" line="38"/>
         <source>Show time intervall of different usages</source>
         <translation>Jelenjenek meg a géphasználatok is</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="130"/>
+        <location filename="report/repledgermain.cpp" line="131"/>
         <source>Use of devices</source>
         <translation>Géphasználat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="148"/>
+        <location filename="report/repledgermain.cpp" line="149"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="154"/>
+        <location filename="report/repledgermain.cpp" line="155"/>
         <source>Device usage
 with card / with payment</source>
         <translation>Géphasználat
 kártyával / fizetéssel</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="158"/>
+        <location filename="report/repledgermain.cpp" line="159"/>
         <source>Device usage
 used time / interrupted time</source>
         <translation>Géphasználat
 tényleges / megszakított</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="163"/>
+        <location filename="report/repledgermain.cpp" line="164"/>
         <source>Patients</source>
         <translation>Vendégek</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="167"/>
-        <source>Card usages</source>
-        <translation></translation>
+        <location filename="report/repledgermain.cpp" line="168"/>
+        <source>Card
+usages</source>
+        <oldsource>Card usages</oldsource>
+        <translation>Kártyás
+használat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="171"/>
-        <source>Payed usages</source>
-        <translation>Kifizetett használatok</translation>
+        <location filename="report/repledgermain.cpp" line="172"/>
+        <source>Payed
+usages</source>
+        <oldsource>Payed usages</oldsource>
+        <translation>Fizetett
+használat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="179"/>
-        <source>Credit card usages</source>
-        <translation>Bérlet használatok</translation>
+        <location filename="report/repledgermain.cpp" line="180"/>
+        <source>C.Card
+usages</source>
+        <oldsource>Credit card usages</oldsource>
+        <translation>Bankkártyás
+használat</translation>
     </message>
     <message>
         <source>Card usage</source>
@@ -1633,19 +1642,25 @@ tényleges / megszakított</translation>
         <translation type="obsolete">Bérlethasználatok</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="175"/>
-        <source>Cash usages</source>
-        <oldsource>No cash usage</oldsource>
-        <translation>Készpénzes használatok</translation>
+        <location filename="report/repledgermain.cpp" line="176"/>
+        <source>Cash
+usages</source>
+        <oldsource>Cash usages</oldsource>
+        <translation>Készpénzes
+használat</translation>
     </message>
     <message>
         <source>No patients</source>
         <translation type="obsolete">Vendégek száma</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="183"/>
-        <source>Sum of cash usage</source>
-        <translation>Készpénzes használat össz.</translation>
+        <location filename="report/repledgermain.cpp" line="184"/>
+        <source>Sum of
+payment usage</source>
+        <oldsource>Sum of
+cash usage</oldsource>
+        <translation>Fizetve
+összesen</translation>
     </message>
     <message>
         <source>List of incomes</source>

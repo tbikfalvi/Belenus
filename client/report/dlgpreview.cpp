@@ -58,3 +58,13 @@ void cDlgPreview::printReport()
         m_tdReport.print( &obPrinter );
     }
 }
+
+QString cDlgPreview::intTimeToString( const int p_inTime )
+{
+    QTime   qtTemp;
+
+    qtTemp = QTime( p_inTime/3600, (p_inTime%3600)/60, (p_inTime%3600)%60, 0 );
+
+    return qtTemp.toString("hh:mm:ss");
+}
+
