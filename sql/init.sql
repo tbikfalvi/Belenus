@@ -22,16 +22,21 @@ USE `belenus`;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
-  ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
-  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+ ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
-  ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Gyógycentrum alapértelmezett felhasználója rendszergazdai jogosultságokkal.' );
+ ( 0, 'guest', 'guest', '', 1, 0, '' );
+UPDATE `users` SET `userId`=0 WHERE `userId`=1;
+ALTER TABLE `users` auto_increment=1;
+
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
-  ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Gyógycentrum alapértelmezett felhasználója alap felhasználói jogosultságokkal' );
+ ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Gyógycentrum alapértelmezett felhasználója rendszergazdai jogosultságokkal.' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
+ ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Gyógycentrum alapértelmezett felhasználója alap felhasználói jogosultságokkal' );
 
 -- -----------------------------------------------------------------------------------
 
@@ -204,13 +209,6 @@ INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `com
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `ledgerDevice` (`ledgerDeviceId`, `licenceId`, `userId`, `panelId`, `patientId`, `paymentMethodId`, `units`, `cash`, `timeReal`, `timeLeft`, `timeCard`, `timeCash`, `ledgerTime`, `comment`, `active`, `archive`) VALUES
- (0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, '2010-10-23 11:45:07', NULL, 0, 'ARC');
-UPDATE `ledgerDevice` SET `ledgerDeviceId`=0 WHERE `ledgerDeviceId`=1;
-ALTER TABLE `ledgerDevice` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
 INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, `archive`) VALUES
  (0, 0, '', 0, 'ARC');
 UPDATE `paymentMethods` SET `paymentMethodId`=0 WHERE `paymentMethodId`=1;
@@ -228,6 +226,13 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (3 , '0', 'Bérlet feltöltés', '1', 'ARC'),
  (4 , '0', 'Termék eladás', '1', 'ARC'),
  (5 , '0', 'Egyéb', '1', 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `ledgerDevice` (`ledgerDeviceId`, `licenceId`, `userId`, `panelId`, `patientId`, `paymentMethodId`, `units`, `cash`, `timeReal`, `timeLeft`, `timeCard`, `timeCash`, `ledgerTime`, `comment`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, '2010-10-23 11:45:07', NULL, 0, 'ARC');
+UPDATE `ledgerDevice` SET `ledgerDeviceId`=0 WHERE `ledgerDeviceId`=1;
+ALTER TABLE `ledgerDevice` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
