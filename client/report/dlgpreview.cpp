@@ -1,6 +1,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QPushButton>
+#include <QKeyEvent>
 
 #include "../../framework/qtframework.h"
 #include "dlgpreview.h"
@@ -28,7 +29,7 @@ cDlgPreview::~cDlgPreview()
     cTracer obTrace( "cDlgPreview::~cDlgPreview" );
 }
 
-/*void cDlgPreview::keyPressEvent( QKeyEvent *p_poEvent )
+void cDlgPreview::keyPressEvent( QKeyEvent *p_poEvent )
 {
     if( p_poEvent->key() == Qt::Key_F5 )
     {
@@ -36,7 +37,7 @@ cDlgPreview::~cDlgPreview()
     }
 
     QDialog::keyPressEvent( p_poEvent );
-}*/
+}
 
 void cDlgPreview::setReportTitle( const QString &p_qsTitle )
 {

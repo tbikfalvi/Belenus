@@ -21,7 +21,7 @@ protected:
 
     QString         intTimeToString( const int p_inTime );
 
-    //    void keyPressEvent ( QKeyEvent *p_poEvent );
+    void keyPressEvent( QKeyEvent *p_poEvent );
 
 protected slots:
     virtual void setReportTitle( const QString &p_qsTitle );
