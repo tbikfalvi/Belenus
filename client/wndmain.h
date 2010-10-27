@@ -5,6 +5,7 @@
 
 #include "ui_wndmain.h"
 #include "mdipanels.h"
+#include "dlg/dlgprogress.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ protected:
 
 private:
     cMdiPanels         *mdiPanels;
+    cDlgProgress       *m_dlgProgress;
     int                 m_nTimer;
 
     unsigned int        m_uiPatientId;

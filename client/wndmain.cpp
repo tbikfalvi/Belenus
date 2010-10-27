@@ -100,7 +100,7 @@ cWndMain::cWndMain( QWidget *parent )
     m_uiAttendanceId        = 0;
     g_uiPatientAttendanceId = 0;
 
-    g_dlgProgress = new cDlgProgress();
+    m_dlgProgress = new cDlgProgress( this );
 
     mdiPanels = new cMdiPanels( centralwidget );
     verticalLayout->addWidget(mdiPanels);
@@ -217,7 +217,7 @@ cWndMain::~cWndMain()
 {
     cTracer obTrace( "cWndMain::~cWndMain" );
 
-    delete g_dlgProgress;
+    delete m_dlgProgress;
 
     killTimer( m_nTimer );
 }
@@ -1506,9 +1506,9 @@ void cWndMain::on_action_HealthInsurance_triggered()
 //====================================================================================
 void cWndMain::on_action_RegionZipCity_triggered()
 {
-    g_dlgProgress->showProgress();
+    m_dlgProgress->showProgress();
     cDlgZipRegionCity   obDlgZipRegionCity( this );
-    g_dlgProgress->hideProgress();
+    m_dlgProgress->hideProgress();
 
     obDlgZipRegionCity.exec();
 }

@@ -37,7 +37,6 @@
     #include "communication_serial.h"
 #endif
 #include "wndmain.h"
-#include "dlg/dlgprogress.h"
 
 //====================================================================================
 
@@ -54,7 +53,6 @@ cDBPatient               g_obPatient;
 unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 LicenceManager           g_obLicenceManager;
-cDlgProgress            *g_dlgProgress;
 
 //====================================================================================
 int main( int argc, char *argv[] )

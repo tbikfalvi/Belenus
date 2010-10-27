@@ -7,6 +7,7 @@
 #include "../framework/qtframework.h"
 #include "repledgermain.h"
 #include "../db/dbpanels.h"
+#include "dlg/dlgprogress.h"
 
 cDlgRepLedgerMain::cDlgRepLedgerMain( QWidget *parent )
     : cDlgPreview( parent )
@@ -73,7 +74,8 @@ void cDlgRepLedgerMain::refreshReport()
 {
     cTracer obTrace( "cDlgRepLedgerMain::refreshReport()" );
 
-    g_dlgProgress->showProgress();
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -820,5 +822,5 @@ void cDlgRepLedgerMain::refreshReport()
 
     //======================================================================================================
                                                                                                                                                                                                                 //======================================================================================================
-    g_dlgProgress->hideProgress();
+    dlgProgress.hideProgress();
 }
