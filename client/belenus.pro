@@ -30,7 +30,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgdoctoredit.ui \
     dlgzipregioncityedit.ui \
     dlglicenceedit.ui \
-    dlgdiscountedit.ui
+    dlgdiscountedit.ui \
+    dlgprogress.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -145,7 +146,8 @@ HEADERS = belenus.h \
     report/repattendance.h \
     report/repcarduses.h \
     edit/dlglicenceedit.h \
-    general.h
+    general.h \
+    dlg/dlgprogress.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -256,7 +258,8 @@ SOURCES = main.cpp \
     report/rep_sample_.cpp \
     report/repattendance.cpp \
     report/repcarduses.cpp \
-    general.cpp
+    general.cpp \
+    dlg/dlgprogress.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
@@ -267,5 +270,5 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-CONFIG += console
+#CONFIG += console
 win32:DEFINES -= UNICODE

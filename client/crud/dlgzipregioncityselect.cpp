@@ -2,6 +2,7 @@
 
 #include "belenus.h"
 #include "dlgzipregioncityselect.h"
+#include "dlg/dlgprogress.h"
 
 cDlgZipRegionCitySelect::cDlgZipRegionCitySelect( QWidget *p_poParent, QString p_qsCity )
     : cDlgZipRegionCity( p_poParent )

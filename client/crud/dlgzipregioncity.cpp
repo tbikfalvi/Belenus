@@ -3,7 +3,7 @@
 #include "belenus.h"
 #include "dlgzipregioncity.h"
 #include "../edit/dlgzipregioncityedit.h"
-#include "db/dbpostponed.h"
+#include "../db/dbpostponed.h"
 
 cDlgZipRegionCity::cDlgZipRegionCity( QWidget *p_poParent )
     : cDlgCrud( p_poParent )

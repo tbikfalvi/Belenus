@@ -73,7 +73,7 @@ void cDlgRepLedgerMain::refreshReport()
 {
     cTracer obTrace( "cDlgRepLedgerMain::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    g_dlgProgress->showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -123,14 +123,24 @@ void cDlgRepLedgerMain::refreshReport()
 
     //======================================================================================================
     //
+    // Title of the report
+    //
+    //======================================================================================================
+
+    tcReport.insertText( m_qsReportName + "   ", obTitleFormat );
+    tcReport.setCharFormat( obNormalFormat );
+    tcReport.insertText( QString( "%1 %2 -> " ).arg( tr( "Date:" ) ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ) );
+    tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    tcReport.insertHtml( "<hr>" );
+    tcReport.movePosition( QTextCursor::NextBlock );
+    tcReport.insertHtml( "<br>" );
+
+    //======================================================================================================
+    //
     // List of incomes
     //
     //======================================================================================================
 
-    tcReport.movePosition( QTextCursor::NextBlock );
-    tcReport.insertHtml( "<hr>" );
-    tcReport.insertHtml( "<br>" );
-    tcReport.movePosition( QTextCursor::NextBlock );
     tcReport.insertText( tr("List of incomes"), obSubTitleFormat );
     tcReport.movePosition( QTextCursor::NextBlock );
 
@@ -345,10 +355,7 @@ void cDlgRepLedgerMain::refreshReport()
     //
     //======================================================================================================
 
-    tcReport.insertText( m_qsReportName + "   ", obTitleFormat );
-    tcReport.setCharFormat( obNormalFormat );
-    tcReport.insertText( QString( "%1 %2 -> " ).arg( tr( "Date:" ) ).arg( dteStartDate->date().toString( "yyyy-MM-dd" ) ) );
-    tcReport.insertText( dteEndDate->date().toString( "yyyy-MM-dd" ) );
+    tcReport.movePosition( QTextCursor::NextBlock );
     tcReport.insertHtml( "<hr>" );
     tcReport.insertHtml( "<br>" );
     tcReport.movePosition( QTextCursor::NextBlock );
@@ -813,5 +820,5 @@ void cDlgRepLedgerMain::refreshReport()
 
     //======================================================================================================
                                                                                                                                                                                                                 //======================================================================================================
-    setCursor( Qt::ArrowCursor);
+    g_dlgProgress->hideProgress();
 }
