@@ -1,15 +1,31 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : reppatients.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
+//====================================================================================
+
 #include "../framework/qtframework.h"
+#include "../dlg/dlgprogress.h"
 #include "reppatients.h"
 
-
-cDlgReportPatients::cDlgReportPatients( QWidget *parent )
-    : cDlgPreview( parent )
+//====================================================================================
+cDlgReportPatients::cDlgReportPatients( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportPatients::cDlgReportPatients" );
 
@@ -195,17 +211,20 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent )
 
     if( poQuery ) delete poQuery;
 }
-
+//====================================================================================
 cDlgReportPatients::~cDlgReportPatients()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportPatients::~cDlgReportPatients" );
 }
-
+//====================================================================================
 void cDlgReportPatients::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportPatients::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -648,5 +667,6 @@ void cDlgReportPatients::refreshReport()
 
     //======================================================================================================
 
-    setCursor( Qt::ArrowCursor);
+    dlgProgress.hideProgress();
 }
+//====================================================================================

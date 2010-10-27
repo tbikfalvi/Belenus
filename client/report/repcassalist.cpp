@@ -1,15 +1,31 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : repcassalist.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
+//====================================================================================
+
 #include "../framework/qtframework.h"
+#include "../dlg/dlgprogress.h"
 #include "repcassalist.h"
 
-
-cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
-    : cDlgPreview( parent )
+//====================================================================================
+cDlgReportCassaList::cDlgReportCassaList( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportCassaList::cDlgReportCassaList" );
 
@@ -38,13 +54,15 @@ cDlgReportCassaList::cDlgReportCassaList( QWidget *parent )
     horizontalLayout->insertWidget( 0, dteStartDate );
     horizontalLayout->insertWidget( 0, lblDate );
 }
-
+//====================================================================================
 cDlgReportCassaList::~cDlgReportCassaList()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportCassaList::~cDlgReportCassaList" );
 }
-
+//====================================================================================
 QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//====================================================================================
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -63,12 +81,14 @@ QString cDlgReportCassaList::convertCurrency( int p_nCurrencyValue, QString p_qs
 
     return qsRet;
 }
-
+//====================================================================================
 void cDlgReportCassaList::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportCassaList::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -215,6 +235,6 @@ void cDlgReportCassaList::refreshReport()
 
     //======================================================================================================
 
-    setCursor( Qt::ArrowCursor);
+    dlgProgress.hideProgress();
 }
-
+//====================================================================================

@@ -1,15 +1,31 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : repattendance.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
+//====================================================================================
+
 #include "../framework/qtframework.h"
+#include "../dlg/dlgprogress.h"
 #include "repattendance.h"
 
-
-cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
-    : cDlgPreview( parent )
+//====================================================================================
+cDlgReportAttendance::cDlgReportAttendance( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportAttendance::cDlgReportAttendance" );
 
@@ -63,13 +79,15 @@ cDlgReportAttendance::cDlgReportAttendance( QWidget *parent )
     }
     if( poQuery ) delete poQuery;
 }
-
+//====================================================================================
 cDlgReportAttendance::~cDlgReportAttendance()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportAttendance::~cDlgReportAttendance" );
 }
-
+//====================================================================================
 QString cDlgReportAttendance::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//====================================================================================
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -88,12 +106,14 @@ QString cDlgReportAttendance::convertCurrency( int p_nCurrencyValue, QString p_q
 
     return qsRet;
 }
-
+//====================================================================================
 void cDlgReportAttendance::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportAttendance::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -286,6 +306,6 @@ void cDlgReportAttendance::refreshReport()
 
     //======================================================================================================
 
-    setCursor( Qt::ArrowCursor);
+    dlgProgress.hideProgress();
 }
-
+//====================================================================================

@@ -1,15 +1,31 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : rep_sample_.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
+//====================================================================================
+
 #include "../framework/qtframework.h"
+#include "../dlg/dlgprogress.h"
 #include "rep_sample_.h"
 
-
-cDlgReportSAMPLE::cDlgReportSAMPLE( QWidget *parent )
-    : cDlgPreview( parent )
+//====================================================================================
+cDlgReportSAMPLE::cDlgReportSAMPLE( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportSAMPLE::cDlgReportSAMPLE" );
 
@@ -38,13 +54,15 @@ cDlgReportSAMPLE::cDlgReportSAMPLE( QWidget *parent )
     horizontalLayout->insertWidget( 0, dteStartDate );
     horizontalLayout->insertWidget( 0, lblDate );
 }
-
+//====================================================================================
 cDlgReportSAMPLE::~cDlgReportSAMPLE()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportSAMPLE::~cDlgReportSAMPLE" );
 }
-
+//====================================================================================
 QString cDlgReportSAMPLE::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//====================================================================================
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -63,12 +81,14 @@ QString cDlgReportSAMPLE::convertCurrency( int p_nCurrencyValue, QString p_qsCur
 
     return qsRet;
 }
-
+//====================================================================================
 void cDlgReportSAMPLE::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportSAMPLE::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -185,6 +205,6 @@ void cDlgReportSAMPLE::refreshReport()
 
     //======================================================================================================
 
-    setCursor( Qt::ArrowCursor);
+    dlgProgress.hideProgress();
 }
 

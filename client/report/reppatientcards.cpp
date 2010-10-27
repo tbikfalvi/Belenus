@@ -1,15 +1,31 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : reppatientcards.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
+//====================================================================================
+
 #include "../framework/qtframework.h"
+#include "../dlg/dlgprogress.h"
 #include "reppatientcards.h"
 
-
-cDlgReportPatientCard::cDlgReportPatientCard( QWidget *parent )
-    : cDlgPreview( parent )
+//====================================================================================
+cDlgReportPatientCard::cDlgReportPatientCard( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportPatientCard::cDlgReportPatientCard" );
 
@@ -38,13 +54,15 @@ cDlgReportPatientCard::cDlgReportPatientCard( QWidget *parent )
     horizontalLayout->insertWidget( 0, dteStartDate );
     horizontalLayout->insertWidget( 0, lblDate );
 }
-
+//====================================================================================
 cDlgReportPatientCard::~cDlgReportPatientCard()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportPatientCard::~cDlgReportPatientCard" );
 }
-
+//====================================================================================
 QString cDlgReportPatientCard::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//====================================================================================
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -63,12 +81,14 @@ QString cDlgReportPatientCard::convertCurrency( int p_nCurrencyValue, QString p_
 
     return qsRet;
 }
-
+//====================================================================================
 void cDlgReportPatientCard::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportPatientCard::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -246,6 +266,6 @@ void cDlgReportPatientCard::refreshReport()
 
     //======================================================================================================
 
-    setCursor( Qt::ArrowCursor);
+    dlgProgress.hideProgress();
 }
-
+//====================================================================================

@@ -487,4 +487,8 @@ client/general.o
 client/moc_reppatientcardsobs.cpp
 client/moc_reppatientcardsobs.o
 client/reppatientcardsobs.o
+client/dlgprogress.o
+client/moc_dlgprogress.cpp
+client/moc_dlgprogress.o
+client/ui_dlgprogress.h
 

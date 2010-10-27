@@ -1,15 +1,31 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : repcarduses.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
+//====================================================================================
+
 #include "../framework/qtframework.h"
+#include "../dlg/dlgprogress.h"
 #include "repcarduses.h"
 
-
-cDlgReportCardUses::cDlgReportCardUses( QWidget *parent )
-    : cDlgPreview( parent )
+//====================================================================================
+cDlgReportCardUses::cDlgReportCardUses( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportCardUses::cDlgReportCardUses" );
 
@@ -85,13 +101,15 @@ cDlgReportCardUses::cDlgReportCardUses( QWidget *parent )
     }
     if( poQuery ) delete poQuery;
 }
-
+//====================================================================================
 cDlgReportCardUses::~cDlgReportCardUses()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportCardUses::~cDlgReportCardUses" );
 }
-
+//====================================================================================
 QString cDlgReportCardUses::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//====================================================================================
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -110,12 +128,14 @@ QString cDlgReportCardUses::convertCurrency( int p_nCurrencyValue, QString p_qsC
 
     return qsRet;
 }
-
+//====================================================================================
 void cDlgReportCardUses::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgReportCardUses::refreshReport()" );
 
-    setCursor( Qt::WaitCursor);
+    cDlgProgress    dlgProgress( this );
+    dlgProgress.showProgress();
 
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
@@ -346,6 +366,6 @@ void cDlgReportCardUses::refreshReport()
 
     //======================================================================================================
 
-    setCursor( Qt::ArrowCursor);
+    dlgProgress.hideProgress();
 }
-
+//====================================================================================

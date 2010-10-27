@@ -1,16 +1,32 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : repledgermain.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+
 #include <QSqlQuery>
 #include <QTextCursor>
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 
-#include "../framework/qtframework.h"
-#include "repledgermain.h"
-#include "../db/dbpanels.h"
-#include "dlg/dlgprogress.h"
+//====================================================================================
 
-cDlgRepLedgerMain::cDlgRepLedgerMain( QWidget *parent )
-    : cDlgPreview( parent )
+#include "../framework/qtframework.h"
+#include "../db/dbpanels.h"
+#include "../dlg/dlgprogress.h"
+#include "repledgermain.h"
+
+//====================================================================================
+cDlgRepLedgerMain::cDlgRepLedgerMain( QWidget *parent ) : cDlgPreview( parent )
+//====================================================================================
 {
     cTracer obTrace( "cDlgRepLedgerMain::cDlgRepLedgerMain" );
 
@@ -44,13 +60,15 @@ cDlgRepLedgerMain::cDlgRepLedgerMain( QWidget *parent )
     horizontalLayout->insertWidget( 0, dteStartDate );
     horizontalLayout->insertWidget( 0, lblDate );
 }
-
+//====================================================================================
 cDlgRepLedgerMain::~cDlgRepLedgerMain()
+//====================================================================================
 {
     cTracer obTrace( "cDlgRepLedgerMain::~cDlgRepLedgerMain" );
 }
-
+//====================================================================================
 QString cDlgRepLedgerMain::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//====================================================================================
 {
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
@@ -69,8 +87,9 @@ QString cDlgRepLedgerMain::convertCurrency( int p_nCurrencyValue, QString p_qsCu
 
     return qsRet;
 }
-
+//====================================================================================
 void cDlgRepLedgerMain::refreshReport()
+//====================================================================================
 {
     cTracer obTrace( "cDlgRepLedgerMain::refreshReport()" );
 
@@ -154,12 +173,13 @@ void cDlgRepLedgerMain::refreshReport()
     qsQuery += QString( "p.title AS Device, " );
     qsQuery += QString( "SUM(l.netPrice) AS Net, " );
     qsQuery += QString( "SUM(l.totalPrice) AS Total, " );
-    qsQuery += QString( "COUNT(case when l.discount = 0 then 1 else null end) AS NCount, " );
+    qsQuery += QString( "COUNT(case when l.discount = 0 AND ((ledgerDeviceId > 0 AND l.ledgerTypeId = 1) OR (l.ledgerTypeId > 1)) then 1 else null end) AS NCount, " );
     qsQuery += QString( "SUM(l.discount) as Discount, " );
     qsQuery += QString( "COUNT(case when l.discount > 0 then 1 else null end) AS DCount, " );
-    qsQuery += QString( "COUNT(case when paymentMethodId = 1 then 1 else null end) AS UseCash, " );
+    qsQuery += QString( "COUNT(case when paymentMethodId = 1 AND ledgerDeviceId > 0 then 1 else null end) AS UseCash, " );
     qsQuery += QString( "COUNT(case when paymentMethodId = 3 then 1 else null end) AS UseCreditCard, " );
-    qsQuery += QString( "COUNT(l.panelId) AS Count " );
+    qsQuery += QString( "COUNT(case when (ledgerDeviceId > 0 AND l.ledgerTypeId = 1) OR (l.ledgerTypeId > 1) then 1 else null end) AS Count " );
+//    qsQuery += QString( "COUNT(l.panelId) AS Count " );
     qsQuery += QString( "FROM ledger l, ledgerTypes lt, panels p " );
     qsQuery += QString( "WHERE " );
     qsQuery += QString( "l.ledgerTypeId=lt.ledgerTypeId " );
@@ -824,3 +844,4 @@ void cDlgRepLedgerMain::refreshReport()
                                                                                                                                                                                                                 //======================================================================================================
     dlgProgress.hideProgress();
 }
+//====================================================================================

@@ -13,7 +13,6 @@
 // Hosszabb process-ek alatt megjeleno dialog, homokora helyett
 //====================================================================================
 
-
 #include <QPushButton>
 #include <QMessageBox>
 
