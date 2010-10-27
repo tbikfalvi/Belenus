@@ -967,7 +967,7 @@ void cWndMain::on_action_Cassa_triggered()
 void cWndMain::on_action_Accounting_triggered()
 {
     setCursor( Qt::WaitCursor);
-    cDlgLedgerMain  obDlgLedgerMain( this );
+    cDlgRepLedgerMain  obDlgLedgerMain( this );
     setCursor( Qt::ArrowCursor);
 
     obDlgLedgerMain.exec();

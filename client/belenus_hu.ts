@@ -1553,87 +1553,72 @@ Az időintervallum nem lehet nagyobb, mint %1 perc.</translation>
 <context>
     <name>cDlgLedgerMain</name>
     <message>
-        <location filename="report/repledgermain.cpp" line="16"/>
         <source>Main ledger</source>
-        <translation>Főkönyv</translation>
+        <translation type="obsolete">Főkönyv</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="18"/>
-        <location filename="report/repledgermain.cpp" line="132"/>
         <source>Date:</source>
-        <translation>Dátum : </translation>
+        <translation type="obsolete">Dátum : </translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="38"/>
         <source>Show time intervall of different usages</source>
-        <translation>Jelenjenek meg a géphasználatok is</translation>
+        <translation type="obsolete">Jelenjenek meg a géphasználatok is</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="137"/>
         <source>Use of devices</source>
-        <translation>Géphasználat</translation>
+        <translation type="obsolete">Géphasználat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="151"/>
-        <location filename="report/repledgermain.cpp" line="425"/>
         <source>Device</source>
-        <translation>Gép</translation>
+        <translation type="obsolete">Gép</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="157"/>
         <source>Device usage
 with card / with payment</source>
-        <translation>Géphasználat
+        <translation type="obsolete">Géphasználat
 kártyával / fizetéssel</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="161"/>
         <source>Device usage
 used time / interrupted time</source>
-        <translation>Géphasználat
+        <translation type="obsolete">Géphasználat
 tényleges / megszakított</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="166"/>
         <source>Patients</source>
-        <translation>Vendégek</translation>
+        <translation type="obsolete">Vendégek</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="170"/>
         <source>Card
 usages</source>
         <oldsource>Card usages</oldsource>
-        <translation>Kártyás
+        <translation type="obsolete">Kártyás
 használat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="174"/>
         <source>Payed
 usages</source>
         <oldsource>Payed usages</oldsource>
-        <translation>Fizetett
+        <translation type="obsolete">Fizetett
 használat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="182"/>
         <source>C.Card
 usages</source>
         <oldsource>Credit card usages</oldsource>
-        <translation>Bankkártyás
+        <translation type="obsolete">Bankkártyás
 használat</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="621"/>
         <source>Sum of
 net income</source>
-        <translation>Nettó
+        <translation type="obsolete">Nettó
 összesen</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="625"/>
         <source>Sum of
 total income</source>
-        <translation>Bruttó
+        <translation type="obsolete">Bruttó
 összesen</translation>
     </message>
     <message>
@@ -1657,11 +1642,10 @@ total income</source>
         <translation type="obsolete">Bérlethasználatok</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="178"/>
         <source>Cash
 usages</source>
         <oldsource>Cash usages</oldsource>
-        <translation>Készpénzes
+        <translation type="obsolete">Készpénzes
 használat</translation>
     </message>
     <message>
@@ -1669,72 +1653,55 @@ használat</translation>
         <translation type="obsolete">Vendégek száma</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="186"/>
         <source>Sum of
 payment usage</source>
         <oldsource>Sum of
 cash usage</oldsource>
-        <translation>Fizetve
+        <translation type="obsolete">Fizetve
 összesen</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="382"/>
         <source>List of incomes</source>
-        <translation>Bevételek összesítése</translation>
+        <translation type="obsolete">Bevételek összesítése</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="421"/>
         <source>Ledger type</source>
-        <translation>Megnevezés</translation>
+        <translation type="obsolete">Megnevezés</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="437"/>
-        <location filename="report/repledgermain.cpp" line="453"/>
-        <location filename="report/repledgermain.cpp" line="629"/>
-        <location filename="report/repledgermain.cpp" line="645"/>
         <source>Count</source>
-        <translation>Db.</translation>
+        <translation type="obsolete">Db.</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="429"/>
         <source>Net</source>
-        <translation>Nettó</translation>
+        <translation type="obsolete">Nettó</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="433"/>
         <source>Total</source>
-        <translation>Bruttó</translation>
+        <translation type="obsolete">Bruttó</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="441"/>
-        <location filename="report/repledgermain.cpp" line="633"/>
         <source>Sum of
 discounts</source>
-        <translation>Kedvezmények
+        <translation type="obsolete">Kedvezmények
 összesen</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="445"/>
-        <location filename="report/repledgermain.cpp" line="637"/>
         <source>Number of
 discounts</source>
-        <translation>Kedvezmények</translation>
+        <translation type="obsolete">Kedvezmények</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="449"/>
-        <location filename="report/repledgermain.cpp" line="641"/>
         <source>Sum</source>
-        <translation>Összesen</translation>
+        <translation type="obsolete">Összesen</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="577"/>
         <source>List of sold patientcard types</source>
-        <translation>Eladott bérlettípusok összesítése</translation>
+        <translation type="obsolete">Eladott bérlettípusok összesítése</translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="617"/>
         <source>Patientcard Type</source>
-        <translation>Bérlet típus</translation>
+        <translation type="obsolete">Bérlet típus</translation>
     </message>
     <message>
         <source>Sum of net income</source>
@@ -2514,12 +2481,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="372"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="397"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="373"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="398"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
@@ -3278,6 +3245,180 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <location filename="edit/dlgreasontovisitedit.cpp" line="50"/>
         <source>Reason to visit cannot be empty.</source>
         <translation>A látogatás oka nem lehet üres.</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgRepLedgerMain</name>
+    <message>
+        <location filename="report/repledgermain.cpp" line="16"/>
+        <source>Main ledger</source>
+        <translation>Főkönyv</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="18"/>
+        <location filename="report/repledgermain.cpp" line="132"/>
+        <source>Date:</source>
+        <translation>Dátum : </translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="38"/>
+        <source>Show time intervall of different usages</source>
+        <translation>Jelenjenek meg a géphasználatok is</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="137"/>
+        <source>Use of devices</source>
+        <translation>Géphasználat</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="151"/>
+        <location filename="report/repledgermain.cpp" line="424"/>
+        <source>Device</source>
+        <translation>Gép</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="157"/>
+        <source>Device usage
+with card / with payment</source>
+        <translation>Géphasználat
+kártyával / fizetéssel</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="161"/>
+        <source>Device usage
+used time / interrupted time</source>
+        <translation>Géphasználat
+tényleges / megszakított</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="166"/>
+        <source>Patients</source>
+        <translation>Vendégek</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="170"/>
+        <source>Card
+usages</source>
+        <translation>Kártyás
+használat</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="174"/>
+        <source>Payed
+usages</source>
+        <translation>Fizetett
+használat</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="178"/>
+        <source>Cash
+usages</source>
+        <translation>Készpénzes
+használat</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="182"/>
+        <source>C.Card
+usages</source>
+        <translation>Bankkártyás
+használat</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="186"/>
+        <source>Sum of
+payment usage</source>
+        <translation>Fizetve
+összesen</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="382"/>
+        <source>List of incomes</source>
+        <translation>Bevételek összesítése</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="420"/>
+        <source>Ledger type</source>
+        <translation>Megnevezés</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="428"/>
+        <source>Net</source>
+        <translation>Nettó</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="432"/>
+        <source>Total</source>
+        <translation>Bruttó</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="436"/>
+        <location filename="report/repledgermain.cpp" line="611"/>
+        <source>Number of
+full price</source>
+        <translation>Teljesárú
+db</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="448"/>
+        <location filename="report/repledgermain.cpp" line="623"/>
+        <source>Number of
+all type</source>
+        <translation>Összes
+db.</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation type="obsolete">Db.</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="440"/>
+        <location filename="report/repledgermain.cpp" line="615"/>
+        <source>Sum of
+discounts</source>
+        <translation>Kedvezmény
+összesen</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="444"/>
+        <location filename="report/repledgermain.cpp" line="619"/>
+        <source>Number of
+discounts</source>
+        <translation>Kedvezményes
+db.</translation>
+    </message>
+    <message>
+        <source>Sum
+count</source>
+        <translation type="obsolete">Összes
+db.</translation>
+    </message>
+    <message>
+        <source>Sum</source>
+        <translation type="obsolete">Összesen</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="560"/>
+        <source>List of sold patientcard types</source>
+        <translation>Eladott bérlettípusok összesítése</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="599"/>
+        <source>Patientcard Type</source>
+        <translation>Bérlet típus</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="603"/>
+        <source>Sum of
+net income</source>
+        <translation>Nettó
+összesen</translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="607"/>
+        <source>Sum of
+total income</source>
+        <translation>Bruttó
+összesen</translation>
     </message>
 </context>
 <context>

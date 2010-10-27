@@ -243,12 +243,24 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
                 cDlgCassaAction     obDlgCassaAction(this);
                 int                 inPriceNet;
+                int                 inPriceNetDiscount;
                 int                 inPriceTotal;
                 int                 inPriceDiscount;
 
                 inPriceNet = m_poPatientCardType->price();
-                inPriceDiscount = inPriceNet - g_obPatient.getDiscountPrice( inPriceNet );
-                inPriceTotal = g_obPatient.getDiscountPrice(inPriceNet) + (g_obPatient.getDiscountPrice(inPriceNet)/100)*m_poPatientCardType->vatpercent();
+                if( cmbPatient->currentIndex() > 0 )
+                {
+                    cDBPatient  obDBPatientTemp;
+
+                    obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
+                    inPriceNetDiscount = obDBPatientTemp.getDiscountPrice( inPriceNet );
+                }
+                else
+                {
+                    inPriceNetDiscount = inPriceNet;
+                }
+                inPriceDiscount = inPriceNet - inPriceNetDiscount;
+                inPriceTotal = inPriceNetDiscount + (inPriceNetDiscount/100)*m_poPatientCardType->vatpercent();
                 obDlgCassaAction.setInitialMoney( inPriceTotal );
                 obDlgCassaAction.setPayWithCash();
                 if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -276,7 +288,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDBLedger.setPatientCardId( m_poPatientCard->id() );
                     obDBLedger.setPanelId( 0 );
                     obDBLedger.setName( m_poPatientCard->barcode() );
-                    obDBLedger.setNetPrice( g_obPatient.getDiscountPrice(inPriceNet) );
+                    obDBLedger.setNetPrice( inPriceNetDiscount );
                     obDBLedger.setDiscount( inPriceDiscount );
                     obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
                     obDBLedger.setComment( qsComment );
@@ -361,7 +373,20 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
         int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
-        int discount = g_obPatient.getDiscountPrice( priceTotal );
+
+        int discount = 0;
+
+        if( cmbPatient->currentIndex() > 0 )
+        {
+            cDBPatient  obDBPatientTemp;
+
+            obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
+            discount = obDBPatientTemp.getDiscountPrice( priceTotal );
+        }
+        else
+        {
+            discount = priceTotal;
+        }
         if( discount != priceTotal )
             ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
         else
@@ -398,4 +423,12 @@ QString cDlgPatientCardEdit::convertCurrency( int p_nCurrencyValue, QString p_qs
     qsRet += " " + p_qsCurrency;
 
     return qsRet;
+}
+
+void cDlgPatientCardEdit::on_cmbPatient_currentIndexChanged(int /*index*/)
+{
+    if( !m_bDlgLoaded )
+        return;
+
+    on_cmbCardType_currentIndexChanged( cmbCardType->currentIndex() );
 }

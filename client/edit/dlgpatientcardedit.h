@@ -30,6 +30,7 @@ private:
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 private slots:
+    void on_cmbPatient_currentIndexChanged(int index);
     void on_cmbCardType_currentIndexChanged(int index);
     void on_cbActive_toggled(bool checked);
     void on_pbCancel_clicked();

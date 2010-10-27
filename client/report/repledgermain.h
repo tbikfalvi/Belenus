@@ -10,18 +10,34 @@
 #include "belenus.h"
 #include "dlgpreview.h"
 
-class cDlgLedgerMain : public cDlgPreview
+class cDlgRepLedgerMain : public cDlgPreview
 {
     Q_OBJECT
 
 public:
-    cDlgLedgerMain( QWidget *parent = 0 );
-    ~cDlgLedgerMain();
+    cDlgRepLedgerMain( QWidget *parent = 0 );
+    ~cDlgRepLedgerMain();
 
 private:
     QSqlQuery       *poReportResult;
     QString          qsQuery;
     unsigned int     uiColumnCount;
+    int              inSumUsedWithCard;
+    int              inSumUsedWithPayment;
+    int              inSumTimeReal;
+    int              inSumTimeInterrupted;
+    int              inSumPatientCount;
+    int              inSumNoCardUse;
+    int              inSumNoPaymentUse;
+    int              inSumNoCashUse;
+    int              inSumNoCreditCardUse;
+    int              inSumCash;
+    int              inSumNet;
+    int              inSumTotal;
+    int              inSumCount;
+    int              inSumDiscount;
+    int              inSumDCount;
+    int              inSumSumCount;
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
