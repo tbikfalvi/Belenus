@@ -30,6 +30,7 @@ cDlgReportPatientCardObs::cDlgReportPatientCardObs( QWidget *parent ) : cDlgPrev
     cTracer obTrace( "cDlgReportPatientCardObs::cDlgReportPatientCardObs" );
 
     setReportTitle( tr( "Patientcards will be obsolete" ) );
+    setReportFileName( tr( "patientcard_obsolete" ) );
 
     lblDate = new QLabel( tr("Validity will be expire between dates :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );

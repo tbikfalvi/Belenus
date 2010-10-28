@@ -30,6 +30,7 @@ cDlgReportCardUses::cDlgReportCardUses( QWidget *parent ) : cDlgPreview( parent 
     cTracer obTrace( "cDlgReportCardUses::cDlgReportCardUses" );
 
     setReportTitle( tr( "Patientcard uses" ) );
+    setReportFileName( tr( "patientcard_uses" ) );
 
     lblDate = new QLabel( tr("Date :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );

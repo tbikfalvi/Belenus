@@ -32,6 +32,7 @@ cDlgReportPatients::cDlgReportPatients( QWidget *parent ) : cDlgPreview( parent 
     QSqlQuery *poQuery;
 
     setReportTitle( tr( "Patients" ) );
+    setReportFileName( tr( "patients" ) );
 
     //======================================================================================================
 

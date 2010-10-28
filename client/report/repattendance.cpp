@@ -30,6 +30,7 @@ cDlgReportAttendance::cDlgReportAttendance( QWidget *parent ) : cDlgPreview( par
     cTracer obTrace( "cDlgReportAttendance::cDlgReportAttendance" );
 
     setReportTitle( tr( "Attendances" ) );
+    setReportFileName( tr( "attendances" ) );
 
     lblDate = new QLabel( tr("Date :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );

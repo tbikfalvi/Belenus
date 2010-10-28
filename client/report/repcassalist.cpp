@@ -30,6 +30,7 @@ cDlgReportCassaList::cDlgReportCassaList( QWidget *parent ) : cDlgPreview( paren
     cTracer obTrace( "cDlgReportCassaList::cDlgReportCassaList" );
 
     setReportTitle( tr( "Cassa list" ) );
+    setReportFileName( tr( "cassalist" ) );
 
     lblDate = new QLabel( tr("Date :"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );

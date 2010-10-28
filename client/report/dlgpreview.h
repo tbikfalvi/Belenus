@@ -17,6 +17,7 @@ public:
 
 protected:
     QString         m_qsReportName;
+    QString         m_qsReportFileName;
     QTextDocument   m_tdReport;
 
     QString         intTimeToString( const int p_inTime );
@@ -25,9 +26,11 @@ protected:
 
 protected slots:
     virtual void setReportTitle( const QString &p_qsTitle );
+    virtual void setReportFileName( const QString &p_qsFileName );
 
     virtual void refreshReport();
     virtual void printReport();
+    virtual void saveReportToFile();
 
 };
 

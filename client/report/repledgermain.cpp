@@ -31,6 +31,7 @@ cDlgRepLedgerMain::cDlgRepLedgerMain( QWidget *parent ) : cDlgPreview( parent )
     cTracer obTrace( "cDlgRepLedgerMain::cDlgRepLedgerMain" );
 
     setReportTitle( tr( "Main ledger" ) );
+    setReportFileName( tr( "ledgermain" ) );
 
     lblDate = new QLabel( tr("Date:"), grpFilters );
     lblDate->setObjectName( QString::fromUtf8( "lblDate" ) );

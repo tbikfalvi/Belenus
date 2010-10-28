@@ -2641,13 +2641,34 @@ as new into the database?</oldsource>
 <context>
     <name>cDlgPreview</name>
     <message>
-        <location filename="report/dlgpreview.cpp" line="18"/>
+        <location filename="report/dlgpreview.cpp" line="19"/>
+        <source>report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/dlgpreview.cpp" line="21"/>
+        <source>&amp;Save to html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/dlgpreview.cpp" line="22"/>
         <source>&amp;Print ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/dlgpreview.cpp" line="19"/>
+        <location filename="report/dlgpreview.cpp" line="23"/>
         <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/dlgpreview.cpp" line="83"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/dlgpreview.cpp" line="84"/>
+        <source>Exporting report to HTML file finished.
+Name of the file is: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2759,159 +2780,164 @@ as new into the database?</oldsource>
 <context>
     <name>cDlgRepLedgerMain</name>
     <message>
-        <location filename="report/repledgermain.cpp" line="16"/>
+        <location filename="report/repledgermain.cpp" line="33"/>
         <source>Main ledger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="18"/>
-        <location filename="report/repledgermain.cpp" line="132"/>
+        <location filename="report/repledgermain.cpp" line="36"/>
+        <location filename="report/repledgermain.cpp" line="154"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="38"/>
+        <location filename="report/repledgermain.cpp" line="56"/>
         <source>Show time intervall of different usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="369"/>
+        <location filename="report/repledgermain.cpp" line="392"/>
         <source>Use of devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="188"/>
-        <location filename="report/repledgermain.cpp" line="383"/>
+        <location filename="report/repledgermain.cpp" line="211"/>
+        <location filename="report/repledgermain.cpp" line="406"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="212"/>
-        <location filename="report/repledgermain.cpp" line="679"/>
+        <location filename="report/repledgermain.cpp" line="34"/>
+        <source>ledgermain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/repledgermain.cpp" line="235"/>
+        <location filename="report/repledgermain.cpp" line="702"/>
         <source>Cash
 payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="216"/>
-        <location filename="report/repledgermain.cpp" line="683"/>
+        <location filename="report/repledgermain.cpp" line="239"/>
+        <location filename="report/repledgermain.cpp" line="706"/>
         <source>C.Card
 payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="389"/>
+        <location filename="report/repledgermain.cpp" line="412"/>
         <source>Device usage
 with card / with payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="393"/>
+        <location filename="report/repledgermain.cpp" line="416"/>
         <source>Device usage
 used time / interrupted time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="398"/>
+        <location filename="report/repledgermain.cpp" line="421"/>
         <source>Patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="402"/>
+        <location filename="report/repledgermain.cpp" line="425"/>
         <source>Card
 usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="406"/>
+        <location filename="report/repledgermain.cpp" line="429"/>
         <source>Payed
 usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="410"/>
+        <location filename="report/repledgermain.cpp" line="433"/>
         <source>Cash
 usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="414"/>
+        <location filename="report/repledgermain.cpp" line="437"/>
         <source>C.Card
 usages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="418"/>
+        <location filename="report/repledgermain.cpp" line="441"/>
         <source>Sum of
 payment usage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="144"/>
+        <location filename="report/repledgermain.cpp" line="166"/>
         <source>List of incomes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="184"/>
+        <location filename="report/repledgermain.cpp" line="207"/>
         <source>Ledger type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="192"/>
+        <location filename="report/repledgermain.cpp" line="215"/>
         <source>Net</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="196"/>
+        <location filename="report/repledgermain.cpp" line="219"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="200"/>
-        <location filename="report/repledgermain.cpp" line="667"/>
+        <location filename="report/repledgermain.cpp" line="223"/>
+        <location filename="report/repledgermain.cpp" line="690"/>
         <source>Number of
 full price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="220"/>
-        <location filename="report/repledgermain.cpp" line="687"/>
+        <location filename="report/repledgermain.cpp" line="243"/>
+        <location filename="report/repledgermain.cpp" line="710"/>
         <source>Number of
 all type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="204"/>
-        <location filename="report/repledgermain.cpp" line="671"/>
+        <location filename="report/repledgermain.cpp" line="227"/>
+        <location filename="report/repledgermain.cpp" line="694"/>
         <source>Sum of
 discounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="208"/>
-        <location filename="report/repledgermain.cpp" line="675"/>
+        <location filename="report/repledgermain.cpp" line="231"/>
+        <location filename="report/repledgermain.cpp" line="698"/>
         <source>Number of
 discounts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="619"/>
+        <location filename="report/repledgermain.cpp" line="642"/>
         <source>List of sold patientcard types</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="655"/>
+        <location filename="report/repledgermain.cpp" line="678"/>
         <source>Patientcard Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="659"/>
+        <location filename="report/repledgermain.cpp" line="682"/>
         <source>Sum of
 net income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repledgermain.cpp" line="663"/>
+        <location filename="report/repledgermain.cpp" line="686"/>
         <source>Sum of
 total income</source>
         <translation type="unfinished"></translation>
@@ -2920,59 +2946,64 @@ total income</source>
 <context>
     <name>cDlgReportAttendance</name>
     <message>
-        <location filename="report/repattendance.cpp" line="16"/>
+        <location filename="report/repattendance.cpp" line="32"/>
         <source>Attendances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="18"/>
+        <location filename="report/repattendance.cpp" line="33"/>
+        <source>attendances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/repattendance.cpp" line="35"/>
         <source>Date :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="36"/>
+        <location filename="report/repattendance.cpp" line="53"/>
         <source>Patient :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="51"/>
+        <location filename="report/repattendance.cpp" line="68"/>
         <source>&lt;All patients&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="142"/>
+        <location filename="report/repattendance.cpp" line="163"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="145"/>
+        <location filename="report/repattendance.cpp" line="166"/>
         <source> | Patient: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="197"/>
+        <location filename="report/repattendance.cpp" line="218"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="210"/>
+        <location filename="report/repattendance.cpp" line="231"/>
         <source>Blood pressure
 (start-&gt;stop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="215"/>
+        <location filename="report/repattendance.cpp" line="236"/>
         <source>Pulse
 (start-&gt;stop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="220"/>
+        <location filename="report/repattendance.cpp" line="241"/>
         <source>Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repattendance.cpp" line="204"/>
+        <location filename="report/repattendance.cpp" line="225"/>
         <source>Patient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2980,53 +3011,58 @@ total income</source>
 <context>
     <name>cDlgReportCardUses</name>
     <message>
-        <location filename="report/repcarduses.cpp" line="16"/>
+        <location filename="report/repcarduses.cpp" line="32"/>
         <source>Patientcard uses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="18"/>
+        <location filename="report/repcarduses.cpp" line="33"/>
+        <source>patientcard_uses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/repcarduses.cpp" line="35"/>
         <source>Date :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="36"/>
+        <location filename="report/repcarduses.cpp" line="53"/>
         <source>Patientcard :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="73"/>
+        <location filename="report/repcarduses.cpp" line="90"/>
         <source>&lt;All patientcards&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="164"/>
+        <location filename="report/repcarduses.cpp" line="185"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="167"/>
+        <location filename="report/repcarduses.cpp" line="188"/>
         <source> | Patientcard barcode: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="236"/>
+        <location filename="report/repcarduses.cpp" line="257"/>
         <source>Date time</source>
         <oldsource>Date</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="241"/>
+        <location filename="report/repcarduses.cpp" line="262"/>
         <source>No units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="246"/>
+        <location filename="report/repcarduses.cpp" line="267"/>
         <source>Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcarduses.cpp" line="253"/>
+        <location filename="report/repcarduses.cpp" line="274"/>
         <source>Patientcard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3034,37 +3070,42 @@ total income</source>
 <context>
     <name>cDlgReportCassaList</name>
     <message>
-        <location filename="report/repcassalist.cpp" line="16"/>
+        <location filename="report/repcassalist.cpp" line="32"/>
         <source>Cassa list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcassalist.cpp" line="18"/>
+        <location filename="report/repcassalist.cpp" line="33"/>
+        <source>cassalist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/repcassalist.cpp" line="35"/>
         <source>Date :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcassalist.cpp" line="112"/>
+        <location filename="report/repcassalist.cpp" line="133"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcassalist.cpp" line="140"/>
+        <location filename="report/repcassalist.cpp" line="161"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcassalist.cpp" line="145"/>
+        <location filename="report/repcassalist.cpp" line="166"/>
         <source>Amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcassalist.cpp" line="150"/>
+        <location filename="report/repcassalist.cpp" line="171"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/repcassalist.cpp" line="155"/>
+        <location filename="report/repcassalist.cpp" line="176"/>
         <source>Cassa owner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3072,47 +3113,52 @@ total income</source>
 <context>
     <name>cDlgReportPatientCard</name>
     <message>
-        <location filename="report/reppatientcards.cpp" line="16"/>
+        <location filename="report/reppatientcards.cpp" line="32"/>
         <source>Patientcards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="18"/>
+        <location filename="report/reppatientcards.cpp" line="33"/>
+        <source>patientcards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatientcards.cpp" line="35"/>
         <source>Valid between dates :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="117"/>
+        <location filename="report/reppatientcards.cpp" line="138"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="145"/>
+        <location filename="report/reppatientcards.cpp" line="166"/>
         <source>Barcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="165"/>
+        <location filename="report/reppatientcards.cpp" line="186"/>
         <source>Units left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="170"/>
+        <location filename="report/reppatientcards.cpp" line="191"/>
         <source>Time left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="160"/>
+        <location filename="report/reppatientcards.cpp" line="181"/>
         <source>Valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="155"/>
+        <location filename="report/reppatientcards.cpp" line="176"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcards.cpp" line="150"/>
+        <location filename="report/reppatientcards.cpp" line="171"/>
         <source>Owner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3120,47 +3166,52 @@ total income</source>
 <context>
     <name>cDlgReportPatientCardObs</name>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="16"/>
+        <location filename="report/reppatientcardsobs.cpp" line="32"/>
         <source>Patientcards will be obsolete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="18"/>
+        <location filename="report/reppatientcardsobs.cpp" line="33"/>
+        <source>patientcard_obsolete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatientcardsobs.cpp" line="35"/>
         <source>Validity will be expire between dates :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="117"/>
+        <location filename="report/reppatientcardsobs.cpp" line="138"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="145"/>
+        <location filename="report/reppatientcardsobs.cpp" line="166"/>
         <source>Barcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="150"/>
+        <location filename="report/reppatientcardsobs.cpp" line="171"/>
         <source>Owner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="155"/>
+        <location filename="report/reppatientcardsobs.cpp" line="176"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="160"/>
+        <location filename="report/reppatientcardsobs.cpp" line="181"/>
         <source>Valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="165"/>
+        <location filename="report/reppatientcardsobs.cpp" line="186"/>
         <source>Units left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatientcardsobs.cpp" line="170"/>
+        <location filename="report/reppatientcardsobs.cpp" line="191"/>
         <source>Time left</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3168,209 +3219,214 @@ total income</source>
 <context>
     <name>cDlgReportPatients</name>
     <message>
-        <location filename="report/reppatients.cpp" line="18"/>
+        <location filename="report/reppatients.cpp" line="34"/>
         <source>Patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="30"/>
+        <location filename="report/reppatients.cpp" line="35"/>
+        <source>patients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="report/reppatients.cpp" line="47"/>
         <source>Entered into database :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="60"/>
+        <location filename="report/reppatients.cpp" line="77"/>
         <source>Age :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="66"/>
+        <location filename="report/reppatients.cpp" line="83"/>
         <source>&lt;All patients&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="67"/>
+        <location filename="report/reppatients.cpp" line="84"/>
         <source>0 year to 10 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="68"/>
+        <location filename="report/reppatients.cpp" line="85"/>
         <source>10 year to 20 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="69"/>
+        <location filename="report/reppatients.cpp" line="86"/>
         <source>20 year to 30 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="70"/>
+        <location filename="report/reppatients.cpp" line="87"/>
         <source>30 year to 40 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="71"/>
+        <location filename="report/reppatients.cpp" line="88"/>
         <source>40 year to 50 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="72"/>
+        <location filename="report/reppatients.cpp" line="89"/>
         <source>50 year to 60 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="73"/>
+        <location filename="report/reppatients.cpp" line="90"/>
         <source>60 year to 70 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="74"/>
+        <location filename="report/reppatients.cpp" line="91"/>
         <source>70 year to 80 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="75"/>
+        <location filename="report/reppatients.cpp" line="92"/>
         <source>80 year to 90 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="76"/>
+        <location filename="report/reppatients.cpp" line="93"/>
         <source>90 year to 100 years</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="79"/>
+        <location filename="report/reppatients.cpp" line="96"/>
         <source>Gender :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="83"/>
+        <location filename="report/reppatients.cpp" line="100"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="96"/>
+        <location filename="report/reppatients.cpp" line="113"/>
         <source>Regular customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="100"/>
+        <location filename="report/reppatients.cpp" line="117"/>
         <source>Employee</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="104"/>
+        <location filename="report/reppatients.cpp" line="121"/>
         <source>Service person</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="116"/>
+        <location filename="report/reppatients.cpp" line="133"/>
         <source>Health Insurance Fund :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="122"/>
+        <location filename="report/reppatients.cpp" line="139"/>
         <source>&lt;All Health Insurance Fund&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="130"/>
+        <location filename="report/reppatients.cpp" line="147"/>
         <source>Company :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="136"/>
+        <location filename="report/reppatients.cpp" line="153"/>
         <source>&lt;All Company&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="144"/>
+        <location filename="report/reppatients.cpp" line="161"/>
         <source>Proposal person :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="150"/>
+        <location filename="report/reppatients.cpp" line="167"/>
         <source>&lt;All proposal person&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="254"/>
+        <location filename="report/reppatients.cpp" line="274"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="335"/>
+        <location filename="report/reppatients.cpp" line="355"/>
         <source>Total number of patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="358"/>
+        <location filename="report/reppatients.cpp" line="378"/>
         <source>Number of male patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="379"/>
+        <location filename="report/reppatients.cpp" line="399"/>
         <source>Number of female patients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="403"/>
+        <location filename="report/reppatients.cpp" line="423"/>
         <source>Number of regular customers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="427"/>
+        <location filename="report/reppatients.cpp" line="447"/>
         <source>Number of employees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="451"/>
+        <location filename="report/reppatients.cpp" line="471"/>
         <source>Number of service persons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="475"/>
+        <location filename="report/reppatients.cpp" line="495"/>
         <source>Number of health insurance fund&apos;s members</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="499"/>
+        <location filename="report/reppatients.cpp" line="519"/>
         <source>Number of company employees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="523"/>
+        <location filename="report/reppatients.cpp" line="543"/>
         <source>Number of patients proposed by ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="570"/>
+        <location filename="report/reppatients.cpp" line="590"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="577"/>
+        <location filename="report/reppatients.cpp" line="597"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="583"/>
+        <location filename="report/reppatients.cpp" line="603"/>
         <source>Date of birth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="588"/>
+        <location filename="report/reppatients.cpp" line="608"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="88"/>
-        <location filename="report/reppatients.cpp" line="611"/>
+        <location filename="report/reppatients.cpp" line="105"/>
+        <location filename="report/reppatients.cpp" line="631"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/reppatients.cpp" line="92"/>
-        <location filename="report/reppatients.cpp" line="613"/>
+        <location filename="report/reppatients.cpp" line="109"/>
+        <location filename="report/reppatients.cpp" line="633"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3378,17 +3434,17 @@ total income</source>
 <context>
     <name>cDlgReportSAMPLE</name>
     <message>
-        <location filename="report/rep_sample_.cpp" line="16"/>
+        <location filename="report/rep_sample_.cpp" line="32"/>
         <source>_X_TITLE_X_</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/rep_sample_.cpp" line="18"/>
+        <location filename="report/rep_sample_.cpp" line="34"/>
         <source>Date :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="report/rep_sample_.cpp" line="117"/>
+        <location filename="report/rep_sample_.cpp" line="137"/>
         <source>Date:</source>
         <translation type="unfinished"></translation>
     </message>
