@@ -14,7 +14,8 @@ BelenusServerConnection::BelenusServerConnection()
       _code2(""),
       _status(NOT_CONNECTED),
       _licenceResult(Result::UNKNOWN),
-      _clientId(0)
+      _clientId(0),
+      _queryIdCounter(-1)
 {
     qRegisterMetaType<Result::ResultCode>("Result::ResultCode");
     connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
@@ -169,4 +170,28 @@ void BelenusServerConnection::_handleDisconnect(Result::ResultCode reason)
 bool BelenusServerConnection::isLicenseValid()
 {
     return _licenceResult == Result::OK ;
+}
+
+
+int BelenusServerConnection::sendQuery(const QString query)
+{
+    _queryIdCounterGuard.lock();
+    _queryIdCounter++;
+    int id = _queryIdCounter;
+    _queryIdCounterGuard.unlock();
+    QMetaObject::invokeMethod(this, "_sendQuery", Qt::QueuedConnection, Q_ARG(int, id), Q_ARG(QString,query) );
+    return id;
+}
+
+
+void BelenusServerConnection::_sendQuery(int id, const QString query)
+{
+    sendSqlQuery(id, query.toAscii().constData());
+}
+
+
+void BelenusServerConnection::_handleSqlQueryResult(int queryId, SqlResult *res)
+{
+    g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::_handleSqlQueryResult] id = " << queryId << EOM;
+    emit queryReady(queryId, res);
 }

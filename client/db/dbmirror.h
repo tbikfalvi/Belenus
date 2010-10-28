@@ -16,15 +16,25 @@
 #ifndef DBMIRROR_H
 #define DBMIRROR_H
 
+#include "../bs_connection.h"
+
 //====================================================================================
-class cDBMirror
+class cDBMirror : public QObject
 {
-    //Q_OBJECT
+    Q_OBJECT
 
 public:
     cDBMirror();
     ~cDBMirror();
 
+    void initialize();
+    void start();
+
+public slots:
+    void queryReady(int id, SqlResult*);
+
+protected:
+    int _qId;
 };
 //====================================================================================
 

@@ -56,14 +56,14 @@ public:
     bool isLicenseValid();                                              // true if connected to server and server accepted license and key2 */
     int getClientId();                                                  // if lic auth succeeded, returns the clientId stored FROM server
 
-
+    int sendQuery(const QString query);
 
 signals:
     void connected();
     void disconnected();
     void error(QAbstractSocket::SocketError);
     void licenceStatusChanged(Result::ResultCode, int clientId);
-
+    void queryReady(int id, SqlResult*);
 
 protected slots:
     void _error(QAbstractSocket::SocketError);
@@ -71,6 +71,7 @@ protected slots:
     void _connected();
     virtual void _read() { CommunicationProtocol::read(); } /* slots cannot be overloaded */
     void _connectTo();
+    void _sendQuery(int id, const QString query);
 
 protected:
     virtual void run();
@@ -78,6 +79,7 @@ protected:
     void _handleLogonChallenge();
     void _handleLogonResult(Result::ResultCode res, int licenceId);
     void _handleDisconnect(Result::ResultCode reason);
+    void _handleSqlQueryResult(int /*queryId*/, SqlResult *);
 
 private:
     QString _host;
@@ -89,6 +91,8 @@ private:
     Result::ResultCode _lastResult;
     bool _isLicenseValid;
     int _clientId;
+    int _queryIdCounter;
+    QMutex _queryIdCounterGuard;
 };
 
 

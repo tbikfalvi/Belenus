@@ -24,6 +24,7 @@
 #include "../framework/logger/GUIWriter.h"
 #include "../framework/logger/DatabaseWriter.h"
 #include "../framework/logger/ConsoleWriter.h"
+#include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "db/dbuser.h"
 #include "db/dbpatient.h"
@@ -45,6 +46,7 @@ cQTLogger                g_obLogger;
 DatabaseWriter           g_obLogDBWriter;
 GUIWriter                g_obLogGUIWriter;
 ConsoleWriter            g_obLogConsoleWriter;
+FileWriter               g_obLogFileWriter("client_%1_%2.log");
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
@@ -64,7 +66,9 @@ int main( int argc, char *argv[] )
     g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
     g_obLogger.attachWriter("db", &g_obLogDBWriter);
     g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
+    g_obLogger.attachWriter("file", &g_obLogFileWriter);
     g_obLogger.setMinimumSeverity("console", cSeverity::DEBUG);
+    g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
@@ -167,6 +171,9 @@ int main( int argc, char *argv[] )
         }
         qsSpalsh += "\n";
 
+        qsSpalsh += QObject::tr("Starting db mirror test ...\n");
+        g_obDBMirror.initialize(); // enough to call once at the begining
+        g_obDBMirror.start();
 
 #ifdef __WIN32__
 

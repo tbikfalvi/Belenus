@@ -40,6 +40,7 @@ HEADERS = belenus.h \
     ../framework/logger/DatabaseWriter.h \
     ../framework/logger/GUIWriter.h \
     ../framework/logger/ConsoleWriter.h \
+    ../framework/logger/FileWriter.h \
     ../framework/qtmysqlconnection.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/sevexception.h \
@@ -155,6 +156,7 @@ SOURCES = main.cpp \
     ../framework/qtlogger.cpp \
     ../framework/logger/DatabaseWriter.cpp \
     ../framework/logger/GUIWriter.cpp \
+    ../framework/logger/FileWriter.cpp \
     ../framework/logger/ConsoleWriter.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
@@ -262,7 +264,7 @@ SOURCES = main.cpp \
     general.cpp \
     dlg/dlgprogress.cpp \
     db/dbmirror.cpp
-win32 { 
+win32 {
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }
