@@ -4,27 +4,63 @@
 --
 -- -----------------------------------------------------------------------------------
 --
--- Filename    : belenus.sql
+-- Filename    : server_install_ver_1_0.sql
 -- AppVersion  : 1.0
 -- FileVersion : 1.0
--- Author      : Ballok Peter, Bikfalvi Tamas
+-- Author      : Ballok Peter, Bikfalvi Tamas, Kovacs Gabor
 --
 -- -----------------------------------------------------------------------------------
--- Adatbazist letrehozo SQL script
+-- Szerver alkalmazáshoz adatbázist létrehozó SQL script
+-- A szerver gépen elkészített 'BelenusDB' adatbázis van
+-- 'belenus_user' felhasználóval
 -- -----------------------------------------------------------------------------------
 
--- -----------------------------------------------------------------------------------
--- Letezo tablak torlese
--- -----------------------------------------------------------------------------------
-
-DROP DATABASE IF EXISTS `belenus`;
-
-CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
-USE `belenus`;
+USE `BelenusDB`;
 
 -- -----------------------------------------------------------------------------------
--- Tablak letrehozasa
+-- Tablak torlese
+-- -----------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ledger`;
+DROP TABLE IF EXISTS `ledgerDevice`;
+DROP TABLE IF EXISTS `paymentMethods`;
+DROP TABLE IF EXISTS `cassaDenominations`;
+DROP TABLE IF EXISTS `cassaHistory`;
+DROP TABLE IF EXISTS `cassa`;
+DROP TABLE IF EXISTS `address`;
+DROP TABLE IF EXISTS `zipRegionCity`;
+DROP TABLE IF EXISTS `discounts`;
+DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `productTypes`;
+DROP TABLE IF EXISTS `ledgerTypes`;
+DROP TABLE IF EXISTS `denominations`;
+DROP TABLE IF EXISTS `attendanceSchedule`;
+DROP TABLE IF EXISTS `panelUses`;
+DROP TABLE IF EXISTS `panels`;
+DROP TABLE IF EXISTS `panelStatuses`;
+DROP TABLE IF EXISTS `panelTypes`;
+DROP TABLE IF EXISTS `patientCardHistories`;
+DROP TABLE IF EXISTS `connectPatientWithCard`;
+DROP TABLE IF EXISTS `patientCards`;
+DROP TABLE IF EXISTS `patientCardTypes`;
+DROP TABLE IF EXISTS `attendance`;
+DROP TABLE IF EXISTS `patients`;
+DROP TABLE IF EXISTS `doctorSchedule`;
+DROP TABLE IF EXISTS `doctors`;
+DROP TABLE IF EXISTS `doctorTypes`;
+DROP TABLE IF EXISTS `companies`;
+DROP TABLE IF EXISTS `healthInsurances`;
+DROP TABLE IF EXISTS `publicPlaces`;
+DROP TABLE IF EXISTS `illnessGroups`;
+DROP TABLE IF EXISTS `reasonToVisit`;
+DROP TABLE IF EXISTS `patientOrigin`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `logs`;
+DROP TABLE IF EXISTS `clients`;
+DROP TABLE IF EXISTS `licences`;
+
+-- -----------------------------------------------------------------------------------
+-- Tablak letrehozasa es kezdo tartalommal feltoltese
 -- -----------------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------------
@@ -45,6 +81,37 @@ CREATE TABLE `licences` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
+  ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
+  ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
+-- A szerver alkalmazasnal van szerepe. Kliens install-nal nincs ra szukseg.
+-- A kliens program nem hasznalja.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `clients` (
+  `clientId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `code1`                   varchar(50)             NOT NULL,
+  `code2`                   varchar(50)             NOT NULL,
+  `dateCreated`             datetime                NOT NULL,
+  `lastLogin`               datetime                NOT NULL,
+  PRIMARY KEY (`clientId`),
+  UNIQUE (`code1`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `clients` (`clientId`, `code1`, `code2`, `dateCreated`, `lastLogin`) VALUES
+ (0, 'b5234d73c694e3a1132f748ff1c9e8c7876d70f1', '', '2010-09-01 11:00:00', '2010-09-01 11:00:00');
+UPDATE `clients` SET `clientId`=0 WHERE `clientId`=1;
+ALTER TABLE `clients` auto_increment=1;
+
+INSERT INTO `clients` (`clientId`, `code1`, `code2`, `dateCreated`, `lastLogin`) VALUES
+ (1, '873ad9accf298d60c235650389bfb6de692ae280', '', '2010-09-01 11:00:00', '2010-09-01 11:00:00');
 
 -- -----------------------------------------------------------------------------------
 -- Log tabla. A program mukodese soran keletkezo log-okat tartalmazza.
@@ -77,13 +144,11 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A panel statuszokhoz tartozo parancsokat tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `activateCommand` (
-  `activateCommandId`       int(10) unsigned        NOT NULL,
-  `name`                    varchar(100)            NOT NULL,
-  PRIMARY KEY (`activateCommandId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
+ ( 0, 'guest', 'guest', '', 1, 0, '' );
+UPDATE `users` SET `userId`=0 WHERE `userId`=1;
+ALTER TABLE `users` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
@@ -100,6 +165,21 @@ CREATE TABLE `patientOrigin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
+ALTER TABLE `patientOrigin` auto_increment=1;
+
+INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'Ismerõs/barát ajánlotta', 1, 'ARC'),
+ (2, 0, 'Szórólap', 1, 'ARC'),
+ (3, 0, 'Internet', 1, 'ARC'),
+ (4, 0, 'TV', 1, 'ARC'),
+ (5, 0, 'Újság', 1, 'ARC'),
+ (6, 0, 'Egyéb', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
 -- Opcionalis.
 -- Az indokokat tartalmazza, amiert jott a paciens
 -- -----------------------------------------------------------------------------------
@@ -112,6 +192,17 @@ CREATE TABLE `reasonToVisit` (
   PRIMARY KEY (`reasonToVisitId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
+ALTER TABLE `reasonToVisit` auto_increment=1;
+
+INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'Gyógyulás betegségbõl', 1, 'ARC'),
+ (2, 0, 'Immunerõsítés / regenerálódás', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
@@ -128,6 +219,13 @@ CREATE TABLE `illnessGroups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO `illnessGroups` (`illnessGroupId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `illnessGroups` SET `illnessGroupId`=0 WHERE `illnessGroupId`=1;
+ALTER TABLE `illnessGroups` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
 -- Opcionalis.
 -- A vendegekhez kotheto cimekhez a kozteruletek neveit tartalmazza
 -- -----------------------------------------------------------------------------------
@@ -140,6 +238,20 @@ CREATE TABLE `publicPlaces` (
   PRIMARY KEY (`publicPlaceId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `publicPlaces` SET `publicPlaceId`=0 WHERE `publicPlaceId`=1;
+ALTER TABLE `publicPlaces` auto_increment=1;
+INSERT INTO `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, 0, 'út', 1, 'ARC'),
+ (2, 0, 'utca', 1, 'ARC'),
+ (3, 0, 'körút', 1, 'ARC'),
+ (4, 0, 'köz', 1, 'ARC'),
+ (5, 0, 'tér', 1, 'ARC'),
+ (6, 0, 'dûlõ', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
@@ -165,6 +277,13 @@ CREATE TABLE `healthInsurances` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO  `healthInsurances` (`healthInsuranceId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `healthInsurances` SET `healthInsuranceId`=0 WHERE `healthInsuranceId`=1;
+ALTER TABLE `healthInsurances` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
 -- Opcionalis.
 -- A vendegekhez kotheto cegek neveit tartalmazza.
 -- -----------------------------------------------------------------------------------
@@ -188,6 +307,13 @@ CREATE TABLE `companies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO  `companies` (`companyId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `companies` SET `companyId`=0 WHERE `companyId`=1;
+ALTER TABLE `companies` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
 -- Opcionalis.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `doctorTypes` (
@@ -199,6 +325,19 @@ CREATE TABLE `doctorTypes` (
   PRIMARY KEY (`doctorTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 'ARC');
+UPDATE `doctorTypes` SET `doctorTypeId`=0 WHERE `doctorTypeId`=1;
+ALTER TABLE `doctorTypes` auto_increment=1;
+
+INSERT INTO `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ (1, '0', 'Orvos', '1', 'ARC'),
+ (2, '0', 'Gyógyszerész', '1', 'ARC'),
+ (3, '0', 'Gyógytornász', '1', 'ARC'),
+ (4, '0', 'Védõnõ', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- A vendeget bekuldo orvos, akarki adatait tartalmazza.
@@ -216,6 +355,13 @@ CREATE TABLE `doctors` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`doctorTypeId`) REFERENCES `doctorTypes` (`doctorTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO  `doctors` (`doctorId`, `licenceId`, `doctorTypeId`, `name`, `active`, `archive`) VALUES
+ (0, 0, 0, '', 0, 'ARC');
+UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
+ALTER TABLE `doctors` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- A doktorok rendelesi idejet tartalmazo tabla.
@@ -280,6 +426,13 @@ CREATE TABLE `patients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `illnessGroupId`, `healthInsuranceId`, `companyId`, `doctorId`, `name`, `gender`, `dateBirth`, `uniqueId`, `email`, `phone`, `weight`, `height`, `illnesses`, `symptoms`, `medicineCurrent`, `medicineAllergy`, `regularCustomer`, `employee`, `service`, `healthInsurance`, `company`, `doctorProposed`, `comment`, `active`, `archive`) VALUES
+ ('0', '0', '0', '0', '0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '0', 'ARC');
+UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
+ALTER TABLE `patients` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
 -- Opcionalis.
 -- A vendegek kezeleseit nyilvantarto tabla
 -- -----------------------------------------------------------------------------------
@@ -302,17 +455,11 @@ CREATE TABLE `attendance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Opcionalis.
--- A nem kitoltott paciensek illetve kezelesekre mutato rekordok
--- -----------------------------------------------------------------------------------
-CREATE TABLE `toBeFilled` (
-  `toBeFilledId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `attendanceId`            int(10) unsigned        NOT NULL,
-  `patientId`               int(10) unsigned        NOT NULL,
-  PRIMARY KEY (`toBeFilledId`),
-  FOREIGN KEY (`attendanceId`) REFERENCES `attendance` (`attendanceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `comment`, `active`, `archive`) VALUES
+ (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'ARC');
+UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
+ALTER TABLE `attendance` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- A studioban hasznalhato kartyak tipusait tartalmazza.
@@ -333,6 +480,16 @@ CREATE TABLE `patientCardTypes` (
   PRIMARY KEY (`patientCardTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
+ (0, 0, '', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
+UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
+ALTER TABLE `patientCardTypes` auto_increment=1;
+
+INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
+ (1, 0, 'Szervíz kártyák', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- A studioban rogzitett, eladott kartyak adatait tartalmazza.
@@ -356,6 +513,13 @@ CREATE TABLE `patientCards` (
   FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
+UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
+ALTER TABLE `patientCards` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
@@ -405,6 +569,16 @@ CREATE TABLE `panelTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES
+  ( 0, 0, "", 0, "ARC" );
+UPDATE `panelTypes` SET `panelTypeId`='0' WHERE `panelTypeId`=1;
+ALTER TABLE `panelTypes` auto_increment=1;
+
+INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES
+ ( 1, 0, "Sensolite gyógyterápiás gép", 1, "ARC" );
+
+-- -----------------------------------------------------------------------------------
 -- A kliens alkalmazasban mukodtetett panelok kulonbozo status-ait tartalmazza.
 -- A statusok a panel tipusokhoz kapcsolodnak.
 -- -----------------------------------------------------------------------------------
@@ -424,6 +598,14 @@ CREATE TABLE `panelStatuses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `active`, `archive` ) VALUES
+ ( 0, 1, 1, "Alap állapot", 0, 0, 1, "ARC" ),
+ ( 0, 1, 2, "Elõkészület/Vetkõzés", 60, 1, 1, "ARC" ),
+ ( 0, 1, 3, "Kezelés", 0, 3, 1, "ARC" ),
+ ( 0, 1, 4, "Utóhûtés", 60, 4, 1, "ARC" );
+
+-- -----------------------------------------------------------------------------------
 -- A kliens alkalmazasban mukodtetett panelokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panels` (
@@ -439,6 +621,13 @@ CREATE TABLE `panels` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 0, 0, 0, "", 0, 0, 0, "ARC" );
+UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
+ALTER TABLE `panels` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- A panelok (gepek) hasznalatait tartalmazo tabla.
@@ -457,6 +646,13 @@ CREATE TABLE `panelUses` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `panelUses` (`panelUseId`, `licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `active`, `archive`) VALUES
+  ( '0', '0', '0', '', '0', '0', '1', 'ARC');
+UPDATE `panelUses` SET `panelUseId`='0' WHERE `panelUseId`=1;
+ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Paciensek altal lefoglalt idopontokat tartalmazza.
@@ -491,6 +687,22 @@ CREATE TABLE `denominations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `comment`, `active`, `archive`) VALUES
+ (1, 0, 5, "", 1, 'ARC'),
+ (2, 0, 10, "", 1, 'ARC'),
+ (3, 0, 20, "", 1, 'ARC'),
+ (4, 0, 50, "", 1, 'ARC'),
+ (5, 0, 100, "", 1, 'ARC'),
+ (6, 0, 200, "", 1, 'ARC'),
+ (7, 0, 500, "", 1, 'ARC'),
+ (8, 0, 1000, "", 1, 'ARC'),
+ (9, 0, 2000, "", 1, 'ARC'),
+ (10, 0, 5000, "", 1, 'ARC'),
+ (11, 0, 10000, "", 1, 'ARC'),
+ (12, 0, 20000, "", 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
 -- Konyveles tipusok tabla.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `ledgerTypes` (
@@ -502,6 +714,15 @@ CREATE TABLE `ledgerTypes` (
   PRIMARY KEY (`ledgerTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
+ (1 , '0', 'Géphasználat', '1', 'ARC'),
+ (2 , '0', 'Bérlet eladás', '1', 'ARC'),
+ (3 , '0', 'Bérlet feltöltés', '1', 'ARC'),
+ (4 , '0', 'Termék eladás', '1', 'ARC'),
+ (5 , '0', 'Egyéb', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
@@ -516,6 +737,13 @@ CREATE TABLE `productTypes` (
   PRIMARY KEY (`productTypeId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `productTypes` (`productTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
+ ('0', '0', '', '0', 'ARC');
+UPDATE `productTypes` SET `productTypeId`=0 WHERE `productTypeId`=1;
+ALTER TABLE `productTypes` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
@@ -534,6 +762,13 @@ CREATE TABLE `products` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productTypeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
+ ('0', '0', '0', '', '0', '0', '0', 'ARC');
+UPDATE `products` SET `productId`='0' WHERE `productId`=1;
+ALTER TABLE `products` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 -- Kulonbozo a rendszerbe felvett kedvezmenyeket tartalmazza.
@@ -560,6 +795,13 @@ CREATE TABLE `discounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+
+INSERT INTO `discounts` (`discountId`, `licenceId`, `healthInsuranceId`, `companyId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `active`, `archive`) VALUES
+ ('0', '0', NULL, NULL, '0', '0', '0', '', '', '', 0, "ARC" );
+UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
+ALTER TABLE `discounts` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
 -- Opcionalis.
 -- A vendegekhez kotheto cimekhez elore feltoltott megye, telepules es iranyitoszam
 -- rekordokat tartalmaz.
@@ -575,445 +817,6 @@ CREATE TABLE `zipRegionCity` (
   PRIMARY KEY (`zipRegionCityId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- Opcionalis.
--- A vendegekhez kotheto cimeket tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `address` (
-  `addressId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `patientId`               int(10) unsigned        NOT NULL,
-  `publicPlaceId`           int(10) unsigned        NOT NULL,
-  `name`                    varchar(100)            NOT NULL,
-  `country`                 varchar(100)            DEFAULT NULL,
-  `region`                  varchar(100)            DEFAULT NULL,
-  `city`                    varchar(100)            DEFAULT NULL,
-  `zip`                     varchar(10)             DEFAULT NULL,
-  `street`                  varchar(50)             DEFAULT NULL,
-  `streetNumber`            varchar(10)             DEFAULT NULL,
-  `floor`                   varchar(10)             DEFAULT NULL,
-  `door`                    varchar(10)             DEFAULT NULL,
-  `primaryAddress`          tinyint(1)              DEFAULT 0,
-  `active`                  tinyint(1)              DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`addressId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`publicPlaceId`) REFERENCES `publicPlaces` (`publicPlaceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- A kliens alkalmazas napi penzforgalmanak egyenleget tartalmazza.
--- Minden rekord egy felhasznalohoz kotheto.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `cassa` (
-  `cassaId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `userId`                  int(10) unsigned        NOT NULL,
-  `currentBalance`          int(11)                 NOT NULL,
-  `startDateTime`           datetime                NOT NULL,
-  `stopDateTime`            datetime                NOT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`cassaId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- A kliens alkalmazas penzforgalmat tartalmazza.
--- Minden egyes penzforgalom egy kulon rekord.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `cassaHistory` (
-  `cassaHistoryId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `cassaId`                 int(10) unsigned        NOT NULL,
-  `userId`                  int(10) unsigned        NOT NULL,
-  `actionValue`             int(11)                 NOT NULL,
-  `actionBalance`           int(11)                 NOT NULL,
-  `actionTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `comment`                 text                    DEFAULT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`cassaHistoryId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- A kulonbozo penztarak zarasaihoz tartalmazo cimleteket tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `cassaDenominations` (
-  `denominationId`          int(10) unsigned        NOT NULL,
-  `cassaId`                 int(10) unsigned        NOT NULL,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `value`                   int(10) unsigned        NOT NULL DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`denominationId`,`cassaId`,`licenceID`),
-  FOREIGN KEY (`denominationId`) REFERENCES `denominations` (`denominationId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- Fizetesi modokat tartalmazo szamla
--- -----------------------------------------------------------------------------------
-CREATE TABLE `paymentMethods` (
-  `paymentMethodId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `name`                    varchar(50)             NOT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`paymentMethodId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- GepKonyveles tabla.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `ledgerDevice` (
-  `ledgerDeviceId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `userId`                  int(10) unsigned        NOT NULL,
-  `panelId`                 int(10) unsigned        NOT NULL,
-  `patientId`               int(10) unsigned        NOT NULL,
-  `paymentMethodId`         int(10) unsigned        NOT NULL,
-  `units`                   int(11)                 NOT NULL,
-  `cash`                    int(11)                 NOT NULL,
-  `timeReal`                int(11)                 NOT NULL,
-  `timeLeft`                int(11)                 NOT NULL,
-  `timeCard`                int(11)                 NOT NULL,
-  `timeCash`                int(11)                 NOT NULL,
-  `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `comment`                 text                    DEFAULT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`ledgerDeviceId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- Konyveles tabla.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `ledger` (
-  `ledgerId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `ledgerTypeId`            int(10) unsigned        NOT NULL,
-  `ledgerDeviceId`          int(10) unsigned        NOT NULL,
-  `paymentMethodId`         int(10) unsigned        NOT NULL,
-  `userId`                  int(10) unsigned        NOT NULL,
-  `productId`               int(10) unsigned        NOT NULL,
-  `patientCardTypeId`       int(10) unsigned        NOT NULL,
-  `patientCardId`           int(10) unsigned        NOT NULL,
-  `panelId`                 int(10) unsigned        NOT NULL,
-  `name`                    varchar(100)            NOT NULL,
-  `netPrice`                int(11)                 NOT NULL,
-  `discount`                int(11)                 NOT NULL,
-  `vatpercent`              int(11)                 NOT NULL,
-  `totalPrice`              int(11)                 NOT NULL,
-  `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `comment`                 text                    DEFAULT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`ledgerId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`ledgerTypeId`) REFERENCES `ledgerTypes` (`ledgerTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`ledgerDeviceId`) REFERENCES `ledgerDevice` (`ledgerDeviceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
--- EZEK A TABLAK MEG NEM VEGLEGESEK
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
-
--- -----------------------------------------------------------------------------------
--- A studioban keszitett szamlakat tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `invoices` (
-  `invoiceId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `addressId`               int(10) unsigned        NOT NULL,
-  `paymentMethodId`         int(10) unsigned        NOT NULL,
-  `dateCreated`             date                    NOT NULL,
-  `invoiceReady`            tinyint(1)              DEFAULT 0,
-  `invoicePrinted`          tinyint(1)              DEFAULT 0,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`invoiceId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`addressId`) REFERENCES `address` (`addressId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
--- A studioban keszitett szamlak teteleit tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `invoiceRecords` (
-  `invoiceRecordId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `invoiceId`               int(10) unsigned        NOT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`invoiceRecordId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`invoiceId`) REFERENCES `invoices` (`invoiceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
---
--- Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
---
--- -----------------------------------------------------------------------------------
---
--- Filename : init.sql
--- AppVersion : 1.0
--- FileVersion : 1.0
--- Author : Ballok Peter, Bikfalvi Tamas
---
--- -----------------------------------------------------------------------------------
--- Tablak feltoltese default adatokkal
---
--- Ezeket az INSERT-eket a telepito futtatja le azutan, hogy a szerver programtol
--- megkapja a kliens serial-hoz tartozo licenceId erteket
---
--- -----------------------------------------------------------------------------------
-
-USE `belenus`;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
-INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Pest megye', 'Budapest', '1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
- ( 0, 'guest', 'guest', '', 1, 0, '' );
-UPDATE `users` SET `userId`=0 WHERE `userId`=1;
-ALTER TABLE `users` auto_increment=1;
-
-INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
- ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Gyógycentrum alapértelmezett felhasználója rendszergazdai jogosultságokkal.' );
-INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`) VALUES
- ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Gyógycentrum alapértelmezett felhasználója alap felhasználói jogosultságokkal' );
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `activateCommand` (`activateCommandId`, `name`) VALUES
- (0, 'Alap állapot'),
- (1, 'Elõkészítés'),
- (3, 'Kezelés'),
- (4, 'Utóhûtés'),
- (9, 'Várakozás');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO  `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `patientOrigin` SET `patientOriginId`=0 WHERE `patientOriginId`=1;
-ALTER TABLE `patientOrigin` auto_increment=1;
-
-INSERT INTO `patientOrigin` (`patientOriginId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'Ismerõs/barát ajánlotta', 1, 'ARC'),
- (2, 0, 'Szórólap', 1, 'ARC'),
- (3, 0, 'Internet', 1, 'ARC'),
- (4, 0, 'TV', 1, 'ARC'),
- (5, 0, 'Újság', 1, 'ARC'),
- (6, 0, 'Egyéb', 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `reasonToVisit` SET `reasonToVisitId`=0 WHERE `reasonToVisitId`=1;
-ALTER TABLE `reasonToVisit` auto_increment=1;
-
-INSERT INTO `reasonToVisit` (`reasonToVisitId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'Gyógyulás betegségbõl', 1, 'ARC'),
- (2, 0, 'Immunerõsítés / regenerálódás', 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `illnessGroups` (`illnessGroupId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `illnessGroups` SET `illnessGroupId`=0 WHERE `illnessGroupId`=1;
-ALTER TABLE `illnessGroups` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO  `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `publicPlaces` SET `publicPlaceId`=0 WHERE `publicPlaceId`=1;
-ALTER TABLE `publicPlaces` auto_increment=1;
-INSERT INTO `publicPlaces` (`publicPlaceId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'út', 1, 'ARC'),
- (2, 0, 'utca', 1, 'ARC'),
- (3, 0, 'körút', 1, 'ARC'),
- (4, 0, 'köz', 1, 'ARC'),
- (5, 0, 'tér', 1, 'ARC'),
- (6, 0, 'dûlõ', 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO  `healthInsurances` (`healthInsuranceId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `healthInsurances` SET `healthInsuranceId`=0 WHERE `healthInsuranceId`=1;
-ALTER TABLE `healthInsurances` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO  `companies` (`companyId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `companies` SET `companyId`=0 WHERE `companyId`=1;
-ALTER TABLE `companies` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO  `doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (0, 0, '', 0, 'ARC');
-UPDATE `doctorTypes` SET `doctorTypeId`=0 WHERE `doctorTypeId`=1;
-ALTER TABLE `doctorTypes` auto_increment=1;
-
-INSERT INTO `belenus`.`doctorTypes` (`doctorTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, '0', 'Orvos', '1', 'ARC'),
- (2, '0', 'Gyógyszerész', '1', 'ARC'),
- (3, '0', 'Gyógytornász', '1', 'ARC'),
- (4, '0', 'Védõnõ', '1', 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO  `doctors` (`doctorId`, `licenceId`, `doctorTypeId`, `name`, `active`, `archive`) VALUES
- (0, 0, 0, '', 0, 'ARC');
-UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
-ALTER TABLE `doctors` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `patients` (`patientId`, `licenceId`, `patientOriginId`, `reasonToVisitId`, `illnessGroupId`, `healthInsuranceId`, `companyId`, `doctorId`, `name`, `gender`, `dateBirth`, `uniqueId`, `email`, `phone`, `weight`, `height`, `illnesses`, `symptoms`, `medicineCurrent`, `medicineAllergy`, `regularCustomer`, `employee`, `service`, `healthInsurance`, `company`, `doctorProposed`, `comment`, `active`, `archive`) VALUES
- ('0', '0', '0', '0', '0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', NULL, '0', 'ARC');
-UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
-ALTER TABLE `patients` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `attendance` (`attendanceId`, `licenceId`, `patientId`, `date`, `length`, `bloodPressureStart`, `pulseStart`, `bloodPressureStop`, `pulseStop`, `comment`, `active`, `archive`) VALUES
- (0, 0, 0, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'ARC');
-UPDATE `attendance` SET `attendanceId`=0 WHERE `attendanceId`=1;
-ALTER TABLE `attendance` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (0, 0, '', 0, 0, 0, '2010-01-01', '2010-01-01', 0, 0, 0, 'ARC');
-UPDATE `patientCardTypes` SET `patientCardTypeId`=0 WHERE `patientCardTypeId`=1;
-ALTER TABLE `patientCardTypes` auto_increment=1;
-
-INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES
- (1, 0, 'Szervíz kártyák', 0, 0, 999, '2010-01-01', '2100-12-31', 0, 1, 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
- (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
-UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
-ALTER TABLE `patientCards` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES
-  ( 0, 0, "", 0, "ARC" );
-UPDATE `panelTypes` SET `panelTypeId`='0' WHERE `panelTypeId`=1;
-ALTER TABLE `panelTypes` auto_increment=1;
-
-INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES
- ( 1, 0, "Sensolite gyógyterápiás gép", 1, "ARC" );
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `active`, `archive` ) VALUES
- ( 0, 1, 1, "Alap állapot", 0, 0, 1, "ARC" ),
- ( 0, 1, 2, "Elõkészület/Vetkõzés", 60, 1, 1, "ARC" ),
- ( 0, 1, 3, "Kezelés", 0, 3, 1, "ARC" ),
- ( 0, 1, 4, "Utóhûtés", 60, 4, 1, "ARC" );
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 0, 0, 0, "", 0, 0, 0, "ARC" );
-UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
-ALTER TABLE `panels` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `panelUses` (`licenceId`, `panelId`, `name`, `useTime`, `usePrice`, `active`, `archive`) VALUES
-  ('0', '0', '', '0', '0', '0', 'ARC');
-UPDATE `panelUses` SET `panelUseId`='0' WHERE `panelUseId`=1;
-ALTER TABLE `panelUses` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `denominations` (`denominationId`, `licenceId`, `denomination`, `comment`, `active`, `archive`) VALUES
- (1, 0, 5, "", 1, 'ARC'),
- (2, 0, 10, "", 1, 'ARC'),
- (3, 0, 20, "", 1, 'ARC'),
- (4, 0, 50, "", 1, 'ARC'),
- (5, 0, 100, "", 1, 'ARC'),
- (6, 0, 200, "", 1, 'ARC'),
- (7, 0, 500, "", 1, 'ARC'),
- (8, 0, 1000, "", 1, 'ARC'),
- (9, 0, 2000, "", 1, 'ARC'),
- (10, 0, 5000, "", 1, 'ARC'),
- (11, 0, 10000, "", 1, 'ARC'),
- (12, 0, 20000, "", 1, 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
- (1 , '0', 'Géphasználat', '1', 'ARC'),
- (2 , '0', 'Bérlet eladás', '1', 'ARC'),
- (3 , '0', 'Bérlet feltöltés', '1', 'ARC'),
- (4 , '0', 'Termék eladás', '1', 'ARC'),
- (5 , '0', 'Egyéb', '1', 'ARC');
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `productTypes` (`productTypeId`, `licenceId`, `name`, `active`, `archive`) VALUES
- ('0', '0', '', '0', 'ARC');
-UPDATE `productTypes` SET `productTypeId`=0 WHERE `productTypeId`=1;
-ALTER TABLE `productTypes` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '0', '0', '0', 'ARC');
-UPDATE `products` SET `productId`='0' WHERE `productId`=1;
-ALTER TABLE `products` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
-
-INSERT INTO `discounts` (`discountId`, `licenceId`, `healthInsuranceId`, `companyId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `active`, `archive`) VALUES
- ('0', '0', NULL, NULL, '0', '0', '0', '', '', '', 0, "ARC" );
-UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
-ALTER TABLE `discounts` auto_increment=1;
-
--- -----------------------------------------------------------------------------------
 
 INSERT INTO zipRegionCity ( `licenceId`, `zip`, `region`, `city`, `active`, `archive`) VALUES
  ( '0', '8127', 'Fejér', 'Aba', 1, 'ARC' ),
@@ -4335,11 +4138,105 @@ INSERT INTO zipRegionCity ( `licenceId`, `zip`, `region`, `city`, `active`, `arc
  ( '0', '4627', 'Szabolcs-Szatmár-Bereg', 'Zsurk', 1, 'ARC' );
 
 -- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- A vendegekhez kotheto cimeket tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `address` (
+  `addressId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `publicPlaceId`           int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `country`                 varchar(100)            DEFAULT NULL,
+  `region`                  varchar(100)            DEFAULT NULL,
+  `city`                    varchar(100)            DEFAULT NULL,
+  `zip`                     varchar(10)             DEFAULT NULL,
+  `street`                  varchar(50)             DEFAULT NULL,
+  `streetNumber`            varchar(10)             DEFAULT NULL,
+  `floor`                   varchar(10)             DEFAULT NULL,
+  `door`                    varchar(10)             DEFAULT NULL,
+  `primaryAddress`          tinyint(1)              DEFAULT 0,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`addressId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`publicPlaceId`) REFERENCES `publicPlaces` (`publicPlaceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 
 INSERT INTO `address` (`addressId`, `licenceId`, `patientId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `active`, `archive`) VALUES
  ('0', '0', '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 'ARC');
 UPDATE `address` SET `addressId`='0' WHERE `addressId`=1;
 ALTER TABLE `address` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+-- A kliens alkalmazas napi penzforgalmanak egyenleget tartalmazza.
+-- Minden rekord egy felhasznalohoz kotheto.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `cassa` (
+  `cassaId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `currentBalance`          int(11)                 NOT NULL,
+  `startDateTime`           datetime                NOT NULL,
+  `stopDateTime`            datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`cassaId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A kliens alkalmazas penzforgalmat tartalmazza.
+-- Minden egyes penzforgalom egy kulon rekord.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `cassaHistory` (
+  `cassaHistoryId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `cassaId`                 int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `actionValue`             int(11)                 NOT NULL,
+  `actionBalance`           int(11)                 NOT NULL,
+  `actionTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`cassaHistoryId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A kulonbozo penztarak zarasaihoz tartalmazo cimleteket tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `cassaDenominations` (
+  `denominationId`          int(10) unsigned        NOT NULL,
+  `cassaId`                 int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `value`                   int(10) unsigned        NOT NULL DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`denominationId`,`cassaId`,`licenceID`),
+  FOREIGN KEY (`denominationId`) REFERENCES `denominations` (`denominationId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Fizetesi modokat tartalmazo szamla
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `paymentMethods` (
+  `paymentMethodId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(50)             NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`paymentMethodId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
 
@@ -4354,6 +4251,34 @@ INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, 
  (3, 0, 'Fizetés bankkártyával', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
+-- GepKonyveles tabla.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `ledgerDevice` (
+  `ledgerDeviceId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `paymentMethodId`         int(10) unsigned        NOT NULL,
+  `units`                   int(11)                 NOT NULL,
+  `cash`                    int(11)                 NOT NULL,
+  `timeReal`                int(11)                 NOT NULL,
+  `timeLeft`                int(11)                 NOT NULL,
+  `timeCard`                int(11)                 NOT NULL,
+  `timeCash`                int(11)                 NOT NULL,
+  `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`ledgerDeviceId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 
 INSERT INTO `ledgerDevice` (`ledgerDeviceId`, `licenceId`, `userId`, `panelId`, `patientId`, `paymentMethodId`, `units`, `cash`, `timeReal`, `timeLeft`, `timeCard`, `timeCash`, `ledgerTime`, `comment`, `active`, `archive`) VALUES
  (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2010-11-02 08:00:00', NULL, 0, 'ARC');
@@ -4361,18 +4286,38 @@ UPDATE `ledgerDevice` SET `ledgerDeviceId`=0 WHERE `ledgerDeviceId`=1;
 ALTER TABLE `ledgerDevice` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
+-- Konyveles tabla.
 -- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
--- -----------------------------------------------------------------------------------
+CREATE TABLE `ledger` (
+  `ledgerId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `ledgerTypeId`            int(10) unsigned        NOT NULL,
+  `ledgerDeviceId`          int(10) unsigned        NOT NULL,
+  `paymentMethodId`         int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `netPrice`                int(11)                 NOT NULL,
+  `discount`                int(11)                 NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
+  `totalPrice`              int(11)                 NOT NULL,
+  `ledgerTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment`                 text                    DEFAULT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`ledgerId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerTypeId`) REFERENCES `ledgerTypes` (`ledgerTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerDeviceId`) REFERENCES `ledgerDevice` (`ledgerDeviceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentMethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 1, 1, "1-es gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "2-es gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "3-as gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "4-es gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "5-ös gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "6-os gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "7-es gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "8-as gép", 0, 0, 1, "ARC" );
+
