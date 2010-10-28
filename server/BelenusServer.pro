@@ -17,7 +17,7 @@ TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
-CONFIG += console
+#CONFIG += console
 TRANSLATIONS = bs_us.ts \
     bs_hu.ts
 HEADERS += ../framework/dbconnection.h \

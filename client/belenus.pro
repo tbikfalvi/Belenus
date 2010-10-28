@@ -147,7 +147,8 @@ HEADERS = belenus.h \
     report/repcarduses.h \
     edit/dlglicenceedit.h \
     general.h \
-    dlg/dlgprogress.h
+    dlg/dlgprogress.h \
+    db/dbmirror.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -259,7 +260,8 @@ SOURCES = main.cpp \
     report/repattendance.cpp \
     report/repcarduses.cpp \
     general.cpp \
-    dlg/dlgprogress.cpp
+    dlg/dlgprogress.cpp \
+    db/dbmirror.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
@@ -270,5 +272,6 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
-#CONFIG += console
+
+# CONFIG += console
 win32:DEFINES -= UNICODE

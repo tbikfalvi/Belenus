@@ -33,7 +33,7 @@ MainWindow::MainWindow( QWidget *p_poParent )
 
     iHost->setText( QString("%1:%2").arg(g_prefs.value("server/host")).arg(g_prefs.value("server/port")) );
     iUsername->setText("root");
-    iPassword->setText("Korben5Dallas");
+    iPassword->setText("");
 
     logLevel->addItem("Debug", cSeverity::DEBUG);
     logLevel->addItem("Info", cSeverity::INFO);

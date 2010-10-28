@@ -26,11 +26,12 @@
 #include "../framework/logger/ConsoleWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "db/dbuser.h"
+#include "db/dbpatient.h"
+#include "db/dbmirror.h"
 #include "preferences.h"
 #include "communication.h"
 #include "communication_demo.h"
 #include "bs_connection.h"
-#include "db/dbpatient.h"
 #include "cassa.h"
 #include "licenceManager.h"
 #ifdef __WIN32__
@@ -53,6 +54,7 @@ cDBPatient               g_obPatient;
 unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 LicenceManager           g_obLicenceManager;
+cDBMirror                g_obDBMirror;
 
 //====================================================================================
 int main( int argc, char *argv[] )
