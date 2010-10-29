@@ -47,6 +47,7 @@ Server::~Server()
 
 void Server::execute()
 {
+    g_obLogger(cSeverity::DEBUG) << "[Server::execute] called" << EOM;
     connect(&_tcpServer, SIGNAL(newConnection()), this, SLOT(connectionAvailable()));
 
     if ( !_tcpServer.listen( QHostAddress(g_prefs.value("server/interface")), g_prefs.value("server/port").toInt() ) )
