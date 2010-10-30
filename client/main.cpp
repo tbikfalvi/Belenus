@@ -171,7 +171,7 @@ int main( int argc, char *argv[] )
         }
         qsSpalsh += "\n";
 
-        qsSpalsh += QObject::tr("Starting db mirror test ...\n");
+        qsSpalsh += QObject::tr("Starting db mirror ...\n");
         g_obDBMirror.initialize(); // enough to call once at the begining
         g_obDBMirror.start();
 

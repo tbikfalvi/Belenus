@@ -491,4 +491,8 @@ client/dlgprogress.o
 client/moc_dlgprogress.cpp
 client/moc_dlgprogress.o
 client/ui_dlgprogress.h
+client/FileWriter.o
+client/dbmirror.o
+client/moc_dbmirror.cpp
+client/moc_dbmirror.o
 

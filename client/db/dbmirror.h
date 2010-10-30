@@ -16,7 +16,13 @@
 #ifndef DBMIRROR_H
 #define DBMIRROR_H
 
+//====================================================================================
+
 #include "../bs_connection.h"
+
+//====================================================================================
+
+#define     MIRROR_UPDATE_LICENCE_DATA      1
 
 //====================================================================================
 class cDBMirror : public QObject
@@ -27,14 +33,21 @@ public:
     cDBMirror();
     ~cDBMirror();
 
-    void initialize();
-    void start();
+    void    initialize();
+    void    start();
+
+    void    updateLicenceData();
 
 public slots:
-    void queryReady(int id, SqlResult*);
+    void    queryReady( int id, SqlResult* );
 
 protected:
-    int _qId;
+    int     _qId;
+
+private:
+    bool    m_bGetGlobalData;
+    int     m_inProcessCount;
+
 };
 //====================================================================================
 

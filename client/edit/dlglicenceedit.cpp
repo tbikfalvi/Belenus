@@ -41,6 +41,7 @@ dlgLicenceEdit::dlgLicenceEdit( QWidget *p_poParent ) : QDialog( p_poParent )
     ledZip->setText( poQuery->value( 5 ).toString() );
     ledCity->setText( poQuery->value( 4 ).toString() );
     ledAddress->setText( poQuery->value( 6 ).toString() );
+    ledContactName->setText( poQuery->value( 8 ).toString() );
 }
 
 dlgLicenceEdit::~dlgLicenceEdit()
@@ -76,6 +77,8 @@ void dlgLicenceEdit::accept ()
 
             QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
             if( poQuery ) delete poQuery;
+
+            g_obDBMirror.updateLicenceData();
         }
         catch( cSevException &e )
         {

@@ -4,7 +4,7 @@
 --
 -- -----------------------------------------------------------------------------------
 --
--- Filename    : server_install_ver_1_0.sql
+-- Filename    : server_v20.sql
 -- AppVersion  : 1.0
 -- FileVersion : 1.0
 -- Author      : Ballok Peter, Bikfalvi Tamas, Kovacs Gabor
