@@ -156,8 +156,14 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
         action_Users->setIcon( QIcon("./resources/40x40_user.png") );
+        action_Doctor->setIcon( QIcon("./resources/40x40_doctor.png") );
+        action_Company->setIcon( QIcon("./resources/40x40_company.png") );
+        action_HealthInsurance->setIcon( QIcon("./resources/40x40_health_insurance.png") );
+        action_Discounts->setIcon( QIcon("./resources/40x40_discount.png") );
         action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.png") );
         action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.png") );
+        action_IllnessGroup->setIcon( QIcon("./resources/40x40_illness.png") );
+        action_RegionZipCity->setIcon( QIcon("./resources/40x40_address.png") );
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
@@ -171,6 +177,16 @@ cWndMain::cWndMain( QWidget *parent )
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
 
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
+    action_ReportPatients->setIcon( QIcon("./resources/40x40_patient.png") );
+    action_ReportAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
+    action_ReportPatientcards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_PatientcardsObsolete->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_ReportPatientcardUses->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
+    action_CassaHistory->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
+
+    action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
+    action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
+
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 
