@@ -171,9 +171,19 @@ int main( int argc, char *argv[] )
         }
         qsSpalsh += "\n";
 
-        qsSpalsh += QObject::tr("Starting db mirror ...\n");
+        qsSpalsh += QObject::tr("Initialize database synchronization ...");
         g_obDBMirror.initialize(); // enough to call once at the begining
-        g_obDBMirror.start();
+        if( g_obDBMirror.start() )
+        {
+            qsSpalsh += QObject::tr("SUCCEEDED\n");
+
+            // Itt lehet lekérdezni a 0 licenceId-s adatokat a szervertől
+            // __TO_BE_SOLVED__
+        }
+        else
+        {
+            qsSpalsh += QObject::tr("FAILED\n");
+        }
 
 #ifdef __WIN32__
 

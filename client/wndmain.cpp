@@ -1591,3 +1591,9 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
     obDlgReportPatientCardObs.exec();
 }
 //====================================================================================
+void cWndMain::on_action_SynchronizeDatabase_triggered()
+//====================================================================================
+{
+    g_obDBMirror.synchronizeUserTable();
+}
+//====================================================================================

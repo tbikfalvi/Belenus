@@ -18,6 +18,8 @@
 
 #include "belenus.h"
 #include "dbmirror.h"
+#include "dbuser.h"
+#include "dbpatientorigin.h"
 
 //====================================================================================
 
@@ -30,8 +32,11 @@ cDBMirror::cDBMirror()
 {
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::cDBMirror] called" << EOM;
 
-    m_bGetGlobalData    = 0;
-    m_inProcessCount    = 0;
+    m_bGetGlobalData        = false;
+    m_inProcessCount        = 0;
+    m_bSyncAllTable         = false;
+    m_uiDbModificationLevel = 0;
+    m_uiCurrentId           = 0;
 }
 //====================================================================================
 cDBMirror::~cDBMirror()
@@ -51,18 +56,27 @@ void cDBMirror::initialize()
 //====================================================================================
 // Start database syncronization. Get data linked to licenceId 0
 //====================================================================================
-void cDBMirror::start()
+bool cDBMirror::start()
 //====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::start] start called" << EOM;
+
     if ( g_poServer->getStatus()!=BelenusServerConnection::AUTHENTICATED )
     {
         g_obLogger(cSeverity::DEBUG) << "[cDBMirror::start] not connected to server" << EOM;
-        return;
+        return false;
     }
 
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE archive<>\"ARC\" AND licenceId > 1 " ) );
+
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_USER );
+
     m_bGetGlobalData = true;
-//    _qId = g_poServer->sendQuery("SELECT lastLogin FROM clients;");
+
+    return true;
 }
 //====================================================================================
 void cDBMirror::queryReady( int id, SqlResult *r )
@@ -75,10 +89,21 @@ void cDBMirror::queryReady( int id, SqlResult *r )
         switch( m_inProcessCount )
         {
             case MIRROR_UPDATE_LICENCE_DATA:
+            {
                 if( r->isValid() )
                 {
                     g_poDB->executeQTQuery( QString( "UPDATE licences SET archive=\"ARC\" WHERE licenceId=%1" ).arg(g_poPrefs->getLicenceId()) );
+                    m_inProcessCount = 0;
                 }
+                break;
+            }
+
+            case MIRROR_SYNC_DB_USER:
+                _recordUserSynchronized();
+                break;
+
+            case MIRROR_SYNC_DB_PATIENTORIGIN:
+                _recordPatientOriginSynchronized();
                 break;
 
             default:
@@ -121,5 +146,171 @@ void cDBMirror::updateLicenceData()
 
         _qId = g_poServer->sendQuery( qsQuery );
     }
+}
+//====================================================================================
+void cDBMirror::updateSynchronizationLevel( unsigned int p_uiSyncLevel )
+//====================================================================================
+{
+    m_uiDbModificationLevel |= p_uiSyncLevel;
+}
+//====================================================================================
+void cDBMirror::_tableSynchronized( unsigned int p_uiSyncLevel )
+//====================================================================================
+{
+    m_uiDbModificationLevel &= ~p_uiSyncLevel;
+}
+//====================================================================================
+//
+//  User table synchronization
+//
+//====================================================================================
+void cDBMirror::synchronizeUserTable()
+//====================================================================================
+{
+    _synchronizeUserTable();
+}
+//====================================================================================
+void cDBMirror::_synchronizeUserTable( unsigned int p_uiSyncLevel )
+//====================================================================================
+{
+    if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+        return;
+
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE archive<>\"ARC\" AND licenceId > 1 " ) );
+
+    if( poQuery->first() )
+    {
+        m_uiCurrentId = poQuery->value( 0 ).toUInt();
+
+        QString     qsQuery = "";
+        cDBUser     obUser;
+
+        obUser.load( m_uiCurrentId );
+
+        if( obUser.archive().compare( "NEW" ) == 0 )
+        {
+            qsQuery = "INSERT INTO users SET ";
+            qsQuery += QString( "userId = \"%1\", " ).arg( obUser.id() );
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( obUser.licenceId() );
+        }
+        else if( obUser.archive().compare( "MOD" ) == 0 )
+        {
+            qsQuery = "UPDATE users SET ";
+        }
+        qsQuery += QString( "name = \"%1\", " ).arg(  obUser.name() );
+        qsQuery += QString( "realName = \"%1\", " ).arg(  obUser.realName() );
+        qsQuery += QString( "password = \"%1\", " ).arg(  obUser.password() );
+        qsQuery += QString( "accgroup = %1, " ).arg(  obUser.group() );
+        qsQuery += QString( "active = %1, " ).arg(  obUser.active() );
+        qsQuery += QString( "comment = \"%1\", " ).arg(  obUser.comment() );
+        qsQuery += QString( "archive = \"ARC\"" );
+        if( obUser.archive().compare( "MOD" ) == 0 )
+        {
+            qsQuery += "WHERE ";
+            qsQuery += QString( "userId = \"%1\" " ).arg( obUser.id() );
+            qsQuery += "AND ";
+            qsQuery += QString( "licenceId = \"%1\" " ).arg( obUser.licenceId() );
+        }
+
+        m_inProcessCount = MIRROR_SYNC_DB_USER;
+
+        _qId = g_poServer->sendQuery( qsQuery );
+    }
+    else
+    {
+        _tableSynchronized( p_uiSyncLevel );
+        if( m_bSyncAllTable )
+            synchronizePatientOriginTable();
+    }
+}
+//====================================================================================
+void cDBMirror::_recordUserSynchronized()
+//====================================================================================
+{
+    g_poDB->executeQTQuery( QString( "UPDATE users SET archive=\"ARC\" WHERE userId=%1" ).arg(m_uiCurrentId) );
+
+    _synchronizeUserTable();
+}
+//====================================================================================
+//
+//  Patient origin table synchronization
+//
+//====================================================================================
+void cDBMirror::synchronizePatientOriginTable()
+//====================================================================================
+{
+    _synchronizePatientOriginTable();
+}
+//====================================================================================
+void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
+//====================================================================================
+{
+    if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+        return;
+
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientOrigin WHERE archive<>\"ARC\" AND licenceId > 1 " ) );
+
+    if( poQuery->first() )
+    {
+        m_uiCurrentId = poQuery->value( 0 ).toUInt();
+
+        QString             qsQuery = "";
+        cDBPatientOrigin    obPatientOrigin;
+
+        obPatientOrigin.load( m_uiCurrentId );
+
+        if( obPatientOrigin.archive().compare( "NEW" ) == 0 )
+        {
+            qsQuery = "INSERT INTO patientOrigin SET ";
+            qsQuery += QString( "patientOriginId = \"%1\", " ).arg( obPatientOrigin.id() );
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( obPatientOrigin.licenceId() );
+        }
+        else if( obPatientOrigin.archive().compare( "MOD" ) == 0 )
+        {
+            qsQuery = "UPDATE patientOrigin SET ";
+        }
+        qsQuery += QString( "name = \"%1\", " ).arg( obPatientOrigin.name() );
+        qsQuery += QString( "active = %1, " ).arg( obPatientOrigin.active() );
+        qsQuery += QString( "archive = \"ARC\" " );
+        if( obPatientOrigin.archive().compare( "MOD" ) == 0 )
+        {
+            qsQuery += "WHERE ";
+            qsQuery += QString( "patientOriginId = \"%1\" " ).arg( obPatientOrigin.id() );
+            qsQuery += "AND ";
+            qsQuery += QString( "licenceId = \"%1\" " ).arg( obPatientOrigin.licenceId() );
+        }
+
+        m_inProcessCount = MIRROR_SYNC_DB_PATIENTORIGIN;
+
+        _qId = g_poServer->sendQuery( qsQuery );
+    }
+    else
+    {
+        _tableSynchronized( p_uiSyncLevel );
+        if( m_bSyncAllTable )
+            synchronizeReasonToVisit();
+    }
+}
+//====================================================================================
+void cDBMirror::_recordPatientOriginSynchronized()
+//====================================================================================
+{
+    g_poDB->executeQTQuery( QString( "UPDATE patientOrigin SET archive=\"ARC\" WHERE patientOriginId=%1" ).arg(m_uiCurrentId) );
+
+    _synchronizePatientOriginTable();
+}
+//====================================================================================
+//
+//  Reason to visit table synchronization
+//
+//====================================================================================
+void cDBMirror::synchronizeReasonToVisit()
+//====================================================================================
+{
+//    _synchronizeReasonToVisit();
 }
 //====================================================================================
