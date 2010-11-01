@@ -177,6 +177,15 @@ int main( int argc, char *argv[] )
         {
             qsSpalsh += QObject::tr("SUCCEEDED\n");
 
+            if( g_obDBMirror.checkIsSynchronizationNeeded() )
+            {
+                qsSpalsh += QObject::tr("Local database has to synchronized with server.");
+            }
+            else
+            {
+                qsSpalsh += QObject::tr("Local database synchronized with server.");
+            }
+
             // Itt lehet lekérdezni a 0 licenceId-s adatokat a szervertől
             // __TO_BE_SOLVED__
         }

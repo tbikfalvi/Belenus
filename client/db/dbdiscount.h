@@ -1,5 +1,5 @@
-#ifndef DB_PATIENT_ORIGIN_H
-#define DB_PATIENT_ORIGIN_H
+#ifndef DB_DISCOUNT_H
+#define DB_DISCOUNT_H
 
 #include <QSqlRecord>
 

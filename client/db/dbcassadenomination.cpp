@@ -105,6 +105,11 @@ void cDBCassaDenomination::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( poQuery ) delete poQuery;
     m_bNewRecord = false;
+
+//    if( m_uiId > 0 && m_uiLicenceId != 1 )
+//        g_obDBMirror.updateSynchronizationLevel( DB_CASSA_DENOMINATION );
+//    if( m_uiId > 0 && m_uiLicenceId == 0 )
+//        g_obDBMirror.updateGlobalSyncLevel( DB_CASSA_DENOMINATION );
 }
 
 void cDBCassaDenomination::remove() throw( cSevException )

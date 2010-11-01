@@ -112,6 +112,7 @@ public:
     void            updateGlobalSyncLevel( unsigned int p_uiSyncLevel );
 
     bool            checkSynchronizationFinished();
+    bool            checkIsSynchronizationNeeded();
 
     void            synchronizeUserTable();
     void            synchronizePatientOriginTable();
