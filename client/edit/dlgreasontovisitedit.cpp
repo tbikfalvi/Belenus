@@ -21,7 +21,7 @@ cDlgReasonToVisitEdit::cDlgReasonToVisitEdit( QWidget *p_poParent, cDBReasonToVi
     m_poReasonToVisit = p_poReasonToVisit;
     if( m_poReasonToVisit )
     {
-        ledName->setText( QString::fromStdString( m_poReasonToVisit->name() ) );
+        ledName->setText( m_poReasonToVisit->name() );
         if( m_poReasonToVisit->licenceId() == 0 && m_poReasonToVisit->id() > 0 )
             checkIndependent->setChecked( true );
 
@@ -54,7 +54,7 @@ void cDlgReasonToVisitEdit::accept ()
     {
         try
         {
-            m_poReasonToVisit->setName( ledName->text().toStdString() );
+            m_poReasonToVisit->setName( ledName->text() );
             if( checkIndependent->isChecked() )
             {
                 m_poReasonToVisit->setLicenceId( 0 );

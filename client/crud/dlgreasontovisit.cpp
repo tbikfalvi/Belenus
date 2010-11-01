@@ -102,7 +102,7 @@ void cDlgReasonToVisit::editClicked( bool )
         poReasonToVisit->load( m_uiSelectedId );
 
         cDlgReasonToVisitEdit  obDlgEdit( this, poReasonToVisit );
-        obDlgEdit.setWindowTitle( QString::fromStdString( poReasonToVisit->name() ) );
+        obDlgEdit.setWindowTitle( poReasonToVisit->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();
