@@ -164,6 +164,11 @@ void cDBPatientCard::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+
+    if( m_uiId > 0 && m_uiLicenceId != 1 )
+        g_obDBMirror.updateSynchronizationLevel( DB_PATIENTCARD );
+    if( m_uiId > 0 && m_uiLicenceId == 0 )
+        g_obDBMirror.updateGlobalSyncLevel( DB_PATIENTCARD );
 }
 
 void cDBPatientCard::remove() throw( cSevException )

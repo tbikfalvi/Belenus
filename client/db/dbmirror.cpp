@@ -29,6 +29,11 @@
 #include "dbdoctor.h"
 //#include "dbdoctorschedule.h"
 #include "dbpatient.h"
+#include "dbattendance.h"
+#include "dbpatientcardtype.h"
+#include "dbpatientcard.h"
+//#include "dbpatientcardconnect.h"
+#include "dbpatientcardhistory.h"
 
 //====================================================================================
 
@@ -1110,39 +1115,46 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
 
     QSqlQuery *poQuery = NULL;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM attendance WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
 
     if( poQuery->first() )
     {
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
-        /*cDB_ClassName_    ob_ClassName_;
+        cDBAttendance       obAttendance;
 
-        ob_ClassName_.load( m_uiCurrentId );
+        obAttendance.load( m_uiCurrentId );
 
-        if( ob_ClassName_.archive().compare( "NEW" ) == 0 )
+        if( obAttendance.archive().compare( "NEW" ) == 0 )
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\", " ).arg( ob_ClassName_.id() );
-            qsQuery += QString( "licenceId = \"%1\", " ).arg( ob_ClassName_.licenceId() );
+            qsQuery = "INSERT INTO attendance SET ";
+            qsQuery += QString( "attendanceId = \"%1\", " ).arg( obAttendance.id() );
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( obAttendance.licenceId() );
         }
-        else if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        else if( obAttendance.archive().compare( "MOD" ) == 0 )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE attendance SET ";
         }
-        //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
-        qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
+        qsQuery += QString( "patientId = \"%1\", " ).arg( obAttendance.patientId() );
+        qsQuery += QString( "date = \"%1\", " ).arg( obAttendance.date() );
+        qsQuery += QString( "length = \"%1\", " ).arg( obAttendance.length() );
+        qsQuery += QString( "bloodPressureStart = \"%1\", " ).arg( obAttendance.bloodPressureStart() );
+        qsQuery += QString( "pulseStart = \"%1\", " ).arg( obAttendance.pulseStart() );
+        qsQuery += QString( "bloodPressureStop = \"%1\", " ).arg( obAttendance.bloodPressureStop() );
+        qsQuery += QString( "pulseStop = \"%1\", " ).arg( obAttendance.pulseStop() );
+        qsQuery += QString( "comment = \"%1\", " ).arg( obAttendance.comment() );
+        qsQuery += QString( "active = %1, " ).arg( obAttendance.active() );
         qsQuery += QString( "archive = \"ARC\" " );
-        if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        if( obAttendance.archive().compare( "MOD" ) == 0 )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\" " ).arg( ob_ClassName_.id() );
+            qsQuery += QString( "attendanceId = \"%1\" " ).arg( obAttendance.id() );
             qsQuery += "AND ";
-            qsQuery += QString( "licenceId = \"%1\" " ).arg( ob_ClassName_.licenceId() );
+            qsQuery += QString( "licenceId = \"%1\" " ).arg( obAttendance.licenceId() );
         }
 
-        m_inProcessCount = MIRROR_SYNC_DB_TABLENAME;*/
+        m_inProcessCount = MIRROR_SYNC_DB_ATTENDANCE;
 
         _qId = g_poServer->sendQuery( qsQuery );
     }
@@ -1158,7 +1170,7 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
 void cDBMirror::_recordAttendanceSynchronized()
 //====================================================================================
 {
-    g_poDB->executeQTQuery( QString( "UPDATE _TABLENAME_ SET archive=\"ARC\" WHERE _TABLERECORD_Id=%1" ).arg(m_uiCurrentId) );
+    g_poDB->executeQTQuery( QString( "UPDATE attendance SET archive=\"ARC\" WHERE attendanceId=%1" ).arg(m_uiCurrentId) );
 
     _synchronizeAttendance();
 }
@@ -1177,39 +1189,46 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
 
     QSqlQuery *poQuery = NULL;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardTypes WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
 
     if( poQuery->first() )
     {
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
-        /*cDB_ClassName_    ob_ClassName_;
+        cDBPatientCardType  obPatientCardType;
 
-        ob_ClassName_.load( m_uiCurrentId );
+        obPatientCardType.load( m_uiCurrentId );
 
-        if( ob_ClassName_.archive().compare( "NEW" ) == 0 )
+        if( obPatientCardType.archive().compare( "NEW" ) == 0 )
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\", " ).arg( ob_ClassName_.id() );
-            qsQuery += QString( "licenceId = \"%1\", " ).arg( ob_ClassName_.licenceId() );
+            qsQuery = "INSERT INTO patientCardTypes SET ";
+            qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( obPatientCardType.id() );
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( obPatientCardType.licenceId() );
         }
-        else if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        else if( obPatientCardType.archive().compare( "MOD" ) == 0 )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE patientCardTypes SET ";
         }
-        //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
-        qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
+        qsQuery += QString( "name = \"%1\", " ).arg( obPatientCardType.name() );
+        qsQuery += QString( "price = \"%1\", " ).arg( obPatientCardType.price() );
+        qsQuery += QString( "vatpercent = \"%1\", " ).arg( obPatientCardType.vatpercent() );
+        qsQuery += QString( "units = \"%1\", " ).arg( obPatientCardType.units() );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( obPatientCardType.validDateFrom() );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( obPatientCardType.validDateTo() );
+        qsQuery += QString( "validDays = \"%1\", " ).arg( obPatientCardType.validDays() );
+        qsQuery += QString( "unitTime = \"%1\", " ).arg( obPatientCardType.unitTime() );
+        qsQuery += QString( "active = %1, " ).arg( obPatientCardType.active() );
         qsQuery += QString( "archive = \"ARC\" " );
-        if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        if( obPatientCardType.archive().compare( "MOD" ) == 0 )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\" " ).arg( ob_ClassName_.id() );
+            qsQuery += QString( "patientCardTypeId = \"%1\" " ).arg( obPatientCardType.id() );
             qsQuery += "AND ";
-            qsQuery += QString( "licenceId = \"%1\" " ).arg( ob_ClassName_.licenceId() );
+            qsQuery += QString( "licenceId = \"%1\" " ).arg( obPatientCardType.licenceId() );
         }
 
-        m_inProcessCount = MIRROR_SYNC_DB_TABLENAME;*/
+        m_inProcessCount = MIRROR_SYNC_DB_PATIENTCARDTYPE;
 
         _qId = g_poServer->sendQuery( qsQuery );
     }
@@ -1225,7 +1244,7 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
 void cDBMirror::_recordPatientcardTypeSynchronized()
 //====================================================================================
 {
-    g_poDB->executeQTQuery( QString( "UPDATE _TABLENAME_ SET archive=\"ARC\" WHERE _TABLERECORD_Id=%1" ).arg(m_uiCurrentId) );
+    g_poDB->executeQTQuery( QString( "UPDATE patientCardTypes SET archive=\"ARC\" WHERE patientCardTypeId=%1" ).arg(m_uiCurrentId) );
 
     _synchronizePatientcardType();
 }
@@ -1244,39 +1263,47 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
 
     QSqlQuery *poQuery = NULL;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
 
     if( poQuery->first() )
     {
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
-        /*cDB_ClassName_    ob_ClassName_;
+        cDBPatientCard      obPatientCard;
 
-        ob_ClassName_.load( m_uiCurrentId );
+        obPatientCard.load( m_uiCurrentId );
 
-        if( ob_ClassName_.archive().compare( "NEW" ) == 0 )
+        if( obPatientCard.archive().compare( "NEW" ) == 0 )
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\", " ).arg( ob_ClassName_.id() );
-            qsQuery += QString( "licenceId = \"%1\", " ).arg( ob_ClassName_.licenceId() );
+            qsQuery = "INSERT INTO patientCards SET ";
+            qsQuery += QString( "patientCardId = \"%1\", " ).arg( obPatientCard.id() );
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( obPatientCard.licenceId() );
         }
-        else if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        else if( obPatientCard.archive().compare( "MOD" ) == 0 )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE patientCards SET ";
         }
-        //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
-        qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
+        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( obPatientCard.patientCardTypeId() );
+        qsQuery += QString( "patientId = \"%1\", " ).arg( obPatientCard.patientId() );
+        qsQuery += QString( "barcode = \"%1\", " ).arg( obPatientCard.barcode() );
+        qsQuery += QString( "comment = \"%1\", " ).arg( obPatientCard.comment() );
+        qsQuery += QString( "units = \"%1\", " ).arg( obPatientCard.units() );
+        qsQuery += QString( "timeLeft = \"%1\", " ).arg( obPatientCard.timeLeft() );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( obPatientCard.validDateFrom() );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( obPatientCard.validDateTo() );
+        qsQuery += QString( "pincode = \"%1\", " ).arg( obPatientCard.pincode() );
+        qsQuery += QString( "active = %1, " ).arg( obPatientCard.active() );
         qsQuery += QString( "archive = \"ARC\" " );
-        if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        if( obPatientCard.archive().compare( "MOD" ) == 0 )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\" " ).arg( ob_ClassName_.id() );
+            qsQuery += QString( "patientCardId = \"%1\" " ).arg( obPatientCard.id() );
             qsQuery += "AND ";
-            qsQuery += QString( "licenceId = \"%1\" " ).arg( ob_ClassName_.licenceId() );
+            qsQuery += QString( "licenceId = \"%1\" " ).arg( obPatientCard.licenceId() );
         }
 
-        m_inProcessCount = MIRROR_SYNC_DB_TABLENAME;*/
+        m_inProcessCount = MIRROR_SYNC_DB_PATIENTCARD;
 
         _qId = g_poServer->sendQuery( qsQuery );
     }
@@ -1292,7 +1319,7 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
 void cDBMirror::_recordPatientcardSynchronized()
 //====================================================================================
 {
-    g_poDB->executeQTQuery( QString( "UPDATE _TABLENAME_ SET archive=\"ARC\" WHERE _TABLERECORD_Id=%1" ).arg(m_uiCurrentId) );
+    g_poDB->executeQTQuery( QString( "UPDATE patientCards SET archive=\"ARC\" WHERE patientCardId=%1" ).arg(m_uiCurrentId) );
 
     _synchronizePatientcard();
 }
@@ -1306,6 +1333,13 @@ void cDBMirror::synchronizePatientcardConnect()
 void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
+    // This table is not in use
+    // Currently no need to synchronize it with server
+    _tableSynchronized( p_uiSyncLevel );
+    _globalDataSynchronized( p_uiSyncLevel );
+    if( m_bSyncAllTable )
+        synchronizePatientcardHistory();
+/*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
 
@@ -1318,7 +1352,7 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
-        /*cDB_ClassName_    ob_ClassName_;
+        cDB_ClassName_    ob_ClassName_;
 
         ob_ClassName_.load( m_uiCurrentId );
 
@@ -1343,7 +1377,7 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
             qsQuery += QString( "licenceId = \"%1\" " ).arg( ob_ClassName_.licenceId() );
         }
 
-        m_inProcessCount = MIRROR_SYNC_DB_TABLENAME;*/
+        m_inProcessCount = MIRROR_SYNC_DB_TABLENAME;
 
         _qId = g_poServer->sendQuery( qsQuery );
     }
@@ -1354,6 +1388,7 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
         if( m_bSyncAllTable )
             synchronizePatientcardHistory();
     }
+*/
 }
 //====================================================================================
 void cDBMirror::_recordPatientcardConnectSynchronized()
@@ -1378,39 +1413,41 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
 
     QSqlQuery *poQuery = NULL;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardHistories WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
 
     if( poQuery->first() )
     {
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
-        QString             qsQuery = "";
-        /*cDB_ClassName_    ob_ClassName_;
+        QString                 qsQuery = "";
+        cDBPatientCardHistory   obPatientCardHistory;
 
-        ob_ClassName_.load( m_uiCurrentId );
+        obPatientCardHistory.load( m_uiCurrentId );
 
-        if( ob_ClassName_.archive().compare( "NEW" ) == 0 )
+        if( obPatientCardHistory.archive().compare( "NEW" ) == 0 )
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\", " ).arg( ob_ClassName_.id() );
-            qsQuery += QString( "licenceId = \"%1\", " ).arg( ob_ClassName_.licenceId() );
+            qsQuery = "INSERT INTO patientCardHistories SET ";
+            qsQuery += QString( "patientCardHistoryId = \"%1\", " ).arg( obPatientCardHistory.id() );
+            qsQuery += QString( "licenceId = \"%1\", " ).arg( obPatientCardHistory.licenceId() );
         }
-        else if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        else if( obPatientCardHistory.archive().compare( "MOD" ) == 0 )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE patientCardHistories SET ";
         }
-        //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
-        qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
+        qsQuery += QString( "patientCardId = \"%1\", " ).arg( obPatientCardHistory.patientCardId() );
+        qsQuery += QString( "units = \"%1\", " ).arg( obPatientCardHistory.units() );
+        qsQuery += QString( "time = \"%1\", " ).arg( obPatientCardHistory.time() );
+        qsQuery += QString( "active = %1, " ).arg( obPatientCardHistory.active() );
         qsQuery += QString( "archive = \"ARC\" " );
-        if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
+        if( obPatientCardHistory.archive().compare( "MOD" ) == 0 )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_TABLERECORD_Id = \"%1\" " ).arg( ob_ClassName_.id() );
+            qsQuery += QString( "patientCardHistoryId = \"%1\" " ).arg( obPatientCardHistory.id() );
             qsQuery += "AND ";
-            qsQuery += QString( "licenceId = \"%1\" " ).arg( ob_ClassName_.licenceId() );
+            qsQuery += QString( "licenceId = \"%1\" " ).arg( obPatientCardHistory.licenceId() );
         }
 
-        m_inProcessCount = MIRROR_SYNC_DB_TABLENAME;*/
+        m_inProcessCount = MIRROR_SYNC_DB_PATIENTCARDHISTORY;
 
         _qId = g_poServer->sendQuery( qsQuery );
     }
@@ -1426,7 +1463,7 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
 void cDBMirror::_recordPatientcardHistorySynchronized()
 //====================================================================================
 {
-    g_poDB->executeQTQuery( QString( "UPDATE _TABLENAME_ SET archive=\"ARC\" WHERE _TABLERECORD_Id=%1" ).arg(m_uiCurrentId) );
+    g_poDB->executeQTQuery( QString( "UPDATE patientCardHistories SET archive=\"ARC\" WHERE patientCardHistoryId=%1" ).arg(m_uiCurrentId) );
 
     _synchronizePatientcardHistory();
 }
