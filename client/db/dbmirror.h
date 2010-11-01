@@ -111,6 +111,8 @@ public:
     void            updateSynchronizationLevel( unsigned int p_uiSyncLevel );
     void            updateGlobalSyncLevel( unsigned int p_uiSyncLevel );
 
+    bool            checkSynchronizationFinished();
+
     void            synchronizeUserTable();
     void            synchronizePatientOriginTable();
     void            synchronizeReasonToVisit();
@@ -157,7 +159,7 @@ private:
     unsigned int    m_uiDbModificationLevel;        // Identifies which table modified. Only table with higher level
                                                     // can be archived on server
     unsigned int    m_uiGlobalSyncLevel;            // Identifies which table has modified global data.
-    unsigned int    m_uiCurrentId;
+    unsigned int    m_uiCurrentId;                  // Holds the actually archived record unique identifier
 
     void            _tableSynchronized( unsigned int p_uiSyncLevel );
     void            _globalDataSynchronized( unsigned int p_uiSyncLevel );
