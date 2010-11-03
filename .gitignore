@@ -495,4 +495,8 @@ client/FileWriter.o
 client/dbmirror.o
 client/moc_dbmirror.cpp
 client/moc_dbmirror.o
+client/dlgsynchronization.o
+client/moc_dlgsynchronization.cpp
+client/moc_dlgsynchronization.o
+client/ui_dlgsynchronization.h
 
