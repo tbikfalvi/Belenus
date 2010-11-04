@@ -175,6 +175,8 @@ bool BelenusServerConnection::isLicenseValid()
 
 int BelenusServerConnection::sendQuery(const QString query)
 {
+    g_obLogger(cSeverity::DEBUG) << "[BelenusServerConnection::sendQuery] " << query << EOM;
+
     _queryIdCounterGuard.lock();
     _queryIdCounter++;
     int id = _queryIdCounter;

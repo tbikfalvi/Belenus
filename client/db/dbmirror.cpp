@@ -282,6 +282,14 @@ void cDBMirror::_globalDataSynchronized( unsigned int p_uiSyncLevel )
     m_uiGlobalSyncLevel &= ~p_uiSyncLevel;
 }
 //====================================================================================
+bool cDBMirror::checkSyncLevel( unsigned int p_uiSyncLevel )
+//====================================================================================
+{
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::checkSyncLevel] p_uiSyncLevel: " << QString::number(p_uiSyncLevel) << " - m_uiDbModificationLevel: " << QString::number(m_uiDbModificationLevel) << EOM;
+
+    return ((m_uiDbModificationLevel&p_uiSyncLevel)>0?true:false);
+}
+//====================================================================================
 bool cDBMirror::checkSynchronizationFinished()
 //====================================================================================
 {
@@ -303,13 +311,105 @@ bool cDBMirror::checkSynchronizationFinished()
 bool cDBMirror::checkIsSynchronizationNeeded()
 //====================================================================================
 {
-    QSqlQuery *poQuery = NULL;
+    QSqlQuery   *poQuery = NULL;
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
-
     if( poQuery->first() )
         updateSynchronizationLevel( DB_USER );
 
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientOrigin WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PATIENT_ORIGIN );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM reasonToVisit WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_REASON_TO_VISIT );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM illnessGroups WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_ILLNESS_GROUP );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM publicPlaces WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PUBLIC_PLACES );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM healthInsurances WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_HEALTH_INSURANCE );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM companies WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_COMPANY );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM doctors WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_DOCTOR );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patients WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PATIENT );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM attendance WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_ATTENDANCE );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardTypes WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PATIENTCARD_TYPE );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PATIENTCARD );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardHistories WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PATIENTCARD_HISTORY );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PANEL_TYPE );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PANEL_STATUS );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PANEL );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_PANEL_USE );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_DISCOUNT );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM zipRegionCity WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_ZIP_REGION_CITY );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM address WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_ADDRESS );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassa WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_CASSA );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaHistory WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_CASSA_HISTORY );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledgerDevice WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_LEDGER_DEVICE );
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
+    if( poQuery->first() )
+        updateSynchronizationLevel( DB_LEDGER );
+
+    return (m_uiDbModificationLevel>0?true:false);
 }
 //====================================================================================
 //====================================================================================
@@ -320,6 +420,13 @@ bool cDBMirror::checkIsSynchronizationNeeded()
 //====================================================================================
 //====================================================================================
 //====================================================================================
+//====================================================================================
+void cDBMirror::synchronizeAllTable()
+//====================================================================================
+{
+    m_bSyncAllTable = true;
+    synchronizeUserTable();
+}
 //====================================================================================
 void cDBMirror::synchronizeUserTable()
 //====================================================================================
@@ -2070,7 +2177,7 @@ void cDBMirror::_recordProductSynchronized()
 void cDBMirror::synchronizeDiscount()
 //====================================================================================
 {
-    _synchronizeZipRegionCity();
+    _synchronizeDiscount();
 }
 //====================================================================================
 void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )

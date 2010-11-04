@@ -31,7 +31,15 @@ public:
     cDlgSynchronization( QWidget *p_poParent = 0 );
     virtual ~cDlgSynchronization();
 
+private:
+    int     m_nTimer;
+
 private slots:
+    void    checkSynchronizationStatus();
+    void    on_pbStart_clicked();
+
+protected:
+    void    timerEvent(QTimerEvent *event);
 
 };
 

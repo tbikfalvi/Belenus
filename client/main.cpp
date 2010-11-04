@@ -179,11 +179,11 @@ int main( int argc, char *argv[] )
 
             if( g_obDBMirror.checkIsSynchronizationNeeded() )
             {
-                qsSpalsh += QObject::tr("Local database has to synchronized with server.");
+                qsSpalsh += QObject::tr("Local database has to synchronized with server.\n");
             }
             else
             {
-                qsSpalsh += QObject::tr("Local database synchronized with server.");
+                qsSpalsh += QObject::tr("Local database synchronized with server.\n");
             }
 
             // Itt lehet lekérdezni a 0 licenceId-s adatokat a szervertől

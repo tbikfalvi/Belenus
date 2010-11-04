@@ -70,6 +70,7 @@
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
+#include "dlg/dlgsynchronization.h"
 
 //====================================================================================
 
@@ -1610,6 +1611,8 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
 void cWndMain::on_action_SynchronizeDatabase_triggered()
 //====================================================================================
 {
-    g_obDBMirror.synchronizeUserTable();
+    cDlgSynchronization obDlgSynchronization( this );
+
+    obDlgSynchronization.exec();
 }
 //====================================================================================
