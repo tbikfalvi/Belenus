@@ -65,6 +65,7 @@ cDBMirror::cDBMirror()
     m_bGetGlobalData        = false;
     m_inProcessCount        = 0;
     m_bSyncAllTable         = false;
+    m_bSyncExit             = false;
     m_uiDbModificationLevel = 0;
     m_uiCurrentId           = 0;
 }
@@ -302,6 +303,7 @@ bool cDBMirror::checkSynchronizationFinished()
         m_bGetGlobalData    = false;
         m_inProcessCount    = 0;
         m_bSyncAllTable     = false;
+        m_bSyncExit         = false;
         m_uiCurrentId       = 0;
     }
 
@@ -426,6 +428,12 @@ void cDBMirror::synchronizeAllTable()
 {
     m_bSyncAllTable = true;
     synchronizeUserTable();
+}
+//====================================================================================
+void cDBMirror::synchronizeExit()
+//====================================================================================
+{
+    m_bSyncExit = true;
 }
 //====================================================================================
 void cDBMirror::synchronizeUserTable()

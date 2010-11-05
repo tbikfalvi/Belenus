@@ -27,6 +27,7 @@ public:
 
     void setValid(bool v) { _valid = v; }
     bool isValid() const { return _valid; }
+    int affectedRecords();
     QString toStringStream();
     bool fromStringStream(QString);
 
@@ -34,6 +35,7 @@ protected:
     typedef QVector<QHash<int, QVariant> > DataTable;
 
     bool _valid;
+    int _affected;
     QVector<QString> _headers;
     DataTable _data;
 };

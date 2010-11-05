@@ -749,6 +749,10 @@ void cWndMain::on_action_LogOut_triggered()
 
     g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
 
+    cDlgSynchronization obDlgSynchronization( this );
+
+    obDlgSynchronization.exec();
+
     g_obUser.logOut();
     g_obLogDBWriter.setAppUser( 0 );
     updateTitle();

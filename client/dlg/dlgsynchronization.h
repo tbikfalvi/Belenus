@@ -30,9 +30,11 @@ class cDlgSynchronization : public QDialog, protected Ui::dlgSynchronization
 public:
     cDlgSynchronization( QWidget *p_poParent = 0 );
     virtual ~cDlgSynchronization();
+    void    autoSynchronization();
 
 private:
     int     m_nTimer;
+    bool    m_bAutoSynchronization;
 
 private slots:
     void    checkSynchronizationStatus();

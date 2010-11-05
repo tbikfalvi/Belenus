@@ -9,6 +9,7 @@ SqlResult::SqlResult(QObject *parent)
     : QAbstractTableModel(parent),
       _valid(false)
 {
+    _affected = 0;
 }
 
 
@@ -74,6 +75,7 @@ bool SqlResult::copy(QSqlQuery *q) {
 
     _headers.clear();
     _data.clear();
+    _affected = 0;
 
     if ( q->lastError().isValid() ) {
         _valid = false;
@@ -99,6 +101,11 @@ bool SqlResult::copy(QSqlQuery *q) {
                 _data[q->at()][i] = q->value(i);
             hasNext = q->next();
         }
+    }
+
+    if ( q->isActive() && !q->isSelect() )
+    {
+        _affected = q->numRowsAffected();
     }
 
     return true;

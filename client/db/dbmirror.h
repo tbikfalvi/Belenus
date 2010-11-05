@@ -116,6 +116,7 @@ public:
     bool            checkIsSynchronizationNeeded();
 
     void            synchronizeAllTable();
+    void            synchronizeExit();
 
     void            synchronizeUserTable();
     void            synchronizePatientOriginTable();
@@ -159,7 +160,9 @@ protected:
 private:
     bool            m_bGetGlobalData;               // Identifies when data with licenceId=0 requested from server
     int             m_inProcessCount;               // Identifies the current process, see process identifier defines
-    bool            m_bSyncAllTable;                // Identifies whether all table has been synchronized or not
+    bool            m_bSyncAllTable;                // Identifies whether all table needs to be synchronized or not
+    bool            m_bSyncExit;                    // Identifies whether tables modified during exit
+                                                    // needs to be synchronized or not
     unsigned int    m_uiDbModificationLevel;        // Identifies which table modified. Only table with higher level
                                                     // can be archived on server
     unsigned int    m_uiGlobalSyncLevel;            // Identifies which table has modified global data.

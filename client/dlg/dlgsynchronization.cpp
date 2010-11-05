@@ -17,6 +17,8 @@
 
 cDlgSynchronization::cDlgSynchronization( QWidget *p_poParent ) : QDialog( p_poParent )
 {
+    m_bAutoSynchronization = false;
+
     setupUi( this );
 
     setWindowTitle( tr("Database synchronization") );
@@ -44,6 +46,12 @@ cDlgSynchronization::~cDlgSynchronization()
 
 }
 
+void cDlgSynchronization::autoSynchronization()
+{
+    m_bAutoSynchronization = true;
+    m_nTimer = startTimer( 5000 );
+}
+
 void cDlgSynchronization::checkSynchronizationStatus()
 {
     chkUser->setChecked( g_obDBMirror.checkSyncLevel(DB_USER) );
@@ -55,7 +63,10 @@ void cDlgSynchronization::checkSynchronizationStatus()
     chkDoctors->setChecked( g_obDBMirror.checkSyncLevel(DB_DOCTOR) );
     chkApplication->setChecked( g_obDBMirror.checkSyncLevel(DB_PANEL) ||
                                 g_obDBMirror.checkSyncLevel(DB_PANEL_STATUS) ||
-                                g_obDBMirror.checkSyncLevel(DB_PANEL_USE) );
+                                g_obDBMirror.checkSyncLevel(DB_PANEL_USE) ||
+                                g_obDBMirror.checkSyncLevel(DB_CASSA) ||
+                                g_obDBMirror.checkSyncLevel(DB_CASSA_DENOMINATION) ||
+                                g_obDBMirror.checkSyncLevel(DB_CASSA_HISTORY) );
     chkPatient->setChecked( g_obDBMirror.checkSyncLevel(DB_PATIENT) );
     chkAttendance->setChecked( g_obDBMirror.checkSyncLevel(DB_ATTENDANCE) );
     chkPatientcardTypes->setChecked( g_obDBMirror.checkSyncLevel(DB_PATIENTCARD_TYPE) );
@@ -71,16 +82,26 @@ void cDlgSynchronization::on_pbStart_clicked()
     m_nTimer = startTimer( 500 );
     listInformation->addItem( tr("Starting database synchronization.") );
     g_obDBMirror.synchronizeAllTable();
+    pbStart->setEnabled( false );
 }
 
 void cDlgSynchronization::timerEvent(QTimerEvent *)
 {
+    if( m_bAutoSynchronization )
+    {
+        on_pbStart_clicked();
+        killTimer( m_nTimer );
+    }
+
     checkSynchronizationStatus();
 
     if( !g_obDBMirror.checkIsSynchronizationNeeded() )
     {
         killTimer( m_nTimer );
         listInformation->addItem( tr("Database synchronization finished.") );
-        pbStart->setEnabled( false );
+        if( m_bAutoSynchronization )
+        {
+            QDialog::accept();
+        }
     }
 }
