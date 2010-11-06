@@ -17,7 +17,9 @@
 
 cDlgSynchronization::cDlgSynchronization( QWidget *p_poParent ) : QDialog( p_poParent )
 {
-    m_bAutoSynchronization = false;
+    m_bAutoSynchronization  = false;
+    m_bAutoStart            = true;
+    m_bAutoClose            = false;
 
     setupUi( this );
 
@@ -48,8 +50,13 @@ cDlgSynchronization::~cDlgSynchronization()
 
 void cDlgSynchronization::autoSynchronization()
 {
-    m_bAutoSynchronization = true;
+    setWindowTitle( tr("Automatic database synchronization") );
+    listInformation->addItem( tr("Automatic database synchronization is starting ...") );
+    m_bAutoSynchronization  = true;
+    m_bAutoStart            = true;
     m_nTimer = startTimer( 5000 );
+    pbStart->setEnabled( false );
+    pbExit->setEnabled( false );
 }
 
 void cDlgSynchronization::checkSynchronizationStatus()
@@ -66,7 +73,8 @@ void cDlgSynchronization::checkSynchronizationStatus()
                                 g_obDBMirror.checkSyncLevel(DB_PANEL_USE) ||
                                 g_obDBMirror.checkSyncLevel(DB_CASSA) ||
                                 g_obDBMirror.checkSyncLevel(DB_CASSA_DENOMINATION) ||
-                                g_obDBMirror.checkSyncLevel(DB_CASSA_HISTORY) );
+                                g_obDBMirror.checkSyncLevel(DB_CASSA_HISTORY) ||
+                                g_obDBMirror.checkSyncLevel(DB_ZIP_REGION_CITY) );
     chkPatient->setChecked( g_obDBMirror.checkSyncLevel(DB_PATIENT) );
     chkAttendance->setChecked( g_obDBMirror.checkSyncLevel(DB_ATTENDANCE) );
     chkPatientcardTypes->setChecked( g_obDBMirror.checkSyncLevel(DB_PATIENTCARD_TYPE) );
@@ -87,10 +95,18 @@ void cDlgSynchronization::on_pbStart_clicked()
 
 void cDlgSynchronization::timerEvent(QTimerEvent *)
 {
-    if( m_bAutoSynchronization )
+    if( m_bAutoStart )
     {
         on_pbStart_clicked();
         killTimer( m_nTimer );
+        m_bAutoStart = false;
+        return;
+    }
+    else if( m_bAutoClose )
+    {
+        killTimer( m_nTimer );
+        QDialog::accept();
+        return;
     }
 
     checkSynchronizationStatus();
@@ -101,7 +117,9 @@ void cDlgSynchronization::timerEvent(QTimerEvent *)
         listInformation->addItem( tr("Database synchronization finished.") );
         if( m_bAutoSynchronization )
         {
-            QDialog::accept();
+            listInformation->addItem( tr("Exiting application ...") );
+            m_nTimer = startTimer( 3000 );
+            m_bAutoClose = true;
         }
     }
 }

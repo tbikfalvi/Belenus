@@ -103,10 +103,7 @@ bool SqlResult::copy(QSqlQuery *q) {
         }
     }
 
-    if ( q->isActive() && !q->isSelect() )
-    {
-        _affected = q->numRowsAffected();
-    }
+    _affected = q->numRowsAffected();
 
     return true;
 }

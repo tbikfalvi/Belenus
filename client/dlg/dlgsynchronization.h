@@ -35,6 +35,8 @@ public:
 private:
     int     m_nTimer;
     bool    m_bAutoSynchronization;
+    bool    m_bAutoStart;
+    bool    m_bAutoClose;
 
 private slots:
     void    checkSynchronizationStatus();

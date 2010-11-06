@@ -106,7 +106,7 @@ bool cDBMirror::start()
 void cDBMirror::queryReady( int id, SqlResult *r )
 //====================================================================================
 {
-    //g_obLogger(cSeverity::DEBUG) << "[cDBMirror::queryReady] id=" << id << " result has " << r->rowCount() << " rows." << EOM;
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::queryReady] id=" << id << " affected " << r->affectedRecords() << " rows." << EOM;
 
     if( id == _qId )
     {
@@ -114,7 +114,7 @@ void cDBMirror::queryReady( int id, SqlResult *r )
         {
             case MIRROR_UPDATE_LICENCE_DATA:
             {
-                if( r->affectedRecords() > 0 )
+                if( r->isValid() > 0 )
                 {
                     g_poDB->executeQTQuery( QString( "UPDATE licences SET archive=\"ARC\" WHERE licenceId=%1" ).arg(g_poPrefs->getLicenceId()) );
                     m_inProcessCount = 0;
@@ -242,7 +242,16 @@ void cDBMirror::updateLicenceData()
     {
         QString qsQuery = "";
 
-        qsQuery += QString( "UPDATE licences SET " );
+        if( poQuery->value( 11 ).toString().compare("NEW") == 0 )
+        {
+            qsQuery += QString( "INSERT INTO licences SET " );
+            qsQuery += QString( "licenceId = %1, " ).arg( poQuery->value( 0 ).toString() );
+            qsQuery += QString( "serial = \"%1\", " ).arg( poQuery->value( 1 ).toString() );
+        }
+        else
+        {
+            qsQuery += QString( "UPDATE licences SET " );
+        }
         qsQuery += QString( "country = \"%1\", " ).arg( poQuery->value( 2 ).toString() );
         qsQuery += QString( "region = \"%1\", " ).arg( poQuery->value( 3 ).toString() );
         qsQuery += QString( "city = \"%1\", " ).arg( poQuery->value( 4 ).toString() );
@@ -251,7 +260,14 @@ void cDBMirror::updateLicenceData()
         qsQuery += QString( "studio = \"%1\", " ).arg( poQuery->value( 7 ).toString() );
         qsQuery += QString( "contact = \"%1\", " ).arg( poQuery->value( 8 ).toString() );
         qsQuery += QString( "lastValidated = \"%1\" " ).arg( poQuery->value( 9 ).toString() );
-        qsQuery += QString( "WHERE licenceId = %1" ).arg( poQuery->value( 0 ).toString() );
+        if( poQuery->value( 11 ).toString().compare("NEW") == 0 )
+        {
+            qsQuery += QString( ", active = 1, archive = \"ARC\" " );
+        }
+        else
+        {
+            qsQuery += QString( "WHERE licenceId = %1" ).arg( poQuery->value( 0 ).toString() );
+        }
 
         m_inProcessCount = MIRROR_UPDATE_LICENCE_DATA;
 
@@ -286,7 +302,7 @@ void cDBMirror::_globalDataSynchronized( unsigned int p_uiSyncLevel )
 bool cDBMirror::checkSyncLevel( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
-    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::checkSyncLevel] p_uiSyncLevel: " << QString::number(p_uiSyncLevel) << " - m_uiDbModificationLevel: " << QString::number(m_uiDbModificationLevel) << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::checkSyncLevel] p_uiSyncLevel: " << QString::number(p_uiSyncLevel) << " - m_uiDbModificationLevel: " << QString::number(m_uiDbModificationLevel) << EOM;
 
     return ((m_uiDbModificationLevel&p_uiSyncLevel)>0?true:false);
 }

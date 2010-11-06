@@ -42,6 +42,8 @@ private:
 
     bool                m_bCtrlPressed;
 
+    bool                m_bSerialRegistration;
+
     void updateTitle();
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );

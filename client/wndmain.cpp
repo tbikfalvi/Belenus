@@ -96,6 +96,7 @@ cWndMain::cWndMain( QWidget *parent )
     setupUi( this );
 
     m_bCtrlPressed          = false;
+    m_bSerialRegistration   = false;
 
     m_uiPatientId           = 0;
     m_uiAttendanceId        = 0;
@@ -281,32 +282,37 @@ void cWndMain::initPanels()
 {
     mdiPanels->initPanels();
 }
-
-
-
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
-    if ( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ) {
+    if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but was not able to validate it with the server.\n"
                                  "Please note that without validation the application will work only for the next %1 days\n\n"
                                  "Please also note you need live internet connection for the validation process.").arg(g_obLicenceManager.getDaysRemaining()) );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR ) {
+    }
+    else if( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but failed to validate the installation with the server.\n"
                                  "Please call Service to validate your installation.\n\n"
                                  "Note that without validation the application will work only for the next %1 days").arg(g_obLicenceManager.getDaysRemaining()) );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED || g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED ) {
+    }
+    else if( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED ||
+                g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key has expired.\n"
                                  "The application has a serial key registered but failed to validate it with the server since the last %1 days.\n\n"
                                  "Please note you need live internet connection for the validation process.").arg(LicenceManager::EXPIRE_IN_DAYS) );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::NOT_VALID ) {
+    }
+    else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key validation has failed.\n"
                                  "Please call Service") );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
+    } /*else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
@@ -319,7 +325,7 @@ void cWndMain::checkDemoLicenceKey()
             cDlgSerialReg   obDlgSerialReg( this );
             obDlgSerialReg.exec();
         }
-    }
+    }*/
 }
 //====================================================================================
 void cWndMain::loginUser()
@@ -626,6 +632,33 @@ void cWndMain::timerEvent(QTimerEvent *)
 {
     updateToolbar();
 
+    if( m_bSerialRegistration )
+    {
+        if( g_poPrefs->getLicenceId() > 1 )
+        {
+            m_bSerialRegistration = false;
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Application licence key successfully registered.\n"
+                                          "The application users currently attached to DEMO licence key.\n\n"
+                                          "Do you want to update application users and attach them to the newly registered licence key?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE licenceId=1").arg(g_poPrefs->getLicenceId()) );
+                g_obDBMirror.updateLicenceData();
+            }
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to set the additional information of the studio now?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                dlgLicenceEdit  obDlgLicenceEdit( this );
+
+                obDlgLicenceEdit.exec();
+            }
+        }
+    }
+
     if( m_uiPatientId != g_obPatient.id() )
     {
         updateTitle();
@@ -670,11 +703,26 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
     }
     else
     {
-        if( QMessageBox::question( this, tr("Attention"),
+        if( QMessageBox::question( this, tr("Question"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
             logoutUser();
+
+            if( g_obDBMirror.checkIsSynchronizationNeeded() &&
+                QMessageBox::question( this, tr("Question"),
+                                       tr("Database synchronization needed.\n"
+                                          "Do you want to synchronize database with server?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                hide();
+
+                cDlgSynchronization     obDlgSynchronization( this );
+
+                obDlgSynchronization.autoSynchronization();
+                obDlgSynchronization.exec();
+            }
+
             p_poEvent->accept();
         }
         else
@@ -748,10 +796,6 @@ void cWndMain::on_action_LogOut_triggered()
     logoutUser();
 
     g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged out" << EOM;
-
-    cDlgSynchronization obDlgSynchronization( this );
-
-    obDlgSynchronization.exec();
 
     g_obUser.logOut();
     g_obLogDBWriter.setAppUser( 0 );
@@ -1027,7 +1071,11 @@ void cWndMain::on_action_PostponedAttendance_triggered()
 void cWndMain::on_action_ValidateSerialKey_triggered()
 {
     cDlgSerialReg   obDlgSerialReg( this );
-    obDlgSerialReg.exec();
+
+    if( obDlgSerialReg.exec() == QDialog::Accepted )
+    {
+        m_bSerialRegistration = true;
+    }
 }
 //====================================================================================
 void cWndMain::on_action_PatientCardSell_triggered()
