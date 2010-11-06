@@ -114,7 +114,7 @@ void cDBMirror::queryReady( int id, SqlResult *r )
         {
             case MIRROR_UPDATE_LICENCE_DATA:
             {
-                if( r->isValid() )
+                if( r->affectedRecords() > 0 )
                 {
                     g_poDB->executeQTQuery( QString( "UPDATE licences SET archive=\"ARC\" WHERE licenceId=%1" ).arg(g_poPrefs->getLicenceId()) );
                     m_inProcessCount = 0;
