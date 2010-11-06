@@ -330,11 +330,6 @@ void cWndMain::checkDemoLicenceKey()
 //====================================================================================
 void cWndMain::loginUser()
 {
-    //----------------------------------------------
-    // Penztar betoltese, ellenorzese
-    //----------------------------------------------
-    g_obCassa.init();
-
     // Felhasznalo ellenorzese
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) )
     { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
@@ -342,6 +337,80 @@ void cWndMain::loginUser()
         return;
     }
 
+    // Felhasznalohoz tartozo, legutolso nem lezart kassza keresese
+    if( g_obCassa.loadOpenCassa(g_obUser.id()) )
+    {// Letezik nyitva hagyott, felhasznalohoz tartozo rekord
+
+        g_obCassa.cassaContinue();
+    }
+    else
+    {// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
+
+        // Legutolso nem lezart kassza keresese
+        if( g_obCassa.loadOpenCassa() )
+        {// Van nyitva hagyott kassza rekord
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr( "The latest cassa record still opened:\n\n"
+                                           "Owner: %1\n"
+                                           "Balance: %2\n\n"
+                                           "Do you want to continue this cassa?\n\n"
+                                           "Please note: if you click NO, new cassa record will be opened "
+                                           "and this cassa forced to close with reseting it's balance.").arg(g_obCassa.cassaOwnerStr()).arg(g_obCassa.cassaBalance()),
+                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                g_obCassa.cassaContinue( g_obUser.id() );
+            }
+            else
+            {
+                g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cassa left in open.") );
+                g_obCassa.cassaClose();
+                g_obCassa.createNew( g_obUser.id() );
+            }
+        }// Volt nyitva hagyott kassza rekord
+        else
+        {// Nem volt nyitva hagyott kassza rekord
+
+            // Legutolso kassza rekord betoltese
+            if( g_obCassa.loadLatestCassa() )
+            {// Volt mar lezart kassza rekord
+
+                // Ki lett-e uritve a kassza zaraskor
+                if( g_obCassa.cassaBalance() > 0 )
+                {// A kasszaban meg maradt penz
+
+                    // Akarja-e a felhasznalo folytatni a kasszat
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr( "The latest cassa record closed with balance:\n\n"
+                                                   "%1\n\n"
+                                                   "Do you want to continue this cassa?\n\n"
+                                                   "Please note: if you click NO, new cassa record will be opened "
+                                                   "and this cassa forced to reopen and close with reseting it's balance.").arg(g_obCassa.cassaBalance()),
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    {// Kassza folytatasa
+                        g_obCassa.createNew( g_obUser.id(), g_obCassa.cassaBalance() );
+                    }
+                    else
+                    {// Uj kassza nyitasa
+                        g_obCassa.cassaReOpen();
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                    }
+                }// Volt penz a kasszaban
+                else
+                {// Nem volt penz a kasszaban
+                    g_obCassa.createNew( g_obUser.id() );
+                }
+            }// Volt mar lezart kassza rekord
+            else
+            {// Nem volt meg lezart kassza rekord
+                g_obCassa.createNew( g_obUser.id() );
+            }
+        }// Nem volt nyitva hagyott kassza rekord
+    }// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
+
+/*
     // Penztar ellenorzese
     if( g_obCassa.isCassaExists() )
     { // Penztar rekord letezik, utolso bejegyzes betoltve
@@ -372,7 +441,7 @@ void cWndMain::loginUser()
             { // Mas jelentkezett be
 
                 // Volt az aktualis napon mar korabbi penztara?
-                unsigned int uiCassaId = g_obCassa.isCassaClosedToday(  g_obUser.id() );
+                unsigned int uiCassaId = g_obCassa.isCassaClosedToday( g_obUser.id() );
                 if( uiCassaId )
                 { // Volt mar az aktualis napon lezart penztara
 
@@ -451,12 +520,12 @@ void cWndMain::loginUser()
             g_obCassa.setDisabled();
         } // Penztar letiltva
     } // Penztar rekord nem letezett
+*/
 }
 //====================================================================================
 void cWndMain::logoutUser()
 {
-    if( g_obCassa.isCassaEnabled() &&
-        g_obCassa.cassaOwner() == g_obUser.id() )
+    if( g_obCassa.isCassaEnabled() )
     {
         if( !g_poPrefs->getCassaAutoClose() )
         {

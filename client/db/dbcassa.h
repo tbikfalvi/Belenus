@@ -25,11 +25,11 @@ public:
     void            setCurrentBalance( const int p_nCurrentBalance )        throw();
     QString         startDateTime() const                                   throw();
     void            setStartDateTime( const QString &p_qsStartDateTime )    throw();
-    QString          stopDateTime() const                                   throw();
+    QString         stopDateTime() const                                    throw();
     void            setStopDateTime( const QString &p_qsStopDateTime )      throw();
     bool            active() const                                          throw();
     void            setActive( const bool p_bActive )                       throw();
-    QString          archive() const                                        throw();
+    QString         archive() const                                         throw();
     void            setArchive( const QString &p_qsArchive )                throw();
 
 private:
