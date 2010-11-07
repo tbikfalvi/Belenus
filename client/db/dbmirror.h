@@ -23,40 +23,41 @@
 //====================================================================================
 // Process identifiers
 
-#define     MIRROR_UPDATE_LICENCE_DATA          1
+#define     MIRROR_GET_GLOBAL_TIMESTAMP         1
+#define     MIRROR_UPDATE_LICENCE_DATA          2
 
-#define     MIRROR_SYNC_DB_USER                 2
-#define     MIRROR_SYNC_DB_PATIENTORIGIN        3
-#define     MIRROR_SYNC_DB_REASONTOVISIT        4
-#define     MIRROR_SYNC_DB_ILLNESSGROUP         5
-#define     MIRROR_SYNC_DB_PUBLICPLACES         6
-#define     MIRROR_SYNC_DB_HEALTHINSURANCE      7
-#define     MIRROR_SYNC_DB_COMPANY              8
-#define     MIRROR_SYNC_DB_DOCTORTYPE           9
-#define     MIRROR_SYNC_DB_DOCTOR               10
-#define     MIRROR_SYNC_DB_DOCTORSCHEDULE       11
-#define     MIRROR_SYNC_DB_PATIENT              12
-#define     MIRROR_SYNC_DB_ATTENDANCE           13
-#define     MIRROR_SYNC_DB_PATIENTCARDTYPE      14
-#define     MIRROR_SYNC_DB_PATIENTCARD          15
-#define     MIRROR_SYNC_DB_PATIENTCARDCONNECT   16
-#define     MIRROR_SYNC_DB_PATIENTCARDHISTORY   17
-#define     MIRROR_SYNC_DB_PANELTYPE            18
-#define     MIRROR_SYNC_DB_PANELSTATUS          19
-#define     MIRROR_SYNC_DB_PANEL                20
-#define     MIRROR_SYNC_DB_PANELUSE             21
-#define     MIRROR_SYNC_DB_ATTENDANCESCHEDULE   22
-#define     MIRROR_SYNC_DB_DENOMINATION         23
-#define     MIRROR_SYNC_DB_PRODUCTTYPE          24
-#define     MIRROR_SYNC_DB_PRODUCT              25
-#define     MIRROR_SYNC_DB_DISCOUNT             26
-#define     MIRROR_SYNC_DB_ZIPREGIONCITY        27
-#define     MIRROR_SYNC_DB_ADDRESS              28
-#define     MIRROR_SYNC_DB_CASSA                29
-#define     MIRROR_SYNC_DB_CASSAHISTORY         30
-#define     MIRROR_SYNC_DB_CASSADENOMINATION    31
-#define     MIRROR_SYNC_DB_LEDGERDEVICE         32
-#define     MIRROR_SYNC_DB_LEDGER               33
+#define     MIRROR_SYNC_DB_USER                 10
+#define     MIRROR_SYNC_DB_PATIENTORIGIN        11
+#define     MIRROR_SYNC_DB_REASONTOVISIT        12
+#define     MIRROR_SYNC_DB_ILLNESSGROUP         13
+#define     MIRROR_SYNC_DB_PUBLICPLACES         14
+#define     MIRROR_SYNC_DB_HEALTHINSURANCE      15
+#define     MIRROR_SYNC_DB_COMPANY              16
+#define     MIRROR_SYNC_DB_DOCTORTYPE           17
+#define     MIRROR_SYNC_DB_DOCTOR               18
+#define     MIRROR_SYNC_DB_DOCTORSCHEDULE       19
+#define     MIRROR_SYNC_DB_PATIENT              20
+#define     MIRROR_SYNC_DB_ATTENDANCE           21
+#define     MIRROR_SYNC_DB_PATIENTCARDTYPE      22
+#define     MIRROR_SYNC_DB_PATIENTCARD          23
+#define     MIRROR_SYNC_DB_PATIENTCARDCONNECT   24
+#define     MIRROR_SYNC_DB_PATIENTCARDHISTORY   25
+#define     MIRROR_SYNC_DB_PANELTYPE            26
+#define     MIRROR_SYNC_DB_PANELSTATUS          27
+#define     MIRROR_SYNC_DB_PANEL                28
+#define     MIRROR_SYNC_DB_PANELUSE             29
+#define     MIRROR_SYNC_DB_ATTENDANCESCHEDULE   30
+#define     MIRROR_SYNC_DB_DENOMINATION         31
+#define     MIRROR_SYNC_DB_PRODUCTTYPE          32
+#define     MIRROR_SYNC_DB_PRODUCT              33
+#define     MIRROR_SYNC_DB_DISCOUNT             34
+#define     MIRROR_SYNC_DB_ZIPREGIONCITY        35
+#define     MIRROR_SYNC_DB_ADDRESS              36
+#define     MIRROR_SYNC_DB_CASSA                37
+#define     MIRROR_SYNC_DB_CASSAHISTORY         38
+#define     MIRROR_SYNC_DB_CASSADENOMINATION    39
+#define     MIRROR_SYNC_DB_LEDGERDEVICE         40
+#define     MIRROR_SYNC_DB_LEDGER               41
 
 //====================================================================================
 // Database modification levels
@@ -106,12 +107,14 @@ public:
     void            initialize();
     bool            start();
 
+    void            requestGlobalDataTimestamp();
     void            updateLicenceData();
 
     void            updateSynchronizationLevel( unsigned int p_uiSyncLevel );
     void            updateGlobalSyncLevel( unsigned int p_uiSyncLevel );
     bool            checkSyncLevel( unsigned int p_uiSyncLevel );
 
+    bool            checkIsGlobalDataDownloadInProgress();
     bool            checkSynchronizationFinished();
     bool            checkIsSynchronizationNeeded();
 
@@ -158,8 +161,8 @@ protected:
     int             _qId;
 
 private:
-    bool            m_bGetGlobalData;               // Identifies when data with licenceId=0 requested from server
     int             m_inProcessCount;               // Identifies the current process, see process identifier defines
+    bool            m_bAcquireGlobalData;           // Identifies when global data download is in progress
     bool            m_bSyncAllTable;                // Identifies whether all table needs to be synchronized or not
     bool            m_bSyncExit;                    // Identifies whether tables modified during exit
                                                     // needs to be synchronized or not
@@ -167,6 +170,8 @@ private:
                                                     // can be archived on server
     unsigned int    m_uiGlobalSyncLevel;            // Identifies which table has modified global data.
     unsigned int    m_uiCurrentId;                  // Holds the actually archived record unique identifier
+
+    void            _compareGlobalDataTimestamp( const QString &p_qsGlobalTimestamp );
 
     void            _tableSynchronized( unsigned int p_uiSyncLevel );
     void            _globalDataSynchronized( unsigned int p_uiSyncLevel );

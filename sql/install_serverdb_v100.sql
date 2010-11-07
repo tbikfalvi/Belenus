@@ -55,6 +55,7 @@ DROP TABLE IF EXISTS `illnessGroups`;
 DROP TABLE IF EXISTS `reasonToVisit`;
 DROP TABLE IF EXISTS `patientOrigin`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `settings`;
 DROP TABLE IF EXISTS `logs`;
 DROP TABLE IF EXISTS `clients`;
 DROP TABLE IF EXISTS `licences`;
@@ -124,6 +125,22 @@ CREATE TABLE `logs` (
   `message`                 text                    DEFAULT NULL,
   INDEX logs_date(`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Settings tabla. A program mukodeset befolyasolo adatokat tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `settings` (
+  `settingId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `identifier`              varchar(50)             NOT NULL,
+  `value`                   text                    NOT NULL,
+  UNIQUE (`identifier`),
+  PRIMARY KEY (`settingId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
+ (NULL, 'GLOBAL_DATA_UPDATED', '2010-11-01 00:00:00');
 
 -- -----------------------------------------------------------------------------------
 -- A kliens alkalmazast uzemelteto felhasznalok adatait tartalmazza

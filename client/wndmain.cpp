@@ -356,7 +356,7 @@ void cWndMain::loginUser()
                                            "Balance: %2\n\n"
                                            "Do you want to continue this cassa?\n\n"
                                            "Please note: if you click NO, new cassa record will be opened "
-                                           "and this cassa forced to close with reseting it's balance.").arg(g_obCassa.cassaOwnerStr()).arg(g_obCassa.cassaBalance()),
+                                           "and this cassa forced to close with reseting it's balance.").arg( g_obCassa.cassaOwnerStr() ).arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
             {
                 g_obCassa.cassaContinue( g_obUser.id() );
@@ -385,7 +385,7 @@ void cWndMain::loginUser()
                                                    "%1\n\n"
                                                    "Do you want to continue this cassa?\n\n"
                                                    "Please note: if you click NO, new cassa record will be opened "
-                                                   "and this cassa forced to reopen and close with reseting it's balance.").arg(g_obCassa.cassaBalance()),
+                                                   "and this cassa forced to reopen and close with reseting it's balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
                                                QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                     {// Kassza folytatasa
                         g_obCassa.createNew( g_obUser.id(), g_obCassa.cassaBalance() );
@@ -533,13 +533,43 @@ void cWndMain::logoutUser()
                                        tr("Do you want to close your cassa?"),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
             {
-//                on_action_Cassa_triggered();
+                if( g_obCassa.cassaBalance() > 0 )
+                {
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr("There are some cash left in your cassa.\n"
+                                                  "Current balance: %1\n\n"
+                                                  "Do you want to close the cassa with automatic "
+                                                  "cash withdawal?\n\n"
+                                                  "Please note: if you click NO, the cassa will "
+                                                  "be closed with the actual balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    {
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                    }
+                }
                 g_obCassa.cassaClose();
             }
         }
         else
         {
-//                on_action_Cassa_triggered();
+            if( g_obCassa.cassaBalance() > 0 && !g_poPrefs->getCassaAutoWithdrawal() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("There are some cash left in your cassa.\n"
+                                              "Current balance: %1\n\n"
+                                              "Do you want to close the cassa with automatic "
+                                              "cash withdawal?\n\n"
+                                              "Please note: if you click NO, the cassa will "
+                                              "be closed with the actual balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                }
+            }
+            else if( g_obCassa.cassaBalance() > 0 && g_poPrefs->getCassaAutoWithdrawal() )
+            {
+                g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+            }
             g_obCassa.cassaClose();
         }
     }
@@ -706,6 +736,9 @@ void cWndMain::timerEvent(QTimerEvent *)
         if( g_poPrefs->getLicenceId() > 1 )
         {
             m_bSerialRegistration = false;
+            g_obDBMirror.updateLicenceData();
+            g_obCassa.cassaClose();
+            g_obCassa.createNew( g_obUser.id() );
 
             if( QMessageBox::question( this, tr("Question"),
                                        tr("Application licence key successfully registered.\n"
@@ -714,7 +747,10 @@ void cWndMain::timerEvent(QTimerEvent *)
                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
             {
                 g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE licenceId=1").arg(g_poPrefs->getLicenceId()) );
-                g_obDBMirror.updateLicenceData();
+            }
+            else
+            {
+                g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE (userId=1 OR userId=2) AND licenceId=1").arg(g_poPrefs->getLicenceId()) );
             }
 
             if( QMessageBox::question( this, tr("Question"),

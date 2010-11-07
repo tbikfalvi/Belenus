@@ -42,6 +42,18 @@ dlgLicenceEdit::dlgLicenceEdit( QWidget *p_poParent ) : QDialog( p_poParent )
     ledCity->setText( poQuery->value( 4 ).toString() );
     ledAddress->setText( poQuery->value( 6 ).toString() );
     ledContactName->setText( poQuery->value( 8 ).toString() );
+
+    if( m_uiId < 2 )
+    {
+        ledName->setEnabled( false );
+        ledCountry->setEnabled( false );
+        cmbRegion->setEnabled( false );
+        ledZip->setEnabled( false );
+        ledCity->setEnabled( false );
+        ledAddress->setEnabled( false );
+        ledContactName->setEnabled( false );
+        pbSave->setEnabled( false );
+    }
 }
 
 dlgLicenceEdit::~dlgLicenceEdit()

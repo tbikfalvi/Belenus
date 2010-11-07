@@ -21,6 +21,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
+    tbwPreferences->setCurrentIndex( 0 );
+
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
     QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
     btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
@@ -70,6 +72,12 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
+    chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
+    if( !chkAutoCloseCassa->isChecked() )
+    {
+        chkCassaAutoWithdrawal->setChecked( false );
+        chkCassaAutoWithdrawal->setEnabled( false );
+    }
 
     ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
 
@@ -101,6 +109,19 @@ void cDlgPreferences::on_btnMainBackground_clicked( bool )
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 }
 
+void cDlgPreferences::on_chkAutoCloseCassa_clicked()
+{
+    if( chkAutoCloseCassa->isChecked() )
+    {
+        chkCassaAutoWithdrawal->setEnabled( true );
+    }
+    else
+    {
+        chkCassaAutoWithdrawal->setEnabled( false );
+        chkCassaAutoWithdrawal->setChecked( false );
+    }
+}
+
 void cDlgPreferences::on_spbBarcodeLen_valueChanged( int p_inValue )
 {
     ledBarcodePrefix->setMaxLength( p_inValue - 1 );
@@ -127,6 +148,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
+    g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
 
     g_poPrefs->setDefaultCountry( ledDefaultCountry->text() );
 
@@ -134,3 +156,4 @@ void cDlgPreferences::accept()
 
     QDialog::accept();
 }
+

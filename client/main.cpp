@@ -35,6 +35,7 @@
 #include "bs_connection.h"
 #include "cassa.h"
 #include "licenceManager.h"
+#include "general.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -57,6 +58,7 @@ unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
 LicenceManager           g_obLicenceManager;
 cDBMirror                g_obDBMirror;
+cGeneral                 g_obGen;
 
 //====================================================================================
 int main( int argc, char *argv[] )
@@ -105,7 +107,7 @@ int main( int argc, char *argv[] )
         g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
-        qsSpalsh += QObject::tr(" SUCCEEDED.\n");
+        qsSpalsh += QObject::tr(" SUCCEEDED.\n\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
@@ -169,7 +171,7 @@ int main( int argc, char *argv[] )
         } else if ( g_obLicenceManager.getType()==LicenceManager::NOT_VALID ) {
             qsSpalsh += QObject::tr(" (licence not accepted by server)");
         }
-        qsSpalsh += "\n";
+        qsSpalsh += "\n\n";
 
         qsSpalsh += QObject::tr("Initialize database synchronization ...");
         g_obDBMirror.initialize(); // enough to call once at the begining
@@ -186,13 +188,24 @@ int main( int argc, char *argv[] )
                 qsSpalsh += QObject::tr("Local database synchronized with server.\n");
             }
 
-            // Itt lehet lekérdezni a 0 licenceId-s adatokat a szervertől
-            // __TO_BE_SOLVED__
+            qsSpalsh += "\n";
+
+            qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
+            if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
+            {
+                qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
+            }
+            else
+            {
+                qsSpalsh += QObject::tr("Studio independent data match with server.\n");
+            }
         }
         else
         {
             qsSpalsh += QObject::tr("FAILED\n");
         }
+
+        qsSpalsh += "\n";
 
 #ifdef __WIN32__
 

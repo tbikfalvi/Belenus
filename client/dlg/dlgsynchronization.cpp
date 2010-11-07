@@ -15,10 +15,12 @@
 
 #include "dlgsynchronization.h"
 
+//====================================================================================
 cDlgSynchronization::cDlgSynchronization( QWidget *p_poParent ) : QDialog( p_poParent )
+//====================================================================================
 {
     m_bAutoSynchronization  = false;
-    m_bAutoStart            = true;
+    m_bAutoStart            = false;
     m_bAutoClose            = false;
 
     setupUi( this );
@@ -42,13 +44,15 @@ cDlgSynchronization::cDlgSynchronization( QWidget *p_poParent ) : QDialog( p_poP
         listInformation->addItem( tr("Database synchronized with server.") );
     }
 }
-
+//====================================================================================
 cDlgSynchronization::~cDlgSynchronization()
+//====================================================================================
 {
 
 }
-
+//====================================================================================
 void cDlgSynchronization::autoSynchronization()
+//====================================================================================
 {
     setWindowTitle( tr("Automatic database synchronization") );
     listInformation->addItem( tr("Automatic database synchronization is starting ...") );
@@ -58,8 +62,9 @@ void cDlgSynchronization::autoSynchronization()
     pbStart->setEnabled( false );
     pbExit->setEnabled( false );
 }
-
+//====================================================================================
 void cDlgSynchronization::checkSynchronizationStatus()
+//====================================================================================
 {
     chkUser->setChecked( g_obDBMirror.checkSyncLevel(DB_USER) );
     chkPatientOrigin->setChecked( g_obDBMirror.checkSyncLevel(DB_PATIENT_ORIGIN) );
@@ -84,16 +89,18 @@ void cDlgSynchronization::checkSynchronizationStatus()
     chkLedger->setChecked( g_obDBMirror.checkSyncLevel(DB_LEDGER_DEVICE) ||
                            g_obDBMirror.checkSyncLevel(DB_LEDGER));
 }
-
+//====================================================================================
 void cDlgSynchronization::on_pbStart_clicked()
+//====================================================================================
 {
     m_nTimer = startTimer( 500 );
     listInformation->addItem( tr("Starting database synchronization.") );
     g_obDBMirror.synchronizeAllTable();
     pbStart->setEnabled( false );
 }
-
+//====================================================================================
 void cDlgSynchronization::timerEvent(QTimerEvent *)
+//====================================================================================
 {
     if( m_bAutoStart )
     {
@@ -123,3 +130,4 @@ void cDlgSynchronization::timerEvent(QTimerEvent *)
         }
     }
 }
+//====================================================================================

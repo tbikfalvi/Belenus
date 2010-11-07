@@ -59,6 +59,8 @@ public:
     int             getDeviceUseVAT() const;
     void            setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow = false );
     bool            getCassaAutoClose() const;
+    void            setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal, bool p_boSaveNow = false );
+    bool            getCassaAutoWithdrawal() const;
     void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
     QString         getDefaultCountry() const;
     void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
@@ -112,6 +114,7 @@ private:
     unsigned int    m_uiMaxTreatLength;
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;
+    bool            m_bCassaAutoWithdrawal;
     QString         m_qsDefaultCountry;
     int             m_inZipLength;
 

@@ -13,6 +13,7 @@
 //
 //====================================================================================
 
+#include <QDateTime>
 
 //====================================================================================
 
@@ -62,8 +63,8 @@ cDBMirror::cDBMirror()
 {
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::cDBMirror] called" << EOM;
 
-    m_bGetGlobalData        = false;
     m_inProcessCount        = 0;
+    m_bAcquireGlobalData    = false;
     m_bSyncAllTable         = false;
     m_bSyncExit             = false;
     m_uiDbModificationLevel = 0;
@@ -92,15 +93,74 @@ bool cDBMirror::start()
 {
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::start] start called" << EOM;
 
-    if ( g_poServer->getStatus()!=BelenusServerConnection::AUTHENTICATED )
+    if( g_poServer->getStatus() != BelenusServerConnection::AUTHENTICATED )
     {
         g_obLogger(cSeverity::DEBUG) << "[cDBMirror::start] not connected to server" << EOM;
         return false;
     }
 
-    m_bGetGlobalData = true;
+    m_bAcquireGlobalData = true;
+    requestGlobalDataTimestamp();
 
     return true;
+}
+//====================================================================================
+void cDBMirror::requestGlobalDataTimestamp()
+//====================================================================================
+{
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::requestGlobalDataTimestamp]" << EOM;
+
+    QString qsQuery = QString( "SELECT value FROM settings WHERE identifier=\"GLOBAL_DATA_UPDATED\" ");
+
+    m_inProcessCount = MIRROR_GET_GLOBAL_TIMESTAMP;
+
+    _qId = g_poServer->sendQuery( qsQuery );
+}
+//====================================================================================
+void cDBMirror::updateLicenceData()
+//====================================================================================
+{
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::updateLicenceData]" << EOM;
+
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences WHERE licenceId=%1" ).arg(g_poPrefs->getLicenceId()) );
+
+    if( poQuery->first() )
+    {
+        QString qsQuery = "";
+
+        if( poQuery->value( 11 ).toString().compare("NEW") == 0 )
+        {
+            qsQuery += QString( "INSERT INTO licences SET " );
+            qsQuery += QString( "licenceId = %1, " ).arg( poQuery->value( 0 ).toString() );
+            qsQuery += QString( "serial = \"%1\", " ).arg( poQuery->value( 1 ).toString() );
+        }
+        else
+        {
+            qsQuery += QString( "UPDATE licences SET " );
+        }
+        qsQuery += QString( "country = \"%1\", " ).arg( poQuery->value( 2 ).toString() );
+        qsQuery += QString( "region = \"%1\", " ).arg( poQuery->value( 3 ).toString() );
+        qsQuery += QString( "city = \"%1\", " ).arg( poQuery->value( 4 ).toString() );
+        qsQuery += QString( "zip = \"%1\", " ).arg( poQuery->value( 5 ).toString() );
+        qsQuery += QString( "address = \"%1\", " ).arg( poQuery->value( 6 ).toString() );
+        qsQuery += QString( "studio = \"%1\", " ).arg( poQuery->value( 7 ).toString() );
+        qsQuery += QString( "contact = \"%1\", " ).arg( poQuery->value( 8 ).toString() );
+        qsQuery += QString( "lastValidated = \"%1\" " ).arg( poQuery->value( 9 ).toString() );
+        if( poQuery->value( 11 ).toString().compare("NEW") == 0 )
+        {
+            qsQuery += QString( ", active = 1, archive = \"ARC\" " );
+        }
+        else
+        {
+            qsQuery += QString( "WHERE licenceId = %1" ).arg( poQuery->value( 0 ).toString() );
+        }
+
+        m_inProcessCount = MIRROR_UPDATE_LICENCE_DATA;
+
+        _qId = g_poServer->sendQuery( qsQuery );
+    }
 }
 //====================================================================================
 void cDBMirror::queryReady( int id, SqlResult *r )
@@ -112,6 +172,12 @@ void cDBMirror::queryReady( int id, SqlResult *r )
     {
         switch( m_inProcessCount )
         {
+            case MIRROR_GET_GLOBAL_TIMESTAMP:
+                if( r->isValid() )
+                {
+                    _compareGlobalDataTimestamp( r->index(0,0).data().toString() );
+                }
+                break;
             case MIRROR_UPDATE_LICENCE_DATA:
             {
                 if( r->isValid() > 0 )
@@ -229,56 +295,34 @@ void cDBMirror::queryReady( int id, SqlResult *r )
     }
 }
 //====================================================================================
-void cDBMirror::updateLicenceData()
-//====================================================================================
-{
-    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::updateLicenceData]" << EOM;
-
-    QSqlQuery *poQuery = NULL;
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences WHERE licenceId=%1" ).arg(g_poPrefs->getLicenceId()) );
-
-    if( poQuery->first() )
-    {
-        QString qsQuery = "";
-
-        if( poQuery->value( 11 ).toString().compare("NEW") == 0 )
-        {
-            qsQuery += QString( "INSERT INTO licences SET " );
-            qsQuery += QString( "licenceId = %1, " ).arg( poQuery->value( 0 ).toString() );
-            qsQuery += QString( "serial = \"%1\", " ).arg( poQuery->value( 1 ).toString() );
-        }
-        else
-        {
-            qsQuery += QString( "UPDATE licences SET " );
-        }
-        qsQuery += QString( "country = \"%1\", " ).arg( poQuery->value( 2 ).toString() );
-        qsQuery += QString( "region = \"%1\", " ).arg( poQuery->value( 3 ).toString() );
-        qsQuery += QString( "city = \"%1\", " ).arg( poQuery->value( 4 ).toString() );
-        qsQuery += QString( "zip = \"%1\", " ).arg( poQuery->value( 5 ).toString() );
-        qsQuery += QString( "address = \"%1\", " ).arg( poQuery->value( 6 ).toString() );
-        qsQuery += QString( "studio = \"%1\", " ).arg( poQuery->value( 7 ).toString() );
-        qsQuery += QString( "contact = \"%1\", " ).arg( poQuery->value( 8 ).toString() );
-        qsQuery += QString( "lastValidated = \"%1\" " ).arg( poQuery->value( 9 ).toString() );
-        if( poQuery->value( 11 ).toString().compare("NEW") == 0 )
-        {
-            qsQuery += QString( ", active = 1, archive = \"ARC\" " );
-        }
-        else
-        {
-            qsQuery += QString( "WHERE licenceId = %1" ).arg( poQuery->value( 0 ).toString() );
-        }
-
-        m_inProcessCount = MIRROR_UPDATE_LICENCE_DATA;
-
-        _qId = g_poServer->sendQuery( qsQuery );
-    }
-}
-//====================================================================================
 void cDBMirror::updateSynchronizationLevel( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     m_uiDbModificationLevel |= p_uiSyncLevel;
+}
+//====================================================================================
+void cDBMirror::_compareGlobalDataTimestamp( const QString &p_qsGlobalTimestamp )
+//====================================================================================
+{
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"GLOBAL_DATA_UPDATED\" ") );
+    poQuery->first();
+
+    QDateTime   qdServer = QDateTime::fromString( p_qsGlobalTimestamp, "yyyy-MM-dd hh:mm:ss" );
+    QDateTime   qdClient = QDateTime::fromString( poQuery->value( 0 ).toString(), "yyyy-MM-dd hh:mm:ss" );
+
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::_compareGlobalDataTimestamp] Server: " << qdServer.toString("yyyy-MM-dd hh:mm:ss") << EOM;
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::_compareGlobalDataTimestamp] Client: " << qdClient.toString("yyyy-MM-dd hh:mm:ss") << EOM;
+
+    if( qdClient.secsTo( qdServer ) > 0 )
+    {
+        m_bAcquireGlobalData = true;
+    }
+    else
+    {
+        m_bAcquireGlobalData = false;
+    }
 }
 //====================================================================================
 void cDBMirror::_tableSynchronized( unsigned int p_uiSyncLevel )
@@ -307,6 +351,12 @@ bool cDBMirror::checkSyncLevel( unsigned int p_uiSyncLevel )
     return ((m_uiDbModificationLevel&p_uiSyncLevel)>0?true:false);
 }
 //====================================================================================
+bool cDBMirror::checkIsGlobalDataDownloadInProgress()
+//====================================================================================
+{
+    return m_bAcquireGlobalData;
+}
+//====================================================================================
 bool cDBMirror::checkSynchronizationFinished()
 //====================================================================================
 {
@@ -316,7 +366,6 @@ bool cDBMirror::checkSynchronizationFinished()
     {
         bRet = true;
 
-        m_bGetGlobalData    = false;
         m_inProcessCount    = 0;
         m_bSyncAllTable     = false;
         m_bSyncExit         = false;

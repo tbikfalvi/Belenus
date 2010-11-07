@@ -145,7 +145,7 @@ void cCassa::cassaContinue()
 {
     cDBCassaHistory obDBCassaHistory;
 
-    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( 0 );
@@ -187,7 +187,7 @@ void cCassa::cassaReOpen()
 
     cDBCassaHistory obDBCassaHistory;
 
-    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
@@ -214,7 +214,7 @@ void cCassa::cassaClose()
 
     cDBCassaHistory obDBCassaHistory;
 
-    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( 0 );

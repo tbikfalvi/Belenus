@@ -8,6 +8,7 @@
 #include "preferences.h"
 #include "communication.h"
 #include "cassa.h"
+#include "general.h"
 
 extern cDBUser                   g_obUser;
 extern cPreferences             *g_poPrefs;
@@ -16,5 +17,6 @@ extern cDBPatient                g_obPatient;
 extern unsigned int              g_uiPatientAttendanceId;
 extern cCassa                    g_obCassa;
 extern cDBMirror                 g_obDBMirror;
+extern cGeneral                  g_obGen;
 
 #endif

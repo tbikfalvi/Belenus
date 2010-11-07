@@ -499,4 +499,6 @@ client/dlgsynchronization.o
 client/moc_dlgsynchronization.cpp
 client/moc_dlgsynchronization.o
 client/ui_dlgsynchronization.h
+sql/reset_client
+sql/reset_server
 
