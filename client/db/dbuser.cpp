@@ -123,6 +123,9 @@ void cDBUser::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+
+    if( m_uiId > 0 && m_uiLicenceId > 1 )
+        g_obDBMirror.updateSynchronizationLevel( DB_USER );
 }
 
 void cDBUser::createNew() throw()
@@ -234,4 +237,14 @@ void cDBUser::setComment( const QString &p_qsComment ) throw ()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBUser::archive() const throw()
+{
+    return m_qsArchive;
+}
+
+void cDBUser::setArchive( const QString &p_qsArchive ) throw()
+{
+    m_qsArchive = p_qsArchive;
 }

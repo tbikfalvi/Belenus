@@ -81,6 +81,8 @@
     <addaction name="action_ValidateSerialKey"/>
     <addaction name="action_EditLicenceInformation"/>
     <addaction name="separator"/>
+    <addaction name="action_SynchronizeDatabase"/>
+    <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
@@ -557,6 +559,14 @@
    </property>
    <property name="toolTip">
     <string>List of patientcards will be obsolete in the near future.</string>
+   </property>
+  </action>
+  <action name="action_SynchronizeDatabase">
+   <property name="text">
+    <string>Synchronize database ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Synchronize database with server database</string>
    </property>
   </action>
  </widget>

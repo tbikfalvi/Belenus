@@ -228,6 +228,11 @@ void cDBHealthInsurance::save() throw( cSevException )
         }
     }
     if( poQuery ) delete poQuery;
+
+    if( m_uiId > 0 && m_uiLicenceId != 1 )
+        g_obDBMirror.updateSynchronizationLevel( DB_HEALTH_INSURANCE );
+    if( m_uiId > 0 && m_uiLicenceId == 0 )
+        g_obDBMirror.updateGlobalSyncLevel( DB_HEALTH_INSURANCE );
 }
 
 void cDBHealthInsurance::remove() throw( cSevException )

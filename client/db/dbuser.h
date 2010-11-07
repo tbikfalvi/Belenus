@@ -61,6 +61,8 @@ public:
     void                        setActive( const bool p_boActive )                              throw();
     QString                     comment() const                                                 throw();
     void                        setComment( const QString &p_qsComment )                        throw();
+    QString                     archive() const                                                 throw();
+    void                        setArchive( const QString &p_qsArchive )                        throw();
 
 private:
     bool                        m_boLoggedIn;

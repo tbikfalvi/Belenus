@@ -42,6 +42,8 @@ private:
 
     bool                m_bCtrlPressed;
 
+    bool                m_bSerialRegistration;
+
     void updateTitle();
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
@@ -97,6 +99,7 @@ private slots:
     void on_action_ReportPatientcards_triggered();
     void on_action_Discounts_triggered();
     void on_action_PatientcardsObsolete_triggered();
+    void on_action_SynchronizeDatabase_triggered();
 };
 
 #endif

@@ -17,22 +17,28 @@ public:
     cCassa();
     ~cCassa();
 
-    void                    init();
-    bool                    isCassaExists();
-    void                    createNew( unsigned int p_uiUserId );
-    bool                    isCassaClosed();
-    unsigned int            isCassaClosedToday( unsigned int p_uiUserId );
-    unsigned int            cassaOwner();
+    bool                    loadOpenCassa( unsigned int p_uiUserId );
+    bool                    loadOpenCassa();
+    bool                    loadLatestCassa();
+
+    void                    createNew( unsigned int p_uiUserId, int p_inBalance=0 );
+    void                    cassaContinue();
+    void                    cassaContinue( unsigned int p_uiUserId );
     void                    cassaReOpen();
     void                    cassaReOpen( unsigned int p_uiCassaId );
     void                    cassaClose();
-    void                    setEnabled();
-    void                    setDisabled();
-    bool                    isCassaEnabled();
-    unsigned int            cassaId();
+
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaAddMoneyAction( int p_nMoney, QString p_qsComment = "" );
+
+    void                    setEnabled();
+    void                    setDisabled();
+    bool                    isCassaEnabled();
+
+    QString                 cassaOwnerStr();
+    int                     cassaBalance();
+    unsigned int            cassaId();
 
 private:
     cDBCassa                *m_pCassa;

@@ -27,9 +27,9 @@ cDBReasonToVisit::~cDBReasonToVisit()
 
 void cDBReasonToVisit::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
-                             const string &p_stName,
+                             const QString &p_stName,
                              const bool p_bActive,
-                             const string &p_stArchive ) throw()
+                             const QString &p_stArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
@@ -48,9 +48,9 @@ void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
-          p_obRecord.value( inNameIdx ).toString().toStdString(),
+          p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
-          p_obRecord.value( inArchiveIdx ).toString().toStdString() );
+          p_obRecord.value( inArchiveIdx ).toString() );
 }
 
 void cDBReasonToVisit::load( const unsigned int p_uiId ) throw( cSevException )
@@ -66,11 +66,11 @@ void cDBReasonToVisit::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBReasonToVisit::load( const string &p_stName ) throw( cSevException )
+void cDBReasonToVisit::load( const QString &p_stName ) throw( cSevException )
 {
-    cTracer obTrace( "cDBReasonToVisit::load", QString("name: \"%1\"").arg(p_stName.c_str()) );
+    cTracer obTrace( "cDBReasonToVisit::load", QString("name: \"%1\"").arg(p_stName) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM reasonToVisit WHERE name = \"" + QString::fromStdString( p_stName ) + "\"" );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM reasonToVisit WHERE name = \"" + p_stName + "\"" );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Reason to visit name not found" );
@@ -100,9 +100,9 @@ void cDBReasonToVisit::save() throw( cSevException )
     }
     qsQuery += " reasonToVisit SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "name = \"%1\", " ).arg( QString::fromStdString( m_stName ) );
+    qsQuery += QString( "name = \"%1\", " ).arg( m_stName );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
-    qsQuery += QString( "archive = \"%1\" " ).arg( QString::fromStdString( m_stArchive ) );
+    qsQuery += QString( "archive = \"%1\" " ).arg( m_stArchive );
     if( m_uiId )
     {
         qsQuery += QString( " WHERE reasonToVisitId = %1" ).arg( m_uiId );
@@ -111,6 +111,11 @@ void cDBReasonToVisit::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
+
+    if( m_uiId > 0 && m_uiLicenceId != 1 )
+        g_obDBMirror.updateSynchronizationLevel( DB_REASON_TO_VISIT );
+    if( m_uiId > 0 && m_uiLicenceId == 0 )
+        g_obDBMirror.updateGlobalSyncLevel( DB_REASON_TO_VISIT );
 }
 
 void cDBReasonToVisit::remove() throw( cSevException )
@@ -156,12 +161,12 @@ void cDBReasonToVisit::setLicenceId( const unsigned int p_uiLicenceId ) throw()
     m_uiLicenceId = p_uiLicenceId;
 }
 
-string cDBReasonToVisit::name() const throw()
+QString cDBReasonToVisit::name() const throw()
 {
     return m_stName;
 }
 
-void cDBReasonToVisit::setName( const string &p_stName ) throw()
+void cDBReasonToVisit::setName( const QString &p_stName ) throw()
 {
     m_stName = p_stName;
 }
@@ -176,12 +181,12 @@ void cDBReasonToVisit::setActive( const bool p_bActive ) throw()
     m_bActive = p_bActive;
 }
 
-string cDBReasonToVisit::archive() const throw()
+QString cDBReasonToVisit::archive() const throw()
 {
     return m_stArchive;
 }
 
-void cDBReasonToVisit::setArchive( const string &p_stArchive ) throw()
+void cDBReasonToVisit::setArchive( const QString &p_stArchive ) throw()
 {
     m_stArchive = p_stArchive;
 }

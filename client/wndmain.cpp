@@ -70,6 +70,7 @@
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
+#include "dlg/dlgsynchronization.h"
 
 //====================================================================================
 
@@ -95,6 +96,7 @@ cWndMain::cWndMain( QWidget *parent )
     setupUi( this );
 
     m_bCtrlPressed          = false;
+    m_bSerialRegistration   = false;
 
     m_uiPatientId           = 0;
     m_uiAttendanceId        = 0;
@@ -156,8 +158,14 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
         action_Users->setIcon( QIcon("./resources/40x40_user.png") );
+        action_Doctor->setIcon( QIcon("./resources/40x40_doctor.png") );
+        action_Company->setIcon( QIcon("./resources/40x40_company.png") );
+        action_HealthInsurance->setIcon( QIcon("./resources/40x40_health_insurance.png") );
+        action_Discounts->setIcon( QIcon("./resources/40x40_discount.png") );
         action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.png") );
         action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.png") );
+        action_IllnessGroup->setIcon( QIcon("./resources/40x40_illness.png") );
+        action_RegionZipCity->setIcon( QIcon("./resources/40x40_address.png") );
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
@@ -171,6 +179,16 @@ cWndMain::cWndMain( QWidget *parent )
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
 
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
+    action_ReportPatients->setIcon( QIcon("./resources/40x40_patient.png") );
+    action_ReportAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
+    action_ReportPatientcards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_PatientcardsObsolete->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
+    action_ReportPatientcardUses->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
+    action_CassaHistory->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
+
+    action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
+    action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
+
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 
@@ -264,32 +282,37 @@ void cWndMain::initPanels()
 {
     mdiPanels->initPanels();
 }
-
-
-
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
-    if ( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ) {
+    if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but was not able to validate it with the server.\n"
                                  "Please note that without validation the application will work only for the next %1 days\n\n"
                                  "Please also note you need live internet connection for the validation process.").arg(g_obLicenceManager.getDaysRemaining()) );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR ) {
+    }
+    else if( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but failed to validate the installation with the server.\n"
                                  "Please call Service to validate your installation.\n\n"
                                  "Note that without validation the application will work only for the next %1 days").arg(g_obLicenceManager.getDaysRemaining()) );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED || g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED ) {
+    }
+    else if( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED ||
+                g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key has expired.\n"
                                  "The application has a serial key registered but failed to validate it with the server since the last %1 days.\n\n"
                                  "Please note you need live internet connection for the validation process.").arg(LicenceManager::EXPIRE_IN_DAYS) );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::NOT_VALID ) {
+    }
+    else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
+    {
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key validation has failed.\n"
                                  "Please call Service") );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
+    } /*else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
@@ -302,16 +325,11 @@ void cWndMain::checkDemoLicenceKey()
             cDlgSerialReg   obDlgSerialReg( this );
             obDlgSerialReg.exec();
         }
-    }
+    }*/
 }
 //====================================================================================
 void cWndMain::loginUser()
 {
-    //----------------------------------------------
-    // Penztar betoltese, ellenorzese
-    //----------------------------------------------
-    g_obCassa.init();
-
     // Felhasznalo ellenorzese
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) )
     { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
@@ -319,6 +337,80 @@ void cWndMain::loginUser()
         return;
     }
 
+    // Felhasznalohoz tartozo, legutolso nem lezart kassza keresese
+    if( g_obCassa.loadOpenCassa(g_obUser.id()) )
+    {// Letezik nyitva hagyott, felhasznalohoz tartozo rekord
+
+        g_obCassa.cassaContinue();
+    }
+    else
+    {// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
+
+        // Legutolso nem lezart kassza keresese
+        if( g_obCassa.loadOpenCassa() )
+        {// Van nyitva hagyott kassza rekord
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr( "The latest cassa record still opened:\n\n"
+                                           "Owner: %1\n"
+                                           "Balance: %2\n\n"
+                                           "Do you want to continue this cassa?\n\n"
+                                           "Please note: if you click NO, new cassa record will be opened "
+                                           "and this cassa forced to close with reseting it's balance.").arg( g_obCassa.cassaOwnerStr() ).arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                g_obCassa.cassaContinue( g_obUser.id() );
+            }
+            else
+            {
+                g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cassa left in open.") );
+                g_obCassa.cassaClose();
+                g_obCassa.createNew( g_obUser.id() );
+            }
+        }// Volt nyitva hagyott kassza rekord
+        else
+        {// Nem volt nyitva hagyott kassza rekord
+
+            // Legutolso kassza rekord betoltese
+            if( g_obCassa.loadLatestCassa() )
+            {// Volt mar lezart kassza rekord
+
+                // Ki lett-e uritve a kassza zaraskor
+                if( g_obCassa.cassaBalance() > 0 )
+                {// A kasszaban meg maradt penz
+
+                    // Akarja-e a felhasznalo folytatni a kasszat
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr( "The latest cassa record closed with balance:\n\n"
+                                                   "%1\n\n"
+                                                   "Do you want to continue this cassa?\n\n"
+                                                   "Please note: if you click NO, new cassa record will be opened "
+                                                   "and this cassa forced to reopen and close with reseting it's balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    {// Kassza folytatasa
+                        g_obCassa.createNew( g_obUser.id(), g_obCassa.cassaBalance() );
+                    }
+                    else
+                    {// Uj kassza nyitasa
+                        g_obCassa.cassaReOpen();
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                    }
+                }// Volt penz a kasszaban
+                else
+                {// Nem volt penz a kasszaban
+                    g_obCassa.createNew( g_obUser.id() );
+                }
+            }// Volt mar lezart kassza rekord
+            else
+            {// Nem volt meg lezart kassza rekord
+                g_obCassa.createNew( g_obUser.id() );
+            }
+        }// Nem volt nyitva hagyott kassza rekord
+    }// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
+
+/*
     // Penztar ellenorzese
     if( g_obCassa.isCassaExists() )
     { // Penztar rekord letezik, utolso bejegyzes betoltve
@@ -349,7 +441,7 @@ void cWndMain::loginUser()
             { // Mas jelentkezett be
 
                 // Volt az aktualis napon mar korabbi penztara?
-                unsigned int uiCassaId = g_obCassa.isCassaClosedToday(  g_obUser.id() );
+                unsigned int uiCassaId = g_obCassa.isCassaClosedToday( g_obUser.id() );
                 if( uiCassaId )
                 { // Volt mar az aktualis napon lezart penztara
 
@@ -428,12 +520,12 @@ void cWndMain::loginUser()
             g_obCassa.setDisabled();
         } // Penztar letiltva
     } // Penztar rekord nem letezett
+*/
 }
 //====================================================================================
 void cWndMain::logoutUser()
 {
-    if( g_obCassa.isCassaEnabled() &&
-        g_obCassa.cassaOwner() == g_obUser.id() )
+    if( g_obCassa.isCassaEnabled() )
     {
         if( !g_poPrefs->getCassaAutoClose() )
         {
@@ -441,13 +533,43 @@ void cWndMain::logoutUser()
                                        tr("Do you want to close your cassa?"),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
             {
-//                on_action_Cassa_triggered();
+                if( g_obCassa.cassaBalance() > 0 )
+                {
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr("There are some cash left in your cassa.\n"
+                                                  "Current balance: %1\n\n"
+                                                  "Do you want to close the cassa with automatic "
+                                                  "cash withdawal?\n\n"
+                                                  "Please note: if you click NO, the cassa will "
+                                                  "be closed with the actual balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    {
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                    }
+                }
                 g_obCassa.cassaClose();
             }
         }
         else
         {
-//                on_action_Cassa_triggered();
+            if( g_obCassa.cassaBalance() > 0 && !g_poPrefs->getCassaAutoWithdrawal() )
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("There are some cash left in your cassa.\n"
+                                              "Current balance: %1\n\n"
+                                              "Do you want to close the cassa with automatic "
+                                              "cash withdawal?\n\n"
+                                              "Please note: if you click NO, the cassa will "
+                                              "be closed with the actual balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                }
+            }
+            else if( g_obCassa.cassaBalance() > 0 && g_poPrefs->getCassaAutoWithdrawal() )
+            {
+                g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+            }
             g_obCassa.cassaClose();
         }
     }
@@ -609,6 +731,39 @@ void cWndMain::timerEvent(QTimerEvent *)
 {
     updateToolbar();
 
+    if( m_bSerialRegistration )
+    {
+        if( g_poPrefs->getLicenceId() > 1 )
+        {
+            m_bSerialRegistration = false;
+            g_obDBMirror.updateLicenceData();
+            g_obCassa.cassaClose();
+            g_obCassa.createNew( g_obUser.id() );
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Application licence key successfully registered.\n"
+                                          "The application users currently attached to DEMO licence key.\n\n"
+                                          "Do you want to update application users and attach them to the newly registered licence key?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE licenceId=1").arg(g_poPrefs->getLicenceId()) );
+            }
+            else
+            {
+                g_poDB->executeQTQuery( QString("UPDATE users SET licenceId=%1 WHERE (userId=1 OR userId=2) AND licenceId=1").arg(g_poPrefs->getLicenceId()) );
+            }
+
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Do you want to set the additional information of the studio now?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                dlgLicenceEdit  obDlgLicenceEdit( this );
+
+                obDlgLicenceEdit.exec();
+            }
+        }
+    }
+
     if( m_uiPatientId != g_obPatient.id() )
     {
         updateTitle();
@@ -653,11 +808,26 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
     }
     else
     {
-        if( QMessageBox::question( this, tr("Attention"),
+        if( QMessageBox::question( this, tr("Question"),
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
             logoutUser();
+
+            if( g_obDBMirror.checkIsSynchronizationNeeded() &&
+                QMessageBox::question( this, tr("Question"),
+                                       tr("Database synchronization needed.\n"
+                                          "Do you want to synchronize database with server?"),
+                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                hide();
+
+                cDlgSynchronization     obDlgSynchronization( this );
+
+                obDlgSynchronization.autoSynchronization();
+                obDlgSynchronization.exec();
+            }
+
             p_poEvent->accept();
         }
         else
@@ -1006,7 +1176,11 @@ void cWndMain::on_action_PostponedAttendance_triggered()
 void cWndMain::on_action_ValidateSerialKey_triggered()
 {
     cDlgSerialReg   obDlgSerialReg( this );
-    obDlgSerialReg.exec();
+
+    if( obDlgSerialReg.exec() == QDialog::Accepted )
+    {
+        m_bSerialRegistration = true;
+    }
 }
 //====================================================================================
 void cWndMain::on_action_PatientCardSell_triggered()
@@ -1589,5 +1763,13 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
     setCursor( Qt::ArrowCursor);
 
     obDlgReportPatientCardObs.exec();
+}
+//====================================================================================
+void cWndMain::on_action_SynchronizeDatabase_triggered()
+//====================================================================================
+{
+    cDlgSynchronization obDlgSynchronization( this );
+
+    obDlgSynchronization.exec();
 }
 //====================================================================================
