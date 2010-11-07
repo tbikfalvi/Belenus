@@ -27,6 +27,7 @@ public:
 
     void setValid(bool v) { _valid = v; }
     bool isValid() const { return _valid; }
+    void setAffectedRecords(const int rows) { _affected = rows; }
     int affectedRecords() const { return _affected; }
     QString toStringStream();
     bool fromStringStream(QString);

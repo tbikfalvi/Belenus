@@ -124,11 +124,13 @@ void CommunicationProtocol::_handlePacket(Packet &packet)
             case Packet::MSG_SQL_RESULT: {
                     int id;
                     bool status;
+                    int records;
                     char* str;
-                    packet >> id >> status >> str;
+                    packet >> id >> status >> records >> str;
                     SqlResult *s = new SqlResult();
                     s->fromStringStream(str);
                     s->setValid(status);
+                    s->setAffectedRecords(records);
                     _handleSqlQueryResult(id, s);
                 } break;
 
@@ -236,7 +238,7 @@ void CommunicationProtocol::sendSqlQuery(int queryId, const char *query)
 void CommunicationProtocol::sendSqlQueryResult(int queryId, SqlResult &b)
 {
     Packet p(Packet::MSG_SQL_RESULT);
-    p << queryId << b.isValid();
+    p << queryId << b.isValid() << b.affectedRecords();
     p << b.toStringStream();
 
     _send(p);
