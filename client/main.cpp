@@ -107,7 +107,10 @@ int main( int argc, char *argv[] )
         g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
-        qsSpalsh += QObject::tr(" SUCCEEDED.\n\n");
+        qsSpalsh += QObject::tr(" SUCCEEDED.\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
@@ -151,7 +154,7 @@ int main( int argc, char *argv[] )
             qsSpalsh += QObject::tr("FAILED");
         }
         qsSpalsh += "\n";
-
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         qsSpalsh += QObject::tr("License is ... ");
         if ( g_obLicenceManager.isDemo() )
@@ -171,13 +174,18 @@ int main( int argc, char *argv[] )
         } else if ( g_obLicenceManager.getType()==LicenceManager::NOT_VALID ) {
             qsSpalsh += QObject::tr(" (licence not accepted by server)");
         }
-        qsSpalsh += "\n\n";
+        qsSpalsh += "\n";
+        qsSpalsh += "-----------------------------------------------------\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         qsSpalsh += QObject::tr("Initialize database synchronization ...");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         g_obDBMirror.initialize(); // enough to call once at the begining
         if( g_obDBMirror.start() )
         {
             qsSpalsh += QObject::tr("SUCCEEDED\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             if( g_obDBMirror.checkIsSynchronizationNeeded() )
             {
@@ -187,10 +195,13 @@ int main( int argc, char *argv[] )
             {
                 qsSpalsh += QObject::tr("Local database synchronized with server.\n");
             }
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += "\n";
+            qsSpalsh += "-----------------------------------------------------\n";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
             if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
             {
                 qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
@@ -199,13 +210,15 @@ int main( int argc, char *argv[] )
             {
                 qsSpalsh += QObject::tr("Studio independent data match with server.\n");
             }
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
         }
         else
         {
             qsSpalsh += QObject::tr("FAILED\n");
         }
 
-        qsSpalsh += "\n";
+        qsSpalsh += "-----------------------------------------------------\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
 #ifdef __WIN32__
 

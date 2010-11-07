@@ -59,6 +59,23 @@
 #define     MIRROR_SYNC_DB_LEDGERDEVICE         40
 #define     MIRROR_SYNC_DB_LEDGER               41
 
+#define     MIRROR_GET_GLOBAL_PATIENTORIGIN     50
+#define     MIRROR_GET_GLOBAL_REASONTOVISIT     51
+#define     MIRROR_GET_GLOBAL_ILLNESSGROUPS     52
+#define     MIRROR_GET_GLOBAL_PUBLICPLACES      53
+#define     MIRROR_GET_GLOBAL_HEALTHINSURANCES  54
+#define     MIRROR_GET_GLOBAL_COMPANIES         55
+#define     MIRROR_GET_GLOBAL_DOCTORTYPES       56
+#define     MIRROR_GET_GLOBAL_DOCTORS           57
+#define     MIRROR_GET_GLOBAL_PATIENTS          58
+#define     MIRROR_GET_GLOBAL_PATIENTCARDTYPES  59
+#define     MIRROR_GET_GLOBAL_PATIENTCARDS      60
+#define     MIRROR_GET_GLOBAL_LEDGERTYPES       61
+#define     MIRROR_GET_GLOBAL_PRODUCTTYPES      62
+#define     MIRROR_GET_GLOBAL_PRODUCTS          63
+#define     MIRROR_GET_GLOBAL_DISCOUNTS         64
+#define     MIRROR_GET_GLOBAL_PAYMENTMETHODS    65
+
 //====================================================================================
 // Database modification levels
 
@@ -118,6 +135,23 @@ public:
     bool            checkSynchronizationFinished();
     bool            checkIsSynchronizationNeeded();
 
+    void            acquirePatientOriginGlobals();
+    void            acquireReasonToVisitGlobals();
+    void            acquireIllnessGroupsGlobals();
+    void            acquirePublicPlacesGlobals();
+    void            acquireHealthInsurancesGlobals();
+    void            acquireCompaniesGlobals();
+    void            acquireDoctorTypesGlobals();
+    void            acquireDoctorsGlobals();
+    void            acquirePatientsGlobals();
+    void            acquirePatientCardTypesGlobals();
+    void            acquirePatientCardsGlobals();
+    void            acquireLedgerTypesGlobals();
+    void            acquireProductTypesGlobals();
+    void            acquireProductsGlobals();
+    void            acquireDiscountsGlobals();
+    void            acquirePaymentMethodsGlobals();
+
     void            synchronizeAllTable();
     void            synchronizeExit();
 
@@ -175,6 +209,23 @@ private:
 
     void            _tableSynchronized( unsigned int p_uiSyncLevel );
     void            _globalDataSynchronized( unsigned int p_uiSyncLevel );
+
+    void            _processPatientOriginGlobals( SqlResult *p_sqlResult );
+    void            _processReasonToVisitGlobals( SqlResult *p_sqlResult );
+    void            _processIllnessGroupsGlobals( SqlResult *p_sqlResult );
+    void            _processPublicPlacesGlobals( SqlResult *p_sqlResult );
+    void            _processHealthInsurancesGlobals( SqlResult *p_sqlResult );
+    void            _processCompaniesGlobals( SqlResult *p_sqlResult );
+    void            _processDoctorTypesGlobals( SqlResult *p_sqlResult );
+    void            _processDoctorsGlobals( SqlResult *p_sqlResult );
+    void            _processPatientsGlobals( SqlResult *p_sqlResult );
+    void            _processPatientCardTypesGlobals( SqlResult *p_sqlResult );
+    void            _processPatientCardsGlobals( SqlResult *p_sqlResult );
+    void            _processLedgerTypesGlobals( SqlResult *p_sqlResult );
+    void            _processProductTypesGlobals( SqlResult *p_sqlResult );
+    void            _processProductsGlobals( SqlResult *p_sqlResult );
+    void            _processDiscountsGlobals( SqlResult *p_sqlResult );
+    void            _processPaymentMethodsGlobals( SqlResult *p_sqlResult );
 
     void            _synchronizeUserTable( unsigned int p_uiSyncLevel = DB_USER );
     void            _recordUserSynchronized();
