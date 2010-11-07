@@ -31,6 +31,8 @@
   *   sql-query - string containing the query
   * SQL_RESULT
   *   int id - id received from the query packet
+  *   validity
+  *   affectedRows
   *   ByteArray - the query
   */
 

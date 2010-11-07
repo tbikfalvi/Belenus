@@ -243,7 +243,7 @@ void AdminClientThread::_disconnected()
 
 void AdminClientThread::_handleSqlQueryResult(int queryId, SqlResult *res)
 {
-    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleSqlQueryResult] result for queryid "<< queryId << " has " << res->rowCount() << " rows" << EOM;
+    g_obLogger(cSeverity::DEBUG) << "[AdminClientThread::_handleSqlQueryResult] result for queryid "<< queryId << " has " << res->rowCount() << " rows. Affected=" << res->affectedRecords() << EOM;
     emit sqlResultReady(queryId, res);
 }
 
