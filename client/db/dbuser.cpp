@@ -112,8 +112,9 @@ void cDBUser::save() throw( cSevException )
     qsQuery += QString( "password = \"%1\", " ).arg( m_qsPassword );
     qsQuery += QString( "realName = \"%1\", " ).arg( m_qsRealName );
     qsQuery += QString( "accgroup = %1, " ).arg( (int)m_enGroup );
-    qsQuery += QString( "active = %1, " ).arg( m_boActive );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
+    qsQuery += QString( "active = %1, " ).arg( m_boActive );
     qsQuery += QString( "archive = \"%1\"" ).arg( m_qsArchive );
     if( m_uiId )
     {

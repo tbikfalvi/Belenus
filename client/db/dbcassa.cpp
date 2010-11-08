@@ -116,6 +116,7 @@ void cDBCassa::save() throw( cSevException )
     qsQuery += QString( "currentBalance = \"%1\", " ).arg( m_nCurrentBalance );
     qsQuery += QString( "startDateTime = \"%1\", " ).arg( m_qsStartDateTime );
     qsQuery += QString( "stopDateTime = \"%1\", " ).arg( m_qsStopDateTime );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )

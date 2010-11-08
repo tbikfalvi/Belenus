@@ -142,6 +142,7 @@ void cDBLedgerDevice::save() throw( cSevException )
     qsQuery += QString( "timeCard = \"%1\", " ).arg( m_inTimeCard );
     qsQuery += QString( "timeCash = \"%1\", " ).arg( m_inTimeCash );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )

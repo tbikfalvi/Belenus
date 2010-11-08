@@ -240,6 +240,7 @@ void cDBDiscount::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "discountValue = \"%1\", " ).arg( m_inDiscountValue );
     qsQuery += QString( "discountPercent = \"%1\", " ).arg( m_inDiscountPercent );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )

@@ -236,100 +236,196 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
                 _processPaymentMethodsGlobals( p_sqlResult );
                 break;
             case MIRROR_SYNC_DB_USER:
-                _recordUserSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordUserSynchronized();
+                else
+                    _synchronizeUserTable();
                 break;
             case MIRROR_SYNC_DB_PATIENTORIGIN:
-                _recordPatientOriginSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPatientOriginSynchronized();
+                else
+                    _synchronizePatientOriginTable();
                 break;
             case MIRROR_SYNC_DB_REASONTOVISIT:
-                _recordReasonToVisitSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordReasonToVisitSynchronized();
+                else
+                    _synchronizeReasonToVisit();
                 break;
             case MIRROR_SYNC_DB_ILLNESSGROUP:
-                _recordIllnessSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordIllnessSynchronized();
+                else
+                    _synchronizeIllnessGroup();
                 break;
             case MIRROR_SYNC_DB_PUBLICPLACES:
-                _recordPublicPlacesSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPublicPlacesSynchronized();
+                else
+                    _synchronizePublicPlaces();
                 break;
             case MIRROR_SYNC_DB_HEALTHINSURANCE:
-                _recordHealthInsuranceSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordHealthInsuranceSynchronized();
+                else
+                    _synchronizeHealthInsurance();
                 break;
             case MIRROR_SYNC_DB_COMPANY:
-                _recordCompanySynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordCompanySynchronized();
+                else
+                    _synchronizeCompany();
                 break;
             case MIRROR_SYNC_DB_DOCTORTYPE:
-                _recordDoctorTypeSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordDoctorTypeSynchronized();
+                else
+                    _synchronizeDoctorType();
                 break;
             case MIRROR_SYNC_DB_DOCTOR:
-                _recordDoctorSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordDoctorSynchronized();
+                else
+                    _synchronizeDoctor();
                 break;
             case MIRROR_SYNC_DB_DOCTORSCHEDULE:
-                _recordDoctorScheduleSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordDoctorScheduleSynchronized();
+                else
+                    _synchronizeDoctorSchedule();
                 break;
             case MIRROR_SYNC_DB_PATIENT:
-                _recordPatientSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPatientSynchronized();
+                else
+                    _synchronizePatient();
                 break;
             case MIRROR_SYNC_DB_ATTENDANCE:
-                _recordAttendanceSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordAttendanceSynchronized();
+                else
+                    _synchronizeAttendance();
                 break;
             case MIRROR_SYNC_DB_PATIENTCARDTYPE:
-                _recordPatientcardTypeSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPatientcardTypeSynchronized();
+                else
+                    _synchronizePatientcardType();
                 break;
             case MIRROR_SYNC_DB_PATIENTCARD:
-                _recordPatientcardSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPatientcardSynchronized();
+                else
+                    _synchronizePatientcard();
                 break;
             case MIRROR_SYNC_DB_PATIENTCARDCONNECT:
-                _recordPatientcardConnectSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPatientcardConnectSynchronized();
+                else
+                    _synchronizePatientcardConnect();
                 break;
             case MIRROR_SYNC_DB_PATIENTCARDHISTORY:
-                _recordPatientcardHistorySynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPatientcardHistorySynchronized();
+                else
+                    _synchronizePatientcardHistory();
                 break;
             case MIRROR_SYNC_DB_PANELTYPE:
-                _recordPanelTypeSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPanelTypeSynchronized();
+                else
+                    _synchronizePanelType();
                 break;
             case MIRROR_SYNC_DB_PANELSTATUS:
-                _recordPanelStatusSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPanelStatusSynchronized();
+                else
+                    _synchronizePanelStatus();
                 break;
             case MIRROR_SYNC_DB_PANEL:
-                _recordPanelSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPanelSynchronized();
+                else
+                    _synchronizePanel();
                 break;
             case MIRROR_SYNC_DB_PANELUSE:
-                _recordPanelUseSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordPanelUseSynchronized();
+                else
+                    _synchronizePanelUse();
                 break;
             case MIRROR_SYNC_DB_ATTENDANCESCHEDULE:
-                _recordAttendanceScheduleSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordAttendanceScheduleSynchronized();
+                else
+                    _synchronizeAttendanceSchedule();
                 break;
             case MIRROR_SYNC_DB_DENOMINATION:
-                _recordDenominationSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordDenominationSynchronized();
+                else
+                    _synchronizeDenomination();
                 break;
             case MIRROR_SYNC_DB_PRODUCTTYPE:
-                _recordProductTypeSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordProductTypeSynchronized();
+                else
+                    _synchronizeProductType();
                 break;
             case MIRROR_SYNC_DB_PRODUCT:
-                _recordProductSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordProductSynchronized();
+                else
+                    _synchronizeProduct();
                 break;
             case MIRROR_SYNC_DB_DISCOUNT:
-                _recordDiscountSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordDiscountSynchronized();
+                else
+                    _synchronizeDiscount();
                 break;
             case MIRROR_SYNC_DB_ZIPREGIONCITY:
-                _recordZipRegionCitySynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordZipRegionCitySynchronized();
+                else
+                    _synchronizeZipRegionCity();
                 break;
             case MIRROR_SYNC_DB_ADDRESS:
-                _recordAddressSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordAddressSynchronized();
+                else
+                    _synchronizeAddress();
                 break;
             case MIRROR_SYNC_DB_CASSA:
-                _recordCassaSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordCassaSynchronized();
+                else
+                    _synchronizeCassa();
                 break;
             case MIRROR_SYNC_DB_CASSAHISTORY:
-                _recordCassaHistorySynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordCassaHistorySynchronized();
+                else
+                    _synchronizeCassaHistory();
                 break;
             case MIRROR_SYNC_DB_CASSADENOMINATION:
-                _recordCassaDenominationSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordCassaDenominationSynchronized();
+                else
+                    _synchronizeCassaDenomination();
                 break;
             case MIRROR_SYNC_DB_LEDGERDEVICE:
-                _recordLedgerDeviceSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordLedgerDeviceSynchronized();
+                else
+                    _synchronizeLedgerDevice();
                 break;
             case MIRROR_SYNC_DB_LEDGER:
-                _recordLedgerSynchronized();
+                if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
+                    _recordLedgerSynchronized();
+                else
+                    _synchronizeLedger();
                 break;
             default:
                 break;
@@ -410,7 +506,7 @@ bool cDBMirror::checkSynchronizationFinished()
 {
     bool bRet = false;
 
-    if( m_uiDbModificationLevel == 0 && m_uiGlobalSyncLevel == 0 )
+    if( (m_uiDbModificationLevel == 0 && m_uiGlobalSyncLevel == 0) || !m_bProcessSucceeded )
     {
         bRet = true;
 
@@ -418,6 +514,7 @@ bool cDBMirror::checkSynchronizationFinished()
         m_bSyncAllTable     = false;
         m_bSyncExit         = false;
         m_uiCurrentId       = 0;
+        m_inCountOfTries    = 0;
     }
 
     return bRet;
@@ -540,7 +637,10 @@ bool cDBMirror::checkIsSynchronizationNeeded()
 void cDBMirror::acquirePatientOriginGlobals()
 //====================================================================================
 {
-    m_inProcessCount = MIRROR_GET_GLOBAL_PATIENTORIGIN;
+    m_inProcessCount    = MIRROR_GET_GLOBAL_PATIENTORIGIN;
+    m_bProcessSucceeded = true;
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
 
     _qId = g_poServer->sendQuery( QString("SELECT * FROM patientOrigin WHERE licenceId=0 AND active=1") );
 }
@@ -1254,7 +1354,11 @@ void cDBMirror::_processPaymentMethodsGlobals( SqlResult *p_sqlResult )
 void cDBMirror::synchronizeAllTable()
 //====================================================================================
 {
-    m_bSyncAllTable = true;
+    m_bSyncAllTable     = true;
+    m_bProcessSucceeded = true;
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     synchronizeUserTable();
 }
 //====================================================================================
@@ -1267,6 +1371,9 @@ void cDBMirror::synchronizeExit()
 void cDBMirror::synchronizeUserTable()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeUserTable();
 }
 //====================================================================================
@@ -1276,12 +1383,24 @@ void cDBMirror::_synchronizeUserTable( unsigned int p_uiSyncLevel )
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
 
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
+
     QSqlQuery *poQuery = NULL;
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE archive<>\"ARC\" AND licenceId <> 1 " ) );
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString     qsQuery = "";

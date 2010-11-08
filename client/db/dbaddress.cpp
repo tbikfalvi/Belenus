@@ -168,6 +168,7 @@ void cDBAddress::save() throw( cSevException )
     qsQuery += QString( "floor = \"%1\", " ).arg( m_qsFloor );
     qsQuery += QString( "door = \"%1\", " ).arg( m_qsDoor );
     qsQuery += QString( "primaryAddress = %1, " ).arg( m_bPrimaryAddress );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )

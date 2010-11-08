@@ -204,6 +204,9 @@ private:
                                                     // can be archived on server
     unsigned int    m_uiGlobalSyncLevel;            // Identifies which table has modified global data.
     unsigned int    m_uiCurrentId;                  // Holds the actually archived record unique identifier
+    int             m_inCountOfTries;               // Identifies how many times client tried to process sql query
+                                                    // on belenus server
+    bool            m_bProcessSucceeded;            // Identifies whether communication with server finished with success or not
 
     void            _compareGlobalDataTimestamp( const QString &p_qsGlobalTimestamp );
 
