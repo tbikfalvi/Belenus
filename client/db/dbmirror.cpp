@@ -170,6 +170,11 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
 
     if( id == _qId )
     {
+        if( p_sqlResult->rowCount() > 0 )
+        {
+            g_obLogger(cSeverity::DEBUG) << "[cDBMirror::queryReady] data[0,0] = '" << p_sqlResult->index(0,0).data().toString() << "'" << EOM;
+        }
+
         switch( m_inProcessCount )
         {
             case MIRROR_GET_GLOBAL_TIMESTAMP:
@@ -188,52 +193,68 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
                 break;
             }
             case MIRROR_GET_GLOBAL_PATIENTORIGIN:
-                _processPatientOriginGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientOriginGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_REASONTOVISIT:
-                _processReasonToVisitGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processReasonToVisitGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_ILLNESSGROUPS:
-                _processIllnessGroupsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processIllnessGroupsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PUBLICPLACES:
-                _processPublicPlacesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPublicPlacesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_HEALTHINSURANCES:
-                _processHealthInsurancesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processHealthInsurancesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_COMPANIES:
-                _processCompaniesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processCompaniesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_DOCTORTYPES:
-                _processDoctorTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processDoctorTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_DOCTORS:
-                _processDoctorsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processDoctorsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PATIENTS:
-                _processPatientsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PATIENTCARDTYPES:
-                _processPatientCardTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientCardTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PATIENTCARDS:
-                _processPatientCardsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientCardsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_LEDGERTYPES:
-                _processLedgerTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processLedgerTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PRODUCTTYPES:
-                _processProductTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processProductTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PRODUCTS:
-                _processProductsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processProductsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_DISCOUNTS:
-                _processDiscountsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processDiscountsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PAYMENTMETHODS:
-                _processPaymentMethodsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPaymentMethodsGlobals( p_sqlResult );
                 break;
             case MIRROR_SYNC_DB_USER:
                 if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
@@ -429,11 +450,6 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
                 break;
             default:
                 break;
-        }
-
-        if( p_sqlResult->rowCount() > 0 )
-        {
-            g_obLogger(cSeverity::DEBUG) << "[cDBMirror::queryReady] data[0,0] = '" << p_sqlResult->index(0,0).data().toString() << "'" << EOM;
         }
         delete p_sqlResult;
     }
@@ -1456,6 +1472,9 @@ void cDBMirror::_recordUserSynchronized()
 void cDBMirror::synchronizePatientOriginTable()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientOriginTable();
 }
 //====================================================================================
@@ -1464,6 +1483,13 @@ void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1522,6 +1548,9 @@ void cDBMirror::_recordPatientOriginSynchronized()
 void cDBMirror::synchronizeReasonToVisit()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeReasonToVisit();
 }
 //====================================================================================
@@ -1530,6 +1559,13 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1589,6 +1625,9 @@ void cDBMirror::_recordReasonToVisitSynchronized()
 void cDBMirror::synchronizeIllnessGroup()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeIllnessGroup();
 }
 //====================================================================================
@@ -1597,6 +1636,13 @@ void cDBMirror::_synchronizeIllnessGroup( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1656,6 +1702,9 @@ void cDBMirror::_recordIllnessSynchronized()
 void cDBMirror::synchronizePublicPlaces()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePublicPlaces();
 }
 //====================================================================================
@@ -1664,6 +1713,13 @@ void cDBMirror::_synchronizePublicPlaces( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1723,6 +1779,9 @@ void cDBMirror::_recordPublicPlacesSynchronized()
 void cDBMirror::synchronizeHealthInsurance()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeHealthInsurance();
 }
 //====================================================================================
@@ -1731,6 +1790,13 @@ void cDBMirror::_synchronizeHealthInsurance( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1799,6 +1865,9 @@ void cDBMirror::_recordHealthInsuranceSynchronized()
 void cDBMirror::synchronizeCompany()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCompany();
 }
 //====================================================================================
@@ -1807,6 +1876,13 @@ void cDBMirror::_synchronizeCompany( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1875,6 +1951,9 @@ void cDBMirror::_recordCompanySynchronized()
 void cDBMirror::synchronizeDoctorType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDoctorType();
 }
 //====================================================================================
@@ -1890,6 +1969,13 @@ void cDBMirror::_synchronizeDoctorType( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1950,6 +2036,9 @@ void cDBMirror::_recordDoctorTypeSynchronized()
 void cDBMirror::synchronizeDoctor()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDoctor();
 }
 //====================================================================================
@@ -1958,6 +2047,13 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2019,6 +2115,9 @@ void cDBMirror::_recordDoctorSynchronized()
 void cDBMirror::synchronizeDoctorSchedule()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDoctorSchedule();
 }
 //====================================================================================
@@ -2034,6 +2133,13 @@ void cDBMirror::_synchronizeDoctorSchedule( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2094,6 +2200,9 @@ void cDBMirror::_recordDoctorScheduleSynchronized()
 void cDBMirror::synchronizePatient()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatient();
 }
 //====================================================================================
@@ -2102,6 +2211,13 @@ void cDBMirror::_synchronizePatient( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2187,6 +2303,9 @@ void cDBMirror::_recordPatientSynchronized()
 void cDBMirror::synchronizeAttendance()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeAttendance();
 }
 //====================================================================================
@@ -2195,6 +2314,13 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2261,6 +2387,9 @@ void cDBMirror::_recordAttendanceSynchronized()
 void cDBMirror::synchronizePatientcardType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcardType();
 }
 //====================================================================================
@@ -2269,6 +2398,13 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2335,6 +2471,9 @@ void cDBMirror::_recordPatientcardTypeSynchronized()
 void cDBMirror::synchronizePatientcard()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcard();
 }
 //====================================================================================
@@ -2343,6 +2482,13 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2410,6 +2556,9 @@ void cDBMirror::_recordPatientcardSynchronized()
 void cDBMirror::synchronizePatientcardConnect()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcardConnect();
 }
 //====================================================================================
@@ -2425,6 +2574,13 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2485,6 +2641,9 @@ void cDBMirror::_recordPatientcardConnectSynchronized()
 void cDBMirror::synchronizePatientcardHistory()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcardHistory();
 }
 //====================================================================================
@@ -2493,6 +2652,13 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2554,6 +2720,9 @@ void cDBMirror::_recordPatientcardHistorySynchronized()
 void cDBMirror::synchronizePanelType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanelType();
 }
 //====================================================================================
@@ -2562,6 +2731,13 @@ void cDBMirror::_synchronizePanelType( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2621,6 +2797,9 @@ void cDBMirror::_recordPanelTypeSynchronized()
 void cDBMirror::synchronizePanelStatus()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanelStatus();
 }
 //====================================================================================
@@ -2629,6 +2808,13 @@ void cDBMirror::_synchronizePanelStatus( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2692,6 +2878,9 @@ void cDBMirror::_recordPanelStatusSynchronized()
 void cDBMirror::synchronizePanel()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanel();
 }
 //====================================================================================
@@ -2700,6 +2889,13 @@ void cDBMirror::_synchronizePanel( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2762,6 +2958,9 @@ void cDBMirror::_recordPanelSynchronized()
 void cDBMirror::synchronizePanelUse()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanelUse();
 }
 //====================================================================================
@@ -2770,6 +2969,13 @@ void cDBMirror::_synchronizePanelUse( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2832,6 +3038,9 @@ void cDBMirror::_recordPanelUseSynchronized()
 void cDBMirror::synchronizeAttendanceSchedule()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeAttendanceSchedule();
 }
 //====================================================================================
@@ -2847,6 +3056,13 @@ void cDBMirror::_synchronizeAttendanceSchedule( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2907,6 +3123,9 @@ void cDBMirror::_recordAttendanceScheduleSynchronized()
 void cDBMirror::synchronizeDenomination()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDenomination();
 }
 //====================================================================================
@@ -2922,6 +3141,13 @@ void cDBMirror::_synchronizeDenomination( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2982,6 +3208,9 @@ void cDBMirror::_recordDenominationSynchronized()
 void cDBMirror::synchronizeProductType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeProductType();
 }
 //====================================================================================
@@ -2997,6 +3226,13 @@ void cDBMirror::_synchronizeProductType( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3057,6 +3293,9 @@ void cDBMirror::_recordProductTypeSynchronized()
 void cDBMirror::synchronizeProduct()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeProduct();
 }
 //====================================================================================
@@ -3072,6 +3311,13 @@ void cDBMirror::_synchronizeProduct( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3132,6 +3378,9 @@ void cDBMirror::_recordProductSynchronized()
 void cDBMirror::synchronizeDiscount()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDiscount();
 }
 //====================================================================================
@@ -3140,6 +3389,13 @@ void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3207,6 +3463,9 @@ void cDBMirror::_recordDiscountSynchronized()
 void cDBMirror::synchronizeZipRegionCity()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeZipRegionCity();
 }
 //====================================================================================
@@ -3215,6 +3474,13 @@ void cDBMirror::_synchronizeZipRegionCity( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3276,6 +3542,9 @@ void cDBMirror::_recordZipRegionCitySynchronized()
 void cDBMirror::synchronizeAddress()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeAddress();
 }
 //====================================================================================
@@ -3284,6 +3553,13 @@ void cDBMirror::_synchronizeAddress( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3354,6 +3630,9 @@ void cDBMirror::_recordAddressSynchronized()
 void cDBMirror::synchronizeCassa()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCassa();
 }
 //====================================================================================
@@ -3362,6 +3641,13 @@ void cDBMirror::_synchronizeCassa( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3424,6 +3710,9 @@ void cDBMirror::_recordCassaSynchronized()
 void cDBMirror::synchronizeCassaHistory()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCassaHistory();
 }
 //====================================================================================
@@ -3432,6 +3721,13 @@ void cDBMirror::_synchronizeCassaHistory( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3495,6 +3791,9 @@ void cDBMirror::_recordCassaHistorySynchronized()
 void cDBMirror::synchronizeCassaDenomination()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCassaDenomination();
 }
 //====================================================================================
@@ -3510,6 +3809,13 @@ void cDBMirror::_synchronizeCassaDenomination( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3571,6 +3877,9 @@ void cDBMirror::_recordCassaDenominationSynchronized()
 void cDBMirror::synchronizeLedgerDevice()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeLedgerDevice();
 }
 //====================================================================================
@@ -3579,6 +3888,13 @@ void cDBMirror::_synchronizeLedgerDevice( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3648,6 +3964,9 @@ void cDBMirror::_recordLedgerDeviceSynchronized()
 void cDBMirror::synchronizeLedger()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeLedger();
 }
 //====================================================================================
@@ -3656,6 +3975,13 @@ void cDBMirror::_synchronizeLedger( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
