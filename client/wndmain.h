@@ -100,6 +100,7 @@ private slots:
     void on_action_Discounts_triggered();
     void on_action_PatientcardsObsolete_triggered();
     void on_action_SynchronizeDatabase_triggered();
+    void on_action_AcquireGlobalData_triggered();
 };
 
 #endif

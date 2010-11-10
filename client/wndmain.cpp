@@ -71,6 +71,7 @@
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgsynchronization.h"
+#include "dlg/dlgglobals.h"
 
 //====================================================================================
 
@@ -1771,5 +1772,15 @@ void cWndMain::on_action_SynchronizeDatabase_triggered()
     cDlgSynchronization obDlgSynchronization( this );
 
     obDlgSynchronization.exec();
+}
+//====================================================================================
+void cWndMain::on_action_AcquireGlobalData_triggered()
+//====================================================================================
+{
+    g_obDBMirror.requestGlobalDataTimestamp();
+
+    cDlgDBGlobals   obDlgDBGlobals( this );
+
+    obDlgDBGlobals.exec();
 }
 //====================================================================================

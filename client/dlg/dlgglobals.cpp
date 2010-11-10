@@ -1,0 +1,107 @@
+//====================================================================================
+//
+// Belenus Server alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : dlgglobals.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Bikfalvi Tamas
+//
+//====================================================================================
+//
+//====================================================================================
+
+#include "dlgglobals.h"
+
+//====================================================================================
+cDlgDBGlobals::cDlgDBGlobals( QWidget *p_poParent ) : QDialog( p_poParent )
+//====================================================================================
+{
+    m_bAutoSynchronization  = false;
+    m_bNormalStart          = true;
+    m_bAutoStart            = false;
+    m_bAutoClose            = false;
+
+    setupUi( this );
+
+    setWindowTitle( tr("Database global data synchronization") );
+    setWindowIcon( QIcon("./resources/40x40_database_sync.png") );
+
+    pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
+    pbStart->setIcon( QIcon("./resources/40x40_database_sync.png") );
+
+    m_nTimer = startTimer( 5000 );
+}
+//====================================================================================
+cDlgDBGlobals::~cDlgDBGlobals()
+//====================================================================================
+{
+}
+//====================================================================================
+void cDlgDBGlobals::autoSynchronization()
+//====================================================================================
+{
+    setWindowTitle( tr("Automatic database synchronization") );
+    listInformation->addItem( tr("Automatic database synchronization is starting ...") );
+    m_bAutoSynchronization  = true;
+    m_bNormalStart          = false;
+    m_bAutoStart            = true;
+    m_nTimer = startTimer( 5000 );
+    pbStart->setEnabled( false );
+    pbExit->setEnabled( false );
+}
+//====================================================================================
+void cDlgDBGlobals::on_pbStart_clicked()
+//====================================================================================
+{
+    m_nTimer = startTimer( 500 );
+    listInformation->addItem( tr("Starting database synchronization.") );
+    g_obDBMirror.acquirePatientOriginGlobals();
+    pbStart->setEnabled( false );
+}
+//====================================================================================
+void cDlgDBGlobals::timerEvent(QTimerEvent *)
+//====================================================================================
+{
+    if( m_bAutoStart )
+    {
+        on_pbStart_clicked();
+        killTimer( m_nTimer );
+        m_bAutoStart = false;
+        return;
+    }
+    else if( m_bAutoClose )
+    {
+        killTimer( m_nTimer );
+        QDialog::accept();
+        return;
+    }
+    else if( m_bNormalStart )
+    {
+        killTimer( m_nTimer );
+        if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
+        {
+            pbStart->setEnabled( true );
+            listInformation->addItem( tr("Database synchronization required.") );
+        }
+        else
+        {
+            pbStart->setEnabled( false );
+            listInformation->addItem( tr("Database synchronized with server.") );
+        }
+    }
+
+    if( !g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
+    {
+        killTimer( m_nTimer );
+        listInformation->addItem( tr("Database synchronization finished.") );
+        if( m_bAutoSynchronization )
+        {
+            m_nTimer = startTimer( 3000 );
+            m_bAutoClose = true;
+        }
+    }
+}
+//====================================================================================

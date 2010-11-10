@@ -170,6 +170,11 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
 
     if( id == _qId )
     {
+        if( p_sqlResult->rowCount() > 0 )
+        {
+            g_obLogger(cSeverity::DEBUG) << "[cDBMirror::queryReady] data[0,0] = '" << p_sqlResult->index(0,0).data().toString() << "'" << EOM;
+        }
+
         switch( m_inProcessCount )
         {
             case MIRROR_GET_GLOBAL_TIMESTAMP:
@@ -188,52 +193,68 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
                 break;
             }
             case MIRROR_GET_GLOBAL_PATIENTORIGIN:
-                _processPatientOriginGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientOriginGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_REASONTOVISIT:
-                _processReasonToVisitGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processReasonToVisitGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_ILLNESSGROUPS:
-                _processIllnessGroupsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processIllnessGroupsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PUBLICPLACES:
-                _processPublicPlacesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPublicPlacesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_HEALTHINSURANCES:
-                _processHealthInsurancesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processHealthInsurancesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_COMPANIES:
-                _processCompaniesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processCompaniesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_DOCTORTYPES:
-                _processDoctorTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processDoctorTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_DOCTORS:
-                _processDoctorsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processDoctorsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PATIENTS:
-                _processPatientsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PATIENTCARDTYPES:
-                _processPatientCardTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientCardTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PATIENTCARDS:
-                _processPatientCardsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPatientCardsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_LEDGERTYPES:
-                _processLedgerTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processLedgerTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PRODUCTTYPES:
-                _processProductTypesGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processProductTypesGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PRODUCTS:
-                _processProductsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processProductsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_DISCOUNTS:
-                _processDiscountsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processDiscountsGlobals( p_sqlResult );
                 break;
             case MIRROR_GET_GLOBAL_PAYMENTMETHODS:
-                _processPaymentMethodsGlobals( p_sqlResult );
+                if( p_sqlResult->isValid() )
+                    _processPaymentMethodsGlobals( p_sqlResult );
                 break;
             case MIRROR_SYNC_DB_USER:
                 if( p_sqlResult->isValid() && p_sqlResult->affectedRecords() > 0 )
@@ -430,11 +451,6 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
             default:
                 break;
         }
-
-        if( p_sqlResult->rowCount() > 0 )
-        {
-            g_obLogger(cSeverity::DEBUG) << "[cDBMirror::queryReady] data[0,0] = '" << p_sqlResult->index(0,0).data().toString() << "'" << EOM;
-        }
         delete p_sqlResult;
     }
 }
@@ -461,7 +477,7 @@ void cDBMirror::_compareGlobalDataTimestamp( const QString &p_qsGlobalTimestamp 
 
     if( qdClient.secsTo( qdServer ) > 0 )
     {
-        acquirePatientOriginGlobals();
+        m_bAcquireGlobalData = true;
     }
     else
     {
@@ -652,8 +668,17 @@ void cDBMirror::_processPatientOriginGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientOrigin WHERE patientOriginId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
+                continue;
+        }
+
         if( poQuery->first() )
         {
             qsQuery = "UPDATE patientOrigin SET ";
@@ -665,7 +690,8 @@ void cDBMirror::_processPatientOriginGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\", " );
         }
         qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
@@ -696,8 +722,17 @@ void cDBMirror::_processReasonToVisitGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM reasonToVisit WHERE reasonToVisitId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
+                continue;
+        }
+
         if( poQuery->first() )
         {
             qsQuery = "UPDATE reasonToVisit SET ";
@@ -708,8 +743,9 @@ void cDBMirror::_processReasonToVisitGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "reasonToVisitId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
@@ -730,7 +766,7 @@ void cDBMirror::acquireIllnessGroupsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_ILLNESSGROUPS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM illnessGroups WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processIllnessGroupsGlobals( SqlResult *p_sqlResult )
@@ -740,25 +776,35 @@ void cDBMirror::_processIllnessGroupsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM illnessGroups WHERE illnessGroupId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE illnessGroups SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO illnessGroups SET ";
+            qsQuery += QString( "illnessGroupId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "illnessGroupId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -774,7 +820,7 @@ void cDBMirror::acquirePublicPlacesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PUBLICPLACES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM publicPlaces WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processPublicPlacesGlobals( SqlResult *p_sqlResult )
@@ -784,25 +830,35 @@ void cDBMirror::_processPublicPlacesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM publicPlaces WHERE publicPlaceId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE publicPlaces SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO publicPlaces SET ";
+            qsQuery += QString( "publicPlaceId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "publicPlaceId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -818,7 +874,7 @@ void cDBMirror::acquireHealthInsurancesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_HEALTHINSURANCES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM healthInsurances WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processHealthInsurancesGlobals( SqlResult *p_sqlResult )
@@ -828,25 +884,44 @@ void cDBMirror::_processHealthInsurancesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM healthInsurances WHERE healthInsuranceId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,12).data().toString();
+            if( qsServerTS.compare( poQuery->value( 12 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE healthInsurances SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO healthInsurances SET ";
+            qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "country = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "region = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "city = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toString() );
+        qsQuery += QString( "zip = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
+        qsQuery += QString( "address = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toString() );
+        qsQuery += QString( "contactPerson = \"%1\", " ).arg( p_sqlResult->index(i,8).data().toString() );
+        qsQuery += QString( "contractId = \"%1\", " ).arg( p_sqlResult->index(i,9).data().toString() );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( p_sqlResult->index(i,10).data().toString() );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_sqlResult->index(i,11).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,12).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,13).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "healthInsuranceId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -862,7 +937,7 @@ void cDBMirror::acquireCompaniesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_COMPANIES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM companies WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processCompaniesGlobals( SqlResult *p_sqlResult )
@@ -872,25 +947,44 @@ void cDBMirror::_processCompaniesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM companies WHERE companyId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,12).data().toString();
+            if( qsServerTS.compare( poQuery->value( 12 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE companies SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO companies SET ";
+            qsQuery += QString( "companyId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "country = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "region = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "city = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toString() );
+        qsQuery += QString( "zip = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
+        qsQuery += QString( "address = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toString() );
+        qsQuery += QString( "contactPerson = \"%1\", " ).arg( p_sqlResult->index(i,8).data().toString() );
+        qsQuery += QString( "contractId = \"%1\", " ).arg( p_sqlResult->index(i,9).data().toString() );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( p_sqlResult->index(i,10).data().toString() );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_sqlResult->index(i,11).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,12).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,13).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "companyId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -906,7 +1000,7 @@ void cDBMirror::acquireDoctorTypesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_DOCTORTYPES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM doctorTypes WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processDoctorTypesGlobals( SqlResult *p_sqlResult )
@@ -916,25 +1010,35 @@ void cDBMirror::_processDoctorTypesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM doctorTypes WHERE doctorTypeId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE doctorTypes SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO doctorTypes SET ";
+            qsQuery += QString( "doctorTypeId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "doctorTypeId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -950,7 +1054,7 @@ void cDBMirror::acquireDoctorsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_DOCTORS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM doctors WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processDoctorsGlobals( SqlResult *p_sqlResult )
@@ -960,25 +1064,38 @@ void cDBMirror::_processDoctorsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM doctors WHERE doctorId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,6).data().toString();
+            if( qsServerTS.compare( poQuery->value( 6 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE doctors SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO doctors SET ";
+            qsQuery += QString( "doctorId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "doctorTypeId = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toUInt() );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "doctorLicence = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "data = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,7).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "doctorId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -994,7 +1111,7 @@ void cDBMirror::acquirePatientsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PATIENTS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM patients WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processPatientsGlobals( SqlResult *p_sqlResult )
@@ -1004,25 +1121,61 @@ void cDBMirror::_processPatientsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patients WHERE patientIdId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,29).data().toString();
+            if( qsServerTS.compare( poQuery->value( 29 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE patients SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO patients SET ";
+            qsQuery += QString( "patientId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "patientOriginId = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toUInt() );
+        qsQuery += QString( "reasonToVisitId = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toUInt() );
+        qsQuery += QString( "illnessGroupId = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toUInt() );
+        qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toUInt() );
+        qsQuery += QString( "companyId = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toUInt() );
+        qsQuery += QString( "doctorId = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toUInt() );
+        qsQuery += QString( "created = \"%1\", " ).arg( p_sqlResult->index(i,8).data().toString() );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,9).data().toString() );
+        qsQuery += QString( "gender = \"%1\", " ).arg( p_sqlResult->index(i,10).data().toString() );
+        qsQuery += QString( "dateBirth = \"%1\", " ).arg( p_sqlResult->index(i,11).data().toString() );
+        qsQuery += QString( "uniqueId = \"%1\", " ).arg( p_sqlResult->index(i,12).data().toString() );
+        qsQuery += QString( "email = \"%1\", " ).arg( p_sqlResult->index(i,13).data().toString() );
+        qsQuery += QString( "phone = \"%1\", " ).arg( p_sqlResult->index(i,14).data().toString() );
+        qsQuery += QString( "weight = \"%1\", " ).arg( p_sqlResult->index(i,15).data().toInt() );
+        qsQuery += QString( "height = \"%1\", " ).arg( p_sqlResult->index(i,16).data().toInt() );
+        qsQuery += QString( "illnesses = \"%1\", " ).arg( p_sqlResult->index(i,17).data().toString() );
+        qsQuery += QString( "symptoms = \"%1\", " ).arg( p_sqlResult->index(i,18).data().toString() );
+        qsQuery += QString( "medicineCurrent = \"%1\", " ).arg( p_sqlResult->index(i,19).data().toString() );
+        qsQuery += QString( "medicineAllergy = \"%1\", " ).arg( p_sqlResult->index(i,20).data().toString() );
+        qsQuery += QString( "regularCustomer = %1, " ).arg( p_sqlResult->index(i,21).data().toBool() );
+        qsQuery += QString( "employee = %1, " ).arg( p_sqlResult->index(i,22).data().toBool() );
+        qsQuery += QString( "service = %1, " ).arg( p_sqlResult->index(i,23).data().toBool() );
+        qsQuery += QString( "healthInsurance = %1, " ).arg( p_sqlResult->index(i,24).data().toBool() );
+        qsQuery += QString( "company = %1, " ).arg( p_sqlResult->index(i,25).data().toBool() );
+        qsQuery += QString( "doctorProposed = %1, " ).arg( p_sqlResult->index(i,26).data().toBool() );
+        qsQuery += QString( "discountType = %1, " ).arg( p_sqlResult->index(i,27).data().toInt() );
+        qsQuery += QString( "comment = \"%1\", " ).arg( p_sqlResult->index(i,28).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,29).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,30).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "patientId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1038,7 +1191,7 @@ void cDBMirror::acquirePatientCardTypesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PATIENTCARDTYPES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM patientCardTypes WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processPatientCardTypesGlobals( SqlResult *p_sqlResult )
@@ -1048,25 +1201,42 @@ void cDBMirror::_processPatientCardTypesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardTypes WHERE patientCardTypeId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,10).data().toString();
+            if( qsServerTS.compare( poQuery->value( 10 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE patientCardTypes SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO patientCardTypes SET ";
+            qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "price = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "vatpercent = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toInt() );
+        qsQuery += QString( "units = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toInt() );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toString() );
+        qsQuery += QString( "validDays = \"%1\", " ).arg( p_sqlResult->index(i,8).data().toString() );
+        qsQuery += QString( "unitTime = \"%1\", " ).arg( p_sqlResult->index(i,9).data().toInt() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,10).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,11).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "patientCardTypeId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1082,7 +1252,7 @@ void cDBMirror::acquirePatientCardsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PATIENTCARDS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM patientCards WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processPatientCardsGlobals( SqlResult *p_sqlResult )
@@ -1092,25 +1262,43 @@ void cDBMirror::_processPatientCardsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE patientCardId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,11).data().toString();
+            if( qsServerTS.compare( poQuery->value( 11 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE patientCards SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO patientCards SET ";
+            qsQuery += QString( "patientCardId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toUInt() );
+        qsQuery += QString( "patientId = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toUInt() );
+        qsQuery += QString( "barcode = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "comment = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toString() );
+        qsQuery += QString( "units = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toInt() );
+        qsQuery += QString( "timeLeft = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toUInt() );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( p_sqlResult->index(i,8).data().toString() );
+        qsQuery += QString( "validDateTo = \"%1\", " ).arg( p_sqlResult->index(i,9).data().toString() );
+        qsQuery += QString( "pincode = \"%1\", " ).arg( p_sqlResult->index(i,10).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,11).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,12).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "patientCardId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1126,7 +1314,7 @@ void cDBMirror::acquireLedgerTypesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_LEDGERTYPES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM ledgerTypes WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processLedgerTypesGlobals( SqlResult *p_sqlResult )
@@ -1136,25 +1324,35 @@ void cDBMirror::_processLedgerTypesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledgerTypes WHERE ledgerTypeId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE ledgerTypes SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO ledgerTypes SET ";
+            qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toBool() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "ledgerTypeId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1180,8 +1378,17 @@ void cDBMirror::_processProductTypesGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
+            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+                continue;
+        }
+
         if( poQuery->first() )
         {
             qsQuery = "UPDATE _TABLENAME_ SET ";
@@ -1193,7 +1400,8 @@ void cDBMirror::_processProductTypesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\", " );
         }
         // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
@@ -1224,8 +1432,17 @@ void cDBMirror::_processProductsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
+            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+                continue;
+        }
+
         if( poQuery->first() )
         {
             qsQuery = "UPDATE _TABLENAME_ SET ";
@@ -1237,7 +1454,8 @@ void cDBMirror::_processProductsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\", " );
         }
         // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
@@ -1268,8 +1486,17 @@ void cDBMirror::_processDiscountsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
+            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+                continue;
+        }
+
         if( poQuery->first() )
         {
             qsQuery = "UPDATE _TABLENAME_ SET ";
@@ -1281,7 +1508,8 @@ void cDBMirror::_processDiscountsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\", " );
         }
         // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
@@ -1312,8 +1540,17 @@ void cDBMirror::_processPaymentMethodsGlobals( SqlResult *p_sqlResult )
     {
         QSqlQuery  *poQuery = NULL;
         QString     qsQuery = "";
+        QString     qsServerTS = "";
 
         poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
+            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+                continue;
+        }
+
         if( poQuery->first() )
         {
             qsQuery = "UPDATE _TABLENAME_ SET ";
@@ -1325,7 +1562,8 @@ void cDBMirror::_processPaymentMethodsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\", " );
         }
         // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "active = 1, " );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
@@ -1456,6 +1694,9 @@ void cDBMirror::_recordUserSynchronized()
 void cDBMirror::synchronizePatientOriginTable()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientOriginTable();
 }
 //====================================================================================
@@ -1464,6 +1705,13 @@ void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1522,6 +1770,9 @@ void cDBMirror::_recordPatientOriginSynchronized()
 void cDBMirror::synchronizeReasonToVisit()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeReasonToVisit();
 }
 //====================================================================================
@@ -1530,6 +1781,13 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1589,6 +1847,9 @@ void cDBMirror::_recordReasonToVisitSynchronized()
 void cDBMirror::synchronizeIllnessGroup()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeIllnessGroup();
 }
 //====================================================================================
@@ -1597,6 +1858,13 @@ void cDBMirror::_synchronizeIllnessGroup( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1656,6 +1924,9 @@ void cDBMirror::_recordIllnessSynchronized()
 void cDBMirror::synchronizePublicPlaces()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePublicPlaces();
 }
 //====================================================================================
@@ -1664,6 +1935,13 @@ void cDBMirror::_synchronizePublicPlaces( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1723,6 +2001,9 @@ void cDBMirror::_recordPublicPlacesSynchronized()
 void cDBMirror::synchronizeHealthInsurance()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeHealthInsurance();
 }
 //====================================================================================
@@ -1731,6 +2012,13 @@ void cDBMirror::_synchronizeHealthInsurance( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1799,6 +2087,9 @@ void cDBMirror::_recordHealthInsuranceSynchronized()
 void cDBMirror::synchronizeCompany()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCompany();
 }
 //====================================================================================
@@ -1807,6 +2098,13 @@ void cDBMirror::_synchronizeCompany( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1875,6 +2173,9 @@ void cDBMirror::_recordCompanySynchronized()
 void cDBMirror::synchronizeDoctorType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDoctorType();
 }
 //====================================================================================
@@ -1890,6 +2191,13 @@ void cDBMirror::_synchronizeDoctorType( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -1950,6 +2258,9 @@ void cDBMirror::_recordDoctorTypeSynchronized()
 void cDBMirror::synchronizeDoctor()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDoctor();
 }
 //====================================================================================
@@ -1958,6 +2269,13 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2019,6 +2337,9 @@ void cDBMirror::_recordDoctorSynchronized()
 void cDBMirror::synchronizeDoctorSchedule()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDoctorSchedule();
 }
 //====================================================================================
@@ -2034,6 +2355,13 @@ void cDBMirror::_synchronizeDoctorSchedule( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2094,6 +2422,9 @@ void cDBMirror::_recordDoctorScheduleSynchronized()
 void cDBMirror::synchronizePatient()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatient();
 }
 //====================================================================================
@@ -2102,6 +2433,13 @@ void cDBMirror::_synchronizePatient( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2187,6 +2525,9 @@ void cDBMirror::_recordPatientSynchronized()
 void cDBMirror::synchronizeAttendance()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeAttendance();
 }
 //====================================================================================
@@ -2195,6 +2536,13 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2261,6 +2609,9 @@ void cDBMirror::_recordAttendanceSynchronized()
 void cDBMirror::synchronizePatientcardType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcardType();
 }
 //====================================================================================
@@ -2269,6 +2620,13 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2335,6 +2693,9 @@ void cDBMirror::_recordPatientcardTypeSynchronized()
 void cDBMirror::synchronizePatientcard()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcard();
 }
 //====================================================================================
@@ -2343,6 +2704,13 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2410,6 +2778,9 @@ void cDBMirror::_recordPatientcardSynchronized()
 void cDBMirror::synchronizePatientcardConnect()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcardConnect();
 }
 //====================================================================================
@@ -2425,6 +2796,13 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2485,6 +2863,9 @@ void cDBMirror::_recordPatientcardConnectSynchronized()
 void cDBMirror::synchronizePatientcardHistory()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePatientcardHistory();
 }
 //====================================================================================
@@ -2493,6 +2874,13 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2554,6 +2942,9 @@ void cDBMirror::_recordPatientcardHistorySynchronized()
 void cDBMirror::synchronizePanelType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanelType();
 }
 //====================================================================================
@@ -2562,6 +2953,13 @@ void cDBMirror::_synchronizePanelType( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2621,6 +3019,9 @@ void cDBMirror::_recordPanelTypeSynchronized()
 void cDBMirror::synchronizePanelStatus()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanelStatus();
 }
 //====================================================================================
@@ -2629,6 +3030,13 @@ void cDBMirror::_synchronizePanelStatus( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2692,6 +3100,9 @@ void cDBMirror::_recordPanelStatusSynchronized()
 void cDBMirror::synchronizePanel()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanel();
 }
 //====================================================================================
@@ -2700,6 +3111,13 @@ void cDBMirror::_synchronizePanel( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2762,6 +3180,9 @@ void cDBMirror::_recordPanelSynchronized()
 void cDBMirror::synchronizePanelUse()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizePanelUse();
 }
 //====================================================================================
@@ -2770,6 +3191,13 @@ void cDBMirror::_synchronizePanelUse( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2832,6 +3260,9 @@ void cDBMirror::_recordPanelUseSynchronized()
 void cDBMirror::synchronizeAttendanceSchedule()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeAttendanceSchedule();
 }
 //====================================================================================
@@ -2847,6 +3278,13 @@ void cDBMirror::_synchronizeAttendanceSchedule( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2907,6 +3345,9 @@ void cDBMirror::_recordAttendanceScheduleSynchronized()
 void cDBMirror::synchronizeDenomination()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDenomination();
 }
 //====================================================================================
@@ -2922,6 +3363,13 @@ void cDBMirror::_synchronizeDenomination( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -2982,6 +3430,9 @@ void cDBMirror::_recordDenominationSynchronized()
 void cDBMirror::synchronizeProductType()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeProductType();
 }
 //====================================================================================
@@ -2997,6 +3448,13 @@ void cDBMirror::_synchronizeProductType( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3057,6 +3515,9 @@ void cDBMirror::_recordProductTypeSynchronized()
 void cDBMirror::synchronizeProduct()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeProduct();
 }
 //====================================================================================
@@ -3072,6 +3533,13 @@ void cDBMirror::_synchronizeProduct( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3132,6 +3600,9 @@ void cDBMirror::_recordProductSynchronized()
 void cDBMirror::synchronizeDiscount()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeDiscount();
 }
 //====================================================================================
@@ -3140,6 +3611,13 @@ void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3207,6 +3685,9 @@ void cDBMirror::_recordDiscountSynchronized()
 void cDBMirror::synchronizeZipRegionCity()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeZipRegionCity();
 }
 //====================================================================================
@@ -3215,6 +3696,13 @@ void cDBMirror::_synchronizeZipRegionCity( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3276,6 +3764,9 @@ void cDBMirror::_recordZipRegionCitySynchronized()
 void cDBMirror::synchronizeAddress()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeAddress();
 }
 //====================================================================================
@@ -3284,6 +3775,13 @@ void cDBMirror::_synchronizeAddress( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3354,6 +3852,9 @@ void cDBMirror::_recordAddressSynchronized()
 void cDBMirror::synchronizeCassa()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCassa();
 }
 //====================================================================================
@@ -3362,6 +3863,13 @@ void cDBMirror::_synchronizeCassa( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3424,6 +3932,9 @@ void cDBMirror::_recordCassaSynchronized()
 void cDBMirror::synchronizeCassaHistory()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCassaHistory();
 }
 //====================================================================================
@@ -3432,6 +3943,13 @@ void cDBMirror::_synchronizeCassaHistory( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3495,6 +4013,9 @@ void cDBMirror::_recordCassaHistorySynchronized()
 void cDBMirror::synchronizeCassaDenomination()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeCassaDenomination();
 }
 //====================================================================================
@@ -3510,6 +4031,13 @@ void cDBMirror::_synchronizeCassaDenomination( unsigned int p_uiSyncLevel )
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3571,6 +4099,9 @@ void cDBMirror::_recordCassaDenominationSynchronized()
 void cDBMirror::synchronizeLedgerDevice()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeLedgerDevice();
 }
 //====================================================================================
@@ -3579,6 +4110,13 @@ void cDBMirror::_synchronizeLedgerDevice( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 
@@ -3648,6 +4186,9 @@ void cDBMirror::_recordLedgerDeviceSynchronized()
 void cDBMirror::synchronizeLedger()
 //====================================================================================
 {
+    m_inCountOfTries    = 0;
+    m_uiCurrentId       = 0;
+
     _synchronizeLedger();
 }
 //====================================================================================
@@ -3656,6 +4197,13 @@ void cDBMirror::_synchronizeLedger( unsigned int p_uiSyncLevel )
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
         return;
+
+    if( m_inCountOfTries > 4 )
+    {
+        m_bProcessSucceeded = false;
+        checkSynchronizationFinished();
+        return;
+    }
 
     QSqlQuery *poQuery = NULL;
 

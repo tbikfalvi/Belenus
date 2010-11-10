@@ -22,7 +22,7 @@
      <x>0</x>
      <y>0</y>
      <width>899</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -82,6 +82,7 @@
     <addaction name="action_EditLicenceInformation"/>
     <addaction name="separator"/>
     <addaction name="action_SynchronizeDatabase"/>
+    <addaction name="action_AcquireGlobalData"/>
     <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
@@ -567,6 +568,14 @@
    </property>
    <property name="toolTip">
     <string>Synchronize database with server database</string>
+   </property>
+  </action>
+  <action name="action_AcquireGlobalData">
+   <property name="text">
+    <string>Get global data ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Get global data from server</string>
    </property>
   </action>
  </widget>

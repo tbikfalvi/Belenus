@@ -197,7 +197,7 @@ int main( int argc, char *argv[] )
             }
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += "-----------------------------------------------------\n";
+            /*qsSpalsh += "-----------------------------------------------------\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
@@ -210,7 +210,7 @@ int main( int argc, char *argv[] )
             {
                 qsSpalsh += QObject::tr("Studio independent data match with server.\n");
             }
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
         }
         else
         {
