@@ -230,6 +230,8 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
+
+    action_AcquireGlobalData->setEnabled( !g_obLicenceManager.isDemo() );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -763,6 +765,25 @@ void cWndMain::timerEvent(QTimerEvent *)
                 obDlgLicenceEdit.exec();
             }
         }
+        else
+        {
+            if( m_inRegistrationTimeout > 20 )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("Registration of the licence key has been failed.\n\n"
+                                         "Please check your internet connection and "
+                                         "try to restart the application.\n"
+                                         "Please also check whether the defined licence key is valid "
+                                         "and not used by somebody else. For this information please "
+                                         "contact your franchise distributor.") );
+                m_bSerialRegistration = false;
+                m_inRegistrationTimeout = 0;
+            }
+            else
+            {
+                m_inRegistrationTimeout++;
+            }
+        }
     }
 
     if( m_uiPatientId != g_obPatient.id() )
@@ -1180,6 +1201,7 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
 
     if( obDlgSerialReg.exec() == QDialog::Accepted )
     {
+        m_inRegistrationTimeout = 0;
         m_bSerialRegistration = true;
     }
 }

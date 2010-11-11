@@ -145,7 +145,7 @@ int main( int argc, char *argv[] )
         }
 
         qsSpalsh += "  ";
-        if ( g_poServer->isConnected() )
+        if( g_poServer->isConnected() )
         {
             qsSpalsh += QObject::tr("SUCCEEDED");
         }
@@ -157,68 +157,74 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         qsSpalsh += QObject::tr("License is ... ");
-        if ( g_obLicenceManager.isDemo() )
+        if( g_obLicenceManager.isDemo() )
             qsSpalsh += QObject::tr("DEMO");
         else
             qsSpalsh += QObject::tr("OK");
 
-        if ( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ||
-             g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
+        if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ||
+            g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
         {
             qsSpalsh += QObject::tr(" (needs server validation in %1 days)").arg(g_obLicenceManager.getDaysRemaining());
-        } else
-        if ( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED ||
-             g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED )
+        }
+        else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
+                 g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
         {
             qsSpalsh += QObject::tr(" (licence validation limit expired)");
-        } else if ( g_obLicenceManager.getType()==LicenceManager::NOT_VALID ) {
+        }
+        else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
+        {
             qsSpalsh += QObject::tr(" (licence not accepted by server)");
         }
         qsSpalsh += "\n";
-        qsSpalsh += "-----------------------------------------------------\n";
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        qsSpalsh += QObject::tr("Initialize database synchronization ...");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        g_obDBMirror.initialize(); // enough to call once at the begining
-        if( g_obDBMirror.start() )
+        if( g_poServer->isConnected() )
         {
-            qsSpalsh += QObject::tr("SUCCEEDED\n");
+            qsSpalsh += "-----------------------------------------------------\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            if( g_obDBMirror.checkIsSynchronizationNeeded() )
+            qsSpalsh += QObject::tr("Initialize database synchronization ...");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            g_obDBMirror.initialize(); // enough to call once at the begining
+            if( g_obDBMirror.start() )
             {
-                qsSpalsh += QObject::tr("Local database has to synchronized with server.\n");
+                qsSpalsh += QObject::tr("SUCCEEDED\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                if( g_obDBMirror.checkIsSynchronizationNeeded() )
+                {
+                    qsSpalsh += QObject::tr("Local database has to synchronized with server.\n");
+                }
+                else
+                {
+                    qsSpalsh += QObject::tr("Local database synchronized with server.\n");
+                }
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                /*qsSpalsh += "-----------------------------------------------------\n";
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
+                {
+                    qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
+                }
+                else
+                {
+                    qsSpalsh += QObject::tr("Studio independent data match with server.\n");
+                }
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
             }
             else
             {
-                qsSpalsh += QObject::tr("Local database synchronized with server.\n");
+                qsSpalsh += QObject::tr("FAILED\n");
             }
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            /*qsSpalsh += "-----------------------------------------------------\n";
+            qsSpalsh += "-----------------------------------------------------\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-            if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
-            {
-                qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
-            }
-            else
-            {
-                qsSpalsh += QObject::tr("Studio independent data match with server.\n");
-            }
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
         }
-        else
-        {
-            qsSpalsh += QObject::tr("FAILED\n");
-        }
-
-        qsSpalsh += "-----------------------------------------------------\n";
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
 #ifdef __WIN32__
 
