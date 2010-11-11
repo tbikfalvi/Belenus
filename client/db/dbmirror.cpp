@@ -1368,7 +1368,7 @@ void cDBMirror::acquireProductTypesGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PRODUCTTYPES;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM productTypes WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processProductTypesGlobals( SqlResult *p_sqlResult )
@@ -1380,33 +1380,33 @@ void cDBMirror::_processProductTypesGlobals( SqlResult *p_sqlResult )
         QString     qsQuery = "";
         QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productTypes WHERE productTypeId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
 
         if( poQuery->first() )
         {
-            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
-            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
                 continue;
         }
 
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE productTypes SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO productTypes SET ";
+            qsQuery += QString( "productTypeId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
-        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "productTypeId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1422,7 +1422,7 @@ void cDBMirror::acquireProductsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PRODUCTS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM products WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processProductsGlobals( SqlResult *p_sqlResult )
@@ -1434,33 +1434,36 @@ void cDBMirror::_processProductsGlobals( SqlResult *p_sqlResult )
         QString     qsQuery = "";
         QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM products WHERE productId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
 
         if( poQuery->first() )
         {
-            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
-            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+            qsServerTS = p_sqlResult->index(i,6).data().toString();
+            if( qsServerTS.compare( poQuery->value( 6 ).toString() ) == 0 )
                 continue;
         }
 
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE products SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO products SET ";
+            qsQuery += QString( "productId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
-        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "productTypeId = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toUInt() );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "netPrice = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "vatpercent = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,7).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "productId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1476,7 +1479,7 @@ void cDBMirror::acquireDiscountsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_DISCOUNTS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM discounts WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processDiscountsGlobals( SqlResult *p_sqlResult )
@@ -1488,33 +1491,41 @@ void cDBMirror::_processDiscountsGlobals( SqlResult *p_sqlResult )
         QString     qsQuery = "";
         QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE discountId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
 
         if( poQuery->first() )
         {
-            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
-            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+            qsServerTS = p_sqlResult->index(i,11).data().toString();
+            if( qsServerTS.compare( poQuery->value( 11 ).toString() ) == 0 )
                 continue;
         }
 
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE discounts SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO discounts SET ";
+            qsQuery += QString( "discountId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
-        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toUInt() );
+        qsQuery += QString( "companyId = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toUInt() );
+        qsQuery += QString( "doctorId = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toUInt() );
+        qsQuery += QString( "regularCustomer = \"%1\", " ).arg( p_sqlResult->index(i,5).data().toBool() );
+        qsQuery += QString( "employee = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toBool() );
+        qsQuery += QString( "service = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toBool() );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,8).data().toString() );
+        qsQuery += QString( "discountValue = \"%1\", " ).arg( p_sqlResult->index(i,9).data().toInt() );
+        qsQuery += QString( "discountPercent = \"%1\", " ).arg( p_sqlResult->index(i,10).data().toInt() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,11).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,12).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "discountId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
@@ -1530,7 +1541,7 @@ void cDBMirror::acquirePaymentMethodsGlobals()
 {
     m_inProcessCount = MIRROR_GET_GLOBAL_PAYMENTMETHODS;
 
-    _qId = g_poServer->sendQuery( QString("SELECT * FROM _TABLENAME_ WHERE licenceId=0 AND active=1") );
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM paymentMethods WHERE licenceId=0 AND active=1") );
 }
 //====================================================================================
 void cDBMirror::_processPaymentMethodsGlobals( SqlResult *p_sqlResult )
@@ -1542,33 +1553,33 @@ void cDBMirror::_processPaymentMethodsGlobals( SqlResult *p_sqlResult )
         QString     qsQuery = "";
         QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM _TABLENAME_ WHERE _RECORD_Id=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM paymentMethods WHERE paymentMethodId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
 
         if( poQuery->first() )
         {
-            qsServerTS = p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString();
-            if( qsServerTS.compare( poQuery->value( _MODIFIED_FIELD_INDEX_ ).toString() ) == 0 )
+            qsServerTS = p_sqlResult->index(i,3).data().toString();
+            if( qsServerTS.compare( poQuery->value( 3 ).toString() ) == 0 )
                 continue;
         }
 
         if( poQuery->first() )
         {
-            qsQuery = "UPDATE _TABLENAME_ SET ";
+            qsQuery = "UPDATE paymentMethods SET ";
         }
         else
         {
-            qsQuery = "INSERT INTO _TABLENAME_ SET ";
-            qsQuery += QString( "_RECORD_Id = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery = "INSERT INTO paymentMethods SET ";
+            qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += QString( "licenceId = \"0\", " );
         }
-        // IDE JONNEK A TABLA SPECIFIKUS SOROK
-        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,_MODIFIED_FIELD_INDEX_).data().toString() );
-        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,_ACTIVE_FIELD_INDEX_).data().toString() );
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,4).data().toString() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( poQuery->first() )
         {
             qsQuery += "WHERE ";
-            qsQuery += QString( "_RECORD_Id = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "paymentMethodId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
             qsQuery += "AND ";
             qsQuery += QString( "licenceId = \"0\" " );
         }
