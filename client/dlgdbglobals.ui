@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>378</width>
-    <height>364</height>
+    <width>483</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
           <item>
            <widget class="QCheckBox" name="chkPatientOrigin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Patient origins</string>
@@ -40,7 +40,7 @@
           <item>
            <widget class="QCheckBox" name="chkReasonToVisit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Reasons to visit</string>
@@ -50,7 +50,7 @@
           <item>
            <widget class="QCheckBox" name="chkIllnessGroups">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Illness groups</string>
@@ -60,7 +60,7 @@
           <item>
            <widget class="QCheckBox" name="chkHealthInsurance">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Health Insurance Funds</string>
@@ -70,7 +70,7 @@
           <item>
            <widget class="QCheckBox" name="chkCompany">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Companies</string>
@@ -80,7 +80,7 @@
           <item>
            <widget class="QCheckBox" name="chkDoctors">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Doctors ...</string>
@@ -94,7 +94,7 @@
           <item>
            <widget class="QCheckBox" name="chkPatient">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Patients</string>
@@ -104,7 +104,7 @@
           <item>
            <widget class="QCheckBox" name="chkPatientcardTypes">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Patientcard types</string>
@@ -114,7 +114,7 @@
           <item>
            <widget class="QCheckBox" name="chkPatientcard">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Patientcards</string>
@@ -124,7 +124,7 @@
           <item>
            <widget class="QCheckBox" name="chkDiscount">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Discounts</string>
@@ -134,7 +134,7 @@
           <item>
            <widget class="QCheckBox" name="chkApplication">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="text">
              <string>Application data</string>
@@ -226,7 +226,7 @@
      <property name="title">
       <string/>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
        <widget class="QListWidget" name="listInformation"/>
       </item>
@@ -236,5 +236,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pbExit</sender>
+   <signal>clicked()</signal>
+   <receiver>dlgDBGlobals</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>241</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

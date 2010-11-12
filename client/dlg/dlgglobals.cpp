@@ -32,6 +32,9 @@ cDlgDBGlobals::cDlgDBGlobals( QWidget *p_poParent ) : QDialog( p_poParent )
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
     pbStart->setIcon( QIcon("./resources/40x40_database_sync.png") );
 
+    pbStart->setEnabled( false );
+    listInformation->addItem( tr("Please wait while checking global data on server.") );
+
     m_nTimer = startTimer( 5000 );
 }
 //====================================================================================
@@ -67,9 +70,9 @@ void cDlgDBGlobals::timerEvent(QTimerEvent *)
 {
     if( m_bAutoStart )
     {
-        on_pbStart_clicked();
         killTimer( m_nTimer );
         m_bAutoStart = false;
+        on_pbStart_clicked();
         return;
     }
     else if( m_bAutoClose )
@@ -81,7 +84,7 @@ void cDlgDBGlobals::timerEvent(QTimerEvent *)
     else if( m_bNormalStart )
     {
         killTimer( m_nTimer );
-        if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
+        if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
         {
             pbStart->setEnabled( true );
             listInformation->addItem( tr("Database synchronization required.") );
@@ -96,6 +99,23 @@ void cDlgDBGlobals::timerEvent(QTimerEvent *)
     if( !g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
     {
         killTimer( m_nTimer );
+
+        chkPatientOrigin->setChecked( g_obDBMirror.checkGlobalData(DB_PATIENT_ORIGIN) );
+        chkReasonToVisit->setChecked( g_obDBMirror.checkGlobalData(DB_REASON_TO_VISIT) );
+        chkIllnessGroups->setChecked( g_obDBMirror.checkGlobalData(DB_ILLNESS_GROUP) );
+        chkHealthInsurance->setChecked( g_obDBMirror.checkGlobalData(DB_HEALTH_INSURANCE) );
+        chkCompany->setChecked( g_obDBMirror.checkGlobalData(DB_COMPANY) );
+        chkDoctors->setChecked( g_obDBMirror.checkGlobalData(DB_DOCTOR_TYPE) || g_obDBMirror.checkGlobalData(DB_DOCTOR) );
+        chkPatient->setChecked( g_obDBMirror.checkGlobalData(DB_PATIENT) );
+        chkPatientcardTypes->setChecked( g_obDBMirror.checkGlobalData(DB_PATIENTCARD_TYPE) );
+        chkPatientcard->setChecked( g_obDBMirror.checkGlobalData(DB_PATIENTCARD) );
+        chkDiscount->setChecked( g_obDBMirror.checkGlobalData(DB_DISCOUNT) );
+        chkApplication->setChecked( g_obDBMirror.checkGlobalData(DB_PUBLIC_PLACES) ||
+                                    g_obDBMirror.checkGlobalData(DB_LEDGER) ||
+                                    g_obDBMirror.checkGlobalData(DB_PRODUCT_TYPE) ||
+                                    g_obDBMirror.checkGlobalData(DB_PRODUCT) ||
+                                    g_obDBMirror.checkGlobalData(DB_CASSA));
+
         listInformation->addItem( tr("Database synchronization finished.") );
         if( m_bAutoSynchronization )
         {

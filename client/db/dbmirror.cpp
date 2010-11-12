@@ -70,6 +70,7 @@ cDBMirror::cDBMirror()
     m_bSyncExit             = false;
     m_uiDbModificationLevel = 0;
     m_uiCurrentId           = 0;
+    m_uiGlobalDataChanged   = 0;
 }
 //====================================================================================
 cDBMirror::~cDBMirror()
@@ -475,14 +476,17 @@ void cDBMirror::_compareGlobalDataTimestamp( const QString &p_qsGlobalTimestamp 
 
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::_compareGlobalDataTimestamp] Server: " << qdServer.toString("yyyy-MM-dd hh:mm:ss") << EOM;
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::_compareGlobalDataTimestamp] Client: " << qdClient.toString("yyyy-MM-dd hh:mm:ss") << EOM;
+    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::_compareGlobalDataTimestamp] Diff: " << qdClient.secsTo( qdServer ) << EOM;
 
     if( qdClient.secsTo( qdServer ) > 0 )
     {
         m_bGlobalDataChanged = true;
+        m_qsServerTimestamp = p_qsGlobalTimestamp;
     }
     else
     {
         m_bGlobalDataChanged = false;
+        m_qsServerTimestamp = poQuery->value( 0 ).toString();
     }
 }
 //====================================================================================
@@ -510,6 +514,12 @@ bool cDBMirror::checkSyncLevel( unsigned int p_uiSyncLevel )
 //    g_obLogger(cSeverity::DEBUG) << "[cDBMirror::checkSyncLevel] p_uiSyncLevel: " << QString::number(p_uiSyncLevel) << " - m_uiDbModificationLevel: " << QString::number(m_uiDbModificationLevel) << EOM;
 
     return ((m_uiDbModificationLevel&p_uiSyncLevel)>0?true:false);
+}
+//====================================================================================
+bool cDBMirror::checkGlobalData( unsigned int p_uiSyncLevel )
+//====================================================================================
+{
+    return ((m_uiGlobalDataChanged&p_uiSyncLevel)>0?true:false);
 }
 //====================================================================================
 bool cDBMirror::checkIsGlobalDataDownloadInProgress()
@@ -660,10 +670,11 @@ bool cDBMirror::checkIsGlobalDataModifiedOnServer()
 void cDBMirror::acquirePatientOriginGlobals()
 //====================================================================================
 {
-    m_inProcessCount    = MIRROR_GET_GLOBAL_PATIENTORIGIN;
-    m_bProcessSucceeded = true;
-    m_inCountOfTries    = 0;
-    m_uiCurrentId       = 0;
+    m_inProcessCount        = MIRROR_GET_GLOBAL_PATIENTORIGIN;
+    m_bProcessSucceeded     = true;
+    m_inCountOfTries        = 0;
+    m_uiCurrentId           = 0;
+    m_uiGlobalDataChanged   = 0;
 
     _qId = g_poServer->sendQuery( QString("SELECT * FROM patientOrigin WHERE licenceId=0 AND active=1") );
 }
@@ -708,10 +719,20 @@ void cDBMirror::_processPatientOriginGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PATIENT_ORIGIN;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireReasonToVisitGlobals();
+    if( m_bProcessSucceeded )
+        acquireReasonToVisitGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireReasonToVisitGlobals()
@@ -762,10 +783,20 @@ void cDBMirror::_processReasonToVisitGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_REASON_TO_VISIT;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireIllnessGroupsGlobals();
+    if( m_bProcessSucceeded )
+        acquireIllnessGroupsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireIllnessGroupsGlobals()
@@ -816,10 +847,20 @@ void cDBMirror::_processIllnessGroupsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_ILLNESS_GROUP;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquirePublicPlacesGlobals();
+    if( m_bProcessSucceeded )
+        acquirePublicPlacesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquirePublicPlacesGlobals()
@@ -870,10 +911,20 @@ void cDBMirror::_processPublicPlacesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PUBLIC_PLACES;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireHealthInsurancesGlobals();
+    if( m_bProcessSucceeded )
+        acquireHealthInsurancesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireHealthInsurancesGlobals()
@@ -933,10 +984,20 @@ void cDBMirror::_processHealthInsurancesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_HEALTH_INSURANCE;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireCompaniesGlobals();
+    if( m_bProcessSucceeded )
+        acquireCompaniesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireCompaniesGlobals()
@@ -996,10 +1057,20 @@ void cDBMirror::_processCompaniesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_COMPANY;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireDoctorTypesGlobals();
+    if( m_bProcessSucceeded )
+        acquireDoctorTypesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireDoctorTypesGlobals()
@@ -1050,10 +1121,20 @@ void cDBMirror::_processDoctorTypesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_DOCTOR_TYPE;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireDoctorsGlobals();
+    if( m_bProcessSucceeded )
+        acquireDoctorsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireDoctorsGlobals()
@@ -1107,10 +1188,20 @@ void cDBMirror::_processDoctorsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_DOCTOR;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquirePatientsGlobals();
+    if( m_bProcessSucceeded )
+        acquirePatientsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquirePatientsGlobals()
@@ -1187,10 +1278,20 @@ void cDBMirror::_processPatientsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PATIENT;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquirePatientCardTypesGlobals();
+    if( m_bProcessSucceeded )
+        acquirePatientCardTypesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquirePatientCardTypesGlobals()
@@ -1248,10 +1349,20 @@ void cDBMirror::_processPatientCardTypesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PATIENTCARD_TYPE;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquirePatientCardsGlobals();
+    if( m_bProcessSucceeded )
+        acquirePatientCardsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquirePatientCardsGlobals()
@@ -1310,10 +1421,20 @@ void cDBMirror::_processPatientCardsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PATIENTCARD;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireLedgerTypesGlobals();
+    if( m_bProcessSucceeded )
+        acquireLedgerTypesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireLedgerTypesGlobals()
@@ -1364,10 +1485,20 @@ void cDBMirror::_processLedgerTypesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_LEDGER;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireProductTypesGlobals();
+    if( m_bProcessSucceeded )
+        acquireProductTypesGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireProductTypesGlobals()
@@ -1418,10 +1549,20 @@ void cDBMirror::_processProductTypesGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PRODUCT_TYPE;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireProductsGlobals();
+    if( m_bProcessSucceeded )
+        acquireProductsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireProductsGlobals()
@@ -1475,10 +1616,20 @@ void cDBMirror::_processProductsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_PRODUCT;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquireDiscountsGlobals();
+    if( m_bProcessSucceeded )
+        acquireDiscountsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquireDiscountsGlobals()
@@ -1537,10 +1688,20 @@ void cDBMirror::_processDiscountsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_DISCOUNT;
+
         if( poQuery ) delete poQuery;
     }
 
-    acquirePaymentMethodsGlobals();
+    if( m_bProcessSucceeded )
+        acquirePaymentMethodsGlobals();
 }
 //====================================================================================
 void cDBMirror::acquirePaymentMethodsGlobals()
@@ -1591,10 +1752,27 @@ void cDBMirror::_processPaymentMethodsGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\" " );
         }
 
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_CASSA;
+
         if( poQuery ) delete poQuery;
     }
 
+    _processGlobalsFinished();
+}
+//====================================================================================
+void cDBMirror::_processGlobalsFinished()
+//====================================================================================
+{
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"GLOBAL_DATA_UPDATED\" ").arg(m_qsServerTimestamp) );
     m_bAcquireGlobalData = false;
+    m_bGlobalDataChanged = false;
 }
 //====================================================================================
 //====================================================================================

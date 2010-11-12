@@ -130,6 +130,7 @@ public:
     void            updateSynchronizationLevel( unsigned int p_uiSyncLevel );
     void            updateGlobalSyncLevel( unsigned int p_uiSyncLevel );
     bool            checkSyncLevel( unsigned int p_uiSyncLevel );
+    bool            checkGlobalData( unsigned int p_uiSyncLevel );
 
     bool            checkIsGlobalDataDownloadInProgress();
     bool            checkSynchronizationFinished();
@@ -204,7 +205,9 @@ private:
                                                     // needs to be synchronized or not
     unsigned int    m_uiDbModificationLevel;        // Identifies which table modified. Only table with higher level
                                                     // can be archived on server
+    QString         m_qsServerTimestamp;            // Identifies date and time of global data modified on server
     unsigned int    m_uiGlobalSyncLevel;            // Identifies which table has modified global data.
+    unsigned int    m_uiGlobalDataChanged;          // Identifies which table updated with data from server
     unsigned int    m_uiCurrentId;                  // Holds the actually archived record unique identifier
     int             m_inCountOfTries;               // Identifies how many times client tried to process sql query
                                                     // on belenus server
@@ -231,6 +234,7 @@ private:
     void            _processProductsGlobals( SqlResult *p_sqlResult );
     void            _processDiscountsGlobals( SqlResult *p_sqlResult );
     void            _processPaymentMethodsGlobals( SqlResult *p_sqlResult );
+    void            _processGlobalsFinished();
 
     void            _synchronizeUserTable( unsigned int p_uiSyncLevel = DB_USER );
     void            _recordUserSynchronized();

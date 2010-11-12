@@ -787,7 +787,10 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
     else if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
     {
+        cDlgDBGlobals   obDlgDBGlobals( this );
 
+        obDlgDBGlobals.autoSynchronization();
+        obDlgDBGlobals.exec();
     }
 
     if( m_uiPatientId != g_obPatient.id() )
