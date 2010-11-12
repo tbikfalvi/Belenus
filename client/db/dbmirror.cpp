@@ -65,6 +65,7 @@ cDBMirror::cDBMirror()
 
     m_inProcessCount        = 0;
     m_bAcquireGlobalData    = false;
+    m_bGlobalDataChanged    = false;
     m_bSyncAllTable         = false;
     m_bSyncExit             = false;
     m_uiDbModificationLevel = 0;
@@ -477,11 +478,11 @@ void cDBMirror::_compareGlobalDataTimestamp( const QString &p_qsGlobalTimestamp 
 
     if( qdClient.secsTo( qdServer ) > 0 )
     {
-        m_bAcquireGlobalData = true;
+        m_bGlobalDataChanged = true;
     }
     else
     {
-        m_bAcquireGlobalData = false;
+        m_bGlobalDataChanged = false;
     }
 }
 //====================================================================================
@@ -638,6 +639,12 @@ bool cDBMirror::checkIsSynchronizationNeeded()
         updateSynchronizationLevel( DB_LEDGER );
 
     return (m_uiDbModificationLevel>0?true:false);
+}
+//====================================================================================
+bool cDBMirror::checkIsGlobalDataModifiedOnServer()
+//====================================================================================
+{
+    return m_bGlobalDataChanged;
 }
 //====================================================================================
 //====================================================================================

@@ -134,6 +134,7 @@ public:
     bool            checkIsGlobalDataDownloadInProgress();
     bool            checkSynchronizationFinished();
     bool            checkIsSynchronizationNeeded();
+    bool            checkIsGlobalDataModifiedOnServer();
 
     void            acquirePatientOriginGlobals();
     void            acquireReasonToVisitGlobals();
@@ -197,6 +198,7 @@ protected:
 private:
     int             m_inProcessCount;               // Identifies the current process, see process identifier defines
     bool            m_bAcquireGlobalData;           // Identifies when global data download is in progress
+    bool            m_bGlobalDataChanged;           // Identifies whether the global data changed on server
     bool            m_bSyncAllTable;                // Identifies whether all table needs to be synchronized or not
     bool            m_bSyncExit;                    // Identifies whether tables modified during exit
                                                     // needs to be synchronized or not

@@ -502,4 +502,7 @@ client/ui_dlgsynchronization.h
 sql/reset_client
 sql/reset_server
 client/ui_dlgdbglobals.h
+client/dlgglobals.o
+client/moc_dlgglobals.cpp
+client/moc_dlgglobals.o
 

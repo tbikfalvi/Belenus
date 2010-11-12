@@ -288,22 +288,22 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
-    if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR )
+    if( g_obLicenceManager.getType() == LicenceManager::VALID_SERVER_ERROR )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but was not able to validate it with the server.\n"
                                  "Please note that without validation the application will work only for the next %1 days\n\n"
                                  "Please also note you need live internet connection for the validation process.").arg(g_obLicenceManager.getDaysRemaining()) );
     }
-    else if( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
+    else if( g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_ERROR )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but failed to validate the installation with the server.\n"
                                  "Please call Service to validate your installation.\n\n"
                                  "Note that without validation the application will work only for the next %1 days").arg(g_obLicenceManager.getDaysRemaining()) );
     }
-    else if( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED ||
-                g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED )
+    else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
+             g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key has expired.\n"
@@ -784,6 +784,10 @@ void cWndMain::timerEvent(QTimerEvent *)
                 m_inRegistrationTimeout++;
             }
         }
+    }
+    else if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
+    {
+
     }
 
     if( m_uiPatientId != g_obPatient.id() )

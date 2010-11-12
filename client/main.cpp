@@ -221,10 +221,10 @@ int main( int argc, char *argv[] )
             {
                 qsSpalsh += QObject::tr("FAILED\n");
             }
-
-            qsSpalsh += "-----------------------------------------------------\n";
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
         }
+
+        qsSpalsh += "-----------------------------------------------------\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
 #ifdef __WIN32__
 
