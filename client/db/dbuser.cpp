@@ -13,6 +13,7 @@ cDBUser::~cDBUser()
 void cDBUser::init( const unsigned int p_uiId, const unsigned int p_uiLicenceId,
                     const QString &p_qsName, const QString &p_qsRealName,
                     const QString &p_qsPassword, const cAccessGroup::teAccessGroup p_enGroup,
+                    const QString &p_qsModified,
                     const bool p_boActive, const QString &p_qsComment,
                     const QString &p_qsArchive ) throw()
 {
@@ -24,6 +25,7 @@ void cDBUser::init( const unsigned int p_uiId, const unsigned int p_uiLicenceId,
     else m_qsRealName = p_qsName;
     m_qsPassword  = p_qsPassword;
     m_enGroup     = p_enGroup;
+    m_qsModified        = p_qsModified;
     m_boActive    = p_boActive;
     m_qsComment   = p_qsComment;
     m_qsArchive   = p_qsArchive;

@@ -43,6 +43,7 @@ public:
     void            setDiscountType( const int p_nDiscountType )                    throw();
     int             discount() const                                                throw();
     void            setDiscount( const int p_nDiscount )                            throw();
+    QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
     QString         archive() const                                                 throw();
@@ -63,6 +64,7 @@ private:
     QString         m_qsValidDateTo;
     int             m_nDiscountType;
     int             m_nDiscount;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -80,6 +82,7 @@ private:
                const QString &p_qsValidDateTo = "",
                const int p_nDiscountType = 0,
                const int p_nDiscount = 0,
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();

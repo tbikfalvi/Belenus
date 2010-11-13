@@ -45,6 +45,7 @@ public:
     void            setDoor( const QString &p_qsDoor )                              throw();
     bool            primaryAddress() const                                          throw();
     void            setPrimaryAddress( const bool p_bPrimaryAddress )               throw();
+    QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
     QString         archive() const                                                 throw();
@@ -65,6 +66,7 @@ private:
     QString         m_qsFloor;
     QString         m_qsDoor;
     bool            m_bPrimaryAddress;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -82,6 +84,7 @@ private:
                const QString &p_qsFloor = "",
                const QString &p_qsDoor = "",
                const bool p_bPrimaryAddress = false,
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                 throw();
     void init( const QSqlRecord &p_obRecord )                       throw();

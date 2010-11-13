@@ -28,12 +28,14 @@ cDBReasonToVisit::~cDBReasonToVisit()
 void cDBReasonToVisit::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const QString &p_stName,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_stArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_stName        = p_stName;
+    m_qsModified        = p_qsModified;
     m_bActive       = p_bActive;
     m_stArchive     = p_stArchive;
 }

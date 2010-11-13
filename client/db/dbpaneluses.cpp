@@ -33,6 +33,7 @@ void cDBPanelUses::init( const unsigned int p_uiId,
                          const QString &p_qsName,
                          const unsigned int p_uiUseTime,
                          const unsigned int p_uiUsePrice,
+                         const QString &p_qsModified,
                          const bool p_bActive,
                          const QString &p_qsArchive ) throw()
 {
@@ -42,6 +43,7 @@ void cDBPanelUses::init( const unsigned int p_uiId,
     m_qsName            = p_qsName;
     m_uiUseTime         = p_uiUseTime;
     m_uiUsePrice        = p_uiUsePrice;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }

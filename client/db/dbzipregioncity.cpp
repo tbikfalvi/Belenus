@@ -31,6 +31,7 @@ void cDBZipRegionCity::init( const unsigned int p_uiId,
                              const QString &p_qsZip,
                              const QString &p_qsRegion,
                              const QString &p_qsCity,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -39,6 +40,7 @@ void cDBZipRegionCity::init( const unsigned int p_uiId,
     m_qsZip         = p_qsZip;
     m_qsRegion      = p_qsRegion;
     m_qsCity        = p_qsCity;
+    m_qsModified        = p_qsModified;
     m_bActive       = p_bActive;
     m_qsArchive     = p_qsArchive;
 }

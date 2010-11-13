@@ -42,6 +42,7 @@ void cDBLedger::init( const unsigned int p_uiId,
                       const int p_nTotalPrice,
                       const QString &p_qsLedgerTime,
                       const QString &p_qsComment,
+                      const QString &p_qsModified,
                       const bool p_bActive,
                       const QString &p_qsArchive ) throw()
 {
@@ -62,6 +63,7 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_nTotalPrice           = p_nTotalPrice;
     m_qsLedgerTime          = p_qsLedgerTime;
     m_qsComment             = p_qsComment;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }

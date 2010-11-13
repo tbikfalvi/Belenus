@@ -32,6 +32,7 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
                              const QString &p_qsName,
                              const unsigned int p_uiLength,
                              const unsigned int p_uiActivateCommand,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -42,6 +43,7 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
     m_qsName            = p_qsName;
     m_uiLength          = p_uiLength;
     m_uiActivateCommand = p_uiActivateCommand;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }

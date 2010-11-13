@@ -34,6 +34,7 @@ void cDBDoctor::init( const unsigned int p_uiId,
                       const QString &p_qsData,
                       const int p_nDiscountType,
                       const int p_nDiscount,
+                      const QString &p_qsModified,
                       const bool p_bActive,
                       const QString &p_qsArchive ) throw()
 {
@@ -45,6 +46,7 @@ void cDBDoctor::init( const unsigned int p_uiId,
     m_qsData            = p_qsData;
     m_nDiscountType     = p_nDiscountType;
     m_nDiscount         = p_nDiscount;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }

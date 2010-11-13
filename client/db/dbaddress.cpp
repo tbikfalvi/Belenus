@@ -39,6 +39,7 @@ void cDBAddress::init( const unsigned int p_uiId,
                        const QString &p_qsFloor,
                        const QString &p_qsDoor,
                        const bool p_bPrimaryAddress,
+                       const QString &p_qsModified,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
 {
@@ -56,6 +57,7 @@ void cDBAddress::init( const unsigned int p_uiId,
     m_qsFloor           = p_qsFloor;
     m_qsDoor            = p_qsDoor;
     m_bPrimaryAddress   = p_bPrimaryAddress;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -76,6 +78,7 @@ void cDBAddress::init( const QSqlRecord &p_obRecord ) throw()
     int inFloorIdx          = p_obRecord.indexOf( "floor" );
     int inDoorIdx           = p_obRecord.indexOf( "door" );
     int inPrimaryAddressIdx = p_obRecord.indexOf( "primaryAddress" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -93,6 +96,7 @@ void cDBAddress::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inFloorIdx ).toString(),
           p_obRecord.value( inDoorIdx ).toString(),
           p_obRecord.value( inPrimaryAddressIdx ).toBool(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -364,6 +368,11 @@ bool cDBAddress::primaryAddress() const throw()
 void cDBAddress::setPrimaryAddress( const bool p_bPrimaryAddress ) throw()
 {
     m_bPrimaryAddress = p_bPrimaryAddress;
+}
+
+QString cDBAddress::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBAddress::active() const throw()

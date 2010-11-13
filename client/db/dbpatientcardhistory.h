@@ -26,6 +26,7 @@ public:
     void            setUnits( const int p_nUnits )                              throw();
     QString         time() const                                                throw();
     void            setTime( const QString &p_qsTime )                          throw();
+    QString         modified() const                                                throw();
     bool            active() const                                              throw();
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
@@ -38,6 +39,7 @@ private:
     QString         m_qsDateTime;
     int             m_nUnits;
     QString         m_qsTime;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -47,6 +49,7 @@ private:
                const QString p_qsDateTime = "",
                const int p_nUnits = 0,
                const QString p_qsTime = "",
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                             throw();
     void init( const QSqlRecord &p_obRecord )                                   throw();

@@ -31,6 +31,7 @@ void cDBPatientCardHistory::init( const unsigned int p_uiId,
                                   const QString p_qsDateTime,
                                   const int p_nUnits,
                                   const QString p_qsTime,
+                                  const QString &p_qsModified,
                                   const bool p_bActive,
                                   const QString &p_qsArchive ) throw()
 {
@@ -40,6 +41,7 @@ void cDBPatientCardHistory::init( const unsigned int p_uiId,
     m_qsDateTime            = p_qsDateTime;
     m_nUnits                = p_nUnits;
     m_qsTime                = p_qsTime;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }

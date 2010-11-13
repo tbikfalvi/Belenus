@@ -35,6 +35,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
                              const QString &p_qsValidDateTo,
                              const int p_nValidDays,
                              const int p_nUnitTime,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -48,6 +49,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
     m_qsValidDateTo     = p_qsValidDateTo;
     m_nValidDays        = p_nValidDays;
     m_nUnitTime         = p_nUnitTime;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }

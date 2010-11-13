@@ -193,6 +193,7 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
     action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
+    action_AcquireGlobalData->setIcon( QIcon("./resources/40x40_database_sync.png") );
 
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
@@ -235,6 +236,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 
+    action_SynchronizeDatabase->setEnabled( !g_obLicenceManager.isDemo() );
     action_AcquireGlobalData->setEnabled( !g_obLicenceManager.isDemo() );
 }
 //====================================================================================
@@ -749,6 +751,7 @@ void cWndMain::timerEvent(QTimerEvent *)
         if( g_poPrefs->getLicenceId() > 1 )
         {
             m_bSerialRegistration = false;
+            g_obDBMirror.initialize();
             g_obDBMirror.updateLicenceData();
             g_obCassa.cassaClose();
             g_obCassa.createNew( g_obUser.id() );
@@ -1844,5 +1847,10 @@ void cWndMain::on_action_AcquireGlobalData_triggered()
 /*    cDlgDBGlobals   obDlgDBGlobals( this );
 
     obDlgDBGlobals.exec();*/
+}
+//====================================================================================
+void cWndMain::on_action_EstablishConnection_triggered()
+//====================================================================================
+{
 }
 //====================================================================================

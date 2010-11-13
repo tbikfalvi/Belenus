@@ -42,6 +42,7 @@ public:
     void            setLedgerTime( const QString &p_qsLedgerTime )                  throw();
     QString         comment() const                                                 throw();
     void            setComment( const QString &p_qsComment )                        throw();
+    QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
     QString         archive() const                                                 throw();
@@ -62,6 +63,7 @@ private:
     int             m_inTimeCash;
     QString         m_qsLedgerTime;
     QString         m_qsComment;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -79,6 +81,7 @@ private:
                const int p_inTimeCash = 0,
                const QString &p_qsLedgerTime = "",
                const QString &p_qsComment = "",
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();

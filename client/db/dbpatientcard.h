@@ -41,6 +41,7 @@ public:
     void            setValidDateTo( const QString &p_qsValidDateTo )            throw();
     QString         pincode() const                                             throw();
     void            setPincode( const QString &p_qsPincode )                    throw();
+    QString         modified() const                                                throw();
     bool            active() const                                              throw();
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
@@ -58,6 +59,7 @@ private:
     QString         m_qsValidDateFrom;
     QString         m_qsValidDateTo;
     QString         m_qsPincode;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -72,6 +74,7 @@ private:
                const QString p_qsValidDateFrom = "0000-00-00",
                const QString p_qsValidDateTo = "0000-00-00",
                const QString p_qsPincode = "",
+               const QString &p_qsModified = "",
                const bool p_bActive = false,
                const QString &p_qsArchive = "NEW" )                             throw();
     void init( const QSqlRecord &p_obRecord )                                   throw();

@@ -31,6 +31,7 @@ void cDBPanel::init( const unsigned int p_uiId,
                      const QString &p_qsTitle,
                      const unsigned int p_uiWorkTime,
                      const unsigned int p_uiMaxWorkTime,
+                     const QString &p_qsModified,
                      const bool p_bActive,
                      const QString &p_qsArchive ) throw()
 {
@@ -40,6 +41,7 @@ void cDBPanel::init( const unsigned int p_uiId,
     m_qsTitle           = p_qsTitle;
     m_uiWorkTime        = p_uiWorkTime;
     m_uiMaxWorkTime     = p_uiMaxWorkTime;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }

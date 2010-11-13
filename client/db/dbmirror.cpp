@@ -1870,8 +1870,9 @@ void cDBMirror::_synchronizeUserTable( unsigned int p_uiSyncLevel )
         qsQuery += QString( "realName = \"%1\", " ).arg(  obUser.realName() );
         qsQuery += QString( "password = \"%1\", " ).arg(  obUser.password() );
         qsQuery += QString( "accgroup = %1, " ).arg(  obUser.group() );
-        qsQuery += QString( "active = %1, " ).arg(  obUser.active() );
         qsQuery += QString( "comment = \"%1\", " ).arg(  obUser.comment() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obUser.modified() );
+        qsQuery += QString( "active = %1, " ).arg(  obUser.active() );
         qsQuery += QString( "archive = \"ARC\"" );
         if( obUser.archive().compare( "MOD" ) == 0 )
         {

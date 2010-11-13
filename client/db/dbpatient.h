@@ -74,6 +74,7 @@ public:
     void            setDiscountType( const int p_inDiscountType )                   throw();
     QString         comment() const                                                 throw();
     void            setComment( const QString &p_qsComment )                        throw();
+    QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
     QString         archive() const                                                 throw();
@@ -109,6 +110,7 @@ private:
     bool            m_bDoctorProposed;
     int             m_inDiscountType;
     QString         m_qsComment;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -141,6 +143,7 @@ private:
                const bool p_bDoctorProposed = false,
                const int p_inDiscountType = 2,
                const QString &p_qsComment = "",
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();

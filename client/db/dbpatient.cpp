@@ -58,6 +58,7 @@ void cDBPatient::init( const unsigned int p_uiId,
                        const bool p_bDoctorProposed,
                        const int p_inDiscountType,
                        const QString &p_qsComment,
+                       const QString &p_qsModified,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
 //====================================================================================
@@ -91,6 +92,7 @@ void cDBPatient::init( const unsigned int p_uiId,
     m_bDoctorProposed       = p_bDoctorProposed;
     m_inDiscountType        = p_inDiscountType;
     m_qsComment             = p_qsComment;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }

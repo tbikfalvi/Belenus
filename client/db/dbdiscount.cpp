@@ -36,6 +36,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
                         const QString &p_qsName,
                         const int p_inDiscountValue,
                         const int p_inDiscountPercent,
+                        const QString &p_qsModified,
                         const bool p_bActive,
                         const QString &p_qsArchive ) throw()
 {
@@ -50,6 +51,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
     m_qsName                = p_qsName;
     m_inDiscountValue       = p_inDiscountValue;
     m_inDiscountPercent     = p_inDiscountPercent;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }

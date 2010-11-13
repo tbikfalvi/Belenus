@@ -35,6 +35,7 @@ void cDBAttendance::init( const unsigned int p_uiId,
                           const float p_fBloodPressureStop,
                           const float p_fPulseStop,
                           const QString &p_qsComment,
+                          const QString &p_qsModified,
                           const bool p_bActive,
                           const QString &p_qsArchive ) throw()
 {
@@ -48,6 +49,7 @@ void cDBAttendance::init( const unsigned int p_uiId,
     m_fBloodPressureStop    = p_fBloodPressureStop;
     m_fPulseStop            = p_fPulseStop;
     m_qsComment             = p_qsComment;
+    m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -64,6 +66,7 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
     int inBPStopIdx         = p_obRecord.indexOf( "bloodPressureStop" );
     int inPulseStopIdx      = p_obRecord.indexOf( "pulseStop" );
     int inCommentIdx        = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -77,6 +80,7 @@ void cDBAttendance::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inBPStopIdx ).toFloat(),
           p_obRecord.value( inPulseStopIdx ).toFloat(),
           p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -278,6 +282,11 @@ void cDBAttendance::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBAttendance::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBAttendance::active() const throw()

@@ -57,6 +57,7 @@ public:
     cAccessGroup::teAccessGroup group() const                                                   throw();
     void                        setGroup( const cAccessGroup::teAccessGroup p_enGroup)          throw();
     bool                        isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const  throw();
+    QString         modified() const                                                throw();
     bool                        active() const                                                  throw();
     void                        setActive( const bool p_boActive )                              throw();
     QString                     comment() const                                                 throw();
@@ -72,6 +73,7 @@ private:
     QString                     m_qsRealName;
     QString                     m_qsPassword;
     cAccessGroup::teAccessGroup m_enGroup;
+    QString         m_qsModified;
     bool                        m_boActive;
     QString                     m_qsComment;
     QString                     m_qsArchive;
@@ -82,6 +84,7 @@ private:
                const QString &p_qsRealName = "",
                const QString &p_qsPassword = "",
                const cAccessGroup::teAccessGroup p_enGroup = cAccessGroup::USER,
+               const QString &p_qsModified = "",
                const bool p_boActive = true,
                const QString &p_qsComment = "",
                const QString &p_qsArchive = "NEW" )     throw();
