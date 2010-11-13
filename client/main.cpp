@@ -309,6 +309,11 @@ int main( int argc, char *argv[] )
         {
             obMainWindow.initPanels();
             obMainWindow.startMainTimer();
+            if( g_poPrefs->getDBGlobalAutoSynchronize() )
+            {
+                g_obDBMirror.requestGlobalDataTimestamp();
+                obMainWindow.autoSynchronizeGlobalData();
+            }
             r = apMainApp.exec();
         }
         else

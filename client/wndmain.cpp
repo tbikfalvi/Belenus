@@ -96,12 +96,16 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
-    m_bCtrlPressed          = false;
-    m_bSerialRegistration   = false;
+    m_bCtrlPressed                  = false;
+    m_bSerialRegistration           = false;
+    m_inRegistrationTimeout         = 0;
 
-    m_uiPatientId           = 0;
-    m_uiAttendanceId        = 0;
-    g_uiPatientAttendanceId = 0;
+    m_bGlobalDataRequested          = false;
+    m_inGlobalDataRequestTimeout    = 0;
+
+    m_uiPatientId                   = 0;
+    m_uiAttendanceId                = 0;
+    g_uiPatientAttendanceId         = 0;
 
     m_dlgProgress = new cDlgProgress( this );
 
@@ -246,6 +250,12 @@ cWndMain::~cWndMain()
 void cWndMain::startMainTimer()
 {
     m_nTimer = startTimer( 300 );
+}
+//====================================================================================
+void cWndMain::autoSynchronizeGlobalData()
+//====================================================================================
+{
+    m_bGlobalDataRequested = true;
 }
 //====================================================================================
 bool cWndMain::showLogIn()
@@ -769,6 +779,9 @@ void cWndMain::timerEvent(QTimerEvent *)
         {
             if( m_inRegistrationTimeout > 20 )
             {
+                m_bSerialRegistration = false;
+                m_inRegistrationTimeout = 0;
+
                 QMessageBox::warning( this, tr("Warning"),
                                       tr("Registration of the licence key has been failed.\n\n"
                                          "Please check your internet connection and "
@@ -776,8 +789,6 @@ void cWndMain::timerEvent(QTimerEvent *)
                                          "Please also check whether the defined licence key is valid "
                                          "and not used by somebody else. For this information please "
                                          "contact your franchise distributor.") );
-                m_bSerialRegistration = false;
-                m_inRegistrationTimeout = 0;
             }
             else
             {
@@ -785,12 +796,32 @@ void cWndMain::timerEvent(QTimerEvent *)
             }
         }
     }
-    else if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
+    else if( m_bGlobalDataRequested )
     {
-        cDlgDBGlobals   obDlgDBGlobals( this );
+        if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
+        {
+            m_bGlobalDataRequested          = false;
+            m_inGlobalDataRequestTimeout    = 0;
 
-        obDlgDBGlobals.autoSynchronization();
-        obDlgDBGlobals.exec();
+            cDlgDBGlobals   obDlgDBGlobals( this );
+
+            obDlgDBGlobals.autoSynchronization();
+            obDlgDBGlobals.exec();
+        }
+        else
+        {
+            if( m_inGlobalDataRequestTimeout > 10 )
+            {
+                m_bGlobalDataRequested          = false;
+                m_inGlobalDataRequestTimeout    = 0;
+
+                QMessageBox::information( this, tr("Information"),tr( "Studio independent data is already synchronized with server." ) );
+            }
+            else
+            {
+                m_inGlobalDataRequestTimeout++;
+            }
+        }
     }
 
     if( m_uiPatientId != g_obPatient.id() )
@@ -843,11 +874,12 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
         {
             logoutUser();
 
-            if( g_obDBMirror.checkIsSynchronizationNeeded() &&
-                QMessageBox::question( this, tr("Question"),
-                                       tr("Database synchronization needed.\n"
-                                          "Do you want to synchronize database with server?"),
-                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            if( g_poPrefs->getDBAutoArchive() ||
+                (g_obDBMirror.checkIsSynchronizationNeeded() &&
+                 QMessageBox::question( this, tr("Question"),
+                                        tr("Database synchronization needed.\n"
+                                           "Do you want to synchronize database with server?"),
+                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes ) )
             {
                 hide();
 
@@ -1807,9 +1839,10 @@ void cWndMain::on_action_AcquireGlobalData_triggered()
 //====================================================================================
 {
     g_obDBMirror.requestGlobalDataTimestamp();
+    m_bGlobalDataRequested = true;
 
-    cDlgDBGlobals   obDlgDBGlobals( this );
+/*    cDlgDBGlobals   obDlgDBGlobals( this );
 
-    obDlgDBGlobals.exec();
+    obDlgDBGlobals.exec();*/
 }
 //====================================================================================

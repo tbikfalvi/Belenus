@@ -25,6 +25,7 @@ public:
 
     void checkDemoLicenceKey();
     void startMainTimer();
+    void autoSynchronizeGlobalData();
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
@@ -44,6 +45,9 @@ private:
 
     bool                m_bSerialRegistration;
     int                 m_inRegistrationTimeout;
+
+    bool                m_bGlobalDataRequested;
+    int                 m_inGlobalDataRequestTimeout;
 
     void updateTitle();
     void processInputPatient( QString p_stPatientName );

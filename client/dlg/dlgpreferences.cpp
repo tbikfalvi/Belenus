@@ -62,6 +62,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
+    chkDBAutoSynchron->setChecked( g_poPrefs->getDBAutoArchive() );
+    chkDBGlobalAutoSynchron->setChecked( g_poPrefs->getDBGlobalAutoSynchronize() );
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
 
@@ -143,6 +145,9 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );
+    g_poPrefs->setDBAutoArchive( chkDBAutoSynchron->isChecked() );
+    g_poPrefs->setDBGlobalAutoSynchronize( chkDBGlobalAutoSynchron->isChecked() );
+
     g_poPrefs->setCommunicationPort( spbCOM->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );

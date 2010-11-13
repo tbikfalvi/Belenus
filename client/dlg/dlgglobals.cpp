@@ -19,6 +19,8 @@
 cDlgDBGlobals::cDlgDBGlobals( QWidget *p_poParent ) : QDialog( p_poParent )
 //====================================================================================
 {
+    g_obLogger(cSeverity::DEBUG) << "[cDlgDBGlobals::cDlgDBGlobals]" << EOM;
+
     m_bAutoSynchronization  = false;
     m_bNormalStart          = true;
     m_bAutoStart            = false;
@@ -46,6 +48,8 @@ cDlgDBGlobals::~cDlgDBGlobals()
 void cDlgDBGlobals::autoSynchronization()
 //====================================================================================
 {
+    g_obLogger(cSeverity::DEBUG) << "[cDlgDBGlobals::autoSynchronization]" << EOM;
+
     setWindowTitle( tr("Automatic database synchronization") );
     listInformation->addItem( tr("Automatic database synchronization is starting ...") );
     m_bAutoSynchronization  = true;
@@ -59,6 +63,8 @@ void cDlgDBGlobals::autoSynchronization()
 void cDlgDBGlobals::on_pbStart_clicked()
 //====================================================================================
 {
+    g_obLogger(cSeverity::DEBUG) << "[cDlgDBGlobals::on_pbStart_clicked]" << EOM;
+
     m_nTimer = startTimer( 500 );
     listInformation->addItem( tr("Starting database synchronization.") );
     g_obDBMirror.acquirePatientOriginGlobals();
@@ -68,6 +74,8 @@ void cDlgDBGlobals::on_pbStart_clicked()
 void cDlgDBGlobals::timerEvent(QTimerEvent *)
 //====================================================================================
 {
+    g_obLogger(cSeverity::DEBUG) << "[cDlgDBGlobals::timerEvent]" << EOM;
+
     if( m_bAutoStart )
     {
         killTimer( m_nTimer );

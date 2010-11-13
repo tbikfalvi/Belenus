@@ -822,42 +822,42 @@ Do you want to save them as new into the database?</source>
 <context>
     <name>cDlgDBGlobals</name>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="29"/>
+        <location filename="dlg/dlgglobals.cpp" line="31"/>
         <source>Database global data synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="36"/>
+        <location filename="dlg/dlgglobals.cpp" line="38"/>
         <source>Please wait while checking global data on server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="49"/>
+        <location filename="dlg/dlgglobals.cpp" line="53"/>
         <source>Automatic database synchronization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="50"/>
+        <location filename="dlg/dlgglobals.cpp" line="54"/>
         <source>Automatic database synchronization is starting ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="63"/>
+        <location filename="dlg/dlgglobals.cpp" line="69"/>
         <source>Starting database synchronization.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="90"/>
+        <location filename="dlg/dlgglobals.cpp" line="98"/>
         <source>Database synchronization required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="95"/>
+        <location filename="dlg/dlgglobals.cpp" line="103"/>
         <source>Database synchronized with server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="102"/>
+        <location filename="dlg/dlgglobals.cpp" line="127"/>
         <source>Database synchronization finished.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2701,12 +2701,12 @@ as new into the database?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="137"/>
+        <location filename="dlg/dlgpreferences.cpp" line="139"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="138"/>
+        <location filename="dlg/dlgpreferences.cpp" line="140"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3897,83 +3897,83 @@ Only %1 panels will be displayed.</source>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="265"/>
+        <location filename="wndmain.cpp" line="275"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="266"/>
+        <location filename="wndmain.cpp" line="276"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="293"/>
-        <location filename="wndmain.cpp" line="300"/>
-        <location filename="wndmain.cpp" line="308"/>
-        <location filename="wndmain.cpp" line="315"/>
-        <location filename="wndmain.cpp" line="833"/>
-        <location filename="wndmain.cpp" line="1294"/>
-        <location filename="wndmain.cpp" line="1357"/>
-        <location filename="wndmain.cpp" line="1525"/>
-        <location filename="wndmain.cpp" line="1623"/>
+        <location filename="wndmain.cpp" line="303"/>
+        <location filename="wndmain.cpp" line="310"/>
+        <location filename="wndmain.cpp" line="318"/>
+        <location filename="wndmain.cpp" line="325"/>
+        <location filename="wndmain.cpp" line="863"/>
+        <location filename="wndmain.cpp" line="1325"/>
+        <location filename="wndmain.cpp" line="1388"/>
+        <location filename="wndmain.cpp" line="1556"/>
+        <location filename="wndmain.cpp" line="1654"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="356"/>
-        <location filename="wndmain.cpp" line="386"/>
-        <location filename="wndmain.cpp" line="535"/>
-        <location filename="wndmain.cpp" line="541"/>
-        <location filename="wndmain.cpp" line="560"/>
-        <location filename="wndmain.cpp" line="746"/>
-        <location filename="wndmain.cpp" line="759"/>
-        <location filename="wndmain.cpp" line="805"/>
-        <location filename="wndmain.cpp" line="841"/>
-        <location filename="wndmain.cpp" line="848"/>
-        <location filename="wndmain.cpp" line="991"/>
-        <location filename="wndmain.cpp" line="1063"/>
-        <location filename="wndmain.cpp" line="1102"/>
-        <location filename="wndmain.cpp" line="1118"/>
-        <location filename="wndmain.cpp" line="1182"/>
-        <location filename="wndmain.cpp" line="1238"/>
-        <location filename="wndmain.cpp" line="1260"/>
-        <location filename="wndmain.cpp" line="1327"/>
-        <location filename="wndmain.cpp" line="1371"/>
-        <location filename="wndmain.cpp" line="1382"/>
-        <location filename="wndmain.cpp" line="1392"/>
-        <location filename="wndmain.cpp" line="1411"/>
-        <location filename="wndmain.cpp" line="1471"/>
-        <location filename="wndmain.cpp" line="1481"/>
-        <location filename="wndmain.cpp" line="1500"/>
+        <location filename="wndmain.cpp" line="366"/>
+        <location filename="wndmain.cpp" line="396"/>
+        <location filename="wndmain.cpp" line="545"/>
+        <location filename="wndmain.cpp" line="551"/>
+        <location filename="wndmain.cpp" line="570"/>
+        <location filename="wndmain.cpp" line="756"/>
+        <location filename="wndmain.cpp" line="769"/>
+        <location filename="wndmain.cpp" line="835"/>
+        <location filename="wndmain.cpp" line="871"/>
+        <location filename="wndmain.cpp" line="879"/>
+        <location filename="wndmain.cpp" line="1022"/>
+        <location filename="wndmain.cpp" line="1094"/>
+        <location filename="wndmain.cpp" line="1133"/>
+        <location filename="wndmain.cpp" line="1149"/>
+        <location filename="wndmain.cpp" line="1213"/>
+        <location filename="wndmain.cpp" line="1269"/>
+        <location filename="wndmain.cpp" line="1291"/>
+        <location filename="wndmain.cpp" line="1358"/>
+        <location filename="wndmain.cpp" line="1402"/>
+        <location filename="wndmain.cpp" line="1413"/>
+        <location filename="wndmain.cpp" line="1423"/>
+        <location filename="wndmain.cpp" line="1442"/>
+        <location filename="wndmain.cpp" line="1502"/>
+        <location filename="wndmain.cpp" line="1512"/>
+        <location filename="wndmain.cpp" line="1531"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="772"/>
-        <location filename="wndmain.cpp" line="1018"/>
-        <location filename="wndmain.cpp" line="1518"/>
-        <location filename="wndmain.cpp" line="1533"/>
-        <location filename="wndmain.cpp" line="1569"/>
+        <location filename="wndmain.cpp" line="785"/>
+        <location filename="wndmain.cpp" line="1049"/>
+        <location filename="wndmain.cpp" line="1549"/>
+        <location filename="wndmain.cpp" line="1564"/>
+        <location filename="wndmain.cpp" line="1600"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="653"/>
+        <location filename="wndmain.cpp" line="663"/>
         <source>Belenus </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="675"/>
+        <location filename="wndmain.cpp" line="685"/>
         <source> &lt;=&gt; Current patient: [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="681"/>
+        <location filename="wndmain.cpp" line="691"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="357"/>
+        <location filename="wndmain.cpp" line="367"/>
         <source>The latest cassa record still opened:
 
 Owner: %1
@@ -3985,12 +3985,12 @@ Please note: if you click NO, new cassa record will be opened and this cassa for
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="369"/>
+        <location filename="wndmain.cpp" line="379"/>
         <source>Cassa left in open.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="387"/>
+        <location filename="wndmain.cpp" line="397"/>
         <source>The latest cassa record closed with balance:
 
 %1
@@ -4001,13 +4001,13 @@ Please note: if you click NO, new cassa record will be opened and this cassa for
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="399"/>
+        <location filename="wndmain.cpp" line="409"/>
         <source>Cash left in cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="542"/>
-        <location filename="wndmain.cpp" line="561"/>
+        <location filename="wndmain.cpp" line="552"/>
+        <location filename="wndmain.cpp" line="571"/>
         <source>There are some cash left in your cassa.
 Current balance: %1
 
@@ -4017,14 +4017,14 @@ Please note: if you click NO, the cassa will be closed with the actual balance.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="550"/>
-        <location filename="wndmain.cpp" line="569"/>
-        <location filename="wndmain.cpp" line="574"/>
+        <location filename="wndmain.cpp" line="560"/>
+        <location filename="wndmain.cpp" line="579"/>
+        <location filename="wndmain.cpp" line="584"/>
         <source>Automatic cassa close.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="747"/>
+        <location filename="wndmain.cpp" line="757"/>
         <source>Application licence key successfully registered.
 The application users currently attached to DEMO licence key.
 
@@ -4032,12 +4032,12 @@ Do you want to update application users and attach them to the newly registered 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="760"/>
+        <location filename="wndmain.cpp" line="770"/>
         <source>Do you want to set the additional information of the studio now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="773"/>
+        <location filename="wndmain.cpp" line="786"/>
         <source>Registration of the licence key has been failed.
 
 Please check your internet connection and try to restart the application.
@@ -4045,7 +4045,7 @@ Please also check whether the defined licence key is valid and not used by someb
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="806"/>
+        <location filename="wndmain.cpp" line="836"/>
         <source>Do you want to create new attendance for this patient?
 
 Press the Ignore button to select an existing attendance
@@ -4053,57 +4053,63 @@ that saved previously for this patient.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="834"/>
+        <location filename="wndmain.cpp" line="864"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="842"/>
+        <location filename="wndmain.cpp" line="872"/>
         <source>Are you sure you want to close the application?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="849"/>
+        <location filename="wndmain.cpp" line="880"/>
         <source>Database synchronization needed.
 Do you want to synchronize database with server?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="922"/>
-        <location filename="wndmain.cpp" line="1081"/>
+        <location filename="wndmain.cpp" line="818"/>
+        <location filename="wndmain.cpp" line="953"/>
+        <location filename="wndmain.cpp" line="1112"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="923"/>
+        <location filename="wndmain.cpp" line="818"/>
+        <source>Studio independent data is already synchronized with server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.cpp" line="954"/>
         <source>This area is restricted for system administrators only!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="992"/>
+        <location filename="wndmain.cpp" line="1023"/>
         <source>Do you want to select the created patient as actual?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1019"/>
-        <location filename="wndmain.cpp" line="1534"/>
+        <location filename="wndmain.cpp" line="1050"/>
+        <location filename="wndmain.cpp" line="1565"/>
         <source>The device usage has to be payed.
 Please process the payment first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1064"/>
+        <location filename="wndmain.cpp" line="1095"/>
         <source>Do you want to select the created attendance as actual?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1082"/>
+        <location filename="wndmain.cpp" line="1113"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1103"/>
+        <location filename="wndmain.cpp" line="1134"/>
         <source>A patientcard with barcode [%1]
 attached to the actual patient.
 
@@ -4115,25 +4121,25 @@ Do you want to use this patientcard?</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1119"/>
+        <location filename="wndmain.cpp" line="1150"/>
         <source>There is no patientcard attached to the actual patient.
 Do you want to sell a patientcard for the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1183"/>
+        <location filename="wndmain.cpp" line="1214"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1258"/>
-        <location filename="wndmain.cpp" line="1409"/>
+        <location filename="wndmain.cpp" line="1289"/>
+        <location filename="wndmain.cpp" line="1440"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1261"/>
+        <location filename="wndmain.cpp" line="1292"/>
         <source>This patientcard has the following settings:
 
 Available units: %1
@@ -4143,13 +4149,13 @@ Do you want to refill the patientcard now?%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1295"/>
+        <location filename="wndmain.cpp" line="1326"/>
         <source>This patientcard already sold.
 Please select another inactive patientcard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1328"/>
+        <location filename="wndmain.cpp" line="1359"/>
         <source>There is no patient in the database with name like
 
 &apos;%1&apos;
@@ -4158,14 +4164,14 @@ Do you want to create a new patient record with this name?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1358"/>
+        <location filename="wndmain.cpp" line="1389"/>
         <source>This device already prepared with a patientcard.
 To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1372"/>
+        <location filename="wndmain.cpp" line="1403"/>
         <source>This patientcard has been assigned to the following patient.
 
 %1
@@ -4174,51 +4180,51 @@ Do you want to select this patient as actual?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1383"/>
+        <location filename="wndmain.cpp" line="1414"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1393"/>
+        <location filename="wndmain.cpp" line="1424"/>
         <source>There is no patient assigned to this patientcard.
 Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1519"/>
+        <location filename="wndmain.cpp" line="1550"/>
         <source>There is no actual attendance selected.
 Please select first a patient and then an attendance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1526"/>
+        <location filename="wndmain.cpp" line="1557"/>
         <source>This device already prepared with a time period.
 To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1624"/>
+        <location filename="wndmain.cpp" line="1655"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1643"/>
+        <location filename="wndmain.cpp" line="1674"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1570"/>
+        <location filename="wndmain.cpp" line="1601"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="294"/>
+        <location filename="wndmain.cpp" line="304"/>
         <source>The application has valid serial key registered but was not able to validate it with the server.
 Please note that without validation the application will work only for the next %1 days
 
@@ -4226,7 +4232,7 @@ Please also note you need live internet connection for the validation process.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="301"/>
+        <location filename="wndmain.cpp" line="311"/>
         <source>The application has valid serial key registered but failed to validate the installation with the server.
 Please call Service to validate your installation.
 
@@ -4234,7 +4240,7 @@ Note that without validation the application will work only for the next %1 days
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="309"/>
+        <location filename="wndmain.cpp" line="319"/>
         <source>Your licence key has expired.
 The application has a serial key registered but failed to validate it with the server since the last %1 days.
 
@@ -4242,28 +4248,28 @@ Please note you need live internet connection for the validation process.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="316"/>
+        <location filename="wndmain.cpp" line="326"/>
         <source>Your licence key validation has failed.
 Please call Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="536"/>
+        <location filename="wndmain.cpp" line="546"/>
         <source>Do you want to close your cassa?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="986"/>
+        <location filename="wndmain.cpp" line="1017"/>
         <source>New Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1058"/>
+        <location filename="wndmain.cpp" line="1089"/>
         <source>New Attendance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1412"/>
+        <location filename="wndmain.cpp" line="1443"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -4273,19 +4279,19 @@ Do you want to refill the patientcard now?%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1472"/>
+        <location filename="wndmain.cpp" line="1503"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1482"/>
+        <location filename="wndmain.cpp" line="1513"/>
         <source>Do you want to assign this patientcard to the actual patient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1239"/>
-        <location filename="wndmain.cpp" line="1501"/>
+        <location filename="wndmain.cpp" line="1270"/>
+        <location filename="wndmain.cpp" line="1532"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation type="unfinished"></translation>
@@ -6231,17 +6237,32 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="605"/>
+        <location filename="dlgpreferences.ui" line="591"/>
+        <source> Automatically synchronize ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="597"/>
+        <source>database when exiting from application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="604"/>
+        <source>studio independent data when application started.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="628"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="613"/>
+        <location filename="dlgpreferences.ui" line="636"/>
         <source>COM Port:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="620"/>
+        <location filename="dlgpreferences.ui" line="643"/>
         <source>COM</source>
         <translation type="unfinished"></translation>
     </message>

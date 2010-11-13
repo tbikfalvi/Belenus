@@ -63,14 +63,15 @@ cDBMirror::cDBMirror()
 {
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::cDBMirror] called" << EOM;
 
-    m_inProcessCount        = 0;
-    m_bAcquireGlobalData    = false;
-    m_bGlobalDataChanged    = false;
-    m_bSyncAllTable         = false;
-    m_bSyncExit             = false;
-    m_uiDbModificationLevel = 0;
-    m_uiCurrentId           = 0;
-    m_uiGlobalDataChanged   = 0;
+    m_inProcessCount            = 0;
+    m_bAcquireGlobalData        = false;
+    m_bGlobalDataChanged        = false;
+    m_bSyncAllTable             = false;
+    m_bSyncExit                 = false;
+    m_uiDbModificationLevel     = 0;
+    m_uiCurrentId               = 0;
+    m_uiGlobalDataChanged       = 0;
+    m_bGlobalDataSynchronize    = false;
 }
 //====================================================================================
 cDBMirror::~cDBMirror()
@@ -505,7 +506,21 @@ void cDBMirror::updateGlobalSyncLevel( unsigned int p_uiSyncLevel )
 void cDBMirror::_globalDataSynchronized( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
+    if( (m_uiGlobalSyncLevel&p_uiSyncLevel) > 0 )
+    {
+        _updateGlobalTimestampOnServer();
+    }
     m_uiGlobalSyncLevel &= ~p_uiSyncLevel;
+}
+//====================================================================================
+void cDBMirror::_updateGlobalTimestampOnServer()
+//====================================================================================
+{
+    QString qsQuery = QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"GLOBAL_DATA_UPDATED\" ").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+
+    m_inProcessCount = MIRROR_SET_GLOBAL_TIMESTAMP_ON_SERVER;
+
+    _qId = g_poServer->sendQuery( qsQuery );
 }
 //====================================================================================
 bool cDBMirror::checkSyncLevel( unsigned int p_uiSyncLevel )
@@ -531,20 +546,7 @@ bool cDBMirror::checkIsGlobalDataDownloadInProgress()
 bool cDBMirror::checkSynchronizationFinished()
 //====================================================================================
 {
-    bool bRet = false;
-
-    if( (m_uiDbModificationLevel == 0 && m_uiGlobalSyncLevel == 0) || !m_bProcessSucceeded )
-    {
-        bRet = true;
-
-        m_inProcessCount    = 0;
-        m_bSyncAllTable     = false;
-        m_bSyncExit         = false;
-        m_uiCurrentId       = 0;
-        m_inCountOfTries    = 0;
-    }
-
-    return bRet;
+    return ( ((m_uiDbModificationLevel == 0 && m_uiGlobalSyncLevel == 0) || !m_bProcessSucceeded) ? true : false );
 }
 //====================================================================================
 bool cDBMirror::checkIsSynchronizationNeeded()
@@ -1793,6 +1795,15 @@ void cDBMirror::synchronizeAllTable()
     m_inCountOfTries    = 0;
     m_uiCurrentId       = 0;
 
+    if( m_uiGlobalSyncLevel > 0 )
+    {
+        m_bGlobalDataSynchronize = true;
+    }
+    else
+    {
+        m_bGlobalDataSynchronize = false;
+    }
+
     synchronizeUserTable();
 }
 //====================================================================================
@@ -1815,12 +1826,15 @@ void cDBMirror::_synchronizeUserTable( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -1876,6 +1890,8 @@ void cDBMirror::_synchronizeUserTable( unsigned int p_uiSyncLevel )
         _tableSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatientOriginTable();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -1900,12 +1916,15 @@ void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -1952,6 +1971,8 @@ void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
         _tableSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeReasonToVisit();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -1976,12 +1997,15 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2029,6 +2053,8 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeIllnessGroup();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2053,12 +2079,15 @@ void cDBMirror::_synchronizeIllnessGroup( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2106,6 +2135,8 @@ void cDBMirror::_synchronizeIllnessGroup( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePublicPlaces();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2130,12 +2161,15 @@ void cDBMirror::_synchronizePublicPlaces( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2183,6 +2217,8 @@ void cDBMirror::_synchronizePublicPlaces( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeHealthInsurance();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2207,12 +2243,15 @@ void cDBMirror::_synchronizeHealthInsurance( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2269,6 +2308,8 @@ void cDBMirror::_synchronizeHealthInsurance( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeCompany();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2293,12 +2334,15 @@ void cDBMirror::_synchronizeCompany( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2355,6 +2399,8 @@ void cDBMirror::_synchronizeCompany( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeDoctorType();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2384,14 +2430,19 @@ void cDBMirror::_synchronizeDoctorType( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizeDoctor();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2439,6 +2490,8 @@ void cDBMirror::_synchronizeDoctorType( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeDoctor();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -2464,12 +2517,15 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2519,6 +2575,8 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeDoctorSchedule();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2548,14 +2606,19 @@ void cDBMirror::_synchronizeDoctorSchedule( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizePatient();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2603,6 +2666,8 @@ void cDBMirror::_synchronizeDoctorSchedule( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatient();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -2628,12 +2693,15 @@ void cDBMirror::_synchronizePatient( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2707,6 +2775,8 @@ void cDBMirror::_synchronizePatient( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeAttendance();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2731,12 +2801,15 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2791,6 +2864,8 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatientcardType();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2815,12 +2890,15 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2875,6 +2953,8 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatientcard();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2899,12 +2979,15 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -2960,6 +3043,8 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatientcardConnect();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -2989,14 +3074,19 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizePatientcardHistory();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3044,6 +3134,8 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatientcardHistory();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -3069,12 +3161,15 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3124,6 +3219,8 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePanelType();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3148,12 +3245,15 @@ void cDBMirror::_synchronizePanelType( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3201,6 +3301,8 @@ void cDBMirror::_synchronizePanelType( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePanelStatus();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3225,12 +3327,15 @@ void cDBMirror::_synchronizePanelStatus( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3282,6 +3387,8 @@ void cDBMirror::_synchronizePanelStatus( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePanel();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3306,12 +3413,15 @@ void cDBMirror::_synchronizePanel( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3362,6 +3472,8 @@ void cDBMirror::_synchronizePanel( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePanelUse();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3386,12 +3498,15 @@ void cDBMirror::_synchronizePanelUse( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3442,6 +3557,8 @@ void cDBMirror::_synchronizePanelUse( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeAttendanceSchedule();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3471,14 +3588,19 @@ void cDBMirror::_synchronizeAttendanceSchedule( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizeDenomination();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3526,6 +3648,8 @@ void cDBMirror::_synchronizeAttendanceSchedule( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeDenomination();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -3556,14 +3680,19 @@ void cDBMirror::_synchronizeDenomination( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizeProductType();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3611,6 +3740,8 @@ void cDBMirror::_synchronizeDenomination( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeProductType();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -3641,14 +3772,19 @@ void cDBMirror::_synchronizeProductType( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizeProduct();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3696,6 +3832,8 @@ void cDBMirror::_synchronizeProductType( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeProduct();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -3726,14 +3864,19 @@ void cDBMirror::_synchronizeProduct( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizeDiscount();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3781,6 +3924,8 @@ void cDBMirror::_synchronizeProduct( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeDiscount();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -3806,12 +3951,15 @@ void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3867,6 +4015,8 @@ void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeZipRegionCity();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3891,12 +4041,15 @@ void cDBMirror::_synchronizeZipRegionCity( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -3946,6 +4099,8 @@ void cDBMirror::_synchronizeZipRegionCity( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeAddress();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -3970,12 +4125,15 @@ void cDBMirror::_synchronizeAddress( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -4034,6 +4192,8 @@ void cDBMirror::_synchronizeAddress( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeCassa();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -4058,12 +4218,15 @@ void cDBMirror::_synchronizeCassa( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -4114,6 +4277,8 @@ void cDBMirror::_synchronizeCassa( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeCassaHistory();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -4138,12 +4303,15 @@ void cDBMirror::_synchronizeCassaHistory( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -4195,6 +4363,8 @@ void cDBMirror::_synchronizeCassaHistory( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeCassaDenomination();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -4224,14 +4394,19 @@ void cDBMirror::_synchronizeCassaDenomination( unsigned int p_uiSyncLevel )
     _globalDataSynchronized( p_uiSyncLevel );
     if( m_bSyncAllTable )
         synchronizeLedgerDevice();
+    else
+        _synchronizeDatabaseFinished();
 /*
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -4280,6 +4455,8 @@ void cDBMirror::_synchronizeCassaDenomination( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeLedgerDevice();
+        else
+            _synchronizeDatabaseFinished();
     }
 */
 }
@@ -4305,12 +4482,15 @@ void cDBMirror::_synchronizeLedgerDevice( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -4368,6 +4548,8 @@ void cDBMirror::_synchronizeLedgerDevice( unsigned int p_uiSyncLevel )
         _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizeLedger();
+        else
+            _synchronizeDatabaseFinished();
     }
 }
 //====================================================================================
@@ -4392,12 +4574,15 @@ void cDBMirror::_synchronizeLedger( unsigned int p_uiSyncLevel )
 //====================================================================================
 {
     if( m_uiDbModificationLevel > 0 && m_uiDbModificationLevel < p_uiSyncLevel )
+    {
+        _synchronizeDatabaseFinished();
         return;
+    }
 
     if( m_inCountOfTries > 4 )
     {
         m_bProcessSucceeded = false;
-        checkSynchronizationFinished();
+        _synchronizeDatabaseFinished();
         return;
     }
 
@@ -4456,8 +4641,10 @@ void cDBMirror::_synchronizeLedger( unsigned int p_uiSyncLevel )
     {
         _tableSynchronized( p_uiSyncLevel );
         _globalDataSynchronized( p_uiSyncLevel );
-        if( m_bSyncAllTable )
-            checkSynchronizationFinished();
+
+        _synchronizeDatabaseFinished();
+//        if( m_bSyncAllTable )
+//            synchronize_NEXT_TABLE_();
     }
 }
 //====================================================================================
@@ -4467,5 +4654,15 @@ void cDBMirror::_recordLedgerSynchronized()
     g_poDB->executeQTQuery( QString( "UPDATE ledger SET archive=\"ARC\" WHERE ledgerId=%1" ).arg(m_uiCurrentId) );
 
     _synchronizeLedger();
+}
+//====================================================================================
+void cDBMirror::_synchronizeDatabaseFinished()
+//====================================================================================
+{
+    m_inProcessCount    = 0;
+    m_bSyncAllTable     = false;
+    m_bSyncExit         = false;
+    m_uiCurrentId       = 0;
+    m_inCountOfTries    = 0;
 }
 //====================================================================================
