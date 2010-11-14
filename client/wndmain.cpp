@@ -236,8 +236,8 @@ cWndMain::cWndMain( QWidget *parent )
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 
-    action_SynchronizeDatabase->setEnabled( !g_obLicenceManager.isDemo() );
-    action_AcquireGlobalData->setEnabled( !g_obLicenceManager.isDemo() );
+    action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
+    action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -777,6 +777,7 @@ void cWndMain::timerEvent(QTimerEvent *)
 
                 obDlgLicenceEdit.exec();
             }
+            g_obDBMirror.start();
         }
         else
         {
@@ -801,29 +802,37 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
     else if( m_bGlobalDataRequested )
     {
-        if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
+        if( g_obDBMirror.isAvailable() )
         {
-            m_bGlobalDataRequested          = false;
-            m_inGlobalDataRequestTimeout    = 0;
-
-            cDlgDBGlobals   obDlgDBGlobals( this );
-
-            obDlgDBGlobals.autoSynchronization();
-            obDlgDBGlobals.exec();
-        }
-        else
-        {
-            if( m_inGlobalDataRequestTimeout > 10 )
+            if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
             {
                 m_bGlobalDataRequested          = false;
                 m_inGlobalDataRequestTimeout    = 0;
 
-                QMessageBox::information( this, tr("Information"),tr( "Studio independent data is already synchronized with server." ) );
+                cDlgDBGlobals   obDlgDBGlobals( this );
+
+                obDlgDBGlobals.autoSynchronization();
+                obDlgDBGlobals.exec();
             }
             else
             {
-                m_inGlobalDataRequestTimeout++;
+                if( m_inGlobalDataRequestTimeout > 10 )
+                {
+                    m_bGlobalDataRequested          = false;
+                    m_inGlobalDataRequestTimeout    = 0;
+
+                    QMessageBox::information( this, tr("Information"),tr( "Studio independent data is already synchronized with server." ) );
+                }
+                else
+                {
+                    m_inGlobalDataRequestTimeout++;
+                }
             }
+        }
+        else
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Connection to Belenus server is not available."));
         }
     }
 
@@ -877,19 +886,22 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
         {
             logoutUser();
 
-            if( g_poPrefs->getDBAutoArchive() ||
-                (g_obDBMirror.checkIsSynchronizationNeeded() &&
-                 QMessageBox::question( this, tr("Question"),
-                                        tr("Database synchronization needed.\n"
-                                           "Do you want to synchronize database with server?"),
-                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes ) )
+            if( g_obDBMirror.isAvailable() )
             {
-                hide();
+                if( g_poPrefs->getDBAutoArchive() ||
+                    (g_obDBMirror.checkIsSynchronizationNeeded() &&
+                     QMessageBox::question( this, tr("Question"),
+                                            tr("Database synchronization needed.\n"
+                                               "Do you want to synchronize database with server?"),
+                                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes ) )
+                {
+                    hide();
 
-                cDlgSynchronization     obDlgSynchronization( this );
+                    cDlgSynchronization     obDlgSynchronization( this );
 
-                obDlgSynchronization.autoSynchronization();
-                obDlgSynchronization.exec();
+                    obDlgSynchronization.autoSynchronization();
+                    obDlgSynchronization.exec();
+                }
             }
 
             p_poEvent->accept();
@@ -1833,20 +1845,36 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
 void cWndMain::on_action_SynchronizeDatabase_triggered()
 //====================================================================================
 {
-    cDlgSynchronization obDlgSynchronization( this );
+    if( g_obDBMirror.isAvailable() )
+    {
+        cDlgSynchronization obDlgSynchronization( this );
 
-    obDlgSynchronization.exec();
+        obDlgSynchronization.exec();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Connection to Belenus server is not available."));
+    }
 }
 //====================================================================================
 void cWndMain::on_action_AcquireGlobalData_triggered()
 //====================================================================================
 {
-    g_obDBMirror.requestGlobalDataTimestamp();
-    m_bGlobalDataRequested = true;
+    if( g_obDBMirror.isAvailable() )
+    {
+        g_obDBMirror.requestGlobalDataTimestamp();
+        m_bGlobalDataRequested = true;
 
-/*    cDlgDBGlobals   obDlgDBGlobals( this );
+/*        cDlgDBGlobals   obDlgDBGlobals( this );
 
-    obDlgDBGlobals.exec();*/
+        obDlgDBGlobals.exec();*/
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Connection to Belenus server is not available."));
+    }
 }
 //====================================================================================
 void cWndMain::on_action_EstablishConnection_triggered()

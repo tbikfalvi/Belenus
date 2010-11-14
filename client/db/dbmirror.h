@@ -126,6 +126,7 @@ public:
     void            initialize();
     bool            start();
 
+    bool            isAvailable();
     void            requestGlobalDataTimestamp();
     void            updateLicenceData();
 
@@ -201,6 +202,7 @@ protected:
     int             _qId;
 
 private:
+    bool            m_bServerConnected;             // Identifies whether the connection to server is established
     int             m_inProcessCount;               // Identifies the current process, see process identifier defines
     bool            m_bAcquireGlobalData;           // Identifies when global data download is in progress
     bool            m_bGlobalDataSynchronize;       // Identifies if global data will be synchronized

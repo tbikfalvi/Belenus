@@ -63,6 +63,7 @@ cDBMirror::cDBMirror()
 {
     g_obLogger(cSeverity::DEBUG) << "[cDBMirror::cDBMirror] called" << EOM;
 
+    m_bServerConnected          = false;
     m_inProcessCount            = 0;
     m_bAcquireGlobalData        = false;
     m_bGlobalDataChanged        = false;
@@ -99,13 +100,21 @@ bool cDBMirror::start()
     if( g_poServer->getStatus() != BelenusServerConnection::AUTHENTICATED )
     {
         g_obLogger(cSeverity::DEBUG) << "[cDBMirror::start] not connected to server" << EOM;
+        m_bServerConnected = false;
         return false;
     }
 
+    m_bServerConnected = true;
     m_bAcquireGlobalData = true;
     requestGlobalDataTimestamp();
 
     return true;
+}
+//====================================================================================
+bool cDBMirror::isAvailable()
+//====================================================================================
+{
+    return m_bServerConnected;
 }
 //====================================================================================
 void cDBMirror::requestGlobalDataTimestamp()
