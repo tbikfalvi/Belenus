@@ -35,8 +35,6 @@ cDlgHealthInsuranceEdit::cDlgHealthInsuranceEdit( QWidget *p_poParent, cDBHealth
     if( m_poHealthInsurance )
     {
         ledName->setText( m_poHealthInsurance->name() );
-        if( m_poHealthInsurance->licenceId() == 0 && m_poHealthInsurance->id() > 0 )
-            checkIndependent->setChecked( true );
 
         ledContactPerson->setText( m_poHealthInsurance->contactPerson() );
         if( g_poPrefs->getDefaultCountry().length() > 0 && m_poHealthInsurance->id() == 0 )
@@ -57,12 +55,27 @@ cDlgHealthInsuranceEdit::cDlgHealthInsuranceEdit( QWidget *p_poParent, cDBHealth
         ( m_poHealthInsurance->discountType()==1?rbDiscountValue->setChecked(true):rbDiscountPercent->setChecked(true) );
         ledDiscount->setText( QString::number(m_poHealthInsurance->discount()) );
 
+        if( m_poHealthInsurance->licenceId() == 0 && m_poHealthInsurance->id() > 0 )
+            checkIndependent->setChecked( true );
+
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poHealthInsurance->licenceId() == 0 && m_poHealthInsurance->id() > 0 )
             {
                 ledName->setEnabled( false );
+                ledContactPerson->setEnabled( false );
+                ledCountry->setEnabled( false );
+                cmbRegion->setEnabled( false );
+                ledZip->setEnabled( false );
+                ledCity->setEnabled( false );
+                pbCitySearch->setEnabled( false );
+                ledAddress->setEnabled( false );
+                ledContractId->setEnabled( false );
+                deValidDateFrom->setEnabled( false );
+                deValidDateTo->setEnabled( false );
+                rbDiscountValue->setEnabled( false );
+                rbDiscountPercent->setEnabled( false );
                 poBtnSave->setEnabled( false );
             }
         }

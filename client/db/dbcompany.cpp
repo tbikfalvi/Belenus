@@ -77,6 +77,7 @@ void cDBCompany::init( const QSqlRecord &p_obRecord ) throw()
     int inContractIdIdx     = p_obRecord.indexOf( "contractId" );
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -117,6 +118,7 @@ void cDBCompany::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_nDiscountType,
           p_nDiscount,
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -408,6 +410,11 @@ int cDBCompany::discount() const throw()
 void cDBCompany::setDiscount( const int p_nDiscount ) throw()
 {
     m_nDiscount = p_nDiscount;
+}
+
+QString cDBCompany::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBCompany::active() const throw()

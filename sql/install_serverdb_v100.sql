@@ -156,7 +156,6 @@ CREATE TABLE `users` (
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL DEFAULT 1,
   `archive`                 varchar(10)             NOT NULL,
-  UNIQUE (`name`),
   PRIMARY KEY (`userId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

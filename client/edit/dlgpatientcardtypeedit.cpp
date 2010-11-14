@@ -55,6 +55,15 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
             if( m_poPatientCardType->licenceId() == 0 && m_poPatientCardType->id() > 0 )
             {
                 ledName->setEnabled( false );
+                ledPrice->setEnabled( false );
+                ledVatpercent->setEnabled( false );
+                ledUnits->setEnabled( false );
+                ledUnitTime->setEnabled( false );
+                rbInterval->setEnabled( false );
+                deValidDateFrom->setEnabled( false );
+                deValidDateTo->setEnabled( false );
+                rbDays->setEnabled( false );
+                ledValidDays->setEnabled( false );
                 pbSave->setEnabled( false );
             }
         }

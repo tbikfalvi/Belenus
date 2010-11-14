@@ -79,6 +79,16 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
             checkIndependent->setEnabled( false );
             if( m_poPatientCard->licenceId() == 0 && m_poPatientCard->id() > 0 )
             {
+                ledBarcode->setEnabled( false );
+                cbActive->setEnabled( false );
+                cmbCardType->setEnabled( false );
+                ledPrice->setEnabled( false );
+                cmbPatient->setEnabled( false );
+                ledUnits->setEnabled( false );
+                teTimeLeft->setEnabled( false );
+                deValidDateFrom->setEnabled( false );
+                deValidDateTo->setEnabled( false );
+                pteComment->setEnabled( false );
                 pbSave->setEnabled( false );
             }
         }

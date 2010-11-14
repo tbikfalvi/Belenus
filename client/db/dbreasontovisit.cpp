@@ -45,12 +45,14 @@ void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx         = p_obRecord.indexOf( "reasonToVisitId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -172,6 +174,11 @@ QString cDBReasonToVisit::name() const throw()
 void cDBReasonToVisit::setName( const QString &p_stName ) throw()
 {
     m_stName = p_stName;
+}
+
+QString cDBReasonToVisit::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBReasonToVisit::active() const throw()

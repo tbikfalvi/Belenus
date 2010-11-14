@@ -60,6 +60,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inActionBalanceIdx  = p_obRecord.indexOf( "actionBalance" );
     int inActionTimeIdx     = p_obRecord.indexOf( "actionTime" );
     int inCommentIdx        = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -71,6 +72,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inActionBalanceIdx ).toInt(),
           p_obRecord.value( inActionTimeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -234,6 +236,11 @@ void cDBCassaHistory::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBCassaHistory::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBCassaHistory::active() const throw()

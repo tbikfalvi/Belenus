@@ -66,6 +66,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
     int inValidDaysIdx      = p_obRecord.indexOf( "validDays" );
     int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -79,6 +80,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inValidDaysIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -278,6 +280,11 @@ int cDBPatientCardType::unitTime() const throw()
 void cDBPatientCardType::setUnitTime( const int p_nUnitTime ) throw()
 {
     m_nUnitTime = p_nUnitTime;
+}
+
+QString cDBPatientCardType::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientCardType::active() const throw()

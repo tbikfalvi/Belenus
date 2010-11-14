@@ -129,6 +129,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
     int inDoctorProposedIdx     = p_obRecord.indexOf( "doctorProposed" );
     int inDiscountTypeIdx       = p_obRecord.indexOf( "discountType" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -161,6 +162,7 @@ void cDBPatient::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inDoctorProposedIdx ).toBool(),
           p_obRecord.value( inDiscountTypeIdx ).toInt(),
           p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -677,6 +679,11 @@ void cDBPatient::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPatient::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatient::active() const throw()

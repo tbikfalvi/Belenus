@@ -59,6 +59,7 @@ void cDBDoctor::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inLicenceIdx        = p_obRecord.indexOf( "doctorLicence" );
     int inDataIdx           = p_obRecord.indexOf( "data" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -93,6 +94,7 @@ void cDBDoctor::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inDataIdx ).toString(),
           p_nDiscountType,
           p_nDiscount,
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -313,6 +315,11 @@ int cDBDoctor::discount() const throw()
 void cDBDoctor::setDiscount( const int p_nDiscount ) throw()
 {
     m_nDiscount = p_nDiscount;
+}
+
+QString cDBDoctor::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBDoctor::active() const throw()

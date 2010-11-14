@@ -67,7 +67,7 @@ void cDlgDBGlobals::on_pbStart_clicked()
 
     m_nTimer = startTimer( 500 );
     listInformation->addItem( tr("Starting database synchronization.") );
-    g_obDBMirror.acquirePatientOriginGlobals();
+    g_obDBMirror.acquireGlobals();
     pbStart->setEnabled( false );
 }
 //====================================================================================
@@ -118,7 +118,8 @@ void cDlgDBGlobals::timerEvent(QTimerEvent *)
         chkPatientcardTypes->setChecked( g_obDBMirror.checkGlobalData(DB_PATIENTCARD_TYPE) );
         chkPatientcard->setChecked( g_obDBMirror.checkGlobalData(DB_PATIENTCARD) );
         chkDiscount->setChecked( g_obDBMirror.checkGlobalData(DB_DISCOUNT) );
-        chkApplication->setChecked( g_obDBMirror.checkGlobalData(DB_PUBLIC_PLACES) ||
+        chkApplication->setChecked( g_obDBMirror.checkGlobalData(DB_USER) ||
+                                    g_obDBMirror.checkGlobalData(DB_PUBLIC_PLACES) ||
                                     g_obDBMirror.checkGlobalData(DB_LEDGER) ||
                                     g_obDBMirror.checkGlobalData(DB_PRODUCT_TYPE) ||
                                     g_obDBMirror.checkGlobalData(DB_PRODUCT) ||

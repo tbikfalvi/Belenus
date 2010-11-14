@@ -52,6 +52,7 @@ void cDBZipRegionCity::init( const QSqlRecord &p_obRecord ) throw()
     int inZipIdx        = p_obRecord.indexOf( "zip" );
     int inRegionIdx     = p_obRecord.indexOf( "region" );
     int inCityIdx       = p_obRecord.indexOf( "city" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
@@ -60,6 +61,7 @@ void cDBZipRegionCity::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inZipIdx ).toString(),
           p_obRecord.value( inRegionIdx ).toString(),
           p_obRecord.value( inCityIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -244,6 +246,11 @@ void cDBZipRegionCity::setCity( const QString &p_qsCity ) throw()
 {
     m_qsCity = p_qsCity;
     m_qsCity = m_qsCity.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBZipRegionCity::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBZipRegionCity::active() const throw()

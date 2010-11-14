@@ -195,6 +195,10 @@ void cDBMirror::queryReady( int id, SqlResult *p_sqlResult )
                 }
                 break;
             }
+            case MIRROR_GET_GLOBAL_USER:
+                if( p_sqlResult->isValid() )
+                    _processUserGlobals( p_sqlResult );
+                break;
             case MIRROR_GET_GLOBAL_PATIENTORIGIN:
                 if( p_sqlResult->isValid() )
                     _processPatientOriginGlobals( p_sqlResult );
@@ -669,14 +673,89 @@ bool cDBMirror::checkIsGlobalDataModifiedOnServer()
 //====================================================================================
 //====================================================================================
 //====================================================================================
-void cDBMirror::acquirePatientOriginGlobals()
+void cDBMirror::acquireGlobals()
 //====================================================================================
 {
-    m_inProcessCount        = MIRROR_GET_GLOBAL_PATIENTORIGIN;
     m_bProcessSucceeded     = true;
     m_inCountOfTries        = 0;
     m_uiCurrentId           = 0;
     m_uiGlobalDataChanged   = 0;
+
+    acquireUserGlobals();
+}
+//====================================================================================
+void cDBMirror::acquireUserGlobals()
+//====================================================================================
+{
+    m_inProcessCount        = MIRROR_GET_GLOBAL_USER;
+
+    _qId = g_poServer->sendQuery( QString("SELECT * FROM users WHERE licenceId=0 AND active=1") );
+}
+//====================================================================================
+void cDBMirror::_processUserGlobals( SqlResult *p_sqlResult )
+//====================================================================================
+{
+    for( int i=0; i<p_sqlResult->rowCount();i++ )
+    {
+        QSqlQuery  *poQuery = NULL;
+        QString     qsQuery = "";
+        QString     qsServerTS = "";
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE userId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+
+        if( poQuery->first() )
+        {
+            qsServerTS = p_sqlResult->index(i,7).data().toString();
+            if( qsServerTS.compare( poQuery->value( 7 ).toString() ) == 0 )
+                continue;
+        }
+
+        if( poQuery->first() )
+        {
+            qsQuery = "UPDATE users SET ";
+        }
+        else
+        {
+            qsQuery = "INSERT INTO users SET ";
+            qsQuery += QString( "userId = \"%1\", " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += QString( "licenceId = \"0\", " );
+        }
+        qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
+        qsQuery += QString( "password = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "realName = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "accgroup = %1, " ).arg( p_sqlResult->index(i,5).data().toInt() );
+        qsQuery += QString( "comment = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toString() );
+        qsQuery += QString( "active = %1, " ).arg( p_sqlResult->index(i,8).data().toBool() );
+        qsQuery += QString( "archive = \"ARC\" " );
+        if( poQuery->first() )
+        {
+            qsQuery += "WHERE ";
+            qsQuery += QString( "userId = \"%1\" " ).arg( p_sqlResult->index(i,0).data().toUInt() );
+            qsQuery += "AND ";
+            qsQuery += QString( "licenceId = \"0\" " );
+        }
+
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery->numRowsAffected() != 1 )
+        {
+            m_bProcessSucceeded     = false;
+            m_bAcquireGlobalData    = false;
+        }
+
+        m_uiGlobalDataChanged |= DB_USER;
+
+        if( poQuery ) delete poQuery;
+    }
+
+    if( m_bProcessSucceeded )
+        acquirePatientOriginGlobals();
+}
+//====================================================================================
+void cDBMirror::acquirePatientOriginGlobals()
+//====================================================================================
+{
+    m_inProcessCount        = MIRROR_GET_GLOBAL_PATIENTORIGIN;
 
     _qId = g_poServer->sendQuery( QString("SELECT * FROM patientOrigin WHERE licenceId=0 AND active=1") );
 }
@@ -1223,7 +1302,7 @@ void cDBMirror::_processPatientsGlobals( SqlResult *p_sqlResult )
         QString     qsQuery = "";
         QString     qsServerTS = "";
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patients WHERE patientIdId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patients WHERE patientId=%1 AND licenceId=0 " ).arg(p_sqlResult->index(i,0).data().toUInt()) );
 
         if( poQuery->first() )
         {
@@ -1889,6 +1968,7 @@ void cDBMirror::_synchronizeUserTable( unsigned int p_uiSyncLevel )
     else
     {
         _tableSynchronized( p_uiSyncLevel );
+        _globalDataSynchronized( p_uiSyncLevel );
         if( m_bSyncAllTable )
             synchronizePatientOriginTable();
         else
@@ -1935,6 +2015,11 @@ void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -1953,6 +2038,7 @@ void cDBMirror::_synchronizePatientOriginTable( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE patientOrigin SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obPatientOrigin.name() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPatientOrigin.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPatientOrigin.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPatientOrigin.archive().compare( "MOD" ) == 0 )
@@ -2016,6 +2102,11 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2034,6 +2125,7 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE patientOrigin SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obReasonToVisit.name() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obReasonToVisit.modified() );
         qsQuery += QString( "active = %1, " ).arg( obReasonToVisit.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obReasonToVisit.archive().compare( "MOD" ) == 0 )
@@ -2098,6 +2190,11 @@ void cDBMirror::_synchronizeIllnessGroup( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2116,6 +2213,7 @@ void cDBMirror::_synchronizeIllnessGroup( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE illnessGroups SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obIllnessGroup.name() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obIllnessGroup.modified() );
         qsQuery += QString( "active = %1, " ).arg( obIllnessGroup.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obIllnessGroup.archive().compare( "MOD" ) == 0 )
@@ -2180,6 +2278,11 @@ void cDBMirror::_synchronizePublicPlaces( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2198,6 +2301,7 @@ void cDBMirror::_synchronizePublicPlaces( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE publicPlaces SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obPublicPlace.name() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPublicPlace.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPublicPlace.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPublicPlace.archive().compare( "MOD" ) == 0 )
@@ -2262,6 +2366,11 @@ void cDBMirror::_synchronizeHealthInsurance( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2289,6 +2398,7 @@ void cDBMirror::_synchronizeHealthInsurance( unsigned int p_uiSyncLevel )
         qsQuery += QString( "contractId = \"%1\", " ).arg( obHealthInsurance.contractId() );
         qsQuery += QString( "validDateFrom = \"%1\", " ).arg( obHealthInsurance.validDateFrom() );
         qsQuery += QString( "validDateTo = \"%1\", " ).arg( obHealthInsurance.validDateTo() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obHealthInsurance.modified() );
         qsQuery += QString( "active = %1, " ).arg( obHealthInsurance.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obHealthInsurance.archive().compare( "MOD" ) == 0 )
@@ -2353,6 +2463,11 @@ void cDBMirror::_synchronizeCompany( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2380,6 +2495,7 @@ void cDBMirror::_synchronizeCompany( unsigned int p_uiSyncLevel )
         qsQuery += QString( "contractId = \"%1\", " ).arg( obCompany.contractId() );
         qsQuery += QString( "validDateFrom = \"%1\", " ).arg( obCompany.validDateFrom() );
         qsQuery += QString( "validDateTo = \"%1\", " ).arg( obCompany.validDateTo() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obCompany.modified() );
         qsQuery += QString( "active = %1, " ).arg( obCompany.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obCompany.archive().compare( "MOD" ) == 0 )
@@ -2453,6 +2569,11 @@ void cDBMirror::_synchronizeDoctorType( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2471,6 +2592,7 @@ void cDBMirror::_synchronizeDoctorType( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE doctorTypes SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -2536,6 +2658,11 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2556,6 +2683,7 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
         qsQuery += QString( "name = \"%1\", " ).arg( obDoctor.name() );
         qsQuery += QString( "doctorLicence = \"%1\", " ).arg( obDoctor.licence() );
         qsQuery += QString( "data = \"%1\", " ).arg( obDoctor.data() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obDoctor.modified() );
         qsQuery += QString( "active = %1, " ).arg( obDoctor.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obDoctor.archive().compare( "MOD" ) == 0 )
@@ -2629,6 +2757,11 @@ void cDBMirror::_synchronizeDoctorSchedule( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2647,6 +2780,7 @@ void cDBMirror::_synchronizeDoctorSchedule( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE _TABLENAME_ SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -2712,6 +2846,11 @@ void cDBMirror::_synchronizePatient( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2756,6 +2895,7 @@ void cDBMirror::_synchronizePatient( unsigned int p_uiSyncLevel )
         qsQuery += QString( "doctorProposed = %1, " ).arg( obPatient.doctorProposed() );
         qsQuery += QString( "discountType = %1, " ).arg( obPatient.discountType() );
         qsQuery += QString( "comment = \"%1\", " ).arg( obPatient.comment() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPatient.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPatient.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPatient.archive().compare( "MOD" ) == 0 )
@@ -2820,6 +2960,11 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2845,6 +2990,7 @@ void cDBMirror::_synchronizeAttendance( unsigned int p_uiSyncLevel )
         qsQuery += QString( "bloodPressureStop = \"%1\", " ).arg( obAttendance.bloodPressureStop() );
         qsQuery += QString( "pulseStop = \"%1\", " ).arg( obAttendance.pulseStop() );
         qsQuery += QString( "comment = \"%1\", " ).arg( obAttendance.comment() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obAttendance.modified() );
         qsQuery += QString( "active = %1, " ).arg( obAttendance.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obAttendance.archive().compare( "MOD" ) == 0 )
@@ -2909,6 +3055,11 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -2934,6 +3085,7 @@ void cDBMirror::_synchronizePatientcardType( unsigned int p_uiSyncLevel )
         qsQuery += QString( "validDateTo = \"%1\", " ).arg( obPatientCardType.validDateTo() );
         qsQuery += QString( "validDays = \"%1\", " ).arg( obPatientCardType.validDays() );
         qsQuery += QString( "unitTime = \"%1\", " ).arg( obPatientCardType.unitTime() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPatientCardType.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPatientCardType.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPatientCardType.archive().compare( "MOD" ) == 0 )
@@ -2998,6 +3150,11 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3024,6 +3181,7 @@ void cDBMirror::_synchronizePatientcard( unsigned int p_uiSyncLevel )
         qsQuery += QString( "validDateFrom = \"%1\", " ).arg( obPatientCard.validDateFrom() );
         qsQuery += QString( "validDateTo = \"%1\", " ).arg( obPatientCard.validDateTo() );
         qsQuery += QString( "pincode = \"%1\", " ).arg( obPatientCard.pincode() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPatientCard.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPatientCard.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPatientCard.archive().compare( "MOD" ) == 0 )
@@ -3097,6 +3255,11 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3115,6 +3278,7 @@ void cDBMirror::_synchronizePatientcardConnect( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE _TABLENAME_ SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -3180,6 +3344,11 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString                 qsQuery = "";
@@ -3200,6 +3369,7 @@ void cDBMirror::_synchronizePatientcardHistory( unsigned int p_uiSyncLevel )
         qsQuery += QString( "patientCardId = \"%1\", " ).arg( obPatientCardHistory.patientCardId() );
         qsQuery += QString( "units = \"%1\", " ).arg( obPatientCardHistory.units() );
         qsQuery += QString( "time = \"%1\", " ).arg( obPatientCardHistory.time() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPatientCardHistory.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPatientCardHistory.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPatientCardHistory.archive().compare( "MOD" ) == 0 )
@@ -3264,6 +3434,11 @@ void cDBMirror::_synchronizePanelType( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3282,6 +3457,7 @@ void cDBMirror::_synchronizePanelType( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE panelTypes SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obPanelTypes.name() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPanelTypes.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPanelTypes.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPanelTypes.archive().compare( "MOD" ) == 0 )
@@ -3346,6 +3522,11 @@ void cDBMirror::_synchronizePanelStatus( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3368,6 +3549,7 @@ void cDBMirror::_synchronizePanelStatus( unsigned int p_uiSyncLevel )
         qsQuery += QString( "name = \"%1\", " ).arg( obPanelStatuses.name() );
         qsQuery += QString( "length = %1, " ).arg( obPanelStatuses.length() );
         qsQuery += QString( "activateCmd = %1, " ).arg( obPanelStatuses.activateCommand() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPanelStatuses.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPanelStatuses.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPanelStatuses.archive().compare( "MOD" ) == 0 )
@@ -3432,6 +3614,11 @@ void cDBMirror::_synchronizePanel( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3453,6 +3640,7 @@ void cDBMirror::_synchronizePanel( unsigned int p_uiSyncLevel )
         qsQuery += QString( "title = \"%1\", " ).arg( obPanel.title() );
         qsQuery += QString( "workTime = \"%1\", " ).arg( obPanel.workTime() );
         qsQuery += QString( "maxWorkTime = \"%1\", " ).arg( obPanel.maxWorkTime() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPanel.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPanel.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPanel.archive().compare( "MOD" ) == 0 )
@@ -3517,6 +3705,11 @@ void cDBMirror::_synchronizePanelUse( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3538,6 +3731,7 @@ void cDBMirror::_synchronizePanelUse( unsigned int p_uiSyncLevel )
         qsQuery += QString( "name = \"%1\", " ).arg( obPanelUses.name() );
         qsQuery += QString( "useTime = %1, " ).arg( obPanelUses.useTime() );
         qsQuery += QString( "usePrice = %1, " ).arg( obPanelUses.usePrice() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obPanelUses.modified() );
         qsQuery += QString( "active = %1, " ).arg( obPanelUses.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obPanelUses.archive().compare( "MOD" ) == 0 )
@@ -3611,6 +3805,11 @@ void cDBMirror::_synchronizeAttendanceSchedule( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3629,6 +3828,7 @@ void cDBMirror::_synchronizeAttendanceSchedule( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE _TABLENAME_ SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -3703,6 +3903,11 @@ void cDBMirror::_synchronizeDenomination( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3721,6 +3926,7 @@ void cDBMirror::_synchronizeDenomination( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE _TABLENAME_ SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -3795,6 +4001,11 @@ void cDBMirror::_synchronizeProductType( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3813,6 +4024,7 @@ void cDBMirror::_synchronizeProductType( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE _TABLENAME_ SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -3887,6 +4099,11 @@ void cDBMirror::_synchronizeProduct( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3905,6 +4122,7 @@ void cDBMirror::_synchronizeProduct( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE _TABLENAME_ SET ";
         }
         //_NEED_TABLE_SPECIFIC_FIELDS_HERE_
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( ob_ClassName_.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( ob_ClassName_.archive().compare( "MOD" ) == 0 )
@@ -3970,6 +4188,11 @@ void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -3996,6 +4219,7 @@ void cDBMirror::_synchronizeDiscount( unsigned int p_uiSyncLevel )
         qsQuery += QString( "name = \"%1\", " ).arg( obDiscount.name() );
         qsQuery += QString( "discountValue = \"%1\", " ).arg( obDiscount.discountValue() );
         qsQuery += QString( "discountPercent = \"%1\", " ).arg( obDiscount.discountPercent() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obDiscount.modified() );
         qsQuery += QString( "active = %1, " ).arg( obDiscount.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obDiscount.archive().compare( "MOD" ) == 0 )
@@ -4060,6 +4284,11 @@ void cDBMirror::_synchronizeZipRegionCity( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -4080,6 +4309,7 @@ void cDBMirror::_synchronizeZipRegionCity( unsigned int p_uiSyncLevel )
         qsQuery += QString( "zip = \"%1\", " ).arg( obZipRegionCity.zip() );
         qsQuery += QString( "region = \"%1\", " ).arg( obZipRegionCity.region() );
         qsQuery += QString( "city = \"%1\", " ).arg( obZipRegionCity.city() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obZipRegionCity.modified() );
         qsQuery += QString( "active = %1, " ).arg( obZipRegionCity.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obZipRegionCity.archive().compare( "MOD" ) == 0 )
@@ -4144,6 +4374,11 @@ void cDBMirror::_synchronizeAddress( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -4173,6 +4408,7 @@ void cDBMirror::_synchronizeAddress( unsigned int p_uiSyncLevel )
         qsQuery += QString( "floor = \"%1\", " ).arg( obAddress.floor() );
         qsQuery += QString( "door = \"%1\", " ).arg( obAddress.door() );
         qsQuery += QString( "primaryAddress = %1, " ).arg( obAddress.primaryAddress() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obAddress.modified() );
         qsQuery += QString( "active = %1, " ).arg( obAddress.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obAddress.archive().compare( "MOD" ) == 0 )
@@ -4237,6 +4473,11 @@ void cDBMirror::_synchronizeCassa( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -4258,6 +4499,7 @@ void cDBMirror::_synchronizeCassa( unsigned int p_uiSyncLevel )
         qsQuery += QString( "currentBalance = \"%1\", " ).arg( obCassa.currentBalance() );
         qsQuery += QString( "startDateTime = \"%1\", " ).arg( obCassa.startDateTime() );
         qsQuery += QString( "stopDateTime = \"%1\", " ).arg( obCassa.stopDateTime() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obCassa.modified() );
         qsQuery += QString( "active = %1, " ).arg( obCassa.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obCassa.archive().compare( "MOD" ) == 0 )
@@ -4322,6 +4564,11 @@ void cDBMirror::_synchronizeCassaHistory( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -4344,6 +4591,7 @@ void cDBMirror::_synchronizeCassaHistory( unsigned int p_uiSyncLevel )
         qsQuery += QString( "actionValue = \"%1\", " ).arg( obCassaHistory.actionValue() );
         qsQuery += QString( "actionBalance = \"%1\", " ).arg( obCassaHistory.actionBalance() );
         qsQuery += QString( "comment = \"%1\", " ).arg( obCassaHistory.comment() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obCassaHistory.modified() );
         qsQuery += QString( "active = %1, " ).arg( obCassaHistory.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obCassaHistory.archive().compare( "MOD" ) == 0 )
@@ -4417,6 +4665,11 @@ void cDBMirror::_synchronizeCassaDenomination( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString                 qsQuery = "";
@@ -4436,6 +4689,7 @@ void cDBMirror::_synchronizeCassaDenomination( unsigned int p_uiSyncLevel )
         }
         qsQuery += QString( "denominationId = \"%1\", " ).arg( m_uiDenominationId );
         qsQuery += QString( "cassaId = \"%1\", " ).arg( m_uiCassaId );
+        qsQuery += QString( "modified = \"%1\", " ).arg( ob_ClassName_.modified() );
         qsQuery += QString( "active = %1, " ).arg( obCassaDenomination.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obCassaDenomination.archive().compare( "MOD" ) == 0 )
@@ -4501,6 +4755,11 @@ void cDBMirror::_synchronizeLedgerDevice( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -4529,6 +4788,7 @@ void cDBMirror::_synchronizeLedgerDevice( unsigned int p_uiSyncLevel )
         qsQuery += QString( "timeCard = \"%1\", " ).arg( obLedgerDevice.timeCard() );
         qsQuery += QString( "timeCash = \"%1\", " ).arg( obLedgerDevice.timeCash() );
         qsQuery += QString( "comment = \"%1\", " ).arg( obLedgerDevice.comment() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obLedgerDevice.modified() );
         qsQuery += QString( "active = %1, " ).arg( obLedgerDevice.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obLedgerDevice.archive().compare( "MOD" ) == 0 )
@@ -4593,6 +4853,11 @@ void cDBMirror::_synchronizeLedger( unsigned int p_uiSyncLevel )
 
     if( poQuery->first() )
     {
+        if( m_uiCurrentId == poQuery->value( 0 ).toUInt() )
+            m_inCountOfTries++;
+        else
+            m_inCountOfTries = 0;
+
         m_uiCurrentId = poQuery->value( 0 ).toUInt();
 
         QString             qsQuery = "";
@@ -4624,6 +4889,7 @@ void cDBMirror::_synchronizeLedger( unsigned int p_uiSyncLevel )
         qsQuery += QString( "vatpercent = \"%1\", " ).arg( obLedger.vatpercent() );
         qsQuery += QString( "totalPrice = \"%1\", " ).arg( obLedger.totalPrice() );
         qsQuery += QString( "comment = \"%1\", " ).arg( obLedger.comment() );
+        qsQuery += QString( "modified = \"%1\", " ).arg( obLedger.modified() );
         qsQuery += QString( "active = %1, " ).arg( obLedger.active() );
         qsQuery += QString( "archive = \"ARC\" " );
         if( obLedger.archive().compare( "MOD" ) == 0 )

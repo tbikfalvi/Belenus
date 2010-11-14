@@ -10,38 +10,46 @@ cDBUser::~cDBUser()
 {
 }
 
-void cDBUser::init( const unsigned int p_uiId, const unsigned int p_uiLicenceId,
-                    const QString &p_qsName, const QString &p_qsRealName,
-                    const QString &p_qsPassword, const cAccessGroup::teAccessGroup p_enGroup,
+void cDBUser::init( const unsigned int p_uiId,
+                    const unsigned int p_uiLicenceId,
+                    const QString &p_qsName,
+                    const QString &p_qsRealName,
+                    const QString &p_qsPassword,
+                    const cAccessGroup::teAccessGroup p_enGroup,
+                    const QString &p_qsComment,
                     const QString &p_qsModified,
-                    const bool p_boActive, const QString &p_qsComment,
+                    const bool p_boActive,
                     const QString &p_qsArchive ) throw()
 {
-    m_boLoggedIn  = false;
-    m_uiId        = p_uiId;
-    m_uiLicenceId = p_uiLicenceId;
-    m_qsName      = p_qsName;
-    if( p_qsRealName != "" ) m_qsRealName = p_qsRealName;
-    else m_qsRealName = p_qsName;
-    m_qsPassword  = p_qsPassword;
-    m_enGroup     = p_enGroup;
+    m_boLoggedIn        = false;
+    m_uiId              = p_uiId;
+    m_uiLicenceId       = p_uiLicenceId;
+    m_qsName            = p_qsName;
+    m_qsPassword        = p_qsPassword;
+    m_enGroup           = p_enGroup;
+    m_qsComment         = p_qsComment;
     m_qsModified        = p_qsModified;
-    m_boActive    = p_boActive;
-    m_qsComment   = p_qsComment;
-    m_qsArchive   = p_qsArchive;
+    m_boActive          = p_boActive;
+    m_qsArchive         = p_qsArchive;
+
+    if( p_qsRealName != "" )
+        m_qsRealName = p_qsRealName;
+    else
+        m_qsRealName = p_qsName;
 }
 
 void cDBUser::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int  inIdIdx        = p_obRecord.indexOf( "userId" );
-    int  inLicenceIdIdx = p_obRecord.indexOf( "licenceId" );
-    int  inNameIdx      = p_obRecord.indexOf( "name" );
-    int  inRNameIdx     = p_obRecord.indexOf( "realName" );
-    int  inPwdIdx       = p_obRecord.indexOf( "password" );
-    int  inGrpIdx       = p_obRecord.indexOf( "accgroup" );
-    int  inActIdx       = p_obRecord.indexOf( "active" );
-    int  inCommIdx      = p_obRecord.indexOf( "comment" );
-    int  inArchiveIdx   = p_obRecord.indexOf( "archive" );
+    int inIdIdx         = p_obRecord.indexOf( "userId" );
+    int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
+    int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inRNameIdx      = p_obRecord.indexOf( "realName" );
+    int inPwdIdx        = p_obRecord.indexOf( "password" );
+    int inGrpIdx        = p_obRecord.indexOf( "accgroup" );
+    int inCommIdx       = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx   = p_obRecord.indexOf( "modified" );
+    int inActIdx        = p_obRecord.indexOf( "active" );
+    int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
@@ -49,8 +57,9 @@ void cDBUser::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inRNameIdx ).toString(),
           p_obRecord.value( inPwdIdx ).toString(),
           (cAccessGroup::teAccessGroup)(p_obRecord.value( inGrpIdx ).toInt()),
-          p_obRecord.value( inActIdx ).toBool(),
           p_obRecord.value( inCommIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
+          p_obRecord.value( inActIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
 
@@ -74,7 +83,7 @@ void cDBUser::load( const QString &p_qsName ) throw( cSevException )
     if( p_qsName == "root" )
     {
         init( 0, 0, "root", "", "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922",
-              cAccessGroup::ROOT, true, "Built-in root user", "" );
+              cAccessGroup::ROOT, "Built-in root user", "", true, "" );
     }
     else
     {
@@ -127,13 +136,15 @@ void cDBUser::save() throw( cSevException )
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
 
-    if( m_uiId > 0 && m_uiLicenceId > 1 )
+    if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_USER );
+    if( m_uiId > 0 && m_uiLicenceId == 0 )
+        g_obDBMirror.updateGlobalSyncLevel( DB_USER );
 }
 
 void cDBUser::createNew() throw()
 {
-    init( 0, 0, "", "", "", cAccessGroup::USER, 1, "", "" );
+    init( 0, 0, "", "", "", cAccessGroup::USER, "", "", 1, "" );
 }
 
 void cDBUser::logIn( const QString &p_qsPassword ) throw( cSevException )
@@ -219,6 +230,11 @@ void cDBUser::setGroup( const cAccessGroup::teAccessGroup p_enGroup ) throw()
 bool cDBUser::isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const throw()
 {
     return ( p_enGroup <= m_enGroup );
+}
+
+QString cDBUser::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBUser::active() const throw ()

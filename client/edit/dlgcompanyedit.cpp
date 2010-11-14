@@ -35,9 +35,6 @@ cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
     if( m_poCompany )
     {
         ledName->setText( m_poCompany->name() );
-        if( m_poCompany->licenceId() == 0 && m_poCompany->id() > 0 )
-            checkIndependent->setChecked( true );
-
         ledContactPerson->setText( m_poCompany->contactPerson() );
         if( g_poPrefs->getDefaultCountry().length() > 0 && m_poCompany->id() == 0 )
         {
@@ -57,12 +54,27 @@ cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
         ( m_poCompany->discountType()==1?rbDiscountValue->setChecked(true):rbDiscountPercent->setChecked(true) );
         ledDiscount->setText( QString::number(m_poCompany->discount()) );
 
+        if( m_poCompany->licenceId() == 0 && m_poCompany->id() > 0 )
+            checkIndependent->setChecked( true );
+
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             checkIndependent->setEnabled( false );
             if( m_poCompany->licenceId() == 0 && m_poCompany->id() > 0 )
             {
                 ledName->setEnabled( false );
+                ledContactPerson->setEnabled( false );
+                ledCountry->setEnabled( false );
+                cmbRegion->setEnabled( false );
+                ledZip->setEnabled( false );
+                ledCity->setEnabled( false );
+                pbCitySearch->setEnabled( false );
+                ledAddress->setEnabled( false );
+                ledContractId->setEnabled( false );
+                deValidDateFrom->setEnabled( false );
+                deValidDateTo->setEnabled( false );
+                rbDiscountValue->setEnabled( false );
+                rbDiscountPercent->setEnabled( false );
                 poBtnSave->setEnabled( false );
             }
         }

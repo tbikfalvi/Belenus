@@ -28,12 +28,14 @@ cDBPatientOrigin::~cDBPatientOrigin()
 void cDBPatientOrigin::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const QString &p_qsName,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_qsName        = p_qsName;
+    m_qsModified    = p_qsModified;
     m_bActive       = p_bActive;
     m_qsArchive     = p_qsArchive;
 }
@@ -43,12 +45,14 @@ void cDBPatientOrigin::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx         = p_obRecord.indexOf( "patientOriginId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inModifiedIdx   = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -171,6 +175,11 @@ void cDBPatientOrigin::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPatientOrigin::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientOrigin::active() const throw()

@@ -22,10 +22,10 @@ public:
 
     static QString toStr( teAccessGroup p_enGroup ) {
         switch( p_enGroup ) {
-            case USER:    return QObject::tr( "User" );    break;
-            case ADMIN:   return QObject::tr( "Administrator" );   break;
+            case USER:    return QObject::tr( "User" );                 break;
+            case ADMIN:   return QObject::tr( "Administrator" );        break;
             case SYSTEM:  return QObject::tr( "System Administrator" ); break;
-            case ROOT:    return QObject::tr( "God" );    break;
+            case ROOT:    return QObject::tr( "God" );                  break;
             default:      return QObject::tr( "Invalid" );
         }
     }
@@ -57,7 +57,7 @@ public:
     cAccessGroup::teAccessGroup group() const                                                   throw();
     void                        setGroup( const cAccessGroup::teAccessGroup p_enGroup)          throw();
     bool                        isInGroup( const cAccessGroup::teAccessGroup p_enGroup ) const  throw();
-    QString         modified() const                                                throw();
+    QString                     modified() const                                                throw();
     bool                        active() const                                                  throw();
     void                        setActive( const bool p_boActive )                              throw();
     QString                     comment() const                                                 throw();
@@ -73,7 +73,7 @@ private:
     QString                     m_qsRealName;
     QString                     m_qsPassword;
     cAccessGroup::teAccessGroup m_enGroup;
-    QString         m_qsModified;
+    QString                     m_qsModified;
     bool                        m_boActive;
     QString                     m_qsComment;
     QString                     m_qsArchive;
@@ -84,9 +84,9 @@ private:
                const QString &p_qsRealName = "",
                const QString &p_qsPassword = "",
                const cAccessGroup::teAccessGroup p_enGroup = cAccessGroup::USER,
+               const QString &p_qsComment = "",
                const QString &p_qsModified = "",
                const bool p_boActive = true,
-               const QString &p_qsComment = "",
                const QString &p_qsArchive = "NEW" )     throw();
     void init( const QSqlRecord &p_obRecord )          throw();
 };

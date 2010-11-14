@@ -54,6 +54,7 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inDateTimeIdx           = p_obRecord.indexOf( "dateTimeUsed" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
     int inTimeIdx               = p_obRecord.indexOf( "time" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -63,6 +64,7 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inDateTimeIdx ).toString(),
           p_obRecord.value( inUnitsIdx ).toInt(),
           p_obRecord.value( inTimeIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -203,6 +205,11 @@ QString cDBPatientCardHistory::time() const throw()
 void cDBPatientCardHistory::setTime( const QString &p_qsTime ) throw()
 {
     m_qsTime = p_qsTime;
+}
+
+QString cDBPatientCardHistory::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientCardHistory::active() const throw()

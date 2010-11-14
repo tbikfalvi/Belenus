@@ -60,22 +60,23 @@
 #define     MIRROR_SYNC_DB_LEDGERDEVICE             40
 #define     MIRROR_SYNC_DB_LEDGER                   41
 
-#define     MIRROR_GET_GLOBAL_PATIENTORIGIN         50
-#define     MIRROR_GET_GLOBAL_REASONTOVISIT         51
-#define     MIRROR_GET_GLOBAL_ILLNESSGROUPS         52
-#define     MIRROR_GET_GLOBAL_PUBLICPLACES          53
-#define     MIRROR_GET_GLOBAL_HEALTHINSURANCES      54
-#define     MIRROR_GET_GLOBAL_COMPANIES             55
-#define     MIRROR_GET_GLOBAL_DOCTORTYPES           56
-#define     MIRROR_GET_GLOBAL_DOCTORS               57
-#define     MIRROR_GET_GLOBAL_PATIENTS              58
-#define     MIRROR_GET_GLOBAL_PATIENTCARDTYPES      59
-#define     MIRROR_GET_GLOBAL_PATIENTCARDS          60
-#define     MIRROR_GET_GLOBAL_LEDGERTYPES           61
-#define     MIRROR_GET_GLOBAL_PRODUCTTYPES          62
-#define     MIRROR_GET_GLOBAL_PRODUCTS              63
-#define     MIRROR_GET_GLOBAL_DISCOUNTS             64
-#define     MIRROR_GET_GLOBAL_PAYMENTMETHODS        65
+#define     MIRROR_GET_GLOBAL_USER                  50
+#define     MIRROR_GET_GLOBAL_PATIENTORIGIN         51
+#define     MIRROR_GET_GLOBAL_REASONTOVISIT         52
+#define     MIRROR_GET_GLOBAL_ILLNESSGROUPS         53
+#define     MIRROR_GET_GLOBAL_PUBLICPLACES          54
+#define     MIRROR_GET_GLOBAL_HEALTHINSURANCES      55
+#define     MIRROR_GET_GLOBAL_COMPANIES             56
+#define     MIRROR_GET_GLOBAL_DOCTORTYPES           57
+#define     MIRROR_GET_GLOBAL_DOCTORS               58
+#define     MIRROR_GET_GLOBAL_PATIENTS              59
+#define     MIRROR_GET_GLOBAL_PATIENTCARDTYPES      60
+#define     MIRROR_GET_GLOBAL_PATIENTCARDS          61
+#define     MIRROR_GET_GLOBAL_LEDGERTYPES           62
+#define     MIRROR_GET_GLOBAL_PRODUCTTYPES          63
+#define     MIRROR_GET_GLOBAL_PRODUCTS              64
+#define     MIRROR_GET_GLOBAL_DISCOUNTS             65
+#define     MIRROR_GET_GLOBAL_PAYMENTMETHODS        66
 
 //====================================================================================
 // Database modification levels
@@ -138,6 +139,8 @@ public:
     bool            checkIsSynchronizationNeeded();
     bool            checkIsGlobalDataModifiedOnServer();
 
+    void            acquireGlobals();
+    void            acquireUserGlobals();
     void            acquirePatientOriginGlobals();
     void            acquireReasonToVisitGlobals();
     void            acquireIllnessGroupsGlobals();
@@ -221,6 +224,7 @@ private:
     void            _globalDataSynchronized( unsigned int p_uiSyncLevel );
     void            _updateGlobalTimestampOnServer();
 
+    void            _processUserGlobals( SqlResult *p_sqlResult );
     void            _processPatientOriginGlobals( SqlResult *p_sqlResult );
     void            _processReasonToVisitGlobals( SqlResult *p_sqlResult );
     void            _processIllnessGroupsGlobals( SqlResult *p_sqlResult );

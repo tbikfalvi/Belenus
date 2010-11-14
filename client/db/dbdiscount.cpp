@@ -69,6 +69,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inDiscountValueIdx      = p_obRecord.indexOf( "discountValue" );
     int inDiscountPercentIdx    = p_obRecord.indexOf( "discountPercent" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -83,6 +84,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inDiscountValueIdx ).toInt(),
           p_obRecord.value( inDiscountPercentIdx ).toInt(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -392,6 +394,11 @@ int cDBDiscount::discountPercent() const throw()
 void cDBDiscount::setDiscountPercent( const int p_nDiscountPercent ) throw()
 {
     m_inDiscountPercent = p_nDiscountPercent;
+}
+
+QString cDBDiscount::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBDiscount::active() const throw()

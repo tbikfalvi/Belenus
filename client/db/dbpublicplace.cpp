@@ -45,12 +45,14 @@ void cDBPublicPlace::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx         = p_obRecord.indexOf( "publicPlaceId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -173,6 +175,11 @@ void cDBPublicPlace::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPublicPlace::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPublicPlace::active() const throw()

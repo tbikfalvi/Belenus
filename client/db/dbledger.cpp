@@ -87,6 +87,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     int inTotalPriceIdx         = p_obRecord.indexOf( "totalPrice" );
     int inLedgerTimeIdx         = p_obRecord.indexOf( "ledgerTime" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -107,6 +108,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inTotalPriceIdx ).toInt(),
           p_obRecord.value( inLedgerTimeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -372,6 +374,11 @@ void cDBLedger::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBLedger::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBLedger::active() const throw()

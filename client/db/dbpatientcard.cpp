@@ -69,6 +69,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateFromIdx      = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx        = p_obRecord.indexOf( "validDateTo" );
     int inPincodeIdx            = p_obRecord.indexOf( "pincode" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -83,6 +84,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inPincodeIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -334,6 +336,11 @@ void cDBPatientCard::setPincode( const QString &p_qsPincode ) throw()
 {
     m_qsPincode = p_qsPincode;
     m_qsPincode = m_qsPincode.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPatientCard::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientCard::active() const throw()
