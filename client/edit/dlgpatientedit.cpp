@@ -166,16 +166,24 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
                 chkService->setEnabled( false );
                 chkHealthInsurance->setEnabled( false );
                 cmbHealthInsurance->setEnabled( false );
+                pbHealthInsurance->setEnabled( false );
                 chkCompany->setEnabled( false );
                 cmbCompany->setEnabled( false );
+                pbCompany->setEnabled( false );
                 chkDoctorProposed->setEnabled( false );
+                cmbDoctorType->setEnabled( false );
                 cmbDoctor->setEnabled( false );
-                ptComment->setEnabled( false );
+                pbDoctor->setEnabled( false );
+                rbDiscountValue->setEnabled( false );
+                rbDiscountPercent->setEnabled( false );
+                pbDiscount->setEnabled( false );
 
                 ledCountry->setEnabled( false );
                 cmbRegion->setEnabled( false );
                 ledZip->setEnabled( false );
                 ledCity->setEnabled( false );
+                pbCitySearch->setEnabled( false );
+                pbVerifyAddress->setEnabled( false );
                 ledStreet->setEnabled( false );
                 cmbStreet->setEnabled( false );
                 ledStreetNumber->setEnabled( false );
@@ -187,10 +195,12 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
                 ledPhone->setEnabled( false );
                 ledEmail1->setEnabled( false );
                 ledEmail2->setEnabled( false );
+                ptComment->setEnabled( false );
 
                 ledHeight->setEnabled( false );
                 ledWeight->setEnabled( false );
                 cmbIllnessGroup->setEnabled( false );
+                pbIllnessGroup->setEnabled( false );
                 ptIllness->setEnabled( false );
                 ptSymptom->setEnabled( false );
                 ptMedicineCurrent->setEnabled( false );

@@ -25,6 +25,7 @@ public:
 
     void checkDemoLicenceKey();
     void startMainTimer();
+    void autoSynchronizeGlobalData();
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
@@ -43,6 +44,10 @@ private:
     bool                m_bCtrlPressed;
 
     bool                m_bSerialRegistration;
+    int                 m_inRegistrationTimeout;
+
+    bool                m_bGlobalDataRequested;
+    int                 m_inGlobalDataRequestTimeout;
 
     void updateTitle();
     void processInputPatient( QString p_stPatientName );
@@ -100,6 +105,8 @@ private slots:
     void on_action_Discounts_triggered();
     void on_action_PatientcardsObsolete_triggered();
     void on_action_SynchronizeDatabase_triggered();
+    void on_action_AcquireGlobalData_triggered();
+    void on_action_EstablishConnection_triggered();
 };
 
 #endif

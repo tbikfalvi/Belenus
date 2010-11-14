@@ -36,6 +36,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
                            const QString p_qsValidDateFrom,
                            const QString p_qsValidDateTo,
                            const QString p_qsPincode,
+                           const QString &p_qsModified,
                            const bool p_bActive,
                            const QString &p_qsArchive ) throw()
 {
@@ -50,6 +51,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_qsValidDateFrom       = p_qsValidDateFrom;
     m_qsValidDateTo         = p_qsValidDateTo;
     m_qsPincode             = p_qsPincode;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -67,6 +69,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateFromIdx      = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx        = p_obRecord.indexOf( "validDateTo" );
     int inPincodeIdx            = p_obRecord.indexOf( "pincode" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -81,6 +84,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inPincodeIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -154,6 +158,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "pincode = \"%1\", " ).arg( m_qsPincode );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -331,6 +336,11 @@ void cDBPatientCard::setPincode( const QString &p_qsPincode ) throw()
 {
     m_qsPincode = p_qsPincode;
     m_qsPincode = m_qsPincode.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPatientCard::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientCard::active() const throw()

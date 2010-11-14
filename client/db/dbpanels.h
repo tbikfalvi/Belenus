@@ -26,6 +26,7 @@ public:
     void            setWorkTime( const unsigned int p_uiWorkTime)           throw();
     unsigned int    maxWorkTime() const                                     throw();
     void            setMaxWorkTime( const unsigned int p_uiMaxWorkTime)     throw();
+    QString         modified() const                                                throw();
     bool            active() const                                          throw();
     void            setActive( const bool p_bActive )                       throw();
     QString         archive() const                                         throw();
@@ -38,6 +39,7 @@ private:
     QString         m_qsTitle;
     unsigned int    m_uiWorkTime;
     unsigned int    m_uiMaxWorkTime;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -47,6 +49,7 @@ private:
                const QString &p_qsTitle = "",
                const unsigned int p_uiWorkTime = 0,
                const unsigned int p_uiMaxWorkTime = 0,
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();

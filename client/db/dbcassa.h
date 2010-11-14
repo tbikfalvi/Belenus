@@ -27,6 +27,7 @@ public:
     void            setStartDateTime( const QString &p_qsStartDateTime )    throw();
     QString         stopDateTime() const                                    throw();
     void            setStopDateTime( const QString &p_qsStopDateTime )      throw();
+    QString         modified() const                                                throw();
     bool            active() const                                          throw();
     void            setActive( const bool p_bActive )                       throw();
     QString         archive() const                                         throw();
@@ -39,6 +40,7 @@ private:
     int             m_nCurrentBalance;
     QString         m_qsStartDateTime;
     QString         m_qsStopDateTime;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -48,6 +50,7 @@ private:
                const int p_nCurrentBalance = 0,
                const QString p_qsStartDateTime = "",
                const QString p_qsStopDateTime = "",
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                      throw();
     void init( const QSqlRecord &p_obRecord )                           throw();

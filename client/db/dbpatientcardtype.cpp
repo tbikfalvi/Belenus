@@ -35,6 +35,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
                              const QString &p_qsValidDateTo,
                              const int p_nValidDays,
                              const int p_nUnitTime,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -48,6 +49,7 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
     m_qsValidDateTo     = p_qsValidDateTo;
     m_nValidDays        = p_nValidDays;
     m_nUnitTime         = p_nUnitTime;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -64,6 +66,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
     int inValidDaysIdx      = p_obRecord.indexOf( "validDays" );
     int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -77,6 +80,7 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inValidDaysIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -136,6 +140,7 @@ void cDBPatientCardType::save() throw( cSevException )
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "validDays = \"%1\", " ).arg( m_nValidDays );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -275,6 +280,11 @@ int cDBPatientCardType::unitTime() const throw()
 void cDBPatientCardType::setUnitTime( const int p_nUnitTime ) throw()
 {
     m_nUnitTime = p_nUnitTime;
+}
+
+QString cDBPatientCardType::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientCardType::active() const throw()

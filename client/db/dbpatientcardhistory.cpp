@@ -31,6 +31,7 @@ void cDBPatientCardHistory::init( const unsigned int p_uiId,
                                   const QString p_qsDateTime,
                                   const int p_nUnits,
                                   const QString p_qsTime,
+                                  const QString &p_qsModified,
                                   const bool p_bActive,
                                   const QString &p_qsArchive ) throw()
 {
@@ -40,6 +41,7 @@ void cDBPatientCardHistory::init( const unsigned int p_uiId,
     m_qsDateTime            = p_qsDateTime;
     m_nUnits                = p_nUnits;
     m_qsTime                = p_qsTime;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -52,6 +54,7 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inDateTimeIdx           = p_obRecord.indexOf( "dateTimeUsed" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
     int inTimeIdx               = p_obRecord.indexOf( "time" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -61,6 +64,7 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inDateTimeIdx ).toString(),
           p_obRecord.value( inUnitsIdx ).toInt(),
           p_obRecord.value( inTimeIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -102,6 +106,7 @@ void cDBPatientCardHistory::save() throw( cSevException )
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
     qsQuery += QString( "time = \"%1\", " ).arg( m_qsTime );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -200,6 +205,11 @@ QString cDBPatientCardHistory::time() const throw()
 void cDBPatientCardHistory::setTime( const QString &p_qsTime ) throw()
 {
     m_qsTime = p_qsTime;
+}
+
+QString cDBPatientCardHistory::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPatientCardHistory::active() const throw()

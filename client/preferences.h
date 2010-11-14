@@ -65,6 +65,10 @@ public:
     QString         getDefaultCountry() const;
     void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
     int             getZipLength() const;
+    void            setDBAutoArchive( const bool p_bDBAutoArchive, bool p_boSaveNow = false );
+    bool            getDBAutoArchive() const;
+    void            setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow = false );
+    bool            getDBGlobalAutoSynchronize() const;
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -117,6 +121,8 @@ private:
     bool            m_bCassaAutoWithdrawal;
     QString         m_qsDefaultCountry;
     int             m_inZipLength;
+    bool            m_bDBAutoArchive;
+    bool            m_bDBGlobalAutoSynchronize;
 
     void init();
 };

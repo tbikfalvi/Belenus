@@ -31,6 +31,7 @@ void cDBCassa::init( const unsigned int p_uiId,
                              const int p_nCurrentBalance,
                              const QString p_qsStartDateTime,
                              const QString p_qsStopDateTime,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -40,6 +41,7 @@ void cDBCassa::init( const unsigned int p_uiId,
     m_nCurrentBalance   = p_nCurrentBalance;
     m_qsStartDateTime   = p_qsStartDateTime;
     m_qsStopDateTime    = p_qsStopDateTime;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -52,6 +54,7 @@ void cDBCassa::init( const QSqlRecord &p_obRecord ) throw()
     int inCurrentBalanceIdx = p_obRecord.indexOf( "currentBalance" );
     int inStartDateTimeIdx  = p_obRecord.indexOf( "startDateTime" );
     int inStopDateTimeIdx   = p_obRecord.indexOf( "stopDateTime" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -61,6 +64,7 @@ void cDBCassa::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inCurrentBalanceIdx ).toInt(),
           p_obRecord.value( inStartDateTimeIdx ).toString(),
           p_obRecord.value( inStopDateTimeIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -116,6 +120,7 @@ void cDBCassa::save() throw( cSevException )
     qsQuery += QString( "currentBalance = \"%1\", " ).arg( m_nCurrentBalance );
     qsQuery += QString( "startDateTime = \"%1\", " ).arg( m_qsStartDateTime );
     qsQuery += QString( "stopDateTime = \"%1\", " ).arg( m_qsStopDateTime );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -219,6 +224,11 @@ void cDBCassa::setStopDateTime( const QString &p_qsStopDateTime ) throw()
 bool cDBCassa::active() const throw()
 {
     return m_bActive;
+}
+
+QString cDBCassa::modified() const throw()
+{
+    return m_qsModified;
 }
 
 void cDBCassa::setActive( const bool p_bActive ) throw()

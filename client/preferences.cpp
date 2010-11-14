@@ -425,6 +425,37 @@ QString cPreferences::getDefaultCountry() const
     return m_qsDefaultCountry;
 }
 
+void cPreferences::setDBAutoArchive( const bool p_bDBAutoArchive, bool p_boSaveNow )
+{
+    m_bDBAutoArchive = p_bDBAutoArchive;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
+    }
+}
+
+bool cPreferences::getDBAutoArchive() const
+{
+    return m_bDBAutoArchive;
+}
+void cPreferences::setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow )
+{
+    m_bDBGlobalAutoSynchronize = p_bDBGlobalAutoSynchronize;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
+    }
+}
+
+bool cPreferences::getDBGlobalAutoSynchronize() const
+{
+    return m_bDBGlobalAutoSynchronize;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -485,15 +516,17 @@ void cPreferences::loadConfFileSettings()
     }
     else
     {
-        m_qsLang                = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
-        m_qsLastUser            = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
-        m_uiPanelsPerRow        = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
-        m_inBarcodeLength       = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
-        m_qsBarcodePrefix       = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
-        m_bCassaAutoClose       = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
-        m_bCassaAutoWithdrawal  = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
-        m_qsDefaultCountry      = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
-        m_inZipLength           = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
+        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
+        m_qsLastUser                = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
+        m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
+        m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
+        m_qsBarcodePrefix           = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        m_bCassaAutoClose           = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
+        m_bCassaAutoWithdrawal      = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
+        m_qsDefaultCountry          = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
+        m_inZipLength               = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
+        m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
+        m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
 
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );
@@ -580,6 +613,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
     obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
     obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
+    obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
+    obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );

@@ -82,6 +82,7 @@
     <addaction name="action_EditLicenceInformation"/>
     <addaction name="separator"/>
     <addaction name="action_SynchronizeDatabase"/>
+    <addaction name="action_AcquireGlobalData"/>
     <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
@@ -567,6 +568,22 @@
    </property>
    <property name="toolTip">
     <string>Synchronize database with server database</string>
+   </property>
+  </action>
+  <action name="action_AcquireGlobalData">
+   <property name="text">
+    <string>Get global data ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Get global data from server</string>
+   </property>
+  </action>
+  <action name="action_EstablishConnection">
+   <property name="text">
+    <string>Establish connection</string>
+   </property>
+   <property name="toolTip">
+    <string>Establish connection with server</string>
    </property>
   </action>
  </widget>

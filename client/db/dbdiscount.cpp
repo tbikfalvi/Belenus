@@ -36,6 +36,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
                         const QString &p_qsName,
                         const int p_inDiscountValue,
                         const int p_inDiscountPercent,
+                        const QString &p_qsModified,
                         const bool p_bActive,
                         const QString &p_qsArchive ) throw()
 {
@@ -50,6 +51,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
     m_qsName                = p_qsName;
     m_inDiscountValue       = p_inDiscountValue;
     m_inDiscountPercent     = p_inDiscountPercent;
+    m_qsModified        = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -67,6 +69,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inDiscountValueIdx      = p_obRecord.indexOf( "discountValue" );
     int inDiscountPercentIdx    = p_obRecord.indexOf( "discountPercent" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -81,6 +84,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inDiscountValueIdx ).toInt(),
           p_obRecord.value( inDiscountPercentIdx ).toInt(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -240,6 +244,7 @@ void cDBDiscount::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "discountValue = \"%1\", " ).arg( m_inDiscountValue );
     qsQuery += QString( "discountPercent = \"%1\", " ).arg( m_inDiscountPercent );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -389,6 +394,11 @@ int cDBDiscount::discountPercent() const throw()
 void cDBDiscount::setDiscountPercent( const int p_nDiscountPercent ) throw()
 {
     m_inDiscountPercent = p_nDiscountPercent;
+}
+
+QString cDBDiscount::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBDiscount::active() const throw()

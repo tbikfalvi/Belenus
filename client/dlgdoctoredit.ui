@@ -123,6 +123,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>ledName</tabstop>
+  <tabstop>ledLicence</tabstop>
+  <tabstop>cmbDoctorType</tabstop>
+  <tabstop>ptData</tabstop>
+  <tabstop>rbDiscountValue</tabstop>
+  <tabstop>rbDiscountPercent</tabstop>
+  <tabstop>ledDiscount</tabstop>
+  <tabstop>checkIndependent</tabstop>
+  <tabstop>btbButtons</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

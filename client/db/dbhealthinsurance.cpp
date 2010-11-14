@@ -40,6 +40,7 @@ void cDBHealthInsurance::init( const unsigned int p_uiId,
                              const QString &p_qsValidDateTo,
                              const int p_nDiscountType,
                              const int p_nDiscount,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -57,6 +58,7 @@ void cDBHealthInsurance::init( const unsigned int p_uiId,
     m_qsValidDateTo     = p_qsValidDateTo;
     m_nDiscountType     = p_nDiscountType;
     m_nDiscount         = p_nDiscount;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -75,6 +77,7 @@ void cDBHealthInsurance::init( const QSqlRecord &p_obRecord ) throw()
     int inContractIdIdx     = p_obRecord.indexOf( "contractId" );
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -115,6 +118,7 @@ void cDBHealthInsurance::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_nDiscountType,
           p_nDiscount,
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -176,6 +180,7 @@ void cDBHealthInsurance::save() throw( cSevException )
     qsQuery += QString( "contractId = \"%1\", " ).arg( m_qsContractId );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -402,6 +407,11 @@ int cDBHealthInsurance::discount() const throw()
 void cDBHealthInsurance::setDiscount( const int p_nDiscount ) throw()
 {
     m_nDiscount = p_nDiscount;
+}
+
+QString cDBHealthInsurance::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBHealthInsurance::active() const throw()

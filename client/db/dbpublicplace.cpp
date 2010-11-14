@@ -28,12 +28,14 @@ cDBPublicPlace::~cDBPublicPlace()
 void cDBPublicPlace::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const QString &p_qsName,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_qsName        = p_qsName;
+    m_qsModified        = p_qsModified;
     m_bActive       = p_bActive;
     m_qsArchive     = p_qsArchive;
 }
@@ -43,12 +45,14 @@ void cDBPublicPlace::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx         = p_obRecord.indexOf( "publicPlaceId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -101,6 +105,7 @@ void cDBPublicPlace::save() throw( cSevException )
     qsQuery += " publicPlaces SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -170,6 +175,11 @@ void cDBPublicPlace::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBPublicPlace::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBPublicPlace::active() const throw()

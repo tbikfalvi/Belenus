@@ -34,6 +34,7 @@ void cDBDoctor::init( const unsigned int p_uiId,
                       const QString &p_qsData,
                       const int p_nDiscountType,
                       const int p_nDiscount,
+                      const QString &p_qsModified,
                       const bool p_bActive,
                       const QString &p_qsArchive ) throw()
 {
@@ -45,6 +46,7 @@ void cDBDoctor::init( const unsigned int p_uiId,
     m_qsData            = p_qsData;
     m_nDiscountType     = p_nDiscountType;
     m_nDiscount         = p_nDiscount;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -57,6 +59,7 @@ void cDBDoctor::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inLicenceIdx        = p_obRecord.indexOf( "doctorLicence" );
     int inDataIdx           = p_obRecord.indexOf( "data" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -91,6 +94,7 @@ void cDBDoctor::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inDataIdx ).toString(),
           p_nDiscountType,
           p_nDiscount,
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -146,6 +150,7 @@ void cDBDoctor::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "doctorLicence = \"%1\", " ).arg( m_qsLicence );
     qsQuery += QString( "data = \"%1\", " ).arg( m_qsData );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -310,6 +315,11 @@ int cDBDoctor::discount() const throw()
 void cDBDoctor::setDiscount( const int p_nDiscount ) throw()
 {
     m_nDiscount = p_nDiscount;
+}
+
+QString cDBDoctor::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBDoctor::active() const throw()

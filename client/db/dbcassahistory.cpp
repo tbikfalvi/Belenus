@@ -33,6 +33,7 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
                              const int p_inActionBalance,
                              const QString &p_qsActionTime,
                              const QString &p_qsComment,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -44,6 +45,7 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
     m_inActionBalance   = p_inActionBalance;
     m_qsActionTime      = p_qsActionTime;
     m_qsComment         = p_qsComment;
+    m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -58,6 +60,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inActionBalanceIdx  = p_obRecord.indexOf( "actionBalance" );
     int inActionTimeIdx     = p_obRecord.indexOf( "actionTime" );
     int inCommentIdx        = p_obRecord.indexOf( "comment" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -69,6 +72,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inActionBalanceIdx ).toInt(),
           p_obRecord.value( inActionTimeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -112,6 +116,7 @@ void cDBCassaHistory::save() throw( cSevException )
     qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
     qsQuery += QString( "actionBalance = \"%1\", " ).arg( m_inActionBalance );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -231,6 +236,11 @@ void cDBCassaHistory::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBCassaHistory::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBCassaHistory::active() const throw()

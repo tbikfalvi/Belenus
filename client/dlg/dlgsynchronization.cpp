@@ -58,9 +58,9 @@ void cDlgSynchronization::autoSynchronization()
     listInformation->addItem( tr("Automatic database synchronization is starting ...") );
     m_bAutoSynchronization  = true;
     m_bAutoStart            = true;
-    m_nTimer = startTimer( 5000 );
     pbStart->setEnabled( false );
     pbExit->setEnabled( false );
+    m_nTimer = startTimer( 5000 );
 }
 //====================================================================================
 void cDlgSynchronization::checkSynchronizationStatus()
@@ -104,9 +104,9 @@ void cDlgSynchronization::timerEvent(QTimerEvent *)
 {
     if( m_bAutoStart )
     {
-        on_pbStart_clicked();
         killTimer( m_nTimer );
         m_bAutoStart = false;
+        on_pbStart_clicked();
         return;
     }
     else if( m_bAutoClose )

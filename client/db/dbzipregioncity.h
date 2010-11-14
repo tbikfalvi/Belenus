@@ -28,6 +28,7 @@ public:
     void            setRegion( const QString &p_qsRegion )          throw();
     QString         city() const                                    throw();
     void            setCity( const QString &p_qsCity )              throw();
+    QString         modified() const                                                throw();
     bool            active() const                                  throw();
     void            setActive( const bool p_bActive )               throw();
     QString         archive() const                                 throw();
@@ -39,6 +40,7 @@ private:
     QString         m_qsZip;
     QString         m_qsRegion;
     QString         m_qsCity;
+    QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
 
@@ -47,6 +49,7 @@ private:
                const QString &p_qsZip = "",
                const QString &p_qsRegion = "",
                const QString &p_qsCity = "",
+               const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
     void init( const QSqlRecord &p_obRecord )                       throw();

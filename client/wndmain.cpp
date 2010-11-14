@@ -71,6 +71,7 @@
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgsynchronization.h"
+#include "dlg/dlgglobals.h"
 
 //====================================================================================
 
@@ -95,12 +96,16 @@ cWndMain::cWndMain( QWidget *parent )
 
     setupUi( this );
 
-    m_bCtrlPressed          = false;
-    m_bSerialRegistration   = false;
+    m_bCtrlPressed                  = false;
+    m_bSerialRegistration           = false;
+    m_inRegistrationTimeout         = 0;
 
-    m_uiPatientId           = 0;
-    m_uiAttendanceId        = 0;
-    g_uiPatientAttendanceId = 0;
+    m_bGlobalDataRequested          = false;
+    m_inGlobalDataRequestTimeout    = 0;
+
+    m_uiPatientId                   = 0;
+    m_uiAttendanceId                = 0;
+    g_uiPatientAttendanceId         = 0;
 
     m_dlgProgress = new cDlgProgress( this );
 
@@ -188,6 +193,7 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
     action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
+    action_AcquireGlobalData->setIcon( QIcon("./resources/40x40_database_sync.png") );
 
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
@@ -229,6 +235,9 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
+
+    action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
+    action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -243,6 +252,12 @@ cWndMain::~cWndMain()
 void cWndMain::startMainTimer()
 {
     m_nTimer = startTimer( 300 );
+}
+//====================================================================================
+void cWndMain::autoSynchronizeGlobalData()
+//====================================================================================
+{
+    m_bGlobalDataRequested = true;
 }
 //====================================================================================
 bool cWndMain::showLogIn()
@@ -285,22 +300,22 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
-    if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR )
+    if( g_obLicenceManager.getType() == LicenceManager::VALID_SERVER_ERROR )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but was not able to validate it with the server.\n"
                                  "Please note that without validation the application will work only for the next %1 days\n\n"
                                  "Please also note you need live internet connection for the validation process.").arg(g_obLicenceManager.getDaysRemaining()) );
     }
-    else if( g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
+    else if( g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_ERROR )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("The application has valid serial key registered but failed to validate the installation with the server.\n"
                                  "Please call Service to validate your installation.\n\n"
                                  "Note that without validation the application will work only for the next %1 days").arg(g_obLicenceManager.getDaysRemaining()) );
     }
-    else if( g_obLicenceManager.getType()==LicenceManager::VALID_EXPIRED ||
-                g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_EXPIRED )
+    else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
+             g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
     {
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key has expired.\n"
@@ -736,6 +751,7 @@ void cWndMain::timerEvent(QTimerEvent *)
         if( g_poPrefs->getLicenceId() > 1 )
         {
             m_bSerialRegistration = false;
+            g_obDBMirror.initialize();
             g_obDBMirror.updateLicenceData();
             g_obCassa.cassaClose();
             g_obCassa.createNew( g_obUser.id() );
@@ -761,6 +777,62 @@ void cWndMain::timerEvent(QTimerEvent *)
 
                 obDlgLicenceEdit.exec();
             }
+            g_obDBMirror.start();
+        }
+        else
+        {
+            if( m_inRegistrationTimeout > 20 )
+            {
+                m_bSerialRegistration = false;
+                m_inRegistrationTimeout = 0;
+
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("Registration of the licence key has been failed.\n\n"
+                                         "Please check your internet connection and "
+                                         "try to restart the application.\n"
+                                         "Please also check whether the defined licence key is valid "
+                                         "and not used by somebody else. For this information please "
+                                         "contact your franchise distributor.") );
+            }
+            else
+            {
+                m_inRegistrationTimeout++;
+            }
+        }
+    }
+    else if( m_bGlobalDataRequested )
+    {
+        if( g_obDBMirror.isAvailable() )
+        {
+            if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
+            {
+                m_bGlobalDataRequested          = false;
+                m_inGlobalDataRequestTimeout    = 0;
+
+                cDlgDBGlobals   obDlgDBGlobals( this );
+
+                obDlgDBGlobals.autoSynchronization();
+                obDlgDBGlobals.exec();
+            }
+            else
+            {
+                if( m_inGlobalDataRequestTimeout > 10 )
+                {
+                    m_bGlobalDataRequested          = false;
+                    m_inGlobalDataRequestTimeout    = 0;
+
+                    QMessageBox::information( this, tr("Information"),tr( "Studio independent data is already synchronized with server." ) );
+                }
+                else
+                {
+                    m_inGlobalDataRequestTimeout++;
+                }
+            }
+        }
+        else
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Connection to Belenus server is not available."));
         }
     }
 
@@ -814,18 +886,22 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
         {
             logoutUser();
 
-            if( g_obDBMirror.checkIsSynchronizationNeeded() &&
-                QMessageBox::question( this, tr("Question"),
-                                       tr("Database synchronization needed.\n"
-                                          "Do you want to synchronize database with server?"),
-                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            if( g_obDBMirror.isAvailable() )
             {
-                hide();
+                if( g_poPrefs->getDBAutoArchive() ||
+                    (g_obDBMirror.checkIsSynchronizationNeeded() &&
+                     QMessageBox::question( this, tr("Question"),
+                                            tr("Database synchronization needed.\n"
+                                               "Do you want to synchronize database with server?"),
+                                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes ) )
+                {
+                    hide();
 
-                cDlgSynchronization     obDlgSynchronization( this );
+                    cDlgSynchronization     obDlgSynchronization( this );
 
-                obDlgSynchronization.autoSynchronization();
-                obDlgSynchronization.exec();
+                    obDlgSynchronization.autoSynchronization();
+                    obDlgSynchronization.exec();
+                }
             }
 
             p_poEvent->accept();
@@ -1179,6 +1255,7 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
 
     if( obDlgSerialReg.exec() == QDialog::Accepted )
     {
+        m_inRegistrationTimeout = 0;
         m_bSerialRegistration = true;
     }
 }
@@ -1768,8 +1845,40 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
 void cWndMain::on_action_SynchronizeDatabase_triggered()
 //====================================================================================
 {
-    cDlgSynchronization obDlgSynchronization( this );
+    if( g_obDBMirror.isAvailable() )
+    {
+        cDlgSynchronization obDlgSynchronization( this );
 
-    obDlgSynchronization.exec();
+        obDlgSynchronization.exec();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Connection to Belenus server is not available."));
+    }
+}
+//====================================================================================
+void cWndMain::on_action_AcquireGlobalData_triggered()
+//====================================================================================
+{
+    if( g_obDBMirror.isAvailable() )
+    {
+        g_obDBMirror.requestGlobalDataTimestamp();
+        m_bGlobalDataRequested = true;
+
+/*        cDlgDBGlobals   obDlgDBGlobals( this );
+
+        obDlgDBGlobals.exec();*/
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Connection to Belenus server is not available."));
+    }
+}
+//====================================================================================
+void cWndMain::on_action_EstablishConnection_triggered()
+//====================================================================================
+{
 }
 //====================================================================================

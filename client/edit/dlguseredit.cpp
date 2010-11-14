@@ -12,6 +12,13 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     setWindowTitle( tr( "User" ) );
     setWindowIcon( QIcon("./resources/40x40_user.png") );
 
+    QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
+    QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
+    btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
+    btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
+    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     m_qsDefaultPwd = "pppppppp";
 
     m_poUser = p_poUser;
@@ -38,19 +45,31 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
         cmbGroup->setCurrentIndex( (int)p_poUser->group() - 1 );
         chbActive->setChecked( m_poUser->active() );
         pteComment->setPlainText( m_poUser->comment() );
+
+        if( m_poUser->licenceId() == 0 && m_poUser->id() > 0 )
+            checkIndependent->setChecked( true );
+
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            checkIndependent->setEnabled( false );
+            if( m_poUser->licenceId() == 0 && m_poUser->id() > 0 )
+            {
+                ledName->setEnabled( false );
+                ledPwd->setEnabled( false );
+                ledRePwd->setEnabled( false );
+                ledRealName->setEnabled( false );
+                cmbGroup->setEnabled( false );
+                chbActive->setEnabled( false );
+                pteComment->setEnabled( false );
+                poBtnSave->setEnabled( false );
+            }
+        }
     }
 
     if( !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )
     {
         chbActive->setEnabled( false );
     }
-
-    QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
-    QPushButton  *poBtnCancel = new QPushButton( tr( "&Cancel" ) );
-    btbButtons->addButton( poBtnSave, QDialogButtonBox::AcceptRole );
-    btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
-    poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
-    poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 }
 
 cDlgUserEdit::~cDlgUserEdit()
@@ -77,7 +96,14 @@ void cDlgUserEdit::accept ()
         {
             try
             {
-                m_poUser->setLicenceId( g_poPrefs->getLicenceId() );
+                if( checkIndependent->isChecked() )
+                {
+                    m_poUser->setLicenceId( 0 );
+                }
+                else
+                {
+                    m_poUser->setLicenceId( g_poPrefs->getLicenceId() );
+                }
                 m_poUser->setName( ledName->text() );
                 if( ledPwd->text() != m_qsDefaultPwd )
                 {

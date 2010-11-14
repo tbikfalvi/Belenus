@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -560,7 +560,7 @@
       <attribute name="title">
        <string>Server</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
         <layout class="QFormLayout" name="formLayout_3">
          <item row="0" column="0">
@@ -584,6 +584,29 @@
           <widget class="QLineEdit" name="ledServerPort"/>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbDBSynchron">
+         <property name="title">
+          <string> Automatically synchronize ...</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QCheckBox" name="chkDBAutoSynchron">
+            <property name="text">
+             <string>database when exiting from application</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkDBGlobalAutoSynchron">
+            <property name="text">
+             <string>studio independent data when application started.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_2">

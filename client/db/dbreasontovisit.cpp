@@ -28,12 +28,14 @@ cDBReasonToVisit::~cDBReasonToVisit()
 void cDBReasonToVisit::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const QString &p_stName,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_stArchive ) throw()
 {
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_stName        = p_stName;
+    m_qsModified        = p_qsModified;
     m_bActive       = p_bActive;
     m_stArchive     = p_stArchive;
 }
@@ -43,12 +45,14 @@ void cDBReasonToVisit::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx         = p_obRecord.indexOf( "reasonToVisitId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -101,6 +105,7 @@ void cDBReasonToVisit::save() throw( cSevException )
     qsQuery += " reasonToVisit SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_stName );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_stArchive );
     if( m_uiId )
@@ -169,6 +174,11 @@ QString cDBReasonToVisit::name() const throw()
 void cDBReasonToVisit::setName( const QString &p_stName ) throw()
 {
     m_stName = p_stName;
+}
+
+QString cDBReasonToVisit::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBReasonToVisit::active() const throw()

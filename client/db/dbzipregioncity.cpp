@@ -31,6 +31,7 @@ void cDBZipRegionCity::init( const unsigned int p_uiId,
                              const QString &p_qsZip,
                              const QString &p_qsRegion,
                              const QString &p_qsCity,
+                             const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
 {
@@ -39,6 +40,7 @@ void cDBZipRegionCity::init( const unsigned int p_uiId,
     m_qsZip         = p_qsZip;
     m_qsRegion      = p_qsRegion;
     m_qsCity        = p_qsCity;
+    m_qsModified        = p_qsModified;
     m_bActive       = p_bActive;
     m_qsArchive     = p_qsArchive;
 }
@@ -50,6 +52,7 @@ void cDBZipRegionCity::init( const QSqlRecord &p_obRecord ) throw()
     int inZipIdx        = p_obRecord.indexOf( "zip" );
     int inRegionIdx     = p_obRecord.indexOf( "region" );
     int inCityIdx       = p_obRecord.indexOf( "city" );
+    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx     = p_obRecord.indexOf( "active" );
     int inArchiveIdx    = p_obRecord.indexOf( "archive" );
 
@@ -58,6 +61,7 @@ void cDBZipRegionCity::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inZipIdx ).toString(),
           p_obRecord.value( inRegionIdx ).toString(),
           p_obRecord.value( inCityIdx ).toString(),
+          p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -150,6 +154,7 @@ void cDBZipRegionCity::save() throw( cSevException )
     qsQuery += QString( "zip = \"%1\", " ).arg( m_qsZip );
     qsQuery += QString( "region = \"%1\", " ).arg( m_qsRegion );
     qsQuery += QString( "city = \"%1\", " ).arg( m_qsCity );
+    qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -241,6 +246,11 @@ void cDBZipRegionCity::setCity( const QString &p_qsCity ) throw()
 {
     m_qsCity = p_qsCity;
     m_qsCity = m_qsCity.replace( QString("\""), QString("\\\"") );
+}
+
+QString cDBZipRegionCity::modified() const throw()
+{
+    return m_qsModified;
 }
 
 bool cDBZipRegionCity::active() const throw()
