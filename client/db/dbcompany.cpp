@@ -221,7 +221,7 @@ void cDBCompany::save() throw( cSevException )
             cDBDiscount obDBDiscount;
 
             obDBDiscount.createNew();
-            obDBDiscount.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBDiscount.setLicenceId( m_uiLicenceId );
             obDBDiscount.setCompanyId( m_uiId);
             if( m_nDiscountType == 1 )
             {

@@ -83,6 +83,8 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
             pbSave->setEnabled( false );
         }
     }
+    if( m_poDiscount->id() > 0 )
+        checkIndependent->setEnabled( false );
 }
 
 cDlgDiscountEdit::~cDlgDiscountEdit()

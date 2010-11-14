@@ -92,6 +92,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
                 pbSave->setEnabled( false );
             }
         }
+        if( m_poPatientCard->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
     if( m_poPatientCard->patientId() > 0 )
     {

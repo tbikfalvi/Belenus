@@ -34,6 +34,8 @@ cDlgReasonToVisitEdit::cDlgReasonToVisitEdit( QWidget *p_poParent, cDBReasonToVi
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poReasonToVisit->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 }
 

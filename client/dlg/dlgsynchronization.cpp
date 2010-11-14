@@ -118,7 +118,7 @@ void cDlgSynchronization::timerEvent(QTimerEvent *)
 
     checkSynchronizationStatus();
 
-    if( !g_obDBMirror.checkIsSynchronizationNeeded() )
+    if( g_obDBMirror.checkSynchronizationFinished() )
     {
         killTimer( m_nTimer );
         listInformation->addItem( tr("Database synchronization finished.") );

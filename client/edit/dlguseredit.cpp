@@ -64,6 +64,8 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poUser->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 
     if( !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )

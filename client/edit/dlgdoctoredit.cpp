@@ -57,6 +57,8 @@ cDlgDoctorEdit::cDlgDoctorEdit( QWidget *p_poParent, cDBDoctor *p_poDoctor )
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poDoctor->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 }
 

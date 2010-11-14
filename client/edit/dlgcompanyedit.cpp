@@ -78,6 +78,8 @@ cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poCompany->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 }
 

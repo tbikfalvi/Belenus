@@ -51,7 +51,10 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
                 gbProcess->setEnabled( false );
                 pbOk->setEnabled( false );
             }
-        }*/
+        }
+        if( m_poPanelStatuses->id() > 0 )
+            checkIndependent->setEnabled( false );
+*/
     }
     ledName->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );

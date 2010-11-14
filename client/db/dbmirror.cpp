@@ -730,8 +730,8 @@ void cDBMirror::_processUserGlobals( SqlResult *p_sqlResult )
             qsQuery += QString( "licenceId = \"0\", " );
         }
         qsQuery += QString( "name = \"%1\", " ).arg( p_sqlResult->index(i,2).data().toString() );
-        qsQuery += QString( "password = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
-        qsQuery += QString( "realName = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
+        qsQuery += QString( "realName = \"%1\", " ).arg( p_sqlResult->index(i,3).data().toString() );
+        qsQuery += QString( "password = \"%1\", " ).arg( p_sqlResult->index(i,4).data().toString() );
         qsQuery += QString( "accgroup = %1, " ).arg( p_sqlResult->index(i,5).data().toInt() );
         qsQuery += QString( "comment = \"%1\", " ).arg( p_sqlResult->index(i,6).data().toString() );
         qsQuery += QString( "modified = \"%1\", " ).arg( p_sqlResult->index(i,7).data().toString() );
@@ -2690,6 +2690,7 @@ void cDBMirror::_synchronizeDoctor( unsigned int p_uiSyncLevel )
             qsQuery = "UPDATE doctors SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obDoctor.name() );
+        qsQuery += QString( "doctorTypeId = \"%1\", " ).arg( obDoctor.doctorTypeId() );
         qsQuery += QString( "doctorLicence = \"%1\", " ).arg( obDoctor.licence() );
         qsQuery += QString( "data = \"%1\", " ).arg( obDoctor.data() );
         qsQuery += QString( "modified = \"%1\", " ).arg( obDoctor.modified() );

@@ -85,9 +85,6 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
                 cmbIllnessGroup->setCurrentIndex( cmbIllnessGroup->count()-1 );
         }*/
 
-        if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
-            checkIndependent->setChecked( true );
-
         if( m_poPatient->id() == 0 )
         {
             pbAttendances->setEnabled( false );
@@ -148,6 +145,9 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
             pbCitySearch->setEnabled( true );
 
         ( m_poPatient->discountType() == 1 ? rbDiscountValue->setChecked( true ) : rbDiscountPercent->setChecked( true) );
+
+        if( m_poPatient->licenceId() == 0 && m_poPatient->id() > 0 )
+            checkIndependent->setChecked( true );
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
@@ -214,6 +214,8 @@ cDlgPatientEdit::cDlgPatientEdit( QWidget *p_poParent, cDBPatient *p_poPatient, 
                 pbAttendances->setEnabled( false );
             }
         }
+        if( m_poPatient->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 
     if( g_poPrefs->getDefaultCountry().length() > 0 && m_poPatient->id() == 0 )

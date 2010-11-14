@@ -34,6 +34,8 @@ cDlgIllnessGroupEdit::cDlgIllnessGroupEdit( QWidget *p_poParent, cDBIllnessGroup
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poIllnessGroup->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 }
 

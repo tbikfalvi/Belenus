@@ -34,6 +34,8 @@ cDlgPatientOriginEdit::cDlgPatientOriginEdit( QWidget *p_poParent, cDBPatientOri
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poPatientOrigin->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 }
 

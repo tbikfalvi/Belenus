@@ -79,6 +79,8 @@ cDlgHealthInsuranceEdit::cDlgHealthInsuranceEdit( QWidget *p_poParent, cDBHealth
                 poBtnSave->setEnabled( false );
             }
         }
+        if( m_poHealthInsurance->id() > 0 )
+            checkIndependent->setEnabled( false );
     }
 }
 
