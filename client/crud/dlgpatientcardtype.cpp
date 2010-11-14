@@ -147,6 +147,12 @@ void cDlgPatientCardType::deleteClicked( bool )
 
             poPatientCardType = new cDBPatientCardType;
             poPatientCardType->load( m_uiSelectedId );
+            if( poPatientCardType->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
             poPatientCardType->remove();
             m_uiSelectedId = 0;
             refreshTable();

@@ -131,6 +131,12 @@ void cDlgDoctor::deleteClicked( bool )
         {
             poDoctor = new cDBDoctor;
             poDoctor->load( m_uiSelectedId );
+            if( poDoctor->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
             poDoctor->remove();
             m_uiSelectedId = 0;
             refreshTable();

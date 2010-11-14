@@ -2131,7 +2131,7 @@ void cDBMirror::_synchronizeReasonToVisit( unsigned int p_uiSyncLevel )
         }
         else if( obReasonToVisit.archive().compare( "MOD" ) == 0 )
         {
-            qsQuery = "UPDATE patientOrigin SET ";
+            qsQuery = "UPDATE reasonToVisit SET ";
         }
         qsQuery += QString( "name = \"%1\", " ).arg( obReasonToVisit.name() );
         qsQuery += QString( "modified = \"%1\", " ).arg( obReasonToVisit.modified() );

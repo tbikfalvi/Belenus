@@ -61,6 +61,7 @@
      <addaction name="action_PanelStatuses"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
+     <addaction name="action_EditLicenceInformation"/>
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
@@ -77,9 +78,6 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="action_Cassa"/>
-    <addaction name="separator"/>
-    <addaction name="action_ValidateSerialKey"/>
-    <addaction name="action_EditLicenceInformation"/>
     <addaction name="separator"/>
     <addaction name="action_SynchronizeDatabase"/>
     <addaction name="action_AcquireGlobalData"/>

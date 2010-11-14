@@ -129,6 +129,12 @@ void cDlgIllnessGroup::deleteClicked( bool )
         {
             poIllnessGroup = new cDBIllnessGroup;
             poIllnessGroup->load( m_uiSelectedId );
+            if( poIllnessGroup->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
             poIllnessGroup->remove();
             m_uiSelectedId = 0;
             refreshTable();

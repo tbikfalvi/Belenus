@@ -135,14 +135,31 @@ void cDlgUsers::editClicked( bool )
 
 void cDlgUsers::deleteClicked( bool )
 {
+    cDBUser  *poUser = NULL;
+
     if( QMessageBox::question( this, tr( "Question" ),
                                tr( "Are you sure you want to delete this User?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
-        QString stQuery = QString( "UPDATE users SET active=0, name=\"%1\" WHERE userId=%1" ).arg( m_uiSelectedId );
-        g_poDB->executeQuery( stQuery.toStdString(), true );
-
-        m_uiSelectedId = 0;
-        refreshTable();
+        try
+        {
+            poUser = new cDBUser;
+            poUser->load( m_uiSelectedId );
+            if( poUser->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
+            poUser->remove();
+            m_uiSelectedId = 0;
+            refreshTable();
+            if( poUser ) delete poUser;
+        }
+        catch( cSevException &e )
+        {
+            if( poUser ) delete poUser;
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
     }
 }

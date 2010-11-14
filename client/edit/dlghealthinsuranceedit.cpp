@@ -76,6 +76,7 @@ cDlgHealthInsuranceEdit::cDlgHealthInsuranceEdit( QWidget *p_poParent, cDBHealth
                 deValidDateTo->setEnabled( false );
                 rbDiscountValue->setEnabled( false );
                 rbDiscountPercent->setEnabled( false );
+                ledDiscount->setEnabled( false );
                 poBtnSave->setEnabled( false );
             }
         }
@@ -118,6 +119,7 @@ void cDlgHealthInsuranceEdit::accept ()
             m_poHealthInsurance->setZip( ledZip->text() );
             m_poHealthInsurance->setCity( ledCity->text() );
             m_poHealthInsurance->setAddress( ledAddress->text() );
+            m_poHealthInsurance->setContractId( ledContractId->text() );
             m_poHealthInsurance->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             m_poHealthInsurance->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             if( rbDiscountValue->isChecked() ) m_poHealthInsurance->setDiscountType( 1 );

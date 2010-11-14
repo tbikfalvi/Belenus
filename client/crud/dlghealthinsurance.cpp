@@ -129,6 +129,12 @@ void cDlgHealthInsurance::deleteClicked( bool )
         {
             poHealthInsurance = new cDBHealthInsurance;
             poHealthInsurance->load( m_uiSelectedId );
+            if( poHealthInsurance->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
             poHealthInsurance->remove();
             m_uiSelectedId = 0;
             refreshTable();

@@ -816,10 +816,14 @@ void cWndMain::timerEvent(QTimerEvent *)
             }
             else
             {
+                m_dlgProgress->showProgress();
+
                 if( m_inGlobalDataRequestTimeout > 10 )
                 {
                     m_bGlobalDataRequested          = false;
                     m_inGlobalDataRequestTimeout    = 0;
+
+                    m_dlgProgress->hideProgress();
 
                     QMessageBox::information( this, tr("Information"),tr( "Studio independent data is already synchronized with server." ) );
                 }
@@ -1758,7 +1762,10 @@ void cWndMain::on_action_HealthInsurance_triggered()
 void cWndMain::on_action_RegionZipCity_triggered()
 {
     m_dlgProgress->showProgress();
+    m_dlgProgress->showProgress();
+
     cDlgZipRegionCity   obDlgZipRegionCity( this );
+
     m_dlgProgress->hideProgress();
 
     obDlgZipRegionCity.exec();

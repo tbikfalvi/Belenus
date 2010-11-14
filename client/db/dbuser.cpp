@@ -142,6 +142,29 @@ void cDBUser::save() throw( cSevException )
         g_obDBMirror.updateGlobalSyncLevel( DB_USER );
 }
 
+void cDBUser::remove() throw( cSevException )
+{
+    cTracer obTrace( "cDBUser::remove" );
+
+    if( m_uiId )
+    {
+        QString  qsQuery;
+
+        if( m_qsArchive.compare( "NEW" ) == 0 )
+        {
+            qsQuery = "DELETE FROM users ";
+        }
+        else
+        {
+            qsQuery = "UPDATE users SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE userId = %1" ).arg( m_uiId );
+
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
 void cDBUser::createNew() throw()
 {
     init( 0, 0, "", "", "", cAccessGroup::USER, "", "", 1, "" );

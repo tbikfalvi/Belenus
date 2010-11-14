@@ -75,6 +75,7 @@ cDlgCompanyEdit::cDlgCompanyEdit( QWidget *p_poParent, cDBCompany *p_poCompany )
                 deValidDateTo->setEnabled( false );
                 rbDiscountValue->setEnabled( false );
                 rbDiscountPercent->setEnabled( false );
+                ledDiscount->setEnabled( false );
                 poBtnSave->setEnabled( false );
             }
         }
@@ -117,6 +118,7 @@ void cDlgCompanyEdit::accept ()
             m_poCompany->setZip( ledZip->text() );
             m_poCompany->setCity( ledCity->text() );
             m_poCompany->setAddress( ledAddress->text() );
+            m_poCompany->setContractId( ledContractId->text() );
             m_poCompany->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             m_poCompany->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             if( rbDiscountValue->isChecked() ) m_poCompany->setDiscountType( 1 );

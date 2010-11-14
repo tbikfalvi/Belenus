@@ -137,6 +137,12 @@ void cDlgDiscount::deleteClicked( bool )
         {
             poDiscount = new cDBDiscount;
             poDiscount->load( m_uiSelectedId );
+            if( poDiscount->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
             poDiscount->remove();
             m_uiSelectedId = 0;
             refreshTable();

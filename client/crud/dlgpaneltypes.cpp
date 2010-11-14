@@ -127,6 +127,12 @@ void cDlgPanelTypes::deleteClicked( bool )
         {
             poPanelTypes = new cDBPanelTypes;
             poPanelTypes->load( m_uiSelectedId );
+            if( poPanelTypes->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete studio independent data."));
+                return;
+            }
             poPanelTypes->remove();
             m_uiSelectedId = 0;
             refreshTable();
