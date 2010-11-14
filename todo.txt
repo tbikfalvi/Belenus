@@ -1,3 +1,3 @@
-- cDBMirror külön szálon kell, hogy fusson => Gabor
-- global adat lekérdezés befejezése => Tamas
-- report framework "tab-ositasa" => Peter
+Gabor => cDBMirror külön szálon kell, hogy fusson
+Peter => report framework "tab-ositasa"
+Tamas => minden más ;-)
