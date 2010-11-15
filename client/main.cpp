@@ -13,6 +13,10 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
+#define APPLICATION_VERSION_NUMBER  "1.0.3"
+
+//====================================================================================
+
 #include <QApplication>
 #include <QString>
 #include <QSettings>
@@ -74,7 +78,7 @@ int main( int argc, char *argv[] )
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
-    g_poPrefs->setVersion( "1.0.2" );
+    g_poPrefs->setVersion( APPLICATION_VERSION_NUMBER );
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 
