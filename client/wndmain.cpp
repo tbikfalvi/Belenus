@@ -194,6 +194,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
     action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
     action_AcquireGlobalData->setIcon( QIcon("./resources/40x40_database_sync.png") );
+    action_EmptyDemoDB->setIcon( QIcon("./resources/40x40_database_sync.png") );
 
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
@@ -238,6 +239,7 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
     action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
+    action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
 }
 //====================================================================================
 cWndMain::~cWndMain()
