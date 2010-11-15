@@ -62,6 +62,8 @@
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
+     <addaction name="separator"/>
+     <addaction name="action_EmptyDemoDB"/>
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
@@ -582,6 +584,14 @@
    </property>
    <property name="toolTip">
     <string>Establish connection with server</string>
+   </property>
+  </action>
+  <action name="action_EmptyDemoDB">
+   <property name="text">
+    <string>Empty demo database ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete all data attached to demo licence key.</string>
    </property>
   </action>
  </widget>

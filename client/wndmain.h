@@ -107,6 +107,7 @@ private slots:
     void on_action_SynchronizeDatabase_triggered();
     void on_action_AcquireGlobalData_triggered();
     void on_action_EstablishConnection_triggered();
+    void on_action_EmptyDemoDB_triggered();
 };
 
 #endif
