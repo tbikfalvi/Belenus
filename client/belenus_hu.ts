@@ -58,12 +58,12 @@
         <translation>Pénztár kiadás.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="103"/>
+        <location filename="main.cpp" line="107"/>
         <source>Connecting to database ...</source>
         <translation>Kapcsolódás az adatbázishoz ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="110"/>
+        <location filename="main.cpp" line="114"/>
         <source> SUCCEEDED.
 </source>
         <oldsource> CONNECTED.
@@ -82,7 +82,7 @@
         <translation type="obsolete">Várakozás a Belenus szervertől érkező válaszra </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="118"/>
+        <location filename="main.cpp" line="122"/>
         <source>Connecting to Belenus server ...</source>
         <translation>Kapcsolódás a Belenus szerverhez ...</translation>
     </message>
@@ -111,79 +111,79 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete"> NEM SIKERÜLT</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="150"/>
+        <location filename="main.cpp" line="154"/>
         <source>SUCCEEDED</source>
         <translation>SIKERES</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="154"/>
+        <location filename="main.cpp" line="158"/>
         <source>FAILED</source>
         <translation>SIKERTELEN</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="159"/>
+        <location filename="main.cpp" line="163"/>
         <source>License is ... </source>
         <translation>Liszensz kulcs: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="161"/>
+        <location filename="main.cpp" line="165"/>
         <source>DEMO</source>
         <translation>DEMO</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="163"/>
+        <location filename="main.cpp" line="167"/>
         <source>OK</source>
         <translation>RENDBEN</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="168"/>
+        <location filename="main.cpp" line="172"/>
         <source> (needs server validation in %1 days)</source>
         <translation> (%1 napon belül regisztrálni kell)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="173"/>
+        <location filename="main.cpp" line="177"/>
         <source> (licence validation limit expired)</source>
         <translation> (liszensz érvényesítési idő lejárt)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="177"/>
+        <location filename="main.cpp" line="181"/>
         <source> (licence not accepted by server)</source>
         <translation> (liszensz a szerver által elutasítva)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="231"/>
+        <location filename="main.cpp" line="235"/>
         <source>Checking hardware connection ...</source>
         <translation>Hardver kapcsolat ellenőrzése ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="222"/>
-        <location filename="main.cpp" line="238"/>
+        <location filename="main.cpp" line="226"/>
+        <location filename="main.cpp" line="242"/>
         <source>FAILED
 </source>
         <translation>SIKERTELEN
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="186"/>
+        <location filename="main.cpp" line="190"/>
         <source>Initialize database synchronization ...</source>
         <translation>Adatbázis szinkronizálás előkészítés ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="192"/>
+        <location filename="main.cpp" line="196"/>
         <source>SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="197"/>
+        <location filename="main.cpp" line="201"/>
         <source>Local database has to synchronized with server.
 </source>
         <translation>Az adatbázist szinkronizálni kell a szerverrel.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="201"/>
+        <location filename="main.cpp" line="205"/>
         <source>Local database synchronized with server.
 </source>
         <translation>Az adatbázis szinkronizálva van a szerverrel.
@@ -208,67 +208,67 @@ Probléma van az internet kapcsolattal?
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="240"/>
-        <location filename="main.cpp" line="286"/>
+        <location filename="main.cpp" line="244"/>
+        <location filename="main.cpp" line="290"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Alkalmazás indítása DEMÓ módban.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="248"/>
+        <location filename="main.cpp" line="252"/>
         <source>CONNECTED
 </source>
         <translation>KAPCSOLÓDVA
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="251"/>
+        <location filename="main.cpp" line="255"/>
         <source>Initializing hardware device ... </source>
         <translation>Hardver eszköz beállítása ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="255"/>
+        <location filename="main.cpp" line="259"/>
         <source>FINISHED
 </source>
         <translation>BEFEJEZŐDÖTT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="258"/>
+        <location filename="main.cpp" line="262"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Hardver eszközben tárolt fejléc szöveg: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="261"/>
+        <location filename="main.cpp" line="265"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Hardver panelok száma: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="264"/>
+        <location filename="main.cpp" line="268"/>
         <source>Checking hardware panels:
 </source>
         <translation>Hardver panelok ellenőrzése:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="269"/>
+        <location filename="main.cpp" line="273"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Hardver panel ellenőrzése -%1-</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="274"/>
+        <location filename="main.cpp" line="278"/>
         <source> SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="279"/>
+        <location filename="main.cpp" line="283"/>
         <source> FAILED
 </source>
         <translation>SIKERTELEN
@@ -5399,7 +5399,7 @@ allergia :</translation>
         <translation>Pénzösszeg :</translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="95"/>
+        <location filename="dlgcassaaction.ui" line="98"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
@@ -5409,7 +5409,7 @@ allergia :</translation>
         <translation>Számla készítés</translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="111"/>
+        <location filename="dlgcassaaction.ui" line="114"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -5424,17 +5424,17 @@ allergia :</translation>
         <translation>Készpénz</translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="67"/>
+        <location filename="dlgcassaaction.ui" line="77"/>
         <source>Voucher</source>
         <translation>Utalvány</translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="74"/>
+        <location filename="dlgcassaaction.ui" line="67"/>
         <source>Credit card</source>
         <translation>Bankkártya</translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="83"/>
+        <location filename="dlgcassaaction.ui" line="86"/>
         <source>Comment :</source>
         <translation>Megjegyzés :</translation>
     </message>

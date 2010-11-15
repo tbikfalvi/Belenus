@@ -14,6 +14,8 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent )
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    rbVoucher->setVisible( false);
+
     lblCurrencyShort->setText( g_poPrefs->getCurrencyShort() );
 }
 

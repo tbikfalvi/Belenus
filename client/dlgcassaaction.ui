@@ -62,16 +62,19 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rbVoucher">
+      <widget class="QRadioButton" name="rbCreditcard">
        <property name="text">
-        <string>Voucher</string>
+        <string>Credit card</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rbCreditcard">
+      <widget class="QRadioButton" name="rbVoucher">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
-        <string>Credit card</string>
+        <string>Voucher</string>
        </property>
       </widget>
      </item>
@@ -129,8 +132,6 @@
   <tabstop>ledMoney</tabstop>
   <tabstop>cbInvoice</tabstop>
   <tabstop>rbPayCash</tabstop>
-  <tabstop>rbVoucher</tabstop>
-  <tabstop>rbCreditcard</tabstop>
   <tabstop>teComment</tabstop>
   <tabstop>pbOk</tabstop>
   <tabstop>pbCancel</tabstop>
