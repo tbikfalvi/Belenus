@@ -505,4 +505,6 @@ client/ui_dlgdbglobals.h
 client/dlgglobals.o
 client/moc_dlgglobals.cpp
 client/moc_dlgglobals.o
+BelenusDBTool.exe
+BelenusDBTool-build-desktop
 
