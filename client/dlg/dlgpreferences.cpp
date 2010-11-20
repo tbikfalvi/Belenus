@@ -162,3 +162,8 @@ void cDlgPreferences::accept()
     QDialog::accept();
 }
 
+
+void cDlgPreferences::on_pbPanelSettings_clicked()
+{
+
+}

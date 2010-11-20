@@ -33,7 +33,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgdiscountedit.ui \
     dlgprogress.ui \
     dlgsynchronization.ui \
-    dlgdbglobals.ui
+    dlgdbglobals.ui \
+    dlgpanelsettings.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -153,7 +154,8 @@ HEADERS = belenus.h \
     dlg/dlgprogress.h \
     db/dbmirror.h \
     dlg/dlgsynchronization.h \
-    dlg/dlgglobals.h
+    dlg/dlgglobals.h \
+    dlg/dlgpanelsettings.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -269,7 +271,8 @@ SOURCES = main.cpp \
     dlg/dlgprogress.cpp \
     db/dbmirror.cpp \
     dlg/dlgsynchronization.cpp \
-    dlg/dlgglobals.cpp
+    dlg/dlgglobals.cpp \
+    dlg/dlgpanelsettings.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

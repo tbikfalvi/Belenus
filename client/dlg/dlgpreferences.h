@@ -20,6 +20,7 @@ private:
     QPushButton   *m_poBtnSystem;
 
 private slots:
+    void on_pbPanelSettings_clicked();
     void on_chkAutoCloseCassa_clicked();
     void on_sliConsoleLogLevel_valueChanged( int p_inValue );
     void on_sliDBLogLevel_valueChanged( int p_inValue );
