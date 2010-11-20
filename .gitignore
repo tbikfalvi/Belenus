@@ -507,4 +507,10 @@ client/moc_dlgglobals.cpp
 client/moc_dlgglobals.o
 BelenusDBTool.exe
 BelenusDBTool-build-desktop
+client/dlgpanelappereance.o
+client/moc_dlgpanelappereance.cpp
+client/moc_dlgpanelappereance.o
+client/ui_dlgpanelappereance.h
+client/ui_dlgpanelsettings.h
+
 

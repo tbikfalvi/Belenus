@@ -1914,6 +1914,14 @@ Kérem próbálkozzon újra.</translation>
     </message>
 </context>
 <context>
+    <name>cDlgPanelAppereance</name>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="10"/>
+        <source>Panel settings</source>
+        <translation>Panel beállítások</translation>
+    </message>
+</context>
+<context>
     <name>cDlgPanelSettings</name>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="11"/>
@@ -3304,27 +3312,27 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
 <context>
     <name>cDlgPreferences</name>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="21"/>
+        <location filename="dlg/dlgpreferences.cpp" line="22"/>
         <source>Preferences</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="26"/>
+        <location filename="dlg/dlgpreferences.cpp" line="27"/>
         <source>&amp;Save</source>
         <translation>&amp;Mentés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="27"/>
+        <location filename="dlg/dlgpreferences.cpp" line="28"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="139"/>
+        <location filename="dlg/dlgpreferences.cpp" line="140"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="140"/>
+        <location filename="dlg/dlgpreferences.cpp" line="141"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
@@ -6335,6 +6343,54 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
 </context>
 <context>
+    <name>dlgPanelAppereance</name>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="22"/>
+        <source> Panel status </source>
+        <translation> Gép állapot </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="28"/>
+        <source>Panel status name : </source>
+        <translation>Gép állapot megnevezés : </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="54"/>
+        <source> Settings </source>
+        <translation> Beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="60"/>
+        <source>Backgournd color : </source>
+        <translation>Háttér szín : </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="79"/>
+        <source>Choose ...</source>
+        <translation>Válasszon ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="117"/>
+        <source> Preview </source>
+        <translation> Előnézet </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="141"/>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="154"/>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
     <name>dlgPanelStatusesEdit</name>
     <message>
         <location filename="dlgpanelstatusesedit.ui" line="14"/>
@@ -7201,97 +7257,102 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Alapértelmezett ország :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="451"/>
+        <location filename="dlgpreferences.ui" line="526"/>
         <source>Patientcard</source>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="457"/>
+        <location filename="dlgpreferences.ui" line="532"/>
         <source> Barcode </source>
         <translation> Vonalkód </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="463"/>
+        <location filename="dlgpreferences.ui" line="538"/>
         <source>Barcode length:</source>
         <translation>Vonalkód hossza :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="483"/>
+        <location filename="dlgpreferences.ui" line="558"/>
         <source>Barcode prefix:</source>
         <translation>Vonalkód automatikus előtag :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="417"/>
+        <location filename="dlgpreferences.ui" line="492"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="425"/>
+        <location filename="dlgpreferences.ui" line="450"/>
+        <source>Panel settings ...</source>
+        <translation>Panel beállítások ...</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="500"/>
         <source>VAT percent for device usage :</source>
         <translation>Géphasználat ÁFA kulcs (%):</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="510"/>
+        <location filename="dlgpreferences.ui" line="585"/>
         <source>Cassa</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="516"/>
+        <location filename="dlgpreferences.ui" line="591"/>
         <source>Automatically close cassa when user log out</source>
         <translation>A pénztár automatikusan legyen lezárva a felhasználó kilépésekor</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="519"/>
+        <location filename="dlgpreferences.ui" line="594"/>
         <source>Auto close cassa</source>
         <translation>Pénztár zárás automatikusan</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="538"/>
+        <location filename="dlgpreferences.ui" line="613"/>
         <source>Automatically add cash withdrawal</source>
         <translation>Automatikus készpénz kivét</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="561"/>
+        <location filename="dlgpreferences.ui" line="636"/>
         <source>Server</source>
         <translation>Szerver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="569"/>
+        <location filename="dlgpreferences.ui" line="644"/>
         <source>Server Host:</source>
         <translation>IP cím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="579"/>
+        <location filename="dlgpreferences.ui" line="654"/>
         <source>Server Port:</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="591"/>
+        <location filename="dlgpreferences.ui" line="666"/>
         <source> Automatically synchronize ...</source>
         <translation> Az alkalmazás automatikusan szinkronizálja ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="597"/>
+        <location filename="dlgpreferences.ui" line="672"/>
         <source>database when exiting from application</source>
         <translation>az adatbázist kilépéskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="604"/>
+        <location filename="dlgpreferences.ui" line="679"/>
         <source>studio independent data when application started.</source>
         <translation>a stúdió független adatokat induláskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="628"/>
+        <location filename="dlgpreferences.ui" line="703"/>
         <source>Hardware</source>
         <translation>Hardver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="636"/>
+        <location filename="dlgpreferences.ui" line="711"/>
         <source>COM Port:</source>
         <translation>COM Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="643"/>
+        <location filename="dlgpreferences.ui" line="718"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
@@ -7301,17 +7362,17 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Megjelenés</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="352"/>
+        <location filename="dlgpreferences.ui" line="349"/>
         <source>Number of &amp;panels in a row:</source>
         <translation>Egy sorban megjelenő &amp;panelok száma :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="372"/>
+        <location filename="dlgpreferences.ui" line="398"/>
         <source>Main Window Background Color: </source>
         <translation>Fő ablak hátterének színe :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="391"/>
+        <location filename="dlgpreferences.ui" line="417"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>

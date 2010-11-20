@@ -10,6 +10,7 @@
 #include <QColorDialog>
 #include "dlgpreferences.h"
 #include "../framework/sevexception.h"
+#include "dlgpanelappereance.h"
 
 cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -165,5 +166,7 @@ void cDlgPreferences::accept()
 
 void cDlgPreferences::on_pbPanelSettings_clicked()
 {
+    cDlgPanelAppereance     obDlgPanelAppereance( this );
 
+    obDlgPanelAppereance.exec();
 }
