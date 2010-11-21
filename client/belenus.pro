@@ -101,6 +101,7 @@ HEADERS = belenus.h \
     db/dbpublicplace.h \
     db/dbpanels.h \
     db/dbdiscount.h \
+    db/dbpanelstatussettings.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -219,6 +220,7 @@ SOURCES = main.cpp \
     db/dbpublicplace.cpp \
     db/dbpanels.cpp \
     db/dbdiscount.cpp \
+    db/dbpanelstatussettings.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
