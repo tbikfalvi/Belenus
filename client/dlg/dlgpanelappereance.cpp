@@ -4,9 +4,13 @@
 #include <QColorDialog>
 #include <QFontDialog>
 
+//====================================================================================
+
 #include "dlgpanelappereance.h"
 
+//====================================================================================
 cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poParent )
+//====================================================================================
 {
     setupUi( this );
 
@@ -28,15 +32,29 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
     cmbPanelText->addItem( tr("Length of next status"), 2 );
     cmbPanelText->addItem( tr("Information"), 3 );
 
+    updatePanelSettings();
 }
-
+//====================================================================================
 cDlgPanelAppereance::~cDlgPanelAppereance()
+//====================================================================================
 {
     if( pDBPanelStatusSettings ) delete pDBPanelStatusSettings;
 }
-
-
+//====================================================================================
+void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
+//====================================================================================
+{
+    updatePanelSettings();
+}
+//====================================================================================
+void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
+//====================================================================================
+{
+    updatePanelSettings();
+}
+//====================================================================================
 void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
+//====================================================================================
 {
     QColor obNewColor = QColorDialog::getColor( QColor( QString("#00ff00") ), this );
 //    if( obNewColor.isValid() ) g_poPrefs->setMainBackground( obNewColor.name() );
@@ -45,8 +63,9 @@ void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
     obColorIcon.fill( QColor( obNewColor.name() ) );
     pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
 }
-
+//====================================================================================
 void cDlgPanelAppereance::on_pbFontColor_clicked()
+//====================================================================================
 {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, QFont("Helvetica [Cronyx]", 10), this);
@@ -57,12 +76,18 @@ void cDlgPanelAppereance::on_pbFontColor_clicked()
         pDBPanelStatusSettings->setStatusFontSize( font.pixelSize() );
     }
 }
-
-void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
+//====================================================================================
+void cDlgPanelAppereance::on_pbTextColor_clicked()
+//====================================================================================
+{
+}
+//====================================================================================
+void cDlgPanelAppereance::updatePanelSettings()
+//====================================================================================
 {
     try
     {
-        pDBPanelStatusSettings->loadStatus( cmbPanelStatus->itemData(0).toUInt() );
+        pDBPanelStatusSettings->loadStatus( cmbPanelStatus->itemData( cmbPanelStatus ).toUInt() );
     }
     catch( cSevException &e )
     {
@@ -148,13 +173,4 @@ void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
             break;
     }
 }
-
-void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
-{
-
-}
-
-void cDlgPanelAppereance::on_pbTextColor_clicked()
-{
-
-}
+//====================================================================================

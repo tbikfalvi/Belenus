@@ -1523,8 +1523,48 @@ Time value can not be greater than %1 minutes.</source>
 <context>
     <name>cDlgPanelAppereance</name>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="10"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="13"/>
         <source>Panel settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="26"/>
+        <source>Status name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="27"/>
+        <source>Length of current status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="28"/>
+        <source>Length of next status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="29"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="138"/>
+        <source>status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="146"/>
+        <source>current length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="154"/>
+        <source>next length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="162"/>
+        <source>information</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5529,37 +5569,54 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="28"/>
+        <location filename="dlgpanelappereance.ui" line="30"/>
         <source>Panel status name : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="54"/>
+        <location filename="dlgpanelappereance.ui" line="58"/>
         <source> Settings </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="60"/>
+        <location filename="dlgpanelappereance.ui" line="66"/>
         <source>Backgournd color : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="79"/>
+        <location filename="dlgpanelappereance.ui" line="91"/>
+        <location filename="dlgpanelappereance.ui" line="183"/>
+        <location filename="dlgpanelappereance.ui" line="205"/>
         <source>Choose ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="117"/>
+        <location filename="dlgpanelappereance.ui" line="124"/>
+        <source>Panel text name : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="151"/>
+        <source>Font : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="158"/>
+        <source>sampletext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="242"/>
         <source> Preview </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="141"/>
+        <location filename="dlgpanelappereance.ui" line="266"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="154"/>
+        <location filename="dlgpanelappereance.ui" line="279"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

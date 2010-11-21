@@ -16,8 +16,7 @@ public:
 private:
     cDBPanelStatusSettings  *pDBPanelStatusSettings;
 
-private slots:
-
+    void updatePanelSettings();
 
 private slots:
     void on_pbTextColor_clicked();

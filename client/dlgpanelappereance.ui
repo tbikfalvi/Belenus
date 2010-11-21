@@ -92,8 +92,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>10</width>
-              <height>10</height>
+              <width>15</width>
+              <height>15</height>
              </size>
             </property>
             <property name="toolButtonStyle">
@@ -184,8 +184,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>15</width>
+              <height>15</height>
              </size>
             </property>
             <property name="toolButtonStyle">
@@ -206,8 +206,8 @@
             </property>
             <property name="iconSize">
              <size>
-              <width>10</width>
-              <height>10</height>
+              <width>15</width>
+              <height>15</height>
              </size>
             </property>
            </widget>

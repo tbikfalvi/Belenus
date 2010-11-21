@@ -1916,9 +1916,49 @@ Kérem próbálkozzon újra.</translation>
 <context>
     <name>cDlgPanelAppereance</name>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="10"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="13"/>
         <source>Panel settings</source>
         <translation>Panel beállítások</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="26"/>
+        <source>Status name</source>
+        <translation>Státusz szöveg</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="27"/>
+        <source>Length of current status</source>
+        <translation>Státusz időtartam</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="28"/>
+        <source>Length of next status</source>
+        <translation>Köv. státusz időtartam</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="29"/>
+        <source>Information</source>
+        <translation>Információs szöveg</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="138"/>
+        <source>status</source>
+        <translation>státusz</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="146"/>
+        <source>current length</source>
+        <translation>időtartam</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="154"/>
+        <source>next length</source>
+        <translation>időtartam</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpanelappereance.cpp" line="162"/>
+        <source>information</source>
+        <translation>információ</translation>
     </message>
 </context>
 <context>
@@ -6355,37 +6395,54 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation> Gép állapot </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="28"/>
+        <location filename="dlgpanelappereance.ui" line="30"/>
         <source>Panel status name : </source>
         <translation>Gép állapot megnevezés : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="54"/>
+        <location filename="dlgpanelappereance.ui" line="58"/>
         <source> Settings </source>
         <translation> Beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="60"/>
+        <location filename="dlgpanelappereance.ui" line="66"/>
         <source>Backgournd color : </source>
         <translation>Háttér szín : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="79"/>
+        <location filename="dlgpanelappereance.ui" line="91"/>
+        <location filename="dlgpanelappereance.ui" line="183"/>
+        <location filename="dlgpanelappereance.ui" line="205"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="117"/>
+        <location filename="dlgpanelappereance.ui" line="124"/>
+        <source>Panel text name : </source>
+        <translation>Panel szöveg megnevezés : </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="151"/>
+        <source>Font : </source>
+        <translation>Betűtípus : </translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="158"/>
+        <source>sampletext</source>
+        <translation>mintaszöveg</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="242"/>
         <source> Preview </source>
         <translation> Előnézet </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="141"/>
+        <location filename="dlgpanelappereance.ui" line="266"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="154"/>
+        <location filename="dlgpanelappereance.ui" line="279"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
