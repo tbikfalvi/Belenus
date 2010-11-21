@@ -18,7 +18,9 @@ public:
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
     unsigned int    licenceId() const                                           throw();
-    void            setLicenceId( const unsigned int p_nLicenceId )             throw();
+    void            setLicenceId( const unsigned int p_uiLicenceId )            throw();
+    unsigned int    panelStatusId() const                                       throw();
+    void            setPanelStatusId( const unsigned int p_uiPanelStatusId )    throw();
     QString         backgroundColor() const                                     throw();
     void            setBackgroundColor( const QString &p_qsBackgroundColor )    throw();
     QString         statusFontName() const                                      throw();
@@ -54,6 +56,7 @@ public:
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
+    unsigned int    m_uiPanelStatusId;
     QString         m_qsBackgroundColor;
     QString         m_qsStatusFontName;
     int             m_inStatusFontSize;
@@ -73,6 +76,7 @@ private:
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
+               const unsigned int p_uiPanelStatusId = 0,
                const QString &p_qsBackgroundColor = "",
                const QString &p_qsStatusFontName = "",
                const int p_inStatusFontSize = 0,

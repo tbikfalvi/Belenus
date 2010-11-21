@@ -14,15 +14,21 @@ public:
     virtual ~cDlgPanelAppereance();
 
 private:
-    cDBPanelStatusSettings  *pDBPanelStatusSettings;
+
+    vector<cDBPanelStatusSettings*>    m_obStatusSettings;
+
+    bool    m_bInit;
 
     void updatePanelSettings();
+
+public slots:
+    virtual void accept();
 
 private slots:
     void on_pbTextColor_clicked();
     void on_cmbPanelText_currentIndexChanged(int index);
     void on_cmbPanelStatus_currentIndexChanged(int index);
-    void on_pbFontColor_clicked();
+    void on_pbFont_clicked();
     void on_pbBackgroundColor_clicked();
 };
 

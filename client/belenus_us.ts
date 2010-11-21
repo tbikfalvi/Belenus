@@ -1523,47 +1523,47 @@ Time value can not be greater than %1 minutes.</source>
 <context>
     <name>cDlgPanelAppereance</name>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="13"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="17"/>
         <source>Panel settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="26"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="33"/>
         <source>Status name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="27"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="34"/>
         <source>Length of current status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="28"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="35"/>
         <source>Length of next status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="29"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="36"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="138"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="156"/>
         <source>status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="146"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="164"/>
         <source>current length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="154"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="172"/>
         <source>next length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="162"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="180"/>
         <source>information</source>
         <translation type="unfinished"></translation>
     </message>

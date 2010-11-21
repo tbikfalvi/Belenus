@@ -27,6 +27,7 @@ cDBPanelStatusSettings::~cDBPanelStatusSettings()
 
 void cDBPanelStatusSettings::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
+                             const unsigned int p_uiPanelStatusId,
                              const QString &p_qsBackgroundColor,
                              const QString &p_qsStatusFontName,
                              const int p_inStatusFontSize,
@@ -46,6 +47,7 @@ void cDBPanelStatusSettings::init( const unsigned int p_uiId,
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
+    m_uiPanelStatusId   = p_uiPanelStatusId;
     m_qsBackgroundColor = p_qsBackgroundColor;
     m_qsStatusFontName  = p_qsStatusFontName;
     m_inStatusFontSize  = p_inStatusFontSize;
@@ -68,6 +70,7 @@ void cDBPanelStatusSettings::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx                 = p_obRecord.indexOf( "patientOriginId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inPanelStatusIdIdx      = p_obRecord.indexOf( "panelStatusId" );
     int inBackgroundColorIdx    = p_obRecord.indexOf( "backgroundColor" );
     int inStatusFontNameIdx     = p_obRecord.indexOf( "statusFontName" );
     int inStatusFontSizeIdx     = p_obRecord.indexOf( "statusFontSize" );
@@ -86,7 +89,8 @@ void cDBPanelStatusSettings::init( const QSqlRecord &p_obRecord ) throw()
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
-          p_obRecord.value( inLicenceIdIdx ).toInt(),
+          p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inPanelStatusIdIdx ).toUInt(),
           p_obRecord.value( inBackgroundColorIdx ).toString(),
           p_obRecord.value( inStatusFontNameIdx ).toString(),
           p_obRecord.value( inStatusFontSizeIdx ).toInt(),
@@ -152,6 +156,7 @@ void cDBPanelStatusSettings::save() throw( cSevException )
     }
     qsQuery += " panelStatusSettings SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "panelStatusId = \"%1\", " ).arg( m_uiPanelStatusId );
     qsQuery += QString( "backgroundColor = \"%1\", " ).arg( m_qsBackgroundColor );
     qsQuery += QString( "statusFontName = \"%1\", " ).arg( m_qsStatusFontName );
     qsQuery += QString( "statusFontSize = \"%1\", " ).arg( m_inStatusFontSize );
@@ -222,6 +227,16 @@ unsigned int cDBPanelStatusSettings::licenceId() const throw()
 void cDBPanelStatusSettings::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBPanelStatusSettings::panelStatusId() const throw()
+{
+    return m_uiPanelStatusId;
+}
+
+void cDBPanelStatusSettings::setPanelStatusId( const unsigned int p_uiPanelStatusId ) throw()
+{
+    m_uiPanelStatusId = p_uiPanelStatusId;
 }
 
 QString cDBPanelStatusSettings::backgroundColor() const throw()
