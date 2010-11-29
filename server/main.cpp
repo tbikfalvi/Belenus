@@ -89,12 +89,12 @@ int main( int argc, char *argv[] )
 
     g_prefs.loadFile();
 
-    ConsoleWriter *_writer = new ConsoleWriter( static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/console").toInt()) );
+//    ConsoleWriter *_writer = new ConsoleWriter( static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/console").toInt()) );
     DatabaseWriter *_dbWriter = new DatabaseWriter( static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/db").toInt()) );
     FileWriter *_fWriter = new FileWriter( g_prefs.value("log/file"), static_cast<cSeverity::teSeverity>(g_prefs.value("loglevel/file").toInt()) );
 
     _dbWriter->setDBConnection(&g_db);
-    g_obLogger.attachWriter("console", _writer);
+//    g_obLogger.attachWriter("console", _writer);
     g_obLogger.attachWriter("db", _dbWriter);
     g_obLogger.attachWriter("file", _fWriter);
 
