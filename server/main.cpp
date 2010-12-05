@@ -39,6 +39,7 @@ Server::Server()
 //====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[Server::Server] constructed" << EOM;
+    g_obDebugger.dLog( "[Server::Server] constructed" );
 }
 //====================================================================================
 Server::~Server()
@@ -46,18 +47,24 @@ Server::~Server()
 {
     _tcpServer.close();
     g_obLogger(cSeverity::DEBUG) << "[Server::~Server] finished" << EOM;
+    g_obDebugger.dLog( "[Server::~Server] finished" );
 }
 //====================================================================================
 void Server::execute()
 //====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[Server::execute] called" << EOM;
+    g_obDebugger.dLog( "[Server::execute] called" );
     connect(&_tcpServer, SIGNAL(newConnection()), this, SLOT(connectionAvailable()));
 
     if ( !_tcpServer.listen( QHostAddress(g_prefs.value("server/interface")), g_prefs.value("server/port").toInt() ) )
+    {
+        g_obDebugger.dLog( "Unable to start listener" );
         throw cSevException(cSeverity::ERROR, "Unable to start listener");
+    }
 
     g_obLogger(cSeverity::DEBUG) << "[Server::execute] listening on " << g_prefs.value("server/interface") << ":" << g_prefs.value("server/port") << EOM;
+    g_obDebugger.dLog( QString("[Server::execute] listening on %1:%2").arg(g_prefs.value("server/interface")).arg(g_prefs.value("server/port")) );
 }
 //====================================================================================
 void Server::connectionAvailable()
@@ -80,6 +87,7 @@ void sigc_handler(int)
 //====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[Server] SIGC caught" << EOM;
+    g_obDebugger.dLog( "[Server] SIGC caught" );
     QCoreApplication::exit();
 }
 //====================================================================================

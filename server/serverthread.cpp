@@ -1,41 +1,54 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : serverthread.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Kovacs Gabor
+//
+//====================================================================================
+
 #include <QHostAddress>
 #include "../framework/qtlogger.h"
 #include "../framework/qtmysqlconnection.h"
 #include "serverthread.h"
+#include "main.h"
 
+//====================================================================================
 
-extern cQTLogger g_obLogger;
-extern cQTMySQLConnection g_db;
+extern cQTLogger            g_obLogger;
+extern cQTMySQLConnection   g_db;
+extern cDebugger            g_obDebugger;
 
-
-
+//====================================================================================
 ServerThread::ServerThread(QTcpSocket *tcpSocket) :
         CommunicationProtocol(tcpSocket),
         _isAuthenticated(false),
         _isAdmin(false)
+//====================================================================================
 {
     g_obLogger(cSeverity::INFO) << "[ServerThread::ServerThread] initialized" << EOM;
 
     connect( this, SIGNAL(finished()),   this, SLOT(deleteLater()));
 }
-
-
-
+//====================================================================================
 ServerThread::~ServerThread()
+//====================================================================================
 {
 }
-
-
-
+//====================================================================================
 void ServerThread::read()
+//====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[serverthread::read]" << EOM;
     CommunicationProtocol::read();
 }
-
-
-
+//====================================================================================
 void ServerThread::_handleHello(int version)
+//====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleHello] called" << EOM;
 
@@ -50,10 +63,9 @@ void ServerThread::_handleHello(int version)
         sendLogonChallenge();
     }
 }
-
-
-
+//====================================================================================
 void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
+//====================================================================================
 {
     int clientId;
 
@@ -86,10 +98,9 @@ void ServerThread::_handleLogonResponse(const char* code1, const char* code2)
 
     delete q;
 }
-
-
-
+//====================================================================================
 void ServerThread::_handleLogonAdminResponse(const char* username, const char* password)
+//====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleLogonAdminResponse] entering" << EOM;
 
@@ -103,10 +114,9 @@ void ServerThread::_handleLogonAdminResponse(const char* username, const char* p
         _isAuthenticated = true;
     }
 }
-
-
-
+//====================================================================================
 void ServerThread::_handleRegisterKey(const char* newKey)
+//====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleRegisterKey] requesting to register new key: " << newKey << EOM;
     if ( !_isAdmin ) {
@@ -136,10 +146,9 @@ void ServerThread::_handleRegisterKey(const char* newKey)
 
     delete q;
 }
-
-
-
+//====================================================================================
 void ServerThread::_handleSqlQuery(int queryId, const char *query)
+//====================================================================================
 {
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleSqlQuery] entered. QueryId="<<queryId<<" query=" << query << EOM;
 
@@ -161,9 +170,9 @@ void ServerThread::_handleSqlQuery(int queryId, const char *query)
     g_obLogger(cSeverity::DEBUG) << "[ServerThread::_handleSqlQuery] valid=" << result.isValid() << EOM;
     sendSqlQueryResult(queryId, result);
 }
-
-
+//====================================================================================
 void ServerThread::run()
+//====================================================================================
 {
     if ( !m_socket )
         return;
@@ -178,10 +187,9 @@ void ServerThread::run()
 
     exec(); // start event processing loop
 }
-
-
-
+//====================================================================================
 void ServerThread::error(QAbstractSocket::SocketError err)
+//====================================================================================
 {
     QString errStr;
     switch (err) {
@@ -197,10 +205,10 @@ void ServerThread::error(QAbstractSocket::SocketError err)
 
     g_obLogger(cSeverity::ERROR) << "[Serverthread::error] (" << err <<") " << errStr << EOM;
 }
-
-
-
+//====================================================================================
 void ServerThread::disconnected()
+//====================================================================================
 {
     g_obLogger(cSeverity::INFO) << "[Serverthread::disconnected] " << m_socket->peerAddress().toString() << ":" << m_socket->peerPort() << EOM;
 }
+//====================================================================================
