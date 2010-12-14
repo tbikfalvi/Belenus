@@ -4,15 +4,18 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-TARGET = BelenusInstall
-TEMPLATE = app
-
-
-SOURCES += main.cpp\
-        dlgMain.cpp
-
-HEADERS  += dlgMain.h
+TEMPLATE  = app
 
 FORMS    += dlgMain.ui
+HEADERS  += dlgMain.h
+SOURCES  += main.cpp\
+            dlgMain.cpp
+DESTDIR   = ..
+CONFIG   += qt
+TARGET    = BelenusInstall
+QT       += core gui
+
+
+
+
+
