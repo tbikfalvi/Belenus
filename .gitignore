@@ -517,3 +517,10 @@ BelenusInstall-build-desktop/
 BelenusInstall.exe
 install/BelenusInstall.pro.user
 install/ui_dlgMain.h
+install/dlgMain.o
+install/main.o
+install/moc_dlgMain.cpp
+install/moc_dlgMain.o
+install/Makefile
+BelenusInstall
+

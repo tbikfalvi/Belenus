@@ -9,6 +9,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     setupUi(this);
 
     pagerControl->setCurrentIndex( 0 );
+
+    Logo->setPixmap( QPixmap( QString("./resources/Install_Logo.png") ) );
 }
 
 dlgMain::~dlgMain()

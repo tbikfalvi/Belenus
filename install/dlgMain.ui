@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>354</height>
+    <width>607</width>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,20 +29,56 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page0">
-      <widget class="QLabel" name="lbl1">
+      <widget class="QLabel" name="Logo">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>20</y>
-         <width>46</width>
-         <height>13</height>
+         <x>0</x>
+         <y>0</y>
+         <width>201</width>
+         <height>391</height>
         </rect>
        </property>
        <property name="text">
-        <string>label 1</string>
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../resources/Install_Logo.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>9</y>
+         <width>370</width>
+         <height>370</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Installing Belenus application.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Welcome in the installer of the Belenus application system.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;On the next pages you can initialize and setup the environment of the Belenus application system.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bla bla bla&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Press the &lt;span style=&quot; font-weight:600;&quot;&gt;Next&lt;/span&gt; button to start the installation.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Press the &lt;span style=&quot; font-weight:600;&quot;&gt;Cancel&lt;/span&gt; button to abort the installation.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
@@ -139,6 +175,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pbStartInstall">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Start</string>
        </property>
