@@ -12,10 +12,10 @@ SOURCES  += main.cpp\
             dlgMain.cpp
 DESTDIR   = ..
 CONFIG   += qt
-TARGET    = BelenusInstall
+TARGET    = Setup
 QT       += core gui
 
-
-
-
-
+TRANSLATIONS = setup_us.ts \
+               setup_hu.ts
+RESOURCES += \
+    install.qrc

@@ -1,4 +1,5 @@
 .gitignore
+Setup.exe
 libmysql.dll
 dist/
 belenus.exe
@@ -523,4 +524,4 @@ install/moc_dlgMain.cpp
 install/moc_dlgMain.o
 install/Makefile
 BelenusInstall
-
+setup.qm
