@@ -79,7 +79,30 @@ void dlgMain::on_pbCancel_clicked()
 void dlgMain::processPage( int p_nPage )
 //====================================================================================
 {
-    QMessageBox::information( this, "", QString::number(p_nPage) );
+//    QMessageBox::information( this, "", QString::number(p_nPage) );
+    switch( p_nPage )
+    {
+        case 1:  // Process selection
+        {
+            QSettings   m_obSettings;
+/*                    ("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus",
+                                     QSettings::NativeFormat);*/
+
+            QString qsVersion = m_obSettings.value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus\\DisplayVersion","invalid").toString();
+            if( qsVersion.compare("invalid") != 0 )
+                QMessageBox::information( this, "Belenus", "van" );
+            else
+                QMessageBox::information( this, "Belenus", "nincs" );
+            break;
+        }
+        case 10:
+        {
+            m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
+            m_obFile->link( QString("C:\\Development\\Qt\\belenus.lnk") );
+            delete m_obFile;
+            break;
+        }
+    }
 }
 //====================================================================================
 void dlgMain::on_pbStartInstall_clicked()
@@ -88,3 +111,10 @@ void dlgMain::on_pbStartInstall_clicked()
 
 }
 //====================================================================================
+
+
+
+
+
+
+
