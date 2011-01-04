@@ -42,6 +42,7 @@ private:
     QFile       *m_obFile;
 
     void processPage( int p_nPage );
+    bool isRegKeyExists( QString p_qsKeyPath, QString p_qsKeyName );
 
 private slots:
     void on_pbCancel_clicked();

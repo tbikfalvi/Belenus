@@ -15,10 +15,14 @@
 
 #include <QMessageBox>
 
+#include "vregistry.h"
+
 //====================================================================================
 
 #include "dlgMain.h"
 #include "ui_dlgMain.h"
+
+using namespace voidrealms::win32;
 
 //====================================================================================
 dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
@@ -87,9 +91,9 @@ void dlgMain::processPage( int p_nPage )
             QSettings   m_obSettings;
 /*                    ("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus",
                                      QSettings::NativeFormat);*/
-
-            QString qsVersion = m_obSettings.value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus\\DisplayVersion","invalid").toString();
-            if( qsVersion.compare("invalid") != 0 )
+            //QString qsVersion = m_obSettings.value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus\\DisplayVersion","invalid").toString();
+            if( isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
+                                "Belenus") )
                 QMessageBox::information( this, "Belenus", "van" );
             else
                 QMessageBox::information( this, "Belenus", "nincs" );
@@ -111,10 +115,33 @@ void dlgMain::on_pbStartInstall_clicked()
 
 }
 //====================================================================================
+bool dlgMain::isRegKeyExists( QString p_qsKeyPath, QString p_qsKeyName )
+//====================================================================================
+{
+    bool        bRet = false;
+    QString     qsKey = QString( "%1\\%2" ).arg(p_qsKeyPath).arg(p_qsKeyName);
+    VRegistry   obReg;
 
+    if( obReg.OpenKey(HKEY_LOCAL_MACHINE,qsKey) )
+    {
+        bRet = true;
+        obReg.CloseKey();
+    }
 
+    return bRet;
+    /*
+    HKEY hKey;
+    QString szSubKey = "Control Panel\\Appearance";
+    QString szCurrent = "Current";
+    DWORD dwSize = 256;
+    TCHAR keyValue[256];
+    if( RegOpenKeyEx( HKEY_LOCAL_MACHINE, szSubKey.ucs2(), 0, KEY_ALL_ACCESS,&hKey)!= ERROR_SUCCESS)
+    {
+    // Can't find it
+    }
+    RegQueryValueEx(hKey, szCurrent.ucs2(), NULL, NULL, (LPBYTE)keyValue, &dwSize);
 
-
-
-
-
+    RegCloseKey(hKey);
+    */
+}
+//====================================================================================

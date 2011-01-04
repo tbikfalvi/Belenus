@@ -7,9 +7,13 @@
 TEMPLATE  = app
 
 FORMS    += dlgMain.ui
-HEADERS  += dlgMain.h
+HEADERS  += dlgMain.h \
+    vqtconvert.h \
+    vregistry.h
 SOURCES  += main.cpp\
-            dlgMain.cpp
+            dlgMain.cpp \
+    vregistry.cpp \
+    vqtconvert.cpp
 DESTDIR   = ..
 CONFIG   += qt
 TARGET    = Setup
