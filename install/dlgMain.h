@@ -39,12 +39,16 @@ public:
     ~dlgMain();
 
 private:
-    QFile       *m_obFile;
+    QFile           *m_obFile;
+    QRadioButton    *m_pInstallType;
 
     void processPage( int p_nPage );
-    bool isRegKeyExists( QString p_qsKeyPath, QString p_qsKeyName );
+    bool isRegKeyExists( QString p_qsKeyName );
 
 private slots:
+    void on_rbRemove_clicked();
+    void on_rbUpdate_clicked();
+    void on_rbInstall_clicked();
     void on_pbCancel_clicked();
     void on_pbPrev_clicked();
     void on_pbNext_clicked();

@@ -1,32 +1,32 @@
-//====================================================================================
+//=======================================================================================
 //
 // Belenus telepito alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 //
-//====================================================================================
+//=======================================================================================
 //
 // Filename    : dlgMain.cpp
 // AppVersion  : 1.0
 // FileVersion : 1.0
 // Author      : Bikfalvi Tamas
 //
-//====================================================================================
+//=======================================================================================
 //
-//====================================================================================
+//=======================================================================================
 
 #include <QMessageBox>
 
 #include "vregistry.h"
 
-//====================================================================================
+//=======================================================================================
 
 #include "dlgMain.h"
 #include "ui_dlgMain.h"
 
 using namespace voidrealms::win32;
 
-//====================================================================================
+//=======================================================================================
 dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
-//====================================================================================
+//=======================================================================================
 {
     setupUi(this);
 
@@ -34,15 +34,20 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
 
     Logo->setPixmap( QPixmap( QString(":/images/Logo.png") ) );
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
+
+    if( isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+        m_pInstallType = rbUpdate;
+    else
+        m_pInstallType = rbInstall;
 }
-//====================================================================================
+//=======================================================================================
 dlgMain::~dlgMain()
-//====================================================================================
+//=======================================================================================
 {
 }
-//====================================================================================
+//=======================================================================================
 void dlgMain::on_pbNext_clicked()
-//====================================================================================
+//=======================================================================================
 {
     if( pagerControl->currentIndex() < pagerControl->count()-1 )
         pagerControl->setCurrentIndex( pagerControl->currentIndex()+1 );
@@ -54,9 +59,9 @@ void dlgMain::on_pbNext_clicked()
 
     processPage( pagerControl->currentIndex() );
 }
-//====================================================================================
+//=======================================================================================
 void dlgMain::on_pbPrev_clicked()
-//====================================================================================
+//=======================================================================================
 {
     if( pagerControl->currentIndex() > 0 )
         pagerControl->setCurrentIndex( pagerControl->currentIndex()-1 );
@@ -68,9 +73,9 @@ void dlgMain::on_pbPrev_clicked()
 
     processPage( pagerControl->currentIndex() );
 }
-//====================================================================================
+//=======================================================================================
 void dlgMain::on_pbCancel_clicked()
-//====================================================================================
+//=======================================================================================
 {
     if( QMessageBox::question( this, tr("Question"),
                                tr("Are you sure you want to abort installation?"),
@@ -79,27 +84,55 @@ void dlgMain::on_pbCancel_clicked()
         QDialog::reject();
     }
 }
-//====================================================================================
+//=======================================================================================
+void dlgMain::on_rbInstall_clicked()
+//=======================================================================================
+{
+    m_pInstallType = rbInstall;
+}
+//=======================================================================================
+void dlgMain::on_rbUpdate_clicked()
+//=======================================================================================
+{
+    m_pInstallType = rbUpdate;
+}
+//=======================================================================================
+
+void dlgMain::on_rbRemove_clicked()
+//=======================================================================================
+{
+    m_pInstallType = rbRemove;
+}
+//=======================================================================================
 void dlgMain::processPage( int p_nPage )
-//====================================================================================
+//=======================================================================================
 {
 //    QMessageBox::information( this, "", QString::number(p_nPage) );
     switch( p_nPage )
     {
+        //-------------------------------------------------------------------------------
         case 1:  // Process selection
+        //-------------------------------------------------------------------------------
         {
-            QSettings   m_obSettings;
-/*                    ("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus",
-                                     QSettings::NativeFormat);*/
-            //QString qsVersion = m_obSettings.value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus\\DisplayVersion","invalid").toString();
-            if( isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
-                                "Belenus") )
-                QMessageBox::information( this, "Belenus", "van" );
+            if( isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+            {
+                rbInstall->setEnabled( false );
+                rbUpdate->setEnabled( true );
+                rbRemove->setEnabled( true );
+            }
             else
-                QMessageBox::information( this, "Belenus", "nincs" );
+            {
+                rbInstall->setEnabled( true );
+                rbUpdate->setEnabled( false );
+                rbRemove->setEnabled( false );
+                rbInstall->setChecked( true );
+            }
+            m_pInstallType->setChecked( true );
             break;
         }
-        case 10:
+        //-------------------------------------------------------------------------------
+        case 10: // Installation
+        //-------------------------------------------------------------------------------
         {
             m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
             m_obFile->link( QString("C:\\Development\\Qt\\belenus.lnk") );
@@ -108,40 +141,25 @@ void dlgMain::processPage( int p_nPage )
         }
     }
 }
-//====================================================================================
+//=======================================================================================
 void dlgMain::on_pbStartInstall_clicked()
-//====================================================================================
+//=======================================================================================
 {
 
 }
-//====================================================================================
-bool dlgMain::isRegKeyExists( QString p_qsKeyPath, QString p_qsKeyName )
-//====================================================================================
+//=======================================================================================
+bool dlgMain::isRegKeyExists( QString p_qsKeyName )
+//=======================================================================================
 {
     bool        bRet = false;
-    QString     qsKey = QString( "%1\\%2" ).arg(p_qsKeyPath).arg(p_qsKeyName);
     VRegistry   obReg;
 
-    if( obReg.OpenKey(HKEY_LOCAL_MACHINE,qsKey) )
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, p_qsKeyName ) )
     {
         bRet = true;
         obReg.CloseKey();
     }
 
     return bRet;
-    /*
-    HKEY hKey;
-    QString szSubKey = "Control Panel\\Appearance";
-    QString szCurrent = "Current";
-    DWORD dwSize = 256;
-    TCHAR keyValue[256];
-    if( RegOpenKeyEx( HKEY_LOCAL_MACHINE, szSubKey.ucs2(), 0, KEY_ALL_ACCESS,&hKey)!= ERROR_SUCCESS)
-    {
-    // Can't find it
-    }
-    RegQueryValueEx(hKey, szCurrent.ucs2(), NULL, NULL, (LPBYTE)keyValue, &dwSize);
-
-    RegCloseKey(hKey);
-    */
 }
-//====================================================================================
+//=======================================================================================

@@ -291,6 +291,44 @@
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QLabel" name="lblText2_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>140</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Update system components, reinitialize and restart services. This option guides you through the steps of the update process allowing to reset and modify the application system's settings.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText2_3">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>210</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Uninstall and remove application system components.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
