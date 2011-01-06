@@ -7,5 +7,6 @@
         <file>40x40_remove.png</file>
         <file>40x40_setup.png</file>
         <file>40x40_refresh.png</file>
+        <file>40x40_wamp.png</file>
     </qresource>
 </RCC>

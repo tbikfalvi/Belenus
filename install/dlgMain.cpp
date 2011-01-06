@@ -131,7 +131,28 @@ void dlgMain::processPage( int p_nPage )
             break;
         }
         //-------------------------------------------------------------------------------
-        case 10: // Installation
+        case 2:  // Component install step 1
+        //-------------------------------------------------------------------------------
+        {
+        }
+        //-------------------------------------------------------------------------------
+        case 98:  // Process selection
+        //-------------------------------------------------------------------------------
+        {
+            STARTUPINFO si;
+            PROCESS_INFORMATION pi;
+            ZeroMemory(&si,sizeof(si));
+            si.cb=sizeof(si);
+            ZeroMemory(&pi,sizeof(pi));
+            if(!CreateProcess(L"C:/WINDOWS/notepad.exe",L"notepad.exe c:/readme.txt",0,0,0,0,0,0,&si,&pi))
+                QMessageBox::information( this, "", "Process start error" );
+
+            WaitForSingleObject(pi.hProcess,INFINITE);
+            QMessageBox::information( this, "", "Process started OK" );
+            break;
+        }
+        //-------------------------------------------------------------------------------
+        case 99: // Installation
         //-------------------------------------------------------------------------------
         {
             m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
