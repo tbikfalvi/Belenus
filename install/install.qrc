@@ -8,5 +8,7 @@
         <file>40x40_setup.png</file>
         <file>40x40_refresh.png</file>
         <file>40x40_wamp.png</file>
+        <file>40x40_database.png</file>
+        <file>40x40_connection.png</file>
     </qresource>
 </RCC>

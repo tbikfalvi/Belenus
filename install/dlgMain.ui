@@ -390,7 +390,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Setup database server. This component is required to be installed before Belenus application system.</string>
+        <string>Setup database server application system. This component is required to be installed with Belenus application system.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -410,6 +410,89 @@
        </property>
        <property name="text">
         <string>Belenus client database</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgDatabase">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>140</y>
+         <width>40</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_database.png</pixmap>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText3_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>140</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Create and initialize client database. This component is required to be installed with Belenus application system. Wamp database server is required for this component.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="chkHardware">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>190</y>
+         <width>181</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Hardware connection</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgConnection">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>210</y>
+         <width>40</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_connection.png</pixmap>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText3_3">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>210</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Initialize and check hardware connection. This component is </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
        </property>
       </widget>
      </widget>
