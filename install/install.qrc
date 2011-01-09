@@ -10,5 +10,6 @@
         <file>40x40_wamp.png</file>
         <file>40x40_database.png</file>
         <file>40x40_connection.png</file>
+        <file>40x40_dbserver.png</file>
     </qresource>
 </RCC>

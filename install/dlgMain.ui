@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>607</width>
-    <height>445</height>
+    <height>455</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>607</width>
-    <height>445</height>
+    <height>455</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>607</width>
-    <height>445</height>
+    <height>455</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -52,16 +52,16 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="page0">
+     <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
          <width>201</width>
-         <height>391</height>
+         <height>401</height>
         </rect>
        </property>
        <property name="text">
@@ -158,7 +158,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="page1">
+     <widget class="QWidget" name="pageProcessSelect">
       <widget class="QLabel" name="lblTitle1">
        <property name="geometry">
         <rect>
@@ -272,7 +272,7 @@
         <pixmap resource="install.qrc">:/icons/40x40_remove.png</pixmap>
        </property>
       </widget>
-      <widget class="QLabel" name="lblText2_1">
+      <widget class="QLabel" name="lblTextInstall">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -291,7 +291,10 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="lblText2_2">
+      <widget class="QLabel" name="lblTextUpdate">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -310,7 +313,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="lblText2_3">
+      <widget class="QLabel" name="lblTextRemove">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -330,7 +333,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="page">
+     <widget class="QWidget" name="pageComponentSelect">
       <widget class="QLabel" name="lblTitle2">
        <property name="geometry">
         <rect>
@@ -355,7 +358,7 @@
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>50</y>
+         <y>40</y>
          <width>311</width>
          <height>17</height>
         </rect>
@@ -368,7 +371,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>70</y>
+         <y>60</y>
          <width>40</width>
          <height>40</height>
         </rect>
@@ -379,12 +382,15 @@
        <property name="pixmap">
         <pixmap resource="install.qrc">:/icons/40x40_wamp.png</pixmap>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
-      <widget class="QLabel" name="lblText3_1">
+      <widget class="QLabel" name="lblTextWamp">
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>70</y>
+         <y>60</y>
          <width>440</width>
          <height>50</height>
         </rect>
@@ -403,7 +409,7 @@
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>120</y>
+         <y>110</y>
          <width>291</width>
          <height>17</height>
         </rect>
@@ -416,7 +422,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>140</y>
+         <y>130</y>
          <width>40</width>
          <height>40</height>
         </rect>
@@ -427,12 +433,15 @@
        <property name="pixmap">
         <pixmap resource="install.qrc">:/icons/40x40_database.png</pixmap>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
-      <widget class="QLabel" name="lblText3_2">
+      <widget class="QLabel" name="lblTextDatabase">
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>140</y>
+         <y>130</y>
          <width>440</width>
          <height>50</height>
         </rect>
@@ -451,7 +460,7 @@
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>190</y>
+         <y>180</y>
          <width>181</width>
          <height>17</height>
         </rect>
@@ -464,7 +473,7 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>210</y>
+         <y>200</y>
          <width>40</width>
          <height>40</height>
         </rect>
@@ -475,12 +484,15 @@
        <property name="pixmap">
         <pixmap resource="install.qrc">:/icons/40x40_connection.png</pixmap>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
-      <widget class="QLabel" name="lblText3_3">
+      <widget class="QLabel" name="lblTextHardware">
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>210</y>
+         <y>200</y>
          <width>440</width>
          <height>50</height>
         </rect>
@@ -494,6 +506,247 @@
        <property name="wordWrap">
         <bool>true</bool>
        </property>
+      </widget>
+      <widget class="QCheckBox" name="chkBelenus">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>320</y>
+         <width>241</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Belenus client application</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgBelenus">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>340</y>
+         <width>40</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/belenus.ico</pixmap>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTextBelenus">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>340</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Initialize and check hardware connection. This component is </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="chkInternet">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>250</y>
+         <width>161</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Internet connection</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgDBServer">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>270</y>
+         <width>40</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_dbserver.png</pixmap>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="pageWamp">
+      <widget class="QLabel" name="lblTitleWampInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>271</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Wamp Server installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="pageDatabase">
+      <widget class="QLabel" name="lblTitleDatabaseInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>271</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Database installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="pageFinish">
+      <widget class="QLabel" name="Logo_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>201</width>
+         <height>391</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/images/Logo.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTitleInstallFinished">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>10</y>
+         <width>201</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Installation finished</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTextInstallFinished">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>360</width>
+         <height>60</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Installing Belenus Application System has been finished. To use the system correcty you need to restart your computer after exiting the installer.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>200</y>
+         <width>371</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbExitRestart">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Restart computer now</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </widget>
     </widget>
@@ -510,6 +763,9 @@
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -542,6 +798,9 @@
            <height>20</height>
           </size>
          </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -554,6 +813,9 @@
            <width>20</width>
            <height>20</height>
           </size>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -573,7 +835,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pbStartInstall">
+      <widget class="QPushButton" name="pbStartExit">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -585,6 +847,9 @@
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

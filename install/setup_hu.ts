@@ -64,35 +64,98 @@
         <translation>Szoftver rendszer összetevőinek eltávolítása.</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="340"/>
+        <location filename="dlgMain.ui" line="351"/>
+        <source>Component install</source>
+        <translation>Összetevők kiválasztása</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="364"/>
+        <source>Wamp database server application</source>
+        <translation>Wamp adatbázis kezelő rendszer</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="396"/>
+        <source>Setup database server application system. This component is required to be installed with Belenus application system.</source>
+        <translation>Az adatbázis kezelő rendszer telepítése. Az összetevő telepítése elengedhetetlen a Belenus Szoftver Rendszer telepítése esetén.</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="415"/>
+        <source>Belenus client database</source>
+        <translation>Belenus kliens adatbázis</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="447"/>
+        <source>Create and initialize client database. This component is required to be installed with Belenus application system. Wamp database server is required for this component.</source>
+        <translation>Az adatbázis létrehozása és inicializálása. Az összetevő telepítése elengedhetetlen a Belenus Szoftver Rendszer telepítése esetén. A Wamp adatbázis kezelő rendszer nélkül ez az összetevő nem telepíthető.</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="466"/>
+        <source>Hardware connection</source>
+        <translation>Hardver kapcsolat</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="498"/>
+        <location filename="dlgMain.ui" line="549"/>
+        <source>Initialize and check hardware connection. This component is </source>
+        <translation>A hardver eszközzel való kapcsolat kiépítése.</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="517"/>
+        <source>Belenus client application</source>
+        <translation>Belenus Kliens alkalmazás</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="596"/>
+        <source>Installation finished</source>
+        <translation>A telepítés befejeződött</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="609"/>
+        <source>Installing Belenus Application System has been finished. To use the system correcty you need to restart your computer after exiting the installer.</source>
+        <translation>A Belenus Szoftver Rendszer telepítése befejeződött. Az alkalmazás hibamentes működéséhez újra kell indítania a számítógépet.</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="650"/>
+        <source>Restart computer now</source>
+        <translation>Számítógép újraindítása</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="683"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="371"/>
+        <location filename="dlgMain.ui" line="717"/>
         <source>&lt;&lt; Previous</source>
         <translation>&lt;&lt; Előző</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="384"/>
+        <location filename="dlgMain.ui" line="733"/>
         <source>Next &gt;&gt;</source>
         <translation>Következő &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="415"/>
+        <location filename="dlgMain.ui" line="767"/>
+        <location filename="dlgMain.cpp" line="75"/>
         <source>Start</source>
         <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="80"/>
+        <location filename="dlgMain.cpp" line="54"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="81"/>
+        <location filename="dlgMain.cpp" line="55"/>
         <source>Are you sure you want to abort installation?</source>
         <oldsource>Are you sure you want to abort installation.</oldsource>
         <translation>Biztos benne, hogy le akarja állítani a telepítést?</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.cpp" line="93"/>
+        <location filename="dlgMain.cpp" line="102"/>
+        <source>Exit</source>
+        <translation>Kilépés</translation>
     </message>
 </context>
 </TS>

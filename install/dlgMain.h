@@ -24,10 +24,20 @@
 #include <QDialog>
 #include <QFile>
 #include <QSettings>
+#include <QVector>
 
 //====================================================================================
 
 #include "ui_dlgMain.h"
+
+//====================================================================================
+
+#define CONST_PAGE_WELCOME              0
+#define CONST_PAGE_INSTALL_SELECTION    1
+#define CONST_PAGE_COMPONENT_SELECTION  2
+#define CONST_PAGE_WAMP_INSTALL         3
+#define CONST_PAGE_DATABASE_INSTALL     4
+#define CONST_PAGE_FINISH               5
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -40,173 +50,47 @@ public:
 
 private:
     QFile           *m_obFile;
-    QRadioButton    *m_pInstallType;
 
-    void processPage( int p_nPage );
-    bool isRegKeyExists( QString p_qsKeyName );
+    QVector<int>     m_vPages;
+    int              m_nCurrentPage;
+    QRadioButton    *m_pInstallType;
+    bool             m_bProcessWamp;
+    bool             m_bProcessDatabase;
+    bool             m_bProcessHWConnection;
+    bool             m_bProcessBelenusClient;
+    bool             m_bRestartRequired;
+
+    void _initializePage( int p_nPage );
+    void _initializeInstallSelection();
+    void _initializeComponentSelection();
+    void _initializeFinishPage();
+
+    bool _processPage( int p_nPage );
+    bool _processInstallSelection();
+    bool _processComponentSelection();
+
+    bool _processWampInstall();
+
+    void _refreshPages();
+    bool _isRegKeyExists( QString p_qsKeyName );
+    void _setEnableNextButton();
+
+    void _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_chkBelenus_clicked();
+    void on_chkHardware_clicked();
+    void on_chkDatabase_clicked();
+    void on_chkWamp_clicked();
+    void on_pbStartExit_clicked();
+    void on_pbExitRestart_clicked();
     void on_rbRemove_clicked();
     void on_rbUpdate_clicked();
     void on_rbInstall_clicked();
     void on_pbCancel_clicked();
     void on_pbPrev_clicked();
     void on_pbNext_clicked();
-    void on_pbStartInstall_clicked();
 };
 //====================================================================================
 #endif // DLGMAIN_H
 //====================================================================================
-
-
-/*
-static HRESULT CreateShortCut(LPSTR pszTargetfile, LPSTR pszTargetargs,
-                              LPSTR pszLinkfile, LPSTR pszDescription,
-                              int iShowmode, LPSTR pszCurdir,
-                              LPSTR pszIconfile, int iIconindex)
-{
-  HRESULT       hRes;
-  IShellLink*   pShellLink;
-  IPersistFile* pPersistFile;
-  WORD          wszLinkfile[MAX_PATH];
-  int           iWideCharsWritten;
-
-  hRes = E_INVALIDARG;
-  if (
-       (pszTargetfile != NULL) && (strlen(pszTargetfile) > 0) &&
-       (pszTargetargs != NULL) &&
-       (pszLinkfile != NULL) && (strlen(pszLinkfile) > 0) &&
-       (pszDescription != NULL) &&
-       (iShowmode >= 0) &&
-       (pszCurdir != NULL) &&
-       (pszIconfile != NULL) &&
-       (iIconindex >= 0)
-     )
-  {
-    hRes = CoCreateInstance( CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*)&pShellLink);
-
-    if (SUCCEEDED(hRes))
-    {
-      hRes = pShellLink->SetPath((WCHAR*)pszTargetfile);
-      hRes = pShellLink->SetArguments((WCHAR*)pszTargetargs);
-      if (strlen(pszDescription) > 0)
-      {
-        hRes = pShellLink->SetDescription((WCHAR*)pszDescription);
-      }
-      if (iShowmode > 0)
-      {
-        hRes = pShellLink->SetShowCmd(iShowmode);
-      }
-      if (strlen(pszCurdir) > 0)
-      {
-        hRes = pShellLink->SetWorkingDirectory((WCHAR*)pszCurdir);
-      }
-      if (strlen(pszIconfile) > 0 && iIconindex >= 0)
-      {
-        hRes = pShellLink->SetIconLocation((WCHAR*)pszIconfile, iIconindex);
-      }
-
-      hRes = pShellLink->QueryInterface(IID_IPersistFile, &pPersistFile);
-
-      if (SUCCEEDED(hRes))
-      {
-        iWideCharsWritten = MultiByteToWideChar(CP_ACP, 0, pszLinkfile, -1, wszLinkfile, MAX_PATH);
-        hRes = pPersistFile->Save(pPersistFile, wszLinkfile, TRUE);
-        pPersistFile->Release(pPersistFile);
-      }
-      pShellLink->Release(pShellLink);
-    }
-
-  }
-  return (hRes);
-}
-*/
-/*
-bool createShortcut(LPCSTR lpszSrcFile,
-                    LPCSTR lpszDstPath,
-                    LPCSTR lpszName)
-{
- IShellLink *pShl = NULL;
- IPersistFile *pPPF = NULL;
- HRESULT rc = CoCreateInstance(CLSID_ShellLink,
-                               NULL,
-                               CLSCTX_INPROC_SERVER,
-                               IID_IShellLink,
-                               (void**)(&pShl));
- if (FAILED(rc))
-  return false;
- do
- {
-  rc = pShl->SetPath(lpszSrcFile);
-  if (FAILED(rc))
-   break;
-  rc = pShl->QueryInterface(IID_IPersistFile, (void**)&pPPF);
-  if (FAILED(rc))
-   break;
-  WORD wsz[MAX_PATH];
-  TCHAR path[MAX_PATH] = { 0 };
-  lstrcat(path, lpszDstPath);
-  lstrcat(path, "\\");
-  lstrcat(path, lpszName);
-  lstrcat(path, ".lnk");
-  MultiByteToWideChar(CP_ACP, 0, buf, -1, wsz, MAX_PATH);
-  rc = pPPF->Save(wsz, TRUE);
- } while(0);
- if (pPPF)
-  pPPF->Release();
- if (pShl)
-  pShl->Release();
- return SUCCEEDED(rc);
-}
-*/
-// CreateLink - uses the Shell's IShellLink and IPersistFile interfaces
-//              to create and store a shortcut to the specified object.
-//
-// Returns the result of calling the member functions of the interfaces.
-//
-// Parameters:
-// lpszPathObj  - address of a buffer containing the path of the object.
-// lpszPathLink - address of a buffer containing the path where the
-//                Shell link is to be stored.
-// lpszDesc     - address of a buffer containing the description of the
-//                Shell link.
-/*
-HRESULT dlgMain::CreateShortcut(LPCSTR lpszPathObj, LPCSTR lpszPathLink, LPCSTR lpszDesc)
-{
-    HRESULT hres;
-    IShellLink* psl;
-
-    // Get a pointer to the IShellLink interface.
-    hres = CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER,
-                            IID_IShellLink, (LPVOID*)&psl);
-    if (SUCCEEDED(hres))
-    {
-        IPersistFile* ppf;
-
-        // Set the path to the shortcut target and add the description.
-        psl->SetPath((WCHAR*)lpszPathObj);
-        psl->SetDescription((WCHAR*)lpszDesc);
-
-        // Query IShellLink for the IPersistFile interface for saving the
-        // shortcut in persistent storage.
-        hres = psl->QueryInterface(IID_IPersistFile, (LPVOID*)&ppf);
-
-        if (SUCCEEDED(hres))
-        {
-            WCHAR wsz[MAX_PATH];
-
-            // Ensure that the string is Unicode.
-            MultiByteToWideChar(CP_ACP, 0, lpszPathLink, -1, wsz, MAX_PATH);
-
-            // Add code here to check return value from MultiByteWideChar
-            // for success.
-
-            // Save the link by calling IPersistFile::Save.
-            hres = ppf->Save(wsz, TRUE);
-            ppf->Release();
-        }
-        psl->Release();
-    }
-    return hres;
-}
-*/

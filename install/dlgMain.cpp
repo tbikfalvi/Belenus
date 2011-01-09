@@ -13,6 +13,8 @@
 //
 //=======================================================================================
 
+#include <windows.h>
+#include <winuser.h>
 #include <QMessageBox>
 
 #include "vregistry.h"
@@ -35,43 +37,29 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     Logo->setPixmap( QPixmap( QString(":/images/Logo.png") ) );
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
 
-    if( isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+    if( _isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
         m_pInstallType = rbUpdate;
     else
         m_pInstallType = rbInstall;
+
+    m_vPages.clear();
+    m_vPages.append( CONST_PAGE_WELCOME );
+    m_vPages.append( CONST_PAGE_INSTALL_SELECTION );
+    m_vPages.append( CONST_PAGE_FINISH );
+
+    m_nCurrentPage = CONST_PAGE_WELCOME;
+
+    m_bProcessWamp          = true;
+    m_bProcessDatabase      = true;
+    m_bProcessHWConnection  = true;
+    m_bProcessBelenusClient = true;
+
+    m_bRestartRequired      = false;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
 //=======================================================================================
 {
-}
-//=======================================================================================
-void dlgMain::on_pbNext_clicked()
-//=======================================================================================
-{
-    if( pagerControl->currentIndex() < pagerControl->count()-1 )
-        pagerControl->setCurrentIndex( pagerControl->currentIndex()+1 );
-
-    if( pagerControl->currentIndex() > 0 )
-        pbPrev->setEnabled( true );
-    if( pagerControl->currentIndex() == pagerControl->count()-1 )
-        pbNext->setEnabled( false );
-
-    processPage( pagerControl->currentIndex() );
-}
-//=======================================================================================
-void dlgMain::on_pbPrev_clicked()
-//=======================================================================================
-{
-    if( pagerControl->currentIndex() > 0 )
-        pagerControl->setCurrentIndex( pagerControl->currentIndex()-1 );
-
-    if( pagerControl->currentIndex() == 0 )
-        pbPrev->setEnabled( false );
-    if( pagerControl->currentIndex() < pagerControl->count()-1 )
-        pbNext->setEnabled( true );
-
-    processPage( pagerControl->currentIndex() );
 }
 //=======================================================================================
 void dlgMain::on_pbCancel_clicked()
@@ -85,75 +73,190 @@ void dlgMain::on_pbCancel_clicked()
     }
 }
 //=======================================================================================
-void dlgMain::on_rbInstall_clicked()
+void dlgMain::on_pbPrev_clicked()
 //=======================================================================================
 {
-    m_pInstallType = rbInstall;
-}
-//=======================================================================================
-void dlgMain::on_rbUpdate_clicked()
-//=======================================================================================
-{
-    m_pInstallType = rbUpdate;
-}
-//=======================================================================================
+    _processPage( m_vPages.at( m_nCurrentPage ) );
 
-void dlgMain::on_rbRemove_clicked()
-//=======================================================================================
-{
-    m_pInstallType = rbRemove;
+    if( m_nCurrentPage > 0 )
+        m_nCurrentPage--;
+
+    pagerControl->setCurrentIndex( m_vPages.at( m_nCurrentPage ) );
+
+    if( m_nCurrentPage == 0 )
+        pbPrev->setEnabled( false );
+    if( m_nCurrentPage < m_vPages.size()-1 )
+        pbNext->setEnabled( true );
+
+    pbCancel->setEnabled( true );
+    pbStartExit->setEnabled( false );
+    pbStartExit->setText( tr("Start") );
+
+    _initializePage( m_vPages.at( m_nCurrentPage ) );
 }
 //=======================================================================================
-void dlgMain::processPage( int p_nPage )
+void dlgMain::on_pbNext_clicked()
 //=======================================================================================
 {
-//    QMessageBox::information( this, "", QString::number(p_nPage) );
+    if ( !_processPage( m_vPages.at( m_nCurrentPage ) ) )
+        return;
+
+    if( m_nCurrentPage < m_vPages.size()-1 )
+        m_nCurrentPage++;
+
+    pagerControl->setCurrentIndex( m_vPages.at( m_nCurrentPage ) );
+
+    if( m_nCurrentPage > 0 )
+        pbPrev->setEnabled( true );
+    if( m_nCurrentPage == m_vPages.size()-1 )
+    {
+        pbCancel->setEnabled( false );
+        pbPrev->setEnabled( false );
+        pbNext->setEnabled( false );
+        pbStartExit->setEnabled( true );
+        pbStartExit->setText( tr("Exit") );
+    }
+
+    _initializePage( m_vPages.at( m_nCurrentPage ) );
+}
+//=======================================================================================
+void dlgMain::on_pbStartExit_clicked()
+//=======================================================================================
+{
+    if( pbStartExit->text().compare( tr("Exit") ) == 0 )
+    {
+        QDialog::accept();
+    }
+}
+//=======================================================================================
+void dlgMain::_initializePage( int p_nPage )
+//=======================================================================================
+{
     switch( p_nPage )
     {
-        //-------------------------------------------------------------------------------
-        case 1:  // Process selection
-        //-------------------------------------------------------------------------------
-        {
-            if( isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
-            {
-                rbInstall->setEnabled( false );
-                rbUpdate->setEnabled( true );
-                rbRemove->setEnabled( true );
-            }
-            else
-            {
-                rbInstall->setEnabled( true );
-                rbUpdate->setEnabled( false );
-                rbRemove->setEnabled( false );
-                rbInstall->setChecked( true );
-            }
-            m_pInstallType->setChecked( true );
+        case 1:
+            _initializeInstallSelection();
             break;
-        }
-        //-------------------------------------------------------------------------------
-        case 2:  // Component install step 1
-        //-------------------------------------------------------------------------------
-        {
-        }
-        //-------------------------------------------------------------------------------
-        case 98:  // Process selection
-        //-------------------------------------------------------------------------------
-        {
-            STARTUPINFO si;
-            PROCESS_INFORMATION pi;
-            ZeroMemory(&si,sizeof(si));
-            si.cb=sizeof(si);
-            ZeroMemory(&pi,sizeof(pi));
-            if(!CreateProcess(L"C:/WINDOWS/notepad.exe",L"notepad.exe c:/readme.txt",0,0,0,0,0,0,&si,&pi))
-                QMessageBox::information( this, "", "Process start error" );
 
-            WaitForSingleObject(pi.hProcess,INFINITE);
-            QMessageBox::information( this, "", "Process started OK" );
+        case 2:
+            _initializeComponentSelection();
             break;
-        }
-        //-------------------------------------------------------------------------------
+
+        case 4:
+            _initializeFinishPage();
+            break;
+    }
+}
+//=======================================================================================
+void dlgMain::_initializeInstallSelection()
+//=======================================================================================
+{
+    if( _isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+    {
+        rbInstall->setEnabled( false );
+        lblTextInstall->setEnabled( false );
+        rbUpdate->setEnabled( true );
+        lblTextUpdate->setEnabled( true );
+        rbRemove->setEnabled( true );
+        lblTextRemove->setEnabled( true );
+    }
+    else
+    {
+        rbInstall->setEnabled( true );
+        lblTextInstall->setEnabled( true );
+        rbUpdate->setEnabled( false );
+        lblTextUpdate->setEnabled( false );
+        rbRemove->setEnabled( false );
+        lblTextRemove->setEnabled( false );
+
+        rbInstall->setChecked( true );
+    }
+    m_pInstallType->setChecked( true );
+}
+//=======================================================================================
+void dlgMain::_initializeComponentSelection()
+//=======================================================================================
+{
+    if( m_pInstallType == rbInstall )
+    {
+        chkWamp->setEnabled( true );
+        chkDatabase->setEnabled( true );
+        chkHardware->setEnabled( true );
+        chkBelenus->setEnabled( true );
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        chkWamp->setEnabled( false );
+        lblTextWamp->setEnabled( false );
+    }
+
+    chkWamp->setChecked( m_bProcessWamp );
+    chkDatabase->setChecked( m_bProcessDatabase );
+    chkHardware->setChecked( m_bProcessHWConnection );
+    chkBelenus->setChecked( m_bProcessBelenusClient );
+
+    _setEnableNextButton();
+}
+//=======================================================================================
+void dlgMain::_initializeFinishPage()
+//=======================================================================================
+{
+    QString qsProcess;
+
+    if( m_pInstallType == rbInstall )
+    {
+        lblTitleInstallFinished->setText( tr( "Installation finished" ) );
+        qsProcess = "Installing";
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        lblTitleInstallFinished->setText( tr( "Update finished" ) );
+        qsProcess = "Updating";
+    }
+    else if( m_pInstallType == rbRemove )
+    {
+        lblTitleInstallFinished->setText( tr( "Uninstall finished" ) );
+        qsProcess = "Removing";
+    }
+
+    if( m_bRestartRequired )
+    {
+        lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished."
+                                             "To use the system correcty you need to restart your "
+                                             "computer after exiting the installer.\n\n"
+                                             "Press Exit to close the installer." ).arg(qsProcess) );
+        pbExitRestart->setEnabled( true );
+        pbExitRestart->setVisible( true );
+    }
+    else
+    {
+        lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished.\n\n"
+                                             "Press Exit to close the installer." ).arg(qsProcess) );
+        pbExitRestart->setEnabled( false );
+        pbExitRestart->setVisible( false );
+    }
+}
+//=======================================================================================
+bool dlgMain::_processPage( int p_nPage )
+//=======================================================================================
+{
+    bool bRet = true;
+
+    switch( p_nPage )
+    {
+        case 1:
+            bRet = _processInstallSelection();
+            break;
+
+        case 2:
+            bRet = _processComponentSelection();
+            break;
+
+        case 98:
+            bRet = _processWampInstall();
+            break;
+
         case 99: // Installation
-        //-------------------------------------------------------------------------------
         {
             m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
             m_obFile->link( QString("C:\\Development\\Qt\\belenus.lnk") );
@@ -161,15 +264,181 @@ void dlgMain::processPage( int p_nPage )
             break;
         }
     }
+
+    return bRet;
 }
 //=======================================================================================
-void dlgMain::on_pbStartInstall_clicked()
+bool dlgMain::_processInstallSelection()
 //=======================================================================================
 {
+    if( m_pInstallType == rbInstall )
+    {
+        m_bProcessWamp          = true;
+        m_bProcessDatabase      = true;
+        m_bProcessHWConnection  = true;
+        m_bProcessBelenusClient = true;
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        m_bProcessWamp          = false;
+        m_bProcessDatabase      = false;
+        m_bProcessHWConnection  = false;
+        m_bProcessBelenusClient = false;
+    }
+    else if( m_pInstallType == rbRemove )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Are you sure you want to remove Belenus Application system and all of it's components?"),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+        {
+            return false;
+        }
+        m_bProcessWamp          = true;
+        m_bProcessDatabase      = true;
+        m_bProcessHWConnection  = true;
+        m_bProcessBelenusClient = true;
+    }
 
+    _refreshPages();
+
+    return true;
 }
 //=======================================================================================
-bool dlgMain::isRegKeyExists( QString p_qsKeyName )
+void dlgMain::on_rbInstall_clicked()
+//=======================================================================================
+{
+    m_pInstallType          = rbInstall;
+}
+//=======================================================================================
+void dlgMain::on_rbUpdate_clicked()
+//=======================================================================================
+{
+    m_pInstallType          = rbUpdate;
+}
+//=======================================================================================
+void dlgMain::on_rbRemove_clicked()
+//=======================================================================================
+{
+    m_pInstallType          = rbRemove;
+}
+//=======================================================================================
+bool dlgMain::_processComponentSelection()
+//=======================================================================================
+{
+    m_bProcessWamp = chkWamp->isChecked();
+    m_bProcessDatabase = chkDatabase->isChecked();
+    m_bProcessHWConnection = chkHardware->isChecked();
+    m_bProcessBelenusClient = chkBelenus->isChecked();
+
+    _refreshPages();
+
+    return true;
+}
+//=======================================================================================
+void dlgMain::on_chkWamp_clicked()
+//=======================================================================================
+{
+    m_bProcessWamp = chkWamp->isChecked();
+    _setEnableNextButton();
+}
+//=======================================================================================
+void dlgMain::on_chkDatabase_clicked()
+//=======================================================================================
+{
+    m_bProcessDatabase = chkDatabase->isChecked();
+    _setEnableNextButton();
+}
+//=======================================================================================
+void dlgMain::on_chkHardware_clicked()
+//=======================================================================================
+{
+    m_bProcessHWConnection = chkHardware->isChecked();
+    _setEnableNextButton();
+}
+//=======================================================================================
+void dlgMain::on_chkBelenus_clicked()
+//=======================================================================================
+{
+    m_bProcessBelenusClient = chkBelenus->isChecked();
+
+    if( m_pInstallType == rbInstall && chkBelenus->isChecked() )
+    {
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkDatabase->setChecked( true );
+    }
+
+    _setEnableNextButton();
+}
+//=======================================================================================
+bool dlgMain::_processWampInstall()
+//=======================================================================================
+{
+    bool                bRet = true;
+    STARTUPINFO         si;
+    PROCESS_INFORMATION pi;
+
+    ZeroMemory(&si,sizeof(si));
+    si.cb=sizeof(si);
+    ZeroMemory(&pi,sizeof(pi));
+
+    if(!CreateProcess(L"WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+        bRet = false;
+
+    WaitForSingleObject(pi.hProcess,INFINITE);
+
+    return bRet;
+}
+//=======================================================================================
+void dlgMain::on_pbExitRestart_clicked()
+//=======================================================================================
+{
+    _exitInstaller( true );
+}
+//=======================================================================================
+void dlgMain::_exitInstaller( bool m_bRestartPC )
+//=======================================================================================
+{
+    QDialog::accept();
+
+    if( m_bRestartPC )
+        ExitWindowsEx( 0x00000040/*EWX_RESTARTAPPS*/, 0x00000002/*SHTDN_REASON_MINOR_INSTALLATION*/ );
+}
+//=======================================================================================
+void dlgMain::_refreshPages()
+//=======================================================================================
+{
+    m_vPages.clear();
+
+    m_vPages.append( CONST_PAGE_WELCOME );
+    m_vPages.append( CONST_PAGE_INSTALL_SELECTION );
+
+    if( m_pInstallType == rbInstall )
+    {
+        m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
+        if( m_bProcessWamp)
+            m_vPages.append( CONST_PAGE_WAMP_INSTALL );
+        if( m_bProcessDatabase)
+            m_vPages.append( CONST_PAGE_DATABASE_INSTALL );
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
+        if( m_bProcessDatabase)
+            m_vPages.append( CONST_PAGE_DATABASE_INSTALL );
+    }
+    else if( m_pInstallType == rbRemove )
+    {
+        if( m_bProcessDatabase)
+            m_vPages.append( CONST_PAGE_DATABASE_INSTALL );
+        if( m_bProcessWamp)
+            m_vPages.append( CONST_PAGE_WAMP_INSTALL );
+    }
+
+    m_vPages.append( CONST_PAGE_FINISH );
+}
+//=======================================================================================
+bool dlgMain::_isRegKeyExists( QString p_qsKeyName )
 //=======================================================================================
 {
     bool        bRet = false;
@@ -182,5 +451,14 @@ bool dlgMain::isRegKeyExists( QString p_qsKeyName )
     }
 
     return bRet;
+}
+//=======================================================================================
+void dlgMain::_setEnableNextButton()
+//=======================================================================================
+{
+    if( !chkWamp->isChecked() && !chkDatabase->isChecked() && !chkHardware->isChecked() && !chkBelenus->isChecked() )
+        pbNext->setEnabled( false );
+    else
+        pbNext->setEnabled( true );
 }
 //=======================================================================================
