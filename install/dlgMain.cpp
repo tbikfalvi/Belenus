@@ -52,6 +52,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bProcessWamp          = true;
     m_bProcessDatabase      = true;
     m_bProcessHWConnection  = true;
+    m_bProcessInternet      = true;
     m_bProcessBelenusClient = true;
 
     m_bRestartRequired      = false;
@@ -134,15 +135,39 @@ void dlgMain::_initializePage( int p_nPage )
 {
     switch( p_nPage )
     {
-        case 1:
+        case CONST_PAGE_INSTALL_SELECTION:
             _initializeInstallSelection();
             break;
 
-        case 2:
+        case CONST_PAGE_COMPONENT_SELECTION:
             _initializeComponentSelection();
             break;
 
-        case 4:
+        case CONST_PAGE_WAMP_INSTALL:
+            _initializeWampInstall();
+            break;
+
+        case CONST_PAGE_DATABASE_INSTALL:
+            _initializeDatabaseInstall();
+            break;
+
+        case CONST_PAGE_HARDWARE_INSTALL:
+            _initializeHardwareInstall();
+            break;
+
+        case CONST_PAGE_INTERNET_INSTALL:
+            _initializeInternetInstall();
+            break;
+
+        case CONST_PAGE_CLIENT_INSTALL:
+            _initializeClientInstall();
+            break;
+
+        case CONST_PAGE_PROCESS:
+            _initializeInstallProcess();
+            break;
+
+        case CONST_PAGE_FINISH:
             _initializeFinishPage();
             break;
     }
@@ -193,9 +218,42 @@ void dlgMain::_initializeComponentSelection()
     chkWamp->setChecked( m_bProcessWamp );
     chkDatabase->setChecked( m_bProcessDatabase );
     chkHardware->setChecked( m_bProcessHWConnection );
+    chkInternet->setChecked( m_bProcessInternet );
     chkBelenus->setChecked( m_bProcessBelenusClient );
 
     _setEnableNextButton();
+}
+//=======================================================================================
+void dlgMain::_initializeWampInstall()
+//=======================================================================================
+{
+    if( _processWampInstall() )
+        QMessageBox::information( this, "ok", "ok" );
+}
+//=======================================================================================
+void dlgMain::_initializeDatabaseInstall()
+//=======================================================================================
+{
+}
+//=======================================================================================
+void dlgMain::_initializeHardwareInstall()
+//=======================================================================================
+{
+}
+//=======================================================================================
+void dlgMain::_initializeInternetInstall()
+//=======================================================================================
+{
+}
+//=======================================================================================
+void dlgMain::_initializeClientInstall()
+//=======================================================================================
+{
+}
+//=======================================================================================
+void dlgMain::_initializeInstallProcess()
+//=======================================================================================
+{
 }
 //=======================================================================================
 void dlgMain::_initializeFinishPage()
@@ -276,6 +334,7 @@ bool dlgMain::_processInstallSelection()
         m_bProcessWamp          = true;
         m_bProcessDatabase      = true;
         m_bProcessHWConnection  = true;
+        m_bProcessInternet      = true;
         m_bProcessBelenusClient = true;
     }
     else if( m_pInstallType == rbUpdate )
@@ -283,6 +342,7 @@ bool dlgMain::_processInstallSelection()
         m_bProcessWamp          = false;
         m_bProcessDatabase      = false;
         m_bProcessHWConnection  = false;
+        m_bProcessInternet      = false;
         m_bProcessBelenusClient = false;
     }
     else if( m_pInstallType == rbRemove )
@@ -296,6 +356,7 @@ bool dlgMain::_processInstallSelection()
         m_bProcessWamp          = true;
         m_bProcessDatabase      = true;
         m_bProcessHWConnection  = true;
+        m_bProcessInternet      = true;
         m_bProcessBelenusClient = true;
     }
 
@@ -307,19 +368,19 @@ bool dlgMain::_processInstallSelection()
 void dlgMain::on_rbInstall_clicked()
 //=======================================================================================
 {
-    m_pInstallType          = rbInstall;
+    m_pInstallType = rbInstall;
 }
 //=======================================================================================
 void dlgMain::on_rbUpdate_clicked()
 //=======================================================================================
 {
-    m_pInstallType          = rbUpdate;
+    m_pInstallType = rbUpdate;
 }
 //=======================================================================================
 void dlgMain::on_rbRemove_clicked()
 //=======================================================================================
 {
-    m_pInstallType          = rbRemove;
+    m_pInstallType = rbRemove;
 }
 //=======================================================================================
 bool dlgMain::_processComponentSelection()
@@ -328,6 +389,7 @@ bool dlgMain::_processComponentSelection()
     m_bProcessWamp = chkWamp->isChecked();
     m_bProcessDatabase = chkDatabase->isChecked();
     m_bProcessHWConnection = chkHardware->isChecked();
+    m_bProcessInternet = chkInternet->isChecked();
     m_bProcessBelenusClient = chkBelenus->isChecked();
 
     _refreshPages();
@@ -346,6 +408,14 @@ void dlgMain::on_chkDatabase_clicked()
 //=======================================================================================
 {
     m_bProcessDatabase = chkDatabase->isChecked();
+
+    if( m_pInstallType == rbInstall && chkDatabase->isChecked() )
+    {
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkBelenus->setChecked( true );
+    }
+
     _setEnableNextButton();
 }
 //=======================================================================================
@@ -353,6 +423,31 @@ void dlgMain::on_chkHardware_clicked()
 //=======================================================================================
 {
     m_bProcessHWConnection = chkHardware->isChecked();
+
+    if( m_pInstallType == rbInstall && chkHardware->isChecked() )
+    {
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkDatabase->setChecked( true );
+        chkBelenus->setChecked( true );
+    }
+
+    _setEnableNextButton();
+}
+//=======================================================================================
+void dlgMain::on_chkInternet_clicked()
+//=======================================================================================
+{
+    m_bProcessInternet = chkInternet->isChecked();
+
+    if( m_pInstallType == rbInstall && chkInternet->isChecked() )
+    {
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkDatabase->setChecked( true );
+        chkBelenus->setChecked( true );
+    }
+
     _setEnableNextButton();
 }
 //=======================================================================================
@@ -420,21 +515,40 @@ void dlgMain::_refreshPages()
             m_vPages.append( CONST_PAGE_WAMP_INSTALL );
         if( m_bProcessDatabase)
             m_vPages.append( CONST_PAGE_DATABASE_INSTALL );
+        if( m_bProcessHWConnection )
+            m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
+        if( m_bProcessInternet )
+            m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
+        if( m_bProcessBelenusClient )
+            m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
     }
     else if( m_pInstallType == rbUpdate )
     {
         m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
         if( m_bProcessDatabase)
             m_vPages.append( CONST_PAGE_DATABASE_INSTALL );
+        if( m_bProcessHWConnection )
+            m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
+        if( m_bProcessInternet )
+            m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
+        if( m_bProcessBelenusClient )
+            m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
     }
-    else if( m_pInstallType == rbRemove )
+    /*else if( m_pInstallType == rbRemove )
     {
+        if( m_bProcessBelenusClient )
+            m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
+        if( m_bProcessInternet )
+            m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
+        if( m_bProcessHWConnection )
+            m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
         if( m_bProcessDatabase)
             m_vPages.append( CONST_PAGE_DATABASE_INSTALL );
         if( m_bProcessWamp)
             m_vPages.append( CONST_PAGE_WAMP_INSTALL );
-    }
+    }*/
 
+    m_vPages.append( CONST_PAGE_PROCESS );
     m_vPages.append( CONST_PAGE_FINISH );
 }
 //=======================================================================================
@@ -456,9 +570,10 @@ bool dlgMain::_isRegKeyExists( QString p_qsKeyName )
 void dlgMain::_setEnableNextButton()
 //=======================================================================================
 {
-    if( !chkWamp->isChecked() && !chkDatabase->isChecked() && !chkHardware->isChecked() && !chkBelenus->isChecked() )
+    if( !chkWamp->isChecked() && !chkDatabase->isChecked() && !chkHardware->isChecked() && !chkInternet->isChecked() && !chkBelenus->isChecked() )
         pbNext->setEnabled( false );
     else
         pbNext->setEnabled( true );
 }
 //=======================================================================================
+

@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -498,7 +498,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Initialize and check hardware connection. This component is </string>
+        <string>Initialize and check hardware connection. This component is not required for DEMO version.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -517,7 +517,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Belenus client application</string>
+        <string>Client application</string>
        </property>
       </widget>
       <widget class="QLabel" name="imgBelenus">
@@ -549,7 +549,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Initialize and check hardware connection. This component is </string>
+        <string>Setup Belenus client application. Wamp database server and Belenus client database is required for this component.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -587,14 +587,33 @@
         <pixmap resource="install.qrc">:/icons/40x40_dbserver.png</pixmap>
        </property>
       </widget>
+      <widget class="QLabel" name="lblTextHardware_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>270</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Initialize database server connection. This component is not required for DEMO version.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="pageWamp">
       <widget class="QLabel" name="lblTitleWampInstall">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>210</x>
          <y>10</y>
-         <width>271</width>
+         <width>370</width>
          <height>16</height>
         </rect>
        </property>
@@ -606,7 +625,26 @@
         </font>
        </property>
        <property name="text">
-        <string>Wamp Server installation</string>
+        <string>Installing Wamp server</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgWampServer">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>190</width>
+         <height>270</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/images/WampServer.png</pixmap>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
       </widget>
      </widget>
@@ -629,6 +667,94 @@
        </property>
        <property name="text">
         <string>Database installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page">
+      <widget class="QLabel" name="lblTitleHardwareInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>561</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hardware connection installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <widget class="QLabel" name="lblTitleInternetInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>561</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Internet connection installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <widget class="QLabel" name="lblTitleClientInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>561</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Client application installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_4">
+      <widget class="QLabel" name="lblTitleProcessInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>561</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Installation process</string>
        </property>
       </widget>
      </widget>

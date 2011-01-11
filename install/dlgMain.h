@@ -37,7 +37,11 @@
 #define CONST_PAGE_COMPONENT_SELECTION  2
 #define CONST_PAGE_WAMP_INSTALL         3
 #define CONST_PAGE_DATABASE_INSTALL     4
-#define CONST_PAGE_FINISH               5
+#define CONST_PAGE_HARDWARE_INSTALL     5
+#define CONST_PAGE_INTERNET_INSTALL     6
+#define CONST_PAGE_CLIENT_INSTALL       7
+#define CONST_PAGE_PROCESS              8
+#define CONST_PAGE_FINISH               9
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -57,27 +61,35 @@ private:
     bool             m_bProcessWamp;
     bool             m_bProcessDatabase;
     bool             m_bProcessHWConnection;
+    bool             m_bProcessInternet;
     bool             m_bProcessBelenusClient;
     bool             m_bRestartRequired;
 
-    void _initializePage( int p_nPage );
-    void _initializeInstallSelection();
-    void _initializeComponentSelection();
-    void _initializeFinishPage();
+    void            _initializePage( int p_nPage );
+    void            _initializeInstallSelection();
+    void            _initializeComponentSelection();
+    void            _initializeWampInstall();
+    void            _initializeDatabaseInstall();
+    void            _initializeHardwareInstall();
+    void            _initializeInternetInstall();
+    void            _initializeClientInstall();
+    void            _initializeInstallProcess();
+    void            _initializeFinishPage();
 
-    bool _processPage( int p_nPage );
-    bool _processInstallSelection();
-    bool _processComponentSelection();
+    bool            _processPage( int p_nPage );
+    bool            _processInstallSelection();
+    bool            _processComponentSelection();
 
-    bool _processWampInstall();
+    bool            _processWampInstall();
 
-    void _refreshPages();
-    bool _isRegKeyExists( QString p_qsKeyName );
-    void _setEnableNextButton();
+    void            _refreshPages();
+    bool            _isRegKeyExists( QString p_qsKeyName );
+    void            _setEnableNextButton();
 
-    void _exitInstaller( bool m_bRestartPC = false );
+    void            _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_chkInternet_clicked();
     void on_chkBelenus_clicked();
     void on_chkHardware_clicked();
     void on_chkDatabase_clicked();
