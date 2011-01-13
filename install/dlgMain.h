@@ -52,8 +52,12 @@ public:
     explicit dlgMain(QWidget *parent = 0);
     ~dlgMain();
 
+protected:
+    void timerEvent( QTimerEvent *p_poEvent );
+
 private:
     QFile           *m_obFile;
+    int              m_nTimer;
 
     QVector<int>     m_vPages;
     int              m_nCurrentPage;
@@ -64,6 +68,7 @@ private:
     bool             m_bProcessInternet;
     bool             m_bProcessBelenusClient;
     bool             m_bRestartRequired;
+    bool             m_bStartWampInstall;
 
     void            _initializePage( int p_nPage );
     void            _initializeInstallSelection();
@@ -81,6 +86,7 @@ private:
     bool            _processComponentSelection();
 
     bool            _processWampInstall();
+    bool            _initializeWampServer();
 
     void            _refreshPages();
     bool            _isRegKeyExists( QString p_qsKeyName );

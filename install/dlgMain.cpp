@@ -55,12 +55,47 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bProcessInternet      = true;
     m_bProcessBelenusClient = true;
 
+    m_bStartWampInstall     = false;
+
     m_bRestartRequired      = false;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
 //=======================================================================================
 {
+}
+//=======================================================================================
+void dlgMain::timerEvent(QTimerEvent *)
+//=======================================================================================
+{
+    if( m_bStartWampInstall )
+    {
+        m_bStartWampInstall = false;
+        killTimer( m_nTimer );
+
+        if( _isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("Wamp server already installed on your computer.") );
+        }
+        else
+        {
+            if( _processWampInstall() )
+            {
+                if( !_isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+                {
+                    QMessageBox::warning( this, tr("Attention"),
+                                          tr("Wamp server installation failed.\n"
+                                             "Please try to reinstall it with going back one page "
+                                             "then return to this page.") );
+                }
+                else
+                {
+                    _initializeWampServer();
+                }
+            }
+        }
+    }
 }
 //=======================================================================================
 void dlgMain::on_pbCancel_clicked()
@@ -227,8 +262,8 @@ void dlgMain::_initializeComponentSelection()
 void dlgMain::_initializeWampInstall()
 //=======================================================================================
 {
-    if( _processWampInstall() )
-        QMessageBox::information( this, "ok", "ok" );
+    m_bStartWampInstall = true;
+    m_nTimer = startTimer( 1000 );
 }
 //=======================================================================================
 void dlgMain::_initializeDatabaseInstall()
@@ -477,10 +512,18 @@ bool dlgMain::_processWampInstall()
     si.cb=sizeof(si);
     ZeroMemory(&pi,sizeof(pi));
 
-    if(!CreateProcess(L"WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+    if(!CreateProcess(L"Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
         bRet = false;
 
     WaitForSingleObject(pi.hProcess,INFINITE);
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_initializeWampServer()
+//=======================================================================================
+{
+    bool                bRet = true;
 
     return bRet;
 }
@@ -576,4 +619,3 @@ void dlgMain::_setEnableNextButton()
         pbNext->setEnabled( true );
 }
 //=======================================================================================
-

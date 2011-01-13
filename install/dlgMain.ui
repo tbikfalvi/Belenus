@@ -647,6 +647,22 @@
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
       </widget>
+      <widget class="QLabel" name="lblText3_1">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>40</y>
+         <width>361</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Please wait while the Wamp server installation finishes.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="pageDatabase">
       <widget class="QLabel" name="lblTitleDatabaseInstall">
