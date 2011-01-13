@@ -525,3 +525,5 @@ install/moc_dlgMain.o
 install/Makefile
 BelenusInstall
 setup.qm
+Wamp/
+Wamp/WampServer2.0i.exe
