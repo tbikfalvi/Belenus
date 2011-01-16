@@ -288,3 +288,6 @@ CONFIG += qt
 
 # CONFIG += console
 win32:DEFINES -= UNICODE
+
+RESOURCES += \
+    belenus.qrc

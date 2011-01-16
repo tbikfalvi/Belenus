@@ -18,13 +18,11 @@
 
 //====================================================================================
 
-//#include <windows.h>
-//#include <shlobj.h>
-
 #include <QDialog>
 #include <QFile>
 #include <QSettings>
 #include <QVector>
+#include <QSqlDatabase>
 
 //====================================================================================
 
@@ -56,20 +54,22 @@ protected:
     void timerEvent( QTimerEvent *p_poEvent );
 
 private:
-    QFile           *m_obFile;
-    int              m_nTimer;
+    QFile                   *m_obFile;
+    int                      m_nTimer;
 
-    QVector<int>     m_vPages;
-    int              m_nCurrentPage;
-    QRadioButton    *m_pInstallType;
-    bool             m_bProcessWamp;
-    bool             m_bProcessDatabase;
-    bool             m_bProcessHWConnection;
-    bool             m_bProcessInternet;
-    bool             m_bProcessBelenusClient;
-    bool             m_bRestartRequired;
-    bool             m_bStartWampInstall;
-    bool             m_bInitializeWamp;
+    QVector<int>             m_vPages;
+    int                      m_nCurrentPage;
+    QRadioButton            *m_pInstallType;
+    bool                     m_bProcessWamp;
+    bool                     m_bProcessDatabase;
+    bool                     m_bProcessHWConnection;
+    bool                     m_bProcessInternet;
+    bool                     m_bProcessBelenusClient;
+    bool                     m_bRestartRequired;
+    bool                     m_bStartWampInstall;
+    bool                     m_bInitializeWamp;
+
+    QSqlDatabase            *m_poDB;
 
     void            _initializePage( int p_nPage );
     void            _initializeInstallSelection();

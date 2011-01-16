@@ -16,6 +16,7 @@
 #include <windows.h>
 #include <winuser.h>
 #include <QMessageBox>
+#include <QSqlError>
 
 #include "vregistry.h"
 
@@ -23,6 +24,8 @@
 
 #include "dlgMain.h"
 #include "ui_dlgMain.h"
+
+//=======================================================================================
 
 using namespace voidrealms::win32;
 
@@ -59,11 +62,14 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bInitializeWamp       = false;
 
     m_bRestartRequired      = false;
+
+    m_poDB                  = NULL;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
 //=======================================================================================
 {
+    if( m_poDB ) delete m_poDB;
 }
 //=======================================================================================
 void dlgMain::timerEvent(QTimerEvent *)
@@ -362,6 +368,10 @@ bool dlgMain::_processPage( int p_nPage )
             bRet = _processComponentSelection();
             break;
 
+        case 3:
+            bRet = _processWampInstall();
+            break;
+
         case 99: // Installation
         {
             m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
@@ -448,6 +458,27 @@ bool dlgMain::_processComponentSelection()
 bool dlgMain::_processWampInstall()
 //=======================================================================================
 {
+    bool    bRet = true;
+
+    m_poDB = new QSqlDatabase();
+
+    m_poDB->addDatabase( "QMYSQL" );
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( ledDBRootPassword->text() );
+
+    if( (bRet = m_poDB->open()) )
+    {
+        m_poDB->close();
+    }
+    else
+    {
+        QMessageBox::warning(this, "", m_poDB->lastError().text() );
+    }
+
+    return bRet;
 }
 //=======================================================================================
 void dlgMain::on_chkWamp_clicked()

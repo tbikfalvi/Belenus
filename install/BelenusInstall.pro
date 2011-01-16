@@ -4,22 +4,25 @@
 #
 #-------------------------------------------------
 
-TEMPLATE  = app
+TEMPLATE     = app
+DESTDIR      = ..
+TARGET       = Setup
 
-FORMS    += dlgMain.ui
-HEADERS  += dlgMain.h \
-    vqtconvert.h \
-    vregistry.h
-SOURCES  += main.cpp\
-            dlgMain.cpp \
-    vregistry.cpp \
-    vqtconvert.cpp
-DESTDIR   = ..
-CONFIG   += qt
-TARGET    = Setup
-QT       += core gui
-
+CONFIG      += qt
+QT          += core gui sql
 TRANSLATIONS = setup_us.ts \
                setup_hu.ts
-RESOURCES += \
-    install.qrc
+
+FORMS       += dlgMain.ui
+
+SOURCES     += main.cpp \
+               dlgMain.cpp \
+               vregistry.cpp \
+               vqtconvert.cpp
+
+HEADERS     += dlgMain.h \
+               vqtconvert.h \
+               vregistry.h
+
+RESOURCES   += install.qrc
+
