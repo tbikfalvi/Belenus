@@ -37,7 +37,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     Logo->setPixmap( QPixmap( QString(":/images/Logo.png") ) );
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
 
-    if( _isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+    if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
         m_pInstallType = rbUpdate;
     else
         m_pInstallType = rbInstall;
@@ -56,6 +56,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bProcessBelenusClient = true;
 
     m_bStartWampInstall     = false;
+    m_bInitializeWamp       = false;
 
     m_bRestartRequired      = false;
 }
@@ -70,30 +71,41 @@ void dlgMain::timerEvent(QTimerEvent *)
 {
     if( m_bStartWampInstall )
     {
+        pbNext->setEnabled( false );
         m_bStartWampInstall = false;
         killTimer( m_nTimer );
-
-        if( _isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+        if( _processWampServerInstall() )
         {
-            QMessageBox::warning( this, tr("Attention"),
-                                  tr("Wamp server already installed on your computer.") );
+            m_bInitializeWamp = true;
+            m_nTimer = startTimer( 500 );
         }
         else
         {
-            if( _processWampInstall() )
-            {
-                if( !_isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
-                {
-                    QMessageBox::warning( this, tr("Attention"),
-                                          tr("Wamp server installation failed.\n"
-                                             "Please try to reinstall it with going back one page "
-                                             "then return to this page.") );
-                }
-                else
-                {
-                    _initializeWampServer();
-                }
-            }
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("Wamp server installation failed.\n"
+                                     "Please try to reinstall it with going back one page "
+                                     "then return to this page.\n\n"
+                                     "If Wamp install continuously fails please contact Belenus software support.") );
+            pbNext->setEnabled( false );
+        }
+    }
+    else if( m_bInitializeWamp )
+    {
+        m_bInitializeWamp = false;
+        killTimer( m_nTimer );
+        if( _initializeWampServer() )
+        {
+            pbNext->setEnabled( true );
+            lblText3_1->setVisible( false );
+            lblText3_2->setVisible( true );
+            lblText3_3->setVisible( true );
+            ledDBRootPassword->setVisible( true );
+            ledDBRootPassword->setEnabled( true );
+            ledDBRootPassword->setFocus();
+        }
+        else
+        {
+            pbNext->setEnabled( false );
         }
     }
 }
@@ -211,7 +223,7 @@ void dlgMain::_initializePage( int p_nPage )
 void dlgMain::_initializeInstallSelection()
 //=======================================================================================
 {
-    if( _isRegKeyExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+    if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
     {
         rbInstall->setEnabled( false );
         lblTextInstall->setEnabled( false );
@@ -242,6 +254,7 @@ void dlgMain::_initializeComponentSelection()
         chkWamp->setEnabled( true );
         chkDatabase->setEnabled( true );
         chkHardware->setEnabled( true );
+        chkInternet->setEnabled( true );
         chkBelenus->setEnabled( true );
     }
     else if( m_pInstallType == rbUpdate )
@@ -262,8 +275,12 @@ void dlgMain::_initializeComponentSelection()
 void dlgMain::_initializeWampInstall()
 //=======================================================================================
 {
+    lblText3_2->setVisible( false );
+    lblText3_3->setVisible( false );
+    ledDBRootPassword->setVisible( false );
+    ledDBRootPassword->setEnabled( false );
     m_bStartWampInstall = true;
-    m_nTimer = startTimer( 1000 );
+    m_nTimer = startTimer( 500 );
 }
 //=======================================================================================
 void dlgMain::_initializeDatabaseInstall()
@@ -343,10 +360,6 @@ bool dlgMain::_processPage( int p_nPage )
 
         case 2:
             bRet = _processComponentSelection();
-            break;
-
-        case 98:
-            bRet = _processWampInstall();
             break;
 
         case 99: // Installation
@@ -432,6 +445,11 @@ bool dlgMain::_processComponentSelection()
     return true;
 }
 //=======================================================================================
+bool dlgMain::_processWampInstall()
+//=======================================================================================
+{
+}
+//=======================================================================================
 void dlgMain::on_chkWamp_clicked()
 //=======================================================================================
 {
@@ -501,21 +519,41 @@ void dlgMain::on_chkBelenus_clicked()
     _setEnableNextButton();
 }
 //=======================================================================================
-bool dlgMain::_processWampInstall()
+bool dlgMain::_processWampServerInstall()
 //=======================================================================================
 {
-    bool                bRet = true;
-    STARTUPINFO         si;
-    PROCESS_INFORMATION pi;
+    bool    bRet        = true;
+    bool    bVersion    = false;
 
-    ZeroMemory(&si,sizeof(si));
-    si.cb=sizeof(si);
-    ZeroMemory(&pi,sizeof(pi));
+    if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+    {
+        bVersion = _isRegStringMatch( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
+                                      "Inno Setup: Setup Version",
+                                      "5.2.3");
+    }
+    else
+    {
+        STARTUPINFO         si;
+        PROCESS_INFORMATION pi;
 
-    if(!CreateProcess(L"Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+        ZeroMemory(&si,sizeof(si));
+        si.cb=sizeof(si);
+        ZeroMemory(&pi,sizeof(pi));
+
+        if(!CreateProcess(L"Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+            bRet = false;
+
+        WaitForSingleObject(pi.hProcess,INFINITE);
+
+        bVersion = _isRegStringMatch( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
+                                      "Inno Setup: Setup Version",
+                                      "5.2.3");
+    }
+
+    if( !bVersion )
+    {
         bRet = false;
-
-    WaitForSingleObject(pi.hProcess,INFINITE);
+    }
 
     return bRet;
 }
@@ -523,7 +561,36 @@ bool dlgMain::_processWampInstall()
 bool dlgMain::_initializeWampServer()
 //=======================================================================================
 {
-    bool                bRet = true;
+    bool        bRet = true;
+    VRegistry   obReg;
+    QString     strPath = "";
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+    {
+        strPath = obReg.get_REG_SZ( "Inno Setup: App Path" );
+        obReg.CloseKey();
+    }
+    if( strPath.length() )
+    {
+        QString strMySQLConfig = QString( "%1\\bin\\mysql\\mysql5.1.32\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
+
+        STARTUPINFO         si;
+        PROCESS_INFORMATION pi;
+
+        ZeroMemory(&si,sizeof(si));
+        si.cb=sizeof(si);
+        ZeroMemory(&pi,sizeof(pi));
+
+        WCHAR   wsMySQLConfig[1000];
+
+        memset( wsMySQLConfig, 0, 1000 );
+        strMySQLConfig.toWCharArray( wsMySQLConfig );
+
+        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
+            bRet = false;
+
+        WaitForSingleObject(pi.hProcess,INFINITE);
+    }
 
     return bRet;
 }
@@ -595,15 +662,32 @@ void dlgMain::_refreshPages()
     m_vPages.append( CONST_PAGE_FINISH );
 }
 //=======================================================================================
-bool dlgMain::_isRegKeyExists( QString p_qsKeyName )
+bool dlgMain::_isRegPathExists( QString p_qsPath )
 //=======================================================================================
 {
     bool        bRet = false;
     VRegistry   obReg;
 
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, p_qsKeyName ) )
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, p_qsPath ) )
     {
         bRet = true;
+        obReg.CloseKey();
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue )
+//=======================================================================================
+{
+    bool        bRet = false;
+    VRegistry   obReg;
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, p_qsPath ) )
+    {
+        if( p_qsValue.compare( obReg.get_REG_SZ( p_qsKey ) ) == 0 )
+            bRet = true;
+
         obReg.CloseKey();
     }
 

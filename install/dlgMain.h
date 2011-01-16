@@ -69,6 +69,7 @@ private:
     bool             m_bProcessBelenusClient;
     bool             m_bRestartRequired;
     bool             m_bStartWampInstall;
+    bool             m_bInitializeWamp;
 
     void            _initializePage( int p_nPage );
     void            _initializeInstallSelection();
@@ -84,12 +85,14 @@ private:
     bool            _processPage( int p_nPage );
     bool            _processInstallSelection();
     bool            _processComponentSelection();
-
     bool            _processWampInstall();
+
+    bool            _processWampServerInstall();
     bool            _initializeWampServer();
 
     void            _refreshPages();
-    bool            _isRegKeyExists( QString p_qsKeyName );
+    bool            _isRegPathExists( QString p_qsPath );
+    bool            _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );
     void            _setEnableNextButton();
 
     void            _exitInstaller( bool m_bRestartPC = false );
