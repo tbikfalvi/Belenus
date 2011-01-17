@@ -12,5 +12,7 @@
         <file>40x40_database.png</file>
         <file>40x40_connection.png</file>
         <file>40x40_dbserver.png</file>
+        <file>40x40_ok.png</file>
+        <file>40x40_fail.png</file>
     </qresource>
 </RCC>

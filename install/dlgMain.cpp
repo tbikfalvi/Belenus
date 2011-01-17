@@ -77,7 +77,6 @@ void dlgMain::timerEvent(QTimerEvent *)
 {
     if( m_bStartWampInstall )
     {
-        pbNext->setEnabled( false );
         m_bStartWampInstall = false;
         killTimer( m_nTimer );
         if( _processWampServerInstall() )
@@ -108,6 +107,8 @@ void dlgMain::timerEvent(QTimerEvent *)
             ledDBRootPassword->setVisible( true );
             ledDBRootPassword->setEnabled( true );
             ledDBRootPassword->setFocus();
+            pbCheckRootPsw->setVisible( true );
+            pbCheckRootPsw->setEnabled( true );
         }
         else
         {
@@ -281,10 +282,16 @@ void dlgMain::_initializeComponentSelection()
 void dlgMain::_initializeWampInstall()
 //=======================================================================================
 {
+    pbNext->setEnabled( false );
     lblText3_2->setVisible( false );
     lblText3_3->setVisible( false );
     ledDBRootPassword->setVisible( false );
     ledDBRootPassword->setEnabled( false );
+    pbCheckRootPsw->setVisible( false );
+    pbCheckRootPsw->setEnabled( false );
+    lblText3_4->setVisible( false );
+    imgOk3->setVisible( false );
+    imgFail3->setVisible( false );
     m_bStartWampInstall = true;
     m_nTimer = startTimer( 500 );
 }
@@ -455,28 +462,50 @@ bool dlgMain::_processComponentSelection()
     return true;
 }
 //=======================================================================================
+void dlgMain::on_pbCheckRootPsw_clicked()
+//=======================================================================================
+{
+    lblText3_4->setVisible( true );
+
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( ledDBRootPassword->text() );
+
+    if( m_poDB->open() )
+    {
+        imgOk3->setVisible( true );
+        imgFail3->setVisible( false );
+        m_poDB->close();
+        pbNext->setEnabled( true );
+        ledDBRootPassword->setEnabled( false );
+        pbCheckRootPsw->setEnabled( false );
+    }
+    else
+    {
+        imgOk3->setVisible( false );
+        imgFail3->setVisible( true );
+        imgFail3->update();
+        QString strErr = tr("Error occured when trying to connect to Wamp server.\n"
+                            "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
+        QMessageBox::warning(this, "Attention", strErr );
+        pbNext->setEnabled( false );
+    }
+
+    if( m_poDB )
+    {
+        delete m_poDB;
+        m_poDB = NULL;
+    }
+}
+//=======================================================================================
 bool dlgMain::_processWampInstall()
 //=======================================================================================
 {
     bool    bRet = true;
 
-    m_poDB = new QSqlDatabase();
-
-    m_poDB->addDatabase( "QMYSQL" );
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenus" );
-    m_poDB->setUserName( "belenus" );
-    m_poDB->setPassword( ledDBRootPassword->text() );
-
-    if( (bRet = m_poDB->open()) )
-    {
-        m_poDB->close();
-    }
-    else
-    {
-        QMessageBox::warning(this, "", m_poDB->lastError().text() );
-    }
 
     return bRet;
 }

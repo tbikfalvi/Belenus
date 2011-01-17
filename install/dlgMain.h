@@ -22,7 +22,7 @@
 #include <QFile>
 #include <QSettings>
 #include <QVector>
-#include <QSqlDatabase>
+#include <QtSql>
 
 //====================================================================================
 
@@ -98,6 +98,7 @@ private:
     void            _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_pbCheckRootPsw_clicked();
     void on_chkInternet_clicked();
     void on_chkBelenus_clicked();
     void on_chkHardware_clicked();
