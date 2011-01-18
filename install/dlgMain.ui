@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -710,7 +710,7 @@
         <rect>
          <x>210</x>
          <y>140</y>
-         <width>171</width>
+         <width>160</width>
          <height>16</height>
         </rect>
        </property>
@@ -791,6 +791,277 @@
         <string>Database installation</string>
        </property>
       </widget>
+      <widget class="QLabel" name="imgOk4_1">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>38</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_ok.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgFail4_1">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>38</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_fail.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText4_1">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Creating Belenus database ...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText4_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>72</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Creating Belenus user for Belenus client application ...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgOk4_2">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>70</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_ok.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgFail4_2">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>70</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_fail.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText4_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>102</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Granting neccessary rights for Belenus user on Belenus database ...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgOk4_3">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>100</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_ok.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgFail4_3">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>100</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_fail.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText4_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>132</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Creating data tables for Belenus client application ...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgOk4_4">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>130</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_ok.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgFail4_4">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>130</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_fail.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText4_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>162</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Filling data tables with default data ...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgOk4_5">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>160</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_ok.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgFail4_5">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>160</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_fail.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <zorder>imgFail4_5</zorder>
+      <zorder>imgFail4_4</zorder>
+      <zorder>lblTitleDatabaseInstall</zorder>
+      <zorder>imgOk4_1</zorder>
+      <zorder>imgFail4_1</zorder>
+      <zorder>lblText4_1</zorder>
+      <zorder>lblText4_2</zorder>
+      <zorder>imgOk4_2</zorder>
+      <zorder>imgFail4_2</zorder>
+      <zorder>lblText4_3</zorder>
+      <zorder>imgOk4_3</zorder>
+      <zorder>imgFail4_3</zorder>
+      <zorder>lblText4_4</zorder>
+      <zorder>imgOk4_4</zorder>
+      <zorder>lblText4_5</zorder>
+      <zorder>imgOk4_5</zorder>
      </widget>
      <widget class="QWidget" name="page">
       <widget class="QLabel" name="lblTitleHardwareInstall">

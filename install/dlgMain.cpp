@@ -64,6 +64,10 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bRestartRequired      = false;
 
     m_poDB                  = NULL;
+
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+
+    m_qsSQLPath             = "";
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -292,6 +296,7 @@ void dlgMain::_initializeWampInstall()
     lblText3_4->setVisible( false );
     imgOk3->setVisible( false );
     imgFail3->setVisible( false );
+
     m_bStartWampInstall = true;
     m_nTimer = startTimer( 500 );
 }
@@ -299,6 +304,27 @@ void dlgMain::_initializeWampInstall()
 void dlgMain::_initializeDatabaseInstall()
 //=======================================================================================
 {
+
+    imgOk4_1->setVisible( false );
+    imgOk4_2->setVisible( false );
+    imgOk4_3->setVisible( false );
+    imgOk4_4->setVisible( false );
+    imgOk4_5->setVisible( false );
+    imgFail4_1->setVisible( false );
+    imgFail4_2->setVisible( false );
+    imgFail4_3->setVisible( false );
+    imgFail4_4->setVisible( false );
+    imgFail4_5->setVisible( false );
+
+    if( _processDatabaseCreate() )
+    {
+        imgOk4_1->setVisible( true );
+    }
+    else
+    {
+        imgFail4_1->setVisible( true );
+        return;
+    }
 }
 //=======================================================================================
 void dlgMain::_initializeHardwareInstall()
@@ -467,8 +493,6 @@ void dlgMain::on_pbCheckRootPsw_clicked()
 {
     lblText3_4->setVisible( true );
 
-    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
-
     m_poDB->setHostName( "localhost" );
     m_poDB->setDatabaseName( "mysql" );
     m_poDB->setUserName( "root" );
@@ -482,6 +506,7 @@ void dlgMain::on_pbCheckRootPsw_clicked()
         pbNext->setEnabled( true );
         ledDBRootPassword->setEnabled( false );
         pbCheckRootPsw->setEnabled( false );
+        m_qsRootPassword = ledDBRootPassword->text();
     }
     else
     {
@@ -492,12 +517,7 @@ void dlgMain::on_pbCheckRootPsw_clicked()
                             "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
         QMessageBox::warning(this, "Attention", strErr );
         pbNext->setEnabled( false );
-    }
-
-    if( m_poDB )
-    {
-        delete m_poDB;
-        m_poDB = NULL;
+        m_qsRootPassword = "";
     }
 }
 //=======================================================================================
@@ -634,6 +654,8 @@ bool dlgMain::_initializeWampServer()
     {
         QString strMySQLConfig = QString( "%1\\bin\\mysql\\mysql5.1.32\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
 
+        m_qsSQLPath = QString( "%1\\bin\\mysql\\mysql5.1.32\\bin\\" ).arg(strPath);
+
         STARTUPINFO         si;
         PROCESS_INFORMATION pi;
 
@@ -650,6 +672,29 @@ bool dlgMain::_initializeWampServer()
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processDatabaseCreate()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( ledDBRootPassword->text() );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( "DROP DATABASE IF EXISTS `belenusss`; CREATE DATABASE `belenusss` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
     }
 
     return bRet;

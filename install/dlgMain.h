@@ -70,6 +70,8 @@ private:
     bool                     m_bInitializeWamp;
 
     QSqlDatabase            *m_poDB;
+    QString                  m_qsRootPassword;
+    QString                  m_qsSQLPath;
 
     void            _initializePage( int p_nPage );
     void            _initializeInstallSelection();
@@ -89,6 +91,7 @@ private:
 
     bool            _processWampServerInstall();
     bool            _initializeWampServer();
+    bool            _processDatabaseCreate();
 
     void            _refreshPages();
     bool            _isRegPathExists( QString p_qsPath );
