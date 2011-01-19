@@ -24,6 +24,7 @@
 #include "db/dbpatientcardhistory.h"
 #include "db/dbledger.h"
 #include "db/dbattendance.h"
+#include "db/dbpanelstatussettings.h"
 
 #include <iostream>
 
@@ -491,10 +492,56 @@ void cFrmPanel::displayStatus()
 
     lblInfo->setText( qsInfo );
 
+    cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+    try
+    {
+        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Panelstatus settings id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            obDBPanelStatusSettings.createNew();
+            switch( m_uiStatus )
+            {
+                case 0:
+                    obDBPanelStatusSettings.setBackgroundColor( "#00ff00" );
+                    break;
+                case 1:
+                    obDBPanelStatusSettings.setBackgroundColor( "#ffff00" );
+                    break;
+                case 2:
+                    obDBPanelStatusSettings.setBackgroundColor( "#ff0000" );
+                    break;
+                case 3:
+                    obDBPanelStatusSettings.setBackgroundColor( "#ffff00" );
+                    break;
+            }
+            obDBPanelStatusSettings.setStatusFontName( "Arial" );
+            obDBPanelStatusSettings.setStatusFontSize( 18 );
+            obDBPanelStatusSettings.setStatusFontColor( "#000000" );
+            obDBPanelStatusSettings.setTimerFontName( "Arial" );
+            obDBPanelStatusSettings.setTimerFontSize( 30 );
+            obDBPanelStatusSettings.setTimerFontColor( "#000000" );
+            obDBPanelStatusSettings.setNextFontName( "Arial" );
+            obDBPanelStatusSettings.setNextFontSize( 18 );
+            obDBPanelStatusSettings.setNextFontColor( "#000000" );
+            obDBPanelStatusSettings.setInfoFontName( "Arial" );
+            obDBPanelStatusSettings.setInfoFontSize( 10 );
+            obDBPanelStatusSettings.setInfoFontColor( "#000000" );
+            obDBPanelStatusSettings.setActive( true );
+        }
+    }
+
     // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
     // stilus valtas statuszonkent
     QPalette  obFramePalette = palette();
-    switch( m_uiStatus )
+/*    switch( m_uiStatus )
     {
         case 0:
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
@@ -508,7 +555,8 @@ void cFrmPanel::displayStatus()
         case 3:
             obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
             break;
-    }
+    }*/
+    obFramePalette.setBrush( QPalette::Window, QBrush( QColor(obDBPanelStatusSettings.backgroundColor()) ) );
     setPalette( obFramePalette );
 
     QFont   obFont;
