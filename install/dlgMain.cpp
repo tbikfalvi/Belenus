@@ -325,6 +325,26 @@ void dlgMain::_initializeDatabaseInstall()
         imgFail4_1->setVisible( true );
         return;
     }
+
+    if( _processBelenusUserCreate() )
+    {
+        imgOk4_2->setVisible( true );
+    }
+    else
+    {
+        imgFail4_2->setVisible( true );
+        return;
+    }
+
+    if( _processBelenusUserRights() )
+    {
+        imgOk4_3->setVisible( true );
+    }
+    else
+    {
+        imgFail4_3->setVisible( true );
+        return;
+    }
 }
 //=======================================================================================
 void dlgMain::_initializeHardwareInstall()
@@ -689,9 +709,83 @@ bool dlgMain::_processDatabaseCreate()
 
     if( m_poDB->open() )
     {
-        m_poDB->exec( "DROP DATABASE IF EXISTS `belenusss`; CREATE DATABASE `belenusss` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
+        m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
         m_poDB->close();
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setUserName( "root" );
+        m_poDB->setPassword( ledDBRootPassword->text() );
+
+        if( m_poDB->open() )
+            m_poDB->close();
+        else
+            bRet = false;
     }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusUserCreate()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( ledDBRootPassword->text() );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( "CREATE USER 'belenus'@'localhost' IDENTIFIED BY 'belenus';" );
+        m_poDB->close();
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setUserName( "belenus" );
+        m_poDB->setPassword( "belenus" );
+
+        if( m_poDB->open() )
+            m_poDB->close();
+        else
+            bRet = false;    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusUserRights()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( ledDBRootPassword->text() );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenus` . * TO 'belenus'@'localhost' WITH GRANT OPTION;" );
+        m_poDB->close();
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setUserName( "belenus" );
+        m_poDB->setPassword( "belenus" );
+
+        if( m_poDB->open() )
+            m_poDB->close();
+        else
+            bRet = false;    }
     else
     {
         bRet = false;

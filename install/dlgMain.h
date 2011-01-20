@@ -92,6 +92,8 @@ private:
     bool            _processWampServerInstall();
     bool            _initializeWampServer();
     bool            _processDatabaseCreate();
+    bool            _processBelenusUserCreate();
+    bool            _processBelenusUserRights();
 
     void            _refreshPages();
     bool            _isRegPathExists( QString p_qsPath );
