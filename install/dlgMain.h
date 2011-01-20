@@ -71,36 +71,36 @@ private:
 
     QSqlDatabase            *m_poDB;
     QString                  m_qsRootPassword;
-    QString                  m_qsSQLPath;
 
-    void            _initializePage( int p_nPage );
-    void            _initializeInstallSelection();
-    void            _initializeComponentSelection();
-    void            _initializeWampInstall();
-    void            _initializeDatabaseInstall();
-    void            _initializeHardwareInstall();
-    void            _initializeInternetInstall();
-    void            _initializeClientInstall();
-    void            _initializeInstallProcess();
-    void            _initializeFinishPage();
+    void                    _initializePage( int p_nPage );
+    void                    _initializeInstallSelection();
+    void                    _initializeComponentSelection();
+    void                    _initializeWampInstall();
+    void                    _initializeDatabaseInstall();
+    void                    _initializeHardwareInstall();
+    void                    _initializeInternetInstall();
+    void                    _initializeClientInstall();
+    void                    _initializeInstallProcess();
+    void                    _initializeFinishPage();
 
-    bool            _processPage( int p_nPage );
-    bool            _processInstallSelection();
-    bool            _processComponentSelection();
-    bool            _processWampInstall();
+    bool                    _processPage( int p_nPage );
+    bool                    _processInstallSelection();
+    bool                    _processComponentSelection();
+    bool                    _processWampInstall();
 
-    bool            _processWampServerInstall();
-    bool            _initializeWampServer();
-    bool            _processDatabaseCreate();
-    bool            _processBelenusUserCreate();
-    bool            _processBelenusUserRights();
+    bool                    _processWampServerInstall();
+    bool                    _initializeWampServer();
+    bool                    _processDatabaseCreate();
+    bool                    _processBelenusUserCreate();
+    bool                    _processBelenusUserRights();
+    bool                    _processBelenusTablesCreate();
 
-    void            _refreshPages();
-    bool            _isRegPathExists( QString p_qsPath );
-    bool            _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );
-    void            _setEnableNextButton();
+    void                    _refreshPages();
+    bool                    _isRegPathExists( QString p_qsPath );
+    bool                    _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );
+    void                    _setEnableNextButton();
 
-    void            _exitInstaller( bool m_bRestartPC = false );
+    void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
     void on_pbCheckRootPsw_clicked();

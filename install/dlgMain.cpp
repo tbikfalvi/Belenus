@@ -66,8 +66,6 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_poDB                  = NULL;
 
     m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
-
-    m_qsSQLPath             = "";
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -343,6 +341,16 @@ void dlgMain::_initializeDatabaseInstall()
     else
     {
         imgFail4_3->setVisible( true );
+        return;
+    }
+
+    if( _processBelenusTablesCreate() )
+    {
+        imgOk4_4->setVisible( true );
+    }
+    else
+    {
+        imgFail4_4->setVisible( true );
         return;
     }
 }
@@ -674,8 +682,6 @@ bool dlgMain::_initializeWampServer()
     {
         QString strMySQLConfig = QString( "%1\\bin\\mysql\\mysql5.1.32\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
 
-        m_qsSQLPath = QString( "%1\\bin\\mysql\\mysql5.1.32\\bin\\" ).arg(strPath);
-
         STARTUPINFO         si;
         PROCESS_INFORMATION pi;
 
@@ -705,17 +711,17 @@ bool dlgMain::_processDatabaseCreate()
     m_poDB->setHostName( "localhost" );
     m_poDB->setDatabaseName( "mysql" );
     m_poDB->setUserName( "root" );
-    m_poDB->setPassword( ledDBRootPassword->text() );
+    m_poDB->setPassword( m_qsRootPassword );
 
     if( m_poDB->open() )
     {
-        m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
+        m_poDB->exec( "DROP DATABASE IF EXISTS `belenusss`; CREATE DATABASE `belenusss` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
         m_poDB->close();
 
         m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setDatabaseName( "belenusss" );
         m_poDB->setUserName( "root" );
-        m_poDB->setPassword( ledDBRootPassword->text() );
+        m_poDB->setPassword( m_qsRootPassword );
 
         if( m_poDB->open() )
             m_poDB->close();
@@ -734,26 +740,28 @@ bool dlgMain::_processBelenusUserCreate()
 //=======================================================================================
 {
     bool        bRet = true;
+    QSqlQuery   poQuery;
 
     m_poDB->setHostName( "localhost" );
     m_poDB->setDatabaseName( "mysql" );
     m_poDB->setUserName( "root" );
-    m_poDB->setPassword( ledDBRootPassword->text() );
+    m_poDB->setPassword( m_qsRootPassword );
 
     if( m_poDB->open() )
     {
-        m_poDB->exec( "CREATE USER 'belenus'@'localhost' IDENTIFIED BY 'belenus';" );
+        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenusss';" );
+        if( !poQuery.first() )
+            m_poDB->exec( "DROP USER 'belenusss'@'localhost';" );
+
+        m_poDB->exec( "CREATE USER 'belenusss'@'localhost' IDENTIFIED BY 'belenus';" );
+
+        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenusss';" );
+        if( !poQuery.first() )
+        {
+            bRet = false;
+        }
         m_poDB->close();
-
-        m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenus" );
-        m_poDB->setUserName( "belenus" );
-        m_poDB->setPassword( "belenus" );
-
-        if( m_poDB->open() )
-            m_poDB->close();
-        else
-            bRet = false;    }
+    }
     else
     {
         bRet = false;
@@ -770,22 +778,65 @@ bool dlgMain::_processBelenusUserRights()
     m_poDB->setHostName( "localhost" );
     m_poDB->setDatabaseName( "mysql" );
     m_poDB->setUserName( "root" );
-    m_poDB->setPassword( ledDBRootPassword->text() );
+    m_poDB->setPassword( m_qsRootPassword );
 
     if( m_poDB->open() )
     {
-        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenus` . * TO 'belenus'@'localhost' WITH GRANT OPTION;" );
+        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenusss` . * TO 'belenusss'@'localhost' WITH GRANT OPTION;" );
         m_poDB->close();
 
         m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenus" );
-        m_poDB->setUserName( "belenus" );
+        m_poDB->setDatabaseName( "belenusss" );
+        m_poDB->setUserName( "belenusss" );
         m_poDB->setPassword( "belenus" );
 
         if( m_poDB->open() )
             m_poDB->close();
         else
-            bRet = false;    }
+            bRet = false;
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusTablesCreate()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenusss" );
+    m_poDB->setUserName( "belenusss" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        QFile file("sql/db_create.sql");
+
+        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+            return false;
+
+        QString qsSQLCommand = "";
+        QTextStream in(&file);
+        while( !in.atEnd() )
+        {
+            QString line = in.readLine();
+
+            qsSQLCommand.append( line );
+            if( line.contains( QChar(';') ))
+            {
+                m_poDB->exec( qsSQLCommand );
+                qsSQLCommand = "";
+            }
+        }
+        file.close();
+
+        m_poDB->close();
+    }
     else
     {
         bRet = false;
