@@ -1046,22 +1046,35 @@
         <bool>true</bool>
        </property>
       </widget>
-      <zorder>imgFail4_5</zorder>
-      <zorder>imgFail4_4</zorder>
-      <zorder>lblTitleDatabaseInstall</zorder>
-      <zorder>imgOk4_1</zorder>
-      <zorder>imgFail4_1</zorder>
-      <zorder>lblText4_1</zorder>
-      <zorder>lblText4_2</zorder>
-      <zorder>imgOk4_2</zorder>
-      <zorder>imgFail4_2</zorder>
-      <zorder>lblText4_3</zorder>
-      <zorder>imgOk4_3</zorder>
-      <zorder>imgFail4_3</zorder>
-      <zorder>lblText4_4</zorder>
-      <zorder>imgOk4_4</zorder>
-      <zorder>lblText4_5</zorder>
-      <zorder>imgOk4_5</zorder>
+      <widget class="QLabel" name="lblText4_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>210</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Overall process</string>
+       </property>
+      </widget>
+      <widget class="QProgressBar" name="prbDBInstall">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>230</y>
+         <width>530</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>146</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="page">
       <widget class="QLabel" name="lblTitleHardwareInstall">

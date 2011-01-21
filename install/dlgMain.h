@@ -68,6 +68,7 @@ private:
     bool                     m_bRestartRequired;
     bool                     m_bStartWampInstall;
     bool                     m_bInitializeWamp;
+    bool                     m_bCreateDatabase;
 
     QSqlDatabase            *m_poDB;
     QString                  m_qsRootPassword;
@@ -94,6 +95,7 @@ private:
     bool                    _processBelenusUserCreate();
     bool                    _processBelenusUserRights();
     bool                    _processBelenusTablesCreate();
+    bool                    _processBelenusTablesFill();
 
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );

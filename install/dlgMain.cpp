@@ -60,6 +60,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
 
     m_bStartWampInstall     = false;
     m_bInitializeWamp       = false;
+    m_bCreateDatabase       = false;
 
     m_bRestartRequired      = false;
 
@@ -79,12 +80,13 @@ void dlgMain::timerEvent(QTimerEvent *)
 {
     if( m_bStartWampInstall )
     {
+        pbNext->setEnabled( false );
         m_bStartWampInstall = false;
         killTimer( m_nTimer );
         if( _processWampServerInstall() )
         {
             m_bInitializeWamp = true;
-            m_nTimer = startTimer( 500 );
+            m_nTimer = startTimer( 200 );
         }
         else
         {
@@ -93,16 +95,15 @@ void dlgMain::timerEvent(QTimerEvent *)
                                      "Please try to reinstall it with going back one page "
                                      "then return to this page.\n\n"
                                      "If Wamp install continuously fails please contact Belenus software support.") );
-            pbNext->setEnabled( false );
         }
     }
     else if( m_bInitializeWamp )
     {
+        pbNext->setEnabled( false );
         m_bInitializeWamp = false;
         killTimer( m_nTimer );
         if( _initializeWampServer() )
         {
-            pbNext->setEnabled( true );
             lblText3_1->setVisible( false );
             lblText3_2->setVisible( true );
             lblText3_3->setVisible( true );
@@ -115,6 +116,60 @@ void dlgMain::timerEvent(QTimerEvent *)
         else
         {
             pbNext->setEnabled( false );
+        }
+    }
+    else if( m_bCreateDatabase )
+    {
+        m_bCreateDatabase = false;
+
+        if( _processDatabaseCreate() )
+        {
+            imgOk4_1->setVisible( true );
+        }
+        else
+        {
+            imgFail4_1->setVisible( true );
+            return;
+        }
+
+        if( _processBelenusUserCreate() )
+        {
+            imgOk4_2->setVisible( true );
+        }
+        else
+        {
+            imgFail4_2->setVisible( true );
+            return;
+        }
+
+        if( _processBelenusUserRights() )
+        {
+            imgOk4_3->setVisible( true );
+        }
+        else
+        {
+            imgFail4_3->setVisible( true );
+            return;
+        }
+
+        if( _processBelenusTablesCreate() )
+        {
+            imgOk4_4->setVisible( true );
+        }
+        else
+        {
+            imgFail4_4->setVisible( true );
+            return;
+        }
+
+        if( _processBelenusTablesFill() )
+        {
+            imgOk4_5->setVisible( true );
+        }
+        else
+        {
+            imgFail4_5->setVisible( true );
+            return;
         }
     }
 }
@@ -296,13 +351,12 @@ void dlgMain::_initializeWampInstall()
     imgFail3->setVisible( false );
 
     m_bStartWampInstall = true;
-    m_nTimer = startTimer( 500 );
+    m_nTimer = startTimer( 200 );
 }
 //=======================================================================================
 void dlgMain::_initializeDatabaseInstall()
 //=======================================================================================
 {
-
     imgOk4_1->setVisible( false );
     imgOk4_2->setVisible( false );
     imgOk4_3->setVisible( false );
@@ -314,45 +368,8 @@ void dlgMain::_initializeDatabaseInstall()
     imgFail4_4->setVisible( false );
     imgFail4_5->setVisible( false );
 
-    if( _processDatabaseCreate() )
-    {
-        imgOk4_1->setVisible( true );
-    }
-    else
-    {
-        imgFail4_1->setVisible( true );
-        return;
-    }
-
-    if( _processBelenusUserCreate() )
-    {
-        imgOk4_2->setVisible( true );
-    }
-    else
-    {
-        imgFail4_2->setVisible( true );
-        return;
-    }
-
-    if( _processBelenusUserRights() )
-    {
-        imgOk4_3->setVisible( true );
-    }
-    else
-    {
-        imgFail4_3->setVisible( true );
-        return;
-    }
-
-    if( _processBelenusTablesCreate() )
-    {
-        imgOk4_4->setVisible( true );
-    }
-    else
-    {
-        imgFail4_4->setVisible( true );
-        return;
-    }
+    m_bCreateDatabase = true;
+    m_nTimer = startTimer( 200 );
 }
 //=======================================================================================
 void dlgMain::_initializeHardwareInstall()
@@ -724,7 +741,12 @@ bool dlgMain::_processDatabaseCreate()
         m_poDB->setPassword( m_qsRootPassword );
 
         if( m_poDB->open() )
+        {
             m_poDB->close();
+            prbDBInstall->setValue( prbDBInstall->value()+1 );
+            prbDBInstall->update();
+            Sleep(50);
+        }
         else
             bRet = false;
     }
@@ -760,6 +782,12 @@ bool dlgMain::_processBelenusUserCreate()
         {
             bRet = false;
         }
+        else
+        {
+            prbDBInstall->setValue( prbDBInstall->value()+1 );
+            prbDBInstall->update();
+            Sleep(50);
+        }
         m_poDB->close();
     }
     else
@@ -791,9 +819,16 @@ bool dlgMain::_processBelenusUserRights()
         m_poDB->setPassword( "belenus" );
 
         if( m_poDB->open() )
+        {
+            prbDBInstall->setValue( prbDBInstall->value()+1 );
+            prbDBInstall->update();
+            Sleep(50);
             m_poDB->close();
+        }
         else
+        {
             bRet = false;
+        }
     }
     else
     {
@@ -830,6 +865,54 @@ bool dlgMain::_processBelenusTablesCreate()
             if( line.contains( QChar(';') ))
             {
                 m_poDB->exec( qsSQLCommand );
+                prbDBInstall->setValue( prbDBInstall->value()+1 );
+                prbDBInstall->update();
+                Sleep(50);
+                qsSQLCommand = "";
+            }
+        }
+        file.close();
+
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusTablesFill()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenusss" );
+    m_poDB->setUserName( "belenusss" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        QFile file("sql/db_fill.sql");
+
+        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+            return false;
+
+        QString qsSQLCommand = "";
+        QTextStream in(&file);
+        while( !in.atEnd() )
+        {
+            QString line = in.readLine();
+
+            qsSQLCommand.append( line );
+            if( line.contains( QChar(';') ))
+            {
+                m_poDB->exec( qsSQLCommand );
+                prbDBInstall->setValue( prbDBInstall->value()+1 );
+                prbDBInstall->update();
+                Sleep(50);
                 qsSQLCommand = "";
             }
         }
