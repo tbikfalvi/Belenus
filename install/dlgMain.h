@@ -60,6 +60,9 @@ private:
     QVector<int>             m_vPages;
     int                      m_nCurrentPage;
     QRadioButton            *m_pInstallType;
+
+    bool                     m_bInstallStarted;         // Identifies if install process started
+                                                        // true after component selection
     bool                     m_bProcessWamp;
     bool                     m_bProcessDatabase;
     bool                     m_bProcessHWConnection;
@@ -69,6 +72,7 @@ private:
     bool                     m_bStartWampInstall;
     bool                     m_bInitializeWamp;
     bool                     m_bCreateDatabase;
+    bool                     m_bDatabaseInstalled;
 
     QSqlDatabase            *m_poDB;
     QString                  m_qsRootPassword;
