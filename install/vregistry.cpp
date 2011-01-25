@@ -333,11 +333,13 @@ namespace voidrealms
             LPCTSTR mValueName = VQTConvert::QString_To_LPCTSTR(ValueName);
             DWORD mType = REG_MULTI_SZ;
             BYTE* mBuffer = QueryValue(mValueName, mType);
-            WCHAR* mItems =(WCHAR*)mBuffer;
+//            WCHAR* mItems =(WCHAR*)mBuffer;
+            CHAR* mItems =(CHAR*)mBuffer;
             while(*mItems != '\0')
             {
                 //mItems is the current string
-                QString mRet =  VQTConvert::WCHAR_to_QString(mItems);
+//                QString mRet =  VQTConvert::WCHAR_to_QString(mItems);
+                QString mRet =  VQTConvert::Char_To_QString(mItems);
                 mList.append(mRet);
                 mItems = mItems + lstrlen(mItems); // pStr now points to null at end of string
                 mItems++; // pStr now points to the next string, or the second null to terminate
@@ -415,12 +417,14 @@ namespace voidrealms
             do
             {
                 DWORD dwSize = 255;
-                WCHAR* pBuffer = new WCHAR[dwSize];
+//                WCHAR* pBuffer = new WCHAR[dwSize];
+                CHAR* pBuffer = new CHAR[dwSize];
 
                 lResult = RegEnumKeyEx(this->mKey,lNumber, pBuffer, &dwSize,NULL,NULL,NULL,NULL);
                 if(lResult == ERROR_SUCCESS)
                 {
-                    QString mRet =  VQTConvert::WCHAR_to_QString(pBuffer);
+//                    QString mRet =  VQTConvert::WCHAR_to_QString(pBuffer);
+                    QString mRet =  VQTConvert::Char_To_QString(pBuffer);
                     mList.append(mRet);
                 }
                 else
@@ -447,11 +451,13 @@ namespace voidrealms
             do
             {
                 DWORD dwSize = 16383;
-                WCHAR* pBuffer = new WCHAR[dwSize];
+//                WCHAR* pBuffer = new WCHAR[dwSize];
+                CHAR* pBuffer = new CHAR[dwSize];
                 lResult = RegEnumValue(this->mKey,lNumber, pBuffer, &dwSize,NULL,NULL,NULL,NULL);
                 if(lResult == ERROR_SUCCESS)
                 {
-                    QString mRet =  VQTConvert::WCHAR_to_QString(pBuffer);
+//                    QString mRet =  VQTConvert::WCHAR_to_QString(pBuffer);
+                    QString mRet =  VQTConvert::Char_To_QString(pBuffer);
                     mList.append(mRet);
                 }
                 else

@@ -24,6 +24,7 @@
 
 #include "dlgMain.h"
 #include "ui_dlgMain.h"
+#include "../client/communication_serial.h"
 
 //=======================================================================================
 
@@ -69,14 +70,16 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bRestartRequired      = false;
 
     m_poDB                  = NULL;
+    m_poDB                  = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
 
-    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+    m_poHardware            = NULL;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
 //=======================================================================================
 {
-    if( m_poDB ) delete m_poDB;
+    if( m_poDB != NULL )        delete m_poDB;
+    if( m_poHardware != NULL )  delete m_poHardware;
 }
 //=======================================================================================
 void dlgMain::on_pbCancel_clicked()
@@ -297,7 +300,26 @@ void dlgMain::_initializeDatabaseInstall()
 void dlgMain::_initializeHardwareInstall()
 //=======================================================================================
 {
-    _fillAvailableComPorts();
+    m_poHardware = new CS_Communication_Serial();
+
+    if( m_poHardware != NULL )
+    {
+        _fillAvailableComPorts();
+    }
+    else
+    {
+        QMessageBox::critical( this, tr("Error"), tr("System error.") );
+        pbNext->setEnabled( false );
+    }
+    lblText5_3->setVisible( false );
+    imgFail5_1->setVisible( false );
+    imgOk5_1->setVisible( false );
+    lblText5_4->setVisible( false );
+    ledPanelsAvailable->setVisible( false );
+    lblText5_5->setVisible( false );
+    lblText5_6->setVisible( false );
+    ledPanelsInstalled->setVisible( false );
+    ledPanelsInstalled->setEnabled( false );
 }
 //=======================================================================================
 void dlgMain::_initializeInternetInstall()
@@ -473,6 +495,13 @@ bool dlgMain::_processPage( int p_nPage )
             bRet = _processWampInstall();
             break;
 
+        case 4:
+            bRet = _processDatabaseInstall();
+            break;
+
+        case 5:
+            bRet = _processHardwareInstall();
+
         case 99: // Installation
         {
             m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
@@ -546,6 +575,34 @@ bool dlgMain::_processWampInstall()
     return bRet;
 }
 //=======================================================================================
+bool dlgMain::_processDatabaseInstall()
+//=======================================================================================
+{
+    bool    bRet = true;
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processHardwareInstall()
+//=======================================================================================
+{
+    bool    bRet = true;
+
+    if( cmbCOMPorts->currentIndex() == 0 )
+    {
+        QMessageBox::information( this, tr("Information"),
+                                  tr("There is no COM port selected for hardware unit communication.\n"
+                                     "The Belenus client will be installed in DEMO mode.\n") );
+    }
+    if( m_poHardware != NULL )
+    {
+        delete m_poHardware;
+        m_poHardware = NULL;
+    }
+
+    return bRet;
+}
+//=======================================================================================
 bool dlgMain::_processWampServerInstall()
 //=======================================================================================
 {
@@ -567,7 +624,7 @@ bool dlgMain::_processWampServerInstall()
         si.cb=sizeof(si);
         ZeroMemory(&pi,sizeof(pi));
 
-        if(!CreateProcess(L"Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess("Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);
@@ -925,7 +982,6 @@ void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
 void dlgMain::on_pbTestHWConnection_clicked()
 //=======================================================================================
 {
-
 }
 //=======================================================================================
 void dlgMain::on_pbExitRestart_clicked()
@@ -941,7 +997,7 @@ bool dlgMain::_initializeWampServer()
     VRegistry   obReg;
     QString     strPath = "";
 
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
     {
         strPath = obReg.get_REG_SZ( "Inno Setup: App Path" );
         obReg.CloseKey();
@@ -962,7 +1018,8 @@ bool dlgMain::_initializeWampServer()
         memset( wsMySQLConfig, 0, 1000 );
         strMySQLConfig.toWCharArray( wsMySQLConfig );
 
-        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
+//        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess(strMySQLConfig.toStdString().c_str(),NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);
@@ -1079,5 +1136,11 @@ void dlgMain::_fillAvailableComPorts()
     cmbCOMPorts->clear();
 
     cmbCOMPorts->addItem( tr("<Not selected>") );
+    for( int i=0; i<m_poHardware->getCountAvailablePorts(); i++ )
+    {
+        QString qsCOM = QString( "COM%1" ).arg( m_poHardware->getComPort(i) );
+
+        cmbCOMPorts->addItem( qsCOM );
+    }
 }
 //=======================================================================================

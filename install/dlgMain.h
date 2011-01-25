@@ -27,6 +27,7 @@
 //====================================================================================
 
 #include "ui_dlgMain.h"
+#include "../client/communication.h"
 
 //====================================================================================
 
@@ -77,6 +78,8 @@ private:
     QSqlDatabase            *m_poDB;
     QString                  m_qsRootPassword;
 
+    CS_Communication        *m_poHardware;
+
     void                    _initializePage( int p_nPage );
     void                    _initializeInstallSelection();
     void                    _initializeComponentSelection();
@@ -92,6 +95,8 @@ private:
     bool                    _processInstallSelection();
     bool                    _processComponentSelection();
     bool                    _processWampInstall();
+    bool                    _processDatabaseInstall();
+    bool                    _processHardwareInstall();
 
     bool                    _processWampServerInstall();
     bool                    _initializeWampServer();
