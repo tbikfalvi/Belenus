@@ -297,6 +297,7 @@ void dlgMain::_initializeDatabaseInstall()
 void dlgMain::_initializeHardwareInstall()
 //=======================================================================================
 {
+    _fillAvailableComPorts();
 }
 //=======================================================================================
 void dlgMain::_initializeInternetInstall()
@@ -541,7 +542,6 @@ bool dlgMain::_processWampInstall()
 //=======================================================================================
 {
     bool    bRet = true;
-
 
     return bRet;
 }
@@ -913,6 +913,21 @@ void dlgMain::on_chkBelenus_clicked()
     _setEnableNextButton();
 }
 //=======================================================================================
+void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
+//=======================================================================================
+{
+    if( cmbCOMPorts->currentIndex() )
+        pbTestHWConnection->setEnabled( true );
+    else
+        pbTestHWConnection->setEnabled( false );
+}
+//=======================================================================================
+void dlgMain::on_pbTestHWConnection_clicked()
+//=======================================================================================
+{
+
+}
+//=======================================================================================
 void dlgMain::on_pbExitRestart_clicked()
 //=======================================================================================
 {
@@ -1056,5 +1071,13 @@ void dlgMain::_setEnableNextButton()
         pbNext->setEnabled( false );
     else
         pbNext->setEnabled( true );
+}
+//=======================================================================================
+void dlgMain::_fillAvailableComPorts()
+//=======================================================================================
+{
+    cmbCOMPorts->clear();
+
+    cmbCOMPorts->addItem( tr("<Not selected>") );
 }
 //=======================================================================================

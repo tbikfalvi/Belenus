@@ -105,10 +105,13 @@ private:
     bool                    _isRegPathExists( QString p_qsPath );
     bool                    _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );
     void                    _setEnableNextButton();
+    void                    _fillAvailableComPorts();
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_pbTestHWConnection_clicked();
+    void on_cmbCOMPorts_currentIndexChanged(int index);
     void on_pbCheckRootPsw_clicked();
     void on_chkInternet_clicked();
     void on_chkBelenus_clicked();

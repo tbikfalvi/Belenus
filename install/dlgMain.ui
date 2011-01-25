@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -721,7 +721,7 @@
       <widget class="QLabel" name="imgOk3">
        <property name="geometry">
         <rect>
-         <x>370</x>
+         <x>480</x>
          <y>138</y>
          <width>20</width>
          <height>20</height>
@@ -740,7 +740,7 @@
       <widget class="QLabel" name="imgFail3">
        <property name="geometry">
         <rect>
-         <x>370</x>
+         <x>480</x>
          <y>138</y>
          <width>20</width>
          <height>20</height>
@@ -1095,6 +1095,174 @@
        </property>
        <property name="text">
         <string>Hardware connection installation</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText5_1">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>491</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Please select the desired COM port from the list below:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText5_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>130</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Available COM ports :</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cmbCOMPorts">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>70</y>
+         <width>110</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pbTestHWConnection">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>70</y>
+         <width>181</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Test hardware connection</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText5_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>300</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Hardware unit available on the selected COM port ...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgOk5_1">
+       <property name="geometry">
+        <rect>
+         <x>490</x>
+         <y>110</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_ok.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgFail5_1">
+       <property name="geometry">
+        <rect>
+         <x>490</x>
+         <y>110</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_fail.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText5_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>300</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Number of available panels on hardware unit : </string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ledPanelsAvailable">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>150</y>
+         <width>40</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText5_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>190</y>
+         <width>560</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Enter the field below the number of panels installed on place:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText5_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>220</y>
+         <width>120</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Number of panels : </string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ledPanelsInstalled">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>220</y>
+         <width>40</width>
+         <height>20</height>
+        </rect>
        </property>
       </widget>
      </widget>
