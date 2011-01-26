@@ -2,7 +2,7 @@
 #define DLGATTENDANCEEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlgattendanceedit.h"
+#include "ui_dlgattendanceedit.h"
 #include "../db/dbattendance.h"
 #include "db/dbpostponed.h"
 

@@ -2,7 +2,7 @@
 #define DLGPANELSTATUSESEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlgpanelstatusesedit.h"
+#include "ui_dlgpanelstatusesedit.h"
 #include "../db/dbpanelstatuses.h"
 
 class cDlgPanelStatusesEdit : public QDialog, protected Ui::dlgPanelStatusesEdit

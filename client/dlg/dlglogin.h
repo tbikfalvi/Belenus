@@ -1,7 +1,7 @@
 #ifndef DLGLOGIN_H
 #define DLGLOGIN_H
 
-#include "../ui_dlglogin.h"
+#include "ui_dlglogin.h"
 #include "../../framework/qtmysqlquerymodel.h"
 
 class cDlgLogIn : public QDialog, private Ui::dlgLogIn

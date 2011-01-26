@@ -2,7 +2,7 @@
 #define CDLGHARDWARETEST_H
 
 #include "belenus.h"
-#include "../ui_dlghardwaretest.h"
+#include "ui_dlghardwaretest.h"
 
 class cDlgHardwareTest : public QDialog, private Ui::dlgHardwaretest
 {

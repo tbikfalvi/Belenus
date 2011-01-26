@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDADD_H
 
 #include "../belenus.h"
-#include "../ui_dlgpatientcardadd.h"
+#include "ui_dlgpatientcardadd.h"
 #include "../db/dbpatientcard.h"
 
 class cDlgPatientCardAdd : public QDialog, protected Ui::dlgPatientCardAdd

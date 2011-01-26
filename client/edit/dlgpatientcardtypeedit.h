@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDTYPEEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlgpatientcardtypeedit.h"
+#include "ui_dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcardtype.h"
 
 class cDlgPatientCardTypeEdit : public QDialog, protected Ui::dlgPatientCardTypeEdit

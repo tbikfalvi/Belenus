@@ -2,7 +2,7 @@
 #define DLGCASSAACTION_H
 
 #include "../belenus.h"
-#include "../ui_dlgcassaaction.h"
+#include "ui_dlgcassaaction.h"
 
 class cDlgCassaAction : public QDialog, protected Ui::dlgCassaAction
 {

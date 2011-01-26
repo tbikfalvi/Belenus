@@ -2,7 +2,7 @@
 #define DLGHEALTHINSURANCEEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlghealthinsuranceedit.h"
+#include "ui_dlghealthinsuranceedit.h"
 #include "../db/dbhealthinsurance.h"
 
 class cDlgHealthInsuranceEdit : public QDialog, protected Ui::dlgHealthInsuranceEdit
