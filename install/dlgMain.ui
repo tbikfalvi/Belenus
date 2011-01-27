@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -1110,45 +1110,6 @@
         <string>Please select the desired COM port from the list below:</string>
        </property>
       </widget>
-      <widget class="QLabel" name="lblText5_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>70</y>
-         <width>130</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Available COM ports :</string>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="cmbCOMPorts">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>70</y>
-         <width>110</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pbTestHWConnection">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>260</x>
-         <y>70</y>
-         <width>181</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Test hardware connection</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="lblText5_3">
        <property name="geometry">
         <rect>
@@ -1239,7 +1200,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Enter the field below the number of panels installed on place:</string>
+        <string>Enter the field below the number of panels installed on place.</string>
        </property>
       </widget>
       <widget class="QLabel" name="lblText5_6">
@@ -1256,6 +1217,9 @@
        </property>
       </widget>
       <widget class="QLineEdit" name="ledPanelsInstalled">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>140</x>
@@ -1264,6 +1228,51 @@
          <height>20</height>
         </rect>
        </property>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>561</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="lblText5_2">
+          <property name="text">
+           <string>Available COM ports :</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cmbCOMPorts"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbTestHWConnection">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Test hardware connection</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QWidget" name="page_2">
@@ -1285,6 +1294,19 @@
        </property>
        <property name="text">
         <string>Internet connection installation</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText6_1">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>491</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Please fill the fields below.</string>
        </property>
       </widget>
      </widget>

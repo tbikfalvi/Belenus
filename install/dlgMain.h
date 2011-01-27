@@ -61,6 +61,9 @@ private:
     QVector<int>             m_vPages;
     int                      m_nCurrentPage;
     QRadioButton            *m_pInstallType;
+    QString                  m_qsRootPassword;
+    int                      m_nComPort;
+    int                      m_nCountDevices;
 
     bool                     m_bInstallStarted;         // Identifies if install process started
                                                         // true after component selection
@@ -76,8 +79,6 @@ private:
     bool                     m_bDatabaseInstalled;
 
     QSqlDatabase            *m_poDB;
-    QString                  m_qsRootPassword;
-
     CS_Communication        *m_poHardware;
 
     void                    _initializePage( int p_nPage );
@@ -105,6 +106,7 @@ private:
     bool                    _processBelenusUserRights();
     bool                    _processBelenusTablesCreate();
     bool                    _processBelenusTablesFill();
+    bool                    _processBelenusDeviceFill();
 
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );

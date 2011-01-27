@@ -755,7 +755,7 @@ void CS_Communication_Serial::GetAvailableCommPorts()
       HANDLE hcom;
       sprintf( channel, "COM%d", i+1 );
 
-      if( (hcom = CreateFile( channel,
+      if( (hcom = CreateFile( (WCHAR*)channel,
                               GENERIC_READ|GENERIC_WRITE,
                               0,
                               NULL,
@@ -809,7 +809,7 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
 
    if( bSync )
    {
-      m_hPort = CreateFile( portName,              // port name
+      m_hPort = CreateFile( (WCHAR*)portName,              // port name
                             GENERIC_READ | GENERIC_WRITE,  // access mode
                             0,                             // share mode
                             NULL,                          // default security attributes
@@ -819,7 +819,7 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
    }
    else
    {
-      m_hPort = CreateFile( portName,              // port name
+      m_hPort = CreateFile( (WCHAR*)portName,              // port name
                             GENERIC_READ | GENERIC_WRITE,  // access mode
                             0,                             // share mode
                             NULL,                          // default security attributes

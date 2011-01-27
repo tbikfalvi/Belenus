@@ -13,7 +13,7 @@ QT          += core gui sql
 TRANSLATIONS = setup_us.ts \
                setup_hu.ts
 
-win32:DEFINES -= UNICODE
+#win32:DEFINES -= UNICODE
 
 FORMS       += dlgMain.ui
 

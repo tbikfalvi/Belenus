@@ -73,6 +73,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_poDB                  = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
 
     m_poHardware            = NULL;
+    m_nComPort              = 0;
+    m_nCountDevices         = 0;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -308,7 +310,9 @@ void dlgMain::_initializeHardwareInstall()
     }
     else
     {
-        QMessageBox::critical( this, tr("Error"), tr("System error.") );
+        QMessageBox::critical( this, tr("Error"), tr("System error occured during COM ports initialization.\n"
+                                                     "Please restart application and/or the operating system.\n"
+                                                     "If the error continuously occures again, please contact system administrator.") );
         pbNext->setEnabled( false );
     }
     lblText5_3->setVisible( false );
@@ -320,6 +324,7 @@ void dlgMain::_initializeHardwareInstall()
     lblText5_6->setVisible( false );
     ledPanelsInstalled->setVisible( false );
     ledPanelsInstalled->setEnabled( false );
+    ledPanelsInstalled->setText( QString::number(m_nCountDevices) );
 }
 //=======================================================================================
 void dlgMain::_initializeInternetInstall()
@@ -588,12 +593,22 @@ bool dlgMain::_processHardwareInstall()
 {
     bool    bRet = true;
 
+    m_nCountDevices = ledPanelsInstalled->text().toInt();
+
     if( cmbCOMPorts->currentIndex() == 0 )
     {
         QMessageBox::information( this, tr("Information"),
                                   tr("There is no COM port selected for hardware unit communication.\n"
                                      "The Belenus client will be installed in DEMO mode.\n") );
     }
+    else if( m_nCountDevices < 1 || m_nCountDevices > ledPanelsAvailable->text().toInt() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Invalid value in number of panels field.\n"
+                                 "Please enter a valid number between 1 and %1").arg(ledPanelsAvailable->text()) );
+        bRet = false;
+    }
+
     if( m_poHardware != NULL )
     {
         delete m_poHardware;
@@ -624,7 +639,7 @@ bool dlgMain::_processWampServerInstall()
         si.cb=sizeof(si);
         ZeroMemory(&pi,sizeof(pi));
 
-        if(!CreateProcess("Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess(L"Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);
@@ -654,11 +669,11 @@ bool dlgMain::_processDatabaseCreate()
 
     if( m_poDB->open() )
     {
-        m_poDB->exec( "DROP DATABASE IF EXISTS `belenusss`; CREATE DATABASE `belenusss` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
+        m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
         m_poDB->close();
 
         m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenusss" );
+        m_poDB->setDatabaseName( "belenus" );
         m_poDB->setUserName( "root" );
         m_poDB->setPassword( m_qsRootPassword );
 
@@ -693,13 +708,13 @@ bool dlgMain::_processBelenusUserCreate()
 
     if( m_poDB->open() )
     {
-        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenusss';" );
+        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenus';" );
         if( !poQuery.first() )
-            m_poDB->exec( "DROP USER 'belenusss'@'localhost';" );
+            m_poDB->exec( "DROP USER 'belenus'@'localhost';" );
 
-        m_poDB->exec( "CREATE USER 'belenusss'@'localhost' IDENTIFIED BY 'belenus';" );
+        m_poDB->exec( "CREATE USER 'belenus'@'localhost' IDENTIFIED BY 'belenus';" );
 
-        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenusss';" );
+        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenus';" );
         if( !poQuery.first() )
         {
             bRet = false;
@@ -732,12 +747,12 @@ bool dlgMain::_processBelenusUserRights()
 
     if( m_poDB->open() )
     {
-        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenusss` . * TO 'belenusss'@'localhost' WITH GRANT OPTION;" );
+        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenus` . * TO 'belenus'@'localhost' WITH GRANT OPTION;" );
         m_poDB->close();
 
         m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenusss" );
-        m_poDB->setUserName( "belenusss" );
+        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setUserName( "belenus" );
         m_poDB->setPassword( "belenus" );
 
         if( m_poDB->open() )
@@ -766,8 +781,8 @@ bool dlgMain::_processBelenusTablesCreate()
     bool        bRet = true;
 
     m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenusss" );
-    m_poDB->setUserName( "belenusss" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
     m_poDB->setPassword( "belenus" );
 
     if( m_poDB->open() )
@@ -811,8 +826,8 @@ bool dlgMain::_processBelenusTablesFill()
     bool        bRet = true;
 
     m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenusss" );
-    m_poDB->setUserName( "belenusss" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
     m_poDB->setPassword( "belenus" );
 
     if( m_poDB->open() )
@@ -839,6 +854,35 @@ bool dlgMain::_processBelenusTablesFill()
             }
         }
         file.close();
+
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusDeviceFill()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        for( int i=0; i<m_nCountDevices; i++ )
+        {
+            QString qsSQL = QString("INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES"
+                                    "( 1, 1, \"%1 %2\", 0, 0, 1, \"ARC\" )").arg(tr("Device")).arg(i);
+            m_poDB->exec( qsSQL );
+        }
 
         m_poDB->close();
     }
@@ -974,14 +1018,58 @@ void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
 //=======================================================================================
 {
     if( cmbCOMPorts->currentIndex() )
+    {
+        m_nComPort = cmbCOMPorts->currentText().right(cmbCOMPorts->currentText().length()-3).toInt();
         pbTestHWConnection->setEnabled( true );
+        lblText5_3->setVisible( true );
+        lblText5_4->setVisible( true );
+        ledPanelsAvailable->setVisible( true );
+    }
     else
+    {
+        m_nComPort = 0;
         pbTestHWConnection->setEnabled( false );
+        lblText5_3->setVisible( false );
+        lblText5_4->setVisible( false );
+        ledPanelsAvailable->setVisible( false );
+    }
+    ledPanelsAvailable->setText( "" );
+    imgOk5_1->setVisible( false );
+    imgFail5_1->setVisible( false );
+    lblText5_5->setVisible( false );
+    lblText5_6->setVisible( false );
+    ledPanelsInstalled->setVisible( false );
+    ledPanelsInstalled->setEnabled( false );
+    ledPanelsInstalled->setText( "" );
 }
 //=======================================================================================
 void dlgMain::on_pbTestHWConnection_clicked()
 //=======================================================================================
 {
+    m_poHardware->init( m_nComPort );
+
+    if( m_poHardware->isHardwareConnected() )
+    {
+        imgOk5_1->setVisible( true );
+        imgFail5_1->setVisible( false );
+        ledPanelsAvailable->setText( QString::number(m_poHardware->getHardwareModuleCount()) );
+        lblText5_5->setVisible( true );
+        lblText5_6->setVisible( true );
+        ledPanelsInstalled->setVisible( true );
+        ledPanelsInstalled->setEnabled( true );
+    }
+    else
+    {
+        imgOk5_1->setVisible( false );
+        imgFail5_1->setVisible( true );
+        ledPanelsAvailable->setText( "N/A" );
+        lblText5_5->setVisible( false );
+        lblText5_6->setVisible( false );
+        ledPanelsInstalled->setVisible( false );
+        ledPanelsInstalled->setEnabled( false );
+    }
+    ledPanelsInstalled->setText( "" );
+    m_poHardware->closeCommunication();
 }
 //=======================================================================================
 void dlgMain::on_pbExitRestart_clicked()
@@ -1004,7 +1092,7 @@ bool dlgMain::_initializeWampServer()
     }
     if( strPath.length() )
     {
-        QString strMySQLConfig = QString( "%1\\bin\\mysql\\mysql5.1.32\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
+        QString strMySQLConfig = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
 
         STARTUPINFO         si;
         PROCESS_INFORMATION pi;
@@ -1017,9 +1105,10 @@ bool dlgMain::_initializeWampServer()
 
         memset( wsMySQLConfig, 0, 1000 );
         strMySQLConfig.toWCharArray( wsMySQLConfig );
+//QMessageBox::information(this,"",QString::fromStdWString(wsMySQLConfig));
 
-//        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
-        if(!CreateProcess(strMySQLConfig.toStdString().c_str(),NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
+//        if(!CreateProcess(strMySQLConfig.toStdString().c_str(),NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);
