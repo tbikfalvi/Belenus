@@ -1,6 +1,5 @@
 TEMPLATE = app
 FORMS = ../framework/dlgcrud.ui \
-    report/dlgpreview.ui \
     dlghardwaretest.ui \
     dlglogin.ui \
     dlglogs.ui \
@@ -128,9 +127,6 @@ HEADERS = belenus.h \
     edit/dlgdoctoredit.h \
     edit/dlgzipregioncityedit.h \
     edit/dlgdiscountedit.h \
-    report/dlgpreview.h \
-    report/reppatientcards.h \
-    report/reppatientcardsobs.h \
     bs_connection.h \
     licenceManager.h \
     communication.h \
@@ -142,12 +138,6 @@ HEADERS = belenus.h \
     cassa.h \
     ledger.h \
     crud/dlgpaneluseselect.h \
-    report/repledgermain.h \
-    report/reppatients.h \
-    report/repcassalist.h \
-    report/rep_sample_.h \
-    report/repattendance.h \
-    report/repcarduses.h \
     edit/dlglicenceedit.h \
     general.h \
     dlg/dlgprogress.h \
@@ -246,9 +236,6 @@ SOURCES = main.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
     edit/dlgdiscountedit.cpp \
-    report/reppatientcards.cpp \
-    report/reppatientcardsobs.cpp \
-    report/dlgpreview.cpp \
     bs_connection.cpp \
     licenceManager.cpp \
     communication_demo.cpp \
@@ -259,12 +246,6 @@ SOURCES = main.cpp \
     cassa.cpp \
     ledger.cpp \
     crud/dlgpaneluseselect.cpp \
-    report/repledgermain.cpp \
-    report/reppatients.cpp \
-    report/repcassalist.cpp \
-    report/rep_sample_.cpp \
-    report/repattendance.cpp \
-    report/repcarduses.cpp \
     general.cpp \
     dlg/dlgprogress.cpp \
     db/dbmirror.cpp \

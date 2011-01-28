@@ -16,14 +16,21 @@ public:
     ~cDlgPreview();
 
 protected:
-    QString       m_qsReportName;
-    QTextDocument m_tdReport;
+    QString         m_qsReportName;
+    QString         m_qsReportFileName;
+    QTextDocument   m_tdReport;
+
+    QString         intTimeToString( const int p_inTime );
+
+    void keyPressEvent( QKeyEvent *p_poEvent );
 
 protected slots:
     virtual void setReportTitle( const QString &p_qsTitle );
+    virtual void setReportFileName( const QString &p_qsFileName );
 
     virtual void refreshReport();
     virtual void printReport();
+    virtual void saveReportToFile();
 
 };
 

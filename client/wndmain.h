@@ -79,7 +79,6 @@ private slots:
     void on_action_CardTypes_triggered();
     void on_action_PCSaveToDatabase_triggered();
     void on_action_Cassa_triggered();
-    void on_action_Accounting_triggered();
     void on_action_DeviceSkipStatus_triggered();
     void on_action_PostponedPatient_triggered();
     void on_action_PostponedAttendance_triggered();
@@ -96,14 +95,8 @@ private slots:
     void on_action_Doctor_triggered();
     void on_action_HealthInsurance_triggered();
     void on_action_RegionZipCity_triggered();
-    void on_action_ReportPatients_triggered();
-    void on_action_CassaHistory_triggered();
-    void on_action_ReportAttendances_triggered();
-    void on_action_ReportPatientcardUses_triggered();
     void on_action_EditLicenceInformation_triggered();
-    void on_action_ReportPatientcards_triggered();
     void on_action_Discounts_triggered();
-    void on_action_PatientcardsObsolete_triggered();
     void on_action_SynchronizeDatabase_triggered();
     void on_action_AcquireGlobalData_triggered();
     void on_action_EstablishConnection_triggered();

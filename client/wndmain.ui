@@ -22,7 +22,7 @@
      <x>0</x>
      <y>0</y>
      <width>899</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -134,25 +134,9 @@
     <addaction name="separator"/>
     <addaction name="menuDevice"/>
    </widget>
-   <widget class="QMenu" name="menu_View_2">
-    <property name="title">
-     <string>&amp;Reports</string>
-    </property>
-    <addaction name="action_Accounting"/>
-    <addaction name="separator"/>
-    <addaction name="action_ReportPatients"/>
-    <addaction name="action_ReportAttendances"/>
-    <addaction name="separator"/>
-    <addaction name="action_ReportPatientcards"/>
-    <addaction name="action_PatientcardsObsolete"/>
-    <addaction name="action_ReportPatientcardUses"/>
-    <addaction name="separator"/>
-    <addaction name="action_CassaHistory"/>
-   </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
    <addaction name="menuAction"/>
-   <addaction name="menu_View_2"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -364,14 +348,6 @@
     <string>Activate existing ...</string>
    </property>
   </action>
-  <action name="action_Accounting">
-   <property name="text">
-    <string>Accounting ...</string>
-   </property>
-   <property name="toolTip">
-    <string>Main accounting</string>
-   </property>
-  </action>
   <action name="action_Cassa">
    <property name="text">
     <string>Cassa ...</string>
@@ -498,38 +474,6 @@
     <string>Region, Zip, City ...</string>
    </property>
   </action>
-  <action name="action_ReportPatients">
-   <property name="text">
-    <string>Patients</string>
-   </property>
-   <property name="toolTip">
-    <string>Report of patients</string>
-   </property>
-  </action>
-  <action name="action_CassaHistory">
-   <property name="text">
-    <string>Cassa history</string>
-   </property>
-   <property name="toolTip">
-    <string>History of cassa actions</string>
-   </property>
-  </action>
-  <action name="action_ReportAttendances">
-   <property name="text">
-    <string>Attendances</string>
-   </property>
-   <property name="toolTip">
-    <string>Report of attendances</string>
-   </property>
-  </action>
-  <action name="action_ReportPatientcardUses">
-   <property name="text">
-    <string>Patientcard uses</string>
-   </property>
-   <property name="toolTip">
-    <string>List of patientcard uses</string>
-   </property>
-  </action>
   <action name="action_EditLicenceInformation">
    <property name="text">
     <string>Edit Licence information</string>
@@ -538,28 +482,12 @@
     <string>Edit Licence information such as Studio name, address, contact person etc.</string>
    </property>
   </action>
-  <action name="action_ReportPatientcards">
-   <property name="text">
-    <string>Patientcards</string>
-   </property>
-   <property name="toolTip">
-    <string>List of active patientcards</string>
-   </property>
-  </action>
   <action name="action_Discounts">
    <property name="text">
     <string>Discounts ...</string>
    </property>
    <property name="toolTip">
     <string>Different type of discounts</string>
-   </property>
-  </action>
-  <action name="action_PatientcardsObsolete">
-   <property name="text">
-    <string>Obsolete Patientcards</string>
-   </property>
-   <property name="toolTip">
-    <string>List of patientcards will be obsolete in the near future.</string>
    </property>
   </action>
   <action name="action_SynchronizeDatabase">

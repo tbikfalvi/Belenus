@@ -75,16 +75,6 @@
 
 //====================================================================================
 
-#include "report/repledgermain.h"
-#include "report/reppatients.h"
-#include "report/repcassalist.h"
-#include "report/repattendance.h"
-#include "report/repcarduses.h"
-#include "report/reppatientcards.h"
-#include "report/reppatientcardsobs.h"
-
-//====================================================================================
-
 extern DatabaseWriter g_obLogDBWriter;
 extern LicenceManager g_obLicenceManager;
 
@@ -182,14 +172,6 @@ cWndMain::cWndMain( QWidget *parent )
         action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
-
-    action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
-    action_ReportPatients->setIcon( QIcon("./resources/40x40_patient.png") );
-    action_ReportAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
-    action_ReportPatientcards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
-    action_PatientcardsObsolete->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
-    action_ReportPatientcardUses->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
-    action_CassaHistory->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
     action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
     action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
@@ -1220,15 +1202,6 @@ void cWndMain::on_action_Cassa_triggered()
     obDlgCassaEdit.exec();
 }
 //====================================================================================
-void cWndMain::on_action_Accounting_triggered()
-{
-    setCursor( Qt::WaitCursor);
-    cDlgRepLedgerMain  obDlgLedgerMain( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgLedgerMain.exec();
-}
-//====================================================================================
 void cWndMain::on_action_DeviceSkipStatus_triggered()
 {
     if( QMessageBox::question( this, tr("Question"),
@@ -1773,62 +1746,12 @@ void cWndMain::on_action_RegionZipCity_triggered()
     obDlgZipRegionCity.exec();
 }
 //====================================================================================
-void cWndMain::on_action_ReportPatients_triggered()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-    cDlgReportPatients  obDlgReportPatients( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportPatients.exec();
-}
-//====================================================================================
-void cWndMain::on_action_CassaHistory_triggered()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-    cDlgReportCassaList  obDlgReportCassaList( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportCassaList.exec();
-}
-//====================================================================================
-void cWndMain::on_action_ReportAttendances_triggered()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-    cDlgReportAttendance  obDlgReportAttendance( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportAttendance.exec();
-}
-//====================================================================================
-void cWndMain::on_action_ReportPatientcardUses_triggered()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-    cDlgReportCardUses  obDlgReportCardUses( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportCardUses.exec();
-}
-//====================================================================================
 void cWndMain::on_action_EditLicenceInformation_triggered()
 //====================================================================================
 {
     dlgLicenceEdit  obDlgLicenceEdit( this );
 
     obDlgLicenceEdit.exec();
-}
-//====================================================================================
-void cWndMain::on_action_ReportPatientcards_triggered()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-    cDlgReportPatientCard  obDlgReportPatientCard( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportPatientCard.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Discounts_triggered()
@@ -1839,16 +1762,6 @@ void cWndMain::on_action_Discounts_triggered()
     setCursor( Qt::ArrowCursor);
 
     obDlgDiscount.exec();
-}
-//====================================================================================
-void cWndMain::on_action_PatientcardsObsolete_triggered()
-//====================================================================================
-{
-    setCursor( Qt::WaitCursor);
-    cDlgReportPatientCardObs  obDlgReportPatientCardObs( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportPatientCardObs.exec();
 }
 //====================================================================================
 void cWndMain::on_action_SynchronizeDatabase_triggered()
