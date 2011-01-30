@@ -586,7 +586,7 @@ void cDlgMain::on_pbImportPatientCardUsages_clicked()
                 m_qsPatientCardUse += QString( " ( " );
                 m_qsPatientCardUse += QString( "NULL, " );
                 m_qsPatientCardUse += QString( "\'%1\', " ).arg( ledLicenceId->text().toInt() );
-                m_qsPatientCardUse += QString( "\"%1\", " ).arg(patientCardId(stTemp.strVonalkod));
+                m_qsPatientCardUse += QString( "\"%1\", " ).arg(/*patientCardId(*/stTemp.strVonalkod/*)*/);
                 m_qsPatientCardUse += QString( "\"%1\", " ).arg(qdtDate.toString(("yyyy-MM-dd hh:mm:ss")));
                 m_qsPatientCardUse += QString( "%1, ").arg(stTemp.nEgyseg);
                 m_qsPatientCardUse += QString( "\"00:00:00\", ");
@@ -899,6 +899,7 @@ void cDlgMain::on_pbExportToSQL_clicked()
 {
     createPCTFile();
     createPCFile();
+    createPCUFile();
 }
 //====================================================================================
 void cDlgMain::on_pbExportToPCDat_clicked()
@@ -1074,6 +1075,26 @@ bool cDlgMain::createPCFile()
 
     file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
     fputs( m_qsPatientCards.toStdString().c_str(), file );
+    fclose( file );
+
+    return bRet;
+}
+//====================================================================================
+//
+//====================================================================================
+bool cDlgMain::createPCUFile()
+{
+    FILE    *file = NULL;
+    bool    bRet = true;
+
+#ifdef __WIN32__
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("\\")?QString(""):QString("\\")) + QString( "patientcardhistory.sql" );
+#else
+    m_qsFullName = m_qsSQLPath + (!m_qsSQLPath.right(1).compare("/")?QString(""):QString("/")) + QString( "patientcardhistory.sql" );
+#endif
+
+    file = fopen( m_qsFullName.toStdString().c_str(), "wt" );
+    fputs( m_qsPatientCardUse.toStdString().c_str(), file );
     fclose( file );
 
     return bRet;

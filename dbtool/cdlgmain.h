@@ -118,6 +118,7 @@ private:
     bool            checkFile( QString p_qsFileName);
     bool            createPCTFile();
     bool            createPCFile();
+    bool            createPCUFile();
     unsigned int    patientCardId( QString p_qsBarcode );
     bool            getNextNewPatientCard();
 
