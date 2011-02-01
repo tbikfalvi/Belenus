@@ -9,6 +9,7 @@
 #include <QDialog>
 #include <QString>
 #include <QStringList>
+#include <QVector>
 
 //====================================================================================
 
@@ -62,7 +63,7 @@ typedef struct _typ_berlethasznalat
    int   nEgyseg;
 } typ_berlethasznalat;
 //====================================================================================
-class KiwiSunBerlet : public QDialog, protected Ui_KiwiSunBerlet
+class KiwiSunBerlet : public QDialog, public Ui_KiwiSunBerlet
 {
     Q_OBJECT
 
@@ -72,17 +73,27 @@ public:
 
 private:
 
-    QStringList      m_qslPCUBarcodes;
-    QString          m_qsPCUFileName;
+    QStringList                  m_qslPCUBarcodes;
+    QString                      m_qsPCFileName;
+    QString                      m_qsPCTFileName;
+    QString                      m_qsPCUFileName;
+    QVector<typ_berlet>          m_qvPatientCards;
+    QVector<typ_berlettipus>     m_qvPatientCardTypes;
 
-    void            _loadPatientCardUsages();
+    void                        _enableImportButton();
+    void                        _loadPatientCards();
+    void                        _loadPatientCardTypes();
+    void                        _loadPatientCardUsages();
 
-    void            _EnCode( char *str, int size );
-    void            _DeCode( char *str, int size );
+    void                        _EnCode( char *str, int size );
+    void                        _DeCode( char *str, int size );
 
 private slots:
-    void on_pbImportPCU_clicked();
+    void on_pbSelectPC_clicked();
+    void on_pbSelectPCT_clicked();
     void on_pbSelectPCU_clicked();
+    void on_pbImport_clicked();
+    void on_dateImportStart_dateChanged( QDate );
 };
 //====================================================================================
 

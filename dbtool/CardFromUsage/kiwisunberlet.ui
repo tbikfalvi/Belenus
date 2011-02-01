@@ -91,80 +91,198 @@
     <widget class="QListWidget" name="listLog">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>201</y>
-       <width>401</width>
-       <height>131</height>
+       <x>9</x>
+       <y>191</y>
+       <width>403</width>
+       <height>145</height>
       </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>145</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>145</height>
+      </size>
      </property>
     </widget>
-    <widget class="QPushButton" name="pbImportPCU">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>11</x>
-       <y>71</y>
-       <width>137</width>
-       <height>23</height>
+       <x>9</x>
+       <y>9</y>
+       <width>366</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="text">
-      <string>  Import PatientCard uses  </string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="lblSelectFile">
+        <property name="text">
+         <string>Select PatientCard, PatientCard Type and PatientCard usage files.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
-    <widget class="QDateEdit" name="dateImportStart">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>183</x>
-       <y>41</y>
-       <width>87</width>
-       <height>20</height>
+       <x>9</x>
+       <y>37</y>
+       <width>388</width>
+       <height>25</height>
       </rect>
      </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pbSelectPC">
+        <property name="text">
+         <string>Select PatientCard</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbSelectPCT">
+        <property name="text">
+         <string>  Select PatientCard Type  </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbSelectPCU">
+        <property name="text">
+         <string>  Select PatientCard Usage  </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QLabel" name="lblSelectDateTime">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>11</x>
-       <y>41</y>
-       <width>166</width>
-       <height>16</height>
+       <x>9</x>
+       <y>68</y>
+       <width>307</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Select start date of import process</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="lblSelectDateTime">
+        <property name="text">
+         <string>Select start date of import process</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QDateEdit" name="dateImportStart">
+        <property name="minimumSize">
+         <size>
+          <width>87</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>87</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QLabel" name="lblSelectFile">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>11</x>
-       <y>11</y>
-       <width>124</width>
-       <height>16</height>
+       <x>9</x>
+       <y>96</y>
+       <width>352</width>
+       <height>25</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Select PatientCardUse file</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pbSelectPCU">
-     <property name="geometry">
-      <rect>
-       <x>141</x>
-       <y>11</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Select</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="pbImport">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>  Import selected files  </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblPCVersion">
+        <property name="text">
+         <string>PatientCard version : </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="ledVersionPCDAT">
+        <property name="minimumSize">
+         <size>
+          <width>70</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
