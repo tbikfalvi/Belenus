@@ -505,4 +505,12 @@ client/ui_dlgdbglobals.h
 client/dlgglobals.o
 client/moc_dlgglobals.cpp
 client/moc_dlgglobals.o
-
+BelenusDBTool.exe
+BelenusInstall-build-desktop/
+Setup.exe
+Wamp/
+dbtool/KiwiSunBerlet-build-desktop/
+dbtool/KiwiSunBerlet.exe
+setup.qm
+dbtool/CardFromUsage/KiwiSunBerlet.pro.user
+dbtool/connect_pc_pcu.txt
