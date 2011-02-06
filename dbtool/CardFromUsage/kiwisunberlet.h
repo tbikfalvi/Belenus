@@ -84,6 +84,7 @@ private:
     void                        _loadPatientCards();
     void                        _loadPatientCardTypes();
     void                        _loadPatientCardUsages();
+    void                        _addToPatientCards( typ_berlethasznalat p_stPCU );
 
     void                        _EnCode( char *str, int size );
     void                        _DeCode( char *str, int size );
@@ -94,6 +95,7 @@ private slots:
     void on_pbSelectPCU_clicked();
     void on_pbImport_clicked();
     void on_dateImportStart_dateChanged( QDate );
+    void on_pbProcessPCU_clicked();
 };
 //====================================================================================
 

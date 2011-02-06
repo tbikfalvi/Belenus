@@ -114,6 +114,29 @@ void KiwiSunBerlet::on_dateImportStart_dateChanged( QDate )
     _enableImportButton();
 }
 //====================================================================================
+void KiwiSunBerlet::on_pbProcessPCU_clicked()
+//====================================================================================
+{
+    FILE    *file = NULL;
+
+    setCursor( Qt::WaitCursor);
+
+    file = fopen( "connect_pc_pcu.txt", "rt" );
+    if( file != NULL )
+    {
+        char    strLine[100];
+
+        fgets( strLine, 100 , file );
+        fclose( file );
+    }
+    else
+    {
+        listLog->addItem( tr( "Error occured during opening connect_pc_pcu.txt file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
 void KiwiSunBerlet::_enableImportButton()
 //====================================================================================
 {
@@ -278,6 +301,7 @@ void KiwiSunBerlet::_loadPatientCardUsages()
                     if( !m_qslPCUBarcodes.contains( QString(stTemp.strVonalkod) ) )
                     {
                         m_qslPCUBarcodes << QString( stTemp.strVonalkod );
+                        _addToPatientCards( stTemp );
                     }
                 }
             }
@@ -292,6 +316,33 @@ void KiwiSunBerlet::_loadPatientCardUsages()
     }
 
     setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void KiwiSunBerlet::_addToPatientCards( typ_berlethasznalat p_stPCU )
+//====================================================================================
+{
+    bool bPCFound = false;
+
+    for( int i=0; i<m_qvPatientCards.size(); i++ )
+    {
+        if( strcmp( m_qvPatientCards.at(i).strVonalkod, p_stPCU.strVonalkod ) == 0 )
+        {
+            bPCFound = true;
+        }
+    }
+
+    if( !bPCFound )
+    {
+        typ_berlet  stTemp;
+
+        memset( &stTemp, 0, sizeof(typ_berlet) );
+        strcpy( stTemp.strVonalkod, p_stPCU.strVonalkod );
+        stTemp.nErvEv   = p_stPCU.nEv + 1;
+        stTemp.nErvHo   = p_stPCU.nHo;
+        stTemp.nErvNap  = p_stPCU.nNap;
+
+        m_qvPatientCards.append( stTemp );
+    }
 }
 //====================================================================================
 void KiwiSunBerlet::_EnCode( char *str, int size )
