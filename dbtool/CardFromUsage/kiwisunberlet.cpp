@@ -125,13 +125,79 @@ void KiwiSunBerlet::on_pbProcessPCU_clicked()
     if( file != NULL )
     {
         char    strLine[100];
+        int     nCount = 0;
 
-        fgets( strLine, 100 , file );
+        while( fgets( strLine, 100 , file ) )
+        {
+            QStringList qslTemp = QString(strLine).split('\t');
+
+            QString qsBarcode   = qslTemp.at(0).simplified();
+            int     nCountUsage = qslTemp.at(1).toInt();
+            QString qsPCT       = qslTemp.at(2).simplified();
+
+            for( int i=0; i<m_qvPatientCardTypes.size(); i++ )
+            {
+                if( qsPCT.compare( QString(m_qvPatientCardTypes.at(i).strNev) ) == 0 )
+                {
+                    _fillPatientCard( qsBarcode, m_qvPatientCardTypes.at(i).nID, m_qvPatientCardTypes.at(i).nEgyseg, nCountUsage );
+                    nCount++;
+                    break;
+                }
+            }
+        }
         fclose( file );
+        listLog->addItem( tr( "%1 PatientCards usages processed." ).arg(nCount) );
+
+        _savePatientCardsToFile();
     }
     else
     {
         listLog->addItem( tr( "Error occured during opening connect_pc_pcu.txt file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void KiwiSunBerlet::on_pbCreatePC_clicked()
+//====================================================================================
+{
+    FILE    *file = NULL;
+    char     strPatiencardVersion[10];
+    int      nBerletCount = m_qvPatientCards.size();
+
+    setCursor( Qt::WaitCursor);
+
+    memset( strPatiencardVersion, 0, 10 );
+    strncpy( strPatiencardVersion, ledVersionPCDAT->text().toStdString().c_str(), 9 );
+
+    file = fopen( "brltfsv_new.dat", "wb" );
+    if( file != NULL )
+    {
+        fwrite( strPatiencardVersion, 10, 1, file );
+        fwrite( &nBerletCount, 4, 1, file );
+
+        typ_berlet   stTemp;
+
+        for( int i=0; i<m_qvPatientCards.size(); i++ )
+        {
+            stTemp = m_qvPatientCards.at(i);
+            _EnCode( stTemp.strVonalkod, 20 );
+            _EnCode( stTemp.strMegjegyzes, 50 );
+
+            fwrite( stTemp.strVonalkod, 20, 1, file );
+            fwrite( stTemp.strMegjegyzes, 50, 1, file );
+            fwrite( &stTemp.nBerletTipus, 4, 1, file );
+            fwrite( &stTemp.nEgyseg, 4, 1, file );
+            fwrite( &stTemp.nErvEv, 4, 1, file );
+            fwrite( &stTemp.nErvHo, 4, 1, file );
+            fwrite( &stTemp.nErvNap, 4, 1, file );
+            fwrite( &stTemp.nPin, 4, 1, file );
+        }
+        fclose( file );
+    }
+    else
+    {
+        listLog->addItem( tr( "Error occured during opening brltfsv_new.txt file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -298,6 +364,8 @@ void KiwiSunBerlet::_loadPatientCardUsages()
                 //listLog->addItem( tr("Date: %1  daysTo: %2").arg(qdtDate.toString("yyyy-MM-dd hh:mm")).arg(qdtDate.daysTo(dateImportStart->dateTime())) );
                 if( qdtDate.daysTo(dateImportStart->dateTime()) < 1 )
                 {
+                    m_qvPatientCardUsage.append( stTemp );
+
                     if( !m_qslPCUBarcodes.contains( QString(stTemp.strVonalkod) ) )
                     {
                         m_qslPCUBarcodes << QString( stTemp.strVonalkod );
@@ -328,6 +396,7 @@ void KiwiSunBerlet::_addToPatientCards( typ_berlethasznalat p_stPCU )
         if( strcmp( m_qvPatientCards.at(i).strVonalkod, p_stPCU.strVonalkod ) == 0 )
         {
             bPCFound = true;
+            break;
         }
     }
 
@@ -343,6 +412,80 @@ void KiwiSunBerlet::_addToPatientCards( typ_berlethasznalat p_stPCU )
 
         m_qvPatientCards.append( stTemp );
     }
+}
+//====================================================================================
+void KiwiSunBerlet::_fillPatientCard( QString p_qsBarcode, int p_nPCTId, int p_nMaxEgyseg, int p_nUsedEgyseg )
+//====================================================================================
+{
+    for( int i=0; i<m_qvPatientCards.size(); i++ )
+    {
+        if( p_qsBarcode.compare( m_qvPatientCards.at(i).strVonalkod ) == 0 )
+        {
+            m_qvPatientCards[i].nBerletTipus = p_nPCTId;
+            m_qvPatientCards[i].nEgyseg      = p_nMaxEgyseg - p_nUsedEgyseg;
+            break;
+        }
+    }
+}
+//====================================================================================
+void KiwiSunBerlet::_savePatientCardsToFile()
+//====================================================================================
+{
+    FILE    *file = NULL;
+
+    setCursor( Qt::WaitCursor);
+
+    file = fopen( "patientcards.txt", "wt" );
+    if( file != NULL )
+    {
+        for( int i=0; i<m_qvPatientCards.size(); i++ )
+        {
+            int nEgyseg = _getMaxUsages(m_qvPatientCards.at(i).nBerletTipus)-_getPatientCardUsages(m_qvPatientCards.at(i).strVonalkod);
+            QString qsLine = QString( "%1\t%2\t%3\t%4-%5-%6\t%7\n" ).arg(m_qvPatientCards.at(i).strVonalkod).arg(m_qvPatientCards.at(i).nBerletTipus).arg(m_qvPatientCards.at(i).nEgyseg).arg(m_qvPatientCards.at(i).nErvEv).arg(m_qvPatientCards.at(i).nErvHo).arg(m_qvPatientCards.at(i).nErvNap).arg((m_qvPatientCards.at(i).nEgyseg==nEgyseg?QString("OK"):QString("HIBA")));
+
+            fputs( qsLine.toStdString().c_str(), file );
+        }
+        fclose( file );
+    }
+    else
+    {
+        listLog->addItem( tr( "Error occured during opening patientcards.txt file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+int KiwiSunBerlet::_getPatientCardUsages( QString p_qsBarcode )
+//====================================================================================
+{
+    int nRet = 0;
+
+    for( int i=0; i<m_qvPatientCardUsage.size(); i++ )
+    {
+        if( p_qsBarcode.compare(m_qvPatientCardUsage.at(i).strVonalkod) == 0 )
+        {
+            nRet += m_qvPatientCardUsage.at(i).nEgyseg;
+        }
+    }
+
+    return nRet;
+}
+//====================================================================================
+int KiwiSunBerlet::_getMaxUsages( int p_nPCTId )
+//====================================================================================
+{
+    int nRet = 0;
+
+    for( int i=0; i<m_qvPatientCardTypes.size(); i++ )
+    {
+        if( m_qvPatientCardTypes.at(i).nID == p_nPCTId )
+        {
+            nRet = m_qvPatientCardTypes.at(i).nEgyseg;
+            break;
+        }
+    }
+
+    return nRet;
 }
 //====================================================================================
 void KiwiSunBerlet::_EnCode( char *str, int size )

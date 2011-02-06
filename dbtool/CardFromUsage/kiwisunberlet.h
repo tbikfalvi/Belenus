@@ -79,12 +79,17 @@ private:
     QString                      m_qsPCUFileName;
     QVector<typ_berlet>          m_qvPatientCards;
     QVector<typ_berlettipus>     m_qvPatientCardTypes;
+    QVector<typ_berlethasznalat> m_qvPatientCardUsage;
 
     void                        _enableImportButton();
     void                        _loadPatientCards();
     void                        _loadPatientCardTypes();
     void                        _loadPatientCardUsages();
     void                        _addToPatientCards( typ_berlethasznalat p_stPCU );
+    void                        _fillPatientCard( QString p_qsBarcode, int p_nPCTId, int p_nMaxEgyseg, int p_nUsedEgyseg );
+    void                        _savePatientCardsToFile();
+    int                         _getPatientCardUsages( QString p_qsBarcode );
+    int                         _getMaxUsages( int p_nPCTId );
 
     void                        _EnCode( char *str, int size );
     void                        _DeCode( char *str, int size );
@@ -96,6 +101,7 @@ private slots:
     void on_pbImport_clicked();
     void on_dateImportStart_dateChanged( QDate );
     void on_pbProcessPCU_clicked();
+    void on_pbCreatePC_clicked();
 };
 //====================================================================================
 

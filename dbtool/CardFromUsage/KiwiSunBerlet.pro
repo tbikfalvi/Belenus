@@ -9,6 +9,7 @@ QT       += core gui
 DESTDIR = ..
 TARGET = KiwiSunBerlet
 TEMPLATE = app
+RC_FILE = KiwiSunBerlet.rc
 
 SOURCES += main.cpp\
         kiwisunberlet.cpp
