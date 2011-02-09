@@ -1229,7 +1229,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1307,6 +1307,64 @@
        </property>
        <property name="text">
         <string>Please fill the fields below.</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText6_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>281</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>IP Address of Belenus Database Server : </string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ledDBIPAddress">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>70</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText6_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>130</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Connection port : </string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ledDBIPPort">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>100</y>
+         <width>41</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>41</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>41</width>
+         <height>16777215</height>
+        </size>
        </property>
       </widget>
      </widget>

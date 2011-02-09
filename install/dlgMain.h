@@ -77,6 +77,7 @@ private:
     bool                     m_bInitializeWamp;
     bool                     m_bCreateDatabase;
     bool                     m_bDatabaseInstalled;
+    bool                     m_bDemoMode;
 
     QSqlDatabase            *m_poDB;
     CS_Communication        *m_poHardware;
@@ -98,6 +99,7 @@ private:
     bool                    _processWampInstall();
     bool                    _processDatabaseInstall();
     bool                    _processHardwareInstall();
+    bool                    _processInternetInstall();
 
     bool                    _processWampServerInstall();
     bool                    _initializeWampServer();

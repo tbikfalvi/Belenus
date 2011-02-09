@@ -7,6 +7,7 @@
 TEMPLATE     = app
 DESTDIR      = ..
 TARGET       = Setup
+RC_FILE      = setup.rc
 
 CONFIG      += qt
 QT          += core gui sql

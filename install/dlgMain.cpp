@@ -75,6 +75,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_poHardware            = NULL;
     m_nComPort              = 0;
     m_nCountDevices         = 0;
+
+    m_bDemoMode             = false;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -506,6 +508,11 @@ bool dlgMain::_processPage( int p_nPage )
 
         case 5:
             bRet = _processHardwareInstall();
+            break;
+
+        case 6:
+            bRet = _processInternetInstall();
+            break;
 
         case 99: // Installation
         {
@@ -593,6 +600,7 @@ bool dlgMain::_processHardwareInstall()
 {
     bool    bRet = true;
 
+    m_bDemoMode = false;
     m_nCountDevices = ledPanelsInstalled->text().toInt();
 
     if( cmbCOMPorts->currentIndex() == 0 )
@@ -600,6 +608,7 @@ bool dlgMain::_processHardwareInstall()
         QMessageBox::information( this, tr("Information"),
                                   tr("There is no COM port selected for hardware unit communication.\n"
                                      "The Belenus client will be installed in DEMO mode.\n") );
+        m_bDemoMode = true;
     }
     else if( m_nCountDevices < 1 || m_nCountDevices > ledPanelsAvailable->text().toInt() )
     {
@@ -613,6 +622,48 @@ bool dlgMain::_processHardwareInstall()
     {
         delete m_poHardware;
         m_poHardware = NULL;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processInternetInstall()
+//=======================================================================================
+{
+    bool    bRet = true;
+
+    if( m_bDemoMode )
+    {
+        ledDBIPAddress->setText( "127.0.0.1" );
+        ledDBIPPort->setText( "1000" );
+    }
+    else
+    {
+        QStringList qslIPAddress = ledDBIPAddress->text().split( '.' );
+
+        if( qslIPAddress.size() != 4 )
+        {
+            bRet = false;
+        }
+        else
+        {
+            for( int i=0; i<qslIPAddress.size(); i++ )
+            {
+                bool    ok;
+
+                int nValue = qslIPAddress.at(i).toInt(&ok);
+                if( !ok || qslIPAddress.at(i).length() < 1 || nValue < 0 || nValue > 999 )
+                {
+                    bRet = false;
+                    break;
+                }
+            }
+        }
+        if( !bRet )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("IP Address of Database Server is invalid." ) );
+        }
     }
 
     return bRet;
