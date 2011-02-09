@@ -81,6 +81,9 @@ private:
 
     QSqlDatabase            *m_poDB;
     CS_Communication        *m_poHardware;
+    QString                  m_qsClientInstallDir;
+    QString                  m_qsIPAddress;
+    int                      m_nPort;
 
     void                    _initializePage( int p_nPage );
     void                    _initializeInstallSelection();
@@ -100,6 +103,7 @@ private:
     bool                    _processDatabaseInstall();
     bool                    _processHardwareInstall();
     bool                    _processInternetInstall();
+    bool                    _processClientInstall();
 
     bool                    _processWampServerInstall();
     bool                    _initializeWampServer();
@@ -127,6 +131,7 @@ private slots:
     void on_chkHardware_clicked();
     void on_chkDatabase_clicked();
     void on_chkWamp_clicked();
+    void on_pbSelectDir_clicked();
     void on_pbStartExit_clicked();
     void on_pbExitRestart_clicked();
     void on_rbRemove_clicked();

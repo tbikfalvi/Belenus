@@ -17,6 +17,7 @@
 #include <winuser.h>
 #include <QMessageBox>
 #include <QSqlError>
+#include <QFileDialog>
 
 #include "vregistry.h"
 
@@ -77,6 +78,9 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_nCountDevices         = 0;
 
     m_bDemoMode             = false;
+
+    m_qsClientInstallDir    = QString( "C:\\Program Files\\Belenus" );
+    m_qsIPAddress           = QString( "127.0.0.1" );
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -332,11 +336,14 @@ void dlgMain::_initializeHardwareInstall()
 void dlgMain::_initializeInternetInstall()
 //=======================================================================================
 {
+    ledDBIPAddress->setText( m_qsIPAddress );
+    ledDBIPPort->setText( QString::number(m_nPort ) );
 }
 //=======================================================================================
 void dlgMain::_initializeClientInstall()
 //=======================================================================================
 {
+    ledClientInstallDir->setText( m_qsClientInstallDir );
 }
 //=======================================================================================
 void dlgMain::_initializeInstallProcess()
@@ -514,6 +521,10 @@ bool dlgMain::_processPage( int p_nPage )
             bRet = _processInternetInstall();
             break;
 
+        case 7:
+            bRet = _processClientInstall();
+            break;
+
         case 99: // Installation
         {
             m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
@@ -639,6 +650,8 @@ bool dlgMain::_processInternetInstall()
     }
     else
     {
+        bool        ok           = false;
+        int         nValue       = 0;
         QStringList qslIPAddress = ledDBIPAddress->text().split( '.' );
 
         if( qslIPAddress.size() != 4 )
@@ -649,9 +662,7 @@ bool dlgMain::_processInternetInstall()
         {
             for( int i=0; i<qslIPAddress.size(); i++ )
             {
-                bool    ok;
-
-                int nValue = qslIPAddress.at(i).toInt(&ok);
+                nValue = qslIPAddress.at(i).toInt(&ok);
                 if( !ok || qslIPAddress.at(i).length() < 1 || nValue < 0 || nValue > 999 )
                 {
                     bRet = false;
@@ -664,7 +675,38 @@ bool dlgMain::_processInternetInstall()
             QMessageBox::warning( this, tr("Attention"),
                                   tr("IP Address of Database Server is invalid." ) );
         }
+        else
+        {
+            m_qsIPAddress = ledDBIPAddress->text();
+
+            nValue = ledDBIPPort->text().toInt(&ok);
+            if( !ok || ledDBIPPort->text().length() < 1 || nValue < 1 )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("Connection port of Database Server is invalid." ) );
+                bRet = false;
+            }
+            else
+            {
+                m_nPort = nValue;
+            }
+        }
     }
+
+    if( bRet )
+    {
+        ledDBIPAddress->setText( m_qsIPAddress );
+        ledDBIPPort->setText( QString::number(m_nPort) );
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processClientInstall()
+//=======================================================================================
+{
+    bool    bRet = true;
+
 
     return bRet;
 }
@@ -1121,6 +1163,28 @@ void dlgMain::on_pbTestHWConnection_clicked()
     }
     ledPanelsInstalled->setText( "" );
     m_poHardware->closeCommunication();
+}
+//=======================================================================================
+void dlgMain::on_pbSelectDir_clicked()
+//=======================================================================================
+{
+    QString qsDir = QFileDialog::getExistingDirectory( this,
+                                                       tr("Select Directory"),
+                                                       m_qsClientInstallDir,
+                                                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    if( qsDir.length() > 0 )
+    {
+        qsDir.replace( '/', '\\' );
+        if( qsDir.right(7).compare("Belenus") )
+        {
+            m_qsClientInstallDir = QString("%1\\%2").arg(qsDir).arg(QString("Belenus"));
+        }
+        else
+        {
+            m_qsClientInstallDir = qsDir;
+        }
+    }
+    ledClientInstallDir->setText( m_qsClientInstallDir );
 }
 //=======================================================================================
 void dlgMain::on_pbExitRestart_clicked()
