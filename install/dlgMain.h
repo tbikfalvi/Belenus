@@ -78,6 +78,7 @@ private:
     bool                     m_bCreateDatabase;
     bool                     m_bDatabaseInstalled;
     bool                     m_bDemoMode;
+    bool                     m_bInstallClient;
 
     QSqlDatabase            *m_poDB;
     CS_Communication        *m_poHardware;
@@ -97,13 +98,13 @@ private:
     void                    _initializeFinishPage();
 
     bool                    _processPage( int p_nPage );
-    bool                    _processInstallSelection();
-    bool                    _processComponentSelection();
-    bool                    _processWampInstall();
-    bool                    _processDatabaseInstall();
-    bool                    _processHardwareInstall();
-    bool                    _processInternetInstall();
-    bool                    _processClientInstall();
+    bool                    _processSelectionPage();
+    bool                    _processComponentSelectionPage();
+    bool                    _processWampInstallPage();
+    bool                    _processDatabaseInstallPage();
+    bool                    _processHardwareInstallPage();
+    bool                    _processInternetInstallPage();
+    bool                    _processClientInstallPage();
 
     bool                    _processWampServerInstall();
     bool                    _initializeWampServer();
@@ -113,12 +114,14 @@ private:
     bool                    _processBelenusTablesCreate();
     bool                    _processBelenusTablesFill();
     bool                    _processBelenusDeviceFill();
+    bool                    _processClientInstall();
 
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );
     bool                    _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );
     void                    _setEnableNextButton();
     void                    _fillAvailableComPorts();
+    bool                    _copyClientFile( QString p_qsFileName );
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 

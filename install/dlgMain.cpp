@@ -81,6 +81,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
 
     m_qsClientInstallDir    = QString( "C:\\Program Files\\Belenus" );
     m_qsIPAddress           = QString( "127.0.0.1" );
+
+    m_bInstallClient        = false;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -344,11 +346,16 @@ void dlgMain::_initializeClientInstall()
 //=======================================================================================
 {
     ledClientInstallDir->setText( m_qsClientInstallDir );
+    prbDBInstallClient->setValue( 0 );
+    prbDBInstallClient->update();
 }
 //=======================================================================================
 void dlgMain::_initializeInstallProcess()
 //=======================================================================================
 {
+    pbNext->setEnabled( false );
+    m_bInstallClient = true;
+    m_nTimer = startTimer( 500 );
 }
 //=======================================================================================
 void dlgMain::_initializeFinishPage()
@@ -436,6 +443,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     else if( m_bCreateDatabase )
     {
         m_bCreateDatabase = false;
+        killTimer( m_nTimer );
 
         if( _processDatabaseCreate() )
         {
@@ -488,6 +496,12 @@ void dlgMain::timerEvent(QTimerEvent *)
         }
         m_bDatabaseInstalled = true;
     }
+    else if(  m_bInstallClient )
+    {
+        m_bInstallClient = false;
+        killTimer( m_nTimer );
+        _processClientInstall();
+    }
 }
 //=======================================================================================
 bool dlgMain::_processPage( int p_nPage )
@@ -498,31 +512,31 @@ bool dlgMain::_processPage( int p_nPage )
     switch( p_nPage )
     {
         case 1:
-            bRet = _processInstallSelection();
+            bRet = _processSelectionPage();
             break;
 
         case 2:
-            bRet = _processComponentSelection();
+            bRet = _processComponentSelectionPage();
             break;
 
         case 3:
-            bRet = _processWampInstall();
+            bRet = _processWampInstallPage();
             break;
 
         case 4:
-            bRet = _processDatabaseInstall();
+            bRet = _processDatabaseInstallPage();
             break;
 
         case 5:
-            bRet = _processHardwareInstall();
+            bRet = _processHardwareInstallPage();
             break;
 
         case 6:
-            bRet = _processInternetInstall();
+            bRet = _processInternetInstallPage();
             break;
 
         case 7:
-            bRet = _processClientInstall();
+            bRet = _processClientInstallPage();
             break;
 
         case 99: // Installation
@@ -537,7 +551,7 @@ bool dlgMain::_processPage( int p_nPage )
     return bRet;
 }
 //=======================================================================================
-bool dlgMain::_processInstallSelection()
+bool dlgMain::_processSelectionPage()
 //=======================================================================================
 {
     if( m_pInstallType == rbInstall )
@@ -576,7 +590,7 @@ bool dlgMain::_processInstallSelection()
     return true;
 }
 //=======================================================================================
-bool dlgMain::_processComponentSelection()
+bool dlgMain::_processComponentSelectionPage()
 //=======================================================================================
 {
     m_bProcessWamp = chkWamp->isChecked();
@@ -590,7 +604,7 @@ bool dlgMain::_processComponentSelection()
     return true;
 }
 //=======================================================================================
-bool dlgMain::_processWampInstall()
+bool dlgMain::_processWampInstallPage()
 //=======================================================================================
 {
     bool    bRet = true;
@@ -598,7 +612,7 @@ bool dlgMain::_processWampInstall()
     return bRet;
 }
 //=======================================================================================
-bool dlgMain::_processDatabaseInstall()
+bool dlgMain::_processDatabaseInstallPage()
 //=======================================================================================
 {
     bool    bRet = true;
@@ -606,7 +620,7 @@ bool dlgMain::_processDatabaseInstall()
     return bRet;
 }
 //=======================================================================================
-bool dlgMain::_processHardwareInstall()
+bool dlgMain::_processHardwareInstallPage()
 //=======================================================================================
 {
     bool    bRet = true;
@@ -638,7 +652,7 @@ bool dlgMain::_processHardwareInstall()
     return bRet;
 }
 //=======================================================================================
-bool dlgMain::_processInternetInstall()
+bool dlgMain::_processInternetInstallPage()
 //=======================================================================================
 {
     bool    bRet = true;
@@ -702,7 +716,7 @@ bool dlgMain::_processInternetInstall()
     return bRet;
 }
 //=======================================================================================
-bool dlgMain::_processClientInstall()
+bool dlgMain::_processClientInstallPage()
 //=======================================================================================
 {
     bool    bRet = true;
@@ -982,6 +996,105 @@ bool dlgMain::_processBelenusDeviceFill()
     else
     {
         bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processClientInstall()
+//=======================================================================================
+{
+    bool    bRet = true;
+
+    pbCancel->setEnabled( false );
+
+    prbDBInstallClient->setValue( 0 );
+    prbDBInstallClient->update();
+
+    QDir    qdInstallDir( m_qsClientInstallDir );
+
+    if( qdInstallDir.exists() )
+    {
+        if( QMessageBox::warning( this, tr("Attention"),
+                                  tr("The specified directory already exits.\n"
+                                     "All the files will be deleted or overwritten.\n\n"
+                                     "Are you sure you want to continue?"),
+                                  QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+        {
+            return true;
+        }
+    }
+
+    QString qsTemp = m_qsClientInstallDir;
+
+    if( !qdInstallDir.mkpath( qsTemp ) )
+    {
+        QMessageBox::critical( this, tr("System error"),
+                               tr("Unable to create directory:\n\n%1").arg(qsTemp));
+        pbCancel->setEnabled( true );
+        return false;
+    }
+
+    qsTemp = QString("%1\\lang").arg(m_qsClientInstallDir);
+    if( !qdInstallDir.mkpath( qsTemp ) )
+    {
+        QMessageBox::critical( this, tr("System error"),
+                               tr("Unable to create directory:\n\n%1").arg(qsTemp));
+        pbCancel->setEnabled( true );
+        return false;
+    }
+
+    qsTemp = QString("%1\\resources").arg(m_qsClientInstallDir);
+    if( !qdInstallDir.mkpath( qsTemp ) )
+    {
+        QMessageBox::critical( this, tr("System error"),
+                               tr("Unable to create directory:\n\n%1").arg(qsTemp));
+        pbCancel->setEnabled( true );
+        return false;
+    }
+
+    QFile   file("files.li");
+
+    if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+    {
+        pbCancel->setEnabled( true );
+        return false;
+    }
+
+    qsTemp = "";
+    QTextStream in(&file);
+
+    while( !in.atEnd() )
+    {
+        qsTemp.append( in.readLine() );
+    }
+    file.close();
+
+    QStringList qslFiles = qsTemp.split( '#' );
+
+    prbDBInstallClient->setMaximum( qslFiles.size() );
+
+    for( int i=0; i<qslFiles.size(); i++ )
+    {
+        prbDBInstallClient->setValue( i+1 );
+        prbDBInstallClient->update();
+        lblText8_2->setText( tr("Copying file: ..\\%1").arg(qslFiles.at(i)) );
+        if( !_copyClientFile(qslFiles.at(i)) )
+        {
+            QMessageBox::critical( this, tr("System error"),
+                                   tr("Unable to copy file:\n\n%1").arg(qslFiles.at(i)));
+            bRet = false;
+            break;
+        }
+    }
+
+    if( bRet )
+    {
+        pbNext->setEnabled( true );
+    }
+    else
+    {
+        pbCancel->setEnabled( true );
     }
 
     return bRet;
@@ -1346,5 +1459,16 @@ void dlgMain::_fillAvailableComPorts()
 
         cmbCOMPorts->addItem( qsCOM );
     }
+}
+//=======================================================================================
+bool dlgMain::_copyClientFile( QString p_qsFileName )
+//=======================================================================================
+{
+    QString     qsFrom  = QString( "%1\\%2" ).arg(QDir::currentPath()).arg(p_qsFileName);
+    QString     qsTo    = QString( "%1%2" ).arg(m_qsClientInstallDir.left(m_qsClientInstallDir.length()-7)).arg(p_qsFileName);
+
+    qsFrom.replace( '/', '\\' );
+
+    return QFile::copy( qsFrom, qsTo );
 }
 //=======================================================================================

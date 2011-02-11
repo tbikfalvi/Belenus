@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -1448,6 +1448,48 @@
        </property>
        <property name="text">
         <string>Installation process</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText8_1">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>491</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Please wait while the installation process finish.</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText8_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>491</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Overall process</string>
+       </property>
+      </widget>
+      <widget class="QProgressBar" name="prbDBInstallClient">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>530</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>0</number>
        </property>
       </widget>
      </widget>
