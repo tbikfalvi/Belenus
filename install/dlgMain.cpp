@@ -1013,78 +1013,48 @@ bool dlgMain::_processClientInstall()
 
     QDir    qdInstallDir( m_qsClientInstallDir );
 
-    if( qdInstallDir.exists() )
+    if( m_pInstallType == rbInstall )
     {
-        if( QMessageBox::warning( this, tr("Attention"),
-                                  tr("The specified directory already exits.\n"
-                                     "All the files will be deleted or overwritten.\n\n"
-                                     "Are you sure you want to continue?"),
-                                  QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+        if( qdInstallDir.exists() )
         {
-            return true;
+            if( QMessageBox::warning( this, tr("Attention"),
+                                      tr("The specified directory already exits.\n"
+                                         "All the files will be deleted or overwritten.\n\n"
+                                         "Are you sure you want to continue?"),
+                                      QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+            {
+                pbCancel->setEnabled( true );
+                return true;
+            }
+            if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
+            {
+                QMessageBox::information( this, tr("Attention"),
+                                          tr("Unable to empy the specified directory.\n"
+                                             "%1\n"
+                                             "Please manually delete the directory if copying new files fails.") );
+            }
         }
-    }
 
-    QString qsTemp = m_qsClientInstallDir;
-
-    if( !qdInstallDir.mkpath( qsTemp ) )
-    {
-        QMessageBox::critical( this, tr("System error"),
-                               tr("Unable to create directory:\n\n%1").arg(qsTemp));
-        pbCancel->setEnabled( true );
-        return false;
-    }
-
-    qsTemp = QString("%1\\lang").arg(m_qsClientInstallDir);
-    if( !qdInstallDir.mkpath( qsTemp ) )
-    {
-        QMessageBox::critical( this, tr("System error"),
-                               tr("Unable to create directory:\n\n%1").arg(qsTemp));
-        pbCancel->setEnabled( true );
-        return false;
-    }
-
-    qsTemp = QString("%1\\resources").arg(m_qsClientInstallDir);
-    if( !qdInstallDir.mkpath( qsTemp ) )
-    {
-        QMessageBox::critical( this, tr("System error"),
-                               tr("Unable to create directory:\n\n%1").arg(qsTemp));
-        pbCancel->setEnabled( true );
-        return false;
-    }
-
-    QFile   file("files.li");
-
-    if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
-    {
-        pbCancel->setEnabled( true );
-        return false;
-    }
-
-    qsTemp = "";
-    QTextStream in(&file);
-
-    while( !in.atEnd() )
-    {
-        qsTemp.append( in.readLine() );
-    }
-    file.close();
-
-    QStringList qslFiles = qsTemp.split( '#' );
-
-    prbDBInstallClient->setMaximum( qslFiles.size() );
-
-    for( int i=0; i<qslFiles.size(); i++ )
-    {
-        prbDBInstallClient->setValue( i+1 );
-        prbDBInstallClient->update();
-        lblText8_2->setText( tr("Copying file: ..\\%1").arg(qslFiles.at(i)) );
-        if( !_copyClientFile(qslFiles.at(i)) )
+        if( !_createTargetDirectory( m_qsClientInstallDir ) ||
+            !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
+            !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) )
         {
-            QMessageBox::critical( this, tr("System error"),
-                                   tr("Unable to copy file:\n\n%1").arg(qslFiles.at(i)));
-            bRet = false;
-            break;
+            return false;
+        }
+
+        bRet = _copyInstallFiles( "install.li" );
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        bRet = _copyInstallFiles( "update.li" );
+    }
+    else if( m_pInstallType == rbRemove )
+    {
+        if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
+        {
+            QMessageBox::information( this, tr("Attention"),
+                                      tr("Unable to empy the specified directory.\n"
+                                         "Some of the files or subdirectories can not be removed." ) );
         }
     }
 
@@ -1461,7 +1431,64 @@ void dlgMain::_fillAvailableComPorts()
     }
 }
 //=======================================================================================
-bool dlgMain::_copyClientFile( QString p_qsFileName )
+bool dlgMain::_emptyTargetDirectory( QString p_qsPath )
+//=======================================================================================
+{
+    bool            bRet = true;
+    QDir            qdTarget( p_qsPath );
+
+    if( qdTarget.exists() )
+    {
+        QStringList qstFiles = qdTarget.entryList();
+
+        for( int nCount=0; nCount<qstFiles.size(); nCount++ )
+        {
+            if( qstFiles.at(nCount).compare(".") == 0 || qstFiles.at(nCount).compare("..") == 0 )
+                continue;
+
+            if( qstFiles.at(nCount).indexOf('.') == -1 )
+            {
+                if( !_emptyTargetDirectory( QString("%1\\%2").arg(p_qsPath).arg(qstFiles.at(nCount)) ) )
+                {
+                    bRet = false;
+                }
+                else
+                {
+                    qdTarget.rmpath( QString("%1\\%2").arg(p_qsPath).arg(qstFiles.at(nCount)) );
+                }
+            }
+            else
+            {
+                qdTarget.remove( QString("%1\\%2").arg(p_qsPath).arg(qstFiles.at(nCount)) );
+            }
+        }
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_createTargetDirectory( QString p_qsPath )
+//=======================================================================================
+{
+    bool    bRet = true;
+    QDir    qdInstallDir( p_qsPath );
+
+    if( !qdInstallDir.mkpath( p_qsPath ) )
+    {
+        QMessageBox::critical( this, tr("System error"),
+                               tr("Unable to create directory:\n\n%1").arg(p_qsPath));
+        pbCancel->setEnabled( true );
+        return false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_copyClientFile( QString p_qsFileName, bool p_bInstall )
 //=======================================================================================
 {
     QString     qsFrom  = QString( "%1\\%2" ).arg(QDir::currentPath()).arg(p_qsFileName);
@@ -1469,6 +1496,64 @@ bool dlgMain::_copyClientFile( QString p_qsFileName )
 
     qsFrom.replace( '/', '\\' );
 
+    if( !p_bInstall )
+    {
+        QFile::remove( qsTo );
+    }
+
     return QFile::copy( qsFrom, qsTo );
+}
+//=======================================================================================
+bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
+//=======================================================================================
+{
+    bool    bRet = true;
+    QFile   file( p_qsFileName );
+
+    if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+    {
+        pbCancel->setEnabled( true );
+        return false;
+    }
+
+    QString qsTemp = "";
+    QTextStream in(&file);
+
+    while( !in.atEnd() )
+    {
+        qsTemp.append( in.readLine() );
+    }
+    file.close();
+
+    QStringList qslFiles = qsTemp.split( '#' );
+
+    prbDBInstallClient->setMaximum( qslFiles.size() );
+
+    for( int i=0; i<qslFiles.size(); i++ )
+    {
+        prbDBInstallClient->setValue( i+1 );
+        prbDBInstallClient->update();
+        if( p_bInstall )
+        {
+            lblText8_2->setText( tr("Copying file: ..\\%1").arg(qslFiles.at(i)) );
+        }
+        else
+        {
+            lblText8_2->setText( tr("Updating file: ..\\%1").arg(qslFiles.at(i)) );
+        }
+        if( !_copyClientFile( qslFiles.at(i), p_bInstall ) )
+        {
+            if( p_bInstall )
+                QMessageBox::critical( this, tr("System error"),
+                                       tr("Unable to copy file:\n\n%1").arg(qslFiles.at(i)));
+            else
+                QMessageBox::critical( this, tr("System error"),
+                                       tr("Unable to update file:\n\n%1").arg(qslFiles.at(i)));
+            bRet = false;
+            break;
+        }
+    }
+
+    return bRet;
 }
 //=======================================================================================

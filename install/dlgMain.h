@@ -121,7 +121,10 @@ private:
     bool                    _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );
     void                    _setEnableNextButton();
     void                    _fillAvailableComPorts();
-    bool                    _copyClientFile( QString p_qsFileName );
+    bool                    _emptyTargetDirectory( QString p_qsPath );
+    bool                    _createTargetDirectory( QString p_qsPath );
+    bool                    _copyClientFile( QString p_qsFileName, bool p_bInstall = true );
+    bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 
