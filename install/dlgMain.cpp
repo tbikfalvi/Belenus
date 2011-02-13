@@ -83,6 +83,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_qsIPAddress           = QString( "127.0.0.1" );
 
     m_bInstallClient        = false;
+    m_bInstallFinished      = false;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -496,11 +497,17 @@ void dlgMain::timerEvent(QTimerEvent *)
         }
         m_bDatabaseInstalled = true;
     }
-    else if(  m_bInstallClient )
+    else if( m_bInstallClient )
     {
         m_bInstallClient = false;
         killTimer( m_nTimer );
         _processClientInstall();
+    }
+    else if( m_bInstallFinished )
+    {
+        m_bInstallFinished = false;
+        killTimer( m_nTimer );
+        on_pbNext_clicked();
     }
 }
 //=======================================================================================
@@ -538,14 +545,6 @@ bool dlgMain::_processPage( int p_nPage )
         case 7:
             bRet = _processClientInstallPage();
             break;
-
-        case 99: // Installation
-        {
-            m_obFile = new QFile( QString("C:\\Program Files\\Belenus\\Kliens\\belenus.exe") );
-            m_obFile->link( QString("C:\\Development\\Qt\\belenus.lnk") );
-            delete m_obFile;
-            break;
-        }
     }
 
     return bRet;
@@ -1029,7 +1028,7 @@ bool dlgMain::_processClientInstall()
             if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
             {
                 QMessageBox::information( this, tr("Attention"),
-                                          tr("Unable to empy the specified directory.\n"
+                                          tr("Unable to empty the specified directory.\n"
                                              "%1\n"
                                              "Please manually delete the directory if copying new files fails.") );
             }
@@ -1043,6 +1042,19 @@ bool dlgMain::_processClientInstall()
         }
 
         bRet = _copyInstallFiles( "install.li" );
+
+        QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
+        QString     qsTo    = QString( "%1\\Setup.exe" ).arg(m_qsClientInstallDir.left(m_qsClientInstallDir.length()));
+
+        if( !QFile::copy( qsFrom, qsTo ) )
+        {
+            bRet = false;
+        }
+
+        if( bRet )
+        {
+            bRet = _createFolderShortcut();
+        }
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -1053,14 +1065,17 @@ bool dlgMain::_processClientInstall()
         if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
         {
             QMessageBox::information( this, tr("Attention"),
-                                      tr("Unable to empy the specified directory.\n"
+                                      tr("Unable to empty the specified directory.\n"
                                          "Some of the files or subdirectories can not be removed." ) );
         }
     }
 
     if( bRet )
     {
+        lblText8_2->setText( "" );
         pbNext->setEnabled( true );
+        m_bInstallFinished = true;
+        m_nTimer = startTimer( 2000 );
     }
     else
     {
@@ -1527,7 +1542,7 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
 
     QStringList qslFiles = qsTemp.split( '#' );
 
-    prbDBInstallClient->setMaximum( qslFiles.size() );
+    prbDBInstallClient->setMaximum( qslFiles.size()+1 );
 
     for( int i=0; i<qslFiles.size(); i++ )
     {
@@ -1552,6 +1567,72 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
             bRet = false;
             break;
         }
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_createFolderShortcut()
+//=======================================================================================
+{
+    bool        bRet = true;
+    VRegistry   obReg;
+    QString     qsDirPrograms;
+    QString     qsDirDesktop;
+
+    lblText8_2->setText( tr("Creating folder and shortcut for client application.") );
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders") ) )
+    {
+        qsDirPrograms   = obReg.get_REG_SZ( QString("Common Programs") );
+        qsDirDesktop    = obReg.get_REG_SZ( QString("Common Desktop") );
+        obReg.CloseKey();
+
+        if( qsDirPrograms.contains( ":\\" ) )
+        {
+            if( !_createTargetDirectory( QString("%1\\Belenus").arg(qsDirPrograms) ) )
+                return false;
+
+            m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
+            m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
+            delete m_obFile;
+        }
+
+        if( qsDirDesktop.contains( ":\\" ) )
+        {
+            m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
+            m_obFile->link( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
+            delete m_obFile;
+        }
+
+        if( obReg.CreateKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+        {
+            if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+            {
+                obReg.set_REG_SZ( QString("DisplayIcon"), QString("%1\\resources\\belenus.ico").arg(m_qsClientInstallDir) );
+                obReg.set_REG_SZ( QString("DisplayName"), tr("Belenus Application System") );
+                obReg.set_REG_SZ( QString("DisplayVersion"), QString("1.0.0.0") );
+                obReg.set_REG_SZ( QString("InstallLocation"), m_qsClientInstallDir );
+                obReg.set_REG_SZ( QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
+                obReg.set_REG_SZ( QString("UninstallString"), QString("%1\\setup.exe -uninstall").arg(m_qsClientInstallDir) );
+                obReg.set_REG_SZ( QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
+                obReg.CloseKey();
+            }
+            else
+            {
+                bRet = false;
+            }
+        }
+        else
+        {
+            bRet = false;
+        }
+        prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+        prbDBInstallClient->update();
+    }
+    else
+    {
+        bRet = false;
     }
 
     return bRet;

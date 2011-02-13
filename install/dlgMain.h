@@ -79,6 +79,7 @@ private:
     bool                     m_bDatabaseInstalled;
     bool                     m_bDemoMode;
     bool                     m_bInstallClient;
+    bool                     m_bInstallFinished;
 
     QSqlDatabase            *m_poDB;
     CS_Communication        *m_poHardware;
@@ -125,6 +126,7 @@ private:
     bool                    _createTargetDirectory( QString p_qsPath );
     bool                    _copyClientFile( QString p_qsFileName, bool p_bInstall = true );
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
+    bool                    _createFolderShortcut();
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 
