@@ -53,8 +53,18 @@ public:
 
 protected:
     void timerEvent( QTimerEvent *p_poEvent );
+    void closeEvent( QCloseEvent *p_poEvent );
 
 private:
+
+    QString                  m_qsPathPrograms;
+    QString                  m_qsPathDesktop;
+    QString                  m_qsPathWampServer;
+
+    bool                     m_bBelenusAlreadyInstalled;
+
+
+
     QFile                   *m_obFile;
     int                      m_nTimer;
 
@@ -86,6 +96,8 @@ private:
     QString                  m_qsClientInstallDir;
     QString                  m_qsIPAddress;
     int                      m_nPort;
+
+    void                    _initializeInstall();
 
     void                    _initializePage( int p_nPage );
     void                    _initializeInstallSelection();

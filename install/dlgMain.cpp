@@ -18,6 +18,7 @@
 #include <QMessageBox>
 #include <QSqlError>
 #include <QFileDialog>
+#include <QCloseEvent>
 
 #include "vregistry.h"
 
@@ -42,48 +43,60 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     Logo->setPixmap( QPixmap( QString(":/images/Logo.png") ) );
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
 
-    if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
-        m_pInstallType = rbUpdate;
-    else
-        m_pInstallType = rbInstall;
-
-    m_vPages.clear();
-    m_vPages.append( CONST_PAGE_WELCOME );
-    m_vPages.append( CONST_PAGE_INSTALL_SELECTION );
-    m_vPages.append( CONST_PAGE_FINISH );
-
-    m_nCurrentPage          = CONST_PAGE_WELCOME;
-
+    // Set when passed component selection page to block welcome page
     m_bInstallStarted       = false;
 
+    // Flag for demo mode
+    m_bDemoMode             = false;
+
+    // Identifies which component has to be processed
     m_bProcessWamp          = true;
     m_bProcessDatabase      = true;
     m_bProcessHWConnection  = true;
     m_bProcessInternet      = true;
     m_bProcessBelenusClient = true;
 
+    // Flags for timer
     m_bStartWampInstall     = false;
     m_bInitializeWamp       = false;
     m_bCreateDatabase       = false;
+    m_bInstallClient        = false;
+    m_bInstallFinished      = false;
 
+    // If database created during install, set this flag
     m_bDatabaseInstalled    = false;
 
-    m_bRestartRequired      = false;
-
-    m_poDB                  = NULL;
-    m_poDB                  = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
-
+    // Default settings for hardware
     m_poHardware            = NULL;
     m_nComPort              = 0;
     m_nCountDevices         = 0;
 
-    m_bDemoMode             = false;
-
-    m_qsClientInstallDir    = QString( "C:\\Program Files\\Belenus" );
+    // Default settings for internet connection
     m_qsIPAddress           = QString( "127.0.0.1" );
 
-    m_bInstallClient        = false;
-    m_bInstallFinished      = false;
+    // Default settings for client
+    m_qsClientInstallDir    = QString( "C:\\Program Files\\Belenus" );
+
+    // If computer restart required, set this flag
+    m_bRestartRequired      = false;
+
+    // Get common settings from registry, set flags for install/update process
+    _initializeInstall();
+
+    // Set setup type based on previously set flag
+    if( m_bBelenusAlreadyInstalled )
+        m_pInstallType = rbUpdate;
+    else
+        m_pInstallType = rbInstall;
+
+    // Initialize pages has to show on start
+    m_vPages.clear();
+    m_vPages.append( CONST_PAGE_WELCOME );
+    m_vPages.append( CONST_PAGE_INSTALL_SELECTION );
+    m_vPages.append( CONST_PAGE_FINISH );
+
+    // Set current page index to welcome page
+    m_nCurrentPage          = CONST_PAGE_WELCOME;
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -91,6 +104,17 @@ dlgMain::~dlgMain()
 {
     if( m_poDB != NULL )        delete m_poDB;
     if( m_poHardware != NULL )  delete m_poHardware;
+}
+//=======================================================================================
+void dlgMain::closeEvent( QCloseEvent *p_poEvent )
+//=======================================================================================
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to abort installation?"),
+                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+    {
+        p_poEvent->ignore();
+    }
 }
 //=======================================================================================
 void dlgMain::on_pbCancel_clicked()
@@ -163,6 +187,34 @@ void dlgMain::on_pbStartExit_clicked()
     }
 }
 //=======================================================================================
+void dlgMain::_initializeInstall()
+//=======================================================================================
+{
+    VRegistry   obReg;
+
+    m_qsPathPrograms    = "";
+    m_qsPathDesktop     = "";
+    m_qsPathWampServer  = "";
+
+    m_bBelenusAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders") ) )
+    {
+        m_qsPathPrograms    = obReg.get_REG_SZ( QString("Common Programs") );
+        m_qsPathDesktop     = obReg.get_REG_SZ( QString("Common Desktop") );
+        obReg.CloseKey();
+    }
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
+    {
+        m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
+        obReg.CloseKey();
+    }
+
+    m_poDB = NULL;
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+}
+//=======================================================================================
 void dlgMain::_initializePage( int p_nPage )
 //=======================================================================================
 {
@@ -209,7 +261,7 @@ void dlgMain::_initializePage( int p_nPage )
 void dlgMain::_initializeInstallSelection()
 //=======================================================================================
 {
-    if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" ) )
+    if( m_bBelenusAlreadyInstalled )
     {
         rbInstall->setEnabled( false );
         lblTextInstall->setEnabled( false );
@@ -1305,7 +1357,9 @@ bool dlgMain::_initializeWampServer()
     }
     if( strPath.length() )
     {
-        QString strMySQLConfig = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
+        QString qsTemplate      = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
+        QString qsConfig        = QString( "%1\\bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
+        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\" -t%2 -c%3" ).arg(strPath).arg(qsTemplate).arg(qsConfig);
 
         STARTUPINFO         si;
         PROCESS_INFORMATION pi;
@@ -1320,7 +1374,7 @@ bool dlgMain::_initializeWampServer()
         strMySQLConfig.toWCharArray( wsMySQLConfig );
 //QMessageBox::information(this,"",QString::fromStdWString(wsMySQLConfig));
 
-        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess(NULL,wsMySQLConfig,0,0,0,0,0,0,&si,&pi))
 //        if(!CreateProcess(strMySQLConfig.toStdString().c_str(),NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
