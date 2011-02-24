@@ -192,11 +192,18 @@ void dlgMain::_initializeInstall()
 {
     VRegistry   obReg;
 
+    m_qsPathWindows     = "";
     m_qsPathPrograms    = "";
     m_qsPathDesktop     = "";
     m_qsPathWampServer  = "";
 
     m_bBelenusAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
+    {
+        m_qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
+        obReg.CloseKey();
+    }
 
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders") ) )
     {
@@ -213,6 +220,15 @@ void dlgMain::_initializeInstall()
 
     m_poDB = NULL;
     m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+
+    if( m_qsPathWindows.length() == 0 || m_qsPathPrograms.length() == 0 || m_qsPathDesktop.length() == 0 )
+    {
+        pbNext->setEnabled( false );
+        QMessageBox::critical( this, tr("Error"),
+                               tr("Error occured during initialization.\n"
+                                  "Please contact system administrator.\n"
+                                  "Error code: ErrSysRegKeysFail") );
+    }
 }
 //=======================================================================================
 void dlgMain::_initializePage( int p_nPage )
@@ -221,35 +237,35 @@ void dlgMain::_initializePage( int p_nPage )
     switch( p_nPage )
     {
         case CONST_PAGE_INSTALL_SELECTION:
-            _initializeInstallSelection();
+            _initializeSelectionPage();
             break;
 
         case CONST_PAGE_COMPONENT_SELECTION:
-            _initializeComponentSelection();
+            _initializeComponentSelectionPage();
             break;
 
         case CONST_PAGE_WAMP_INSTALL:
-            _initializeWampInstall();
+            _initializeWampInstallPage();
             break;
 
         case CONST_PAGE_DATABASE_INSTALL:
-            _initializeDatabaseInstall();
+            _initializeDatabaseInstallPage();
             break;
 
         case CONST_PAGE_HARDWARE_INSTALL:
-            _initializeHardwareInstall();
+            _initializeHardwareInstallPage();
             break;
 
         case CONST_PAGE_INTERNET_INSTALL:
-            _initializeInternetInstall();
+            _initializeInternetInstallPage();
             break;
 
         case CONST_PAGE_CLIENT_INSTALL:
-            _initializeClientInstall();
+            _initializeClientInstallPage();
             break;
 
         case CONST_PAGE_PROCESS:
-            _initializeInstallProcess();
+            _initializeInstallProcessPage();
             break;
 
         case CONST_PAGE_FINISH:
@@ -258,7 +274,7 @@ void dlgMain::_initializePage( int p_nPage )
     }
 }
 //=======================================================================================
-void dlgMain::_initializeInstallSelection()
+void dlgMain::_initializeSelectionPage()
 //=======================================================================================
 {
     if( m_bBelenusAlreadyInstalled )
@@ -284,7 +300,7 @@ void dlgMain::_initializeInstallSelection()
     m_pInstallType->setChecked( true );
 }
 //=======================================================================================
-void dlgMain::_initializeComponentSelection()
+void dlgMain::_initializeComponentSelectionPage()
 //=======================================================================================
 {
     if( m_pInstallType == rbInstall )
@@ -315,7 +331,7 @@ void dlgMain::_initializeComponentSelection()
     _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::_initializeWampInstall()
+void dlgMain::_initializeWampInstallPage()
 //=======================================================================================
 {
     pbNext->setEnabled( false );
@@ -335,7 +351,7 @@ void dlgMain::_initializeWampInstall()
     m_nTimer = startTimer( 200 );
 }
 //=======================================================================================
-void dlgMain::_initializeDatabaseInstall()
+void dlgMain::_initializeDatabaseInstallPage()
 //=======================================================================================
 {
     if( m_bDatabaseInstalled )
@@ -360,7 +376,7 @@ void dlgMain::_initializeDatabaseInstall()
     }
 }
 //=======================================================================================
-void dlgMain::_initializeHardwareInstall()
+void dlgMain::_initializeHardwareInstallPage()
 //=======================================================================================
 {
     m_poHardware = new CS_Communication_Serial();
@@ -388,14 +404,14 @@ void dlgMain::_initializeHardwareInstall()
     ledPanelsInstalled->setText( QString::number(m_nCountDevices) );
 }
 //=======================================================================================
-void dlgMain::_initializeInternetInstall()
+void dlgMain::_initializeInternetInstallPage()
 //=======================================================================================
 {
     ledDBIPAddress->setText( m_qsIPAddress );
     ledDBIPPort->setText( QString::number(m_nPort ) );
 }
 //=======================================================================================
-void dlgMain::_initializeClientInstall()
+void dlgMain::_initializeClientInstallPage()
 //=======================================================================================
 {
     ledClientInstallDir->setText( m_qsClientInstallDir );
@@ -403,7 +419,7 @@ void dlgMain::_initializeClientInstall()
     prbDBInstallClient->update();
 }
 //=======================================================================================
-void dlgMain::_initializeInstallProcess()
+void dlgMain::_initializeInstallProcessPage()
 //=======================================================================================
 {
     pbNext->setEnabled( false );
@@ -1096,7 +1112,7 @@ bool dlgMain::_processClientInstall()
         bRet = _copyInstallFiles( "install.li" );
 
         QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
-        QString     qsTo    = QString( "%1\\Setup.exe" ).arg(m_qsClientInstallDir.left(m_qsClientInstallDir.length()));
+        QString     qsTo    = QString( "%1\\Temp\\Setup.exe" ).arg(m_qsPathWindows);
 
         if( !QFile::copy( qsFrom, qsTo ) )
         {
@@ -1352,14 +1368,15 @@ bool dlgMain::_initializeWampServer()
 
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
     {
-        strPath = obReg.get_REG_SZ( "Inno Setup: App Path" );
+        strPath = obReg.get_REG_SZ( "InstallLocation" );
         obReg.CloseKey();
     }
     if( strPath.length() )
     {
-        QString qsTemplate      = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
-        QString qsConfig        = QString( "%1\\bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
-        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\" -t%2 -c%3" ).arg(strPath).arg(qsTemplate).arg(qsConfig);
+//        QString qsTemplate      = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
+//        QString qsConfig        = QString( "%1\\bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
+//        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\" -t%2 -c%3" ).arg(strPath).arg(qsTemplate).arg(qsConfig);
+        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\"" ).arg(strPath);
 
         STARTUPINFO         si;
         PROCESS_INFORMATION pi;
@@ -1372,10 +1389,8 @@ bool dlgMain::_initializeWampServer()
 
         memset( wsMySQLConfig, 0, 1000 );
         strMySQLConfig.toWCharArray( wsMySQLConfig );
-//QMessageBox::information(this,"",QString::fromStdWString(wsMySQLConfig));
 
-        if(!CreateProcess(NULL,wsMySQLConfig,0,0,0,0,0,0,&si,&pi))
-//        if(!CreateProcess(strMySQLConfig.toStdString().c_str(),NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);

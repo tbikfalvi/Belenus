@@ -57,6 +57,7 @@ protected:
 
 private:
 
+    QString                  m_qsPathWindows;
     QString                  m_qsPathPrograms;
     QString                  m_qsPathDesktop;
     QString                  m_qsPathWampServer;
@@ -100,14 +101,14 @@ private:
     void                    _initializeInstall();
 
     void                    _initializePage( int p_nPage );
-    void                    _initializeInstallSelection();
-    void                    _initializeComponentSelection();
-    void                    _initializeWampInstall();
-    void                    _initializeDatabaseInstall();
-    void                    _initializeHardwareInstall();
-    void                    _initializeInternetInstall();
-    void                    _initializeClientInstall();
-    void                    _initializeInstallProcess();
+    void                    _initializeSelectionPage();
+    void                    _initializeComponentSelectionPage();
+    void                    _initializeWampInstallPage();
+    void                    _initializeDatabaseInstallPage();
+    void                    _initializeHardwareInstallPage();
+    void                    _initializeInternetInstallPage();
+    void                    _initializeClientInstallPage();
+    void                    _initializeInstallProcessPage();
     void                    _initializeFinishPage();
 
     bool                    _processPage( int p_nPage );
