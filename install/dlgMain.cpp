@@ -55,6 +55,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bProcessHWConnection  = true;
     m_bProcessInternet      = true;
     m_bProcessBelenusClient = true;
+    m_bProcessViewer        = true;
 
     // Flags for timer
     m_bStartWampInstall     = false;
@@ -327,6 +328,7 @@ void dlgMain::_initializeComponentSelectionPage()
     chkHardware->setChecked( m_bProcessHWConnection );
     chkInternet->setChecked( m_bProcessInternet );
     chkBelenus->setChecked( m_bProcessBelenusClient );
+    chkViewer->setChecked( m_bProcessViewer );
 
     _setEnableNextButton();
 }
@@ -628,6 +630,7 @@ bool dlgMain::_processSelectionPage()
         m_bProcessHWConnection  = true;
         m_bProcessInternet      = true;
         m_bProcessBelenusClient = true;
+        m_bProcessViewer        = true;
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -636,6 +639,7 @@ bool dlgMain::_processSelectionPage()
         m_bProcessHWConnection  = false;
         m_bProcessInternet      = false;
         m_bProcessBelenusClient = false;
+        m_bProcessViewer        = false;
     }
     else if( m_pInstallType == rbRemove )
     {
@@ -650,6 +654,7 @@ bool dlgMain::_processSelectionPage()
         m_bProcessHWConnection  = true;
         m_bProcessInternet      = true;
         m_bProcessBelenusClient = true;
+        m_bProcessViewer        = true;
     }
 
     _refreshPages();
@@ -660,11 +665,12 @@ bool dlgMain::_processSelectionPage()
 bool dlgMain::_processComponentSelectionPage()
 //=======================================================================================
 {
-    m_bProcessWamp = chkWamp->isChecked();
-    m_bProcessDatabase = chkDatabase->isChecked();
-    m_bProcessHWConnection = chkHardware->isChecked();
-    m_bProcessInternet = chkInternet->isChecked();
+    m_bProcessWamp          = chkWamp->isChecked();
+    m_bProcessDatabase      = chkDatabase->isChecked();
+    m_bProcessHWConnection  = chkHardware->isChecked();
+    m_bProcessInternet      = chkInternet->isChecked();
     m_bProcessBelenusClient = chkBelenus->isChecked();
+    m_bProcessViewer        = chkViewer->isChecked();
 
     _refreshPages();
 

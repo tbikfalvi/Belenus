@@ -83,6 +83,7 @@ private:
     bool                     m_bProcessHWConnection;
     bool                     m_bProcessInternet;
     bool                     m_bProcessBelenusClient;
+    bool                     m_bProcessViewer;
     bool                     m_bRestartRequired;
     bool                     m_bStartWampInstall;
     bool                     m_bInitializeWamp;

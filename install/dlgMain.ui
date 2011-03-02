@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>607</width>
-    <height>455</height>
+    <height>525</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
   <property name="maximumSize">
    <size>
     <width>607</width>
-    <height>455</height>
+    <height>535</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>8</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -158,7 +158,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="pageProcessSelect">
+     <widget class="QWidget" name="pageSelectProcess">
       <widget class="QLabel" name="lblTitle1">
        <property name="geometry">
         <rect>
@@ -333,7 +333,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="pageComponentSelect">
+     <widget class="QWidget" name="pageSelectComponent">
       <widget class="QLabel" name="lblTitle2">
        <property name="geometry">
         <rect>
@@ -539,7 +539,7 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLabel" name="lblTextBelenus">
+      <widget class="QLabel" name="lblTextViewer">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -606,8 +606,40 @@
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QCheckBox" name="chkViewer">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>390</y>
+         <width>281</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Report viewer application</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTextBelenus_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>410</y>
+         <width>440</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Setup Belenus report viewer application. Wamp database server and Belenus client database is required for this component. This component can be installed independently from Client application.</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
-     <widget class="QWidget" name="pageWamp">
+     <widget class="QWidget" name="pageInstallWamp">
       <widget class="QLabel" name="lblTitleWampInstall">
        <property name="geometry">
         <rect>
@@ -770,7 +802,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="pageDatabase">
+     <widget class="QWidget" name="pageInstallDatabase">
       <widget class="QLabel" name="lblTitleDatabaseInstall">
        <property name="geometry">
         <rect>
@@ -1076,7 +1108,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="page">
+     <widget class="QWidget" name="pageInstallHardware">
       <widget class="QLabel" name="lblTitleHardwareInstall">
        <property name="geometry">
         <rect>
@@ -1275,7 +1307,7 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="pageInstallNetConnection">
       <widget class="QLabel" name="lblTitleInternetInstall">
        <property name="geometry">
         <rect>
@@ -1368,7 +1400,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_3">
+     <widget class="QWidget" name="pageInstallClient">
       <widget class="QLabel" name="lblTitleClientInstall">
        <property name="geometry">
         <rect>
@@ -1429,7 +1461,29 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="page_4">
+     <widget class="QWidget" name="pageInstallViewer">
+      <widget class="QLabel" name="lblTitleInstallViewer">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>561</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Report viewer installation</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="pageInstallOverall">
       <widget class="QLabel" name="lblTitleProcessInstall">
        <property name="geometry">
         <rect>
