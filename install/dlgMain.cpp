@@ -311,6 +311,7 @@ void dlgMain::_initializeComponentSelectionPage()
         chkHardware->setEnabled( true );
         chkInternet->setEnabled( true );
         chkBelenus->setEnabled( true );
+        chkViewer->setEnabled( true );
         if( m_bDatabaseInstalled )
         {
             m_bProcessDatabase = false;
@@ -1435,6 +1436,8 @@ void dlgMain::_refreshPages()
             m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
         if( m_bProcessBelenusClient )
             m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
+        if( m_bProcessViewer )
+            m_vPages.append( CONST_PAGE_VIEWER_INSTALL );
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -1447,6 +1450,8 @@ void dlgMain::_refreshPages()
             m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
         if( m_bProcessBelenusClient )
             m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
+        if( m_bProcessViewer )
+            m_vPages.append( CONST_PAGE_VIEWER_INSTALL );
     }
     /*else if( m_pInstallType == rbRemove )
     {

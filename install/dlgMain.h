@@ -31,16 +31,17 @@
 
 //====================================================================================
 
-#define CONST_PAGE_WELCOME              0
-#define CONST_PAGE_INSTALL_SELECTION    1
-#define CONST_PAGE_COMPONENT_SELECTION  2
-#define CONST_PAGE_WAMP_INSTALL         3
-#define CONST_PAGE_DATABASE_INSTALL     4
-#define CONST_PAGE_HARDWARE_INSTALL     5
-#define CONST_PAGE_INTERNET_INSTALL     6
-#define CONST_PAGE_CLIENT_INSTALL       7
-#define CONST_PAGE_PROCESS              8
-#define CONST_PAGE_FINISH               9
+#define CONST_PAGE_WELCOME               0
+#define CONST_PAGE_INSTALL_SELECTION     1
+#define CONST_PAGE_COMPONENT_SELECTION   2
+#define CONST_PAGE_WAMP_INSTALL          3
+#define CONST_PAGE_DATABASE_INSTALL      4
+#define CONST_PAGE_HARDWARE_INSTALL      5
+#define CONST_PAGE_INTERNET_INSTALL      6
+#define CONST_PAGE_CLIENT_INSTALL        7
+#define CONST_PAGE_VIEWER_INSTALL        8
+#define CONST_PAGE_PROCESS               9
+#define CONST_PAGE_FINISH               10
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -63,7 +64,7 @@ private:
     QString                  m_qsPathWampServer;
 
     bool                     m_bBelenusAlreadyInstalled;
-
+    QStringList              m_qslComponents;
 
 
     QFile                   *m_obFile;

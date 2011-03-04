@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>607</width>
-    <height>525</height>
+    <height>535</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>607</width>
-    <height>455</height>
+    <height>535</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -61,7 +61,7 @@
          <x>0</x>
          <y>0</y>
          <width>201</width>
-         <height>401</height>
+         <height>480</height>
         </rect>
        </property>
        <property name="text">
@@ -629,13 +629,32 @@
         </rect>
        </property>
        <property name="text">
-        <string>Setup Belenus report viewer application. Wamp database server and Belenus client database is required for this component. This component can be installed independently from Client application.</string>
+        <string>Setup Belenus report viewer application. Wamp database server, Belenus client database and Internet connection is required for this component. This component can be installed independently from Client application.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="imgBelenus_2">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>410</y>
+         <width>40</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="install.qrc">:/icons/40x40_report.png</pixmap>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </widget>
