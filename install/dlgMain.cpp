@@ -200,6 +200,15 @@ void dlgMain::_initializeInstall()
 
     m_bBelenusAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
 
+    if( m_bBelenusAlreadyInstalled )
+    {
+        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+        {
+            QString qsTemp = obReg.get_REG_SZ( QString("Components") );
+            m_qslComponents = qsTemp.split( "#" );
+        }
+    }
+
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
     {
         m_qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
@@ -322,6 +331,19 @@ void dlgMain::_initializeComponentSelectionPage()
     {
         chkWamp->setEnabled( false );
         lblTextWamp->setEnabled( false );
+        if( m_qslComponents.count() > 0 )
+        {
+            if( m_qslComponents.indexOf( "Database" ) == -1 )
+                m_bProcessDatabase = false;
+            if( m_qslComponents.indexOf( "Hardware" ) == -1 )
+                m_bProcessHWConnection = false;
+            if( m_qslComponents.indexOf( "Internet" ) == -1 )
+                m_bProcessInternet = false;
+            if( m_qslComponents.indexOf( "Client" ) == -1 )
+                m_bProcessBelenusClient = false;
+            if( m_qslComponents.indexOf( "Viewer" ) == -1 )
+                m_bProcessViewer = false;
+        }
     }
 
     chkWamp->setChecked( m_bProcessWamp );
@@ -636,11 +658,11 @@ bool dlgMain::_processSelectionPage()
     else if( m_pInstallType == rbUpdate )
     {
         m_bProcessWamp          = false;
-        m_bProcessDatabase      = false;
-        m_bProcessHWConnection  = false;
-        m_bProcessInternet      = false;
-        m_bProcessBelenusClient = false;
-        m_bProcessViewer        = false;
+        m_bProcessDatabase      = true;
+        m_bProcessHWConnection  = true;
+        m_bProcessInternet      = true;
+        m_bProcessBelenusClient = true;
+        m_bProcessViewer        = true;
     }
     else if( m_pInstallType == rbRemove )
     {
@@ -666,6 +688,15 @@ bool dlgMain::_processSelectionPage()
 bool dlgMain::_processComponentSelectionPage()
 //=======================================================================================
 {
+    if( m_pInstallType == rbInstall )
+    {
+        if( chkViewer->isChecked() )
+        {
+            chkWamp->setChecked( true );
+            chkDatabase->setChecked( true );
+        }
+    }
+
     m_bProcessWamp          = chkWamp->isChecked();
     m_bProcessDatabase      = chkDatabase->isChecked();
     m_bProcessHWConnection  = chkHardware->isChecked();
