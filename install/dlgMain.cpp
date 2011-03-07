@@ -694,6 +694,8 @@ bool dlgMain::_processComponentSelectionPage()
         {
             chkWamp->setChecked( true );
             chkDatabase->setChecked( true );
+            if( !chkBelenus->isChecked() )
+                chkInternet->setChecked( true );
         }
     }
 

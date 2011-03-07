@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -625,11 +625,11 @@
          <x>100</x>
          <y>410</y>
          <width>440</width>
-         <height>50</height>
+         <height>61</height>
         </rect>
        </property>
        <property name="text">
-        <string>Setup Belenus report viewer application. Wamp database server, Belenus client database and Internet connection is required for this component. This component can be installed independently from Client application.</string>
+        <string>Setup Belenus report viewer application. Wamp database server and Belenus client database is required for this component. This component can be installed independently from Client application with Internet connection.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
