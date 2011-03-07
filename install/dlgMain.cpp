@@ -44,42 +44,34 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
 
     // Set when passed component selection page to block welcome page
-    m_bInstallStarted       = false;
-
+    m_bInstallStarted           = false;
     // Flag for demo mode
-    m_bDemoMode             = false;
-
+    m_bDemoMode                 = false;
     // Identifies which component has to be processed
-    m_bProcessWamp          = true;
-    m_bProcessDatabase      = true;
-    m_bProcessHWConnection  = true;
-    m_bProcessInternet      = true;
-    m_bProcessBelenusClient = true;
-    m_bProcessViewer        = true;
-
+    m_bProcessWamp              = true;
+    m_bProcessDatabase          = true;
+    m_bProcessHWConnection      = true;
+    m_bProcessInternet          = true;
+    m_bProcessBelenusClient     = true;
+    m_bProcessViewer            = true;
     // Flags for timer
-    m_bStartWampInstall     = false;
-    m_bInitializeWamp       = false;
-    m_bCreateDatabase       = false;
-    m_bInstallClient        = false;
-    m_bInstallFinished      = false;
-
+    m_bStartWampInstall         = false;
+    m_bInitializeWamp           = false;
+    m_bCreateDatabase           = false;
+    m_bInstallClient            = false;
+    m_bInstallFinished          = false;
     // If database created during install, set this flag
-    m_bDatabaseInstalled    = false;
-
+    m_bDatabaseAlreadyInstalled = false;
     // Default settings for hardware
-    m_poHardware            = NULL;
-    m_nComPort              = 0;
-    m_nCountDevices         = 0;
-
+    m_poHardware                = NULL;
+    m_nComPort                  = 0;
+    m_nCountDevices             = 0;
     // Default settings for internet connection
-    m_qsIPAddress           = QString( "127.0.0.1" );
-
+    m_qsIPAddress               = QString( "127.0.0.1" );
     // Default settings for client
-    m_qsClientInstallDir    = QString( "C:\\Program Files\\Belenus" );
-
+    m_qsClientInstallDir        = QString( "C:\\Program Files\\Belenus" );
     // If computer restart required, set this flag
-    m_bRestartRequired      = false;
+    m_bRestartRequired          = false;
 
     // Get common settings from registry, set flags for install/update process
     _initializeInstall();
@@ -103,6 +95,7 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
 dlgMain::~dlgMain()
 //=======================================================================================
 {
+    if( m_obLog != NULL )       delete m_obLog;
     if( m_poDB != NULL )        delete m_poDB;
     if( m_poHardware != NULL )  delete m_poHardware;
 }
@@ -198,17 +191,6 @@ void dlgMain::_initializeInstall()
     m_qsPathDesktop     = "";
     m_qsPathWampServer  = "";
 
-    m_bBelenusAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
-
-    if( m_bBelenusAlreadyInstalled )
-    {
-        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
-        {
-            QString qsTemp = obReg.get_REG_SZ( QString("Components") );
-            m_qslComponents = qsTemp.split( "#" );
-        }
-    }
-
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
     {
         m_qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
@@ -222,15 +204,6 @@ void dlgMain::_initializeInstall()
         obReg.CloseKey();
     }
 
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
-    {
-        m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
-        obReg.CloseKey();
-    }
-
-    m_poDB = NULL;
-    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
-
     if( m_qsPathWindows.length() == 0 || m_qsPathPrograms.length() == 0 || m_qsPathDesktop.length() == 0 )
     {
         pbNext->setEnabled( false );
@@ -238,7 +211,56 @@ void dlgMain::_initializeInstall()
                                tr("Error occured during initialization.\n"
                                   "Please contact system administrator.\n"
                                   "Error code: ErrSysRegKeysFail") );
+        return;
     }
+
+    m_obLog = new QFile( QString("%1\\Temp\\BelenusSetup.log").arg(m_qsPathWindows) );
+    if( m_obFile == NULL )
+    {
+        pbNext->setEnabled( false );
+        QMessageBox::critical( this, tr("Error"),
+                               tr("Error occured during initialization.\n"
+                                  "Please contact system administrator.\n"
+                                  "Error code: ErrLogCreateFail") );
+        return;
+    }
+
+    _logProcess( "" );
+    _logProcess( "Belenus Setup V1.0" );
+    _logProcess( "" );
+    _logProcess( "System directories:" );
+    _logProcess( QString("Windows: %1").arg(m_qsPathWindows) );
+    _logProcess( QString("Desktop: %1").arg(m_qsPathDesktop) );
+    _logProcess( QString("Programs: %1").arg(m_qsPathPrograms) );
+
+    m_bBelenusAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
+
+    if( m_bBelenusAlreadyInstalled )
+    {
+        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+        {
+            QString qsTemp = obReg.get_REG_SZ( QString("Components") );
+            m_qslComponents = qsTemp.split( "#" );
+            obReg.CloseKey();
+        }
+    }
+
+    m_bWampServerAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" );
+
+    if( m_bWampServerAlreadyInstalled )
+    {
+        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
+        {
+            m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
+            obReg.CloseKey();
+        }
+    }
+
+    _logProcess( QString("Wamp System: %1").arg(m_qsPathWampServer) );
+    _logProcess( QString("") );
+
+    m_poDB = NULL;
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
 }
 //=======================================================================================
 void dlgMain::_initializePage( int p_nPage )
@@ -321,7 +343,8 @@ void dlgMain::_initializeComponentSelectionPage()
         chkInternet->setEnabled( true );
         chkBelenus->setEnabled( true );
         chkViewer->setEnabled( true );
-        if( m_bDatabaseInstalled )
+
+        if( m_bDatabaseAlreadyInstalled )
         {
             m_bProcessDatabase = false;
             chkDatabase->setEnabled( false );
@@ -379,7 +402,7 @@ void dlgMain::_initializeWampInstallPage()
 void dlgMain::_initializeDatabaseInstallPage()
 //=======================================================================================
 {
-    if( m_bDatabaseInstalled )
+    if( m_bDatabaseAlreadyInstalled )
     {
         on_pbNext_clicked();
     }
@@ -404,8 +427,8 @@ void dlgMain::_initializeDatabaseInstallPage()
 void dlgMain::_initializeHardwareInstallPage()
 //=======================================================================================
 {
+    _logProcess( QString("Serial communication init") );
     m_poHardware = new CS_Communication_Serial();
-
     if( m_poHardware != NULL )
     {
         _fillAvailableComPorts();
@@ -415,6 +438,7 @@ void dlgMain::_initializeHardwareInstallPage()
         QMessageBox::critical( this, tr("Error"), tr("System error occured during COM ports initialization.\n"
                                                      "Please restart application and/or the operating system.\n"
                                                      "If the error continuously occures again, please contact system administrator.") );
+        _logProcess( QString("COM init failed") );
         pbNext->setEnabled( false );
     }
     lblText5_3->setVisible( false );
@@ -473,6 +497,8 @@ void dlgMain::_initializeFinishPage()
         qsProcess = "Removing";
     }
 
+    _logProcess( lblTitleInstallFinished->text() );
+
     if( m_bRestartRequired )
     {
         lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished."
@@ -494,32 +520,39 @@ void dlgMain::_initializeFinishPage()
 void dlgMain::timerEvent(QTimerEvent *)
 //=======================================================================================
 {
-    if( m_bStartWampInstall )
+    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
     {
+        _logProcess( QString("Wamp installation started") );
+        killTimer( m_nTimer );
         pbNext->setEnabled( false );
         m_bStartWampInstall = false;
-        killTimer( m_nTimer );
         if( _processWampServerInstall() )
         {
+            _logProcess( QString("Wamp install SUCCEEDED") );
             m_bInitializeWamp = true;
             m_nTimer = startTimer( 200 );
         }
         else
         {
+            _logProcess( QString("Wamp install FAILED") );
             QMessageBox::warning( this, tr("Attention"),
                                   tr("Wamp server installation failed.\n"
                                      "Please try to reinstall it with going back one page "
                                      "then return to this page.\n\n"
                                      "If Wamp install continuously fails please contact Belenus software support.") );
         }
+        _logProcess( QString("Wamp installation finished") );
     }
-    else if( m_bInitializeWamp )
+    else if( m_bInitializeWamp || (m_bStartWampInstall && m_bWampServerAlreadyInstalled) )
     {
-        pbNext->setEnabled( false );
-        m_bInitializeWamp = false;
+        _logProcess( QString("MySQL initialization started") );
         killTimer( m_nTimer );
+        pbNext->setEnabled( false );
+        m_bStartWampInstall = false;
+        m_bInitializeWamp = false;
         if( _initializeWampServer() )
         {
+            _logProcess( QString("MySQL init SUCCEEDED") );
             lblText3_1->setVisible( false );
             lblText3_2->setVisible( true );
             lblText3_3->setVisible( true );
@@ -531,8 +564,10 @@ void dlgMain::timerEvent(QTimerEvent *)
         }
         else
         {
+            _logProcess( QString("MySQL init FAILED") );
             pbNext->setEnabled( false );
         }
+        _logProcess( QString("MySQL initialization finished") );
     }
     else if( m_bCreateDatabase )
     {
@@ -588,7 +623,7 @@ void dlgMain::timerEvent(QTimerEvent *)
             imgFail4_5->setVisible( true );
             return;
         }
-        m_bDatabaseInstalled = true;
+        m_bDatabaseAlreadyInstalled = true;
     }
     else if( m_bInstallClient )
     {
@@ -697,6 +732,18 @@ bool dlgMain::_processComponentSelectionPage()
             if( !chkBelenus->isChecked() )
                 chkInternet->setChecked( true );
         }
+
+        if( chkBelenus->isChecked() )
+        {
+            chkWamp->setChecked( true );
+            chkDatabase->setChecked( true );
+            chkViewer->setChecked( true );
+        }
+
+        if( chkDatabase->isChecked() )
+        {
+            chkWamp->setChecked( true );
+        }
     }
 
     m_bProcessWamp          = chkWamp->isChecked();
@@ -707,6 +754,8 @@ bool dlgMain::_processComponentSelectionPage()
     m_bProcessViewer        = chkViewer->isChecked();
 
     _refreshPages();
+
+    m_qslComponents.clear();
 
     return true;
 }
@@ -838,6 +887,7 @@ bool dlgMain::_processWampServerInstall()
     bool    bRet        = true;
     bool    bVersion    = false;
 
+    _logProcess( QString("Check Wamp install in registry") );
     if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
     {
         bVersion = _isRegStringMatch( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
@@ -846,6 +896,7 @@ bool dlgMain::_processWampServerInstall()
     }
     else
     {
+        _logProcess( QString("Start WampServer2.0i.exe") );
         STARTUPINFO         si;
         PROCESS_INFORMATION pi;
 
@@ -862,6 +913,8 @@ bool dlgMain::_processWampServerInstall()
                                       "Inno Setup: Setup Version",
                                       "5.2.3");
     }
+
+    _logProcess( QString("Wamp version is correct: %1").arg((bVersion?"true":"false")) );
 
     if( !bVersion )
     {
@@ -1159,6 +1212,14 @@ bool dlgMain::_processClientInstall()
             bRet = false;
         }
 
+        qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
+        qsTo    = QString( "%1\\Temp\\Setup.qm" ).arg(m_qsPathWindows);
+
+        if( !QFile::copy( qsFrom, qsTo ) )
+        {
+            bRet = false;
+        }
+
         if( bRet )
         {
             bRet = _createFolderShortcut();
@@ -1406,34 +1467,80 @@ bool dlgMain::_initializeWampServer()
     VRegistry   obReg;
     QString     strPath = "";
 
+    _logProcess( QString("Get Wamp install location") );
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
     {
         strPath = obReg.get_REG_SZ( "InstallLocation" );
         obReg.CloseKey();
     }
+    _logProcess( QString("Wamp directory: %1").arg(strPath) );
     if( strPath.length() )
     {
 //        QString qsTemplate      = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
 //        QString qsConfig        = QString( "%1\\bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
 //        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\" -t%2 -c%3" ).arg(strPath).arg(qsTemplate).arg(qsConfig);
-        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\"" ).arg(strPath);
+        if( strPath.right(1).compare("\\") != 0 )
+        {
+            strPath.append( "\\" );
+        }
 
-        STARTUPINFO         si;
-        PROCESS_INFORMATION pi;
+        QString     qsFrom  = QString( "%1bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
+        QString     qsTo    = QString( "%1bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
 
-        ZeroMemory(&si,sizeof(si));
-        si.cb=sizeof(si);
-        ZeroMemory(&pi,sizeof(pi));
+        qsFrom.replace( '/', '\\' );
 
-        WCHAR   wsMySQLConfig[1000];
+        QFile::remove( qsTo );
+        _logProcess( QString("Copy file: [%1] => [%2]").arg(qsFrom).arg(qsTo) );
+        if( !QFile::copy( qsFrom, qsTo ) )
+        {
+            _logProcess( QString("Copy FAILED" ) );
+        }
 
-        memset( wsMySQLConfig, 0, 1000 );
-        strMySQLConfig.toWCharArray( wsMySQLConfig );
+        _logProcess( QString("Creating registry keys for MySQL Server") );
+        if( !_isRegPathExists( "SOFTWARE\\MySQL AB\\MySQL Server 5.1" ) )
+        {
+            if( obReg.CreateKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\MySQL AB\\MySQL Server 5.1") ) )
+            {
+                if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\MySQL AB\\MySQL Server 5.1") ) )
+                {
+                    obReg.set_REG_SZ( QString("Location"), QString( "%1bin\\mysql\\mysql5.1.36\\bin\\" ).arg(strPath) );
+                    obReg.set_REG_SZ( QString("Version"), QString("5.1.36") );
+                    obReg.CloseKey();
+                }
+                else
+                {
+                    bRet = false;
+                }
+            }
+            else
+            {
+                bRet = false;
+            }
+        }
 
-        if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
-            bRet = false;
+        if( bRet )
+        {
+            QString strMySQLConfig  = QString( "%1bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
 
-        WaitForSingleObject(pi.hProcess,INFINITE);
+            _logProcess( QString("MySQL init: %1").arg(strMySQLConfig) );
+
+            STARTUPINFO         si;
+            PROCESS_INFORMATION pi;
+
+            ZeroMemory(&si,sizeof(si));
+            si.cb=sizeof(si);
+            ZeroMemory(&pi,sizeof(pi));
+
+            WCHAR   wsMySQLConfig[1000];
+
+            memset( wsMySQLConfig, 0, 1000 );
+            strMySQLConfig.toWCharArray( wsMySQLConfig );
+
+            if(!CreateProcess(wsMySQLConfig,NULL,0,0,0,0,0,0,&si,&pi))
+                bRet = false;
+
+            WaitForSingleObject(pi.hProcess,INFINITE);
+        }
     }
 
     return bRet;
@@ -1557,6 +1664,7 @@ void dlgMain::_fillAvailableComPorts()
 
         cmbCOMPorts->addItem( qsCOM );
     }
+    _logProcess( QString("Number of available COM ports: %1").arg(m_poHardware->getCountAvailablePorts()) );
 }
 //=======================================================================================
 bool dlgMain::_emptyTargetDirectory( QString p_qsPath )
@@ -1722,12 +1830,13 @@ bool dlgMain::_createFolderShortcut()
         {
             if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
             {
+                obReg.set_REG_SZ( QString("Components"), m_qslComponents.join("#") );
                 obReg.set_REG_SZ( QString("DisplayIcon"), QString("%1\\resources\\belenus.ico").arg(m_qsClientInstallDir) );
                 obReg.set_REG_SZ( QString("DisplayName"), tr("Belenus Application System") );
                 obReg.set_REG_SZ( QString("DisplayVersion"), QString("1.0.0.0") );
                 obReg.set_REG_SZ( QString("InstallLocation"), m_qsClientInstallDir );
                 obReg.set_REG_SZ( QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
-                obReg.set_REG_SZ( QString("UninstallString"), QString("%1\\setup.exe -uninstall").arg(m_qsClientInstallDir) );
+                obReg.set_REG_SZ( QString("UninstallString"), QString("%1\\Temp\\setup.exe -uninstall").arg(m_qsPathWindows) );
                 obReg.set_REG_SZ( QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
                 obReg.CloseKey();
             }
@@ -1749,5 +1858,16 @@ bool dlgMain::_createFolderShortcut()
     }
 
     return bRet;
+}
+//=======================================================================================
+void dlgMain::_logProcess( QString p_qsLog )
+//=======================================================================================
+{
+    if( m_obLog->open( QIODevice::Append | QIODevice::Text ) )
+    {
+        QTextStream out( m_obLog );
+        out << p_qsLog << "\n";
+        m_obLog->close();
+    }
 }
 //=======================================================================================

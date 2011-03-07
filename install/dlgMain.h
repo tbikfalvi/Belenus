@@ -58,13 +58,19 @@ protected:
 
 private:
 
+    QFile                   *m_obLog;
+
     QString                  m_qsPathWindows;
     QString                  m_qsPathPrograms;
     QString                  m_qsPathDesktop;
     QString                  m_qsPathWampServer;
 
     bool                     m_bBelenusAlreadyInstalled;
+    bool                     m_bWampServerAlreadyInstalled;
+    bool                     m_bDatabaseAlreadyInstalled;
+
     QStringList              m_qslComponents;
+
 
 
     QFile                   *m_obFile;
@@ -89,7 +95,6 @@ private:
     bool                     m_bStartWampInstall;
     bool                     m_bInitializeWamp;
     bool                     m_bCreateDatabase;
-    bool                     m_bDatabaseInstalled;
     bool                     m_bDemoMode;
     bool                     m_bInstallClient;
     bool                     m_bInstallFinished;
@@ -142,6 +147,7 @@ private:
     bool                    _copyClientFile( QString p_qsFileName, bool p_bInstall = true );
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
     bool                    _createFolderShortcut();
+    void                    _logProcess( QString p_qsLog );
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 
