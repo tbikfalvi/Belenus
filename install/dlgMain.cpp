@@ -214,7 +214,22 @@ void dlgMain::_initializeInstall()
         return;
     }
 
-    m_obLog = new QFile( QString("%1\\Temp\\BelenusSetup.log").arg(m_qsPathWindows) );
+    QDir    qdTempInstallDir( QString("%1\\Temp\\BelenusInstall").arg(m_qsPathWindows) );
+
+    if( !qdTempInstallDir.exists() )
+    {
+        if( !_createTargetDirectory( QString("%1\\Temp\\BelenusInstall").arg(m_qsPathWindows) ) )
+        {
+            pbNext->setEnabled( false );
+            QMessageBox::critical( this, tr("Error"),
+                                   tr("Error occured during initialization.\n"
+                                      "Please contact system administrator.\n"
+                                      "Error code: ErrInstDirCreateFail") );
+            return;
+        }
+    }
+
+    m_obLog = new QFile( QString("%1\\Temp\\BelenusInstall\\BelenusSetup.log").arg(m_qsPathWindows) );
     if( m_obFile == NULL )
     {
         pbNext->setEnabled( false );
@@ -386,9 +401,14 @@ void dlgMain::_initializeWampInstallPage()
     lblText3_1->setVisible( true );
     lblText3_2->setVisible( false );
     lblText3_3->setVisible( false );
-    ledDBRootPassword->setVisible( false );
-    ledDBRootPassword->setEnabled( false );
-    ledDBRootPassword->setText( "" );
+    lblText3_5->setVisible( false );
+    lblText3_6->setVisible( false );
+    ledDBRootPassword1->setVisible( false );
+    ledDBRootPassword1->setEnabled( false );
+    ledDBRootPassword1->setText( "" );
+    ledDBRootPassword2->setVisible( false );
+    ledDBRootPassword2->setEnabled( false );
+    ledDBRootPassword2->setText( "" );
     pbCheckRootPsw->setVisible( false );
     pbCheckRootPsw->setEnabled( false );
     lblText3_4->setVisible( false );
@@ -550,15 +570,19 @@ void dlgMain::timerEvent(QTimerEvent *)
         pbNext->setEnabled( false );
         m_bStartWampInstall = false;
         m_bInitializeWamp = false;
-        if( _initializeWampServer() )
+        if( _initializeMySQL() )
         {
             _logProcess( QString("MySQL init SUCCEEDED") );
             lblText3_1->setVisible( false );
             lblText3_2->setVisible( true );
             lblText3_3->setVisible( true );
-            ledDBRootPassword->setVisible( true );
-            ledDBRootPassword->setEnabled( true );
-            ledDBRootPassword->setFocus();
+            lblText3_5->setVisible( true );
+            lblText3_6->setVisible( true );
+            ledDBRootPassword1->setVisible( true );
+            ledDBRootPassword1->setEnabled( true );
+            ledDBRootPassword2->setVisible( true );
+            ledDBRootPassword2->setEnabled( true );
+            ledDBRootPassword1->setFocus();
             pbCheckRootPsw->setVisible( true );
             pbCheckRootPsw->setEnabled( true );
         }
@@ -574,55 +598,72 @@ void dlgMain::timerEvent(QTimerEvent *)
         m_bCreateDatabase = false;
         killTimer( m_nTimer );
 
+        _logProcess( QString("Creating database") );
         if( _processDatabaseCreate() )
         {
+            _logProcess( QString("Creating database OK") );
             imgOk4_1->setVisible( true );
         }
         else
         {
+            _logProcess( QString("Creating database FAIL") );
             imgFail4_1->setVisible( true );
             return;
         }
 
+        _logProcess( QString("Creating Belenus user") );
         if( _processBelenusUserCreate() )
         {
+            _logProcess( QString("Creating Belenus user OK") );
             imgOk4_2->setVisible( true );
         }
         else
         {
+            _logProcess( QString("Creating Belenus user FAIL") );
             imgFail4_2->setVisible( true );
             return;
         }
 
+        _logProcess( QString("Granting privileges for Belenus user") );
         if( _processBelenusUserRights() )
         {
+            _logProcess( QString("Granting privileges for Belenus user OK") );
             imgOk4_3->setVisible( true );
         }
         else
         {
+            _logProcess( QString("Granting privileges for Belenus user FAIL") );
             imgFail4_3->setVisible( true );
             return;
         }
 
+        _logProcess( QString("Creating tables in database") );
         if( _processBelenusTablesCreate() )
         {
+            _logProcess( QString("Creating tables in database OK") );
             imgOk4_4->setVisible( true );
         }
         else
         {
+            _logProcess( QString("Creating tables in database FAIL") );
             imgFail4_4->setVisible( true );
             return;
         }
 
+        _logProcess( QString("Adding default data to tables") );
         if( _processBelenusTablesFill() )
         {
+            _logProcess( QString("Adding default data to tables OK") );
             imgOk4_5->setVisible( true );
         }
         else
         {
+            _logProcess( QString("Adding default data to tables FAIL") );
             imgFail4_5->setVisible( true );
             return;
         }
+
+        _logProcess( QString("Database creation SUCCEEDED") );
         m_bDatabaseAlreadyInstalled = true;
     }
     else if( m_bInstallClient )
@@ -1205,7 +1246,7 @@ bool dlgMain::_processClientInstall()
         bRet = _copyInstallFiles( "install.li" );
 
         QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
-        QString     qsTo    = QString( "%1\\Temp\\Setup.exe" ).arg(m_qsPathWindows);
+        QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
 
         if( !QFile::copy( qsFrom, qsTo ) )
         {
@@ -1213,7 +1254,7 @@ bool dlgMain::_processClientInstall()
         }
 
         qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
-        qsTo    = QString( "%1\\Temp\\Setup.qm" ).arg(m_qsPathWindows);
+        qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.qm" ).arg(m_qsPathWindows);
 
         if( !QFile::copy( qsFrom, qsTo ) )
         {
@@ -1275,12 +1316,46 @@ void dlgMain::on_rbRemove_clicked()
 void dlgMain::on_pbCheckRootPsw_clicked()
 //=======================================================================================
 {
+    if( ledDBRootPassword1->text().compare( ledDBRootPassword2->text() ) != 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Passwords in the two fields are different.\n"
+                                 "Please retype the passwords.") );
+        return;
+    }
+
+    _logProcess( QString("") );
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( "" );
+
+    if( m_poDB->open() )
+    {
+        _logProcess( QString("") );
+        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD( '%1' );").arg(ledDBRootPassword1->text()) );
+        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'localhost' = PASSWORD( '%1' );").arg(ledDBRootPassword1->text()) );
+        m_poDB->close();
+    }
+    else
+    {
+        imgOk3->setVisible( false );
+        imgFail3->setVisible( true );
+        imgFail3->update();
+        QString strErr = tr("Error occured when trying to set root password.\n"
+                            "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
+        QMessageBox::warning(this, "Attention", strErr );
+        pbNext->setEnabled( false );
+        m_qsRootPassword = "";
+        return;
+    }
+
     lblText3_4->setVisible( true );
 
     m_poDB->setHostName( "localhost" );
     m_poDB->setDatabaseName( "mysql" );
     m_poDB->setUserName( "root" );
-    m_poDB->setPassword( ledDBRootPassword->text() );
+    m_poDB->setPassword( ledDBRootPassword1->text() );
 
     if( m_poDB->open() )
     {
@@ -1288,9 +1363,11 @@ void dlgMain::on_pbCheckRootPsw_clicked()
         imgFail3->setVisible( false );
         m_poDB->close();
         pbNext->setEnabled( true );
-        ledDBRootPassword->setEnabled( false );
+        pbNext->setFocus();
+        ledDBRootPassword1->setEnabled( false );
+        ledDBRootPassword2->setEnabled( false );
         pbCheckRootPsw->setEnabled( false );
-        m_qsRootPassword = ledDBRootPassword->text();
+        m_qsRootPassword = ledDBRootPassword1->text();
     }
     else
     {
@@ -1460,7 +1537,7 @@ void dlgMain::on_pbExitRestart_clicked()
     _exitInstaller( true );
 }
 //=======================================================================================
-bool dlgMain::_initializeWampServer()
+bool dlgMain::_initializeMySQL()
 //=======================================================================================
 {
     bool        bRet = true;
@@ -1476,15 +1553,24 @@ bool dlgMain::_initializeWampServer()
     _logProcess( QString("Wamp directory: %1").arg(strPath) );
     if( strPath.length() )
     {
-//        QString qsTemplate      = QString( "%1\\bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
-//        QString qsConfig        = QString( "%1\\bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
-//        QString strMySQLConfig  = QString( "\"%1\\bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe\" -t%2 -c%3" ).arg(strPath).arg(qsTemplate).arg(qsConfig);
+        _logProcess( QString("Set wampmysql service to start auto") );
+        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
+        {
+            bRet = obReg.set_REG_DWORD( QString("Start"), 2 );
+            obReg.CloseKey();
+        }
+        else
+        {
+            bRet = false;
+        }
+        _logProcess( QString("Setting reg. value %1").arg((bRet?"SUCCEEDED":"FAILED")) );
+
         if( strPath.right(1).compare("\\") != 0 )
         {
             strPath.append( "\\" );
         }
 
-        QString     qsFrom  = QString( "%1bin\\mysql\\mysql5.1.36\\my-template.ini" ).arg(strPath);
+/*        QString     qsFrom  = QString( "%1bin\\mysql\\mysql5.1.36\\my.ini" ).arg(strPath);
         QString     qsTo    = QString( "%1bin\\mysql\\mysql5.1.36\\bin\\my-template.cnf" ).arg(strPath);
 
         qsFrom.replace( '/', '\\' );
@@ -1494,9 +1580,9 @@ bool dlgMain::_initializeWampServer()
         if( !QFile::copy( qsFrom, qsTo ) )
         {
             _logProcess( QString("Copy FAILED" ) );
-        }
+        }*/
 
-        _logProcess( QString("Creating registry keys for MySQL Server") );
+/*        _logProcess( QString("Creating registry keys for MySQL Server") );
         if( !_isRegPathExists( "SOFTWARE\\MySQL AB\\MySQL Server 5.1" ) )
         {
             if( obReg.CreateKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\MySQL AB\\MySQL Server 5.1") ) )
@@ -1516,8 +1602,9 @@ bool dlgMain::_initializeWampServer()
             {
                 bRet = false;
             }
-        }
+        }*/
 
+/*        _logProcess( QString("Start MySQLInstanceConfig.exe") );
         if( bRet )
         {
             QString strMySQLConfig  = QString( "%1bin\\mysql\\mysql5.1.36\\bin\\MySQLInstanceConfig.exe" ).arg(strPath);
@@ -1540,7 +1627,7 @@ bool dlgMain::_initializeWampServer()
                 bRet = false;
 
             WaitForSingleObject(pi.hProcess,INFINITE);
-        }
+        }*/
     }
 
     return bRet;
@@ -1836,7 +1923,7 @@ bool dlgMain::_createFolderShortcut()
                 obReg.set_REG_SZ( QString("DisplayVersion"), QString("1.0.0.0") );
                 obReg.set_REG_SZ( QString("InstallLocation"), m_qsClientInstallDir );
                 obReg.set_REG_SZ( QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
-                obReg.set_REG_SZ( QString("UninstallString"), QString("%1\\Temp\\setup.exe -uninstall").arg(m_qsPathWindows) );
+                obReg.set_REG_SZ( QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
                 obReg.set_REG_SZ( QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
                 obReg.CloseKey();
             }

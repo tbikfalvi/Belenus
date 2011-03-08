@@ -5,7 +5,7 @@
     <name>dlgMain</name>
     <message>
         <location filename="dlgMain.ui" line="32"/>
-        <location filename="dlgMain.cpp" line="1726"/>
+        <location filename="dlgMain.cpp" line="1872"/>
         <source>Belenus Application System</source>
         <translation>Belenus Szoftver Rendszer</translation>
     </message>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <location filename="dlgMain.ui" line="179"/>
-        <location filename="dlgMain.ui" line="1523"/>
+        <location filename="dlgMain.ui" line="1562"/>
         <source>Installation process</source>
         <translation>Telepítés</translation>
     </message>
@@ -148,8 +148,9 @@
     </message>
     <message>
         <location filename="dlgMain.ui" line="743"/>
-        <source>Wamp database root password :</source>
-        <translation>Wamp szerver root jelszó :</translation>
+        <source>Set database root password :</source>
+        <oldsource>Wamp database root password :</oldsource>
+        <translation>Wamp szerver root jelszó beállítás :</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="769"/>
@@ -158,127 +159,138 @@
     </message>
     <message>
         <location filename="dlgMain.ui" line="820"/>
-        <source>Check</source>
-        <translation>Ellenőrzés</translation>
+        <source>Set &amp;&amp; Check</source>
+        <oldsource>Check</oldsource>
+        <translation>Beállítás és ellenőrzés</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="842"/>
+        <location filename="dlgMain.ui" line="833"/>
+        <source>Password : </source>
+        <translation>Jelszó : </translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="846"/>
+        <source>Retype : </source>
+        <translation>Jelszó újra : </translation>
+    </message>
+    <message>
+        <location filename="dlgMain.ui" line="881"/>
         <source>Database installation</source>
         <translation>Adatbázis telepítés</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="893"/>
+        <location filename="dlgMain.ui" line="932"/>
         <source>Creating Belenus database ...</source>
         <translation>Belenus adatbázis létrehozás ...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="906"/>
+        <location filename="dlgMain.ui" line="945"/>
         <source>Creating Belenus user for Belenus client application ...</source>
         <translation>Adatbázis felhasználó létrehozása a kliens alkalmazáshoz ...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="957"/>
+        <location filename="dlgMain.ui" line="996"/>
         <source>Granting neccessary rights for Belenus user on Belenus database ...</source>
         <translation>Megfelelő jogosultságok létrehozása a Belenus adatbázis használatához ...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1008"/>
+        <location filename="dlgMain.ui" line="1047"/>
         <source>Creating data tables for Belenus client application ...</source>
         <translation>Adattáblák létrehozása a kliens alkalmazáshoz ...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1059"/>
+        <location filename="dlgMain.ui" line="1098"/>
         <source>Filling data tables with default data ...</source>
         <translation>Adattáblák feltöltése alapértelmezett adatokkal ...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1110"/>
-        <location filename="dlgMain.ui" line="1549"/>
+        <location filename="dlgMain.ui" line="1149"/>
+        <location filename="dlgMain.ui" line="1588"/>
         <source>Overall process</source>
         <translation>Teljes folyamat</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1148"/>
+        <location filename="dlgMain.ui" line="1187"/>
         <source>Hardware connection installation</source>
         <translation>Hardver kapcsolat telepítés</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1161"/>
+        <location filename="dlgMain.ui" line="1200"/>
         <source>Please select the desired COM port from the list below:</source>
         <translation>Válassza ki a megfelelő COM port-ot a listából:</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1174"/>
+        <location filename="dlgMain.ui" line="1213"/>
         <source>Hardware unit available on the selected COM port ...</source>
         <translation>A hardver eszköz elérhető a megadott COM port-on ...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1225"/>
+        <location filename="dlgMain.ui" line="1264"/>
         <source>Number of available panels on hardware unit : </source>
         <translation>Elérhető panelok a hardver eszközön : </translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1254"/>
+        <location filename="dlgMain.ui" line="1293"/>
         <source>Enter the field below the number of panels installed on place.</source>
         <translation>Írja be a lenti mezőbe a telepített gépek számát.</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1267"/>
+        <location filename="dlgMain.ui" line="1306"/>
         <source>Number of panels : </source>
         <translation>Gépek száma : </translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1296"/>
+        <location filename="dlgMain.ui" line="1335"/>
         <source>Available COM ports :</source>
         <translation>Elérhető COM port-ok :</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1309"/>
+        <location filename="dlgMain.ui" line="1348"/>
         <source>Test hardware connection</source>
         <translation>Hardver kapcsolat ellenőrzése</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1347"/>
+        <location filename="dlgMain.ui" line="1386"/>
         <source>Internet connection installation</source>
         <translation>Internet kapcsolat telepítés</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1360"/>
+        <location filename="dlgMain.ui" line="1399"/>
         <source>Please fill the fields below.</source>
         <translation>Kérem töltse ki a lent található mezőket.</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1373"/>
+        <location filename="dlgMain.ui" line="1412"/>
         <source>IP Address of Belenus Database Server : </source>
         <translation>A Belenus Adatbázis Szerver IP címe : </translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1396"/>
+        <location filename="dlgMain.ui" line="1435"/>
         <source>Connection port : </source>
         <translation>Kapcsolódási port : </translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1440"/>
+        <location filename="dlgMain.ui" line="1479"/>
         <source>Client application installation</source>
         <translation>Kliens alkalmazás telepítés</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1453"/>
+        <location filename="dlgMain.ui" line="1492"/>
         <source>Select the destination directory for Belenus client application</source>
         <translation>Válassza ki a cél könyvtárat a Belenus kliens alkalmazáshoz</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1479"/>
+        <location filename="dlgMain.ui" line="1518"/>
         <source> ... </source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1501"/>
+        <location filename="dlgMain.ui" line="1540"/>
         <source>Report viewer installation</source>
         <translation>Belenus Adat Elemző telepítés</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1536"/>
+        <location filename="dlgMain.ui" line="1575"/>
         <source>Please wait while the installation process finish.</source>
         <translation>Kérem várjon amíg a telepítés befejeződik.</translation>
     </message>
@@ -291,70 +303,71 @@
         <translation type="obsolete">Belenus Kliens alkalmazás</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1606"/>
-        <location filename="dlgMain.cpp" line="462"/>
+        <location filename="dlgMain.ui" line="1645"/>
+        <location filename="dlgMain.cpp" line="491"/>
         <source>Installation finished</source>
         <translation>A telepítés befejeződött</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1619"/>
+        <location filename="dlgMain.ui" line="1658"/>
         <source>Installing Belenus Application System has been finished. To use the system correcty you need to restart your computer after exiting the installer.</source>
         <translation>A Belenus Szoftver Rendszer telepítése befejeződött. Az alkalmazás hibamentes működéséhez újra kell indítania a számítógépet.</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1660"/>
+        <location filename="dlgMain.ui" line="1699"/>
         <source>Restart computer now</source>
         <translation>Számítógép újraindítása</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1693"/>
+        <location filename="dlgMain.ui" line="1732"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1727"/>
+        <location filename="dlgMain.ui" line="1766"/>
         <source>&lt;&lt; Previous</source>
         <translation>&lt;&lt; Előző</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1743"/>
+        <location filename="dlgMain.ui" line="1782"/>
         <source>Next &gt;&gt;</source>
         <translation>Következő &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlgMain.ui" line="1777"/>
-        <location filename="dlgMain.cpp" line="149"/>
+        <location filename="dlgMain.ui" line="1816"/>
+        <location filename="dlgMain.cpp" line="142"/>
         <source>Start</source>
         <translation>Indítás</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="113"/>
-        <location filename="dlgMain.cpp" line="124"/>
-        <location filename="dlgMain.cpp" line="669"/>
+        <location filename="dlgMain.cpp" line="106"/>
+        <location filename="dlgMain.cpp" line="117"/>
+        <location filename="dlgMain.cpp" line="730"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="114"/>
-        <location filename="dlgMain.cpp" line="125"/>
+        <location filename="dlgMain.cpp" line="107"/>
+        <location filename="dlgMain.cpp" line="118"/>
         <source>Are you sure you want to abort installation?</source>
         <oldsource>Are you sure you want to abort installation.</oldsource>
         <translation>Biztos benne, hogy le akarja állítani a telepítést?</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="176"/>
-        <location filename="dlgMain.cpp" line="185"/>
+        <location filename="dlgMain.cpp" line="169"/>
+        <location filename="dlgMain.cpp" line="178"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="237"/>
-        <location filename="dlgMain.cpp" line="415"/>
+        <location filename="dlgMain.cpp" line="210"/>
+        <location filename="dlgMain.cpp" line="221"/>
+        <location filename="dlgMain.cpp" line="443"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="238"/>
+        <location filename="dlgMain.cpp" line="211"/>
         <source>Error occured during initialization.
 Please contact system administrator.
 Error code: ErrSysRegKeysFail</source>
@@ -363,7 +376,16 @@ Kérem lépjen kapcsolatba a rendszer adminisztrátorral.
 Hibakód: ErrSysRegKeysFail</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="415"/>
+        <location filename="dlgMain.cpp" line="222"/>
+        <source>Error occured during initialization.
+Please contact system administrator.
+Error code: ErrLogCreateFail</source>
+        <translation>Hiba történt a telepítő inicializálása közben.
+Kérem lépjen kapcsolatba a rendszer adminisztrátorral.
+Hibakód: ErrLogCreateFail</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.cpp" line="443"/>
         <source>System error occured during COM ports initialization.
 Please restart application and/or the operating system.
 If the error continuously occures again, please contact system administrator.</source>
@@ -372,17 +394,17 @@ Kérem indítsa újra az alkalmazást, vagy az operációs rendszert.
 Ha a hiba az újraindítás után sem szűnik meg, kérem forduljon a rendszer adminisztrátorhoz.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="467"/>
+        <location filename="dlgMain.cpp" line="496"/>
         <source>Update finished</source>
         <translation>A frissítés befejeződött</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="472"/>
+        <location filename="dlgMain.cpp" line="501"/>
         <source>Uninstall finished</source>
         <translation>Az eltávolítás befejeződött</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="478"/>
+        <location filename="dlgMain.cpp" line="509"/>
         <source>%1 Belenus Application System has been finished.To use the system correcty you need to restart your computer after exiting the installer.
 
 Press Exit to close the installer.</source>
@@ -391,7 +413,7 @@ Press Exit to close the installer.</source>
 Kattintson a Kilépés gombra a telepítő bezárásához.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="487"/>
+        <location filename="dlgMain.cpp" line="518"/>
         <source>%1 Belenus Application System has been finished.
 
 Press Exit to close the installer.</source>
@@ -400,18 +422,19 @@ Press Exit to close the installer.</source>
 Kattintson a Kilépés gombra a telepítő bezárásához.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="509"/>
-        <location filename="dlgMain.cpp" line="747"/>
-        <location filename="dlgMain.cpp" line="796"/>
-        <location filename="dlgMain.cpp" line="806"/>
-        <location filename="dlgMain.cpp" line="1127"/>
-        <location filename="dlgMain.cpp" line="1138"/>
-        <location filename="dlgMain.cpp" line="1175"/>
+        <location filename="dlgMain.cpp" line="543"/>
+        <location filename="dlgMain.cpp" line="822"/>
+        <location filename="dlgMain.cpp" line="871"/>
+        <location filename="dlgMain.cpp" line="881"/>
+        <location filename="dlgMain.cpp" line="1206"/>
+        <location filename="dlgMain.cpp" line="1217"/>
+        <location filename="dlgMain.cpp" line="1262"/>
+        <location filename="dlgMain.cpp" line="1306"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="510"/>
+        <location filename="dlgMain.cpp" line="544"/>
         <source>Wamp server installation failed.
 Please try to reinstall it with going back one page then return to this page.
 
@@ -422,17 +445,17 @@ Kérem lépjen vissza az előző oldalra, majd térjen vissza újra erre az olda
 Ha a Wamp telepítés megint sikertelen, kérem forduljon a Belenus Szoftver Ügyféltámogatáshoz.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="670"/>
+        <location filename="dlgMain.cpp" line="731"/>
         <source>Are you sure you want to remove Belenus Application system and all of it&apos;s components?</source>
         <translation>Biztos benne, hogy el akarja távolítani a Belenus Szoftver Rendszert és annak összes összetevőjét?</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="740"/>
+        <location filename="dlgMain.cpp" line="815"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="741"/>
+        <location filename="dlgMain.cpp" line="816"/>
         <source>There is no COM port selected for hardware unit communication.
 The Belenus client will be installed in DEMO mode.
 </source>
@@ -440,29 +463,29 @@ The Belenus client will be installed in DEMO mode.
 A Belenus kliens alkalmazás DEMO módban lesz telepítve.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="748"/>
+        <location filename="dlgMain.cpp" line="823"/>
         <source>Invalid value in number of panels field.
 Please enter a valid number between 1 and %1</source>
         <translation>Nem megfelelő érték a gépek számánál.
 Kérem adjon meg egy számot 1 és %1 között.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="797"/>
+        <location filename="dlgMain.cpp" line="872"/>
         <source>IP Address of Database Server is invalid.</source>
         <translation>Az Adatbázis Szerver IP címe hibás.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="807"/>
+        <location filename="dlgMain.cpp" line="882"/>
         <source>Connection port of Database Server is invalid.</source>
         <translation>Az Adatbázis Szerver kapcsolódási port-ja hibás.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1097"/>
+        <location filename="dlgMain.cpp" line="1176"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1128"/>
+        <location filename="dlgMain.cpp" line="1207"/>
         <source>The specified directory already exits.
 All the files will be deleted or overwritten.
 
@@ -473,7 +496,7 @@ Minden állomány törlődik vagy felülíródik.
 Biztosan folytatni akarja?</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1139"/>
+        <location filename="dlgMain.cpp" line="1218"/>
         <source>Unable to empty the specified directory.
 %1
 Please manually delete the directory if copying new files fails.</source>
@@ -482,14 +505,21 @@ Please manually delete the directory if copying new files fails.</source>
 Kérem törölje kézzel a könyvtárat, amennyiben az új állományok másolása nem sikerül.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1176"/>
+        <location filename="dlgMain.cpp" line="1263"/>
         <source>Unable to empty the specified directory.
 Some of the files or subdirectories can not be removed.</source>
         <translation>Nem lehet kiüríteni a megadott könyvtárat.
 Egyes alkönyvtárak és/vagy állományok törlése le van tiltva.</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1239"/>
+        <location filename="dlgMain.cpp" line="1307"/>
+        <source>Passwords in the two fields are different.
+Please retype the passwords.</source>
+        <translation>A két mezőben megadott jelszó nem egyezik.
+Kérem írja be újra a jelszót.</translation>
+    </message>
+    <message>
+        <location filename="dlgMain.cpp" line="1334"/>
         <source>Error occured when trying to connect to Wamp server.
 Wamp server error message:
 
@@ -500,24 +530,24 @@ Wamp szerver hibaüzenet:
 %1</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1378"/>
+        <location filename="dlgMain.cpp" line="1473"/>
         <source>Select Directory</source>
         <translation>Válasszon könyvtárat</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1553"/>
+        <location filename="dlgMain.cpp" line="1697"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1610"/>
-        <location filename="dlgMain.cpp" line="1675"/>
-        <location filename="dlgMain.cpp" line="1678"/>
+        <location filename="dlgMain.cpp" line="1755"/>
+        <location filename="dlgMain.cpp" line="1820"/>
+        <location filename="dlgMain.cpp" line="1823"/>
         <source>System error</source>
         <translation>Rendszer hiba</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1611"/>
+        <location filename="dlgMain.cpp" line="1756"/>
         <source>Unable to create directory:
 
 %1</source>
@@ -526,17 +556,17 @@ Wamp szerver hibaüzenet:
 %1</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1666"/>
+        <location filename="dlgMain.cpp" line="1811"/>
         <source>Copying file: ..\%1</source>
         <translation>Állomány másolása: ..\%1</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1670"/>
+        <location filename="dlgMain.cpp" line="1815"/>
         <source>Updating file: ..\%1</source>
         <translation>Állomány frissítése: ..\%1</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1676"/>
+        <location filename="dlgMain.cpp" line="1821"/>
         <source>Unable to copy file:
 
 %1</source>
@@ -545,7 +575,7 @@ Wamp szerver hibaüzenet:
 %1</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1679"/>
+        <location filename="dlgMain.cpp" line="1824"/>
         <source>Unable to update file:
 
 %1</source>
@@ -554,7 +584,7 @@ Wamp szerver hibaüzenet:
 %1</translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1696"/>
+        <location filename="dlgMain.cpp" line="1841"/>
         <source>Creating folder and shortcut for client application.</source>
         <translation>Könyvtárak és indító állományok létrehozása a kliens alkalmazáshoz.</translation>
     </message>
