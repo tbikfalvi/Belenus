@@ -45,6 +45,8 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
 
     // Set when passed component selection page to block welcome page
     m_bInstallStarted           = false;
+    // Set when application called with -uninstall parameter
+    m_bUninstallCalled          = false;
     // Flag for demo mode
     m_bDemoMode                 = false;
     // Identifies which component has to be processed
@@ -62,12 +64,15 @@ dlgMain::dlgMain(QWidget *parent) : QDialog(parent)
     m_bInstallFinished          = false;
     // If database created during install, set this flag
     m_bDatabaseAlreadyInstalled = false;
+    // If belenus user created, set this flag
+    m_bBelenusUserExists        = false;
     // Default settings for hardware
     m_poHardware                = NULL;
     m_nComPort                  = 0;
     m_nCountDevices             = 0;
     // Default settings for internet connection
     m_qsIPAddress               = QString( "127.0.0.1" );
+    m_nPort                     = 1000;
     // Default settings for client
     m_qsClientInstallDir        = QString( "C:\\Program Files\\Belenus" );
     // If computer restart required, set this flag
@@ -98,6 +103,13 @@ dlgMain::~dlgMain()
     if( m_obLog != NULL )       delete m_obLog;
     if( m_poDB != NULL )        delete m_poDB;
     if( m_poHardware != NULL )  delete m_poHardware;
+}
+//=======================================================================================
+void dlgMain::uninstallBelenus()
+//=======================================================================================
+{
+    m_bUninstallCalled = true;
+    m_nTimer = startTimer( 500 );
 }
 //=======================================================================================
 void dlgMain::closeEvent( QCloseEvent *p_poEvent )
@@ -276,6 +288,17 @@ void dlgMain::_initializeInstall()
 
     m_poDB = NULL;
     m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        m_bBelenusUserExists = true;
+        m_poDB->close();
+    }
 }
 //=======================================================================================
 void dlgMain::_initializePage( int p_nPage )
@@ -283,6 +306,10 @@ void dlgMain::_initializePage( int p_nPage )
 {
     switch( p_nPage )
     {
+        case CONST_PAGE_WELCOME:
+            _initializeWelcomePage();
+            break;
+
         case CONST_PAGE_INSTALL_SELECTION:
             _initializeSelectionPage();
             break;
@@ -321,6 +348,111 @@ void dlgMain::_initializePage( int p_nPage )
     }
 }
 //=======================================================================================
+bool dlgMain::_processPage( int p_nPage )
+//=======================================================================================
+{
+    bool bRet = true;
+
+    switch( p_nPage )
+    {
+        case CONST_PAGE_INSTALL_SELECTION:
+            bRet = _processSelectionPage();
+            break;
+
+        case CONST_PAGE_COMPONENT_SELECTION:
+            bRet = _processComponentSelectionPage();
+            break;
+
+        case CONST_PAGE_WAMP_INSTALL:
+            bRet = _processWampInstallPage();
+            break;
+
+        case CONST_PAGE_DATABASE_INSTALL:
+            bRet = _processDatabaseInstallPage();
+            break;
+
+        case CONST_PAGE_HARDWARE_INSTALL:
+            bRet = _processHardwareInstallPage();
+            break;
+
+        case CONST_PAGE_INTERNET_INSTALL:
+            bRet = _processInternetInstallPage();
+            break;
+
+        case CONST_PAGE_CLIENT_INSTALL:
+            bRet = _processClientInstallPage();
+            break;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+void dlgMain::timerEvent(QTimerEvent *)
+//=======================================================================================
+{
+    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
+    {
+        _installWampServer();
+    }
+    else if( m_bInitializeWamp || (m_bStartWampInstall && m_bWampServerAlreadyInstalled) )
+    {
+        _installSQLServer();
+    }
+    else if( m_bCreateDatabase )
+    {
+        _installFullDatabase();
+    }
+    else if( m_bInstallClient )
+    {
+        _processClientInstall();
+    }
+    else if( m_bInstallFinished )
+    {
+        m_bInstallFinished = false;
+        killTimer( m_nTimer );
+        on_pbNext_clicked();
+    }
+    else
+    {
+        killTimer( m_nTimer );
+        _initializePage( m_vPages.at( m_nCurrentPage ) );
+    }
+}
+//=======================================================================================
+//
+//  W E L C O M E  P A G E
+//
+//=======================================================================================
+void dlgMain::_initializeWelcomePage()
+//=======================================================================================
+{
+    if( m_bUninstallCalled )
+    {
+        pbCancel->setEnabled( false );
+        pbNext->setEnabled( false );
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Are you sure you want to uninstall Belenus Application System and all of it's components?\n"
+                                      "All of the data will be deleted from the computer."),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            m_vPages.clear();
+            m_vPages.append( CONST_PAGE_WELCOME );
+            m_vPages.append( CONST_PAGE_PROCESS );
+            m_vPages.append( CONST_PAGE_FINISH );
+            m_pInstallType = rbRemove;
+            on_pbNext_clicked();
+        }
+        else
+        {
+            QDialog::accept();
+        }
+    }
+}
+//=======================================================================================
+//
+//  P A G E  S E L E C T I O N
+//
+//=======================================================================================
 void dlgMain::_initializeSelectionPage()
 //=======================================================================================
 {
@@ -346,6 +478,70 @@ void dlgMain::_initializeSelectionPage()
     }
     m_pInstallType->setChecked( true );
 }
+//=======================================================================================
+void dlgMain::on_rbInstall_clicked()
+//=======================================================================================
+{
+    m_pInstallType = rbInstall;
+}
+//=======================================================================================
+void dlgMain::on_rbUpdate_clicked()
+//=======================================================================================
+{
+    m_pInstallType = rbUpdate;
+}
+//=======================================================================================
+void dlgMain::on_rbRemove_clicked()
+//=======================================================================================
+{
+    m_pInstallType = rbRemove;
+}
+//=======================================================================================
+bool dlgMain::_processSelectionPage()
+//=======================================================================================
+{
+    if( m_pInstallType == rbInstall )
+    {
+        m_bProcessWamp          = true;
+        m_bProcessDatabase      = true;
+        m_bProcessHWConnection  = true;
+        m_bProcessInternet      = true;
+        m_bProcessBelenusClient = true;
+        m_bProcessViewer        = true;
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        m_bProcessWamp          = false;
+        m_bProcessDatabase      = true;
+        m_bProcessHWConnection  = true;
+        m_bProcessInternet      = true;
+        m_bProcessBelenusClient = true;
+        m_bProcessViewer        = true;
+    }
+    else if( m_pInstallType == rbRemove )
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("Are you sure you want to remove Belenus Application system and all of it's components?"),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+        {
+            return false;
+        }
+        m_bProcessWamp          = true;
+        m_bProcessDatabase      = true;
+        m_bProcessHWConnection  = true;
+        m_bProcessInternet      = true;
+        m_bProcessBelenusClient = true;
+        m_bProcessViewer        = true;
+    }
+
+    _refreshPages();
+
+    return true;
+}
+//=======================================================================================
+//
+//  C O M P O N E N T  S E L E C T I O N
+//
 //=======================================================================================
 void dlgMain::_initializeComponentSelectionPage()
 //=======================================================================================
@@ -394,371 +590,73 @@ void dlgMain::_initializeComponentSelectionPage()
     _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::_initializeWampInstallPage()
+void dlgMain::on_chkWamp_clicked()
 //=======================================================================================
 {
-    pbNext->setEnabled( false );
-    lblText3_1->setVisible( true );
-    lblText3_2->setVisible( false );
-    lblText3_3->setVisible( false );
-    lblText3_5->setVisible( false );
-    lblText3_6->setVisible( false );
-    ledDBRootPassword1->setVisible( false );
-    ledDBRootPassword1->setEnabled( false );
-    ledDBRootPassword1->setText( "" );
-    ledDBRootPassword2->setVisible( false );
-    ledDBRootPassword2->setEnabled( false );
-    ledDBRootPassword2->setText( "" );
-    pbCheckRootPsw->setVisible( false );
-    pbCheckRootPsw->setEnabled( false );
-    lblText3_4->setVisible( false );
-    imgOk3->setVisible( false );
-    imgFail3->setVisible( false );
-
-    m_bStartWampInstall = true;
-    m_nTimer = startTimer( 200 );
+    m_bProcessWamp = chkWamp->isChecked();
+    _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::_initializeDatabaseInstallPage()
+void dlgMain::on_chkDatabase_clicked()
 //=======================================================================================
 {
-    if( m_bDatabaseAlreadyInstalled )
-    {
-        on_pbNext_clicked();
-    }
-    else
-    {
-        imgOk4_1->setVisible( false );
-        imgOk4_2->setVisible( false );
-        imgOk4_3->setVisible( false );
-        imgOk4_4->setVisible( false );
-        imgOk4_5->setVisible( false );
-        imgFail4_1->setVisible( false );
-        imgFail4_2->setVisible( false );
-        imgFail4_3->setVisible( false );
-        imgFail4_4->setVisible( false );
-        imgFail4_5->setVisible( false );
+    m_bProcessDatabase = chkDatabase->isChecked();
 
-        m_bCreateDatabase = true;
-        m_nTimer = startTimer( 200 );
+    if( m_pInstallType == rbInstall && chkDatabase->isChecked() )
+    {
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkBelenus->setChecked( true );
     }
+
+    _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::_initializeHardwareInstallPage()
+void dlgMain::on_chkHardware_clicked()
 //=======================================================================================
 {
-    _logProcess( QString("Serial communication init") );
-    m_poHardware = new CS_Communication_Serial();
-    if( m_poHardware != NULL )
+    m_bProcessHWConnection = chkHardware->isChecked();
+
+    if( m_pInstallType == rbInstall && chkHardware->isChecked() )
     {
-        _fillAvailableComPorts();
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkDatabase->setChecked( true & m_bProcessDatabase );
+        chkBelenus->setChecked( true );
     }
-    else
-    {
-        QMessageBox::critical( this, tr("Error"), tr("System error occured during COM ports initialization.\n"
-                                                     "Please restart application and/or the operating system.\n"
-                                                     "If the error continuously occures again, please contact system administrator.") );
-        _logProcess( QString("COM init failed") );
-        pbNext->setEnabled( false );
-    }
-    lblText5_3->setVisible( false );
-    imgFail5_1->setVisible( false );
-    imgOk5_1->setVisible( false );
-    lblText5_4->setVisible( false );
-    ledPanelsAvailable->setVisible( false );
-    lblText5_5->setVisible( false );
-    lblText5_6->setVisible( false );
-    ledPanelsInstalled->setVisible( false );
-    ledPanelsInstalled->setEnabled( false );
-    ledPanelsInstalled->setText( QString::number(m_nCountDevices) );
+
+    _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::_initializeInternetInstallPage()
+void dlgMain::on_chkInternet_clicked()
 //=======================================================================================
 {
-    ledDBIPAddress->setText( m_qsIPAddress );
-    ledDBIPPort->setText( QString::number(m_nPort ) );
+    m_bProcessInternet = chkInternet->isChecked();
+
+    if( m_pInstallType == rbInstall && chkInternet->isChecked() )
+    {
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkDatabase->setChecked( true & m_bProcessDatabase );
+        chkBelenus->setChecked( true );
+    }
+
+    _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::_initializeClientInstallPage()
+void dlgMain::on_chkBelenus_clicked()
 //=======================================================================================
 {
-    ledClientInstallDir->setText( m_qsClientInstallDir );
-    prbDBInstallClient->setValue( 0 );
-    prbDBInstallClient->update();
-}
-//=======================================================================================
-void dlgMain::_initializeInstallProcessPage()
-//=======================================================================================
-{
-    pbNext->setEnabled( false );
-    m_bInstallClient = true;
-    m_nTimer = startTimer( 500 );
-}
-//=======================================================================================
-void dlgMain::_initializeFinishPage()
-//=======================================================================================
-{
-    QString qsProcess;
+    m_bProcessBelenusClient = chkBelenus->isChecked();
 
-    if( m_pInstallType == rbInstall )
+    if( m_pInstallType == rbInstall && chkBelenus->isChecked() )
     {
-        lblTitleInstallFinished->setText( tr( "Installation finished" ) );
-        qsProcess = "Installing";
-    }
-    else if( m_pInstallType == rbUpdate )
-    {
-        lblTitleInstallFinished->setText( tr( "Update finished" ) );
-        qsProcess = "Updating";
-    }
-    else if( m_pInstallType == rbRemove )
-    {
-        lblTitleInstallFinished->setText( tr( "Uninstall finished" ) );
-        qsProcess = "Removing";
+        if( chkWamp->isEnabled() )
+            chkWamp->setChecked( true );
+        chkDatabase->setChecked( true & m_bProcessDatabase );
     }
 
-    _logProcess( lblTitleInstallFinished->text() );
-
-    if( m_bRestartRequired )
-    {
-        lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished."
-                                             "To use the system correcty you need to restart your "
-                                             "computer after exiting the installer.\n\n"
-                                             "Press Exit to close the installer." ).arg(qsProcess) );
-        pbExitRestart->setEnabled( true );
-        pbExitRestart->setVisible( true );
-    }
-    else
-    {
-        lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished.\n\n"
-                                             "Press Exit to close the installer." ).arg(qsProcess) );
-        pbExitRestart->setEnabled( false );
-        pbExitRestart->setVisible( false );
-    }
-}
-//=======================================================================================
-void dlgMain::timerEvent(QTimerEvent *)
-//=======================================================================================
-{
-    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
-    {
-        _logProcess( QString("Wamp installation started") );
-        killTimer( m_nTimer );
-        pbNext->setEnabled( false );
-        m_bStartWampInstall = false;
-        if( _processWampServerInstall() )
-        {
-            _logProcess( QString("Wamp install SUCCEEDED") );
-            m_bInitializeWamp = true;
-            m_nTimer = startTimer( 200 );
-        }
-        else
-        {
-            _logProcess( QString("Wamp install FAILED") );
-            QMessageBox::warning( this, tr("Attention"),
-                                  tr("Wamp server installation failed.\n"
-                                     "Please try to reinstall it with going back one page "
-                                     "then return to this page.\n\n"
-                                     "If Wamp install continuously fails please contact Belenus software support.") );
-        }
-        _logProcess( QString("Wamp installation finished") );
-    }
-    else if( m_bInitializeWamp || (m_bStartWampInstall && m_bWampServerAlreadyInstalled) )
-    {
-        _logProcess( QString("MySQL initialization started") );
-        killTimer( m_nTimer );
-        pbNext->setEnabled( false );
-        m_bStartWampInstall = false;
-        m_bInitializeWamp = false;
-        if( _initializeMySQL() )
-        {
-            _logProcess( QString("MySQL init SUCCEEDED") );
-            lblText3_1->setVisible( false );
-            lblText3_2->setVisible( true );
-            lblText3_3->setVisible( true );
-            lblText3_5->setVisible( true );
-            lblText3_6->setVisible( true );
-            ledDBRootPassword1->setVisible( true );
-            ledDBRootPassword1->setEnabled( true );
-            ledDBRootPassword2->setVisible( true );
-            ledDBRootPassword2->setEnabled( true );
-            ledDBRootPassword1->setFocus();
-            pbCheckRootPsw->setVisible( true );
-            pbCheckRootPsw->setEnabled( true );
-        }
-        else
-        {
-            _logProcess( QString("MySQL init FAILED") );
-            pbNext->setEnabled( false );
-        }
-        _logProcess( QString("MySQL initialization finished") );
-    }
-    else if( m_bCreateDatabase )
-    {
-        m_bCreateDatabase = false;
-        killTimer( m_nTimer );
-
-        _logProcess( QString("Creating database") );
-        if( _processDatabaseCreate() )
-        {
-            _logProcess( QString("Creating database OK") );
-            imgOk4_1->setVisible( true );
-        }
-        else
-        {
-            _logProcess( QString("Creating database FAIL") );
-            imgFail4_1->setVisible( true );
-            return;
-        }
-
-        _logProcess( QString("Creating Belenus user") );
-        if( _processBelenusUserCreate() )
-        {
-            _logProcess( QString("Creating Belenus user OK") );
-            imgOk4_2->setVisible( true );
-        }
-        else
-        {
-            _logProcess( QString("Creating Belenus user FAIL") );
-            imgFail4_2->setVisible( true );
-            return;
-        }
-
-        _logProcess( QString("Granting privileges for Belenus user") );
-        if( _processBelenusUserRights() )
-        {
-            _logProcess( QString("Granting privileges for Belenus user OK") );
-            imgOk4_3->setVisible( true );
-        }
-        else
-        {
-            _logProcess( QString("Granting privileges for Belenus user FAIL") );
-            imgFail4_3->setVisible( true );
-            return;
-        }
-
-        _logProcess( QString("Creating tables in database") );
-        if( _processBelenusTablesCreate() )
-        {
-            _logProcess( QString("Creating tables in database OK") );
-            imgOk4_4->setVisible( true );
-        }
-        else
-        {
-            _logProcess( QString("Creating tables in database FAIL") );
-            imgFail4_4->setVisible( true );
-            return;
-        }
-
-        _logProcess( QString("Adding default data to tables") );
-        if( _processBelenusTablesFill() )
-        {
-            _logProcess( QString("Adding default data to tables OK") );
-            imgOk4_5->setVisible( true );
-        }
-        else
-        {
-            _logProcess( QString("Adding default data to tables FAIL") );
-            imgFail4_5->setVisible( true );
-            return;
-        }
-
-        _logProcess( QString("Database creation SUCCEEDED") );
-        m_bDatabaseAlreadyInstalled = true;
-    }
-    else if( m_bInstallClient )
-    {
-        m_bInstallClient = false;
-        killTimer( m_nTimer );
-        _processClientInstall();
-    }
-    else if( m_bInstallFinished )
-    {
-        m_bInstallFinished = false;
-        killTimer( m_nTimer );
-        on_pbNext_clicked();
-    }
-}
-//=======================================================================================
-bool dlgMain::_processPage( int p_nPage )
-//=======================================================================================
-{
-    bool bRet = true;
-
-    switch( p_nPage )
-    {
-        case 1:
-            bRet = _processSelectionPage();
-            break;
-
-        case 2:
-            bRet = _processComponentSelectionPage();
-            break;
-
-        case 3:
-            bRet = _processWampInstallPage();
-            break;
-
-        case 4:
-            bRet = _processDatabaseInstallPage();
-            break;
-
-        case 5:
-            bRet = _processHardwareInstallPage();
-            break;
-
-        case 6:
-            bRet = _processInternetInstallPage();
-            break;
-
-        case 7:
-            bRet = _processClientInstallPage();
-            break;
-    }
-
-    return bRet;
-}
-//=======================================================================================
-bool dlgMain::_processSelectionPage()
-//=======================================================================================
-{
-    if( m_pInstallType == rbInstall )
-    {
-        m_bProcessWamp          = true;
-        m_bProcessDatabase      = true;
-        m_bProcessHWConnection  = true;
-        m_bProcessInternet      = true;
-        m_bProcessBelenusClient = true;
-        m_bProcessViewer        = true;
-    }
-    else if( m_pInstallType == rbUpdate )
-    {
-        m_bProcessWamp          = false;
-        m_bProcessDatabase      = true;
-        m_bProcessHWConnection  = true;
-        m_bProcessInternet      = true;
-        m_bProcessBelenusClient = true;
-        m_bProcessViewer        = true;
-    }
-    else if( m_pInstallType == rbRemove )
-    {
-        if( QMessageBox::question( this, tr("Question"),
-                                   tr("Are you sure you want to remove Belenus Application system and all of it's components?"),
-                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
-        {
-            return false;
-        }
-        m_bProcessWamp          = true;
-        m_bProcessDatabase      = true;
-        m_bProcessHWConnection  = true;
-        m_bProcessInternet      = true;
-        m_bProcessBelenusClient = true;
-        m_bProcessViewer        = true;
-    }
-
-    _refreshPages();
-
-    return true;
+    _setEnableNextButton();
 }
 //=======================================================================================
 bool dlgMain::_processComponentSelectionPage()
@@ -801,6 +699,108 @@ bool dlgMain::_processComponentSelectionPage()
     return true;
 }
 //=======================================================================================
+//
+//  W A M P / S Q L  I N S T A L L
+//
+//=======================================================================================
+void dlgMain::_initializeWampInstallPage()
+//=======================================================================================
+{
+    pbNext->setEnabled( false );
+    lblText3_1->setVisible( true );
+    lblText3_2->setVisible( false );
+    lblText3_3->setVisible( false );
+    lblText3_5->setVisible( false );
+    lblText3_6->setVisible( false );
+    ledDBRootPassword1->setVisible( false );
+    ledDBRootPassword1->setEnabled( false );
+    ledDBRootPassword1->setText( "" );
+    ledDBRootPassword2->setVisible( false );
+    ledDBRootPassword2->setEnabled( false );
+    ledDBRootPassword2->setText( "" );
+    pbCheckRootPsw->setVisible( false );
+    pbCheckRootPsw->setEnabled( false );
+    lblText3_4->setVisible( false );
+    imgOk3->setVisible( false );
+    imgFail3->setVisible( false );
+
+    m_bStartWampInstall = true;
+    m_nTimer = startTimer( 200 );
+}
+//=======================================================================================
+void dlgMain::_installWampServer()
+//=======================================================================================
+{
+    _logProcess( QString("Wamp installation started") );
+    killTimer( m_nTimer );
+    pbNext->setEnabled( false );
+    m_bStartWampInstall = false;
+    if( _processWampServerInstall() )
+    {
+        _logProcess( QString("Wamp install SUCCEEDED") );
+        m_bInitializeWamp = true;
+        m_nTimer = startTimer( 200 );
+    }
+    else
+    {
+        _logProcess( QString("Wamp install FAILED") );
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Wamp server installation failed.\n"
+                                 "Please try to reinstall it with going back one page "
+                                 "then return to this page.\n\n"
+                                 "If Wamp install continuously fails please contact Belenus software support.") );
+    }
+    _logProcess( QString("Wamp installation finished") );
+}
+//=======================================================================================
+void dlgMain::_installSQLServer()
+//=======================================================================================
+{
+    _logProcess( QString("MySQL initialization started") );
+    killTimer( m_nTimer );
+    pbNext->setEnabled( false );
+    m_bStartWampInstall = false;
+    m_bInitializeWamp = false;
+
+    if( !m_bBelenusUserExists )
+    {
+        if( _initializeMySQL() )
+        {
+            _logProcess( QString("MySQL init SUCCEEDED") );
+            lblText3_1->setVisible( false );
+            lblText3_2->setVisible( true );
+            lblText3_3->setVisible( true );
+            lblText3_5->setVisible( true );
+            lblText3_6->setVisible( true );
+            ledDBRootPassword1->setVisible( true );
+            ledDBRootPassword1->setEnabled( true );
+            ledDBRootPassword2->setVisible( true );
+            ledDBRootPassword2->setEnabled( true );
+            ledDBRootPassword1->setFocus();
+            pbCheckRootPsw->setVisible( true );
+            pbCheckRootPsw->setEnabled( true );
+        }
+        else
+        {
+            _logProcess( QString("MySQL init FAILED") );
+            pbNext->setEnabled( false );
+        }
+    }
+    else
+    {
+        lblText3_1->setVisible( false );
+        lblText3_2->setVisible( true );
+        lblText3_3->setVisible( true );
+        lblText3_5->setVisible( true );
+        ledDBRootPassword1->setVisible( true );
+        ledDBRootPassword1->setEnabled( true );
+        pbCheckRootPsw->setVisible( true );
+        pbCheckRootPsw->setEnabled( true );
+        pbCheckRootPsw->setText( tr("Check") );
+    }
+    _logProcess( QString("MySQL initialization finished") );
+}
+//=======================================================================================
 bool dlgMain::_processWampInstallPage()
 //=======================================================================================
 {
@@ -809,12 +809,74 @@ bool dlgMain::_processWampInstallPage()
     return bRet;
 }
 //=======================================================================================
+//
+//  D A T A B A S E  I N S T A L L
+//
+//=======================================================================================
+void dlgMain::_initializeDatabaseInstallPage()
+//=======================================================================================
+{
+    if( m_bDatabaseAlreadyInstalled )
+    {
+        on_pbNext_clicked();
+    }
+    else
+    {
+        imgOk4_1->setVisible( false );
+        imgOk4_2->setVisible( false );
+        imgOk4_3->setVisible( false );
+        imgOk4_4->setVisible( false );
+        imgOk4_5->setVisible( false );
+        imgFail4_1->setVisible( false );
+        imgFail4_2->setVisible( false );
+        imgFail4_3->setVisible( false );
+        imgFail4_4->setVisible( false );
+        imgFail4_5->setVisible( false );
+
+        m_bCreateDatabase = true;
+        m_nTimer = startTimer( 200 );
+    }
+}
+//=======================================================================================
 bool dlgMain::_processDatabaseInstallPage()
 //=======================================================================================
 {
     bool    bRet = true;
 
     return bRet;
+}
+//=======================================================================================
+//
+//  H A R D W A R E  I N S T A L L
+//
+//=======================================================================================
+void dlgMain::_initializeHardwareInstallPage()
+//=======================================================================================
+{
+    _logProcess( QString("Serial communication init") );
+    m_poHardware = new CS_Communication_Serial();
+    if( m_poHardware != NULL )
+    {
+        _fillAvailableComPorts();
+    }
+    else
+    {
+        QMessageBox::critical( this, tr("Error"), tr("System error occured during COM ports initialization.\n"
+                                                     "Please restart application and/or the operating system.\n"
+                                                     "If the error continuously occures again, please contact system administrator.") );
+        _logProcess( QString("COM init failed") );
+        pbNext->setEnabled( false );
+    }
+    lblText5_3->setVisible( false );
+    imgFail5_1->setVisible( false );
+    imgOk5_1->setVisible( false );
+    lblText5_4->setVisible( false );
+    ledPanelsAvailable->setVisible( false );
+    lblText5_5->setVisible( false );
+    lblText5_6->setVisible( false );
+    ledPanelsInstalled->setVisible( false );
+    ledPanelsInstalled->setEnabled( false );
+    ledPanelsInstalled->setText( QString::number(m_nCountDevices) );
 }
 //=======================================================================================
 bool dlgMain::_processHardwareInstallPage()
@@ -830,6 +892,7 @@ bool dlgMain::_processHardwareInstallPage()
         QMessageBox::information( this, tr("Information"),
                                   tr("There is no COM port selected for hardware unit communication.\n"
                                      "The Belenus client will be installed in DEMO mode.\n") );
+        m_nCountDevices = 3;
         m_bDemoMode = true;
     }
     else if( m_nCountDevices < 1 || m_nCountDevices > ledPanelsAvailable->text().toInt() )
@@ -846,71 +909,85 @@ bool dlgMain::_processHardwareInstallPage()
         m_poHardware = NULL;
     }
 
+    if( bRet )
+    {
+        _processBelenusDeviceFill();
+    }
+
     return bRet;
+}
+//=======================================================================================
+//
+//  I N T E R N E T  I N S T A L L
+//
+//=======================================================================================
+void dlgMain::_initializeInternetInstallPage()
+//=======================================================================================
+{
+    ledDBIPAddress->setText( m_qsIPAddress );
+    ledDBIPPort->setText( QString::number(m_nPort ) );
 }
 //=======================================================================================
 bool dlgMain::_processInternetInstallPage()
 //=======================================================================================
 {
-    bool    bRet = true;
+    bool        bRet            = true;
+    bool        ok              = false;
+    int         nValue          = 0;
+    QStringList qslIPAddress    = ledDBIPAddress->text().split( '.' );
 
-    if( m_bDemoMode )
+    if( qslIPAddress.size() != 4 )
     {
-        ledDBIPAddress->setText( "127.0.0.1" );
-        ledDBIPPort->setText( "1000" );
+        bRet = false;
     }
     else
     {
-        bool        ok           = false;
-        int         nValue       = 0;
-        QStringList qslIPAddress = ledDBIPAddress->text().split( '.' );
-
-        if( qslIPAddress.size() != 4 )
+        for( int i=0; i<qslIPAddress.size(); i++ )
         {
+            nValue = qslIPAddress.at(i).toInt(&ok);
+            if( !ok || qslIPAddress.at(i).length() < 1 || nValue < 0 || nValue > 999 )
+            {
+                bRet = false;
+                break;
+            }
+        }
+    }
+    if( !bRet )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("IP Address of Database Server is invalid." ) );
+    }
+    else
+    {
+        m_qsIPAddress = ledDBIPAddress->text();
+
+        nValue = ledDBIPPort->text().toInt(&ok);
+        if( !ok || ledDBIPPort->text().length() < 1 || nValue < 1 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("Connection port of Database Server is invalid." ) );
             bRet = false;
         }
         else
         {
-            for( int i=0; i<qslIPAddress.size(); i++ )
-            {
-                nValue = qslIPAddress.at(i).toInt(&ok);
-                if( !ok || qslIPAddress.at(i).length() < 1 || nValue < 0 || nValue > 999 )
-                {
-                    bRet = false;
-                    break;
-                }
-            }
-        }
-        if( !bRet )
-        {
-            QMessageBox::warning( this, tr("Attention"),
-                                  tr("IP Address of Database Server is invalid." ) );
-        }
-        else
-        {
-            m_qsIPAddress = ledDBIPAddress->text();
-
-            nValue = ledDBIPPort->text().toInt(&ok);
-            if( !ok || ledDBIPPort->text().length() < 1 || nValue < 1 )
-            {
-                QMessageBox::warning( this, tr("Attention"),
-                                      tr("Connection port of Database Server is invalid." ) );
-                bRet = false;
-            }
-            else
-            {
-                m_nPort = nValue;
-            }
+            m_nPort = nValue;
         }
     }
 
-    if( bRet )
-    {
-        ledDBIPAddress->setText( m_qsIPAddress );
-        ledDBIPPort->setText( QString::number(m_nPort) );
-    }
 
     return bRet;
+}
+//=======================================================================================
+//
+// C L I E N T  I N S T A L L
+//
+//=======================================================================================
+void dlgMain::_initializeClientInstallPage()
+//=======================================================================================
+{
+    ledClientInstallDir->setText( m_qsClientInstallDir );
+    prbDBInstallClient->setValue( 0 );
+    prbDBInstallClient->update();
 }
 //=======================================================================================
 bool dlgMain::_processClientInstallPage()
@@ -920,6 +997,72 @@ bool dlgMain::_processClientInstallPage()
 
 
     return bRet;
+}
+//=======================================================================================
+//
+//  M A I N  I N S T A L L  P R O C E S S
+//
+//=======================================================================================
+void dlgMain::_initializeInstallProcessPage()
+//=======================================================================================
+{
+    pbCancel->setEnabled( false );
+    pbPrev->setEnabled( false );
+    pbNext->setEnabled( false );
+
+    if( m_pInstallType == rbRemove )
+    {
+        lblTitleProcessInstall->setText( tr("Uninstall process") );
+        lblText8_1->setText( tr("Please wait while the uninstall process finish.") );
+    }
+
+    m_bInstallClient = true;
+    m_nTimer = startTimer( 500 );
+}
+//=======================================================================================
+//
+//  F I N I S H  I N S T A L L
+//
+//=======================================================================================
+void dlgMain::_initializeFinishPage()
+//=======================================================================================
+{
+    QString qsProcess;
+
+    if( m_pInstallType == rbInstall )
+    {
+        lblTitleInstallFinished->setText( tr( "Installation finished" ) );
+        qsProcess = tr("Installing");
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        lblTitleInstallFinished->setText( tr( "Update finished" ) );
+        qsProcess = tr("Updating");
+    }
+    else if( m_pInstallType == rbRemove )
+    {
+        lblTitleInstallFinished->setText( tr( "Uninstall finished" ) );
+        qsProcess = tr("Removing");
+    }
+
+    _logProcess( lblTitleInstallFinished->text() );
+
+    if( m_bRestartRequired )
+    {
+        lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished."
+                                             "To use the system correcty you need to restart your "
+                                             "computer after exiting the installer.\n\n"
+                                             "Press Exit to close the installer." ).arg(qsProcess) );
+        pbExitRestart->setEnabled( true );
+        pbExitRestart->setVisible( true );
+    }
+    else
+    {
+        lblTextInstallFinished->setText( tr( "%1 Belenus Application System has been finished.\n\n"
+                                             "Press Exit to close the installer." ).arg(qsProcess) );
+        pbExitRestart->setEnabled( false );
+        pbExitRestart->setVisible( false );
+    }
 }
 //=======================================================================================
 bool dlgMain::_processWampServerInstall()
@@ -1185,6 +1328,8 @@ bool dlgMain::_processBelenusDeviceFill()
 
     if( m_poDB->open() )
     {
+        m_poDB->exec( QString("DELETE FROM `panels` WHERE `panelTypeId`>0") );
+
         for( int i=0; i<m_nCountDevices; i++ )
         {
             QString qsSQL = QString("INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES"
@@ -1207,6 +1352,10 @@ bool dlgMain::_processClientInstall()
 {
     bool    bRet = true;
 
+    m_bInstallClient = false;
+    killTimer( m_nTimer );
+
+    _logProcess( QString("") );
     pbCancel->setEnabled( false );
 
     prbDBInstallClient->setValue( 0 );
@@ -1216,6 +1365,7 @@ bool dlgMain::_processClientInstall()
 
     if( m_pInstallType == rbInstall )
     {
+        _logProcess( QString("") );
         if( qdInstallDir.exists() )
         {
             if( QMessageBox::warning( this, tr("Attention"),
@@ -1224,11 +1374,13 @@ bool dlgMain::_processClientInstall()
                                          "Are you sure you want to continue?"),
                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
             {
+                _logProcess( QString("") );
                 pbCancel->setEnabled( true );
                 return true;
             }
             if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
             {
+                _logProcess( QString("") );
                 QMessageBox::information( this, tr("Attention"),
                                           tr("Unable to empty the specified directory.\n"
                                              "%1\n"
@@ -1236,48 +1388,66 @@ bool dlgMain::_processClientInstall()
             }
         }
 
+        _logProcess( QString("") );
         if( !_createTargetDirectory( m_qsClientInstallDir ) ||
             !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
             !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) )
         {
+            _logProcess( QString("") );
             return false;
         }
+        _logProcess( QString("") );
 
+        _logProcess( QString("") );
         bRet = _copyInstallFiles( "install.li" );
+        _logProcess( QString("") );
 
         QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
         QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
 
+        _logProcess( QString("") );
         if( !QFile::copy( qsFrom, qsTo ) )
         {
+            _logProcess( QString("") );
             bRet = false;
         }
+        _logProcess( QString("") );
 
         qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
         qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.qm" ).arg(m_qsPathWindows);
 
+        _logProcess( QString("") );
         if( !QFile::copy( qsFrom, qsTo ) )
         {
+            _logProcess( QString("") );
             bRet = false;
         }
+        _logProcess( QString("") );
 
         if( bRet )
         {
+            _logProcess( QString("") );
             bRet = _createFolderShortcut();
         }
+        _logProcess( QString("") );
     }
     else if( m_pInstallType == rbUpdate )
     {
+        _logProcess( QString("") );
         bRet = _copyInstallFiles( "update.li" );
+        _logProcess( QString("") );
     }
     else if( m_pInstallType == rbRemove )
     {
+        _logProcess( QString("") );
         if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
         {
             QMessageBox::information( this, tr("Attention"),
                                       tr("Unable to empty the specified directory.\n"
-                                         "Some of the files or subdirectories can not be removed." ) );
+                                         "%1\n"
+                                         "Some of the files or subdirectories can not be removed." ).arg(m_qsClientInstallDir) );
         }
+        _logProcess( QString("") );
     }
 
     if( bRet )
@@ -1295,62 +1465,47 @@ bool dlgMain::_processClientInstall()
     return bRet;
 }
 //=======================================================================================
-void dlgMain::on_rbInstall_clicked()
-//=======================================================================================
-{
-    m_pInstallType = rbInstall;
-}
-//=======================================================================================
-void dlgMain::on_rbUpdate_clicked()
-//=======================================================================================
-{
-    m_pInstallType = rbUpdate;
-}
-//=======================================================================================
-void dlgMain::on_rbRemove_clicked()
-//=======================================================================================
-{
-    m_pInstallType = rbRemove;
-}
-//=======================================================================================
 void dlgMain::on_pbCheckRootPsw_clicked()
 //=======================================================================================
 {
-    if( ledDBRootPassword1->text().compare( ledDBRootPassword2->text() ) != 0 )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("Passwords in the two fields are different.\n"
-                                 "Please retype the passwords.") );
-        return;
-    }
-
-    _logProcess( QString("") );
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "mysql" );
-    m_poDB->setUserName( "root" );
-    m_poDB->setPassword( "" );
-
-    if( m_poDB->open() )
-    {
-        _logProcess( QString("") );
-        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD( '%1' );").arg(ledDBRootPassword1->text()) );
-        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'localhost' = PASSWORD( '%1' );").arg(ledDBRootPassword1->text()) );
-        m_poDB->close();
-    }
-    else
-    {
-        imgOk3->setVisible( false );
-        imgFail3->setVisible( true );
-        imgFail3->update();
-        QString strErr = tr("Error occured when trying to set root password.\n"
-                            "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
-        QMessageBox::warning(this, "Attention", strErr );
-        pbNext->setEnabled( false );
-        m_qsRootPassword = "";
-        return;
-    }
-
     lblText3_4->setVisible( true );
+
+    if( !m_bBelenusUserExists )
+    {
+        if( ledDBRootPassword1->text().compare( ledDBRootPassword2->text() ) != 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("Passwords in the two fields are different.\n"
+                                     "Please retype the passwords.") );
+            return;
+        }
+
+        _logProcess( QString("Connect SQL server") );
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "mysql" );
+        m_poDB->setUserName( "root" );
+        m_poDB->setPassword( "" );
+
+        if( m_poDB->open() )
+        {
+            _logProcess( QString("") );
+            m_poDB->exec( QString("SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD( '%1' );").arg(ledDBRootPassword1->text()) );
+            m_poDB->exec( QString("SET PASSWORD FOR 'root'@'localhost' = PASSWORD( '%1' );").arg(ledDBRootPassword1->text()) );
+            m_poDB->close();
+        }
+        else
+        {
+            imgOk3->setVisible( false );
+            imgFail3->setVisible( true );
+            imgFail3->update();
+            QString strErr = tr("Error occured when trying to set root password.\n"
+                                "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
+            QMessageBox::warning(this, "Attention", strErr );
+            pbNext->setEnabled( false );
+            m_qsRootPassword = "";
+            return;
+        }
+    }
 
     m_poDB->setHostName( "localhost" );
     m_poDB->setDatabaseName( "mysql" );
@@ -1380,75 +1535,6 @@ void dlgMain::on_pbCheckRootPsw_clicked()
         pbNext->setEnabled( false );
         m_qsRootPassword = "";
     }
-}
-//=======================================================================================
-void dlgMain::on_chkWamp_clicked()
-//=======================================================================================
-{
-    m_bProcessWamp = chkWamp->isChecked();
-    _setEnableNextButton();
-}
-//=======================================================================================
-void dlgMain::on_chkDatabase_clicked()
-//=======================================================================================
-{
-    m_bProcessDatabase = chkDatabase->isChecked();
-
-    if( m_pInstallType == rbInstall && chkDatabase->isChecked() )
-    {
-        if( chkWamp->isEnabled() )
-            chkWamp->setChecked( true );
-        chkBelenus->setChecked( true );
-    }
-
-    _setEnableNextButton();
-}
-//=======================================================================================
-void dlgMain::on_chkHardware_clicked()
-//=======================================================================================
-{
-    m_bProcessHWConnection = chkHardware->isChecked();
-
-    if( m_pInstallType == rbInstall && chkHardware->isChecked() )
-    {
-        if( chkWamp->isEnabled() )
-            chkWamp->setChecked( true );
-        chkDatabase->setChecked( true & m_bProcessDatabase );
-        chkBelenus->setChecked( true );
-    }
-
-    _setEnableNextButton();
-}
-//=======================================================================================
-void dlgMain::on_chkInternet_clicked()
-//=======================================================================================
-{
-    m_bProcessInternet = chkInternet->isChecked();
-
-    if( m_pInstallType == rbInstall && chkInternet->isChecked() )
-    {
-        if( chkWamp->isEnabled() )
-            chkWamp->setChecked( true );
-        chkDatabase->setChecked( true & m_bProcessDatabase );
-        chkBelenus->setChecked( true );
-    }
-
-    _setEnableNextButton();
-}
-//=======================================================================================
-void dlgMain::on_chkBelenus_clicked()
-//=======================================================================================
-{
-    m_bProcessBelenusClient = chkBelenus->isChecked();
-
-    if( m_pInstallType == rbInstall && chkBelenus->isChecked() )
-    {
-        if( chkWamp->isEnabled() )
-            chkWamp->setChecked( true );
-        chkDatabase->setChecked( true & m_bProcessDatabase );
-    }
-
-    _setEnableNextButton();
 }
 //=======================================================================================
 void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
@@ -1945,6 +2031,83 @@ bool dlgMain::_createFolderShortcut()
     }
 
     return bRet;
+}
+//=======================================================================================
+void dlgMain::_installFullDatabase()
+//=======================================================================================
+{
+    m_bCreateDatabase = false;
+    killTimer( m_nTimer );
+
+    _logProcess( QString("Creating database") );
+    if( _processDatabaseCreate() )
+    {
+        _logProcess( QString("Creating database OK") );
+        imgOk4_1->setVisible( true );
+    }
+    else
+    {
+        _logProcess( QString("Creating database FAIL") );
+        imgFail4_1->setVisible( true );
+        return;
+    }
+
+    _logProcess( QString("Creating Belenus user") );
+    if( _processBelenusUserCreate() )
+    {
+        _logProcess( QString("Creating Belenus user OK") );
+        imgOk4_2->setVisible( true );
+    }
+    else
+    {
+        _logProcess( QString("Creating Belenus user FAIL") );
+        imgFail4_2->setVisible( true );
+        return;
+    }
+
+    _logProcess( QString("Granting privileges for Belenus user") );
+    if( _processBelenusUserRights() )
+    {
+        _logProcess( QString("Granting privileges for Belenus user OK") );
+        imgOk4_3->setVisible( true );
+    }
+    else
+    {
+        _logProcess( QString("Granting privileges for Belenus user FAIL") );
+        imgFail4_3->setVisible( true );
+        return;
+    }
+
+    m_bBelenusUserExists = true;
+
+    _logProcess( QString("Creating tables in database") );
+    if( _processBelenusTablesCreate() )
+    {
+        _logProcess( QString("Creating tables in database OK") );
+        imgOk4_4->setVisible( true );
+    }
+    else
+    {
+        _logProcess( QString("Creating tables in database FAIL") );
+        imgFail4_4->setVisible( true );
+        return;
+    }
+
+    _logProcess( QString("Adding default data to tables") );
+    if( _processBelenusTablesFill() )
+    {
+        _logProcess( QString("Adding default data to tables OK") );
+        imgOk4_5->setVisible( true );
+    }
+    else
+    {
+        _logProcess( QString("Adding default data to tables FAIL") );
+        imgFail4_5->setVisible( true );
+        return;
+    }
+
+    _logProcess( QString("Database creation SUCCEEDED") );
+    m_bDatabaseAlreadyInstalled = true;
 }
 //=======================================================================================
 void dlgMain::_logProcess( QString p_qsLog )

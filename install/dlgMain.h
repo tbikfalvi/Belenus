@@ -52,6 +52,8 @@ public:
     explicit dlgMain(QWidget *parent = 0);
     ~dlgMain();
 
+    void                     uninstallBelenus();
+
 protected:
     void timerEvent( QTimerEvent *p_poEvent );
     void closeEvent( QCloseEvent *p_poEvent );
@@ -68,6 +70,7 @@ private:
     bool                     m_bBelenusAlreadyInstalled;
     bool                     m_bWampServerAlreadyInstalled;
     bool                     m_bDatabaseAlreadyInstalled;
+    bool                     m_bBelenusUserExists;
 
     QStringList              m_qslComponents;
 
@@ -105,12 +108,18 @@ private:
     QString                  m_qsIPAddress;
     int                      m_nPort;
 
+    bool                     m_bUninstallCalled;
+
     void                    _initializeInstall();
 
     void                    _initializePage( int p_nPage );
+    void                    _initializeWelcomePage();
     void                    _initializeSelectionPage();
     void                    _initializeComponentSelectionPage();
     void                    _initializeWampInstallPage();
+    void                    _installWampServer();
+    void                    _installSQLServer();
+    void                    _installFullDatabase();
     void                    _initializeDatabaseInstallPage();
     void                    _initializeHardwareInstallPage();
     void                    _initializeInternetInstallPage();

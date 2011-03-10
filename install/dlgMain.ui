@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>10</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -724,7 +724,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Fill the password field below then press the Next button.</string>
+        <string>Set and check the root password.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1630,7 +1630,7 @@
         <rect>
          <x>210</x>
          <y>10</y>
-         <width>201</width>
+         <width>361</width>
          <height>16</height>
         </rect>
        </property>
@@ -1831,6 +1831,33 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>cmbCOMPorts</tabstop>
+  <tabstop>pbTestHWConnection</tabstop>
+  <tabstop>rbRemove</tabstop>
+  <tabstop>chkWamp</tabstop>
+  <tabstop>chkDatabase</tabstop>
+  <tabstop>chkHardware</tabstop>
+  <tabstop>chkInternet</tabstop>
+  <tabstop>chkBelenus</tabstop>
+  <tabstop>chkViewer</tabstop>
+  <tabstop>ledDBRootPassword1</tabstop>
+  <tabstop>ledDBRootPassword2</tabstop>
+  <tabstop>pbCheckRootPsw</tabstop>
+  <tabstop>ledPanelsAvailable</tabstop>
+  <tabstop>ledPanelsInstalled</tabstop>
+  <tabstop>rbInstall</tabstop>
+  <tabstop>rbUpdate</tabstop>
+  <tabstop>ledDBIPAddress</tabstop>
+  <tabstop>ledDBIPPort</tabstop>
+  <tabstop>ledClientInstallDir</tabstop>
+  <tabstop>pbSelectDir</tabstop>
+  <tabstop>pbExitRestart</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbPrev</tabstop>
+  <tabstop>pbNext</tabstop>
+  <tabstop>pbStartExit</tabstop>
+ </tabstops>
  <resources>
   <include location="install.qrc"/>
  </resources>

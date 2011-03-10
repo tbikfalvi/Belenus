@@ -33,6 +33,11 @@ int main(int argc, char *argv[])
 
     dlgMain w;
 
+    if( argc > 0 && strcmp(argv[1],"-uninstall") == 0 )
+    {
+        w.uninstallBelenus();
+    }
+
     w.show();
 
     return apMainApp.exec();
