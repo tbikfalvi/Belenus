@@ -35,13 +35,13 @@
 #define CONST_PAGE_INSTALL_SELECTION     1
 #define CONST_PAGE_COMPONENT_SELECTION   2
 #define CONST_PAGE_WAMP_INSTALL          3
-#define CONST_PAGE_DATABASE_INSTALL      4
-#define CONST_PAGE_HARDWARE_INSTALL      5
-#define CONST_PAGE_INTERNET_INSTALL      6
-#define CONST_PAGE_CLIENT_INSTALL        7
-#define CONST_PAGE_VIEWER_INSTALL        8
-#define CONST_PAGE_PROCESS               9
-#define CONST_PAGE_FINISH               10
+#define CONST_PAGE_HARDWARE_INSTALL      4
+#define CONST_PAGE_INTERNET_INSTALL      5
+#define CONST_PAGE_CLIENT_INSTALL        6
+#define CONST_PAGE_PROCESS               7
+#define CONST_PAGE_FINISH                8
+
+#define CONST_INSTALL_APP_VERSION       "1.0"
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -49,10 +49,8 @@ class dlgMain : public QDialog, protected Ui::dlgMain
     Q_OBJECT
 
 public:
-    explicit dlgMain(QWidget *parent = 0);
+    explicit dlgMain(QWidget *parent = 0, bool bUninstall = false);
     ~dlgMain();
-
-    void                     uninstallBelenus();
 
 protected:
     void timerEvent( QTimerEvent *p_poEvent );
@@ -97,7 +95,6 @@ private:
     bool                     m_bRestartRequired;
     bool                     m_bStartWampInstall;
     bool                     m_bInitializeWamp;
-    bool                     m_bCreateDatabase;
     bool                     m_bDemoMode;
     bool                     m_bInstallClient;
     bool                     m_bInstallFinished;
@@ -111,6 +108,8 @@ private:
     bool                     m_bUninstallCalled;
 
     void                    _initializeInstall();
+    void                    _uninstallBelenus();
+
 
     void                    _initializePage( int p_nPage );
     void                    _initializeWelcomePage();
@@ -120,7 +119,6 @@ private:
     void                    _installWampServer();
     void                    _installSQLServer();
     void                    _installFullDatabase();
-    void                    _initializeDatabaseInstallPage();
     void                    _initializeHardwareInstallPage();
     void                    _initializeInternetInstallPage();
     void                    _initializeClientInstallPage();
@@ -131,7 +129,6 @@ private:
     bool                    _processSelectionPage();
     bool                    _processComponentSelectionPage();
     bool                    _processWampInstallPage();
-    bool                    _processDatabaseInstallPage();
     bool                    _processHardwareInstallPage();
     bool                    _processInternetInstallPage();
     bool                    _processClientInstallPage();
@@ -144,7 +141,9 @@ private:
     bool                    _processBelenusTablesCreate();
     bool                    _processBelenusTablesFill();
     bool                    _processBelenusDeviceFill();
-    bool                    _processClientInstall();
+    void                    _processInstall();
+    bool                    _processDatabaseInstall();
+    int                     _getProcessActionCount();
 
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );
@@ -156,19 +155,19 @@ private:
     bool                    _copyClientFile( QString p_qsFileName, bool p_bInstall = true );
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
     bool                    _createFolderShortcut();
-    void                    _logProcess( QString p_qsLog );
+    void                    _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
     void on_pbTestHWConnection_clicked();
     void on_cmbCOMPorts_currentIndexChanged(int index);
-    void on_pbCheckRootPsw_clicked();
     void on_chkInternet_clicked();
     void on_chkBelenus_clicked();
     void on_chkHardware_clicked();
     void on_chkDatabase_clicked();
     void on_chkWamp_clicked();
+    void on_chkViewer_clicked();
     void on_pbSelectDir_clicked();
     void on_pbStartExit_clicked();
     void on_pbExitRestart_clicked();

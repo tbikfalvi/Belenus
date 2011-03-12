@@ -31,12 +31,14 @@ int main(int argc, char *argv[])
     poTrans->load( QString("setup.qm") );
     apMainApp.installTranslator( poTrans );
 
-    dlgMain w;
+    bool bUninstall = false;
 
-    if( argc > 0 && strcmp(argv[1],"-uninstall") == 0 )
+    if( argc > 1 && strcmp(argv[1],"-uninstall") == 0 )
     {
-        w.uninstallBelenus();
+        bUninstall = true;
     }
+
+    dlgMain w( 0, bUninstall );
 
     w.show();
 
