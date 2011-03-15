@@ -1167,90 +1167,23 @@ void dlgMain::_initializeInstallProcessPage()
 void dlgMain::_processInstall()
 //=======================================================================================
 {
-    bool    bRet = false;
+    bool    bProcessFailed = false;
+
     m_bInstallClient = false;
     killTimer( m_nTimer );
 
     prbDBInstallClient->setValue( 0 );
+    prbDBInstallClient->setMaximum( _getProcessActionCount() );
     prbDBInstallClient->update();
-//    prbDBInstallClient->setMaximum( _getProcessActionCount() );
 
-    QMessageBox::information( this, "", QString( "Count: %1" ).arg(_getProcessActionCount()) );
-/*
+    m_qsProcessErrorMsg = "";
+
     if( m_pInstallType == rbInstall )
     {
-        if( m_bProcessDatabase )
+        if( !bProcessFailed && m_bProcessDatabase )
         {
-            _processDatabaseInstall();
+            bProcessFailed = _processDatabaseInstall();
         }
-
-        QDir    qdInstallDir( m_qsClientInstallDir );
-
-        _logProcess( QString("") );
-        if( qdInstallDir.exists() )
-        {
-            if( QMessageBox::warning( this, tr("Attention"),
-                                      tr("The specified directory already exits.\n"
-                                         "All the files will be deleted or overwritten.\n\n"
-                                         "Are you sure you want to continue?"),
-                                      QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
-            {
-                _logProcess( QString("") );
-                pbCancel->setEnabled( true );
-                return true;
-            }
-            if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
-            {
-                _logProcess( QString("") );
-                QMessageBox::information( this, tr("Attention"),
-                                          tr("Unable to empty the specified directory.\n"
-                                             "%1\n"
-                                             "Please manually delete the directory if copying new files fails.") );
-            }
-        }
-
-        _logProcess( QString("") );
-        if( !_createTargetDirectory( m_qsClientInstallDir ) ||
-            !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
-            !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) )
-        {
-            _logProcess( QString("") );
-            return false;
-        }
-        _logProcess( QString("") );
-
-        _logProcess( QString("") );
-        bRet = _copyInstallFiles( "install.li" );
-        _logProcess( QString("") );
-
-        QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
-        QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
-
-        _logProcess( QString("") );
-        if( !QFile::copy( qsFrom, qsTo ) )
-        {
-            _logProcess( QString("") );
-            bRet = false;
-        }
-        _logProcess( QString("") );
-
-        qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
-        qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.qm" ).arg(m_qsPathWindows);
-
-        _logProcess( QString("") );
-        if( !QFile::copy( qsFrom, qsTo ) )
-        {
-            _logProcess( QString("") );
-            bRet = false;
-        }
-        _logProcess( QString("") );
-
-        if( bRet )
-        {
-            _logProcess( QString("") );
-            bRet = _createFolderShortcut();
-        }
-        _logProcess( QString("") );
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -1272,8 +1205,8 @@ void dlgMain::_processInstall()
 
         _logProcess( QString("SUCCEEDED") );
     }
-*/
-    if( bRet )
+
+    if( !bProcessFailed )
     {
         lblText8_2->setText( "" );
         pbNext->setEnabled( true );
@@ -1282,6 +1215,10 @@ void dlgMain::_processInstall()
     }
     else
     {
+        QMessageBox::warning( this, "Attention",
+                              tr("Error occured during installing Belenus Application System.\n"
+                                 "Please contact Belenus software support.\n\n"
+                                 "Error code: %1").arg(m_qsProcessErrorMsg) );
         pbCancel->setEnabled( true );
     }
 }
@@ -1331,6 +1268,97 @@ int dlgMain::_getProcessActionCount()
                 fileFill.close();
             }
         }
+        else if( m_pInstallType == rbUpdate )
+        {
+            // Increase number with table creates
+            QFile fileCreate("sql/db_update.sql");
+
+            if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
+            {
+                QTextStream in(&fileCreate);
+                while( !in.atEnd() )
+                {
+                    QString line = in.readLine();
+
+                    if( line.contains( QChar(';') ))
+                        nCount++;
+                }
+                fileCreate.close();
+            }
+        }
+        else if( m_pInstallType == rbRemove )
+        {
+            nCount += 1;
+        }
+    }
+    if( m_bProcessHWConnection )
+    {
+        nCount += 1;
+    }
+    if( m_bProcessInternet )
+    {
+        nCount += 1;
+    }
+    if( m_bProcessBelenusClient )
+    {
+        if( m_pInstallType == rbInstall )
+        {
+            nCount += 3;
+            QFile fileCreate("install.li");
+
+            if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
+            {
+                QTextStream in(&fileCreate);
+                while( !in.atEnd() )
+                {
+                    QString line = in.readLine();
+
+                    if( line.contains( QChar('#') ))
+                        nCount++;
+                }
+                fileCreate.close();
+            }
+        }
+        else if( m_pInstallType == rbUpdate )
+        {
+            QFile fileCreate("update.li");
+
+            if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
+            {
+                QTextStream in(&fileCreate);
+                while( !in.atEnd() )
+                {
+                    QString line = in.readLine();
+
+                    if( line.contains( QChar('#') ))
+                        nCount++;
+                }
+                fileCreate.close();
+            }
+        }
+        else if( m_pInstallType == rbRemove )
+        {
+            nCount += 3;
+            QFile fileCreate( QString("%1\\Temp\\BelenusInstall\\uninstall.li").arg(m_qsPathWindows) );
+
+            if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
+            {
+                QTextStream in(&fileCreate);
+                while( !in.atEnd() )
+                {
+                    QString line = in.readLine();
+
+                    if( line.contains( QChar('#') ))
+                        nCount++;
+                }
+                fileCreate.close();
+            }
+        }
+    }
+
+    if( m_pInstallType == rbInstall )
+    {
+        nCount++;
     }
 
     return nCount;
@@ -1347,53 +1375,58 @@ bool dlgMain::_processDatabaseInstall()
     }
     else
     {
+        m_qsProcessErrorMsg = "CreateDBFailed";
         _logProcess( QString(" FAIL") );
         return false;
     }
 
-    _logProcess( QString("Creating Belenus user") );
+    _logProcess( QString("Creating Belenus user ..."), false );
     if( _processBelenusUserCreate() )
     {
-        _logProcess( QString("Creating Belenus user OK") );
+        _logProcess( QString(" OK") );
     }
     else
     {
-        _logProcess( QString("Creating Belenus user FAIL") );
+        m_qsProcessErrorMsg = "CreateUserFailed";
+        _logProcess( QString(" FAIL") );
         return false;
     }
 
-    _logProcess( QString("Granting privileges for Belenus user") );
+    _logProcess( QString("Granting privileges for Belenus user ..."), false );
     if( _processBelenusUserRights() )
     {
-        _logProcess( QString("Granting privileges for Belenus user OK") );
+        _logProcess( QString(" OK") );
     }
     else
     {
-        _logProcess( QString("Granting privileges for Belenus user FAIL") );
+        m_qsProcessErrorMsg = "GrantUserFailed";
+        _logProcess( QString(" FAIL") );
         return false;
     }
 
     m_bBelenusUserExists = true;
 
-    _logProcess( QString("Creating tables in database") );
+    _logProcess( QString("Creating tables in database ..."), false );
     if( _processBelenusTablesCreate() )
     {
-        _logProcess( QString("Creating tables in database OK") );
+        _logProcess( QString(" OK") );
     }
     else
     {
-        _logProcess( QString("Creating tables in database FAIL") );
+        m_qsProcessErrorMsg = "CreateTableFailed";
+        _logProcess( QString(" FAIL") );
         return false;
     }
 
-    _logProcess( QString("Adding default data to tables") );
+    _logProcess( QString("Adding default data to tables ..."), false );
     if( _processBelenusTablesFill() )
     {
-        _logProcess( QString("Adding default data to tables OK") );
+        _logProcess( QString(" OK") );
     }
     else
     {
-        _logProcess( QString("Adding default data to tables FAIL") );
+        m_qsProcessErrorMsg = "FillTableFailed";
+        _logProcess( QString(" FAIL") );
         return false;
     }
 
@@ -1401,6 +1434,288 @@ bool dlgMain::_processDatabaseInstall()
     m_bDatabaseAlreadyInstalled = true;
 
     return true;
+}
+//=======================================================================================
+bool dlgMain::_processDatabaseCreate()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( m_qsRootPassword );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
+        m_poDB->close();
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setUserName( "root" );
+        m_poDB->setPassword( m_qsRootPassword );
+
+        if( m_poDB->open() )
+        {
+            m_poDB->close();
+            prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+            prbDBInstallClient->update();
+            Sleep(50);
+        }
+        else
+            bRet = false;
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusUserCreate()
+//=======================================================================================
+{
+    bool        bRet = true;
+    QSqlQuery   poQuery;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( m_qsRootPassword );
+
+    if( m_poDB->open() )
+    {
+        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenus';" );
+        if( !poQuery.first() )
+            m_poDB->exec( "DROP USER 'belenus'@'localhost';" );
+
+        m_poDB->exec( "CREATE USER 'belenus'@'localhost' IDENTIFIED BY 'belenus';" );
+
+        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenus';" );
+        if( !poQuery.first() )
+        {
+            bRet = false;
+        }
+        else
+        {
+            prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+            prbDBInstallClient->update();
+            Sleep(50);
+        }
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusUserRights()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( m_qsRootPassword );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenus` . * TO 'belenus'@'localhost' WITH GRANT OPTION;" );
+        m_poDB->close();
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "belenus" );
+        m_poDB->setUserName( "belenus" );
+        m_poDB->setPassword( "belenus" );
+
+        if( m_poDB->open() )
+        {
+            prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+            prbDBInstallClient->update();
+            Sleep(50);
+            m_poDB->close();
+        }
+        else
+        {
+            bRet = false;
+        }
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusTablesCreate()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        QFile file("sql/db_create.sql");
+
+        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+            return false;
+
+        QString qsSQLCommand = "";
+        QTextStream in(&file);
+        while( !in.atEnd() )
+        {
+            QString line = in.readLine();
+
+            qsSQLCommand.append( line );
+            if( line.contains( QChar(';') ))
+            {
+                m_poDB->exec( qsSQLCommand );
+                prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+                prbDBInstallClient->update();
+                Sleep(50);
+                qsSQLCommand = "";
+            }
+        }
+        file.close();
+
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processBelenusTablesFill()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        QFile file("sql/db_fill.sql");
+
+        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+            return false;
+
+        QString qsSQLCommand = "";
+        QTextStream in(&file);
+        while( !in.atEnd() )
+        {
+            QString line = in.readLine();
+
+            qsSQLCommand.append( line );
+            if( line.contains( QChar(';') ))
+            {
+                m_poDB->exec( qsSQLCommand );
+                prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+                prbDBInstallClient->update();
+                Sleep(50);
+                qsSQLCommand = "";
+            }
+        }
+        file.close();
+
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+
+
+
+
+//=======================================================================================
+bool dlgMain::_processClientInstall()
+//=======================================================================================
+{
+    QDir    qdInstallDir( m_qsClientInstallDir );
+
+    _logProcess( QString("") );
+    if( qdInstallDir.exists() )
+    {
+        if( QMessageBox::warning( this, tr("Attention"),
+                                  tr("The specified directory already exits.\n"
+                                     "All the files will be deleted or overwritten.\n\n"
+                                     "Are you sure you want to continue?"),
+                                  QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
+        {
+            _logProcess( QString("") );
+            pbCancel->setEnabled( true );
+            return true;
+        }
+        if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
+        {
+            _logProcess( QString("") );
+            QMessageBox::information( this, tr("Attention"),
+                                      tr("Unable to empty the specified directory.\n"
+                                         "%1\n"
+                                         "Please manually delete the directory if copying new files fails.") );
+        }
+    }
+
+    _logProcess( QString("") );
+    if( !_createTargetDirectory( m_qsClientInstallDir ) ||
+        !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
+        !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) )
+    {
+        _logProcess( QString("") );
+        return false;
+    }
+    _logProcess( QString("") );
+
+    _logProcess( QString("") );
+    bRet = _copyInstallFiles( "install.li" );
+    _logProcess( QString("") );
+
+    if( bRet )
+    {
+        _logProcess( QString("") );
+        bRet = _createFolderShortcut();
+    }
+    _logProcess( QString("") );
+}
+//=======================================================================================
+bool dlgMain::_copyUninstallFiles()
+//=======================================================================================
+{
+    QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
+    QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
+
+    if( !QFile::copy( qsFrom, qsTo ) )
+    {
+        bRet = false;
+    }
+
+    qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
+    qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.qm" ).arg(m_qsPathWindows);
+
+    if( !QFile::copy( qsFrom, qsTo ) )
+    {
+        bRet = false;
+    }
 }
 //=======================================================================================
 //
@@ -1446,214 +1761,6 @@ void dlgMain::_initializeFinishPage()
         pbExitRestart->setEnabled( false );
         pbExitRestart->setVisible( false );
     }
-}
-//=======================================================================================
-bool dlgMain::_processDatabaseCreate()
-//=======================================================================================
-{
-    bool        bRet = true;
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "mysql" );
-    m_poDB->setUserName( "root" );
-    m_poDB->setPassword( m_qsRootPassword );
-
-    if( m_poDB->open() )
-    {
-        m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
-        m_poDB->close();
-
-        m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenus" );
-        m_poDB->setUserName( "root" );
-        m_poDB->setPassword( m_qsRootPassword );
-
-        if( m_poDB->open() )
-        {
-            m_poDB->close();
-//            prbDBInstall->setValue( prbDBInstall->value()+1 );
-//            prbDBInstall->update();
-            Sleep(50);
-        }
-        else
-            bRet = false;
-    }
-    else
-    {
-        bRet = false;
-    }
-
-    return bRet;
-}
-//=======================================================================================
-bool dlgMain::_processBelenusUserCreate()
-//=======================================================================================
-{
-    bool        bRet = true;
-    QSqlQuery   poQuery;
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "mysql" );
-    m_poDB->setUserName( "root" );
-    m_poDB->setPassword( m_qsRootPassword );
-
-    if( m_poDB->open() )
-    {
-        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenus';" );
-        if( !poQuery.first() )
-            m_poDB->exec( "DROP USER 'belenus'@'localhost';" );
-
-        m_poDB->exec( "CREATE USER 'belenus'@'localhost' IDENTIFIED BY 'belenus';" );
-
-        poQuery = m_poDB->exec( "SELECT Host FROM user WHERE User='belenus';" );
-        if( !poQuery.first() )
-        {
-            bRet = false;
-        }
-        else
-        {
-//            prbDBInstall->setValue( prbDBInstall->value()+1 );
-//            prbDBInstall->update();
-            Sleep(50);
-        }
-        m_poDB->close();
-    }
-    else
-    {
-        bRet = false;
-    }
-
-    return bRet;
-}
-//=======================================================================================
-bool dlgMain::_processBelenusUserRights()
-//=======================================================================================
-{
-    bool        bRet = true;
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "mysql" );
-    m_poDB->setUserName( "root" );
-    m_poDB->setPassword( m_qsRootPassword );
-
-    if( m_poDB->open() )
-    {
-        m_poDB->exec( "GRANT ALL PRIVILEGES ON `belenus` . * TO 'belenus'@'localhost' WITH GRANT OPTION;" );
-        m_poDB->close();
-
-        m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "belenus" );
-        m_poDB->setUserName( "belenus" );
-        m_poDB->setPassword( "belenus" );
-
-        if( m_poDB->open() )
-        {
-//            prbDBInstall->setValue( prbDBInstall->value()+1 );
-//            prbDBInstall->update();
-            Sleep(50);
-            m_poDB->close();
-        }
-        else
-        {
-            bRet = false;
-        }
-    }
-    else
-    {
-        bRet = false;
-    }
-
-    return bRet;
-}
-//=======================================================================================
-bool dlgMain::_processBelenusTablesCreate()
-//=======================================================================================
-{
-    bool        bRet = true;
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenus" );
-    m_poDB->setUserName( "belenus" );
-    m_poDB->setPassword( "belenus" );
-
-    if( m_poDB->open() )
-    {
-        QFile file("sql/db_create.sql");
-
-        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
-            return false;
-
-        QString qsSQLCommand = "";
-        QTextStream in(&file);
-        while( !in.atEnd() )
-        {
-            QString line = in.readLine();
-
-            qsSQLCommand.append( line );
-            if( line.contains( QChar(';') ))
-            {
-                m_poDB->exec( qsSQLCommand );
-//                prbDBInstall->setValue( prbDBInstall->value()+1 );
-//                prbDBInstall->update();
-                Sleep(50);
-                qsSQLCommand = "";
-            }
-        }
-        file.close();
-
-        m_poDB->close();
-    }
-    else
-    {
-        bRet = false;
-    }
-
-    return bRet;
-}
-//=======================================================================================
-bool dlgMain::_processBelenusTablesFill()
-//=======================================================================================
-{
-    bool        bRet = true;
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenus" );
-    m_poDB->setUserName( "belenus" );
-    m_poDB->setPassword( "belenus" );
-
-    if( m_poDB->open() )
-    {
-        QFile file("sql/db_fill.sql");
-
-        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
-            return false;
-
-        QString qsSQLCommand = "";
-        QTextStream in(&file);
-        while( !in.atEnd() )
-        {
-            QString line = in.readLine();
-
-            qsSQLCommand.append( line );
-            if( line.contains( QChar(';') ))
-            {
-                m_poDB->exec( qsSQLCommand );
-//                prbDBInstall->setValue( prbDBInstall->value()+1 );
-//                prbDBInstall->update();
-                Sleep(50);
-                qsSQLCommand = "";
-            }
-        }
-        file.close();
-
-        m_poDB->close();
-    }
-    else
-    {
-        bRet = false;
-    }
-
-    return bRet;
 }
 //=======================================================================================
 bool dlgMain::_processBelenusDeviceFill()

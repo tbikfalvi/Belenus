@@ -106,6 +106,7 @@ private:
     int                      m_nPort;
 
     bool                     m_bUninstallCalled;
+    QString                  m_qsProcessErrorMsg;
 
     void                    _initializeInstall();
     void                    _uninstallBelenus();
@@ -144,6 +145,9 @@ private:
     void                    _processInstall();
     bool                    _processDatabaseInstall();
     int                     _getProcessActionCount();
+
+    bool                    _copyUninstallFiles();
+    bool                    _processClientInstall();
 
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );
