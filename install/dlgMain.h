@@ -68,6 +68,7 @@ private:
     bool                     m_bBelenusAlreadyInstalled;
     bool                     m_bWampServerAlreadyInstalled;
     bool                     m_bDatabaseAlreadyInstalled;
+    bool                     m_bRootUserExists;
     bool                     m_bBelenusUserExists;
 
     QStringList              m_qslComponents;
@@ -107,6 +108,7 @@ private:
 
     bool                     m_bUninstallCalled;
     QString                  m_qsProcessErrorMsg;
+    QString                  m_qsIniFileName;
 
     void                    _initializeInstall();
     void                    _uninstallBelenus();
@@ -136,6 +138,7 @@ private:
 
     bool                    _processWampServerInstall();
     bool                    _initializeMySQL();
+    bool                    _processRootCreate();
     bool                    _processDatabaseCreate();
     bool                    _processBelenusUserCreate();
     bool                    _processBelenusUserRights();
@@ -148,6 +151,8 @@ private:
 
     bool                    _copyUninstallFiles();
     bool                    _processClientInstall();
+    bool                    _processHWSettings();
+    bool                    _processInternetSettings();
 
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );

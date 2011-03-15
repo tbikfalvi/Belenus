@@ -1102,7 +1102,7 @@
         <string>Please wait while the installation process finish.</string>
        </property>
       </widget>
-      <widget class="QLabel" name="lblText8_2">
+      <widget class="QLabel" name="lblTextProcessInfo">
        <property name="geometry">
         <rect>
          <x>10</x>

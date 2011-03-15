@@ -191,6 +191,9 @@ void dlgMain::_initializeInstall()
     // If database created during install, set this flag
     m_bDatabaseAlreadyInstalled = false;
 
+    // If root user created, set this flag
+    m_bRootUserExists           = false;
+
     // If belenus user created, set this flag
     m_bBelenusUserExists        = false;
 
@@ -208,6 +211,8 @@ void dlgMain::_initializeInstall()
     // Default settings for internet connection
     m_qsIPAddress               = QString( "127.0.0.1" );
     m_nPort                     = 1000;
+
+    m_qsIniFileName             = "";
 
     // Default settings for client
     m_qsClientInstallDir        = QString( "C:\\Program Files\\Belenus" );
@@ -237,6 +242,18 @@ void dlgMain::_initializeInstall()
             _logProcess( QString("") );
         }
 
+        // Check root user
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "mysql" );
+        m_poDB->setUserName( "root" );
+        m_poDB->setPassword( m_qsRootPassword );
+
+        if( m_poDB->open() )
+        {
+            m_bRootUserExists = true;
+            m_poDB->close();
+        }
+
         // Check database server and database
         m_poDB->setHostName( "localhost" );
         m_poDB->setDatabaseName( "belenus" );
@@ -257,9 +274,12 @@ void dlgMain::_initializeInstall()
     {
         if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
         {
+            m_qsClientInstallDir = obReg.get_REG_SZ( QString("InstallLocation") );
             QString qsTemp = obReg.get_REG_SZ( QString("Components") );
             m_qslComponents = qsTemp.split( "#" );
             obReg.CloseKey();
+
+            m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
         }
     }
 }
@@ -1167,7 +1187,7 @@ void dlgMain::_initializeInstallProcessPage()
 void dlgMain::_processInstall()
 //=======================================================================================
 {
-    bool    bProcessFailed = false;
+    bool    bProcessSucceeded = true;
 
     m_bInstallClient = false;
     killTimer( m_nTimer );
@@ -1178,18 +1198,30 @@ void dlgMain::_processInstall()
 
     m_qsProcessErrorMsg = "";
 
+    m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
+
     if( m_pInstallType == rbInstall )
     {
-        if( !bProcessFailed && m_bProcessDatabase )
+        if( bProcessSucceeded && m_bProcessDatabase )
         {
-            bProcessFailed = _processDatabaseInstall();
+            bProcessSucceeded = _processDatabaseInstall();
+        }
+        if( bProcessSucceeded && m_bProcessBelenusClient )
+        {
+            bProcessSucceeded = _processClientInstall();
+        }
+        if( bProcessSucceeded && m_bProcessHWConnection )
+        {
+            bProcessSucceeded = _processHWSettings();
+        }
+        if( bProcessSucceeded && m_bProcessInternet )
+        {
+            bProcessSucceeded = _processInternetSettings();
         }
     }
     else if( m_pInstallType == rbUpdate )
     {
-        _logProcess( QString("") );
-        bRet = _copyInstallFiles( "update.li" );
-        _logProcess( QString("") );
+        bProcessSucceeded = _copyInstallFiles( "update.li" );
     }
     else if( m_pInstallType == rbRemove )
     {
@@ -1206,9 +1238,9 @@ void dlgMain::_processInstall()
         _logProcess( QString("SUCCEEDED") );
     }
 
-    if( !bProcessFailed )
+    if( bProcessSucceeded )
     {
-        lblText8_2->setText( "" );
+        lblTextProcessInfo->setText( "" );
         pbNext->setEnabled( true );
         m_bInstallFinished = true;
         m_nTimer = startTimer( 2000 );
@@ -1235,6 +1267,12 @@ int dlgMain::_getProcessActionCount()
             // Increase number with
             // DB create, User create, User grant privs
             nCount += 3;
+
+            // If not created increase number with root user creation
+            if( !m_bRootUserExists )
+            {
+                nCount++;
+            }
 
             // Increase number with table creates
             QFile fileCreate("sql/db_create.sql");
@@ -1367,8 +1405,24 @@ int dlgMain::_getProcessActionCount()
 bool dlgMain::_processDatabaseInstall()
 //=======================================================================================
 {
+    if( !m_bRootUserExists )
+    {
+        _logProcess( QString("Creating root user ..."), false );
+        lblTextProcessInfo->setText( tr("Creating root user ...") );
+        if( _processRootCreate() )
+        {
+            _logProcess( QString(" OK") );
+        }
+        else
+        {
+            m_qsProcessErrorMsg = "CreateRootFailed";
+            _logProcess( QString(" FAIL") );
+            return false;
+        }
+    }
+
     _logProcess( QString("Creating database ..."), false );
-    lblText8_2->setText( tr("Creating database ...") );
+    lblTextProcessInfo->setText( tr("Creating database ...") );
     if( _processDatabaseCreate() )
     {
         _logProcess( QString(" OK") );
@@ -1381,6 +1435,7 @@ bool dlgMain::_processDatabaseInstall()
     }
 
     _logProcess( QString("Creating Belenus user ..."), false );
+    lblTextProcessInfo->setText( tr("Creating Belenus user ...") );
     if( _processBelenusUserCreate() )
     {
         _logProcess( QString(" OK") );
@@ -1393,6 +1448,7 @@ bool dlgMain::_processDatabaseInstall()
     }
 
     _logProcess( QString("Granting privileges for Belenus user ..."), false );
+    lblTextProcessInfo->setText( tr("Granting privileges for Belenus user ...") );
     if( _processBelenusUserRights() )
     {
         _logProcess( QString(" OK") );
@@ -1407,6 +1463,7 @@ bool dlgMain::_processDatabaseInstall()
     m_bBelenusUserExists = true;
 
     _logProcess( QString("Creating tables in database ..."), false );
+    lblTextProcessInfo->setText( tr("Creating tables in database ...") );
     if( _processBelenusTablesCreate() )
     {
         _logProcess( QString(" OK") );
@@ -1419,6 +1476,7 @@ bool dlgMain::_processDatabaseInstall()
     }
 
     _logProcess( QString("Adding default data to tables ..."), false );
+    lblTextProcessInfo->setText( tr("Adding default data to tables ...") );
     if( _processBelenusTablesFill() )
     {
         _logProcess( QString(" OK") );
@@ -1434,6 +1492,41 @@ bool dlgMain::_processDatabaseInstall()
     m_bDatabaseAlreadyInstalled = true;
 
     return true;
+}
+//=======================================================================================
+bool dlgMain::_processRootCreate()
+//=======================================================================================
+{
+    bool bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( "" );
+
+    if( m_poDB->open() )
+    {
+        _logProcess( QString("") );
+        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD( '%1' );").arg(m_qsRootPassword) );
+        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'localhost' = PASSWORD( '%1' );").arg(m_qsRootPassword) );
+        m_poDB->close();
+    }
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( m_qsRootPassword );
+
+    if( m_poDB->open() )
+    {
+        m_bRootUserExists = true;
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
 }
 //=======================================================================================
 bool dlgMain::_processDatabaseCreate()
@@ -1459,7 +1552,7 @@ bool dlgMain::_processDatabaseCreate()
         if( m_poDB->open() )
         {
             m_poDB->close();
-            prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+            prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
             prbDBInstallClient->update();
             Sleep(50);
         }
@@ -1500,7 +1593,7 @@ bool dlgMain::_processBelenusUserCreate()
         }
         else
         {
-            prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+            prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
             prbDBInstallClient->update();
             Sleep(50);
         }
@@ -1536,7 +1629,7 @@ bool dlgMain::_processBelenusUserRights()
 
         if( m_poDB->open() )
         {
-            prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+            prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
             prbDBInstallClient->update();
             Sleep(50);
             m_poDB->close();
@@ -1581,7 +1674,7 @@ bool dlgMain::_processBelenusTablesCreate()
             if( line.contains( QChar(';') ))
             {
                 m_poDB->exec( qsSQLCommand );
-                prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+                prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
                 Sleep(50);
                 qsSQLCommand = "";
@@ -1626,7 +1719,7 @@ bool dlgMain::_processBelenusTablesFill()
             if( line.contains( QChar(';') ))
             {
                 m_poDB->exec( qsSQLCommand );
-                prbDBInstallClient->setValue( prbDBInstall->value()+1 );
+                prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
                 Sleep(50);
                 qsSQLCommand = "";
@@ -1643,14 +1736,11 @@ bool dlgMain::_processBelenusTablesFill()
 
     return bRet;
 }
-
-
-
-
 //=======================================================================================
 bool dlgMain::_processClientInstall()
 //=======================================================================================
 {
+    bool    bRet = false;
     QDir    qdInstallDir( m_qsClientInstallDir );
 
     _logProcess( QString("") );
@@ -1696,6 +1786,38 @@ bool dlgMain::_processClientInstall()
         bRet = _createFolderShortcut();
     }
     _logProcess( QString("") );
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processHWSettings()
+//=======================================================================================
+{
+    lblTextProcessInfo->setText( tr("Processing hardware settings ...") );
+    QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_nComPort );
+    prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+    prbDBInstallClient->update();
+    Sleep(50);
+
+    return ( obPrefFile.value(QString::fromAscii("Hardware/ComPort" ),"-1").toInt()==m_nComPort ? true : false );
+}
+//=======================================================================================
+bool dlgMain::_processInternetSettings()
+//=======================================================================================
+{
+    lblTextProcessInfo->setText( tr("Processing internet connection settings ...") );
+    QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
+    obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsIPAddress );
+    obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_nPort );
+    prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+    prbDBInstallClient->update();
+    Sleep(50);
+
+    QString qsTemp  = obPrefFile.value(QString::fromAscii("Hardware/ComPort" ),"0.0.0.0").toString();
+    int     nTemp   = obPrefFile.value( QString::fromAscii( "Server/Port" ), "-1" ).toInt();
+
+    return ( (qsTemp.compare(m_qsIPAddress)==0 && nTemp==m_nPort) ? true : false );
 }
 //=======================================================================================
 bool dlgMain::_copyUninstallFiles()
@@ -1706,7 +1828,7 @@ bool dlgMain::_copyUninstallFiles()
 
     if( !QFile::copy( qsFrom, qsTo ) )
     {
-        bRet = false;
+        return false;
     }
 
     qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
@@ -1714,8 +1836,10 @@ bool dlgMain::_copyUninstallFiles()
 
     if( !QFile::copy( qsFrom, qsTo ) )
     {
-        bRet = false;
+        return false;
     }
+
+    return true;
 }
 //=======================================================================================
 //
@@ -2093,7 +2217,6 @@ bool dlgMain::_emptyTargetDirectory( QString p_qsPath )
 bool dlgMain::_createTargetDirectory( QString p_qsPath )
 //=======================================================================================
 {
-    bool    bRet = true;
     QDir    qdInstallDir( p_qsPath );
 
     if( !qdInstallDir.mkpath( p_qsPath ) )
@@ -2104,7 +2227,7 @@ bool dlgMain::_createTargetDirectory( QString p_qsPath )
         return false;
     }
 
-    return bRet;
+    return true;
 }
 //=======================================================================================
 bool dlgMain::_copyClientFile( QString p_qsFileName, bool p_bInstall )
@@ -2154,11 +2277,11 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
         prbDBInstallClient->update();
         if( p_bInstall )
         {
-            lblText8_2->setText( tr("Copying file: ..\\%1").arg(qslFiles.at(i)) );
+            lblTextProcessInfo->setText( tr("Copying file: ..\\%1").arg(qslFiles.at(i)) );
         }
         else
         {
-            lblText8_2->setText( tr("Updating file: ..\\%1").arg(qslFiles.at(i)) );
+            lblTextProcessInfo->setText( tr("Updating file: ..\\%1").arg(qslFiles.at(i)) );
         }
         if( !_copyClientFile( qslFiles.at(i), p_bInstall ) )
         {
@@ -2184,7 +2307,7 @@ bool dlgMain::_createFolderShortcut()
     QString     qsDirPrograms;
     QString     qsDirDesktop;
 
-    lblText8_2->setText( tr("Creating folder and shortcut for client application.") );
+    lblTextProcessInfo->setText( tr("Creating folder and shortcut for client application.") );
 
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders") ) )
     {
