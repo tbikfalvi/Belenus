@@ -52,7 +52,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <widget class="QLabel" name="Logo">
@@ -1065,6 +1065,29 @@
        </property>
        <property name="text">
         <string> ... </string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblText7_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>491</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Select language for the application</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cmbLanguage">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>191</width>
+         <height>22</height>
+        </rect>
        </property>
       </widget>
      </widget>

@@ -65,6 +65,10 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
     // Set current page index to welcome page
     m_nCurrentPage          = CONST_PAGE_WELCOME;
 
+    // Initialize GUI components
+    cmbLanguage->addItem( "Magyar (hu)" );
+    cmbLanguage->addItem( "English (en)" );
+
     // If application called with uninstall flag, start uninstall process
     if( bUninstall )
         _uninstallBelenus();
@@ -135,19 +139,21 @@ void dlgMain::_initializeInstall()
             QMessageBox::critical( this, tr("Error"),
                                    tr("Error occured during initialization.\n"
                                       "Please contact system administrator.\n"
-                                      "Error code: ErrInstDirCreateFail") );
+                                      "Error code: ErrInstDirCreateFail\n"
+                                      "[%1]").arg(QString("%1\\Temp\\BelenusInstall").arg(m_qsPathWindows)) );
             return;
         }
     }
 
     m_obLog = new QFile( QString("%1\\Temp\\BelenusInstall\\BelenusSetup.log").arg(m_qsPathWindows) );
-    if( m_obFile == NULL )
+    if( m_obLog == NULL )
     {
         pbNext->setEnabled( false );
         QMessageBox::critical( this, tr("Error"),
                                tr("Error occured during initialization.\n"
                                   "Please contact system administrator.\n"
-                                  "Error code: ErrLogCreateFail") );
+                                  "Error code: ErrLogCreateFail\n"
+                                  "[%1]").arg(QString("%1\\Temp\\BelenusInstall\\BelenusSetup.log").arg(m_qsPathWindows)) );
         return;
     }
 
@@ -250,6 +256,7 @@ void dlgMain::_initializeInstall()
 
         if( m_poDB->open() )
         {
+            _logProcess( QString("Root user already set") );
             m_bRootUserExists = true;
             m_poDB->close();
         }
@@ -262,6 +269,7 @@ void dlgMain::_initializeInstall()
 
         if( m_poDB->open() )
         {
+            _logProcess( QString("Belenus user already set") );
             m_bBelenusUserExists = true;
             m_poDB->close();
         }
@@ -272,12 +280,19 @@ void dlgMain::_initializeInstall()
 
     if( m_bBelenusAlreadyInstalled )
     {
+        _logProcess( QString("Belenus application installed") );
         if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
         {
             m_qsClientInstallDir = obReg.get_REG_SZ( QString("InstallLocation") );
             QString qsTemp = obReg.get_REG_SZ( QString("Components") );
             m_qslComponents = qsTemp.split( "#" );
             obReg.CloseKey();
+            _logProcess( QString("Application location: %1").arg(m_qsClientInstallDir) );
+            _logProcess( QString("Installed components:") );
+            for( int i=0; i<m_qslComponents.count(); i++ )
+            {
+                _logProcess( QString("%1").arg(m_qslComponents.at(i)) );
+            }
 
             m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
         }
@@ -1202,26 +1217,59 @@ void dlgMain::_processInstall()
 
     if( m_pInstallType == rbInstall )
     {
+        m_qslFiles.clear();
+
         if( bProcessSucceeded && m_bProcessDatabase )
         {
             bProcessSucceeded = _processDatabaseInstall();
+            if( bProcessSucceeded )
+                m_qslComponents.append( "Database" );
         }
         if( bProcessSucceeded && m_bProcessBelenusClient )
         {
             bProcessSucceeded = _processClientInstall();
+            if( bProcessSucceeded )
+            {
+                m_qslComponents.append( "Client" );
+                m_qslComponents.append( "Viewer" );
+            }
         }
         if( bProcessSucceeded && m_bProcessHWConnection )
         {
             bProcessSucceeded = _processHWSettings();
+            if( bProcessSucceeded )
+            {
+                _logProcess( QString(" OK") );
+                m_qslComponents.append( "Hardware" );
+            }
+            else
+            {
+                m_qsProcessErrorMsg = QString( "ProcessHWSettingsFailed" );
+                _logProcess( QString(" FAIL") );
+            }
         }
         if( bProcessSucceeded && m_bProcessInternet )
         {
             bProcessSucceeded = _processInternetSettings();
+            if( bProcessSucceeded )
+            {
+                _logProcess( QString(" OK") );
+                m_qslComponents.append( "Internet" );
+            }
+            else
+            {
+                m_qsProcessErrorMsg = QString( "ProcessInternetSettingsFailed" );
+                _logProcess( QString(" FAIL") );
+            }
+        }
+        if( bProcessSucceeded )
+        {
+            bProcessSucceeded = _copyUninstallFiles();
         }
     }
     else if( m_pInstallType == rbUpdate )
     {
-        bProcessSucceeded = _copyInstallFiles( "update.li" );
+        bProcessSucceeded = _copyInstallFiles( "update.li", false );
     }
     else if( m_pInstallType == rbRemove )
     {
@@ -1351,8 +1399,7 @@ int dlgMain::_getProcessActionCount()
                 {
                     QString line = in.readLine();
 
-                    if( line.contains( QChar('#') ))
-                        nCount++;
+                    nCount += line.count( QChar('#') );
                 }
                 fileCreate.close();
             }
@@ -1368,8 +1415,7 @@ int dlgMain::_getProcessActionCount()
                 {
                     QString line = in.readLine();
 
-                    if( line.contains( QChar('#') ))
-                        nCount++;
+                    nCount += line.count( QChar('#') );
                 }
                 fileCreate.close();
             }
@@ -1484,6 +1530,18 @@ bool dlgMain::_processDatabaseInstall()
     else
     {
         m_qsProcessErrorMsg = "FillTableFailed";
+        _logProcess( QString(" FAIL") );
+        return false;
+    }
+
+    _logProcess( QString("Add %1 panel to database ...").arg(m_nCountDevices), false );
+    if( _processBelenusDeviceFill() )
+    {
+        _logProcess( QString(" OK") );
+    }
+    else
+    {
+        m_qsProcessErrorMsg = "FillPanelFailed";
         _logProcess( QString(" FAIL") );
         return false;
     }
@@ -1737,13 +1795,47 @@ bool dlgMain::_processBelenusTablesFill()
     return bRet;
 }
 //=======================================================================================
+bool dlgMain::_processBelenusDeviceFill()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( QString("DELETE FROM `panels` WHERE `panelTypeId`>0") );
+
+        for( int i=0; i<m_nCountDevices; i++ )
+        {
+            QString qsSQL = QString("INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES"
+                                    "( 1, 1, \"%1 %2\", 0, 0, 1, \"ARC\" )").arg(tr("Device")).arg(i);
+            m_poDB->exec( qsSQL );
+            prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+            prbDBInstallClient->update();
+            Sleep(50);
+        }
+
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
 bool dlgMain::_processClientInstall()
 //=======================================================================================
 {
     bool    bRet = false;
     QDir    qdInstallDir( m_qsClientInstallDir );
 
-    _logProcess( QString("") );
+    _logProcess( QString("Start Client install") );
     if( qdInstallDir.exists() )
     {
         if( QMessageBox::warning( this, tr("Attention"),
@@ -1752,13 +1844,13 @@ bool dlgMain::_processClientInstall()
                                      "Are you sure you want to continue?"),
                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
         {
-            _logProcess( QString("") );
+            _logProcess( QString("Belenus target directory exists. User cancelled client install.") );
             pbCancel->setEnabled( true );
             return true;
         }
         if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
         {
-            _logProcess( QString("") );
+            _logProcess( QString("Belenus target directory exists. Empty directory failed.") );
             QMessageBox::information( this, tr("Attention"),
                                       tr("Unable to empty the specified directory.\n"
                                          "%1\n"
@@ -1766,26 +1858,30 @@ bool dlgMain::_processClientInstall()
         }
     }
 
-    _logProcess( QString("") );
+    _logProcess( QString("Creating directories (target, lang, resource) ..."), false );
     if( !_createTargetDirectory( m_qsClientInstallDir ) ||
         !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) )
     {
-        _logProcess( QString("") );
+        _logProcess( QString(" FAIL") );
+        m_qsProcessErrorMsg = QString( "CreateClientDirFailed" );
         return false;
     }
-    _logProcess( QString("") );
+    _logProcess( QString("OK") );
 
-    _logProcess( QString("") );
-    bRet = _copyInstallFiles( "install.li" );
-    _logProcess( QString("") );
+    _logProcess( QString("Copying files from install.li ..."), false );
+    if( (bRet = _copyInstallFiles( "install.li" )) )
+        _logProcess( QString("OK") );
 
     if( bRet )
     {
-        _logProcess( QString("") );
-        bRet = _createFolderShortcut();
+        _logProcess( QString("Creating folders, shortcuts ..."), false );
+        if( (bRet = _createFolderShortcut()) )
+            _logProcess( QString("OK") );
+        else
+            _logProcess( QString("FAIL") );
     }
-    _logProcess( QString("") );
+    _logProcess( QString("Client install successfully finished") );
 
     return bRet;
 }
@@ -1793,6 +1889,7 @@ bool dlgMain::_processClientInstall()
 bool dlgMain::_processHWSettings()
 //=======================================================================================
 {
+    _logProcess( QString("Process HW settings ..."), false );
     lblTextProcessInfo->setText( tr("Processing hardware settings ...") );
     QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
     obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_nComPort );
@@ -1806,6 +1903,7 @@ bool dlgMain::_processHWSettings()
 bool dlgMain::_processInternetSettings()
 //=======================================================================================
 {
+    _logProcess( QString("Process Internet settings ..."), false );
     lblTextProcessInfo->setText( tr("Processing internet connection settings ...") );
     QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
     obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsIPAddress );
@@ -1814,8 +1912,8 @@ bool dlgMain::_processInternetSettings()
     prbDBInstallClient->update();
     Sleep(50);
 
-    QString qsTemp  = obPrefFile.value(QString::fromAscii("Hardware/ComPort" ),"0.0.0.0").toString();
-    int     nTemp   = obPrefFile.value( QString::fromAscii( "Server/Port" ), "-1" ).toInt();
+    QString qsTemp  = obPrefFile.value(QString::fromAscii("Server/Address" ),"0.0.0.0").toString();
+    int     nTemp   = obPrefFile.value(QString::fromAscii("Server/Port"), "0" ).toInt();
 
     return ( (qsTemp.compare(m_qsIPAddress)==0 && nTemp==m_nPort) ? true : false );
 }
@@ -1823,11 +1921,20 @@ bool dlgMain::_processInternetSettings()
 bool dlgMain::_copyUninstallFiles()
 //=======================================================================================
 {
+    VRegistry   obReg;
+
+    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+    {
+        obReg.set_REG_SZ( QString("Components"), m_qslComponents.join("#") );
+        obReg.CloseKey();
+    }
+
     QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
     QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
 
     if( !QFile::copy( qsFrom, qsTo ) )
     {
+        m_qsProcessErrorMsg = QString( "CopySetupExeFailed" );
         return false;
     }
 
@@ -1836,6 +1943,7 @@ bool dlgMain::_copyUninstallFiles()
 
     if( !QFile::copy( qsFrom, qsTo ) )
     {
+        m_qsProcessErrorMsg = QString( "CopySetupQmFailed" );
         return false;
     }
 
@@ -1885,37 +1993,6 @@ void dlgMain::_initializeFinishPage()
         pbExitRestart->setEnabled( false );
         pbExitRestart->setVisible( false );
     }
-}
-//=======================================================================================
-bool dlgMain::_processBelenusDeviceFill()
-//=======================================================================================
-{
-    bool        bRet = true;
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenus" );
-    m_poDB->setUserName( "belenus" );
-    m_poDB->setPassword( "belenus" );
-
-    if( m_poDB->open() )
-    {
-        m_poDB->exec( QString("DELETE FROM `panels` WHERE `panelTypeId`>0") );
-
-        for( int i=0; i<m_nCountDevices; i++ )
-        {
-            QString qsSQL = QString("INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES"
-                                    "( 1, 1, \"%1 %2\", 0, 0, 1, \"ARC\" )").arg(tr("Device")).arg(i);
-            m_poDB->exec( qsSQL );
-        }
-
-        m_poDB->close();
-    }
-    else
-    {
-        bRet = false;
-    }
-
-    return bRet;
 }
 //=======================================================================================
 //void dlgMain::on_pbCheckRootPsw_clicked()
@@ -2255,6 +2332,7 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
     if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
     {
         pbCancel->setEnabled( true );
+        m_qsProcessErrorMsg = QString( "OpenListFileFailed" );
         return false;
     }
 
@@ -2269,11 +2347,9 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
 
     QStringList qslFiles = qsTemp.split( '#' );
 
-    prbDBInstallClient->setMaximum( qslFiles.size()+1 );
-
     for( int i=0; i<qslFiles.size(); i++ )
     {
-        prbDBInstallClient->setValue( i+1 );
+        prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
         prbDBInstallClient->update();
         if( p_bInstall )
         {
@@ -2291,8 +2367,15 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
             else
                 QMessageBox::critical( this, tr("System error"),
                                        tr("Unable to update file:\n\n%1").arg(qslFiles.at(i)));
+            m_qsProcessErrorMsg = QString( "CopyFileFailed" );
+            _logProcess( " FAIL" );
+            _logProcess( QString("%1").arg(qslFiles.at(i)) );
             bRet = false;
             break;
+        }
+        if( p_qsFileName.compare("install.li") == 0 )
+        {
+            m_qslFiles.append( QString( "%1%2" ).arg(m_qsClientInstallDir.left(m_qsClientInstallDir.length()-7)).arg(qslFiles.at(i)) );
         }
     }
 
@@ -2318,10 +2401,15 @@ bool dlgMain::_createFolderShortcut()
         if( qsDirPrograms.contains( ":\\" ) )
         {
             if( !_createTargetDirectory( QString("%1\\Belenus").arg(qsDirPrograms) ) )
+            {
+                m_qsProcessErrorMsg = QString( "CreateClientFolderFailed" );
                 return false;
+            }
 
             m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
             m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
+            m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
+            m_qslFiles.append( QString("%1\\Belenus\\").arg(qsDirPrograms) );
             delete m_obFile;
         }
 
@@ -2329,6 +2417,7 @@ bool dlgMain::_createFolderShortcut()
         {
             m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
             m_obFile->link( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
+            m_qslFiles.append( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             delete m_obFile;
         }
 
@@ -2348,11 +2437,13 @@ bool dlgMain::_createFolderShortcut()
             }
             else
             {
+                m_qsProcessErrorMsg = QString( "OpenClientRegFailed" );
                 bRet = false;
             }
         }
         else
         {
+            m_qsProcessErrorMsg = QString( "CreateClientRegFailed" );
             bRet = false;
         }
         prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );

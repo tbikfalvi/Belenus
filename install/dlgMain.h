@@ -110,6 +110,8 @@ private:
     QString                  m_qsProcessErrorMsg;
     QString                  m_qsIniFileName;
 
+    QStringList              m_qslFiles;
+
     void                    _initializeInstall();
     void                    _uninstallBelenus();
 
