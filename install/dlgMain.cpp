@@ -224,6 +224,8 @@ void dlgMain::_initializeInstall()
     m_qsClientInstallDir        = QString( "C:\\Program Files\\Belenus" );
     // If computer restart required, set this flag
     m_bRestartRequired          = false;
+    // Language of the client application
+    m_qsLanguage                = "hu";
 
     //-----------------------------------------------------------------------------------
     //  Check install components
@@ -1174,6 +1176,7 @@ bool dlgMain::_processClientInstallPage()
 {
     bool    bRet = true;
 
+    m_qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
 
     return bRet;
 }
@@ -1289,7 +1292,6 @@ void dlgMain::_processInstall()
     if( bProcessSucceeded )
     {
         lblTextProcessInfo->setText( "" );
-        pbNext->setEnabled( true );
         m_bInstallFinished = true;
         m_nTimer = startTimer( 2000 );
     }
@@ -1881,6 +1883,10 @@ bool dlgMain::_processClientInstall()
         else
             _logProcess( QString("FAIL") );
     }
+
+    QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
+    obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLanguage );
+
     _logProcess( QString("Client install successfully finished") );
 
     return bRet;
@@ -1945,6 +1951,14 @@ bool dlgMain::_copyUninstallFiles()
     {
         m_qsProcessErrorMsg = QString( "CopySetupQmFailed" );
         return false;
+    }
+
+    QFile   *obUnistall = new QFile( QString("%1\\Temp\\BelenusInstall\\uninstall.li").arg(m_qsPathWindows) );
+    if( obUnistall->open( QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text ) )
+    {
+        QTextStream out( obUnistall );
+        out << m_qslFiles.join("#");
+        obUnistall->close();
     }
 
     return true;

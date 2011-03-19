@@ -111,6 +111,7 @@ private:
     QString                  m_qsIniFileName;
 
     QStringList              m_qslFiles;
+    QString                  m_qsLanguage;
 
     void                    _initializeInstall();
     void                    _uninstallBelenus();
