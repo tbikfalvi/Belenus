@@ -3,6 +3,7 @@
 
 //---------------------------------------------------------------------------
 
+#include <stdio.h>
 #include "ClassHardware.h"
 
 //---------------------------------------------------------------------------
@@ -697,7 +698,7 @@ void CS_Hardware::HW_ModulInit()
 void CS_Hardware::EnableModulIRQ()
 {
 	char chSerialOut[2048];
-        unsigned char byTemp;
+        unsigned char byTemp = 0;
 
 	if( !bEnableIRQ_Msg )
    {
@@ -721,7 +722,7 @@ void CS_Hardware::EnableModulIRQ()
 void CS_Hardware::DisableModulIRQ()
 {
 	char chSerialOut[2048];
-        unsigned char byTemp;
+        unsigned char byTemp = 0;
 
    if( bEnableIRQ_Msg )
    {
@@ -760,7 +761,7 @@ void CS_Hardware::HW_Kezel()
    char chSerialOut[2048];
    char chSerialIn[2048];
    unsigned char byStatus;
-	WORD wRelay;
+        WORD wRelay = 0;
 
    //---------------------------------------------------
    // Relay állapotok beállítása
