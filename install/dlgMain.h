@@ -157,6 +157,8 @@ private:
     bool                    _processHWSettings();
     bool                    _processInternetSettings();
 
+    bool                    _processDatabaseUpdate();
+
     void                    _refreshPages();
     bool                    _isRegPathExists( QString p_qsPath );
     bool                    _isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue );

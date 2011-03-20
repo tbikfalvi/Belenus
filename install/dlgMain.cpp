@@ -157,6 +157,7 @@ void dlgMain::_initializeInstall()
         return;
     }
 
+    _logProcess( QString("") );
     _logProcess( QString("=====================================================================") );
     _logProcess( QString("") );
     _logProcess( QString("Belenus Setup V%1").arg(CONST_INSTALL_APP_VERSION) );
@@ -1272,7 +1273,28 @@ void dlgMain::_processInstall()
     }
     else if( m_pInstallType == rbUpdate )
     {
-        bProcessSucceeded = _copyInstallFiles( "update.li", false );
+        if( bProcessSucceeded && m_bProcessDatabase )
+        {
+            bProcessSucceeded = _processDatabaseUpdate();
+        }
+        if( bProcessSucceeded && m_bProcessInternet )
+        {
+            bProcessSucceeded = _processInternetSettings();
+            if( bProcessSucceeded )
+            {
+                _logProcess( QString(" OK") );
+                m_qslComponents.append( "Internet" );
+            }
+            else
+            {
+                m_qsProcessErrorMsg = QString( "ProcessInternetSettingsFailed" );
+                _logProcess( QString(" FAIL") );
+            }
+        }
+        if( bProcessSucceeded && m_bProcessBelenusClient )
+        {
+            bProcessSucceeded = _copyInstallFiles( "update.li", false );
+        }
     }
     else if( m_pInstallType == rbRemove )
     {
@@ -1552,6 +1574,51 @@ bool dlgMain::_processDatabaseInstall()
     m_bDatabaseAlreadyInstalled = true;
 
     return true;
+}
+//=======================================================================================
+bool dlgMain::_processDatabaseUpdate()
+//=======================================================================================
+{
+    bool        bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        QFile file("sql/db_update.sql");
+
+        if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+            return false;
+
+        QString qsSQLCommand = "";
+        QTextStream in(&file);
+        while( !in.atEnd() )
+        {
+            QString line = in.readLine();
+
+            qsSQLCommand.append( line );
+            if( line.contains( QChar(';') ))
+            {
+                m_poDB->exec( qsSQLCommand );
+                prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+                prbDBInstallClient->update();
+                Sleep(50);
+                qsSQLCommand = "";
+            }
+        }
+        file.close();
+
+        m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
 }
 //=======================================================================================
 bool dlgMain::_processRootCreate()
