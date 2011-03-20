@@ -33,8 +33,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlgdiscountedit.ui \
     dlgprogress.ui \
     dlgsynchronization.ui \
-    dlgdbglobals.ui \
-    dlgpanelappereance.ui
+    dlgdbglobals.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -101,7 +100,6 @@ HEADERS = belenus.h \
     db/dbpublicplace.h \
     db/dbpanels.h \
     db/dbdiscount.h \
-    db/dbpanelstatussettings.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -155,8 +153,7 @@ HEADERS = belenus.h \
     dlg/dlgprogress.h \
     db/dbmirror.h \
     dlg/dlgsynchronization.h \
-    dlg/dlgglobals.h \
-    dlg/dlgpanelappereance.h
+    dlg/dlgglobals.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -220,7 +217,6 @@ SOURCES = main.cpp \
     db/dbpublicplace.cpp \
     db/dbpanels.cpp \
     db/dbdiscount.cpp \
-    db/dbpanelstatussettings.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -273,8 +269,7 @@ SOURCES = main.cpp \
     dlg/dlgprogress.cpp \
     db/dbmirror.cpp \
     dlg/dlgsynchronization.cpp \
-    dlg/dlgglobals.cpp \
-    dlg/dlgpanelappereance.cpp
+    dlg/dlgglobals.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
@@ -285,6 +280,7 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
+RC_FILE = Belenus.rc
 
 # CONFIG += console
 win32:DEFINES -= UNICODE

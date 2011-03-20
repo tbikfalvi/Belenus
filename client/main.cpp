@@ -69,6 +69,8 @@ int main( int argc, char *argv[] )
 {
     QApplication     apMainApp( argc, argv );
 
+    apMainApp.setWindowIcon( QIcon(":/icons/Belenus.ico") );
+
     g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
     g_obLogger.attachWriter("db", &g_obLogDBWriter);
     g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
