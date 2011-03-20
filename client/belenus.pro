@@ -280,6 +280,10 @@ DESTDIR = ..
 QT += sql
 QT += network
 CONFIG += qt
+RC_FILE = Belenus.rc
 
 # CONFIG += console
 win32:DEFINES -= UNICODE
+
+RESOURCES += \
+    belenus.qrc
