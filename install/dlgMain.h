@@ -112,6 +112,7 @@ private:
 
     QStringList              m_qslFiles;
     QString                  m_qsLanguage;
+    QString                  m_qsUninstallWampExec;
 
     void                    _initializeInstall();
     void                    _uninstallBelenus();
@@ -170,6 +171,7 @@ private:
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
     bool                    _createFolderShortcut();
     void                    _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
+    bool                    _removeInstalledFilesFolders();
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 

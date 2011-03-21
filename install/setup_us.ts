@@ -5,7 +5,7 @@
     <name>dlgMain</name>
     <message>
         <location filename="dlgMain.ui" line="32"/>
-        <location filename="dlgMain.cpp" line="2511"/>
+        <location filename="dlgMain.cpp" line="2513"/>
         <source>Belenus Application System</source>
         <translation></translation>
     </message>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <location filename="dlgMain.ui" line="1195"/>
-        <location filename="dlgMain.cpp" line="2045"/>
+        <location filename="dlgMain.cpp" line="2047"/>
         <source>Installation finished</source>
         <translation></translation>
     </message>
@@ -331,24 +331,24 @@ If the error continuously occures again, please contact system administrator.</s
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2050"/>
+        <location filename="dlgMain.cpp" line="2052"/>
         <source>Update finished</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2055"/>
+        <location filename="dlgMain.cpp" line="2057"/>
         <source>Uninstall finished</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2063"/>
+        <location filename="dlgMain.cpp" line="2065"/>
         <source>%1 Belenus Application System has been finished.To use the system correcty you need to restart your computer after exiting the installer.
 
 Press Exit to close the installer.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2072"/>
+        <location filename="dlgMain.cpp" line="2074"/>
         <source>%1 Belenus Application System has been finished.
 
 Press Exit to close the installer.</source>
@@ -360,9 +360,9 @@ Press Exit to close the installer.</source>
         <location filename="dlgMain.cpp" line="1080"/>
         <location filename="dlgMain.cpp" line="1132"/>
         <location filename="dlgMain.cpp" line="1142"/>
-        <location filename="dlgMain.cpp" line="1305"/>
-        <location filename="dlgMain.cpp" line="1910"/>
-        <location filename="dlgMain.cpp" line="1923"/>
+        <location filename="dlgMain.cpp" line="1307"/>
+        <location filename="dlgMain.cpp" line="1912"/>
+        <location filename="dlgMain.cpp" line="1925"/>
         <source>Attention</source>
         <translation></translation>
     </message>
@@ -411,22 +411,22 @@ Please enter a valid number between 1 and %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2046"/>
+        <location filename="dlgMain.cpp" line="2048"/>
         <source>Installing</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2051"/>
+        <location filename="dlgMain.cpp" line="2053"/>
         <source>Updating</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2056"/>
+        <location filename="dlgMain.cpp" line="2058"/>
         <source>Removing</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1884"/>
+        <location filename="dlgMain.cpp" line="1886"/>
         <source>Device</source>
         <translation></translation>
     </message>
@@ -447,14 +447,14 @@ Error code: ErrLogCreateFail
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1306"/>
+        <location filename="dlgMain.cpp" line="1308"/>
         <source>Unable to empty the specified directory.
 %1
 Some of the files or subdirectories can not be removed.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1323"/>
+        <location filename="dlgMain.cpp" line="1325"/>
         <source>Error occured during installing Belenus Application System.
 Please contact Belenus software support.
 
@@ -462,37 +462,37 @@ Error code: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1481"/>
+        <location filename="dlgMain.cpp" line="1483"/>
         <source>Creating root user ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1495"/>
+        <location filename="dlgMain.cpp" line="1497"/>
         <source>Creating database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1508"/>
+        <location filename="dlgMain.cpp" line="1510"/>
         <source>Creating Belenus user ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1521"/>
+        <location filename="dlgMain.cpp" line="1523"/>
         <source>Granting privileges for Belenus user ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1536"/>
+        <location filename="dlgMain.cpp" line="1538"/>
         <source>Creating tables in database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1549"/>
+        <location filename="dlgMain.cpp" line="1551"/>
         <source>Adding default data to tables ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1911"/>
+        <location filename="dlgMain.cpp" line="1913"/>
         <source>The specified directory already exits.
 All the files will be deleted or overwritten.
 
@@ -500,72 +500,72 @@ Are you sure you want to continue?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1924"/>
+        <location filename="dlgMain.cpp" line="1926"/>
         <source>Unable to empty the specified directory.
 %1
 Please manually delete the directory if copying new files fails.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1966"/>
+        <location filename="dlgMain.cpp" line="1968"/>
         <source>Processing hardware settings ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1980"/>
+        <location filename="dlgMain.cpp" line="1982"/>
         <source>Processing internet connection settings ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2211"/>
+        <location filename="dlgMain.cpp" line="2213"/>
         <source>Select Directory</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2325"/>
+        <location filename="dlgMain.cpp" line="2327"/>
         <source>&lt;Not selected&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2382"/>
-        <location filename="dlgMain.cpp" line="2446"/>
-        <location filename="dlgMain.cpp" line="2449"/>
+        <location filename="dlgMain.cpp" line="2384"/>
+        <location filename="dlgMain.cpp" line="2448"/>
+        <location filename="dlgMain.cpp" line="2451"/>
         <source>System error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2383"/>
+        <location filename="dlgMain.cpp" line="2385"/>
         <source>Unable to create directory:
 
 %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2437"/>
+        <location filename="dlgMain.cpp" line="2439"/>
         <source>Copying file: ..\%1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2441"/>
+        <location filename="dlgMain.cpp" line="2443"/>
         <source>Updating file: ..\%1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2447"/>
+        <location filename="dlgMain.cpp" line="2449"/>
         <source>Unable to copy file:
 
 %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2450"/>
+        <location filename="dlgMain.cpp" line="2452"/>
         <source>Unable to update file:
 
 %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2474"/>
+        <location filename="dlgMain.cpp" line="2476"/>
         <source>Creating folder and shortcut for client application.</source>
         <translation></translation>
     </message>
