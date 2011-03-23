@@ -2490,6 +2490,7 @@ bool dlgMain::_createFolderShortcut()
 
             m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
             m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
+            m_obFile->remove( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
             m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
             m_qslFiles.append( QString("%1\\Belenus\\").arg(qsDirPrograms) );
             delete m_obFile;
@@ -2498,6 +2499,7 @@ bool dlgMain::_createFolderShortcut()
         if( qsDirDesktop.contains( ":\\" ) )
         {
             m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
+            m_obFile->remove( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             m_obFile->link( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             m_qslFiles.append( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             delete m_obFile;
@@ -2607,8 +2609,18 @@ bool dlgMain::_removeInstalledFilesFolders()
             si.cb=sizeof(si);
             ZeroMemory(&pi,sizeof(pi));
 
-            if(!CreateProcess(VQTConvert::QString_To_LPCTSTR(m_qsUninstallWampExec),NULL,0,0,0,0,0,0,&si,&pi))
+            WCHAR   wsUninstallWampExec[1000];
+
+            memset( wsUninstallWampExec, 0, 1000 );
+
+            m_qsUninstallWampExec.remove( "\"" );
+            m_qsUninstallWampExec.toWCharArray( wsUninstallWampExec );
+
+            if(!CreateProcess(wsUninstallWampExec,NULL,0,0,0,0,0,0,&si,&pi))
+            {
+                m_qsProcessErrorMsg = "UninstWampExec";
                 bRet = false;
+            }
 
             WaitForSingleObject(pi.hProcess,INFINITE);
         }
@@ -2621,11 +2633,6 @@ bool dlgMain::_removeInstalledFilesFolders()
     }
 
     return bRet;
-}
-//=======================================================================================
-void dlgMain::_installFullDatabase()
-//=======================================================================================
-{
 }
 //=======================================================================================
 void dlgMain::_logProcess( QString p_qsLog, bool p_bInsertNewLine )

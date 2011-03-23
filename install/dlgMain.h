@@ -125,7 +125,6 @@ private:
     void                    _initializeWampInstallPage();
     void                    _installWampServer();
     void                    _installSQLServer();
-    void                    _installFullDatabase();
     void                    _initializeHardwareInstallPage();
     void                    _initializeInternetInstallPage();
     void                    _initializeClientInstallPage();
