@@ -2006,6 +2006,10 @@ bool dlgMain::_copyUninstallFiles()
     QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
     QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
 
+    if( QFile::exists( qsTo ) )
+    {
+        QFile::remove( qsTo );
+    }
     if( !QFile::copy( qsFrom, qsTo ) )
     {
         m_qsProcessErrorMsg = QString( "CopySetupExeFailed" );
@@ -2015,6 +2019,10 @@ bool dlgMain::_copyUninstallFiles()
     qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.qm" ).arg(m_qsPathWindows);
 
+    if( QFile::exists( qsTo ) )
+    {
+        QFile::remove( qsTo );
+    }
     if( !QFile::copy( qsFrom, qsTo ) )
     {
         m_qsProcessErrorMsg = QString( "CopySetupQmFailed" );
