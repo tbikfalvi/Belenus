@@ -21,6 +21,7 @@
 #include <QCloseEvent>
 
 #include "vregistry.h"
+#include "vqtconvert.h"
 
 //=======================================================================================
 
@@ -206,6 +207,7 @@ void dlgMain::_initializeInstall()
 
     // Default settings for Wamp server
     m_qsPathWampServer          = "";
+    m_qsUninstallWampExec       = "";
 
     // Default settings for database
     m_qsRootPassword            = "adminpass";
@@ -245,6 +247,7 @@ void dlgMain::_initializeInstall()
         if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
         {
             m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
+            m_qsUninstallWampExec = obReg.get_REG_SZ( "UninstallString" );
             obReg.CloseKey();
 
             _logProcess( QString("Wamp Server: %1").arg(m_qsPathWampServer) );
@@ -1298,17 +1301,15 @@ void dlgMain::_processInstall()
     }
     else if( m_pInstallType == rbRemove )
     {
-        _logProcess( QString("Removing Belenus System ..."), false );
+        bProcessSucceeded = _removeInstalledFilesFolders();
 
-        if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
+        /*if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
         {
             QMessageBox::information( this, tr("Attention"),
                                       tr("Unable to empty the specified directory.\n"
                                          "%1\n"
                                          "Some of the files or subdirectories can not be removed." ).arg(m_qsClientInstallDir) );
-        }
-
-        _logProcess( QString("SUCCEEDED") );
+        }*/
     }
 
     if( bProcessSucceeded )
@@ -2005,6 +2006,10 @@ bool dlgMain::_copyUninstallFiles()
     QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
     QString     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.exe" ).arg(m_qsPathWindows);
 
+    if( QFile::exists( qsTo ) )
+    {
+        QFile::remove( qsTo );
+    }
     if( !QFile::copy( qsFrom, qsTo ) )
     {
         m_qsProcessErrorMsg = QString( "CopySetupExeFailed" );
@@ -2014,6 +2019,10 @@ bool dlgMain::_copyUninstallFiles()
     qsFrom  = QString( "%1\\Setup.qm" ).arg(QDir::currentPath());
     qsTo    = QString( "%1\\Temp\\BelenusInstall\\Setup.qm" ).arg(m_qsPathWindows);
 
+    if( QFile::exists( qsTo ) )
+    {
+        QFile::remove( qsTo );
+    }
     if( !QFile::copy( qsFrom, qsTo ) )
     {
         m_qsProcessErrorMsg = QString( "CopySetupQmFailed" );
@@ -2489,6 +2498,7 @@ bool dlgMain::_createFolderShortcut()
 
             m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
             m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
+            m_obFile->remove( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
             m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
             m_qslFiles.append( QString("%1\\Belenus\\").arg(qsDirPrograms) );
             delete m_obFile;
@@ -2497,6 +2507,7 @@ bool dlgMain::_createFolderShortcut()
         if( qsDirDesktop.contains( ":\\" ) )
         {
             m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
+            m_obFile->remove( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             m_obFile->link( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             m_qslFiles.append( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
             delete m_obFile;
@@ -2538,9 +2549,98 @@ bool dlgMain::_createFolderShortcut()
     return bRet;
 }
 //=======================================================================================
-void dlgMain::_installFullDatabase()
+bool dlgMain::_removeInstalledFilesFolders()
 //=======================================================================================
 {
+    bool    bRet = true;
+    QFile   file( QString("%1\\Temp\\BelenusInstall\\uninstall.li").arg(m_qsPathWindows) );
+
+    if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+    {
+        pbCancel->setEnabled( true );
+        m_qsProcessErrorMsg = QString( "OpenListFileFailed" );
+        return false;
+    }
+
+    QString qsTemp = "";
+    QTextStream in(&file);
+
+    while( !in.atEnd() )
+    {
+        qsTemp.append( in.readLine() );
+    }
+    file.close();
+
+    QStringList qslFiles = qsTemp.split( '#' );
+
+    QDir    qdTarget( m_qsClientInstallDir );
+
+    if( qdTarget.exists() )
+    {
+        for( int i=0; i<qslFiles.size(); i++ )
+        {
+            if( QString(qslFiles.at(i)).right(1).compare("\\") == 0 )
+            {
+                // Remove directory
+                qdTarget.rmpath( qslFiles.at(i) );
+            }
+            else
+            {
+                // Remove file
+                qdTarget.remove( qslFiles.at(i) );
+            }
+        }
+
+        VRegistry   obReg;
+
+        obReg.DeleteKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") );
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "mysql" );
+        m_poDB->setUserName( "root" );
+        m_poDB->setPassword( m_qsRootPassword );
+
+        if( m_poDB->open() )
+        {
+            m_poDB->exec( "DROP USER 'belenus'@'localhost';" );
+            m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`;" );
+
+            m_poDB->close();
+        }
+
+        if( m_qsUninstallWampExec.length() > 0 )
+        {
+            STARTUPINFO         si;
+            PROCESS_INFORMATION pi;
+
+            ZeroMemory(&si,sizeof(si));
+            si.cb=sizeof(si);
+            ZeroMemory(&pi,sizeof(pi));
+
+            WCHAR   wsUninstallWampExec[1000];
+
+            memset( wsUninstallWampExec, 0, 1000 );
+
+            m_qsUninstallWampExec.remove( "\"" );
+            m_qsUninstallWampExec.toWCharArray( wsUninstallWampExec );
+
+            if(!CreateProcess(wsUninstallWampExec,NULL,0,0,0,0,0,0,&si,&pi))
+            {
+                m_qsProcessErrorMsg = "UninstWampExec";
+                bRet = false;
+            }
+
+            WaitForSingleObject(pi.hProcess,INFINITE);
+        }
+
+        _emptyTargetDirectory( QString("%1\\Temp\\BelenusInstall\\").arg(m_qsPathWindows) );
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
 }
 //=======================================================================================
 void dlgMain::_logProcess( QString p_qsLog, bool p_bInsertNewLine )
