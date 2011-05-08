@@ -103,6 +103,20 @@ int main( int argc, char *argv[] )
     obSplash.show();
     apMainApp.processEvents();
 
+    QString qsSystemID = QObject::tr( "SystemID: " );
+
+    if( g_poPrefs->isComponentSensoliteInstalled() ) qsSystemID.append( "S" );
+    if( g_poPrefs->isComponentKiwiSunInstalled() )   qsSystemID.append( "K" );
+    if( g_poPrefs->isComponentDatabaseInstalled() )  qsSystemID.append( "D" );
+    if( g_poPrefs->isComponentHardwareInstalled() )  qsSystemID.append( "H" );
+    if( g_poPrefs->isComponentInternetInstalled() )  qsSystemID.append( "I" );
+    if( g_poPrefs->isComponentClientInstalled() )    qsSystemID.append( "C" );
+    if( g_poPrefs->isComponentViewerInstalled() )    qsSystemID.append( "V" );
+    qsSystemID.append( "\n" );
+
+    qsSpalsh += qsSystemID;
+    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
     int r = 1;
     try
     {
@@ -116,176 +130,196 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr(" SUCCEEDED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        qsSpalsh += "-----------------------------------------------------\n";
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
 
-        qsSpalsh += QObject::tr("Connecting to Belenus server ...");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        g_poServer = new BelenusServerConnection();
-        g_poServer->moveToThread(g_poServer);
-        g_poServer->start();
-
-        g_obLicenceManager.initialize();
-
-        if( g_obLicenceManager.getType() != LicenceManager::DEMO )
-        {  // start server connection only if licence key is provided. Do not try to validate demo licence
-
-            g_obLicenceManager.validateLicence();     // begins connection
-
-            int nCount = 0;
-            while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
-            {
-                QString qsTemp;
-                qsTemp.fill('.', nCount%5+1);
-                obSplash.showMessage(qsSpalsh+qsTemp, Qt::AlignLeft, QColor(59,44, 75));
-                if( ++nCount > 20 ) // timeout handling: 20*500 = 10 sec
-                    break;
-                QMutex dummy;
-                dummy.lock();
-                QWaitCondition waitCondition;
-                waitCondition.wait(&dummy, 500);
-            }
-        }
-
-        qsSpalsh += "  ";
-        if( g_poServer->isConnected() )
-        {
-            qsSpalsh += QObject::tr("SUCCEEDED");
-        }
-        else
-        {
-            qsSpalsh += QObject::tr("FAILED");
-        }
-        qsSpalsh += "\n";
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        qsSpalsh += QObject::tr("License is ... ");
-        if( g_obLicenceManager.isDemo() )
-            qsSpalsh += QObject::tr("DEMO");
-        else
-            qsSpalsh += QObject::tr("OK");
-
-        if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ||
-            g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
-        {
-            qsSpalsh += QObject::tr(" (needs server validation in %1 days)").arg(g_obLicenceManager.getDaysRemaining());
-        }
-        else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
-                 g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
-        {
-            qsSpalsh += QObject::tr(" (licence validation limit expired)");
-        }
-        else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
-        {
-            qsSpalsh += QObject::tr(" (licence not accepted by server)");
-        }
-        qsSpalsh += "\n";
-
-        if( g_poServer->isConnected() )
+        //-------------------------------------------------------------------------------
+        // If Internet component active, process connection initialization
+        if( g_poPrefs->isComponentInternetInstalled() )
         {
             qsSpalsh += "-----------------------------------------------------\n";
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += QObject::tr("Initialize database synchronization ...");
+            qsSpalsh += QObject::tr("Connecting to Belenus server ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            g_obDBMirror.initialize(); // enough to call once at the begining
-            if( g_obDBMirror.start() )
+            g_poServer = new BelenusServerConnection();
+            g_poServer->moveToThread(g_poServer);
+            g_poServer->start();
+
+            g_obLicenceManager.initialize();
+
+            if( g_obLicenceManager.getType() != LicenceManager::DEMO )
+            {  // start server connection only if licence key is provided. Do not try to validate demo licence
+
+                g_obLicenceManager.validateLicence();     // begins connection
+
+                int nCount = 0;
+                while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
+                {
+                    QString qsTemp;
+                    qsTemp.fill('.', nCount%5+1);
+                    obSplash.showMessage(qsSpalsh+qsTemp, Qt::AlignLeft, QColor(59,44, 75));
+                    if( ++nCount > 20 ) // timeout handling: 20*500 = 10 sec
+                        break;
+                    QMutex dummy;
+                    dummy.lock();
+                    QWaitCondition waitCondition;
+                    waitCondition.wait(&dummy, 500);
+                }
+            }
+
+            qsSpalsh += "  ";
+            if( g_poServer->isConnected() )
             {
-                qsSpalsh += QObject::tr("SUCCEEDED\n");
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                if( g_obDBMirror.checkIsSynchronizationNeeded() )
-                {
-                    qsSpalsh += QObject::tr("Local database has to synchronized with server.\n");
-                }
-                else
-                {
-                    qsSpalsh += QObject::tr("Local database synchronized with server.\n");
-                }
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                /*qsSpalsh += "-----------------------------------------------------\n";
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-                if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
-                {
-                    qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
-                }
-                else
-                {
-                    qsSpalsh += QObject::tr("Studio independent data match with server.\n");
-                }
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
+                qsSpalsh += QObject::tr("SUCCEEDED");
             }
             else
             {
-                qsSpalsh += QObject::tr("FAILED\n");
+                qsSpalsh += QObject::tr("FAILED");
+            }
+            qsSpalsh += "\n";
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+            qsSpalsh += QObject::tr("License is ... ");
+            if( g_obLicenceManager.isDemo() )
+                qsSpalsh += QObject::tr("DEMO");
+            else
+                qsSpalsh += QObject::tr("OK");
+
+            if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ||
+                g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
+            {
+                qsSpalsh += QObject::tr(" (needs server validation in %1 days)").arg(g_obLicenceManager.getDaysRemaining());
+            }
+            else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
+                     g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
+            {
+                qsSpalsh += QObject::tr(" (licence validation limit expired)");
+            }
+            else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
+            {
+                qsSpalsh += QObject::tr(" (licence not accepted by server)");
+            }
+            qsSpalsh += "\n";
+
+            if( g_poServer->isConnected() )
+            {
+                qsSpalsh += "-----------------------------------------------------\n";
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                qsSpalsh += QObject::tr("Initialize database synchronization ...");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                g_obDBMirror.initialize(); // enough to call once at the begining
+                if( g_obDBMirror.start() )
+                {
+                    qsSpalsh += QObject::tr("SUCCEEDED\n");
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                    if( g_obDBMirror.checkIsSynchronizationNeeded() )
+                    {
+                        qsSpalsh += QObject::tr("Local database has to synchronized with server.\n");
+                    }
+                    else
+                    {
+                        qsSpalsh += QObject::tr("Local database synchronized with server.\n");
+                    }
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                    /*qsSpalsh += "-----------------------------------------------------\n";
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                    qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                    if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
+                    {
+                        qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
+                    }
+                    else
+                    {
+                        qsSpalsh += QObject::tr("Studio independent data match with server.\n");
+                    }
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
+                }
+                else
+                {
+                    qsSpalsh += QObject::tr("FAILED\n");
+                }
             }
         }
+        //-------------------------------------------------------------------------------
+        // End of process connection initialization
+        //-------------------------------------------------------------------------------
 
         qsSpalsh += "-----------------------------------------------------\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
 #ifdef __WIN32__
 
-        qsSpalsh += QObject::tr("Checking hardware connection ...");
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        g_poHardware = new CS_Communication_Serial();
-        g_poHardware->init( g_poPrefs->getCommunicationPort() );
-        if( !g_poHardware->isHardwareConnected() || g_obLicenceManager.isDemo() )
+        //-------------------------------------------------------------------------------
+        // If Hardware component active, process hardware initialization
+        if( g_poPrefs->isComponentHardwareInstalled() )
         {
-            qsSpalsh += QObject::tr("FAILED\n");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-            qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
+            qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            delete g_poHardware;
-            g_poHardware = new CS_Communication_Demo();
+            g_poHardware = new CS_Communication_Serial();
+            g_poHardware->init( g_poPrefs->getCommunicationPort() );
+            if( !g_poHardware->isHardwareConnected() || g_obLicenceManager.isDemo() )
+            {
+                qsSpalsh += QObject::tr("FAILED\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                delete g_poHardware;
+                g_poHardware = new CS_Communication_Demo();
+            }
+            else
+            {
+                qsSpalsh += QObject::tr("CONNECTED\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                qsSpalsh += QObject::tr("Initializing hardware device ... ");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
+
+                qsSpalsh += QObject::tr("FINISHED\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                qsSpalsh += QObject::tr("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                qsSpalsh += QObject::tr("Number of hardware panels: %1\n").arg( g_poHardware->getHardwareModuleCount() );
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                qsSpalsh += QObject::tr("Checking hardware panels:\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                for( int i=0; i<g_poHardware->getPanelCount(); i++ )
+                {
+                    qsSpalsh += QObject::tr("     Checking hardware panel -%1- ").arg(i+1);
+                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+                    if( g_poHardware->checkHardwarePanel( i ) )
+                    {
+                        qsSpalsh += QObject::tr(" SUCCEEDED\n");
+                        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                    }
+                    else
+                    {
+                        qsSpalsh += QObject::tr(" FAILED\n");
+                        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+                    }
+                }
+            }
         }
         else
         {
-            qsSpalsh += QObject::tr("CONNECTED\n");
+            qsSpalsh += QObject::tr("Starting application in DEMO mode.\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-            qsSpalsh += QObject::tr("Initializing hardware device ... ");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-            g_poHardware->setApplicationModuleCount( g_poPrefs->getPanelCount() );
-
-            qsSpalsh += QObject::tr("FINISHED\n");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            qsSpalsh += QObject::tr("Caption stored in hardware: %1\n").arg( QString::fromStdString(g_poHardware->getCustomCaption()) );
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            qsSpalsh += QObject::tr("Number of hardware panels: %1\n").arg( g_poHardware->getHardwareModuleCount() );
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            qsSpalsh += QObject::tr("Checking hardware panels:\n");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            for( int i=0; i<g_poHardware->getPanelCount(); i++ )
-            {
-                qsSpalsh += QObject::tr("     Checking hardware panel -%1- ").arg(i+1);
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                if( g_poHardware->checkHardwarePanel( i ) )
-                {
-                    qsSpalsh += QObject::tr(" SUCCEEDED\n");
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-                }
-                else
-                {
-                    qsSpalsh += QObject::tr(" FAILED\n");
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-                }
-            }
+            g_poHardware = new CS_Communication_Demo();
         }
 #else
 

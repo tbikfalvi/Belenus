@@ -1,3 +1,18 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : preferences.h
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas, Kovacs Gabor
+//
+//====================================================================================
+// Alkalmazas beallitasok allomanya.
+//====================================================================================
+
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
@@ -15,6 +30,16 @@ public:
     QString         getFileName() const;
     void            setVersion( const QString &p_qsVersion, bool p_boSaveNow = false );
     QString         getVersion() const;
+    void            setComponents( const unsigned int p_uiComponent, bool p_boSaveNow = false );
+    unsigned int    getComponents() const;
+    void            processComponentID();
+    bool            isComponentSensoliteInstalled();
+    bool            isComponentKiwiSunInstalled();
+    bool            isComponentDatabaseInstalled();
+    bool            isComponentHardwareInstalled();
+    bool            isComponentInternetInstalled();
+    bool            isComponentClientInstalled();
+    bool            isComponentViewerInstalled();
     void            setLangFilePrefix( const QString &p_qsPrefix );
     QString         getLangFilePrefix() const;
     void            setLang( const QString &p_qsLang, bool p_boSaveNow = false );
@@ -94,6 +119,14 @@ public:
 private:
     QString         m_qsFileName;
     QString         m_qsVersion;
+    unsigned int    m_uiComponent;
+    bool            m_bComponentSensolite;
+    bool            m_bComponentKiwiSun;
+    bool            m_bComponentDatabase;
+    bool            m_bComponentHardware;
+    bool            m_bComponentInternet;
+    bool            m_bComponentClient;
+    bool            m_bComponentViewer;
     QString         m_qsLangFilePrefix;
     QString         m_qsLang;
     QString         m_qsLastUser;

@@ -1,3 +1,18 @@
+//====================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//====================================================================================
+//
+// Filename    : preferences.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas, Kovacs Gabor
+//
+//====================================================================================
+// Alkalmazas beallitasok allomanya.
+//====================================================================================
+
 #include "preferences.h"
 #include "belenus.h"
 
@@ -11,6 +26,7 @@ cPreferences::cPreferences( const QString &p_qsFileName )
     init();
     setFileName( p_qsFileName );
     loadConfFileSettings();
+    processComponentID();
 }
 
 cPreferences::~cPreferences()
@@ -66,6 +82,68 @@ void cPreferences::setVersion( const QString &p_qsVersion, bool p_boSaveNow )
 QString cPreferences::getVersion() const
 {
     return m_qsVersion;
+}
+
+void cPreferences::setComponents( const unsigned int p_uiComponent, bool p_boSaveNow )
+{
+    m_uiComponent = p_uiComponent;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "PanelSystemID" ), m_uiComponent );
+    }
+}
+
+unsigned int cPreferences::getComponents() const
+{
+    return m_uiComponent;
+}
+
+void cPreferences::processComponentID()
+{
+    m_bComponentSensolite   = ( m_uiComponent & CONST_COMPONENT_SENSOLITE ? true : false );
+    m_bComponentKiwiSun     = ( m_uiComponent & CONST_COMPONENT_KIWISUN   ? true : false );
+    m_bComponentDatabase    = ( m_uiComponent & CONST_COMPONENT_DATABASE  ? true : false );
+    m_bComponentHardware    = ( m_uiComponent & CONST_COMPONENT_HARDWARE  ? true : false );
+    m_bComponentInternet    = ( m_uiComponent & CONST_COMPONENT_INTERNET  ? true : false );
+    m_bComponentClient      = ( m_uiComponent & CONST_COMPONENT_CLIENT    ? true : false );
+    m_bComponentViewer      = ( m_uiComponent & CONST_COMPONENT_VIEWER    ? true : false );
+}
+
+bool cPreferences::isComponentSensoliteInstalled()
+{
+    return m_bComponentSensolite;
+}
+
+bool cPreferences::isComponentKiwiSunInstalled()
+{
+    return m_bComponentKiwiSun;
+}
+
+bool cPreferences::isComponentDatabaseInstalled()
+{
+    return m_bComponentDatabase;
+}
+
+bool cPreferences::isComponentHardwareInstalled()
+{
+    return m_bComponentHardware;
+}
+
+bool cPreferences::isComponentInternetInstalled()
+{
+    return m_bComponentInternet;
+}
+
+bool cPreferences::isComponentClientInstalled()
+{
+    return m_bComponentClient;
+}
+
+bool cPreferences::isComponentViewerInstalled()
+{
+    return m_bComponentViewer;
 }
 
 void cPreferences::setLangFilePrefix( const QString &p_qsPrefix )
@@ -527,6 +605,7 @@ void cPreferences::loadConfFileSettings()
         m_inZipLength               = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
         m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
         m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
+        m_uiComponent               = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
 
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );

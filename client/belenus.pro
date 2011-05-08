@@ -33,6 +33,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlgdiscountedit.ui \
     dlgprogress.ui \
     dlgsynchronization.ui \
+    dlgpanelappereance.ui \
     dlgdbglobals.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -100,6 +101,7 @@ HEADERS = belenus.h \
     db/dbpublicplace.h \
     db/dbpanels.h \
     db/dbdiscount.h \
+    db/dbpanelstatussettings.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -109,6 +111,7 @@ HEADERS = belenus.h \
     dlg/dlgpatientcardadd.h \
     dlg/dlgserialreg.h \
     dlg/dlgcassaaction.h \
+    dlg/dlgpanelappereance.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgpatientedit.h \
@@ -217,6 +220,7 @@ SOURCES = main.cpp \
     db/dbpublicplace.cpp \
     db/dbpanels.cpp \
     db/dbdiscount.cpp \
+    db/dbpanelstatussettings.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -226,6 +230,7 @@ SOURCES = main.cpp \
     dlg/dlgpatientcardadd.cpp \
     dlg/dlgserialreg.cpp \
     dlg/dlgcassaaction.cpp \
+    dlg/dlgpanelappereance.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
