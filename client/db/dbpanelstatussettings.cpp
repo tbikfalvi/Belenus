@@ -68,7 +68,7 @@ void cDBPanelStatusSettings::init( const unsigned int p_uiId,
 
 void cDBPanelStatusSettings::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx                 = p_obRecord.indexOf( "patientOriginId" );
+    int inIdIdx                 = p_obRecord.indexOf( "panelStatusSettingId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPanelStatusIdIdx      = p_obRecord.indexOf( "panelStatusId" );
     int inBackgroundColorIdx    = p_obRecord.indexOf( "backgroundColor" );

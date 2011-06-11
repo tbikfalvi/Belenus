@@ -49,6 +49,7 @@ private:
     bool                m_bGlobalDataRequested;
     int                 m_inGlobalDataRequestTimeout;
 
+    void showElementsForComponents();
     void updateTitle();
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );

@@ -240,6 +240,8 @@ cWndMain::cWndMain( QWidget *parent )
     action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
     action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
     action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
+
+    showElementsForComponents();
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -286,7 +288,10 @@ bool cWndMain::showLogIn()
 
         updateTitle();
 
-        checkDemoLicenceKey();
+        if( g_poPrefs->isComponentInternetInstalled() )
+        {
+            checkDemoLicenceKey();
+        }
         loginUser();
 
     } // if ( boLogInOK )
@@ -660,6 +665,28 @@ void cWndMain::keyReleaseEvent ( QKeyEvent *p_poEvent )
     QMainWindow::keyPressEvent( p_poEvent );
 }
 //====================================================================================
+void cWndMain::showElementsForComponents()
+{
+    cTracer obTrace( "cWndMain::showElementsForComponents" );
+
+    if( g_poPrefs->isComponentKiwiSunInstalled() )
+    {
+        toolBarPatient->setEnabled( false );
+        toolBarPatient->setVisible( false );
+        menuPatient->setEnabled( false );
+        menuPatient->setVisible( false );
+
+        toolBarAttendance->setEnabled( false );
+        toolBarAttendance->setVisible( false );
+        menuAttendance->setEnabled( false );
+        menuAttendance->setVisible( false );
+
+        toolBarSchedule->setEnabled( false );
+        toolBarSchedule->setVisible( false );
+    }
+
+}
+//====================================================================================
 void cWndMain::updateTitle()
 {
     //cTracer obTrace( "cWndMain::updateTitle" );
@@ -726,10 +753,19 @@ void cWndMain::updateToolbar()
     action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
     action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
 
-    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
-                                    g_obPatient.id() > 0 &&
-                                    g_uiPatientAttendanceId > 0 &&
-                                    mdiPanels->mainProcessTime() > 0 );
+    if( g_poPrefs->isComponentSensoliteInstalled() )
+    {
+        action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
+                                        g_obPatient.id() > 0 &&
+                                        g_uiPatientAttendanceId > 0 &&
+                                        mdiPanels->mainProcessTime() > 0 );
+    }
+    else if( g_poPrefs->isComponentKiwiSunInstalled() )
+    {
+        action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
+                                        mdiPanels->mainProcessTime() > 0 );
+    }
+
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isMainProcess() );
 
@@ -742,6 +778,8 @@ void cWndMain::updateToolbar()
 
     action_PayCash->setEnabled( mdiPanels->isHasToPay() );
     action_Cassa->setEnabled( g_obCassa.isCassaEnabled() );
+
+    showElementsForComponents();
 }
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)

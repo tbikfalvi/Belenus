@@ -25,6 +25,8 @@ public slots:
     virtual void accept();
 
 private slots:
+    void on_spinFontSize_valueChanged(int );
+    void on_cmbFontNames_currentIndexChanged(int index);
     void on_pbTextColor_clicked();
     void on_cmbPanelText_currentIndexChanged(int index);
     void on_cmbPanelStatus_currentIndexChanged(int index);

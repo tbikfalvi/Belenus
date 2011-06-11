@@ -3,6 +3,7 @@
 #include <QColor>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QFontDatabase>
 
 //====================================================================================
 
@@ -22,7 +23,10 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbFont->setIcon( QIcon("./resources/40x40_font.png") );
 
-    QSqlQuery *poQuery = NULL;
+    pbFont->setEnabled( false );
+    pbFont->setVisible( false );
+
+    QSqlQuery               *poQuery = NULL;
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, name FROM panelStatuses WHERE active=1 AND panelStatusId>0" ) );
     while( poQuery->next() )
@@ -30,6 +34,7 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
         cmbPanelStatus->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
 
         cDBPanelStatusSettings  *pDBPanelStatusSettings = new cDBPanelStatusSettings();
+
         try
         {
             pDBPanelStatusSettings->loadStatus( poQuery->value( 0 ).toUInt() );
@@ -63,7 +68,7 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
                 pDBPanelStatusSettings->setStatusFontName( "Arial" );
                 pDBPanelStatusSettings->setStatusFontSize( 18 );
                 pDBPanelStatusSettings->setStatusFontColor( "#000000" );
-                pDBPanelStatusSettings->setTimerFontName( "Arial" );
+                pDBPanelStatusSettings->setTimerFontName( "Book Antiqua" );
                 pDBPanelStatusSettings->setTimerFontSize( 30 );
                 pDBPanelStatusSettings->setTimerFontColor( "#000000" );
                 pDBPanelStatusSettings->setNextFontName( "Arial" );
@@ -83,6 +88,13 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
     cmbPanelText->addItem( tr("Length of next status"), 2 );
     cmbPanelText->addItem( tr("Information"), 3 );
 
+    QFontDatabase   fontDatabase;
+
+    foreach (QString family, fontDatabase.families())
+    {
+        cmbFontNames->addItem( family );
+    }
+
     m_bInit = false;
 
     updatePanelSettings();
@@ -91,7 +103,6 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
 cDlgPanelAppereance::~cDlgPanelAppereance()
 //====================================================================================
 {
-    //if( pDBPanelStatusSettings ) delete pDBPanelStatusSettings;
 }
 //====================================================================================
 void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
@@ -119,6 +130,48 @@ void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
 {
     if( m_bInit ) return;
 
+    updatePanelSettings();
+}
+//====================================================================================
+void cDlgPanelAppereance::on_cmbFontNames_currentIndexChanged(int index)
+//====================================================================================
+{
+    switch( cmbPanelText->currentIndex() )
+    {
+        case 0:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontName( cmbFontNames->currentText() );
+            break;
+        case 1:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setTimerFontName( cmbFontNames->currentText() );
+            break;
+        case 2:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setNextFontName( cmbFontNames->currentText() );
+            break;
+        case 3:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setInfoFontName( cmbFontNames->currentText() );
+            break;
+    }
+    updatePanelSettings();
+}
+//====================================================================================
+void cDlgPanelAppereance::on_spinFontSize_valueChanged(int )
+//====================================================================================
+{
+    switch( cmbPanelText->currentIndex() )
+    {
+        case 0:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontSize( spinFontSize->value() );
+            break;
+        case 1:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setTimerFontSize( spinFontSize->value() );
+            break;
+        case 2:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setNextFontSize( spinFontSize->value() );
+            break;
+        case 3:
+            m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setInfoFontSize( spinFontSize->value() );
+            break;
+    }
     updatePanelSettings();
 }
 //====================================================================================
@@ -185,7 +238,9 @@ void cDlgPanelAppereance::on_pbTextColor_clicked()
 
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ) );
-    pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
+    pbTextColor->setIcon( QIcon( obColorIcon ) );
+
+    updatePanelSettings();
 }
 //====================================================================================
 void cDlgPanelAppereance::updatePanelSettings()
@@ -207,9 +262,8 @@ void cDlgPanelAppereance::updatePanelSettings()
             obFont.setBold( true );
             obFont.setCapitalization( QFont::AllUppercase );
             lblSample->setFont( obFont );
-            lblSample->setText( tr("status") );
+            lblSample->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor()).name()).arg(tr("status")) );
             obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ) );
-            pbTextColor->setIcon( QIcon( obColorIcon ) );
             break;
         case 1:
             obFont.setFamily( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->timerFontName() );
@@ -217,9 +271,8 @@ void cDlgPanelAppereance::updatePanelSettings()
             obFont.setBold( true );
             obFont.setCapitalization( QFont::AllUppercase );
             lblSample->setFont( obFont );
-            lblSample->setText( tr("current length") );
+            lblSample->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->timerFontColor()).name()).arg(tr("current length")) );
             obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->timerFontColor() ) );
-            pbTextColor->setIcon( QIcon( obColorIcon ) );
             break;
         case 2:
             obFont.setFamily( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->nextFontName() );
@@ -227,9 +280,8 @@ void cDlgPanelAppereance::updatePanelSettings()
             obFont.setBold( true );
             obFont.setCapitalization( QFont::AllUppercase );
             lblSample->setFont( obFont );
-            lblSample->setText( tr("next length") );
+            lblSample->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->nextFontColor()).name()).arg(tr("next length")) );
             obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->nextFontColor() ) );
-            pbTextColor->setIcon( QIcon( obColorIcon ) );
             break;
         case 3:
             obFont.setFamily( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->infoFontName() );
@@ -237,11 +289,13 @@ void cDlgPanelAppereance::updatePanelSettings()
             obFont.setBold( true );
             obFont.setCapitalization( QFont::AllUppercase );
             lblSample->setFont( obFont );
-            lblSample->setText( tr("information") );
+            lblSample->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->infoFontColor()).name()).arg(tr("information")) );
             obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->infoFontColor() ) );
-            pbTextColor->setIcon( QIcon( obColorIcon ) );
             break;
     }
+    pbTextColor->setIcon( QIcon( obColorIcon ) );
+    cmbFontNames->setCurrentIndex( cmbFontNames->findText( obFont.family() ) );
+    spinFontSize->setValue( obFont.pixelSize() );
 }
 //====================================================================================
 void cDlgPanelAppereance::accept ()

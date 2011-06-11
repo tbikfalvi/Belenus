@@ -457,9 +457,12 @@ void cFrmPanel::reload()
 //====================================================================================
 void cFrmPanel::displayStatus()
 {
+    QString     qsStatusText;
+
     if( m_uiStatus )
     {
-        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() );
+//        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() );
+        qsStatusText = m_obStatuses.at( m_uiStatus )->name();
 
         lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
         unsigned int uiNextLen = 0;
@@ -475,7 +478,8 @@ void cFrmPanel::displayStatus()
     }
     else
     {
-        lblCurrStatus->setText( "" );
+//        lblCurrStatus->setText( "" );
+        qsStatusText = "";
         if( m_inMainProcessLength > 0 )
             lblCurrTimer->setText( QString( "%1:%2" ).arg( m_inMainProcessLength / 60, 2, 10, QChar( '0' ) ).arg( m_inMainProcessLength % 60, 2, 10, QChar( '0' ) ) );
         else
@@ -541,32 +545,19 @@ void cFrmPanel::displayStatus()
     // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
     // stilus valtas statuszonkent
     QPalette  obFramePalette = palette();
-/*    switch( m_uiStatus )
-    {
-        case 0:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::green ) );
-            break;
-        case 1:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
-            break;
-        case 2:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::red ) );
-            break;
-        case 3:
-            obFramePalette.setBrush( QPalette::Window, QBrush( Qt::yellow ) );
-            break;
-    }*/
     obFramePalette.setBrush( QPalette::Window, QBrush( QColor(obDBPanelStatusSettings.backgroundColor()) ) );
     setPalette( obFramePalette );
 
     QFont   obFont;
 
-    lblCurrStatus->setAlignment( Qt::AlignCenter );
     obFont = lblCurrStatus->font();
+    obFont.setFamily( obDBPanelStatusSettings.statusFontName() );
+    obFont.setPixelSize( obDBPanelStatusSettings.statusFontSize() );
     obFont.setBold( true );
     obFont.setCapitalization( QFont::AllUppercase );
-    obFont.setPixelSize( 18 );
+    lblCurrStatus->setAlignment( Qt::AlignCenter );
     lblCurrStatus->setFont( obFont );
+    lblCurrStatus->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.statusFontColor()).name()).arg(qsStatusText) );
 
     lblCurrTimer->setAlignment( Qt::AlignCenter );
     obFont = lblCurrTimer->font();
