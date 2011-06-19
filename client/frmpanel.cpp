@@ -359,11 +359,11 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
     {
-        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() + tr("\n<< STOPPED >>") );
+        formatStatusString( m_obStatuses.at( m_uiStatus )->name() + tr("\n<< STOPPED >>") );
     }
     else
     {
-        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() );
+        formatStatusString( m_obStatuses.at( m_uiStatus )->name() );
     }
 
     if( m_uiCounter )
@@ -384,7 +384,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
             }
         }
 
-        lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
+        formatTimerString( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
     }
     else
     {
@@ -457,14 +457,11 @@ void cFrmPanel::reload()
 //====================================================================================
 void cFrmPanel::displayStatus()
 {
-    QString     qsStatusText;
-
     if( m_uiStatus )
     {
-//        lblCurrStatus->setText( m_obStatuses.at( m_uiStatus )->name() );
-        qsStatusText = m_obStatuses.at( m_uiStatus )->name();
+        m_qsStatus = m_obStatuses.at( m_uiStatus )->name();
 
-        lblCurrTimer->setText( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
+        m_qsTimer = QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) );
         unsigned int uiNextLen = 0;
         if( m_uiStatus != m_obStatuses.size() - 1 )
         {
@@ -478,12 +475,11 @@ void cFrmPanel::displayStatus()
     }
     else
     {
-//        lblCurrStatus->setText( "" );
-        qsStatusText = "";
+        m_qsStatus = "";
         if( m_inMainProcessLength > 0 )
-            lblCurrTimer->setText( QString( "%1:%2" ).arg( m_inMainProcessLength / 60, 2, 10, QChar( '0' ) ).arg( m_inMainProcessLength % 60, 2, 10, QChar( '0' ) ) );
+            m_qsTimer = QString( "%1:%2" ).arg( m_inMainProcessLength / 60, 2, 10, QChar( '0' ) ).arg( m_inMainProcessLength % 60, 2, 10, QChar( '0' ) );
         else
-            lblCurrTimer->setText( "" );
+            m_qsTimer = "";
         lblNextStatusLen->setText( "" );
     }
 
@@ -550,20 +546,8 @@ void cFrmPanel::displayStatus()
 
     QFont   obFont;
 
-    obFont = lblCurrStatus->font();
-    obFont.setFamily( obDBPanelStatusSettings.statusFontName() );
-    obFont.setPixelSize( obDBPanelStatusSettings.statusFontSize() );
-    obFont.setBold( true );
-    obFont.setCapitalization( QFont::AllUppercase );
-    lblCurrStatus->setAlignment( Qt::AlignCenter );
-    lblCurrStatus->setFont( obFont );
-    lblCurrStatus->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.statusFontColor()).name()).arg(qsStatusText) );
-
-    lblCurrTimer->setAlignment( Qt::AlignCenter );
-    obFont = lblCurrTimer->font();
-    obFont.setBold( true );
-    obFont.setPixelSize( 30 );
-    lblCurrTimer->setFont( obFont );
+    formatStatusString( m_qsStatus );
+    formatTimerString( m_qsTimer );
 
     lblNextStatusLen->setAlignment( Qt::AlignCenter );
 
@@ -572,6 +556,85 @@ void cFrmPanel::displayStatus()
     obFont.setBold( true );
     obFont.setPixelSize( 15 );
     lblInfo->setFont( obFont );
+}
+//====================================================================================
+void cFrmPanel::formatStatusString( QString p_qsStatusText )
+{
+    cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+    try
+    {
+        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Panelstatus settings id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            obDBPanelStatusSettings.createNew();
+            obDBPanelStatusSettings.setStatusFontName( "Arial" );
+            obDBPanelStatusSettings.setStatusFontSize( 18 );
+            obDBPanelStatusSettings.setStatusFontColor( "#000000" );
+        }
+    }
+
+    QFont   obFont;
+
+    obFont = lblCurrStatus->font();
+    obFont.setFamily( obDBPanelStatusSettings.statusFontName() );
+    obFont.setPixelSize( obDBPanelStatusSettings.statusFontSize() );
+    obFont.setBold( true );
+    obFont.setCapitalization( QFont::AllUppercase );
+
+    lblCurrStatus->setAlignment( Qt::AlignCenter );
+    lblCurrStatus->setFont( obFont );
+    lblCurrStatus->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.statusFontColor()).name()).arg(p_qsStatusText) );
+}
+//====================================================================================
+void cFrmPanel::formatTimerString( QString p_qsTimerText )
+{
+    cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+    try
+    {
+        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Panelstatus settings id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            obDBPanelStatusSettings.createNew();
+            obDBPanelStatusSettings.setTimerFontName( "Arial" );
+            obDBPanelStatusSettings.setTimerFontSize( 30 );
+            obDBPanelStatusSettings.setTimerFontColor( "#000000" );
+        }
+    }
+
+    QFont   obFont;
+
+    obFont = lblCurrTimer->font();
+    obFont.setFamily( obDBPanelStatusSettings.timerFontName() );
+    obFont.setPixelSize( obDBPanelStatusSettings.timerFontSize() );
+    obFont.setBold( true );
+
+    lblCurrTimer->setAlignment( Qt::AlignCenter );
+    lblCurrTimer->setFont( obFont );
+    lblCurrTimer->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.timerFontColor()).name()).arg(p_qsTimerText) );
+}
+//====================================================================================
+void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
+{
+}
+//====================================================================================
+void cFrmPanel::formatInfoString( QString p_qsInfoText )
+{
 }
 //====================================================================================
 QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

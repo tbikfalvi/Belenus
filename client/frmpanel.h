@@ -113,12 +113,21 @@ private:
     QSpacerItem                 *spacer3;
     QSpacerItem                 *spacer4;
 
+    QString                      m_qsStatus;
+    QString                      m_qsTimer;
+    QString                      m_qsTimerNextStatus;
+    QString                      m_qsInfo;
+
     vector<cDBPanelStatuses*>    m_obStatuses;
 
-    void load( const unsigned int p_uiPanelId );
-    void displayStatus();
-    void activateNextStatus();
-    void closeAttendance();
+    void            load( const unsigned int p_uiPanelId );
+    void            displayStatus();
+    void            formatStatusString( QString p_qsStatusText );
+    void            formatTimerString( QString p_qsTimerText );
+    void            formatNextLengthString( QString p_qsNextLengthText );
+    void            formatInfoString( QString p_qsInfoText );
+    void            activateNextStatus();
+    void            closeAttendance();
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 };
