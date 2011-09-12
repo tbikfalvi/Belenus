@@ -466,11 +466,11 @@ void cFrmPanel::displayStatus()
         if( m_uiStatus != m_obStatuses.size() - 1 )
         {
             uiNextLen = m_obStatuses.at( m_uiStatus + 1 )->length();
-            lblNextStatusLen->setText( QString( "%1:%2" ).arg( uiNextLen / 60, 2, 10, QChar( '0' ) ).arg( uiNextLen % 60, 2, 10, QChar( '0' ) ) );
+            m_qsTimerNextStatus = QString( "%1:%2" ).arg( uiNextLen / 60, 2, 10, QChar( '0' ) ).arg( uiNextLen % 60, 2, 10, QChar( '0' ) );
         }
         else
         {
-            lblNextStatusLen->setText( "" );
+            m_qsTimerNextStatus = "";
         }
     }
     else
@@ -480,7 +480,7 @@ void cFrmPanel::displayStatus()
             m_qsTimer = QString( "%1:%2" ).arg( m_inMainProcessLength / 60, 2, 10, QChar( '0' ) ).arg( m_inMainProcessLength % 60, 2, 10, QChar( '0' ) );
         else
             m_qsTimer = "";
-        lblNextStatusLen->setText( "" );
+        m_qsTimerNextStatus = "";
     }
 
     QString qsInfo = "";
@@ -490,13 +490,14 @@ void cFrmPanel::displayStatus()
         qsInfo += tr("Cash to pay: ") + convertCurrency( m_inCashToPay, g_poPrefs->getCurrencyShort() );
     }
 
-    lblInfo->setText( qsInfo );
+    QString     qsBackgroundColor;
 
     cDBPanelStatusSettings  obDBPanelStatusSettings;
 
     try
     {
         obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+        qsBackgroundColor = obDBPanelStatusSettings.backgroundColor();
     }
     catch( cSevException &e )
     {
@@ -506,56 +507,32 @@ void cFrmPanel::displayStatus()
         }
         else
         {
-            obDBPanelStatusSettings.createNew();
             switch( m_uiStatus )
             {
                 case 0:
-                    obDBPanelStatusSettings.setBackgroundColor( "#00ff00" );
+                    qsBackgroundColor = "#00ff00";
                     break;
                 case 1:
-                    obDBPanelStatusSettings.setBackgroundColor( "#ffff00" );
+                    qsBackgroundColor = "#ffff00";
                     break;
                 case 2:
-                    obDBPanelStatusSettings.setBackgroundColor( "#ff0000" );
+                    qsBackgroundColor = "#ff0000";
                     break;
                 case 3:
-                    obDBPanelStatusSettings.setBackgroundColor( "#ffff00" );
+                    qsBackgroundColor = "#ffff00";
                     break;
             }
-            obDBPanelStatusSettings.setStatusFontName( "Arial" );
-            obDBPanelStatusSettings.setStatusFontSize( 18 );
-            obDBPanelStatusSettings.setStatusFontColor( "#000000" );
-            obDBPanelStatusSettings.setTimerFontName( "Arial" );
-            obDBPanelStatusSettings.setTimerFontSize( 30 );
-            obDBPanelStatusSettings.setTimerFontColor( "#000000" );
-            obDBPanelStatusSettings.setNextFontName( "Arial" );
-            obDBPanelStatusSettings.setNextFontSize( 18 );
-            obDBPanelStatusSettings.setNextFontColor( "#000000" );
-            obDBPanelStatusSettings.setInfoFontName( "Arial" );
-            obDBPanelStatusSettings.setInfoFontSize( 10 );
-            obDBPanelStatusSettings.setInfoFontColor( "#000000" );
-            obDBPanelStatusSettings.setActive( true );
         }
     }
 
-    // A kovetkezo reszt at kell irni, ha keszen lesz a dinamikus
-    // stilus valtas statuszonkent
     QPalette  obFramePalette = palette();
-    obFramePalette.setBrush( QPalette::Window, QBrush( QColor(obDBPanelStatusSettings.backgroundColor()) ) );
+    obFramePalette.setBrush( QPalette::Window, QBrush( QColor(qsBackgroundColor) ) );
     setPalette( obFramePalette );
-
-    QFont   obFont;
 
     formatStatusString( m_qsStatus );
     formatTimerString( m_qsTimer );
-
-    lblNextStatusLen->setAlignment( Qt::AlignCenter );
-
-    lblInfo->setAlignment( Qt::AlignCenter );
-    obFont = lblInfo->font();
-    obFont.setBold( true );
-    obFont.setPixelSize( 15 );
-    lblInfo->setFont( obFont );
+    formatNextLengthString( m_qsTimerNextStatus );
+    formatInfoString( qsInfo );
 }
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )
@@ -631,10 +608,72 @@ void cFrmPanel::formatTimerString( QString p_qsTimerText )
 //====================================================================================
 void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
 {
+    cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+    try
+    {
+        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Panelstatus settings id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            obDBPanelStatusSettings.createNew();
+            obDBPanelStatusSettings.setNextFontName( "Arial" );
+            obDBPanelStatusSettings.setNextFontSize( 18 );
+            obDBPanelStatusSettings.setNextFontColor( "#000000" );
+        }
+    }
+
+    QFont   obFont;
+
+    obFont = lblNextStatusLen->font();
+    obFont.setFamily( obDBPanelStatusSettings.nextFontName() );
+    obFont.setPixelSize( obDBPanelStatusSettings.nextFontSize() );
+    obFont.setBold( true );
+
+    lblNextStatusLen->setAlignment( Qt::AlignCenter );
+    lblNextStatusLen->setFont( obFont );
+    lblNextStatusLen->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.nextFontColor()).name()).arg(p_qsNextLengthText) );
 }
 //====================================================================================
 void cFrmPanel::formatInfoString( QString p_qsInfoText )
 {
+    cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+    try
+    {
+        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Panelstatus settings id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            obDBPanelStatusSettings.createNew();
+            obDBPanelStatusSettings.setInfoFontName( "Arial" );
+            obDBPanelStatusSettings.setInfoFontSize( 10 );
+            obDBPanelStatusSettings.setInfoFontColor( "#000000" );
+        }
+    }
+
+    QFont   obFont;
+
+    obFont = lblInfo->font();
+    obFont.setFamily( obDBPanelStatusSettings.infoFontName() );
+    obFont.setPixelSize( obDBPanelStatusSettings.infoFontSize() );
+    obFont.setBold( true );
+
+    lblInfo->setAlignment( Qt::AlignCenter );
+    lblInfo->setFont( obFont );
+    lblInfo->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.infoFontColor()).name()).arg(p_qsInfoText) );
 }
 //====================================================================================
 QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
