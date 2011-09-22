@@ -42,10 +42,10 @@
 extern cDBUser                      g_obUser;
 extern cPreferences                *g_poPrefs;
 extern CS_Communication            *g_poHardware;
-extern cDBPatient                   g_obPatient;
-extern unsigned int                 g_uiPatientAttendanceId;
+//extern cDBPatient                   g_obPatient;
+//extern unsigned int                 g_uiPatientAttendanceId;
 extern cCassa                       g_obCassa;
-extern cDBMirror                    g_obDBMirror;
+//extern cDBMirror                    g_obDBMirror;
 extern cGeneral                     g_obGen;
 
 //====================================================================================

@@ -153,12 +153,12 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setLicenceId( g_poPrefs->getLicenceId() );
     m_pDBLedgerDevice->setUserId( g_obUser.id() );
     m_pDBLedgerDevice->setPanelId( m_uiId );
-    m_pDBLedgerDevice->setPatientId( g_obPatient.id() );
+//    m_pDBLedgerDevice->setPatientId( g_obPatient.id() );
     m_pDBLedgerDevice->setActive( true );
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
 
-    m_uiAttendanceId = g_uiPatientAttendanceId;
+//    m_uiAttendanceId = g_uiPatientAttendanceId;
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
@@ -291,12 +291,13 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
         return;
     }
 
+// 'SOLARIUM GUEST'
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
     m_inCashNetToPay += p_inPrice;
-    m_inCashDiscountToPay += p_inPrice - g_obPatient.getDiscountPrice( p_inPrice );
-    m_inCashToPay += g_obPatient.getDiscountPrice(p_inPrice) + (g_obPatient.getDiscountPrice(p_inPrice)/100)*g_poPrefs->getDeviceUseVAT();
-    m_uiPatientToPay = g_obPatient.id();
+//    m_inCashDiscountToPay += p_inPrice - g_obPatient.getDiscountPrice( p_inPrice );
+    m_inCashToPay += /*g_obPatient.getDiscountPrice(*/p_inPrice/*) + (g_obPatient.getDiscountPrice(p_inPrice)/100)*g_poPrefs->getDeviceUseVAT()*/;
+//    m_uiPatientToPay = g_obPatient.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
     m_pDBLedgerDevice->setTimeCash( m_pDBLedgerDevice->timeCash()+p_inLength );
@@ -847,8 +848,8 @@ bool cFrmPanel::isCanBeStartedByTime()
 {
     bool    bRet = true;
 
-    if( g_obPatient.id() == 0 ||
-        g_uiPatientAttendanceId == 0 ||
+    if( /*g_obPatient.id() == 0 ||
+        g_uiPatientAttendanceId == 0 ||*/
         m_inCashLength > 0 )
     {
         bRet = false;
@@ -861,8 +862,8 @@ bool cFrmPanel::isCanBeStartedByCard()
 {
     bool    bRet = true;
 
-    if( g_obPatient.id() == 0 ||
-        g_uiPatientAttendanceId == 0 ||
+    if( /*g_obPatient.id() == 0 ||
+        g_uiPatientAttendanceId == 0 ||*/
         m_vrPatientCard.uiPatientCardId > 0 )
     {
         bRet = false;

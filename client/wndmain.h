@@ -38,8 +38,8 @@ private:
     cDlgProgress       *m_dlgProgress;
     int                 m_nTimer;
 
-    unsigned int        m_uiPatientId;
-    unsigned int        m_uiAttendanceId;
+//    unsigned int        m_uiPatientId;
+//    unsigned int        m_uiAttendanceId;
 
     bool                m_bCtrlPressed;
 

@@ -103,9 +103,9 @@ cWndMain::cWndMain( QWidget *parent )
     m_bGlobalDataRequested          = false;
     m_inGlobalDataRequestTimeout    = 0;
 
-    m_uiPatientId                   = 0;
-    m_uiAttendanceId                = 0;
-    g_uiPatientAttendanceId         = 0;
+//    m_uiPatientId                   = 0;
+//    m_uiAttendanceId                = 0;
+//    g_uiPatientAttendanceId         = 0;
 
     m_dlgProgress = new cDlgProgress( this );
 
@@ -237,8 +237,8 @@ cWndMain::cWndMain( QWidget *parent )
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 
-    action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
-    action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
+//    action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
+//    action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
     action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
 
     showElementsForComponents();
@@ -644,12 +644,13 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
     {
         mdiPanels->clear();
-
+/*
         cDBAttendance   obDBAttendance;
 
         obDBAttendance.load( g_uiPatientAttendanceId );
         obDBAttendance.setLength( 0 );
         obDBAttendance.save();
+*/
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -710,7 +711,7 @@ void cWndMain::updateTitle()
         qsTitle += cAccessGroup::toStr( g_obUser.group() );
         qsTitle += "]";
     }
-
+/*
     if( g_obPatient.id() > 0 )
     {
         qsTitle += tr(" <=> Current patient: [");
@@ -721,7 +722,7 @@ void cWndMain::updateTitle()
     {
         qsTitle += tr(" <=> NO PATIENT SELECTED");
     }
-
+*/
     action_Paneltypes->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     action_PanelStatuses->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
@@ -733,26 +734,27 @@ void cWndMain::updateToolbar()
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
     action_LogOut->setEnabled( true );
 
-    action_PatientSelect->setEnabled( !(g_obPatient.id()>0) );
-    action_PatientSelect->setVisible( !(g_obPatient.id()>0) );
-    action_PatientEmpty->setEnabled( g_obPatient.id()>0 );
-    action_PatientEmpty->setVisible( g_obPatient.id()>0 );
-    action_PatientNew->setEnabled( true );
-    action_EditActualPatient->setEnabled( g_obPatient.id()>0 );
-    action_PostponedPatient->setEnabled( g_poPrefs->postponedPatients()>0 );
+    action_PatientSelect->setEnabled( false/*!(g_obPatient.id()>0)*/ );
+    action_PatientSelect->setVisible( false/*!(g_obPatient.id()>0)*/ );
+    action_PatientEmpty->setEnabled( false/*g_obPatient.id()>0*/ );
+    action_PatientEmpty->setVisible( false/*g_obPatient.id()>0*/ );
+    action_PatientNew->setEnabled( false/*true*/ );
+    action_EditActualPatient->setEnabled( false/*g_obPatient.id()>0*/ );
+    action_PostponedPatient->setEnabled( false/*g_poPrefs->postponedPatients()>0*/ );
 
-    action_SelectActualAttendance->setEnabled( g_uiPatientAttendanceId == 0 && g_obPatient.id()>0 );
-    action_SelectActualAttendance->setVisible( g_uiPatientAttendanceId == 0 );
-    action_DeselectActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
-    action_DeselectActualAttendance->setVisible( g_uiPatientAttendanceId > 0 );
-    action_EditActualAttendance->setEnabled( g_uiPatientAttendanceId > 0 );
+    action_SelectActualAttendance->setEnabled( false/*g_uiPatientAttendanceId == 0 && g_obPatient.id()>0*/ );
+    action_SelectActualAttendance->setVisible( false/*g_uiPatientAttendanceId == 0*/ );
+    action_DeselectActualAttendance->setEnabled( false/*g_uiPatientAttendanceId > 0*/ );
+    action_DeselectActualAttendance->setVisible( false/*g_uiPatientAttendanceId > 0*/ );
+    action_EditActualAttendance->setEnabled( false/*g_uiPatientAttendanceId > 0*/ );
 
-    action_AttendanceNew->setEnabled( g_obPatient.id()>0 );
-    action_PostponedAttendance->setEnabled( g_poPrefs->postponedAttendances()>0 );
+    action_AttendanceNew->setEnabled( false/*g_obPatient.id()>0*/ );
+    action_PostponedAttendance->setEnabled( false/*g_poPrefs->postponedAttendances()>0*/ );
 
     action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
     action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
 
+/*
     if( g_poPrefs->isComponentSensoliteInstalled() )
     {
         action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
@@ -762,9 +764,12 @@ void cWndMain::updateToolbar()
     }
     else if( g_poPrefs->isComponentKiwiSunInstalled() )
     {
+*/
         action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
                                         mdiPanels->mainProcessTime() > 0 );
+/*
     }
+*/
 
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isMainProcess() );
@@ -791,8 +796,10 @@ void cWndMain::timerEvent(QTimerEvent *)
         if( g_poPrefs->getLicenceId() > 1 )
         {
             m_bSerialRegistration = false;
+/*
             g_obDBMirror.initialize();
             g_obDBMirror.updateLicenceData();
+*/
             g_obCassa.cassaClose();
             g_obCassa.createNew( g_obUser.id() );
 
@@ -817,7 +824,7 @@ void cWndMain::timerEvent(QTimerEvent *)
 
                 obDlgLicenceEdit.exec();
             }
-            g_obDBMirror.start();
+//            g_obDBMirror.start();
         }
         else
         {
@@ -840,6 +847,7 @@ void cWndMain::timerEvent(QTimerEvent *)
             }
         }
     }
+/*
     else if( m_bGlobalDataRequested )
     {
         if( g_obDBMirror.isAvailable() )
@@ -879,7 +887,8 @@ void cWndMain::timerEvent(QTimerEvent *)
                                   tr("Connection to Belenus server is not available."));
         }
     }
-
+*/
+/*
     if( m_uiPatientId != g_obPatient.id() )
     {
         updateTitle();
@@ -908,6 +917,7 @@ void cWndMain::timerEvent(QTimerEvent *)
     {
         m_uiAttendanceId = g_uiPatientAttendanceId;
     }
+*/
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -929,7 +939,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
             logoutUser();
-
+/*
             if( g_obDBMirror.isAvailable() )
             {
                 if( g_poPrefs->getDBAutoArchive() ||
@@ -947,7 +957,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
                     obDlgSynchronization.exec();
                 }
             }
-
+*/
             p_poEvent->accept();
         }
         else
@@ -1067,6 +1077,7 @@ void cWndMain::on_action_Patients_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_PatienNew_triggered" );
 
     cDBPatient *poPatient = new cDBPatient;
@@ -1087,6 +1098,7 @@ void cWndMain::on_action_PatientNew_triggered()
     }
 
     delete poPatient;
+*/
 }
 //====================================================================================
 void cWndMain::on_action_Attendances_triggered()
@@ -1132,14 +1144,17 @@ void cWndMain::on_action_PatientSelect_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obPatient.createNew();
     g_uiPatientAttendanceId = 0;
+*/
 }
 //====================================================================================
 void cWndMain::on_action_AttendanceNew_triggered()
 {
+/*
     cDBAttendance *poAttendance = new cDBAttendance;
     poAttendance->createNew();
     poAttendance->setPatientId( g_obPatient.id() );
@@ -1159,6 +1174,7 @@ void cWndMain::on_action_AttendanceNew_triggered()
     }
 
     delete poAttendance;
+*/
 }
 //====================================================================================
 void cWndMain::on_action_PanelStatuses_triggered()
@@ -1184,7 +1200,8 @@ void cWndMain::on_action_UseWithCard_triggered()
     QString      qsBarcode = "";
     QSqlQuery   *poQuery;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(g_obPatient.id()) );
+// 'SOLARIUM GUEST'
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(0/*g_obPatient.id()*/) );
     if( poQuery->first() )
     {
         qsBarcode = poQuery->value(0).toString();
@@ -1389,8 +1406,8 @@ void cWndMain::on_action_PatientCardSell_triggered()
         else
         {
             cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
-
-            obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
+// 'SOLARIUM GUEST'
+            obDlgPatientCardEdit.setPatientCardOwner( 0/*g_obPatient.id()*/ );
             obDlgPatientCardEdit.activatePatientCard();
             obDlgPatientCardEdit.exec();
         }

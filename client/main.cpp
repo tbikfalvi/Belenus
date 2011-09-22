@@ -57,12 +57,14 @@ cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
-cDBPatient               g_obPatient;
-unsigned int             g_uiPatientAttendanceId;
+//cDBPatient               g_obPatient;
+//unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
-LicenceManager           g_obLicenceManager;
-cDBMirror                g_obDBMirror;
+//LicenceManager           g_obLicenceManager;
+//cDBMirror                g_obDBMirror;
 cGeneral                 g_obGen;
+
+// 'SOLARIUM GUEST' felirat mindenhol, ahova a 'patient' helyett 'guest' kell
 
 //====================================================================================
 int main( int argc, char *argv[] )
@@ -134,6 +136,7 @@ int main( int argc, char *argv[] )
 
         //-------------------------------------------------------------------------------
         // If Internet component active, process connection initialization
+/*
         if( g_poPrefs->isComponentInternetInstalled() )
         {
             qsSpalsh += "-----------------------------------------------------\n";
@@ -225,21 +228,6 @@ int main( int argc, char *argv[] )
                         qsSpalsh += QObject::tr("Local database synchronized with server.\n");
                     }
                     obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                    /*qsSpalsh += "-----------------------------------------------------\n";
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                    qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-                    if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
-                    {
-                        qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
-                    }
-                    else
-                    {
-                        qsSpalsh += QObject::tr("Studio independent data match with server.\n");
-                    }
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
                 }
                 else
                 {
@@ -247,6 +235,7 @@ int main( int argc, char *argv[] )
                 }
             }
         }
+*/
         //-------------------------------------------------------------------------------
         // End of process connection initialization
         //-------------------------------------------------------------------------------
@@ -265,7 +254,7 @@ int main( int argc, char *argv[] )
 
             g_poHardware = new CS_Communication_Serial();
             g_poHardware->init( g_poPrefs->getCommunicationPort() );
-            if( !g_poHardware->isHardwareConnected() || g_obLicenceManager.isDemo() )
+            if( !g_poHardware->isHardwareConnected() /*|| g_obLicenceManager.isDemo()*/ )
             {
                 qsSpalsh += QObject::tr("FAILED\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -349,6 +338,7 @@ int main( int argc, char *argv[] )
         {
             obMainWindow.initPanels();
             obMainWindow.startMainTimer();
+/*
             if( g_poPrefs->isComponentInternetInstalled() )
             {
                 if( g_obDBMirror.isAvailable() && g_poPrefs->getDBGlobalAutoSynchronize() )
@@ -357,6 +347,7 @@ int main( int argc, char *argv[] )
                     obMainWindow.autoSynchronizeGlobalData();
                 }
             }
+*/
             r = apMainApp.exec();
         }
         else

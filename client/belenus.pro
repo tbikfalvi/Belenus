@@ -8,11 +8,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpreferences.ui \
     dlgpwdconfirm.ui \
     dlguseredit.ui \
-    dlgpatientoriginedit.ui \
     dlgreasontovisitedit.ui \
     wndmain.ui \
-    dlgpatientedit.ui \
-    dlgattendanceedit.ui \
     dlginputstart.ui \
     dlgpanelstatusesedit.ui \
     dlgpatientcardtypeedit.ui \
@@ -54,18 +51,11 @@ HEADERS = belenus.h \
     ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
     crud/dlgusers.h \
-    crud/dlgpatientorigin.h \
     crud/dlgreasontovisit.h \
-    crud/dlgpatient.h \
-    crud/dlgattendance.h \
-    crud/dlgpatientselect.h \
     crud/dlgpanelstatuses.h \
     crud/dlgpatientcardtype.h \
     crud/dlgpatientcard.h \
-    crud/dlgpostponedpatientselect.h \
     crud/dlgpanelsettings.h \
-    crud/dlgpostponedattendanceselect.h \
-    crud/dlgattendanceselect.h \
     crud/dlgillnessgroup.h \
     crud/dlgaddress.h \
     crud/dlgdoctor.h \
@@ -74,10 +64,7 @@ HEADERS = belenus.h \
     crud/dlgzipregioncity.h \
     crud/dlgzipregioncityselect.h \
     crud/dlgdiscount.h \
-    db/dbpatientorigin.h \
     db/dbreasontovisit.h \
-    db/dbpatient.h \
-    db/dbattendance.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
     db/dbpanelstatuses.h \
@@ -114,10 +101,7 @@ HEADERS = belenus.h \
     dlg/dlgpanelappereance.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
-    edit/dlgpatientedit.h \
-    edit/dlgpatientoriginedit.h \
     edit/dlgreasontovisitedit.h \
-    edit/dlgattendanceedit.h \
     edit/dlgpanelstatusesedit.h \
     edit/dlgpatientcardtypeedit.h \
     edit/dlgpatientcardedit.h \
@@ -146,10 +130,8 @@ HEADERS = belenus.h \
     ledger.h \
     crud/dlgpaneluseselect.h \
     report/repledgermain.h \
-    report/reppatients.h \
     report/repcassalist.h \
     report/rep_sample_.h \
-    report/repattendance.h \
     report/repcarduses.h \
     edit/dlglicenceedit.h \
     general.h \
@@ -173,18 +155,11 @@ SOURCES = main.cpp \
     ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
     crud/dlgusers.cpp \
-    crud/dlgpatientorigin.cpp \
     crud/dlgreasontovisit.cpp \
-    crud/dlgpatient.cpp \
-    crud/dlgattendance.cpp \
-    crud/dlgpatientselect.cpp \
     crud/dlgpanelstatuses.cpp \
     crud/dlgpatientcardtype.cpp \
     crud/dlgpatientcard.cpp \
-    crud/dlgpostponedpatientselect.cpp \
     crud/dlgpanelsettings.cpp \
-    crud/dlgpostponedattendanceselect.cpp \
-    crud/dlgattendanceselect.cpp \
     crud/dlgillnessgroup.cpp \
     crud/dlgaddress.cpp \
     crud/dlgdoctor.cpp \
@@ -193,10 +168,7 @@ SOURCES = main.cpp \
     crud/dlgzipregioncity.cpp \
     crud/dlgzipregioncityselect.cpp \
     crud/dlgdiscount.cpp \
-    db/dbpatientorigin.cpp \
     db/dbreasontovisit.cpp \
-    db/dbpatient.cpp \
-    db/dbattendance.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
     db/dbpanelstatuses.cpp \
@@ -234,9 +206,7 @@ SOURCES = main.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgpatientedit.cpp \
-    edit/dlgpatientoriginedit.cpp \
     edit/dlgreasontovisitedit.cpp \
-    edit/dlgattendanceedit.cpp \
     edit/dlgpanelstatusesedit.cpp \
     edit/dlgpatientcardtypeedit.cpp \
     edit/dlgpatientcardedit.cpp \
@@ -265,10 +235,8 @@ SOURCES = main.cpp \
     ledger.cpp \
     crud/dlgpaneluseselect.cpp \
     report/repledgermain.cpp \
-    report/reppatients.cpp \
     report/repcassalist.cpp \
     report/rep_sample_.cpp \
-    report/repattendance.cpp \
     report/repcarduses.cpp \
     general.cpp \
     dlg/dlgprogress.cpp \
