@@ -22,6 +22,6 @@ Megoldas	: dlgpaneltypeedit.cpp -ben a panelTypesId kicserélve panelTypeId-ra
 
 Datum		: 2011.09.24
 Hibajelenseg	: Rossz/felesleges menuelemek
-Megoldva	: 
-Megoldas	: 
+Megoldva	: 2011.09.24
+Megoldas	: Egyes elemek hide-olva, ketto megszuntetve
 ----------------------------------------------------------------------------------------------------

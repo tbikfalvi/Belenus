@@ -91,15 +91,6 @@
     <property name="title">
      <string>&amp;Action</string>
     </property>
-    <widget class="QMenu" name="menuPatient">
-     <property name="title">
-      <string>Patient</string>
-     </property>
-     <addaction name="action_PatientNew"/>
-     <addaction name="separator"/>
-     <addaction name="action_PatientSelect"/>
-     <addaction name="action_PatientEmpty"/>
-    </widget>
     <widget class="QMenu" name="menuDevice">
      <property name="title">
       <string>Device</string>
@@ -111,25 +102,12 @@
      <addaction name="action_DeviceSkipStatus"/>
      <addaction name="action_DeviceReset"/>
     </widget>
-    <widget class="QMenu" name="menuAttendance">
-     <property name="title">
-      <string>Attendance</string>
-     </property>
-     <addaction name="action_AttendanceNew"/>
-     <addaction name="separator"/>
-     <addaction name="action_SelectActualAttendance"/>
-     <addaction name="action_DeselectActualAttendance"/>
-    </widget>
     <widget class="QMenu" name="menuPatientCard">
      <property name="title">
       <string>PatientCard</string>
      </property>
      <addaction name="action_PCSaveToDatabase"/>
     </widget>
-    <addaction name="menuPatient"/>
-    <addaction name="separator"/>
-    <addaction name="menuAttendance"/>
-    <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
     <addaction name="menuDevice"/>
@@ -173,7 +151,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>

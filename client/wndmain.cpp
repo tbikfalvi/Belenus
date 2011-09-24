@@ -176,8 +176,8 @@ cWndMain::cWndMain( QWidget *parent )
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
-    menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
-    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.png") );
+//    menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
+//    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.png") );
     menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
         action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
@@ -676,16 +676,29 @@ void cWndMain::showElementsForComponents()
     {
         toolBarPatient->setEnabled( false );
         toolBarPatient->setVisible( false );
-        menuPatient->setEnabled( false );
-        menuPatient->setVisible( false );
-
         toolBarAttendance->setEnabled( false );
         toolBarAttendance->setVisible( false );
-        menuAttendance->setEnabled( false );
-        menuAttendance->setVisible( false );
-
         toolBarSchedule->setEnabled( false );
         toolBarSchedule->setVisible( false );
+
+//        menuPatient->setEnabled( false );
+//        menuAttendance->setEnabled( false );
+
+        action_Patients->setVisible( false );
+        action_Attendances->setVisible( false );
+        action_Doctor->setVisible( false );
+        action_Company->setVisible( false );
+        action_HealthInsurance->setVisible( false );
+        action_Discounts->setVisible( false );
+        action_Patientorigin->setVisible( false );
+        action_ReasonToVisit->setVisible( false );
+        action_IllnessGroup->setVisible( false );
+//        menuPatient->setVisible( false );
+//        menuAttendance->setVisible( false );
+        action_ReportPatients->setVisible( false );
+        action_ReportAttendances->setVisible( false );
+        action_SynchronizeDatabase->setVisible( false );
+        action_AcquireGlobalData->setVisible( false );
     }
 
 }
