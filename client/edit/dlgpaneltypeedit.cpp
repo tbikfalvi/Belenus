@@ -26,7 +26,7 @@ cDlgPanelTypeEdit::~cDlgPanelTypeEdit()
 {
 }
 
-void cDlgPanelTypeEdit::on_pbSave_clicked()
+void cDlgPanelTypeEdit::accept()
 {
     bool  boCanBeSaved = true;
 
@@ -46,8 +46,4 @@ void cDlgPanelTypeEdit::on_pbSave_clicked()
     }
 }
 
-void cDlgPanelTypeEdit::on_pbCancel_clicked()
-{
-    QDialog::reject();
-}
 

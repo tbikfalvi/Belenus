@@ -16,9 +16,8 @@ public:
 protected:
     cDBPanelTypes *m_poPanelTypes;
 
-private slots:
-    void on_pbSave_clicked();
-    void on_pbCancel_clicked();
+public slots:
+    virtual void accept();
 };
 
 #endif // DLGPANELTYPEEDIT_H

@@ -42,7 +42,7 @@ void cDBPanelTypes::init( const unsigned int p_uiId,
 
 void cDBPanelTypes::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "panelTypesId" );
+    int inIdIdx         = p_obRecord.indexOf( "panelTypeId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
     int inModifiedIdx   = p_obRecord.indexOf( "modified" );
@@ -61,7 +61,7 @@ void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
 {
     cTracer obTrace( "cDBPanelTypes::load", QString( "id: %1" ).arg( p_uiId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE panelTypesId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE panelTypeId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Paneltype id not found" );
