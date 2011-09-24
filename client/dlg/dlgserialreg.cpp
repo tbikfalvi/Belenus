@@ -4,10 +4,7 @@
 #include "dlgserialreg.h"
 #include "../licenceManager.h"
 
-extern LicenceManager g_obLicenceManager;
-
-
-
+//extern LicenceManager g_obLicenceManager;
 
 cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -19,8 +16,8 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent )
 
     pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-
-    ledSerial->setText( g_obLicenceManager.getClientSerial() );
+// 'TO BE SOLVED'
+//    ledSerial->setText( g_obLicenceManager.getClientSerial() );
     ledSerial->setFocus();
     ledSerial->selectAll();
 }
@@ -31,7 +28,8 @@ cDlgSerialReg::~cDlgSerialReg()
 
 void cDlgSerialReg::on_pbValidate_clicked()
 {
-    g_obLicenceManager.validateLicence(ledSerial->text());
+// 'TO BE SOLVED'
+//    g_obLicenceManager.validateLicence(ledSerial->text());
 
     QDialog::accept();
 }

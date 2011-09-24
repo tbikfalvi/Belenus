@@ -65,6 +65,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 
 // 'SOLARIUM GUEST' felirat mindenhol, ahova a 'patient' helyett 'guest' kell
+// 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 
 //====================================================================================
 int main( int argc, char *argv[] )

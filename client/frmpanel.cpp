@@ -23,7 +23,7 @@
 #include "db/dbpatientcard.h"
 #include "db/dbpatientcardhistory.h"
 #include "db/dbledger.h"
-#include "db/dbattendance.h"
+//#include "db/dbattendance.h"
 #include "db/dbpanelstatussettings.h"
 
 #include <iostream>
@@ -174,6 +174,7 @@ void cFrmPanel::reset()
 //====================================================================================
 void cFrmPanel::clear()
 {
+/*
     cDBAttendance   obDBAttendance;
 
     obDBAttendance.load( m_uiAttendanceId );
@@ -181,7 +182,7 @@ void cFrmPanel::clear()
     obDBAttendance.save();
 
     m_uiAttendanceId        = 0;
-
+*/
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;

@@ -57,6 +57,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
         cmbPatient->addItem( tr("<Not selected>"), 0 );
+// 'SOLARIUM GUEST'
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
@@ -254,18 +255,21 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 }
 
                 cDlgCassaAction     obDlgCassaAction(this);
-                int                 inPriceNet;
-                int                 inPriceNetDiscount;
-                int                 inPriceTotal;
-                int                 inPriceDiscount;
+                int                 inPriceNet = 0;
+                int                 inPriceNetDiscount = 0;
+                int                 inPriceTotal = 0;
+                int                 inPriceDiscount = 0;
 
                 inPriceNet = m_poPatientCardType->price();
                 if( cmbPatient->currentIndex() > 0 )
                 {
+// 'SOLARIUM GUEST'
+/*
                     cDBPatient  obDBPatientTemp;
 
                     obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
                     inPriceNetDiscount = obDBPatientTemp.getDiscountPrice( inPriceNet );
+*/
                 }
                 else
                 {
@@ -390,10 +394,13 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
 
         if( cmbPatient->currentIndex() > 0 )
         {
+// 'SOLARIUM GUEST'
+/*
             cDBPatient  obDBPatientTemp;
 
             obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
             discount = obDBPatientTemp.getDiscountPrice( priceTotal );
+*/
         }
         else
         {

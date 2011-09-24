@@ -19,19 +19,12 @@ FORMS = ../framework/dlgcrud.ui \
     dlgcassa.ui \
     dlgcassaaction.ui \
     dlgpaneluseedit.ui \
-    dlgillnessgroupedit.ui \
     dlgpatientcarduse.ui \
     dlgaddressedit.ui \
-    dlghealthinsuranceedit.ui \
-    dlgcompanyedit.ui \
-    dlgdoctoredit.ui \
     dlgzipregioncityedit.ui \
     dlglicenceedit.ui \
-    dlgdiscountedit.ui \
     dlgprogress.ui \
-    dlgsynchronization.ui \
-    dlgpanelappereance.ui \
-    dlgdbglobals.ui
+    dlgpanelappereance.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -56,14 +49,9 @@ HEADERS = belenus.h \
     crud/dlgpatientcardtype.h \
     crud/dlgpatientcard.h \
     crud/dlgpanelsettings.h \
-    crud/dlgillnessgroup.h \
     crud/dlgaddress.h \
-    crud/dlgdoctor.h \
-    crud/dlgcompany.h \
-    crud/dlghealthinsurance.h \
     crud/dlgzipregioncity.h \
     crud/dlgzipregioncityselect.h \
-    crud/dlgdiscount.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -80,14 +68,9 @@ HEADERS = belenus.h \
     db/dbledgerdevice.h \
     db/dbpatientcardhistory.h \
     db/dbzipregioncity.h \
-    db/dbillnessgroup.h \
     db/dbaddress.h \
-    db/dbdoctor.h \
-    db/dbcompany.h \
-    db/dbhealthinsurance.h \
     db/dbpublicplace.h \
     db/dbpanels.h \
-    db/dbdiscount.h \
     db/dbpanelstatussettings.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
@@ -108,18 +91,12 @@ HEADERS = belenus.h \
     edit/dlgcassaedit.h \
     edit/dlgpaneluseedit.h \
     edit/dlgpatientcarduse.h \
-    edit/dlgillnessgroupedit.h \
     edit/dlgaddressedit.h \
-    edit/dlghealthinsuranceedit.h \
-    edit/dlgcompanyedit.h \
-    edit/dlgdoctoredit.h \
     edit/dlgzipregioncityedit.h \
-    edit/dlgdiscountedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
     bs_connection.h \
-    licenceManager.h \
     communication.h \
     communication_demo.h \
     frmpanel.h \
@@ -135,10 +112,7 @@ HEADERS = belenus.h \
     report/repcarduses.h \
     edit/dlglicenceedit.h \
     general.h \
-    dlg/dlgprogress.h \
-    db/dbmirror.h \
-    dlg/dlgsynchronization.h \
-    dlg/dlgglobals.h
+    dlg/dlgprogress.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -160,14 +134,9 @@ SOURCES = main.cpp \
     crud/dlgpatientcardtype.cpp \
     crud/dlgpatientcard.cpp \
     crud/dlgpanelsettings.cpp \
-    crud/dlgillnessgroup.cpp \
     crud/dlgaddress.cpp \
-    crud/dlgdoctor.cpp \
-    crud/dlgcompany.cpp \
-    crud/dlghealthinsurance.cpp \
     crud/dlgzipregioncity.cpp \
     crud/dlgzipregioncityselect.cpp \
-    crud/dlgdiscount.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -184,14 +153,9 @@ SOURCES = main.cpp \
     db/dbledgerdevice.cpp \
     db/dbpatientcardhistory.cpp \
     db/dbzipregioncity.cpp \
-    db/dbillnessgroup.cpp \
     db/dbaddress.cpp \
-    db/dbdoctor.cpp \
-    db/dbcompany.cpp \
-    db/dbhealthinsurance.cpp \
     db/dbpublicplace.cpp \
     db/dbpanels.cpp \
-    db/dbdiscount.cpp \
     db/dbpanelstatussettings.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
@@ -205,7 +169,6 @@ SOURCES = main.cpp \
     dlg/dlgpanelappereance.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
-    edit/dlgpatientedit.cpp \
     edit/dlgreasontovisitedit.cpp \
     edit/dlgpanelstatusesedit.cpp \
     edit/dlgpatientcardtypeedit.cpp \
@@ -213,19 +176,13 @@ SOURCES = main.cpp \
     edit/dlgcassaedit.cpp \
     edit/dlgpaneluseedit.cpp \
     edit/dlgpatientcarduse.cpp \
-    edit/dlgillnessgroupedit.cpp \
     edit/dlgaddressedit.cpp \
-    edit/dlghealthinsuranceedit.cpp \
-    edit/dlgcompanyedit.cpp \
-    edit/dlgdoctoredit.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
-    edit/dlgdiscountedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
     bs_connection.cpp \
-    licenceManager.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
     mdipanels.cpp \
@@ -239,10 +196,7 @@ SOURCES = main.cpp \
     report/rep_sample_.cpp \
     report/repcarduses.cpp \
     general.cpp \
-    dlg/dlgprogress.cpp \
-    db/dbmirror.cpp \
-    dlg/dlgsynchronization.cpp \
-    dlg/dlgglobals.cpp
+    dlg/dlgprogress.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

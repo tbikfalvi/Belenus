@@ -22,7 +22,7 @@
 //====================================================================================
 
 #include "db/dbpostponed.h"
-#include "db/dbpatient.h"
+//#include "db/dbpatient.h"
 #include "db/dbpatientcard.h"
 #include "db/dbledger.h"
 
@@ -32,29 +32,29 @@
 #include "crud/dlgpatientorigin.h"
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
-#include "crud/dlgpatient.h"
-#include "crud/dlgattendance.h"
-#include "crud/dlgpatientselect.h"
+//#include "crud/dlgpatient.h"
+//#include "crud/dlgattendance.h"
+//#include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
 #include "crud/dlgpatientcardtype.h"
 #include "crud/dlgpatientcard.h"
-#include "crud/dlgpostponedpatientselect.h"
+//#include "crud/dlgpostponedpatientselect.h"
 #include "crud/dlgpanelsettings.h"
-#include "crud/dlgpostponedattendanceselect.h"
-#include "crud/dlgattendanceselect.h"
+//#include "crud/dlgpostponedattendanceselect.h"
+//#include "crud/dlgattendanceselect.h"
 #include "crud/dlgpaneluseselect.h"
-#include "crud/dlgillnessgroup.h"
-#include "crud/dlgcompany.h"
-#include "crud/dlgdoctor.h"
-#include "crud/dlghealthinsurance.h"
+//#include "crud/dlgillnessgroup.h"
+//#include "crud/dlgcompany.h"
+//#include "crud/dlgdoctor.h"
+//#include "crud/dlghealthinsurance.h"
 #include "crud/dlgzipregioncity.h"
-#include "crud/dlgdiscount.h"
+//#include "crud/dlgdiscount.h"
 
 //====================================================================================
 
 #include "edit/dlguseredit.h"
-#include "edit/dlgpatientedit.h"
-#include "edit/dlgattendanceedit.h"
+//#include "edit/dlgpatientedit.h"
+//#include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
 #include "edit/dlgcassaedit.h"
 #include "edit/dlgpatientcarduse.h"
@@ -70,15 +70,15 @@
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
-#include "dlg/dlgsynchronization.h"
+//#include "dlg/dlgsynchronization.h"
 #include "dlg/dlgglobals.h"
 
 //====================================================================================
 
 #include "report/repledgermain.h"
-#include "report/reppatients.h"
+//#include "report/reppatients.h"
 #include "report/repcassalist.h"
-#include "report/repattendance.h"
+//#include "report/repattendance.h"
 #include "report/repcarduses.h"
 #include "report/reppatientcards.h"
 #include "report/reppatientcardsobs.h"
@@ -86,7 +86,7 @@
 //====================================================================================
 
 extern DatabaseWriter g_obLogDBWriter;
-extern LicenceManager g_obLicenceManager;
+//extern LicenceManager g_obLicenceManager;
 
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent )
@@ -307,6 +307,7 @@ void cWndMain::initPanels()
 //====================================================================================
 void cWndMain::checkDemoLicenceKey()
 {
+/*
     if( g_obLicenceManager.getType() == LicenceManager::VALID_SERVER_ERROR )
     {
         QMessageBox::warning( this, tr("Attention"),
@@ -334,7 +335,7 @@ void cWndMain::checkDemoLicenceKey()
         QMessageBox::warning( this, tr("Attention"),
                               tr("Your licence key validation has failed.\n"
                                  "Please call Service") );
-    } /*else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
+    } else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
     {
         if( QMessageBox::warning( this,
                                   tr("Attention"),
@@ -347,7 +348,8 @@ void cWndMain::checkDemoLicenceKey()
             cDlgSerialReg   obDlgSerialReg( this );
             obDlgSerialReg.exec();
         }
-    }*/
+    }
+*/
 }
 //====================================================================================
 void cWndMain::loginUser()
@@ -1050,11 +1052,13 @@ void cWndMain::on_action_Paneltypes_triggered()
 //====================================================================================
 void cWndMain::on_action_Patientorigin_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
 
     cDlgPatientOrigin  obDlgPatientOrigin( this );
 
     obDlgPatientOrigin.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_ReasonToVisit_triggered()
@@ -1068,11 +1072,13 @@ void cWndMain::on_action_ReasonToVisit_triggered()
 //====================================================================================
 void cWndMain::on_action_Patients_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_Patiens_triggered" );
 
     cDlgPatient  obDlgPatient( this );
 
     obDlgPatient.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()
@@ -1103,11 +1109,13 @@ void cWndMain::on_action_PatientNew_triggered()
 //====================================================================================
 void cWndMain::on_action_Attendances_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_Attendances_triggered" );
 
     cDlgAttendance  obDlgAttendance( this );
 
     obDlgAttendance.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
@@ -1135,11 +1143,13 @@ void cWndMain::on_action_DeviceReset_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientSelect_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
 
     cDlgPatientSelect  obDlgPatientSelect( this );
 
     obDlgPatientSelect.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
@@ -1296,18 +1306,22 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
 //====================================================================================
 void cWndMain::on_action_PostponedPatient_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_PostponedPatient_triggered" );
 
     cDlgPostponedPatientSelect  obDlgPostponedPatientSelect( this );
 
     obDlgPostponedPatientSelect.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_PostponedAttendance_triggered()
 {
+/*
     cDlgPostponedAttendanceSelect   obDlgSelect( this );
 
     obDlgSelect.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()
@@ -1416,6 +1430,8 @@ void cWndMain::on_action_PatientCardSell_triggered()
 //====================================================================================
 void cWndMain::processInputPatient( QString p_stPatientName )
 {
+// 'SOLARIUM GUEST'
+/*
     cDBPatient      obDBPatient;
     unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed());
 
@@ -1447,6 +1463,7 @@ void cWndMain::processInputPatient( QString p_stPatientName )
             obDlgEdit.exec();
         }
     }
+*/
 }
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
@@ -1457,9 +1474,9 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         obDBPatientCard.load( p_stBarcode );
 
-        if( !mdiPanels->isCanBeStartedByCard() &&
+        if( !mdiPanels->isCanBeStartedByCard() /*&&
             g_obPatient.id() > 0 &&
-            g_uiPatientAttendanceId > 0 )
+            g_uiPatientAttendanceId > 0*/ )
         {
             QMessageBox::warning( this, tr("Attention"),
                                   tr("This device already prepared with a patientcard.\n"
@@ -1470,6 +1487,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
         if( obDBPatientCard.active() )
         {
+// 'SOLARIUM GUEST'
+/*
             if( g_obPatient.id() == 0 )
             {
                 cDBPatient  obDBPatient;
@@ -1505,8 +1524,9 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     obDBPatientCard.save();
                 }
             }
-            if( g_obPatient.id() > 0 )
-            {
+*/
+//            if( g_obPatient.id() > 0 )
+//            {
                 if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
                 {
                     QString     qsTemp = "";
@@ -1551,8 +1571,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
                 if( obDlgPatientCardUse.exec() == QDialog::Accepted )
                 {
-                    cDBAttendance   obDBAttendance;
-                    QTime           tCurrent;
+//                    cDBAttendance   obDBAttendance;
+//                    QTime           tCurrent;
                     QTime           tLength;
                     QTime           tNewLength;
                     int             inNewLength;
@@ -1561,17 +1581,17 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
                     obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
 
-                    obDBAttendance.load( g_uiPatientAttendanceId );
-                    tCurrent = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
+//                    obDBAttendance.load( g_uiPatientAttendanceId );
+//                    tCurrent = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
                     tLength  = QTime::fromString(qsLength,"mm:ss");
-                    inNewLength = tCurrent.minute()*60 + tCurrent.second() +
+                    inNewLength = /*tCurrent.minute()*60 + tCurrent.second() +*/
                                   tLength.minute()*60 + tLength.second();
-                    tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
-                    obDBAttendance.setLength( tNewLength.hour()*60+tNewLength.minute() );
-                    obDBAttendance.save();
+//                    tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
+//                    obDBAttendance.setLength( tNewLength.hour()*60+tNewLength.minute() );
+//                    obDBAttendance.save();
                     mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
                 }
-            }
+//            }
         }
         else
         {
@@ -1583,6 +1603,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 cDlgPatientCardEdit     obDlgPatientCardEdit( this, &obDBPatientCard );
 
                 obDlgPatientCardEdit.activatePatientCard();
+// 'SOLARIUM GUEST'
+/*
                 if( g_obPatient.id() > 0 )
                 {
                     if( QMessageBox::question( this, tr("Question"),
@@ -1592,6 +1614,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                         obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
                     }
                 }
+*/
                 obDlgPatientCardEdit.exec();
             }
         }
@@ -1620,6 +1643,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inSecond )
 {
+/*
     if( g_uiPatientAttendanceId == 0 )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -1627,6 +1651,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
                                  "Please select first a patient and then an attendance.") );
         return;
     }
+*/
     if( !mdiPanels->isCanBeStartedByTime() )
     {
         QMessageBox::warning( this, tr("Attention"),
@@ -1662,6 +1687,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
                 return;
             }
         }
+/*
         cDBAttendance   obDBAttendance;
         QTime           tLength;
 
@@ -1669,6 +1695,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
         tLength = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
         obDBAttendance.setLengthStr( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
         obDBAttendance.save();
+*/
         mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }
     else
@@ -1681,6 +1708,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
 {
+/*
     cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
     obDlgEdit.setWindowTitle( g_obPatient.name() );
     if( obDlgEdit.exec() == QDialog::Accepted )
@@ -1688,6 +1716,7 @@ void cWndMain::on_action_EditActualPatient_triggered()
         cDBPostponed    obDBPostponed;
         obDBPostponed.removePatient( g_obPatient.id() );
     }
+*/
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
@@ -1702,18 +1731,21 @@ void cWndMain::on_action_DeviceSettings_triggered()
 //====================================================================================
 void cWndMain::on_action_SelectActualAttendance_triggered()
 {
+/*
     cDlgAttendanceSelect    obDlgSelect( this );
 
     obDlgSelect.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_DeselectActualAttendance_triggered()
 {
-    g_uiPatientAttendanceId = 0;
+//    g_uiPatientAttendanceId = 0;
 }
 //====================================================================================
 void cWndMain::on_action_EditActualAttendance_triggered()
 {
+/*
     cDBAttendance   obDBAttendance;
 
     obDBAttendance.load( g_uiPatientAttendanceId );
@@ -1721,6 +1753,7 @@ void cWndMain::on_action_EditActualAttendance_triggered()
     cDlgAttendanceEdit  obDlgEdit( this, &obDBAttendance );
 
     obDlgEdit.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_PayCash_triggered()
@@ -1782,38 +1815,46 @@ void cWndMain::on_action_PayCash_triggered()
 //====================================================================================
 void cWndMain::on_action_IllnessGroup_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_IllnessGroup_triggered" );
 
     cDlgIllnessGroup  obDlgIllnessGroup( this );
 
     obDlgIllnessGroup.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_Company_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_Company_triggered" );
 
     cDlgCompany  obDlgCompany( this );
 
     obDlgCompany.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_Doctor_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_Doctor_triggered" );
 
     cDlgDoctor  obDlgDoctor( this );
 
     obDlgDoctor.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_HealthInsurance_triggered()
 {
+/*
     cTracer obTrace( "cWndMain::on_action_HealthInsurance_triggered" );
 
     cDlgHealthInsurance  obDlgHealthInsurance( this );
 
     obDlgHealthInsurance.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_RegionZipCity_triggered()
@@ -1831,11 +1872,13 @@ void cWndMain::on_action_RegionZipCity_triggered()
 void cWndMain::on_action_ReportPatients_triggered()
 //====================================================================================
 {
+/*
     setCursor( Qt::WaitCursor);
     cDlgReportPatients  obDlgReportPatients( this );
     setCursor( Qt::ArrowCursor);
 
     obDlgReportPatients.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_CassaHistory_triggered()
@@ -1851,11 +1894,13 @@ void cWndMain::on_action_CassaHistory_triggered()
 void cWndMain::on_action_ReportAttendances_triggered()
 //====================================================================================
 {
+/*
     setCursor( Qt::WaitCursor);
     cDlgReportAttendance  obDlgReportAttendance( this );
     setCursor( Qt::ArrowCursor);
 
     obDlgReportAttendance.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_ReportPatientcardUses_triggered()
@@ -1889,11 +1934,13 @@ void cWndMain::on_action_ReportPatientcards_triggered()
 void cWndMain::on_action_Discounts_triggered()
 //====================================================================================
 {
+/*
     setCursor( Qt::WaitCursor);
     cDlgDiscount  obDlgDiscount( this );
     setCursor( Qt::ArrowCursor);
 
     obDlgDiscount.exec();
+*/
 }
 //====================================================================================
 void cWndMain::on_action_PatientcardsObsolete_triggered()
@@ -1909,6 +1956,7 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
 void cWndMain::on_action_SynchronizeDatabase_triggered()
 //====================================================================================
 {
+/*
     if( g_obDBMirror.isAvailable() )
     {
         cDlgSynchronization obDlgSynchronization( this );
@@ -1920,25 +1968,28 @@ void cWndMain::on_action_SynchronizeDatabase_triggered()
         QMessageBox::warning( this, tr("Warning"),
                               tr("Connection to Belenus server is not available."));
     }
+*/
 }
 //====================================================================================
 void cWndMain::on_action_AcquireGlobalData_triggered()
 //====================================================================================
 {
+/*
     if( g_obDBMirror.isAvailable() )
     {
         g_obDBMirror.requestGlobalDataTimestamp();
         m_bGlobalDataRequested = true;
 
-/*        cDlgDBGlobals   obDlgDBGlobals( this );
+        cDlgDBGlobals   obDlgDBGlobals( this );
 
-        obDlgDBGlobals.exec();*/
+        obDlgDBGlobals.exec();
     }
     else
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Connection to Belenus server is not available."));
     }
+*/
 }
 //====================================================================================
 void cWndMain::on_action_EstablishConnection_triggered()
