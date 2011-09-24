@@ -72,7 +72,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
-    m_uiPatientToPay        = 0;
+//    m_uiPatientToPay        = 0;
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
@@ -83,7 +83,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;
 
-    m_uiAttendanceId        = 0;
+//    m_uiAttendanceId        = 0;
     m_uiLedgerId            = 0;
 
     m_pDBLedgerDevice       = new cDBLedgerDevice();
@@ -230,7 +230,7 @@ void cFrmPanel::clear()
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
-    m_uiPatientToPay        = 0;
+//    m_uiPatientToPay        = 0;
     m_uiLedgerId            = 0;
     m_uiPaymentMethodId     = 0;
     m_pDBLedgerDevice->createNew();
@@ -729,7 +729,7 @@ void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
     m_inCashToPay           = 0;
 //    m_inCashNetToPay        = 0;
 //    m_inCashDiscountToPay   = 0;
-    m_uiPatientToPay        = 0;
+//    m_uiPatientToPay        = 0;
     m_uiLedgerId = p_uiLedgerId;
 
     displayStatus();
@@ -830,7 +830,7 @@ void cFrmPanel::closeAttendance()
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )
 {
-    *p_uiPatientId  = m_uiPatientToPay;
+    *p_uiPatientId  = 0//m_uiPatientToPay;
     *p_inPrice      = m_inCashNetToPay;
     *p_inDiscount   = m_inCashDiscountToPay;
 }

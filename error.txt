@@ -9,8 +9,8 @@ Megoldas	:
 
 Datum		: 2011.09.24
 Hibajelenseg	: Gep mukodese nem indul el a vetkozes utan
-Megoldva	: 
-Megoldas	: 
+Megoldva	: 2011.09.24
+Megoldas	: Elindult, csak rossz volt a szinbeállítás a panelon.
 ----------------------------------------------------------------------------------------------------
 
 Datum		: 2011.09.24
@@ -24,4 +24,20 @@ Datum		: 2011.09.24
 Hibajelenseg	: Rossz/felesleges menuelemek
 Megoldva	: 2011.09.24
 Megoldas	: Egyes elemek hide-olva, ketto megszuntetve
+----------------------------------------------------------------------------------------------------
+
+Datum		: 2011.09.24
+Hibajelenseg	: Panel szinbeállítás (karakterszín) nem mûködik rendesen, a panelok nem olvassák
+		  be a színeket változtatás után.
+Megoldva	: 
+Megoldas	: 
+----------------------------------------------------------------------------------------------------
+
+Datum		: 2011.09.24
+Hibajelenseg	: Utóhûtést nem lehet leállítani (feature vagy bug?) és ha ki akarok lépni a programból
+		  akkor ugyan figyelmeztet, hogy nem lehet, de a pénztár zárás és a login ablak 
+		  megjelenik, majd utána a login ablaknál a kilépésre kattintva visszatérek a fõ
+		  ablakba. Kezelõ kiléte bizonytalan.
+Megoldva	: 
+Megoldas	: 
 ----------------------------------------------------------------------------------------------------
