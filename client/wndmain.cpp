@@ -33,6 +33,7 @@
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
 //#include "crud/dlgpatient.h"
+#include "crud/dlgguest.h"
 //#include "crud/dlgattendance.h"
 //#include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
@@ -54,6 +55,7 @@
 
 #include "edit/dlguseredit.h"
 //#include "edit/dlgpatientedit.h"
+#include "edit/dlgguestedit.h"
 //#include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
 #include "edit/dlgcassaedit.h"
@@ -670,7 +672,7 @@ void cWndMain::keyReleaseEvent ( QKeyEvent *p_poEvent )
 //====================================================================================
 void cWndMain::showElementsForComponents()
 {
-    cTracer obTrace( "cWndMain::showElementsForComponents" );
+//    cTracer obTrace( "cWndMain::showElementsForComponents" );
 
     if( g_poPrefs->isComponentKiwiSunInstalled() )
     {

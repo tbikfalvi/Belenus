@@ -24,7 +24,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgzipregioncityedit.ui \
     dlglicenceedit.ui \
     dlgprogress.ui \
-    dlgpanelappereance.ui
+    dlgpanelappereance.ui \
+    dlgguestedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -52,6 +53,7 @@ HEADERS = belenus.h \
     crud/dlgaddress.h \
     crud/dlgzipregioncity.h \
     crud/dlgzipregioncityselect.h \
+    crud/dlgguest.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -72,6 +74,7 @@ HEADERS = belenus.h \
     db/dbpublicplace.h \
     db/dbpanels.h \
     db/dbpanelstatussettings.h \
+    db/dbguest.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -93,6 +96,7 @@ HEADERS = belenus.h \
     edit/dlgpatientcarduse.h \
     edit/dlgaddressedit.h \
     edit/dlgzipregioncityedit.h \
+    edit/dlgguestedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -137,6 +141,7 @@ SOURCES = main.cpp \
     crud/dlgaddress.cpp \
     crud/dlgzipregioncity.cpp \
     crud/dlgzipregioncityselect.cpp \
+    crud/dlgguest.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -157,6 +162,7 @@ SOURCES = main.cpp \
     db/dbpublicplace.cpp \
     db/dbpanels.cpp \
     db/dbpanelstatussettings.cpp \
+    db/dbguest.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -179,6 +185,7 @@ SOURCES = main.cpp \
     edit/dlgaddressedit.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
+    edit/dlgguestedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \

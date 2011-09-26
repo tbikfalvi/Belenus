@@ -830,7 +830,7 @@ void cFrmPanel::closeAttendance()
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )
 {
-    *p_uiPatientId  = 0//m_uiPatientToPay;
+    *p_uiPatientId  = 0;//m_uiPatientToPay;
     *p_inPrice      = m_inCashNetToPay;
     *p_inDiscount   = m_inCashDiscountToPay;
 }
