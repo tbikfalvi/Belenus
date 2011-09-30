@@ -56,6 +56,7 @@ private:
     void processInputTimePeriod( int p_inSecond );
 
 private slots:
+    void on_action_Guests_triggered();
     void updateToolbar();
     void on_action_Preferences_triggered();
     void on_action_Users_triggered();

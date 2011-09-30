@@ -8,7 +8,7 @@ cDlgGuest::cDlgGuest( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Guest List" ) );
-    setWindowIcon( QIcon("./resources/40x40_guest.png") );
+    setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
     setupTableView();
 }
@@ -61,11 +61,11 @@ void cDlgGuest::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT guestId, licenceId, name, uniqueId, active, archive FROM guests WHERE guestId>0";
+        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, active, archive FROM patients WHERE patientId>0";
     }
     else
     {
-        m_qsQuery = "SELECT guestId AS id, name, uniqueId FROM guests WHERE guestId>0 AND active=1";
+        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND active=1";
     }
 
     cDlgCrud::refreshTable();

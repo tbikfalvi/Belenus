@@ -67,6 +67,7 @@
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Attendances"/>
+    <addaction name="action_Guests"/>
     <addaction name="separator"/>
     <addaction name="action_CardTypes"/>
     <addaction name="action_Cards"/>
@@ -643,6 +644,14 @@
    </property>
    <property name="toolTip">
     <string>Delete all data attached to demo licence key.</string>
+   </property>
+  </action>
+  <action name="action_Guests">
+   <property name="text">
+    <string>Guests ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Guests</string>
    </property>
   </action>
  </widget>

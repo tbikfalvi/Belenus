@@ -160,6 +160,7 @@ cWndMain::cWndMain( QWidget *parent )
     // Menu items
     //--------------------------------------------------------------------------------
     action_Patients->setIcon( QIcon("./resources/40x40_patient.png") );
+    action_Guests->setIcon( QIcon("./resources/40x40_patient.png") );
     action_Attendances->setIcon( QIcon("./resources/40x40_attendance.png") );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
@@ -1094,6 +1095,15 @@ void cWndMain::on_action_Patients_triggered()
 
     obDlgPatient.exec();
 */
+}
+//====================================================================================
+void cWndMain::on_action_Guests_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Guests_triggered" );
+
+    cDlgGuest  obDlgGuest( this );
+
+    obDlgGuest.exec();
 }
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()

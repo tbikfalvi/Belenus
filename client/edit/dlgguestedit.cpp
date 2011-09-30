@@ -35,6 +35,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         ledUniqueId->setText( m_poGuest->uniqueId() );
         try
         {
+            m_poPatientCard = new cDBPatientCard();
             m_poPatientCard->loadPatient( m_poGuest->id() );
             ledBarcode->setText( m_poPatientCard->barcode() );
 
@@ -45,7 +46,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         }
         catch( cSevException &e )
         {
-            if( QString(e.what()).compare("Guest id not found") != 0 )
+            if( QString(e.what()).compare("Patient id not found") != 0 )
             {
                 g_obLogger(e.severity()) << e.what() << EOM;
             }
@@ -72,11 +73,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 cDlgGuestEdit::~cDlgGuestEdit()
 {
     cTracer obTrace( "cDlgGuestEdit::~cDlgGuestEdit" );
-
-    if( m_poAddress )
-        delete m_poAddress;
 }
-
 
 void cDlgGuestEdit::on_pbSave_clicked()
 {
