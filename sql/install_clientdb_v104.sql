@@ -568,7 +568,6 @@ CREATE TABLE `productTypes` (
 CREATE TABLE `products` (
   `productId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  `productTypeId`           int(11) unsigned        NOT NULL REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   `name`                    varchar(50)             NOT NULL,
   `netPrice`                int(11)                 NOT NULL,
   `vatpercent`              int(11)                 NOT NULL,
@@ -576,8 +575,20 @@ CREATE TABLE `products` (
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productId`,`licenceID`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`productTypeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- A studioban forgalmazott termekeket és csoportokat köti össze.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `connectProductWithType` (
+  `productTypeId`           int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`productTypeId`,`productId`,`licenceID`),
+  FOREIGN KEY (`productTypeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -1059,8 +1070,8 @@ ALTER TABLE `productTypes` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `products` (`productId`, `licenceId`, `productTypeId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '0', '0', '0', 'ARC');
+INSERT INTO `products` (`productId`, `licenceId`, `name`, `netPrice`, `vatpercent`, `active`, `archive`) VALUES
+ ('0', '0', '', '0', '0', '0', 'ARC');
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
 

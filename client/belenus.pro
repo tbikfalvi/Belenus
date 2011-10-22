@@ -54,6 +54,8 @@ HEADERS = belenus.h \
     crud/dlgzipregioncity.h \
     crud/dlgzipregioncityselect.h \
     crud/dlgguest.h \
+    crud/dlgproduct.h \
+    crud/dlgproducttype.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -75,6 +77,8 @@ HEADERS = belenus.h \
     db/dbpanels.h \
     db/dbpanelstatussettings.h \
     db/dbguest.h \
+    db/dbproduct.h \
+    db/dbproducttype.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -142,6 +146,8 @@ SOURCES = main.cpp \
     crud/dlgzipregioncity.cpp \
     crud/dlgzipregioncityselect.cpp \
     crud/dlgguest.cpp \
+    crud/dlgproduct.cpp \
+    crud/dlgproducttype.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -163,6 +169,8 @@ SOURCES = main.cpp \
     db/dbpanels.cpp \
     db/dbpanelstatussettings.cpp \
     db/dbguest.cpp \
+    db/dbproduct.cpp \
+    db/dbproducttype.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
