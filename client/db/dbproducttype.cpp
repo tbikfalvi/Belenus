@@ -26,11 +26,11 @@ cDBProductType::~cDBProductType()
 }
 
 void cDBProductType::init( const unsigned int p_uiId,
-                             const unsigned int p_uiLicenceId,
-                             const QString &p_qsName,
-                             const QString &p_qsModified,
-                             const bool p_bActive,
-                             const QString &p_qsArchive ) throw()
+                           const unsigned int p_uiLicenceId,
+                           const QString &p_qsName,
+                           const QString &p_qsModified,
+                           const bool p_bActive,
+                           const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
@@ -38,6 +38,8 @@ void cDBProductType::init( const unsigned int p_uiId,
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
+
+    m_qslProducts.clear();
 }
 
 void cDBProductType::init( const QSqlRecord &p_obRecord ) throw()
@@ -55,6 +57,17 @@ void cDBProductType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
+
+    if( m_uiId > 0 )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectProductWithType WHERE productTypeId = %1" ).arg( m_uiId ) );
+        while( poQuery->next() )
+        {
+            m_qslProducts.append( poQuery->value( 1 ).toString() );
+        }
+
+        if( poQuery ) delete poQuery;
+    }
 }
 
 void cDBProductType::load( const unsigned int p_uiId ) throw( cSevException )
@@ -68,6 +81,7 @@ void cDBProductType::load( const unsigned int p_uiId ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
+    if( poQuery ) delete poQuery;
 }
 
 void cDBProductType::load( const QString &p_qsName ) throw( cSevException )
@@ -81,6 +95,7 @@ void cDBProductType::load( const QString &p_qsName ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
+    if( poQuery ) delete poQuery;
 }
 
 void cDBProductType::save() throw( cSevException )
@@ -115,6 +130,18 @@ void cDBProductType::save() throw( cSevException )
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+
+    poQuery = g_poDB->executeQTQuery( QString("DELETE FROM connectProductWithType WHERE productTypeId = %1").arg(m_uiId) );
+    if( poQuery ) delete poQuery;
+
+    for( int i=0; i<m_qslProducts.size(); i++ )
+    {
+        qsQuery  = "INSERT INTO connectProductWithType SET ";
+        qsQuery += QString( "productTypeId = \"%1\", " ).arg(m_uiId);
+        qsQuery += QString( "productId = \"%1\", " ).arg(m_qslProducts.at(i).toInt());
+        qsQuery += QString( "licenceId = \"%1\" " ).arg( m_uiLicenceId );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+    }
     if( poQuery ) delete poQuery;
 /*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
@@ -143,6 +170,9 @@ void cDBProductType::remove() throw( cSevException )
         qsQuery += QString( " WHERE productTypeId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM connectProductWithType WHERE productTypeId = %1").arg(m_uiId) );
+
         if( poQuery ) delete poQuery;
     }
 }
@@ -176,6 +206,16 @@ void cDBProductType::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
+}
+
+QStringList cDBProductType::products() const throw()
+{
+    return m_qslProducts;
+}
+
+void cDBProductType::setProducts( const QStringList &p_qslProducts ) throw()
+{
+    m_qslProducts = p_qslProducts;
 }
 
 QString cDBProductType::modified() const throw()

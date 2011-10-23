@@ -1,0 +1,112 @@
+#include <QPushButton>
+#include <QMessageBox>
+#include <ctime>
+
+#include "dlgproducttypeedit.h"
+
+cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p_poProductType )
+    : QDialog( p_poParent )
+{
+    setupUi( this );
+
+    setWindowTitle( tr( "Product type" ) );
+    setWindowIcon( QIcon("./resources/40x40_producttype.png") );
+
+    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
+
+    m_poProductType = p_poProductType;
+
+    QStringList qslProducts;
+
+    if( m_poProductType->id() > 0 )
+    {
+        qslProducts = m_poProductType->products();
+    }
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT productId, name FROM products WHERE active=1 AND archive<>\"DEL\"" ) );
+    while( poQuery->next() )
+    {
+        if( qslProducts.contains( poQuery->value( 0 ).toString() ) )
+        {
+            listProductsAssigned->addItem( poQuery->value( 1 ).toString()/*, poQuery->value( 0 )*/ );
+        }
+        else
+        {
+            listProductsIndependent->addItem( poQuery->value( 1 ).toString()/*, poQuery->value( 0 )*/ );
+        }
+    }
+    if( poQuery ) delete poQuery;
+
+    if( m_poProductType )
+    {
+        ledName->setText( m_poProductType->name() );
+
+        if( m_poProductType->licenceId() == 0 && m_poProductType->id() > 0 )
+            checkIndependent->setChecked( true );
+
+        if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            checkIndependent->setEnabled( false );
+            if( m_poProductType->licenceId() == 0 && m_poProductType->id() > 0 )
+            {
+                ledName->setEnabled( false );
+                listProductsAssigned->setEnabled( false );
+                listProductsIndependent->setEnabled( false );
+                pbProductAdd->setEnabled( false );
+                pbProductAddAll->setEnabled( false );
+                pbProductRemove->setEnabled( false );
+                pbProductRemoveAll->setEnabled( false );
+                pbSave->setEnabled( false );
+            }
+        }
+        if( m_poProductType->id() > 0 )
+            checkIndependent->setEnabled( false );
+    }
+}
+
+cDlgProductTypeEdit::~cDlgProductTypeEdit()
+{
+}
+
+void cDlgProductTypeEdit::on_pbSave_clicked()
+{
+    bool  boCanBeSaved = true;
+
+    if( ledName->text() == "" )
+    {
+        boCanBeSaved = false;
+        QMessageBox::critical( this, tr( "Error" ), tr( "Name of product type must be set." ) );
+    }
+
+    if( boCanBeSaved )
+    {
+        try
+        {
+            m_poProductType->setName( ledName->text() );
+            m_poProductType->setActive( true );
+
+            if( checkIndependent->isChecked() )
+            {
+                m_poProductType->setLicenceId( 0 );
+            }
+            else
+            {
+                m_poProductType->setLicenceId( g_poPrefs->getLicenceId() );
+            }
+
+            m_poProductType->save();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+
+        QDialog::accept();
+    }
+}
+
+void cDlgProductTypeEdit::on_pbCancel_clicked()
+{
+    QDialog::reject();
+}

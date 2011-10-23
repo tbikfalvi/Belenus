@@ -141,7 +141,7 @@ void cDlgProductType::deleteClicked( bool )
             {
                 QMessageBox::warning( this, tr("Attention"),
                                       tr("Unfortunatelly delete of this product type is not possible.\n"
-                                         "There are products attached to this card type.") );
+                                         "There are products attached to this product type.") );
                 return;
             }
 

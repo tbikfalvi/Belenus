@@ -25,6 +25,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlglicenceedit.ui \
     dlgprogress.ui \
     dlgpanelappereance.ui \
+    dlgproducttypeedit.ui \
+    dlgproductedit.ui \
     dlgguestedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -101,6 +103,8 @@ HEADERS = belenus.h \
     edit/dlgaddressedit.h \
     edit/dlgzipregioncityedit.h \
     edit/dlgguestedit.h \
+    edit/dlgproducttypeedit.h \
+    edit/dlgproductedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -194,6 +198,8 @@ SOURCES = main.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
     edit/dlgguestedit.cpp \
+    edit/dlgproducttypeedit.cpp \
+    edit/dlgproductedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
