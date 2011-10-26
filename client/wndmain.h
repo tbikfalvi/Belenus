@@ -79,6 +79,8 @@ private slots:
     void on_action_UseByTime_triggered();
     void on_action_Cards_triggered();
     void on_action_CardTypes_triggered();
+    void on_action_ProductTypes_triggered();
+    void on_action_Products_triggered();
     void on_action_PCSaveToDatabase_triggered();
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();

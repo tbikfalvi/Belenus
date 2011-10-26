@@ -29,11 +29,11 @@ cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p
     {
         if( qslProducts.contains( poQuery->value( 0 ).toString() ) )
         {
-            listProductsAssigned->addItem( poQuery->value( 1 ).toString()/*, poQuery->value( 0 )*/ );
+            listProductsAssigned->addItem( poQuery->value( 1 ).toString() );
         }
         else
         {
-            listProductsIndependent->addItem( poQuery->value( 1 ).toString()/*, poQuery->value( 0 )*/ );
+            listProductsIndependent->addItem( poQuery->value( 1 ).toString() );
         }
     }
     if( poQuery ) delete poQuery;
@@ -77,6 +77,16 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
     {
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Name of product type must be set." ) );
+    }
+    else
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT name FROM productTypes WHERE productTypeId<>%1 AND active=1 AND archive<>\"DEL\"" ).arg(m_poProductType->id()) );
+        if( poQuery->first() )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Product type with this name already exists.\nPlease set another one." ) );
+        }
+        if( poQuery ) delete poQuery;
     }
 
     if( boCanBeSaved )

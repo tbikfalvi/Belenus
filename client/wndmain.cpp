@@ -50,6 +50,8 @@
 //#include "crud/dlghealthinsurance.h"
 #include "crud/dlgzipregioncity.h"
 //#include "crud/dlgdiscount.h"
+#include "crud/dlgproducttype.h"
+#include "crud/dlgproduct.h"
 
 //====================================================================================
 
@@ -152,6 +154,9 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
     action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
+
+    action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
+    action_Products->setIcon( QIcon("./resources/40x40_product.png") );
 
     action_PayCash->setIcon( QIcon( "./resources/40x40_paycash.png" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
@@ -1294,6 +1299,20 @@ void cWndMain::on_action_CardTypes_triggered()
     cDlgPatientCardType obDlgPatientCardType( this );
 
     obDlgPatientCardType.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ProductTypes_triggered()
+{
+    cDlgProductType obDlgProductType( this );
+
+    obDlgProductType.exec();
+}
+//====================================================================================
+void cWndMain::on_action_Products_triggered()
+{
+    cDlgProduct obDlgProduct( this );
+
+    obDlgProduct.exec();
 }
 //====================================================================================
 void cWndMain::on_action_PCSaveToDatabase_triggered()

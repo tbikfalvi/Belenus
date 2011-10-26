@@ -31,30 +31,22 @@ void cDlgProductType::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
-        tbvCrud->resizeColumnToContents( 5 );
-        tbvCrud->resizeColumnToContents( 6 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
-        tbvCrud->resizeColumnToContents( 2 );
-        tbvCrud->resizeColumnToContents( 3 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -66,11 +58,11 @@ void cDlgProductType::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT productTypeId, licenceId, name, price, units, active, archive FROM productTypes";
+        m_qsQuery = "SELECT productTypeId, licenceId, name, active, archive FROM productTypes";
     }
     else
     {
-        m_qsQuery = "SELECT productTypeId AS id, name, price, units FROM productTypes WHERE active=1";
+        m_qsQuery = "SELECT productTypeId AS id, name FROM productTypes WHERE active=1";
     }
 
     cDlgCrud::refreshTable();
