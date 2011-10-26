@@ -73,8 +73,8 @@ void cDlgProductType::enableButtons()
     cTracer obTracer( "cDlgProductType::enableButtons" );
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId > 1 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 1 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 }
 
 void cDlgProductType::newClicked( bool )

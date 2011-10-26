@@ -120,3 +120,23 @@ void cDlgProductTypeEdit::on_pbCancel_clicked()
 {
     QDialog::reject();
 }
+
+void cDlgProductTypeEdit::on_pbProductAdd_clicked()
+{
+
+}
+
+void cDlgProductTypeEdit::on_pbProductAddAll_clicked()
+{
+
+}
+
+void cDlgProductTypeEdit::on_pbProductRemove_clicked()
+{
+
+}
+
+void cDlgProductTypeEdit::on_pbProductRemoveAll_clicked()
+{
+
+}
