@@ -3,6 +3,8 @@
 #include <ctime>
 
 #include "dlgproducttypeedit.h"
+#include "../db/dbproduct.h"
+
 
 cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p_poProductType )
     : QDialog( p_poParent )
@@ -80,7 +82,7 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
     }
     else
     {
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT name FROM productTypes WHERE productTypeId<>%1 AND active=1 AND archive<>\"DEL\"" ).arg(m_poProductType->id()) );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productTypes WHERE productTypeId<>%1 AND name=\"%2\" AND active=1 AND archive<>\"DEL\"" ).arg(m_poProductType->id()).arg(ledName->text()) );
         if( poQuery->first() )
         {
             boCanBeSaved = false;
@@ -93,6 +95,16 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
     {
         try
         {
+            QStringList     qslProducts;
+            for( int i=0; i<listProductsAssigned->count(); i++ )
+            {
+                cDBProduct  poProduct;
+
+                poProduct.load( listProductsAssigned->item(i)->text() );
+                qslProducts.append( QString("%1").arg(poProduct.id()) );
+            }
+            m_poProductType->setProducts( qslProducts );
+
             m_poProductType->setName( ledName->text() );
             m_poProductType->setActive( true );
 
@@ -123,20 +135,38 @@ void cDlgProductTypeEdit::on_pbCancel_clicked()
 
 void cDlgProductTypeEdit::on_pbProductAdd_clicked()
 {
-
+    for( int i=listProductsIndependent->count()-1; i>-1; i-- )
+    {
+        if( listProductsIndependent->item(i)->isSelected() )
+        {
+            listProductsAssigned->addItem( listProductsIndependent->takeItem(i) );
+        }
+    }
 }
 
 void cDlgProductTypeEdit::on_pbProductAddAll_clicked()
 {
-
+    for( int i=listProductsIndependent->count()-1; i>-1; i-- )
+    {
+        listProductsAssigned->addItem( listProductsIndependent->takeItem(i) );
+    }
 }
 
 void cDlgProductTypeEdit::on_pbProductRemove_clicked()
 {
-
+    for( int i=listProductsAssigned->count()-1; i>-1; i-- )
+    {
+        if( listProductsAssigned->item(i)->isSelected() )
+        {
+            listProductsIndependent->addItem( listProductsAssigned->takeItem(i) );
+        }
+    }
 }
 
 void cDlgProductTypeEdit::on_pbProductRemoveAll_clicked()
 {
-
+    for( int i=listProductsAssigned->count()-1; i>-1; i-- )
+    {
+        listProductsIndependent->addItem( listProductsAssigned->takeItem(i) );
+    }
 }

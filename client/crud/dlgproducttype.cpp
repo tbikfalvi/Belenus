@@ -122,21 +122,21 @@ void cDlgProductType::deleteClicked( bool )
 {
     cDBProductType  *poProductType = NULL;
 
+    cDBProduct  obDBProduct;
+    QString     qsQuestion = tr( "Are you sure you want to delete this Product Type?" );
+    if( obDBProduct.isProductTypeLinked( m_uiSelectedId ) )
+    {
+        qsQuestion = tr("There are products attached to this product type.\n"
+                        "Are you sure you want to delete this product type?\n\n"
+                        "Deleting this product type will not delete the products assigned.");
+    }
+
     if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to delete this Product Type?" ),
+                               qsQuestion,
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         try
         {
-            cDBProduct  obDBProduct;
-            if( obDBProduct.isProductTypeLinked( m_uiSelectedId ) )
-            {
-                QMessageBox::warning( this, tr("Attention"),
-                                      tr("Unfortunatelly delete of this product type is not possible.\n"
-                                         "There are products attached to this product type.") );
-                return;
-            }
-
             poProductType = new cDBProductType;
             poProductType->load( m_uiSelectedId );
             if( poProductType->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )

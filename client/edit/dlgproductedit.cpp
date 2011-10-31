@@ -55,6 +55,16 @@ void cDlgProductEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Name of product must be set." ) );
     }
+    else
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT name FROM products WHERE productId<>%1 AND active=1 AND archive<>\"DEL\"" ).arg(m_poProduct->id()) );
+        if( poQuery->first() )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Product with this name already exists.\nPlease set another one." ) );
+        }
+        if( poQuery ) delete poQuery;
+    }
     if( ledPrice->text() == "" )
     {
         boCanBeSaved = false;

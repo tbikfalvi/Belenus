@@ -135,6 +135,35 @@ int main( int argc, char *argv[] )
 
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
 
+        qsSpalsh += "\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        qsSpalsh += QObject::tr("License is ... ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        int         nId = 0;
+        QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+        if( poQuery->last() )
+        {
+            nId = poQuery->value( 0 ).toInt();
+            qsSerial = poQuery->value( 1 ).toString();
+        }
+        if( poQuery ) delete poQuery;
+
+        g_poPrefs->setLicenceId( nId );
+
+        if( nId < 2 )
+            qsSpalsh += QObject::tr("DEMO");
+        else
+            qsSpalsh += QObject::tr("OK");
+        qsSpalsh += "\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         //-------------------------------------------------------------------------------
         // If Internet component active, process connection initialization
 /*

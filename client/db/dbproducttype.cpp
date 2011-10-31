@@ -134,6 +134,7 @@ void cDBProductType::save() throw( cSevException )
     poQuery = g_poDB->executeQTQuery( QString("DELETE FROM connectProductWithType WHERE productTypeId = %1").arg(m_uiId) );
     if( poQuery ) delete poQuery;
 
+    poQuery = NULL;
     for( int i=0; i<m_qslProducts.size(); i++ )
     {
         qsQuery  = "INSERT INTO connectProductWithType SET ";
@@ -157,7 +158,9 @@ void cDBProductType::remove() throw( cSevException )
 
     if( m_uiId )
     {
-        QString  qsQuery;
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString("DELETE FROM connectProductWithType WHERE productTypeId = %1").arg(m_uiId) );
+
+        QString     qsQuery;
 
         if( m_qsArchive == "NEW" )
         {
@@ -169,9 +172,7 @@ void cDBProductType::remove() throw( cSevException )
         }
         qsQuery += QString( " WHERE productTypeId = %1" ).arg( m_uiId );
 
-        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-
-        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM connectProductWithType WHERE productTypeId = %1").arg(m_uiId) );
+        poQuery = g_poDB->executeQTQuery( qsQuery );
 
         if( poQuery ) delete poQuery;
     }
