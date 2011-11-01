@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>591</width>
-    <height>363</height>
+    <height>377</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,29 @@
         </item>
         <item>
          <widget class="QLineEdit" name="ledName"/>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbSpecial">
+       <property name="title">
+        <string> Special settings </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QCheckBox" name="chkStorageRoom">
+          <property name="text">
+           <string>This Product Type represents the storage room.</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chkStore">
+          <property name="text">
+           <string>This Product Type represents the store from where the products can be sold.</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

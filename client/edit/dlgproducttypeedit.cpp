@@ -14,6 +14,9 @@ cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p
     setWindowTitle( tr( "Product type" ) );
     setWindowIcon( QIcon("./resources/40x40_producttype.png") );
 
+    chkStorageRoom->setChecked( false );
+    chkStore->setChecked( false );
+
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 
@@ -43,6 +46,18 @@ cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p
     if( m_poProductType )
     {
         ledName->setText( m_poProductType->name() );
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productstock" ) );
+        poQuery->first();
+        if( poQuery->value( 0 ).toUInt() == m_poProductType->id() )
+        {
+            chkStorageRoom->setChecked( true );
+        }
+        if( poQuery->value( 1 ).toUInt() == m_poProductType->id() )
+        {
+            chkStore->setChecked( true );
+        }
+        if( poQuery ) delete poQuery;
 
         if( m_poProductType->licenceId() == 0 && m_poProductType->id() > 0 )
             checkIndependent->setChecked( true );
@@ -118,6 +133,17 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
             }
 
             m_poProductType->save();
+
+            if( chkStorageRoom->isChecked() )
+            {
+                QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "UPDATE productstock SET stockId='%1', licenceId='%2'" ).arg(m_poProductType->id()).arg(g_poPrefs->getLicenceId()) );
+                if( poQuery ) delete poQuery;
+            }
+            if( chkStore->isChecked() )
+            {
+                QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "UPDATE productstock SET storeId='%1', licenceId='%2'" ).arg(m_poProductType->id()).arg(g_poPrefs->getLicenceId()) );
+                if( poQuery ) delete poQuery;
+            }
         }
         catch( cSevException &e )
         {
@@ -168,5 +194,25 @@ void cDlgProductTypeEdit::on_pbProductRemoveAll_clicked()
     for( int i=listProductsAssigned->count()-1; i>-1; i-- )
     {
         listProductsIndependent->addItem( listProductsAssigned->takeItem(i) );
+    }
+}
+
+void cDlgProductTypeEdit::on_chkStorageRoom_toggled(bool checked)
+{
+    if( chkStore->isChecked() && checked )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("If this Product Type marked as storage room and store also\n"
+                                 "you can not correctly manage your product inventory.") );
+    }
+}
+
+void cDlgProductTypeEdit::on_chkStore_toggled(bool checked)
+{
+    if( chkStorageRoom->isChecked() && checked )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("If this Product Type marked as storage room and store also\n"
+                                 "you can not correctly manage your product inventory.") );
     }
 }

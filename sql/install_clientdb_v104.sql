@@ -593,6 +593,19 @@ CREATE TABLE `connectProductWithType` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- A studioban a termekcsoportok specialis megjelolesere a raktarrendszerhez.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `productStock` (
+  `stockId`                 int(10) unsigned        NOT NULL,
+  `storeId`                 int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  FOREIGN KEY (`stockId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`storeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Kulonbozo a rendszerbe felvett kedvezmenyeket tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `discounts` (
@@ -1075,6 +1088,11 @@ INSERT INTO `products` (`productId`, `licenceId`, `name`, `netPrice`, `vatpercen
  ('0', '0', '', '0', '0', '0', 'ARC');
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `productstock` (`stockId` ,`storeId` ,`licenceId`) VALUES
+ ('0', '0', '0');
 
 -- -----------------------------------------------------------------------------------
 

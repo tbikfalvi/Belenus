@@ -454,6 +454,15 @@ CREATE TABLE `connectProductWithType` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `productStock` (
+  `stockId`                 int(10) unsigned        NOT NULL,
+  `storeId`                 int(10) unsigned        NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  FOREIGN KEY (`stockId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`storeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `discounts` (
   `discountId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
