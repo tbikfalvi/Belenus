@@ -44,3 +44,15 @@ Hibajelenseg	: Utohutest nem lehet leallitani (feature vagy bug?) es ha ki akaro
 Megoldva	: 
 Megoldas	: 
 ----------------------------------------------------------------------------------------------------
+
+Datum		: 2011.11.01
+Hibajelenseg	: Bérlet használat toolbar gombra kattintva hülyeséget ír, ha nincs vendég kiválasztva
+Megoldva	: 
+Megoldas	: 
+----------------------------------------------------------------------------------------------------
+
+Datum		: 2011.11.01
+Hibajelenseg	: Bérlet használat dialog-nál nem lehet a felhasználható egységek számát módosítani
+Megoldva	: 
+Megoldas	: 
+----------------------------------------------------------------------------------------------------

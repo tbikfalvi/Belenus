@@ -244,3 +244,13 @@ void cDBProductType::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
+bool cDBProductType::isProductTypeLinkedToProduct() const throw()
+{
+    bool bRet = false;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectProductWithType WHERE productTypeId = %1" ).arg( m_uiId ) );
+    bRet = poQuery->first();
+    if( poQuery ) delete poQuery;
+
+    return bRet;
+}

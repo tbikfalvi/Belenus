@@ -28,6 +28,7 @@ public:
     void            setActive( const bool p_bActive )                   throw();
     QString          archive() const                                    throw();
     void            setArchive( const QString &p_qsArchive )            throw();
+    bool            isProductTypeLinkedToProduct() const                throw();
 
 private:
     unsigned int    m_uiId;

@@ -103,9 +103,9 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
                 poProduct.load( listProductsAssigned->item(i)->text() );
                 qslProducts.append( QString("%1").arg(poProduct.id()) );
             }
-            m_poProductType->setProducts( qslProducts );
 
             m_poProductType->setName( ledName->text() );
+            m_poProductType->setProducts( qslProducts );
             m_poProductType->setActive( true );
 
             if( checkIndependent->isChecked() )

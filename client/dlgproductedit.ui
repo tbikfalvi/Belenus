@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>319</height>
+    <width>591</width>
+    <height>414</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,13 +15,13 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
       <widget class="QGroupBox" name="gbIdentification">
        <property name="title">
         <string>Identification </string>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLabel" name="lblName">
           <property name="text">
@@ -36,12 +36,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="gbUse">
+      <widget class="QGroupBox" name="gbPrice">
        <property name="title">
-        <string> Useability </string>
+        <string> Price </string>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
          <widget class="QLabel" name="lblPrice">
           <property name="text">
            <string>Price :</string>
@@ -51,86 +51,49 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item>
          <widget class="QLineEdit" name="ledPrice"/>
         </item>
-        <item row="0" column="2">
+        <item>
          <widget class="QLabel" name="lblVatpercent">
           <property name="text">
            <string>VAT percent :</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="3">
+        <item>
          <widget class="QLineEdit" name="ledVatpercent"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lblUnits">
-          <property name="text">
-           <string>Units :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="ledUnits"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="lblUnitTime">
-          <property name="text">
-           <string>Unit time (min):</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QLineEdit" name="ledUnitTime"/>
         </item>
        </layout>
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="gbValid">
+      <widget class="QGroupBox" name="gbProductTypes">
        <property name="title">
-        <string>Valid ...</string>
+        <string> Product Types </string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QRadioButton" name="rbInterval">
+           <widget class="QLabel" name="lblAssigned">
             <property name="text">
-             <string>Time interval :</string>
+             <string>Assigned product types:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QDateEdit" name="deValidDateFrom">
-            <property name="displayFormat">
-             <string>yyyy/MM/dd</string>
+           <widget class="QListWidget" name="listProductsAssigned">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
             </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblFromTo">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string> -&gt; </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDateEdit" name="deValidDateTo">
-            <property name="displayFormat">
-             <string>yyyy/MM/dd</string>
-            </property>
-            <property name="calendarPopup">
+            <property name="sortingEnabled">
              <bool>true</bool>
             </property>
            </widget>
@@ -138,36 +101,111 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QRadioButton" name="rbDays">
-            <property name="text">
-             <string>No° days:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ledValidDays">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="verticalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>248</width>
-              <height>17</height>
+              <width>20</width>
+              <height>18</height>
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbProductAdd">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbProductAddAll">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&lt;&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbProductRemove">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbProductRemoveAll">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&gt;&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>18</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="lblProductsIndependent">
+            <property name="text">
+             <string>Independent product types:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="listProductsIndependent">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -184,7 +222,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="pbSave">
        <property name="text">
@@ -232,16 +270,8 @@
   <tabstop>ledName</tabstop>
   <tabstop>ledPrice</tabstop>
   <tabstop>ledVatpercent</tabstop>
-  <tabstop>ledUnits</tabstop>
-  <tabstop>ledUnitTime</tabstop>
-  <tabstop>rbInterval</tabstop>
-  <tabstop>deValidDateFrom</tabstop>
-  <tabstop>deValidDateTo</tabstop>
-  <tabstop>rbDays</tabstop>
-  <tabstop>ledValidDays</tabstop>
   <tabstop>checkIndependent</tabstop>
   <tabstop>pbSave</tabstop>
-  <tabstop>pbCancel</tabstop>
  </tabstops>
  <resources/>
  <connections/>

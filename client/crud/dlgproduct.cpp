@@ -119,16 +119,23 @@ void cDlgProduct::editClicked( bool )
 
 void cDlgProduct::deleteClicked( bool )
 {
-    cDBProduct  *poProduct = NULL;
+    cDBProduct  *poProduct = new cDBProduct;
+    poProduct->load( m_uiSelectedId );
+
+    QString     qsQuestion = tr( "Are you sure you want to delete this Product?" );
+    if( poProduct->isProductLinkedToProductType() )
+    {
+        qsQuestion = tr("This product is linked to one or more product type.\n"
+                        "Are you sure you want to delete this product?\n\n"
+                        "Deleting this product will not delete the product types assigned.");
+    }
 
     if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to delete this Product?" ),
+                               qsQuestion,
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         try
         {
-            poProduct = new cDBProduct;
-            poProduct->load( m_uiSelectedId );
             if( poProduct->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
             {
                 QMessageBox::warning( this, tr("Warning"),
