@@ -167,9 +167,6 @@ INSERT INTO `products` (`productId`, `licenceId`, `name`, `netPrice`, `vatpercen
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
 
-INSERT INTO `productstock` (`stockId` ,`storeId` ,`licenceId`) VALUES
- ('0', '0', '0');
-
 INSERT INTO `discounts` (`discountId`, `licenceId`, `healthInsuranceId`, `companyId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `active`, `archive`) VALUES
  ('0', '0', NULL, NULL, '0', '0', '0', '', '', '', 0, "ARC" );
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;

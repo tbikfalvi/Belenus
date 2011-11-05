@@ -594,14 +594,40 @@ CREATE TABLE `connectProductWithType` (
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
--- A studioban a termekcsoportok specialis megjelolesere a raktarrendszerhez.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `productStock` (
-  `stockId`                 int(10) unsigned        NOT NULL,
-  `storeId`                 int(10) unsigned        NOT NULL,
+CREATE TABLE `productActionType` (
+  `productActionTypeId`     int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `name`                    varchar(100)            NOT NULL,
+  `increaseProductCount`    tinyint(1) unsigned     NOT NULL,
+  `decreaseProductCount`    tinyint(1) unsigned     NOT NULL,
   `licenceId`               int(10) unsigned        NOT NULL,
-  FOREIGN KEY (`stockId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`storeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`productActionTypeId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Opcionalis.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `productHistory` (
+  `productHistoryId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `productId`               int(10) unsigned        NOT NULL,
+  `productActionTypeId`     int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `productItemCount`        int(11)                 NOT NULL,
+  `netPrice`                int(11)                 NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
+  `actionDateTime`          datetime                NOT NULL,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`productHistoryId`),
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productActionTypeId`) REFERENCES `productActionType` (`productActionTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

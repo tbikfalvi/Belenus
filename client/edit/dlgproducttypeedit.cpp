@@ -47,18 +47,6 @@ cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p
     {
         ledName->setText( m_poProductType->name() );
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productstock" ) );
-        poQuery->first();
-        if( poQuery->value( 0 ).toUInt() == m_poProductType->id() )
-        {
-            chkStorageRoom->setChecked( true );
-        }
-        if( poQuery->value( 1 ).toUInt() == m_poProductType->id() )
-        {
-            chkStore->setChecked( true );
-        }
-        if( poQuery ) delete poQuery;
-
         if( m_poProductType->licenceId() == 0 && m_poProductType->id() > 0 )
             checkIndependent->setChecked( true );
 
@@ -133,17 +121,6 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
             }
 
             m_poProductType->save();
-
-            if( chkStorageRoom->isChecked() )
-            {
-                QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "UPDATE productstock SET stockId='%1', licenceId='%2'" ).arg(m_poProductType->id()).arg(g_poPrefs->getLicenceId()) );
-                if( poQuery ) delete poQuery;
-            }
-            if( chkStore->isChecked() )
-            {
-                QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "UPDATE productstock SET storeId='%1', licenceId='%2'" ).arg(m_poProductType->id()).arg(g_poPrefs->getLicenceId()) );
-                if( poQuery ) delete poQuery;
-            }
         }
         catch( cSevException &e )
         {
