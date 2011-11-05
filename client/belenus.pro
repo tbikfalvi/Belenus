@@ -26,6 +26,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlgprogress.ui \
     dlgpanelappereance.ui \
     dlgproducttypeedit.ui \
+    dlgproductactiontypeedit.ui \
     dlgproductedit.ui \
     dlgguestedit.ui
 HEADERS = belenus.h \
@@ -58,6 +59,7 @@ HEADERS = belenus.h \
     crud/dlgguest.h \
     crud/dlgproduct.h \
     crud/dlgproducttype.h \
+    crud/dlgproductactiontype.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -81,6 +83,7 @@ HEADERS = belenus.h \
     db/dbguest.h \
     db/dbproduct.h \
     db/dbproducttype.h \
+    db/dbproductactiontype.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -104,6 +107,7 @@ HEADERS = belenus.h \
     edit/dlgzipregioncityedit.h \
     edit/dlgguestedit.h \
     edit/dlgproducttypeedit.h \
+    edit/dlgproductactiontypeedit.h \
     edit/dlgproductedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
@@ -152,6 +156,7 @@ SOURCES = main.cpp \
     crud/dlgguest.cpp \
     crud/dlgproduct.cpp \
     crud/dlgproducttype.cpp \
+    crud/dlgproductactiontype.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -175,6 +180,7 @@ SOURCES = main.cpp \
     db/dbguest.cpp \
     db/dbproduct.cpp \
     db/dbproducttype.cpp \
+    db/dbproductactiontype.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -199,6 +205,7 @@ SOURCES = main.cpp \
     edit/dlglicenceedit.cpp \
     edit/dlgguestedit.cpp \
     edit/dlgproducttypeedit.cpp \
+    edit/dlgproductactiontypeedit.cpp \
     edit/dlgproductedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \

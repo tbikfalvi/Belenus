@@ -60,6 +60,10 @@
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
      <addaction name="separator"/>
+     <addaction name="action_ProductTypes"/>
+     <addaction name="action_ProductActionType"/>
+     <addaction name="action_Products"/>
+     <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
      <addaction name="separator"/>
@@ -71,9 +75,6 @@
     <addaction name="separator"/>
     <addaction name="action_CardTypes"/>
     <addaction name="action_Cards"/>
-    <addaction name="separator"/>
-    <addaction name="action_ProductTypes"/>
-    <addaction name="action_Products"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
     <addaction name="separator"/>
@@ -273,6 +274,9 @@
   <widget class="QToolBar" name="toolBarProduct">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
    </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
@@ -696,6 +700,11 @@
   <action name="action_Products">
    <property name="text">
     <string>Products ...</string>
+   </property>
+  </action>
+  <action name="action_ProductActionType">
+   <property name="text">
+    <string>Product Action Types ...</string>
    </property>
   </action>
  </widget>

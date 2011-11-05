@@ -14,9 +14,6 @@ cDlgProductTypeEdit::cDlgProductTypeEdit( QWidget *p_poParent, cDBProductType *p
     setWindowTitle( tr( "Product type" ) );
     setWindowIcon( QIcon("./resources/40x40_producttype.png") );
 
-    chkStorageRoom->setChecked( false );
-    chkStore->setChecked( false );
-
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 
@@ -174,22 +171,3 @@ void cDlgProductTypeEdit::on_pbProductRemoveAll_clicked()
     }
 }
 
-void cDlgProductTypeEdit::on_chkStorageRoom_toggled(bool checked)
-{
-    if( chkStore->isChecked() && checked )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("If this Product Type marked as storage room and store also\n"
-                                 "you can not correctly manage your product inventory.") );
-    }
-}
-
-void cDlgProductTypeEdit::on_chkStore_toggled(bool checked)
-{
-    if( chkStorageRoom->isChecked() && checked )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("If this Product Type marked as storage room and store also\n"
-                                 "you can not correctly manage your product inventory.") );
-    }
-}

@@ -35,12 +35,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="107"/>
+        <location filename="main.cpp" line="126"/>
         <source>Connecting to database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="114"/>
+        <location filename="main.cpp" line="133"/>
         <source> SUCCEEDED.
 </source>
         <oldsource> CONNECTED.
@@ -48,140 +48,103 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="122"/>
-        <source>Connecting to Belenus server ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="154"/>
-        <source>SUCCEEDED</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="158"/>
-        <source>FAILED</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="163"/>
+        <location filename="main.cpp" line="141"/>
         <source>License is ... </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="165"/>
+        <location filename="main.cpp" line="158"/>
         <source>DEMO</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="167"/>
+        <location filename="main.cpp" line="160"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="172"/>
-        <source> (needs server validation in %1 days)</source>
-        <translation></translation>
+        <location filename="main.cpp" line="109"/>
+        <source>SystemID: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="177"/>
-        <source> (licence validation limit expired)</source>
-        <translation></translation>
+        <location filename="main.cpp" line="145"/>
+        <source>NO_SERIAL_DETECTED</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="181"/>
-        <source> (licence not accepted by server)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="190"/>
-        <source>Initialize database synchronization ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="196"/>
-        <source>SUCCEEDED
+        <location filename="main.cpp" line="164"/>
+        <source>Serial: %1
 </source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="201"/>
-        <source>Local database has to synchronized with server.
-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="205"/>
-        <source>Local database synchronized with server.
-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="main.cpp" line="235"/>
+        <location filename="main.cpp" line="282"/>
         <source>Checking hardware connection ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="226"/>
-        <location filename="main.cpp" line="242"/>
+        <location filename="main.cpp" line="289"/>
         <source>FAILED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="244"/>
-        <location filename="main.cpp" line="290"/>
+        <location filename="main.cpp" line="291"/>
+        <location filename="main.cpp" line="338"/>
+        <location filename="main.cpp" line="345"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="252"/>
+        <location filename="main.cpp" line="299"/>
         <source>CONNECTED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="255"/>
+        <location filename="main.cpp" line="302"/>
         <source>Initializing hardware device ... </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="259"/>
+        <location filename="main.cpp" line="306"/>
         <source>FINISHED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="262"/>
+        <location filename="main.cpp" line="309"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="265"/>
+        <location filename="main.cpp" line="312"/>
         <source>Number of hardware panels: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="268"/>
+        <location filename="main.cpp" line="315"/>
         <source>Checking hardware panels:
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="273"/>
+        <location filename="main.cpp" line="320"/>
         <source>     Checking hardware panel -%1- </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="278"/>
+        <location filename="main.cpp" line="325"/>
         <source> SUCCEEDED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="283"/>
+        <location filename="main.cpp" line="330"/>
         <source> FAILED
 </source>
         <translation></translation>
@@ -225,73 +188,73 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="31"/>
-        <source>&lt;All patient&gt;</source>
-        <translation></translation>
+        <location filename="crud/dlgaddress.cpp" line="32"/>
+        <source>&lt;All guests&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="78"/>
+        <location filename="crud/dlgaddress.cpp" line="81"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="79"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgaddress.cpp" line="80"/>
-        <location filename="crud/dlgaddress.cpp" line="101"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgaddress.cpp" line="81"/>
-        <location filename="crud/dlgaddress.cpp" line="102"/>
-        <source>Zip</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="crud/dlgaddress.cpp" line="82"/>
-        <location filename="crud/dlgaddress.cpp" line="103"/>
-        <source>City</source>
+        <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="83"/>
         <location filename="crud/dlgaddress.cpp" line="104"/>
-        <source>Address</source>
+        <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="84"/>
         <location filename="crud/dlgaddress.cpp" line="105"/>
-        <source>Public place</source>
+        <source>Zip</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="85"/>
         <location filename="crud/dlgaddress.cpp" line="106"/>
-        <source>Number</source>
+        <source>City</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="86"/>
-        <source>Active</source>
+        <location filename="crud/dlgaddress.cpp" line="107"/>
+        <source>Address</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="87"/>
+        <location filename="crud/dlgaddress.cpp" line="108"/>
+        <source>Public place</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="88"/>
+        <location filename="crud/dlgaddress.cpp" line="109"/>
+        <source>Number</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="89"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="90"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="193"/>
+        <location filename="crud/dlgaddress.cpp" line="196"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="194"/>
+        <location filename="crud/dlgaddress.cpp" line="197"/>
         <source>Are you sure you want to delete this address?</source>
         <translation></translation>
     </message>
@@ -394,190 +357,6 @@ Do you want to save them as new into the database?</source>
     </message>
 </context>
 <context>
-    <name>cDlgAttendance</name>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="11"/>
-        <source>Attendance List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="18"/>
-        <source>Patient: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="30"/>
-        <source>&lt;All patient&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="78"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="79"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="80"/>
-        <location filename="crud/dlgattendance.cpp" line="96"/>
-        <source>Date</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="81"/>
-        <location filename="crud/dlgattendance.cpp" line="97"/>
-        <source>Time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="82"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="83"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="145"/>
-        <source>New Attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="152"/>
-        <location filename="crud/dlgattendance.cpp" line="178"/>
-        <source>Do you want to select the created attendance as actual?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="172"/>
-        <source>Edit attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="151"/>
-        <location filename="crud/dlgattendance.cpp" line="177"/>
-        <location filename="crud/dlgattendance.cpp" line="205"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="200"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="201"/>
-        <source>Deleting the actual attendance is not allowed.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendance.cpp" line="206"/>
-        <source>Are you sure you want to delete this Attendance?</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgAttendanceEdit</name>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="12"/>
-        <source>Attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="59"/>
-        <location filename="edit/dlgattendanceedit.cpp" line="68"/>
-        <location filename="edit/dlgattendanceedit.cpp" line="77"/>
-        <location filename="edit/dlgattendanceedit.cpp" line="86"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="59"/>
-        <source>Starting blood pressure must be set.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="68"/>
-        <source>Starting pulse value must be set.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="77"/>
-        <source>Ending blood pressure must be set.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="86"/>
-        <source>Ending pulse value must be set.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="99"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgattendanceedit.cpp" line="100"/>
-        <source>Do you want to add new attendance to database 
-and fill mandatory data later?</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgAttendanceSelect</name>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="24"/>
-        <source>Select attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="37"/>
-        <source>Select</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="42"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="70"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="71"/>
-        <location filename="crud/dlgattendanceselect.cpp" line="84"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="72"/>
-        <location filename="crud/dlgattendanceselect.cpp" line="85"/>
-        <source>Date</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgattendanceselect.cpp" line="73"/>
-        <location filename="crud/dlgattendanceselect.cpp" line="86"/>
-        <source>Time</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>cDlgCassaAction</name>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="11"/>
@@ -641,167 +420,6 @@ Please relogin to enable cassa.</source>
     </message>
 </context>
 <context>
-    <name>cDlgCompany</name>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="10"/>
-        <source>Company List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="30"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="31"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="32"/>
-        <location filename="crud/dlgcompany.cpp" line="46"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="33"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="34"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="85"/>
-        <source>New Company</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="124"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="125"/>
-        <source>Are you sure you want to delete this Company?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="134"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgcompany.cpp" line="135"/>
-        <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgCompanyEdit</name>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="12"/>
-        <source>Company</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="15"/>
-        <source>&amp;Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="16"/>
-        <source>&amp;Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="97"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="97"/>
-        <source>Company name cannot be empty.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="184"/>
-        <source>Information</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="185"/>
-        <source>There is no city in database like
-
-&quot;%1&quot;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="203"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="214"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="238"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="250"/>
-        <location filename="edit/dlgcompanyedit.cpp" line="278"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="204"/>
-        <source>The defined zip code already saved into the database with
-
-Region : %1
-
-Do you want to overwrite the region entered with this one?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="215"/>
-        <source>The defined zip code already saved into the database with
-
-City : %1
-
-Do you want to overwrite the city entered with this one?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="239"/>
-        <source>The defined city already assigned to a different region
-
-Region : %1
-
-Do you want to correct the defined region?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="251"/>
-        <source>The defined city already assigned to a different zip code
-
-Zip : %1
-
-Do you save the following data
-
-Region : %2
-Zip : %3
-City : %4
-
-as new into the database?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcompanyedit.cpp" line="279"/>
-        <source>The defined data did not found in the database
-
-Region : %1
-Zip : %2
-City : %3
-
-Do you want to save them as new into the database?</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>cDlgCrud</name>
     <message>
         <location filename="../framework/dlgcrud.cpp" line="20"/>
@@ -830,311 +448,86 @@ Do you want to save them as new into the database?</source>
     </message>
 </context>
 <context>
-    <name>cDlgDBGlobals</name>
+    <name>cDlgGuest</name>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="31"/>
-        <source>Database global data synchronization</source>
-        <translation></translation>
+        <location filename="crud/dlgguest.cpp" line="10"/>
+        <source>Guest List</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgglobals.cpp" line="38"/>
-        <source>Please wait while checking global data on server.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgglobals.cpp" line="53"/>
-        <source>Automatic database synchronization</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgglobals.cpp" line="54"/>
-        <source>Automatic database synchronization is starting ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgglobals.cpp" line="69"/>
-        <source>Starting database synchronization.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgglobals.cpp" line="98"/>
-        <source>Database synchronization required.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgglobals.cpp" line="103"/>
-        <source>Database synchronized with server.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgglobals.cpp" line="128"/>
-        <source>Database synchronization finished.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgDiscount</name>
-    <message>
-        <location filename="crud/dlgdiscount.cpp" line="10"/>
-        <source>Discounts List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdiscount.cpp" line="30"/>
+        <location filename="crud/dlgguest.cpp" line="30"/>
         <source>Id</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="31"/>
+        <location filename="crud/dlgguest.cpp" line="31"/>
         <source>LicenceId</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="32"/>
-        <location filename="crud/dlgdiscount.cpp" line="50"/>
+        <location filename="crud/dlgguest.cpp" line="32"/>
+        <location filename="crud/dlgguest.cpp" line="48"/>
         <source>Name</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="33"/>
-        <location filename="crud/dlgdiscount.cpp" line="51"/>
-        <source>Exact value</source>
-        <translation></translation>
+        <location filename="crud/dlgguest.cpp" line="33"/>
+        <location filename="crud/dlgguest.cpp" line="49"/>
+        <source>UniqueId</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="34"/>
-        <location filename="crud/dlgdiscount.cpp" line="52"/>
-        <source>Percent</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdiscount.cpp" line="35"/>
+        <location filename="crud/dlgguest.cpp" line="34"/>
         <source>Active</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="36"/>
+        <location filename="crud/dlgguest.cpp" line="35"/>
         <source>Archive</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="93"/>
-        <source>New Discount</source>
-        <translation></translation>
+        <location filename="crud/dlgguest.cpp" line="88"/>
+        <source>New Guest</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="132"/>
+        <location filename="crud/dlgguest.cpp" line="125"/>
         <source>Question</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="133"/>
-        <source>Are you sure you want to delete this Discount?</source>
-        <translation></translation>
+        <location filename="crud/dlgguest.cpp" line="126"/>
+        <source>Are you sure you want to delete this Guest?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="142"/>
+        <location filename="crud/dlgguest.cpp" line="135"/>
         <source>Warning</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="143"/>
+        <location filename="crud/dlgguest.cpp" line="136"/>
         <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>cDlgDiscountEdit</name>
+    <name>cDlgGuestEdit</name>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="11"/>
-        <source>Discount</source>
-        <translation></translation>
+        <location filename="edit/dlgguestedit.cpp" line="21"/>
+        <source>Attendance List</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="134"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="145"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="156"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="167"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="178"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="189"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="199"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="209"/>
-        <source>Warning</source>
-        <translation></translation>
+        <location filename="edit/dlgguestedit.cpp" line="85"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="135"/>
-        <source>Discount for regular customer already exists!
-Please modify the existing discount.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="146"/>
-        <source>Discount for employee already exists!
-Please modify the existing discount.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="157"/>
-        <source>Discount for service person already exists!
-Please modify the existing discount.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="168"/>
-        <source>Discount for selected company already exists!
-Please modify the existing discount.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="179"/>
-        <source>Discount for selected health insurance fund already exists!
-Please modify the existing discount.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="190"/>
-        <source>Discount for selected person already exists!
-Please modify the existing discount.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="200"/>
-        <source>One of the item from the list must be selected!</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="210"/>
-        <source>Value of discount is invalid.
-Please use only numbers.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="229"/>
-        <source>Regular customer</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="234"/>
-        <source>Employee</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="239"/>
-        <source>Service person</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="297"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="308"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="319"/>
-        <source>&lt;Not selected&gt;</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgDoctor</name>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="10"/>
-        <source>Advisor List</source>
-        <oldsource>Doctor List</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="30"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="31"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="32"/>
-        <location filename="crud/dlgdoctor.cpp" line="47"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="33"/>
-        <location filename="crud/dlgdoctor.cpp" line="48"/>
-        <source>Licence</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="34"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="35"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="87"/>
-        <source>New Doctor</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="126"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="127"/>
-        <source>Are you sure you want to delete this Doctor?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="136"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgdoctor.cpp" line="137"/>
-        <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgDoctorEdit</name>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="11"/>
-        <source>Advisor</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="14"/>
-        <source>&amp;Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="15"/>
-        <source>&amp;Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="26"/>
-        <source>&lt;Not selected&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="81"/>
-        <location filename="edit/dlgdoctoredit.cpp" line="86"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="81"/>
-        <source>Advisor&apos;s licence cannot be empty.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgdoctoredit.cpp" line="86"/>
-        <source>The advisor must be member one of the groups.</source>
-        <translation></translation>
+        <location filename="edit/dlgguestedit.cpp" line="85"/>
+        <source>Guest name cannot be empty.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1152,254 +545,6 @@ Please use only numbers.</source>
     <message>
         <location filename="dlg/dlghardwaretest.cpp" line="216"/>
         <source>Hardware unavailable</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgHealthInsurance</name>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="10"/>
-        <source>Health Insurance Fund List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="30"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="31"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="32"/>
-        <location filename="crud/dlghealthinsurance.cpp" line="46"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="33"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="34"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="85"/>
-        <source>New Health Insurance Fund</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="124"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="125"/>
-        <source>Are you sure you want to delete this Health Insurance Fund?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="134"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlghealthinsurance.cpp" line="135"/>
-        <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgHealthInsuranceEdit</name>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="12"/>
-        <source>Health Insurance Fund</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="15"/>
-        <source>&amp;Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="16"/>
-        <source>&amp;Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="98"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="98"/>
-        <source>Health insurance fund name cannot be empty.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="185"/>
-        <source>Information</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="186"/>
-        <source>There is no city in database like
-
-&quot;%1&quot;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="204"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="215"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="239"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="251"/>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="279"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="205"/>
-        <source>The defined zip code already saved into the database with
-
-Region : %1
-
-Do you want to overwrite the region entered with this one?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="216"/>
-        <source>The defined zip code already saved into the database with
-
-City : %1
-
-Do you want to overwrite the city entered with this one?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="240"/>
-        <source>The defined city already assigned to a different region
-
-Region : %1
-
-Do you want to correct the defined region?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="252"/>
-        <source>The defined city already assigned to a different zip code
-
-Zip : %1
-
-Do you save the following data
-
-Region : %2
-Zip : %3
-City : %4
-
-as new into the database?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlghealthinsuranceedit.cpp" line="280"/>
-        <source>The defined data did not found in the database
-
-Region : %1
-Zip : %2
-City : %3
-
-Do you want to save them as new into the database?</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgIllnessGroup</name>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="10"/>
-        <source>Illness Group List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="30"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="31"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="32"/>
-        <location filename="crud/dlgillnessgroup.cpp" line="46"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="33"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="34"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="85"/>
-        <source>New Illness Group</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="124"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="125"/>
-        <source>Are you sure you want to delete this Illness Group?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="134"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgillnessgroup.cpp" line="135"/>
-        <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgIllnessGroupEdit</name>
-    <message>
-        <location filename="edit/dlgillnessgroupedit.cpp" line="11"/>
-        <source>Illness group</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgillnessgroupedit.cpp" line="14"/>
-        <source>&amp;Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgillnessgroupedit.cpp" line="15"/>
-        <source>&amp;Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgillnessgroupedit.cpp" line="52"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgillnessgroupedit.cpp" line="52"/>
-        <source>Illness group cannot be empty.</source>
         <translation></translation>
     </message>
 </context>
@@ -1523,47 +668,47 @@ Time value can not be greater than %1 minutes.</source>
 <context>
     <name>cDlgPanelAppereance</name>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="17"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="20"/>
         <source>Panel settings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="33"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="86"/>
         <source>Status name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="34"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="87"/>
         <source>Length of current status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="35"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="88"/>
         <source>Length of next status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="36"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="89"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="156"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="265"/>
         <source>status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="164"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="274"/>
         <source>current length</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="172"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="283"/>
         <source>next length</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="180"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="292"/>
         <source>information</source>
         <translation></translation>
     </message>
@@ -1949,71 +1094,6 @@ Please define a different one.</source>
     </message>
 </context>
 <context>
-    <name>cDlgPatient</name>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="11"/>
-        <source>Patient List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="31"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="32"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="33"/>
-        <location filename="crud/dlgpatient.cpp" line="49"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="34"/>
-        <location filename="crud/dlgpatient.cpp" line="50"/>
-        <source>UniqueId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="35"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="36"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="89"/>
-        <source>New Patient</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="130"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="131"/>
-        <source>Are you sure you want to delete this Patient?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="146"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatient.cpp" line="147"/>
-        <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>cDlgPatientCard</name>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="10"/>
@@ -2166,40 +1246,40 @@ The length of the new barcode should be %1.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="147"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="155"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="168"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="179"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="187"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="195"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="203"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="211"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="169"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="188"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="196"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="204"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="212"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="147"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
         <source>Barcode cannot be empty.
 
 Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="155"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
         <source>Invalid barcode. Barcode should be %1 character length.
 
 Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="168"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="169"/>
         <source>Invalid barcode. This barcode already saved into database.
 
 Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="179"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 
@@ -2210,7 +1290,7 @@ Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="187"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="188"/>
         <source>Please select valid patient for the card.
 For active patientcard an owner should be selected.
 
@@ -2219,14 +1299,14 @@ press the Save button.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="195"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="196"/>
         <source>Available units cannot be empty.
 
 Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="203"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="204"/>
         <source>Number of available units can not be less then 1.
 
 If you want to reset the number of available units
@@ -2236,7 +1316,7 @@ Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="211"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="212"/>
         <source>Incorrect validation date.
 
 If you want to reset the date of validation
@@ -2246,24 +1326,24 @@ Press Ignore to skip other error messages.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="250"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="251"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="251"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="252"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="409"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="416"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="410"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="417"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
@@ -2445,403 +1525,6 @@ refill the patientcard before use.</source>
     </message>
 </context>
 <context>
-    <name>cDlgPatientEdit</name>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="31"/>
-        <source>Attendance List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="62"/>
-        <location filename="edit/dlgpatientedit.cpp" line="70"/>
-        <location filename="edit/dlgpatientedit.cpp" line="544"/>
-        <location filename="edit/dlgpatientedit.cpp" line="559"/>
-        <location filename="edit/dlgpatientedit.cpp" line="576"/>
-        <location filename="edit/dlgpatientedit.cpp" line="653"/>
-        <location filename="edit/dlgpatientedit.cpp" line="680"/>
-        <source>&lt;Not selected&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="157"/>
-        <source>You are not allowed to change this patient data.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="249"/>
-        <location filename="edit/dlgpatientedit.cpp" line="256"/>
-        <location filename="edit/dlgpatientedit.cpp" line="267"/>
-        <location filename="edit/dlgpatientedit.cpp" line="275"/>
-        <location filename="edit/dlgpatientedit.cpp" line="307"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="249"/>
-        <location filename="edit/dlgpatientedit.cpp" line="307"/>
-        <source>Patient name cannot be empty.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="256"/>
-        <source>Patient gender must be selected.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="267"/>
-        <source>Patient date of birth must be set.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="275"/>
-        <source>Patient unique identification value must be given.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="288"/>
-        <location filename="edit/dlgpatientedit.cpp" line="787"/>
-        <location filename="edit/dlgpatientedit.cpp" line="798"/>
-        <location filename="edit/dlgpatientedit.cpp" line="822"/>
-        <location filename="edit/dlgpatientedit.cpp" line="834"/>
-        <location filename="edit/dlgpatientedit.cpp" line="862"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="289"/>
-        <source>Do you want to add new patient to database 
-and fill mandatory data later?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="483"/>
-        <source>Information</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="484"/>
-        <source>There is no city in database like
-
-&quot;%1&quot;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="788"/>
-        <source>The defined zip code already saved into the database with
-
-Region : %1
-
-Do you want to overwrite the region entered with this one?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="799"/>
-        <source>The defined zip code already saved into the database with
-
-City : %1
-
-Do you want to overwrite the city entered with this one?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="823"/>
-        <source>The defined city already assigned to a different region
-
-Region : %1
-
-Do you want to correct the defined region?</source>
-        <oldsource>The city already assigned to a different region
-
-Region : %1
-
-Do you want to correct the defined region?</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="835"/>
-        <source>The defined city already assigned to a different zip code
-
-Zip : %1
-
-Do you save the following data
-
-Region : %2
-Zip : %3
-City : %4
-
-as new into the database?</source>
-        <oldsource>The city already assigned to a different zip code
-
-Zip : %1
-
-Do you save the following data
-
-Region : %2
-Zip : %3
-City : %4
-
-as new into the database?</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientedit.cpp" line="863"/>
-        <source>The defined data did not found in the database
-
-Region : %1
-Zip : %2
-City : %3
-
-Do you want to save them as new into the database?</source>
-        <oldsource>The defined data did not found in the database
-
-Region : %1
-Zip : %2
-City : %3
-
-as new into the database?</oldsource>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgPatientOrigin</name>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="10"/>
-        <source>Patient Origin List</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="30"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="31"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="32"/>
-        <location filename="crud/dlgpatientorigin.cpp" line="46"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="33"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="34"/>
-        <source>Archive</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="85"/>
-        <source>New Patient Origin</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="124"/>
-        <source>Question</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="125"/>
-        <source>Are you sure you want to delete this Patient Origin?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="134"/>
-        <source>Warning</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientorigin.cpp" line="135"/>
-        <source>You are not allowed to delete studio independent data.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgPatientOriginEdit</name>
-    <message>
-        <location filename="edit/dlgpatientoriginedit.cpp" line="11"/>
-        <source>Patient origin</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientoriginedit.cpp" line="14"/>
-        <source>&amp;Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientoriginedit.cpp" line="15"/>
-        <source>&amp;Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientoriginedit.cpp" line="52"/>
-        <source>Error</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientoriginedit.cpp" line="52"/>
-        <source>Patient origin cannot be empty.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgPatientSelect</name>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="8"/>
-        <source>Select actual patient</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="25"/>
-        <source>Name: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="34"/>
-        <source>Unique identifier: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="41"/>
-        <source>Select</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="46"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="79"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="80"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="81"/>
-        <location filename="crud/dlgpatientselect.cpp" line="93"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientselect.cpp" line="82"/>
-        <location filename="crud/dlgpatientselect.cpp" line="94"/>
-        <source>UniqueId</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgPostponedAttendanceSelect</name>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="24"/>
-        <source>Select postponed attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="37"/>
-        <source>Select</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="42"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="68"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="69"/>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="82"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="70"/>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="83"/>
-        <source>Date</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="71"/>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="84"/>
-        <source>Time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedattendanceselect.cpp" line="143"/>
-        <source>Edit attendance</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgPostponedPatientSelect</name>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="10"/>
-        <source>Select postponed patient</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="27"/>
-        <source>Name: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="36"/>
-        <source>Unique identifier: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="43"/>
-        <source>Select</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="48"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="76"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="77"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="78"/>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="90"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="79"/>
-        <location filename="crud/dlgpostponedpatientselect.cpp" line="91"/>
-        <source>UniqueId</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>cDlgPreferences</name>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="22"/>
@@ -2901,6 +1584,287 @@ as new into the database?</oldsource>
         <source>Exporting report to HTML file finished.
 Name of the file is: %1</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProduct</name>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="10"/>
+        <source>Product List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="30"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="31"/>
+        <source>LicenceId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="32"/>
+        <location filename="crud/dlgproduct.cpp" line="46"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="33"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="34"/>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="85"/>
+        <source>New Product</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="125"/>
+        <source>Are you sure you want to delete this Product?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="128"/>
+        <source>This product is linked to one or more product type.
+Are you sure you want to delete this product?
+
+Deleting this product will not delete the product types assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="133"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="141"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="142"/>
+        <source>You are not allowed to delete studio independent data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProductActionType</name>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="11"/>
+        <source>Productaction Type List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="31"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="32"/>
+        <source>LicenceId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="33"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="47"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="34"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="35"/>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="86"/>
+        <source>New Productaction Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="126"/>
+        <source>Are you sure you want to delete this Productaction Type?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="128"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="136"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="137"/>
+        <source>You are not allowed to delete studio independent data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProductActionTypeEdit</name>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="13"/>
+        <source>Product type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="55"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="63"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="55"/>
+        <source>Name of productaction type must be set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="63"/>
+        <source>Productaction type with this name already exists.
+Please set another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <source>A product action can not increase and decrease
+the product count at the same time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProductEdit</name>
+    <message>
+        <location filename="edit/dlgproductedit.cpp" line="13"/>
+        <source>Product</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductedit.cpp" line="78"/>
+        <location filename="edit/dlgproductedit.cpp" line="86"/>
+        <location filename="edit/dlgproductedit.cpp" line="93"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductedit.cpp" line="78"/>
+        <source>Name of product must be set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductedit.cpp" line="86"/>
+        <source>Product with this name already exists.
+Please set another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductedit.cpp" line="93"/>
+        <source>Price of product must be set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProductType</name>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="11"/>
+        <source>Product Type List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="31"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="32"/>
+        <source>LicenceId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="33"/>
+        <location filename="crud/dlgproducttype.cpp" line="47"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="34"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="35"/>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="86"/>
+        <source>New Product Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="126"/>
+        <source>Are you sure you want to delete this Product Type?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="129"/>
+        <source>There are products attached to this product type.
+Are you sure you want to delete this product type?
+
+Deleting this product type will not delete the products assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="134"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="142"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="143"/>
+        <source>You are not allowed to delete studio independent data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgProductTypeEdit</name>
+    <message>
+        <location filename="edit/dlgproducttypeedit.cpp" line="14"/>
+        <source>Product type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproducttypeedit.cpp" line="81"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="89"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproducttypeedit.cpp" line="81"/>
+        <source>Name of product type must be set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproducttypeedit.cpp" line="89"/>
+        <source>Product type with this name already exists.
+Please set another one.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3185,71 +2149,6 @@ total income</source>
     </message>
 </context>
 <context>
-    <name>cDlgReportAttendance</name>
-    <message>
-        <location filename="report/repattendance.cpp" line="32"/>
-        <source>Attendances</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="33"/>
-        <source>attendances</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="35"/>
-        <source>Date :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="53"/>
-        <source>Patient :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="68"/>
-        <source>&lt;All patients&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="163"/>
-        <source>Date:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="166"/>
-        <source> | Patient: %1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="218"/>
-        <source>Date</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="231"/>
-        <source>Blood pressure
-(start-&gt;stop)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="236"/>
-        <source>Pulse
-(start-&gt;stop)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="241"/>
-        <source>Length</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/repattendance.cpp" line="225"/>
-        <source>Patient</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>cDlgReportCardUses</name>
     <message>
         <location filename="report/repcarduses.cpp" line="32"/>
@@ -3458,221 +2357,6 @@ total income</source>
     </message>
 </context>
 <context>
-    <name>cDlgReportPatients</name>
-    <message>
-        <location filename="report/reppatients.cpp" line="34"/>
-        <source>Patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="35"/>
-        <source>patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="47"/>
-        <source>Entered into database :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="77"/>
-        <source>Age :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="83"/>
-        <source>&lt;All patients&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="84"/>
-        <source>0 year to 10 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="85"/>
-        <source>10 year to 20 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="86"/>
-        <source>20 year to 30 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="87"/>
-        <source>30 year to 40 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="88"/>
-        <source>40 year to 50 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="89"/>
-        <source>50 year to 60 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="90"/>
-        <source>60 year to 70 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="91"/>
-        <source>70 year to 80 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="92"/>
-        <source>80 year to 90 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="93"/>
-        <source>90 year to 100 years</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="96"/>
-        <source>Gender :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="100"/>
-        <source>All</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="113"/>
-        <source>Regular customer</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="117"/>
-        <source>Employee</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="121"/>
-        <source>Service person</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="133"/>
-        <source>Health Insurance Fund :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="139"/>
-        <source>&lt;All Health Insurance Fund&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="147"/>
-        <source>Company :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="153"/>
-        <source>&lt;All Company&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="161"/>
-        <source>Proposal person :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="167"/>
-        <source>&lt;All proposal person&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="274"/>
-        <source>Date:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="355"/>
-        <source>Total number of patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="378"/>
-        <source>Number of male patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="399"/>
-        <source>Number of female patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="423"/>
-        <source>Number of regular customers</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="447"/>
-        <source>Number of employees</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="471"/>
-        <source>Number of service persons</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="495"/>
-        <source>Number of health insurance fund&apos;s members</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="519"/>
-        <source>Number of company employees</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="543"/>
-        <source>Number of patients proposed by ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="590"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="597"/>
-        <source>Gender</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="603"/>
-        <source>Date of birth</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="608"/>
-        <source>Age</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="105"/>
-        <location filename="report/reppatients.cpp" line="631"/>
-        <source>Male</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="report/reppatients.cpp" line="109"/>
-        <location filename="report/reppatients.cpp" line="633"/>
-        <source>Female</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>cDlgReportSAMPLE</name>
     <message>
         <location filename="report/rep_sample_.cpp" line="32"/>
@@ -3693,51 +2377,8 @@ total income</source>
 <context>
     <name>cDlgSerialReg</name>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="17"/>
+        <location filename="dlg/dlgserialreg.cpp" line="14"/>
         <source>Validate Serial key</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>cDlgSynchronization</name>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="28"/>
-        <source>Database synchronization</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="37"/>
-        <source>Database synchronization required.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="44"/>
-        <source>Database synchronized with server.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="57"/>
-        <source>Automatic database synchronization</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="58"/>
-        <source>Automatic database synchronization is starting ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="97"/>
-        <source>Starting database synchronization.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="124"/>
-        <source>Database synchronization finished.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlg/dlgsynchronization.cpp" line="127"/>
-        <source>Exiting application ...</source>
         <translation></translation>
     </message>
 </context>
@@ -4019,40 +2660,40 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="197"/>
+        <location filename="frmpanel.cpp" line="199"/>
         <source>Revoking device (%1) usage.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="287"/>
+        <location filename="frmpanel.cpp" line="289"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="288"/>
+        <location filename="frmpanel.cpp" line="290"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="361"/>
+        <location filename="frmpanel.cpp" line="364"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="411"/>
+        <location filename="frmpanel.cpp" line="414"/>
         <source>Panel Not Found in Database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="489"/>
+        <location filename="frmpanel.cpp" line="492"/>
         <source>Cash to pay: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="606"/>
+        <location filename="frmpanel.cpp" line="749"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation></translation>
     </message>
@@ -4075,86 +2716,59 @@ Only %1 panels will be displayed.</source>
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="279"/>
+        <location filename="wndmain.cpp" line="291"/>
         <source>Password</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="280"/>
+        <location filename="wndmain.cpp" line="292"/>
         <source>Your password is empty. Please change it to a valid password.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="307"/>
-        <location filename="wndmain.cpp" line="314"/>
-        <location filename="wndmain.cpp" line="322"/>
-        <location filename="wndmain.cpp" line="329"/>
-        <location filename="wndmain.cpp" line="881"/>
-        <location filename="wndmain.cpp" line="1346"/>
-        <location filename="wndmain.cpp" line="1409"/>
-        <location filename="wndmain.cpp" line="1577"/>
-        <location filename="wndmain.cpp" line="1675"/>
+        <location filename="wndmain.cpp" line="954"/>
+        <location filename="wndmain.cpp" line="1468"/>
+        <location filename="wndmain.cpp" line="1534"/>
+        <location filename="wndmain.cpp" line="1710"/>
+        <location filename="wndmain.cpp" line="1816"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="370"/>
-        <location filename="wndmain.cpp" line="400"/>
-        <location filename="wndmain.cpp" line="549"/>
-        <location filename="wndmain.cpp" line="555"/>
-        <location filename="wndmain.cpp" line="574"/>
-        <location filename="wndmain.cpp" line="761"/>
-        <location filename="wndmain.cpp" line="774"/>
-        <location filename="wndmain.cpp" line="853"/>
-        <location filename="wndmain.cpp" line="889"/>
-        <location filename="wndmain.cpp" line="899"/>
-        <location filename="wndmain.cpp" line="1043"/>
-        <location filename="wndmain.cpp" line="1115"/>
-        <location filename="wndmain.cpp" line="1154"/>
-        <location filename="wndmain.cpp" line="1170"/>
-        <location filename="wndmain.cpp" line="1234"/>
-        <location filename="wndmain.cpp" line="1290"/>
-        <location filename="wndmain.cpp" line="1312"/>
-        <location filename="wndmain.cpp" line="1379"/>
-        <location filename="wndmain.cpp" line="1423"/>
+        <location filename="wndmain.cpp" line="387"/>
+        <location filename="wndmain.cpp" line="417"/>
+        <location filename="wndmain.cpp" line="566"/>
+        <location filename="wndmain.cpp" line="572"/>
+        <location filename="wndmain.cpp" line="591"/>
+        <location filename="wndmain.cpp" line="831"/>
+        <location filename="wndmain.cpp" line="844"/>
+        <location filename="wndmain.cpp" line="962"/>
+        <location filename="wndmain.cpp" line="1251"/>
+        <location filename="wndmain.cpp" line="1267"/>
+        <location filename="wndmain.cpp" line="1352"/>
+        <location filename="wndmain.cpp" line="1412"/>
         <location filename="wndmain.cpp" line="1434"/>
-        <location filename="wndmain.cpp" line="1444"/>
-        <location filename="wndmain.cpp" line="1463"/>
-        <location filename="wndmain.cpp" line="1523"/>
-        <location filename="wndmain.cpp" line="1533"/>
-        <location filename="wndmain.cpp" line="1552"/>
+        <location filename="wndmain.cpp" line="1591"/>
+        <location filename="wndmain.cpp" line="1651"/>
+        <location filename="wndmain.cpp" line="1683"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="791"/>
-        <location filename="wndmain.cpp" line="840"/>
-        <location filename="wndmain.cpp" line="1070"/>
-        <location filename="wndmain.cpp" line="1570"/>
-        <location filename="wndmain.cpp" line="1585"/>
-        <location filename="wndmain.cpp" line="1621"/>
-        <location filename="wndmain.cpp" line="1865"/>
-        <location filename="wndmain.cpp" line="1884"/>
+        <location filename="wndmain.cpp" line="861"/>
+        <location filename="wndmain.cpp" line="1160"/>
+        <location filename="wndmain.cpp" line="1718"/>
+        <location filename="wndmain.cpp" line="1756"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="667"/>
+        <location filename="wndmain.cpp" line="720"/>
         <source>Belenus </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="689"/>
-        <source> &lt;=&gt; Current patient: [</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="695"/>
-        <source> &lt;=&gt; NO PATIENT SELECTED</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="371"/>
+        <location filename="wndmain.cpp" line="388"/>
         <source>The latest cassa record still opened:
 
 Owner: %1
@@ -4166,12 +2780,12 @@ Please note: if you click NO, new cassa record will be opened and this cassa for
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="383"/>
+        <location filename="wndmain.cpp" line="400"/>
         <source>Cassa left in open.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="401"/>
+        <location filename="wndmain.cpp" line="418"/>
         <source>The latest cassa record closed with balance:
 
 %1
@@ -4182,13 +2796,13 @@ Please note: if you click NO, new cassa record will be opened and this cassa for
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="413"/>
+        <location filename="wndmain.cpp" line="430"/>
         <source>Cash left in cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="556"/>
-        <location filename="wndmain.cpp" line="575"/>
+        <location filename="wndmain.cpp" line="573"/>
+        <location filename="wndmain.cpp" line="592"/>
         <source>There are some cash left in your cassa.
 Current balance: %1
 
@@ -4198,14 +2812,14 @@ Please note: if you click NO, the cassa will be closed with the actual balance.<
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="564"/>
-        <location filename="wndmain.cpp" line="583"/>
-        <location filename="wndmain.cpp" line="588"/>
+        <location filename="wndmain.cpp" line="581"/>
+        <location filename="wndmain.cpp" line="600"/>
+        <location filename="wndmain.cpp" line="605"/>
         <source>Automatic cassa close.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="762"/>
+        <location filename="wndmain.cpp" line="832"/>
         <source>Application licence key successfully registered.
 The application users currently attached to DEMO licence key.
 
@@ -4213,12 +2827,12 @@ Do you want to update application users and attach them to the newly registered 
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="775"/>
+        <location filename="wndmain.cpp" line="845"/>
         <source>Do you want to set the additional information of the studio now?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="792"/>
+        <location filename="wndmain.cpp" line="862"/>
         <source>Registration of the licence key has been failed.
 
 Please check your internet connection and try to restart the application.
@@ -4226,79 +2840,42 @@ Please also check whether the defined licence key is valid and not used by someb
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="854"/>
-        <source>Do you want to create new attendance for this patient?
-
-Press the Ignore button to select an existing attendance
-that saved previously for this patient.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="882"/>
+        <location filename="wndmain.cpp" line="955"/>
         <source>At least one Panel is still working.
 Please stop them before closing the application.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="890"/>
+        <location filename="wndmain.cpp" line="963"/>
         <source>Are you sure you want to close the application?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="900"/>
-        <source>Database synchronization needed.
-Do you want to synchronize database with server?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="830"/>
-        <location filename="wndmain.cpp" line="974"/>
-        <location filename="wndmain.cpp" line="1133"/>
-        <location filename="wndmain.cpp" line="1925"/>
+        <location filename="wndmain.cpp" line="1047"/>
+        <location filename="wndmain.cpp" line="1229"/>
+        <location filename="wndmain.cpp" line="2084"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="830"/>
-        <source>Studio independent data is already synchronized with server.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="841"/>
-        <location filename="wndmain.cpp" line="1866"/>
-        <location filename="wndmain.cpp" line="1885"/>
-        <source>Connection to Belenus server is not available.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="975"/>
+        <location filename="wndmain.cpp" line="1048"/>
         <source>This area is restricted for system administrators only!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1044"/>
-        <source>Do you want to select the created patient as actual?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1071"/>
-        <location filename="wndmain.cpp" line="1586"/>
+        <location filename="wndmain.cpp" line="1161"/>
+        <location filename="wndmain.cpp" line="1719"/>
         <source>The device usage has to be payed.
 Please process the payment first.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1116"/>
-        <source>Do you want to select the created attendance as actual?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1134"/>
+        <location filename="wndmain.cpp" line="1230"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1155"/>
+        <location filename="wndmain.cpp" line="1252"/>
         <source>A patientcard with barcode [%1]
 attached to the actual patient.
 
@@ -4310,25 +2887,25 @@ Do you want to use this patientcard?</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1171"/>
+        <location filename="wndmain.cpp" line="1268"/>
         <source>There is no patientcard attached to the actual patient.
 Do you want to sell a patientcard for the actual patient?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1235"/>
+        <location filename="wndmain.cpp" line="1353"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1310"/>
-        <location filename="wndmain.cpp" line="1461"/>
+        <location filename="wndmain.cpp" line="1432"/>
+        <location filename="wndmain.cpp" line="1589"/>
         <source>
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1313"/>
+        <location filename="wndmain.cpp" line="1435"/>
         <source>This patientcard has the following settings:
 
 Available units: %1
@@ -4338,132 +2915,68 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1347"/>
+        <location filename="wndmain.cpp" line="1469"/>
         <source>This patientcard already sold.
 Please select another inactive patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1380"/>
-        <source>There is no patient in the database with name like
-
-&apos;%1&apos;
-
-Do you want to create a new patient record with this name?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1410"/>
+        <location filename="wndmain.cpp" line="1535"/>
         <source>This device already prepared with a patientcard.
 To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1424"/>
-        <source>This patientcard has been assigned to the following patient.
-
-%1
-
-Do you want to select this patient as actual?</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="wndmain.cpp" line="1435"/>
-        <source>This patientcard has been assigned to a different patient.
-Are you sure you want to use this patientcard?</source>
-        <translation></translation>
+        <source>This patientcard has the following settings:
+
+Available units: %1
+Available time: %2 (hh:mm:ss)
+
+Do you want to refill the patientcard now?%3</source>
+        <oldsource>This patientcard has been assigned to a different patient.
+Are you sure you want to use this patientcard?</oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1445"/>
-        <source>There is no patient assigned to this patientcard.
-Do you want to assign this patientcard to the actual patient?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1571"/>
-        <source>There is no actual attendance selected.
-Please select first a patient and then an attendance.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1578"/>
+        <location filename="wndmain.cpp" line="1711"/>
         <source>This device already prepared with a time period.
 To start the device with other conditions, please
 reset the device first with pushing the ESC button.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1676"/>
+        <location filename="wndmain.cpp" line="1817"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1695"/>
+        <location filename="wndmain.cpp" line="1836"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1926"/>
+        <location filename="wndmain.cpp" line="2085"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1622"/>
+        <location filename="wndmain.cpp" line="1757"/>
         <source>This time period did not saved in the database
 for the actually selected device.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="308"/>
-        <source>The application has valid serial key registered but was not able to validate it with the server.
-Please note that without validation the application will work only for the next %1 days
-
-Please also note you need live internet connection for the validation process.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="315"/>
-        <source>The application has valid serial key registered but failed to validate the installation with the server.
-Please call Service to validate your installation.
-
-Note that without validation the application will work only for the next %1 days</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="323"/>
-        <source>Your licence key has expired.
-The application has a serial key registered but failed to validate it with the server since the last %1 days.
-
-Please note you need live internet connection for the validation process.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="330"/>
-        <source>Your licence key validation has failed.
-Please call Service</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="550"/>
+        <location filename="wndmain.cpp" line="567"/>
         <source>Do you want to close your cassa?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1038"/>
-        <source>New Patient</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1110"/>
-        <source>New Attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1464"/>
+        <location filename="wndmain.cpp" line="1592"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -4473,19 +2986,14 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1524"/>
+        <location filename="wndmain.cpp" line="1652"/>
         <source>This barcode has not been activated yet.
 Do you want to activate it now?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1534"/>
-        <source>Do you want to assign this patientcard to the actual patient?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1291"/>
-        <location filename="wndmain.cpp" line="1553"/>
+        <location filename="wndmain.cpp" line="1413"/>
+        <location filename="wndmain.cpp" line="1684"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation></translation>
@@ -4551,96 +3059,6 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgaddressedit.ui" line="268"/>
         <source>Cancel</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgAttendanceEdit</name>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="22"/>
-        <source> Patient information </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="28"/>
-        <source>Name :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="42"/>
-        <source>Unique identifier :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="59"/>
-        <source> Data </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="65"/>
-        <source>Date :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="75"/>
-        <source>yyyy/MM/dd</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="85"/>
-        <source>Duration :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="95"/>
-        <source>minutes : seconds</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="98"/>
-        <source>mm:ss</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="108"/>
-        <source> Start </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="114"/>
-        <location filename="dlgattendanceedit.ui" line="143"/>
-        <source>Blood pressure :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="124"/>
-        <location filename="dlgattendanceedit.ui" line="153"/>
-        <source>Pulse :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="137"/>
-        <source> Stop </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="176"/>
-        <source>Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="195"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgattendanceedit.ui" line="227"/>
-        <source>Finish later ...</source>
         <translation></translation>
     </message>
 </context>
@@ -4756,110 +3174,6 @@ Do you want to register it for a new patientcard?</source>
     </message>
 </context>
 <context>
-    <name>dlgCompanyEdit</name>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="20"/>
-        <source> Company </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="28"/>
-        <source>Name :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="42"/>
-        <source>Contact person : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="57"/>
-        <source> Address </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="65"/>
-        <source>Country :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="79"/>
-        <source>Region :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="110"/>
-        <source>Zip :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="142"/>
-        <source>City: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="165"/>
-        <source>?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="176"/>
-        <source>Address : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="191"/>
-        <source> Contract </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="199"/>
-        <source>Contract identifier : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="213"/>
-        <source>Valid till ... :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="220"/>
-        <location filename="dlgcompanyedit.ui" line="249"/>
-        <source>yyyy/MM/dd</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="242"/>
-        <source> -&gt; </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="277"/>
-        <source> Discount </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="283"/>
-        <source>Exact value</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="290"/>
-        <source>Percent</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcompanyedit.ui" line="333"/>
-        <source>Independent from the local studio.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>dlgCrud</name>
     <message>
         <location filename="../framework/dlgcrud.ui" line="14"/>
@@ -4868,212 +3182,81 @@ Do you want to register it for a new patientcard?</source>
     </message>
 </context>
 <context>
-    <name>dlgDBGlobals</name>
+    <name>dlgGuestEdit</name>
     <message>
-        <location filename="dlgdbglobals.ui" line="14"/>
+        <location filename="dlgguestedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdbglobals.ui" line="25"/>
-        <source> Tables where global data updated </source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="22"/>
+        <source> Identification </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdbglobals.ui" line="36"/>
-        <source>Patient origins</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="46"/>
-        <source>Reasons to visit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="56"/>
-        <source>Illness groups</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="66"/>
-        <source>Health Insurance Funds</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="76"/>
-        <source>Companies</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="86"/>
-        <source>Doctors ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="100"/>
-        <source>Patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="110"/>
-        <source>Patientcard types</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="120"/>
-        <source>Patientcards</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="130"/>
-        <source>Discounts</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="140"/>
-        <source>Application data</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="167"/>
-        <source>Exit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdbglobals.ui" line="199"/>
-        <source>Get studio independent data </source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgDiscountEdit</name>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="22"/>
-        <source> Category </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="28"/>
-        <source>Regular customer</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="35"/>
-        <source>Employee</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="42"/>
-        <source>Service person</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="49"/>
-        <source>Health Insurance Fund</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="56"/>
-        <source>Company</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="63"/>
-        <source>Doctor etc.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="75"/>
-        <source> Health Insurance Fund / Company / Doctor ... </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="89"/>
-        <source> Type </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="95"/>
-        <source>fix value</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="102"/>
-        <source>percent</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="115"/>
-        <source> Value </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="153"/>
-        <source>Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="166"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="196"/>
-        <source>Independent from the local studio.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgDoctorEdit</name>
-    <message>
-        <location filename="dlgdoctoredit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgdoctoredit.ui" line="22"/>
+        <location filename="dlgguestedit.ui" line="30"/>
         <source>Name :</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="32"/>
-        <source>Licence :</source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="47"/>
+        <source>Gender :</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="42"/>
-        <source>Additional information :</source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="54"/>
+        <source>Male</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="52"/>
-        <source>Member of group : </source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="61"/>
+        <source>Female</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="64"/>
-        <source> Discount </source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="72"/>
+        <source>Unique identification :</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="70"/>
-        <source>Exact value</source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="92"/>
+        <source>Date of birth :</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="77"/>
-        <source>Percent</source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="109"/>
+        <source>yyyy/MM/dd</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgdoctoredit.ui" line="113"/>
-        <source>Independent from the local studio.</source>
-        <translation></translation>
+        <location filename="dlgguestedit.ui" line="119"/>
+        <source>Age :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="156"/>
+        <source> Guest&apos;s card </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="162"/>
+        <source>Barcode :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="194"/>
+        <source>Type of card :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="215"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgguestedit.ui" line="228"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5209,128 +3392,6 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlghardwaretest.ui" line="411"/>
         <source>Relay 12</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgHealthInsuranceEdit</name>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="20"/>
-        <source> Health Insurance </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="28"/>
-        <source>Name :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="42"/>
-        <source>Contact person : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="57"/>
-        <source> Address </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="65"/>
-        <source>Country :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="79"/>
-        <source>Region :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="110"/>
-        <source>Zip :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="142"/>
-        <source>City: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="165"/>
-        <source>?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="176"/>
-        <source>Address : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="191"/>
-        <source> Contract </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="199"/>
-        <source>Contract identifier : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="213"/>
-        <source>Valid till ... :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="220"/>
-        <location filename="dlghealthinsuranceedit.ui" line="249"/>
-        <source>yyyy/MM/dd</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="242"/>
-        <source> -&gt; </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="277"/>
-        <source> Discount </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="283"/>
-        <source>Exact value</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="290"/>
-        <source>Percent</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghealthinsuranceedit.ui" line="333"/>
-        <source>Independent from the local studio.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgIllnessGroupEdit</name>
-    <message>
-        <location filename="dlgillnessgroupedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgillnessgroupedit.ui" line="22"/>
-        <source>Name :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgillnessgroupedit.ui" line="34"/>
-        <source>Independent from the local studio.</source>
         <translation></translation>
     </message>
 </context>
@@ -5580,13 +3641,14 @@ Do you want to save them as new into the database?</source>
     </message>
     <message>
         <location filename="dlgpanelappereance.ui" line="66"/>
-        <source>Backgournd color : </source>
-        <translation></translation>
+        <source>Background color : </source>
+        <oldsource>Backgournd color : </oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dlgpanelappereance.ui" line="91"/>
         <location filename="dlgpanelappereance.ui" line="183"/>
-        <location filename="dlgpanelappereance.ui" line="205"/>
+        <location filename="dlgpanelappereance.ui" line="217"/>
         <source>Choose ...</source>
         <translation></translation>
     </message>
@@ -5601,22 +3663,22 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="158"/>
+        <location filename="dlgpanelappereance.ui" line="278"/>
         <source>sampletext</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="242"/>
+        <location filename="dlgpanelappereance.ui" line="257"/>
         <source> Preview </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="266"/>
+        <location filename="dlgpanelappereance.ui" line="320"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="279"/>
+        <location filename="dlgpanelappereance.ui" line="333"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
@@ -6046,347 +4108,6 @@ Do you want to save them as new into the database?</source>
     </message>
 </context>
 <context>
-    <name>dlgPatientEdit</name>
-    <message>
-        <location filename="dlgpatientedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="24"/>
-        <source>Main data</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="30"/>
-        <source> Identification </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="38"/>
-        <source>Name :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="55"/>
-        <source>Gender :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="62"/>
-        <source>Male</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="69"/>
-        <source>Female</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="100"/>
-        <source>Date of birth :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="117"/>
-        <source>yyyy/MM/dd</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="80"/>
-        <source>Unique identification :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="127"/>
-        <source>Age :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="871"/>
-        <source>Illness group :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="945"/>
-        <source>Medicines :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="962"/>
-        <source>Medicine allergy :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="993"/>
-        <source>Statistical data</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="457"/>
-        <source>Additional data</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="164"/>
-        <source> Patient&apos;s card </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="170"/>
-        <source>Barcode :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="202"/>
-        <source>Type of card :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="219"/>
-        <source> Classification / Discount </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="227"/>
-        <source>Regular customer</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="234"/>
-        <source>Employee</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="241"/>
-        <source>Service</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="265"/>
-        <source>Client of health insurance company :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="283"/>
-        <location filename="dlgpatientedit.ui" line="310"/>
-        <location filename="dlgpatientedit.ui" line="344"/>
-        <location filename="dlgpatientedit.ui" line="420"/>
-        <location filename="dlgpatientedit.ui" line="887"/>
-        <source>...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="292"/>
-        <source>Member of company :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="319"/>
-        <source>Proposed by ... :</source>
-        <oldsource>Proposed by doctor :</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="358"/>
-        <source> Discount </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="364"/>
-        <source>Type of discount : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="371"/>
-        <source>fix value</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="378"/>
-        <source>percent</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="388"/>
-        <source>  Value of discount : </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="606"/>
-        <source>floor</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="626"/>
-        <source>door</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="663"/>
-        <source>Addresses ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="675"/>
-        <source> Accessibility </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="703"/>
-        <source>+; </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="780"/>
-        <source> Comment </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1122"/>
-        <source>Independent from the local studio.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1081"/>
-        <source>Finish later ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="463"/>
-        <source> Address </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="471"/>
-        <source>Country :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="481"/>
-        <source>Region :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="537"/>
-        <source>City: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="505"/>
-        <source>Zip :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="560"/>
-        <source>Search the string defined in &apos;city&apos; field in database for region and zip code.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="576"/>
-        <source>Verify region-zip-city fields with values stored in database.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="681"/>
-        <source>Phone number :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="700"/>
-        <source>Country calling code</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="725"/>
-        <source>Region calling code</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="744"/>
-        <source>Phone number</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="757"/>
-        <source>E-Mail address :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="767"/>
-        <source>@</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="806"/>
-        <source>Actual condition</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="814"/>
-        <source>Height (cm):</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="834"/>
-        <source>Weight (kg):</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="913"/>
-        <source>Illness(es) :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="927"/>
-        <source>Symptom(s) :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1042"/>
-        <source>Save</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1055"/>
-        <source>Cancel</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1001"/>
-        <source>Place the patient comes from :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1011"/>
-        <source>Reason of visit :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientedit.ui" line="1094"/>
-        <source>Attendances ...</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgPatientOriginEdit</name>
-    <message>
-        <location filename="dlgpatientoriginedit.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientoriginedit.ui" line="22"/>
-        <source>Name :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgpatientoriginedit.ui" line="34"/>
-        <source>Independent from the local studio.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>dlgPreferences</name>
     <message>
         <location filename="dlgpreferences.ui" line="17"/>
@@ -6581,6 +4302,210 @@ Do you want to save them as new into the database?</source>
     </message>
 </context>
 <context>
+    <name>dlgProductActionTypeEdit</name>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="22"/>
+        <source>Identification </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="28"/>
+        <source>Name :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="41"/>
+        <source> Action effect </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="49"/>
+        <source>Action will ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="71"/>
+        <source>increase the count of defined product</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="78"/>
+        <source>decrease the count of defined product</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="91"/>
+        <source>Independent from the local studio.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="102"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="115"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dlgProductEdit</name>
+    <message>
+        <location filename="dlgproductedit.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="22"/>
+        <source>Identification </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="28"/>
+        <source>Name :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="41"/>
+        <source> Price </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="47"/>
+        <source>Price :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="60"/>
+        <source>VAT percent :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="73"/>
+        <source> Product Types </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="81"/>
+        <source>Assigned product types:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="127"/>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="140"/>
+        <source>&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="153"/>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="166"/>
+        <source>&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="190"/>
+        <source>Independent product types:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="218"/>
+        <source>Independent from the local studio.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="229"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="242"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dlgProductTypeEdit</name>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="22"/>
+        <source>Identification </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="28"/>
+        <source>Name :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="41"/>
+        <source> Products </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="49"/>
+        <source>Assigned to product type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="95"/>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="108"/>
+        <source>&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="121"/>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="134"/>
+        <source>&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="158"/>
+        <source>Products independent from this type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="189"/>
+        <source>Independent from the local studio.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="200"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproducttypeedit.ui" line="213"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>dlgProgress</name>
     <message>
         <location filename="dlgprogress.ui" line="17"/>
@@ -6649,104 +4574,6 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgserialreg.ui" line="58"/>
         <source>Validate</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dlgSynchronization</name>
-    <message>
-        <location filename="dlgsynchronization.ui" line="14"/>
-        <source>Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="25"/>
-        <source> Tables to be synchronized </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="36"/>
-        <source>Application users</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="46"/>
-        <source>Patient origins</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="56"/>
-        <source>Reasons to visit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="66"/>
-        <source>Illness groups</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="76"/>
-        <source>Health Insurance Funds</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="86"/>
-        <source>Companies</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="96"/>
-        <source>Doctors ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="106"/>
-        <source>Application data</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="120"/>
-        <source>Patients</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="130"/>
-        <source>Attendances</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="140"/>
-        <source>Patientcard types</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="150"/>
-        <source>Patientcards</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="160"/>
-        <source>Patientcard history</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="170"/>
-        <source>Discounts</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="180"/>
-        <source>Ledger</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="207"/>
-        <source>Exit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgsynchronization.ui" line="239"/>
-        <source>Start synchronization</source>
         <translation></translation>
     </message>
 </context>
@@ -6855,507 +4682,532 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="96"/>
-        <source>Patient</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="105"/>
+        <location filename="wndmain.ui" line="101"/>
         <source>Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="116"/>
-        <source>Attendance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="125"/>
+        <location filename="wndmain.ui" line="112"/>
         <source>PatientCard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="161"/>
+        <location filename="wndmain.ui" line="144"/>
+        <location filename="wndmain.ui" line="191"/>
+        <location filename="wndmain.ui" line="213"/>
+        <location filename="wndmain.ui" line="237"/>
+        <location filename="wndmain.ui" line="257"/>
+        <location filename="wndmain.ui" line="276"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="211"/>
+        <location filename="wndmain.ui" line="301"/>
         <source>E&amp;xit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="216"/>
+        <location filename="wndmain.ui" line="306"/>
         <source>&amp;Preferences ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="221"/>
+        <location filename="wndmain.ui" line="311"/>
         <source>&amp;Logs ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="226"/>
+        <location filename="wndmain.ui" line="316"/>
         <source>Log &amp;Out</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="231"/>
+        <location filename="wndmain.ui" line="321"/>
         <source>&amp;Users ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="236"/>
+        <location filename="wndmain.ui" line="326"/>
         <source>&amp;Hardware test ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="241"/>
+        <location filename="wndmain.ui" line="331"/>
         <source>P&amp;anel types ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="246"/>
+        <location filename="wndmain.ui" line="336"/>
         <source>Patient origin ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="251"/>
+        <location filename="wndmain.ui" line="341"/>
         <source>Reason to visit ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="256"/>
+        <location filename="wndmain.ui" line="346"/>
         <source>Start Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="259"/>
+        <location filename="wndmain.ui" line="349"/>
         <source>Start Current Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="264"/>
+        <location filename="wndmain.ui" line="354"/>
         <source>Reset Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="267"/>
+        <location filename="wndmain.ui" line="357"/>
         <source>Reset Current Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="272"/>
+        <location filename="wndmain.ui" line="362"/>
         <source>DeviceSettings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="275"/>
+        <location filename="wndmain.ui" line="365"/>
         <source>Current Device Settings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="280"/>
+        <location filename="wndmain.ui" line="370"/>
         <source>Patients ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="288"/>
+        <location filename="wndmain.ui" line="378"/>
         <source>Create new patient</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="285"/>
+        <location filename="wndmain.ui" line="375"/>
         <source>Create new patient ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="80"/>
+        <location filename="wndmain.ui" line="85"/>
         <source>&amp;Tools</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="92"/>
+        <location filename="wndmain.ui" line="97"/>
         <source>&amp;Action</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="139"/>
+        <location filename="wndmain.ui" line="122"/>
         <source>&amp;Reports</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="293"/>
+        <location filename="wndmain.ui" line="169"/>
+        <source>toolBar_2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="383"/>
         <source>Attendances ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="298"/>
+        <location filename="wndmain.ui" line="388"/>
         <source>Select actual patient...</source>
         <oldsource>Select actual ...</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="301"/>
+        <location filename="wndmain.ui" line="391"/>
         <source>Select actual patient</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="306"/>
-        <location filename="wndmain.ui" line="309"/>
+        <location filename="wndmain.ui" line="396"/>
+        <location filename="wndmain.ui" line="399"/>
         <source>Deselect actual patient</source>
         <oldsource>Deselect actual</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="314"/>
+        <location filename="wndmain.ui" line="404"/>
         <source>Create new attendance ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="317"/>
+        <location filename="wndmain.ui" line="407"/>
         <source>Add new attendance for actual patient</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="322"/>
+        <location filename="wndmain.ui" line="412"/>
         <source>Cards ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="325"/>
+        <location filename="wndmain.ui" line="415"/>
         <source>Patient cards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="330"/>
+        <location filename="wndmain.ui" line="420"/>
         <source>Use with card ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="333"/>
+        <location filename="wndmain.ui" line="423"/>
         <source>Use device with patient card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="338"/>
+        <location filename="wndmain.ui" line="428"/>
         <source>Use by time ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="341"/>
+        <location filename="wndmain.ui" line="431"/>
         <source>Use device with defined time period</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="346"/>
+        <location filename="wndmain.ui" line="436"/>
         <source>Panel statuses ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="351"/>
+        <location filename="wndmain.ui" line="441"/>
         <source>Card types ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="354"/>
+        <location filename="wndmain.ui" line="444"/>
         <source>Patientcard types</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="359"/>
+        <location filename="wndmain.ui" line="449"/>
         <source>Save to database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="364"/>
+        <location filename="wndmain.ui" line="454"/>
         <source>Activate existing ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="369"/>
+        <location filename="wndmain.ui" line="459"/>
         <source>Accounting ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="372"/>
+        <location filename="wndmain.ui" line="462"/>
         <source>Main accounting</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="377"/>
+        <location filename="wndmain.ui" line="467"/>
         <source>Cassa ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="380"/>
+        <location filename="wndmain.ui" line="470"/>
         <source>Cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="385"/>
+        <location filename="wndmain.ui" line="475"/>
         <source>Skip status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="388"/>
+        <location filename="wndmain.ui" line="478"/>
         <source>Skip actual status and step to next status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="393"/>
+        <location filename="wndmain.ui" line="483"/>
         <source>Sell / refill patientcard</source>
         <oldsource>Sell patientcard</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="396"/>
+        <location filename="wndmain.ui" line="486"/>
         <source>Sell inactive or refill active patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="401"/>
+        <location filename="wndmain.ui" line="491"/>
         <source>Doctor schedule</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="404"/>
+        <location filename="wndmain.ui" line="494"/>
         <source>Schedule of doctor&apos;s consulting hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="409"/>
+        <location filename="wndmain.ui" line="499"/>
         <source>Device schedule</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="412"/>
+        <location filename="wndmain.ui" line="502"/>
         <source>Schedule of device useability</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="417"/>
+        <location filename="wndmain.ui" line="507"/>
         <source>Fullfill postponed patient</source>
         <oldsource>Fullfill postponed</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="420"/>
+        <location filename="wndmain.ui" line="510"/>
         <source>Fullfill data for postponed patients</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="425"/>
+        <location filename="wndmain.ui" line="515"/>
         <source>Fullfill postponed attendance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="428"/>
+        <location filename="wndmain.ui" line="518"/>
         <source>Fullfill data for postponed attendances</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="433"/>
+        <location filename="wndmain.ui" line="523"/>
         <source>Validate Serial key ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="438"/>
+        <location filename="wndmain.ui" line="528"/>
         <source>Edit actual ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="441"/>
+        <location filename="wndmain.ui" line="531"/>
         <source>Edit actual patient</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="446"/>
+        <location filename="wndmain.ui" line="536"/>
         <source>Select actual attendance...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="449"/>
+        <location filename="wndmain.ui" line="539"/>
         <source>Select actual attendance for actual patient.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="454"/>
+        <location filename="wndmain.ui" line="544"/>
         <source>Deselect actual attendance...</source>
         <oldsource>Deselect actual ...</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="457"/>
+        <location filename="wndmain.ui" line="547"/>
         <source>Deselect actual attendance of actual patient.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="462"/>
+        <location filename="wndmain.ui" line="552"/>
         <source>Edit actual attendance...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="465"/>
+        <location filename="wndmain.ui" line="555"/>
         <source>Edit actual attendance of actual patient.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="470"/>
+        <location filename="wndmain.ui" line="560"/>
         <source>PayCash</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="473"/>
+        <location filename="wndmain.ui" line="563"/>
         <source>Pay cash usage of panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="478"/>
+        <location filename="wndmain.ui" line="568"/>
         <source>Illness group ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="483"/>
+        <location filename="wndmain.ui" line="573"/>
         <source>Companies ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="488"/>
+        <location filename="wndmain.ui" line="578"/>
         <source>Doctors ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="493"/>
+        <location filename="wndmain.ui" line="583"/>
         <source>Health Insurance Funds ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="498"/>
+        <location filename="wndmain.ui" line="588"/>
         <source>Region, Zip, City ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="503"/>
+        <location filename="wndmain.ui" line="593"/>
         <source>Patients</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="506"/>
+        <location filename="wndmain.ui" line="596"/>
         <source>Report of patients</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="511"/>
+        <location filename="wndmain.ui" line="601"/>
         <source>Cassa history</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="514"/>
+        <location filename="wndmain.ui" line="604"/>
         <source>History of cassa actions</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="519"/>
+        <location filename="wndmain.ui" line="609"/>
         <source>Attendances</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="522"/>
+        <location filename="wndmain.ui" line="612"/>
         <source>Report of attendances</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="527"/>
+        <location filename="wndmain.ui" line="617"/>
         <source>Patientcard uses</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="530"/>
+        <location filename="wndmain.ui" line="620"/>
         <source>List of patientcard uses</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="535"/>
+        <location filename="wndmain.ui" line="625"/>
         <source>Edit Licence information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="538"/>
+        <location filename="wndmain.ui" line="628"/>
         <source>Edit Licence information such as Studio name, address, contact person etc.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="543"/>
+        <location filename="wndmain.ui" line="633"/>
         <source>Patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="546"/>
+        <location filename="wndmain.ui" line="636"/>
         <source>List of active patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="551"/>
+        <location filename="wndmain.ui" line="641"/>
         <source>Discounts ...</source>
         <oldsource>Discounts</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="554"/>
+        <location filename="wndmain.ui" line="644"/>
         <source>Different type of discounts</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="559"/>
+        <location filename="wndmain.ui" line="649"/>
         <source>Obsolete Patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="562"/>
+        <location filename="wndmain.ui" line="652"/>
         <source>List of patientcards will be obsolete in the near future.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="567"/>
+        <location filename="wndmain.ui" line="657"/>
         <source>Synchronize database ...</source>
         <oldsource>Synchronize database</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="570"/>
+        <location filename="wndmain.ui" line="660"/>
         <source>Synchronize database with server database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="575"/>
+        <location filename="wndmain.ui" line="665"/>
         <source>Get global data ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="578"/>
+        <location filename="wndmain.ui" line="668"/>
         <source>Get global data from server</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="583"/>
+        <location filename="wndmain.ui" line="673"/>
         <source>Establish connection</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="586"/>
+        <location filename="wndmain.ui" line="676"/>
         <source>Establish connection with server</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="591"/>
+        <location filename="wndmain.ui" line="681"/>
         <source>Empty demo database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="594"/>
+        <location filename="wndmain.ui" line="684"/>
         <source>Delete all data attached to demo licence key.</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="689"/>
+        <source>Guests ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="692"/>
+        <source>Guests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="697"/>
+        <source>Product Types ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="702"/>
+        <source>Products ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="707"/>
+        <source>Product Action Types ...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

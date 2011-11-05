@@ -51,6 +51,7 @@
 #include "crud/dlgzipregioncity.h"
 //#include "crud/dlgdiscount.h"
 #include "crud/dlgproducttype.h"
+#include "crud/dlgproductactiontype.h"
 #include "crud/dlgproduct.h"
 
 //====================================================================================
@@ -156,6 +157,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
 
     action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
+    action_ProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
     action_Products->setIcon( QIcon("./resources/40x40_product.png") );
 
     action_PayCash->setIcon( QIcon( "./resources/40x40_paycash.png" ) );
@@ -1306,6 +1308,13 @@ void cWndMain::on_action_ProductTypes_triggered()
     cDlgProductType obDlgProductType( this );
 
     obDlgProductType.exec();
+}
+//====================================================================================
+void cWndMain::on_action_ProductActionType_triggered()
+{
+    cDlgProductActionType obDlgProductActionType( this );
+
+    obDlgProductActionType.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Products_triggered()

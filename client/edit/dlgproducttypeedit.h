@@ -17,8 +17,6 @@ protected:
     cDBProductType *m_poProductType;
 
 private slots:
-    void on_chkStore_toggled(bool checked);
-    void on_chkStorageRoom_toggled(bool checked);
     void on_pbProductRemoveAll_clicked();
     void on_pbProductRemove_clicked();
     void on_pbProductAddAll_clicked();
