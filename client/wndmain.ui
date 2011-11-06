@@ -92,7 +92,7 @@
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
-   <widget class="QMenu" name="menuAction">
+   <widget class="QMenu" name="menu_Action">
     <property name="title">
      <string>&amp;Action</string>
     </property>
@@ -111,13 +111,23 @@
      <property name="title">
       <string>PatientCard</string>
      </property>
+     <addaction name="action_PatientCardSell"/>
+     <addaction name="separator"/>
      <addaction name="action_PCSaveToDatabase"/>
     </widget>
+    <widget class="QMenu" name="menuProduct">
+     <property name="title">
+      <string>Product</string>
+     </property>
+     <addaction name="action_SellProduct"/>
+    </widget>
+    <addaction name="menuDevice"/>
+    <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
-    <addaction name="menuDevice"/>
+    <addaction name="menuProduct"/>
    </widget>
-   <widget class="QMenu" name="menu_View_2">
+   <widget class="QMenu" name="menu_Reports">
     <property name="title">
      <string>&amp;Reports</string>
     </property>
@@ -134,8 +144,8 @@
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
-   <addaction name="menuAction"/>
-   <addaction name="menu_View_2"/>
+   <addaction name="menu_Action"/>
+   <addaction name="menu_Reports"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -168,6 +178,9 @@
    <property name="windowTitle">
     <string>toolBar_2</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <property name="iconSize">
     <size>
      <width>40</width>
@@ -190,6 +203,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <property name="iconSize">
     <size>
      <width>40</width>
@@ -211,6 +227,9 @@
   <widget class="QToolBar" name="toolBarDeviceUse">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
    </property>
    <property name="iconSize">
     <size>
@@ -236,6 +255,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <property name="iconSize">
     <size>
      <width>40</width>
@@ -250,11 +272,17 @@
    </attribute>
    <addaction name="action_PatientCardSell"/>
    <addaction name="action_PayCash"/>
+   <addaction name="action_SellProduct"/>
+   <addaction name="separator"/>
+   <addaction name="action_ShoppingCart"/>
    <addaction name="action_Cassa"/>
   </widget>
   <widget class="QToolBar" name="toolBarSchedule">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
    </property>
    <property name="iconSize">
     <size>
@@ -276,7 +304,7 @@
     <string>toolBar</string>
    </property>
    <property name="movable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
@@ -705,6 +733,16 @@
   <action name="action_ProductActionType">
    <property name="text">
     <string>Product Action Types ...</string>
+   </property>
+  </action>
+  <action name="action_SellProduct">
+   <property name="text">
+    <string>Sell Product</string>
+   </property>
+  </action>
+  <action name="action_ShoppingCart">
+   <property name="text">
+    <string>Shopping cart</string>
    </property>
   </action>
  </widget>

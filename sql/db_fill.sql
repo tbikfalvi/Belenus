@@ -167,6 +167,11 @@ INSERT INTO `products` (`productId`, `licenceId`, `name`, `netPrice`, `vatpercen
 UPDATE `products` SET `productId`='0' WHERE `productId`=1;
 ALTER TABLE `products` auto_increment=1;
 
+INSERT INTO `productActionType` (`productActionTypeId`, `name`, `increaseProductCount`, `decreaseProductCount`, `licenceId`, `active`, `archive` ) VALUES
+ ('0', '', '0', '0', '0', 0, "ARC" );
+UPDATE `productActionType` SET `productActionTypeId`='0' WHERE `productActionTypeId`=1;
+ALTER TABLE `productActionType` auto_increment=1;
+
 INSERT INTO `discounts` (`discountId`, `licenceId`, `healthInsuranceId`, `companyId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `active`, `archive`) VALUES
  ('0', '0', NULL, NULL, '0', '0', '0', '', '', '', 0, "ARC" );
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;

@@ -759,7 +759,7 @@ CREATE TABLE `cassaDenominations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Fizetesi modokat tartalmazo szamla
+-- Fizetesi modokat tartalmazo tabla
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `paymentMethods` (
   `paymentMethodId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
@@ -769,6 +769,30 @@ CREATE TABLE `paymentMethods` (
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`paymentMethodId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Bevasarlo kosar elemeit tartalmazo tabla
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `shoppingCartItems` (
+  `shoppingCartItemId`      int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `itemName`                varchar(100)            NOT NULL,
+  `itemCount`               int(11)                 NOT NULL,
+  `itemNetPrice`            int(11)                 NOT NULL,
+  `itemVAT`                 int(11)                 NOT NULL,
+  `itemNetSumPrice`         int(11)                 NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`shoppingCartItemId`,`licenceID`),
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1117,8 +1141,10 @@ ALTER TABLE `products` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `productstock` (`stockId` ,`storeId` ,`licenceId`) VALUES
- ('0', '0', '0');
+INSERT INTO `productActionType` (`productActionTypeId`, `name`, `increaseProductCount`, `decreaseProductCount`, `licenceId`, `active`, `archive` ) VALUES
+ ('0', '', '0', '0', '0', 0, "ARC" );
+UPDATE `productActionType` SET `productActionTypeId`='0' WHERE `productActionTypeId`=1;
+ALTER TABLE `productActionType` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 

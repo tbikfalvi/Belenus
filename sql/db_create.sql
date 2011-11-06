@@ -602,6 +602,27 @@ CREATE TABLE `paymentMethods` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `shoppingCartItems` (
+  `shoppingCartItemId`      int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `itemName`                varchar(100)            NOT NULL,
+  `itemCount`               int(11)                 NOT NULL,
+  `itemNetPrice`            int(11)                 NOT NULL,
+  `itemVAT`                 int(11)                 NOT NULL,
+  `itemNetSumPrice`         int(11)                 NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`shoppingCartItemId`,`licenceID`),
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `ledgerDevice` (
   `ledgerDeviceId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,

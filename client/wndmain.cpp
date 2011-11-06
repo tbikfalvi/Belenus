@@ -161,6 +161,8 @@ cWndMain::cWndMain( QWidget *parent )
     action_Products->setIcon( QIcon("./resources/40x40_product.png") );
 
     action_PayCash->setIcon( QIcon( "./resources/40x40_paycash.png" ) );
+    action_SellProduct->setIcon( QIcon( "./resources/40x40_productsell.png" ) );
+    action_ShoppingCart->setIcon( QIcon( "./resources/40x40_shoppingcart.png" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
     //--------------------------------------------------------------------------------
