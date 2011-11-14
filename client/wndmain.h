@@ -56,6 +56,9 @@ private:
     void processInputTimePeriod( int p_inSecond );
 
 private slots:
+    void on_action_CassaActionStorno_triggered();
+    void on_action_ShoppingCart_triggered();
+    void on_action_SellProduct_triggered();
     void on_action_ProductActionType_triggered();
     void on_action_Guests_triggered();
     void updateToolbar();

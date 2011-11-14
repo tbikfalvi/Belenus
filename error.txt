@@ -56,3 +56,11 @@ Hibajelenseg	: Bérlet használat dialog-nál nem lehet a felhasználható egységek s
 Megoldva	: 
 Megoldas	: 
 ----------------------------------------------------------------------------------------------------
+
+Datum		: 2011.11.14
+Hibajelenseg	: Pénztár nem-zárás/folytatás nem jó, mert ha azt választom, hogy nem zárom le és 
+		  folytatom, akkor is új ID-val csinál cassa-t
+Megoldva	: 
+Megoldas	: 
+----------------------------------------------------------------------------------------------------
+

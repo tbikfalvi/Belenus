@@ -121,11 +121,19 @@
      </property>
      <addaction name="action_SellProduct"/>
     </widget>
+    <widget class="QMenu" name="menuCassa">
+     <property name="title">
+      <string>Cassa</string>
+     </property>
+     <addaction name="action_CassaActionStorno"/>
+    </widget>
     <addaction name="menuDevice"/>
     <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
     <addaction name="menuProduct"/>
+    <addaction name="separator"/>
+    <addaction name="menuCassa"/>
    </widget>
    <widget class="QMenu" name="menu_Reports">
     <property name="title">
@@ -270,9 +278,11 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_PatientCardSell"/>
    <addaction name="action_PayCash"/>
+   <addaction name="action_PatientCardSell"/>
    <addaction name="action_SellProduct"/>
+   <addaction name="separator"/>
+   <addaction name="action_CassaActionStorno"/>
    <addaction name="separator"/>
    <addaction name="action_ShoppingCart"/>
    <addaction name="action_Cassa"/>
@@ -743,6 +753,11 @@
   <action name="action_ShoppingCart">
    <property name="text">
     <string>Shopping cart</string>
+   </property>
+  </action>
+  <action name="action_CassaActionStorno">
+   <property name="text">
+    <string>Cassa action storno</string>
    </property>
   </action>
  </widget>

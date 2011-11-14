@@ -164,6 +164,7 @@ cWndMain::cWndMain( QWidget *parent )
     action_SellProduct->setIcon( QIcon( "./resources/40x40_productsell.png" ) );
     action_ShoppingCart->setIcon( QIcon( "./resources/40x40_shoppingcart.png" ) );
     action_Cassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
+    action_CassaActionStorno->setIcon( QIcon( "./resources/40x40_cassa_storno.png" ) );
 
     //--------------------------------------------------------------------------------
     // Menu items
@@ -187,6 +188,9 @@ cWndMain::cWndMain( QWidget *parent )
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
+
+    menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
+    menuCassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
 //    menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
 //    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.png") );
@@ -1324,6 +1328,20 @@ void cWndMain::on_action_Products_triggered()
     cDlgProduct obDlgProduct( this );
 
     obDlgProduct.exec();
+}
+void cWndMain::on_action_SellProduct_triggered()
+{
+
+}
+//====================================================================================
+void cWndMain::on_action_ShoppingCart_triggered()
+{
+
+}
+//====================================================================================
+void cWndMain::on_action_CassaActionStorno_triggered()
+{
+
 }
 //====================================================================================
 void cWndMain::on_action_PCSaveToDatabase_triggered()

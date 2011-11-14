@@ -56,7 +56,7 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );
     pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.png") );
 
-    pbMore->setEnabled( false );
+//    pbMore->setEnabled( false );
 
     dtStartDate->setEnabled( false );
     dtStopDate->setEnabled( false );
@@ -86,28 +86,37 @@ void cDlgCassaEdit::setupTableView()
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Denomination" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Value" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Date/Time" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Amount of money" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Actual balance" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "User" ) );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Denomination" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Value" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Date/Time" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Amount of money" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Actual balance" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "User" ) );
     }
+
+    tbvCassa->resizeColumnToContents( 1 );
+    tbvCassa->resizeColumnToContents( 2 );
+    tbvCassa->resizeColumnToContents( 3 );
+    tbvCassa->resizeColumnToContents( 4 );
+    tbvCassa->resizeColumnToContents( 5 );
 }
 
 void cDlgCassaEdit::refreshTable()
 {
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString( "SELECT cassaDenominations.denominationId, cassaDenominations.licenceId, denominations.denomination, cassaDenominations.value, denominations.comment, cassaDenominations.archive FROM cassaDenominations, denominations WHERE denominations.denominationId=cassaDenominations.denominationId AND cassaDenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaHistoryId, cassahistory.licenceId, cassahistory.comment, actionTime, actionValue, actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
     }
     else
     {
-        m_qsQuery = QString( "SELECT cassaDenominations.denominationId as id, denominations.denomination, cassaDenominations.value, denominations.comment FROM cassaDenominations, denominations WHERE denominations.denominationId=cassaDenominations.denominationId AND cassaDenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaHistoryId as id, cassahistory.comment, actionTime, actionValue, actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
     }
 
     tbvCassa->selectionModel()->blockSignals( true );
@@ -206,6 +215,7 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
         obCassa.load( g_obCassa.cassaId() );
         lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
     }
+    refreshTable();
 }
 
 void cDlgCassaEdit::on_pbCashGet_clicked()
@@ -232,18 +242,23 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
         obCassa.load( g_obCassa.cassaId() );
         lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
     }
+    refreshTable();
 }
 
 void cDlgCassaEdit::on_pbMore_clicked()
 {
-    if( height() == 421 )
+    if( pbMore->text().compare( tr("Less <<") ) == 0 )
     {
-        resize( width(), 148 );
+        gbCassaHistory->setVisible( false );
         tbvCassa->setEnabled( false );
+        pbMore->setText( tr("More >>") );
+        resize( 706, 148 );
     }
-    else if( height() == 148 )
+    else
     {
-        resize( width(), 421 );
+        gbCassaHistory->setVisible( true );
         tbvCassa->setEnabled( true );
+        pbMore->setText( tr("Less <<") );
+        resize( 706, 421 );
     }
 }
