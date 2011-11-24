@@ -2,7 +2,7 @@
 #define DLGINPUTSTART_H
 
 #include "../belenus.h"
-#include "../ui_dlginputstart.h"
+#include "../../belenus-build-desktop/ui_dlginputstart.h"
 
 class cDlgInputStart : public QDialog, protected Ui::dlgInputStart
 {
@@ -13,7 +13,7 @@ public:
     virtual ~cDlgInputStart();
 
     void setInitialText( const QString &p_stText );
-    void init();
+    void init( const QString &p_qsText = "" );
     QString getEditText();
 
     bool m_bTime;

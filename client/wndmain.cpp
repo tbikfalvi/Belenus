@@ -1243,46 +1243,46 @@ void cWndMain::on_action_UseWithCard_triggered()
     cDlgInputStart  obDlgInputStart( this );
 
     obDlgInputStart.m_bCard = true;
-    obDlgInputStart.init();
+    obDlgInputStart.init( g_poPrefs->getBarcodePrefix() );
 
-    QString      qsBarcode = "";
-    QSqlQuery   *poQuery;
+//    QString      qsBarcode = "";
+//    QSqlQuery   *poQuery;
 
 // 'SOLARIUM GUEST'
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(0/*g_obPatient.id()*/) );
-    if( poQuery->first() )
-    {
-        qsBarcode = poQuery->value(0).toString();
+//    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(0/*g_obPatient.id()*/) );
+//    if( poQuery->first() )
+//    {
+//        qsBarcode = poQuery->value(0).toString();
 
-        if( QMessageBox::question( this, tr("Question"),
-                                   tr("A patientcard with barcode [%1]\n"
-                                      "attached to the actual patient.\n\n"
-                                      "Do you want to use this patientcard?").arg(qsBarcode),
-                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-        {
-            processInputPatientCard( qsBarcode );
-        }
-        else
-        {
+//        if( QMessageBox::question( this, tr("Question"),
+//                                   tr("A patientcard with barcode [%1]\n"
+//                                      "attached to the actual patient.\n\n"
+//                                      "Do you want to use this patientcard?").arg(qsBarcode),
+//                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+//        {
+//            processInputPatientCard( qsBarcode );
+//        }
+//        else
+//        {
             if( obDlgInputStart.exec() == QDialog::Accepted )
                 processInputPatientCard( obDlgInputStart.getEditText() );
-        }
-    }
-    else
-    {
-        if( QMessageBox::question( this, tr("Question"),
-                                   tr("There is no patientcard attached to the actual patient.\n"
-                                      "Do you want to sell a patientcard for the actual patient?"),
-                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-        {
-            on_action_PatientCardSell_triggered();
-        }
-        else
-        {
-            if( obDlgInputStart.exec() == QDialog::Accepted )
-                processInputPatientCard( obDlgInputStart.getEditText() );
-        }
-    }
+//        }
+//    }
+//    else
+//    {
+//        if( QMessageBox::question( this, tr("Question"),
+//                                   tr("There is no patientcard attached to the actual patient.\n"
+//                                      "Do you want to sell a patientcard for the actual patient?"),
+//                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+//        {
+//            on_action_PatientCardSell_triggered();
+//        }
+//        else
+//        {
+//            if( obDlgInputStart.exec() == QDialog::Accepted )
+//                processInputPatientCard( obDlgInputStart.getEditText() );
+//        }
+//    }
 }
 //====================================================================================
 void cWndMain::on_action_UseByTime_triggered()

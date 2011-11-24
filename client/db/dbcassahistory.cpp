@@ -29,6 +29,7 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const unsigned int p_uiCassaId,
                              const unsigned int p_uiUserId,
+                             const unsigned int p_uiPatientId,
                              const int p_inActionValue,
                              const int p_inActionBalance,
                              const QString &p_qsActionTime,
@@ -41,6 +42,7 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
     m_uiLicenceId       = p_uiLicenceId;
     m_uiCassaId         = p_uiCassaId;
     m_uiUserId          = p_uiUserId;
+    m_uiPatientId       = p_uiPatientId;
     m_inActionValue     = p_inActionValue;
     m_inActionBalance   = p_inActionBalance;
     m_qsActionTime      = p_qsActionTime;
@@ -56,6 +58,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inCassaIdIdx        = p_obRecord.indexOf( "cassaId" );
     int inUserIdIdx         = p_obRecord.indexOf( "userId" );
+    int inPatientIdIdx      = p_obRecord.indexOf( "patientId" );
     int inActionValueIdx    = p_obRecord.indexOf( "actionValue" );
     int inActionBalanceIdx  = p_obRecord.indexOf( "actionBalance" );
     int inActionTimeIdx     = p_obRecord.indexOf( "actionTime" );
@@ -68,6 +71,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inCassaIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
+          p_obRecord.value( inPatientIdIdx ).toUInt(),
           p_obRecord.value( inActionValueIdx ).toInt(),
           p_obRecord.value( inActionBalanceIdx ).toInt(),
           p_obRecord.value( inActionTimeIdx ).toString(),
@@ -113,6 +117,7 @@ void cDBCassaHistory::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "cassaId = \"%1\", " ).arg( m_uiCassaId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
+    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
     qsQuery += QString( "actionBalance = \"%1\", " ).arg( m_inActionBalance );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
@@ -196,6 +201,16 @@ unsigned int cDBCassaHistory::userId() const throw()
 void cDBCassaHistory::setUserId( const unsigned int p_uiUserId ) throw()
 {
     m_uiUserId = p_uiUserId;
+}
+
+unsigned int cDBCassaHistory::patientId() const throw()
+{
+    return m_uiPatientId;
+}
+
+void cDBCassaHistory::setPatientId( const unsigned int p_uiPatientId ) throw()
+{
+    m_uiPatientId = p_uiPatientId;
 }
 
 int cDBCassaHistory::actionValue() const throw()

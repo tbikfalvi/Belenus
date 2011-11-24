@@ -22,6 +22,8 @@ public:
     void            setCassaId( const unsigned int p_uiCassaId )        throw();
     unsigned int    userId() const                                      throw();
     void            setUserId( const unsigned int p_uiUserId )          throw();
+    unsigned int    patientId() const                                   throw();
+    void            setPatientId( const unsigned int p_uiPatientId )    throw();
     int             actionValue() const                                 throw();
     void            setActionValue( const int p_inActionValue )         throw();
     int             actionBalance() const                               throw();
@@ -30,7 +32,7 @@ public:
     void            setActionTime( const QString &p_qsActionTime )      throw();
     QString         comment() const                                     throw();
     void            setComment( const QString &p_qsComment )            throw();
-    QString         modified() const                                                throw();
+    QString         modified() const                                    throw();
     bool            active() const                                      throw();
     void            setActive( const bool p_bActive )                   throw();
     QString         archive() const                                     throw();
@@ -41,6 +43,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiCassaId;
     unsigned int    m_uiUserId;
+    unsigned int    m_uiPatientId;
     int             m_inActionValue;
     int             m_inActionBalance;
     QString         m_qsActionTime;
@@ -53,6 +56,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiCassaId = 0,
                const unsigned int p_uiUserId = 0,
+               const unsigned int p_uiPatientId = 0,
                const int p_inActionValue = 0,
                const int p_inActionBalance = 0,
                const QString &p_qsActionTime = "",

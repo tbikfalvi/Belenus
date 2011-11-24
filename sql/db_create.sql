@@ -566,6 +566,7 @@ CREATE TABLE `cassaHistory` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `cassaId`                 int(10) unsigned        NOT NULL,
   `userId`                  int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
   `actionValue`             int(11)                 NOT NULL,
   `actionBalance`           int(11)                 NOT NULL,
   `actionTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -576,7 +577,8 @@ CREATE TABLE `cassaHistory` (
   PRIMARY KEY (`cassaHistoryId`,`licenceID`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`cassaId`) REFERENCES `cassa` (`cassaId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cassaDenominations` (

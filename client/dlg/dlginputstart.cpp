@@ -26,13 +26,15 @@ cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     pbTime->setEnabled( false );
     pbCardcode->setEnabled( false );
     pbPatient->setEnabled( false );
+
+    pbPatient->setVisible( false );
 }
 
 cDlgInputStart::~cDlgInputStart()
 {
 }
 
-void cDlgInputStart::init()
+void cDlgInputStart::init( const QString &p_qsText )
 {
     m_bInitCalled = true;
 
@@ -55,6 +57,11 @@ void cDlgInputStart::init()
         pbPatient->setEnabled( true );
         lblAction->setText( tr("Entering patient name ...") );
     }
+
+    if( p_qsText.length() > 0 )
+        setInitialText( p_qsText );
+
+    m_bInitCalled = false;
 }
 
 void cDlgInputStart::setInitialText( const QString &p_stText )
@@ -71,12 +78,15 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 {
     if( m_bInitCalled ) return;
 
+    ledInputStart->setText( ledInputStart->text().remove( ' ' ) );
+
     bool boIsANumber = false;
     ledInputStart->text().toUInt( &boIsANumber );
 
     m_bTime = true;
     m_bCard = true;
-    m_bPat  = true;
+//    m_bPat  = true;
+    m_bPat  = false;
 
     pbTime->setEnabled( true );
     pbCardcode->setEnabled( true );
@@ -118,10 +128,10 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
 
 void cDlgInputStart::on_pbPatient_clicked()
 {
-    m_bPat = true;
-    m_bCard = false;
-    m_bTime = false;
-    QDialog::accept();
+//    m_bPat = true;
+//    m_bCard = false;
+//    m_bTime = false;
+//    QDialog::accept();
 }
 
 void cDlgInputStart::on_pbCardcode_clicked()

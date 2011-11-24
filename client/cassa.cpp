@@ -124,6 +124,7 @@ void cCassa::createNew( unsigned int p_uiUserId, int p_inBalance )
         obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
         obDBCassaHistory.setCassaId( m_pCassa->id() );
         obDBCassaHistory.setUserId( p_uiUserId );
+        obDBCassaHistory.setPatientId( 0 );
         obDBCassaHistory.setActionValue( 0 );
         obDBCassaHistory.setActionBalance( p_inBalance );
         obDBCassaHistory.setComment( QObject::tr("Open new cassa record.") );

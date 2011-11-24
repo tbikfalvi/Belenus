@@ -13,8 +13,11 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     setWindowTitle( tr("Cassa") );
     setWindowIcon( QIcon("./resources/40x40_cassa.png") );
 
-    resize( width(), 148 );
+    setMinimumHeight( 147 );
+    setMaximumHeight( 147 );
+//    resize( 706, 147 );
     tbvCassa->setEnabled( false );
+    gbCassaHistory->setVisible( false );
 
     m_qsQuery       = "";
     m_poModel       = new cQTMySQLQueryModel( this );
@@ -252,13 +255,19 @@ void cDlgCassaEdit::on_pbMore_clicked()
         gbCassaHistory->setVisible( false );
         tbvCassa->setEnabled( false );
         pbMore->setText( tr("More >>") );
-        resize( 706, 148 );
+        setMinimumHeight( 147 );
+        setMaximumHeight( 147 );
+//        resize( 706, 147 );
+        move( x(), y()+137 );
     }
     else
     {
         gbCassaHistory->setVisible( true );
         tbvCassa->setEnabled( true );
         pbMore->setText( tr("Less <<") );
-        resize( 706, 421 );
+        setMinimumHeight( 421 );
+        setMaximumHeight( 421 );
+//        resize( 706, 421 );
+        move( x(), y()-137 );
     }
 }
