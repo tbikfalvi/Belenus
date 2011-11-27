@@ -17,6 +17,7 @@
 #define PREFERENCES_H
 
 #include <QString>
+#include <QPoint>
 #include "../framework/sevexception.h"
 
 class cPreferences
@@ -115,6 +116,8 @@ public:
     void            setPostponedPatients( const unsigned int p_uiPostponedPatients );
     unsigned int    postponedAttendances() const;
     void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
+    void            setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize );
+    QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const;
 
 private:
     QString         m_qsFileName;

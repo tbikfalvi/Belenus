@@ -239,6 +239,18 @@ CREATE TABLE `doctors` (
 
 -- -----------------------------------------------------------------------------------
 -- Opcionalis.
+-- Nemek leirasat tartalmazza. Vendegekhez.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `genders` (
+  `genderId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `genderName`              varchar(50)             NOT NULL,
+  PRIMARY KEY (`genderId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Opcionalis.
 -- A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
@@ -1038,6 +1050,17 @@ INSERT INTO  `doctors` (`doctorId`, `licenceId`, `doctorTypeId`, `name`, `active
  (0, 0, 0, '', 0, 'ARC');
 UPDATE `doctors` SET `doctorId`=0 WHERE `doctorId`=1;
 ALTER TABLE `doctors` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES
+ ('0', '0', 'Nincs meghatározva');
+UPDATE `genders` SET `genderId`=0 WHERE `genderId`=1;
+ALTER TABLE `genders` auto_increment=1;
+
+INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES
+ ('1', '0', 'Férfi'),
+ ('2', '0', 'Nõ');
 
 -- -----------------------------------------------------------------------------------
 

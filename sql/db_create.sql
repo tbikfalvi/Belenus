@@ -164,6 +164,14 @@ CREATE TABLE `doctors` (
   FOREIGN KEY (`doctorTypeId`) REFERENCES `doctorTypes` (`doctorTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `genders` (
+  `genderId`                int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `genderName`              varchar(50)             NOT NULL,
+  PRIMARY KEY (`genderId`,`licenceID`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `patients` (
   `patientId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,

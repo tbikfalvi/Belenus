@@ -4,33 +4,33 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="cassa.cpp" line="129"/>
+        <location filename="cassa.cpp" line="130"/>
         <source>Open new cassa record.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="195"/>
+        <location filename="cassa.cpp" line="196"/>
         <source>Reopen cassa record.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="175"/>
-        <location filename="cassa.cpp" line="222"/>
+        <location filename="cassa.cpp" line="176"/>
+        <location filename="cassa.cpp" line="223"/>
         <source>Close cassa record.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="153"/>
+        <location filename="cassa.cpp" line="154"/>
         <source>Continue cassa record.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="230"/>
+        <location filename="cassa.cpp" line="231"/>
         <source>Add money to cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="256"/>
+        <location filename="cassa.cpp" line="257"/>
         <source>Remove money from cassa.</source>
         <translation></translation>
     </message>
@@ -372,64 +372,65 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="87"/>
+        <location filename="edit/dlgcassaedit.cpp" line="90"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="88"/>
+        <location filename="edit/dlgcassaedit.cpp" line="91"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="90"/>
-        <location filename="edit/dlgcassaedit.cpp" line="98"/>
+        <location filename="edit/dlgcassaedit.cpp" line="93"/>
+        <location filename="edit/dlgcassaedit.cpp" line="101"/>
         <source>Date/Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="91"/>
-        <location filename="edit/dlgcassaedit.cpp" line="99"/>
+        <location filename="edit/dlgcassaedit.cpp" line="94"/>
+        <location filename="edit/dlgcassaedit.cpp" line="102"/>
         <source>Amount of money</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgcassaedit.cpp" line="95"/>
+        <location filename="edit/dlgcassaedit.cpp" line="103"/>
+        <source>Actual balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgcassaedit.cpp" line="96"/>
+        <location filename="edit/dlgcassaedit.cpp" line="104"/>
+        <source>User</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgcassaedit.cpp" line="257"/>
+        <source>More &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgcassaedit.cpp" line="253"/>
+        <location filename="edit/dlgcassaedit.cpp" line="267"/>
+        <source>Less &lt;&lt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="92"/>
         <location filename="edit/dlgcassaedit.cpp" line="100"/>
-        <source>Actual balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcassaedit.cpp" line="93"/>
-        <location filename="edit/dlgcassaedit.cpp" line="101"/>
-        <source>User</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcassaedit.cpp" line="252"/>
-        <source>More &gt;&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcassaedit.cpp" line="258"/>
-        <source>Less &lt;&lt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcassaedit.cpp" line="89"/>
-        <location filename="edit/dlgcassaedit.cpp" line="97"/>
         <source>Comment</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="198"/>
-        <location filename="edit/dlgcassaedit.cpp" line="224"/>
+        <location filename="edit/dlgcassaedit.cpp" line="201"/>
+        <location filename="edit/dlgcassaedit.cpp" line="228"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="199"/>
-        <location filename="edit/dlgcassaedit.cpp" line="225"/>
+        <location filename="edit/dlgcassaedit.cpp" line="202"/>
+        <location filename="edit/dlgcassaedit.cpp" line="229"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -472,59 +473,71 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="30"/>
+        <location filename="crud/dlgguest.cpp" line="34"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="31"/>
+        <location filename="crud/dlgguest.cpp" line="35"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="32"/>
-        <location filename="crud/dlgguest.cpp" line="48"/>
+        <location filename="crud/dlgguest.cpp" line="36"/>
+        <location filename="crud/dlgguest.cpp" line="56"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="33"/>
-        <location filename="crud/dlgguest.cpp" line="49"/>
+        <location filename="crud/dlgguest.cpp" line="37"/>
+        <location filename="crud/dlgguest.cpp" line="57"/>
         <source>UniqueId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="34"/>
+        <location filename="crud/dlgguest.cpp" line="38"/>
+        <location filename="crud/dlgguest.cpp" line="58"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgguest.cpp" line="39"/>
+        <location filename="crud/dlgguest.cpp" line="59"/>
+        <source>Date of birth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgguest.cpp" line="40"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="35"/>
+        <location filename="crud/dlgguest.cpp" line="41"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="88"/>
+        <location filename="crud/dlgguest.cpp" line="100"/>
         <source>New Guest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="125"/>
+        <location filename="crud/dlgguest.cpp" line="137"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="126"/>
+        <location filename="crud/dlgguest.cpp" line="138"/>
         <source>Are you sure you want to delete this Guest?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="135"/>
+        <location filename="crud/dlgguest.cpp" line="147"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="136"/>
+        <location filename="crud/dlgguest.cpp" line="148"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -578,50 +591,50 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="42"/>
-        <location filename="dlg/dlginputstart.cpp" line="107"/>
+        <location filename="dlg/dlginputstart.cpp" line="44"/>
+        <location filename="dlg/dlginputstart.cpp" line="117"/>
         <source>Entering time period ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="47"/>
-        <location filename="dlg/dlginputstart.cpp" line="111"/>
+        <location filename="dlg/dlginputstart.cpp" line="49"/>
+        <location filename="dlg/dlginputstart.cpp" line="121"/>
         <source>Entering barcode ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="56"/>
-        <location filename="dlg/dlginputstart.cpp" line="115"/>
+        <location filename="dlg/dlginputstart.cpp" line="58"/>
+        <location filename="dlg/dlginputstart.cpp" line="125"/>
         <source>Entering patient name ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="131"/>
-        <location filename="dlg/dlginputstart.cpp" line="150"/>
-        <location filename="dlg/dlginputstart.cpp" line="158"/>
-        <location filename="dlg/dlginputstart.cpp" line="183"/>
+        <location filename="dlg/dlginputstart.cpp" line="141"/>
+        <location filename="dlg/dlginputstart.cpp" line="160"/>
+        <location filename="dlg/dlginputstart.cpp" line="168"/>
+        <location filename="dlg/dlginputstart.cpp" line="193"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="132"/>
+        <location filename="dlg/dlginputstart.cpp" line="142"/>
         <source>Barcode of patientcard should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="151"/>
+        <location filename="dlg/dlginputstart.cpp" line="161"/>
         <source>Invalid value entered.
 Please use only numbers.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="159"/>
+        <location filename="dlg/dlginputstart.cpp" line="169"/>
         <source>Invalid value entered.
 Time value can not be greater than %1 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlginputstart.cpp" line="183"/>
+        <location filename="dlg/dlginputstart.cpp" line="193"/>
         <source>Please click on the desired button for the defined search value!</source>
         <translation></translation>
     </message>
@@ -1133,77 +1146,90 @@ Please define a different one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="65"/>
+        <location filename="crud/dlgpatientcard.cpp" line="69"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="66"/>
+        <location filename="crud/dlgpatientcard.cpp" line="70"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="67"/>
-        <location filename="crud/dlgpatientcard.cpp" line="89"/>
+        <location filename="crud/dlgpatientcard.cpp" line="71"/>
+        <location filename="crud/dlgpatientcard.cpp" line="97"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="68"/>
-        <location filename="crud/dlgpatientcard.cpp" line="90"/>
+        <location filename="crud/dlgpatientcard.cpp" line="72"/>
+        <location filename="crud/dlgpatientcard.cpp" line="98"/>
         <source>Owner</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="69"/>
-        <location filename="crud/dlgpatientcard.cpp" line="91"/>
+        <location filename="crud/dlgpatientcard.cpp" line="73"/>
+        <location filename="crud/dlgpatientcard.cpp" line="99"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="70"/>
-        <location filename="crud/dlgpatientcard.cpp" line="92"/>
+        <location filename="crud/dlgpatientcard.cpp" line="74"/>
+        <location filename="crud/dlgpatientcard.cpp" line="100"/>
         <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="71"/>
-        <location filename="crud/dlgpatientcard.cpp" line="93"/>
+        <location filename="crud/dlgpatientcard.cpp" line="75"/>
+        <location filename="crud/dlgpatientcard.cpp" line="101"/>
         <source>All units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="72"/>
+        <location filename="crud/dlgpatientcard.cpp" line="76"/>
+        <location filename="crud/dlgpatientcard.cpp" line="102"/>
+        <source>Valid from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcard.cpp" line="77"/>
+        <location filename="crud/dlgpatientcard.cpp" line="103"/>
+        <source>Valid to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcard.cpp" line="78"/>
+        <location filename="crud/dlgpatientcard.cpp" line="104"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="73"/>
+        <location filename="crud/dlgpatientcard.cpp" line="79"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="151"/>
+        <location filename="crud/dlgpatientcard.cpp" line="165"/>
         <source>New Patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="190"/>
+        <location filename="crud/dlgpatientcard.cpp" line="204"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="191"/>
+        <location filename="crud/dlgpatientcard.cpp" line="205"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="200"/>
+        <location filename="crud/dlgpatientcard.cpp" line="214"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="201"/>
+        <location filename="crud/dlgpatientcard.cpp" line="215"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -1373,76 +1399,100 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="31"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="35"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="32"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="36"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="33"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="51"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="37"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="63"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="34"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="52"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="38"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="64"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="35"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="53"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="39"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="65"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="36"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="40"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="66"/>
+        <source>Unit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="41"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="67"/>
+        <source>Valid from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="42"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="68"/>
+        <source>Valid to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="43"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="69"/>
+        <source>Valid days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="44"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="37"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="45"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="94"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="114"/>
         <source>New PatientCard Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="133"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="153"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="134"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="154"/>
         <source>Are you sure you want to delete this PatientCard Type?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="142"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="162"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="143"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="163"/>
         <source>Unfortunatelly delete of this card type is not possible.
 There are patientcards attached to this card type.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="152"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="172"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="153"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="173"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -1455,48 +1505,48 @@ There are patientcards attached to this card type.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="102"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="107"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="109"/>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="119"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="124"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="129"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="134"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="121"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="126"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="131"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="136"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="141"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="102"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="109"/>
         <source>Name of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="107"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
         <source>Price of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="121"/>
         <source>Number of units of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="119"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="126"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="124"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="131"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="129"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="136"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="134"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="141"/>
         <source>FROM date must be before TO date.</source>
         <translation></translation>
     </message>
@@ -1509,32 +1559,26 @@ There are patientcards attached to this card type.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="52"/>
-        <location filename="edit/dlgpatientcarduse.cpp" line="58"/>
-        <source>%1 sec</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="76"/>
-        <location filename="edit/dlgpatientcarduse.cpp" line="84"/>
-        <location filename="edit/dlgpatientcarduse.cpp" line="124"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="80"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="88"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="128"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="77"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="81"/>
         <source>This patientcard has no available units to use.
 Please refill the patientcard before use.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="85"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="89"/>
         <source>This patientcard can not be used today.
 Please check it&apos;s validation date.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcarduse.cpp" line="125"/>
+        <location filename="edit/dlgpatientcarduse.cpp" line="129"/>
         <source>This patientcard has less time to use.
 Please select another time interval or
 refill the patientcard before use.</source>
@@ -2760,8 +2804,6 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="837"/>
         <location filename="wndmain.cpp" line="850"/>
         <location filename="wndmain.cpp" line="968"/>
-        <location filename="wndmain.cpp" line="1257"/>
-        <location filename="wndmain.cpp" line="1273"/>
         <location filename="wndmain.cpp" line="1372"/>
         <location filename="wndmain.cpp" line="1432"/>
         <location filename="wndmain.cpp" line="1454"/>
@@ -2889,24 +2931,6 @@ Please process the payment first.</source>
     <message>
         <location filename="wndmain.cpp" line="1236"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1258"/>
-        <source>A patientcard with barcode [%1]
-attached to the actual patient.
-
-Do you want to use this patientcard?</source>
-        <oldsource>The patientcard with barcode [%1]
-attached to the actual patient.
-
-Do you want to use this patientcard?</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="1274"/>
-        <source>There is no patientcard attached to the actual patient.
-Do you want to sell a patientcard for the actual patient?</source>
         <translation></translation>
     </message>
     <message>
@@ -3123,57 +3147,62 @@ Do you want to register it for a new patientcard?</source>
 <context>
     <name>dlgCassaEdit</name>
     <message>
-        <location filename="dlgcassa.ui" line="14"/>
+        <location filename="dlgcassa.ui" line="32"/>
         <source>Dialog</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="45"/>
+        <location filename="dlgcassa.ui" line="50"/>
+        <source> Cassa history </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="87"/>
         <source> Cassa </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="118"/>
+        <location filename="dlgcassa.ui" line="97"/>
         <source>Started :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="128"/>
+        <location filename="dlgcassa.ui" line="120"/>
         <source>Stopped :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="57"/>
+        <location filename="dlgcassa.ui" line="168"/>
         <source>Balance :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="77"/>
+        <location filename="dlgcassa.ui" line="194"/>
         <source>1,000,000</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="150"/>
+        <location filename="dlgcassa.ui" line="231"/>
         <source>Responsible :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="93"/>
+        <location filename="dlgcassa.ui" line="276"/>
         <source>More &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="174"/>
+        <location filename="dlgcassa.ui" line="305"/>
         <source>Close</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="196"/>
+        <location filename="dlgcassa.ui" line="340"/>
         <source>Add cash</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="218"/>
+        <location filename="dlgcassa.ui" line="362"/>
         <source>Remove cash</source>
         <translation></translation>
     </message>
@@ -3189,77 +3218,77 @@ Do you want to register it for a new patientcard?</source>
 <context>
     <name>dlgGuestEdit</name>
     <message>
-        <location filename="dlgguestedit.ui" line="14"/>
+        <location filename="dlgguestedit.ui" line="26"/>
         <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="22"/>
+        <location filename="dlgguestedit.ui" line="34"/>
         <source> Identification </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="30"/>
+        <location filename="dlgguestedit.ui" line="42"/>
         <source>Name :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="47"/>
+        <location filename="dlgguestedit.ui" line="59"/>
         <source>Gender :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="54"/>
+        <location filename="dlgguestedit.ui" line="66"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="61"/>
+        <location filename="dlgguestedit.ui" line="73"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="72"/>
+        <location filename="dlgguestedit.ui" line="84"/>
         <source>Unique identification :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="92"/>
+        <location filename="dlgguestedit.ui" line="104"/>
         <source>Date of birth :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="109"/>
+        <location filename="dlgguestedit.ui" line="121"/>
         <source>yyyy/MM/dd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="119"/>
+        <location filename="dlgguestedit.ui" line="131"/>
         <source>Age :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="156"/>
+        <location filename="dlgguestedit.ui" line="168"/>
         <source> Guest&apos;s card </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="162"/>
+        <location filename="dlgguestedit.ui" line="174"/>
         <source>Barcode :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="194"/>
+        <location filename="dlgguestedit.ui" line="206"/>
         <source>Type of card :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="215"/>
+        <location filename="dlgguestedit.ui" line="227"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="228"/>
+        <location filename="dlgguestedit.ui" line="240"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3408,7 +3437,7 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlginputstart.ui" line="26"/>
+        <location filename="dlginputstart.ui" line="20"/>
         <source>Input ...</source>
         <translation></translation>
     </message>

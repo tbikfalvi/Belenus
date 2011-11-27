@@ -735,3 +735,30 @@ void cPreferences::setPostponedAttendances( const unsigned int p_uiPostponedAtte
 {
     m_uiPostponedAttendances = p_uiPostponedAttendances;
 }
+
+void cPreferences::setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize )
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_width" ).arg(p_qsDialogName), p_qpDlgSize.x() );
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_height" ).arg(p_qsDialogName), p_qpDlgSize.y() );
+}
+
+QPoint cPreferences::getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const
+{
+    QSettings   obPrefFile( m_qsFileName, QSettings::IniFormat );
+    QPoint      qpDlgSize = p_qpDlgSizeDefault;
+
+    if( obPrefFile.status() != QSettings::NoError )
+    {
+        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << EOM;
+    }
+    else
+    {
+        qpDlgSize.setX( obPrefFile.value( QString::fromAscii( "Dialogs/%1_width" ).arg(p_qsDialogName), QString::number(p_qpDlgSizeDefault.x()) ).toInt() );
+        qpDlgSize.setY( obPrefFile.value( QString::fromAscii( "Dialogs/%1_height" ).arg(p_qsDialogName), QString::number(p_qpDlgSizeDefault.y()) ).toInt() );
+    }
+
+    return qpDlgSize;
+}
+

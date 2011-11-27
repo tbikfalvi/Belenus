@@ -10,11 +10,15 @@ cDlgGuest::cDlgGuest( QWidget *p_poParent )
     setWindowTitle( tr( "Guest List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListGuests", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgGuest::~cDlgGuest()
 {
+    g_poPrefs->setDialogSize( "ListGuests", QPoint( width(), height() ) );
 }
 
 void cDlgGuest::setupTableView()
@@ -31,8 +35,10 @@ void cDlgGuest::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "UniqueId" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Gender" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Date of birth" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -40,6 +46,8 @@ void cDlgGuest::setupTableView()
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -47,9 +55,13 @@ void cDlgGuest::setupTableView()
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "UniqueId" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Gender" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Date of birth" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -61,11 +73,11 @@ void cDlgGuest::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, active, archive FROM patients WHERE patientId>0";
+        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, genderName, dateBirth, active, archive FROM patients, genders WHERE genders.genderId=patients.gender AND patientId>0";
     }
     else
     {
-        m_qsQuery = "SELECT patientId AS id, name, uniqueId FROM patients WHERE patientId>0 AND active=1";
+        m_qsQuery = "SELECT patientId AS id, name, uniqueId, genderName, dateBirth FROM patients, genders WHERE genders.genderId=patients.gender AND patientId>0 AND active=1";
     }
 
     cDlgCrud::refreshTable();

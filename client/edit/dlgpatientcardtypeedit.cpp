@@ -18,6 +18,12 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     deValidDateFrom->setDate( QDate(2000,1,1) );
     deValidDateTo->setDate( QDate(2000,1,1) );
 
+    checkIndependent->setVisible( false );
+    checkIndependent->setEnabled( false );
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPatientCardType", QPoint(420,245) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     m_poPatientCardType = p_poPatientCardType;
 
     if( m_poPatientCardType )
@@ -74,6 +80,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
 
 cDlgPatientCardTypeEdit::~cDlgPatientCardTypeEdit()
 {
+    g_poPrefs->setDialogSize( "EditPatientCardType", QPoint( width(), height() ) );
 }
 
 void cDlgPatientCardTypeEdit::on_rbInterval_toggled(bool checked)

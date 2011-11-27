@@ -47,14 +47,14 @@ Megoldas	:
 
 Datum		: 2011.11.01
 Hibajelenseg	: Bérlet használat toolbar gombra kattintva hülyeséget ír, ha nincs vendég kiválasztva
-Megoldva	: 
-Megoldas	: 
+Megoldva	: 2011.11.24
+Megoldas	: Kijavitva, kiszedve a vendég rész.
 ----------------------------------------------------------------------------------------------------
 
 Datum		: 2011.11.01
 Hibajelenseg	: Bérlet használat dialog-nál nem lehet a felhasználható egységek számát módosítani
-Megoldva	: 
-Megoldas	: 
+Megoldva	: 2011.11.24
+Megoldas	: Enabled-be került, time combo disabled és auto-calculated.
 ----------------------------------------------------------------------------------------------------
 
 Datum		: 2011.11.14
@@ -66,8 +66,15 @@ Megoldas	:
 
 Datum		: 2011.11.15
 Hibajelenseg	: bérlet létrehozáskor 0 marad a felhasználható idõ
-Megoldva	: 
-Megoldas	: 
+Megoldva	: 2011.11.25
+Megoldas	: Csak akkor, ha a bérlettípusnál nincs megadva egységidõ.
+----------------------------------------------------------------------------------------------------
+
+Datum		: 2011.11.27
+Hibajelenseg	: Meg kell oldani, hogy a crud-os listákat az SQL lefuttatása után soronként lehessen
+                  átnézni és változtatni az értékeken és átírni azokat.
+Megoldva	:
+Megoldas	:
 ----------------------------------------------------------------------------------------------------
 
 

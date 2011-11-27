@@ -11,11 +11,15 @@ cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
     setWindowTitle( tr( "Patient Cardtype List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCardTypes", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgPatientCardType::~cDlgPatientCardType()
 {
+    g_poPrefs->setDialogSize( "ListPatientCardTypes", QPoint( width(), height() ) );
 }
 
 void cDlgPatientCardType::setupTableView()
@@ -33,8 +37,12 @@ void cDlgPatientCardType::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Unit time" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid days" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -43,6 +51,10 @@ void cDlgPatientCardType::setupTableView()
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
         tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
+        tbvCrud->resizeColumnToContents( 8 );
+        tbvCrud->resizeColumnToContents( 9 );
+        tbvCrud->resizeColumnToContents( 10 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -51,10 +63,18 @@ void cDlgPatientCardType::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Unit time" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid days" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -66,11 +86,11 @@ void cDlgPatientCardType::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, price, units, active, archive FROM patientCardTypes";
+        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, price, units, unitTime, validDateFrom, validDateTo, validDays, active, archive FROM patientCardTypes";
     }
     else
     {
-        m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units FROM patientCardTypes WHERE active=1";
+        m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units, unitTime, validDateFrom, validDateTo, validDays FROM patientCardTypes WHERE licenceId>0 AND active=1";
     }
 
     cDlgCrud::refreshTable();
