@@ -77,4 +77,17 @@ Megoldva	:
 Megoldas	:
 ----------------------------------------------------------------------------------------------------
 
+Datum		: 2011.11.29
+Hibajelenseg	: Berlet hasznalatnal, ha beirom a kodot, majd Enter es utana valtoztatas nelkul
+                  megint Enter, akkor nem kerul fel a panelra az ido, mintha nem irna be
+Megoldva	:
+Megoldas	:
+----------------------------------------------------------------------------------------------------
 
+Datum		: 2011.11.29
+Hibajelenseg	: Ha feljön a fizetés ablak, a pénzösszeget felül lehet írni, de ennek ellenére az
+                  összeg nem változik a tényleges pénztárforgalomban, azaz annyi lesz az esemény
+                  pénzösszege, amennyi eredetileg be volt írva.
+Megoldva	:
+Megoldas	:
+----------------------------------------------------------------------------------------------------

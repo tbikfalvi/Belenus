@@ -103,42 +103,64 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
 
+    QString qsErrorMessage = "";
+
+    lblName->setStyleSheet( "QLabel {font: normal;}" );
+    lblPrice->setStyleSheet( "QLabel {font: normal;}" );
+    lblUnits->setStyleSheet( "QLabel {font: normal;}" );
+    lblUnitTime->setStyleSheet( "QLabel {font: normal;}" );
+    rbInterval->setStyleSheet( "QRadioButton {font: normal;}" );
+    rbDays->setStyleSheet( "QRadioButton {font: normal;}" );
+
     if( ledName->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Name of patientcard type must be set." ) );
+        qsErrorMessage.append( tr( "Name of patientcard type must be set." ) );
+        lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
     if( ledPrice->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Price of patientcard type must be set." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "Price of patientcard type must be set." ) );
+        lblPrice->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
     if( ledVatpercent->text() == "" )
         ledVatpercent->setText( "0" );
-    if( ledUnits->text() == "" )
+    if( ledUnits->text() == "" || ledUnits->text().toInt() < 1 )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Number of units of patientcard type must be set." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "Number of units of patientcard type must be set." ) );
+        lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
-    if( ledUnitTime->text() == "" )
+    if( ledUnitTime->text() == "" || ledUnitTime->text().toInt() < 1 )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Unittime of patientcard type must be set." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "Unittime of patientcard type must be set." ) );
+        lblUnitTime->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
     if( rbDays->isChecked() && (ledValidDays->text() == "" || ledValidDays->text().toInt() < 1) )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Number of validation days of patientcard type must be set." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "Number of validation days of patientcard type must be set." ) );
+        rbDays->setStyleSheet( "QRadioButton {font: bold; color: red;}" );
     }
     else if( rbInterval->isChecked() && deValidDateTo->date() <= QDate::currentDate() )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Invalid end date. End date must be in the future." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "Invalid end date. End date must be in the future." ) );
+        rbInterval->setStyleSheet( "QRadioButton {font: bold; color: red;}" );
     }
     else if( rbInterval->isChecked() && deValidDateFrom->date() > deValidDateTo->date() )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "FROM date must be before TO date." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "FROM date must be before TO date." ) );
+        rbInterval->setStyleSheet( "QRadioButton {font: bold; color: red;}" );
     }
 
     if( boCanBeSaved )
@@ -172,6 +194,10 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         }
 
         QDialog::accept();
+    }
+    else
+    {
+        QMessageBox::critical( this, tr( "Error" ), qsErrorMessage );
     }
 }
 

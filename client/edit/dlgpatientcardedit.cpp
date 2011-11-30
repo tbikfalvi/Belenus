@@ -20,6 +20,12 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     m_bRefillCard       = false;
     m_bIsCardActivated  = false;
 
+    checkIndependent->setVisible( false );
+    checkIndependent->setEnabled( false );
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPatientCard", QPoint(440,380) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     m_poPatientCard     = p_poPatientCard;
     m_poPatientCardType = new cDBPatientCardType;
 
@@ -100,11 +106,23 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     {
         cmbPatient->setEnabled( false );
     }
+
+    if( cbActive->isChecked() )
+    {
+        lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+        if( cmbPatient->currentIndex() == 0 )
+        {
+            lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+        }
+    }
+
     m_bDlgLoaded = true;
 }
 
 cDlgPatientCardEdit::~cDlgPatientCardEdit()
 {
+    g_poPrefs->setDialogSize( "EditPatientCard", QPoint( width(), height() ) );
+
     if( m_poPatientCardType ) delete m_poPatientCardType;
 }
 
@@ -139,24 +157,28 @@ void cDlgPatientCardEdit::setPatientCardOwner( const unsigned int p_uiPatientId 
 
 void cDlgPatientCardEdit::on_pbSave_clicked()
 {
-    bool  boSkipErrorMessages = false;
     bool  boCanBeSaved = true;
+
+    QString qsErrorMessage = "";
+
+    lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
+    lblCardType->setStyleSheet( "QLabel {font: normal;}" );
+    lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+    lblUnits->setStyleSheet( "QLabel {font: normal;}" );
+    lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
 
     if( ledBarcode->text() == "" )
     {
         boCanBeSaved = false;
-        if( QMessageBox::critical( this, tr( "Error" ), tr( "Barcode cannot be empty.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-        {
-            boSkipErrorMessages = true;
-        }
+        qsErrorMessage.append( tr( "Barcode cannot be empty." ) );
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
     else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
         boCanBeSaved = false;
-        if( QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. Barcode should be %1 character length.\n\nPress Ignore to skip other error messages." ).arg(g_poPrefs->getBarcodeLength()), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-        {
-            boSkipErrorMessages = true;
-        }
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
     else
     {
@@ -166,53 +188,44 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
         if( poQuery->numRowsAffected() > 0 )
         {
             boCanBeSaved = false;
-            if( QMessageBox::critical( this, tr( "Error" ), tr( "Invalid barcode. This barcode already saved into database.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-            {
-                boSkipErrorMessages = true;
-            }
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Invalid barcode. This barcode already saved into database."  ) );
+            lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
     if( cbActive->isChecked() )
     {
-        if( cmbCardType->currentIndex() == 0 && !boSkipErrorMessages )
+        if( cmbCardType->currentIndex() == 0 )
         {
             boCanBeSaved = false;
-            if( QMessageBox::critical( this, tr( "Error" ), tr( "Invalid Patientcard type.\nFor active patientcard other type should be selected.\n\nIf you want to connect the card to this type,\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-            {
-                boSkipErrorMessages = true;
-            }
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Invalid Patientcard type.\nFor active patientcard other type should be selected.\nIf you want to connect the card to this type,\ndeactivate the card with unchecking the Active checkbox." ) );
+            lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
-        if( cmbPatient->currentIndex() == 0 && !boSkipErrorMessages )
+        if( cmbPatient->currentIndex() == 0 )
         {
-            boCanBeSaved = false;
-            if( QMessageBox::critical( this, tr( "Error" ), tr( "Please select valid patient for the card.\nFor active patientcard an owner should be selected.\n\nIf you don't want to add this card to any patient,\npress the Save button." ), QMessageBox::Ok, QMessageBox::Save ) == QMessageBox::Save )
-            {
-                boCanBeSaved = true;
-            }
+            lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
         }
-        if( ledUnits->text() == "" && !boSkipErrorMessages )
+        if( ledUnits->text() == "" )
         {
             boCanBeSaved = false;
-            if( QMessageBox::critical( this, tr( "Error" ), tr( "Available units cannot be empty.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-            {
-                boSkipErrorMessages = true;
-            }
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Available units cannot be empty." ) );
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
-        else if( ledUnits->text().toInt() < 1 && !boSkipErrorMessages )
+        else if( ledUnits->text().toInt() < 1 )
         {
             boCanBeSaved = false;
-            if( QMessageBox::critical( this, tr( "Error" ), tr( "Number of available units can not be less then 1.\n\nIf you want to reset the number of available units\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-            {
-                boSkipErrorMessages = true;
-            }
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Number of available units can not be less then 1.\nIf you want to reset the number of available units\ndeactivate the card with unchecking the Active checkbox." ) );
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
-        if( deValidDateTo->date() < QDate::currentDate() && !boSkipErrorMessages )
+        if( deValidDateTo->date() < QDate::currentDate() )
         {
             boCanBeSaved = false;
-            if( QMessageBox::critical( this, tr( "Error" ), tr( "Incorrect validation date.\n\nIf you want to reset the date of validation\ndeactivate the card with unchecking the Active checkbox.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-            {
-                boSkipErrorMessages = true;
-            }
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Incorrect validation date.\nIf you want to reset the date of validation\ndeactivate the card with unchecking the Active checkbox." ) );
+            lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
 
@@ -328,6 +341,10 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
+    else
+    {
+        QMessageBox::critical( this, tr( "Error" ), qsErrorMessage );
+    }
 }
 
 void cDlgPatientCardEdit::on_pbCancel_clicked()
@@ -340,6 +357,34 @@ void cDlgPatientCardEdit::on_cbActive_toggled(bool checked)
     cmbCardType->setEnabled( checked );
     cmbPatient->setEnabled( checked );
     gbInformation->setEnabled( checked );
+
+    lblCardType->setStyleSheet( "QLabel {font: normal;}" );
+    lblUnits->setStyleSheet( "QLabel {font: normal;}" );
+    lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+    lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
+    if( cbActive->isChecked() )
+    {
+        if( cmbCardType->currentIndex() == 0 )
+        {
+            lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( ledUnits->text() == "" )
+        {
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        else if( ledUnits->text().toInt() < 1 )
+        {
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( cmbPatient->currentIndex() == 0 )
+        {
+            lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+        }
+        if( deValidDateTo->date() < QDate::currentDate() )
+        {
+            lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+    }
 }
 
 void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
@@ -422,6 +467,30 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             pbSave->setEnabled( true );
         }
     }
+
+    lblCardType->setStyleSheet( "QLabel {font: normal;}" );
+    lblUnits->setStyleSheet( "QLabel {font: normal;}" );
+    lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( cbActive->isChecked() )
+    {
+        if( cmbCardType->currentIndex() == 0 )
+        {
+            lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( ledUnits->text() == "" )
+        {
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        else if( ledUnits->text().toInt() < 1 )
+        {
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( deValidDateTo->date() < QDate::currentDate() )
+        {
+            lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+    }
 }
 
 QString cDlgPatientCardEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
@@ -449,5 +518,35 @@ void cDlgPatientCardEdit::on_cmbPatient_currentIndexChanged(int /*index*/)
     if( !m_bDlgLoaded )
         return;
 
+    lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+    if( cmbPatient->currentIndex() == 0 )
+    {
+        lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    }
+
     on_cmbCardType_currentIndexChanged( cmbCardType->currentIndex() );
+}
+
+void cDlgPatientCardEdit::on_ledBarcode_lostFocus()
+{
+    lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( ledBarcode->text() == "" )
+    {
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+    {
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else
+    {
+        QSqlQuery *poQuery;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE barcode=\"%1\" AND patientCardId<>%2" ).arg(ledBarcode->text()).arg(m_poPatientCard->id()) );
+        if( poQuery->numRowsAffected() > 0 )
+        {
+            lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+    }
 }

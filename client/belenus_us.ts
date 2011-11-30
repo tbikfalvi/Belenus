@@ -1141,95 +1141,95 @@ Please define a different one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="38"/>
+        <location filename="crud/dlgpatientcard.cpp" line="39"/>
         <source>&lt;All patientcard type&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="69"/>
+        <location filename="crud/dlgpatientcard.cpp" line="79"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="70"/>
+        <location filename="crud/dlgpatientcard.cpp" line="80"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="71"/>
-        <location filename="crud/dlgpatientcard.cpp" line="97"/>
+        <location filename="crud/dlgpatientcard.cpp" line="81"/>
+        <location filename="crud/dlgpatientcard.cpp" line="107"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="72"/>
-        <location filename="crud/dlgpatientcard.cpp" line="98"/>
+        <location filename="crud/dlgpatientcard.cpp" line="82"/>
+        <location filename="crud/dlgpatientcard.cpp" line="108"/>
         <source>Owner</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="73"/>
-        <location filename="crud/dlgpatientcard.cpp" line="99"/>
+        <location filename="crud/dlgpatientcard.cpp" line="83"/>
+        <location filename="crud/dlgpatientcard.cpp" line="109"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="74"/>
-        <location filename="crud/dlgpatientcard.cpp" line="100"/>
+        <location filename="crud/dlgpatientcard.cpp" line="84"/>
+        <location filename="crud/dlgpatientcard.cpp" line="110"/>
         <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="75"/>
-        <location filename="crud/dlgpatientcard.cpp" line="101"/>
+        <location filename="crud/dlgpatientcard.cpp" line="85"/>
+        <location filename="crud/dlgpatientcard.cpp" line="111"/>
         <source>All units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="76"/>
-        <location filename="crud/dlgpatientcard.cpp" line="102"/>
+        <location filename="crud/dlgpatientcard.cpp" line="86"/>
+        <location filename="crud/dlgpatientcard.cpp" line="112"/>
         <source>Valid from</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="77"/>
-        <location filename="crud/dlgpatientcard.cpp" line="103"/>
+        <location filename="crud/dlgpatientcard.cpp" line="87"/>
+        <location filename="crud/dlgpatientcard.cpp" line="113"/>
         <source>Valid to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="78"/>
-        <location filename="crud/dlgpatientcard.cpp" line="104"/>
+        <location filename="crud/dlgpatientcard.cpp" line="88"/>
+        <location filename="crud/dlgpatientcard.cpp" line="114"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="79"/>
+        <location filename="crud/dlgpatientcard.cpp" line="89"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="165"/>
+        <location filename="crud/dlgpatientcard.cpp" line="175"/>
         <source>New Patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="204"/>
+        <location filename="crud/dlgpatientcard.cpp" line="214"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="205"/>
+        <location filename="crud/dlgpatientcard.cpp" line="215"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="214"/>
+        <location filename="crud/dlgpatientcard.cpp" line="224"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="215"/>
+        <location filename="crud/dlgpatientcard.cpp" line="225"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -1283,110 +1283,82 @@ The length of the new barcode should be %1.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="51"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="59"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="57"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="65"/>
         <source>&lt;Not selected&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="169"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="173"/>
+        <source>Barcode cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="188"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="196"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="204"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="212"/>
+        <source>Invalid barcode. Barcode should be %1 character length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardedit.cpp" line="192"/>
+        <source>Invalid barcode. This barcode already saved into database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardedit.cpp" line="202"/>
+        <source>Invalid Patientcard type.
+For active patientcard other type should be selected.
+If you want to connect the card to this type,
+deactivate the card with unchecking the Active checkbox.</source>
+        <oldsource>Invalid Patientcard type.
+For active patientcard other type should be selected.
+
+If you want to connect the card to this type,
+deactivate the card with unchecking the Active checkbox.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardedit.cpp" line="213"/>
+        <source>Available units cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardedit.cpp" line="220"/>
+        <source>Number of available units can not be less then 1.
+If you want to reset the number of available units
+deactivate the card with unchecking the Active checkbox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardedit.cpp" line="227"/>
+        <source>Incorrect validation date.
+If you want to reset the date of validation
+deactivate the card with unchecking the Active checkbox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardedit.cpp" line="346"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="148"/>
-        <source>Barcode cannot be empty.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="156"/>
-        <source>Invalid barcode. Barcode should be %1 character length.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="169"/>
-        <source>Invalid barcode. This barcode already saved into database.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
-        <source>Invalid Patientcard type.
-For active patientcard other type should be selected.
-
-If you want to connect the card to this type,
-deactivate the card with unchecking the Active checkbox.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="188"/>
-        <source>Please select valid patient for the card.
-For active patientcard an owner should be selected.
-
-If you don&apos;t want to add this card to any patient,
-press the Save button.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="196"/>
-        <source>Available units cannot be empty.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="204"/>
-        <source>Number of available units can not be less then 1.
-
-If you want to reset the number of available units
-deactivate the card with unchecking the Active checkbox.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="212"/>
-        <source>Incorrect validation date.
-
-If you want to reset the date of validation
-deactivate the card with unchecking the Active checkbox.
-
-Press Ignore to skip other error messages.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="251"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="264"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="252"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="265"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="416"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="461"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="417"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="462"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
@@ -1448,6 +1420,8 @@ Please relogin to enable cassa.</source>
         <location filename="crud/dlgpatientcardtype.cpp" line="43"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="69"/>
         <source>Valid days</source>
+        <oldsource>Valid
+days</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1505,48 +1479,42 @@ There are patientcards attached to this card type.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="109"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="121"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="126"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="131"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="136"/>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="141"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="200"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="109"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="118"/>
         <source>Name of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="114"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="125"/>
         <source>Price of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="121"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="134"/>
         <source>Number of units of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="126"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="141"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="131"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="148"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="136"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="155"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="141"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="162"/>
         <source>FROM date must be before TO date.</source>
         <translation></translation>
     </message>
@@ -3963,7 +3931,7 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="180"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="183"/>
         <source>Independent from the local studio.</source>
         <translation></translation>
     </message>
@@ -3983,60 +3951,60 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="47"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="50"/>
         <source>Price :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="70"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="73"/>
         <source>Units :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="80"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="83"/>
         <source>Unit time (min):</source>
         <oldsource>Unit time (sec):</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="60"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="63"/>
         <source>VAT percent :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="93"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="96"/>
         <source>Valid ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="101"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="104"/>
         <source>Time interval :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="108"/>
-        <location filename="dlgpatientcardtypeedit.ui" line="131"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="111"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="134"/>
         <source>yyyy/MM/dd</source>
         <translation></translation>
     </message>
     <message utf8="true">
-        <location filename="dlgpatientcardtypeedit.ui" line="145"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="148"/>
         <source>No° days:</source>
         <oldsource>No days:</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="124"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="127"/>
         <source> -&gt; </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="191"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="194"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpatientcardtypeedit.ui" line="204"/>
+        <location filename="dlgpatientcardtypeedit.ui" line="207"/>
         <source>Cancel</source>
         <translation></translation>
     </message>

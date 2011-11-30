@@ -43,6 +43,9 @@
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
          <widget class="QLabel" name="lblPrice">
+          <property name="styleSheet">
+           <string notr="true">QLabel {text-decoration: bold;}</string>
+          </property>
           <property name="text">
            <string>Price :</string>
           </property>

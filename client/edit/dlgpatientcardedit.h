@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlgpatientcardedit.h"
+#include "../../belenus-build-desktop/ui_dlgpatientcardedit.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
 
@@ -30,6 +30,7 @@ private:
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 private slots:
+    void on_ledBarcode_lostFocus();
     void on_cmbPatient_currentIndexChanged(int index);
     void on_cmbCardType_currentIndexChanged(int index);
     void on_cbActive_toggled(bool checked);
