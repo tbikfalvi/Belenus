@@ -98,10 +98,12 @@ public:
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
+                                  const unsigned int p_uiFileLevel,
                                   bool p_boSaveNow = false );
     void            getLogLevels( unsigned int *p_poConLevel = NULL,
                                   unsigned int *p_poDBLevel = NULL,
-                                  unsigned int *p_poGUILevel = NULL ) const;
+                                  unsigned int *p_poGUILevel = NULL,
+                                  unsigned int *p_uiFileLevel = NULL ) const;
     void            setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
                                  const QString &p_qsUser, const QString &p_qsPwd );
     void            getDBAccess( QString *p_poHost = NULL, QString *p_poDB = NULL,

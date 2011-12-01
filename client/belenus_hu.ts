@@ -58,12 +58,12 @@
         <translation>Pénztár kiadás.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="126"/>
+        <location filename="main.cpp" line="127"/>
         <source>Connecting to database ...</source>
         <translation>Kapcsolódás az adatbázishoz ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="133"/>
+        <location filename="main.cpp" line="134"/>
         <source> SUCCEEDED.
 </source>
         <oldsource> CONNECTED.
@@ -118,17 +118,17 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete">SIKERTELEN</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="141"/>
+        <location filename="main.cpp" line="142"/>
         <source>License is ... </source>
         <translation>Az alkalmazás ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="158"/>
+        <location filename="main.cpp" line="159"/>
         <source>DEMO</source>
         <translation>DEMO</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="160"/>
+        <location filename="main.cpp" line="161"/>
         <source>OK</source>
         <translation>RENDBEN</translation>
     </message>
@@ -145,12 +145,12 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete"> (liszensz a szerver által elutasítva)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="282"/>
+        <location filename="main.cpp" line="283"/>
         <source>Checking hardware connection ...</source>
         <translation>Hardver kapcsolat ellenőrzése ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="289"/>
+        <location filename="main.cpp" line="290"/>
         <source>FAILED
 </source>
         <translation>SIKERTELEN
@@ -197,85 +197,85 @@ Probléma van az internet kapcsolattal?
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="109"/>
+        <location filename="main.cpp" line="110"/>
         <source>SystemID: </source>
         <translation>RendszerAzonosító: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="145"/>
+        <location filename="main.cpp" line="146"/>
         <source>NO_SERIAL_DETECTED</source>
         <translation>LISZENSZ_KULCS_HIÁNYZIK</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="164"/>
+        <location filename="main.cpp" line="165"/>
         <source>Serial: %1
 </source>
         <translation>Liszensz kulcs: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="291"/>
-        <location filename="main.cpp" line="338"/>
-        <location filename="main.cpp" line="345"/>
+        <location filename="main.cpp" line="292"/>
+        <location filename="main.cpp" line="339"/>
+        <location filename="main.cpp" line="346"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Alkalmazás indítása DEMÓ módban.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="299"/>
+        <location filename="main.cpp" line="300"/>
         <source>CONNECTED
 </source>
         <translation>KAPCSOLÓDVA
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="302"/>
+        <location filename="main.cpp" line="303"/>
         <source>Initializing hardware device ... </source>
         <translation>Hardver eszköz beállítása ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="306"/>
+        <location filename="main.cpp" line="307"/>
         <source>FINISHED
 </source>
         <translation>BEFEJEZŐDÖTT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="309"/>
+        <location filename="main.cpp" line="310"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Hardver eszközben tárolt fejléc szöveg: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="312"/>
+        <location filename="main.cpp" line="313"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Hardver panelok száma: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="315"/>
+        <location filename="main.cpp" line="316"/>
         <source>Checking hardware panels:
 </source>
         <translation>Hardver panelok ellenőrzése:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="320"/>
+        <location filename="main.cpp" line="321"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Hardver panel ellenőrzése -%1-</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="325"/>
+        <location filename="main.cpp" line="326"/>
         <source> SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="330"/>
+        <location filename="main.cpp" line="331"/>
         <source> FAILED
 </source>
         <translation>SIKERTELEN
@@ -2542,22 +2542,22 @@ A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="173"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="206"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="180"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="213"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="192"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="225"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="202"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="235"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -2573,12 +2573,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="213"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="246"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="220"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="253"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card with unchecking the Active checkbox.</source>
@@ -2587,7 +2587,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="227"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="260"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.</source>
@@ -2596,7 +2596,7 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="346"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="379"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -2687,12 +2687,12 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="264"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="297"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="265"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="298"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -2701,12 +2701,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="461"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="499"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="462"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="500"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
@@ -3280,22 +3280,22 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="27"/>
+        <location filename="dlg/dlgpreferences.cpp" line="30"/>
         <source>&amp;Save</source>
         <translation>&amp;Mentés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="28"/>
+        <location filename="dlg/dlgpreferences.cpp" line="31"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="140"/>
+        <location filename="dlg/dlgpreferences.cpp" line="156"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="141"/>
+        <location filename="dlg/dlgpreferences.cpp" line="157"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
@@ -7303,153 +7303,159 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="93"/>
-        <location filename="dlgpreferences.ui" line="166"/>
-        <location filename="dlgpreferences.ui" line="239"/>
+        <location filename="dlgpreferences.ui" line="169"/>
+        <location filename="dlgpreferences.ui" line="242"/>
+        <location filename="dlgpreferences.ui" line="315"/>
         <source>NONE</source>
         <translation>NONE</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="141"/>
+        <location filename="dlgpreferences.ui" line="144"/>
         <source>&amp;DB Log Level:</source>
         <translation>&amp;Adatbázis log szint :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="214"/>
+        <location filename="dlgpreferences.ui" line="217"/>
         <source>&amp;GUI Log Level:</source>
         <translation>Program log szint :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="308"/>
+        <location filename="dlgpreferences.ui" line="384"/>
         <source>Default country : </source>
         <translation>Alapértelmezett ország :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="526"/>
+        <location filename="dlgpreferences.ui" line="602"/>
         <source>Patientcard</source>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="532"/>
+        <location filename="dlgpreferences.ui" line="608"/>
         <source> Barcode </source>
         <translation> Vonalkód </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="538"/>
+        <location filename="dlgpreferences.ui" line="614"/>
         <source>Barcode length:</source>
         <translation>Vonalkód hossza :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="558"/>
+        <location filename="dlgpreferences.ui" line="634"/>
         <source>Barcode prefix:</source>
         <translation>Vonalkód automatikus előtag :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="492"/>
+        <location filename="dlgpreferences.ui" line="568"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="450"/>
+        <location filename="dlgpreferences.ui" line="290"/>
+        <source>&amp;File Log Level:</source>
+        <translation>Állomány log szint:</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="526"/>
         <source>Panel settings ...</source>
         <translation>Panel beállítások ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="500"/>
+        <location filename="dlgpreferences.ui" line="576"/>
         <source>VAT percent for device usage :</source>
         <translation>Géphasználat ÁFA kulcs (%):</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="585"/>
+        <location filename="dlgpreferences.ui" line="661"/>
         <source>Cassa</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="591"/>
+        <location filename="dlgpreferences.ui" line="667"/>
         <source>Automatically close cassa when user log out</source>
         <translation>A pénztár automatikusan legyen lezárva a felhasználó kilépésekor</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="594"/>
+        <location filename="dlgpreferences.ui" line="670"/>
         <source>Auto close cassa</source>
         <translation>Pénztár zárás automatikusan</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="613"/>
+        <location filename="dlgpreferences.ui" line="689"/>
         <source>Automatically add cash withdrawal</source>
         <translation>Automatikus készpénz kivét</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="636"/>
+        <location filename="dlgpreferences.ui" line="712"/>
         <source>Server</source>
         <translation>Szerver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="644"/>
+        <location filename="dlgpreferences.ui" line="720"/>
         <source>Server Host:</source>
         <translation>IP cím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="654"/>
+        <location filename="dlgpreferences.ui" line="734"/>
         <source>Server Port:</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="666"/>
+        <location filename="dlgpreferences.ui" line="750"/>
         <source> Automatically synchronize ...</source>
         <translation> Az alkalmazás automatikusan szinkronizálja ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="672"/>
+        <location filename="dlgpreferences.ui" line="759"/>
         <source>database when exiting from application</source>
         <translation>az adatbázist kilépéskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="679"/>
+        <location filename="dlgpreferences.ui" line="769"/>
         <source>studio independent data when application started.</source>
         <translation>a stúdió független adatokat induláskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="703"/>
+        <location filename="dlgpreferences.ui" line="793"/>
         <source>Hardware</source>
         <translation>Hardver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="711"/>
+        <location filename="dlgpreferences.ui" line="801"/>
         <source>COM Port:</source>
         <translation>COM Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="718"/>
+        <location filename="dlgpreferences.ui" line="808"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="335"/>
+        <location filename="dlgpreferences.ui" line="411"/>
         <source>Appearance</source>
         <translation>Megjelenés</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="349"/>
+        <location filename="dlgpreferences.ui" line="425"/>
         <source>Number of &amp;panels in a row:</source>
         <translation>Egy sorban megjelenő &amp;panelok száma :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="398"/>
+        <location filename="dlgpreferences.ui" line="474"/>
         <source>Main Window Background Color: </source>
         <translation>Fő ablak hátterének színe :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="417"/>
+        <location filename="dlgpreferences.ui" line="493"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="276"/>
+        <location filename="dlgpreferences.ui" line="352"/>
         <source>Application Settings</source>
         <translation> Alkalmazás beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="291"/>
+        <location filename="dlgpreferences.ui" line="367"/>
         <source>&amp;Language :</source>
         <oldsource>&amp;Language:</oldsource>
         <translation>&amp;Nyelv :</translation>

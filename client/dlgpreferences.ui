@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>408</height>
+    <width>460</width>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -96,6 +96,9 @@
             </item>
             <item>
              <widget class="QSlider" name="sliConsoleLogLevel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="minimum">
                <number>1</number>
               </property>
@@ -242,6 +245,79 @@
             </item>
             <item>
              <widget class="QSlider" name="sliGUILogLevel">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>5</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBothSides</enum>
+              </property>
+              <property name="tickInterval">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QLabel" name="lblFileLogLevel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>130</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&amp;File Log Level:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy">
+               <cstring>sliGUILogLevel</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblFileLogLevelValue">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>70</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>NONE</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="sliFileLogLevel">
               <property name="minimum">
                <number>1</number>
               </property>
@@ -487,7 +563,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="tab_Device">
       <attribute name="title">
        <string>Device</string>
       </attribute>
@@ -521,7 +597,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_PatientCard">
       <attribute name="title">
        <string>Patientcard</string>
       </attribute>
@@ -580,7 +656,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="tab_Cassa">
       <attribute name="title">
        <string>Cassa</string>
       </attribute>
@@ -646,7 +722,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="ledServerHost"/>
+          <widget class="QLineEdit" name="ledServerHost">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="lblServerPort">
@@ -656,7 +736,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="ledServerPort"/>
+          <widget class="QLineEdit" name="ledServerPort">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -668,6 +752,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QCheckBox" name="chkDBAutoSynchron">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>database when exiting from application</string>
             </property>
@@ -675,6 +762,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="chkDBGlobalAutoSynchron">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>studio independent data when application started.</string>
             </property>

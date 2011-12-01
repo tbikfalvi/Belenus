@@ -2,7 +2,7 @@
 #define DLGPREFERENCES_H
 
 #include "../belenus.h"
-#include "../ui_dlgpreferences.h"
+#include "../../belenus-build-desktop/ui_dlgpreferences.h"
 
 class cDlgPreferences : public QDialog, private Ui::dlgPreferences
 {
@@ -10,6 +10,7 @@ class cDlgPreferences : public QDialog, private Ui::dlgPreferences
 
 public:
     cDlgPreferences( QWidget *p_poParent = 0 );
+    virtual ~cDlgPreferences();
 
 public slots:
     virtual void accept();
@@ -25,6 +26,7 @@ private slots:
     void on_sliConsoleLogLevel_valueChanged( int p_inValue );
     void on_sliDBLogLevel_valueChanged( int p_inValue );
     void on_sliGUILogLevel_valueChanged( int p_inValue );
+    void on_sliFileLogLevel_valueChanged( int p_inValue );
     void on_btnMainBackground_clicked( bool p_boClicked );
     void on_spbBarcodeLen_valueChanged( int p_inValue );
 };

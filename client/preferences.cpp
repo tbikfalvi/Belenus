@@ -537,11 +537,13 @@ bool cPreferences::getDBGlobalAutoSynchronize() const
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
+                                 const unsigned int p_uiFileLevel,
                                  bool p_boSaveNow )
 {
-    //g_obLogger.setMinSeverityLevels( (cSeverity::teSeverity)p_uiConLevel,
-    //                                 (cSeverity::teSeverity)p_uiDBLevel,
-    //                                 (cSeverity::teSeverity)p_uiGUILevel );
+    g_obLogger.setMinimumSeverity("console", (cSeverity::teSeverity)p_uiConLevel );
+    g_obLogger.setMinimumSeverity("db", (cSeverity::teSeverity)p_uiDBLevel );
+    g_obLogger.setMinimumSeverity("gui", (cSeverity::teSeverity)p_uiGUILevel );
+    g_obLogger.setMinimumSeverity("file", (cSeverity::teSeverity)p_uiFileLevel );
 
     if( p_boSaveNow )
     {
@@ -549,21 +551,19 @@ void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
         obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), p_uiConLevel );
         obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), p_uiDBLevel );
         obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), p_uiGUILevel );
+        obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), p_uiFileLevel );
     }
 }
 
 void cPreferences::getLogLevels( unsigned int *p_poConLevel,
                                  unsigned int *p_poDBLevel,
-                                 unsigned int *p_poGUILevel ) const
-{
-    cSeverity::teSeverity  enConLevel = cSeverity::DEBUG;
-    cSeverity::teSeverity  enDBLevel  = cSeverity::DEBUG;
-    cSeverity::teSeverity  enGUILevel = cSeverity::DEBUG;
-//    g_obLogger.getMinSeverityLevels( &enConLevel, &enDBLevel, &enGUILevel );
-
-    if( p_poConLevel ) *p_poConLevel = enConLevel;
-    if( p_poDBLevel )  *p_poDBLevel  = enDBLevel;
-    if( p_poGUILevel ) *p_poGUILevel = enGUILevel;
+                                 unsigned int *p_poGUILevel,
+                                 unsigned int *p_poFileLevel) const
+{    
+    if( p_poConLevel )  *p_poConLevel   = g_obLogger.getMinimumSeverity( "console" );
+    if( p_poDBLevel )   *p_poDBLevel    = g_obLogger.getMinimumSeverity( "db" );
+    if( p_poGUILevel )  *p_poGUILevel   = g_obLogger.getMinimumSeverity( "gui" );
+    if( p_poFileLevel ) *p_poFileLevel  = g_obLogger.getMinimumSeverity( "file" );
 }
 
 void cPreferences::setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
@@ -656,7 +656,16 @@ void cPreferences::loadConfFileSettings()
             g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << EOM;
         }
 
-        setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel );
+        unsigned int uiFileLevel = obPrefFile.value( QString::fromAscii( "LogLevels/FileLogLevel" ), cSeverity::WARNING ).toUInt();
+        if( (uiFileLevel >= cSeverity::MAX) &&
+            (uiFileLevel <= cSeverity::MIN) )
+        {
+            uiFileLevel = cSeverity::DEBUG;
+
+            g_obLogger(cSeverity::WARNING) << "Invalid FileLogLevel in preferences file: " << m_qsFileName << EOM;
+        }
+
+        setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
     }
 }
 
@@ -695,11 +704,12 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
     obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
 
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
-    getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
+    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
+    getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
     obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), uiConLevel );
     obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), uiDBLevel );
     obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), uiGUILevel );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), uiFileLevel );
 
     obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
     obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );

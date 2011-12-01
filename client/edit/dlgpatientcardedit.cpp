@@ -116,6 +116,39 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         }
     }
 
+    lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
+    lblCardType->setStyleSheet( "QLabel {font: normal;}" );
+    lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+    lblUnits->setStyleSheet( "QLabel {font: normal;}" );
+    lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( cbActive->isChecked() )
+    {
+        if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+        {
+            lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( cmbCardType->currentIndex() == 0 )
+        {
+            lblCardType->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( ledUnits->text() == "" )
+        {
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        else if( ledUnits->text().toInt() < 1 )
+        {
+            lblUnits->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+        if( cmbPatient->currentIndex() == 0 )
+        {
+            lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+        }
+        if( deValidDateTo->date() < QDate::currentDate() )
+        {
+            lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+    }
     m_bDlgLoaded = true;
 }
 
@@ -437,20 +470,25 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
 
         int discount = 0;
 
+        /*
         if( cmbPatient->currentIndex() > 0 )
         {
 // 'SOLARIUM GUEST'
-/*
             cDBPatient  obDBPatientTemp;
 
             obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
             discount = obDBPatientTemp.getDiscountPrice( priceTotal );
-*/
         }
         else
         {
             discount = priceTotal;
         }
+*/
+// ez nem lesz itt, amint bejön a kedvezmény kezelés
+// ekkor a fenti kikommentezett részt kell visszarakni
+discount = priceTotal;
+//
+//
         if( discount != priceTotal )
             ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
         else

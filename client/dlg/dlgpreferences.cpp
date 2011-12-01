@@ -22,6 +22,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     tbwPreferences->setCurrentIndex( 0 );
 
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
@@ -31,11 +34,12 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
-    g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
+    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
+    g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
     sliConsoleLogLevel->setValue( uiConLevel );
     sliDBLogLevel->setValue( uiDBLevel );
     sliGUILogLevel->setValue( uiGUILevel );
+    sliFileLogLevel->setValue( uiFileLevel );
 
     QStringList obFilters( g_poPrefs->getLangFilePrefix() + "*.qm" );
     QDir        obLangDir( "lang" );
@@ -87,6 +91,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
 }
 
+cDlgPreferences::~cDlgPreferences()
+{
+    g_poPrefs->setDialogSize( "EditPreferences", QPoint( width(), height() ) );
+}
+
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
 {
     lblConsoleLogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
@@ -100,6 +109,11 @@ void cDlgPreferences::on_sliDBLogLevel_valueChanged( int p_inValue )
 void cDlgPreferences::on_sliGUILogLevel_valueChanged( int p_inValue )
 {
     lblGUILogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
+}
+
+void cDlgPreferences::on_sliFileLogLevel_valueChanged( int p_inValue )
+{
+    lblFileLogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
 }
 
 void cDlgPreferences::on_btnMainBackground_clicked( bool )
@@ -134,7 +148,9 @@ void cDlgPreferences::accept()
 {
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
-                             sliGUILogLevel->value() );
+                             sliGUILogLevel->value(),
+                             sliFileLogLevel->value() );
+
     g_poPrefs->setLang( cmbAppLang->currentText() );
     if( m_inLangIdx != cmbAppLang->currentIndex() )
         QMessageBox::information( this, tr( "Information" ),
