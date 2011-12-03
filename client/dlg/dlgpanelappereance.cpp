@@ -98,11 +98,15 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
     m_bInit = false;
 
     updatePanelSettings();
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelAppereance", QPoint(455,415) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 //====================================================================================
 cDlgPanelAppereance::~cDlgPanelAppereance()
 //====================================================================================
 {
+    g_poPrefs->setDialogSize( "EditPanelAppereance", QPoint( width(), height() ) );
 }
 //====================================================================================
 void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
@@ -121,8 +125,10 @@ void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
         m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setBackgroundColor( obNewColor.name() );
 
     QPixmap  obColorIcon( 24, 24 );
-    obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() ) );
+    QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
+    obColorIcon.fill( colorFill );
     pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
+    gbPreview->setStyleSheet( QString("QGroupBox { background-color: %1 }").arg( colorFill.name() ) );
 }
 //====================================================================================
 void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
@@ -248,8 +254,10 @@ void cDlgPanelAppereance::updatePanelSettings()
 {
     QPixmap  obColorIcon( 24, 24 );
 
-    obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() ) );
+    QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
+    obColorIcon.fill( colorFill );
     pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
+    gbPreview->setStyleSheet( QString("QGroupBox { background-color: %1 }").arg( colorFill.name() ) );
 
     QFont   obFont;
 
