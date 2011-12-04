@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
-    <height>379</height>
+    <width>370</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -134,6 +134,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="checkIndependent">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Independent from the local studio.</string>
      </property>

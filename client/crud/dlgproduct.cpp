@@ -10,11 +10,15 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent )
     setWindowTitle( tr( "Product List" ) );
     setWindowIcon( QIcon("./resources/40x40_product.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListProducts", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgProduct::~cDlgProduct()
 {
+    g_poPrefs->setDialogSize( "ListProducts", QPoint( width(), height() ) );
 }
 
 void cDlgProduct::setupTableView()
@@ -30,22 +34,26 @@ void cDlgProduct::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
+        tbvCrud->resizeColumnToContents( 2 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -57,11 +65,11 @@ void cDlgProduct::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT productId, licenceId, name, active, archive FROM products";
+        m_qsQuery = "SELECT productId, licenceId, name, netPrice, active, archive FROM products";
     }
     else
     {
-        m_qsQuery = "SELECT productId AS id, name FROM products WHERE active=1";
+        m_qsQuery = "SELECT productId AS id, name, netPrice FROM products WHERE active=1";
     }
 
     cDlgCrud::refreshTable();

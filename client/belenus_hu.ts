@@ -329,68 +329,68 @@ Probléma van az internet kapcsolattal?
         <translation>&lt;Összes vendég&gt;</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="81"/>
+        <location filename="crud/dlgaddress.cpp" line="85"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="82"/>
+        <location filename="crud/dlgaddress.cpp" line="86"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="83"/>
-        <location filename="crud/dlgaddress.cpp" line="104"/>
+        <location filename="crud/dlgaddress.cpp" line="87"/>
+        <location filename="crud/dlgaddress.cpp" line="108"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="84"/>
-        <location filename="crud/dlgaddress.cpp" line="105"/>
+        <location filename="crud/dlgaddress.cpp" line="88"/>
+        <location filename="crud/dlgaddress.cpp" line="109"/>
         <source>Zip</source>
         <translation>Irányítószám</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="85"/>
-        <location filename="crud/dlgaddress.cpp" line="106"/>
+        <location filename="crud/dlgaddress.cpp" line="89"/>
+        <location filename="crud/dlgaddress.cpp" line="110"/>
         <source>City</source>
         <translation>Város</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="86"/>
-        <location filename="crud/dlgaddress.cpp" line="107"/>
+        <location filename="crud/dlgaddress.cpp" line="90"/>
+        <location filename="crud/dlgaddress.cpp" line="111"/>
         <source>Address</source>
         <translation>Cím</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="87"/>
-        <location filename="crud/dlgaddress.cpp" line="108"/>
+        <location filename="crud/dlgaddress.cpp" line="91"/>
+        <location filename="crud/dlgaddress.cpp" line="112"/>
         <source>Public place</source>
         <translation>Közterület</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="88"/>
-        <location filename="crud/dlgaddress.cpp" line="109"/>
+        <location filename="crud/dlgaddress.cpp" line="92"/>
+        <location filename="crud/dlgaddress.cpp" line="113"/>
         <source>Number</source>
         <translation>Szám</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="89"/>
+        <location filename="crud/dlgaddress.cpp" line="93"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="90"/>
+        <location filename="crud/dlgaddress.cpp" line="94"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="196"/>
+        <location filename="crud/dlgaddress.cpp" line="200"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="197"/>
+        <location filename="crud/dlgaddress.cpp" line="201"/>
         <source>Are you sure you want to delete this address?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a címet?</translation>
     </message>
@@ -1891,22 +1891,22 @@ Kérem próbálkozzon újra.</translation>
         <translation>Információs szöveg</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="265"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="275"/>
         <source>status</source>
         <translation>státusz</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="274"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="284"/>
         <source>current length</source>
         <translation>időtartam</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="283"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="293"/>
         <source>next length</source>
         <translation>időtartam</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="292"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="302"/>
         <source>information</source>
         <translation>információ</translation>
     </message>
@@ -1958,8 +1958,9 @@ Kérem próbálkozzon újra.</translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="89"/>
-        <source>Copy to all</source>
-        <translation>Másolás a többihez</translation>
+        <source> Copy to all </source>
+        <oldsource>Copy to all</oldsource>
+        <translation> Másolás a többihez </translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="90"/>
@@ -1967,65 +1968,65 @@ Kérem próbálkozzon újra.</translation>
         <translation>A géphasználatok másolása az összes többi géphez.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="156"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="159"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="157"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="160"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="158"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="174"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="161"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="177"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="159"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="175"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="162"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="178"/>
         <source>Time length</source>
         <translation>Idő intervallum</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="160"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="176"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="163"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="179"/>
         <source>Price</source>
         <translation>Fizetendő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="161"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="164"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="217"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="220"/>
         <source>New paneluse</source>
         <translation>Új kezelési idő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="256"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="259"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="289"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="292"/>
         <source>Maximum worktime of panel can not be empty.</source>
         <translation>A maximum üzemóra nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="294"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="297"/>
         <source>Maximum worktime has to be greater than zero.</source>
         <translation>A maximum üzemórának nagyobbnak kell lennie nullánál.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="332"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="335"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="333"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="336"/>
         <source>Device usage copy process finished.</source>
         <translation>A géphasználatok másolása befejeződött.</translation>
     </message>
@@ -2034,19 +2035,19 @@ Kérem próbálkozzon újra.</translation>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="257"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="260"/>
         <source>Are you sure you want to delete this paneluse?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a kezelési időt?</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="284"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="289"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="294"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="287"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="292"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="297"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="284"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="287"/>
         <source>Title of panel can not be empty.</source>
         <translation>A gépet azonosító fejléc szövege nem lehet üres.</translation>
     </message>
@@ -3343,43 +3344,49 @@ Az állomány neve: %1</translation>
         <translation>Termékek listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="30"/>
+        <location filename="crud/dlgproduct.cpp" line="34"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="31"/>
+        <location filename="crud/dlgproduct.cpp" line="35"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="32"/>
-        <location filename="crud/dlgproduct.cpp" line="46"/>
+        <location filename="crud/dlgproduct.cpp" line="36"/>
+        <location filename="crud/dlgproduct.cpp" line="52"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="33"/>
+        <location filename="crud/dlgproduct.cpp" line="37"/>
+        <location filename="crud/dlgproduct.cpp" line="53"/>
+        <source>Price</source>
+        <translation>Fizetendő</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="38"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="34"/>
+        <location filename="crud/dlgproduct.cpp" line="39"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="85"/>
+        <location filename="crud/dlgproduct.cpp" line="93"/>
         <source>New Product</source>
         <translation>Új Termék</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="125"/>
+        <location filename="crud/dlgproduct.cpp" line="133"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a terméket?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="128"/>
+        <location filename="crud/dlgproduct.cpp" line="136"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -3390,17 +3397,17 @@ Biztos benne, hogy törölni akarja a terméket?
 A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="133"/>
+        <location filename="crud/dlgproduct.cpp" line="141"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="141"/>
+        <location filename="crud/dlgproduct.cpp" line="149"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="142"/>
+        <location filename="crud/dlgproduct.cpp" line="150"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -3413,53 +3420,53 @@ A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.<
         <translation>Termékkel kapcsolatos események listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="31"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="35"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="32"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="36"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="33"/>
-        <location filename="crud/dlgproductactiontype.cpp" line="47"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="37"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="51"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="34"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="38"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="35"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="39"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="86"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="90"/>
         <source>New Productaction Type</source>
         <translation>Új Termék-Esemény típus</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="126"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="130"/>
         <source>Are you sure you want to delete this Productaction Type?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a Termék-Eseményt?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="128"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="132"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="136"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="140"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="137"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="141"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -3472,26 +3479,26 @@ A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.<
         <translation>Termék Típus</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="55"/>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="63"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="55"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
         <source>Name of productaction type must be set.</source>
         <translation>A Termék-Esemény neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="63"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
         <source>Productaction type with this name already exists.
 Please set another one.</source>
         <translation>Ilyen nevü Termék-Esemény már létezik.
 Kérem válasszon egy másik nevet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
         <source>A product action can not increase and decrease
 the product count at the same time.</source>
         <translation>A termékkel kapcsolatos esemény nem növelheti és
@@ -3506,26 +3513,26 @@ csökkentheti az adott termék darabszámát egyszerre.</translation>
         <translation>Termék</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="78"/>
-        <location filename="edit/dlgproductedit.cpp" line="86"/>
+        <location filename="edit/dlgproductedit.cpp" line="85"/>
         <location filename="edit/dlgproductedit.cpp" line="93"/>
+        <location filename="edit/dlgproductedit.cpp" line="100"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="78"/>
+        <location filename="edit/dlgproductedit.cpp" line="85"/>
         <source>Name of product must be set.</source>
         <translation>A Termék neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="86"/>
+        <location filename="edit/dlgproductedit.cpp" line="93"/>
         <source>Product with this name already exists.
 Please set another one.</source>
         <translation>Ilyen nevü Termék már létezik.
 Kérem válasszon egy másik nevet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="93"/>
+        <location filename="edit/dlgproductedit.cpp" line="100"/>
         <source>Price of product must be set.</source>
         <translation>A Termék ára nem lehet üres.</translation>
     </message>
@@ -3538,43 +3545,43 @@ Kérem válasszon egy másik nevet.</translation>
         <translation>Termék Típusok listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="31"/>
+        <location filename="crud/dlgproducttype.cpp" line="35"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="32"/>
+        <location filename="crud/dlgproducttype.cpp" line="36"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="33"/>
-        <location filename="crud/dlgproducttype.cpp" line="47"/>
+        <location filename="crud/dlgproducttype.cpp" line="37"/>
+        <location filename="crud/dlgproducttype.cpp" line="51"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="34"/>
+        <location filename="crud/dlgproducttype.cpp" line="38"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="35"/>
+        <location filename="crud/dlgproducttype.cpp" line="39"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="86"/>
+        <location filename="crud/dlgproducttype.cpp" line="90"/>
         <source>New Product Type</source>
         <translation>Új Termék Típus</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="126"/>
+        <location filename="crud/dlgproducttype.cpp" line="130"/>
         <source>Are you sure you want to delete this Product Type?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a Termék Típust?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="129"/>
+        <location filename="crud/dlgproducttype.cpp" line="133"/>
         <source>There are products attached to this product type.
 Are you sure you want to delete this product type?
 
@@ -3585,17 +3592,17 @@ Biztos benne, hogy törölni akarja a termék típust?
 A terméktípus törlésével nem törli a kapcsolt terméket/termékeket.</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="134"/>
+        <location filename="crud/dlgproducttype.cpp" line="138"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="142"/>
+        <location filename="crud/dlgproducttype.cpp" line="146"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="143"/>
+        <location filename="crud/dlgproducttype.cpp" line="147"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -3608,18 +3615,18 @@ A terméktípus törlésével nem törli a kapcsolt terméket/termékeket.</tran
         <translation>Termék Típus</translation>
     </message>
     <message>
-        <location filename="edit/dlgproducttypeedit.cpp" line="81"/>
-        <location filename="edit/dlgproducttypeedit.cpp" line="89"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="88"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="96"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgproducttypeedit.cpp" line="81"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="88"/>
         <source>Name of product type must be set.</source>
         <translation>A Terméktípus neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproducttypeedit.cpp" line="89"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="96"/>
         <source>Product type with this name already exists.
 Please set another one.</source>
         <translation>Ilyen nevü Terméktípus már létezik.
@@ -4477,18 +4484,18 @@ total income</source>
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="89"/>
-        <location filename="edit/dlguseredit.cpp" line="131"/>
+        <location filename="edit/dlguseredit.cpp" line="101"/>
+        <location filename="edit/dlguseredit.cpp" line="143"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="89"/>
+        <location filename="edit/dlguseredit.cpp" line="101"/>
         <source>Password cannot be empty.</source>
         <translation>A jelszó nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="131"/>
+        <location filename="edit/dlguseredit.cpp" line="143"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation>A Jelszó és a Jelszó megint mezők értéke nem egyezik meg</translation>
     </message>
@@ -4501,39 +4508,51 @@ total income</source>
         <translation>Felhasználók</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="32"/>
+        <location filename="crud/dlgusers.cpp" line="36"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="33"/>
-        <location filename="crud/dlgusers.cpp" line="40"/>
+        <location filename="crud/dlgusers.cpp" line="37"/>
+        <location filename="crud/dlgusers.cpp" line="46"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="34"/>
-        <location filename="crud/dlgusers.cpp" line="41"/>
+        <location filename="crud/dlgusers.cpp" line="38"/>
+        <location filename="crud/dlgusers.cpp" line="47"/>
         <source>Real Name</source>
         <translation>Teljes név</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="94"/>
+        <location filename="crud/dlgusers.cpp" line="39"/>
+        <location filename="crud/dlgusers.cpp" line="48"/>
+        <source>Privilege</source>
+        <translation>Jogosultság</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgusers.cpp" line="40"/>
+        <location filename="crud/dlgusers.cpp" line="49"/>
+        <source>Comment</source>
+        <translation>Megjegyzés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgusers.cpp" line="104"/>
         <source>New User</source>
         <translation>Új felhasználó</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="140"/>
+        <location filename="crud/dlgusers.cpp" line="150"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="150"/>
+        <location filename="crud/dlgusers.cpp" line="160"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="151"/>
+        <location filename="crud/dlgusers.cpp" line="161"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -4542,7 +4561,7 @@ total income</source>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="141"/>
+        <location filename="crud/dlgusers.cpp" line="151"/>
         <source>Are you sure you want to delete this User?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a felhasználót?</translation>
     </message>
@@ -6469,60 +6488,65 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Dialog</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="22"/>
+        <location filename="dlgpanelappereance.ui" line="28"/>
         <source> Panel status </source>
         <translation> Gép állapot </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="30"/>
+        <location filename="dlgpanelappereance.ui" line="36"/>
         <source>Panel status name : </source>
         <translation>Gép állapot megnevezés : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="58"/>
+        <location filename="dlgpanelappereance.ui" line="70"/>
         <source> Settings </source>
         <translation> Beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="66"/>
+        <location filename="dlgpanelappereance.ui" line="78"/>
         <source>Background color : </source>
         <oldsource>Backgournd color : </oldsource>
         <translation>Háttér szín : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="91"/>
-        <location filename="dlgpanelappereance.ui" line="183"/>
-        <location filename="dlgpanelappereance.ui" line="217"/>
+        <location filename="dlgpanelappereance.ui" line="103"/>
+        <location filename="dlgpanelappereance.ui" line="195"/>
+        <location filename="dlgpanelappereance.ui" line="229"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="124"/>
+        <location filename="dlgpanelappereance.ui" line="136"/>
         <source>Panel text name : </source>
         <translation>Panel szöveg megnevezés : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="151"/>
+        <location filename="dlgpanelappereance.ui" line="163"/>
         <source>Font : </source>
         <translation>Betűtípus : </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="278"/>
+        <location filename="dlgpanelappereance.ui" line="351"/>
+        <source>Title</source>
+        <translation>Fejléc</translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="407"/>
         <source>sampletext</source>
         <translation>mintaszöveg</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="257"/>
+        <location filename="dlgpanelappereance.ui" line="269"/>
         <source> Preview </source>
         <translation> Előnézet </translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="320"/>
+        <location filename="dlgpanelappereance.ui" line="442"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="333"/>
+        <location filename="dlgpanelappereance.ui" line="455"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -7888,7 +7912,7 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>&amp;Megjegyzés :</translation>
     </message>
     <message>
-        <location filename="dlguseredit.ui" line="138"/>
+        <location filename="dlguseredit.ui" line="141"/>
         <source>Independent from the local studio.</source>
         <translation>Független a stúdiótól</translation>
     </message>

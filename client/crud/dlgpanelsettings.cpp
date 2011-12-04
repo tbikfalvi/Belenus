@@ -13,7 +13,8 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.png") );
 
-    m_uiPanelId = p_uiPanelId;
+    m_uiPanelId         = p_uiPanelId;
+    m_bIsSettingChanged = false;
 
     horizontalLayout1 = new QHBoxLayout();
     horizontalLayout1->setObjectName( QString::fromUtf8( "horizontalLayout1" ) );
@@ -86,7 +87,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbCopyToAll->setObjectName( QString::fromUtf8( "pbCopyToAll" ) );
     pbCopyToAll->setMinimumHeight( 30 );
     pbCopyToAll->setMaximumHeight( 30 );
-    pbCopyToAll->setText( tr("Copy to all") );
+    pbCopyToAll->setText( tr(" Copy to all ") );
     pbCopyToAll->setToolTip( tr("Copy and assign all device usages to all other devices.") );
     pbCopyToAll->setIconSize( QSize(20,20) );
     pbCopyToAll->setIcon( QIcon("./resources/40x40_save.png") );
@@ -97,8 +98,10 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     verticalLayout->insertLayout( 1, horizontalLayout2 );
     verticalLayout->insertLayout( 3, horizontalLayout3 );
 
-    cmbPanelType->setEnabled( false );
+    cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     ledWorkTime->setEnabled( false );
+    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
     m_poBtnSave->setEnabled( true );
     m_poBtnSave->setVisible( true );
@@ -134,13 +137,15 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         if( poQueryType ) delete poQueryType;
     }
 
-    setupTableView();
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelSettings", QPoint(600,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 
+    setupTableView();
 }
 
 cDlgPanelSettings::~cDlgPanelSettings()
 {
-
+    g_poPrefs->setDialogSize( "ListPanelSettings", QPoint( width(), height() ) );
 }
 
 void cDlgPanelSettings::setupTableView()
@@ -313,6 +318,7 @@ void cDlgPanelSettings::saveClicked( bool )
 void cDlgPanelSettings::on_pbWTReset_clicked( bool )
 {
     ledWorkTime->setText( "00:00:00" );
+    m_bIsSettingChanged = true;
 }
 
 void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )

@@ -35,7 +35,7 @@ void cDBPanelTypes::init( const unsigned int p_uiId,
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_qsName        = p_qsName;
-    m_qsModified        = p_qsModified;
+    m_qsModified    = p_qsModified;
     m_bActive       = p_bActive;
     m_qsArchive     = p_qsArchive;
 }

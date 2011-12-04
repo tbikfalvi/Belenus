@@ -20,6 +20,9 @@ cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPa
     {
         ledNameVal->setText( m_poPanelTypes->name() );
     }
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelType", QPoint(270,70) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 cDlgPanelTypeEdit::~cDlgPanelTypeEdit()

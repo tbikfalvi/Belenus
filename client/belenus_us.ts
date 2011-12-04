@@ -193,68 +193,68 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="81"/>
+        <location filename="crud/dlgaddress.cpp" line="85"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="82"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgaddress.cpp" line="83"/>
-        <location filename="crud/dlgaddress.cpp" line="104"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgaddress.cpp" line="84"/>
-        <location filename="crud/dlgaddress.cpp" line="105"/>
-        <source>Zip</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgaddress.cpp" line="85"/>
-        <location filename="crud/dlgaddress.cpp" line="106"/>
-        <source>City</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="crud/dlgaddress.cpp" line="86"/>
-        <location filename="crud/dlgaddress.cpp" line="107"/>
-        <source>Address</source>
+        <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="87"/>
         <location filename="crud/dlgaddress.cpp" line="108"/>
-        <source>Public place</source>
+        <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="88"/>
         <location filename="crud/dlgaddress.cpp" line="109"/>
-        <source>Number</source>
+        <source>Zip</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="89"/>
-        <source>Active</source>
+        <location filename="crud/dlgaddress.cpp" line="110"/>
+        <source>City</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="90"/>
+        <location filename="crud/dlgaddress.cpp" line="111"/>
+        <source>Address</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="91"/>
+        <location filename="crud/dlgaddress.cpp" line="112"/>
+        <source>Public place</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="92"/>
+        <location filename="crud/dlgaddress.cpp" line="113"/>
+        <source>Number</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="93"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgaddress.cpp" line="94"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="196"/>
+        <location filename="crud/dlgaddress.cpp" line="200"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgaddress.cpp" line="197"/>
+        <location filename="crud/dlgaddress.cpp" line="201"/>
         <source>Are you sure you want to delete this address?</source>
         <translation></translation>
     </message>
@@ -723,22 +723,22 @@ Time value can not be greater than %1 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="265"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="275"/>
         <source>status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="274"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="284"/>
         <source>current length</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="283"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="293"/>
         <source>next length</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="292"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="302"/>
         <source>information</source>
         <translation></translation>
     </message>
@@ -782,8 +782,9 @@ Time value can not be greater than %1 minutes.</source>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="89"/>
-        <source>Copy to all</source>
-        <translation></translation>
+        <source> Copy to all </source>
+        <oldsource>Copy to all</oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="90"/>
@@ -791,82 +792,82 @@ Time value can not be greater than %1 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="156"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="159"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="157"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="160"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="158"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="174"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="161"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="177"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="159"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="175"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="162"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="178"/>
         <source>Time length</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="160"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="176"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="163"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="179"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="161"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="164"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="217"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="220"/>
         <source>New paneluse</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="256"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="259"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="257"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="260"/>
         <source>Are you sure you want to delete this paneluse?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="284"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="289"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="294"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="287"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="292"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="297"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="284"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="287"/>
         <source>Title of panel can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="289"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="292"/>
         <source>Maximum worktime of panel can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="294"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="297"/>
         <source>Maximum worktime has to be greater than zero.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="332"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="335"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="333"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="336"/>
         <source>Device usage copy process finished.</source>
         <translation></translation>
     </message>
@@ -1623,43 +1624,49 @@ Name of the file is: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="30"/>
+        <location filename="crud/dlgproduct.cpp" line="34"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="31"/>
+        <location filename="crud/dlgproduct.cpp" line="35"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="32"/>
-        <location filename="crud/dlgproduct.cpp" line="46"/>
+        <location filename="crud/dlgproduct.cpp" line="36"/>
+        <location filename="crud/dlgproduct.cpp" line="52"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="33"/>
+        <location filename="crud/dlgproduct.cpp" line="37"/>
+        <location filename="crud/dlgproduct.cpp" line="53"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="38"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="34"/>
+        <location filename="crud/dlgproduct.cpp" line="39"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="85"/>
+        <location filename="crud/dlgproduct.cpp" line="93"/>
         <source>New Product</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="125"/>
+        <location filename="crud/dlgproduct.cpp" line="133"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="128"/>
+        <location filename="crud/dlgproduct.cpp" line="136"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -1667,17 +1674,17 @@ Deleting this product will not delete the product types assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="133"/>
+        <location filename="crud/dlgproduct.cpp" line="141"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="141"/>
+        <location filename="crud/dlgproduct.cpp" line="149"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="142"/>
+        <location filename="crud/dlgproduct.cpp" line="150"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1690,53 +1697,53 @@ Deleting this product will not delete the product types assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="31"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="35"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="32"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="36"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="33"/>
-        <location filename="crud/dlgproductactiontype.cpp" line="47"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="37"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="51"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="34"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="38"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="35"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="39"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="86"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="90"/>
         <source>New Productaction Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="126"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="130"/>
         <source>Are you sure you want to delete this Productaction Type?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="128"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="132"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="136"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="140"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="137"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="141"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1749,25 +1756,25 @@ Deleting this product will not delete the product types assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="55"/>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="63"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="55"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
         <source>Name of productaction type must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="63"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
         <source>Productaction type with this name already exists.
 Please set another one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
         <source>A product action can not increase and decrease
 the product count at the same time.</source>
         <translation type="unfinished"></translation>
@@ -1781,25 +1788,25 @@ the product count at the same time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="78"/>
-        <location filename="edit/dlgproductedit.cpp" line="86"/>
+        <location filename="edit/dlgproductedit.cpp" line="85"/>
         <location filename="edit/dlgproductedit.cpp" line="93"/>
+        <location filename="edit/dlgproductedit.cpp" line="100"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="78"/>
+        <location filename="edit/dlgproductedit.cpp" line="85"/>
         <source>Name of product must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="86"/>
+        <location filename="edit/dlgproductedit.cpp" line="93"/>
         <source>Product with this name already exists.
 Please set another one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="93"/>
+        <location filename="edit/dlgproductedit.cpp" line="100"/>
         <source>Price of product must be set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1812,43 +1819,43 @@ Please set another one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="31"/>
+        <location filename="crud/dlgproducttype.cpp" line="35"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="32"/>
+        <location filename="crud/dlgproducttype.cpp" line="36"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="33"/>
-        <location filename="crud/dlgproducttype.cpp" line="47"/>
+        <location filename="crud/dlgproducttype.cpp" line="37"/>
+        <location filename="crud/dlgproducttype.cpp" line="51"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="34"/>
+        <location filename="crud/dlgproducttype.cpp" line="38"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="35"/>
+        <location filename="crud/dlgproducttype.cpp" line="39"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="86"/>
+        <location filename="crud/dlgproducttype.cpp" line="90"/>
         <source>New Product Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="126"/>
+        <location filename="crud/dlgproducttype.cpp" line="130"/>
         <source>Are you sure you want to delete this Product Type?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="129"/>
+        <location filename="crud/dlgproducttype.cpp" line="133"/>
         <source>There are products attached to this product type.
 Are you sure you want to delete this product type?
 
@@ -1856,17 +1863,17 @@ Deleting this product type will not delete the products assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="134"/>
+        <location filename="crud/dlgproducttype.cpp" line="138"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="142"/>
+        <location filename="crud/dlgproducttype.cpp" line="146"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="143"/>
+        <location filename="crud/dlgproducttype.cpp" line="147"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1879,18 +1886,18 @@ Deleting this product type will not delete the products assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproducttypeedit.cpp" line="81"/>
-        <location filename="edit/dlgproducttypeedit.cpp" line="89"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="88"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="96"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproducttypeedit.cpp" line="81"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="88"/>
         <source>Name of product type must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproducttypeedit.cpp" line="89"/>
+        <location filename="edit/dlgproducttypeedit.cpp" line="96"/>
         <source>Product type with this name already exists.
 Please set another one.</source>
         <translation type="unfinished"></translation>
@@ -2429,18 +2436,18 @@ total income</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="89"/>
-        <location filename="edit/dlguseredit.cpp" line="131"/>
+        <location filename="edit/dlguseredit.cpp" line="101"/>
+        <location filename="edit/dlguseredit.cpp" line="143"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="89"/>
+        <location filename="edit/dlguseredit.cpp" line="101"/>
         <source>Password cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlguseredit.cpp" line="131"/>
+        <location filename="edit/dlguseredit.cpp" line="143"/>
         <source>Values of the Password and Retype Password fields are not the same</source>
         <translation></translation>
     </message>
@@ -2453,44 +2460,56 @@ total income</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="32"/>
+        <location filename="crud/dlgusers.cpp" line="36"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="33"/>
-        <location filename="crud/dlgusers.cpp" line="40"/>
+        <location filename="crud/dlgusers.cpp" line="37"/>
+        <location filename="crud/dlgusers.cpp" line="46"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="34"/>
-        <location filename="crud/dlgusers.cpp" line="41"/>
+        <location filename="crud/dlgusers.cpp" line="38"/>
+        <location filename="crud/dlgusers.cpp" line="47"/>
         <source>Real Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="94"/>
+        <location filename="crud/dlgusers.cpp" line="39"/>
+        <location filename="crud/dlgusers.cpp" line="48"/>
+        <source>Privilege</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgusers.cpp" line="40"/>
+        <location filename="crud/dlgusers.cpp" line="49"/>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgusers.cpp" line="104"/>
         <source>New User</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="140"/>
+        <location filename="crud/dlgusers.cpp" line="150"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="141"/>
+        <location filename="crud/dlgusers.cpp" line="151"/>
         <source>Are you sure you want to delete this User?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="150"/>
+        <location filename="crud/dlgusers.cpp" line="160"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgusers.cpp" line="151"/>
+        <location filename="crud/dlgusers.cpp" line="161"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -3627,60 +3646,65 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="22"/>
+        <location filename="dlgpanelappereance.ui" line="28"/>
         <source> Panel status </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="30"/>
+        <location filename="dlgpanelappereance.ui" line="36"/>
         <source>Panel status name : </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="58"/>
+        <location filename="dlgpanelappereance.ui" line="70"/>
         <source> Settings </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="66"/>
+        <location filename="dlgpanelappereance.ui" line="78"/>
         <source>Background color : </source>
         <oldsource>Backgournd color : </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="91"/>
-        <location filename="dlgpanelappereance.ui" line="183"/>
-        <location filename="dlgpanelappereance.ui" line="217"/>
+        <location filename="dlgpanelappereance.ui" line="103"/>
+        <location filename="dlgpanelappereance.ui" line="195"/>
+        <location filename="dlgpanelappereance.ui" line="229"/>
         <source>Choose ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="124"/>
+        <location filename="dlgpanelappereance.ui" line="136"/>
         <source>Panel text name : </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="151"/>
+        <location filename="dlgpanelappereance.ui" line="163"/>
         <source>Font : </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="278"/>
+        <location filename="dlgpanelappereance.ui" line="351"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="407"/>
         <source>sampletext</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="257"/>
+        <location filename="dlgpanelappereance.ui" line="269"/>
         <source> Preview </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="320"/>
+        <location filename="dlgpanelappereance.ui" line="442"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="333"/>
+        <location filename="dlgpanelappereance.ui" line="455"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
@@ -4639,7 +4663,7 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlguseredit.ui" line="138"/>
+        <location filename="dlguseredit.ui" line="141"/>
         <source>Independent from the local studio.</source>
         <translation></translation>
     </message>

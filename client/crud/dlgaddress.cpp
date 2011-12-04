@@ -48,11 +48,15 @@ cDlgAddress::cDlgAddress( QWidget *p_poParent )
     }
     if( poQuery ) delete poQuery;
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListAddress", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgAddress::~cDlgAddress()
 {
+    g_poPrefs->setDialogSize( "ListAddress", QPoint( width(), height() ) );
 }
 
 void cDlgAddress::setPatientId( const unsigned int p_uiPatientId )

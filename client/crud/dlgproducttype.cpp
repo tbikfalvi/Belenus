@@ -11,11 +11,15 @@ cDlgProductType::cDlgProductType( QWidget *p_poParent )
     setWindowTitle( tr( "Product Type List" ) );
     setWindowIcon( QIcon("./resources/40x40_producttype.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListProductTypes", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgProductType::~cDlgProductType()
 {
+    g_poPrefs->setDialogSize( "ListProductTypes", QPoint( width(), height() ) );
 }
 
 void cDlgProductType::setupTableView()

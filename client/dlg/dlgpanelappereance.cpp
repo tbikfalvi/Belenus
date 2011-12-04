@@ -97,9 +97,11 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
 
     m_bInit = false;
 
+    frmPanelTitle->setStyleSheet( QString("QFrame { background-color: lightgray }") );
+
     updatePanelSettings();
 
-    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelAppereance", QPoint(455,415) );
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelAppereance", QPoint(455,400) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 //====================================================================================
@@ -128,7 +130,7 @@ void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
     QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
     obColorIcon.fill( colorFill );
     pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
-    gbPreview->setStyleSheet( QString("QGroupBox { background-color: %1 }").arg( colorFill.name() ) );
+    frmPanelBody->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
 }
 //====================================================================================
 void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
@@ -257,7 +259,7 @@ void cDlgPanelAppereance::updatePanelSettings()
     QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
     obColorIcon.fill( colorFill );
     pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
-    gbPreview->setStyleSheet( QString("QGroupBox { background-color: %1 }").arg( colorFill.name() ) );
+    frmPanelBody->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
 
     QFont   obFont;
 

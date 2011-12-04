@@ -10,11 +10,15 @@ cDlgPanelTypes::cDlgPanelTypes( QWidget *p_poParent )
     setWindowTitle( tr( "Panel Types List" ) );
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelTypes", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgPanelTypes::~cDlgPanelTypes()
 {
+    g_poPrefs->setDialogSize( "ListPanelTypes", QPoint( width(), height() ) );
 }
 
 void cDlgPanelTypes::setupTableView()
@@ -55,11 +59,11 @@ void cDlgPanelTypes::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT panelTypeId, name, active, archive FROM panelTypes";
+        m_qsQuery = "SELECT panelTypeId, name, active, archive FROM panelTypes WHERE panelTypeId>0";
     }
     else
     {
-        m_qsQuery = "SELECT panelTypeId AS id, name FROM panelTypes";
+        m_qsQuery = "SELECT panelTypeId AS id, name FROM panelTypes WHERE panelTypeId>0";
     }
 
     cDlgCrud::refreshTable();

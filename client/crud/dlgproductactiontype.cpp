@@ -11,11 +11,15 @@ cDlgProductActionType::cDlgProductActionType( QWidget *p_poParent )
     setWindowTitle( tr( "Productaction Type List" ) );
     setWindowIcon( QIcon("./resources/40x40_productactiontype.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListProductTypeActions", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgProductActionType::~cDlgProductActionType()
 {
+    g_poPrefs->setDialogSize( "ListProductTypeActions", QPoint( width(), height() ) );
 }
 
 void cDlgProductActionType::setupTableView()

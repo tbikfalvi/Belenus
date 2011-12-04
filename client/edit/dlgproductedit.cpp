@@ -16,6 +16,9 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
     pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
 
+    checkIndependent->setVisible( false );
+    checkIndependent->setEnabled( false );
+
     m_poProduct = p_poProduct;
 
     QStringList qslProductTypes;
@@ -62,10 +65,14 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
         if( m_poProduct->id() > 0 )
             checkIndependent->setEnabled( false );
     }
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditProduct", QPoint(600,360) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 cDlgProductEdit::~cDlgProductEdit()
 {
+    g_poPrefs->setDialogSize( "EditProduct", QPoint( width(), height() ) );
 }
 
 void cDlgProductEdit::on_pbSave_clicked()

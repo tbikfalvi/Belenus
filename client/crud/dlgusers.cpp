@@ -12,11 +12,15 @@ cDlgUsers::cDlgUsers( QWidget *p_poParent )
 
     m_uiSelectedId = g_obUser.id();
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListUsers", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgUsers::~cDlgUsers()
 {
+    g_poPrefs->setDialogSize( "ListUsers", QPoint( width(), height() ) );
 }
 
 void cDlgUsers::setupTableView()
@@ -32,6 +36,8 @@ void cDlgUsers::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Active" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Real Name" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Privilege" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Comment" ) );
 
         tbvCrud->sortByColumn( 4, Qt::AscendingOrder );
     }
@@ -39,11 +45,15 @@ void cDlgUsers::setupTableView()
     {
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Real Name" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Privilege" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Comment" ) );
 
         tbvCrud->sortByColumn( 3, Qt::AscendingOrder );
     }
     tbvCrud->resizeColumnToContents( 2 );
     tbvCrud->resizeColumnToContents( 3 );
+    tbvCrud->resizeColumnToContents( 4 );
+    tbvCrud->resizeColumnToContents( 5 );
     tbvCrud->setColumnHidden( 1, true );
 }
 
@@ -53,11 +63,11 @@ void cDlgUsers::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT userId AS id, accgroup, active, name, realName FROM users";
+        m_qsQuery = "SELECT userId AS id, accgroup, active, name, realName, accGroup, comment FROM users";
     }
     else
     {
-        m_qsQuery = "SELECT userId AS id, accgroup, name, realName FROM users WHERE active = 1";
+        m_qsQuery = "SELECT userId AS id, accgroup, name, realName, accGroup, comment FROM users WHERE active = 1";
     }
 
     cDlgCrud::refreshTable();

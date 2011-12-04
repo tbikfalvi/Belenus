@@ -19,6 +19,9 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    checkIndependent->setVisible( false );
+    checkIndependent->setEnabled( false );
+
     m_qsDefaultPwd = "pppppppp";
 
     m_poUser = p_poUser;
@@ -72,10 +75,19 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     {
         chbActive->setEnabled( false );
     }
+    if( !(g_obUser.isInGroup( cAccessGroup::ROOT )) )
+    {
+        lblUserId->setVisible( false );
+        lblUserIdValue->setVisible( false );
+    }
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditUsers", QPoint(370,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 cDlgUserEdit::~cDlgUserEdit()
 {
+    g_poPrefs->setDialogSize( "EditUsers", QPoint( width(), height() ) );
 }
 
 void cDlgUserEdit::accept ()

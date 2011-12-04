@@ -35,9 +35,10 @@ public:
     virtual ~cDlgPanelSettings();
 
 private:
+    bool             m_bIsSettingChanged;
 
 protected:
-    unsigned int    m_uiPanelId;
+    unsigned int     m_uiPanelId;
 
     virtual void setupTableView();
     virtual void enableButtons();
