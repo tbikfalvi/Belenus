@@ -41,6 +41,8 @@ void cDBGuest::init( const unsigned int p_uiId,
                        const QString &p_qsName,
                        const int p_nGender,
                        const QString &p_qsDateBirth,
+                       const int p_nAgeType,
+                       const bool p_bIsReturning,
                        const QString &p_qsUniqueId,
                        const QString &p_qsEmail,
                        const QString &p_qsPhone,
@@ -65,7 +67,7 @@ void cDBGuest::init( const unsigned int p_uiId,
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
-    m_uiGuestOriginId     = p_uiGuestOriginId;
+    m_uiGuestOriginId       = p_uiGuestOriginId;
     m_uiReasonToVisitId     = p_uiReasonToVisitId;
     m_uiIllnessGroupId      = p_uiIllnessGroupId;
     m_uiHealthInsuranceId   = p_uiHealthInsuranceId;
@@ -75,6 +77,8 @@ void cDBGuest::init( const unsigned int p_uiId,
     m_qsName                = p_qsName;
     m_nGender               = p_nGender;
     m_qsDateBirth           = p_qsDateBirth;
+    m_nAgeType              = p_nAgeType;
+    m_bIsReturning          = p_bIsReturning;
     m_qsUniqueId            = p_qsUniqueId;
     m_qsEmail               = p_qsEmail;
     m_qsPhone               = p_qsPhone;
@@ -92,7 +96,7 @@ void cDBGuest::init( const unsigned int p_uiId,
     m_bDoctorProposed       = p_bDoctorProposed;
     m_inDiscountType        = p_inDiscountType;
     m_qsComment             = p_qsComment;
-    m_qsModified        = p_qsModified;
+    m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -102,7 +106,7 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx                 = p_obRecord.indexOf( "patientId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
-    int inGuestOriginIdIdx    = p_obRecord.indexOf( "patientOriginId" );
+    int inGuestOriginIdIdx      = p_obRecord.indexOf( "patientOriginId" );
     int inReasonToVisitIdIdx    = p_obRecord.indexOf( "reasonToVisitId" );
     int inIllnessGroupIdIdx     = p_obRecord.indexOf( "illnessGroupId" );
     int inHealthInsuranceIdIdx  = p_obRecord.indexOf( "healthInsuranceId" );
@@ -112,6 +116,8 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inGenderIdx             = p_obRecord.indexOf( "gender" );
     int inDateBirthIdx          = p_obRecord.indexOf( "dateBirth" );
+    int inAgeTypeIdx            = p_obRecord.indexOf( "ageType" );
+    int inIsReturningIdx        = p_obRecord.indexOf( "isReturning" );
     int inUniqueIdIdx           = p_obRecord.indexOf( "uniqueId" );
     int inEmailIdx              = p_obRecord.indexOf( "email" );
     int inPhoneIdx              = p_obRecord.indexOf( "phone" );
@@ -129,7 +135,7 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
     int inDoctorProposedIdx     = p_obRecord.indexOf( "doctorProposed" );
     int inDiscountTypeIdx       = p_obRecord.indexOf( "discountType" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -145,6 +151,8 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inGenderIdx ).toInt(),
           p_obRecord.value( inDateBirthIdx ).toString(),
+          p_obRecord.value( inAgeTypeIdx ).toInt(),
+          p_obRecord.value( inIsReturningIdx ).toBool(),
           p_obRecord.value( inUniqueIdIdx ).toString(),
           p_obRecord.value( inEmailIdx ).toString(),
           p_obRecord.value( inPhoneIdx ).toString(),
@@ -328,6 +336,8 @@ void cDBGuest::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "gender = \"%1\", " ).arg( m_nGender );
     qsQuery += QString( "dateBirth = \"%1\", " ).arg( m_qsDateBirth );
+    qsQuery += QString( "ageType = \"%1\", " ).arg( m_nAgeType );
+    qsQuery += QString( "isReturning = %1, " ).arg( m_bIsReturning );
     qsQuery += QString( "uniqueId = \"%1\", " ).arg( m_qsUniqueId );
     qsQuery += QString( "email = \"%1\", " ).arg( m_qsEmail );
     qsQuery += QString( "phone = \"%1\", " ).arg( m_qsPhone );
@@ -502,6 +512,26 @@ QString cDBGuest::dateBirth() const throw()
 void cDBGuest::setDateBirth( const QString &p_qsDateBirth ) throw()
 {
     m_qsDateBirth = p_qsDateBirth;
+}
+
+int cDBGuest::ageType() const throw()
+{
+    return m_nAgeType;
+}
+
+void cDBGuest::setAgeType( const int p_nAgeType ) throw()
+{
+    m_nAgeType = p_nAgeType;
+}
+
+bool cDBGuest::isReturning() const throw()
+{
+    return m_bIsReturning;
+}
+
+void cDBGuest::setIsReturning( const bool p_bIsReturning ) throw()
+{
+    m_bIsReturning = m_bIsReturning;
 }
 
 QString cDBGuest::uniqueId() const throw()

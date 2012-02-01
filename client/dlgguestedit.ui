@@ -6,60 +6,54 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>162</height>
+    <width>547</width>
+    <height>296</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>700</width>
-    <height>162</height>
-   </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>700</width>
-    <height>162</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QGroupBox" name="gbIdentification">
        <property name="title">
         <string> Identification </string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="lblName">
-            <property name="text">
-             <string>Name :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ledName">
-            <property name="minimumSize">
-             <size>
-              <width>340</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblGender">
-            <property name="text">
-             <string>Gender :</string>
-            </property>
-           </widget>
-          </item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblName">
+          <property name="text">
+           <string>Name :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="ledName">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblGender">
+          <property name="text">
+           <string>Gender :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QRadioButton" name="rbGenderMale">
             <property name="text">
@@ -74,87 +68,131 @@
             </property>
            </widget>
           </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="lblUniqueId">
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblUniqueId">
+          <property name="text">
+           <string>Unique identification :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="ledUniqueId">
+          <property name="minimumSize">
+           <size>
+            <width>211</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maxLength">
+           <number>100</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblAge">
+          <property name="text">
+           <string>Age :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="rbAge0">
             <property name="text">
-             <string>Unique identification :</string>
+             <string>Not defined</string>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ledUniqueId">
-            <property name="minimumSize">
-             <size>
-              <width>211</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maxLength">
-             <number>100</number>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblDateBirth">
-            <property name="text">
-             <string>Date of birth :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDateEdit" name="deDateBirth">
-            <property name="dateTime">
-             <datetime>
-              <hour>0</hour>
-              <minute>0</minute>
-              <second>0</second>
-              <year>1900</year>
-              <month>1</month>
-              <day>1</day>
-             </datetime>
-            </property>
-            <property name="displayFormat">
-             <string>yyyy/MM/dd</string>
-            </property>
-            <property name="calendarPopup">
+            <property name="checked">
              <bool>true</bool>
             </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="lblAge">
+          <item row="0" column="1">
+           <widget class="QRadioButton" name="rbAge1">
             <property name="text">
-             <string>Age :</string>
+             <string>Under 18</string>
             </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
            </widget>
           </item>
-          <item>
-           <widget class="QLineEdit" name="ledAge">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="0" column="2">
+           <widget class="QRadioButton" name="rbAge2">
+            <property name="text">
+             <string>18 - 20</string>
             </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QRadioButton" name="rbAge3">
+            <property name="text">
+             <string>21 - 30</string>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="rbAge4">
+            <property name="text">
+             <string>31 - 40</string>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>16777215</height>
-             </size>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QRadioButton" name="rbAge5">
+            <property name="text">
+             <string>41 - 50</string>
             </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QRadioButton" name="rbAge6">
+            <property name="text">
+             <string>51 - 60</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QRadioButton" name="rbAge7">
+            <property name="text">
+             <string>Above 60</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
            </widget>
           </item>
          </layout>
@@ -217,6 +255,35 @@
        </layout>
       </widget>
      </item>
+     <item>
+      <widget class="QGroupBox" name="gbStatistics">
+       <property name="title">
+        <string> Statistical data </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QCheckBox" name="chkReturning">
+          <property name="text">
+           <string>Returning guest</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </item>
    <item>
@@ -252,10 +319,39 @@
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>18</height>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbHistory">
+       <property name="text">
+        <string>History</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
         </size>
        </property>
       </spacer>
@@ -266,4 +362,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

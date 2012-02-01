@@ -9,7 +9,7 @@
 #include "../db/dbpatientcardtype.h"
 #include "../crud/dlgaddress.h"
 
-cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostponed *p_poPostponed )
+cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostponed* )
     : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgGuestEdit::cDlgGuestEdit" );
@@ -23,6 +23,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbHistory->setIcon( QIcon("./resources/40x40_question.png") );
 
     m_poGuest = p_poGuest;
 
@@ -31,8 +32,35 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         ledName->setText( m_poGuest->name() );
         if( m_poGuest->gender() == 1 ) rbGenderMale->setChecked(true);
         else if( m_poGuest->gender() == 2 ) rbGenderFemale->setChecked(true);
-        deDateBirth->setDate( QDate::fromString(m_poGuest->dateBirth(),"yyyy-MM-dd") );
         ledUniqueId->setText( m_poGuest->uniqueId() );
+        switch( m_poGuest->ageType() )
+        {
+            case 1:
+                rbAge1->setChecked( true );
+                break;
+            case 2:
+                rbAge2->setChecked( true );
+                break;
+            case 3:
+                rbAge3->setChecked( true );
+                break;
+            case 4:
+                rbAge4->setChecked( true );
+                break;
+            case 5:
+                rbAge5->setChecked( true );
+                break;
+            case 6:
+                rbAge6->setChecked( true );
+                break;
+            case 7:
+                rbAge7->setChecked( true );
+                break;
+            default:
+                rbAge0->setChecked( true );
+        }
+        chkReturning->setChecked( m_poGuest->isReturning() );
+
         try
         {
             m_poPatientCard = new cDBPatientCard();
@@ -60,7 +88,15 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 rbGenderFemale->setEnabled( false );
                 rbGenderMale->setEnabled( false );
                 ledUniqueId->setEnabled( false );
-                deDateBirth->setEnabled( false );
+                rbAge0->setEnabled( false );
+                rbAge1->setEnabled( false );
+                rbAge2->setEnabled( false );
+                rbAge3->setEnabled( false );
+                rbAge4->setEnabled( false );
+                rbAge5->setEnabled( false );
+                rbAge6->setEnabled( false );
+                rbAge7->setEnabled( false );
+                chkReturning->setEnabled( false );
 
                 pbSave->setEnabled( false );
             }
@@ -144,7 +180,15 @@ bool cDlgGuestEdit::SaveGuestData()
         else if( rbGenderFemale->isChecked() )
             m_poGuest->setGender( 2 );
         m_poGuest->setUniqueId( ledUniqueId->text() );
-        m_poGuest->setDateBirth( deDateBirth->date().toString("yyyy-MM-dd") );
+        if( rbAge0->isChecked() ) m_poGuest->setAgeType( 0 );
+        else if( rbAge1->isChecked() ) m_poGuest->setAgeType( 1 );
+        else if( rbAge2->isChecked() ) m_poGuest->setAgeType( 2 );
+        else if( rbAge3->isChecked() ) m_poGuest->setAgeType( 3 );
+        else if( rbAge4->isChecked() ) m_poGuest->setAgeType( 4 );
+        else if( rbAge5->isChecked() ) m_poGuest->setAgeType( 5 );
+        else if( rbAge6->isChecked() ) m_poGuest->setAgeType( 6 );
+        else if( rbAge7->isChecked() ) m_poGuest->setAgeType( 7 );
+        m_poGuest->setIsReturning( chkReturning->isChecked() );
 
         m_poGuest->save();
 
@@ -158,15 +202,7 @@ bool cDlgGuestEdit::SaveGuestData()
     return bRet;
 }
 
-void cDlgGuestEdit::on_deDateBirth_dateChanged(QDate)
+void cDlgGuestEdit::on_pbHistory_clicked()
 {
-    if( deDateBirth->date().year() != 1900 )
-    {
-        QDate   qdDays = deDateBirth->date();
-        QDate   qdAge  = QDate( 1900, 1, 1 );
-
-        qdAge = qdAge.addDays( qdDays.daysTo(QDate::currentDate()) );
-
-        ledAge->setText( QString::number(qdAge.year()-1900) );
-    }
+    QMessageBox::information( this, tr("Information"), tr("Not implemented yet.") );
 }

@@ -40,6 +40,10 @@ public:
     void            setGender( const int p_nGender )                                throw();
     QString         dateBirth() const                                               throw();
     void            setDateBirth( const QString &p_qsDateBirth )                    throw();
+    int             ageType() const                                                 throw();
+    void            setAgeType( const int p_nAgeType )                              throw();
+    bool            isReturning() const                                             throw();
+    void            setIsReturning( const bool p_bIsReturning )                     throw();
     QString         uniqueId() const                                                throw();
     void            setUniqueId( const QString &p_qsUniqueId )                      throw();
     QString         email() const                                                   throw();
@@ -93,6 +97,8 @@ private:
     QString         m_qsName;
     int             m_nGender;
     QString         m_qsDateBirth;
+    int             m_nAgeType;
+    bool            m_bIsReturning;
     QString         m_qsUniqueId;
     QString         m_qsEmail;
     QString         m_qsPhone;
@@ -126,6 +132,8 @@ private:
                const QString &p_qsName = "",
                const int p_nGender = 0,
                const QString &p_qsDateBirth = "",
+               const int p_nAgeType = 0,
+               const bool p_bIsReturning = false,
                const QString &p_qsUniqueId = "",
                const QString &p_qsEmail = "",
                const QString &p_qsPhone = "",

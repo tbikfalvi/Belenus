@@ -30,7 +30,7 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
-    void on_deDateBirth_dateChanged(QDate date);
+    void on_pbHistory_clicked();
     void on_pbCancel_clicked();
     void on_pbSave_clicked();
 };

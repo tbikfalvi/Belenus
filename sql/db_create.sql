@@ -185,6 +185,8 @@ CREATE TABLE `patients` (
   `name`                    varchar(100)            NOT NULL,
   `gender`                  int(11)                 DEFAULT NULL,
   `dateBirth`               date                    DEFAULT NULL,
+  `ageType`                 int(11)                 DEFAULT 0,
+  `isReturning`             tinyint(1)              DEFAULT 0,
   `uniqueId`                varchar(20)             DEFAULT NULL,
   `email`                   varchar(100)            DEFAULT NULL,
   `phone`                   varchar(100)            DEFAULT NULL,
