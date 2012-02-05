@@ -128,9 +128,6 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
 
-    action_DoctorSchedule->setIcon( QIcon("./resources/40x40_doctor_schedule.png") );
-    action_DeviceSchedule->setIcon( QIcon("./resources/40x40_device_schedule.png") );
-
     action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
     action_ProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
     action_Products->setIcon( QIcon("./resources/40x40_product.png") );
@@ -150,13 +147,9 @@ cWndMain::cWndMain( QWidget *parent )
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
         action_Users->setIcon( QIcon("./resources/40x40_user.png") );
-        action_Doctor->setIcon( QIcon("./resources/40x40_doctor.png") );
         action_Company->setIcon( QIcon("./resources/40x40_company.png") );
         action_HealthInsurance->setIcon( QIcon("./resources/40x40_health_insurance.png") );
         action_Discounts->setIcon( QIcon("./resources/40x40_discount.png") );
-        action_Patientorigin->setIcon( QIcon("./resources/40x40_patientorigin.png") );
-        action_ReasonToVisit->setIcon( QIcon("./resources/40x40_reasontovisit.png") );
-        action_IllnessGroup->setIcon( QIcon("./resources/40x40_illness.png") );
         action_RegionZipCity->setIcon( QIcon("./resources/40x40_address.png") );
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
@@ -180,8 +173,6 @@ cWndMain::cWndMain( QWidget *parent )
     action_CassaHistory->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
     action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
-    action_SynchronizeDatabase->setIcon( QIcon("./resources/40x40_database_sync.png") );
-    action_AcquireGlobalData->setIcon( QIcon("./resources/40x40_database_sync.png") );
     action_EmptyDemoDB->setIcon( QIcon("./resources/40x40_database_sync.png") );
 
     //--------------------------------------------------------------------------------
@@ -200,19 +191,12 @@ cWndMain::cWndMain( QWidget *parent )
     action_DeviceSkipStatus->setEnabled( false );
     action_DeviceReset->setEnabled( false );
     action_DeviceSettings->setEnabled( false );
-    action_DoctorSchedule->setEnabled( false );
-    action_DeviceSchedule->setEnabled( false );
 
     action_PatientCardSell->setEnabled( false );
-
-    action_DoctorSchedule->setEnabled( false );
-    action_DeviceSchedule->setEnabled( false );
 
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 
-//    action_SynchronizeDatabase->setEnabled( g_obDBMirror.isAvailable() );
-//    action_AcquireGlobalData->setEnabled( g_obDBMirror.isAvailable() );
     action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
 
     showElementsForComponents();
@@ -641,25 +625,14 @@ void cWndMain::showElementsForComponents()
 
     if( g_poPrefs->isComponentKiwiSunInstalled() )
     {
-//        toolBarPatient->setEnabled( false );
-//        toolBarPatient->setVisible( false );
         toolBarSchedule->setEnabled( false );
         toolBarSchedule->setVisible( false );
 
-//        menuPatient->setEnabled( false );
-
         action_Patients->setVisible( false );
-        action_Doctor->setVisible( false );
         action_Company->setVisible( false );
         action_HealthInsurance->setVisible( false );
         action_Discounts->setVisible( false );
-        action_Patientorigin->setVisible( false );
-        action_ReasonToVisit->setVisible( false );
-        action_IllnessGroup->setVisible( false );
-//        menuPatient->setVisible( false );
         action_ReportPatients->setVisible( false );
-        action_SynchronizeDatabase->setVisible( false );
-        action_AcquireGlobalData->setVisible( false );
     }
 
 }
@@ -688,10 +661,10 @@ void cWndMain::updateTitle()
         qsTitle += "]";
     }
 /*
-    if( g_obPatient.id() > 0 )
+    if( g_obGuest.id() > 0 )
     {
         qsTitle += tr(" <=> Current patient: [");
-        qsTitle += g_obPatient.name();
+        qsTitle += g_obGuest.name();
         qsTitle += "]";
     }
     else
@@ -710,12 +683,12 @@ void cWndMain::updateToolbar()
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
     action_LogOut->setEnabled( true );
 
-    action_PatientSelect->setEnabled( false/*!(g_obPatient.id()>0)*/ );
-    action_PatientSelect->setVisible( false/*!(g_obPatient.id()>0)*/ );
-    action_PatientEmpty->setEnabled( false/*g_obPatient.id()>0*/ );
-    action_PatientEmpty->setVisible( false/*g_obPatient.id()>0*/ );
+    action_PatientSelect->setEnabled( false/*!(g_obGuest.id()>0)*/ );
+    action_PatientSelect->setVisible( false/*!(g_obGuest.id()>0)*/ );
+    action_PatientEmpty->setEnabled( false/*g_obGuest.id()>0*/ );
+    action_PatientEmpty->setVisible( false/*g_obGuest.id()>0*/ );
     action_PatientNew->setEnabled( true );
-    action_EditActualPatient->setEnabled( false/*g_obPatient.id()>0*/ );
+    action_EditActualPatient->setEnabled( false/*g_obGuest.id()>0*/ );
 
     action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
     action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
@@ -728,9 +701,6 @@ void cWndMain::updateToolbar()
     action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
 
     action_PatientCardSell->setEnabled( true );
-
-    action_DoctorSchedule->setEnabled( false );
-    action_DeviceSchedule->setEnabled( false );
 
     action_PayCash->setEnabled( mdiPanels->isHasToPay() );
     action_Cassa->setEnabled( g_obCassa.isCassaEnabled() );
@@ -747,10 +717,7 @@ void cWndMain::timerEvent(QTimerEvent *)
         if( g_poPrefs->getLicenceId() > 1 )
         {
             m_bSerialRegistration = false;
-/*
-            g_obDBMirror.initialize();
-            g_obDBMirror.updateLicenceData();
-*/
+
             g_obCassa.cassaClose();
             g_obCassa.createNew( g_obUser.id() );
 
@@ -775,7 +742,6 @@ void cWndMain::timerEvent(QTimerEvent *)
 
                 obDlgLicenceEdit.exec();
             }
-//            g_obDBMirror.start();
         }
         else
         {
@@ -799,52 +765,11 @@ void cWndMain::timerEvent(QTimerEvent *)
         }
     }
 /*
-    else if( m_bGlobalDataRequested )
-    {
-        if( g_obDBMirror.isAvailable() )
-        {
-            if( g_obDBMirror.checkIsGlobalDataModifiedOnServer() )
-            {
-                m_bGlobalDataRequested          = false;
-                m_inGlobalDataRequestTimeout    = 0;
-
-                cDlgDBGlobals   obDlgDBGlobals( this );
-
-                obDlgDBGlobals.autoSynchronization();
-                obDlgDBGlobals.exec();
-            }
-            else
-            {
-                m_dlgProgress->showProgress();
-
-                if( m_inGlobalDataRequestTimeout > 10 )
-                {
-                    m_bGlobalDataRequested          = false;
-                    m_inGlobalDataRequestTimeout    = 0;
-
-                    m_dlgProgress->hideProgress();
-
-                    QMessageBox::information( this, tr("Information"),tr( "Studio independent data is already synchronized with server." ) );
-                }
-                else
-                {
-                    m_inGlobalDataRequestTimeout++;
-                }
-            }
-        }
-        else
-        {
-            QMessageBox::warning( this, tr("Warning"),
-                                  tr("Connection to Belenus server is not available."));
-        }
-    }
-*/
-/*
-    if( m_uiPatientId != g_obPatient.id() )
+    if( m_uiPatientId != g_obGuest.id() )
     {
         updateTitle();
 
-        m_uiPatientId = g_obPatient.id();
+        m_uiPatientId = g_obGuest.id();
     }
 */
 }
@@ -1080,7 +1005,7 @@ void cWndMain::on_action_PatientEmpty_triggered()
 /*
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
-    g_obPatient.createNew();
+    g_obGuest.createNew();
 */
 }
 //====================================================================================
@@ -1108,7 +1033,7 @@ void cWndMain::on_action_UseWithCard_triggered()
 //    QSqlQuery   *poQuery;
 
 // 'SOLARIUM GUEST'
-//    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(0/*g_obPatient.id()*/) );
+//    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(0/*g_obGuest.id()*/) );
 //    if( poQuery->first() )
 //    {
 //        qsBarcode = poQuery->value(0).toString();
@@ -1333,7 +1258,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
         {
             cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
 // 'SOLARIUM GUEST'
-            obDlgPatientCardEdit.setPatientCardOwner( 0/*g_obPatient.id()*/ );
+            obDlgPatientCardEdit.setPatientCardOwner( 0/*g_obGuest.id()*/ );
             obDlgPatientCardEdit.activatePatientCard();
             obDlgPatientCardEdit.exec();
         }
@@ -1355,7 +1280,7 @@ void cWndMain::processInputPatient( QString p_stPatientName )
     }
     else if( uiPatientCount == 1 )
     {
-        g_obPatient.load( obDBPatient.id() );
+        g_obGuest.load( obDBPatient.id() );
     }
     else
     {
@@ -1387,7 +1312,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         obDBPatientCard.load( p_stBarcode );
 
         if( !mdiPanels->isCanBeStartedByCard() /*&&
-            g_obPatient.id() > 0 */ )
+            g_obGuest.id() > 0 */ )
         {
             QMessageBox::warning( this, tr("Attention"),
                                   tr("This device already prepared with a patientcard.\n"
@@ -1400,7 +1325,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         {
 // 'SOLARIUM GUEST'
 /*
-            if( g_obPatient.id() == 0 )
+            if( g_obGuest.id() == 0 )
             {
                 cDBPatient  obDBPatient;
 
@@ -1411,10 +1336,10 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                               "Do you want to select this patient as actual?").arg( obDBPatient.name() ),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
-                    g_obPatient.load( obDBPatientCard.patientId() );
+                    g_obGuest.load( obDBPatientCard.patientId() );
                 }
             }
-            if( obDBPatientCard.patientId() != g_obPatient.id() && g_obPatient.id() > 0 && obDBPatientCard.patientId() > 0 )
+            if( obDBPatientCard.patientId() != g_obGuest.id() && g_obGuest.id() > 0 && obDBPatientCard.patientId() > 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard has been assigned to a different patient.\n"
@@ -1424,19 +1349,19 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     return;
                 }
             }
-            else if( g_obPatient.id() > 0 && obDBPatientCard.patientId() == 0 )
+            else if( g_obGuest.id() > 0 && obDBPatientCard.patientId() == 0 )
             {
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("There is no patient assigned to this patientcard.\n"
                                               "Do you want to assign this patientcard to the actual patient?"),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
-                    obDBPatientCard.setPatientId( g_obPatient.id() );
+                    obDBPatientCard.setPatientId( g_obGuest.id() );
                     obDBPatientCard.save();
                 }
             }
 */
-//            if( g_obPatient.id() > 0 )
+//            if( g_obGuest.id() > 0 )
 //            {
                 if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
                 {
@@ -1508,13 +1433,13 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 obDlgPatientCardEdit.activatePatientCard();
 // 'SOLARIUM GUEST'
 /*
-                if( g_obPatient.id() > 0 )
+                if( g_obGuest.id() > 0 )
                 {
                     if( QMessageBox::question( this, tr("Question"),
                                                tr("Do you want to assign this patientcard to the actual patient?"),
                                                QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                     {
-                        obDlgPatientCardEdit.setPatientCardOwner( g_obPatient.id() );
+                        obDlgPatientCardEdit.setPatientCardOwner( g_obGuest.id() );
                     }
                 }
 */
@@ -1595,12 +1520,12 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 void cWndMain::on_action_EditActualPatient_triggered()
 {
 /*
-    cDlgPatientEdit  obDlgEdit( this, &g_obPatient );
-    obDlgEdit.setWindowTitle( g_obPatient.name() );
+    cDlgPatientEdit  obDlgEdit( this, &g_obGuest );
+    obDlgEdit.setWindowTitle( g_obGuest.name() );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         cDBPostponed    obDBPostponed;
-        obDBPostponed.removePatient( g_obPatient.id() );
+        obDBPostponed.removePatient( g_obGuest.id() );
     }
 */
 }

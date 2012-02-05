@@ -24,7 +24,7 @@ private:
     bool SaveGuestData();
 
 protected:
-    cDBGuest      *m_poGuest;
+    cDBGuest        *m_poGuest;
     cDBPostponed    *m_poPostponed;
     cDBAddress      *m_poAddress;
     cDBPatientCard  *m_poPatientCard;

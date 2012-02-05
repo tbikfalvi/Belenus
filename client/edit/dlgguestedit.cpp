@@ -32,7 +32,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         ledName->setText( m_poGuest->name() );
         if( m_poGuest->gender() == 1 ) rbGenderMale->setChecked(true);
         else if( m_poGuest->gender() == 2 ) rbGenderFemale->setChecked(true);
-        ledUniqueId->setText( m_poGuest->uniqueId() );
+        ledEmail->setText( m_poGuest->email() );
         switch( m_poGuest->ageType() )
         {
             case 1:
@@ -87,7 +87,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 ledName->setEnabled( false );
                 rbGenderFemale->setEnabled( false );
                 rbGenderMale->setEnabled( false );
-                ledUniqueId->setEnabled( false );
+                ledEmail->setEnabled( false );
                 rbAge0->setEnabled( false );
                 rbAge1->setEnabled( false );
                 rbAge2->setEnabled( false );
@@ -132,29 +132,7 @@ void cDlgGuestEdit::on_pbSave_clicked()
         }
     }
 */
-/*
-    if( deDateBirth->date().year() == 1900 &&
-        deDateBirth->date().month() == 1 &&
-        deDateBirth->date().day() == 1 &&
-        !boSkipErrorMessages )
-    {
-        boCanBeSaved = false;
-        if( QMessageBox::critical( this, tr( "Error" ), tr( "Guest date of birth must be set.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-        {
-            boSkipErrorMessages = true;
-        }
-    }
-*/
-/*
-    if( ledUniqueId->text() == "" && !boSkipErrorMessages )
-    {
-        boCanBeSaved = false;
-        if( QMessageBox::critical( this, tr( "Error" ), tr( "Guest unique identification value must be given.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-        {
-            boSkipErrorMessages = true;
-        }
-    }
-*/
+
     if( boCanBeSaved )
     {
         if( SaveGuestData() )
@@ -179,7 +157,7 @@ bool cDlgGuestEdit::SaveGuestData()
             m_poGuest->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poGuest->setGender( 2 );
-        m_poGuest->setUniqueId( ledUniqueId->text() );
+        m_poGuest->setEmail( ledEmail->text() );
         if( rbAge0->isChecked() ) m_poGuest->setAgeType( 0 );
         else if( rbAge1->isChecked() ) m_poGuest->setAgeType( 1 );
         else if( rbAge2->isChecked() ) m_poGuest->setAgeType( 2 );
