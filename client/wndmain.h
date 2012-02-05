@@ -38,8 +38,7 @@ private:
     cDlgProgress       *m_dlgProgress;
     int                 m_nTimer;
 
-//    unsigned int        m_uiPatientId;
-//    unsigned int        m_uiAttendanceId;
+    unsigned int        m_uiPatientId;
 
     bool                m_bCtrlPressed;
 
@@ -72,12 +71,10 @@ private slots:
     void on_action_ReasonToVisit_triggered();
     void on_action_Patients_triggered();
     void on_action_PatientNew_triggered();
-    void on_action_Attendances_triggered();
     void on_action_DeviceStart_triggered();
     void on_action_DeviceReset_triggered();
     void on_action_PatientSelect_triggered();
     void on_action_PatientEmpty_triggered();
-    void on_action_AttendanceNew_triggered();
     void on_action_PanelStatuses_triggered();
     void on_action_UseWithCard_triggered();
     void on_action_UseByTime_triggered();
@@ -89,15 +86,10 @@ private slots:
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();
     void on_action_DeviceSkipStatus_triggered();
-    void on_action_PostponedPatient_triggered();
-    void on_action_PostponedAttendance_triggered();
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
-    void on_action_SelectActualAttendance_triggered();
-    void on_action_DeselectActualAttendance_triggered();
-    void on_action_EditActualAttendance_triggered();
     void on_action_PayCash_triggered();
     void on_action_IllnessGroup_triggered();
     void on_action_Company_triggered();
@@ -106,7 +98,6 @@ private slots:
     void on_action_RegionZipCity_triggered();
     void on_action_ReportPatients_triggered();
     void on_action_CassaHistory_triggered();
-    void on_action_ReportAttendances_triggered();
     void on_action_ReportPatientcardUses_triggered();
     void on_action_EditLicenceInformation_triggered();
     void on_action_ReportPatientcards_triggered();

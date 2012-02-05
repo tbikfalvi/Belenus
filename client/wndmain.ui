@@ -205,32 +205,6 @@
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
    <addaction name="action_EditActualPatient"/>
-   <addaction name="action_PostponedPatient"/>
-  </widget>
-  <widget class="QToolBar" name="toolBarAttendance">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <property name="movable">
-    <bool>false</bool>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>40</width>
-     <height>40</height>
-    </size>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="action_AttendanceNew"/>
-   <addaction name="action_SelectActualAttendance"/>
-   <addaction name="action_DeselectActualAttendance"/>
-   <addaction name="action_EditActualAttendance"/>
-   <addaction name="action_PostponedAttendance"/>
   </widget>
   <widget class="QToolBar" name="toolBarDeviceUse">
    <property name="windowTitle">
@@ -251,7 +225,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_UseWithCard"/>
    <addaction name="action_UseByTime"/>
    <addaction name="separator"/>
    <addaction name="action_DeviceStart"/>

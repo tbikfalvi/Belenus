@@ -31,8 +31,7 @@
 #include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "db/dbuser.h"
-#include "db/dbpatient.h"
-#include "db/dbmirror.h"
+#include "db/dbguest.h"
 #include "preferences.h"
 #include "communication.h"
 #include "communication_demo.h"
@@ -57,12 +56,9 @@ cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
-//cDBPatient               g_obPatient;
-//unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
-//LicenceManager           g_obLicenceManager;
-//cDBMirror                g_obDBMirror;
 cGeneral                 g_obGen;
+cDBGuest                 g_obGuest;
 
 // 'SOLARIUM GUEST' felirat mindenhol, ahova a 'patient' helyett 'guest' kell
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
@@ -76,7 +72,7 @@ int main( int argc, char *argv[] )
 
     g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
     g_obLogger.attachWriter("db", &g_obLogDBWriter);
-    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
+//    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
 
     g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);

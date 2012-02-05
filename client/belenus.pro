@@ -65,7 +65,6 @@ HEADERS = belenus.h \
     db/dbpatientcardtype.h \
     db/dbpanelstatuses.h \
     db/dbuser.h \
-    db/dbpostponed.h \
     db/dbpaneltypes.h \
     db/dbpaneluses.h \
     db/dbcassa.h \
@@ -163,7 +162,6 @@ SOURCES = main.cpp \
     db/dbpatientcardtype.cpp \
     db/dbpanelstatuses.cpp \
     db/dbuser.cpp \
-    db/dbpostponed.cpp \
     db/dbpaneltypes.cpp \
     db/dbpaneluses.cpp \
     db/dbcassa.cpp \

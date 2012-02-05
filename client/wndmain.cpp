@@ -21,8 +21,6 @@
 
 //====================================================================================
 
-#include "db/dbpostponed.h"
-//#include "db/dbpatient.h"
 #include "db/dbpatientcard.h"
 #include "db/dbledger.h"
 
@@ -32,24 +30,16 @@
 #include "crud/dlgpatientorigin.h"
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
-//#include "crud/dlgpatient.h"
 #include "crud/dlgguest.h"
-//#include "crud/dlgattendance.h"
 //#include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
 #include "crud/dlgpatientcardtype.h"
 #include "crud/dlgpatientcard.h"
-//#include "crud/dlgpostponedpatientselect.h"
 #include "crud/dlgpanelsettings.h"
-//#include "crud/dlgpostponedattendanceselect.h"
-//#include "crud/dlgattendanceselect.h"
 #include "crud/dlgpaneluseselect.h"
-//#include "crud/dlgillnessgroup.h"
-//#include "crud/dlgcompany.h"
-//#include "crud/dlgdoctor.h"
-//#include "crud/dlghealthinsurance.h"
+#include "crud/dlgcompany.h"
 #include "crud/dlgzipregioncity.h"
-//#include "crud/dlgdiscount.h"
+#include "crud/dlgdiscount.h"
 #include "crud/dlgproducttype.h"
 #include "crud/dlgproductactiontype.h"
 #include "crud/dlgproduct.h"
@@ -57,9 +47,7 @@
 //====================================================================================
 
 #include "edit/dlguseredit.h"
-//#include "edit/dlgpatientedit.h"
 #include "edit/dlgguestedit.h"
-//#include "edit/dlgattendanceedit.h"
 #include "edit/dlgpatientcardedit.h"
 #include "edit/dlgcassaedit.h"
 #include "edit/dlgpatientcarduse.h"
@@ -75,15 +63,11 @@
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
-//#include "dlg/dlgsynchronization.h"
-#include "dlg/dlgglobals.h"
 
 //====================================================================================
 
 #include "report/repledgermain.h"
-//#include "report/reppatients.h"
 #include "report/repcassalist.h"
-//#include "report/repattendance.h"
 #include "report/repcarduses.h"
 #include "report/reppatientcards.h"
 #include "report/reppatientcardsobs.h"
@@ -108,9 +92,7 @@ cWndMain::cWndMain( QWidget *parent )
     m_bGlobalDataRequested          = false;
     m_inGlobalDataRequestTimeout    = 0;
 
-//    m_uiPatientId                   = 0;
-//    m_uiAttendanceId                = 0;
-//    g_uiPatientAttendanceId         = 0;
+    m_uiPatientId                   = 0;
 
     m_dlgProgress = new cDlgProgress( this );
 
@@ -134,13 +116,6 @@ cWndMain::cWndMain( QWidget *parent )
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.png") );
     action_EditActualPatient->setIcon( QIcon("./resources/40x40_patient_edit.png") );
     action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.png") );
-    action_PostponedPatient->setIcon( QIcon("./resources/40x40_patient_later.png") );
-
-    action_SelectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_select.png") );
-    action_DeselectActualAttendance->setIcon( QIcon("./resources/40x40_attendance_deselect.png") );
-    action_EditActualAttendance->setIcon( QIcon("./resources/40x40_attendance_edit.png") );
-    action_AttendanceNew->setIcon( QIcon("./resources/40x40_attendance_new.png") );
-    action_PostponedAttendance->setIcon( QIcon("./resources/40x40_attendance_later.png") );
 
     action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
     action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.png" ) );
@@ -171,7 +146,6 @@ cWndMain::cWndMain( QWidget *parent )
     //--------------------------------------------------------------------------------
     action_Patients->setIcon( QIcon("./resources/40x40_patient.png") );
     action_Guests->setIcon( QIcon("./resources/40x40_patient.png") );
-    action_Attendances->setIcon( QIcon("./resources/40x40_attendance.png") );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
     action_Cards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
     menuAdministrator->setIcon( QIcon("./resources/40x40_key.png") );
@@ -193,7 +167,6 @@ cWndMain::cWndMain( QWidget *parent )
     menuCassa->setIcon( QIcon( "./resources/40x40_cassa.png" ) );
 
 //    menuPatient->setIcon( QIcon("./resources/40x40_patient.png") );
-//    menuAttendance->setIcon( QIcon("./resources/40x40_attendance.png") );
     menuPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
         action_PCSaveToDatabase->setIcon( QIcon( "./resources/40x40_patientcardadd.png" ) );
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
@@ -201,7 +174,6 @@ cWndMain::cWndMain( QWidget *parent )
 
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
     action_ReportPatients->setIcon( QIcon("./resources/40x40_patient.png") );
-    action_ReportAttendances->setIcon( QIcon("./resources/40x40_attendance.png") );
     action_ReportPatientcards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
     action_PatientcardsObsolete->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
     action_ReportPatientcardUses->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
@@ -215,13 +187,6 @@ cWndMain::cWndMain( QWidget *parent )
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 
-    cDBPostponed    *poDBPostPoned = new cDBPostponed();
-
-    g_poPrefs->setPostponedPatients( poDBPostPoned->countPostponedPatients() );
-    g_poPrefs->setPostponedAttendances( poDBPostPoned->countPostponedAttendances() );
-
-    delete poDBPostPoned;
-
     action_Exit->setEnabled( false );
     action_LogOut->setEnabled( false );
     action_PatientSelect->setEnabled( false );
@@ -229,13 +194,6 @@ cWndMain::cWndMain( QWidget *parent )
     action_PatientEmpty->setVisible( false );
     action_PatientNew->setEnabled( false );
     action_EditActualPatient->setEnabled( false );
-    action_PostponedPatient->setEnabled( false );
-    action_SelectActualAttendance->setEnabled( false );
-    action_DeselectActualAttendance->setEnabled( false );
-    action_DeselectActualAttendance->setVisible( false );
-    action_EditActualAttendance->setEnabled( false );
-    action_AttendanceNew->setEnabled( false );
-    action_PostponedAttendance->setEnabled( false );
     action_UseWithCard->setEnabled( false );
     action_UseByTime->setEnabled( false );
     action_DeviceStart->setEnabled( false );
@@ -662,13 +620,6 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
     {
         mdiPanels->clear();
-/*
-        cDBAttendance   obDBAttendance;
-
-        obDBAttendance.load( g_uiPatientAttendanceId );
-        obDBAttendance.setLength( 0 );
-        obDBAttendance.save();
-*/
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -690,18 +641,14 @@ void cWndMain::showElementsForComponents()
 
     if( g_poPrefs->isComponentKiwiSunInstalled() )
     {
-        toolBarPatient->setEnabled( false );
-        toolBarPatient->setVisible( false );
-        toolBarAttendance->setEnabled( false );
-        toolBarAttendance->setVisible( false );
+//        toolBarPatient->setEnabled( false );
+//        toolBarPatient->setVisible( false );
         toolBarSchedule->setEnabled( false );
         toolBarSchedule->setVisible( false );
 
 //        menuPatient->setEnabled( false );
-//        menuAttendance->setEnabled( false );
 
         action_Patients->setVisible( false );
-        action_Attendances->setVisible( false );
         action_Doctor->setVisible( false );
         action_Company->setVisible( false );
         action_HealthInsurance->setVisible( false );
@@ -710,9 +657,7 @@ void cWndMain::showElementsForComponents()
         action_ReasonToVisit->setVisible( false );
         action_IllnessGroup->setVisible( false );
 //        menuPatient->setVisible( false );
-//        menuAttendance->setVisible( false );
         action_ReportPatients->setVisible( false );
-        action_ReportAttendances->setVisible( false );
         action_SynchronizeDatabase->setVisible( false );
         action_AcquireGlobalData->setVisible( false );
     }
@@ -769,39 +714,14 @@ void cWndMain::updateToolbar()
     action_PatientSelect->setVisible( false/*!(g_obPatient.id()>0)*/ );
     action_PatientEmpty->setEnabled( false/*g_obPatient.id()>0*/ );
     action_PatientEmpty->setVisible( false/*g_obPatient.id()>0*/ );
-    action_PatientNew->setEnabled( false/*true*/ );
+    action_PatientNew->setEnabled( true );
     action_EditActualPatient->setEnabled( false/*g_obPatient.id()>0*/ );
-    action_PostponedPatient->setEnabled( false/*g_poPrefs->postponedPatients()>0*/ );
-
-    action_SelectActualAttendance->setEnabled( false/*g_uiPatientAttendanceId == 0 && g_obPatient.id()>0*/ );
-    action_SelectActualAttendance->setVisible( false/*g_uiPatientAttendanceId == 0*/ );
-    action_DeselectActualAttendance->setEnabled( false/*g_uiPatientAttendanceId > 0*/ );
-    action_DeselectActualAttendance->setVisible( false/*g_uiPatientAttendanceId > 0*/ );
-    action_EditActualAttendance->setEnabled( false/*g_uiPatientAttendanceId > 0*/ );
-
-    action_AttendanceNew->setEnabled( false/*g_obPatient.id()>0*/ );
-    action_PostponedAttendance->setEnabled( false/*g_poPrefs->postponedAttendances()>0*/ );
 
     action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
     action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
 
-/*
-    if( g_poPrefs->isComponentSensoliteInstalled() )
-    {
-        action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
-                                        g_obPatient.id() > 0 &&
-                                        g_uiPatientAttendanceId > 0 &&
-                                        mdiPanels->mainProcessTime() > 0 );
-    }
-    else if( g_poPrefs->isComponentKiwiSunInstalled() )
-    {
-*/
-        action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
-                                        mdiPanels->mainProcessTime() > 0 );
-/*
-    }
-*/
-
+    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
+                                    mdiPanels->mainProcessTime() > 0 );
     action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
     action_DeviceReset->setEnabled( mdiPanels->isMainProcess() );
 
@@ -925,28 +845,6 @@ void cWndMain::timerEvent(QTimerEvent *)
         updateTitle();
 
         m_uiPatientId = g_obPatient.id();
-
-        if( m_uiPatientId )
-        {
-            switch( QMessageBox::question( this, tr("Question"),
-                                       tr("Do you want to create new attendance for this patient?\n\n"
-                                          "Press the Ignore button to select an existing attendance\n"
-                                          "that saved previously for this patient."),
-                                       QMessageBox::Yes, QMessageBox::No, QMessageBox::Ignore ) )
-            {
-                case QMessageBox::Yes:
-                    on_action_AttendanceNew_triggered();
-                    break;
-
-                case QMessageBox::Ignore:
-                    on_action_SelectActualAttendance_triggered();
-                    break;
-            }
-        }
-    }
-    if( m_uiAttendanceId != g_uiPatientAttendanceId )
-    {
-        m_uiAttendanceId = g_uiPatientAttendanceId;
     }
 */
 }
@@ -1121,39 +1019,26 @@ void cWndMain::on_action_Guests_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()
 {
-/*
     cTracer obTrace( "cWndMain::on_action_PatienNew_triggered" );
 
-    cDBPatient *poPatient = new cDBPatient;
-    poPatient->createNew();
+    cDBGuest *poGuest = new cDBGuest;
+    poGuest->createNew();
 
-    cDlgPatientEdit  obDlgEdit( this, poPatient );
+    cDlgGuestEdit  obDlgEdit( this, poGuest );
     obDlgEdit.setWindowTitle( tr( "New Patient" ) );
     obDlgEdit.exec();
 
-    if( poPatient->id() > 0 )
+    if( poGuest->id() > 0 )
     {
         if( QMessageBox::question( this, tr("Question"),
                                    tr("Do you want to select the created patient as actual?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            g_obPatient.load( poPatient->id() );
+//            g_obGuest.load( poGuest->id() );
         }
     }
 
-    delete poPatient;
-*/
-}
-//====================================================================================
-void cWndMain::on_action_Attendances_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_Attendances_triggered" );
-
-    cDlgAttendance  obDlgAttendance( this );
-
-    obDlgAttendance.exec();
-*/
+    delete poGuest;
 }
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
@@ -1196,32 +1081,6 @@ void cWndMain::on_action_PatientEmpty_triggered()
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obPatient.createNew();
-    g_uiPatientAttendanceId = 0;
-*/
-}
-//====================================================================================
-void cWndMain::on_action_AttendanceNew_triggered()
-{
-/*
-    cDBAttendance *poAttendance = new cDBAttendance;
-    poAttendance->createNew();
-    poAttendance->setPatientId( g_obPatient.id() );
-
-    cDlgAttendanceEdit obDlgEdit( this, poAttendance );
-    obDlgEdit.setWindowTitle( tr( "New Attendance" ) );
-    obDlgEdit.exec();
-
-    if( poAttendance->id() )
-    {
-        if( QMessageBox::question( this, tr("Question"),
-                                   tr("Do you want to select the created attendance as actual?"),
-                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-        {
-            g_uiPatientAttendanceId = poAttendance->id();
-        }
-    }
-
-    delete poAttendance;
 */
 }
 //====================================================================================
@@ -1377,26 +1236,6 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
     }
 }
 //====================================================================================
-void cWndMain::on_action_PostponedPatient_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_PostponedPatient_triggered" );
-
-    cDlgPostponedPatientSelect  obDlgPostponedPatientSelect( this );
-
-    obDlgPostponedPatientSelect.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_PostponedAttendance_triggered()
-{
-/*
-    cDlgPostponedAttendanceSelect   obDlgSelect( this );
-
-    obDlgSelect.exec();
-*/
-}
-//====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()
 {
     cDlgSerialReg   obDlgSerialReg( this );
@@ -1548,8 +1387,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         obDBPatientCard.load( p_stBarcode );
 
         if( !mdiPanels->isCanBeStartedByCard() /*&&
-            g_obPatient.id() > 0 &&
-            g_uiPatientAttendanceId > 0*/ )
+            g_obPatient.id() > 0 */ )
         {
             QMessageBox::warning( this, tr("Attention"),
                                   tr("This device already prepared with a patientcard.\n"
@@ -1644,8 +1482,6 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
                 if( obDlgPatientCardUse.exec() == QDialog::Accepted )
                 {
-//                    cDBAttendance   obDBAttendance;
-//                    QTime           tCurrent;
                     QTime           tLength;
                     QTime           tNewLength;
                     int             inNewLength;
@@ -1654,14 +1490,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
                     obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
 
-//                    obDBAttendance.load( g_uiPatientAttendanceId );
-//                    tCurrent = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
                     tLength  = QTime::fromString(qsLength,"mm:ss");
-                    inNewLength = /*tCurrent.minute()*60 + tCurrent.second() +*/
-                                  tLength.minute()*60 + tLength.second();
-//                    tNewLength = QTime( 0, inNewLength/60, inNewLength%60, 0 );
-//                    obDBAttendance.setLength( tNewLength.hour()*60+tNewLength.minute() );
-//                    obDBAttendance.save();
+                    inNewLength = tLength.minute()*60 + tLength.second();
                     mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
                 }
 //            }
@@ -1716,15 +1546,6 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inSecond )
 {
-/*
-    if( g_uiPatientAttendanceId == 0 )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("There is no actual attendance selected.\n"
-                                 "Please select first a patient and then an attendance.") );
-        return;
-    }
-*/
     if( !mdiPanels->isCanBeStartedByTime() )
     {
         QMessageBox::warning( this, tr("Attention"),
@@ -1760,15 +1581,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
                 return;
             }
         }
-/*
-        cDBAttendance   obDBAttendance;
-        QTime           tLength;
 
-        obDBAttendance.load( g_uiPatientAttendanceId );
-        tLength = QTime::fromString(obDBAttendance.lengthStr(),"hh:mm:ss");
-        obDBAttendance.setLengthStr( tLength.addSecs( p_inSecond*60 ).toString("hh:mm:ss") );
-        obDBAttendance.save();
-*/
         mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
     }
     else
@@ -1800,33 +1613,6 @@ void cWndMain::on_action_DeviceSettings_triggered()
     {
         mdiPanels->reload();
     }
-}
-//====================================================================================
-void cWndMain::on_action_SelectActualAttendance_triggered()
-{
-/*
-    cDlgAttendanceSelect    obDlgSelect( this );
-
-    obDlgSelect.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_DeselectActualAttendance_triggered()
-{
-//    g_uiPatientAttendanceId = 0;
-}
-//====================================================================================
-void cWndMain::on_action_EditActualAttendance_triggered()
-{
-/*
-    cDBAttendance   obDBAttendance;
-
-    obDBAttendance.load( g_uiPatientAttendanceId );
-
-    cDlgAttendanceEdit  obDlgEdit( this, &obDBAttendance );
-
-    obDlgEdit.exec();
-*/
 }
 //====================================================================================
 void cWndMain::on_action_PayCash_triggered()
@@ -1964,18 +1750,6 @@ void cWndMain::on_action_CassaHistory_triggered()
     obDlgReportCassaList.exec();
 }
 //====================================================================================
-void cWndMain::on_action_ReportAttendances_triggered()
-//====================================================================================
-{
-/*
-    setCursor( Qt::WaitCursor);
-    cDlgReportAttendance  obDlgReportAttendance( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportAttendance.exec();
-*/
-}
-//====================================================================================
 void cWndMain::on_action_ReportPatientcardUses_triggered()
 //====================================================================================
 {
@@ -2089,7 +1863,6 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
     g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE licenceId=1" ) );
     g_poDB->executeQTQuery( QString( "DELETE FROM patientCards WHERE licenceId=1" ) );
     g_poDB->executeQTQuery( QString( "DELETE FROM patientCardTypes WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM attendance WHERE licenceId=1" ) );
     g_poDB->executeQTQuery( QString( "DELETE FROM patients WHERE licenceId=1" ) );
     g_poDB->executeQTQuery( QString( "DELETE FROM doctors WHERE licenceId=1" ) );
     g_poDB->executeQTQuery( QString( "DELETE FROM companies WHERE licenceId=1" ) );
