@@ -45,6 +45,7 @@ void cDBGuest::init( const unsigned int p_uiId,
                        const bool p_bCompany,
                        const int p_inDiscountType,
                        const QString &p_qsComment,
+                       const int p_inLoyaltyPoints,
                        const QString &p_qsModified,
                        const bool p_bActive,
                        const QString &p_qsArchive ) throw()
@@ -66,6 +67,7 @@ void cDBGuest::init( const unsigned int p_uiId,
     m_bCompany              = p_bCompany;
     m_inDiscountType        = p_inDiscountType;
     m_qsComment             = p_qsComment;
+    m_inLoyaltyPoints       = p_inLoyaltyPoints;
     m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
@@ -90,6 +92,7 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
     int inCompanyIdx            = p_obRecord.indexOf( "company" );
     int inDiscountTypeIdx       = p_obRecord.indexOf( "discountType" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
+    int inLoyaltyPoints         = p_obRecord.indexOf( "loyaltyPoints" );
     int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
@@ -110,6 +113,7 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inCompanyIdx ).toBool(),
           p_obRecord.value( inDiscountTypeIdx ).toInt(),
           p_obRecord.value( inCommentIdx ).toString(),
+          p_obRecord.value( inLoyaltyPoints ).toInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -272,6 +276,7 @@ void cDBGuest::save() throw( cSevException )
     qsQuery += QString( "company = %1, " ).arg( m_bCompany );
     qsQuery += QString( "discountType = %1, " ).arg( m_inDiscountType );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "loyaltyPoints = %1, " ).arg( m_inLoyaltyPoints );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -382,7 +387,7 @@ bool cDBGuest::isReturning() const throw()
 
 void cDBGuest::setIsReturning( const bool p_bIsReturning ) throw()
 {
-    m_bIsReturning = m_bIsReturning;
+    m_bIsReturning = p_bIsReturning;
 }
 
 QString cDBGuest::uniqueId() const throw()
@@ -466,6 +471,16 @@ void cDBGuest::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
     m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
+}
+
+int cDBGuest::loyaltyPoints() const throw()
+{
+    return m_inLoyaltyPoints;
+}
+
+void cDBGuest::setLoyaltyPoints( const int p_inLoyaltyPoints ) throw()
+{
+    m_inLoyaltyPoints = p_inLoyaltyPoints;
 }
 
 QString cDBGuest::modified() const throw()

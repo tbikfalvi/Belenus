@@ -25,6 +25,10 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbHistory->setIcon( QIcon("./resources/40x40_question.png") );
 
+    chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    chkRegularCustomer->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+
     m_poGuest = p_poGuest;
 
     if( m_poGuest )
@@ -60,6 +64,10 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                 rbAge0->setChecked( true );
         }
         chkReturning->setChecked( m_poGuest->isReturning() );
+        chkService->setChecked( m_poGuest->service() );
+        chkEmployee->setChecked( m_poGuest->employee() );
+        chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
+        ledLoyaltyPoints->setText( QString::number( m_poGuest->loyaltyPoints() ) );
 
         try
         {
@@ -167,6 +175,9 @@ bool cDlgGuestEdit::SaveGuestData()
         else if( rbAge6->isChecked() ) m_poGuest->setAgeType( 6 );
         else if( rbAge7->isChecked() ) m_poGuest->setAgeType( 7 );
         m_poGuest->setIsReturning( chkReturning->isChecked() );
+        m_poGuest->setService( chkService->isChecked() );
+        m_poGuest->setEmployee( chkEmployee->isChecked() );
+        m_poGuest->setRegularCustomer( chkRegularCustomer->isChecked() );
 
         m_poGuest->save();
 

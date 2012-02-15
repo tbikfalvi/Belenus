@@ -48,6 +48,8 @@ public:
     void            setDiscountType( const int p_inDiscountType )                   throw();
     QString         comment() const                                                 throw();
     void            setComment( const QString &p_qsComment )                        throw();
+    int             loyaltyPoints() const                                           throw();
+    void            setLoyaltyPoints( const int p_inLoyaltyPoints )                 throw();
     QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
@@ -71,6 +73,7 @@ private:
     bool            m_bCompany;
     int             m_inDiscountType;
     QString         m_qsComment;
+    int             m_inLoyaltyPoints;
     QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -91,6 +94,7 @@ private:
                const bool p_bCompany = false,
                const int p_inDiscountType = 2,
                const QString &p_qsComment = "",
+               const int p_inLoyaltyPoints = 0,
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();

@@ -121,7 +121,17 @@ CREATE TABLE `companies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Opcionalis.
+-- Eletkor csoportokat tartalmazza
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `ageTypes` (
+  `ageTypeId`               int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `ageTypeName`             varchar(50)             NOT NULL,
+  PRIMARY KEY (`ageTypeId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Nemek leirasat tartalmazza. Vendegekhez.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `genders` (
@@ -133,7 +143,6 @@ CREATE TABLE `genders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Opcionalis.
 -- A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
@@ -153,6 +162,7 @@ CREATE TABLE `patients` (
   `company`                 tinyint(1)              DEFAULT 0,
   `discountType`            int(11)                 NOT NULL,
   `comment`                 text                    DEFAULT NULL,
+  `loyaltyPoints`           int(11)                 DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -775,6 +785,22 @@ ALTER TABLE `companies` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `agetypes` (`ageTypeId`, `licenceId`, `ageTypeName` ) VALUES
+ ('0', '0', 'Nincs meghatározva');
+UPDATE `agetypes` SET `ageTypeId`=0 WHERE `ageTypeId`=1;
+ALTER TABLE `agetypes` auto_increment=1;
+
+INSERT INTO `agetypes` (`ageTypeId`, `licenceId`, `ageTypeName` ) VALUES
+ ('1', '0', '18-nál fiatalabb'),
+ ('2', '0', '18 - 20'),
+ ('3', '0', '21 - 30'),
+ ('4', '0', '31 - 40'),
+ ('5', '0', '41 - 50'),
+ ('6', '0', '51 - 60'),
+ ('7', '0', '60 fölött');
+
+-- -----------------------------------------------------------------------------------
+
 INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES
  ('0', '0', 'Nincs meghatározva');
 UPDATE `genders` SET `genderId`=0 WHERE `genderId`=1;
@@ -786,8 +812,8 @@ INSERT INTO `genders` (`genderId`, `licenceId`, `genderName` ) VALUES
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `modified`, `active`, `archive`) VALUES
- ('0', '0', '0', '', '', '0', '0', '0', NULL, NULL, '0', '0', '0', '0', '', NULL, '', '0', 'ARC');
+INSERT INTO `patients` (`patientId`, `licenceId`, `companyId`, `created`, `name`, `gender`, `ageType`, `isReturning`, `uniqueId`, `email`, `regularCustomer`, `employee`, `service`, `company`, `discountType`, `comment`, `loyaltyPoints`, `modified`, `active`, `archive`) VALUES
+ ('0', '0', '0', '', '', '0', '0', '0', NULL, NULL, '0', '0', '0', '0', '', NULL, 0, '', '0', 'ARC');
 UPDATE `patients` SET `patientId`=0 WHERE `patientId`=1;
 ALTER TABLE `patients` auto_increment=1;
 

@@ -34,10 +34,11 @@ void cDlgGuest::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "UniqueId" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Gender" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Gender" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Age group" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "E-Mail" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -46,18 +47,21 @@ void cDlgGuest::setupTableView()
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
         tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "UniqueId" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Gender" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Gender" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Age group" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "E-Mail" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -69,11 +73,11 @@ void cDlgGuest::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientId, licenceId, name, uniqueId, genderName, active, archive FROM patients, genders WHERE genders.genderId=patients.gender AND patientId>0";
+        m_qsQuery = "SELECT patientId, patients.licenceId, name, genderName, ageTypeName, email, active, archive FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0";
     }
     else
     {
-        m_qsQuery = "SELECT patientId AS id, name, uniqueId, genderName FROM patients, genders WHERE genders.genderId=patients.gender AND patientId>0 AND active=1";
+        m_qsQuery = "SELECT patientId AS id, name, genderName, ageTypeName, email FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0 AND active=1";
     }
 
     cDlgCrud::refreshTable();
