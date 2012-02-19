@@ -21,6 +21,7 @@ public slots:
 private:
     bool m_bInit;
 
+    void fillPatientCardData();
     bool SaveGuestData();
 
 protected:
@@ -30,6 +31,9 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbSellCard_clicked();
+    void on_pbDislink_clicked();
+    void on_pbAssignCard_clicked();
     void on_pbHistory_clicked();
     void on_pbCancel_clicked();
     void on_pbSave_clicked();

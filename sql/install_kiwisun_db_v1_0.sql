@@ -221,15 +221,13 @@ CREATE TABLE `patientCards` (
 -- tulajdonosa hasznalja a kartyat
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `connectPatientWithCard` (
-  `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        NOT NULL,
-  `modified`                datetime                NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`licenceId`,`patientCardId`,`patientId`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  PRIMARY KEY (`patientCardId`,`patientId`,`licenceId`),
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------

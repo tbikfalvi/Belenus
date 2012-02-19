@@ -33,8 +33,8 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
 
-    QSqlQuery *poQuery;
-    QString     qsQuery;
+    QSqlQuery   *poQuery;
+    QString      qsQuery;
 
     cmbPatientCardType->addItem( tr("<All patientcard type>"), -1 );
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
@@ -126,7 +126,7 @@ void cDlgPatientCard::setupTableView()
     }
 }
 
-void cDlgPatientCard::refreshTable()
+void cDlgPatientCard::refreshTable( QString p_qsCondition )
 {
     cTracer obTracer( "cDlgPatientCard::refreshTable" );
 
@@ -152,6 +152,12 @@ void cDlgPatientCard::refreshTable()
     {
         m_qsQuery += " AND ";
         m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
+    if( p_qsCondition != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += p_qsCondition;
     }
 
     cDlgCrud::refreshTable();

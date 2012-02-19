@@ -8,6 +8,7 @@
 #include "../framework/sevexception.h"
 #include "../db/dbpatientcardtype.h"
 #include "../crud/dlgaddress.h"
+#include "../crud/dlgpatientcardselect.h"
 
 cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostponed* )
     : QDialog( p_poParent )
@@ -69,24 +70,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
         ledLoyaltyPoints->setText( QString::number( m_poGuest->loyaltyPoints() ) );
 
-        try
-        {
-            m_poPatientCard = new cDBPatientCard();
-            m_poPatientCard->loadPatient( m_poGuest->id() );
-            ledBarcode->setText( m_poPatientCard->barcode() );
-
-            cDBPatientCardType  obDBPatientCardType;
-
-            obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
-            ledPatientcardType->setText( obDBPatientCardType.name() );
-        }
-        catch( cSevException &e )
-        {
-            if( QString(e.what()).compare("Patient id not found") != 0 )
-            {
-                g_obLogger(e.severity()) << e.what() << EOM;
-            }
-        }
+        fillPatientCardData();
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
@@ -117,6 +101,55 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 cDlgGuestEdit::~cDlgGuestEdit()
 {
     cTracer obTrace( "cDlgGuestEdit::~cDlgGuestEdit" );
+}
+
+void cDlgGuestEdit::fillPatientCardData()
+{
+    try
+    {
+        m_poPatientCard = new cDBPatientCard();
+        m_poPatientCard->loadPatient( m_poGuest->id() );
+
+        ledBarcode->setText( m_poPatientCard->barcode() );
+
+        cDBPatientCardType  obDBPatientCardType;
+
+        obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
+        ledPatientcardType->setText( obDBPatientCardType.name() );
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Patient id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        else
+        {
+            try
+            {
+                QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectPatientWithCard WHERE patientId = %2 AND licenceId = %3" ).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+
+                if( poQuery->size() > 0 )
+                {
+                    poQuery->last();
+                    m_poPatientCard->load( poQuery->value(0).toUInt() );
+                }
+                ledBarcode->setText( m_poPatientCard->barcode() );
+
+                cDBPatientCardType  obDBPatientCardType;
+
+                obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
+                ledPatientcardType->setText( obDBPatientCardType.name() );
+            }
+            catch( cSevException &e )
+            {
+                if( QString(e.what()).compare("Patientcard id not found") != 0 )
+                {
+                    g_obLogger(e.severity()) << e.what() << EOM;
+                }
+            }
+        }
+    }
 }
 
 void cDlgGuestEdit::on_pbSave_clicked()
@@ -194,4 +227,59 @@ bool cDlgGuestEdit::SaveGuestData()
 void cDlgGuestEdit::on_pbHistory_clicked()
 {
     QMessageBox::information( this, tr("Information"), tr("Not implemented yet.") );
+}
+
+void cDlgGuestEdit::on_pbAssignCard_clicked()
+{
+    cDlgPatientCardSelect   obDlgSelect( this );
+
+    if( obDlgSelect.exec() == QDialog::Accepted )
+    {
+        unsigned int uiPCardId = obDlgSelect.selected();
+
+        m_poPatientCard = new cDBPatientCard();
+        m_poPatientCard->load( uiPCardId );
+
+        if( m_poPatientCard->patientId() == 0 )
+        {
+            m_poPatientCard->setPatientId( m_poGuest->id() );
+            m_poPatientCard->save();
+        }
+        else
+        {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(uiPCardId).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+
+            if( poQuery->size() == 0 )
+            {
+                g_poDB->executeQTQuery( QString( "INSERT INTO connectpatientwithcard (patientCardId, patientId, licenceId) VALUES ('%1', '%2', '%3')" ).arg(uiPCardId).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+            }
+        }
+    }
+    fillPatientCardData();
+}
+
+void cDlgGuestEdit::on_pbDislink_clicked()
+{
+    if( m_poPatientCard->id() < 1 ) return;
+
+    if( QMessageBox::question( this, tr( "Question" ),
+                               tr( "Are you sure you want to disjoin this card from patient?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        if( m_poPatientCard->patientId() == m_poGuest->id() )
+        {
+            m_poPatientCard->setPatientId( 0 );
+            m_poPatientCard->save();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(m_poPatientCard->id()).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+        }
+    }
+    fillPatientCardData();
+}
+
+void cDlgGuestEdit::on_pbSellCard_clicked()
+{
+
 }

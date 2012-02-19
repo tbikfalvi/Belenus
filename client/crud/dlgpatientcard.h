@@ -27,7 +27,7 @@ protected:
     virtual void enableButtons();
 
 protected slots:
-    virtual void refreshTable();
+    virtual void refreshTable( QString p_qsCondition = "");
     virtual void newClicked( bool );
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
