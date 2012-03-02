@@ -25,6 +25,9 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbHistory->setIcon( QIcon("./resources/40x40_question.png") );
+    pbAssignCard->setIcon( QIcon("./resources/40x40_patientcard_join.png") );
+    pbDislink->setIcon( QIcon("./resources/40x40_patientcard_disjoin.png") );
+    pbSellCard->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
 
     chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
