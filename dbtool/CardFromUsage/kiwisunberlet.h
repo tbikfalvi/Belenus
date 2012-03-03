@@ -64,6 +64,10 @@ typedef struct _typ_berlethasznalat
    int   nEgyseg;
 } typ_berlethasznalat;
 //====================================================================================
+namespace Ui {
+    class KiwiSunBerlet;
+}
+
 class KiwiSunBerlet : public QDialog, public Ui_KiwiSunBerlet
 {
     Q_OBJECT
@@ -73,6 +77,7 @@ public:
     ~KiwiSunBerlet();
 
 private:
+    Ui::KiwiSunBerlet           *ui;
 
     QDir                         m_qdExpCurrentDir;
     QStringList                  m_qslPCUBarcodes;
@@ -97,6 +102,8 @@ private:
     void                        _DeCode( char *str, int size );
 
 private slots:
+    void on_pbExpExport_clicked();
+    void on_pbExpImportDB_clicked();
     void on_pbSelectPC_clicked();
     void on_pbSelectPCT_clicked();
     void on_pbSelectPCU_clicked();

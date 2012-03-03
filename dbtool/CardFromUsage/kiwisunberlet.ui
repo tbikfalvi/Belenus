@@ -72,7 +72,7 @@
      <x>216</x>
      <y>10</y>
      <width>427</width>
-     <height>191</height>
+     <height>189</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -91,43 +91,190 @@
     <attribute name="title">
      <string>Expiration date</string>
     </attribute>
-    <widget class="QWidget" name="">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>401</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <item>
-       <widget class="QLabel" name="lblStep1">
-        <property name="text">
-         <string>1. Select directory :</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="ledPathDB">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbExpSelectDir">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="KiwiSunBerlet.qrc">
-          <normaloff>:/imgButton/open.png</normaloff>:/imgButton/open.png</iconset>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLabel" name="lblExpStep1">
+         <property name="text">
+          <string>1. Select directory :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ledPathDB">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbExpSelectDir">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="KiwiSunBerlet.qrc">
+           <normaloff>:/imgButton/open.png</normaloff>:/imgButton/open.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="lblExpStep2">
+         <property name="text">
+          <string>2. Import data files :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbExpImportDB">
+         <property name="text">
+          <string>Import database</string>
+         </property>
+         <property name="icon">
+          <iconset resource="KiwiSunBerlet.qrc">
+           <normaloff>:/imgButton/import.png</normaloff>:/imgButton/import.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="lblExpStep3">
+         <property name="text">
+          <string>3. Select patientcard type :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cmbExpPatientCardType">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>245</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>245</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>5</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="lblExpStep4">
+         <property name="text">
+          <string>4. Set number of days to add to expiration day :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ledExpDays">
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <widget class="QLabel" name="lblExpStep5">
+         <property name="text">
+          <string>5. Export patiencards to new database file :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbExpExport">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Export patientcards</string>
+         </property>
+         <property name="icon">
+          <iconset resource="KiwiSunBerlet.qrc">
+           <normaloff>:/imgButton/export.png</normaloff>:/imgButton/export.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
    <widget class="QWidget" name="tabPatientCardUse">
     <attribute name="title">
@@ -394,6 +541,25 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>tabMain</tabstop>
+  <tabstop>ledPathDB</tabstop>
+  <tabstop>pbExpSelectDir</tabstop>
+  <tabstop>pbExpImportDB</tabstop>
+  <tabstop>cmbExpPatientCardType</tabstop>
+  <tabstop>ledExpDays</tabstop>
+  <tabstop>pbExpExport</tabstop>
+  <tabstop>pbSelectPC</tabstop>
+  <tabstop>pbSelectPCT</tabstop>
+  <tabstop>pbSelectPCU</tabstop>
+  <tabstop>dateImportStart</tabstop>
+  <tabstop>pbImport</tabstop>
+  <tabstop>ledVersionPCDAT</tabstop>
+  <tabstop>pbProcessPCU</tabstop>
+  <tabstop>pbCreatePC</tabstop>
+  <tabstop>listLog</tabstop>
+  <tabstop>pbExitApplication</tabstop>
+ </tabstops>
  <resources>
   <include location="KiwiSunBerlet.qrc"/>
  </resources>

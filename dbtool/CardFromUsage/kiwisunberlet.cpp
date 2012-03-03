@@ -26,6 +26,8 @@ KiwiSunBerlet::KiwiSunBerlet(QWidget *parent) : QDialog(parent)
     m_qdExpCurrentDir = QDir::currentPath();
 
     ledPathDB->setText( m_qdExpCurrentDir.path() );
+    cmbExpPatientCardType->addItem( tr("<Not selected>") );
+    ledExpDays->setText( "0" );
 
     m_qsPCFileName  = "";
     m_qsPCTFileName = "";
@@ -40,7 +42,11 @@ KiwiSunBerlet::~KiwiSunBerlet()
 //====================================================================================
 {
 }
+//====================================================================================
+// TAB 1 - Expiration date changer
+//====================================================================================
 void KiwiSunBerlet::on_pbExpSelectDir_clicked()
+//====================================================================================
 {
     QString qsDirectory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_qdExpCurrentDir.absolutePath() );
 
@@ -48,8 +54,121 @@ void KiwiSunBerlet::on_pbExpSelectDir_clicked()
     {
         m_qdExpCurrentDir = QDir( qsDirectory );
         ledPathDB->setText( qsDirectory );
+
+        m_qsPCTFileName = QString( "%1/brlttpsfsv.dat" ).arg( ledPathDB->text() ).replace( "/", "\\" );
+        m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ledPathDB->text() ).replace( "/", "\\" );
+
+        listLog->addItem( tr("Filenames of patientcard and patientcard types data:") );
+        listLog->addItem( m_qsPCTFileName );
+        listLog->addItem( m_qsPCFileName );
     }
 }
+//====================================================================================
+void KiwiSunBerlet::on_pbExpImportDB_clicked()
+//====================================================================================
+{
+    pbExpExport->setEnabled( false );
+
+    _loadPatientCardTypes();
+
+    if( m_qvPatientCardTypes.size() == 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Unable to open data file of patientcard types OR\n"
+                                 "no patientcard types found in selected data file.\n\n"
+                                 "Please select the correct directory.") );
+        return;
+    }
+
+    _loadPatientCards();
+
+    if( m_qvPatientCards.size() == 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Unable to open data file of patientcards OR\n"
+                                 "no patientcards found in selected data file.\n\n"
+                                 "Please select the correct directory.") );
+        return;
+    }
+
+    for( int i=0; i<m_qvPatientCardTypes.size(); i++ )
+    {
+        cmbExpPatientCardType->addItem( QString(m_qvPatientCardTypes.at(i).strNev) );
+    }
+
+    pbExpExport->setEnabled( true );
+}
+//====================================================================================
+void KiwiSunBerlet::on_pbExpExport_clicked()
+//====================================================================================
+{
+    if( cmbExpPatientCardType->currentIndex() == 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("No patientcard type selected.\n"
+                                 "Please select a patientcard type.") );
+        return;
+    }
+
+    int    nPCTID = 0;
+    int    i;
+
+    for( i=0; i<m_qvPatientCardTypes.size(); i++ )
+    {
+        if( cmbExpPatientCardType->itemText( cmbExpPatientCardType->currentIndex() ).compare( QString(m_qvPatientCardTypes.at(i).strNev) ) == 0 )
+        {
+            nPCTID = m_qvPatientCardTypes.at(i).nID;
+            break;
+        }
+    }
+
+    int nCount = 0;
+    for( i=0; i<m_qvPatientCards.size(); i++ )
+    {
+        if( m_qvPatientCards.at(i).nBerletTipus == nPCTID )
+            nCount++;
+    }
+
+    if( ledExpDays->text().toInt() == 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Number of days is invalid.\n"
+                                 "Please set a valid value different than zero.") );
+        return;
+    }
+
+    if( QMessageBox::question( this, tr("question"),
+                               tr("Are you sure you want to modify the expiration date\n"
+                                  "of (%1) patientcards related to patientcard type:\n"
+                                  "%2\n"
+                                  "and export them with new data?").arg(nCount).arg(cmbExpPatientCardType->itemText( cmbExpPatientCardType->currentIndex() )),
+                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        nCount = 0;
+        for( i=0; i<m_qvPatientCards.size(); i++ )
+        {
+            if( m_qvPatientCards.at(i).nBerletTipus == nPCTID )
+            {
+                QDate   qdExp = QDate( m_qvPatientCards.at(i).nErvEv,
+                                       m_qvPatientCards.at(i).nErvHo,
+                                       m_qvPatientCards.at(i).nErvNap );
+
+                qdExp = qdExp.addDays( ledExpDays->text().toInt() );
+                nCount++;
+
+                m_qvPatientCards[i].nErvEv = qdExp.year();
+                m_qvPatientCards[i].nErvHo = qdExp.month();
+                m_qvPatientCards[i].nErvNap = qdExp.day();
+            }
+        }
+        on_pbCreatePC_clicked();
+        listLog->addItem( tr( "Creating new patientcard file successfully finished." ) );
+        listLog->addItem( tr( "Number of updated patientcards: %1" ).arg(nCount) );
+        pbExpExport->setEnabled( false );
+    }
+}
+//====================================================================================
+// TAB 2 - Patientcards from usage
 //====================================================================================
 void KiwiSunBerlet::on_pbSelectPC_clicked()
 //====================================================================================
@@ -522,3 +641,4 @@ void KiwiSunBerlet::_DeCode( char *str, int size )
    }
 }
 //====================================================================================
+
