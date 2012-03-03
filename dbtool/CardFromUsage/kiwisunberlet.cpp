@@ -23,16 +23,32 @@ KiwiSunBerlet::KiwiSunBerlet(QWidget *parent) : QDialog(parent)
 {
     setupUi(this);
 
+    m_qdExpCurrentDir = QDir::currentPath();
+
+    ledPathDB->setText( m_qdExpCurrentDir.path() );
+
     m_qsPCFileName  = "";
     m_qsPCTFileName = "";
     m_qsPCUFileName = "";
 
     dateImportStart->setDate( QDate::currentDate() );
+
+    tabPatientCardUse->setEnabled( false );
 }
 //====================================================================================
 KiwiSunBerlet::~KiwiSunBerlet()
 //====================================================================================
 {
+}
+void KiwiSunBerlet::on_pbExpSelectDir_clicked()
+{
+    QString qsDirectory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_qdExpCurrentDir.absolutePath() );
+
+    if (!qsDirectory.isEmpty())
+    {
+        m_qdExpCurrentDir = QDir( qsDirectory );
+        ledPathDB->setText( qsDirectory );
+    }
 }
 //====================================================================================
 void KiwiSunBerlet::on_pbSelectPC_clicked()

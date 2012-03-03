@@ -64,12 +64,15 @@
    </property>
   </widget>
   <widget class="QTabWidget" name="tabMain">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>216</x>
      <y>10</y>
      <width>427</width>
-     <height>371</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -84,32 +87,52 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="PatientCardUse">
+   <widget class="QWidget" name="tabExpiration">
+    <attribute name="title">
+     <string>Expiration date</string>
+    </attribute>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>401</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="lblStep1">
+        <property name="text">
+         <string>1. Select directory :</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="ledPathDB">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbExpSelectDir">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="KiwiSunBerlet.qrc">
+          <normaloff>:/imgButton/open.png</normaloff>:/imgButton/open.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tabPatientCardUse">
     <attribute name="title">
      <string>PatientCard Use</string>
     </attribute>
-    <widget class="QListWidget" name="listLog">
-     <property name="geometry">
-      <rect>
-       <x>9</x>
-       <y>191</y>
-       <width>403</width>
-       <height>145</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>145</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>145</height>
-      </size>
-     </property>
-    </widget>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
@@ -287,7 +310,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -344,6 +367,28 @@
     <size>
      <width>20</width>
      <height>20</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listLog">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>210</y>
+     <width>420</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>171</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>171</height>
     </size>
    </property>
   </widget>

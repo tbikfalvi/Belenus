@@ -5,4 +5,7 @@
     <qresource prefix="/icons">
         <file>KiwiSunBerlet.ico</file>
     </qresource>
+    <qresource prefix="/">
+        <file>imgButton/open.png</file>
+    </qresource>
 </RCC>

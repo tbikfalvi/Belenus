@@ -10,6 +10,7 @@
 #include <QString>
 #include <QStringList>
 #include <QVector>
+#include <QDir>
 
 //====================================================================================
 
@@ -73,6 +74,7 @@ public:
 
 private:
 
+    QDir                         m_qdExpCurrentDir;
     QStringList                  m_qslPCUBarcodes;
     QString                      m_qsPCFileName;
     QString                      m_qsPCTFileName;
@@ -102,6 +104,7 @@ private slots:
     void on_dateImportStart_dateChanged( QDate );
     void on_pbProcessPCU_clicked();
     void on_pbCreatePC_clicked();
+    void on_pbExpSelectDir_clicked();
 };
 //====================================================================================
 
