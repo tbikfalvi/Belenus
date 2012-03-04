@@ -5,4 +5,10 @@
     <qresource prefix="/icons">
         <file>KiwiSunBerlet.ico</file>
     </qresource>
+    <qresource prefix="/">
+        <file>imgButton/open.png</file>
+        <file>imgButton/import.png</file>
+        <file>imgButton/export.png</file>
+        <file>imgButton/exit.png</file>
+    </qresource>
 </RCC>
