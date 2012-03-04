@@ -9,5 +9,6 @@
         <file>imgButton/open.png</file>
         <file>imgButton/import.png</file>
         <file>imgButton/export.png</file>
+        <file>imgButton/exit.png</file>
     </qresource>
 </RCC>
