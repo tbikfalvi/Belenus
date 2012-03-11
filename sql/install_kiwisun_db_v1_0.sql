@@ -199,6 +199,7 @@ CREATE TABLE `patientCards` (
   `patientCardId`           int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  `parentCardId`            int(10) unsigned        DEFAULT 0,
   `patientId`               int(10) unsigned        NOT NULL,
   `barcode`                 varchar(20)             NOT NULL,
   `comment`                 varchar(50)             DEFAULT NULL,
@@ -458,6 +459,18 @@ CREATE TABLE `productHistory` (
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productActionTypeId`) REFERENCES `productActionType` (`productActionTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+--
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `patientHistory` (
+  `patientHistoryId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        DEFAULT NULL,
+  PRIMARY KEY (`patientHistoryId`,`licenceId`),
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
