@@ -859,6 +859,7 @@ bool cFrmPanel::isCanBeStartedByTime()
     return bRet;
 }
 
+//====================================================================================
 bool cFrmPanel::isCanBeStartedByCard()
 {
     bool    bRet = true;
@@ -873,6 +874,7 @@ bool cFrmPanel::isCanBeStartedByCard()
     return bRet;
 }
 
+//====================================================================================
 void cFrmPanel::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
 {
     m_uiPaymentMethodId = p_uiPaymentMethodId;

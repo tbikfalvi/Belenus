@@ -218,6 +218,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_UseByTime"/>
+   <addaction name="action_UseWithCard"/>
    <addaction name="separator"/>
    <addaction name="action_DeviceStart"/>
    <addaction name="action_DeviceSkipStatus"/>

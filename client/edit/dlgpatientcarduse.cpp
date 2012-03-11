@@ -91,6 +91,11 @@ cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_p
         pbSave->setEnabled( false );
         cmbTimeUse->setEnabled( false );
     }
+
+    if( cmbNoUnits->count() > 0 )
+    {
+        on_cmbNoUnits_currentIndexChanged( 0 );
+    }
 }
 
 cDlgPatientCardUse::~cDlgPatientCardUse()
