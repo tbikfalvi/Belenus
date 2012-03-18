@@ -379,16 +379,21 @@ void cWndMain::loginUser()
             {// Nem volt nem kiuritett kassza
 
                 // Felhasznalo utolso kasszajanak betoltese
-                g_obCassa.loadLatestCassa( g_obUser.id() );
-                QMessageBox::information(this, "", QString("cassaid: %1").arg(g_obCassa.cassaId()) );
-                // Akarja-e a felhasznalo folytatni a kasszat
-                if( QMessageBox::question( this, tr("Question"),
-                                           tr( "The latest cassa record used:\n\n"
-                                               "from %1 to %2\n\n"
-                                               "Do you want to continue this cassa?").arg( g_obCassa.cassaOpenDate() ).arg( g_obCassa.cassaCloseDate() ),
-                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                {// Kassza folytatasa
-                    g_obCassa.cassaReOpen();
+                if( g_obCassa.loadLatestCassa( g_obUser.id() ) )
+                {
+                    // Akarja-e a felhasznalo folytatni a kasszat
+                    if( QMessageBox::question( this, tr("Question"),
+                                               tr( "The latest cassa record used:\n\n"
+                                                   "from %1 to %2\n\n"
+                                                   "Do you want to continue this cassa?").arg( g_obCassa.cassaOpenDate() ).arg( g_obCassa.cassaCloseDate() ),
+                                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    {// Kassza folytatasa
+                        g_obCassa.cassaReOpen();
+                    }
+                    else
+                    {// Uj kassza nyitasa
+                        g_obCassa.createNew( g_obUser.id() );
+                    }
                 }
                 else
                 {// Uj kassza nyitasa
@@ -1004,6 +1009,7 @@ void cWndMain::on_action_Products_triggered()
 
     obDlgProduct.exec();
 }
+//====================================================================================
 void cWndMain::on_action_SellProduct_triggered()
 {
 

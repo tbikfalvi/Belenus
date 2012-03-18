@@ -107,7 +107,7 @@ void cDlgProductTypeEdit::on_pbSave_clicked()
             {
                 cDBProduct  poProduct;
 
-                poProduct.load( listProductsAssigned->item(i)->text() );
+                poProduct.loadName( listProductsAssigned->item(i)->text() );
                 qslProducts.append( QString("%1").arg(poProduct.id()) );
             }
 

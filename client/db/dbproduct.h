@@ -12,7 +12,8 @@ public:
     ~cDBProduct();
 
     void            load( const unsigned int p_uiId )                               throw( cSevException );
-    void            load( const QString &p_qsName )                                 throw( cSevException );
+    void            loadName( const QString &p_qsName )                             throw( cSevException );
+    void            loadBarcode( const QString &p_qsBarcode )                       throw( cSevException );
     void            save()                                                          throw( cSevException );
     void            remove()                                                        throw( cSevException );
     void            createNew()                                                     throw();
@@ -21,10 +22,20 @@ public:
     void            setLicenceId( const unsigned int p_nLicenceId )                 throw();
     QString         name() const                                                    throw();
     void            setName( const QString &p_qsName )                              throw();
-    int             netPrice() const                                                throw();
-    void            setNetPrice( const int p_nNetPrice )                            throw();
-    int             vatPercent() const                                              throw();
-    void            setVatPercent( const int p_nVatPercent )                        throw();
+    QString         barcode() const                                                 throw();
+    void            setBarcode( const QString &p_qsBarcode )                        throw();
+    int             netPriceBuy() const                                             throw();
+    void            setNetPriceBuy( const int p_nNetPriceBuy )                      throw();
+    int             vatPercentBuy() const                                           throw();
+    void            setVatPercentBuy( const int p_nVatPercentBuy )                  throw();
+    int             netPriceSell() const                                            throw();
+    void            setNetPriceSell( const int p_nNetPriceSell )                    throw();
+    int             vatPercentSell() const                                          throw();
+    void            setVatPercentSell( const int p_nVatPercentSell )                throw();
+    int             productCount() const                                            throw();
+    void            setProductCount( const int p_nProductCount )                    throw();
+    void            increaseProductCount( const int p_nCount )                      throw();
+    void            decreaseProductCount( const int p_nCount )                      throw();
     QStringList     productTypes() const                                            throw();
     void            setProductTypes( const QStringList &p_qslProductTypes )         throw();
     QString         modified() const                                                throw();
@@ -38,8 +49,12 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     QString         m_qsName;
-    int             m_nNetPrice;
-    int             m_nVatPercent;
+    QString         m_qsBarcode;
+    int             m_nNetPriceBuy;
+    int             m_nVatPercentBuy;
+    int             m_nNetPriceSell;
+    int             m_nVatPercentSell;
+    int             m_nProductCount;
     QStringList     m_qslProductTypes;
     QString         m_qsModified;
     bool            m_bActive;
@@ -48,8 +63,12 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const QString &p_qsName = "",
-               const int p_nNetPrice = 0,
-               const int p_nVatPercent = 0,
+               const QString &p_qsBarcode = "",
+               const int p_nNetPriceBuy = 0,
+               const int p_nVatPercentBuy = 0,
+               const int p_nNetPriceSell = 0,
+               const int p_nVatPercentSell = 0,
+               const int p_nProductCount = 0,
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();

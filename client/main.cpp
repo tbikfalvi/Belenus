@@ -359,21 +359,11 @@ int main( int argc, char *argv[] )
         obSplash.finish( &obMainWindow );
 
         obMainWindow.show();
+        obMainWindow.initPanels();
 
         if( obMainWindow.showLogIn() )
         {
-            obMainWindow.initPanels();
             obMainWindow.startMainTimer();
-/*
-            if( g_poPrefs->isComponentInternetInstalled() )
-            {
-                if( g_obDBMirror.isAvailable() && g_poPrefs->getDBGlobalAutoSynchronize() )
-                {
-                    g_obDBMirror.requestGlobalDataTimestamp();
-                    obMainWindow.autoSynchronizeGlobalData();
-                }
-            }
-*/
             r = apMainApp.exec();
         }
         else

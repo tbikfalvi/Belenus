@@ -13,8 +13,8 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
     setWindowTitle( tr( "Product" ) );
     setWindowIcon( QIcon("./resources/40x40_product.png") );
 
-    pbSave->setIcon(        QIcon("./resources/40x40_ok.png") );
-    pbCancel->setIcon(      QIcon("./resources/40x40_cancel.png") );
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
@@ -45,8 +45,12 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
     if( m_poProduct )
     {
         ledName->setText( m_poProduct->name() );
-        ledPrice->setText( QString::number(m_poProduct->netPrice()) );
-        ledVatpercent->setText( QString::number(m_poProduct->vatPercent()) );
+        ledBarcode->setText( m_poProduct->barcode() );
+        ledProductCount->setText( QString::number(m_poProduct->productCount()) );
+        ledPriceBuy->setText( QString::number(m_poProduct->netPriceBuy()) );
+        ledVatpercentBuy->setText( QString::number(m_poProduct->vatPercentBuy()) );
+        ledPriceSell->setText( QString::number(m_poProduct->netPriceSell()) );
+        ledVatpercentSell->setText( QString::number(m_poProduct->vatPercentSell()) );
 
         if( m_poProduct->licenceId() == 0 && m_poProduct->id() > 0 )
             checkIndependent->setChecked( true );
@@ -57,8 +61,11 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
             if( m_poProduct->licenceId() == 0 && m_poProduct->id() > 0 )
             {
                 ledName->setEnabled( false );
-                ledPrice->setEnabled( false );
-                ledVatpercent->setEnabled( false );
+                ledBarcode->setEnabled( false );
+                ledPriceBuy->setEnabled( false );
+                ledVatpercentBuy->setEnabled( false );
+                ledPriceSell->setEnabled( false );
+                ledVatpercentSell->setEnabled( false );
                 pbSave->setEnabled( false );
             }
         }
@@ -94,13 +101,17 @@ void cDlgProductEdit::on_pbSave_clicked()
         }
         if( poQuery ) delete poQuery;
     }
-    if( ledPrice->text() == "" )
+    if( ledPriceBuy->text() == "" )
+        ledPriceBuy->setText( "0" );
+    if( ledVatpercentBuy->text() == "" )
+        ledVatpercentBuy->setText( "0" );
+    if( ledPriceSell->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Price of product must be set." ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Sell price of product must be set." ) );
     }
-    if( ledVatpercent->text() == "" )
-        ledVatpercent->setText( "0" );
+    if( ledVatpercentSell->text() == "" )
+        ledVatpercentSell->setText( "0" );
 
     if( boCanBeSaved )
     {
@@ -116,8 +127,12 @@ void cDlgProductEdit::on_pbSave_clicked()
             }
 
             m_poProduct->setName( ledName->text() );
-            m_poProduct->setNetPrice( ledPrice->text().toUInt() );
-            m_poProduct->setVatPercent( ledVatpercent->text().toInt() );
+            m_poProduct->setBarcode( ledBarcode->text() );
+            m_poProduct->setProductCount( ledProductCount->text().toUInt() );
+            m_poProduct->setNetPriceBuy( ledPriceBuy->text().toUInt() );
+            m_poProduct->setVatPercentBuy( ledVatpercentBuy->text().toInt() );
+            m_poProduct->setNetPriceSell( ledPriceSell->text().toUInt() );
+            m_poProduct->setVatPercentSell( ledVatpercentSell->text().toInt() );
             m_poProduct->setProductTypes( qslProductTypes );
             m_poProduct->setActive( true );
 

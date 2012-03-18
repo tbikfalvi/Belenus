@@ -356,12 +356,12 @@ unsigned int cCassa::cassaId()
 QString cCassa::cassaOpenDate()
 //====================================================================================
 {
-    return m_pCassa->startDateTime();
+    return m_pCassa->startDateTime().replace('T'," ").left(m_pCassa->startDateTime().length()-3);
 }
 //====================================================================================
 QString cCassa::cassaCloseDate()
 //====================================================================================
 {
-    return m_pCassa->stopDateTime();
+    return m_pCassa->stopDateTime().replace('T'," ").left(m_pCassa->stopDateTime().length()-3);
 }
 //====================================================================================

@@ -27,19 +27,27 @@ cDBProduct::~cDBProduct()
 }
 
 void cDBProduct::init( const unsigned int p_uiId,
-                             const unsigned int p_uiLicenceId,
-                             const QString &p_qsName,
-                             const int p_nNetPrice,
-                             const int p_nVatPercent,
-                             const QString &p_qsModified,
-                             const bool p_bActive,
-                             const QString &p_qsArchive ) throw()
+                       const unsigned int p_uiLicenceId,
+                       const QString &p_qsName,
+                       const QString &p_qsBarcode,
+                       const int p_nNetPriceBuy,
+                       const int p_nVatPercentBuy,
+                       const int p_nNetPriceSell,
+                       const int p_nVatPercentSell,
+                       const int p_nProductCount,
+                       const QString &p_qsModified,
+                       const bool p_bActive,
+                       const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_qsName            = p_qsName;
-    m_nNetPrice         = p_nNetPrice;
-    m_nVatPercent       = p_nVatPercent;
+    m_qsBarcode         = p_qsBarcode;
+    m_nNetPriceBuy      = p_nNetPriceBuy;
+    m_nVatPercentBuy    = p_nVatPercentBuy;
+    m_nNetPriceSell     = p_nNetPriceSell;
+    m_nVatPercentSell   = p_nVatPercentSell;
+    m_nProductCount     = p_nProductCount;
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
@@ -52,8 +60,12 @@ void cDBProduct::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "productId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inNameIdx           = p_obRecord.indexOf( "name" );
-    int inNetPriceIdx       = p_obRecord.indexOf( "netPrice" );
-    int inVatPercentIdx     = p_obRecord.indexOf( "vatpercent" );
+    int inBarcodeIdx        = p_obRecord.indexOf( "barcode" );
+    int inNetPriceBIdx      = p_obRecord.indexOf( "netPriceBuy" );
+    int inVatPercentBIdx    = p_obRecord.indexOf( "vatpercentBuy" );
+    int inNetPriceSIdx      = p_obRecord.indexOf( "netPriceSell" );
+    int inVatPercentSIdx    = p_obRecord.indexOf( "vatpercentSell" );
+    int inProductCountIdx   = p_obRecord.indexOf( "productCount" );
     int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -61,8 +73,12 @@ void cDBProduct::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inNameIdx ).toString(),
-          p_obRecord.value( inNetPriceIdx ).toInt(),
-          p_obRecord.value( inVatPercentIdx ).toInt(),
+          p_obRecord.value( inBarcodeIdx ).toString(),
+          p_obRecord.value( inNetPriceBIdx ).toInt(),
+          p_obRecord.value( inVatPercentBIdx ).toInt(),
+          p_obRecord.value( inNetPriceSIdx ).toInt(),
+          p_obRecord.value( inVatPercentSIdx ).toInt(),
+          p_obRecord.value( inProductCountIdx ).toInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -92,7 +108,7 @@ void cDBProduct::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBProduct::load( const QString &p_qsName ) throw( cSevException )
+void cDBProduct::loadName( const QString &p_qsName ) throw( cSevException )
 {
     cTracer obTrace( "cDBProduct::load", QString("name: \"%1\"").arg(p_qsName) );
 
@@ -100,6 +116,19 @@ void cDBProduct::load( const QString &p_qsName ) throw( cSevException )
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Product name not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+void cDBProduct::loadBarcode( const QString &p_qsBarcode ) throw( cSevException )
+{
+    cTracer obTrace( "cDBProduct::load", QString("barcode: \"%1\"").arg(p_qsBarcode) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM products WHERE barcode = \"" + p_qsBarcode + "\"" );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Product barcode not found" );
 
     poQuery->first();
     init( poQuery->record() );
@@ -127,8 +156,12 @@ void cDBProduct::save() throw( cSevException )
     qsQuery += " products SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
-    qsQuery += QString( "netPrice = \"%1\", " ).arg( m_nNetPrice );
-    qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatPercent );
+    qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
+    qsQuery += QString( "netPriceBuy = \"%1\", " ).arg( m_nNetPriceBuy );
+    qsQuery += QString( "vatpercentBuy = \"%1\", " ).arg( m_nVatPercentBuy );
+    qsQuery += QString( "netPriceSell = \"%1\", " ).arg( m_nNetPriceSell );
+    qsQuery += QString( "vatpercentSell = \"%1\", " ).arg( m_nVatPercentSell );
+    qsQuery += QString( "productCount = \"%1\", " ).arg( m_nProductCount );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -221,24 +254,74 @@ void cDBProduct::setName( const QString &p_qsName ) throw()
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
 }
 
-int cDBProduct::netPrice() const throw()
+QString cDBProduct::barcode() const throw()
 {
-    return m_nNetPrice;
+    return m_qsBarcode;
 }
 
-void cDBProduct::setNetPrice( const int p_nNetPrice ) throw()
+void cDBProduct::setBarcode( const QString &p_qsBarcode ) throw()
 {
-    m_nNetPrice = p_nNetPrice;
+    m_qsBarcode = p_qsBarcode;
 }
 
-int cDBProduct::vatPercent() const throw()
+int cDBProduct::netPriceBuy() const throw()
 {
-    return m_nVatPercent;
+    return m_nNetPriceBuy;
 }
 
-void cDBProduct::setVatPercent( const int p_nVatPercent ) throw()
+void cDBProduct::setNetPriceBuy( const int p_nNetPriceBuy ) throw()
 {
-    m_nVatPercent = p_nVatPercent;
+    m_nNetPriceBuy = p_nNetPriceBuy;
+}
+
+int cDBProduct::vatPercentBuy() const throw()
+{
+    return m_nVatPercentBuy;
+}
+
+void cDBProduct::setVatPercentBuy( const int p_nVatPercentBuy ) throw()
+{
+    m_nVatPercentBuy = p_nVatPercentBuy;
+}
+
+int cDBProduct::netPriceSell() const throw()
+{
+    return m_nNetPriceSell;
+}
+
+void cDBProduct::setNetPriceSell( const int p_nNetPriceSell ) throw()
+{
+    m_nNetPriceSell = p_nNetPriceSell;
+}
+
+int cDBProduct::vatPercentSell() const throw()
+{
+    return m_nVatPercentSell;
+}
+
+void cDBProduct::setVatPercentSell( const int p_nVatPercentSell ) throw()
+{
+    m_nVatPercentSell = p_nVatPercentSell;
+}
+
+int cDBProduct::productCount() const throw()
+{
+    return m_nProductCount;
+}
+
+void cDBProduct::setProductCount( const int p_nProductCount ) throw()
+{
+    m_nProductCount = p_nProductCount;
+}
+
+void cDBProduct::increaseProductCount( const int p_nCount ) throw()
+{
+    m_nProductCount += p_nCount;
+}
+
+void cDBProduct::decreaseProductCount( const int p_nCount ) throw()
+{
+    m_nProductCount -= p_nCount;
 }
 
 QStringList cDBProduct::productTypes() const throw()

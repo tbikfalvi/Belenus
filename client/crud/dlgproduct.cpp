@@ -34,9 +34,12 @@ void cDlgProduct::setupTableView()
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Net price" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "VAT percent" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Sum price" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Product count" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -44,16 +47,25 @@ void cDlgProduct::setupTableView()
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
+        tbvCrud->resizeColumnToContents( 8 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Net price" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "VAT percent" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sum price" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Product count" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
+        tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -65,11 +77,11 @@ void cDlgProduct::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT productId, licenceId, name, netPrice, active, archive FROM products";
+        m_qsQuery = "SELECT productId, licenceId, name, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount, active, archive FROM products WHERE productId>0";
     }
     else
     {
-        m_qsQuery = "SELECT productId AS id, name, netPrice FROM products WHERE active=1";
+        m_qsQuery = "SELECT productId AS id, name, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount FROM products WHERE active=1 AND productId>0";
     }
 
     cDlgCrud::refreshTable();
