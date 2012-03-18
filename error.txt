@@ -60,8 +60,8 @@ Megoldas	: Enabled-be került, time combo disabled és auto-calculated.
 Datum		: 2011.11.14
 Hibajelenseg	: Pénztár nem-zárás/folytatás nem jó, mert ha azt választom, hogy nem zárom le és 
 		  folytatom, akkor is új ID-val csinál cassa-t
-Megoldva	: 
-Megoldas	: 
+Megoldva	: 2012.03.18
+Megoldas	: Rosszul volt a penztar betoltes megcsinálva.
 ----------------------------------------------------------------------------------------------------
 
 Datum		: 2011.11.15
@@ -80,8 +80,8 @@ Megoldas	:
 Datum		: 2011.11.29
 Hibajelenseg	: Berlet hasznalatnal, ha beirom a kodot, majd Enter es utana valtoztatas nelkul
                   megint Enter, akkor nem kerul fel a panelra az ido, mintha nem irna be
-Megoldva	:
-Megoldas	:
+Megoldva	: 2012.03.14
+Megoldas	: Az ablak megjelenésekor nem hívódott meg a combo változását feldolgozó proc.
 ----------------------------------------------------------------------------------------------------
 
 Datum		: 2011.11.29

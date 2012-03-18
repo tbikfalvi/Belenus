@@ -61,6 +61,7 @@ HEADERS = belenus.h \
     crud/dlgproducttype.h \
     crud/dlgproductactiontype.h \
     crud/dlgpatientcardselect.h \
+    crud/dlgpatientselect.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -159,6 +160,7 @@ SOURCES = main.cpp \
     crud/dlgproducttype.cpp \
     crud/dlgproductactiontype.cpp \
     crud/dlgpatientcardselect.cpp \
+    crud/dlgpatientselect.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \

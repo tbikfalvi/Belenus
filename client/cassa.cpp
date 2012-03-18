@@ -76,13 +76,31 @@ bool cCassa::loadOpenCassa()
     return bRet;
 }
 //====================================================================================
-bool cCassa::loadLatestCassa()
+bool cCassa::loadLatestCassa( unsigned int p_uiUserId )
 //====================================================================================
 {
     bool        bRet    = false;
     QSqlQuery  *poQuery = NULL;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassa WHERE licenceId=%1 ORDER BY cassaId DESC " ).arg(g_poPrefs->getLicenceId()) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassa WHERE userId=%1 AND licenceId=%2 ORDER BY cassaId DESC " ).arg(p_uiUserId).arg(g_poPrefs->getLicenceId()) );
+
+    if( poQuery->first() )
+    {
+        m_pCassa->load( poQuery->value( 0 ).toUInt() );
+        bRet = true;
+    }
+    if( poQuery ) delete poQuery;
+
+    return bRet;
+}
+//====================================================================================
+bool cCassa::loadLatestCassaWithCash()
+//====================================================================================
+{
+    bool        bRet    = false;
+    QSqlQuery  *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassa WHERE currentBalance>0 AND licenceId=%1 ORDER BY cassaId DESC " ).arg(g_poPrefs->getLicenceId()) );
 
     if( poQuery->first() )
     {
@@ -148,7 +166,7 @@ void cCassa::cassaContinue()
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
-    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Continue cassa record.") );
@@ -161,23 +179,23 @@ void cCassa::cassaContinue()
 void cCassa::cassaContinue( unsigned int p_uiUserId )
 //====================================================================================
 {
-    int inCurrentBalance = m_pCassa->currentBalance();
+/*    int inCurrentBalance = m_pCassa->currentBalance();
 
     m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     m_pCassa->save();
-
+*/
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
-    obDBCassaHistory.setUserId( m_pCassa->userId() );
+    obDBCassaHistory.setUserId( p_uiUserId );
     obDBCassaHistory.setActionValue( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
-    obDBCassaHistory.setComment( QObject::tr("Close cassa record.") );
+    obDBCassaHistory.setComment( QObject::tr("Continue cassa record.") );
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();
 
-    createNew( p_uiUserId, inCurrentBalance );
+//    createNew( p_uiUserId, inCurrentBalance );
 }
 //====================================================================================
 void cCassa::cassaReOpen()
@@ -190,7 +208,7 @@ void cCassa::cassaReOpen()
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
-    obDBCassaHistory.setUserId( m_pCassa->userId() );
+    obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Reopen cassa record.") );
@@ -333,5 +351,17 @@ unsigned int cCassa::cassaId()
 //====================================================================================
 {
     return m_pCassa->id();
+}
+//====================================================================================
+QString cCassa::cassaOpenDate()
+//====================================================================================
+{
+    return m_pCassa->startDateTime();
+}
+//====================================================================================
+QString cCassa::cassaCloseDate()
+//====================================================================================
+{
+    return m_pCassa->stopDateTime();
 }
 //====================================================================================

@@ -31,7 +31,7 @@
 #include "crud/dlgreasontovisit.h"
 #include "crud/dlgusers.h"
 #include "crud/dlgguest.h"
-//#include "crud/dlgpatientselect.h"
+#include "crud/dlgpatientselect.h"
 #include "crud/dlgpanelstatuses.h"
 #include "crud/dlgpatientcardtype.h"
 #include "crud/dlgpatientcard.h"
@@ -333,7 +333,7 @@ void cWndMain::loginUser()
         {// Van nyitva hagyott kassza rekord
 
             if( QMessageBox::question( this, tr("Question"),
-                                       tr( "The latest cassa record still opened:\n\n"
+                                       tr( "The latest cassa record still not closed:\n\n"
                                            "Owner: %1\n"
                                            "Balance: %2\n\n"
                                            "Do you want to continue this cassa?\n\n"
@@ -353,156 +353,50 @@ void cWndMain::loginUser()
         else
         {// Nem volt nyitva hagyott kassza rekord
 
-            // Legutolso kassza rekord betoltese
-            if( g_obCassa.loadLatestCassa() )
-            {// Volt mar lezart kassza rekord
-
-                // Ki lett-e uritve a kassza zaraskor
-                if( g_obCassa.cassaBalance() > 0 )
-                {// A kasszaban meg maradt penz
-
-                    // Akarja-e a felhasznalo folytatni a kasszat
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr( "The latest cassa record closed with balance:\n\n"
-                                                   "%1\n\n"
-                                                   "Do you want to continue this cassa?\n\n"
-                                                   "Please note: if you click NO, new cassa record will be opened "
-                                                   "and this cassa forced to reopen and close with reseting it's balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
-                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    {// Kassza folytatasa
-                        g_obCassa.createNew( g_obUser.id(), g_obCassa.cassaBalance() );
-                    }
-                    else
-                    {// Uj kassza nyitasa
-                        g_obCassa.cassaReOpen();
-                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
-                        g_obCassa.cassaClose();
-                        g_obCassa.createNew( g_obUser.id() );
-                    }
-                }// Volt penz a kasszaban
-                else
-                {// Nem volt penz a kasszaban
-                    g_obCassa.createNew( g_obUser.id() );
-                }
-            }// Volt mar lezart kassza rekord
-            else
-            {// Nem volt meg lezart kassza rekord
-                g_obCassa.createNew( g_obUser.id() );
-            }
-        }// Nem volt nyitva hagyott kassza rekord
-    }// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
-
-/*
-    // Penztar ellenorzese
-    if( g_obCassa.isCassaExists() )
-    { // Penztar rekord letezik, utolso bejegyzes betoltve
-
-        // Penztar le van zarva?
-        if( g_obCassa.isCassaClosed() )
-        { // Penztar le van zarva
-
-            // Ugyanaz zarta le az elozo penztarat, aki most be van jelentkezve?
-            if( g_obUser.id() == g_obCassa.cassaOwner() )
-            { // Ugyanaz van bejelentkezve
-
-                // Uj nap kezdodott, vagy visszajelentkezett
+            // Legutolso nem kiuritett kassza rekord betoltese
+            if( g_obCassa.loadLatestCassaWithCash() )
+            {
+                // Akarja-e a felhasznalo folytatni a kasszat
                 if( QMessageBox::question( this, tr("Question"),
-                                           tr( "Do you want to continue the previous cassa record?" ),
+                                           tr( "The latest cassa record closed with balance:\n\n"
+                                               "%1\n\n"
+                                               "Do you want to continue this cassa?\n\n"
+                                               "Please note: if you click NO, new cassa record will be opened "
+                                               "and this cassa forced to close with reseting it's balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
                                            QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                { // Elozo penztar folytatasa
-
+                {// Kassza folytatasa
                     g_obCassa.cassaReOpen();
                 }
                 else
-                { // Uj penztar nyitasa
-
-                    g_obCassa.createNew( g_obUser.id() );
-                }
-            } // Ugyanaz volt bejelentkezve
-            else
-            { // Mas jelentkezett be
-
-                // Volt az aktualis napon mar korabbi penztara?
-                unsigned int uiCassaId = g_obCassa.isCassaClosedToday( g_obUser.id() );
-                if( uiCassaId )
-                { // Volt mar az aktualis napon lezart penztara
-
-                    // Folytatni akarja a mai nap korabban lezart penztarat?
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr( "Do you want to continue the previous cassa record?" ),
-                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    { // Elozo penztar folytatasa
-                        g_obCassa.cassaReOpen( uiCassaId );
-                    }
-                    else
-                    { // Uj penztar nyitasa
-                        g_obCassa.createNew( g_obUser.id() );
-                    }
-                } // Volt aktualis napon lezart penztar
-                else
-                { // Nem volt aktualis napon lezart penztar
-
-                    // Uj penztar nyitasa
-                    g_obCassa.createNew( g_obUser.id() );
-                }
-            } // Mas volt bejelentkezve
-        } // Penztar le volt zarva
-        else
-        { // Penztar nincs lezarva
-
-            // Ugyanaz van bejelentkezve, aki a penztart eddig hasznalta?
-            if( g_obUser.id() != g_obCassa.cassaOwner() )
-            { // Mas jelentkezett be
-
-                // Be akarja zarni a korabbi penztarat es indit egy ujat?
-                if( QMessageBox::warning( this, tr("Warning"),
-                                          tr("The last cassa record is assigned to a different user.\n"
-                                             "You are not able to start new cassa record assigned to you\n"
-                                             "until the previous is still open.\n\n"
-                                             "Do you want to close the previous cassa and start a new one?\n\n"
-                                             "Please note if you don't open a cassa record assigned to you\n"
-                                             "the application can not record any money related action."),
-                                          QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                { // Korabbi penztar bezarasa, uj nyitasa
-
+                {// Uj kassza nyitasa
+                    g_obCassa.cassaReOpen();
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
                     g_obCassa.cassaClose();
                     g_obCassa.createNew( g_obUser.id() );
-                } // Uj penztar nyitva
-                else
-                { // Korabbi penztar nem lesz lezarva, penztar szolgaltatasa letiltasa
-
-                    g_obCassa.setDisabled();
-                } // Penztar letiltva
-            } // Mas volt bejelentkezve
+                }
+            }
             else
-            { // Ugyanaz jelentkezett be
+            {// Nem volt nem kiuritett kassza
 
-                g_obCassa.setEnabled();
-            } // Ugyanaz jelentkezett be
-        } // Penztar nem volt lezarva
-    } // Penztar rekord letezett
-    else
-    { // Penztar rekord nem letezik
-
-        if( QMessageBox::critical( this, tr("Question"),
-                                   tr("There is no data recorded in database for cassa.\n\n"
-                                      "Do you want to start cassa recording with the current user?\n\n"
-                                      "Please note the application can not record any money related\n"
-                                      "action without valid cassa data record.\n"
-                                      "If you want to start cassa with different user, please log out\n"
-                                      "and relogin with the desired user account."),
-                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-        { // Elso rekord letrehozasa
-
-            g_obCassa.createNew( g_obUser.id() );
-        } // Elso rekord letrehozva
-        else
-        { // Penztar szolgaltatas letiltasa
-
-            g_obCassa.setDisabled();
-        } // Penztar letiltva
-    } // Penztar rekord nem letezett
-*/
+                // Felhasznalo utolso kasszajanak betoltese
+                g_obCassa.loadLatestCassa( g_obUser.id() );
+                QMessageBox::information(this, "", QString("cassaid: %1").arg(g_obCassa.cassaId()) );
+                // Akarja-e a felhasznalo folytatni a kasszat
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr( "The latest cassa record used:\n\n"
+                                               "from %1 to %2\n\n"
+                                               "Do you want to continue this cassa?").arg( g_obCassa.cassaOpenDate() ).arg( g_obCassa.cassaCloseDate() ),
+                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                {// Kassza folytatasa
+                    g_obCassa.cassaReOpen();
+                }
+                else
+                {// Uj kassza nyitasa
+                    g_obCassa.createNew( g_obUser.id() );
+                }
+            }
+        }// Nem volt nyitva hagyott kassza rekord
+    }// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
 }
 //====================================================================================
 void cWndMain::logoutUser()
@@ -660,7 +554,7 @@ void cWndMain::updateTitle()
         qsTitle += cAccessGroup::toStr( g_obUser.group() );
         qsTitle += "]";
     }
-/*
+
     if( g_obGuest.id() > 0 )
     {
         qsTitle += tr(" <=> Current patient: [");
@@ -671,7 +565,7 @@ void cWndMain::updateTitle()
     {
         qsTitle += tr(" <=> NO PATIENT SELECTED");
     }
-*/
+
     action_Paneltypes->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     action_PanelStatuses->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
@@ -683,10 +577,10 @@ void cWndMain::updateToolbar()
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
     action_LogOut->setEnabled( true );
 
-    action_PatientSelect->setEnabled( false/*!(g_obGuest.id()>0)*/ );
-    action_PatientSelect->setVisible( false/*!(g_obGuest.id()>0)*/ );
-    action_PatientEmpty->setEnabled( false/*g_obGuest.id()>0*/ );
-    action_PatientEmpty->setVisible( false/*g_obGuest.id()>0*/ );
+    action_PatientSelect->setEnabled( !(g_obGuest.id()>0) );
+    action_PatientSelect->setVisible( !(g_obGuest.id()>0) );
+    action_PatientEmpty->setEnabled( g_obGuest.id()>0 );
+    action_PatientEmpty->setVisible( g_obGuest.id()>0 );
     action_PatientNew->setEnabled( true );
     action_EditActualPatient->setEnabled( false/*g_obGuest.id()>0*/ );
 
@@ -959,7 +853,7 @@ void cWndMain::on_action_PatientNew_triggered()
                                    tr("Do you want to select the created patient as actual?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-//            g_obGuest.load( poGuest->id() );
+            g_obGuest.load( poGuest->id() );
         }
     }
 
@@ -991,22 +885,20 @@ void cWndMain::on_action_DeviceReset_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientSelect_triggered()
 {
-/*
     cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
 
     cDlgPatientSelect  obDlgPatientSelect( this );
 
     obDlgPatientSelect.exec();
-*/
+    updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
 {
-/*
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obGuest.createNew();
-*/
+    updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_PanelStatuses_triggered()
@@ -1029,44 +921,43 @@ void cWndMain::on_action_UseWithCard_triggered()
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init( g_poPrefs->getBarcodePrefix() );
 
-//    QString      qsBarcode = "";
-//    QSqlQuery   *poQuery;
+    QString      qsBarcode = "";
+    QSqlQuery   *poQuery;
 
-// 'SOLARIUM GUEST'
-//    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(0/*g_obGuest.id()*/) );
-//    if( poQuery->first() )
-//    {
-//        qsBarcode = poQuery->value(0).toString();
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(g_obGuest.id()) );
+    if( poQuery->first() )
+    {
+        qsBarcode = poQuery->value(0).toString();
 
-//        if( QMessageBox::question( this, tr("Question"),
-//                                   tr("A patientcard with barcode [%1]\n"
-//                                      "attached to the actual patient.\n\n"
-//                                      "Do you want to use this patientcard?").arg(qsBarcode),
-//                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-//        {
-//            processInputPatientCard( qsBarcode );
-//        }
-//        else
-//        {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("A patientcard with barcode [%1]\n"
+                                      "attached to the actual patient.\n\n"
+                                      "Do you want to use this patientcard?").arg(qsBarcode),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            processInputPatientCard( qsBarcode );
+        }
+        else
+        {
             if( obDlgInputStart.exec() == QDialog::Accepted )
                 processInputPatientCard( obDlgInputStart.getEditText() );
-//        }
-//    }
-//    else
-//    {
-//        if( QMessageBox::question( this, tr("Question"),
-//                                   tr("There is no patientcard attached to the actual patient.\n"
-//                                      "Do you want to sell a patientcard for the actual patient?"),
-//                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-//        {
-//            on_action_PatientCardSell_triggered();
-//        }
-//        else
-//        {
-//            if( obDlgInputStart.exec() == QDialog::Accepted )
-//                processInputPatientCard( obDlgInputStart.getEditText() );
-//        }
-//    }
+        }
+    }
+    else
+    {
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr("There is no patientcard attached to the actual patient.\n"
+                                      "Do you want to sell a patientcard for the actual patient?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            on_action_PatientCardSell_triggered();
+        }
+        else
+        {
+            if( obDlgInputStart.exec() == QDialog::Accepted )
+                processInputPatientCard( obDlgInputStart.getEditText() );
+        }
+    }
 }
 //====================================================================================
 void cWndMain::on_action_UseByTime_triggered()
@@ -1257,8 +1148,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
         else
         {
             cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
-// 'SOLARIUM GUEST'
-            obDlgPatientCardEdit.setPatientCardOwner( 0/*g_obGuest.id()*/ );
+            obDlgPatientCardEdit.setPatientCardOwner( g_obGuest.id() );
             obDlgPatientCardEdit.activatePatientCard();
             obDlgPatientCardEdit.exec();
         }

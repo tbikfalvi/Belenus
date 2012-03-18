@@ -63,7 +63,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
         cmbPatient->addItem( tr("<Not selected>"), 0 );
-// 'SOLARIUM GUEST'
+
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
@@ -309,13 +309,10 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 inPriceNet = m_poPatientCardType->price();
                 if( cmbPatient->currentIndex() > 0 )
                 {
-// 'SOLARIUM GUEST'
-/*
-                    cDBPatient  obDBPatientTemp;
+                    cDBGuest  obDBPatientTemp;
 
                     obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
                     inPriceNetDiscount = obDBPatientTemp.getDiscountPrice( inPriceNet );
-*/
                 }
                 else
                 {
@@ -470,11 +467,9 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
 
         int discount = 0;
 
-        /*
         if( cmbPatient->currentIndex() > 0 )
         {
-// 'SOLARIUM GUEST'
-            cDBPatient  obDBPatientTemp;
+            cDBGuest  obDBPatientTemp;
 
             obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
             discount = obDBPatientTemp.getDiscountPrice( priceTotal );
@@ -483,12 +478,7 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
         {
             discount = priceTotal;
         }
-*/
-// ez nem lesz itt, amint bejön a kedvezmény kezelés
-// ekkor a fenti kikommentezett részt kell visszarakni
-discount = priceTotal;
-//
-//
+
         if( discount != priceTotal )
             ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
         else

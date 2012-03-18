@@ -60,7 +60,6 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 
-// 'SOLARIUM GUEST' felirat mindenhol, ahova a 'patient' helyett 'guest' kell
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 
 //====================================================================================
@@ -120,6 +119,8 @@ int main( int argc, char *argv[] )
     int r = 1;
     try
     {
+        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
+
         qsSpalsh += QObject::tr("Connecting to database ...");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
@@ -129,8 +130,6 @@ int main( int argc, char *argv[] )
 
         qsSpalsh += QObject::tr(" SUCCEEDED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
 
         qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -391,7 +390,18 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << EOM;
+        qsSpalsh += QObject::tr(" FAILED\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        QString qsError = QString( e.what() );
+
+        if( qsError.contains( "Can't connect to MySQL server on 'localhost' (10061)" ) )
+        {
+            qsError = QObject::tr( "Database server application is not running.\n"
+                                   "Belenus application can not be started without active database server.\n"
+                                   "Please start WampServer application then restart Belenus application." );
+        }
+        g_obLogger(e.severity()) << qsError << EOM;
     }
 
 //    g_poServer->quit();

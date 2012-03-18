@@ -28,19 +28,16 @@ cDlgAddress::cDlgAddress( QWidget *p_poParent )
 
     QSqlQuery *poQuery = NULL;
 
-// SOLARIUM GUEST
     cmbPatient->addItem( tr("<All guests>"), 0 );
     try
     {
-/*
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND patientId>0" ) );
         while( poQuery->next() )
         {
             cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-            if( g_obPatient.id() == poQuery->value( 0 ) )
+            if( g_obGuest.id() == poQuery->value( 0 ) )
                 cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
         }
-*/
     }
     catch( cSevException &e )
     {

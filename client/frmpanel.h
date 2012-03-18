@@ -97,7 +97,7 @@ private:
     int                          m_inCashToPay;
     int                          m_inCashNetToPay;
     int                          m_inCashDiscountToPay;
-//    unsigned int                 m_uiPatientToPay;
+    unsigned int                 m_uiPatientToPay;
 //    unsigned int                 m_uiAttendanceId;
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;

@@ -72,7 +72,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
-//    m_uiPatientToPay        = 0;
+    m_uiPatientToPay        = 0;
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
@@ -230,7 +230,7 @@ void cFrmPanel::clear()
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
-//    m_uiPatientToPay        = 0;
+    m_uiPatientToPay        = 0;
     m_uiLedgerId            = 0;
     m_uiPaymentMethodId     = 0;
     m_pDBLedgerDevice->createNew();
@@ -292,13 +292,12 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
         return;
     }
 
-// 'SOLARIUM GUEST'
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
     m_inCashNetToPay += p_inPrice;
-//    m_inCashDiscountToPay += p_inPrice - g_obPatient.getDiscountPrice( p_inPrice );
-    m_inCashToPay += /*g_obPatient.getDiscountPrice(*/p_inPrice/*) + (g_obPatient.getDiscountPrice(p_inPrice)/100)*g_poPrefs->getDeviceUseVAT()*/;
-//    m_uiPatientToPay = g_obPatient.id();
+    m_inCashDiscountToPay += p_inPrice - g_obGuest.getDiscountPrice( p_inPrice );
+    m_inCashToPay += g_obGuest.getDiscountPrice(p_inPrice) + (g_obGuest.getDiscountPrice(p_inPrice)/100)*g_poPrefs->getDeviceUseVAT();
+    m_uiPatientToPay = g_obGuest.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
     m_pDBLedgerDevice->setTimeCash( m_pDBLedgerDevice->timeCash()+p_inLength );
@@ -727,9 +726,9 @@ void cFrmPanel::activateNextStatus()
 void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
 {
     m_inCashToPay           = 0;
-//    m_inCashNetToPay        = 0;
-//    m_inCashDiscountToPay   = 0;
-//    m_uiPatientToPay        = 0;
+    m_inCashNetToPay        = 0;
+    m_inCashDiscountToPay   = 0;
+    m_uiPatientToPay        = 0;
     m_uiLedgerId = p_uiLedgerId;
 
     displayStatus();
@@ -830,7 +829,7 @@ void cFrmPanel::closeAttendance()
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )
 {
-    *p_uiPatientId  = 0;//m_uiPatientToPay;
+    *p_uiPatientId  = m_uiPatientToPay;
     *p_inPrice      = m_inCashNetToPay;
     *p_inDiscount   = m_inCashDiscountToPay;
 }

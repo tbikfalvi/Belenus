@@ -19,7 +19,8 @@ public:
 
     bool                    loadOpenCassa( unsigned int p_uiUserId );
     bool                    loadOpenCassa();
-    bool                    loadLatestCassa();
+    bool                    loadLatestCassa( unsigned int p_uiUserId );
+    bool                    loadLatestCassaWithCash();
 
     void                    createNew( unsigned int p_uiUserId, int p_inBalance=0 );
     void                    cassaContinue();
@@ -39,6 +40,8 @@ public:
     QString                 cassaOwnerStr();
     int                     cassaBalance();
     unsigned int            cassaId();
+    QString                 cassaOpenDate();
+    QString                 cassaCloseDate();
 
 private:
     cDBCassa                *m_pCassa;
