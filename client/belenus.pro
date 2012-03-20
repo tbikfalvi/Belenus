@@ -28,7 +28,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgproducttypeedit.ui \
     dlgproductactiontypeedit.ui \
     dlgproductedit.ui \
-    dlgguestedit.ui
+    dlgguestedit.ui \
+    dlgproductstorage.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -130,7 +131,8 @@ HEADERS = belenus.h \
     report/repcarduses.h \
     edit/dlglicenceedit.h \
     general.h \
-    dlg/dlgprogress.h
+    dlg/dlgprogress.h \
+    dlg/dlgproductstorage.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -228,7 +230,8 @@ SOURCES = main.cpp \
     report/rep_sample_.cpp \
     report/repcarduses.cpp \
     general.cpp \
-    dlg/dlgprogress.cpp
+    dlg/dlgprogress.cpp \
+    dlg/dlgproductstorage.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

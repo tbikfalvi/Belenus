@@ -4,6 +4,7 @@
 
 #include "dlgproductedit.h"
 #include "../db/dbproducttype.h"
+#include "../dlg/dlgproductstorage.h"
 
 cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
     : QDialog( p_poParent )
@@ -15,9 +16,17 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbProductStorage->setIcon( QIcon("./resources/40x40_storage.png") );
 
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
+    lblPriceBuy->setVisible( false );
+    ledPriceBuy->setVisible( false );
+    ledPriceBuy->setEnabled( false );
+    lblCurrencyBuy->setVisible( false );
+    lblVatpercentBuy->setVisible( false );
+    ledVatpercentBuy->setVisible( false );
+    ledVatpercentBuy->setEnabled( false );
 
     m_poProduct = p_poProduct;
 
@@ -149,7 +158,7 @@ void cDlgProductEdit::on_pbSave_clicked()
         }
         catch( cSevException &e )
         {
-            g_obLogger(e.severity()) << e.what() << EOM;
+            g_obLogger(cSeverity::DEBUG) << e.what() << EOM;
         }
 
         QDialog::accept();
@@ -196,5 +205,15 @@ void cDlgProductEdit::on_pbProductRemoveAll_clicked()
     for( int i=listProductsAssigned->count()-1; i>-1; i-- )
     {
         listProductsIndependent->addItem( listProductsAssigned->takeItem(i) );
+    }
+}
+
+void cDlgProductEdit::on_pbProductStorage_clicked()
+{
+    dlgProductStorage   *obDlgProductStorage = new dlgProductStorage( this, m_poProduct );
+
+    if( obDlgProductStorage->exec() == QDialog::Accepted )
+    {
+        // product history action
     }
 }

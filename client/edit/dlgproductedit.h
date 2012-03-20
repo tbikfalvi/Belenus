@@ -17,6 +17,7 @@ protected:
     cDBProduct *m_poProduct;
 
 private slots:
+    void on_pbProductStorage_clicked();
     void on_pbProductRemoveAll_clicked();
     void on_pbProductRemove_clicked();
     void on_pbProductAddAll_clicked();

@@ -186,8 +186,8 @@ void cDBProduct::save() throw( cSevException )
         qsQuery += QString( "productId = \"%1\", " ).arg(m_uiId);
         qsQuery += QString( "licenceId = \"%1\" " ).arg( m_uiLicenceId );
         poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
     }
-    if( poQuery ) delete poQuery;
 
 /*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
