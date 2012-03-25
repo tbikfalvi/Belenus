@@ -8123,12 +8123,12 @@ beavatkozás</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="15"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="16"/>
         <source>Product storage</source>
         <translation>Raktárkészlet</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="23"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="24"/>
         <source>Please check the cassa and action type again
 and make sure the correct amount of price and
 count of product selected before continue.
@@ -8143,17 +8143,17 @@ Figyelem: a Bruttó ár kerül archiválásra
 a pénztártörténetben.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="29"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="30"/>
         <source>&lt;General cassa&gt;</source>
         <translation>&lt;Stúdió költségvetés&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="30"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
         <source>Daily, user related cassa</source>
         <translation>Napi, stúdió pénztár</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="32"/>
         <source>Select appropriate cassa type for product action.
 
 &lt;General cassa&gt; is related to the solarium studio
@@ -8168,22 +8168,22 @@ egyik esemény sem változtat a napi, aktuális pénztár egyenlegén.
 az események kihatással vannak a pénztár egyenlegére.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="42"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="43"/>
         <source>not modify</source>
         <translation>nem változtatja</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="45"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="46"/>
         <source>increase</source>
         <translation>növeli</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="49"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="50"/>
         <source>decrease</source>
         <translation>csökkenti</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="51"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="52"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -8193,12 +8193,13 @@ A kiválasztott &apos;Kapcsolódó pénztár&apos; függvényében a megadott ö
 módosítja az aktuális, illetve a stúdió általános pénztárának egyenlegét.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="108"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="109"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="117"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="109"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="110"/>
         <source>You have selected a product action that modifies the
 count of the selected product but the value has not defined.
 
@@ -8209,7 +8210,18 @@ a kiválasztott termék darabszámát, de darabszámot nem adott meg.
 Kérem adjon meg egy valós darabszámot, vagy válasszon másik eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="128"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="118"/>
+        <source>You have defined price for the selected action
+but the count of product not defined.
+
+Please define a valid product count or reset the price.</source>
+        <translation>A kiválasztott raktáreseményhez megadott egy árat
+de a termék darabszámát nem adta meg.
+
+Kérem adjon meg egy valós darabszámot, vagy törölje az árat.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="137"/>
         <source>Negative</source>
         <translation>Negatív</translation>
     </message>

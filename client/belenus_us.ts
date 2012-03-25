@@ -4957,12 +4957,12 @@ action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="15"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="16"/>
         <source>Product storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="23"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="24"/>
         <source>Please check the cassa and action type again
 and make sure the correct amount of price and
 count of product selected before continue.
@@ -4972,17 +4972,17 @@ archived in cassa history.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="29"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="30"/>
         <source>&lt;General cassa&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="30"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
         <source>Daily, user related cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="32"/>
         <source>Select appropriate cassa type for product action.
 
 &lt;General cassa&gt; is related to the solarium studio
@@ -4992,22 +4992,22 @@ any action will increase or decrease the balance of the cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="42"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="43"/>
         <source>not modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="45"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="46"/>
         <source>increase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="49"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="50"/>
         <source>decrease</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="51"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="52"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -5015,12 +5015,13 @@ added to actual cassa or to the general ledger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="108"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="109"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="117"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="109"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="110"/>
         <source>You have selected a product action that modifies the
 count of the selected product but the value has not defined.
 
@@ -5028,7 +5029,15 @@ Please define a valid product count or select another product action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="128"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="118"/>
+        <source>You have defined price for the selected action
+but the count of product not defined.
+
+Please define a valid product count or reset the price.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="137"/>
         <source>Negative</source>
         <translation type="unfinished"></translation>
     </message>

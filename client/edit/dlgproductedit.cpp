@@ -214,6 +214,6 @@ void cDlgProductEdit::on_pbProductStorage_clicked()
 
     if( obDlgProductStorage->exec() == QDialog::Accepted )
     {
-        // product history action
+        ledProductCount->setText( QString::number(m_poProduct->productCount()) );
     }
 }

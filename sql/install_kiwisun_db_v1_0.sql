@@ -452,7 +452,7 @@ CREATE TABLE `productHistory` (
   `productItemCount`        int(11)                 NOT NULL,
   `netPrice`                int(11)                 NOT NULL,
   `vatpercent`              int(11)                 NOT NULL,
-  `actionDateTime`          datetime                NOT NULL,
+  `actionDateTime`          timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,

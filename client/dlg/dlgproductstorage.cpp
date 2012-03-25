@@ -5,6 +5,7 @@
 #include "ui_dlgproductstorage.h"
 #include "../db/dbproductactiontype.h"
 #include "../db/dbcassahistory.h"
+#include "../db/dbproducthistory.h"
 
 dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct ) : QDialog(parent)
 {
@@ -111,6 +112,14 @@ void dlgProductStorage::on_pbSave_clicked()
                                  "Please define a valid product count or select another product action.") );
         boCanBeSaved = false;
     }
+    if( ledNetPrice->text().toInt() > 0 && ledProductCount->text().toInt() == 0 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("You have defined price for the selected action\n"
+                                 "but the count of product not defined.\n\n"
+                                 "Please define a valid product count or reset the price.") );
+        boCanBeSaved = false;
+    }
 
     if( boCanBeSaved )
     {
@@ -130,6 +139,8 @@ void dlgProductStorage::on_pbSave_clicked()
                     nPrice *= (-1);
                 }
 
+                nPrice *= ledProductCount->text().toInt();
+
                 cDBCassaHistory     obDBCassaHistory;
 
                 obDBCassaHistory.createNew();
@@ -144,16 +155,28 @@ void dlgProductStorage::on_pbSave_clicked()
             }
 
             int nProductCount = m_poProduct->productCount();
+            int nProductCountChange = 0;
 
             if( obDBProductActionType.increaseProductCount() )
-                nProductCount += ledProductCount->text().toInt();
+                nProductCountChange += ledProductCount->text().toInt();
             else if( obDBProductActionType.decreaseProductCount() )
-                nProductCount -= ledProductCount->text().toInt();
+                nProductCountChange -= ledProductCount->text().toInt();
+
+            nProductCount += nProductCountChange;
 
             m_poProduct->setProductCount( nProductCount );
             m_poProduct->save();
 
             cDBProductHistory   obDBProductHistory;
+            obDBProductHistory.createNew();
+            obDBProductHistory.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBProductHistory.setProductId( m_poProduct->id() );
+            obDBProductHistory.setPATypeId( obDBProductActionType.id() );
+            obDBProductHistory.setUserId( g_obUser.id() );
+            obDBProductHistory.setItemCount( nProductCountChange );
+            obDBProductHistory.setNetPrice( ledNetPrice->text().toInt() );
+            obDBProductHistory.setVatPercent( ledVatPercent->text().toInt() );
+            obDBProductHistory.save();
         }
         catch( cSevException &e )
         {

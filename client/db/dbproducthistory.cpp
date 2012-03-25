@@ -30,7 +30,7 @@ void cDBProductHistory::init( const unsigned int p_uiId,
                              const unsigned int p_uiProductId,
                              const unsigned int p_uiProductActionTypeId,
                              const unsigned int p_uiUserId,
-                             const int p_inProductItemCount,
+                             const int p_inItemCount,
                              const int p_inNetPrice,
                              const int p_inVatPercent,
                              const QString &p_qsActionTime,
@@ -43,7 +43,7 @@ void cDBProductHistory::init( const unsigned int p_uiId,
     m_uiProductId       = p_uiProductId;
     m_uiPATypeId        = p_uiProductActionTypeId;
     m_uiUserId          = p_uiUserId;
-    m_inItemCount       = p_inProductItemCount;
+    m_inItemCount       = p_inItemCount;
     m_inNetPrice        = p_inNetPrice;
     m_inVatPercent      = p_inVatPercent;
     m_qsActionTime      = p_qsActionTime;
@@ -56,13 +56,13 @@ void cDBProductHistory::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx             = p_obRecord.indexOf( "productHistoryId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
-    int inProductIdIdx        = p_obRecord.indexOf( "productId" );
+    int inProductIdIdx      = p_obRecord.indexOf( "productId" );
+    int inPATypeIdIdx       = p_obRecord.indexOf( "productActionTypeId" );
     int inUserIdIdx         = p_obRecord.indexOf( "userId" );
-    int inPatientIdIdx      = p_obRecord.indexOf( "patientId" );
-    int inActionValueIdx    = p_obRecord.indexOf( "actionValue" );
-    int inActionBalanceIdx  = p_obRecord.indexOf( "actionBalance" );
-    int inActionTimeIdx     = p_obRecord.indexOf( "actionTime" );
-    int inCommentIdx        = p_obRecord.indexOf( "comment" );
+    int inItemCountIdx      = p_obRecord.indexOf( "productItemCount" );
+    int inNetPriceIdx       = p_obRecord.indexOf( "netPrice" );
+    int inVatPercentIdx     = p_obRecord.indexOf( "vatpercent" );
+    int inActionTimeIdx     = p_obRecord.indexOf( "actionDateTime" );
     int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -70,12 +70,12 @@ void cDBProductHistory::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
+          p_obRecord.value( inPATypeIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
-          p_obRecord.value( inPatientIdIdx ).toUInt(),
-          p_obRecord.value( inActionValueIdx ).toInt(),
-          p_obRecord.value( inActionBalanceIdx ).toInt(),
+          p_obRecord.value( inItemCountIdx ).toInt(),
+          p_obRecord.value( inNetPriceIdx ).toInt(),
+          p_obRecord.value( inVatPercentIdx ).toInt(),
           p_obRecord.value( inActionTimeIdx ).toString(),
-          p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -116,11 +116,11 @@ void cDBProductHistory::save() throw( cSevException )
     qsQuery += " productHistory SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
+    qsQuery += QString( "productActionTypeId = \"%1\", " ).arg( m_uiPATypeId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
-    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
-    qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
-    qsQuery += QString( "actionBalance = \"%1\", " ).arg( m_inActionBalance );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "productItemCount = \"%1\", " ).arg( m_inItemCount );
+    qsQuery += QString( "netPrice = \"%1\", " ).arg( m_inNetPrice );
+    qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_inVatPercent );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -193,6 +193,16 @@ void cDBProductHistory::setProductId( const unsigned int p_uiProductId ) throw()
     m_uiProductId = p_uiProductId;
 }
 
+unsigned int cDBProductHistory::productActionTypeId() const throw()
+{
+    return m_uiPATypeId;
+}
+
+void cDBProductHistory::setPATypeId( const unsigned int p_uiPATypeId ) throw()
+{
+    m_uiPATypeId = p_uiPATypeId;
+}
+
 unsigned int cDBProductHistory::userId() const throw()
 {
     return m_uiUserId;
@@ -203,34 +213,34 @@ void cDBProductHistory::setUserId( const unsigned int p_uiUserId ) throw()
     m_uiUserId = p_uiUserId;
 }
 
-unsigned int cDBProductHistory::patientId() const throw()
+int cDBProductHistory::itemCount() const throw()
 {
-    return m_uiPatientId;
+    return m_inItemCount;
 }
 
-void cDBProductHistory::setPatientId( const unsigned int p_uiPatientId ) throw()
+void cDBProductHistory::setItemCount( const int p_inItemCount ) throw()
 {
-    m_uiPatientId = p_uiPatientId;
+    m_inItemCount = p_inItemCount;
 }
 
-int cDBProductHistory::actionValue() const throw()
+int cDBProductHistory::netPrice() const throw()
 {
-    return m_inActionValue;
+    return m_inNetPrice;
 }
 
-void cDBProductHistory::setActionValue( const int p_inActionValue ) throw()
+void cDBProductHistory::setNetPrice( const int p_inNetPrice ) throw()
 {
-    m_inActionValue = p_inActionValue;
+    m_inNetPrice = p_inNetPrice;
 }
 
-int cDBProductHistory::actionBalance() const throw()
+int cDBProductHistory::vatPercent() const throw()
 {
-    return m_inActionBalance;
+    return m_inVatPercent;
 }
 
-void cDBProductHistory::setActionBalance( const int p_inActionBalance ) throw()
+void cDBProductHistory::setVatPercent( const int p_inVatPercent ) throw()
 {
-    m_inActionBalance = p_inActionBalance;
+    m_inVatPercent = p_inVatPercent;
 }
 
 QString cDBProductHistory::actionTime() const throw()
@@ -241,17 +251,6 @@ QString cDBProductHistory::actionTime() const throw()
 void cDBProductHistory::setActionTime( const QString &p_qsActionTime ) throw()
 {
     m_qsActionTime = p_qsActionTime;
-}
-
-QString cDBProductHistory::comment() const throw()
-{
-    return m_qsComment;
-}
-
-void cDBProductHistory::setComment( const QString &p_qsComment ) throw()
-{
-    m_qsComment = p_qsComment;
-    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBProductHistory::modified() const throw()

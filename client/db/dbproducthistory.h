@@ -61,7 +61,6 @@ private:
                const int p_inNetPrice = 0,
                const int p_inVatPercent = 0,
                const QString &p_qsActionTime = "",
-               const QString &p_qsComment = "",
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                  throw();
