@@ -32,6 +32,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
                            const QString p_qsBarcode,
                            const QString p_qsComment,
                            const int p_nUnits,
+                           const int p_nAmount,
                            const unsigned int p_uiTimeLeft,
                            const QString p_qsValidDateFrom,
                            const QString p_qsValidDateTo,
@@ -47,11 +48,12 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_qsBarcode             = p_qsBarcode;
     m_qsComment             = p_qsComment;
     m_nUnits                = p_nUnits;
+    m_nAmount               = p_nAmount;
     m_uiTimeLeft            = p_uiTimeLeft;
     m_qsValidDateFrom       = p_qsValidDateFrom;
     m_qsValidDateTo         = p_qsValidDateTo;
     m_qsPincode             = p_qsPincode;
-    m_qsModified        = p_qsModified;
+    m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -65,11 +67,12 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
+    int inAmountIdx             = p_obRecord.indexOf( "amount" );
     int inTimeLeftIdx           = p_obRecord.indexOf( "timeLeft" );
     int inValidDateFromIdx      = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx        = p_obRecord.indexOf( "validDateTo" );
     int inPincodeIdx            = p_obRecord.indexOf( "pincode" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -80,6 +83,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inBarcodeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inUnitsIdx ).toInt(),
+          p_obRecord.value( inAmountIdx ).toInt(),
           p_obRecord.value( inTimeLeftIdx ).toUInt(),
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
@@ -154,6 +158,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
+    qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
@@ -282,6 +287,16 @@ int cDBPatientCard::units() const throw()
 void cDBPatientCard::setUnits( const int p_nUnits ) throw()
 {
     m_nUnits = p_nUnits;
+}
+
+int cDBPatientCard::amount() const throw()
+{
+    return m_nAmount;
+}
+
+void cDBPatientCard::setAmount( const int p_nAmount ) throw()
+{
+    m_nAmount = p_nAmount;
 }
 
 unsigned int cDBPatientCard::timeLeft() const throw()

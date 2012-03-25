@@ -31,6 +31,8 @@ public:
     void            setComment( const QString &p_qsComment )                    throw();
     int             units() const                                               throw();
     void            setUnits( const int p_nUnits )                              throw();
+    int             amount() const                                              throw();
+    void            setAmount( const int p_nAmount )                            throw();
     unsigned int    timeLeft() const                                            throw();
     void            setTimeLeft( const unsigned int p_uiTimeLeft )              throw();
     QString         timeLeftStr() const                                         throw();
@@ -41,7 +43,7 @@ public:
     void            setValidDateTo( const QString &p_qsValidDateTo )            throw();
     QString         pincode() const                                             throw();
     void            setPincode( const QString &p_qsPincode )                    throw();
-    QString         modified() const                                                throw();
+    QString         modified() const                                            throw();
     bool            active() const                                              throw();
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
@@ -55,6 +57,7 @@ private:
     QString         m_qsBarcode;
     QString         m_qsComment;
     int             m_nUnits;
+    int             m_nAmount;
     unsigned int    m_uiTimeLeft;
     QString         m_qsValidDateFrom;
     QString         m_qsValidDateTo;
@@ -70,6 +73,7 @@ private:
                const QString p_qsBarcode = "",
                const QString p_qsComment = "",
                const int p_nUnits = 0,
+               const int p_nAmount = 0,
                const unsigned int p_uiTimeLeft = 0,
                const QString p_qsValidDateFrom = "0000-00-00",
                const QString p_qsValidDateTo = "0000-00-00",

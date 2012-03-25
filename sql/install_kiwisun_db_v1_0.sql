@@ -204,6 +204,7 @@ CREATE TABLE `patientCards` (
   `barcode`                 varchar(20)             NOT NULL,
   `comment`                 varchar(50)             DEFAULT NULL,
   `units`                   int(11)                 NOT NULL,
+  `amount`                  int(11)                 NOT NULL,
   `timeLeft`                int(10) unsigned        NOT NULL,
   `validDateFrom`           date                    NOT NULL,
   `validDateTo`             date                    NOT NULL,
