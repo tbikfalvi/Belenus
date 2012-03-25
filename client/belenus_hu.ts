@@ -319,6 +319,11 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <source>Invalid</source>
         <translation>Hibás érték</translation>
     </message>
+    <message>
+        <location filename="db/dbproductactiontype.h" line="53"/>
+        <source>Positive</source>
+        <translation>Pozitív</translation>
+    </message>
 </context>
 <context>
     <name>cDlgAddress</name>
@@ -3656,26 +3661,36 @@ A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.<
         <translation>Termék Típus</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="22"/>
+        <source>Positive</source>
+        <translation>Pozitív</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="23"/>
+        <source>Negative</source>
+        <translation>Negatív</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="68"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="76"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="83"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="68"/>
         <source>Name of productaction type must be set.</source>
         <translation>A Termék-Esemény neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="76"/>
         <source>Productaction type with this name already exists.
 Please set another one.</source>
         <translation>Ilyen nevü Termék-Esemény már létezik.
 Kérem válasszon egy másik nevet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="83"/>
         <source>A product action can not increase and decrease
 the product count at the same time.</source>
         <translation>A termékkel kapcsolatos esemény nem növelheti és
@@ -7888,17 +7903,22 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>csökkenteni fogja az adott termékek darabszámát</translation>
     </message>
     <message>
-        <location filename="dlgproductactiontypeedit.ui" line="91"/>
+        <location filename="dlgproductactiontypeedit.ui" line="87"/>
+        <source>Amount of cassa action&apos;s indication :</source>
+        <translation>Pénztár művelet előjele :</translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="105"/>
         <source>Independent from the local studio.</source>
         <translation>Független a stúdiótól</translation>
     </message>
     <message>
-        <location filename="dlgproductactiontypeedit.ui" line="102"/>
+        <location filename="dlgproductactiontypeedit.ui" line="116"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgproductactiontypeedit.ui" line="115"/>
+        <location filename="dlgproductactiontypeedit.ui" line="129"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -8018,8 +8038,11 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="447"/>
-        <source>Product storage</source>
-        <translation>Raktárkészlet</translation>
+        <source>Product storage
+action</source>
+        <oldsource>Product storage</oldsource>
+        <translation>Raktárkészlet
+beavatkozás</translation>
     </message>
 </context>
 <context>
@@ -8069,53 +8092,68 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Nettó ár :</translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="135"/>
-        <location filename="dlgproductstorage.ui" line="235"/>
+        <location filename="dlgproductstorage.ui" line="138"/>
+        <location filename="dlgproductstorage.ui" line="244"/>
         <source>$</source>
         <translation>Ft.</translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="176"/>
+        <location filename="dlgproductstorage.ui" line="179"/>
         <source>VAT Percent (%) :</source>
         <translation>ÁFA kulcs (%) :</translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="216"/>
+        <location filename="dlgproductstorage.ui" line="222"/>
         <source>SUM price :</source>
         <translation>Bruttó ár :</translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="270"/>
+        <location filename="dlgproductstorage.ui" line="279"/>
         <source>Count of product :</source>
         <translation>Darabszám :</translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="311"/>
+        <location filename="dlgproductstorage.ui" line="323"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="324"/>
+        <location filename="dlgproductstorage.ui" line="336"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="10"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="15"/>
         <source>Product storage</source>
         <translation>Raktárkészlet</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="18"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="23"/>
+        <source>Please check the cassa and action type again
+and make sure the correct amount of price and
+count of product selected before continue.
+
+Please note: the value of SUM price will be
+archived in cassa history.</source>
+        <translation>Kérem ellenőrizze, hogy a megfelelő pénztár
+és raktáresemény van kiválasztva és a
+megadott ár és darabszám helyes.
+
+Figyelem: a Bruttó ár kerül archiválásra
+a pénztártörténetben.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="29"/>
         <source>&lt;General cassa&gt;</source>
         <translation>&lt;Stúdió költségvetés&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="19"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="30"/>
         <source>Daily, user related cassa</source>
         <translation>Napi, stúdió pénztár</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="20"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
         <source>Select appropriate cassa type for product action.
 
 &lt;General cassa&gt; is related to the solarium studio
@@ -8130,22 +8168,22 @@ egyik esemény sem változtat a napi, aktuális pénztár egyenlegén.
 az események kihatással vannak a pénztár egyenlegére.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="42"/>
         <source>not modify</source>
         <translation>nem változtatja</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="34"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="45"/>
         <source>increase</source>
         <translation>növeli</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="38"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="49"/>
         <source>decrease</source>
         <translation>csökkenti</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="40"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="51"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -8153,6 +8191,27 @@ added to actual cassa or to the general ledger.</source>
         <translation>A megadott &lt;%1&gt; esemény %2 a kiválasztott termék darabszámát.
 A kiválasztott &apos;Kapcsolódó pénztár&apos; függvényében a megadott összeg
 módosítja az aktuális, illetve a stúdió általános pénztárának egyenlegét.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="108"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="109"/>
+        <source>You have selected a product action that modifies the
+count of the selected product but the value has not defined.
+
+Please define a valid product count or select another product action.</source>
+        <translation>Egy olyan raktáreseményt választott, ami módosítja
+a kiválasztott termék darabszámát, de darabszámot nem adott meg.
+
+Kérem adjon meg egy valós darabszámot, vagy válasszon másik eseményt.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="128"/>
+        <source>Negative</source>
+        <translation>Negatív</translation>
     </message>
     <message>
         <source>The action &lt;%1&gt; will %2 the count of the selected product.

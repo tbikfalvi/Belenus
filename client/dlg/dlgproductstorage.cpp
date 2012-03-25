@@ -1,5 +1,10 @@
+
+#include <QMessageBox>
+
 #include "dlgproductstorage.h"
 #include "ui_dlgproductstorage.h"
+#include "../db/dbproductactiontype.h"
+#include "../db/dbcassahistory.h"
 
 dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct ) : QDialog(parent)
 {
@@ -14,6 +19,12 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbRefreshNP->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbRefreshSP->setIcon( QIcon("./resources/40x40_refresh.png") );
+
+    pbSave->setToolTip( tr("Please check the cassa and action type again\n"
+                           "and make sure the correct amount of price and\n"
+                           "count of product selected before continue.\n\n"
+                           "Please note: the value of SUM price will be\n"
+                           "archived in cassa history.") );
 
     cmbCassa->addItem( tr("<General cassa>") );
     cmbCassa->addItem( tr("Daily, user related cassa") );
@@ -45,9 +56,11 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
         m_qslActionTooltip << qsToolTip;
     }
 
-    if( p_poProduct )
+    m_poProduct = p_poProduct;
+
+    if( m_poProduct )
     {
-        ledProductName->setText( p_poProduct->name() );
+        ledProductName->setText( m_poProduct->name() );
     }
     ledNetPrice->setText( "0" );
     ledVatPercent->setText( "0" );
@@ -71,10 +84,76 @@ void dlgProductStorage::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
 
+    unsigned int uiPATypeId = cmbProductAction->itemData( cmbProductAction->currentIndex() ).toUInt();
+
+    cDBProductActionType    obDBProductActionType;
+    obDBProductActionType.load( uiPATypeId );
+
+    if( ledNetPrice->text().length() == 0 )
+        ledNetPrice->setText( "0" );
+
+    if( ledVatPercent->text().length() == 0 )
+        ledVatPercent->setText( "0" );
+
+    if( ledSumPrice->text().length() == 0 )
+        ledSumPrice->setText( "0" );
+
+    if( ledProductCount->text().length() == 0 )
+        ledProductCount->setText( "0" );
+
+    if( (obDBProductActionType.increaseProductCount() ||
+         obDBProductActionType.decreaseProductCount()) &&
+        ledProductCount->text().toInt() == 0 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("You have selected a product action that modifies the\n"
+                                 "count of the selected product but the value has not defined.\n\n"
+                                 "Please define a valid product count or select another product action.") );
+        boCanBeSaved = false;
+    }
+
     if( boCanBeSaved )
     {
         try
         {
+            if( ledSumPrice->text().toInt() > 0 )
+            {
+                // Meg van adva bruttó pénzösszeg => könyvelés pénztártörténetbe
+                unsigned int uiCassaId = g_obCassa.cassaId();
+                int nPrice = ledSumPrice->text().toInt();
+
+                if( cmbCassa->currentIndex() == 0 )
+                    uiCassaId = 0;
+
+                if( obDBProductActionType.cassaActionIndication().compare( tr("Negative") ) == 0 )
+                {
+                    nPrice *= (-1);
+                }
+
+                cDBCassaHistory     obDBCassaHistory;
+
+                obDBCassaHistory.createNew();
+                obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+                obDBCassaHistory.setCassaId( uiCassaId );
+                obDBCassaHistory.setUserId( g_obUser.id() );
+                obDBCassaHistory.setPatientId( 0 );
+                obDBCassaHistory.setActionValue( nPrice );
+                obDBCassaHistory.setActionBalance( 0 );
+                obDBCassaHistory.setComment( obDBProductActionType.name() );
+                obDBCassaHistory.save();
+            }
+
+            int nProductCount = m_poProduct->productCount();
+
+            if( obDBProductActionType.increaseProductCount() )
+                nProductCount += ledProductCount->text().toInt();
+            else if( obDBProductActionType.decreaseProductCount() )
+                nProductCount -= ledProductCount->text().toInt();
+
+            m_poProduct->setProductCount( nProductCount );
+            m_poProduct->save();
+
+            cDBProductHistory   obDBProductHistory;
         }
         catch( cSevException &e )
         {

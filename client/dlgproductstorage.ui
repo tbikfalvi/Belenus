@@ -127,6 +127,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhFormattedNumbersOnly</set>
+            </property>
            </widget>
           </item>
           <item>
@@ -193,6 +196,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhFormattedNumbersOnly</set>
+            </property>
            </widget>
           </item>
           <item>
@@ -226,6 +232,9 @@
               <width>80</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhFormattedNumbersOnly</set>
             </property>
            </widget>
           </item>
@@ -280,6 +289,9 @@
               <width>50</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhFormattedNumbersOnly</set>
             </property>
            </widget>
           </item>

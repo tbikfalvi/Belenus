@@ -432,6 +432,7 @@ CREATE TABLE `productActionType` (
   `name`                    varchar(100)            NOT NULL,
   `increaseProductCount`    tinyint(1) unsigned     NOT NULL,
   `decreaseProductCount`    tinyint(1) unsigned     NOT NULL,
+  `cassaActionIndication`   varchar(20)             NOT NULL,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
@@ -931,7 +932,7 @@ ALTER TABLE `productActionType` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `belenus`.`discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `productTypeId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
+INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `productTypeId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
  (NULL, '', NULL, NULL, NULL, NULL, '0', '0', '0', '', '', '', '', '0', 'ARC');
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
 ALTER TABLE `discounts` auto_increment=1;
@@ -4259,10 +4260,17 @@ INSERT INTO zipRegionCity ( `licenceId`, `zip`, `region`, `city`, `active`, `arc
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `belenus`.`address` (`addressId`, `licenceId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `modified`, `active`, `archive`) VALUES
+INSERT INTO `address` (`addressId`, `licenceId`, `publicPlaceId`, `name`, `country`, `region`, `city`, `zip`, `street`, `streetNumber`, `floor`, `door`, `primaryAddress`, `modified`, `active`, `archive`) VALUES
  (NULL, '0', '0', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '', '0', 'ARC');
 UPDATE `address` SET `addressId`='0' WHERE `addressId`=1;
 ALTER TABLE `address` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `cassa` (`cassaId`, `licenceId`, `userId`, `currentBalance`, `startDateTime`, `stopDateTime`, `modified`, `active`, `archive`) VALUES
+ ('0', '0', '0', '0', '', '', '', '1', 'NEW');
+UPDATE `cassa` SET `cassaId`='0' WHERE `cassaId`=1;
+ALTER TABLE `cassa` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 

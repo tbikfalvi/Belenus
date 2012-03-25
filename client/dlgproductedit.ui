@@ -444,7 +444,8 @@
      <item>
       <widget class="QPushButton" name="pbProductStorage">
        <property name="text">
-        <string>Product storage</string>
+        <string>Product storage
+action</string>
        </property>
        <property name="iconSize">
         <size>

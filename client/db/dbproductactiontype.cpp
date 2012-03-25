@@ -30,18 +30,20 @@ void cDBProductActionType::init( const unsigned int p_uiId,
                            const QString &p_qsName,
                            const bool p_bIncrease,
                            const bool p_bDecrease,
+                           const QString &p_qsIndication,
                            const QString &p_qsModified,
                            const bool p_bActive,
                            const QString &p_qsArchive ) throw()
 {
-    m_uiId                  = p_uiId;
-    m_uiLicenceId           = p_uiLicenceId;
-    m_qsName                = p_qsName;
-    m_bIncreaseProductCount = p_bIncrease;
-    m_bDecreaseProductCount = p_bDecrease;
-    m_qsModified            = p_qsModified;
-    m_bActive               = p_bActive;
-    m_qsArchive             = p_qsArchive;
+    m_uiId                      = p_uiId;
+    m_uiLicenceId               = p_uiLicenceId;
+    m_qsName                    = p_qsName;
+    m_bIncreaseProductCount     = p_bIncrease;
+    m_bDecreaseProductCount     = p_bDecrease;
+    m_qsCassaActionIndication   = p_qsIndication;
+    m_qsModified                = p_qsModified;
+    m_bActive                   = p_bActive;
+    m_qsArchive                 = p_qsArchive;
 }
 
 void cDBProductActionType::init( const QSqlRecord &p_obRecord ) throw()
@@ -51,6 +53,7 @@ void cDBProductActionType::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx           = p_obRecord.indexOf( "name" );
     int inIncreaseIdx       = p_obRecord.indexOf( "increaseProductCount" );
     int inDecreaseIdx       = p_obRecord.indexOf( "decreaseProductCount" );
+    int inIndicationIdx     = p_obRecord.indexOf( "cassaActionIndication" );
     int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
@@ -60,6 +63,7 @@ void cDBProductActionType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inIncreaseIdx ).toBool(),
           p_obRecord.value( inDecreaseIdx ).toBool(),
+          p_obRecord.value( inIndicationIdx ).toString(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -117,6 +121,7 @@ void cDBProductActionType::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "increaseProductCount = %1, " ).arg( m_bIncreaseProductCount );
     qsQuery += QString( "decreaseProductCount = %1, " ).arg( m_bDecreaseProductCount );
+    qsQuery += QString( "cassaActionIndication = \"%1\", " ).arg( m_qsCassaActionIndication );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -209,6 +214,16 @@ bool cDBProductActionType::decreaseProductCount() const throw()
 void cDBProductActionType::setDecreaseProductCount( const bool p_bDecrease ) throw()
 {
     m_bDecreaseProductCount = p_bDecrease;
+}
+
+QString cDBProductActionType::cassaActionIndication() const throw()
+{
+    return m_qsCassaActionIndication;
+}
+
+void cDBProductActionType::setCassaActionIndication( const QString &p_qsIndication ) throw()
+{
+    m_qsCassaActionIndication = p_qsIndication;
 }
 
 QString cDBProductActionType::modified() const throw()

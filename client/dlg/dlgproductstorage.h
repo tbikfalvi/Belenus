@@ -19,6 +19,7 @@ public:
 private:
     bool            m_bInit;
     QStringList     m_qslActionTooltip;
+    cDBProduct     *m_poProduct;
 
 private slots:
     void on_cmbProductAction_currentIndexChanged(int index);

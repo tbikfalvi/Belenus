@@ -19,6 +19,10 @@ cDlgProductActionTypeEdit::cDlgProductActionTypeEdit( QWidget *p_poParent, cDBPr
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
 
+    cmbCassaActionIndication->addItem( tr("Positive") );
+    cmbCassaActionIndication->addItem( tr("Negative") );
+    cmbCassaActionIndication->setCurrentIndex( 0 );
+
     m_poProductActionType = p_poProductActionType;
 
     if( m_poProductActionType )
@@ -26,6 +30,8 @@ cDlgProductActionTypeEdit::cDlgProductActionTypeEdit( QWidget *p_poParent, cDBPr
         ledName->setText( m_poProductActionType->name() );
         chkIncrease->setChecked( m_poProductActionType->increaseProductCount() );
         chkDecrease->setChecked( m_poProductActionType->decreaseProductCount() );
+        if( m_poProductActionType->cassaActionIndication().length() )
+            cmbCassaActionIndication->setCurrentIndex( cmbCassaActionIndication->findText( m_poProductActionType->cassaActionIndication() ) );
 
         if( m_poProductActionType->licenceId() == 0 && m_poProductActionType->id() > 0 )
             checkIndependent->setChecked( true );
@@ -85,6 +91,7 @@ void cDlgProductActionTypeEdit::on_pbSave_clicked()
             m_poProductActionType->setName( ledName->text() );
             m_poProductActionType->setIncreaseProductCount( chkIncrease->isChecked() );
             m_poProductActionType->setDecreaseProductCount( chkDecrease->isChecked() );
+            m_poProductActionType->setCassaActionIndication( cmbCassaActionIndication->currentText() );
             m_poProductActionType->setActive( true );
 
             if( checkIndependent->isChecked() )
@@ -111,7 +118,6 @@ void cDlgProductActionTypeEdit::on_pbCancel_clicked()
 {
     QDialog::reject();
 }
-
 
 void cDlgProductActionTypeEdit::on_chkIncrease_toggled(bool checked)
 {

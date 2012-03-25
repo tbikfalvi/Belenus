@@ -185,6 +185,11 @@ Please start WampServer application then restart Belenus application.</oldsource
         <source>Invalid</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="db/dbproductactiontype.h" line="53"/>
+        <source>Positive</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>cDlgAddress</name>
@@ -1954,25 +1959,35 @@ Deleting this product will not delete the product types assigned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="22"/>
+        <source>Positive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="23"/>
+        <source>Negative</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="68"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="76"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="83"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="62"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="68"/>
         <source>Name of productaction type must be set.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="70"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="76"/>
         <source>Productaction type with this name already exists.
 Please set another one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductactiontypeedit.cpp" line="77"/>
+        <location filename="edit/dlgproductactiontypeedit.cpp" line="83"/>
         <source>A product action can not increase and decrease
 the product count at the same time.</source>
         <translation type="unfinished"></translation>
@@ -4731,17 +4746,22 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductactiontypeedit.ui" line="91"/>
+        <location filename="dlgproductactiontypeedit.ui" line="87"/>
+        <source>Amount of cassa action&apos;s indication :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgproductactiontypeedit.ui" line="105"/>
         <source>Independent from the local studio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductactiontypeedit.ui" line="102"/>
+        <location filename="dlgproductactiontypeedit.ui" line="116"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductactiontypeedit.ui" line="115"/>
+        <location filename="dlgproductactiontypeedit.ui" line="129"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4857,7 +4877,9 @@ Do you want to save them as new into the database?</source>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="447"/>
-        <source>Product storage</source>
+        <source>Product storage
+action</source>
+        <oldsource>Product storage</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4904,53 +4926,63 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="135"/>
-        <location filename="dlgproductstorage.ui" line="235"/>
+        <location filename="dlgproductstorage.ui" line="138"/>
+        <location filename="dlgproductstorage.ui" line="244"/>
         <source>$</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="176"/>
+        <location filename="dlgproductstorage.ui" line="179"/>
         <source>VAT Percent (%) :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="216"/>
+        <location filename="dlgproductstorage.ui" line="222"/>
         <source>SUM price :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="270"/>
+        <location filename="dlgproductstorage.ui" line="279"/>
         <source>Count of product :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="311"/>
+        <location filename="dlgproductstorage.ui" line="323"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="324"/>
+        <location filename="dlgproductstorage.ui" line="336"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="10"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="15"/>
         <source>Product storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="18"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="23"/>
+        <source>Please check the cassa and action type again
+and make sure the correct amount of price and
+count of product selected before continue.
+
+Please note: the value of SUM price will be
+archived in cassa history.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="29"/>
         <source>&lt;General cassa&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="19"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="30"/>
         <source>Daily, user related cassa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="20"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
         <source>Select appropriate cassa type for product action.
 
 &lt;General cassa&gt; is related to the solarium studio
@@ -4960,26 +4992,44 @@ any action will increase or decrease the balance of the cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="31"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="42"/>
         <source>not modify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="34"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="45"/>
         <source>increase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="38"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="49"/>
         <source>decrease</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="40"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="51"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
 added to actual cassa or to the general ledger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="108"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="109"/>
+        <source>You have selected a product action that modifies the
+count of the selected product but the value has not defined.
+
+Please define a valid product count or select another product action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="128"/>
+        <source>Negative</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
