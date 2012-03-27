@@ -88,6 +88,7 @@ HEADERS = belenus.h \
     db/dbproductactiontype.h \
     db/dbshoppingcart.h \
     db/dbproducthistory.h \
+    db/dbvalidtimeperiods.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -189,6 +190,7 @@ SOURCES = main.cpp \
     db/dbproductactiontype.cpp \
     db/dbshoppingcart.cpp \
     db/dbproducthistory.cpp \
+    db/dbvalidtimeperiods.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

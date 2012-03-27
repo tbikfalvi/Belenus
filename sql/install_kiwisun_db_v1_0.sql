@@ -184,12 +184,29 @@ CREATE TABLE `patientCardTypes` (
   `validDateFrom`           date                    DEFAULT NULL,
   `validDateTo`             date                    DEFAULT NULL,
   `validDays`               int(11)                 NOT NULL DEFAULT 365,
+  `validWeekDays`           int(11)                 NOT NULL DEFAULT 127,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardTypeId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A studioban hasznalhato kartyak tipusaihoz tartozo idotartamokat tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `patientCardTypeEnabled` (
+  `patientCardTypeEnabledId` int(10) unsigned       NOT NULL AUTO_INCREMENT,
+  `licenceId`                int(10) unsigned       NOT NULL,
+  `patientCardTypeId`        int(10) unsigned       NOT NULL,
+  `start`                    time                   NOT NULL,
+  `stop`                     time                   NOT NULL,
+  `modified`                 datetime               NOT NULL,
+  `archive`                  varchar(10)            NOT NULL,
+  PRIMARY KEY (`patientCardTypeEnabledId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
