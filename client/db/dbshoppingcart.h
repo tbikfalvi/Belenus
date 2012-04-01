@@ -32,11 +32,11 @@ public:
     void            setItemNetPrice( const int p_nItemNetPrice )            throw();
     int             itemVAT() const                                         throw();
     void            setItemVAT( const int p_nItemVAT )                      throw();
-    int             itemNetSumPrice() const                                 throw();
-    void            setItemNetSumPrice( const int p_nItemNetSumPrice )      throw();
+    int             itemDiscount() const                                    throw();
+    void            setItemDiscount( const int p_nItemDiscount )            throw();
+    int             itemSumPrice() const                                    throw();
+    void            setItemSumPrice( const int p_nItemSumPrice )            throw();
     QString         modified() const                                        throw();
-    bool            active() const                                          throw();
-    void            setActive( const bool p_bActive )                       throw();
     QString         archive() const                                         throw();
     void            setArchive( const QString &p_qsArchive )                throw();
 
@@ -50,9 +50,9 @@ private:
     int             m_nItemCount;
     int             m_nItemNetPrice;
     int             m_nItemVAT;
-    int             m_nItemNetSumPrice;
+    int             m_nItemDiscount;
+    int             m_nItemSumPrice;
     QString         m_qsModified;
-    bool            m_bActive;
     QString         m_qsArchive;
 
     void init( const unsigned int p_uiId = 0,
@@ -64,9 +64,9 @@ private:
                const int p_nItemCount = 0,
                const int p_nItemNetPrice = 0,
                const int p_nItemVAT = 0,
-               const int p_nItemNetSumPrice = 0,
+               const int p_nItemDiscount = 0,
+               const int p_nItemSumPrice = 0,
                const QString &p_qsModified = "",
-               const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                         throw();
     void init( const QSqlRecord &p_obRecord )                               throw();
 };

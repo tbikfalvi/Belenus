@@ -1449,7 +1449,6 @@ void cWndMain::on_action_PayCash_triggered()
         return;
     }
 
-    cDlgCassaAction     obDlgCassaAction(this);
     int                 inPriceTotal;
     int                 inPriceNet;
     int                 inPriceDiscount;
@@ -1458,7 +1457,9 @@ void cWndMain::on_action_PayCash_triggered()
     mdiPanels->getPanelCashData( &uiPatientId, &inPriceNet, &inPriceDiscount );
 
     inPriceTotal = (inPriceNet-inPriceDiscount) + ((inPriceNet-inPriceDiscount)/100) * g_poPrefs->getDeviceUseVAT();
-    obDlgCassaAction.setInitialMoney( inPriceTotal );
+
+    cDlgCassaAction     obDlgCassaAction( this, inPriceTotal );
+
     obDlgCassaAction.setPayWithCash();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
@@ -1466,7 +1467,7 @@ void cWndMain::on_action_PayCash_triggered()
         QString qsComment = tr("Using device: %1 - ").arg( mdiPanels->getActivePanelCaption() );
 
         obDlgCassaAction.cassaResult( &inPayType, &qsComment );
-        if( inPayType == 1 )
+        if( inPayType == cDlgCassaAction::PAY_CASH )
         {
             g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
         }

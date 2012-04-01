@@ -300,7 +300,6 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     return;
                 }
 
-                cDlgCassaAction     obDlgCassaAction(this);
                 int                 inPriceNet = 0;
                 int                 inPriceNetDiscount = 0;
                 int                 inPriceTotal = 0;
@@ -320,7 +319,9 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 }
                 inPriceDiscount = inPriceNet - inPriceNetDiscount;
                 inPriceTotal = inPriceNetDiscount + (inPriceNetDiscount/100)*m_poPatientCardType->vatpercent();
-                obDlgCassaAction.setInitialMoney( inPriceTotal );
+
+                cDlgCassaAction     obDlgCassaAction( this, inPriceTotal );
+
                 obDlgCassaAction.setPayWithCash();
                 if( obDlgCassaAction.exec() == QDialog::Accepted )
                 {
@@ -328,7 +329,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     QString qsComment = QString("[%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
 
                     obDlgCassaAction.cassaResult( &inPayType, &qsComment );
-                    if( inPayType == 1 )
+                    if( inPayType == cDlgCassaAction::PAY_CASH )
                     {
                         g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
                     }

@@ -34,9 +34,9 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const int p_nItemCount,
                             const int p_nItemNetPrice,
                             const int p_nItemVAT,
-                            const int p_nItemNetSumPrice,
+                            const int p_nItemSumPrice,
+                            const int p_nItemDiscount,
                             const QString &p_qsModified,
-                            const bool p_bActive,
                             const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
@@ -48,9 +48,9 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
     m_nItemCount        = p_nItemCount;
     m_nItemNetPrice     = p_nItemNetPrice;
     m_nItemVAT          = p_nItemVAT;
-    m_nItemNetSumPrice  = p_nItemNetSumPrice;
+    m_nItemDiscount     = p_nItemDiscount;
+    m_nItemSumPrice     = p_nItemSumPrice;
     m_qsModified        = p_qsModified;
-    m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
 
@@ -65,9 +65,9 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
     int inItemCountIdx          = p_obRecord.indexOf( "itemCount" );
     int inItemNetPriceIdx       = p_obRecord.indexOf( "itemNetPrice" );
     int inItemVATIdx            = p_obRecord.indexOf( "itemVAT" );
-    int inItemNetSumPriceIdx    = p_obRecord.indexOf( "itemNetSumPrice" );
+    int inItemDiscountIdx       = p_obRecord.indexOf( "discountValue" );
+    int inItemSumPriceIdx       = p_obRecord.indexOf( "itemSumPrice" );
     int inModifiedIdx           = p_obRecord.indexOf( "modified" );
-    int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
@@ -79,9 +79,9 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inItemCountIdx ).toInt(),
           p_obRecord.value( inItemNetPriceIdx ).toInt(),
           p_obRecord.value( inItemVATIdx ).toInt(),
-          p_obRecord.value( inItemNetSumPriceIdx ).toInt(),
+          p_obRecord.value( inItemDiscountIdx ).toInt(),
+          p_obRecord.value( inItemSumPriceIdx ).toInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
-          p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
 
@@ -126,9 +126,9 @@ void cDBShoppingCart::save() throw( cSevException )
     qsQuery += QString( "itemCount = \"%1\", " ).arg( m_nItemCount );
     qsQuery += QString( "itemNetPrice = \"%1\", " ).arg( m_nItemNetPrice );
     qsQuery += QString( "itemVAT = \"%1\", " ).arg( m_nItemVAT );
-    qsQuery += QString( "itemNetSumPrice = \"%1\", " ).arg( m_nItemNetSumPrice );
+    qsQuery += QString( "discountValue = \"%1\", " ).arg( m_nItemDiscount );
+    qsQuery += QString( "itemSumPrice = \"%1\", " ).arg( m_nItemSumPrice );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
-    qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
     {
@@ -219,6 +219,16 @@ void cDBShoppingCart::setPanelId( const unsigned int p_uiPanelId ) throw()
     m_uiPanelId = p_uiPanelId;
 }
 
+QString cDBShoppingCart::itemName() const throw()
+{
+    return m_qsItemName;
+}
+
+void cDBShoppingCart::setItemName(const QString &p_qsItemName) throw()
+{
+    m_qsItemName = p_qsItemName;
+}
+
 int cDBShoppingCart::itemCount() const throw()
 {
     return m_nItemCount;
@@ -249,29 +259,29 @@ void cDBShoppingCart::setItemVAT( const int p_nItemVAT ) throw()
     m_nItemVAT = p_nItemVAT;
 }
 
-int cDBShoppingCart::itemNetSumPrice() const throw()
+int cDBShoppingCart::itemDiscount() const throw()
 {
-    return m_nItemNetSumPrice;
+    return m_nItemDiscount;
 }
 
-void cDBShoppingCart::setItemNetSumPrice( const int p_nItemNetSumPrice ) throw()
+void cDBShoppingCart::setItemDiscount( const int p_nItemDiscount ) throw()
 {
-    m_nItemNetSumPrice = p_nItemNetSumPrice;
+    m_nItemDiscount = p_nItemDiscount;
 }
 
-bool cDBShoppingCart::active() const throw()
+int cDBShoppingCart::itemSumPrice() const throw()
 {
-    return m_bActive;
+    return m_nItemSumPrice;
+}
+
+void cDBShoppingCart::setItemSumPrice( const int p_nItemSumPrice ) throw()
+{
+    m_nItemSumPrice = p_nItemSumPrice;
 }
 
 QString cDBShoppingCart::modified() const throw()
 {
     return m_qsModified;
-}
-
-void cDBShoppingCart::setActive( const bool p_bActive ) throw()
-{
-    m_bActive = p_bActive;
 }
 
 QString cDBShoppingCart::archive() const throw()

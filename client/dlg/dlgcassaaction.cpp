@@ -13,30 +13,45 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, int p_nMoney )
 
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbComment->setIcon( QIcon("./resources/40x40_edit.png") );
 
-    rbVoucher->setVisible( false);
+    gbComment->setVisible( false );
+    teComment->setEnabled( false );
 
-    lblCurrencyShort->setText( g_poPrefs->getCurrencyShort() );
+    if( p_nMoney > 0 )
+    {
+        ledAmountToPay->setText( QString::number( p_nMoney ) );
+        ledAmountGiven->setText( QString::number( p_nMoney ) );
+
+        ledAmountToPay->setEnabled( false );
+        ledAmountGiven->setFocus();
+
+        connect( ledAmountToPay, SIGNAL(textChanged(QString)), this, SLOT(updateMoneyBack()) );
+        connect( ledAmountGiven, SIGNAL(textChanged(QString)), this, SLOT(updateMoneyBack()) );
+    }
+    else
+    {
+        ledAmountToPay->setFocus();
+        ledAmountGiven->setEnabled( false );
+    }
+
+    connect( ledAmountToPay, SIGNAL(textEdited(QString)), this, SLOT(ledAmountToPay_textEdited(QString)) );
+    connect( ledAmountGiven, SIGNAL(textEdited(QString)), this, SLOT(ledAmountGiven_textEdited(QString)) );
+
+    m_nHeightSmall  = 217;
+    m_nHeightBig    = 337;
+
+    setMinimumHeight( m_nHeightSmall );
+    setMaximumHeight( m_nHeightSmall );
 }
 
 cDlgCassaAction::~cDlgCassaAction()
 {
 }
 
-void cDlgCassaAction::setInitialMoney( int p_nMoney )
-{
-    ledMoney->setText( QString::number(p_nMoney) );
-    on_ledMoney_textEdited("");
-}
-
 void cDlgCassaAction::setPayWithCash()
 {
     rbPayCash->setChecked( true );
-}
-
-void cDlgCassaAction::setPayWithVoucher()
-{
-    rbVoucher->setChecked( true );
 }
 
 void cDlgCassaAction::setPayWithCreditcard()
@@ -46,21 +61,24 @@ void cDlgCassaAction::setPayWithCreditcard()
 
 void cDlgCassaAction::setCassaAction()
 {
-    cbInvoice->setEnabled( false );
     setPayWithCash();
     rbPayCash->setEnabled( false );
-    rbVoucher->setEnabled( false );
     rbCreditcard->setEnabled( false );
+    lblMoneyToPay->setText( tr("Amount :") );
+    frmPayment->setVisible( false );
+    m_nHeightSmall  = 165;
+    m_nHeightBig    = 285;
+    setMinimumHeight( m_nHeightSmall );
+    setMaximumHeight( m_nHeightSmall );
 }
 
 QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment )
 {
-    if( rbPayCash->isChecked() ) *p_nPayType = 1;
-    else if( rbVoucher->isChecked() ) *p_nPayType = 2;
-    else if( rbCreditcard->isChecked() ) *p_nPayType = 3;
+    if( rbPayCash->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CASH;
+    else if( rbCreditcard->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
 
     *p_qsComment += teComment->toPlainText();
-    return ledMoney->text().remove( QChar(',') );
+    return ledAmountToPay->text().remove( QChar(',') );
 }
 
 void cDlgCassaAction::on_pbOk_clicked()
@@ -73,9 +91,30 @@ void cDlgCassaAction::on_pbCancel_clicked()
     QDialog::reject();
 }
 
-void cDlgCassaAction::on_ledMoney_textEdited(QString)
+void cDlgCassaAction::updateMoneyBack()
 {
-    QString qsValue = ledMoney->text();
+    QString qsGiven = ledAmountGiven->text();
+    QString qsToPay = ledAmountToPay->text();
+
+    qsGiven.remove(QChar(','));
+    qsToPay.remove(QChar(','));
+
+    lblAmountToBack->setText( convertCurrency(QString::number( qsGiven.toInt() - qsToPay.toInt() )) );
+}
+
+void cDlgCassaAction::ledAmountToPay_textEdited(QString text)
+{
+    ledAmountToPay->setText( convertCurrency(text) );
+}
+
+void cDlgCassaAction::ledAmountGiven_textEdited(QString text)
+{
+    ledAmountGiven->setText( convertCurrency(text) );
+}
+
+QString cDlgCassaAction::convertCurrency(const QString &text) const
+{
+    QString qsValue = text;
     QString qsRet = "";
 
     qsValue.remove(QChar(','));
@@ -90,5 +129,27 @@ void cDlgCassaAction::on_ledMoney_textEdited(QString)
         }
     }
     qsRet.insert( 0, qsValue );
-    ledMoney->setText( qsRet );
+
+    return qsRet;
+}
+
+
+void cDlgCassaAction::on_pbComment_clicked()
+{
+    if( pbComment->text().compare( tr("Comment >>") ) == 0 )
+    {
+        gbComment->setVisible( true );
+        teComment->setEnabled( true );
+        pbComment->setText( tr("Comment <<") );
+        setMinimumHeight( m_nHeightBig );
+        setMaximumHeight( m_nHeightBig );
+    }
+    else
+    {
+        gbComment->setVisible( false );
+        teComment->setEnabled( false );
+        pbComment->setText( tr("Comment >>") );
+        setMinimumHeight( m_nHeightSmall );
+        setMaximumHeight( m_nHeightSmall );
+    }
 }

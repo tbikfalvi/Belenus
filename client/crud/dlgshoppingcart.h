@@ -1,7 +1,6 @@
 #ifndef DLGSHOPPINGCART_H
 #define DLGSHOPPINGCART_H
 
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QComboBox>
 #include <QSpacerItem>

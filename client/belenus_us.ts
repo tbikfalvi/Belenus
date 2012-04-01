@@ -379,6 +379,22 @@ Do you want to save them as new into the database?</source>
         <source>Cassa action</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="dlg/dlgcassaaction.cpp" line="67"/>
+        <source>Amount :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgcassaaction.cpp" line="139"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="151"/>
+        <source>Comment &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgcassaaction.cpp" line="143"/>
+        <source>Comment &lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>cDlgCassaEdit</name>
@@ -456,27 +472,27 @@ Please relogin to enable cassa.</source>
 <context>
     <name>cDlgCrud</name>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="20"/>
+        <location filename="../framework/dlgcrud.cpp" line="21"/>
         <source>&amp;New</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="28"/>
+        <location filename="../framework/dlgcrud.cpp" line="29"/>
         <source>&amp;Edit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="36"/>
+        <location filename="../framework/dlgcrud.cpp" line="37"/>
         <source>&amp;Delete</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="44"/>
+        <location filename="../framework/dlgcrud.cpp" line="45"/>
         <source>&amp;Save</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../framework/dlgcrud.cpp" line="52"/>
+        <location filename="../framework/dlgcrud.cpp" line="53"/>
         <source>&amp;Close</source>
         <translation></translation>
     </message>
@@ -1379,7 +1395,7 @@ deactivate the card with unchecking the Active checkbox.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="376"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="377"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -1396,12 +1412,12 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="489"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="490"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="490"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="491"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
@@ -2662,116 +2678,148 @@ total income</source>
 <context>
     <name>cDlgShoppingCart</name>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="8"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="9"/>
         <source>Shopping cart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="19"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="22"/>
         <source>Panel :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="28"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="31"/>
         <source>Guest :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="40"/>
-        <source>Payment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="48"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="45"/>
         <source>&lt;All panels&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="49"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="46"/>
         <source>&lt;Panel independent&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="57"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="54"/>
         <source>&lt;All guests&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="58"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="55"/>
         <source>&lt;Guest independent&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="95"/>
-        <source>Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="96"/>
-        <source>LicenceId</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="97"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="127"/>
-        <source>Panel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="98"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="128"/>
-        <source>Patient</source>
+        <location filename="crud/dlgshoppingcart.cpp" line="66"/>
+        <source>Payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="99"/>
-        <source>ProductId</source>
+        <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="100"/>
-        <source>PatientCardId</source>
+        <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="101"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="129"/>
-        <source>Name</source>
+        <location filename="crud/dlgshoppingcart.cpp" line="133"/>
+        <source>Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="102"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="130"/>
-        <source>NetPrice</source>
+        <location filename="crud/dlgshoppingcart.cpp" line="134"/>
+        <source>Patient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="103"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="131"/>
-        <source>VATPercent</source>
+        <source>ProductId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="104"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="132"/>
-        <source>SumPrice</source>
+        <source>PatientCardId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="105"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="133"/>
-        <source>Count</source>
+        <location filename="crud/dlgshoppingcart.cpp" line="135"/>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="106"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="134"/>
-        <source>TotalSumPrice</source>
+        <location filename="crud/dlgshoppingcart.cpp" line="136"/>
+        <source>NetPrice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="107"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="137"/>
+        <source>VATPercent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="108"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="138"/>
+        <source>SumPrice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="109"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="139"/>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="110"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="140"/>
+        <source>Discount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="111"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="141"/>
+        <source>TotalSumPrice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="112"/>
         <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="210"/>
+        <source>Using panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="212"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="213"/>
+        <source>Deleting panel use is not allowed from shopping cart.
+Please return to the panel and press ESC to reject panel use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="219"/>
+        <source>Question</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="220"/>
+        <source>Are you sure you want to delete the selected items?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3294,7 +3342,7 @@ Please stop them before closing the application.</source>
     <message>
         <location filename="wndmain.cpp" line="776"/>
         <location filename="wndmain.cpp" line="917"/>
-        <location filename="wndmain.cpp" line="1701"/>
+        <location filename="wndmain.cpp" line="1702"/>
         <source>Information</source>
         <translation></translation>
     </message>
@@ -3389,13 +3437,13 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1466"/>
+        <location filename="wndmain.cpp" line="1467"/>
         <source>Using device: %1 - </source>
         <oldsource>Using device: %1</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1702"/>
+        <location filename="wndmain.cpp" line="1703"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation></translation>
     </message>
@@ -3511,53 +3559,75 @@ Do you want to register it for a new patientcard?</source>
 <context>
     <name>dlgCassaAction</name>
     <message>
-        <location filename="dlgcassaaction.ui" line="14"/>
+        <location filename="dlgcassaaction.ui" line="26"/>
         <source>Dialog</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="22"/>
-        <source>Money :</source>
-        <translation></translation>
+        <location filename="dlgcassaaction.ui" line="32"/>
+        <source> Action </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="98"/>
+        <location filename="dlgcassaaction.ui" line="47"/>
+        <source>Amount to pay :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="139"/>
+        <source>Money given :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="207"/>
+        <source>Money to give back :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="252"/>
+        <source>.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="309"/>
+        <source>Comment &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="327"/>
+        <source> Action comment </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="348"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="46"/>
-        <source>Create Invoice</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcassaaction.ui" line="114"/>
+        <location filename="dlgcassaaction.ui" line="364"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="39"/>
+        <location filename="dlgcassaaction.ui" line="97"/>
+        <location filename="dlgcassaaction.ui" line="189"/>
+        <location filename="dlgcassaaction.ui" line="266"/>
         <source>$</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="57"/>
+        <location filename="dlgcassaaction.ui" line="283"/>
+        <source> Action type </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="289"/>
         <source>Cash</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="77"/>
-        <source>Voucher</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcassaaction.ui" line="67"/>
+        <location filename="dlgcassaaction.ui" line="299"/>
         <source>Credit card</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcassaaction.ui" line="86"/>
-        <source>Comment :</source>
         <translation></translation>
     </message>
 </context>

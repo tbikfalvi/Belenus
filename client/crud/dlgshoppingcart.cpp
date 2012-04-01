@@ -2,6 +2,7 @@
 
 #include "belenus.h"
 #include "dlgshoppingcart.h"
+#include "../db/dbshoppingcart.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -10,6 +11,8 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
 
     m_poBtnEdit->setEnabled(false);
     m_poBtnNew->setEnabled(false);
+
+    tbvCrud->setSelectionMode( QAbstractItemView::MultiSelection );
 
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
@@ -37,12 +40,6 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
 
     verticalLayout->insertLayout( 0, horizontalLayout );
 
-    pbPayment = new QPushButton( tr( "Payment" ), this );
-    pbPayment->setObjectName( QString::fromUtf8( "pbPayment" ) );
-    pbPayment->setIconSize( QSize(20, 20) );
-    pbPayment->setIcon( QIcon("./resources/40x40_ok.png") );
-    btbButtons->addButton( pbPayment, QDialogButtonBox::ActionRole );
-
     QSqlQuery   *poQuery;
 
     cmbPanel->addItem( tr("<All panels>"), -1 );
@@ -63,6 +60,17 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
         cmbGuest->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
 
+    connect( cmbPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+    connect( cmbGuest, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+
+    pbPayment = new QPushButton( tr( "Payment" ), this );
+    pbPayment->setObjectName( QString::fromUtf8( "pbPayment" ) );
+    pbPayment->setIconSize( QSize(20, 20) );
+    pbPayment->setIcon( QIcon("./resources/40x40_ok.png") );
+    btbButtons->addButton( pbPayment, QDialogButtonBox::ActionRole );
+
+    connect( pbPayment, SIGNAL(clicked(bool)), this, SLOT(on_pbPayment_clicked()) );
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ShoppingCart", QPoint(800,400) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
@@ -71,10 +79,6 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
     m_poBtnNew->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnSave->setVisible(false);
-
-    connect( cmbPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
-    connect( cmbGuest, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
-    connect( pbPayment, SIGNAL(clicked(bool)), this, SLOT(on_pbPayment_clicked()) );
 }
 
 cDlgShoppingCart::~cDlgShoppingCart()
@@ -103,8 +107,9 @@ void cDlgShoppingCart::setupTableView()
         m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "VATPercent" ) );
         m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "SumPrice" ) );
         m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Count" ) );
-        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "TotalSumPrice" ) );
-        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Discount" ) );
+        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "TotalSumPrice" ) );
+        m_poModel->setHeaderData( 13, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -119,6 +124,7 @@ void cDlgShoppingCart::setupTableView()
         tbvCrud->resizeColumnToContents( 10 );
         tbvCrud->resizeColumnToContents( 11 );
         tbvCrud->resizeColumnToContents( 12 );
+        tbvCrud->resizeColumnToContents( 13 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -131,7 +137,8 @@ void cDlgShoppingCart::setupTableView()
         m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "VATPercent" ) );
         m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "SumPrice" ) );
         m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Count" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "TotalSumPrice" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Discount" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "TotalSumPrice" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
@@ -141,6 +148,7 @@ void cDlgShoppingCart::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
         tbvCrud->resizeColumnToContents( 8 );
+        tbvCrud->resizeColumnToContents( 9 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -152,11 +160,11 @@ void cDlgShoppingCart::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice, itemVAT, itemSumPrice, itemCount, (itemSumPrice*itemCount) AS totalSumPrice, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice, itemVAT, itemSumPrice, itemCount, discountValue, (itemSumPrice*itemCount-discountValue) AS totalSumPrice, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
     }
     else
     {
-        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice, itemVAT, itemSumPrice, itemCount, (itemSumPrice*itemCount) AS totalSumPrice FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice, itemVAT, itemSumPrice, itemCount, discountValue, (itemSumPrice*itemCount-discountValue) AS totalSumPrice FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
     }
 
     int nPanelId = cmbPanel->itemData( cmbPanel->currentIndex() ).toInt();
@@ -180,20 +188,59 @@ void cDlgShoppingCart::enableButtons()
 {
     cTracer obTracer( "cDlgShoppingCart::enableButtons" );
 
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 );
-    pbPayment->setEnabled( m_uiSelectedId > 0 );
+    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 );
+    pbPayment->setEnabled( m_inSelectedCount > 0 );
 }
 
 void cDlgShoppingCart::newClicked( bool ) {}
 void cDlgShoppingCart::editClicked( bool ) {}
+
 void cDlgShoppingCart::deleteClicked( bool )
 {
+    cDBShoppingCart obDBShoppingCart;
+    QStringList qslItemIds;
+
+    for( int i=0; i<tbvCrud->selectionModel()->selectedRows().count(); i++ )
+    {
+        unsigned int uiShoppingCardId = tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt();
+
+        obDBShoppingCart.load( uiShoppingCardId );
+        qslItemIds << QString::number( uiShoppingCardId );
+
+        if( obDBShoppingCart.itemName().compare( tr("Using panel") ) == 0 && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Deleting panel use is not allowed from shopping cart.\n"
+                                     "Please return to the panel and press ESC to reject panel use.") );
+            return;
+        }
+    }
+
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to delete the selected items?"),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+    {
+        for( int i=0; i<qslItemIds.count(); i++ )
+        {
+            obDBShoppingCart.load( qslItemIds.at(i).toInt() );
+            obDBShoppingCart.remove();
+        }
+        refreshTable();
+    }
 }
 
 void cDlgShoppingCart::on_pbPayment_clicked()
 {
     try
     {
+        QString qsTemp;
+
+        for( int i=0; i< tbvCrud->selectionModel()->selectedRows().count(); i++ )
+        {
+            qsTemp += tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
+            qsTemp += " # ";
+        }
+        QMessageBox::information( this, "", qsTemp );
         QDialog::accept();
     }
     catch( cSevException &e )

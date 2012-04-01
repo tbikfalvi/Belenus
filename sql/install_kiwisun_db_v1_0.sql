@@ -661,6 +661,7 @@ CREATE TABLE `shoppingCartItems` (
   `itemCount`               int(11)                 NOT NULL,
   `itemNetPrice`            int(11)                 NOT NULL,
   `itemVAT`                 int(11)                 NOT NULL,
+  `discountValue`           int(11)                 NOT NULL,
   `itemSumPrice`            int(11)                 NOT NULL,
   `modified`                datetime                NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
