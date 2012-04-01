@@ -79,13 +79,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="lblAmountToPay">
-        <property name="minimumSize">
-         <size>
-          <width>150</width>
-          <height>0</height>
-         </size>
-        </property>
+       <widget class="QLineEdit" name="ledAmountToPay">
         <property name="font">
          <font>
           <pointsize>11</pointsize>
@@ -96,8 +90,14 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
-        <property name="text">
-         <string>.</string>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 0; background: transparent;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>

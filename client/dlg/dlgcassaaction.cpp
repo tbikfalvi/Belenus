@@ -3,7 +3,7 @@
 
 #include "dlgcassaaction.h"
 
-cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent )
+cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, int p_nMoney )
     : QDialog( p_poParent )
 {
     setupUi( this );

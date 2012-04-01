@@ -9,7 +9,7 @@ class cDlgCassaAction : public QDialog, protected Ui::dlgCassaAction
     Q_OBJECT
 
 public:
-    cDlgCassaAction( QWidget *p_poParent = 0 );
+    cDlgCassaAction( QWidget *p_poParent = 0, int p_nMoney = 0 );
     virtual ~cDlgCassaAction();
 
     void setInitialMoney( int p_nMoney );
