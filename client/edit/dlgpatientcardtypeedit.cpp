@@ -3,6 +3,8 @@
 #include <ctime>
 
 #include "dlgpatientcardtypeedit.h"
+#include "dlgvalidtimeperiodedit.h"
+#include "../db/dbvalidtimeperiods.h"
 
 cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatientCardType *p_poPatientCardType )
     : QDialog( p_poParent )
@@ -49,6 +51,17 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
         if( m_poPatientCardType->id() == 0 )
         {
             listValidInterval->addItem( "00:00 => 24:00" );
+        }
+        else
+        {
+            cDBValidTimePeriod  obDBValidTimePeriod;
+
+            QStringList qslPeriods = obDBValidTimePeriod.loadPeriods( m_poPatientCardType->id() );
+
+            for( int i=0; i<qslPeriods.count(); i++ )
+            {
+                listValidInterval->addItem( qslPeriods.at(i) );
+            }
         }
 
         if( m_poPatientCardType->validDays() < 1 )
@@ -132,6 +145,7 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
     chkFriday->setStyleSheet( "QCheckBox {font: normal;}" );
     chkSaturday->setStyleSheet( "QCheckBox {font: normal;}" );
     chkSunday->setStyleSheet( "QCheckBox {font: normal;}" );
+    lblTimeInterval->setStyleSheet( "QLabel {font: normal;}" );
 
     if( ledName->text() == "" )
     {
@@ -204,6 +218,14 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
         chkSunday->setStyleSheet( "QCheckBox {font: bold; color: red;;}" );
     }
 
+    if( listValidInterval->count() == 0 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n" );
+        qsErrorMessage.append( tr( "One time period must be set." ) );
+        lblTimeInterval->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+
     if( boCanBeSaved )
     {
         try
@@ -238,6 +260,19 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             }
 
             m_poPatientCardType->save();
+
+            QStringList qslPeriods;
+
+            for( int i=0; i<listValidInterval->count(); i++ )
+            {
+                qslPeriods << listValidInterval->item(i)->text();
+            }
+
+            cDBValidTimePeriod  obDBValidTimePeriod;
+
+            obDBValidTimePeriod.setLicenceId( m_poPatientCardType->licenceId() );
+            obDBValidTimePeriod.setPatientCardTypeId( m_poPatientCardType->id() );
+            obDBValidTimePeriod.saveList( qslPeriods );
         }
         catch( cSevException &e )
         {
@@ -259,12 +294,43 @@ void cDlgPatientCardTypeEdit::on_pbCancel_clicked()
 
 void cDlgPatientCardTypeEdit::on_pbAdd_clicked()
 {
+    cDlgValidTimePeriodEdit     obDlgValidTimePeriodEdit;
 
+    if( obDlgValidTimePeriodEdit.exec() == QDialog::Accepted )
+    {
+        if( listValidInterval->findItems( obDlgValidTimePeriodEdit.validPeriod(), Qt::MatchFixedString ).count() > 0 )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The selected time period already present in the list.") );
+        }
+        else
+        {
+            listValidInterval->addItem( obDlgValidTimePeriodEdit.validPeriod() );
+        }
+    }
 }
 
 void cDlgPatientCardTypeEdit::on_pbEdit_clicked()
 {
+    cDlgValidTimePeriodEdit     obDlgValidTimePeriodEdit( this, listValidInterval->currentItem()->text() );
 
+    if( obDlgValidTimePeriodEdit.exec() == QDialog::Accepted )
+    {
+        int nIndex = listValidInterval->currentRow();
+        QListWidgetItem *lwItem = listValidInterval->takeItem( nIndex );
+
+        if( listValidInterval->findItems( obDlgValidTimePeriodEdit.validPeriod(), Qt::MatchFixedString ).count() > 0 )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The selected time period already present in the list.") );
+            listValidInterval->insertItem( nIndex, lwItem );
+        }
+        else
+        {
+            listValidInterval->insertItem( nIndex, obDlgValidTimePeriodEdit.validPeriod() );
+        }
+        listValidInterval->setCurrentRow( nIndex );
+    }
 }
 
 void cDlgPatientCardTypeEdit::on_pbDelete_clicked()

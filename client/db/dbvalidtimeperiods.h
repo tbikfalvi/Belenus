@@ -12,8 +12,11 @@ public:
     ~cDBValidTimePeriod();
 
     void            load( const unsigned int p_uiId )                               throw( cSevException );
+    QStringList     loadPeriods( const unsigned int p_uiId )                        const throw( cSevException );
     void            save()                                                          throw( cSevException );
+    void            saveList( const QStringList &m_qslPeriods )                     throw( cSevException );
     void            remove()                                                        throw( cSevException );
+    void            removePatienCardTypes( const unsigned int p_uiId )              throw( cSevException );
     void            createNew()                                                     throw();
     unsigned int    id() const                                                      throw();
     unsigned int    licenceId() const                                               throw();

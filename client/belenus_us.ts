@@ -1598,54 +1598,71 @@ There are patientcards attached to this card type.</source>
 <context>
     <name>cDlgPatientCardTypeEdit</name>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="12"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="14"/>
         <source>Patient card type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="197"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="211"/>
         <source>One of the weekdays must be selected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="251"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="225"/>
+        <source>One time period must be set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="286"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="139"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="153"/>
         <source>Name of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="146"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="160"/>
         <source>Price of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="155"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="169"/>
         <source>Number of units of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="162"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="176"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="169"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="183"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="176"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="190"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="183"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="197"/>
         <source>FROM date must be before TO date.</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="303"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="324"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="304"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="325"/>
+        <source>The selected time period already present in the list.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2736,6 +2753,24 @@ total income</source>
         <location filename="crud/dlgusers.cpp" line="161"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>cDlgValidTimePeriodEdit</name>
+    <message>
+        <location filename="edit/dlgvalidtimeperiodedit.cpp" line="11"/>
+        <source>Valid time period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgvalidtimeperiodedit.cpp" line="14"/>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgvalidtimeperiodedit.cpp" line="15"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5310,6 +5345,35 @@ Please define a valid product count or reset the price.</source>
         <location filename="dlguseredit.ui" line="141"/>
         <source>Independent from the local studio.</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>dlgValidTimePeriodEdit</name>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="20"/>
+        <source> Valid time period </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="26"/>
+        <source>From :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="39"/>
+        <location filename="dlgvalidtimeperiodedit.ui" line="59"/>
+        <source>HH:mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="46"/>
+        <source>To :</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

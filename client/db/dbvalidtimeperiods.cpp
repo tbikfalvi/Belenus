@@ -74,6 +74,25 @@ void cDBValidTimePeriod::load( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
+QStringList cDBValidTimePeriod::loadPeriods( const unsigned int p_uiId ) const throw( cSevException )
+{
+    cTracer obTrace( "cDBValidTimePeriod::loadPeriods", QString( "id: %1" ).arg( p_uiId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCardTypeEnabled WHERE patientCardTypeId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() < 1 )
+        throw cSevException( cSeverity::ERROR, "Timeperiods not found" );
+
+    QStringList qslPeriods;
+
+    while( poQuery->next() )
+    {
+        qslPeriods << QString( "%1 => %2" ).arg(poQuery->value(3).toString().left(5)).arg(poQuery->value(4).toString().left(5));
+    }
+
+    return qslPeriods;
+}
+
 void cDBValidTimePeriod::save() throw( cSevException )
 {
     cTracer obTrace( "cDBValidTimePeriod::save" );
@@ -115,6 +134,23 @@ void cDBValidTimePeriod::save() throw( cSevException )
 //        g_obDBMirror.updateGlobalSyncLevel( DB_VALIDTIMEPERIOD );
 }
 
+void cDBValidTimePeriod::saveList(const QStringList &m_qslPeriods) throw( cSevException )
+{
+    if( m_qslPeriods.count() == 0 )
+        return;
+
+    removePatienCardTypes( m_uiPatientCardTypeId );
+
+    for( int i=0; i<m_qslPeriods.count(); i++ )
+    {
+        m_uiId          = 0;
+        m_qsStartTime   = m_qslPeriods.at(i).left(5);
+        m_qsStopTime    = m_qslPeriods.at(i).right(5);
+
+        save();
+    }
+}
+
 void cDBValidTimePeriod::remove() throw( cSevException )
 {
     cTracer obTrace( "cDBValidTimePeriod::remove" );
@@ -129,6 +165,17 @@ void cDBValidTimePeriod::remove() throw( cSevException )
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+void cDBValidTimePeriod::removePatienCardTypes( const unsigned int p_uiId ) throw( cSevException )
+{
+    QString  qsQuery;
+
+    qsQuery = "DELETE FROM patientCardTypeEnabled ";
+    qsQuery += QString( " WHERE patientCardTypeId = %1" ).arg( p_uiId );
+
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( poQuery ) delete poQuery;
 }
 
 void cDBValidTimePeriod::createNew() throw()

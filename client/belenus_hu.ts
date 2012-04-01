@@ -2965,54 +2965,71 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
 <context>
     <name>cDlgPatientCardTypeEdit</name>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="12"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="14"/>
         <source>Patient card type</source>
         <translation>Bérlettípus</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="197"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="211"/>
         <source>One of the weekdays must be selected.</source>
         <translation>A hét napjaiból legalább az egyiket ki kell választani.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="251"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="225"/>
+        <source>One time period must be set.</source>
+        <translation>Legalább egy idő intervallumot meg kell adnia.</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="286"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="139"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="153"/>
         <source>Name of patientcard type must be set.</source>
         <translation>A bérlet típus neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="146"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="160"/>
         <source>Price of patientcard type must be set.</source>
         <translation>A bérlet típus ára nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="155"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="169"/>
         <source>Number of units of patientcard type must be set.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="162"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="176"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation>Az egységhez tartozó kezelési idő nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="169"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="183"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation>A bérlettípus érvényességét meghatározó napok száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="176"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="190"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation>Nem megfelelő az érvényesség lejártát jelző dátum. A dátumnak a jövőbe kell mutatnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="183"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="197"/>
         <source>FROM date must be before TO date.</source>
         <translation>Az érvényesség kezdeti dátumának meg kell előznie a lejárati dátumot.</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="303"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="324"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="304"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="325"/>
+        <source>The selected time period already present in the list.</source>
+        <translation>A kiválasztott időintervallum már szerepel a listában.</translation>
     </message>
 </context>
 <context>
@@ -4771,6 +4788,24 @@ total income</source>
         <location filename="crud/dlgusers.cpp" line="151"/>
         <source>Are you sure you want to delete this User?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a felhasználót?</translation>
+    </message>
+</context>
+<context>
+    <name>cDlgValidTimePeriodEdit</name>
+    <message>
+        <location filename="edit/dlgvalidtimeperiodedit.cpp" line="11"/>
+        <source>Valid time period</source>
+        <translation>Érvényességi idő intervallumok</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgvalidtimeperiodedit.cpp" line="14"/>
+        <source>&amp;Save</source>
+        <translation>&amp;Mentés</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgvalidtimeperiodedit.cpp" line="15"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Mégsem</translation>
     </message>
 </context>
 <context>
@@ -8584,6 +8619,35 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <location filename="dlguseredit.ui" line="141"/>
         <source>Independent from the local studio.</source>
         <translation>Független a stúdiótól</translation>
+    </message>
+</context>
+<context>
+    <name>dlgValidTimePeriodEdit</name>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="20"/>
+        <source> Valid time period </source>
+        <translation> Érvényesség ... </translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="26"/>
+        <source>From :</source>
+        <translation>Kezdete :</translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="39"/>
+        <location filename="dlgvalidtimeperiodedit.ui" line="59"/>
+        <source>HH:mm</source>
+        <translation>HH:mm</translation>
+    </message>
+    <message>
+        <location filename="dlgvalidtimeperiodedit.ui" line="46"/>
+        <source>To :</source>
+        <translation>Vége :</translation>
     </message>
 </context>
 <context>
