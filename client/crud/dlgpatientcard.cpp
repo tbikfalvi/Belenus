@@ -4,8 +4,7 @@
 #include "dlgpatientcard.h"
 #include "../edit/dlgpatientcardedit.h"
 
-cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Card List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
@@ -43,7 +42,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent )
     }
     else
     {
-        qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE ((patientCardTypeId>0 AND licenceId!=0) OR (patientCardTypeId=0 AND licenceId=0)) AND archive<>\"DEL\"" );
+        qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE ((patientCardTypeId>0 AND licenceId!=0) OR (patientCardTypeId=0 AND licenceId=0)) AND active=1 AND archive<>\"DEL\"" );
     }
 
     poQuery = g_poDB->executeQTQuery( qsQuery );

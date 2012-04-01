@@ -43,6 +43,7 @@
 #include "crud/dlgproducttype.h"
 #include "crud/dlgproductactiontype.h"
 #include "crud/dlgproduct.h"
+#include "crud/dlgshoppingcart.h"
 
 //====================================================================================
 
@@ -1017,7 +1018,9 @@ void cWndMain::on_action_SellProduct_triggered()
 //====================================================================================
 void cWndMain::on_action_ShoppingCart_triggered()
 {
+    cDlgShoppingCart    obDlgShoppingCart( this );
 
+    obDlgShoppingCart.exec();
 }
 //====================================================================================
 void cWndMain::on_action_CassaActionStorno_triggered()

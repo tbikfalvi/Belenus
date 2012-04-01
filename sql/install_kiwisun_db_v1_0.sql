@@ -663,7 +663,6 @@ CREATE TABLE `shoppingCartItems` (
   `itemVAT`                 int(11)                 NOT NULL,
   `itemSumPrice`            int(11)                 NOT NULL,
   `modified`                datetime                NOT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`shoppingCartItemId`,`licenceId`),
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
