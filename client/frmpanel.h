@@ -59,6 +59,7 @@ public:
     void            activate();
     void            reload();
 
+    unsigned int    panelId();
     bool            isMainProcess();
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );

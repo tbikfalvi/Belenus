@@ -163,7 +163,7 @@ unsigned int cDBGuest::getGuestCount( const QString &p_qsName ) throw( cSevExcep
     return poQuery->size();
 }
 //====================================================================================
-int cDBGuest::getDiscountPrice( const int p_inPriceTotal ) throw( cSevException )
+int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevException )
 //====================================================================================
 {
     if( !m_bRegularCustomer &&
@@ -220,7 +220,8 @@ int cDBGuest::getDiscountPrice( const int p_inPriceTotal ) throw( cSevException 
     }
     if( poQuery ) delete poQuery;
 
-    int inRet = 0;
+    int inRet = p_inPriceTotal;
+
     if( m_inDiscountType == 1 )
     {
         inRet = p_inPriceTotal - m_inMax;
@@ -228,10 +229,6 @@ int cDBGuest::getDiscountPrice( const int p_inPriceTotal ) throw( cSevException 
     else if( m_inDiscountType == 2 )
     {
         inRet = p_inPriceTotal - ((p_inPriceTotal/100)*m_inMax);
-    }
-    else
-    {
-        inRet = p_inPriceTotal;
     }
 
     return inRet;

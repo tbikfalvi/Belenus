@@ -345,7 +345,7 @@
      <item>
       <widget class="QPushButton" name="pbOk">
        <property name="text">
-        <string>Ok</string>
+        <string>Payment</string>
        </property>
        <property name="iconSize">
         <size>
@@ -355,6 +355,22 @@
        </property>
        <property name="autoDefault">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbShoppingCart">
+       <property name="text">
+        <string>To shopping cart</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

@@ -27,6 +27,7 @@ public:
     void            clear();
     void            next();
     int             activePanel();
+    unsigned int    activePanelId();
     bool            isPanelWorking();
     bool            isPanelWorking( const unsigned int p_uiPanel );
     bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );

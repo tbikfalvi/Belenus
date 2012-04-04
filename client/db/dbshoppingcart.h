@@ -18,6 +18,8 @@ public:
     unsigned int    id() const                                              throw();
     unsigned int    licenceId() const                                       throw();
     void            setLicenceId( const unsigned int p_nLicenceId )         throw();
+    unsigned int    guestId() const                                         throw();
+    void            setGuestId( const unsigned int p_uiGuestId )            throw();
     unsigned int    productId() const                                       throw();
     void            setProductId( const unsigned int p_uiProductId )        throw();
     unsigned int    patientCardId() const                                   throw();
@@ -43,6 +45,7 @@ public:
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
+    unsigned int    m_uiGuestId;
     unsigned int    m_uiProductId;
     unsigned int    m_uiPatientCardId;
     unsigned int    m_uiPanelId;
@@ -57,6 +60,7 @@ private:
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
+               const unsigned int p_uiGuestId = 0,
                const unsigned int p_uiProductId = 0,
                const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiPanelId = 0,

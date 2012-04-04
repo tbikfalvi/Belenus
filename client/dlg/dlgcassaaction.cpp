@@ -3,7 +3,7 @@
 
 #include "dlgcassaaction.h"
 
-cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, int p_nMoney )
+cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShoppingCart )
     : QDialog( p_poParent )
 {
     setupUi( this );
@@ -11,17 +11,26 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, int p_nMoney )
     setWindowTitle( tr("Cassa action") );
     setWindowIcon( QIcon("./resources/40x40_cassa.png") );
 
-    pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbComment->setIcon( QIcon("./resources/40x40_edit.png") );
+    pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbShoppingCart->setIcon( QIcon("./resources/40x40_shoppingcart.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     gbComment->setVisible( false );
     teComment->setEnabled( false );
 
-    if( p_nMoney > 0 )
+    int nMoney = 0;
+
+    if( p_poShoppingCart )
     {
-        ledAmountToPay->setText( QString::number( p_nMoney ) );
-        ledAmountGiven->setText( QString::number( p_nMoney ) );
+        m_poShoppingCart = p_poShoppingCart;
+        nMoney = m_poShoppingCart->itemSumPrice();
+    }
+
+    if( nMoney > 0 )
+    {
+        ledAmountToPay->setText( QString::number( nMoney ) );
+        ledAmountGiven->setText( QString::number( nMoney ) );
 
         ledAmountToPay->setEnabled( false );
         ledAmountGiven->setFocus();
@@ -59,9 +68,10 @@ void cDlgCassaAction::setPayWithCreditcard()
     rbCreditcard->setChecked( true );
 }
 
-void cDlgCassaAction::setCassaAction()
+void cDlgCassaAction::actionCassaInOut()
 {
     setPayWithCash();
+    pbShoppingCart->setEnabled( false );
     rbPayCash->setEnabled( false );
     rbCreditcard->setEnabled( false );
     lblMoneyToPay->setText( tr("Amount :") );
@@ -70,6 +80,11 @@ void cDlgCassaAction::setCassaAction()
     m_nHeightBig    = 285;
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
+}
+
+void cDlgCassaAction::actionPayment()
+{
+    pbShoppingCart->setEnabled( false );
 }
 
 QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment )
@@ -152,4 +167,9 @@ void cDlgCassaAction::on_pbComment_clicked()
         setMinimumHeight( m_nHeightSmall );
         setMaximumHeight( m_nHeightSmall );
     }
+}
+
+void cDlgCassaAction::on_pbShoppingCart_clicked()
+{
+
 }

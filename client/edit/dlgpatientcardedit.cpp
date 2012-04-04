@@ -6,6 +6,7 @@
 #include "../db/dbpatientcardtype.h"
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbledger.h"
+#include "../db/dbshoppingcart.h"
 
 cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p_poPatientCard )
     : QDialog( p_poParent )
@@ -300,27 +301,36 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     return;
                 }
 
-                int                 inPriceNet = 0;
-                int                 inPriceNetDiscount = 0;
-                int                 inPriceTotal = 0;
-                int                 inPriceDiscount = 0;
+                int     inPriceTotal        = m_poPatientCardType->price()+(m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
+                int     inPriceDiscounted   = 0;
 
-                inPriceNet = m_poPatientCardType->price();
                 if( cmbPatient->currentIndex() > 0 )
                 {
                     cDBGuest  obDBPatientTemp;
 
                     obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
-                    inPriceNetDiscount = obDBPatientTemp.getDiscountPrice( inPriceNet );
+                    inPriceDiscounted = obDBPatientTemp.getDiscountedPrice( inPriceTotal );
                 }
                 else
                 {
-                    inPriceNetDiscount = inPriceNet;
+                    inPriceDiscounted = inPriceTotal;
                 }
-                inPriceDiscount = inPriceNet - inPriceNetDiscount;
-                inPriceTotal = inPriceNetDiscount + (inPriceNetDiscount/100)*m_poPatientCardType->vatpercent();
 
-                cDlgCassaAction     obDlgCassaAction( this, inPriceTotal );
+                cDBShoppingCart obDBShoppingCart;
+
+                obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+                obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
+                obDBShoppingCart.setProductId( 0 );
+                obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
+                obDBShoppingCart.setPanelId( 0 );
+                obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
+                obDBShoppingCart.setItemCount( 1 );
+                obDBShoppingCart.setItemNetPrice( m_poPatientCardType->price() );
+                obDBShoppingCart.setItemVAT( m_poPatientCardType->vatpercent() );
+                obDBShoppingCart.setItemDiscount( inPriceTotal - inPriceDiscounted );
+                obDBShoppingCart.setItemSumPrice( inPriceDiscounted );
+
+                cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
                 obDlgCassaAction.setPayWithCash();
                 if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -331,7 +341,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDlgCassaAction.cassaResult( &inPayType, &qsComment );
                     if( inPayType == cDlgCassaAction::PAY_CASH )
                     {
-                        g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
+                        g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
                     }
                     cDBLedger   obDBLedger;
 
@@ -348,8 +358,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDBLedger.setPatientCardId( m_poPatientCard->id() );
                     obDBLedger.setPanelId( 0 );
                     obDBLedger.setName( m_poPatientCard->barcode() );
-                    obDBLedger.setNetPrice( inPriceNetDiscount );
-                    obDBLedger.setDiscount( inPriceDiscount );
+                    obDBLedger.setNetPrice( m_poPatientCardType->price() );
+                    obDBLedger.setDiscount( inPriceTotal - inPriceDiscounted );
                     obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
                     obDBLedger.setComment( qsComment );
                     obDBLedger.setActive( true );
@@ -473,7 +483,7 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             cDBGuest  obDBPatientTemp;
 
             obDBPatientTemp.load( cmbPatient->itemData(cmbPatient->currentIndex()).toUInt() );
-            discount = obDBPatientTemp.getDiscountPrice( priceTotal );
+            discount = obDBPatientTemp.getDiscountedPrice( priceTotal );
         }
         else
         {

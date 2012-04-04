@@ -191,7 +191,7 @@ void cFrmPanel::clear()
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
-    if( m_inCashToPay == 0 )
+    if( m_inCashToPay != 0 )
     {
         if( m_pDBLedgerDevice->cash() > 0 )
         {
@@ -203,7 +203,7 @@ void cFrmPanel::clear()
                                       tr("The device usage has been payed before.\n"
                                          "Do you want to revoke the payment from the cassa?"),
                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )*/
-            if( m_uiPaymentMethodId == 1 )
+            if( m_uiPaymentMethodId == cDBLedgerDevice::PAY_CASH )
             {
                 g_obCassa.cassaDecreaseMoney( inPriceTotal, qsComment );
             }
@@ -291,12 +291,13 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
                                  "Please relogin to enable cassa.") );
         return;
     }
+    int inPriceTotal = (p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT());
 
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
     m_inCashNetToPay += p_inPrice;
-    m_inCashDiscountToPay += p_inPrice - g_obGuest.getDiscountPrice( p_inPrice );
-    m_inCashToPay += g_obGuest.getDiscountPrice(p_inPrice) + (g_obGuest.getDiscountPrice(p_inPrice)/100)*g_poPrefs->getDeviceUseVAT();
+    m_inCashToPay += inPriceTotal;
+    m_inCashDiscountToPay += inPriceTotal - g_obGuest.getDiscountedPrice( inPriceTotal );
     m_uiPatientToPay = g_obGuest.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
@@ -878,4 +879,9 @@ void cFrmPanel::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
 {
     m_uiPaymentMethodId = p_uiPaymentMethodId;
     m_pDBLedgerDevice->setPaymentMethod( m_uiPaymentMethodId );
+}
+//====================================================================================
+unsigned int cFrmPanel::panelId()
+{
+    return m_uiId;
 }

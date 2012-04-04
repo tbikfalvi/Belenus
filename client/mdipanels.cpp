@@ -176,6 +176,11 @@ int cMdiPanels::activePanel()
     return m_uiActivePanel;
 }
 
+unsigned int cMdiPanels::activePanelId()
+{
+    return m_obPanels.at( m_uiActivePanel )->panelId();
+}
+
 bool cMdiPanels::isPanelWorking()
 {
     bool    bRet = false;

@@ -23,6 +23,7 @@
 
 #include "db/dbpatientcard.h"
 #include "db/dbledger.h"
+#include "db/dbshoppingcart.h"
 
 //====================================================================================
 
@@ -1456,9 +1457,23 @@ void cWndMain::on_action_PayCash_triggered()
 
     mdiPanels->getPanelCashData( &uiPatientId, &inPriceNet, &inPriceDiscount );
 
-    inPriceTotal = (inPriceNet-inPriceDiscount) + ((inPriceNet-inPriceDiscount)/100) * g_poPrefs->getDeviceUseVAT();
+    inPriceTotal = inPriceNet + ((inPriceNet / 100) * g_poPrefs->getDeviceUseVAT()) - inPriceDiscount;
 
-    cDlgCassaAction     obDlgCassaAction( this, inPriceTotal );
+    cDBShoppingCart obDBShoppingCart;
+
+    obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBShoppingCart.setGuestId( g_obGuest.id() );
+    obDBShoppingCart.setProductId( 0 );
+    obDBShoppingCart.setPatientCardId( 0 );
+    obDBShoppingCart.setPanelId( mdiPanels->activePanelId() );
+    obDBShoppingCart.setItemName( tr("Using panel") );
+    obDBShoppingCart.setItemCount( 1 );
+    obDBShoppingCart.setItemNetPrice( inPriceNet );
+    obDBShoppingCart.setItemVAT( g_poPrefs->getDeviceUseVAT() );
+    obDBShoppingCart.setItemDiscount( inPriceDiscount );
+    obDBShoppingCart.setItemSumPrice( inPriceTotal );
+
+    cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
     obDlgCassaAction.setPayWithCash();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
@@ -1471,7 +1486,6 @@ void cWndMain::on_action_PayCash_triggered()
         {
             g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
         }
-//        int inPriceNet = inPriceTotal*100 / (100 + g_poPrefs->getDeviceUseVAT());
         mdiPanels->setPaymentMethod( inPayType );
 
         cDBLedger   obDBLedger;
@@ -1486,7 +1500,7 @@ void cWndMain::on_action_PayCash_triggered()
         obDBLedger.setPatientCardId( 0 );
         obDBLedger.setPanelId( mdiPanels->activePanel()+1 );
         obDBLedger.setName( mdiPanels->getActivePanelCaption() );
-        obDBLedger.setNetPrice( inPriceNet-inPriceDiscount );
+        obDBLedger.setNetPrice( inPriceNet );
         obDBLedger.setDiscount( inPriceDiscount );
         obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
         obDBLedger.setComment( qsComment );

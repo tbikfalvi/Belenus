@@ -206,7 +206,7 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
 
     cDlgCassaAction     obDlgCassaAction( this );
 
-    obDlgCassaAction.setCassaAction();
+    obDlgCassaAction.actionCassaInOut();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
         cDBCassa    obCassa;
@@ -233,7 +233,7 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
 
     cDlgCassaAction     obDlgCassaAction( this );
 
-    obDlgCassaAction.setCassaAction();
+    obDlgCassaAction.actionCassaInOut();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
         cDBCassa    obCassa;
