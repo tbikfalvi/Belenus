@@ -47,6 +47,9 @@ public:
     bool            isCanBeStartedByTime();
     bool            isCanBeStartedByCard();
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
+    bool            isItemInShoppingCart();
+    void            itemAddedToShoppingCart();
+    void            itemRemovedFromShoppingCart();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;

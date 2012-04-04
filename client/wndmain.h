@@ -6,6 +6,7 @@
 #include "ui_wndmain.h"
 #include "mdipanels.h"
 #include "dlg/dlgprogress.h"
+#include "db/dbshoppingcart.h"
 
 using namespace std;
 
@@ -53,6 +54,9 @@ private:
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
     void processInputTimePeriod( int p_inSecond );
+
+public slots:
+    void processDeviceUsePayment( const cDBShoppingCart &obDBShoppingCart );
 
 private slots:
     void updateToolbar();

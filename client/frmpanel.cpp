@@ -15,6 +15,7 @@
 
 #include <QPalette>
 #include <QMessageBox>
+#include <QPixmap>
 
 //====================================================================================
 
@@ -44,6 +45,13 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     spacer2          = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer3          = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
     spacer4          = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    layoutIcons      = new QHBoxLayout( this );
+    spacerIcons      = new QSpacerItem( 100, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    icoShoppingCart  = new QLabel( this );
+
+    layoutIcons->setContentsMargins( 0, 0, 5, 5 );
+    layoutIcons->addItem( spacerIcons );
+    layoutIcons->addWidget( icoShoppingCart );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
     verticalLayout->addWidget( lblTitle );
@@ -55,12 +63,18 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     verticalLayout->addItem( spacer3 );
     verticalLayout->addWidget( lblInfo );
     verticalLayout->addItem( spacer4 );
+    verticalLayout->addLayout( layoutIcons );
 
     setAutoFillBackground( true );
 
     lblTitle->setAutoFillBackground( true );
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
+
+    icoShoppingCart->setMinimumSize( 30, 30 );
+    icoShoppingCart->setMaximumSize( 30, 30 );
+    icoShoppingCart->setScaledContents( true );
+    icoShoppingCart->setPixmap( QPixmap(QString("./resources/40x40_shoppingcart.png")) );
 
     m_uiId                  = 0;
     m_uiType                = 0;
@@ -78,6 +92,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inCardTimeRemains     = 0;
 
     m_uiPaymentMethodId     = 0;
+
+    m_bIsItemInShoppingCart = false;
 
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
@@ -153,7 +169,7 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setLicenceId( g_poPrefs->getLicenceId() );
     m_pDBLedgerDevice->setUserId( g_obUser.id() );
     m_pDBLedgerDevice->setPanelId( m_uiId );
-//    m_pDBLedgerDevice->setPatientId( g_obPatient.id() );
+    m_pDBLedgerDevice->setPatientId( g_obGuest.id() );
     m_pDBLedgerDevice->setActive( true );
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
@@ -191,7 +207,7 @@ void cFrmPanel::clear()
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
-    if( m_inCashToPay != 0 )
+    if( m_inCashToPay == 0 )
     {
         if( m_pDBLedgerDevice->cash() > 0 )
         {
@@ -535,6 +551,15 @@ void cFrmPanel::displayStatus()
     formatTimerString( m_qsTimer );
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString( qsInfo );
+
+    if( m_bIsItemInShoppingCart )
+    {
+        icoShoppingCart->setVisible( true );
+    }
+    else
+    {
+        icoShoppingCart->setVisible( false );
+    }
 }
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )
@@ -730,7 +755,7 @@ void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
-    m_uiLedgerId = p_uiLedgerId;
+    m_uiLedgerId            = p_uiLedgerId;
 
     displayStatus();
 }
@@ -879,6 +904,23 @@ void cFrmPanel::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
 {
     m_uiPaymentMethodId = p_uiPaymentMethodId;
     m_pDBLedgerDevice->setPaymentMethod( m_uiPaymentMethodId );
+}
+//====================================================================================
+bool cFrmPanel::isItemInShoppingCart()
+{
+    return m_bIsItemInShoppingCart;
+}
+//====================================================================================
+void cFrmPanel::itemAddedToShoppingCart()
+{
+    m_bIsItemInShoppingCart = true;
+    icoShoppingCart->setVisible( true );
+}
+//====================================================================================
+void cFrmPanel::itemRemovedFromShoppingCart()
+{
+    m_bIsItemInShoppingCart = false;
+    icoShoppingCart->setVisible( true );
 }
 //====================================================================================
 unsigned int cFrmPanel::panelId()

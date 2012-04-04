@@ -73,6 +73,9 @@ public:
     bool            isCanBeStartedByTime();
     bool            isCanBeStartedByCard();
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
+    bool            isItemInShoppingCart();
+    void            itemAddedToShoppingCart();
+    void            itemRemovedFromShoppingCart();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -102,6 +105,7 @@ private:
 //    unsigned int                 m_uiAttendanceId;
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;
+    bool                         m_bIsItemInShoppingCart;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -113,6 +117,9 @@ private:
     QSpacerItem                 *spacer2;
     QSpacerItem                 *spacer3;
     QSpacerItem                 *spacer4;
+    QHBoxLayout                 *layoutIcons;
+    QLabel                      *icoShoppingCart;
+    QSpacerItem                 *spacerIcons;
 
     QString                      m_qsStatus;
     QString                      m_qsTimer;

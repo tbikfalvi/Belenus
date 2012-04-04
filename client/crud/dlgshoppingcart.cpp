@@ -1,8 +1,10 @@
 #include <QMessageBox>
+#include <QStringList>
 
 #include "belenus.h"
 #include "dlgshoppingcart.h"
 #include "../db/dbshoppingcart.h"
+#include "../dlg/dlgcassaaction.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -207,7 +209,10 @@ void cDlgShoppingCart::deleteClicked( bool )
         obDBShoppingCart.load( uiShoppingCardId );
         qslItemIds << QString::number( uiShoppingCardId );
 
-        if( obDBShoppingCart.itemName().compare( tr("Using panel") ) == 0 && !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
+        if( obDBShoppingCart.panelId() != 0 &&
+            obDBShoppingCart.productId() == 0 &&
+            obDBShoppingCart.patientCardId() == 0 &&
+            !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
             QMessageBox::warning( this, tr("Warning"),
                                   tr("Deleting panel use is not allowed from shopping cart.\n"
@@ -233,15 +238,47 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 {
     try
     {
-        QString qsTemp;
+        QStringList qslIds;
 
         for( int i=0; i< tbvCrud->selectionModel()->selectedRows().count(); i++ )
         {
-            qsTemp += tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
-            qsTemp += " # ";
+            qslIds << tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
         }
-        QMessageBox::information( this, "", qsTemp );
-        QDialog::accept();
+
+        QString     qsQuery = QString("SELECT SUM(itemSumPrice) AS shoppingCartSum FROM shoppingcartitems WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        cDBShoppingCart obDBShoppingCart;
+
+        obDBShoppingCart.createNew();
+
+        if( poQuery->first() )
+        {
+            obDBShoppingCart.setItemSumPrice( poQuery->value( 0 ).toInt() );
+        }
+
+        cDlgCassaAction obDlgCassaAction( this, &obDBShoppingCart );
+        obDlgCassaAction.actionPayment();
+        if( obDlgCassaAction.exec() == QDialog::Accepted )
+        {
+            for( int i=0; i< tbvCrud->selectionModel()->selectedRows().count(); i++ )
+            {
+                obDBShoppingCart.load( tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt() );
+
+                int     inPayType = 0;
+                QString qsComment = "";
+
+                obDlgCassaAction.cassaResult( &inPayType, &qsComment );
+
+                if( inPayType == cDlgCassaAction::PAY_CASH )
+                {
+                    g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
+                }
+                // obDBShoppingCart.panelId()  panel értesítése a fizetés típusáról kp vagy kártya
+            }
+
+            QDialog::accept();
+        }
     }
     catch( cSevException &e )
     {

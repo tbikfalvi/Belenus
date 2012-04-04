@@ -171,5 +171,7 @@ void cDlgCassaAction::on_pbComment_clicked()
 
 void cDlgCassaAction::on_pbShoppingCart_clicked()
 {
+    m_poShoppingCart->save();
 
+    QDialog::accept();
 }

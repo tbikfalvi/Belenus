@@ -285,3 +285,19 @@ void cMdiPanels::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
     m_obPanels.at( m_uiActivePanel )->setPaymentMethod( p_uiPaymentMethodId );
 }
 
+//====================================================================================
+bool cMdiPanels::isItemInShoppingCart()
+{
+    return m_obPanels.at( m_uiActivePanel )->isItemInShoppingCart();
+}
+//====================================================================================
+void cMdiPanels::itemAddedToShoppingCart()
+{
+    m_obPanels.at( m_uiActivePanel )->itemAddedToShoppingCart();
+}
+//====================================================================================
+void cMdiPanels::itemRemovedFromShoppingCart()
+{
+    m_obPanels.at( m_uiActivePanel )->itemRemovedFromShoppingCart();
+}
+
