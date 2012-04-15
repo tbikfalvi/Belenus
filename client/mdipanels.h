@@ -41,12 +41,15 @@ public:
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
     void            cashPayed( const unsigned int p_uiLedgerId );
+    void            cashPayed( const unsigned int p_uiPanelId, const unsigned int p_uiLedgerId );
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount );
     bool            isHasToPay();
     QString         getActivePanelCaption();
+    QString         getPanelCaption( const unsigned int p_uiPanelId );
     bool            isCanBeStartedByTime();
     bool            isCanBeStartedByCard();
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
+    void            setPaymentMethod( const unsigned int p_uiPanelId, const unsigned int p_uiPaymentMethodId );
     bool            isItemInShoppingCart();
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();

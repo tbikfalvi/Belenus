@@ -5,6 +5,7 @@
 #include "dlgshoppingcart.h"
 #include "../db/dbshoppingcart.h"
 #include "../dlg/dlgcassaaction.h"
+#include "../db/dbpanels.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -272,9 +273,22 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
                 if( inPayType == cDlgCassaAction::PAY_CASH )
                 {
-                    g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
+                    g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), qsComment );
                 }
-                // obDBShoppingCart.panelId()  panel értesítése a fizetés típusáról kp vagy kártya
+
+                if( obDBShoppingCart.panelId() > 0 &&
+                    obDBShoppingCart.productId() == 0 &&
+                    obDBShoppingCart.patientCardId() == 0)
+                {
+                    cDBPanel    obDBPanel;
+
+                    obDBPanel.load( obDBShoppingCart.panelId() );
+
+                    QString qsPanelUse = tr("Using device: %1 - %2").arg(obDBPanel.title()).arg(qsComment);
+
+                    emit signalPaymentProcessed( obDBShoppingCart, inPayType, qsPanelUse );
+                }
+                obDBShoppingCart.remove();
             }
 
             QDialog::accept();

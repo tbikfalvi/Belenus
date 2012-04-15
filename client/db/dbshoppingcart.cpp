@@ -35,8 +35,8 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const int p_nItemCount,
                             const int p_nItemNetPrice,
                             const int p_nItemVAT,
-                            const int p_nItemSumPrice,
                             const int p_nItemDiscount,
+                            const int p_nItemSumPrice,
                             const QString &p_qsModified,
                             const QString &p_qsArchive ) throw()
 {

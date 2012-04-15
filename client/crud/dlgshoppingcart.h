@@ -6,6 +6,8 @@
 #include <QSpacerItem>
 
 #include "../framework/dlgcrud.h"
+#include "../db/dbshoppingcart.h"
+#include "../dlg/dlgcassaaction.h"
 
 class cDlgShoppingCart : public cDlgCrud
 {
@@ -22,6 +24,9 @@ public:
 
     cDlgShoppingCart( QWidget *p_poParent = 0 );
     virtual ~cDlgShoppingCart();
+
+signals:
+    void signalPaymentProcessed( const cDBShoppingCart &p_DBShoppingCart, int p_nPaymentType = cDlgCassaAction::PAY_CASH, const QString &p_qsComment = "" );
 
 protected:
     virtual void setupTableView();

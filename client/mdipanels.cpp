@@ -265,9 +265,36 @@ void cMdiPanels::cashPayed( const unsigned int p_uiLedgerId )
     m_obPanels.at( m_uiActivePanel )->cashPayed( p_uiLedgerId );
 }
 
+void cMdiPanels::cashPayed( const unsigned int p_uiPanelId, const unsigned int p_uiLedgerId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            m_obPanels.at(i)->cashPayed( p_uiLedgerId );
+            break;
+        }
+    }
+}
+
 QString cMdiPanels::getActivePanelCaption()
 {
     return m_obPanels.at( m_uiActivePanel )->getPanelName();
+}
+
+QString cMdiPanels::getPanelCaption( const unsigned int p_uiPanelId )
+{
+    QString qsCaption = "";
+
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            qsCaption = m_obPanels.at(i)->getPanelName();
+            break;
+        }
+    }
+    return qsCaption;
 }
 
 bool cMdiPanels::isCanBeStartedByTime()
@@ -283,6 +310,18 @@ bool cMdiPanels::isCanBeStartedByCard()
 void cMdiPanels::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
 {
     m_obPanels.at( m_uiActivePanel )->setPaymentMethod( p_uiPaymentMethodId );
+}
+
+void cMdiPanels::setPaymentMethod( const unsigned int p_uiPanelId, const unsigned int p_uiPaymentMethodId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            m_obPanels.at(i)->setPaymentMethod( p_uiPaymentMethodId );
+            break;
+        }
+    }
 }
 
 //====================================================================================

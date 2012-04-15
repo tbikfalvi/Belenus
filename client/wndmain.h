@@ -7,6 +7,7 @@
 #include "mdipanels.h"
 #include "dlg/dlgprogress.h"
 #include "db/dbshoppingcart.h"
+#include "dlg/dlgcassaaction.h"
 
 using namespace std;
 
@@ -56,7 +57,7 @@ private:
     void processInputTimePeriod( int p_inSecond );
 
 public slots:
-    void processDeviceUsePayment( const cDBShoppingCart &obDBShoppingCart );
+    void processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCart, int p_nPaymentType = cDlgCassaAction::PAY_CASH, const QString &p_qsComment = "" );
 
 private slots:
     void updateToolbar();

@@ -1021,6 +1021,8 @@ void cWndMain::on_action_ShoppingCart_triggered()
 {
     cDlgShoppingCart    obDlgShoppingCart( this );
 
+    connect( &obDlgShoppingCart, SIGNAL(signalPaymentProcessed(cDBShoppingCart,int,QString)), this, SLOT(processDeviceUsePayment(cDBShoppingCart,int,QString)) );
+
     obDlgShoppingCart.exec();
 }
 //====================================================================================
@@ -1493,34 +1495,36 @@ void cWndMain::on_action_PayCash_triggered()
             {
                 g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
             }
-            mdiPanels->setPaymentMethod( inPayType );
 
-            cDBLedger   obDBLedger;
-
-            obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-            obDBLedger.setLedgerTypeId( 1 );
-            obDBLedger.setLedgerDeviceId( 0 );
-            obDBLedger.setPaymentMethod( inPayType );
-            obDBLedger.setUserId( g_obUser.id() );
-            obDBLedger.setProductId( 0 );
-            obDBLedger.setPatientCardTypeId( 0 );
-            obDBLedger.setPatientCardId( 0 );
-            obDBLedger.setPanelId( mdiPanels->activePanelId() );
-            obDBLedger.setName( mdiPanels->getActivePanelCaption() );
-            obDBLedger.setNetPrice( inPriceNet );
-            obDBLedger.setDiscount( inPriceDiscount );
-            obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
-            obDBLedger.setComment( qsComment );
-            obDBLedger.setActive( true );
-            obDBLedger.save();
-
-            mdiPanels->cashPayed( obDBLedger.id() );
+            processDeviceUsePayment( obDBShoppingCart, inPayType, qsComment );
         }
     }
 }
 //====================================================================================
-void cWndMain::processDeviceUsePayment( const cDBShoppingCart &obDBShoppingCart )
+void cWndMain::processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCart, int p_nPaymentType, const QString &p_qsComment )
 {
+    mdiPanels->setPaymentMethod( p_obDBShoppingCart.panelId(), p_nPaymentType );
+
+    cDBLedger   obDBLedger;
+
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBLedger.setLedgerTypeId( 1 );
+    obDBLedger.setLedgerDeviceId( 0 );
+    obDBLedger.setPaymentMethod( p_nPaymentType );
+    obDBLedger.setUserId( g_obUser.id() );
+    obDBLedger.setProductId( 0 );
+    obDBLedger.setPatientCardTypeId( 0 );
+    obDBLedger.setPatientCardId( 0 );
+    obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
+    obDBLedger.setName( mdiPanels->getPanelCaption(p_obDBShoppingCart.panelId()) );
+    obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
+    obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
+    obDBLedger.setComment( p_qsComment );
+    obDBLedger.setActive( true );
+    obDBLedger.save();
+
+    mdiPanels->cashPayed( p_obDBShoppingCart.panelId(), obDBLedger.id() );
 }
 //====================================================================================
 void cWndMain::on_action_IllnessGroup_triggered()
