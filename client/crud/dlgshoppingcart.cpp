@@ -89,6 +89,18 @@ cDlgShoppingCart::~cDlgShoppingCart()
     g_poPrefs->setDialogSize( "ShoppingCart", QPoint( width(), height() ) );
 }
 
+void cDlgShoppingCart::setPanelFilter( unsigned int p_uiPanelId )
+{
+    for( int i=0; i<cmbPanel->count(); i++ )
+    {
+        if( cmbPanel->itemData(i).toUInt() == p_uiPanelId )
+        {
+            cmbPanel->setCurrentIndex( i );
+            break;
+        }
+    }
+}
+
 void cDlgShoppingCart::setupTableView()
 {
     cTracer obTracer( "cDlgShoppingCart::setupTableView" );
@@ -269,6 +281,16 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 int     inPayType = 0;
                 QString qsComment = "";
 
+                if( obDBShoppingCart.panelId() > 0 &&
+                    obDBShoppingCart.productId() == 0 &&
+                    obDBShoppingCart.patientCardId() == 0)
+                {
+                    cDBPanel    obDBPanel;
+
+                    obDBPanel.load( obDBShoppingCart.panelId() );
+                    qsComment = tr("Using device: %1").arg(obDBPanel.title());
+                }
+
                 obDlgCassaAction.cassaResult( &inPayType, &qsComment );
 
                 if( inPayType == cDlgCassaAction::PAY_CASH )
@@ -280,13 +302,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                     obDBShoppingCart.productId() == 0 &&
                     obDBShoppingCart.patientCardId() == 0)
                 {
-                    cDBPanel    obDBPanel;
-
-                    obDBPanel.load( obDBShoppingCart.panelId() );
-
-                    QString qsPanelUse = tr("Using device: %1 - %2").arg(obDBPanel.title()).arg(qsComment);
-
-                    emit signalPaymentProcessed( obDBShoppingCart, inPayType, qsPanelUse );
+                    emit signalPaymentProcessed( obDBShoppingCart, inPayType, qsComment );
                 }
                 obDBShoppingCart.remove();
             }

@@ -22,6 +22,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QPushButton>
+
 #include <vector>
 
 //====================================================================================
@@ -118,7 +120,7 @@ private:
     QSpacerItem                 *spacer3;
     QSpacerItem                 *spacer4;
     QHBoxLayout                 *layoutIcons;
-    QLabel                      *icoShoppingCart;
+    QPushButton                 *icoShoppingCart;
     QSpacerItem                 *spacerIcons;
 
     QString                      m_qsStatus;
@@ -138,6 +140,10 @@ private:
     void            closeAttendance();
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+
+private slots:
+    void            slotShoppingCartClicked();
+
 };
 
 #endif // FRMPANEL_H

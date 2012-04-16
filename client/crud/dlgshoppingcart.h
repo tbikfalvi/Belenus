@@ -24,6 +24,7 @@ public:
 
     cDlgShoppingCart( QWidget *p_poParent = 0 );
     virtual ~cDlgShoppingCart();
+    void setPanelFilter( unsigned int p_uiPanelId );
 
 signals:
     void signalPaymentProcessed( const cDBShoppingCart &p_DBShoppingCart, int p_nPaymentType = cDlgCassaAction::PAY_CASH, const QString &p_qsComment = "" );

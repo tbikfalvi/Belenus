@@ -28,6 +28,7 @@ public:
     void checkDemoLicenceKey();
     void startMainTimer();
     void autoSynchronizeGlobalData();
+    void showProgress();
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );

@@ -339,4 +339,16 @@ void cMdiPanels::itemRemovedFromShoppingCart()
 {
     m_obPanels.at( m_uiActivePanel )->itemRemovedFromShoppingCart();
 }
+//====================================================================================
+void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            m_obPanels.at(i)->itemRemovedFromShoppingCart();
+            break;
+        }
+    }
+}
 

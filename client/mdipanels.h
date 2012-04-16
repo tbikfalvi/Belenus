@@ -53,6 +53,7 @@ public:
     bool            isItemInShoppingCart();
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
+    void            itemRemovedFromShoppingCart( const unsigned int p_uiPanelId );
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;

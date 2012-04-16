@@ -351,12 +351,14 @@ int main( int argc, char *argv[] )
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
 #ifdef __WIN32__
-        Sleep(5000);
+        Sleep(2000);
 #else
-        sleep( 5 );
+        sleep( 2 );
 #endif
 
         obSplash.finish( &obMainWindow );
+
+        obMainWindow.showProgress();
 
         obMainWindow.show();
         obMainWindow.initPanels();

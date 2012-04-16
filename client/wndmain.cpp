@@ -229,6 +229,9 @@ bool cWndMain::showLogIn()
     cTracer obTrace( "cWndMain::showLogIn" );
 
     cDlgLogIn  obDlgLogIn( this );
+
+    m_dlgProgress->hideProgress();
+
     bool       boLogInOK = ( obDlgLogIn.exec() == QDialog::Accepted );
 
     if( boLogInOK )
@@ -258,6 +261,11 @@ bool cWndMain::showLogIn()
 
     obTrace << boLogInOK;
     return boLogInOK;
+}
+//====================================================================================
+void cWndMain::showProgress()
+{
+    m_dlgProgress->showProgress();
 }
 //====================================================================================
 void cWndMain::initPanels()
@@ -476,6 +484,10 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F )
     {
         on_action_PayCash_triggered();
+    }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_K )
+    {
+        on_action_ShoppingCart_triggered();
     }
     else if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
              (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
@@ -1488,7 +1500,7 @@ void cWndMain::on_action_PayCash_triggered()
         else
         {
             int     inPayType = 0;
-            QString qsComment = tr("Using device: %1 - ").arg( mdiPanels->getActivePanelCaption() );
+            QString qsComment = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
 
             obDlgCassaAction.cassaResult( &inPayType, &qsComment );
             if( inPayType == cDlgCassaAction::PAY_CASH )
@@ -1525,6 +1537,7 @@ void cWndMain::processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCar
     obDBLedger.save();
 
     mdiPanels->cashPayed( p_obDBShoppingCart.panelId(), obDBLedger.id() );
+    mdiPanels->itemRemovedFromShoppingCart( p_obDBShoppingCart.panelId() );
 }
 //====================================================================================
 void cWndMain::on_action_IllnessGroup_triggered()
@@ -1573,7 +1586,6 @@ void cWndMain::on_action_HealthInsurance_triggered()
 //====================================================================================
 void cWndMain::on_action_RegionZipCity_triggered()
 {
-    m_dlgProgress->showProgress();
     m_dlgProgress->showProgress();
 
     cDlgZipRegionCity   obDlgZipRegionCity( this );

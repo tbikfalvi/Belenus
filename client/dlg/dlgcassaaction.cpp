@@ -92,7 +92,9 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment )
     if( rbPayCash->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CASH;
     else if( rbCreditcard->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
 
-    *p_qsComment += teComment->toPlainText();
+    if( teComment->toPlainText().length() > 0 )
+        *p_qsComment += QString( " - " ).arg(teComment->toPlainText());
+
     return ledAmountToPay->text().remove( QChar(',') );
 }
 

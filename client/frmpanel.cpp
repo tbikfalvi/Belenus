@@ -26,6 +26,8 @@
 #include "db/dbledger.h"
 //#include "db/dbattendance.h"
 #include "db/dbpanelstatussettings.h"
+#include "db/dbshoppingcart.h"
+#include "crud/dlgshoppingcart.h"
 
 #include <iostream>
 
@@ -47,7 +49,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     spacer4          = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
     layoutIcons      = new QHBoxLayout( this );
     spacerIcons      = new QSpacerItem( 100, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    icoShoppingCart  = new QLabel( this );
+//    icoShoppingCart  = new QLabel( this );
+    icoShoppingCart  = new QPushButton( this );
 
     layoutIcons->setContentsMargins( 0, 0, 5, 5 );
     layoutIcons->addItem( spacerIcons );
@@ -71,10 +74,14 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
 
-    icoShoppingCart->setMinimumSize( 30, 30 );
+/*    icoShoppingCart->setMinimumSize( 30, 30 );
     icoShoppingCart->setMaximumSize( 30, 30 );
     icoShoppingCart->setScaledContents( true );
-    icoShoppingCart->setPixmap( QPixmap(QString("./resources/40x40_shoppingcart.png")) );
+    icoShoppingCart->setPixmap( QPixmap(QString("./resources/40x40_shoppingcart.png")) );*/
+    icoShoppingCart->setIconSize( QSize(20,20) );
+    icoShoppingCart->setIcon( QIcon(QString("./resources/40x40_shoppingcart.png")) );
+    icoShoppingCart->setFocusPolicy( Qt::NoFocus );
+    connect( icoShoppingCart, SIGNAL(clicked()), this, SLOT(slotShoppingCartClicked()) );
 
     m_uiId                  = 0;
     m_uiType                = 0;
@@ -212,6 +219,23 @@ void cFrmPanel::clear()
         if( m_pDBLedgerDevice->cash() > 0 )
         {
             int inPriceTotal = m_pDBLedgerDevice->cash();
+
+            if( isItemInShoppingCart() )
+            {
+                QString qsQuery = QString( "SELECT shoppingCartItemId FROM shoppingcartitems WHERE panelId =%1 AND itemSumPrice=%2" ).arg(m_uiId).arg(inPriceTotal);
+
+                QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+                if( poQuery->first() )
+                {
+                    cDBShoppingCart obDBShoppingCart;
+
+                    obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
+                    obDBShoppingCart.remove();
+                    itemRemovedFromShoppingCart();
+                }
+            }
+
             QString qsComment = tr( "Revoking device (%1) usage." ).arg(getPanelName());
 
 /*            if( QMessageBox::warning( this,
@@ -920,10 +944,21 @@ void cFrmPanel::itemAddedToShoppingCart()
 void cFrmPanel::itemRemovedFromShoppingCart()
 {
     m_bIsItemInShoppingCart = false;
-    icoShoppingCart->setVisible( true );
+    icoShoppingCart->setVisible( false );
 }
 //====================================================================================
 unsigned int cFrmPanel::panelId()
 {
     return m_uiId;
 }
+//====================================================================================
+void cFrmPanel::slotShoppingCartClicked()
+{
+    this->setFocus();
+
+    cDlgShoppingCart    obDlgShoppingCart;
+
+    obDlgShoppingCart.setPanelFilter( m_uiId );
+    obDlgShoppingCart.exec();
+}
+//====================================================================================
