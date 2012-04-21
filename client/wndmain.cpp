@@ -104,6 +104,7 @@ cWndMain::cWndMain( QWidget *parent )
     mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged() ), this, SLOT( updateToolbar() ) );
+    connect( mdiPanels, SIGNAL(signalOpenShoppingCart( uint )), this, SLOT( slotOpenShoppingCart( uint )) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
@@ -1031,10 +1032,17 @@ void cWndMain::on_action_SellProduct_triggered()
 //====================================================================================
 void cWndMain::on_action_ShoppingCart_triggered()
 {
+    slotOpenShoppingCart( 0 );
+}
+//====================================================================================
+void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
+{
     cDlgShoppingCart    obDlgShoppingCart( this );
 
     connect( &obDlgShoppingCart, SIGNAL(signalPaymentProcessed(cDBShoppingCart,int,QString)), this, SLOT(processDeviceUsePayment(cDBShoppingCart,int,QString)) );
 
+    if( p_uiPanelId > 0 )
+        obDlgShoppingCart.setPanelFilter( p_uiPanelId );
     obDlgShoppingCart.exec();
 }
 //====================================================================================

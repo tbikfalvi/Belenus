@@ -141,6 +141,9 @@ private:
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
+signals:
+    void            signalOpenShoppingCart( unsigned int p_uiPanelId );
+
 private slots:
     void            slotShoppingCartClicked();
 

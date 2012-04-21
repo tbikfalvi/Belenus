@@ -956,9 +956,6 @@ void cFrmPanel::slotShoppingCartClicked()
 {
     this->setFocus();
 
-    cDlgShoppingCart    obDlgShoppingCart;
-
-    obDlgShoppingCart.setPanelFilter( m_uiId );
-    obDlgShoppingCart.exec();
+    emit signalOpenShoppingCart( m_uiId );
 }
 //====================================================================================

@@ -58,6 +58,7 @@ public:
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;
     void activePanelChanged() const;
+    void signalOpenShoppingCart( unsigned int p_uiPanelId );
 
 private:
     vector<cFrmPanel*>  m_obPanels;
@@ -67,6 +68,7 @@ private:
 
 private slots:
     void activatePanel( unsigned int p_uiPanel );
+    void openShoppingCart( unsigned int p_uiPanelId );
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );

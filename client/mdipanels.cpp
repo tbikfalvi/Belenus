@@ -45,6 +45,7 @@ void cMdiPanels::initPanels()
         poFrame->setLineWidth( 3 );
 
         connect( poFrame, SIGNAL( panelClicked( unsigned int ) ), this, SLOT( activatePanel( unsigned int ) ) );
+        connect( poFrame, SIGNAL( signalOpenShoppingCart( uint ) ), this, SLOT( openShoppingCart( uint ) ) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -351,4 +352,9 @@ void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
         }
     }
 }
-
+//====================================================================================
+void cMdiPanels::openShoppingCart( unsigned int p_uiPanelId )
+{
+    emit signalOpenShoppingCart( p_uiPanelId );
+}
+//====================================================================================
