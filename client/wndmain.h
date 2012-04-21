@@ -63,6 +63,7 @@ public slots:
 private slots:
     void updateToolbar();
     void slotOpenShoppingCart( unsigned int p_uiPanelId );
+    void slotOpenScheduleTable( unsigned int p_uiPanelId );
     void on_action_CassaActionStorno_triggered();
     void on_action_ShoppingCart_triggered();
     void on_action_SellProduct_triggered();

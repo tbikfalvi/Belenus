@@ -104,7 +104,9 @@ cWndMain::cWndMain( QWidget *parent )
     mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
     connect( mdiPanels, SIGNAL( activePanelChanged() ), this, SLOT( updateToolbar() ) );
-    connect( mdiPanels, SIGNAL(signalOpenShoppingCart( uint )), this, SLOT( slotOpenShoppingCart( uint )) );
+    connect( mdiPanels, SIGNAL( signalOpenShoppingCart( uint ) ), this, SLOT( slotOpenShoppingCart( uint )) );
+    connect( mdiPanels, SIGNAL( signalPaymentActivated() ), this, SLOT( on_action_PayCash_triggered() ) );
+    connect( mdiPanels, SIGNAL( signalOpenScheduleTable(uint) ), this, SLOT(slotOpenScheduleTable(uint)) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
@@ -1044,6 +1046,11 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
     if( p_uiPanelId > 0 )
         obDlgShoppingCart.setPanelFilter( p_uiPanelId );
     obDlgShoppingCart.exec();
+}
+//====================================================================================
+void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
+{
+
 }
 //====================================================================================
 void cWndMain::on_action_CassaActionStorno_triggered()

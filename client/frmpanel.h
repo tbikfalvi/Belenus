@@ -122,6 +122,11 @@ private:
     QHBoxLayout                 *layoutIcons;
     QPushButton                 *icoShoppingCart;
     QSpacerItem                 *spacerIcons;
+    QPushButton                 *icoPanelStart;
+    QPushButton                 *icoPanelNext;
+    QPushButton                 *icoPanelStop;
+    QPushButton                 *icoPanelCassa;
+    QPushButton                 *icoScheduledGuest;
 
     QString                      m_qsStatus;
     QString                      m_qsTimer;
@@ -142,11 +147,17 @@ private:
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 signals:
+    void            signalPaymentActivated( unsigned int p_uiPanelId );
     void            signalOpenShoppingCart( unsigned int p_uiPanelId );
+    void            signalOpenScheduleTable( unsigned int p_uiPanelId );
 
 private slots:
+    void            slotPanelStartClicked();
+    void            slotPanelNextClicked();
+    void            slotPanelStopClicked();
+    void            slotPanelCassaClicked();
     void            slotShoppingCartClicked();
-
+    void            slotScheduledGuestClicked();
 };
 
 #endif // FRMPANEL_H

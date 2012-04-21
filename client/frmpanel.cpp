@@ -37,24 +37,34 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
 {
     cTracer obTrace( "cFrmPanel::cFrmPanel" );
 
-    verticalLayout   = new QVBoxLayout( this );
-    lblTitle         = new QLabel( this );
-    lblCurrStatus    = new QLabel( this );
-    lblCurrTimer     = new QLabel( this );
-    lblNextStatusLen = new QLabel( this );
-    lblInfo          = new QLabel( this );
-    spacer1          = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    spacer2          = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    spacer3          = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    spacer4          = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
-    layoutIcons      = new QHBoxLayout( this );
-    spacerIcons      = new QSpacerItem( 100, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-//    icoShoppingCart  = new QLabel( this );
-    icoShoppingCart  = new QPushButton( this );
+    verticalLayout      = new QVBoxLayout( this );
+    lblTitle            = new QLabel( this );
+    lblCurrStatus       = new QLabel( this );
+    lblCurrTimer        = new QLabel( this );
+    lblNextStatusLen    = new QLabel( this );
+    lblInfo             = new QLabel( this );
+    spacer1             = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer2             = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer3             = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer4             = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    layoutIcons         = new QHBoxLayout( this );
+    spacerIcons         = new QSpacerItem( 100, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    icoPanelStart       = new QPushButton( this );
+    icoPanelNext        = new QPushButton( this );
+    icoPanelStop        = new QPushButton( this );
+    icoPanelCassa       = new QPushButton( this );
+    icoShoppingCart     = new QPushButton( this );
+    icoScheduledGuest   = new QPushButton( this );
 
-    layoutIcons->setContentsMargins( 0, 0, 5, 5 );
+    layoutIcons->setContentsMargins( 5, 0, 5, 5 );
+    layoutIcons->setSpacing( 2 );
+    layoutIcons->addWidget( icoPanelStart );
+    layoutIcons->addWidget( icoPanelNext );
+    layoutIcons->addWidget( icoPanelStop );
+    layoutIcons->addWidget( icoPanelCassa );
     layoutIcons->addItem( spacerIcons );
     layoutIcons->addWidget( icoShoppingCart );
+    layoutIcons->addWidget( icoScheduledGuest );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
     verticalLayout->addWidget( lblTitle );
@@ -74,14 +84,35 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
 
-/*    icoShoppingCart->setMinimumSize( 30, 30 );
-    icoShoppingCart->setMaximumSize( 30, 30 );
-    icoShoppingCart->setScaledContents( true );
-    icoShoppingCart->setPixmap( QPixmap(QString("./resources/40x40_shoppingcart.png")) );*/
+    icoPanelStart->setIconSize( QSize(20,20) );
+    icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
+    icoPanelStart->setFocusPolicy( Qt::NoFocus );
+    connect( icoPanelStart, SIGNAL(clicked()), this, SLOT(slotPanelStartClicked()) );
+
+    icoPanelNext->setIconSize( QSize(20,20) );
+    icoPanelNext->setIcon( QIcon(QString("./resources/40x40_next.png")) );
+    icoPanelNext->setFocusPolicy( Qt::NoFocus );
+    connect( icoPanelNext, SIGNAL(clicked()), this, SLOT(slotPanelNextClicked()) );
+
+    icoPanelStop->setIconSize( QSize(20,20) );
+    icoPanelStop->setIcon( QIcon(QString("./resources/40x40_stop.png")) );
+    icoPanelStop->setFocusPolicy( Qt::NoFocus );
+    connect( icoPanelStop, SIGNAL(clicked()), this, SLOT(slotPanelStopClicked()) );
+
+    icoPanelCassa->setIconSize( QSize(20,20) );
+    icoPanelCassa->setIcon( QIcon(QString("./resources/40x40_cassa.png")) );
+    icoPanelCassa->setFocusPolicy( Qt::NoFocus );
+    connect( icoPanelCassa, SIGNAL(clicked()), this, SLOT(slotPanelCassaClicked()) );
+
     icoShoppingCart->setIconSize( QSize(20,20) );
     icoShoppingCart->setIcon( QIcon(QString("./resources/40x40_shoppingcart.png")) );
     icoShoppingCart->setFocusPolicy( Qt::NoFocus );
     connect( icoShoppingCart, SIGNAL(clicked()), this, SLOT(slotShoppingCartClicked()) );
+
+    icoScheduledGuest->setIconSize( QSize(20,20) );
+    icoScheduledGuest->setIcon( QIcon(QString("./resources/40x40_hourglass.png")) );
+    icoScheduledGuest->setFocusPolicy( Qt::NoFocus );
+    connect( icoScheduledGuest, SIGNAL(clicked()), this, SLOT(slotScheduledGuestClicked()) );
 
     m_uiId                  = 0;
     m_uiType                = 0;
@@ -576,6 +607,18 @@ void cFrmPanel::displayStatus()
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString( qsInfo );
 
+    if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
+    {
+        icoPanelStart->setVisible( true );
+    }
+    else
+    {
+        icoPanelStart->setVisible( false );
+    }
+    icoPanelNext->setVisible( isStatusCanBeSkipped() );
+    icoPanelStop->setVisible( isMainProcess() );
+    icoPanelCassa->setVisible( isHasToPay() );
+
     if( m_bIsItemInShoppingCart )
     {
         icoShoppingCart->setVisible( true );
@@ -954,8 +997,38 @@ unsigned int cFrmPanel::panelId()
 //====================================================================================
 void cFrmPanel::slotShoppingCartClicked()
 {
-    this->setFocus();
+//    this->setFocus();
 
     emit signalOpenShoppingCart( m_uiId );
+}
+//====================================================================================
+void cFrmPanel::slotPanelStartClicked()
+{
+    start();
+}
+//====================================================================================
+void cFrmPanel::slotPanelNextClicked()
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Do you want to jump to the next status of the device?"),
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+    {
+        next();
+    }
+}
+//====================================================================================
+void cFrmPanel::slotPanelStopClicked()
+{
+    reset();
+}
+//====================================================================================
+void cFrmPanel::slotPanelCassaClicked()
+{
+    emit signalPaymentActivated( m_uiId );
+}
+//====================================================================================
+void cFrmPanel::slotScheduledGuestClicked()
+{
+    emit signalOpenScheduleTable( m_uiId );
 }
 //====================================================================================
