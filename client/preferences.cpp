@@ -534,6 +534,22 @@ bool cPreferences::getDBGlobalAutoSynchronize() const
     return m_bDBGlobalAutoSynchronize;
 }
 
+void cPreferences::setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow )
+{
+    m_bIsSecondaryWindowVisible = p_bIsSecondaryWindowVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
+    }
+}
+
+bool cPreferences::isSecondaryWindowVisible() const
+{
+    return m_bIsSecondaryWindowVisible;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -606,6 +622,7 @@ void cPreferences::loadConfFileSettings()
         m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
         m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
         m_uiComponent               = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
+        m_bIsSecondaryWindowVisible = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
 
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );
@@ -703,6 +720,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
     obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
     obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
+    obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );

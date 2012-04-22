@@ -355,6 +355,16 @@ void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
     }
 }
 //====================================================================================
+void cMdiPanels::patientAddedToWaitingQueue()
+{
+    m_obPanels.at( m_uiActivePanel )->patientAddedToWaitingQueue();
+}
+//====================================================================================
+void cMdiPanels::patientWaitingQueueEmpty()
+{
+    m_obPanels.at( m_uiActivePanel )->patientWaitingQueueEmpty();
+}
+//====================================================================================
 void cMdiPanels::openShoppingCart( unsigned int p_uiPanelId )
 {
     emit signalOpenShoppingCart( p_uiPanelId );

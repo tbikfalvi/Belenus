@@ -54,6 +54,8 @@ public:
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
     void            itemRemovedFromShoppingCart( const unsigned int p_uiPanelId );
+    void            patientAddedToWaitingQueue();
+    void            patientWaitingQueueEmpty();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;

@@ -78,6 +78,8 @@ public:
     bool            isItemInShoppingCart();
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
+    void            patientAddedToWaitingQueue();
+    void            patientWaitingQueueEmpty();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -108,6 +110,7 @@ private:
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;
     bool                         m_bIsItemInShoppingCart;
+    bool                         m_bIsPatientWaiting;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

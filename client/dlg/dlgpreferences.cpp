@@ -64,6 +64,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
+    on_pbSecondaryWindow_toggled( g_poPrefs->isSecondaryWindowVisible() );
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
@@ -174,6 +175,8 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setDefaultCountry( ledDefaultCountry->text() );
 
+    g_poPrefs->setSecondaryWindowVisibility( pbSecondaryWindow->isChecked() );
+
     g_poPrefs->save();
 
     QDialog::accept();
@@ -185,4 +188,18 @@ void cDlgPreferences::on_pbPanelSettings_clicked()
     cDlgPanelAppereance     obDlgPanelAppereance( this );
 
     obDlgPanelAppereance.exec();
+}
+
+void cDlgPreferences::on_pbSecondaryWindow_toggled(bool checked)
+{
+    if( checked )
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_on.png") );
+        lblSecondaryWindow->setText( tr("Visible") );
+    }
+    else
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
+        lblSecondaryWindow->setText( tr("Hidden") );
+    }
 }

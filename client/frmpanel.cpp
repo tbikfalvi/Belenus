@@ -132,6 +132,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_uiPaymentMethodId     = 0;
 
     m_bIsItemInShoppingCart = false;
+    m_bIsPatientWaiting     = false;
 
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
@@ -618,15 +619,8 @@ void cFrmPanel::displayStatus()
     icoPanelNext->setVisible( isStatusCanBeSkipped() );
     icoPanelStop->setVisible( isMainProcess() );
     icoPanelCassa->setVisible( isHasToPay() );
-
-    if( m_bIsItemInShoppingCart )
-    {
-        icoShoppingCart->setVisible( true );
-    }
-    else
-    {
-        icoShoppingCart->setVisible( false );
-    }
+    icoShoppingCart->setVisible( m_bIsItemInShoppingCart );
+    icoScheduledGuest->setVisible( m_bIsPatientWaiting );
 }
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )
@@ -1030,5 +1024,17 @@ void cFrmPanel::slotPanelCassaClicked()
 void cFrmPanel::slotScheduledGuestClicked()
 {
     emit signalOpenScheduleTable( m_uiId );
+}
+//====================================================================================
+void cFrmPanel::patientAddedToWaitingQueue()
+{
+    m_bIsPatientWaiting = true;
+    displayStatus();
+}
+//====================================================================================
+void cFrmPanel::patientWaitingQueueEmpty()
+{
+    m_bIsPatientWaiting = false;
+    displayStatus();
 }
 //====================================================================================

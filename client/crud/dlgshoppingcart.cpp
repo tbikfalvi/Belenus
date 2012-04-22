@@ -6,6 +6,7 @@
 #include "../db/dbshoppingcart.h"
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbpanels.h"
+#include "../db/dbproduct.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -290,6 +291,10 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                     obDBPanel.load( obDBShoppingCart.panelId() );
                     qsComment = tr("Using device: %1").arg(obDBPanel.title());
                 }
+                else if( obDBShoppingCart.productId() > 0 )
+                {
+                    qsComment = tr("Selling product: %1").arg(obDBShoppingCart.itemName());
+                }
 
                 obDlgCassaAction.cassaResult( &inPayType, &qsComment );
 
@@ -304,6 +309,15 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 {
                     emit signalPaymentProcessed( obDBShoppingCart, inPayType, qsComment );
                 }
+                else if( obDBShoppingCart.productId() > 0 )
+                {
+                    cDBProduct  obDBProduct;
+
+                    obDBProduct.load( obDBShoppingCart.productId() );
+                    obDBProduct.decreaseProductCount( obDBShoppingCart.itemCount() );
+                    obDBProduct.save();
+                }
+
                 obDBShoppingCart.remove();
             }
 

@@ -95,6 +95,9 @@ public:
     bool            getDBAutoArchive() const;
     void            setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow = false );
     bool            getDBGlobalAutoSynchronize() const;
+    void            setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow = false  );
+    bool            isSecondaryWindowVisible() const;
+
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -161,6 +164,7 @@ private:
     int             m_inZipLength;
     bool            m_bDBAutoArchive;
     bool            m_bDBGlobalAutoSynchronize;
+    bool            m_bIsSecondaryWindowVisible;
 
     void init();
 };

@@ -45,6 +45,7 @@
 #include "crud/dlgproductactiontype.h"
 #include "crud/dlgproduct.h"
 #include "crud/dlgshoppingcart.h"
+#include "crud/dlgproductsell.h"
 
 //====================================================================================
 
@@ -508,6 +509,10 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
             else if( obDlgInputStart.m_bCard )
             {
                 processInputPatientCard( obDlgInputStart.getEditText() );
+            }
+            else if( obDlgInputStart.m_bProd )
+            {
+                processInputProduct( obDlgInputStart.getEditText() );
             }
             else if( obDlgInputStart.m_bTime )
             {
@@ -1029,7 +1034,16 @@ void cWndMain::on_action_Products_triggered()
 //====================================================================================
 void cWndMain::on_action_SellProduct_triggered()
 {
+    on_action_SellProduct_triggered( "" );
+}
+//====================================================================================
+void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
+{
+    cDlgProductSell obDlgProductSell( this, p_qsBarcode );
 
+    connect( &obDlgProductSell, SIGNAL(signalPaymentProcessed(cDBShoppingCart)), this, SLOT(processProductSellPayment(cDBShoppingCart)) );
+
+    obDlgProductSell.exec();
 }
 //====================================================================================
 void cWndMain::on_action_ShoppingCart_triggered()
@@ -1398,6 +1412,11 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     }
 }
 //====================================================================================
+void cWndMain::processInputProduct( QString p_stBarcode )
+{
+    on_action_SellProduct_triggered( p_stBarcode );
+}
+//====================================================================================
 void cWndMain::processInputTimePeriod( int p_inSecond )
 {
     if( !mdiPanels->isCanBeStartedByTime() )
@@ -1553,6 +1572,54 @@ void cWndMain::processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCar
 
     mdiPanels->cashPayed( p_obDBShoppingCart.panelId(), obDBLedger.id() );
     mdiPanels->itemRemovedFromShoppingCart( p_obDBShoppingCart.panelId() );
+}
+//====================================================================================
+void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart )
+{
+    cDBShoppingCart obDBShoppingCart = p_obDBShoppingCart;
+
+    cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
+
+    obDlgCassaAction.setPayWithCash();
+    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    {
+        if( obDBShoppingCart.id() == 0 )
+        {
+            int     inPayType = 0;
+            QString qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
+
+            obDlgCassaAction.cassaResult( &inPayType, &qsComment );
+            if( inPayType == cDlgCassaAction::PAY_CASH )
+            {
+                g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), qsComment );
+            }
+            cDBLedger   obDBLedger;
+
+            obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBLedger.setLedgerTypeId( 4 );
+            obDBLedger.setLedgerDeviceId( 0 );
+            obDBLedger.setPaymentMethod( inPayType );
+            obDBLedger.setUserId( g_obUser.id() );
+            obDBLedger.setProductId( obDBShoppingCart.productId() );
+            obDBLedger.setPatientCardTypeId( 0 );
+            obDBLedger.setPatientCardId( 0 );
+            obDBLedger.setPanelId( 0 );
+            obDBLedger.setName( obDBShoppingCart.itemName() );
+            obDBLedger.setNetPrice( obDBShoppingCart.itemNetPrice() );
+            obDBLedger.setDiscount( obDBShoppingCart.itemDiscount() );
+            obDBLedger.setVatpercent( obDBShoppingCart.itemVAT() );
+            obDBLedger.setTotalPrice( obDBShoppingCart.itemSumPrice() );
+            obDBLedger.setComment( qsComment );
+            obDBLedger.setActive( true );
+            obDBLedger.save();
+
+            cDBProduct  obDBProduct;
+
+            obDBProduct.load( obDBShoppingCart.productId() );
+            obDBProduct.decreaseProductCount( obDBShoppingCart.itemCount() );
+            obDBProduct.save();
+        }
+    }
 }
 //====================================================================================
 void cWndMain::on_action_IllnessGroup_triggered()

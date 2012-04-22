@@ -19,11 +19,13 @@ public:
     bool m_bTime;
     bool m_bCard;
     bool m_bPat;
+    bool m_bProd;
 
 private:
     bool     m_bInitCalled;
 
 private slots:
+    void on_pbProduct_clicked();
     void on_ledInputStart_returnPressed();
     void on_pbCancel_clicked();
     void on_pbPatient_clicked();

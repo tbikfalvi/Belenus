@@ -55,18 +55,21 @@ private:
     void updateTitle();
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
+    void processInputProduct( QString p_stBarcode );
     void processInputTimePeriod( int p_inSecond );
 
 public slots:
     void processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCart, int p_nPaymentType = cDlgCassaAction::PAY_CASH, const QString &p_qsComment = "" );
+    void processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart );
 
 private slots:
+    void on_action_SellProduct_triggered();
     void updateToolbar();
     void slotOpenShoppingCart( unsigned int p_uiPanelId );
     void slotOpenScheduleTable( unsigned int p_uiPanelId );
     void on_action_CassaActionStorno_triggered();
     void on_action_ShoppingCart_triggered();
-    void on_action_SellProduct_triggered();
+    void on_action_SellProduct_triggered( QString p_qsBarcode );
     void on_action_ProductActionType_triggered();
     void on_action_Guests_triggered();
     void on_action_Preferences_triggered();

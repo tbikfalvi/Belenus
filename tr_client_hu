@@ -1,5 +1,0 @@
-cd client
-lupdate-qt4 belenus.pro
-cd ..
-linguist-qt4 client/belenus_hu.ts
-

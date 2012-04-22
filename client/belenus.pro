@@ -60,6 +60,7 @@ HEADERS = belenus.h \
     crud/dlgzipregioncityselect.h \
     crud/dlgguest.h \
     crud/dlgproduct.h \
+    crud/dlgproductsell.h \
     crud/dlgproducttype.h \
     crud/dlgproductactiontype.h \
     crud/dlgpatientcardselect.h \
@@ -164,6 +165,7 @@ SOURCES = main.cpp \
     crud/dlgzipregioncityselect.cpp \
     crud/dlgguest.cpp \
     crud/dlgproduct.cpp \
+    crud/dlgproductsell.cpp \
     crud/dlgproducttype.cpp \
     crud/dlgproductactiontype.cpp \
     crud/dlgpatientcardselect.cpp \
