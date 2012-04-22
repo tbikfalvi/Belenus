@@ -64,7 +64,17 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
-    on_pbSecondaryWindow_toggled( g_poPrefs->isSecondaryWindowVisible() );
+    pbSecondaryWindow->setChecked( g_poPrefs->isSecondaryWindowVisible() );
+    if( g_poPrefs->isSecondaryWindowVisible() )
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_on.png") );
+        lblSecondaryWindow->setText( tr("Visible") );
+    }
+    else
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
+        lblSecondaryWindow->setText( tr("Hidden") );
+    }
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );

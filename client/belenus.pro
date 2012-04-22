@@ -30,7 +30,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgproductedit.ui \
     dlgguestedit.ui \
     dlgvalidtimeperiodedit.ui \
-    dlgproductstorage.ui
+    dlgproductstorage.ui \
+    dlgsecondarywindow.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -138,7 +139,9 @@ HEADERS = belenus.h \
     edit/dlglicenceedit.h \
     general.h \
     dlg/dlgprogress.h \
-    dlg/dlgproductstorage.h
+    dlg/dlgproductstorage.h \
+    dlg/dlgsecondarywindow.h \
+    dsppanel.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -242,7 +245,9 @@ SOURCES = main.cpp \
     report/repcarduses.cpp \
     general.cpp \
     dlg/dlgprogress.cpp \
-    dlg/dlgproductstorage.cpp
+    dlg/dlgproductstorage.cpp \
+    dlg/dlgsecondarywindow.cpp \
+    dsppanel.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

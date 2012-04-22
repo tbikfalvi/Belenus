@@ -8,6 +8,7 @@
 #include "dlg/dlgprogress.h"
 #include "db/dbshoppingcart.h"
 #include "dlg/dlgcassaaction.h"
+#include "dlg/dlgsecondarywindow.h"
 
 using namespace std;
 
@@ -37,19 +38,20 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
-    cMdiPanels         *mdiPanels;
-    cDlgProgress       *m_dlgProgress;
-    int                 m_nTimer;
+    cMdiPanels          *mdiPanels;
+    cDlgProgress        *m_dlgProgress;
+    int                  m_nTimer;
+    cDlgSecondaryWindow *m_dlgSecondaryWindow;
 
-    unsigned int        m_uiPatientId;
+    unsigned int         m_uiPatientId;
 
-    bool                m_bCtrlPressed;
+    bool                 m_bCtrlPressed;
 
-    bool                m_bSerialRegistration;
-    int                 m_inRegistrationTimeout;
+    bool                 m_bSerialRegistration;
+    int                  m_inRegistrationTimeout;
 
-    bool                m_bGlobalDataRequested;
-    int                 m_inGlobalDataRequestTimeout;
+    bool                 m_bGlobalDataRequested;
+    int                  m_inGlobalDataRequestTimeout;
 
     void showElementsForComponents();
     void updateTitle();

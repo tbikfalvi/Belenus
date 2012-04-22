@@ -550,6 +550,40 @@ bool cPreferences::isSecondaryWindowVisible() const
     return m_bIsSecondaryWindowVisible;
 }
 
+void cPreferences::setSecondaryWindowPosition( const QPoint &p_qpPosition, bool p_boSaveNow )
+{
+    m_qpSecondaryPosition = p_qpPosition;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
+    }
+}
+
+QPoint cPreferences::secondaryWindowPosition() const
+{
+    return m_qpSecondaryPosition;
+}
+
+void cPreferences::setSecondaryWindowSize( const QSize &p_qsSize, bool p_boSaveNow )
+{
+    m_qsSecondarySize = p_qsSize;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
+    }
+}
+
+QSize cPreferences::secondaryWindowSize() const
+{
+    return m_qsSecondarySize;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -623,6 +657,13 @@ void cPreferences::loadConfFileSettings()
         m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
         m_uiComponent               = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
         m_bIsSecondaryWindowVisible = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
+        int nLeft                   = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
+        int nTop                    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
+        int nWidth                  = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
+        int nHeight                 = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
+
+        m_qpSecondaryPosition = QPoint( nLeft, nTop );
+        m_qsSecondarySize = QSize( nWidth, nHeight );
 
         bool boIsANumber = false;
         m_qsBarcodePrefix.toInt( &boIsANumber );
@@ -721,6 +762,11 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
     obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
     obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
+
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );

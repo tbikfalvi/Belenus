@@ -206,6 +206,17 @@ cWndMain::cWndMain( QWidget *parent )
     action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
 
     showElementsForComponents();
+
+    m_dlgSecondaryWindow = new cDlgSecondaryWindow( this );
+
+    if( g_poPrefs->isSecondaryWindowVisible() )
+    {
+        m_dlgSecondaryWindow->move( g_poPrefs->secondaryWindowPosition() );
+        m_dlgSecondaryWindow->resize( g_poPrefs->secondaryWindowSize() );
+        m_dlgSecondaryWindow->show();
+        m_dlgSecondaryWindow->initPanels();
+        this->setFocus();
+    }
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -213,6 +224,7 @@ cWndMain::~cWndMain()
     cTracer obTrace( "cWndMain::~cWndMain" );
 
     delete m_dlgProgress;
+    delete m_dlgSecondaryWindow;
 
     killTimer( m_nTimer );
 }
@@ -759,6 +771,20 @@ void cWndMain::on_action_Preferences_triggered()
         mdiPanels->placeSubWindows();
         mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
         mdiPanels->show();
+
+        if( g_poPrefs->isSecondaryWindowVisible() )
+        {
+            m_dlgSecondaryWindow->move( g_poPrefs->secondaryWindowPosition() );
+            m_dlgSecondaryWindow->resize( g_poPrefs->secondaryWindowSize() );
+            m_dlgSecondaryWindow->show();
+            this->setFocus();
+        }
+        else
+        {
+            g_poPrefs->setSecondaryWindowPosition( QPoint( m_dlgSecondaryWindow->x(), m_dlgSecondaryWindow->y() ), true );
+            g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
+            m_dlgSecondaryWindow->hide();
+        }
     }
 }
 //====================================================================================

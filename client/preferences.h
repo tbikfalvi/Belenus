@@ -18,6 +18,7 @@
 
 #include <QString>
 #include <QPoint>
+#include <QSize>
 #include "../framework/sevexception.h"
 
 class cPreferences
@@ -95,8 +96,12 @@ public:
     bool            getDBAutoArchive() const;
     void            setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow = false );
     bool            getDBGlobalAutoSynchronize() const;
-    void            setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow = false  );
+    void            setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow = false );
     bool            isSecondaryWindowVisible() const;
+    void            setSecondaryWindowPosition( const QPoint &p_qpPosition, bool p_boSaveNow = false );
+    QPoint          secondaryWindowPosition() const;
+    void            setSecondaryWindowSize( const QSize &p_qsSize, bool p_boSaveNow = false );
+    QSize           secondaryWindowSize() const;
 
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
@@ -165,6 +170,8 @@ private:
     bool            m_bDBAutoArchive;
     bool            m_bDBGlobalAutoSynchronize;
     bool            m_bIsSecondaryWindowVisible;
+    QPoint          m_qpSecondaryPosition;
+    QSize           m_qsSecondarySize;
 
     void init();
 };
