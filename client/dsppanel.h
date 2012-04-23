@@ -28,7 +28,7 @@
 
 //====================================================================================
 
-//#include "db/dbpanelstatuses.h"
+#include "db/dbpanelstatussettings.h"
 
 //====================================================================================
 
@@ -44,26 +44,43 @@ private:
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
-    QLabel                      *lblCurrStatus;
-    QLabel                      *lblCurrTimer;
-    QLabel                      *lblNextStatusLen;
-    QLabel                      *lblInfo;
     QSpacerItem                 *spacer1;
+    QLabel                      *lblCurrStatus;
     QSpacerItem                 *spacer2;
+    QLabel                      *lblCurrTimer;
     QSpacerItem                 *spacer3;
+    QLabel                      *lblEstTimer;
     QSpacerItem                 *spacer4;
-    QString                      m_qsStatus;
-    QString                      m_qsTimer;
-    QString                      m_qsTimerNextStatus;
-    QString                      m_qsInfo;
+    QLabel                      *lblInfo;
+    QSpacerItem                 *spacer5;
 
     unsigned int                 m_uiId;
+    unsigned int                 m_uiCounter;
+    unsigned int                 m_uiWaitTime;
 
-    void                         load();
-/*
+    void                         refreshTitle();
+    void                         setPanelStatus( const unsigned int p_uiPanelStatusId );
+    void                         setPanelStatusText( const QString &p_qsStatus );
+    void                         setPanelInfoText( const QString &p_qsInfo );
+    void                         setPanelCounter( const unsigned int p_uiCounter );
+    void                         setPanelWaitTime( const unsigned int p_uiWaitTime );
+
 protected:
-    void timerEvent ( QTimerEvent *p_poEvent );
+    void                         timerEvent( QTimerEvent *p_poEvent );
 
+private:
+
+    cDBPanelStatusSettings       m_obDBPanelStatusSettings;
+
+    void                         _load();
+    void                         _displayStatus();
+    void                         _formatStatusString( QString p_qsStatusText );
+    void                         _formatTimerString( QString p_qsTimerText );
+    void                         _formatWaitTimeString( QString p_qsTimerText );
+    void                         _formatInfoString( QString p_qsInfoText );
+
+
+    /*
 private:
 
     QHBoxLayout                 *layoutIcons;
@@ -77,11 +94,6 @@ private:
 
     vector<cDBPanelStatuses*>    m_obStatuses;
 
-    void            displayStatus();
-    void            formatStatusString( QString p_qsStatusText );
-    void            formatTimerString( QString p_qsTimerText );
-    void            formatNextLengthString( QString p_qsNextLengthText );
-    void            formatInfoString( QString p_qsInfoText );
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
