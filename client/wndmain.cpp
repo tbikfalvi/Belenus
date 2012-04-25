@@ -108,6 +108,7 @@ cWndMain::cWndMain( QWidget *parent )
     connect( mdiPanels, SIGNAL( signalOpenShoppingCart( uint ) ), this, SLOT( slotOpenShoppingCart( uint )) );
     connect( mdiPanels, SIGNAL( signalPaymentActivated() ), this, SLOT( on_action_PayCash_triggered() ) );
     connect( mdiPanels, SIGNAL( signalOpenScheduleTable(uint) ), this, SLOT(slotOpenScheduleTable(uint)) );
+    connect( mdiPanels, SIGNAL( signalStatusChanged(uint,uint,QString)), this, SLOT( slotStatusChanged(uint,uint,QString)) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
@@ -1851,5 +1852,11 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
 
     QMessageBox::information( this, tr("Information"),
                               tr("Deleting data attached to DEMO licence key has been finished."));
+}
+//====================================================================================
+void cWndMain::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
+{
+    m_dlgSecondaryWindow->setPanelStatus( p_uiPanelId, p_uiPanelStatusId );
+    m_dlgSecondaryWindow->setPanelStatusText( p_uiPanelId, p_qsStatus );
 }
 //====================================================================================

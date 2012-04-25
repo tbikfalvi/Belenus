@@ -48,6 +48,7 @@ void cMdiPanels::initPanels()
         connect( poFrame, SIGNAL( signalOpenShoppingCart( uint ) ), this, SLOT( openShoppingCart( uint ) ) );
         connect( poFrame, SIGNAL( signalPaymentActivated(uint) ), this, SLOT( slotPaymentActivated(uint) ) );
         connect( poFrame, SIGNAL( signalOpenScheduleTable(uint) ), this, SLOT( slotOpenScheduleTable(uint) ) );
+        connect( poFrame, SIGNAL(signalStatusChanged(uint,uint,QString)), this, SLOT(slotStatusChanged(uint,uint,QString)) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -387,5 +388,10 @@ void cMdiPanels::slotPaymentActivated( unsigned int p_uiPanelId )
 void cMdiPanels::slotOpenScheduleTable( unsigned int p_uiPanelId )
 {
     emit signalOpenScheduleTable( p_uiPanelId );
+}
+//====================================================================================
+void cMdiPanels::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
+{
+    emit signalStatusChanged( p_uiPanelId, p_uiPanelStatusId, p_qsStatus );
 }
 //====================================================================================

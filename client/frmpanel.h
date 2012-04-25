@@ -153,6 +153,7 @@ signals:
     void            signalPaymentActivated( unsigned int p_uiPanelId );
     void            signalOpenShoppingCart( unsigned int p_uiPanelId );
     void            signalOpenScheduleTable( unsigned int p_uiPanelId );
+    void            signalStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
 
 private slots:
     void            slotPanelStartClicked();

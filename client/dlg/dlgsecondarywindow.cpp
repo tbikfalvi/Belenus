@@ -56,8 +56,39 @@ void cDlgSecondaryWindow::initPanels()
     }
 }
 
-void cDlgSecondaryWindow::placePanels()
+void cDlgSecondaryWindow::refreshTitle( unsigned int p_uiPanelId )
 {
-    cTracer obTrace( "cDlgSecondaryWindow::placePanels" );
-
+    if( p_uiPanelId < m_obPanels.size() )
+        m_obPanels.at( p_uiPanelId )->refreshTitle();
 }
+
+void cDlgSecondaryWindow::setPanelStatus( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId )
+{
+    if( p_uiPanelId < m_obPanels.size() )
+        m_obPanels.at( p_uiPanelId )->setPanelStatus( p_uiPanelStatusId );
+}
+
+void cDlgSecondaryWindow::setPanelStatusText( unsigned int p_uiPanelId, const QString &p_qsStatus )
+{
+    if( p_uiPanelId < m_obPanels.size() )
+        m_obPanels.at( p_uiPanelId )->setPanelStatusText( p_qsStatus );
+}
+
+void cDlgSecondaryWindow::setPanelInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo )
+{
+    if( p_uiPanelId < m_obPanels.size() )
+        m_obPanels.at( p_uiPanelId )->setPanelInfoText( p_qsInfo );
+}
+
+void cDlgSecondaryWindow::setPanelCounter( unsigned int p_uiPanelId, const unsigned int p_uiCounter )
+{
+    if( p_uiPanelId < m_obPanels.size() )
+        m_obPanels.at( p_uiPanelId )->setPanelCounter( p_uiCounter );
+}
+
+void cDlgSecondaryWindow::setPanelWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime )
+{
+    if( p_uiPanelId < m_obPanels.size() )
+        m_obPanels.at( p_uiPanelId )->setPanelWaitTime( p_uiWaitTime );
+}
+

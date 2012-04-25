@@ -500,6 +500,8 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             m_obStatuses.push_back( poStatus );
         }
 
+        emit signalStatusChanged( m_uiId-1, m_uiStatus+1, lblTitle->text() );
+
         delete poQuery;
     }
     catch( cSevException &e )
@@ -607,6 +609,8 @@ void cFrmPanel::displayStatus()
     formatTimerString( m_qsTimer );
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString( qsInfo );
+
+    emit signalStatusChanged( m_uiId-1, m_uiStatus+1, m_qsStatus );
 
     if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
     {

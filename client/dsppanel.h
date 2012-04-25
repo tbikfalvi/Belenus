@@ -40,6 +40,13 @@ public:
     cDspPanel( const unsigned int p_uiPanelId );
     ~cDspPanel();
 
+    void                         refreshTitle();
+    void                         setPanelStatus( const unsigned int p_uiPanelStatusId );
+    void                         setPanelStatusText( const QString &p_qsStatus );
+    void                         setPanelInfoText( const QString &p_qsInfo );
+    void                         setPanelCounter( const unsigned int p_uiCounter );
+    void                         setPanelWaitTime( const unsigned int p_uiWaitTime );
+
 private:
 
     QVBoxLayout                 *verticalLayout;
@@ -58,13 +65,6 @@ private:
     unsigned int                 m_uiCounter;
     unsigned int                 m_uiWaitTime;
 
-    void                         refreshTitle();
-    void                         setPanelStatus( const unsigned int p_uiPanelStatusId );
-    void                         setPanelStatusText( const QString &p_qsStatus );
-    void                         setPanelInfoText( const QString &p_qsInfo );
-    void                         setPanelCounter( const unsigned int p_uiCounter );
-    void                         setPanelWaitTime( const unsigned int p_uiWaitTime );
-
 protected:
     void                         timerEvent( QTimerEvent *p_poEvent );
 
@@ -79,26 +79,6 @@ private:
     void                         _formatWaitTimeString( QString p_qsTimerText );
     void                         _formatInfoString( QString p_qsInfoText );
 
-
-    /*
-private:
-
-    QHBoxLayout                 *layoutIcons;
-    QPushButton                 *icoShoppingCart;
-    QSpacerItem                 *spacerIcons;
-    QPushButton                 *icoPanelStart;
-    QPushButton                 *icoPanelNext;
-    QPushButton                 *icoPanelStop;
-    QPushButton                 *icoPanelCassa;
-    QPushButton                 *icoScheduledGuest;
-
-    vector<cDBPanelStatuses*>    m_obStatuses;
-
-
-    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
-
-private slots:
-*/
 };
 
 #endif // DSPPANEL_H

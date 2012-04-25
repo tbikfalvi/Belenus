@@ -63,6 +63,7 @@ signals:
     void            signalOpenShoppingCart( unsigned int p_uiPanelId );
     void            signalPaymentActivated();
     void            signalOpenScheduleTable( unsigned int p_uiPanelId );
+    void            signalStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
 
 private:
     vector<cFrmPanel*>  m_obPanels;
@@ -75,6 +76,7 @@ private slots:
     void slotPaymentActivated( unsigned int p_uiPanelId );
     void openShoppingCart( unsigned int p_uiPanelId );
     void slotOpenScheduleTable( unsigned int p_uiPanelId );
+    void slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );
