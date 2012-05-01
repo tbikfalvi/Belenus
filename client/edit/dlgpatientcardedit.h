@@ -30,6 +30,8 @@ private:
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 private slots:
+    void slotRefreshWarningColors();
+    void slotEnableButtons();
     void on_ledBarcode_lostFocus();
     void on_cmbPatient_currentIndexChanged(int index);
     void on_cmbCardType_currentIndexChanged(int index);

@@ -1,7 +1,24 @@
+//===========================================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//===========================================================================================================
+//
+// Filename    : dlgguestedit.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//===========================================================================================================
+// Szolarium studioba betero vendegek adatait kezelo ablak.
+//===========================================================================================================
+
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSqlQuery>
 #include <iostream>
+
+//===========================================================================================================
 
 #include "dlgguestedit.h"
 #include "belenus.h"
@@ -10,8 +27,16 @@
 #include "../crud/dlgaddress.h"
 #include "../crud/dlgpatientcardselect.h"
 
-cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostponed* )
-    : QDialog( p_poParent )
+//===========================================================================================================
+//  cDlgGuestEdit
+//-----------------------------------------------------------------------------------------------------------
+//  Konstruktor
+//-----------------------------------------------------------------------------------------------------------
+//  Parameterek:
+//      p_poParent      Az ablakot meghivo szulo widget-re mutato pointer
+//      p_poGuest       A vendeg adatait tartamlazo objektumra mutato pointer
+//-----------------------------------------------------------------------------------------------------------
+cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostponed* ) : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgGuestEdit::cDlgGuestEdit" );
 
@@ -22,7 +47,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
-    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbSaveExit->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbSave->setIcon( QIcon("./resources/40x40_save.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbHistory->setIcon( QIcon("./resources/40x40_question.png") );
     pbAssignCard->setIcon( QIcon("./resources/40x40_patientcard_join.png") );
@@ -73,7 +99,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
         ledLoyaltyPoints->setText( QString::number( m_poGuest->loyaltyPoints() ) );
 
-        fillPatientCardData();
+        _fillPatientCardData();
 
         if( !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
@@ -98,15 +124,179 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         }
     }
 
+    connect( ledName, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( ledEmail, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( rbGenderMale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+    connect( rbGenderFemale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+    connect( rbAge0, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+
+    slotEnableButtons();
+    slotRefreshWarningColors();
+
     m_bInit = false;
 }
-
+//===========================================================================================================
+//  ~cDlgGuestEdit
+//-----------------------------------------------------------------------------------------------------------
 cDlgGuestEdit::~cDlgGuestEdit()
 {
     cTracer obTrace( "cDlgGuestEdit::~cDlgGuestEdit" );
 }
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbSaveExit_clicked()
+{
+    bool  boCanBeSaved = true;
 
-void cDlgGuestEdit::fillPatientCardData()
+    if( ledName->text() == "" )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "Guest name cannot be empty." ) );
+        ledName->setFocus();
+        return;
+    }
+
+    if( boCanBeSaved )
+    {
+        if( _saveGuestData() )
+            QDialog::accept();
+    }
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbCancel_clicked()
+{
+    QDialog::reject();
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbSave_clicked()
+{
+    bool  boCanBeSaved = true;
+
+    if( ledName->text() == "" )
+    {
+        QMessageBox::critical( this, tr( "Error" ), tr( "Guest name cannot be empty." ) );
+        ledName->setFocus();
+        return;
+    }
+
+    if( boCanBeSaved )
+    {
+        _saveGuestData();
+    }
+    slotEnableButtons();
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbAssignCard_clicked()
+{
+    cDlgPatientCardSelect   obDlgSelect( this );
+
+    if( obDlgSelect.exec() == QDialog::Accepted )
+    {
+        unsigned int uiPCardId = obDlgSelect.selected();
+
+        m_poPatientCard = new cDBPatientCard();
+        m_poPatientCard->load( uiPCardId );
+
+        if( m_poPatientCard->patientId() == 0 )
+        {
+            m_poPatientCard->setPatientId( m_poGuest->id() );
+            m_poPatientCard->save();
+        }
+        else
+        {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(uiPCardId).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+
+            if( poQuery->size() == 0 )
+            {
+                g_poDB->executeQTQuery( QString( "INSERT INTO connectpatientwithcard (patientCardId, patientId, licenceId) VALUES ('%1', '%2', '%3')" ).arg(uiPCardId).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+            }
+        }
+    }
+    _fillPatientCardData();
+    slotEnableButtons();
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbSellCard_clicked()
+{
+    slotEnableButtons();
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbDislink_clicked()
+{
+    if( m_poPatientCard->id() < 1 ) return;
+
+    if( QMessageBox::question( this, tr( "Question" ),
+                               tr( "Are you sure you want to disjoin this card from patient?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        if( m_poPatientCard->patientId() == m_poGuest->id() )
+        {
+            m_poPatientCard->setPatientId( 0 );
+            m_poPatientCard->save();
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(m_poPatientCard->id()).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+        }
+    }
+    _fillPatientCardData();
+    slotEnableButtons();
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::on_pbHistory_clicked()
+{
+    QMessageBox::information( this, tr("Information"), tr("Not implemented yet.") );
+}
+//===========================================================================================================
+//  slotRefreshWarningColors
+//-----------------------------------------------------------------------------------------------------------
+//  A dialog-ban talalhato label-ek adat-fuggo atszinezeseert felelos procedura
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::slotRefreshWarningColors()
+{
+    lblName->setStyleSheet( "QLabel {font: normal;}" );
+    lblGender->setStyleSheet( "QLabel {font: normal;}" );
+    lblAge->setStyleSheet( "QLabel {font: normal;}" );
+    lblEmail->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( ledName->text().length() == 0 )
+        lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+
+    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
+        lblGender->setStyleSheet( "QLabel {font: bold; color: red;}" );
+
+    if( rbAge0->isChecked() )
+        lblAge->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+
+    if( ledEmail->text().length() == 0 )
+        lblEmail->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::slotEnableButtons()
+{
+    pbAssignCard->setEnabled( m_poGuest->id()>0 );
+    pbSellCard->setEnabled( m_poGuest->id()>0 );
+    pbHistory->setEnabled( m_poGuest->id()>0 );
+    pbDislink->setEnabled( ledBarcode->text().length()>0 );
+}
+//===========================================================================================================
+//  _fillPatientCardData
+//-----------------------------------------------------------------------------------------------------------
+void cDlgGuestEdit::_fillPatientCardData()
 {
     try
     {
@@ -154,42 +344,10 @@ void cDlgGuestEdit::fillPatientCardData()
         }
     }
 }
-
-void cDlgGuestEdit::on_pbSave_clicked()
-{
-    bool  boCanBeSaved = true;
-//    bool  boSkipErrorMessages = false;
-
-    if( ledName->text() == "" )
-    {
-        QMessageBox::critical( this, tr( "Error" ), tr( "Guest name cannot be empty." ) );
-        ledName->setFocus();
-        return;
-    }
-/*
-    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
-    {
-        boCanBeSaved = false;
-        if( QMessageBox::critical( this, tr( "Error" ), tr( "Guest gender must be selected.\n\nPress Ignore to skip other error messages." ), QMessageBox::Ok, QMessageBox::Ignore ) == QMessageBox::Ignore )
-        {
-            boSkipErrorMessages = true;
-        }
-    }
-*/
-
-    if( boCanBeSaved )
-    {
-        if( SaveGuestData() )
-            QDialog::accept();
-    }
-}
-
-void cDlgGuestEdit::on_pbCancel_clicked()
-{
-    QDialog::reject();
-}
-
-bool cDlgGuestEdit::SaveGuestData()
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+bool cDlgGuestEdit::_saveGuestData()
 {
     bool bRet = false;
 
@@ -225,64 +383,4 @@ bool cDlgGuestEdit::SaveGuestData()
     }
 
     return bRet;
-}
-
-void cDlgGuestEdit::on_pbHistory_clicked()
-{
-    QMessageBox::information( this, tr("Information"), tr("Not implemented yet.") );
-}
-
-void cDlgGuestEdit::on_pbAssignCard_clicked()
-{
-    cDlgPatientCardSelect   obDlgSelect( this );
-
-    if( obDlgSelect.exec() == QDialog::Accepted )
-    {
-        unsigned int uiPCardId = obDlgSelect.selected();
-
-        m_poPatientCard = new cDBPatientCard();
-        m_poPatientCard->load( uiPCardId );
-
-        if( m_poPatientCard->patientId() == 0 )
-        {
-            m_poPatientCard->setPatientId( m_poGuest->id() );
-            m_poPatientCard->save();
-        }
-        else
-        {
-            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(uiPCardId).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
-
-            if( poQuery->size() == 0 )
-            {
-                g_poDB->executeQTQuery( QString( "INSERT INTO connectpatientwithcard (patientCardId, patientId, licenceId) VALUES ('%1', '%2', '%3')" ).arg(uiPCardId).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
-            }
-        }
-    }
-    fillPatientCardData();
-}
-
-void cDlgGuestEdit::on_pbDislink_clicked()
-{
-    if( m_poPatientCard->id() < 1 ) return;
-
-    if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to disjoin this card from patient?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        if( m_poPatientCard->patientId() == m_poGuest->id() )
-        {
-            m_poPatientCard->setPatientId( 0 );
-            m_poPatientCard->save();
-        }
-        else
-        {
-            g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(m_poPatientCard->id()).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
-        }
-    }
-    fillPatientCardData();
-}
-
-void cDlgGuestEdit::on_pbSellCard_clicked()
-{
-
 }

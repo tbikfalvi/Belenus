@@ -16,14 +16,6 @@ public:
     cDlgGuestEdit( QWidget *p_poParent = 0, cDBGuest *p_poGuest = NULL, cDBPostponed *p_poPostponed = NULL );
     ~cDlgGuestEdit();
 
-public slots:
-
-private:
-    bool m_bInit;
-
-    void fillPatientCardData();
-    bool SaveGuestData();
-
 protected:
     cDBGuest        *m_poGuest;
     cDBPostponed    *m_poPostponed;
@@ -31,12 +23,22 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbSaveExit_clicked();
+    void slotRefreshWarningColors();
+    void slotEnableButtons();
     void on_pbSellCard_clicked();
     void on_pbDislink_clicked();
     void on_pbAssignCard_clicked();
     void on_pbHistory_clicked();
     void on_pbCancel_clicked();
     void on_pbSave_clicked();
+
+private:
+    bool m_bInit;
+
+    void _fillPatientCardData();
+    bool _saveGuestData();
+
 };
 
 #endif

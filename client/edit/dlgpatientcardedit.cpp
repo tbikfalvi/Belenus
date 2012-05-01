@@ -1,6 +1,23 @@
+//===========================================================================================================
+//
+// Belenus Kliens alkalmazas (c) Pagony Multimedia Studio Bt - 2010
+//
+//===========================================================================================================
+//
+// Filename    : dlgpatientcardedit.cpp
+// AppVersion  : 1.0
+// FileVersion : 1.0
+// Author      : Ballok Peter, Bikfalvi Tamas
+//
+//===========================================================================================================
+// Berletek adatait kezelo ablak.
+//===========================================================================================================
+
 #include <QPushButton>
 #include <QMessageBox>
 #include <ctime>
+
+//===========================================================================================================
 
 #include "dlgpatientcardedit.h"
 #include "../db/dbpatientcardtype.h"
@@ -8,39 +25,35 @@
 #include "../db/dbledger.h"
 #include "../db/dbshoppingcart.h"
 
-cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p_poPatientCard )
-    : QDialog( p_poParent )
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p_poPatientCard ) : QDialog( p_poParent )
 {
     setupUi( this );
 
-    setWindowTitle( tr( "Patient card" ) );
-    setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
-
+    m_poPatientCard     = p_poPatientCard;
+    m_poPatientCardType = new cDBPatientCardType;
     m_bDlgLoaded        = false;
     m_bNewCard          = true;
     m_bRefillCard       = false;
     m_bIsCardActivated  = false;
 
+    setWindowTitle( tr( "Patient card" ) );
+    setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
+
+    cbActive->setChecked( true );
+    ledUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
+    teTimeLeft->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
+    ledPrice->setEnabled( false );
+
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
-
-    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPatientCard", QPoint(440,380) );
-    resize( qpDlgSize.x(), qpDlgSize.y() );
-
-    m_poPatientCard     = p_poPatientCard;
-    m_poPatientCardType = new cDBPatientCardType;
 
     if( m_poPatientCard->patientId() > 0 )
     {
         m_bNewCard = false;
     }
-
-    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-    cbActive->setChecked( true );
-    ledUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
-    teTimeLeft->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
-    ledPrice->setEnabled( false );
 
     if( m_poPatientCard->id() == 0 || ( m_poPatientCard->id() > 0 && !m_poPatientCard->active() ) )
     {
@@ -108,15 +121,28 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         cmbPatient->setEnabled( false );
     }
 
-    if( cbActive->isChecked() )
-    {
-        lblPatient->setStyleSheet( "QLabel {font: normal;}" );
-        if( cmbPatient->currentIndex() == 0 )
-        {
-            lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
-        }
-    }
+    slotRefreshWarningColors();
+    slotEnableButtons();
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPatientCard", QPoint(440,380) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
+    m_bDlgLoaded = true;
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+cDlgPatientCardEdit::~cDlgPatientCardEdit()
+{
+    g_poPrefs->setDialogSize( "EditPatientCard", QPoint( width(), height() ) );
+
+    if( m_poPatientCardType ) delete m_poPatientCardType;
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::slotRefreshWarningColors()
+{
     lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
     lblCardType->setStyleSheet( "QLabel {font: normal;}" );
     lblPatient->setStyleSheet( "QLabel {font: normal;}" );
@@ -125,6 +151,11 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
 
     if( cbActive->isChecked() )
     {
+        lblPatient->setStyleSheet( "QLabel {font: normal;}" );
+        if( cmbPatient->currentIndex() == 0 )
+        {
+            lblPatient->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+        }
         if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
         {
             lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
@@ -150,22 +181,33 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
             lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
-    m_bDlgLoaded = true;
 }
-
-cDlgPatientCardEdit::~cDlgPatientCardEdit()
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgPatientCardEdit::slotEnableButtons()
 {
-    g_poPrefs->setDialogSize( "EditPatientCard", QPoint( width(), height() ) );
-
-    if( m_poPatientCardType ) delete m_poPatientCardType;
+    if( !m_poPatientCard->active() && cbActive->isChecked() )
+    {
+        pbSave->setIcon( QIcon("./resources/40x40_cassa.png") );
+    }
+    else
+    {
+        pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    }
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 }
-
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardEdit::activatePatientCard()
 {
     cbActive->setChecked( true );
     cmbCardType->setFocus();
 }
-
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardEdit::refillPatientCard()
 {
     m_bRefillCard = true;
@@ -176,7 +218,9 @@ void cDlgPatientCardEdit::refillPatientCard()
     cmbPatient->setEnabled( false );
     cmbCardType->setFocus();
 }
-
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardEdit::setPatientCardOwner( const unsigned int p_uiPatientId )
 {
     for( int i=0; i<cmbPatient->count(); i++ )
@@ -426,6 +470,8 @@ void cDlgPatientCardEdit::on_cbActive_toggled(bool checked)
             lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
+
+    slotEnableButtons();
 }
 
 void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
