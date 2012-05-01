@@ -21,6 +21,7 @@ private:
     QPushButton   *m_poBtnSystem;
 
 private slots:
+    void on_btnSecondaryBackground_clicked();
     void on_pbSecondaryWindow_toggled(bool checked);
     void on_pbPanelSettings_clicked();
     void on_chkAutoCloseCassa_clicked();

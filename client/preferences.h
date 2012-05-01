@@ -102,6 +102,8 @@ public:
     QPoint          secondaryWindowPosition() const;
     void            setSecondaryWindowSize( const QSize &p_qsSize, bool p_boSaveNow = false );
     QSize           secondaryWindowSize() const;
+    void            setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryBackground() const;
 
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
@@ -172,6 +174,7 @@ private:
     bool            m_bIsSecondaryWindowVisible;
     QPoint          m_qpSecondaryPosition;
     QSize           m_qsSecondarySize;
+    QString         m_qsSecondaryBackground;
 
     void init();
 };

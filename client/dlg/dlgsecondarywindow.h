@@ -18,14 +18,19 @@ public:
     ~cDlgSecondaryWindow();
 
     void                         initPanels();
+    void                         refreshBackground();
     void                         refreshTitle( unsigned int p_uiPanelId );
     void                         setPanelStatus( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId );
     void                         setPanelStatusText( unsigned int p_uiPanelId, const QString &p_qsStatus );
     void                         setPanelInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
-    void                         setPanelCounter( unsigned int p_uiPanelId, const unsigned int p_uiCounter );
+    void                         setCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void                         setPanelWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
 
+protected:
+    void keyPressEvent ( QKeyEvent *p_poEvent );
+
 private:
+    QWidget                     *m_poParent;
     vector<cDspPanel*>           m_obPanels;
     QGridLayout                 *layoutMain;
 

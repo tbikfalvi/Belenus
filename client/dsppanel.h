@@ -44,7 +44,7 @@ public:
     void                         setPanelStatus( const unsigned int p_uiPanelStatusId );
     void                         setPanelStatusText( const QString &p_qsStatus );
     void                         setPanelInfoText( const QString &p_qsInfo );
-    void                         setPanelCounter( const unsigned int p_uiCounter );
+    void                         setCounterText( const QString &p_qsCounter );
     void                         setPanelWaitTime( const unsigned int p_uiWaitTime );
 
 private:
@@ -62,11 +62,10 @@ private:
     QSpacerItem                 *spacer5;
 
     unsigned int                 m_uiId;
-    unsigned int                 m_uiCounter;
     unsigned int                 m_uiWaitTime;
+    int                          m_inTimerId;
 
 protected:
-    void                         timerEvent( QTimerEvent *p_poEvent );
 
 private:
 

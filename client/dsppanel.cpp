@@ -29,7 +29,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 {
     cTracer obTrace( "cDspPanel::cDspPanel" );
 
-    m_uiId = p_uiPanelId;
+    m_uiId          = p_uiPanelId;
 
     setFrameShape( QFrame::Panel );
     setFrameShadow( QFrame::Raised );
@@ -38,7 +38,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     verticalLayout  = new QVBoxLayout( this );
     lblTitle        = new QLabel( this );
-    spacer1         = new QSpacerItem( 20, 15, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer1         = new QSpacerItem( 20, 30, QSizePolicy::Minimum, QSizePolicy::Expanding );
     lblCurrStatus   = new QLabel( this );
     spacer2         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
     lblCurrTimer    = new QLabel( this );
@@ -46,7 +46,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblEstTimer     = new QLabel( this );
     spacer4         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
     lblInfo         = new QLabel( this );
-    spacer5         = new QSpacerItem( 20, 120, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer5         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
 
@@ -88,6 +88,8 @@ void cDspPanel::refreshTitle()
 //====================================================================================
 void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 {
+    cTracer obTrace( "cDspPanel::setPanelStatus" );
+
     try
     {
         m_obDBPanelStatusSettings.load( p_uiPanelStatusId );
@@ -120,23 +122,40 @@ void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 //====================================================================================
 void cDspPanel::setPanelStatusText( const QString &p_qsStatus )
 {
+    cTracer obTrace( "cDspPanel::setPanelStatusText" );
+
     _formatStatusString( p_qsStatus );
 }
 //====================================================================================
 void cDspPanel::setPanelInfoText( const QString &p_qsInfo )
 {
+    cTracer obTrace( "cDspPanel::setPanelInfoText" );
+
     _formatInfoString( p_qsInfo );
 }
 //====================================================================================
-void cDspPanel::setPanelCounter( const unsigned int p_uiCounter )
+void cDspPanel::setCounterText( const QString &p_qsCounter )
 {
-    m_uiCounter = p_uiCounter;
-    _formatTimerString( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
+    cTracer obTrace( "cDspPanel::setCounterText" );
+
+    _formatTimerString( p_qsCounter );
 }
+
 //====================================================================================
 void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
 {
+    cTracer obTrace( "cDspPanel::setPanelWaitTime" );
+
     m_uiWaitTime = p_uiWaitTime;
+
+    if( m_uiWaitTime )
+    {
+        _formatWaitTimeString( QString( "%1:%2" ).arg( m_uiWaitTime / 60, 2, 10, QChar( '0' ) ).arg( m_uiWaitTime % 60, 2, 10, QChar( '0' ) ) );
+    }
+    else
+    {
+        _formatWaitTimeString( "" );
+    }
 }
 //====================================================================================
 void cDspPanel::_load()
@@ -172,21 +191,10 @@ void cDspPanel::_displayStatus()
     setPalette( obFramePalette );
 }
 //====================================================================================
-void cDspPanel::timerEvent( QTimerEvent * )
-{
-    if( m_uiCounter )
-    {
-        m_uiCounter--;
-        _formatTimerString( QString( "%1:%2" ).arg( m_uiCounter / 60, 2, 10, QChar( '0' ) ).arg( m_uiCounter % 60, 2, 10, QChar( '0' ) ) );
-    }
-    else
-    {
-        _formatTimerString( QString( ":" ) );
-    }
-}
-//====================================================================================
 void cDspPanel::_formatStatusString( QString p_qsStatusText )
 {
+    cTracer obTrace( QString("cDspPanel::_formatStatusString - %1").arg(p_qsStatusText) );
+
     QFont   obFont;
 
     obFont = lblCurrStatus->font();
@@ -202,6 +210,8 @@ void cDspPanel::_formatStatusString( QString p_qsStatusText )
 //====================================================================================
 void cDspPanel::_formatTimerString( QString p_qsTimerText )
 {
+    cTracer obTrace( QString("cDspPanel::_formatTimerString - %1").arg(p_qsTimerText) );
+
     QFont   obFont;
 
     obFont = lblCurrTimer->font();
@@ -216,6 +226,8 @@ void cDspPanel::_formatTimerString( QString p_qsTimerText )
 //====================================================================================
 void cDspPanel::_formatWaitTimeString( QString p_qsTimerText )
 {
+    cTracer obTrace( QString("cDspPanel::_formatWaitTimeString - %1").arg(p_qsTimerText) );
+
     QFont   obFont;
 
     obFont = lblEstTimer->font();
@@ -230,6 +242,8 @@ void cDspPanel::_formatWaitTimeString( QString p_qsTimerText )
 //====================================================================================
 void cDspPanel::_formatInfoString( QString p_qsInfoText )
 {
+    cTracer obTrace( QString("cDspPanel::_formatInfoString - %1").arg(p_qsInfoText) );
+
     QFont   obFont;
 
     obFont = lblInfo->font();

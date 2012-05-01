@@ -213,8 +213,6 @@ void cFrmPanel::start()
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
 
-//    m_uiAttendanceId = g_uiPatientAttendanceId;
-
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
 }
@@ -223,6 +221,8 @@ void cFrmPanel::reset()
 {
     if( !isMainProcess() )
         return;
+
+    emit signalSetCounterText( m_uiId-1, "" );
 
     activateNextStatus();
 }
@@ -246,6 +246,10 @@ void cFrmPanel::clear()
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
+
+    emit signalSetCounterText( m_uiId-1, "" );
+    emit signalSetWaitTime( m_uiId-1, 0 );
+
     if( m_inCashToPay == 0 )
     {
         if( m_pDBLedgerDevice->cash() > 0 )
@@ -489,18 +493,18 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         delete poQuery;
         poQuery = NULL;
 
+        m_uiProcessWaitTime = 0;
         m_obStatuses.clear();
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, panelTypeId, seqNumber from panelStatuses WHERE panelTypeId=%1 ORDER BY seqNumber" ).arg( m_uiType ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, length, panelTypeId, seqNumber from panelStatuses WHERE panelTypeId=%1 ORDER BY seqNumber" ).arg( m_uiType ) );
         while( poQuery->next() )
         {
             unsigned int uiStatusId = poQuery->value( 0 ).toInt();
+            m_uiProcessWaitTime += poQuery->value( 1 ).toUInt();
 
             cDBPanelStatuses  *poStatus = new cDBPanelStatuses();
             poStatus->load( uiStatusId );
             m_obStatuses.push_back( poStatus );
         }
-
-        emit signalStatusChanged( m_uiId-1, m_uiStatus+1, lblTitle->text() );
 
         delete poQuery;
     }
@@ -521,6 +525,7 @@ void cFrmPanel::reload()
         {
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
+            emit signalStatusChanged( m_uiId-1, m_uiStatus+1, lblTitle->text() );
         }
         delete poQuery;
     }
@@ -611,6 +616,14 @@ void cFrmPanel::displayStatus()
     formatInfoString( qsInfo );
 
     emit signalStatusChanged( m_uiId-1, m_uiStatus+1, m_qsStatus );
+    if( m_uiStatus == 0 && m_inMainProcessLength == 0 )
+    {
+        emit signalSetWaitTime( m_uiId-1, 0 );
+    }
+    else
+    {
+        emit signalSetWaitTime( m_uiId-1, _calculateWaitTime() );
+    }
 
     if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
     {
@@ -692,6 +705,8 @@ void cFrmPanel::formatTimerString( QString p_qsTimerText )
     obFont.setFamily( obDBPanelStatusSettings.timerFontName() );
     obFont.setPixelSize( obDBPanelStatusSettings.timerFontSize() );
     obFont.setBold( true );
+
+    emit signalSetCounterText( m_uiId-1, p_qsTimerText );
 
     lblCurrTimer->setAlignment( Qt::AlignCenter );
     lblCurrTimer->setFont( obFont );
@@ -1042,3 +1057,16 @@ void cFrmPanel::patientWaitingQueueEmpty()
     displayStatus();
 }
 //====================================================================================
+unsigned int cFrmPanel::_calculateWaitTime()
+{
+    unsigned int uiWaitTime = 0;
+
+    for( int i=m_uiStatus+1; i<(int)m_obStatuses.size(); i++ )
+    {
+        uiWaitTime += m_obStatuses.at(i)->length();
+    }
+
+    // m_uiProcessWaitTime;
+
+    return uiWaitTime;
+}

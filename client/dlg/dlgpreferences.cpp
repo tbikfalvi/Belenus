@@ -87,6 +87,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
+    btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
+
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
@@ -98,6 +101,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     }
 
     ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
+
+    pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
 }
@@ -212,4 +217,14 @@ void cDlgPreferences::on_pbSecondaryWindow_toggled(bool checked)
         pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
         lblSecondaryWindow->setText( tr("Hidden") );
     }
+}
+
+void cDlgPreferences::on_btnSecondaryBackground_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryBackground() ), this );
+    if( obNewColor.isValid() ) g_poPrefs->setSecondaryBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
+    btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
 }

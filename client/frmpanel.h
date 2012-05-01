@@ -111,6 +111,7 @@ private:
     unsigned int                 m_uiPaymentMethodId;
     bool                         m_bIsItemInShoppingCart;
     bool                         m_bIsPatientWaiting;
+    unsigned int                 m_uiProcessWaitTime;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -147,13 +148,17 @@ private:
     void            activateNextStatus();
     void            closeAttendance();
 
-    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    unsigned int    _calculateWaitTime();
 
 signals:
     void            signalPaymentActivated( unsigned int p_uiPanelId );
     void            signalOpenShoppingCart( unsigned int p_uiPanelId );
     void            signalOpenScheduleTable( unsigned int p_uiPanelId );
     void            signalStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
+    void            signalSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
+    void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
+    void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
 
 private slots:
     void            slotPanelStartClicked();

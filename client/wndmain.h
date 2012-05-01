@@ -70,6 +70,9 @@ private slots:
     void slotOpenShoppingCart( unsigned int p_uiPanelId );
     void slotOpenScheduleTable( unsigned int p_uiPanelId );
     void slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
+    void slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
+    void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
+    void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
     void on_action_CassaActionStorno_triggered();
     void on_action_ShoppingCart_triggered();
     void on_action_SellProduct_triggered( QString p_qsBarcode );

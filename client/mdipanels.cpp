@@ -44,11 +44,14 @@ void cMdiPanels::initPanels()
         poFrame->setFrameShadow( QFrame::Sunken );
         poFrame->setLineWidth( 3 );
 
-        connect( poFrame, SIGNAL( panelClicked( unsigned int ) ), this, SLOT( activatePanel( unsigned int ) ) );
-        connect( poFrame, SIGNAL( signalOpenShoppingCart( uint ) ), this, SLOT( openShoppingCart( uint ) ) );
-        connect( poFrame, SIGNAL( signalPaymentActivated(uint) ), this, SLOT( slotPaymentActivated(uint) ) );
-        connect( poFrame, SIGNAL( signalOpenScheduleTable(uint) ), this, SLOT( slotOpenScheduleTable(uint) ) );
-        connect( poFrame, SIGNAL(signalStatusChanged(uint,uint,QString)), this, SLOT(slotStatusChanged(uint,uint,QString)) );
+        connect( poFrame, SIGNAL( panelClicked( unsigned int ) ),           this, SLOT( activatePanel( unsigned int ) ) );
+        connect( poFrame, SIGNAL( signalOpenShoppingCart( uint ) ),         this, SLOT( openShoppingCart( uint ) ) );
+        connect( poFrame, SIGNAL( signalPaymentActivated(uint) ),           this, SLOT( slotPaymentActivated(uint) ) );
+        connect( poFrame, SIGNAL( signalOpenScheduleTable(uint) ),          this, SLOT( slotOpenScheduleTable(uint) ) );
+        connect( poFrame, SIGNAL( signalStatusChanged(uint,uint,QString)),  this, SLOT( slotStatusChanged(uint,uint,QString) ) );
+        connect( poFrame, SIGNAL( signalSetCounterText(uint,QString)),      this, SLOT( slotSetCounterText(uint,QString) ) );
+        connect( poFrame, SIGNAL( signalSetWaitTime(uint,uint) ),           this, SLOT( slotSetWaitTime(uint,uint) ) );
+        connect( poFrame, SIGNAL( signalSetInfoText(uint,QString) ),        this, SLOT( slotSetInfoText(uint,QString) ) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -393,5 +396,19 @@ void cMdiPanels::slotOpenScheduleTable( unsigned int p_uiPanelId )
 void cMdiPanels::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
 {
     emit signalStatusChanged( p_uiPanelId, p_uiPanelStatusId, p_qsStatus );
+}
+void cMdiPanels::slotSetCounterText(unsigned int p_uiPanelId, const QString &p_qsCounter)
+{
+    emit signalSetCounterText( p_uiPanelId, p_qsCounter );
+}
+//====================================================================================
+void cMdiPanels::slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime )
+{
+    emit signalSetWaitTime( p_uiPanelId, p_uiWaitTime );
+}
+//====================================================================================
+void cMdiPanels::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo )
+{
+    emit signalSetInfoText( p_uiPanelId, p_qsInfo );
 }
 //====================================================================================

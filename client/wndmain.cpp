@@ -104,11 +104,14 @@ cWndMain::cWndMain( QWidget *parent )
 
     mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
-    connect( mdiPanels, SIGNAL( activePanelChanged() ), this, SLOT( updateToolbar() ) );
-    connect( mdiPanels, SIGNAL( signalOpenShoppingCart( uint ) ), this, SLOT( slotOpenShoppingCart( uint )) );
-    connect( mdiPanels, SIGNAL( signalPaymentActivated() ), this, SLOT( on_action_PayCash_triggered() ) );
-    connect( mdiPanels, SIGNAL( signalOpenScheduleTable(uint) ), this, SLOT(slotOpenScheduleTable(uint)) );
+    connect( mdiPanels, SIGNAL( activePanelChanged() ),                  this, SLOT( updateToolbar() ) );
+    connect( mdiPanels, SIGNAL( signalOpenShoppingCart( uint ) ),        this, SLOT( slotOpenShoppingCart( uint )) );
+    connect( mdiPanels, SIGNAL( signalPaymentActivated() ),              this, SLOT( on_action_PayCash_triggered() ) );
+    connect( mdiPanels, SIGNAL( signalOpenScheduleTable(uint) ),         this, SLOT( slotOpenScheduleTable(uint)) );
     connect( mdiPanels, SIGNAL( signalStatusChanged(uint,uint,QString)), this, SLOT( slotStatusChanged(uint,uint,QString)) );
+    connect( mdiPanels, SIGNAL( signalSetCounterText(uint,QString) ),    this, SLOT( slotSetCounterText(uint,QString) ) );
+    connect( mdiPanels, SIGNAL( signalSetWaitTime(uint,uint) ),          this, SLOT( slotSetWaitTime(uint,uint) ) );
+    connect( mdiPanels, SIGNAL( signalSetInfoText(uint,QString) ),       this, SLOT( slotSetInfoText(uint,QString) ) );
 
     updateTitle();
     setWindowIcon( QIcon("./resources/belenus.ico") );
@@ -772,6 +775,8 @@ void cWndMain::on_action_Preferences_triggered()
         mdiPanels->placeSubWindows();
         mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
         mdiPanels->show();
+
+        m_dlgSecondaryWindow->refreshBackground();
 
         if( g_poPrefs->isSecondaryWindowVisible() )
         {
@@ -1860,3 +1865,17 @@ void cWndMain::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p
     m_dlgSecondaryWindow->setPanelStatusText( p_uiPanelId, p_qsStatus );
 }
 //====================================================================================
+void cWndMain::slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter )
+{
+    m_dlgSecondaryWindow->setCounterText( p_uiPanelId, p_qsCounter );
+}
+
+void cWndMain::slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime )
+{
+    m_dlgSecondaryWindow->setPanelWaitTime( p_uiPanelId, p_uiWaitTime );
+}
+
+void cWndMain::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo )
+{
+    m_dlgSecondaryWindow->setPanelInfoText( p_uiPanelId, p_qsInfo );
+}

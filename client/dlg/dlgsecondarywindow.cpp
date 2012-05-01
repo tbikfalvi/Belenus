@@ -15,8 +15,13 @@ cDlgSecondaryWindow::cDlgSecondaryWindow(QWidget *parent) : QDialog(parent)
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
     layoutMain = new QGridLayout( this );
+    m_poParent = parent;
 
     setLayout( layoutMain );
+
+    QPalette  obFramePalette = palette();
+    obFramePalette.setBrush( QPalette::Window, QBrush( QColor( g_poPrefs->getSecondaryBackground() ) ) );
+    setPalette( obFramePalette );
 }
 
 cDlgSecondaryWindow::~cDlgSecondaryWindow()
@@ -43,17 +48,25 @@ void cDlgSecondaryWindow::initPanels()
     for( int i=0; i<inPanelCount; i++ )
     {
         pDspPanel = new cDspPanel( i+1 );
+        pDspPanel->setPanelStatus( 1 );
 
         m_obPanels.push_back( pDspPanel );
 
         layoutMain->addWidget( pDspPanel, nRow, nColumn++ );
 
-        if( nColumn > g_poPrefs->getPanelsPerRow()-1 )
+        if( nColumn > (int)g_poPrefs->getPanelsPerRow()-1 )
         {
             nRow++;
             nColumn = 0;
         }
     }
+}
+
+void cDlgSecondaryWindow::refreshBackground()
+{
+    QPalette  obFramePalette = palette();
+    obFramePalette.setBrush( QPalette::Window, QBrush( QColor( g_poPrefs->getSecondaryBackground() ) ) );
+    setPalette( obFramePalette );
 }
 
 void cDlgSecondaryWindow::refreshTitle( unsigned int p_uiPanelId )
@@ -80,10 +93,10 @@ void cDlgSecondaryWindow::setPanelInfoText( unsigned int p_uiPanelId, const QStr
         m_obPanels.at( p_uiPanelId )->setPanelInfoText( p_qsInfo );
 }
 
-void cDlgSecondaryWindow::setPanelCounter( unsigned int p_uiPanelId, const unsigned int p_uiCounter )
+void cDlgSecondaryWindow::setCounterText(unsigned int p_uiPanelId, const QString &p_qsCounter)
 {
     if( p_uiPanelId < m_obPanels.size() )
-        m_obPanels.at( p_uiPanelId )->setPanelCounter( p_uiCounter );
+        m_obPanels.at( p_uiPanelId )->setCounterText( p_qsCounter );
 }
 
 void cDlgSecondaryWindow::setPanelWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime )
@@ -92,3 +105,8 @@ void cDlgSecondaryWindow::setPanelWaitTime( unsigned int p_uiPanelId, const unsi
         m_obPanels.at( p_uiPanelId )->setPanelWaitTime( p_uiWaitTime );
 }
 
+//====================================================================================
+void cDlgSecondaryWindow::keyPressEvent ( QKeyEvent */*p_poEvent*/ )
+{
+    return;
+}

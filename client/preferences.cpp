@@ -584,6 +584,22 @@ QSize cPreferences::secondaryWindowSize() const
     return m_qsSecondarySize;
 }
 
+void cPreferences::setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsSecondaryBackground = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+    }
+}
+
+QString cPreferences::getSecondaryBackground() const
+{
+    return m_qsSecondaryBackground;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -661,6 +677,7 @@ void cPreferences::loadConfFileSettings()
         int nTop                    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
         int nWidth                  = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
         int nHeight                 = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
+        m_qsSecondaryBackground     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -767,6 +784,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
