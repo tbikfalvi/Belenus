@@ -25,7 +25,7 @@ public:
     void setPayWithCreditcard();
     void actionCassaInOut();
     void actionPayment();
-    QString cassaResult( int *p_nPayType, QString *p_qsComment );
+    QString cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart );
 
 private:
     QString convertCurrency(const QString &text) const;
@@ -33,6 +33,7 @@ private:
     cDBShoppingCart     *m_poShoppingCart;
     int                  m_nHeightSmall;
     int                  m_nHeightBig;
+    bool                 m_bShoppingCart;
 
 private slots:
     void on_pbShoppingCart_clicked();

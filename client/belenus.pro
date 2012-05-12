@@ -31,7 +31,9 @@ FORMS = ../framework/dlgcrud.ui \
     dlgguestedit.ui \
     dlgvalidtimeperiodedit.ui \
     dlgproductstorage.ui \
-    dlgsecondarywindow.ui
+    dlgsecondarywindow.ui \
+    dlgpatientcardsell.ui \
+    dlgpatientcardrefill.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -119,6 +121,8 @@ HEADERS = belenus.h \
     edit/dlgproductactiontypeedit.h \
     edit/dlgproductedit.h \
     edit/dlgvalidtimeperiodedit.h \
+    edit/dlgpatientcardsell.h \
+    edit/dlgpatientcardrefill.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -227,6 +231,8 @@ SOURCES = main.cpp \
     edit/dlgproductactiontypeedit.cpp \
     edit/dlgproductedit.cpp \
     edit/dlgvalidtimeperiodedit.cpp \
+    edit/dlgpatientcardsell.cpp \
+    edit/dlgpatientcardrefill.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \

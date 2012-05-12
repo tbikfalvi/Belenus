@@ -111,7 +111,8 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
         pbCardcode->setEnabled( false );
     }
     if( ledInputStart->text().contains(' ') ||
-        ledInputStart->text().length() < 4 )
+        ledInputStart->text().length() < 4 ||
+        ( g_poPrefs->isBarcodeLengthDifferent() && ledInputStart->text().length() == g_poPrefs->getBarcodeLength() ) )
     {
         m_bProd = false;
         pbProduct->setEnabled( false );

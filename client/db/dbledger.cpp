@@ -63,7 +63,7 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_nTotalPrice           = p_nTotalPrice;
     m_qsLedgerTime          = p_qsLedgerTime;
     m_qsComment             = p_qsComment;
-    m_qsModified        = p_qsModified;
+    m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -203,6 +203,14 @@ void cDBLedger::remove() throw( cSevException )
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+void cDBLedger::revoke() throw( cSevException )
+{
+    m_uiId = 0;
+    setComment( QObject::tr("Revoking action: %1").arg(comment()) );
+    setNetPrice( netPrice()*(-1) );
+    save();
 }
 
 void cDBLedger::createNew() throw()
@@ -354,6 +362,7 @@ int cDBLedger::totalPrice() const throw()
 void cDBLedger::setTotalPrice( const int p_nTotalPrice ) throw()
 {
     m_nTotalPrice = p_nTotalPrice;
+    g_obLogger( cSeverity::INFO ) << "m_nTotalPrice: " << m_nTotalPrice << " p_nTotalPrice: " << p_nTotalPrice << EOM;
 }
 
 QString cDBLedger::ledgerTime() const throw()

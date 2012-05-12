@@ -52,6 +52,8 @@
 #include "edit/dlguseredit.h"
 #include "edit/dlgguestedit.h"
 #include "edit/dlgpatientcardedit.h"
+#include "edit/dlgpatientcardsell.h"
+#include "edit/dlgpatientcardrefill.h"
 #include "edit/dlgcassaedit.h"
 #include "edit/dlgpatientcarduse.h"
 #include "edit/dlglicenceedit.h"
@@ -1207,35 +1209,28 @@ void cWndMain::on_action_PatientCardSell_triggered()
                         obDBPatientCard.setActive( false );
                         obDBPatientCard.setPatientCardTypeId( 0 );
                     }
-                    cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
-
-                    if( obDBPatientCard.timeLeft() < 1 )
-                    {
-                        obDlgPatientCardEdit.activatePatientCard();
-                    }
-                    else
-                    {
-                        obDlgPatientCardEdit.refillPatientCard();
-                    }
-                    if( obDlgPatientCardEdit.exec() != QDialog::Accepted )
-                    {
-                        return;
-                    }
+                    cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+                    obDlgPatientCardRefill.exec();
                 }
             }
             else
             {
-                QMessageBox::warning( this, tr("Attention"),
-                                      tr("This patientcard already sold.\n"
-                                         "Please select another inactive patientcard.") );
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard still can be used.\n"
+                                              "Do you want to refill anyway?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCard.setPatientCardTypeId( 0 );
+                    cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+                    obDlgPatientCardRefill.exec();
+                }
             }
         }
         else
         {
-            cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
-            obDlgPatientCardEdit.setPatientCardOwner( g_obGuest.id() );
-            obDlgPatientCardEdit.activatePatientCard();
-            obDlgPatientCardEdit.exec();
+            cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
+            obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+            obDlgPatientCardSell.exec();
         }
     }
 }
@@ -1286,8 +1281,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         obDBPatientCard.load( p_stBarcode );
 
-        if( !mdiPanels->isCanBeStartedByCard() /*&&
-            g_obGuest.id() > 0 */ )
+        if( !mdiPanels->isCanBeStartedByCard() )
         {
             QMessageBox::warning( this, tr("Attention"),
                                   tr("This device already prepared with a patientcard.\n"
@@ -1298,17 +1292,15 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
         if( obDBPatientCard.active() )
         {
-// 'SOLARIUM GUEST'
-/*
             if( g_obGuest.id() == 0 )
             {
-                cDBPatient  obDBPatient;
+                cDBGuest  obDBGuest;
 
-                obDBPatient.load( obDBPatientCard.patientId() );
+                obDBGuest.load( obDBPatientCard.patientId() );
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard has been assigned to the following patient.\n\n"
                                               "%1\n\n"
-                                              "Do you want to select this patient as actual?").arg( obDBPatient.name() ),
+                                              "Do you want to select this patient as actual?").arg( obDBGuest.name() ),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
                     g_obGuest.load( obDBPatientCard.patientId() );
@@ -1335,66 +1327,54 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     obDBPatientCard.save();
                 }
             }
-*/
-//            if( g_obGuest.id() > 0 )
-//            {
-                if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
-                {
-                    QString     qsTemp = "";
 
+            if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
+            {
+                QString     qsTemp = "";
+
+                if( obDBPatientCard.timeLeft() < 1 )
+                {
+                    qsTemp = tr("\nDue to there is no time left, the patientcard will be reseted and deactivated.");
+                }
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard can not be used with these settings:\n\n"
+                                              "Available units: %1\n"
+                                              "Available time: %2 (hh:mm:ss)\n\n"
+                                              "Do you want to refill the patientcard now?%3").arg(obDBPatientCard.units()).arg(obDBPatientCard.timeLeftStr()).arg(qsTemp),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+                else
+                {
                     if( obDBPatientCard.timeLeft() < 1 )
                     {
-                        qsTemp = tr("\nDue to there is no time left, the patientcard will be reseted and deactivated.");
+                        obDBPatientCard.setPatientCardTypeId( 0 );
                     }
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr("This patientcard can not be used with these settings:\n\n"
-                                                  "Available units: %1\n"
-                                                  "Available time: %2 (hh:mm:ss)\n\n"
-                                                  "Do you want to refill the patientcard now?%3").arg(obDBPatientCard.units()).arg(obDBPatientCard.timeLeftStr()).arg(qsTemp),
-                                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                    cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+
+                    if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
                     {
                         return;
                     }
-                    else
-                    {
-                        if( obDBPatientCard.timeLeft() < 1 )
-                        {
-                            obDBPatientCard.setActive( false );
-                            obDBPatientCard.setPatientCardTypeId( 0 );
-                        }
-                        cDlgPatientCardEdit obDlgPatientCardEdit( this, &obDBPatientCard );
-
-                        if( obDBPatientCard.timeLeft() < 1 )
-                        {
-                            obDlgPatientCardEdit.activatePatientCard();
-                        }
-                        else
-                        {
-                            obDlgPatientCardEdit.refillPatientCard();
-                        }
-                        if( obDlgPatientCardEdit.exec() != QDialog::Accepted )
-                        {
-                            return;
-                        }
-                    }
                 }
-                cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );
+            }
+            cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );
 
-                if( obDlgPatientCardUse.exec() == QDialog::Accepted )
-                {
-                    QTime           tLength;
-                    QTime           tNewLength;
-                    int             inNewLength;
-                    int             inUnits;
-                    QString         qsLength;
+            if( obDlgPatientCardUse.exec() == QDialog::Accepted )
+            {
+                QTime           tLength;
+                QTime           tNewLength;
+                int             inNewLength;
+                int             inUnits;
+                QString         qsLength;
 
-                    obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
+                obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
 
-                    tLength  = QTime::fromString(qsLength,"mm:ss");
-                    inNewLength = tLength.minute()*60 + tLength.second();
-                    mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
-                }
-//            }
+                tLength  = QTime::fromString(qsLength,"mm:ss");
+                inNewLength = tLength.minute()*60 + tLength.second();
+                mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
+            }
         }
         else
         {
@@ -1403,22 +1383,9 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                                           "Do you want to activate it now?"),
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
-                cDlgPatientCardEdit     obDlgPatientCardEdit( this, &obDBPatientCard );
-
-                obDlgPatientCardEdit.activatePatientCard();
-// 'SOLARIUM GUEST'
-/*
-                if( g_obGuest.id() > 0 )
-                {
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr("Do you want to assign this patientcard to the actual patient?"),
-                                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
-                    {
-                        obDlgPatientCardEdit.setPatientCardOwner( g_obGuest.id() );
-                    }
-                }
-*/
-                obDlgPatientCardEdit.exec();
+                cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
+                obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+                obDlgPatientCardSell.exec();
             }
         }
     }
@@ -1439,6 +1406,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBPatientCard.setBarcode( p_stBarcode );
                 obDBPatientCard.save();
+                processInputPatientCard( p_stBarcode );
             }
         }
     }
@@ -1567,9 +1535,10 @@ void cWndMain::on_action_PayCash_triggered()
         {
             int     inPayType = 0;
             QString qsComment = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
+            bool    bShoppingCart = false;
 
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment );
-            if( inPayType == cDlgCassaAction::PAY_CASH )
+            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+            if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
             {
                 g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
             }
@@ -1619,9 +1588,10 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
         {
             int     inPayType = 0;
             QString qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
+            bool    bShoppingCart = false;
 
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment );
-            if( inPayType == cDlgCassaAction::PAY_CASH )
+            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+            if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
             {
                 g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), qsComment );
             }

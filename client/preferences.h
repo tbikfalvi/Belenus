@@ -74,6 +74,8 @@ public:
     int             getBarcodeLength() const;
     void            setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow = false );
     QString         getBarcodePrefix() const;
+    void            setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent, bool p_boSaveNow = false );
+    bool            isBarcodeLengthDifferent() const;
     void            setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow = false );
     QString         getCurrencyShort() const;
     void            setCurrencyLong( const QString &p_qsCurrencyLong, bool p_boSaveNow = false );
@@ -175,6 +177,7 @@ private:
     QPoint          m_qpSecondaryPosition;
     QSize           m_qsSecondarySize;
     QString         m_qsSecondaryBackground;
+    bool            m_bBarcodeLengthDifferent;
 
     void init();
 };

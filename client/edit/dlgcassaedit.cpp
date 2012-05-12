@@ -212,7 +212,8 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
         cDBCassa    obCassa;
         QString     qsComment;
         int         nTemp = 0;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment );
+        bool        bShoppingCart = false;
+        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart );
 
         g_obCassa.cassaIncreaseMoney( stRet.toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );
@@ -239,7 +240,8 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
         cDBCassa    obCassa;
         QString     qsComment;
         int         nTemp = 0;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment );
+        bool        bShoppingCart = false;
+        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart );
 
         g_obCassa.cassaDecreaseMoney( stRet.toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );

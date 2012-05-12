@@ -19,6 +19,8 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     gbComment->setVisible( false );
     teComment->setEnabled( false );
 
+    m_bShoppingCart = false;
+
     int nMoney = 0;
 
     if( p_poShoppingCart )
@@ -87,7 +89,7 @@ void cDlgCassaAction::actionPayment()
     pbShoppingCart->setEnabled( false );
 }
 
-QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment )
+QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart )
 {
     if( rbPayCash->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CASH;
     else if( rbCreditcard->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
@@ -95,16 +97,22 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment )
     if( teComment->toPlainText().length() > 0 )
         *p_qsComment += QString( " - " ).arg(teComment->toPlainText());
 
+    *p_bShoppingCart = m_bShoppingCart;
+
     return ledAmountToPay->text().remove( QChar(',') );
 }
 
 void cDlgCassaAction::on_pbOk_clicked()
 {
+    m_bShoppingCart = false;
+
     QDialog::accept();
 }
 
 void cDlgCassaAction::on_pbCancel_clicked()
 {
+    m_bShoppingCart = false;
+
     QDialog::reject();
 }
 
@@ -174,6 +182,7 @@ void cDlgCassaAction::on_pbComment_clicked()
 void cDlgCassaAction::on_pbShoppingCart_clicked()
 {
     m_poShoppingCart->save();
+    m_bShoppingCart = true;
 
     QDialog::accept();
 }

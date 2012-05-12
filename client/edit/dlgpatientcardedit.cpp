@@ -381,9 +381,10 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 {
                     int     inPayType = 0;
                     QString qsComment = QString("[%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
+                    bool    bShoppingCart = false;
 
-                    obDlgCassaAction.cassaResult( &inPayType, &qsComment );
-                    if( inPayType == cDlgCassaAction::PAY_CASH )
+                    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+                    if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
                     {
                         g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
                     }

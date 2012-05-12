@@ -7,6 +7,9 @@
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbpanels.h"
 #include "../db/dbproduct.h"
+#include "../db/dbledger.h"
+#include "../db/dbpatientcard.h"
+#include "../db/dbpatientcardtype.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -233,6 +236,36 @@ void cDlgShoppingCart::deleteClicked( bool )
                                      "Please return to the panel and press ESC to reject panel use.") );
             return;
         }
+        else if( obDBShoppingCart.patientCardId() != 0 )
+        {
+            QString     qsQuery = QString("SELECT * FROM ledger WHERE patientCardId=%1 order by ledgerId DESC").arg(obDBShoppingCart.patientCardId());
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+            if( poQuery->first() )
+            {
+                try
+                {
+                    cDBPatientCardType  obDBPatientCardType;
+                    cDBPatientCard      obDBPatientCard;
+
+                    obDBPatientCardType.load( poQuery->value( 7 ).toUInt() );
+                    obDBPatientCard.load( poQuery->value( 8 ).toUInt() );
+
+                    obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
+                    obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
+                    obDBPatientCard.save();
+
+                    cDBLedger obDBLedger;
+
+                    obDBLedger.load( poQuery->value( 0 ).toUInt() );
+                    obDBLedger.revoke();
+                }
+                catch( cSevException &e )
+                {
+                    g_obLogger(e.severity()) << e.what() << EOM;
+                }
+            }
+        }
     }
 
     if( QMessageBox::question( this, tr("Question"),
@@ -281,6 +314,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
                 int     inPayType = 0;
                 QString qsComment = "";
+                bool    bShoppingCart = false;
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&
@@ -296,7 +330,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                     qsComment = tr("Selling product: %1").arg(obDBShoppingCart.itemName());
                 }
 
-                obDlgCassaAction.cassaResult( &inPayType, &qsComment );
+                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
 
                 if( inPayType == cDlgCassaAction::PAY_CASH )
                 {

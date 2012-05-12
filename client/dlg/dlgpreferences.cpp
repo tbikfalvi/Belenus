@@ -61,6 +61,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
     spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
     ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
+    chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
@@ -175,6 +176,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
+    g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
 
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );

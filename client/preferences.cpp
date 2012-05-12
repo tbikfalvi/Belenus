@@ -358,6 +358,22 @@ QString cPreferences::getBarcodePrefix() const
     return m_qsBarcodePrefix;
 }
 
+void cPreferences::setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent, bool p_boSaveNow )
+{
+    m_bBarcodeLengthDifferent = p_bBarcodeLengthDifferent;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
+    }
+}
+
+bool cPreferences::isBarcodeLengthDifferent() const
+{
+    return m_bBarcodeLengthDifferent;
+}
+
 void cPreferences::setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow )
 {
     m_qsCurrencyShort = p_qsCurrencyShort;
@@ -665,6 +681,7 @@ void cPreferences::loadConfFileSettings()
         m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
         m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
         m_qsBarcodePrefix           = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        m_bBarcodeLengthDifferent = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
         m_bCassaAutoClose           = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
         m_bCassaAutoWithdrawal      = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
         m_qsDefaultCountry          = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
@@ -772,6 +789,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
     obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
     obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
+    obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
     obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
     obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
     obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
