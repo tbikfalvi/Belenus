@@ -14,7 +14,6 @@ public:
     virtual ~cDlgDiscountEdit();
 
 private:
-    void fillHCDComboList();
 
 public slots:
     virtual void accept ();
@@ -23,12 +22,8 @@ protected:
     cDBDiscount *m_poDiscount;
 
 private slots:
-    void on_rbDoctor_clicked();
-    void on_rbCompany_clicked();
-    void on_rbHealthInsurance_clicked();
-    void on_rbService_clicked();
-    void on_rbEmployee_clicked();
-    void on_rbRegularCustomer_clicked();
+    void slotRefreshWarningColors();
+    void slotFillHCDComboList();
 };
 
 #endif

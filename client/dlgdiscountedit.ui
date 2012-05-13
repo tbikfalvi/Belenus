@@ -6,142 +6,209 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>246</height>
+    <width>496</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5">
+  <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <widget class="QGroupBox" name="gbDiscountCategory">
-       <property name="title">
-        <string> Category </string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QRadioButton" name="rbRegularCustomer">
-          <property name="text">
-           <string>Regular customer</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rbEmployee">
-          <property name="text">
-           <string>Employee</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rbService">
-          <property name="text">
-           <string>Service person</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rbHealthInsurance">
-          <property name="text">
-           <string>Health Insurance Fund</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rbCompany">
-          <property name="text">
-           <string>Company</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rbDoctor">
-          <property name="text">
-           <string>Doctor etc.</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QGroupBox" name="gbDiscountCombo">
+        <widget class="QGroupBox" name="gbIdentification">
          <property name="title">
-          <string> Health Insurance Fund / Company / Doctor ... </string>
+          <string> Identification </string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QComboBox" name="cmbHCDList"/>
+           <widget class="QLabel" name="lblName">
+            <property name="text">
+             <string>Name :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledName">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QGroupBox" name="gbDiscountType">
+          <widget class="QGroupBox" name="gbDiscountCategory">
            <property name="title">
-            <string> Type </string>
+            <string> Category </string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QRadioButton" name="rbDiscountValue">
+             <widget class="QRadioButton" name="rbRegularCustomer">
               <property name="text">
-               <string>fix value</string>
+               <string>Regular customer</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="rbDiscountPercent">
+             <widget class="QRadioButton" name="rbEmployee">
               <property name="text">
-               <string>percent</string>
+               <string>Employee</string>
               </property>
-              <property name="checked">
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="rbService">
+              <property name="text">
+               <string>Service person</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="rbGuest">
+              <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="text">
+               <string>Guest</string>
+              </property>
              </widget>
             </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="gbValue">
-           <property name="title">
-            <string> Value </string>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <widget class="QLineEdit" name="ledDiscount">
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
+             <widget class="QRadioButton" name="rbCompany">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Company</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="rbProductType">
+              <property name="text">
+               <string>Product Type</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="rbProduct">
+              <property name="text">
+               <string>Product</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QGroupBox" name="gbDiscountCombo">
+             <property name="title">
+              <string>Guest / Company / Product ... </string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QComboBox" name="cmbHCDList">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QGroupBox" name="gbDiscountType">
+               <property name="title">
+                <string> Type </string>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <item>
+                 <widget class="QRadioButton" name="rbDiscountValue">
+                  <property name="text">
+                   <string>fix value</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="rbDiscountPercent">
+                  <property name="text">
+                   <string>percent</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="gbValue">
+               <property name="title">
+                <string> Value </string>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLineEdit" name="ledDiscount">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
         </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </item>
@@ -192,6 +259,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="checkIndependent">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Independent from the local studio.</string>
      </property>

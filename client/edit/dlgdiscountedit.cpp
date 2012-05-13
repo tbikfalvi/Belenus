@@ -3,8 +3,10 @@
 
 #include "dlgdiscountedit.h"
 
-cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscount )
-    : QDialog( p_poParent )
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscount ) : QDialog( p_poParent )
 {
     setupUi( this );
 
@@ -14,15 +16,19 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    checkIndependent->setVisible( false );
+
     m_poDiscount = p_poDiscount;
     if( m_poDiscount->id() > 0 )
     {
+        ledName->setText( m_poDiscount->name() );
         rbRegularCustomer->setEnabled( false );
         rbEmployee->setEnabled( false );
         rbService->setEnabled( false );
+        rbGuest->setEnabled( false );
         rbCompany->setEnabled( false );
-        rbHealthInsurance->setEnabled( false );
-        rbDoctor->setEnabled( false );
+        rbProductType->setEnabled( false );
+        rbProduct->setEnabled( false );
 
         if( m_poDiscount->regularCustomer() > 0 )
         {
@@ -36,19 +42,23 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         {
             rbService->setChecked( true );
         }
+        else if( m_poDiscount->guestId() > 0 )
+        {
+            rbGuest->setChecked( true );
+        }
         else if( m_poDiscount->companyId() > 0 )
         {
             rbCompany->setChecked( true );
         }
-        else if( m_poDiscount->healthInsuranceId() > 0 )
+        else if( m_poDiscount->productTypeId() > 0 )
         {
-            rbHealthInsurance->setChecked( true );
+            rbProductType->setChecked( true );
         }
-        else if( m_poDiscount->doctorId() > 0 )
+        else if( m_poDiscount->productId() > 0 )
         {
-            rbDoctor->setChecked( true );
+            rbProduct->setChecked( true );
         }
-        fillHCDComboList();
+        slotFillHCDComboList();
 
         if( m_poDiscount->discountValue() > 0 )
         {
@@ -70,12 +80,14 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         checkIndependent->setEnabled( false );
         if( m_poDiscount->licenceId() == 0 && m_poDiscount->id() > 0 )
         {
+            ledName->setEnabled( false );
             rbRegularCustomer->setEnabled( false );
             rbEmployee->setEnabled( false );
             rbService->setEnabled( false );
+            rbGuest->setEnabled( false );
             rbCompany->setEnabled( false );
-            rbHealthInsurance->setEnabled( false );
-            rbDoctor->setEnabled( false );
+            rbProductType->setEnabled( false );
+            rbProduct->setEnabled( false );
             cmbHCDList->setEnabled( false );
             rbDiscountValue->setEnabled( false );
             rbDiscountPercent->setEnabled( false );
@@ -85,55 +97,62 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     }
     if( m_poDiscount->id() > 0 )
         checkIndependent->setEnabled( false );
-}
 
+    connect( rbRegularCustomer, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbEmployee, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbService, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbGuest, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbCompany, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbProductType, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbProduct, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditDiscount", QPoint(517,269) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+}
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 cDlgDiscountEdit::~cDlgDiscountEdit()
 {
+    g_poPrefs->setDialogSize( "EditDiscount", QPoint( width(), height() ) );
 }
-
-void cDlgDiscountEdit::on_rbRegularCustomer_clicked()
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgDiscountEdit::slotRefreshWarningColors()
 {
-    fillHCDComboList();
-}
+    lblName->setStyleSheet( "QLabel {font: normal;}" );
 
-void cDlgDiscountEdit::on_rbEmployee_clicked()
-{
-    fillHCDComboList();
+    if( ledName->text().length() == 0 )
+    {
+        lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
 }
-
-void cDlgDiscountEdit::on_rbService_clicked()
-{
-    fillHCDComboList();
-}
-
-void cDlgDiscountEdit::on_rbHealthInsurance_clicked()
-{
-    fillHCDComboList();
-}
-
-void cDlgDiscountEdit::on_rbCompany_clicked()
-{
-    fillHCDComboList();
-}
-
-void cDlgDiscountEdit::on_rbDoctor_clicked()
-{
-    fillHCDComboList();
-}
-
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 void cDlgDiscountEdit::accept ()
 {
     bool  boCanBeSaved = true;
 
+    QString qsErrorMessage = "";
+
+    if( ledName->text().length() == 0 )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Name of the discount can not be empty!\n"
+                                   "Please add a name to the discount." ) );
+        lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
     if( rbRegularCustomer->isChecked() )
     {
         if( m_poDiscount->isRegularCustomerExists() )
         {
             boCanBeSaved = false;
-            QMessageBox::warning( this,
-                                  tr( "Warning" ),
-                                  tr( "Discount for regular customer already exists!\n"
-                                      "Please modify the existing discount." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for regular customer already exists!\n"
+                                       "Please modify the existing discount." ) );
         }
     }
     else if( rbEmployee->isChecked() )
@@ -141,10 +160,9 @@ void cDlgDiscountEdit::accept ()
         if( m_poDiscount->isEmployeeExists() )
         {
             boCanBeSaved = false;
-            QMessageBox::warning( this,
-                                  tr( "Warning" ),
-                                  tr( "Discount for employee already exists!\n"
-                                      "Please modify the existing discount." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for employee already exists!\n"
+                                       "Please modify the existing discount." ) );
         }
     }
     else if( rbService->isChecked() )
@@ -152,10 +170,19 @@ void cDlgDiscountEdit::accept ()
         if( m_poDiscount->isServiceExists() )
         {
             boCanBeSaved = false;
-            QMessageBox::warning( this,
-                                  tr( "Warning" ),
-                                  tr( "Discount for service person already exists!\n"
-                                      "Please modify the existing discount." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for service person already exists!\n"
+                                       "Please modify the existing discount." ) );
+        }
+    }
+    else if( rbGuest->isChecked() )
+    {
+        if( m_poDiscount->isGuestExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for selected guest already exists!\n"
+                                       "Please modify the existing discount." ) );
         }
     }
     else if( rbCompany->isChecked() )
@@ -163,51 +190,51 @@ void cDlgDiscountEdit::accept ()
         if( m_poDiscount->isCompanyExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
         {
             boCanBeSaved = false;
-            QMessageBox::warning( this,
-                                  tr( "Warning" ),
-                                  tr( "Discount for selected company already exists!\n"
-                                      "Please modify the existing discount." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for selected company already exists!\n"
+                                       "Please modify the existing discount." ) );
         }
     }
-    else if( rbHealthInsurance->isChecked() )
+    else if( rbProductType->isChecked() )
     {
-        if( m_poDiscount->isHealthInsuranceExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
+        if( m_poDiscount->isProductTypeExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
         {
             boCanBeSaved = false;
-            QMessageBox::warning( this,
-                                  tr( "Warning" ),
-                                  tr( "Discount for selected health insurance fund already exists!\n"
-                                      "Please modify the existing discount." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for selected product type already exists!\n"
+                                       "Please modify the existing discount." ) );
         }
     }
-    else if( rbDoctor->isChecked() )
+    else if( rbProduct->isChecked() )
     {
-        if( m_poDiscount->isDoctorExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
+        if( m_poDiscount->isProductExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
         {
             boCanBeSaved = false;
-            QMessageBox::warning( this,
-                                  tr( "Warning" ),
-                                  tr( "Discount for selected person already exists!\n"
-                                      "Please modify the existing discount." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount for selected product already exists!\n"
+                                       "Please modify the existing discount." ) );
         }
     }
-    if( (rbCompany->isChecked() || rbHealthInsurance->isChecked() || rbDoctor->isChecked()) &&
+
+    if( (rbGuest->isChecked() ||
+         rbCompany->isChecked() ||
+         rbProductType->isChecked() ||
+         rbProduct->isChecked()) &&
         cmbHCDList->currentIndex() < 1 )
     {
         boCanBeSaved = false;
-        QMessageBox::warning( this,
-                              tr( "Warning" ),
-                              tr( "One of the item from the list must be selected!" ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "One of the item from the list must be selected!" ) );
         cmbHCDList->setFocus();
     }
+
     bool    boConversion = true;
     ledDiscount->text().toInt( &boConversion );
     if( !boConversion )
     {
         boCanBeSaved = false;
-        QMessageBox::warning( this,
-                              tr( "Warning" ),
-                              tr( "Value of discount is invalid.\nPlease use only numbers." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Value of discount is invalid.\nPlease use only numbers." ) );
         ledDiscount->setFocus();
     }
 
@@ -215,46 +242,44 @@ void cDlgDiscountEdit::accept ()
     {
         try
         {
-            if( checkIndependent->isChecked() )
-            {
-                m_poDiscount->setLicenceId( 0 );
-            }
-            else
-            {
-                m_poDiscount->setLicenceId( g_poPrefs->getLicenceId() );
-            }
+            m_poDiscount->setLicenceId( g_poPrefs->getLicenceId() );
             if( rbRegularCustomer->isChecked() )
             {
                 m_poDiscount->setRegularCustomer( true );
-                m_poDiscount->setName( tr("Regular customer") );
             }
             else if( rbEmployee->isChecked() )
             {
                 m_poDiscount->setEmployee( true );
-                m_poDiscount->setName( tr("Employee") );
             }
             else if( rbService->isChecked() )
             {
                 m_poDiscount->setService( true );
-                m_poDiscount->setName( tr("Service person") );
             }
-            else if( rbCompany->isChecked() ||
-                     rbHealthInsurance->isChecked() ||
-                     rbDoctor->isChecked() )
+            else if( rbGuest->isChecked() ||
+                     rbCompany->isChecked() ||
+                     rbProductType->isChecked() ||
+                     rbProduct->isChecked() )
             {
-                if( rbCompany->isChecked() )
+                if( rbGuest->isChecked() )
                 {
+                    ledName->setText( tr("Guest discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
+                    m_poDiscount->setGuestId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
+                }
+                else if( rbCompany->isChecked() )
+                {
+                    ledName->setText( tr("Company discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
                     m_poDiscount->setCompanyId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
                 }
-                else if( rbHealthInsurance->isChecked() )
+                else if( rbProductType->isChecked() )
                 {
-                    m_poDiscount->setHealthInsuranceId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
+                    ledName->setText( tr("Product type discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
+                    m_poDiscount->setProductTypeId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
                 }
-                else if( rbDoctor->isChecked() )
+                else if( rbProduct->isChecked() )
                 {
-                    m_poDiscount->setDoctorId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
+                    ledName->setText( tr("Product discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
+                    m_poDiscount->setProductId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
                 }
-                m_poDiscount->setName( cmbHCDList->itemText(cmbHCDList->currentIndex()) );
             }
             if( rbDiscountValue->isChecked() )
             {
@@ -266,6 +291,7 @@ void cDlgDiscountEdit::accept ()
                 m_poDiscount->setDiscountValue( 0 );
                 m_poDiscount->setDiscountPercent( ledDiscount->text().toInt() );
             }
+            m_poDiscount->setName( ledName->text() );
             m_poDiscount->setActive( true );
             m_poDiscount->save();
         }
@@ -276,9 +302,15 @@ void cDlgDiscountEdit::accept ()
 
         QDialog::accept();
     }
+    else
+    {
+        QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
+    }
 }
-
-void cDlgDiscountEdit::fillHCDComboList()
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+void cDlgDiscountEdit::slotFillHCDComboList()
 {
     QSqlQuery *poQuery = NULL;
 
@@ -289,10 +321,31 @@ void cDlgDiscountEdit::fillHCDComboList()
         rbEmployee->isChecked() ||
         rbService->isChecked() )
     {
+        if( rbRegularCustomer->isChecked() )
+            ledName->setText( tr("Regular customer discount") );
+        else if( rbEmployee->isChecked() )
+            ledName->setText( tr("Employee discount") );
+        else if( rbService->isChecked() )
+            ledName->setText( tr("Service discount") );
+
+        cmbHCDList->addItem( tr("<Not selected>"), 0 );
         cmbHCDList->setEnabled( false );
+    }
+    else if( rbGuest->isChecked() )
+    {
+        ledName->setText( tr("Guest discount") );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
+        cmbHCDList->addItem( tr("<Not selected>"), 0 );
+        while( poQuery->next() )
+        {
+            cmbHCDList->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( m_poDiscount->guestId() == poQuery->value( 0 ) )
+                cmbHCDList->setCurrentIndex( cmbHCDList->count()-1 );
+        }
     }
     else if( rbCompany->isChecked() )
     {
+        ledName->setText( tr("Company discount") );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT companyId, name FROM companies WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
         cmbHCDList->addItem( tr("<Not selected>"), 0 );
         while( poQuery->next() )
@@ -302,26 +355,27 @@ void cDlgDiscountEdit::fillHCDComboList()
                 cmbHCDList->setCurrentIndex( cmbHCDList->count()-1 );
         }
     }
-    else if( rbHealthInsurance->isChecked() )
+    else if( rbProductType->isChecked() )
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT healthInsuranceId, name FROM healthInsurances WHERE active=1 AND archive<>\"DEL\" ORDER BY name" ) );
+        ledName->setText( tr("Product type discount") );
+        poQuery = g_poDB->executeQTQuery( QString("SELECT productTypeId, name FROM productTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name") );
         cmbHCDList->addItem( tr("<Not selected>"), 0 );
         while( poQuery->next() )
         {
             cmbHCDList->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-            if( m_poDiscount->healthInsuranceId() == poQuery->value( 0 ) )
+            if( m_poDiscount->productTypeId() == poQuery->value( 0 ) )
                 cmbHCDList->setCurrentIndex( cmbHCDList->count()-1 );
         }
     }
-    else if( rbDoctor->isChecked() )
+    else if( rbProduct->isChecked() )
     {
-        poQuery = g_poDB->executeQTQuery( QString("SELECT doctorId, doctorLicence, name FROM doctors WHERE active=1 AND archive<>\"DEL\" ORDER BY doctorLicence") );
+        ledName->setText( tr("Product discount") );
+        poQuery = g_poDB->executeQTQuery( QString("SELECT productId, name FROM products WHERE active=1 AND archive<>\"DEL\" ORDER BY name") );
         cmbHCDList->addItem( tr("<Not selected>"), 0 );
         while( poQuery->next() )
         {
-            QString qsDoc = QString( "%1 (%2)" ).arg( poQuery->value( 1 ).toString() ).arg( poQuery->value( 2 ).toString() );
-            cmbHCDList->addItem( qsDoc, poQuery->value( 0 ) );
-            if( m_poDiscount->doctorId() == poQuery->value( 0 ) )
+            cmbHCDList->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( m_poDiscount->productTypeId() == poQuery->value( 0 ) )
                 cmbHCDList->setCurrentIndex( cmbHCDList->count()-1 );
         }
     }

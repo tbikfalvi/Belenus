@@ -570,7 +570,6 @@ void cWndMain::showElementsForComponents()
         action_Patients->setVisible( false );
         action_Company->setVisible( false );
         action_HealthInsurance->setVisible( false );
-        action_Discounts->setVisible( false );
         action_ReportPatients->setVisible( false );
     }
 
@@ -1732,13 +1731,11 @@ void cWndMain::on_action_ReportPatientcards_triggered()
 void cWndMain::on_action_Discounts_triggered()
 //====================================================================================
 {
-/*
     setCursor( Qt::WaitCursor);
     cDlgDiscount  obDlgDiscount( this );
     setCursor( Qt::ArrowCursor);
 
     obDlgDiscount.exec();
-*/
 }
 //====================================================================================
 void cWndMain::on_action_PatientcardsObsolete_triggered()

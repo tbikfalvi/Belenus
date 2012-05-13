@@ -232,7 +232,9 @@ void cDlgPatientCardEdit::setPatientCardOwner( const unsigned int p_uiPatientId 
         }
     }
 }
-
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardEdit::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
@@ -429,7 +431,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     }
     else
     {
-        QMessageBox::critical( this, tr( "Error" ), qsErrorMessage );
+        QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
     }
 }
 

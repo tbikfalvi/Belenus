@@ -33,7 +33,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgproductstorage.ui \
     dlgsecondarywindow.ui \
     dlgpatientcardsell.ui \
-    dlgpatientcardrefill.ui
+    dlgpatientcardrefill.ui \
+    dlgdiscountedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -69,6 +70,7 @@ HEADERS = belenus.h \
     crud/dlgpatientcardselect.h \
     crud/dlgpatientselect.h \
     crud/dlgshoppingcart.h \
+    crud/dlgdiscount.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -95,6 +97,7 @@ HEADERS = belenus.h \
     db/dbshoppingcart.h \
     db/dbproducthistory.h \
     db/dbvalidtimeperiods.h \
+    db/dbdiscount.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -123,6 +126,7 @@ HEADERS = belenus.h \
     edit/dlgvalidtimeperiodedit.h \
     edit/dlgpatientcardsell.h \
     edit/dlgpatientcardrefill.h \
+    edit/dlgdiscountedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -178,6 +182,7 @@ SOURCES = main.cpp \
     crud/dlgpatientcardselect.cpp \
     crud/dlgpatientselect.cpp \
     crud/dlgshoppingcart.cpp \
+    crud/dlgdiscount.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -204,6 +209,7 @@ SOURCES = main.cpp \
     db/dbshoppingcart.cpp \
     db/dbproducthistory.cpp \
     db/dbvalidtimeperiods.cpp \
+    db/dbdiscount.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -233,6 +239,7 @@ SOURCES = main.cpp \
     edit/dlgvalidtimeperiodedit.cpp \
     edit/dlgpatientcardsell.cpp \
     edit/dlgpatientcardrefill.cpp \
+    edit/dlgdiscountedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \

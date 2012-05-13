@@ -4,17 +4,20 @@
 #include "dlgdiscount.h"
 #include "../edit/dlgdiscountedit.h"
 
-cDlgDiscount::cDlgDiscount( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgDiscount::cDlgDiscount( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Discounts List" ) );
     setWindowIcon( QIcon("./resources/40x40_discount.png") );
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListDiscounts", QPoint(400,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 
     setupTableView();
 }
 
 cDlgDiscount::~cDlgDiscount()
 {
+    g_poPrefs->setDialogSize( "ListDiscounts", QPoint( width(), height() ) );
 }
 
 void cDlgDiscount::setupTableView()

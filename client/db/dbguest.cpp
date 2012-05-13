@@ -210,6 +210,12 @@ int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevExceptio
     }
     m_qsQuery += QString( "AND active=1" );
 
+    Kedvezmények leszûrése ha a checkbox-ok ki vannak választva és ha a
+    konkrét emberhez van kedvezmény
+    utána a kedvezményekre sorban kiszámolni a totalprice-al, hogy mennyi
+    lenne a kedvezményes ár és azt kiválasztani, amelyik a legnagyobb
+    és azt visszaadni
+
     poQuery = g_poDB->executeQTQuery( m_qsQuery );
     while( poQuery->next() )
     {
