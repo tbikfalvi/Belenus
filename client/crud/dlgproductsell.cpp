@@ -109,8 +109,8 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     ledTotalPrice = new QLineEdit( this );
     ledTotalPrice->setObjectName( QString::fromUtf8( "ledTotalPrice" ) );
     ledTotalPrice->setEnabled( false );
-    ledTotalPrice->setMinimumWidth( 80 );
-    ledTotalPrice->setMaximumWidth( 80 );
+    ledTotalPrice->setMinimumWidth( 150 );
+    ledTotalPrice->setMaximumWidth( 150 );
     layoutItemToSellGroup->addWidget( ledTotalPrice );
 
     gbItemToSell->setLayout( layoutItemToSellGroup );
@@ -122,7 +122,6 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     pbPayment->setIconSize( QSize(20, 20) );
     pbPayment->setIcon( QIcon("./resources/40x40_cassa.png") );
     btbButtonsSide->addButton( pbPayment, QDialogButtonBox::ActionRole );
-
 
     pbToCart = new QPushButton( tr( "To shopping cart" ), this );
     pbToCart->setObjectName( QString::fromUtf8( "pbToCart" ) );
@@ -371,11 +370,42 @@ void cDlgProductSell::_calculateTotalPrice()
 {
     int     nCount = ledItemCount->text().toInt();
     int     nTotalPrice = ( m_obProduct.netPriceSell() + (m_obProduct.netPriceSell()/100)*m_obProduct.vatPercentSell() ) * nCount;
+    int     nDiscountedPrice = nTotalPrice;
 
     if( g_obGuest.id() > 0 )
     {
-        nTotalPrice = g_obGuest.getDiscountedPrice( nTotalPrice );
+        nDiscountedPrice = g_obGuest.getDiscountedPrice( nTotalPrice );
+    }
+    else
+    {
+        nDiscountedPrice = m_obProduct.getDiscountedPrice( nTotalPrice );
     }
 
-    ledTotalPrice->setText( QString::number( nTotalPrice ) );
+    if( nDiscountedPrice != nTotalPrice )
+        ledTotalPrice->setText( QString("%1 (%2)").arg(convertCurrency(nDiscountedPrice,g_poPrefs->getCurrencyShort())).arg(convertCurrency(nTotalPrice,g_poPrefs->getCurrencyShort())) );
+    else
+        ledTotalPrice->setText( convertCurrency(nTotalPrice,g_poPrefs->getCurrencyShort()) );
 }
+//===========================================================================================================
+//
+//-----------------------------------------------------------------------------------------------------------
+QString cDlgProductSell::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+{
+    QString qsValue = QString::number( p_nCurrencyValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+    qsRet += " " + p_qsCurrency;
+
+    return qsRet;
+}
+

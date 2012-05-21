@@ -44,6 +44,7 @@ public:
     QString         archive() const                                                 throw();
     void            setArchive( const QString &p_qsArchive )                        throw();
     bool            isProductLinkedToProductType() const                            throw();
+    int             getDiscountedPrice( const int p_inPriceTotal )                  throw();
 
 private:
     unsigned int    m_uiId;

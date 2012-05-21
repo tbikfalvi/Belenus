@@ -23,6 +23,8 @@ protected:
     cDBPatientCard  *m_poPatientCard;
 
 private slots:
+    void on_pbEditDiscount_clicked();
+    void slotUpdateDiscountSample();
     void on_pbSaveExit_clicked();
     void slotRefreshWarningColors();
     void slotEnableButtons();
@@ -38,6 +40,7 @@ private:
 
     void _fillPatientCardData();
     bool _saveGuestData();
+    QString _convertCurrency(const QString &text) const;
 
 };
 

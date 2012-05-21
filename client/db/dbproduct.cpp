@@ -369,3 +369,33 @@ bool cDBProduct::isProductLinkedToProductType() const throw()
 
     return bRet;
 }
+
+int cDBProduct::getDiscountedPrice( const int p_inPriceTotal ) throw()
+{
+    cDBDiscount obDBDiscount;
+    int         nRet = p_inPriceTotal;
+
+    try
+    {
+        obDBDiscount.loadProduct( m_uiId );
+
+        if( obDBDiscount.discountValue() > 0 )
+        {
+            nRet = p_inPriceTotal - obDBDiscount.discountValue();
+        }
+        else if( obDBDiscount.discountPercent() > 0 )
+        {
+            nRet = p_inPriceTotal - ((p_inPriceTotal/100)*obDBDiscount.discountPercent());
+        }
+    }
+    catch( cSevException &e )
+    {
+        if( QString(e.what()).compare("Discount id not found") != 0 )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+
+    return nRet;
+}
+

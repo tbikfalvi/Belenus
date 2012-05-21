@@ -166,78 +166,47 @@ unsigned int cDBGuest::getGuestCount( const QString &p_qsName ) throw( cSevExcep
 int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevException )
 //====================================================================================
 {
-    if( !m_bRegularCustomer &&
-        !m_bEmployee &&
-        !m_bService &&
-        (!m_bCompany || (m_bCompany && m_uiCompanyId == 0)) )
-    {
-        return p_inPriceTotal;
-    }
-
     QSqlQuery   *poQuery;
-    QString      m_qsQuery = "";
-    int          m_inMax = 0;
-    int          m_inValueIdx = 0;
+    QString      qsQuery = "";
+    QString      qsCondition = "";
 
-    m_qsQuery += QString( "SELECT * FROM discounts WHERE " );
+    if( m_bRegularCustomer )
+        qsCondition += QString( "regularCustomer>0 OR " );
+    if( m_bEmployee )
+        qsCondition += QString( "employee>0 OR " );
+    if( m_bService )
+        qsCondition += QString( "service>0 OR " );
+    if( m_bCompany && m_uiCompanyId )
+        qsCondition += QString( "companyId=%1 OR " ).arg(m_uiCompanyId);
 
-    if( m_inDiscountType == 1 )
-    {
-        m_qsQuery += QString( "discountValue>0 " );
-        m_inValueIdx = 9;
-    }
-    else if( m_inDiscountType == 2 )
-    {
-        m_qsQuery += QString( "discountPercent>0 " );
-        m_inValueIdx = 10;
-    }
-    if( m_bRegularCustomer ||
-        m_bEmployee ||
-        m_bService ||
-        (m_bCompany && m_uiCompanyId > 0) )
-    {
-        m_qsQuery += QString( "AND ( " );
-        if( m_bRegularCustomer )
-            m_qsQuery += QString( "regularCustomer>0 OR " );
-        if( m_bEmployee )
-            m_qsQuery += QString( "employee>0 OR " );
-        if( m_bService )
-            m_qsQuery += QString( "service>0 OR " );
-        if( m_bCompany && m_uiCompanyId )
-            m_qsQuery += QString( "companyId=%1 OR " ).arg(m_uiCompanyId);
-        m_qsQuery.chop(3);
-        m_qsQuery += QString( ") " );
-    }
-    m_qsQuery += QString( "AND active=1" );
+    qsCondition += QString( "patientId=%1" ).arg(m_uiId);
 
-    Kedvezmények leszûrése ha a checkbox-ok ki vannak választva és ha a
-    konkrét emberhez van kedvezmény
-    utána a kedvezményekre sorban kiszámolni a totalprice-al, hogy mennyi
-    lenne a kedvezményes ár és azt kiválasztani, amelyik a legnagyobb
-    és azt visszaadni
+    qsQuery = QString( "SELECT * FROM discounts WHERE (%1) AND active=1" ).arg(qsCondition);
+    poQuery = g_poDB->executeQTQuery( qsQuery );
 
-    poQuery = g_poDB->executeQTQuery( m_qsQuery );
+    int inDiscountedPrice = p_inPriceTotal;
+
     while( poQuery->next() )
     {
-        if( m_inMax < poQuery->value( m_inValueIdx ).toInt() )
+        int inBestValue = 0;
+
+        if( poQuery->value( 10 ).toInt() > 0 )
         {
-            m_inMax = poQuery->value( m_inValueIdx ).toInt();
+            inBestValue = p_inPriceTotal - poQuery->value( 10 ).toInt();
+        }
+        else if( poQuery->value( 11 ).toInt() > 0 )
+        {
+            inBestValue = p_inPriceTotal - ((p_inPriceTotal/100)*poQuery->value( 11 ).toInt());
+        }
+
+        if( inBestValue < inDiscountedPrice )
+        {
+            inDiscountedPrice = inBestValue;
         }
     }
     if( poQuery ) delete poQuery;
 
-    int inRet = p_inPriceTotal;
-
-    if( m_inDiscountType == 1 )
-    {
-        inRet = p_inPriceTotal - m_inMax;
-    }
-    else if( m_inDiscountType == 2 )
-    {
-        inRet = p_inPriceTotal - ((p_inPriceTotal/100)*m_inMax);
-    }
-
-    return inRet;
+    return inDiscountedPrice;
 }
 //====================================================================================
 void cDBGuest::save() throw( cSevException )

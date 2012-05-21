@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>496</width>
-    <height>294</height>
+    <height>271</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -83,17 +83,10 @@
             <item>
              <widget class="QRadioButton" name="rbCompany">
               <property name="enabled">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="text">
                <string>Company</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="rbProductType">
-              <property name="text">
-               <string>Product Type</string>
               </property>
              </widget>
             </item>

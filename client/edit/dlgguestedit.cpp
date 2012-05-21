@@ -24,8 +24,10 @@
 #include "belenus.h"
 #include "../framework/sevexception.h"
 #include "../db/dbpatientcardtype.h"
+#include "../db/dbdiscount.h"
 #include "../crud/dlgaddress.h"
 #include "../crud/dlgpatientcardselect.h"
+#include "../edit/dlgdiscountedit.h"
 
 //===========================================================================================================
 //  cDlgGuestEdit
@@ -54,6 +56,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     pbAssignCard->setIcon( QIcon("./resources/40x40_patientcard_join.png") );
     pbDislink->setIcon( QIcon("./resources/40x40_patientcard_disjoin.png") );
     pbSellCard->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    pbEditDiscount->setIcon( QIcon("./resources/40x40_edit.png") );
 
     chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
@@ -97,6 +100,40 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         chkService->setChecked( m_poGuest->service() );
         chkEmployee->setChecked( m_poGuest->employee() );
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
+
+        cDBDiscount obDBDiscount;
+
+        try
+        {
+            obDBDiscount.loadGuest( m_poGuest->id() );
+            pbEditDiscount->setEnabled( true );
+            if( obDBDiscount.discountPercent() > 0 )
+            {
+                rbDiscountPercent->setChecked( true );
+                ledDiscount->setText( QString::number(obDBDiscount.discountPercent()) );
+            }
+            else
+            {
+                rbDiscountValue->setChecked( true );
+                ledDiscount->setText( QString::number(obDBDiscount.discountValue()) );
+            }
+        }
+        catch( cSevException &e )
+        {
+            pbEditDiscount->setEnabled( false );
+            if( QString(e.what()).compare("Discount id not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
+            else
+            {
+                rbDiscountPercent->setChecked( false );
+                rbDiscountValue->setChecked( false );
+                ledDiscount->setText( "" );
+            }
+        }
+        slotUpdateDiscountSample();
+
         ledLoyaltyPoints->setText( QString::number( m_poGuest->loyaltyPoints() ) );
 
         _fillPatientCardData();
@@ -129,6 +166,10 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     connect( rbGenderMale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbGenderFemale, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
     connect( rbAge0, SIGNAL(toggled(bool)), this, SLOT(slotRefreshWarningColors()) );
+
+    connect( chkRegularCustomer, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
+    connect( chkEmployee, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
+    connect( chkService, SIGNAL(toggled(bool)), this, SLOT(slotUpdateDiscountSample()) );
 
     slotEnableButtons();
     slotRefreshWarningColors();
@@ -383,4 +424,48 @@ bool cDlgGuestEdit::_saveGuestData()
     }
 
     return bRet;
+}
+
+QString cDlgGuestEdit::_convertCurrency(const QString &text) const
+{
+    QString qsValue = text;
+    QString qsRet = "";
+
+    qsValue.remove(QChar(','));
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+
+    return qsRet;
+}
+
+void cDlgGuestEdit::slotUpdateDiscountSample()
+{
+    m_poGuest->setRegularCustomer( chkRegularCustomer->isChecked() );
+    m_poGuest->setEmployee( chkEmployee->isChecked() );
+    m_poGuest->setService( chkService->isChecked() );
+
+    lblDiscountedPrice->setText( tr("%1 $").arg( _convertCurrency( QString::number(m_poGuest->getDiscountedPrice( 10000 )) ) ) );
+}
+
+
+void cDlgGuestEdit::on_pbEditDiscount_clicked()
+{
+    cDBDiscount obDBDiscount;
+
+    obDBDiscount.loadGuest( m_poGuest->id() );
+
+    cDlgDiscountEdit    dlgDiscountEdit( this, &obDBDiscount );
+
+    dlgDiscountEdit.exec();
+
+    slotUpdateDiscountSample();
 }

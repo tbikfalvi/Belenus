@@ -10,8 +10,56 @@ cDlgGuest::cDlgGuest( QWidget *p_poParent )
     setWindowTitle( tr( "Guest List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblFilterName = new QLabel( this );
+    lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
+    lblFilterName->setText( tr("Guest name: ") );
+    horizontalLayout->addWidget( lblFilterName );
+    ledFilterName = new QLineEdit( this );
+    ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
+    ledFilterName->setMaximumWidth( 150 );
+    horizontalLayout->addWidget( ledFilterName );
+    lblFilterGender = new QLabel( this );
+    lblFilterGender->setObjectName( QString::fromUtf8( "lblFilterGender" ) );
+    lblFilterGender->setText( tr("Gender: ") );
+    horizontalLayout->addWidget( lblFilterGender );
+    cmbFilterGender = new QComboBox( this );
+    cmbFilterGender->setObjectName( QString::fromUtf8( "cmbFilterGender" ) );
+    horizontalLayout->addWidget( cmbFilterGender );
+    lblFilterAgeType = new QLabel( this );
+    lblFilterAgeType->setObjectName( QString::fromUtf8( "lblFilterAgeType" ) );
+    lblFilterAgeType->setText( tr("Age group: ") );
+    horizontalLayout->addWidget( lblFilterAgeType );
+    cmbFilterAgeType = new QComboBox( this );
+    cmbFilterAgeType->setObjectName( QString::fromUtf8( "cmbFilterAgeType" ) );
+    horizontalLayout->addWidget( cmbFilterAgeType );
+
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+
+    verticalLayout->insertLayout( 0, horizontalLayout );
+
+    QSqlQuery   *poQuery;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT genderId, genderName FROM genders" ) );
+    while( poQuery->next() )
+    {
+        cmbFilterGender->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT ageTypeId, ageTypeName FROM agetypes" ) );
+    while( poQuery->next() )
+    {
+        cmbFilterAgeType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListGuests", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
+
+    connect( ledFilterName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( cmbFilterGender, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+    connect( cmbFilterAgeType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
 
     setupTableView();
 }
@@ -78,6 +126,25 @@ void cDlgGuest::refreshTable()
     else
     {
         m_qsQuery = "SELECT patientId AS id, name, genderName, ageTypeName, email FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0 AND active=1";
+    }
+
+    if( ledFilterName->text().length() )
+    {
+        m_qsQuery += QString( " AND name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+    }
+
+    int nFilterId;
+
+    nFilterId = cmbFilterGender->itemData( cmbFilterGender->currentIndex() ).toInt();
+    if( nFilterId > 0 )
+    {
+        m_qsQuery += QString( " AND patients.gender=%1" ).arg( nFilterId );
+    }
+
+    nFilterId = cmbFilterAgeType->itemData( cmbFilterAgeType->currentIndex() ).toInt();
+    if( nFilterId > 0 )
+    {
+        m_qsQuery += QString( " AND patients.ageType=%1" ).arg( nFilterId );
     }
 
     cDlgCrud::refreshTable();
