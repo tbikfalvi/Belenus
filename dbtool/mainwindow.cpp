@@ -1,0 +1,206 @@
+
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QFile>
+#include <QVector>
+#include <QCloseEvent>
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+
+    m_qdExpCurrentDir   = QDir::currentPath();
+    m_nProgramType      = DBTool::KiwiSun;
+
+    ui->rbProgramKiwiSun->setChecked( true );
+    ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::closeEvent( QCloseEvent *p_poEvent )
+{
+    if( QMessageBox::question( this, tr("Question"),
+                               tr("Are you sure you want to close the application?"),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        p_poEvent->accept();
+    }
+    else
+    {
+        p_poEvent->ignore();
+    }
+}
+
+void MainWindow::on_rbProgramKiwiSun_clicked()
+{
+    ui->imgLogo->setPixmap( QPixmap(":/imgLogo/KiwiSun.png") );
+}
+
+void MainWindow::on_rbProgramSensolite_clicked()
+{
+    ui->imgLogo->setPixmap( QPixmap(":/imgLogo/Sensolite.png") );
+}
+
+void MainWindow::on_pbExpSelectDir_clicked()
+{
+    QString qsDirectory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), m_qdExpCurrentDir.absolutePath() );
+
+    if (!qsDirectory.isEmpty())
+    {
+        m_qdExpCurrentDir = QDir( qsDirectory );
+        ui->ledPathDB->setText( qsDirectory );
+
+        m_qsPCTFileName = QString( "%1/brlttpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+        m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+
+        ui->listLog->addItem( tr("Filenames of patientcard and patientcard types data:") );
+        ui->listLog->addItem( m_qsPCTFileName );
+        ui->listLog->addItem( m_qsPCFileName );
+    }
+}
+
+void MainWindow::on_pbImportDB_clicked()
+{
+    _loadPatientCardTypes();
+    _loadPatientCards();
+}
+
+//====================================================================================
+void MainWindow::_loadPatientCardTypes()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    char           strTemp[10];
+    unsigned int   nCount = 0;
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvPatientCardTypes.clear();
+
+    file = fopen( m_qsPCTFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( strTemp, 0, 10 );
+        fread( strTemp, 10, 1, file );
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_berlettipus stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                fread( &stTemp.nAr, 4, 1, file );
+                fread( &stTemp.nEgyseg, 4, 1, file );
+                fread( stTemp.strNev, 50, 1, file );
+                fread( &stTemp.nErvTolEv, 4, 1, file );
+                fread( &stTemp.nErvTolHo, 4, 1, file );
+                fread( &stTemp.nErvTolNap, 4, 1, file );
+                fread( &stTemp.nErvIgEv, 4, 1, file );
+                fread( &stTemp.nErvIgHo, 4, 1, file );
+                fread( &stTemp.nErvIgNap, 4, 1, file );
+                fread( &stTemp.nErvNapok, 4, 1, file );
+                fread( &stTemp.bSzolariumHaszn, 1, 1, file );
+                if( m_nProgramType == DBTool::Sensolite )
+                {
+                    fread( &stTemp.nEgysegIdo, 4, 1, file );
+                }
+                else
+                {
+                    stTemp.nEgysegIdo = 0;
+                }
+
+                _DeCode( stTemp.strNev, 50 );
+
+                m_qvPatientCardTypes.append( stTemp );
+            }
+        }
+        fclose( file );
+        ui->listLog->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+
+//====================================================================================
+void MainWindow::_loadPatientCards()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strPatiencardVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvPatientCards.clear();
+
+    file = fopen( m_qsPCFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strPatiencardVersion, 0, 10 );
+        fread( m_strPatiencardVersion, 10, 1, file );
+        //ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_berlet   stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( stTemp.strVonalkod, 20, 1, file );
+                fread( stTemp.strMegjegyzes, 50, 1, file );
+                fread( &stTemp.nBerletTipus, 4, 1, file );
+                fread( &stTemp.nEgyseg, 4, 1, file );
+                fread( &stTemp.nErvEv, 4, 1, file );
+                fread( &stTemp.nErvHo, 4, 1, file );
+                fread( &stTemp.nErvNap, 4, 1, file );
+                fread( &stTemp.nPin, 4, 1, file );
+                _DeCode( stTemp.strVonalkod, 20 );
+                _DeCode( stTemp.strMegjegyzes, 50 );
+
+                m_qvPatientCards.append( stTemp );
+            }
+        }
+        fclose( file );
+        ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_EnCode( char *str, int size )
+//====================================================================================
+{
+   for(int i=0;i<size;i++)
+   {
+      str[i] ^= 11;
+   }
+}
+//====================================================================================
+void MainWindow::_DeCode( char *str, int size )
+//====================================================================================
+{
+   for(int i=0;i<size;i++)
+   {
+      str[i] ^= 11;
+   }
+}
+//====================================================================================

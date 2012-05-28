@@ -536,3 +536,6 @@ c.bat
 install/
 dbtool/kiwisunberlet_hu.qm
 tr_client_hu.bat
+DBTool-build-desktop/
+dbtool/DBTool.pro.user
+DBTool.exe
