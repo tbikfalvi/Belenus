@@ -1044,67 +1044,102 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Kedvezmények listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="33"/>
+        <location filename="crud/dlgdiscount.cpp" line="14"/>
+        <source>All discounts</source>
+        <translation>Összes kedvezmény</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="17"/>
+        <source>General discounts</source>
+        <translation>Vendégcsoport kedvezmények</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="20"/>
+        <source>Guest discounts</source>
+        <translation>Vendég kedvezmények</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="23"/>
+        <source>Product discounts</source>
+        <translation>Termék kedvezmények</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="28"/>
+        <source>Name: </source>
+        <translation>Név :</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="68"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="34"/>
+        <location filename="crud/dlgdiscount.cpp" line="69"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="35"/>
-        <location filename="crud/dlgdiscount.cpp" line="53"/>
+        <location filename="crud/dlgdiscount.cpp" line="70"/>
+        <location filename="crud/dlgdiscount.cpp" line="88"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="36"/>
-        <location filename="crud/dlgdiscount.cpp" line="54"/>
+        <location filename="crud/dlgdiscount.cpp" line="71"/>
+        <location filename="crud/dlgdiscount.cpp" line="89"/>
         <source>Exact value</source>
         <translation>Pontos összeg</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="37"/>
-        <location filename="crud/dlgdiscount.cpp" line="55"/>
+        <location filename="crud/dlgdiscount.cpp" line="72"/>
+        <location filename="crud/dlgdiscount.cpp" line="90"/>
         <source>Percent</source>
         <translation>Százalék</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="38"/>
+        <location filename="crud/dlgdiscount.cpp" line="73"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="39"/>
+        <location filename="crud/dlgdiscount.cpp" line="74"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="96"/>
+        <location filename="crud/dlgdiscount.cpp" line="176"/>
         <source>New Discount</source>
         <translation>Új Kedvezmény</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="135"/>
+        <location filename="crud/dlgdiscount.cpp" line="215"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="136"/>
+        <location filename="crud/dlgdiscount.cpp" line="216"/>
         <source>Are you sure you want to delete this Discount?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a kedvezményt?</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="145"/>
+        <location filename="crud/dlgdiscount.cpp" line="225"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgdiscount.cpp" line="146"/>
+        <location filename="crud/dlgdiscount.cpp" line="226"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="249"/>
+        <source>&lt;All guests&gt;</source>
+        <translation>&lt;Összes vendég&gt;</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgdiscount.cpp" line="258"/>
+        <source>&lt;All products&gt;</source>
+        <translation>&lt;Összes ťermék&gt;</translation>
     </message>
 </context>
 <context>
@@ -1119,56 +1154,54 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="204"/>
         <source>Discount for selected product type already exists!
 Please modify the existing discount.</source>
-        <translation>A kiválasztott termék típushoz már létezik kedvezmény!
+        <translation type="obsolete">A kiválasztott termék típushoz már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="214"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="215"/>
         <source>Discount for selected product already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott termékhez már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="265"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="266"/>
         <source>Guest discount - %1</source>
         <translation>Vendég kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="270"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="271"/>
         <source>Company discount - %1</source>
         <translation>Céges kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="275"/>
         <source>Product type discount - %1</source>
-        <translation>Termék típus kedvezmény - %1</translation>
+        <translation type="obsolete">Termék típus kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="280"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="281"/>
         <source>Product discount - %1</source>
         <translation>Termék kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="307"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="308"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="325"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="326"/>
         <source>Regular customer discount</source>
         <translation>Törzsvendég kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="327"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="328"/>
         <source>Employee discount</source>
         <translation>Alkalmazotti kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="329"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="330"/>
         <source>Service discount</source>
         <translation>Szerviz kedvezmény</translation>
     </message>
@@ -1183,9 +1216,8 @@ Kérem módosítsa a korábban elmentett kedvezményt.</translation>
         <translation>Céges kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="360"/>
         <source>Product type discount</source>
-        <translation>Termék típus kedvezmény</translation>
+        <translation type="obsolete">Termék típus kedvezmény</translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="372"/>
@@ -1193,42 +1225,42 @@ Kérem módosítsa a korábban elmentett kedvezményt.</translation>
         <translation>Termék kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="154"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="155"/>
         <source>Discount for regular customer already exists!
 Please modify the existing discount.</source>
         <translation>A törzsvásárlói kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="144"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="145"/>
         <source>Name of the discount can not be empty!
 Please add a name to the discount.</source>
         <translation>A kedvezmény megnevezése nem lehet üres!
 Kérem adjon meg nevezze el a kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="164"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="165"/>
         <source>Discount for employee already exists!
 Please modify the existing discount.</source>
         <translation>Az alkalmazotti kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="174"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="175"/>
         <source>Discount for service person already exists!
 Please modify the existing discount.</source>
         <translation>A szerviz kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="184"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="185"/>
         <source>Discount for selected guest already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott vendéghez már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="194"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="195"/>
         <source>Discount for selected company already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott céghez már létezik kedvezmény.
@@ -1247,12 +1279,12 @@ Please modify the existing discount.</source>
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="227"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="228"/>
         <source>One of the item from the list must be selected!</source>
         <translation>A lista valamelyik elemét ki kell választani!</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="237"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="238"/>
         <source>Value of discount is invalid.
 Please use only numbers.</source>
         <translation>A kedvezmény értéke nem megfelelő.
@@ -1271,10 +1303,9 @@ Kérem csak számokat használjon.</translation>
         <translation type="obsolete">Szerviz szakember</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="331"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="332"/>
         <location filename="edit/dlgdiscountedit.cpp" line="338"/>
         <location filename="edit/dlgdiscountedit.cpp" line="350"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="362"/>
         <location filename="edit/dlgdiscountedit.cpp" line="374"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
@@ -1391,18 +1422,33 @@ Kérem csak számokat használjon.</translation>
         <translation>Vendégek listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="34"/>
+        <location filename="crud/dlgguest.cpp" line="17"/>
+        <source>Guest name: </source>
+        <translation>Vendég neve :</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgguest.cpp" line="25"/>
+        <source>Gender: </source>
+        <translation>Nem :</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgguest.cpp" line="32"/>
+        <source>Age group: </source>
+        <translation>Korcsoport :</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgguest.cpp" line="82"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="35"/>
+        <location filename="crud/dlgguest.cpp" line="83"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="36"/>
-        <location filename="crud/dlgguest.cpp" line="56"/>
+        <location filename="crud/dlgguest.cpp" line="84"/>
+        <location filename="crud/dlgguest.cpp" line="104"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
@@ -1411,8 +1457,8 @@ Kérem csak számokat használjon.</translation>
         <translation type="obsolete">Egyedi azonosító</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="37"/>
-        <location filename="crud/dlgguest.cpp" line="57"/>
+        <location filename="crud/dlgguest.cpp" line="85"/>
+        <location filename="crud/dlgguest.cpp" line="105"/>
         <source>Gender</source>
         <translation>Neme</translation>
     </message>
@@ -1421,49 +1467,49 @@ Kérem csak számokat használjon.</translation>
         <translation type="obsolete">Születési idő</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="38"/>
-        <location filename="crud/dlgguest.cpp" line="58"/>
+        <location filename="crud/dlgguest.cpp" line="86"/>
+        <location filename="crud/dlgguest.cpp" line="106"/>
         <source>Age group</source>
         <translation>Korcsoport</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="39"/>
-        <location filename="crud/dlgguest.cpp" line="59"/>
+        <location filename="crud/dlgguest.cpp" line="87"/>
+        <location filename="crud/dlgguest.cpp" line="107"/>
         <source>E-Mail</source>
         <translation>E-Mail</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="40"/>
+        <location filename="crud/dlgguest.cpp" line="88"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="41"/>
+        <location filename="crud/dlgguest.cpp" line="89"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="100"/>
+        <location filename="crud/dlgguest.cpp" line="167"/>
         <source>New Guest</source>
         <translation>Új Vendég</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="137"/>
+        <location filename="crud/dlgguest.cpp" line="204"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="138"/>
+        <location filename="crud/dlgguest.cpp" line="205"/>
         <source>Are you sure you want to delete this Guest?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a vendéget?</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="147"/>
+        <location filename="crud/dlgguest.cpp" line="214"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgguest.cpp" line="148"/>
+        <location filename="crud/dlgguest.cpp" line="215"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -1471,44 +1517,44 @@ Kérem csak számokat használjon.</translation>
 <context>
     <name>cDlgGuestEdit</name>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="48"/>
+        <location filename="edit/dlgguestedit.cpp" line="49"/>
         <source>Attendance List</source>
         <translation>Kezelések</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="191"/>
-        <location filename="edit/dlgguestedit.cpp" line="218"/>
+        <location filename="edit/dlgguestedit.cpp" line="195"/>
+        <location filename="edit/dlgguestedit.cpp" line="222"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="191"/>
-        <location filename="edit/dlgguestedit.cpp" line="218"/>
+        <location filename="edit/dlgguestedit.cpp" line="195"/>
+        <location filename="edit/dlgguestedit.cpp" line="222"/>
         <source>Guest name cannot be empty.</source>
         <translation>Vendég neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="297"/>
+        <location filename="edit/dlgguestedit.cpp" line="301"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="297"/>
+        <location filename="edit/dlgguestedit.cpp" line="301"/>
         <source>Not implemented yet.</source>
         <translation>Nincs kész</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="452"/>
+        <location filename="edit/dlgguestedit.cpp" line="456"/>
         <source>%1 $</source>
         <translation>%1 Ft.</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="275"/>
+        <location filename="edit/dlgguestedit.cpp" line="279"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="276"/>
+        <location filename="edit/dlgguestedit.cpp" line="280"/>
         <source>Are you sure you want to disjoin this card from patient?</source>
         <translation>Biztos benne, hogy leválasztja a bérletet a vendégről?</translation>
     </message>
@@ -4155,69 +4201,69 @@ Kérem válasszon egy másik nevet.</translation>
         <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="127"/>
+        <location filename="crud/dlgproductsell.cpp" line="126"/>
         <source>To shopping cart</source>
         <oldsource>To cart</oldsource>
         <translation>Bevásárlókosárba</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="133"/>
+        <location filename="crud/dlgproductsell.cpp" line="132"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="173"/>
+        <location filename="crud/dlgproductsell.cpp" line="172"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="174"/>
+        <location filename="crud/dlgproductsell.cpp" line="173"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="175"/>
-        <location filename="crud/dlgproductsell.cpp" line="199"/>
+        <location filename="crud/dlgproductsell.cpp" line="174"/>
+        <location filename="crud/dlgproductsell.cpp" line="198"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="176"/>
-        <location filename="crud/dlgproductsell.cpp" line="200"/>
+        <location filename="crud/dlgproductsell.cpp" line="175"/>
+        <location filename="crud/dlgproductsell.cpp" line="199"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="177"/>
-        <location filename="crud/dlgproductsell.cpp" line="201"/>
+        <location filename="crud/dlgproductsell.cpp" line="176"/>
+        <location filename="crud/dlgproductsell.cpp" line="200"/>
         <source>Net price</source>
         <translation>Nettó ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="178"/>
-        <location filename="crud/dlgproductsell.cpp" line="202"/>
+        <location filename="crud/dlgproductsell.cpp" line="177"/>
+        <location filename="crud/dlgproductsell.cpp" line="201"/>
         <source>VAT percent</source>
         <translation>ÁFA</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="179"/>
-        <location filename="crud/dlgproductsell.cpp" line="203"/>
+        <location filename="crud/dlgproductsell.cpp" line="178"/>
+        <location filename="crud/dlgproductsell.cpp" line="202"/>
         <source>Sum price</source>
         <translation>Bruttó ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="180"/>
-        <location filename="crud/dlgproductsell.cpp" line="204"/>
+        <location filename="crud/dlgproductsell.cpp" line="179"/>
+        <location filename="crud/dlgproductsell.cpp" line="203"/>
         <source>Product count</source>
         <translation>Darabszám</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="181"/>
+        <location filename="crud/dlgproductsell.cpp" line="180"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="182"/>
+        <location filename="crud/dlgproductsell.cpp" line="181"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
@@ -6855,16 +6901,12 @@ allergia :</translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="96"/>
-        <source>Product Type</source>
-        <translation>Termék típus</translation>
-    </message>
-    <message>
-        <location filename="dlgdiscountedit.ui" line="103"/>
         <source>Product</source>
+        <oldsource>Product Type</oldsource>
         <translation>Termék</translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="115"/>
+        <location filename="dlgdiscountedit.ui" line="108"/>
         <source>Guest / Company / Product ... </source>
         <translation> Vendég / Cég / Termék ... </translation>
     </message>
@@ -6886,37 +6928,37 @@ allergia :</translation>
         <translation type="obsolete"> Egészségpénztár / Cég / Orvos ... </translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="133"/>
+        <location filename="dlgdiscountedit.ui" line="126"/>
         <source> Type </source>
         <translation> Típus </translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="139"/>
+        <location filename="dlgdiscountedit.ui" line="132"/>
         <source>fix value</source>
         <translation>pontos összeg</translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="146"/>
+        <location filename="dlgdiscountedit.ui" line="139"/>
         <source>percent</source>
         <translation>százalék</translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="159"/>
+        <location filename="dlgdiscountedit.ui" line="152"/>
         <source> Value </source>
         <translation> Érték </translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="220"/>
+        <location filename="dlgdiscountedit.ui" line="213"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="233"/>
+        <location filename="dlgdiscountedit.ui" line="226"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlgdiscountedit.ui" line="266"/>
+        <location filename="dlgdiscountedit.ui" line="259"/>
         <source>Independent from the local studio.</source>
         <translation>Független a stúdiótól</translation>
     </message>
@@ -7087,37 +7129,37 @@ allergia :</translation>
         <translation>Bérlet típusa :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="314"/>
+        <location filename="dlgguestedit.ui" line="551"/>
         <source> Statistical data </source>
         <translation> Statisztikai adatok </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="320"/>
+        <location filename="dlgguestedit.ui" line="557"/>
         <source>Returning guest</source>
         <translation>Visszatérő vendég</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="336"/>
+        <location filename="dlgguestedit.ui" line="320"/>
         <source> Discount </source>
         <translation> Kedvezmény </translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="364"/>
+        <location filename="dlgguestedit.ui" line="348"/>
         <source>KiwiSun service</source>
         <translation>KiwiSun szerviz szakember</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="357"/>
+        <location filename="dlgguestedit.ui" line="341"/>
         <source>Employee</source>
         <translation>Alkalmazott</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="350"/>
+        <location filename="dlgguestedit.ui" line="334"/>
         <source>Regular customer</source>
         <translation>Törzsvendég</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="532"/>
+        <location filename="dlgguestedit.ui" line="516"/>
         <source>Loyalty points :</source>
         <translation>Hűségpontok :</translation>
     </message>
@@ -7137,38 +7179,38 @@ allergia :</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="394"/>
+        <location filename="dlgguestedit.ui" line="378"/>
         <source>Private discount :</source>
         <translation>Egyéni kedvezmény :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="404"/>
+        <location filename="dlgguestedit.ui" line="388"/>
         <source>fix value</source>
         <translation>pontos összeg</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="417"/>
+        <location filename="dlgguestedit.ui" line="401"/>
         <source>percent</source>
         <translation>százalék</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="459"/>
+        <location filename="dlgguestedit.ui" line="443"/>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="482"/>
+        <location filename="dlgguestedit.ui" line="466"/>
         <source>Sample :</source>
         <translation>Példa :</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="495"/>
+        <location filename="dlgguestedit.ui" line="479"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <oldsource>if total price is 1,000 $ then discounted price is</oldsource>
         <translation>ha a teljes ár 10,000 Ft. akkor a kedvezményes ár</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="502"/>
+        <location filename="dlgguestedit.ui" line="486"/>
         <source>10,000 $</source>
         <translation>10,000 Ft.</translation>
     </message>
@@ -7193,7 +7235,7 @@ allergia :</translation>
         <translation>Bérlet eladás</translation>
     </message>
     <message>
-        <location filename="dlgguestedit.ui" line="677"/>
+        <location filename="dlgguestedit.ui" line="693"/>
         <source>History</source>
         <translation>Előzmények</translation>
     </message>

@@ -9,6 +9,42 @@ cDlgDiscount::cDlgDiscount( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     setWindowTitle( tr( "Discounts List" ) );
     setWindowIcon( QIcon("./resources/40x40_discount.png") );
 
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    rbFilterAll = new QRadioButton( tr("All discounts"), this );
+    rbFilterAll->setObjectName( QString::fromUtf8( "rbFilterAll" ) );
+    horizontalLayout->addWidget( rbFilterAll );
+    rbFilterGeneral = new QRadioButton( tr("General discounts"), this );
+    rbFilterGeneral->setObjectName( QString::fromUtf8( "rbFilterGeneral" ) );
+    horizontalLayout->addWidget( rbFilterGeneral );
+    rbFilterGuest = new QRadioButton( tr("Guest discounts"), this );
+    rbFilterGuest->setObjectName( QString::fromUtf8( "rbFilterGuest" ) );
+    horizontalLayout->addWidget( rbFilterGuest );
+    rbFilterProduct = new QRadioButton( tr("Product discounts"), this );
+    rbFilterProduct->setObjectName( QString::fromUtf8( "rbFilterProduct" ) );
+    horizontalLayout->addWidget( rbFilterProduct );
+    lblFilterName = new QLabel( this );
+    lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
+    lblFilterName->setText( tr("Name: ") );
+    horizontalLayout->addWidget( lblFilterName );
+    ledFilterName = new QLineEdit( this );
+    ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
+    horizontalLayout->addWidget( ledFilterName );
+
+    rbFilterAll->setChecked( true );
+    ledFilterName->setEnabled( false );
+
+    connect( rbFilterAll, SIGNAL(clicked()), this, SLOT(slotFilterRadioClicked()) );
+    connect( rbFilterGeneral, SIGNAL(clicked()), this, SLOT(slotFilterRadioClicked()) );
+    connect( rbFilterGuest, SIGNAL(clicked()), this, SLOT(slotFilterRadioClicked()) );
+    connect( rbFilterProduct, SIGNAL(clicked()), this, SLOT(slotFilterRadioClicked()) );
+    connect( ledFilterName, SIGNAL(textChanged(QString)), this, SLOT(slotFilterNameChanged()) );
+
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+
+    verticalLayout->insertLayout( 0, horizontalLayout );
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListDiscounts", QPoint(400,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
@@ -62,17 +98,50 @@ void cDlgDiscount::setupTableView()
     }
 }
 
+void cDlgDiscount::slotFilterRadioClicked()
+{
+    if( rbFilterAll->isChecked() || rbFilterGeneral->isChecked() )
+    {
+        ledFilterName->setText( "" );
+        ledFilterName->setEnabled( false );
+    }
+    else if( rbFilterGuest->isChecked() || rbFilterProduct->isChecked() )
+    {
+        ledFilterName->setText( "" );
+        ledFilterName->setEnabled( true );
+    }
+    refreshTable();
+}
+
+void cDlgDiscount::slotFilterNameChanged()
+{
+    refreshTable();
+}
+
 void cDlgDiscount::refreshTable()
 {
     cTracer obTracer( "cDlgDiscount::refreshTable" );
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT discountId, licenceId, name, discountValue, discountPercent, active, archive FROM discounts";
+        m_qsQuery = "SELECT discountId, licenceId, name, discountValue, discountPercent, active, archive FROM discounts WHERE discountId>0";
     }
     else
     {
-        m_qsQuery = "SELECT discountId AS id, name, discountValue, discountPercent FROM discounts WHERE active=1";
+        m_qsQuery = "SELECT discountId AS id, name, discountValue, discountPercent FROM discounts WHERE discountId>0 AND active=1";
+    }
+
+    if( rbFilterGeneral->isChecked() )
+    {
+        m_qsQuery += QString( " AND (regularCustomer=1 OR employee=1 OR service=1)" );
+    }
+    else if( rbFilterGuest->isChecked() )
+    {
+        m_qsQuery += QString( " AND patientId>0 AND name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+    }
+    else if( rbFilterProduct->isChecked() )
+    {
+        m_qsQuery += QString( " AND productId>0 AND name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
     }
 
     cDlgCrud::refreshTable();
@@ -158,3 +227,4 @@ void cDlgDiscount::deleteClicked( bool )
         }
     }
 }
+
