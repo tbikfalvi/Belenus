@@ -45,7 +45,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tabStart">
          <attribute name="title">
@@ -173,6 +173,94 @@
          <attribute name="title">
           <string>Patientcard types</string>
          </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QGroupBox" name="gbPCTComplete">
+            <property name="title">
+             <string> Complete Patientcard Types from import file </string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QLabel" name="lblP2P1S1">
+                 <property name="text">
+                  <string>1. Select file :</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ledImportFileName">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pbSelectImportFile">
+                 <property name="text">
+                  <string>Select</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="DBTool.qrc">
+                   <normaloff>:/imgButton/open.png</normaloff>:/imgButton/open.png</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QLabel" name="lblP2P1S2">
+                 <property name="text">
+                  <string>2. Import patientcard types to local data</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pbImportPCTText">
+                 <property name="text">
+                  <string>Import</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="DBTool.qrc">
+                   <normaloff>:/imgButton/import.png</normaloff>:/imgButton/import.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>46</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>

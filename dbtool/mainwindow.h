@@ -87,6 +87,8 @@ private:
     void                        _loadPatientCards();
     void                        _EnCode( char *str, int size );
     void                        _DeCode( char *str, int size );
+    void                        _loadPatientCardTypeImport();
+    int                         _getPatientCardTypeId();
 
     Ui::MainWindow              *ui;
 
@@ -100,6 +102,8 @@ private:
     QString                      m_qsPCTFileName;
 
 private slots:
+    void on_pbImportPCTText_clicked();
+    void on_pbSelectImportFile_clicked();
     void on_pbImportDB_clicked();
     void on_pbExpSelectDir_clicked();
     void on_rbProgramSensolite_clicked();
