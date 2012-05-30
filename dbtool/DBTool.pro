@@ -14,4 +14,6 @@ SOURCES        += main.cpp\
                   mainwindow.cpp
 HEADERS        += mainwindow.h
 FORMS          += mainwindow.ui
+TRANSLATIONS    = dbtool_us.ts \
+                  dbtool_hu.ts
 RESOURCES      += DBTool.qrc

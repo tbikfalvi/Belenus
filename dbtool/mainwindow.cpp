@@ -18,11 +18,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->rbProgramKiwiSun->setChecked( true );
     ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
+
+    connect( ui->rbProgramKiwiSun, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
+    connect( ui->rbProgramSensolite, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
+
+    ui->tabWidget->setCurrentIndex( 0 );
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::slotProgramSelected()
+{
+    if( ui->rbProgramKiwiSun->isChecked() )
+    {
+        m_nProgramType      = DBTool::KiwiSun;
+    }
+    else if( ui->rbProgramSensolite->isChecked() )
+    {
+        m_nProgramType      = DBTool::Sensolite;
+    }
 }
 
 void MainWindow::closeEvent( QCloseEvent *p_poEvent )
@@ -78,7 +95,6 @@ void MainWindow::_loadPatientCardTypes()
 //====================================================================================
 {
     FILE           *file = NULL;
-    char           strTemp[10];
     unsigned int   nCount = 0;
 
     setCursor( Qt::WaitCursor);
@@ -88,8 +104,8 @@ void MainWindow::_loadPatientCardTypes()
     file = fopen( m_qsPCTFileName.toStdString().c_str(), "rb" );
     if( file != NULL )
     {
-        memset( strTemp, 0, 10 );
-        fread( strTemp, 10, 1, file );
+        memset( m_strPatiencardTypeVersion, 0, 10 );
+        fread( m_strPatiencardTypeVersion, 10, 1, file );
         nCount = 0;
         fread( &nCount, 4, 1, file );
         ui->listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
@@ -293,3 +309,53 @@ int MainWindow::_getPatientCardTypeId()
     return ++nRet;
 }
 
+
+void MainWindow::on_pbExportPCTDat_clicked()
+{
+    FILE    *file = NULL;
+
+    int      nBerletTypeCount = m_qvPatientCardTypes.size();
+
+    setCursor( Qt::WaitCursor);
+
+    file = fopen( "brlttpsfsv_new.dat", "wb" );
+    if( file != NULL )
+    {
+        fwrite( m_strPatiencardTypeVersion, 10, 1, file );
+        fwrite( &nBerletTypeCount, 4, 1, file );
+
+        typ_berlettipus   stTemp;
+
+        for( int i=0; i<nBerletTypeCount; i++ )
+        {
+            stTemp = m_qvPatientCardTypes.at(i);
+
+            _EnCode( stTemp.strNev, 50 );
+
+            fwrite( &stTemp.nID, 4, 1, file );
+            fwrite( &stTemp.nAr, 4, 1, file );
+            fwrite( &stTemp.nEgyseg, 4, 1, file );
+            fwrite( stTemp.strNev, 50, 1, file );
+            fwrite( &stTemp.nErvTolEv, 4, 1, file );
+            fwrite( &stTemp.nErvTolHo, 4, 1, file );
+            fwrite( &stTemp.nErvTolNap, 4, 1, file );
+            fwrite( &stTemp.nErvIgEv, 4, 1, file );
+            fwrite( &stTemp.nErvIgHo, 4, 1, file );
+            fwrite( &stTemp.nErvIgNap, 4, 1, file );
+            fwrite( &stTemp.nErvNapok, 4, 1, file );
+            fwrite( &stTemp.bSzolariumHaszn, 1, 1, file );
+            if( m_nProgramType == DBTool::Sensolite )
+            {
+                fwrite( &stTemp.nEgysegIdo, 4, 1, file );
+            }
+        }
+        fclose( file );
+        ui->listLog->addItem( tr( "'brlttpsfsv_new.dat' file created with %2 patientcard types" ).arg(nBerletTypeCount) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv_new.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}

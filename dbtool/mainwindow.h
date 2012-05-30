@@ -101,7 +101,11 @@ private:
     QString                      m_qsPCFileName;
     QString                      m_qsPCTFileName;
 
+    char                         m_strPatiencardTypeVersion[10];
+
 private slots:
+    void slotProgramSelected();
+    void on_pbExportPCTDat_clicked();
     void on_pbImportPCTText_clicked();
     void on_pbSelectImportFile_clicked();
     void on_pbImportDB_clicked();

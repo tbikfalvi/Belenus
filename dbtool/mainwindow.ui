@@ -45,7 +45,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tabStart">
          <attribute name="title">
@@ -124,7 +124,7 @@
             <item>
              <widget class="QLabel" name="lblP1Step3">
               <property name="text">
-               <string>2. Import data files :</string>
+               <string>3. Import data files :</string>
               </property>
              </widget>
             </item>
@@ -231,6 +231,41 @@
                </item>
                <item>
                 <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <widget class="QLabel" name="lblP2P1S3">
+                 <property name="text">
+                  <string>3. Export to patientcard type DAT file</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pbExportPCTDat">
+                 <property name="text">
+                  <string>Export</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="DBTool.qrc">
+                   <normaloff>:/imgButton/export.png</normaloff>:/imgButton/export.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_3">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
                  </property>
