@@ -1,5 +1,0 @@
-Development branch
-
-Branch-ek magyarázata:
-
-KiwiSun_Alap	a Sensolite-os részek kigyomlálása
