@@ -24,6 +24,8 @@
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbledger.h"
 #include "../db/dbshoppingcart.h"
+#include "dlgpatientcardsell.h"
+#include "dlgpatientcardrefill.h"
 
 //===========================================================================================================
 //
@@ -46,6 +48,8 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     ledUnits->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
     teTimeLeft->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) && !m_poPatientCard->id() );
     ledPrice->setEnabled( false );
+
+    cbActive->setEnabled( false );
 
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
@@ -187,15 +191,24 @@ void cDlgPatientCardEdit::slotRefreshWarningColors()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardEdit::slotEnableButtons()
 {
-    if( !m_poPatientCard->active() && cbActive->isChecked() )
+    pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbDeactivate->setIcon( QIcon("./resources/40x40_new.png") );
+    pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
+    pbRefill->setIcon( QIcon("./resources/40x40_cassa.png") );
+
+    if( m_poPatientCard->active() )
     {
-        pbSave->setIcon( QIcon("./resources/40x40_cassa.png") );
+        pbDeactivate->setEnabled( true );
+        pbSell->setEnabled( false );
+        pbRefill->setEnabled( true );
     }
     else
     {
-        pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
+        pbDeactivate->setEnabled( false );
+        pbSell->setEnabled( true );
+        pbRefill->setEnabled( false );
     }
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 }
 //===========================================================================================================
 //
@@ -636,5 +649,65 @@ void cDlgPatientCardEdit::on_ledBarcode_lostFocus()
         {
             lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
+    }
+}
+
+void cDlgPatientCardEdit::on_pbDeactivate_clicked()
+{
+    if( QMessageBox::warning( this,
+                              tr("Attention"),
+                              tr("Are you sure you want to deactivate this patientcard?"),
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+    {
+        m_poPatientCard->setPatientCardTypeId( 0 );
+        m_poPatientCard->setParentId( 0 );
+        m_poPatientCard->setPatientId( 0 );
+        m_poPatientCard->setUnits( 0 );
+        m_poPatientCard->setAmount( 0 );
+        m_poPatientCard->setTimeLeft( 0 );
+        m_poPatientCard->setValidDateFrom( "2000-01-01" );
+        m_poPatientCard->setValidDateTo( "2000-01-01" );
+        m_poPatientCard->setActive( false );
+
+        cbActive->setChecked( false );
+        cmbCardType->setCurrentIndex( 0 );
+        ledPrice->setText( "" );
+        cmbPatient->setCurrentIndex( 0 );
+        ledUnits->setText( "0" );
+        teTimeLeft->setTime( QTime(0, 0, 0) );
+        deValidDateFrom->setDate( QDate(2000,1,1) );
+        deValidDateTo->setDate( QDate(2000,1,1) );
+    }
+}
+
+void cDlgPatientCardEdit::on_pbSell_clicked()
+{
+    cDBPatientCard  obDBPatientCard;
+
+    obDBPatientCard.load( m_poPatientCard->barcode() );
+
+    cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
+    obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+    if( obDlgPatientCardSell.exec() == QDialog::Accepted )
+    {
+        QDialog::accept();
+    }
+}
+
+void cDlgPatientCardEdit::on_pbRefill_clicked()
+{
+    cDBPatientCard  obDBPatientCard;
+
+    obDBPatientCard.load( m_poPatientCard->barcode() );
+
+    if( obDBPatientCard.timeLeft() < 1 )
+    {
+        obDBPatientCard.setPatientCardTypeId( 0 );
+    }
+    cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+
+    if( obDlgPatientCardRefill.exec() == QDialog::Accepted )
+    {
+        QDialog::accept();
     }
 }

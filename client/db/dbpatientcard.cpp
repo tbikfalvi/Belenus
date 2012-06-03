@@ -28,6 +28,7 @@ cDBPatientCard::~cDBPatientCard()
 void cDBPatientCard::init( const unsigned int p_uiId,
                            const unsigned int p_uiLicenceId,
                            const unsigned int p_uiPatientCardTypeId,
+                           const unsigned int p_uiParentId,
                            const unsigned int p_uiPatientId,
                            const QString p_qsBarcode,
                            const QString p_qsComment,
@@ -44,6 +45,7 @@ void cDBPatientCard::init( const unsigned int p_uiId,
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiParentId            = p_uiParentId;
     m_uiPatientId           = p_uiPatientId;
     m_qsBarcode             = p_qsBarcode;
     m_qsComment             = p_qsComment;
@@ -63,6 +65,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx                 = p_obRecord.indexOf( "patientCardId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inParendIdIdx           = p_obRecord.indexOf( "parentCardId" );
     int inPatientIdIdx          = p_obRecord.indexOf( "patientId" );
     int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
@@ -79,6 +82,7 @@ void cDBPatientCard::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
+          p_obRecord.value( inParendIdIdx ).toUInt(),
           p_obRecord.value( inPatientIdIdx ).toUInt(),
           p_obRecord.value( inBarcodeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
@@ -154,6 +158,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += " patientCards SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "parentCardId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
@@ -245,6 +250,16 @@ unsigned int cDBPatientCard::patientCardTypeId() const throw()
 void cDBPatientCard::setPatientCardTypeId( const unsigned int p_uiPCardTypeId ) throw()
 {
     m_uiPatientCardTypeId = p_uiPCardTypeId;
+}
+
+unsigned int cDBPatientCard::parentId() const throw()
+{
+    return m_uiParentId;
+}
+
+void cDBPatientCard::setParentId( const unsigned int p_uiParentId ) throw()
+{
+    m_uiParentId = p_uiParentId;
 }
 
 unsigned int cDBPatientCard::patientId() const throw()

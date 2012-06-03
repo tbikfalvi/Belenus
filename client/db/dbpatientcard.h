@@ -25,6 +25,8 @@ public:
     void            setPatientCardTypeId( const unsigned int p_uiPCardTypeId )  throw();
     unsigned int    patientId() const                                           throw();
     void            setPatientId( const unsigned int p_uiPatientId )            throw();
+    unsigned int    parentId() const                                            throw();
+    void            setParentId( const unsigned int p_uiParentId )              throw();
     QString         barcode() const                                             throw();
     void            setBarcode( const QString &p_qsBarcode )                    throw();
     QString         comment() const                                             throw();
@@ -53,6 +55,7 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientCardTypeId;
+    unsigned int    m_uiParentId;
     unsigned int    m_uiPatientId;
     QString         m_qsBarcode;
     QString         m_qsComment;
@@ -69,6 +72,7 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientCardTypeId = 0,
+               const unsigned int p_uiParentId = 0,
                const unsigned int p_uiPatientId = 0,
                const QString p_qsBarcode = "",
                const QString p_qsComment = "",

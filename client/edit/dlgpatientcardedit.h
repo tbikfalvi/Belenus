@@ -30,6 +30,9 @@ private:
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 private slots:
+    void on_pbRefill_clicked();
+    void on_pbSell_clicked();
+    void on_pbDeactivate_clicked();
     void slotRefreshWarningColors();
     void slotEnableButtons();
     void on_ledBarcode_lostFocus();

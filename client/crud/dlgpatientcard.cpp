@@ -26,6 +26,8 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     horizontalLayout->addWidget( lblBarcode );
     ledBarcode = new QLineEdit( this );
     ledBarcode->setObjectName( QString::fromUtf8( "ledBarcode" ) );
+    ledBarcode->setMinimumWidth( 100 );
+    ledBarcode->setMaximumWidth( 100 );
     horizontalLayout->addWidget( ledBarcode );
 
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
