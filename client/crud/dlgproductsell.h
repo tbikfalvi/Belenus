@@ -37,6 +37,7 @@ public:
     QPushButton *pbPayment;
     QPushButton *pbToCart;
     QPushButton *pbCancel;
+    QPushButton *pbEditProducts;
 
 private:
     cDBProduct   m_obProduct;
@@ -60,6 +61,7 @@ protected slots:
     void on_pbItemCountDecrease_clicked();
     void on_pbPayment_clicked();
     void on_pbToCart_clicked();
+    void on_pbEditProducts_clicked();
     void enablePayment();
 };
 

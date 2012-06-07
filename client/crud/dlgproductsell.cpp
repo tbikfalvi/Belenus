@@ -17,6 +17,7 @@
 
 #include "belenus.h"
 #include "dlgproductsell.h"
+#include "dlgproduct.h"
 
 cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : cDlgCrud( p_poParent )
 {
@@ -117,6 +118,12 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
 
     verticalLayout->insertLayout( 0, verticalLayoutTop );
 
+    pbCancel = new QPushButton( tr( "Exit" ), this );
+    pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
+    pbCancel->setIconSize( QSize(20, 20) );
+    pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
+    btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
+
     pbPayment = new QPushButton( tr( "Sell" ), this );
     pbPayment->setObjectName( QString::fromUtf8( "pbPayment" ) );
     pbPayment->setIconSize( QSize(20, 20) );
@@ -129,11 +136,11 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     pbToCart->setIcon( QIcon("./resources/40x40_shoppingcart.png") );
     btbButtonsSide->addButton( pbToCart, QDialogButtonBox::ActionRole );
 
-    pbCancel = new QPushButton( tr( "Exit" ), this );
-    pbCancel->setObjectName( QString::fromUtf8( "pbCancel" ) );
-    pbCancel->setIconSize( QSize(20, 20) );
-    pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
-    btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
+    pbEditProducts = new QPushButton( tr( "Product list" ), this );
+    pbEditProducts->setObjectName( QString::fromUtf8( "pbEditProducts" ) );
+    pbEditProducts->setIconSize( QSize(20, 20) );
+    pbEditProducts->setIcon( QIcon("./resources/40x40_product.png") );
+    btbButtonsSide->addButton( pbEditProducts, QDialogButtonBox::ActionRole );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductSell", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -143,6 +150,7 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     connect( pbItemCountDecrease, SIGNAL(clicked(bool)), this, SLOT(on_pbItemCountDecrease_clicked()) );
     connect( pbPayment, SIGNAL(clicked(bool)), this, SLOT(on_pbPayment_clicked()) );
     connect( pbToCart, SIGNAL(clicked(bool)), this, SLOT(on_pbToCart_clicked()) );
+    connect( pbEditProducts, SIGNAL(clicked()), this, SLOT(on_pbEditProducts_clicked()) );
 
     m_obProduct.createNew();
 
@@ -364,6 +372,14 @@ void cDlgProductSell::on_pbToCart_clicked()
     obDBShoppingCart.save();
 
     QDialog::accept();
+}
+
+void cDlgProductSell::on_pbEditProducts_clicked()
+{
+    cDlgProduct obDlgProduct( this );
+
+    obDlgProduct.exec();
+    refreshTable();
 }
 
 void cDlgProductSell::_calculateTotalPrice()

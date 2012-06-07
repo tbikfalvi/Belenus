@@ -28,6 +28,8 @@
 #include "../crud/dlgaddress.h"
 #include "../crud/dlgpatientcardselect.h"
 #include "../edit/dlgdiscountedit.h"
+#include "../dlg/dlginputstart.h"
+#include "dlgpatientcardsell.h"
 
 //===========================================================================================================
 //  cDlgGuestEdit
@@ -61,6 +63,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkRegularCustomer->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+
+    m_poPatientCard = new cDBPatientCard();
 
     m_poGuest = p_poGuest;
 
@@ -241,7 +245,6 @@ void cDlgGuestEdit::on_pbAssignCard_clicked()
     {
         unsigned int uiPCardId = obDlgSelect.selected();
 
-        m_poPatientCard = new cDBPatientCard();
         m_poPatientCard->load( uiPCardId );
 
         if( m_poPatientCard->patientId() == 0 )
@@ -267,6 +270,67 @@ void cDlgGuestEdit::on_pbAssignCard_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbSellCard_clicked()
 {
+    cDlgInputStart  obDlgInputStart( this );
+
+    if( obDlgInputStart.exec() == QDialog::Accepted && obDlgInputStart.m_bCard )
+    {
+        cDBPatientCard  obDBPatientCard;
+        QString         qsBarcode = obDlgInputStart.getEditText();
+
+        obDBPatientCard.createNew();
+
+        try
+        {
+            obDBPatientCard.load( qsBarcode );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
+            else
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This barcode has not found in the database.\n"
+                                              "Do you want to register it for a new patientcard?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCard.createNew();
+                    obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
+                    obDBPatientCard.setBarcode( qsBarcode );
+                    obDBPatientCard.save();
+                }
+            }
+        }
+
+        if( obDBPatientCard.id() > 0 )
+        {
+            cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
+            obDlgPatientCardSell.setPatientCardOwner( m_poGuest->id() );
+            if( obDlgPatientCardSell.exec() == QDialog::Accepted )
+            {
+                m_poPatientCard->load( obDBPatientCard.id() );
+
+                if( m_poPatientCard->patientId() == 0 )
+                {
+                    m_poPatientCard->setPatientId( m_poGuest->id() );
+                    m_poPatientCard->save();
+                }
+                else
+                {
+                    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(obDBPatientCard.id()).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+
+                    if( poQuery->size() == 0 )
+                    {
+                        g_poDB->executeQTQuery( QString( "INSERT INTO connectpatientwithcard (patientCardId, patientId, licenceId) VALUES ('%1', '%2', '%3')" ).arg(obDBPatientCard.id()).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+                    }
+                }
+                _fillPatientCardData();
+            }
+        }
+    }
+
     slotEnableButtons();
 }
 //===========================================================================================================
@@ -341,7 +405,6 @@ void cDlgGuestEdit::_fillPatientCardData()
 {
     try
     {
-        m_poPatientCard = new cDBPatientCard();
         m_poPatientCard->loadPatient( m_poGuest->id() );
 
         ledBarcode->setText( m_poPatientCard->barcode() );

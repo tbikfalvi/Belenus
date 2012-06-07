@@ -6,6 +6,7 @@
 #include "../db/dbproductactiontype.h"
 #include "../db/dbcassahistory.h"
 #include "../db/dbproducthistory.h"
+#include "crud/dlgproductactiontype.h"
 
 dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct ) : QDialog(parent)
 {
@@ -20,6 +21,7 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbRefreshNP->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbRefreshSP->setIcon( QIcon("./resources/40x40_refresh.png") );
+    pbActionTypes->setIcon( QIcon("./resources/40x40_productactiontype.png") );
 
     pbSave->setToolTip( tr("Please check the cassa and action type again\n"
                            "and make sure the correct amount of price and\n"
@@ -35,27 +37,7 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
                              "<Daily, user related cassa> is the currently used cassa\n"
                              "any action will increase or decrease the balance of the cassa.") );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productActionType WHERE active=1" ) );
-    while( poQuery->next() )
-    {
-        cmbProductAction->addItem( poQuery->value(2).toString(), poQuery->value(0).toInt() );
-
-        QString qsChangeCount = tr("not modify");
-        if( poQuery->value(3).toInt() )
-        {
-            qsChangeCount = tr("increase");
-        }
-        else if( poQuery->value(4).toInt() )
-        {
-            qsChangeCount = tr("decrease");
-        }
-        QString qsToolTip = tr("The action <%1> will %2\n"
-                               "the count of the selected product.\n"
-                               "Based on the selected cassa type, the given price will be\n"
-                               "added to actual cassa or to the general ledger.").arg(poQuery->value(2).toString()).arg(qsChangeCount);
-
-        m_qslActionTooltip << qsToolTip;
-    }
+    _fillProductActionList();
 
     m_poProduct = p_poProduct;
 
@@ -72,8 +54,6 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
     m_bInit = false;
-
-    on_cmbProductAction_currentIndexChanged( 0 );
 }
 
 dlgProductStorage::~dlgProductStorage()
@@ -225,4 +205,59 @@ void dlgProductStorage::on_cmbProductAction_currentIndexChanged(int index)
 {
     if( !m_bInit )
         cmbProductAction->setToolTip( m_qslActionTooltip.at(index) );
+}
+
+void dlgProductStorage::on_pbActionTypes_clicked()
+{
+    cDlgProductActionType obDlgProductActionType( this );
+
+    obDlgProductActionType.exec();
+    _fillProductActionList();
+}
+
+void dlgProductStorage::_fillProductActionList()
+{
+    m_bInit = true;
+
+    cmbProductAction->clear();
+    m_qslActionTooltip.clear();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productActionType WHERE active=1" ) );
+    while( poQuery->next() )
+    {
+        cmbProductAction->addItem( poQuery->value(2).toString(), poQuery->value(0).toInt() );
+
+        QString qsChangeCount = tr("not modify");
+        if( poQuery->value(3).toInt() )
+        {
+            qsChangeCount = tr("increase");
+        }
+        else if( poQuery->value(4).toInt() )
+        {
+            qsChangeCount = tr("decrease");
+        }
+        QString qsToolTip = tr("The action <%1> will %2\n"
+                               "the count of the selected product.\n"
+                               "Based on the selected cassa type, the given price will be\n"
+                               "added to actual cassa or to the general ledger.").arg(poQuery->value(2).toString()).arg(qsChangeCount);
+
+        m_qslActionTooltip << qsToolTip;
+    }
+
+    if( cmbProductAction->count() < 1 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("There is no product action type in the database.\n"
+                                 "Without any action type modification of product count is not possible.\n"
+                                 "Please create at least one product action type.") );
+        pbSave->setEnabled( false );
+        cmbProductAction->addItem( tr("<Product action type not found>"), 0 );
+    }
+    else
+    {
+        pbSave->setEnabled( true );
+        on_cmbProductAction_currentIndexChanged( 0 );
+    }
+
+    m_bInit = false;
 }

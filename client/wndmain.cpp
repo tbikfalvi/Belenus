@@ -83,8 +83,7 @@ extern DatabaseWriter g_obLogDBWriter;
 //extern LicenceManager g_obLicenceManager;
 
 //====================================================================================
-cWndMain::cWndMain( QWidget *parent )
-    : QMainWindow( parent )
+cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 {
     cTracer obTrace( "cWndMain::cWndMain" );
 
@@ -626,7 +625,7 @@ void cWndMain::updateToolbar()
     action_PatientEmpty->setEnabled( g_obGuest.id()>0 );
     action_PatientEmpty->setVisible( g_obGuest.id()>0 );
     action_PatientNew->setEnabled( true );
-    action_EditActualPatient->setEnabled( false/*g_obGuest.id()>0*/ );
+    action_EditActualPatient->setEnabled( g_obGuest.id()>0 );
 
     action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
     action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
@@ -1466,15 +1465,9 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
 {
-/*
-    cDlgPatientEdit  obDlgEdit( this, &g_obGuest );
+    cDlgGuestEdit  obDlgEdit( this, &g_obGuest );
     obDlgEdit.setWindowTitle( g_obGuest.name() );
-    if( obDlgEdit.exec() == QDialog::Accepted )
-    {
-        cDBPostponed    obDBPostponed;
-        obDBPostponed.removePatient( g_obGuest.id() );
-    }
-*/
+    obDlgEdit.exec();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()

@@ -17,11 +17,14 @@ public:
     ~dlgProductStorage();
 
 private:
-    bool            m_bInit;
-    QStringList     m_qslActionTooltip;
-    cDBProduct     *m_poProduct;
+    bool             m_bInit;
+    QStringList      m_qslActionTooltip;
+    cDBProduct      *m_poProduct;
+
+    void            _fillProductActionList();
 
 private slots:
+    void on_pbActionTypes_clicked();
     void on_cmbProductAction_currentIndexChanged(int index);
     void on_pbRefreshSP_clicked();
     void on_pbRefreshNP_clicked();
