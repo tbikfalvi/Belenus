@@ -96,13 +96,13 @@ void dlgMain::_initializeInstall()
     //-----------------------------------------------------------------------------------
     //  Get Windows default values from registry
     //-----------------------------------------------------------------------------------
-    VRegistry   obReg;
+//    VRegistry   obReg;
 
     m_qsPathWindows     = "";
     m_qsPathPrograms    = "";
     m_qsPathDesktop     = "";
 
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
+/*    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
     {
         m_qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
         obReg.CloseKey();
@@ -114,6 +114,16 @@ void dlgMain::_initializeInstall()
         m_qsPathDesktop     = obReg.get_REG_SZ( QString("Common Desktop") );
         obReg.CloseKey();
     }
+*/
+
+    QSettings   obRegSystem( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", QSettings::NativeFormat );
+
+    m_qsPathWindows = obRegSystem.value( "SystemRoot", "" ).toString();
+
+    QSettings   obRegShell( "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", QSettings::NativeFormat );
+
+    m_qsPathPrograms = obRegShell.value( "Common Programs" ).toString();
+    m_qsPathDesktop  = obRegShell.value( "Common Desktop" ).toString();
 
     if( m_qsPathWindows.length() == 0 || m_qsPathPrograms.length() == 0 || m_qsPathDesktop.length() == 0 )
     {
@@ -244,15 +254,18 @@ void dlgMain::_initializeInstall()
     // If Wamp server installed get settings and check Belenus database and user
     if( m_bWampServerAlreadyInstalled )
     {
-        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
-        {
-            m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
-            m_qsUninstallWampExec = obReg.get_REG_SZ( "UninstallString" );
-            obReg.CloseKey();
+        QSettings obRegWamp( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1", QSettings::NativeFormat );
+//        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
+//        {
+//            m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
+//            m_qsUninstallWampExec = obReg.get_REG_SZ( "UninstallString" );
+//            obReg.CloseKey();
+            m_qsPathWampServer = obRegWamp.value( "Inno Setup: App Path", "" ).toString();
+            m_qsUninstallWampExec = obRegWamp.value( "UninstallString", "" ).toString();
 
             _logProcess( QString("Wamp Server: %1").arg(m_qsPathWampServer) );
             _logProcess( QString("") );
-        }
+//        }
 
         // Check root user
         m_poDB->setHostName( "localhost" );
@@ -287,12 +300,15 @@ void dlgMain::_initializeInstall()
     if( m_bBelenusAlreadyInstalled )
     {
         _logProcess( QString("Belenus application installed") );
-        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
-        {
-            m_qsClientInstallDir = obReg.get_REG_SZ( QString("InstallLocation") );
-            QString qsTemp = obReg.get_REG_SZ( QString("Components") );
+        QSettings obRegBelenus( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QSettings::NativeFormat );
+//        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+//        {
+//            m_qsClientInstallDir = obReg.get_REG_SZ( QString("InstallLocation") );
+//            QString qsTemp = obReg.get_REG_SZ( QString("Components") );
+            m_qsClientInstallDir = obRegBelenus.value( "InstallLocation", "" ).toString();
+            QString qsTemp = obRegBelenus.value( "Components", "" ).toString();
             m_qslComponents = qsTemp.split( "#" );
-            obReg.CloseKey();
+//            obReg.CloseKey();
             _logProcess( QString("Application location: %1").arg(m_qsClientInstallDir) );
             _logProcess( QString("Installed components:") );
             for( int i=0; i<m_qslComponents.count(); i++ )
@@ -301,7 +317,7 @@ void dlgMain::_initializeInstall()
             }
 
             m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
-        }
+//        }
     }
 }
 //=======================================================================================
@@ -956,7 +972,7 @@ bool dlgMain::_processWampServerInstall()
         si.cb=sizeof(si);
         ZeroMemory(&pi,sizeof(pi));
 
-        if(!CreateProcess(L"Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
+        if(!CreateProcess("Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
             bRet = false;
 
         WaitForSingleObject(pi.hProcess,INFINITE);
@@ -2624,7 +2640,7 @@ bool dlgMain::_removeInstalledFilesFolders()
             m_qsUninstallWampExec.remove( "\"" );
             m_qsUninstallWampExec.toWCharArray( wsUninstallWampExec );
 
-            if(!CreateProcess(wsUninstallWampExec,NULL,0,0,0,0,0,0,&si,&pi))
+            if(!CreateProcess((const CHAR*)wsUninstallWampExec,NULL,0,0,0,0,0,0,&si,&pi))
             {
                 m_qsProcessErrorMsg = "UninstWampExec";
                 bRet = false;

@@ -716,6 +716,7 @@ CREATE TABLE `ledger` (
   `patientCardTypeId`       int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
   `netPrice`                int(11)                 NOT NULL,
   `discount`                int(11)                 NOT NULL,
@@ -735,6 +736,7 @@ CREATE TABLE `ledger` (
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -4324,6 +4326,4 @@ INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWork
   ( 1, 1, "3-as gép", 0, 0, 1, "ARC" ),
   ( 1, 1, "4-es gép", 0, 0, 1, "ARC" ),
   ( 1, 1, "5-ös gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "6-os gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "7-es gép", 0, 0, 1, "ARC" ),
-  ( 1, 1, "8-as gép", 0, 0, 1, "ARC" );
+  ( 1, 1, "6-os gép", 0, 0, 1, "ARC" );
