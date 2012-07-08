@@ -395,7 +395,7 @@ void cDlgGuestEdit::slotEnableButtons()
 {
     pbAssignCard->setEnabled( m_poGuest->id()>0 );
     pbSellCard->setEnabled( m_poGuest->id()>0 );
-    pbHistory->setEnabled( m_poGuest->id()>0 );
+    pbHistory->setEnabled( /*m_poGuest->id()>0*/false );
     pbDislink->setEnabled( ledBarcode->text().length()>0 );
 }
 //===========================================================================================================

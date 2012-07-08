@@ -4,16 +4,19 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 DESTDIR         = ..
 TARGET          = DBTool
 TEMPLATE        = app
 RC_FILE         = DBTool.rc
-SOURCES        += main.cpp\
-                  mainwindow.cpp
-HEADERS        += mainwindow.h
-FORMS          += mainwindow.ui
+SOURCES        += main.cpp \
+                  mainwindow.cpp \
+                  dlgprogress.cpp
+HEADERS        += mainwindow.h \
+                  dlgprogress.h
+FORMS          += mainwindow.ui \
+                  dlgprogress.ui
 TRANSLATIONS    = dbtool_us.ts \
                   dbtool_hu.ts
 RESOURCES      += DBTool.qrc

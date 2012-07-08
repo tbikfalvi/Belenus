@@ -46,6 +46,7 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="174"/>
+        <location filename="mainwindow.ui" line="416"/>
         <source>Patientcard types</source>
         <translation>Bérlettípusok</translation>
     </message>
@@ -81,102 +82,176 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="259"/>
+        <location filename="mainwindow.ui" line="501"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="336"/>
+        <location filename="mainwindow.ui" line="302"/>
+        <source>Export to Belenus</source>
+        <translation>Exportálás Belenus-ba</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="310"/>
+        <source>1. Connect to Belenus database</source>
+        <translation>1. Csatlakozás a Belenus adatbázishoz</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="317"/>
+        <source>Connect</source>
+        <translation>Kapcsolódás</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="347"/>
+        <source>2. Set unit time for patiencard type :</source>
+        <translation>2. Egységidő megadása a bérlettípusokhoz :</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="392"/>
+        <source>3. Select data to export</source>
+        <translation>3. Adadotk kiválasztása exportálásra</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="426"/>
+        <source>Patientcards</source>
+        <translation>Bérletek</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="439"/>
+        <source>Product types</source>
+        <translation>Termék típusok</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="449"/>
+        <source>Products</source>
+        <translation>Termékek</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="459"/>
+        <source>Users</source>
+        <translation>Felhasználók</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="491"/>
+        <source>4. Export selected data</source>
+        <translation>4. Kiválasztott adatok exportálása</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="564"/>
         <source>  Exit application  </source>
         <translation>  Kilépés az alkalmazásból  </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="47"/>
+        <location filename="mainwindow.cpp" line="55"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="48"/>
+        <location filename="mainwindow.cpp" line="56"/>
         <source>Are you sure you want to close the application?</source>
         <translation>Biztos benne, hogy ki akar lépni az alkalmazásból?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="71"/>
+        <location filename="mainwindow.cpp" line="79"/>
         <source>Select Directory</source>
         <translation>Könyvtár választás</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="81"/>
+        <location filename="mainwindow.cpp" line="89"/>
         <source>Filenames of patientcard and patientcard types data:</source>
         <translation>Bérlet és bérlettípus adatállományok nevei:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="111"/>
+        <location filename="mainwindow.cpp" line="119"/>
         <source>Count of patientcard types to be imported: %1</source>
         <translation>%1 bérlettípus lesz importálva</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="144"/>
+        <location filename="mainwindow.cpp" line="152"/>
         <source>Importing %1 patientcard types finished.</source>
         <translation>%1 bérlettípus importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="148"/>
+        <location filename="mainwindow.cpp" line="156"/>
         <source>Error occured during opening brlttpsfsv.dat file.</source>
         <translation>Hiba történt a brlttpsfsv.dat állomány megnyitásakor.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="175"/>
+        <location filename="mainwindow.cpp" line="183"/>
         <source>Count of patientcards to be imported: %1</source>
         <translation>%1 bérlet lesz importálva</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="196"/>
-        <location filename="mainwindow.cpp" line="276"/>
+        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.cpp" line="284"/>
         <source>Importing %1 patientcards finished.</source>
         <translation>%1 bérlet importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="200"/>
+        <location filename="mainwindow.cpp" line="208"/>
         <source>Error occured during opening brltfsv.dat file.</source>
         <translation>Hiba történt a brltfsv.dat állomány megnyitásakor.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="239"/>
-        <location filename="mainwindow.cpp" line="291"/>
+        <location filename="mainwindow.cpp" line="247"/>
+        <location filename="mainwindow.cpp" line="299"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="240"/>
+        <location filename="mainwindow.cpp" line="248"/>
         <source>The selected file is not a valid import file.
 Please select a valid file and restart the process.</source>
         <translation>A kiválasztott állomány nem megfelelő import állomány.
 Kérem válasszon ki egy megfelelő állományt és kezdje újra a folyamatot.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="281"/>
+        <location filename="mainwindow.cpp" line="289"/>
         <source>Open import file</source>
         <translation>Import állomány megnyitása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="281"/>
+        <location filename="mainwindow.cpp" line="289"/>
         <source>Import Files (*.imp)</source>
         <translation>Import Állományok (*.imp)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="292"/>
+        <location filename="mainwindow.cpp" line="300"/>
         <source>No import file selected.</source>
         <translation>Nincs import állomány kiválasztva.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="353"/>
+        <location filename="mainwindow.cpp" line="361"/>
         <source>&apos;brlttpsfsv_new.dat&apos; file created with %2 patientcard types</source>
         <translation>A &apos;brlttpsfsv_new.dat&apos; állomány elkészült %2 bérlettípussal</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="357"/>
+        <location filename="mainwindow.cpp" line="365"/>
         <source>Error occured during opening brlttpsfsv_new.dat file.</source>
         <translation>Hiba történt a brlttpsfsv_new.dat állomány megnyitásakor.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="382"/>
+        <source>Successfully connected to Belenus database</source>
+        <translation>A kapcsolódás a Belenus adatbázishoz sikerült</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="405"/>
+        <source>Connection to Belenus database closed</source>
+        <translation>Az Belenus adatbázis kapcsolat lezárult</translation>
+    </message>
+</context>
+<context>
+    <name>dlgProgress</name>
+    <message>
+        <location filename="dlgprogress.ui" line="17"/>
+        <source>Please wait ...</source>
+        <translation>Kérem várjon ...</translation>
+    </message>
+    <message>
+        <location filename="dlgprogress.ui" line="48"/>
+        <source>Please wait while the requested process ends.</source>
+        <translation>Kérem várjon, amíg a kívánt folyamat befejeződik.</translation>
     </message>
 </context>
 </TS>

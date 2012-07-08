@@ -27,6 +27,7 @@ cDBLedger::~cDBLedger()
 
 void cDBLedger::init( const unsigned int p_uiId,
                       const unsigned int p_uiLicenceId,
+                      const unsigned int p_uiParentId,
                       const unsigned int p_uiLedgerTypeId,
                       const unsigned int p_uiLedgerDeviceId,
                       const unsigned int p_uiPaymentMethodId,
@@ -48,6 +49,7 @@ void cDBLedger::init( const unsigned int p_uiId,
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
+    m_uiParentId            = p_uiParentId;
     m_uiLedgerTypeId        = p_uiLedgerTypeId;
     m_uiLedgerDeviceId      = p_uiLedgerDeviceId;
     m_uiPaymentMethod       = p_uiPaymentMethodId;
@@ -72,6 +74,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx                 = p_obRecord.indexOf( "ledgerId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inParentIdIdx           = p_obRecord.indexOf( "parentId" );
     int inLedgerTypeIdIdx       = p_obRecord.indexOf( "ledgerTypeId" );
     int inLedgerDeviceIdIdx     = p_obRecord.indexOf( "ledgerDeviceId" );
     int inPaymentMethodIdx      = p_obRecord.indexOf( "paymentMethodId" );
@@ -93,6 +96,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inParentIdIdx ).toUInt(),
           p_obRecord.value( inLedgerTypeIdIdx ).toUInt(),
           p_obRecord.value( inLedgerDeviceIdIdx ).toUInt(),
           p_obRecord.value( inPaymentMethodIdx ).toUInt(),
@@ -149,6 +153,7 @@ void cDBLedger::save() throw( cSevException )
     }
     qsQuery += " ledger SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "parentId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
     qsQuery += QString( "ledgerDeviceId = \"%1\", " ).arg( m_uiLedgerDeviceId );
     qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( m_uiPaymentMethod );
@@ -207,6 +212,10 @@ void cDBLedger::remove() throw( cSevException )
 
 void cDBLedger::revoke() throw( cSevException )
 {
+    setActive( false );
+    save();
+
+    m_uiParentId = m_uiId;
     m_uiId = 0;
     setComment( QObject::tr("Revoking action: %1").arg(comment()) );
     setNetPrice( netPrice()*(-1) );
@@ -231,6 +240,16 @@ unsigned int cDBLedger::licenceId() const throw()
 void cDBLedger::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBLedger::parentId() const throw()
+{
+    return m_uiParentId;
+}
+
+void cDBLedger::setParentId( const unsigned int p_uiParentId ) throw()
+{
+    m_uiParentId = p_uiParentId;
 }
 
 unsigned int cDBLedger::ledgerTypeId() const throw()

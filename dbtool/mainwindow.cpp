@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QCloseEvent>
 #include <QTextStream>
+#include <QtSql/QSqlQuery>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -23,10 +24,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect( ui->rbProgramSensolite, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
 
     ui->tabWidget->setCurrentIndex( 0 );
+
+    m_poDB = NULL;
+
+    m_dlgProgress = new cDlgProgress( this );
+
+    slotProgramSelected();
 }
 
 MainWindow::~MainWindow()
 {
+    delete m_dlgProgress;
     delete ui;
 }
 
@@ -35,10 +43,12 @@ void MainWindow::slotProgramSelected()
     if( ui->rbProgramKiwiSun->isChecked() )
     {
         m_nProgramType      = DBTool::KiwiSun;
+        ui->ledPExportS2->setEnabled( true );
     }
     else if( ui->rbProgramSensolite->isChecked() )
     {
         m_nProgramType      = DBTool::Sensolite;
+        ui->ledPExportS2->setEnabled( false );
     }
 }
 
@@ -358,4 +368,149 @@ void MainWindow::on_pbExportPCTDat_clicked()
     }
 
     setCursor( Qt::ArrowCursor);
+}
+
+void MainWindow::on_pbPExportConnect_clicked()
+{
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        ui->listLog->addItem( tr("Successfully connected to Belenus database") );
+        ui->pbExportProcess->setEnabled( true );
+    }
+}
+
+void MainWindow::on_pbExportProcess_clicked()
+{
+    if( m_poDB->isOpen() )
+    {
+        m_dlgProgress->showProgress();
+
+        if( ui->chkPExportPCT->isChecked() )
+        {
+            _exportToBelenusPatientCardTypes();
+        }
+
+        if( ui->chkPExportPC->isChecked() )
+        {
+            _exportToBelenusPatientCards();
+        }
+
+        m_poDB->close();
+        m_dlgProgress->hideProgress();
+        ui->listLog->addItem( tr("Connection to Belenus database closed") );
+    }
+    ui->pbExportProcess->setEnabled( false );
+    if( m_poDB != NULL ) delete m_poDB;
+
+    m_poDB = NULL;
+}
+
+int MainWindow::_getTimeLeft(int p_nBerletTipus, int p_nEgyseg )
+{
+    int nRet = 0;
+
+    int nBerletTypeCount = m_qvPatientCardTypes.size();
+
+    for( int i=0; i<nBerletTypeCount; i++ )
+    {
+        if( m_qvPatientCardTypes.at(i).nID == p_nBerletTipus )
+        {
+            if( m_nProgramType == DBTool::Sensolite )
+            {
+                nRet = m_qvPatientCardTypes.at(i).nEgysegIdo * p_nEgyseg * 60;
+            }
+            else
+            {
+                nRet = ui->ledPExportS2->text().toInt() * p_nEgyseg * 60;
+            }
+            break;
+        }
+    }
+
+    return nRet;
+}
+
+void MainWindow::_exportToBelenusPatientCardTypes()
+{
+    int nBerletTypeCount = m_qvPatientCardTypes.size();
+
+    for( int i=0; i<nBerletTypeCount; i++ )
+    {
+        QString qsSQLCommand = QString( "INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES ( " );
+
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
+        qsSQLCommand += QString( "1, " );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCardTypes.at(i).strNev );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nEgyseg );
+        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCardTypes.at(i).nErvTolEv ).arg( m_qvPatientCardTypes.at(i).nErvTolHo ).arg( m_qvPatientCardTypes.at(i).nErvTolNap );
+        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCardTypes.at(i).nErvIgEv ).arg( m_qvPatientCardTypes.at(i).nErvIgHo ).arg( m_qvPatientCardTypes.at(i).nErvIgNap );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nErvNapok );
+        if( m_nProgramType == DBTool::Sensolite )
+        {
+            qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nEgysegIdo );
+        }
+        else
+        {
+            qsSQLCommand += QString( "%1, " ).arg( ui->ledPExportS2->text().toInt() );
+        }
+        qsSQLCommand += QString( "1, 'ARC');" );
+
+        m_poDB->exec( qsSQLCommand );
+
+        qsSQLCommand = QString( "INSERT INTO `patientcardtypeenabled` (`licenceId`, `patientCardTypeId`, `start`, `stop`, `modified`, `archive`) VALUES ( " );
+        qsSQLCommand += QString( "1, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
+        qsSQLCommand += QString( "'00:00:00', " );
+        qsSQLCommand += QString( "'23:59:00', " );
+        qsSQLCommand += QString( "0, 'ARC');" );
+//QMessageBox::information(this,"",qsSQLCommand);
+        m_poDB->exec( qsSQLCommand );
+    }
+}
+
+void MainWindow::_exportToBelenusPatientCards()
+{
+    int nBerletCount = m_qvPatientCards.size();
+
+    for( int i=0; i<nBerletCount; i++ )
+    {
+        QString qsSQLCommand = QString( "INSERT INTO `patientCards` ( `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES ( " );
+
+        qsSQLCommand += QString( "1, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCards.at(i).nBerletTipus+1 );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strVonalkod );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strMegjegyzes );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCards.at(i).nEgyseg );
+        qsSQLCommand += QString( "%1, " ).arg( _getTimeLeft(m_qvPatientCards.at(i).nBerletTipus, m_qvPatientCards.at(i).nEgyseg) );
+        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv-1 ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
+        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
+        qsSQLCommand += QString( "NULL, 1, 'ARC' );" );
+
+        m_poDB->exec( qsSQLCommand );
+    }
+}
+
+void MainWindow::_exportToBelenusProductTypes()
+{
+
+}
+
+void MainWindow::_exportToBelenusProducts()
+{
+
+}
+
+void MainWindow::_exportToBelenusUsers()
+{
+
 }

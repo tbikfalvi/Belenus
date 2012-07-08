@@ -7,6 +7,9 @@
 #include <QStringList>
 #include <QVector>
 #include <QDir>
+#include <QtSql/QSqlDatabase>
+
+#include "dlgprogress.h"
 
 //====================================================================================
 // BERLETTIPUS structure
@@ -56,6 +59,18 @@ typedef struct _typ_berlethasznalat
    int   nEgyseg;
 } typ_berlethasznalat;
 //====================================================================================
+//====================================================================================
+typedef struct _typ_user
+{
+   int      nID;
+   char     strAzonosito[20];
+   char     strLoginNev[20];
+   char     strNevCsalad[100];
+   char     strJelszo[20];
+   char     strMegjegyzes[1000];
+   int      nUserLevel;
+} typ_user;
+//====================================================================================
 
 namespace Ui {
     class MainWindow;
@@ -89,6 +104,12 @@ private:
     void                        _DeCode( char *str, int size );
     void                        _loadPatientCardTypeImport();
     int                         _getPatientCardTypeId();
+    int                         _getTimeLeft(int p_nBerletTipus, int p_nEgyseg );
+    void                        _exportToBelenusPatientCardTypes();
+    void                        _exportToBelenusPatientCards();
+    void                        _exportToBelenusProductTypes();
+    void                        _exportToBelenusProducts();
+    void                        _exportToBelenusUsers();
 
     Ui::MainWindow              *ui;
 
@@ -103,7 +124,12 @@ private:
 
     char                         m_strPatiencardTypeVersion[10];
 
+    QSqlDatabase                *m_poDB;
+    cDlgProgress                *m_dlgProgress;
+
 private slots:
+    void on_pbExportProcess_clicked();
+    void on_pbPExportConnect_clicked();
     void slotProgramSelected();
     void on_pbExportPCTDat_clicked();
     void on_pbImportPCTText_clicked();

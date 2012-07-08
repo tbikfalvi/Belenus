@@ -50,7 +50,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
         chkSunday->setChecked( m_poPatientCardType->validWeekDays() & 64 );
         if( m_poPatientCardType->id() == 0 )
         {
-            listValidInterval->addItem( "00:00 => 24:00" );
+            listValidInterval->addItem( "00:00 => 23:59" );
         }
         else
         {

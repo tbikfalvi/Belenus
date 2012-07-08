@@ -571,7 +571,6 @@ void cWndMain::showElementsForComponents()
         action_HealthInsurance->setVisible( false );
         action_ReportPatients->setVisible( false );
     }
-
 }
 //====================================================================================
 void cWndMain::updateTitle()

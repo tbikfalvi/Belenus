@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbcassahistory.h"
+#include "dbledger.h"
 
 cDBCassaHistory::cDBCassaHistory()
 {
@@ -28,6 +29,7 @@ cDBCassaHistory::~cDBCassaHistory()
 void cDBCassaHistory::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
                              const unsigned int p_uiCassaId,
+                             const unsigned int p_uiLedgerId,
                              const unsigned int p_uiUserId,
                              const unsigned int p_uiPatientId,
                              const int p_inActionValue,
@@ -41,6 +43,7 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiCassaId         = p_uiCassaId;
+    m_uiLedgerId        = p_uiLedgerId;
     m_uiUserId          = p_uiUserId;
     m_uiPatientId       = p_uiPatientId;
     m_inActionValue     = p_inActionValue;
@@ -57,6 +60,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "cassaHistoryId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inCassaIdIdx        = p_obRecord.indexOf( "cassaId" );
+    int inLedgerIdIdx       = p_obRecord.indexOf( "ledgerId" );
     int inUserIdIdx         = p_obRecord.indexOf( "userId" );
     int inPatientIdIdx      = p_obRecord.indexOf( "patientId" );
     int inActionValueIdx    = p_obRecord.indexOf( "actionValue" );
@@ -70,6 +74,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inCassaIdIdx ).toUInt(),
+          p_obRecord.value( inLedgerIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inPatientIdIdx ).toUInt(),
           p_obRecord.value( inActionValueIdx ).toInt(),
@@ -116,6 +121,7 @@ void cDBCassaHistory::save() throw( cSevException )
     qsQuery += " cassaHistory SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "cassaId = \"%1\", " ).arg( m_uiCassaId );
+    qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
@@ -163,6 +169,19 @@ void cDBCassaHistory::remove() throw( cSevException )
     }
 }
 
+void cDBCassaHistory::revoke() throw( cSevException )
+{
+    QString         qsComment   = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
+    unsigned int    uiLedgerId  = ledgerId();
+
+    g_obCassa.cassaAddMoneyAction( actionValue()*(-1), qsComment );
+
+    cDBLedger   obDBLedger;
+
+    obDBLedger.load( uiLedgerId );
+    obDBLedger.revoke();
+}
+
 void cDBCassaHistory::createNew() throw()
 {
     init();
@@ -191,6 +210,16 @@ unsigned int cDBCassaHistory::cassaId() const throw()
 void cDBCassaHistory::setCassaId( const unsigned int p_uiCassaId ) throw()
 {
     m_uiCassaId = p_uiCassaId;
+}
+
+unsigned int cDBCassaHistory::ledgerId() const throw()
+{
+    return m_uiLedgerId;
+}
+
+void cDBCassaHistory::setLedgerId( const unsigned int p_uiLedgerId ) throw()
+{
+    m_uiLedgerId = p_uiLedgerId;
 }
 
 unsigned int cDBCassaHistory::userId() const throw()

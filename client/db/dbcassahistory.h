@@ -14,12 +14,15 @@ public:
     void            load( const unsigned int p_uiId )                   throw( cSevException );
     void            save()                                              throw( cSevException );
     void            remove()                                            throw( cSevException );
+    void            revoke()                                            throw( cSevException );
     void            createNew()                                         throw();
     unsigned int    id() const                                          throw();
     unsigned int    licenceId() const                                   throw();
     void            setLicenceId( const unsigned int p_uiLicenceId )    throw();
     unsigned int    cassaId() const                                     throw();
     void            setCassaId( const unsigned int p_uiCassaId )        throw();
+    unsigned int    ledgerId() const                                    throw();
+    void            setLedgerId( const unsigned int p_uiLedgerId )      throw();
     unsigned int    userId() const                                      throw();
     void            setUserId( const unsigned int p_uiUserId )          throw();
     unsigned int    patientId() const                                   throw();
@@ -42,6 +45,7 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiCassaId;
+    unsigned int    m_uiLedgerId;
     unsigned int    m_uiUserId;
     unsigned int    m_uiPatientId;
     int             m_inActionValue;
@@ -55,6 +59,7 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiCassaId = 0,
+               const unsigned int p_uiLedgerId = 0,
                const unsigned int p_uiUserId = 0,
                const unsigned int p_uiPatientId = 0,
                const int p_inActionValue = 0,
@@ -63,8 +68,8 @@ private:
                const QString &p_qsComment = "",
                const QString &p_qsModified = "",
                const bool p_bActive = true,
-               const QString &p_qsArchive = "NEW" )                  throw();
-    void init( const QSqlRecord &p_obRecord )                       throw();
+               const QString &p_qsArchive = "NEW" )                     throw();
+    void init( const QSqlRecord &p_obRecord )                           throw();
 };
 
 #endif

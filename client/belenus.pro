@@ -71,6 +71,7 @@ HEADERS = belenus.h \
     crud/dlgpatientselect.h \
     crud/dlgshoppingcart.h \
     crud/dlgdiscount.h \
+    crud/dlgstorno.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -183,6 +184,7 @@ SOURCES = main.cpp \
     crud/dlgpatientselect.cpp \
     crud/dlgshoppingcart.cpp \
     crud/dlgdiscount.cpp \
+    crud/dlgstorno.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \

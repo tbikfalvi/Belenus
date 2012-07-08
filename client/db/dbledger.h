@@ -19,6 +19,8 @@ public:
     unsigned int    id() const                                                      throw();
     unsigned int    licenceId() const                                               throw();
     void            setLicenceId( const unsigned int p_nLicenceId )                 throw();
+    unsigned int    parentId() const                                                throw();
+    void            setParentId( const unsigned int p_nParentId )                   throw();
     unsigned int    ledgerTypeId() const                                            throw();
     void            setLedgerTypeId( const unsigned int p_nLedgerTypeId )           throw();
     unsigned int    ledgerDeviceId() const                                          throw();
@@ -58,6 +60,7 @@ public:
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
+    unsigned int    m_uiParentId;
     unsigned int    m_uiLedgerTypeId;
     unsigned int    m_uiLedgerDeviceId;
     unsigned int    m_uiPaymentMethod;
@@ -79,6 +82,7 @@ private:
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
+               const unsigned int p_uiParentId = 0,
                const unsigned int p_uiLedgerTypeId = 0,
                const unsigned int p_uiLedgerDeviceId = 0,
                const unsigned int p_uiPaymentMethodId = 0,
