@@ -19,8 +19,9 @@ USE `belenus`;
 -- Letezo tablak frissitese, kiegeszitese
 -- -----------------------------------------------------------------------------------
 
-ALTER TABLE ledger ADD parentId INT UNSIGNED NOT NULL DEFAULT '0' AFTER licenceId;
-ALTER TABLE cassahistory ADD ledgerId INT UNSIGNED NOT NULL AFTER cassaId;
+ALTER TABLE `ledger` ADD `parentId` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `licenceId`;
+ALTER TABLE `cassahistory` ADD `parentId` INT UNSIGNED NOT NULL DEFAULT '0' AFTER `licenceId`
+ALTER TABLE `cassahistory` ADD `ledgerId` INT UNSIGNED NOT NULL AFTER `cassaId`;
 
 INSERT INTO ledger ( `ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES 
  ( 999 ,  '1',  '0',  '5',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0',  '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );

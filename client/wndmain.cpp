@@ -46,6 +46,7 @@
 #include "crud/dlgproduct.h"
 #include "crud/dlgshoppingcart.h"
 #include "crud/dlgproductsell.h"
+#include "crud/dlgstorno.h"
 
 //====================================================================================
 
@@ -1100,7 +1101,9 @@ void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
 //====================================================================================
 void cWndMain::on_action_CassaActionStorno_triggered()
 {
+    cDlgStorno  obDlgStorno( this );
 
+    obDlgStorno.exec();
 }
 //====================================================================================
 void cWndMain::on_action_PCSaveToDatabase_triggered()

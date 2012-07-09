@@ -724,6 +724,7 @@ CREATE TABLE `ledger` (
 CREATE TABLE `cassaHistory` (
   `cassaHistoryId`          int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `parentId`                int(10) unsigned        NOT NULL DEFAULT '0',
   `cassaId`                 int(10) unsigned        NOT NULL,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `userId`                  int(10) unsigned        NOT NULL,

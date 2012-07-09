@@ -31,7 +31,7 @@ public:
 
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
-    void                    cassaAddMoneyAction( int p_nMoney, QString p_qsComment = "" );
+    void                    cassaAddMoneyAction( int p_nMoney, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
 
     void                    setEnabled();
     void                    setDisabled();

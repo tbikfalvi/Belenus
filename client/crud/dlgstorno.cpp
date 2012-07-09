@@ -1,12 +1,14 @@
-#include "dlgstorno.h"
 
-cDlgStorno::cDlgStorno( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+#include <QMessageBox>
+#include "dlgstorno.h"
+#include "../db/dbcassahistory.h"
+
+cDlgStorno::cDlgStorno( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     cTracer obTrace( "cDlgStorno::cDlgStorno" );
 
-    setWindowTitle( tr( "Select actual patient" ) );
-    setWindowIcon( QIcon("./resources/40x40_patient.png") );
+    setWindowTitle( tr( "Revoke selected cassa action" ) );
+    setWindowIcon( QIcon("./resources/40x40_cassa.png") );
 
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
@@ -31,16 +33,19 @@ cDlgStorno::cDlgStorno( QWidget *p_poParent )
     horizontalLayoutTop->addItem( horizontalSpacerTop );
     verticalLayout->insertLayout( 0, horizontalLayoutTop );
 
-    pbStorno = new QPushButton( tr( "Select" ), this );
+    pbStorno = new QPushButton( tr( "Storno" ), this );
     pbStorno->setObjectName( QString::fromUtf8( "pbStorno" ) );
     pbStorno->setIconSize( QSize(20, 20) );
-    pbStorno->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbStorno->setIcon( QIcon("./resources/40x40_cassa_storno.png") );
     btbButtonsSide->addButton( pbStorno, QDialogButtonBox::ActionRole );
     pbExit = new QPushButton( tr( "Exit" ), this );
     pbExit->setObjectName( QString::fromUtf8( "pbExit" ) );
     pbExit->setIconSize( QSize(20, 20) );
-    pbExit->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
     btbButtonsSide->addButton( pbExit, QDialogButtonBox::RejectRole );
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListCassaStorno", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 
     setupTableView();
 
@@ -51,11 +56,8 @@ cDlgStorno::cDlgStorno( QWidget *p_poParent )
 cDlgStorno::~cDlgStorno()
 {
     cTracer obTrace( "cDlgStorno::~cDlgStorno" );
-}
 
-void cDlgStorno::setSearchPatientName( QString p_stName )
-{
-    ledComment->setText( p_stName );
+    g_poPrefs->setDialogSize( "ListCassaStorno", QPoint( width(), height() ) );
 }
 
 void cDlgStorno::setupTableView()
@@ -70,10 +72,10 @@ void cDlgStorno::setupTableView()
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Gender" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Age group" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "E-Mail" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "ParentId" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Date/Time" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Amount" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Comment" ) );
         m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
         m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Archive" ) );
 
@@ -86,19 +88,17 @@ void cDlgStorno::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
 
-        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 0, Qt::AscendingOrder );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Gender" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Age group" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "E-Mail" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Date/Time" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Amount" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Comment" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
-        tbvCrud->resizeColumnToContents( 4 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -110,11 +110,11 @@ void cDlgStorno::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientId, patients.licenceId, name, genderName, ageTypeName, email, active, archive FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0";
+        m_qsQuery = "SELECT cassaHistoryId, licenceId, parentId, actionTime, actionValue, comment, active, archive FROM cassahistory WHERE actionValue<>0";
     }
     else
     {
-        m_qsQuery = "SELECT patientId AS id, name, genderName, ageTypeName, email FROM patients, genders, ageTypes WHERE genders.genderId=patients.gender AND agetypes.ageTypeId=ageType AND patientId>0 AND active=1";
+        m_qsQuery = "SELECT cassaHistoryId AS id, actionTime, actionValue, comment FROM cassahistory WHERE actionValue<>0 AND active=1";
     }
 
     QString stTemp;
@@ -123,7 +123,7 @@ void cDlgStorno::refreshTable()
     if( stTemp != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+        m_qsQuery += QString( "comment LIKE '\%%1\%'" ).arg( stTemp );
     }
 //    stTemp = ledUniqueId->text();
 //    if( stTemp != "" )
@@ -139,14 +139,23 @@ void cDlgStorno::enableButtons()
 {
     cTracer obTracer( "cDlgStorno::enableButtons" );
 
+    bool    bEnabled = false;
+
     if( m_uiSelectedId )
     {
-        pbStorno->setEnabled( true );
+        try
+        {
+            cDBCassaHistory obDBCassaHistory;
+
+            bEnabled = obDBCassaHistory.isRevokeEnabled( m_uiSelectedId );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
     }
-    else
-    {
-        pbStorno->setEnabled( false );
-    }
+
+    pbStorno->setEnabled( bEnabled );
 }
 
 void cDlgStorno::newClicked( bool ) {}
@@ -157,9 +166,15 @@ void cDlgStorno::on_pbStorno_clicked()
 {
     try
     {
-        g_obGuest.load( m_uiSelectedId );
+        if( QMessageBox::question( this, tr("Question"),
+                                   tr( "Are you sure you want to revoke this cassa action?"),
+                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            cDBCassaHistory obDBCassaHistory;
 
-        QDialog::accept();
+            obDBCassaHistory.load( m_uiSelectedId );
+            obDBCassaHistory.revoke();
+        }
     }
     catch( cSevException &e )
     {

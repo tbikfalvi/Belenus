@@ -28,6 +28,7 @@ cDBCassaHistory::~cDBCassaHistory()
 
 void cDBCassaHistory::init( const unsigned int p_uiId,
                              const unsigned int p_uiLicenceId,
+                             const unsigned int p_uiParentId,
                              const unsigned int p_uiCassaId,
                              const unsigned int p_uiLedgerId,
                              const unsigned int p_uiUserId,
@@ -42,6 +43,7 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
+    m_uiParentId        = p_uiParentId;
     m_uiCassaId         = p_uiCassaId;
     m_uiLedgerId        = p_uiLedgerId;
     m_uiUserId          = p_uiUserId;
@@ -59,6 +61,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx             = p_obRecord.indexOf( "cassaHistoryId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
+    int inParentIdIdx       = p_obRecord.indexOf( "parentId" );
     int inCassaIdIdx        = p_obRecord.indexOf( "cassaId" );
     int inLedgerIdIdx       = p_obRecord.indexOf( "ledgerId" );
     int inUserIdIdx         = p_obRecord.indexOf( "userId" );
@@ -73,6 +76,7 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
+          p_obRecord.value( inParentIdIdx ).toUInt(),
           p_obRecord.value( inCassaIdIdx ).toUInt(),
           p_obRecord.value( inLedgerIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
@@ -120,6 +124,7 @@ void cDBCassaHistory::save() throw( cSevException )
     }
     qsQuery += " cassaHistory SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+    qsQuery += QString( "parentId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "cassaId = \"%1\", " ).arg( m_uiCassaId );
     qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
@@ -174,7 +179,7 @@ void cDBCassaHistory::revoke() throw( cSevException )
     QString         qsComment   = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
     unsigned int    uiLedgerId  = ledgerId();
 
-    g_obCassa.cassaAddMoneyAction( actionValue()*(-1), qsComment );
+    g_obCassa.cassaAddMoneyAction( actionValue()*(-1), qsComment, m_uiId );
 
     cDBLedger   obDBLedger;
 
@@ -185,6 +190,29 @@ void cDBCassaHistory::revoke() throw( cSevException )
 void cDBCassaHistory::createNew() throw()
 {
     init();
+}
+
+bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaHistory WHERE cassaHistoryId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Cassa history id not found" );
+
+    poQuery->first();
+    if( poQuery->value(2).toUInt() > 0 )
+    {
+        return false;
+    }
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaHistory WHERE parentId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() > 0 )
+    {
+        return false;
+    }
+
+    return true;
 }
 
 unsigned int cDBCassaHistory::id() const throw()
@@ -200,6 +228,16 @@ unsigned int cDBCassaHistory::licenceId() const throw()
 void cDBCassaHistory::setLicenceId( const unsigned int p_uiLicenceId ) throw()
 {
     m_uiLicenceId = p_uiLicenceId;
+}
+
+unsigned int cDBCassaHistory::parentId() const throw()
+{
+    return m_uiParentId;
+}
+
+void cDBCassaHistory::setParentId( const unsigned int p_uiParentId ) throw()
+{
+    m_uiParentId = p_uiParentId;
 }
 
 unsigned int cDBCassaHistory::cassaId() const throw()

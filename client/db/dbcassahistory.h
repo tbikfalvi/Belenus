@@ -16,9 +16,12 @@ public:
     void            remove()                                            throw( cSevException );
     void            revoke()                                            throw( cSevException );
     void            createNew()                                         throw();
+    bool            isRevokeEnabled( const unsigned int p_uiId ) const  throw();
     unsigned int    id() const                                          throw();
     unsigned int    licenceId() const                                   throw();
     void            setLicenceId( const unsigned int p_uiLicenceId )    throw();
+    unsigned int    parentId() const                                    throw();
+    void            setParentId( const unsigned int p_nParentId )       throw();
     unsigned int    cassaId() const                                     throw();
     void            setCassaId( const unsigned int p_uiCassaId )        throw();
     unsigned int    ledgerId() const                                    throw();
@@ -44,6 +47,7 @@ public:
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
+    unsigned int    m_uiParentId;
     unsigned int    m_uiCassaId;
     unsigned int    m_uiLedgerId;
     unsigned int    m_uiUserId;
@@ -58,6 +62,7 @@ private:
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
+               const unsigned int p_uiParentId = 0,
                const unsigned int p_uiCassaId = 0,
                const unsigned int p_uiLedgerId = 0,
                const unsigned int p_uiUserId = 0,

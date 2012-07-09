@@ -295,7 +295,7 @@ void cCassa::cassaDecreaseMoney( int p_nMoney, QString p_qsComment )
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaAddMoneyAction( int p_nMoney, QString p_qsComment )
+void cCassa::cassaAddMoneyAction( int p_nMoney, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
     m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
@@ -304,6 +304,7 @@ void cCassa::cassaAddMoneyAction( int p_nMoney, QString p_qsComment )
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setParentId( p_uiParentId );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( p_nMoney );
