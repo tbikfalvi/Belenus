@@ -191,7 +191,7 @@ Please start WampServer application then restart Belenus application.</oldsource
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="db/dbledger.cpp" line="220"/>
+        <location filename="db/dbledger.cpp" line="254"/>
         <source>Revoking action: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3358,12 +3358,12 @@ total income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="326"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="316"/>
         <source>Using device: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="330"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="320"/>
         <source>Selling product: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3379,12 +3379,12 @@ Please return to the panel and press ESC to reject panel use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="271"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="261"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="272"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="262"/>
         <source>Are you sure you want to delete the selected items?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3413,55 +3413,55 @@ Please return to the panel and press ESC to reject panel use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="68"/>
+        <location filename="crud/dlgstorno.cpp" line="73"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="69"/>
+        <location filename="crud/dlgstorno.cpp" line="74"/>
         <source>LicenceId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="70"/>
+        <location filename="crud/dlgstorno.cpp" line="75"/>
         <source>ParentId</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="71"/>
-        <location filename="crud/dlgstorno.cpp" line="90"/>
+        <location filename="crud/dlgstorno.cpp" line="76"/>
+        <location filename="crud/dlgstorno.cpp" line="95"/>
         <source>Date/Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="72"/>
-        <location filename="crud/dlgstorno.cpp" line="91"/>
+        <location filename="crud/dlgstorno.cpp" line="77"/>
+        <location filename="crud/dlgstorno.cpp" line="96"/>
         <source>Amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="73"/>
-        <location filename="crud/dlgstorno.cpp" line="92"/>
+        <location filename="crud/dlgstorno.cpp" line="78"/>
+        <location filename="crud/dlgstorno.cpp" line="97"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="74"/>
+        <location filename="crud/dlgstorno.cpp" line="79"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="75"/>
+        <location filename="crud/dlgstorno.cpp" line="80"/>
         <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="155"/>
+        <location filename="crud/dlgstorno.cpp" line="169"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="crud/dlgstorno.cpp" line="156"/>
+        <location filename="crud/dlgstorno.cpp" line="170"/>
         <source>Are you sure you want to revoke this cassa action?</source>
         <translation type="unfinished"></translation>
     </message>

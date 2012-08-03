@@ -15,6 +15,8 @@
 #include <QMessageBox>
 #include "belenus.h"
 #include "dbledger.h"
+#include "dbpatientcardtype.h"
+#include "dbpatientcard.h"
 
 cDBLedger::cDBLedger()
 {
@@ -37,6 +39,7 @@ void cDBLedger::init( const unsigned int p_uiId,
                       const unsigned int p_uiPatientCardId,
                       const unsigned int p_uiPanelId,
                       const QString &p_qsName,
+                      const int p_nItemCount,
                       const int p_nNetPrice,
                       const int p_inDiscount,
                       const int p_nVatpercent,
@@ -59,6 +62,7 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_uiPatientCardId       = p_uiPatientCardId;
     m_uiPanelId             = p_uiPanelId;
     m_qsName                = p_qsName;
+    m_nItemCount            = p_nItemCount;
     m_nNetPrice             = p_nNetPrice;
     m_inDiscount            = p_inDiscount;
     m_nVatpercent           = p_nVatpercent;
@@ -84,13 +88,14 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
+    int inItemCountIdx          = p_obRecord.indexOf( "itemCount" );
     int inNetPriceIdx           = p_obRecord.indexOf( "netPrice" );
     int inDiscountIdx           = p_obRecord.indexOf( "discount" );
     int inVatpercentIdx         = p_obRecord.indexOf( "vatpercent" );
     int inTotalPriceIdx         = p_obRecord.indexOf( "totalPrice" );
     int inLedgerTimeIdx         = p_obRecord.indexOf( "ledgerTime" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -106,6 +111,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPatientCardIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
           p_obRecord.value( inNameIdx ).toString(),
+          p_obRecord.value( inItemCountIdx ).toInt(),
           p_obRecord.value( inNetPriceIdx ).toInt(),
           p_obRecord.value( inDiscountIdx ).toInt(),
           p_obRecord.value( inVatpercentIdx ).toInt(),
@@ -163,6 +169,7 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
+    qsQuery += QString( "itemCount = \"%1\", " ).arg( m_nItemCount );
     qsQuery += QString( "netPrice = \"%1\", " ).arg( m_nNetPrice );
     qsQuery += QString( "discount = \"%1\", " ).arg( m_inDiscount );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
@@ -212,6 +219,33 @@ void cDBLedger::remove() throw( cSevException )
 
 void cDBLedger::revoke() throw( cSevException )
 {
+    if( ledgerTypeId() == LT_PC_SELL || ledgerTypeId() == LT_PC_REFILL )
+    {
+        try
+        {
+            cDBPatientCardType  obDBPatientCardType;
+            cDBPatientCard      obDBPatientCard;
+
+            obDBPatientCardType.load( patientCardTypeId() );
+            obDBPatientCard.load( patientCardId() );
+
+            obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
+            if( obDBPatientCard.units() < 0 ) obDBPatientCard.setUnits( 0 );
+
+            obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
+            if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
+
+            obDBPatientCard.save();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+    else if( ledgerTypeId() == LT_PROD_SELL )
+    {
+    }
+
     setActive( false );
     save();
 
@@ -341,6 +375,16 @@ void cDBLedger::setName( const QString &p_qsName ) throw()
 {
     m_qsName = p_qsName;
     m_qsName = m_qsName.replace( QString("\""), QString("\\\"") );
+}
+
+int cDBLedger::itemCount() const throw()
+{
+    return m_nItemCount;
+}
+
+void cDBLedger::setItemCount( const int p_nItemCount ) throw()
+{
+    m_nItemCount = p_nItemCount;
 }
 
 int cDBLedger::netPrice() const throw()

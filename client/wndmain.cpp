@@ -1601,6 +1601,7 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
             obDBLedger.setPatientCardId( 0 );
             obDBLedger.setPanelId( 0 );
             obDBLedger.setName( obDBShoppingCart.itemName() );
+            obDBLedger.setItemCount( obDBShoppingCart.itemCount() );
             obDBLedger.setNetPrice( obDBShoppingCart.itemNetPrice() );
             obDBLedger.setDiscount( obDBShoppingCart.itemDiscount() );
             obDBLedger.setVatpercent( obDBShoppingCart.itemVAT() );

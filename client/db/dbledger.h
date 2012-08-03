@@ -8,6 +8,16 @@
 class cDBLedger
 {
 public:
+    enum teLedgerType
+    {
+        LT_NOT_DEFINED = 0,
+        LT_DEVICE_USAGE,
+        LT_PC_SELL,
+        LT_PC_REFILL,
+        LT_PROD_SELL,
+        LT_OTHER
+    };
+
     cDBLedger();
     ~cDBLedger();
 
@@ -39,6 +49,8 @@ public:
     void            setPanelId( const unsigned int p_nPanelId )                     throw();
     QString         name() const                                                    throw();
     void            setName( const QString &p_qsName )                              throw();
+    int             itemCount() const                                               throw();
+    void            setItemCount( const int p_nItemCount )                          throw();
     int             netPrice() const                                                throw();
     void            setNetPrice( const int p_nNetPrice )                            throw();
     int             discount() const                                                throw();
@@ -70,6 +82,7 @@ private:
     unsigned int    m_uiPatientCardId;
     unsigned int    m_uiPanelId;
     QString         m_qsName;
+    int             m_nItemCount;
     int             m_nNetPrice;
     int             m_inDiscount;
     int             m_nVatpercent;
@@ -92,6 +105,7 @@ private:
                const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiPanelId = 0,
                const QString &p_qsName = "",
+               const int p_nItemCount = 1,
                const int p_nNetPrice = 0,
                const int p_inDiscount = 0,
                const int p_nVatpercent = 0,

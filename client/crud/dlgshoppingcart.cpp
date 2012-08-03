@@ -245,16 +245,6 @@ void cDlgShoppingCart::deleteClicked( bool )
             {
                 try
                 {
-                    cDBPatientCardType  obDBPatientCardType;
-                    cDBPatientCard      obDBPatientCard;
-
-                    obDBPatientCardType.load( poQuery->value( 7 ).toUInt() );
-                    obDBPatientCard.load( poQuery->value( 8 ).toUInt() );
-
-                    obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
-                    obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
-                    obDBPatientCard.save();
-
                     cDBLedger obDBLedger;
 
                     obDBLedger.load( poQuery->value( 0 ).toUInt() );

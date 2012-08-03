@@ -695,6 +695,7 @@ CREATE TABLE `ledger` (
   `panelId`                 int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        NOT NULL,
   `name`                    varchar(100)            NOT NULL,
+  `itemCount`               int(11)                 NOT NULL DEFAULT '1',
   `netPrice`                int(11)                 NOT NULL,
   `discount`                int(11)                 NOT NULL,
   `vatpercent`              int(11)                 NOT NULL,

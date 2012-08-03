@@ -273,7 +273,7 @@ int main( int argc, char *argv[] )
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
-        if( g_poPrefs->isComponentHardwareInstalled() )
+        if( nId >= 2 && g_poPrefs->isComponentHardwareInstalled() )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
