@@ -1518,34 +1518,32 @@ void cWndMain::on_action_PayCash_triggered()
     cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
     obDlgCassaAction.setPayWithCash();
-    if( obDlgCassaAction.exec() == QDialog::Accepted )
+
+    int     inCassaAction   = obDlgCassaAction.exec();
+    int     inPayType       = 0;
+    QString qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
+    bool    bShoppingCart   = false;
+
+    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+
+    if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        if( obDBShoppingCart.id() > 0 )
-        {
-            mdiPanels->itemAddedToShoppingCart();
-            mdiPanels->cashPayed( 0 );
-        }
-        else
-        {
-            int     inPayType = 0;
-            QString qsComment = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
-            bool    bShoppingCart = false;
-
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
-            if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
-            {
-                g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
-            }
-
-            processDeviceUsePayment( obDBShoppingCart, inPayType, qsComment );
-        }
+        g_obCassa.cassaProcessDeviceUsePayed( obDBShoppingCart, qsComment, inPayType );
+        processDeviceUsePayment( obDBShoppingCart, inPayType, qsComment );
+    }
+    else if( inCassaAction == QDialog::Accepted && bShoppingCart )
+    {
+        mdiPanels->itemAddedToShoppingCart();
+        mdiPanels->cashPayed( 0 );
     }
 }
 //====================================================================================
 void cWndMain::processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCart, int p_nPaymentType, const QString &p_qsComment )
 {
+    // 'TO BE SOLVED' Ennek csak azzal kell foglalkozni, hogy a panelról eltünjenek a szükségtelen jelek,
+    // maga a fizetés a g_obCassa-val lenne megoldva, mint a dlgpatientcardedit.cpp -ben
     mdiPanels->setPaymentMethod( p_obDBShoppingCart.panelId(), p_nPaymentType );
-
+/*
     cDBLedger   obDBLedger;
 
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
@@ -1564,7 +1562,7 @@ void cWndMain::processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCar
     obDBLedger.setComment( p_qsComment );
     obDBLedger.setActive( true );
     obDBLedger.save();
-
+*/
     mdiPanels->cashPayed( p_obDBShoppingCart.panelId(), obDBLedger.id() );
     mdiPanels->itemRemovedFromShoppingCart( p_obDBShoppingCart.panelId() );
 }

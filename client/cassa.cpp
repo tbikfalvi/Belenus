@@ -274,12 +274,73 @@ void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard,
     {
         cassaAddMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
     }
+    else
+    {
+        cassaAddGlobalMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
 }
 //====================================================================================
 void cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, int p_inPayType )
 //====================================================================================
 {
     cassaProcessPatientCardSell( p_DBPatientCard, p_DBShoppingCart, p_qsComment, false, p_inPayType );
+}
+//====================================================================================
+void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
+//====================================================================================
+{
+    cDBLedger   obDBLedger;
+
+    obDBLedger.createNew();
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBLedger.setLedgerTypeId( 5 );
+    obDBLedger.setPaymentMethod( 1 );
+    obDBLedger.setUserId( 0 );
+    obDBLedger.setProductId( p_DBShoppingCart.productId() );
+    obDBLedger.setName( p_DBShoppingCart.itemName() );
+    obDBLedger.setItemCount( p_DBShoppingCart.itemCount() );
+    obDBLedger.setNetPrice( p_DBShoppingCart.itemNetPrice() );
+    obDBLedger.setVatpercent( p_DBShoppingCart.itemVAT() );
+    obDBLedger.setTotalPrice( p_DBShoppingCart.itemSumPrice() );
+    obDBLedger.setComment( p_qsComment );
+    obDBLedger.save();
+
+    if( !p_bGlobalCassa )
+    {
+        cassaAddMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+    else
+    {
+        cassaAddGlobalMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+}
+//====================================================================================
+void cCassa::cassaProcessDeviceUsePayed()
+//====================================================================================
+{
+    cDBLedger   obDBLedger;
+
+    obDBLedger.createNew();
+
+
+    g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
+
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBLedger.setLedgerTypeId( 1 );
+    obDBLedger.setLedgerDeviceId( 0 );
+    obDBLedger.setPaymentMethod( p_nPaymentType );
+    obDBLedger.setUserId( g_obUser.id() );
+    obDBLedger.setProductId( 0 );
+    obDBLedger.setPatientCardTypeId( 0 );
+    obDBLedger.setPatientCardId( 0 );
+    obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
+    obDBLedger.setName( mdiPanels->getPanelCaption(p_obDBShoppingCart.panelId()) );
+    obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
+    obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
+    obDBLedger.setComment( p_qsComment );
+    obDBLedger.setActive( true );
+    obDBLedger.save();
 }
 //====================================================================================
 void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )
@@ -354,6 +415,25 @@ void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QStri
     obDBCassaHistory.save();
 }
 //====================================================================================
+void cCassa::cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
+//====================================================================================
+{
+    cDBCassaHistory     obDBCassaHistory;
+
+    obDBCassaHistory.createNew();
+    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setParentId( p_uiParentId );
+    obDBCassaHistory.setCassaId( 0 );
+    obDBCassaHistory.setLedgerId( p_uiLedgerId );
+    obDBCassaHistory.setUserId( 0 );
+    obDBCassaHistory.setPatientId( 0 );
+    obDBCassaHistory.setActionValue( p_nMoney );
+    obDBCassaHistory.setActionBalance( cassaGlobalBalance()+p_nMoney );
+    obDBCassaHistory.setComment( p_qsComment );
+    obDBCassaHistory.setActive( true );
+    obDBCassaHistory.save();
+}
+//====================================================================================
 void cCassa::setEnabled()
 //====================================================================================
 {
@@ -386,6 +466,17 @@ int cCassa::cassaBalance()
 //====================================================================================
 {
     return m_pCassa->currentBalance();
+}
+//====================================================================================
+int cCassa::cassaGlobalBalance()
+//====================================================================================
+{
+    QSqlQuery *poQuery = NULL;
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT SUM(actionValue) AS cassaGlobalBalance FROM cassahistory WHERE cassaId=0" ) );
+    poQuery->first();
+
+    return poQuery->value( 0 ).toInt();
 }
 //====================================================================================
 unsigned int cCassa::cassaId()

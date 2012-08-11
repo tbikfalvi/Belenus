@@ -8,6 +8,7 @@
 #include "../db/dbproducthistory.h"
 #include "crud/dlgproductactiontype.h"
 #include "../db/dbledger.h"
+#include "../db/dbshoppingcart.h"
 
 dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct ) : QDialog(parent)
 {
@@ -108,21 +109,32 @@ void dlgProductStorage::on_pbSave_clicked()
         {
             if( ledSumPrice->text().toInt() > 0 )
             {
-                // Meg van adva bruttó pénzösszeg => könyvelés pénztártörténetbe
-                unsigned int uiCassaId = g_obCassa.cassaId();
                 int nPrice = ledSumPrice->text().toInt();
-
-                if( cmbCassa->currentIndex() == 0 )
-                    uiCassaId = 0;
 
                 if( obDBProductActionType.cassaActionIndication().compare( tr("Negative") ) == 0 )
                 {
                     nPrice *= (-1);
                 }
-
                 nPrice *= ledProductCount->text().toInt();
 
-                cDBLedger   obDBLedger;
+                cDBShoppingCart obDBShoppingCart;
+
+                obDBShoppingCart.createNew();
+                obDBShoppingCart.setProductId( m_poProduct->id() );
+                obDBShoppingCart.setItemName( obDBProductActionType.name() );
+                obDBShoppingCart.setItemCount( ledProductCount->text().toInt() );
+                obDBShoppingCart.setItemNetPrice( ledNetPrice->text().toInt() );
+                obDBShoppingCart.setItemVAT( ledVatPercent->text().toInt() );
+                obDBShoppingCart.setItemSumPrice( nPrice );
+
+                bool bGlobalCassa = ( cmbCassa->currentIndex()==0 ? true : false );
+
+                if( cmbCassa->currentIndex() == 0 )
+                    uiCassaId = 0;
+
+                g_obCassa.cassaProcessProductStorageChange( obDBShoppingCart, tr("Product name: %1").arg( m_poProduct->name() ), bGlobalCassa );
+/*
+                cDBLedger_   obDBLedger;
 
                 obDBLedger.createNew();
                 obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
@@ -150,6 +162,7 @@ void dlgProductStorage::on_pbSave_clicked()
                 obDBCassaHistory.setActionBalance( ( uiCassaId>0 ? g_obCassa.cassaBalance()+nPrice : 0 ) );
                 obDBCassaHistory.setComment( obDBProductActionType.name() );
                 obDBCassaHistory.save();
+*/
             }
 
             int nProductCount = m_poProduct->productCount();

@@ -33,10 +33,13 @@ public:
 
     void                    cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType );
     void                    cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, int p_inPayType );
+    void                    cassaProcessProductStorageChange( const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bGlobalCassa = false );
+    void                    cassaProcessDeviceUsePayed();
 
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
+    void                    cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
 
     void                    setEnabled();
     void                    setDisabled();
@@ -44,6 +47,7 @@ public:
 
     QString                 cassaOwnerStr();
     int                     cassaBalance();
+    int                     cassaGlobalBalance();
     unsigned int            cassaId();
     QString                 cassaOpenDate();
     QString                 cassaCloseDate();
