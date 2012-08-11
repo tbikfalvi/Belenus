@@ -141,7 +141,7 @@ void cDBLedger::save() throw( cSevException )
     cTracer obTrace( "cDBLedger::save" );
     QString  qsQuery;
 
-    m_nTotalPrice = m_nNetPrice + (m_nNetPrice/100)*m_nVatpercent;
+    m_nTotalPrice = m_nNetPrice*m_nItemCount + (m_nNetPrice/100)*m_nVatpercent*m_nItemCount - m_inDiscount;
 
     if( m_uiId )
     {
@@ -425,7 +425,6 @@ int cDBLedger::totalPrice() const throw()
 void cDBLedger::setTotalPrice( const int p_nTotalPrice ) throw()
 {
     m_nTotalPrice = p_nTotalPrice;
-    g_obLogger( cSeverity::INFO ) << "m_nTotalPrice: " << m_nTotalPrice << " p_nTotalPrice: " << p_nTotalPrice << EOM;
 }
 
 QString cDBLedger::ledgerTime() const throw()

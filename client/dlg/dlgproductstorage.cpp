@@ -7,6 +7,7 @@
 #include "../db/dbcassahistory.h"
 #include "../db/dbproducthistory.h"
 #include "crud/dlgproductactiontype.h"
+#include "../db/dbledger.h"
 
 dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct ) : QDialog(parent)
 {
@@ -121,15 +122,32 @@ void dlgProductStorage::on_pbSave_clicked()
 
                 nPrice *= ledProductCount->text().toInt();
 
+                cDBLedger   obDBLedger;
+
+                obDBLedger.createNew();
+                obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+                obDBLedger.setLedgerTypeId( 5 );
+                obDBLedger.setPaymentMethod( 1 );
+                obDBLedger.setUserId( g_obUser.id() );
+                obDBLedger.setProductId( m_poProduct->id() );
+                obDBLedger.setName( obDBProductActionType.name() );
+                obDBLedger.setItemCount( ledProductCount->text().toInt() );
+                obDBLedger.setNetPrice( ledNetPrice->text().toInt() );
+                obDBLedger.setVatpercent( ledVatPercent->text().toInt() );
+                obDBLedger.setTotalPrice( nPrice );
+                obDBLedger.setComment( tr("Product name: %1").arg( m_poProduct->name() ) );
+                obDBLedger.save();
+
                 cDBCassaHistory     obDBCassaHistory;
 
                 obDBCassaHistory.createNew();
                 obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBCassaHistory.setCassaId( uiCassaId );
+                obDBCassaHistory.setLedgerId( obDBLedger.id() );
                 obDBCassaHistory.setUserId( g_obUser.id() );
                 obDBCassaHistory.setPatientId( 0 );
                 obDBCassaHistory.setActionValue( nPrice );
-                obDBCassaHistory.setActionBalance( 0 );
+                obDBCassaHistory.setActionBalance( ( uiCassaId>0 ? g_obCassa.cassaBalance()+nPrice : 0 ) );
                 obDBCassaHistory.setComment( obDBProductActionType.name() );
                 obDBCassaHistory.save();
             }

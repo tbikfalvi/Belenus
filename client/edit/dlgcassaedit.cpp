@@ -15,7 +15,6 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
 
     setMinimumHeight( 147 );
     setMaximumHeight( 147 );
-//    resize( 706, 147 );
     tbvCassa->setEnabled( false );
     gbCassaHistory->setVisible( false );
 
@@ -58,8 +57,6 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );
     pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.png") );
-
-//    pbMore->setEnabled( false );
 
     dtStartDate->setEnabled( false );
     dtStopDate->setEnabled( false );

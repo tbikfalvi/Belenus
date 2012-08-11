@@ -358,18 +358,23 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
                 obDlgCassaAction.setPayWithCash();
-                if( obDlgCassaAction.exec() == QDialog::Accepted )
-                {
-                    int     inPayType = 0;
-                    QString qsComment = tr("Sell patientcard [%1]").arg(m_poPatientCard->barcode());
-                    bool    bShoppingCart = false;
 
-                    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+                int     inCassaAction   = obDlgCassaAction.exec();
+                int     inPayType       = 0;
+                QString qsComment       = tr("Sell patientcard [%1]").arg(m_poPatientCard->barcode());
+                bool    bShoppingCart   = false;
+
+                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+
+                if( inCassaAction == QDialog::Accepted && !bShoppingCart )
+                {
+                    g_obCassa.cassaProcessPatientCardSell( m_poPatientCard, obDBShoppingCart, qsComment, true, inPayType );
+/*
                     if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
                     {
                         g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
                     }
-                    cDBLedger   obDBLedger;
+                    cDBLedger_   obDBLedger;
 
                     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
                     obDBLedger.setLedgerTypeId( 2 );
@@ -387,6 +392,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                     obDBLedger.setComment( qsComment );
                     obDBLedger.setActive( true );
                     obDBLedger.save();
+*/
                 }
                 else
                 {

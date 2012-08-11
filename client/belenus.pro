@@ -139,7 +139,6 @@ HEADERS = belenus.h \
     preferences.h \
     wndmain.h \
     cassa.h \
-    ledger.h \
     crud/dlgpaneluseselect.h \
     report/repledgermain.h \
     report/repcassalist.h \
@@ -252,7 +251,6 @@ SOURCES = main.cpp \
     preferences.cpp \
     wndmain.cpp \
     cassa.cpp \
-    ledger.cpp \
     crud/dlgpaneluseselect.cpp \
     report/repledgermain.cpp \
     report/repcassalist.cpp \

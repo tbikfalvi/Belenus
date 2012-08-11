@@ -20,6 +20,7 @@
 #include "cassa.h"
 #include "belenus.h"
 #include "db/dbcassahistory.h"
+#include "db/dbledger.h"
 
 //====================================================================================
 cCassa::cCassa()
@@ -243,6 +244,44 @@ void cCassa::cassaClose()
     obDBCassaHistory.save();
 }
 //====================================================================================
+void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )
+//====================================================================================
+{
+    cDBLedger   obDBLedger;
+
+    obDBLedger.createNew();
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    if( p_bNewCard )
+        obDBLedger.setLedgerTypeId( 2 );
+    else
+        obDBLedger.setLedgerTypeId( 3 );
+    obDBLedger.setLedgerDeviceId( 0 );
+    obDBLedger.setPaymentMethod( p_inPayType );
+    obDBLedger.setUserId( g_obUser.id() );
+    obDBLedger.setProductId( 0 );
+    obDBLedger.setPatientCardTypeId( p_DBPatientCard.patientCardTypeId() );
+    obDBLedger.setPatientCardId( p_DBPatientCard.id() );
+    obDBLedger.setPanelId( 0 );
+    obDBLedger.setName( p_DBPatientCard.barcode() );
+    obDBLedger.setNetPrice( p_DBShoppingCart.itemNetPrice() );
+    obDBLedger.setDiscount( p_DBShoppingCart.itemDiscount() );
+    obDBLedger.setVatpercent( p_DBShoppingCart.itemVAT() );
+    obDBLedger.setComment( qsComment );
+    obDBLedger.setActive( true );
+    obDBLedger.save();
+
+    if( p_inPayType == 1 /*PAY_CASH*/ )
+    {
+        cassaAddMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+}
+//====================================================================================
+void cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, int p_inPayType )
+//====================================================================================
+{
+    cassaProcessPatientCardSell( p_DBPatientCard, p_DBShoppingCart, p_qsComment, false, p_inPayType );
+}
+//====================================================================================
 void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )
 //====================================================================================
 {
@@ -295,7 +334,7 @@ void cCassa::cassaDecreaseMoney( int p_nMoney, QString p_qsComment )
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaAddMoneyAction( int p_nMoney, QString p_qsComment, unsigned int p_uiParentId )
+void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
     m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
@@ -306,6 +345,7 @@ void cCassa::cassaAddMoneyAction( int p_nMoney, QString p_qsComment, unsigned in
     obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
     obDBCassaHistory.setParentId( p_uiParentId );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setLedgerId( p_uiLedgerId );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( p_nMoney );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );

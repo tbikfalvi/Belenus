@@ -392,18 +392,24 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
                 obDlgCassaAction.setPayWithCash();
-                if( obDlgCassaAction.exec() == QDialog::Accepted )
-                {
-                    int     inPayType = 0;
-                    QString qsComment = QString("[%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
-                    bool    bShoppingCart = false;
 
-                    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
-                    if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
+                int     inCassaAction   = obDlgCassaAction.exec();
+                int     inPayType       = 0;
+                QString qsComment       = QString("[%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
+                bool    bShoppingCart   = false;
+
+                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+
+                if( inCassaAction == QDialog::Accepted && !bShoppingCart )
+                {
+                    // 'TO BE SOLVED' minden pénztárt és könyvelést érintõ dolog a g_obCassa által legyen megoldva
+                    g_obCassa.cassaProcessPatientCardSell( m_poPatientCard, obDBShoppingCart, qsComment, m_bNewCard, inPayType );
+
+/*                    if( inPayType == cDlgCassaAction::PAY_CASH )
                     {
                         g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
                     }
-                    cDBLedger   obDBLedger;
+                    cDBLedger_   obDBLedger;   <<<< ERRE KELL RÁKERESNI A TELJES FORRÁSBAN ÉS KICSERÉLNI MINT ITT 6 SORRAL FELJEBB
 
                     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
                     if( m_bNewCard )
@@ -424,6 +430,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     obDBLedger.setComment( qsComment );
                     obDBLedger.setActive( true );
                     obDBLedger.save();
+*/
                 }
                 else
                 {

@@ -8,6 +8,8 @@
 #include "db/dbcassa.h"
 #include "db/dbdenomination.h"
 #include "db/dbcassadenomination.h"
+#include "db/dbshoppingcart.h"
+#include "db/dbpatientcard.h"
 
 class cCassa
 {
@@ -29,9 +31,12 @@ public:
     void                    cassaReOpen( unsigned int p_uiCassaId );
     void                    cassaClose();
 
+    void                    cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType );
+    void                    cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, int p_inPayType );
+
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
-    void                    cassaAddMoneyAction( int p_nMoney, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
+    void                    cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
 
     void                    setEnabled();
     void                    setDisabled();

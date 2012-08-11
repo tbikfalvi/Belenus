@@ -1585,10 +1585,7 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
             bool    bShoppingCart = false;
 
             obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
-            if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
-            {
-                g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), qsComment );
-            }
+
             cDBLedger   obDBLedger;
 
             obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
@@ -1609,6 +1606,11 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
             obDBLedger.setComment( qsComment );
             obDBLedger.setActive( true );
             obDBLedger.save();
+
+            if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
+            {
+                g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+            }
 
             cDBProduct  obDBProduct;
 

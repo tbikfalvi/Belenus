@@ -216,6 +216,8 @@ void cDlgShoppingCart::editClicked( bool ) {}
 
 void cDlgShoppingCart::deleteClicked( bool )
 {
+    // 'TO BE SOLVED' elem(ek) törlése a kosárból nem teljesen jó a lépések sorrendje
+
     cDBShoppingCart obDBShoppingCart;
     QStringList qslItemIds;
 

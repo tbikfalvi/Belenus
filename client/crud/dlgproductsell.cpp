@@ -338,6 +338,8 @@ void cDlgProductSell::on_pbPayment_clicked()
     obDBShoppingCart.setItemDiscount( nDiscount );
     obDBShoppingCart.setItemSumPrice( nTotalPrice - nDiscount );
 
+    g_obLogger(cSeverity::DEBUG) << QString("cDlgProductSell::on_pbPayment_clicked() >> Name: %1 | Net: %2 | Count: %3 | Disc.: %4 | Sum: %5 ").arg(obDBShoppingCart.itemName()).arg(obDBShoppingCart.itemNetPrice()).arg(obDBShoppingCart.itemCount()).arg(obDBShoppingCart.itemDiscount()).arg(obDBShoppingCart.itemSumPrice()) << EOM;
+
     emit signalPaymentProcessed( obDBShoppingCart );
 
     QDialog::accept();
