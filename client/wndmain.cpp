@@ -1087,7 +1087,7 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
 {
     cDlgShoppingCart    obDlgShoppingCart( this );
 
-    connect( &obDlgShoppingCart, SIGNAL(signalPaymentProcessed(cDBShoppingCart,int,QString)), this, SLOT(processDeviceUsePayment(cDBShoppingCart,int,QString)) );
+    connect( &obDlgShoppingCart, SIGNAL(signalPaymentProcessed(unsigned int,unsigned int,int)), this, SLOT(processDeviceUsePayment(unsigned int,unsigned int,int)) );
 
     if( p_uiPanelId > 0 )
         obDlgShoppingCart.setPanelFilter( p_uiPanelId );
@@ -1528,8 +1528,8 @@ void cWndMain::on_action_PayCash_triggered()
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        g_obCassa.cassaProcessDeviceUsePayed( obDBShoppingCart, qsComment, inPayType );
-        processDeviceUsePayment( obDBShoppingCart, inPayType, qsComment );
+        unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(p_obDBShoppingCart.panelId()) );
+        processDeviceUsePayment( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
     }
     else if( inCassaAction == QDialog::Accepted && bShoppingCart )
     {
@@ -1538,33 +1538,11 @@ void cWndMain::on_action_PayCash_triggered()
     }
 }
 //====================================================================================
-void cWndMain::processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCart, int p_nPaymentType, const QString &p_qsComment )
+void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType )
 {
-    // 'TO BE SOLVED' Ennek csak azzal kell foglalkozni, hogy a panelról eltünjenek a szükségtelen jelek,
-    // maga a fizetés a g_obCassa-val lenne megoldva, mint a dlgpatientcardedit.cpp -ben
-    mdiPanels->setPaymentMethod( p_obDBShoppingCart.panelId(), p_nPaymentType );
-/*
-    cDBLedger   obDBLedger;
-
-    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-    obDBLedger.setLedgerTypeId( 1 );
-    obDBLedger.setLedgerDeviceId( 0 );
-    obDBLedger.setPaymentMethod( p_nPaymentType );
-    obDBLedger.setUserId( g_obUser.id() );
-    obDBLedger.setProductId( 0 );
-    obDBLedger.setPatientCardTypeId( 0 );
-    obDBLedger.setPatientCardId( 0 );
-    obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
-    obDBLedger.setName( mdiPanels->getPanelCaption(p_obDBShoppingCart.panelId()) );
-    obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
-    obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
-    obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
-    obDBLedger.setComment( p_qsComment );
-    obDBLedger.setActive( true );
-    obDBLedger.save();
-*/
-    mdiPanels->cashPayed( p_obDBShoppingCart.panelId(), obDBLedger.id() );
-    mdiPanels->itemRemovedFromShoppingCart( p_obDBShoppingCart.panelId() );
+    mdiPanels->setPaymentMethod( p_uiPanelId, p_nPaymentType );
+    mdiPanels->cashPayed( p_uiPanelId, p_uiLedgerId );
+    mdiPanels->itemRemovedFromShoppingCart( p_uiPanelId() );
 }
 //====================================================================================
 void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart )
@@ -1574,48 +1552,17 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
     cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
 
     obDlgCassaAction.setPayWithCash();
-    if( obDlgCassaAction.exec() == QDialog::Accepted )
+
+    int     inCassaAction   = obDlgCassaAction.exec();
+    int     inPayType = 0;
+    QString qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
+    bool    bShoppingCart = false;
+
+    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+
+    if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        if( obDBShoppingCart.id() == 0 )
-        {
-            int     inPayType = 0;
-            QString qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
-            bool    bShoppingCart = false;
-
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
-
-            cDBLedger   obDBLedger;
-
-            obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-            obDBLedger.setLedgerTypeId( 4 );
-            obDBLedger.setLedgerDeviceId( 0 );
-            obDBLedger.setPaymentMethod( inPayType );
-            obDBLedger.setUserId( g_obUser.id() );
-            obDBLedger.setProductId( obDBShoppingCart.productId() );
-            obDBLedger.setPatientCardTypeId( 0 );
-            obDBLedger.setPatientCardId( 0 );
-            obDBLedger.setPanelId( 0 );
-            obDBLedger.setName( obDBShoppingCart.itemName() );
-            obDBLedger.setItemCount( obDBShoppingCart.itemCount() );
-            obDBLedger.setNetPrice( obDBShoppingCart.itemNetPrice() );
-            obDBLedger.setDiscount( obDBShoppingCart.itemDiscount() );
-            obDBLedger.setVatpercent( obDBShoppingCart.itemVAT() );
-            obDBLedger.setTotalPrice( obDBShoppingCart.itemSumPrice() );
-            obDBLedger.setComment( qsComment );
-            obDBLedger.setActive( true );
-            obDBLedger.save();
-
-            if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
-            {
-                g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
-            }
-
-            cDBProduct  obDBProduct;
-
-            obDBProduct.load( obDBShoppingCart.productId() );
-            obDBProduct.decreaseProductCount( obDBShoppingCart.itemCount() );
-            obDBProduct.save();
-        }
+        g_obCassa.cassaProcessProductSell( p_obDBShoppingCart, qsComment, inPayType );
     }
 }
 //====================================================================================

@@ -857,18 +857,7 @@ void cFrmPanel::closeAttendance()
 
     if( m_uiLedgerId > 0 )
     {
-        try
-        {
-            cDBLedger   obDBLedger;
-
-            obDBLedger.load( m_uiLedgerId );
-            obDBLedger.setLedgerDeviceId( m_pDBLedgerDevice->id() );
-            obDBLedger.save();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
+        g_obCassa.cassaConnectLedgerWithLedgerDevice( m_uiLedgerId, m_pDBLedgerDevice->id() );
         m_uiLedgerId = 0;
     }
 

@@ -27,7 +27,7 @@ public:
     void setPanelFilter( unsigned int p_uiPanelId );
 
 signals:
-    void signalPaymentProcessed( const cDBShoppingCart &p_DBShoppingCart, int p_nPaymentType = cDlgCassaAction::PAY_CASH, const QString &p_qsComment = "" );
+    void signalPaymentProcessed( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
 
 protected:
     virtual void setupTableView();

@@ -31,10 +31,12 @@ public:
     void                    cassaReOpen( unsigned int p_uiCassaId );
     void                    cassaClose();
 
-    void                    cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType );
-    void                    cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, int p_inPayType );
-    void                    cassaProcessProductStorageChange( const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bGlobalCassa = false );
-    void                    cassaProcessDeviceUsePayed();
+    void                    cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType );
+    void                    cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType );
+    void                    cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa = false );
+    unsigned int            cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType, QString p_qsPanelTitle );
+    void                    cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType );
+    void                    cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsigned int p_uiLedgerDeviceId );
 
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );

@@ -61,7 +61,7 @@ private:
     void processInputTimePeriod( int p_inSecond );
 
 public slots:
-    void processDeviceUsePayment( const cDBShoppingCart &p_obDBShoppingCart, int p_nPaymentType = cDlgCassaAction::PAY_CASH, const QString &p_qsComment = "" );
+    void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
     void processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart );
 
 private slots:

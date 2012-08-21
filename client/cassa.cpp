@@ -21,6 +21,7 @@
 #include "belenus.h"
 #include "db/dbcassahistory.h"
 #include "db/dbledger.h"
+#include "db/dbproduct.h"
 
 //====================================================================================
 cCassa::cCassa()
@@ -244,7 +245,7 @@ void cCassa::cassaClose()
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )
+void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )
 //====================================================================================
 {
     cDBLedger   obDBLedger;
@@ -263,30 +264,30 @@ void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard,
     obDBLedger.setPatientCardId( p_DBPatientCard.id() );
     obDBLedger.setPanelId( 0 );
     obDBLedger.setName( p_DBPatientCard.barcode() );
-    obDBLedger.setNetPrice( p_DBShoppingCart.itemNetPrice() );
-    obDBLedger.setDiscount( p_DBShoppingCart.itemDiscount() );
-    obDBLedger.setVatpercent( p_DBShoppingCart.itemVAT() );
+    obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
+    obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
     obDBLedger.setComment( qsComment );
     obDBLedger.setActive( true );
     obDBLedger.save();
 
     if( p_inPayType == 1 /*PAY_CASH*/ )
     {
-        cassaAddMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
     }
 }
 //====================================================================================
-void cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, int p_inPayType )
+void cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType )
 //====================================================================================
 {
-    cassaProcessPatientCardSell( p_DBPatientCard, p_DBShoppingCart, p_qsComment, false, p_inPayType );
+    cassaProcessPatientCardSell( p_DBPatientCard, p_obDBShoppingCart, p_qsComment, false, p_inPayType );
 }
 //====================================================================================
-void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_DBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
+void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
 //====================================================================================
 {
     cDBLedger   obDBLedger;
@@ -296,51 +297,106 @@ void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_DBShoppi
     obDBLedger.setLedgerTypeId( 5 );
     obDBLedger.setPaymentMethod( 1 );
     obDBLedger.setUserId( 0 );
-    obDBLedger.setProductId( p_DBShoppingCart.productId() );
-    obDBLedger.setName( p_DBShoppingCart.itemName() );
-    obDBLedger.setItemCount( p_DBShoppingCart.itemCount() );
-    obDBLedger.setNetPrice( p_DBShoppingCart.itemNetPrice() );
-    obDBLedger.setVatpercent( p_DBShoppingCart.itemVAT() );
-    obDBLedger.setTotalPrice( p_DBShoppingCart.itemSumPrice() );
+    obDBLedger.setProductId( p_obDBShoppingCart.productId() );
+    obDBLedger.setName( p_obDBShoppingCart.itemName() );
+    obDBLedger.setItemCount( p_obDBShoppingCart.itemCount() );
+    obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
+    obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
     obDBLedger.setComment( p_qsComment );
     obDBLedger.save();
 
     if( !p_bGlobalCassa )
     {
-        cassaAddMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_DBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
     }
 }
 //====================================================================================
-void cCassa::cassaProcessDeviceUsePayed()
+unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType, QString p_qsPanelTitle )
 //====================================================================================
 {
     cDBLedger   obDBLedger;
 
     obDBLedger.createNew();
-
-
-    g_obCassa.cassaAddMoneyAction( inPriceTotal, qsComment );
-
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
     obDBLedger.setLedgerTypeId( 1 );
-    obDBLedger.setLedgerDeviceId( 0 );
-    obDBLedger.setPaymentMethod( p_nPaymentType );
+    obDBLedger.setPaymentMethod( p_inPayType );
     obDBLedger.setUserId( g_obUser.id() );
-    obDBLedger.setProductId( 0 );
-    obDBLedger.setPatientCardTypeId( 0 );
-    obDBLedger.setPatientCardId( 0 );
     obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
-    obDBLedger.setName( mdiPanels->getPanelCaption(p_obDBShoppingCart.panelId()) );
+    obDBLedger.setName( p_qsPanelTitle );
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
     obDBLedger.setComment( p_qsComment );
-    obDBLedger.setActive( true );
     obDBLedger.save();
+
+    if( p_inPayType == 1 /*PAY_CASH*/ )
+    {
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+    else
+    {
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+
+    return obDBLedger.id();
+}
+//====================================================================================
+void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType )
+//====================================================================================
+{
+    cDBLedger   obDBLedger;
+
+    obDBLedger.createNew();
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBLedger.setLedgerTypeId( 4 );
+    obDBLedger.setPaymentMethod( p_inPayType );
+    obDBLedger.setUserId( g_obUser.id() );
+    obDBLedger.setProductId( p_obDBShoppingCart.productId() );
+    obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
+    obDBLedger.setName( p_obDBShoppingCart.itemName() );
+    obDBLedger.setItemCount( p_obDBShoppingCart.itemCount() );
+    obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
+    obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
+    obDBLedger.setComment( p_qsComment );
+    obDBLedger.save();
+
+    if( p_inPayType == 1 /*PAY_CASH*/ )
+    {
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+    else
+    {
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+    }
+
+    cDBProduct  obDBProduct;
+
+    obDBProduct.load( p_obDBShoppingCart.productId() );
+    obDBProduct.decreaseProductCount( p_obDBShoppingCart.itemCount() );
+    obDBProduct.save();
+}
+//====================================================================================
+void cCassa::cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsigned int p_uiLedgerDeviceId )
+//====================================================================================
+{
+    try
+    {
+        cDBLedger   obDBLedger;
+
+        obDBLedger.load( p_uiLedgerId );
+        obDBLedger.setLedgerDeviceId( p_uiLedgerDeviceId );
+        obDBLedger.save();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 //====================================================================================
 void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )

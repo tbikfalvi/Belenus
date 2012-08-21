@@ -238,7 +238,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                                      "Please return to the panel and press ESC to reject panel use.") );
             return;
         }
-        else if( obDBShoppingCart.patientCardId() != 0 )
+        /*else if( obDBShoppingCart.patientCardId() != 0 )
         {
             QString     qsQuery = QString("SELECT * FROM ledger WHERE patientCardId=%1 order by ledgerId DESC").arg(obDBShoppingCart.patientCardId());
             QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
@@ -247,7 +247,7 @@ void cDlgShoppingCart::deleteClicked( bool )
             {
                 try
                 {
-                    cDBLedger obDBLedger;
+                    cDBLedger_ obDBLedger;
 
                     obDBLedger.load( poQuery->value( 0 ).toUInt() );
                     obDBLedger.revoke();
@@ -257,7 +257,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                     g_obLogger(e.severity()) << e.what() << EOM;
                 }
             }
-        }
+        }*/
     }
 
     if( QMessageBox::question( this, tr("Question"),
@@ -324,24 +324,31 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
                 obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
 
-                if( inPayType == cDlgCassaAction::PAY_CASH )
-                {
-                    g_obCassa.cassaAddMoneyAction( obDBShoppingCart.itemSumPrice(), qsComment );
-                }
-
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&
                     obDBShoppingCart.patientCardId() == 0)
                 {
-                    emit signalPaymentProcessed( obDBShoppingCart, inPayType, qsComment );
+                    cDBPanel    obDBPanel;
+
+                    obDBPanel.load( obDBShoppingCart.panelId() );
+
+                    unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, obDBPanel.title() );
+
+                    emit signalPaymentProcessed( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
                 }
                 else if( obDBShoppingCart.productId() > 0 )
                 {
+                    g_obCassa.cassaProcessProductSell( obDBShoppingCart, qsComment, inPayType );
+
                     cDBProduct  obDBProduct;
 
                     obDBProduct.load( obDBShoppingCart.productId() );
                     obDBProduct.decreaseProductCount( obDBShoppingCart.itemCount() );
                     obDBProduct.save();
+                }
+                else if( obDBShoppingCart.patientCardId() > 0 )
+                {
+                    g_obCassa.cassaProcessPatientCardSell(  );
                 }
 
                 obDBShoppingCart.remove();
