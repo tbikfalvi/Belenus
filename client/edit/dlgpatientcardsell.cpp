@@ -368,7 +368,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    g_obCassa.cassaProcessPatientCardSell( m_poPatientCard, obDBShoppingCart, qsComment, true, inPayType );
+                    g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, true, inPayType );
 /*
                     if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
                     {

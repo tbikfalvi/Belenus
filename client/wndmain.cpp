@@ -1528,7 +1528,7 @@ void cWndMain::on_action_PayCash_triggered()
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(p_obDBShoppingCart.panelId()) );
+        unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
         processDeviceUsePayment( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
     }
     else if( inCassaAction == QDialog::Accepted && bShoppingCart )
@@ -1542,7 +1542,7 @@ void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p
 {
     mdiPanels->setPaymentMethod( p_uiPanelId, p_nPaymentType );
     mdiPanels->cashPayed( p_uiPanelId, p_uiLedgerId );
-    mdiPanels->itemRemovedFromShoppingCart( p_uiPanelId() );
+    mdiPanels->itemRemovedFromShoppingCart( p_uiPanelId );
 }
 //====================================================================================
 void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart )

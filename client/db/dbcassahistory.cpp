@@ -191,7 +191,7 @@ void cDBCassaHistory::revoke() throw( cSevException )
 {
     QString         qsComment   = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
 
-    g_obCassa.cassaAddMoneyAction( actionValue()*(-1), qsComment, m_uiId );
+    g_obCassa.cassaAddMoneyAction( actionValue()*(-1), m_uiLedgerId, qsComment, m_uiId );
 }
 
 void cDBCassaHistory::createNew() throw()

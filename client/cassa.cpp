@@ -267,17 +267,17 @@ void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard,
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
-    obDBLedger.setComment( qsComment );
+    obDBLedger.setComment( p_qsComment );
     obDBLedger.setActive( true );
     obDBLedger.save();
 
     if( p_inPayType == 1 /*PAY_CASH*/ )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
 }
 //====================================================================================
@@ -308,11 +308,11 @@ void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShop
 
     if( !p_bGlobalCassa )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
 }
 //====================================================================================
@@ -336,11 +336,11 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
 
     if( p_inPayType == 1 /*PAY_CASH*/ )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
 
     return obDBLedger.id();
@@ -368,11 +368,11 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
 
     if( p_inPayType == 1 /*PAY_CASH*/ )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), qsComment );
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
 
     cDBProduct  obDBProduct;
@@ -411,7 +411,7 @@ void cCassa::cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId )
 
         cDBLedger   obDBLedger;
 
-        obDBLedger.load( uiLedgerId );
+        obDBLedger.load( p_uiLedgerId );
         obDBLedger.revoke();
     }
     catch( cSevException &e )

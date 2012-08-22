@@ -403,7 +403,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
                     // 'TO BE SOLVED' minden pénztárt és könyvelést érintõ dolog a g_obCassa által legyen megoldva
-                    g_obCassa.cassaProcessPatientCardSell( m_poPatientCard, obDBShoppingCart, qsComment, m_bNewCard, inPayType );
+                    g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, m_bNewCard, inPayType );
 
 /*                    if( inPayType == cDlgCassaAction::PAY_CASH )
                     {

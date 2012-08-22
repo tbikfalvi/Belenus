@@ -216,54 +216,32 @@ void cDlgShoppingCart::editClicked( bool ) {}
 
 void cDlgShoppingCart::deleteClicked( bool )
 {
-    // 'TO BE SOLVED' elem(ek) törlése a kosárból nem teljesen jó a lépések sorrendje
-
-    cDBShoppingCart obDBShoppingCart;
-    QStringList qslItemIds;
-
-    for( int i=0; i<tbvCrud->selectionModel()->selectedRows().count(); i++ )
-    {
-        unsigned int uiShoppingCardId = tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt();
-
-        obDBShoppingCart.load( uiShoppingCardId );
-        qslItemIds << QString::number( uiShoppingCardId );
-
-        if( obDBShoppingCart.panelId() != 0 &&
-            obDBShoppingCart.productId() == 0 &&
-            obDBShoppingCart.patientCardId() == 0 &&
-            !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
-        {
-            QMessageBox::warning( this, tr("Warning"),
-                                  tr("Deleting panel use is not allowed from shopping cart.\n"
-                                     "Please return to the panel and press ESC to reject panel use.") );
-            return;
-        }
-        /*else if( obDBShoppingCart.patientCardId() != 0 )
-        {
-            QString     qsQuery = QString("SELECT * FROM ledger WHERE patientCardId=%1 order by ledgerId DESC").arg(obDBShoppingCart.patientCardId());
-            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-
-            if( poQuery->first() )
-            {
-                try
-                {
-                    cDBLedger_ obDBLedger;
-
-                    obDBLedger.load( poQuery->value( 0 ).toUInt() );
-                    obDBLedger.revoke();
-                }
-                catch( cSevException &e )
-                {
-                    g_obLogger(e.severity()) << e.what() << EOM;
-                }
-            }
-        }*/
-    }
-
     if( QMessageBox::question( this, tr("Question"),
                                tr("Are you sure you want to delete the selected items?"),
                                QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
     {
+        cDBShoppingCart obDBShoppingCart;
+        QStringList qslItemIds;
+
+        for( int i=0; i<tbvCrud->selectionModel()->selectedRows().count(); i++ )
+        {
+            unsigned int uiShoppingCardId = tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt();
+
+            obDBShoppingCart.load( uiShoppingCardId );
+            qslItemIds << QString::number( uiShoppingCardId );
+
+            if( obDBShoppingCart.panelId() != 0 &&
+                obDBShoppingCart.productId() == 0 &&
+                obDBShoppingCart.patientCardId() == 0 &&
+                !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("Deleting panel use is not allowed from shopping cart.\n"
+                                         "Please return to the panel and press ESC to reject panel use.") );
+                return;
+            }
+        }
+
         for( int i=0; i<qslItemIds.count(); i++ )
         {
             obDBShoppingCart.load( qslItemIds.at(i).toInt() );
@@ -348,7 +326,11 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 }
                 else if( obDBShoppingCart.patientCardId() > 0 )
                 {
-                    g_obCassa.cassaProcessPatientCardSell(  );
+                    cDBPatientCard  obDBPatientCard;
+
+                    obDBPatientCard.load( obDBShoppingCart.patientCardId() );
+                    // 'TO BE SOLVED' mi alapján dõl el, hogy eladás, vagy újratöltés?
+                    g_obCassa.cassaProcessPatientCardSell( obDBPatientCard, obDBShoppingCart, qsComment, true, inPayType );
                 }
 
                 obDBShoppingCart.remove();

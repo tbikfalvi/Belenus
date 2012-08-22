@@ -371,7 +371,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    g_obCassa.cassaProcessPatientCardRefill( m_poPatientCard, obDBShoppingCart, qsComment, inPayType );
+                    g_obCassa.cassaProcessPatientCardRefill( *m_poPatientCard, obDBShoppingCart, qsComment, inPayType );
 /*
                     if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
                     {
