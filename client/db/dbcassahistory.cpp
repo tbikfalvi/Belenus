@@ -103,6 +103,19 @@ void cDBCassaHistory::load( const unsigned int p_uiId ) throw( cSevException )
     init( poQuery->record() );
 }
 
+void cDBCassaHistory::loadByLedger( const unsigned int p_uiId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBCassaHistory::loadByLedger", QString( "ledgerId: %1" ).arg( p_uiId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaHistory WHERE ledgerId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Cassa history id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
 void cDBCassaHistory::save() throw( cSevException )
 {
     cTracer obTrace( "cDBCassaHistory::save" );
@@ -177,14 +190,8 @@ void cDBCassaHistory::remove() throw( cSevException )
 void cDBCassaHistory::revoke() throw( cSevException )
 {
     QString         qsComment   = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
-    unsigned int    uiLedgerId  = ledgerId();
 
     g_obCassa.cassaAddMoneyAction( actionValue()*(-1), qsComment, m_uiId );
-
-    cDBLedger   obDBLedger;
-
-    obDBLedger.load( uiLedgerId );
-    obDBLedger.revoke();
 }
 
 void cDBCassaHistory::createNew() throw()

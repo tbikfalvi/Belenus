@@ -12,6 +12,7 @@ public:
     ~cDBCassaHistory();
 
     void            load( const unsigned int p_uiId )                   throw( cSevException );
+    void            loadByLedger( const unsigned int p_uiId )           throw( cSevException );
     void            save()                                              throw( cSevException );
     void            remove()                                            throw( cSevException );
     void            revoke()                                            throw( cSevException );

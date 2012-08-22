@@ -170,10 +170,7 @@ void cDlgStorno::on_pbStorno_clicked()
                                    tr( "Are you sure you want to revoke this cassa action?"),
                                    QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
         {
-            cDBCassaHistory obDBCassaHistory;
-
-            obDBCassaHistory.load( m_uiSelectedId );
-            obDBCassaHistory.revoke();
+            g_obCassa.cassaProcessRevokeCassaAction( m_uiSelectedId );
         }
     }
     catch( cSevException &e )

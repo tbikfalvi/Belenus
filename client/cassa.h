@@ -37,6 +37,8 @@ public:
     unsigned int            cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType, QString p_qsPanelTitle );
     void                    cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType );
     void                    cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsigned int p_uiLedgerDeviceId );
+    void                    cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId );
+    void                    cassaProcessRevokeCassaAction( unsigned int p_uiCassaHistoryId );
 
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );

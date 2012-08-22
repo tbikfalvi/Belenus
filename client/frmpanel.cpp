@@ -271,36 +271,10 @@ void cFrmPanel::clear()
                     itemRemovedFromShoppingCart();
                 }
             }
-
-            QString qsComment = tr( "Revoking device (%1) usage." ).arg(getPanelName());
-
-/*            if( QMessageBox::warning( this,
-                                      tr("Question"),
-                                      tr("The device usage has been payed before.\n"
-                                         "Do you want to revoke the payment from the cassa?"),
-                                      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )*/
-            if( m_uiPaymentMethodId == cDBLedgerDevice::PAY_CASH )
+            else if( m_uiLedgerId > 0 )
             {
-                g_obCassa.cassaDecreaseMoney( inPriceTotal, qsComment );
+                g_obCassa.cassaProcessRevokeDeviceUse( m_uiLedgerId );
             }
-
-            cDBLedger   obDBLedger;
-
-            obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-            obDBLedger.setLedgerTypeId( 1 );
-            obDBLedger.setPaymentMethod( m_uiPaymentMethodId );
-            obDBLedger.setUserId( g_obUser.id() );
-            obDBLedger.setProductId( 0 );
-            obDBLedger.setPatientCardTypeId( 0 );
-            obDBLedger.setPatientCardId( 0 );
-            obDBLedger.setPanelId( m_uiId );
-            obDBLedger.setName( getPanelName() );
-            obDBLedger.setNetPrice( -(m_inCashNetToPay-m_inCashDiscountToPay) );
-            obDBLedger.setDiscount( m_inCashDiscountToPay );
-            obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
-            obDBLedger.setComment( qsComment );
-            obDBLedger.setActive( true );
-            obDBLedger.save();
         }
     }
     m_inCashToPay           = 0;

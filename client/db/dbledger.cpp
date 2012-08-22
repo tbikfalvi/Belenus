@@ -17,6 +17,7 @@
 #include "dbledger.h"
 #include "dbpatientcardtype.h"
 #include "dbpatientcard.h"
+#include "dbproduct.h"
 
 cDBLedger::cDBLedger()
 {
@@ -244,6 +245,22 @@ void cDBLedger::revoke() throw( cSevException )
     }
     else if( ledgerTypeId() == LT_PROD_SELL )
     {
+        try
+        {
+            cDBProduct  obDBProduct;
+
+            obDBProduct.load( productId() );
+            obDBProduct.increaseProductCount( itemCount() );
+            obDBProduct.save();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+    else if( ledgerTypeId() == LT_DEVICE_USAGE )
+    {
+        // Currently no need to do anything with device
     }
 
     setActive( false );

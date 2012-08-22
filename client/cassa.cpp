@@ -399,6 +399,44 @@ void cCassa::cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsi
     }
 }
 //====================================================================================
+void cCassa::cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId )
+//====================================================================================
+{
+    try
+    {
+        cDBCassaHistory obDBCassaHistory;
+
+        obDBCassaHistory.loadByLedger( p_uiLedgerId );
+        obDBCassaHistory.revoke();
+
+        cDBLedger   obDBLedger;
+
+        obDBLedger.load( uiLedgerId );
+        obDBLedger.revoke();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+//====================================================================================
+void cCassa::cassaProcessRevokeCassaAction( unsigned int p_uiCassaHistoryId )
+//====================================================================================
+{
+    cDBCassaHistory obDBCassaHistory;
+
+    obDBCassaHistory.load( p_uiCassaHistoryId );
+    obDBCassaHistory.revoke();
+
+    if( obDBCassaHistory.ledgerId() > 0 )
+    {
+        cDBLedger   obDBLedger;
+
+        obDBLedger.load( obDBCassaHistory.ledgerId() );
+        obDBLedger.revoke();
+    }
+}
+//====================================================================================
 void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )
 //====================================================================================
 {
