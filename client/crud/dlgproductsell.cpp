@@ -331,6 +331,7 @@ void cDlgProductSell::on_pbPayment_clicked()
     obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
     obDBShoppingCart.setGuestId( g_obGuest.id() );
     obDBShoppingCart.setProductId( m_obProduct.id() );
+    obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
     obDBShoppingCart.setItemName( m_obProduct.name() );
     obDBShoppingCart.setItemCount( nCount );
     obDBShoppingCart.setItemNetPrice( m_obProduct.netPriceSell() );
@@ -364,6 +365,7 @@ void cDlgProductSell::on_pbToCart_clicked()
     obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
     obDBShoppingCart.setGuestId( g_obGuest.id() );
     obDBShoppingCart.setProductId( m_obProduct.id() );
+    obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
     obDBShoppingCart.setItemName( m_obProduct.name() );
     obDBShoppingCart.setItemCount( nCount );
     obDBShoppingCart.setItemNetPrice( m_obProduct.netPriceSell() );

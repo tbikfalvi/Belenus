@@ -633,6 +633,7 @@ CREATE TABLE `shoppingCartItems` (
   `productId`               int(10) unsigned        DEFAULT NULL,
   `patientCardId`           int(10) unsigned        DEFAULT NULL,
   `panelId`                 int(10) unsigned        DEFAULT NULL,
+  `ledgerTypeId`            int(10) unsigned        NOT NULL,
   `itemName`                varchar(100)            NOT NULL,
   `itemCount`               int(11)                 NOT NULL,
   `itemNetPrice`            int(11)                 NOT NULL,
@@ -646,6 +647,7 @@ CREATE TABLE `shoppingCartItems` (
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerTypeId`) REFERENCES `ledgerTypes` (`ledgerTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -351,6 +351,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBShoppingCart.setProductId( 0 );
                 obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
                 obDBShoppingCart.setPanelId( 0 );
+                obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PC_REFILL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
                 obDBShoppingCart.setItemCount( 1 );
                 obDBShoppingCart.setItemNetPrice( m_poPatientCardType->price() );
@@ -372,32 +373,8 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
                     g_obCassa.cassaProcessPatientCardRefill( *m_poPatientCard, obDBShoppingCart, qsComment, inPayType );
-/*
-                    if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
-                    {
-                        g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
-                    }
-                    cDBLedger_   obDBLedger;
-
-                    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-                    obDBLedger.setLedgerTypeId( 3 );
-                    obDBLedger.setLedgerDeviceId( 0 );
-                    obDBLedger.setPaymentMethod( inPayType );
-                    obDBLedger.setUserId( g_obUser.id() );
-                    obDBLedger.setProductId( 0 );
-                    obDBLedger.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
-                    obDBLedger.setPatientCardId( m_poPatientCard->id() );
-                    obDBLedger.setPanelId( 0 );
-                    obDBLedger.setName( m_poPatientCard->barcode() );
-                    obDBLedger.setNetPrice( m_poPatientCardType->price() );
-                    obDBLedger.setDiscount( inPriceTotal - inPriceDiscounted );
-                    obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
-                    obDBLedger.setComment( qsComment );
-                    obDBLedger.setActive( true );
-                    obDBLedger.save();
-*/
                 }
-                else
+                else if( inCassaAction != QDialog::Accepted )
                 {
                     // Nem tortent meg az eladas
                     return;

@@ -8,6 +8,16 @@
 class cDBShoppingCart
 {
 public:
+    enum teLedgerType
+    {
+        LT_NOT_DEFINED = 0,
+        LT_DEVICE_USAGE,
+        LT_PC_SELL,
+        LT_PC_REFILL,
+        LT_PROD_SELL,
+        LT_OTHER
+    };
+
     cDBShoppingCart();
     ~cDBShoppingCart();
 
@@ -26,6 +36,8 @@ public:
     void            setPatientCardId( const unsigned int p_uiPatientCardId ) throw();
     unsigned int    panelId() const                                         throw();
     void            setPanelId( const unsigned int p_uiPanelId )            throw();
+    unsigned int    ledgerTypeId() const                                    throw();
+    void            setLedgerTypeId( const unsigned int p_nLedgerTypeId )   throw();
     QString         itemName() const                                        throw();
     void            setItemName( const QString &p_qsItemName )              throw();
     int             itemCount() const                                       throw();
@@ -49,6 +61,7 @@ private:
     unsigned int    m_uiProductId;
     unsigned int    m_uiPatientCardId;
     unsigned int    m_uiPanelId;
+    unsigned int    m_uiLedgerTypeId;
     QString         m_qsItemName;
     int             m_nItemCount;
     int             m_nItemNetPrice;
@@ -64,6 +77,7 @@ private:
                const unsigned int p_uiProductId = 0,
                const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiPanelId = 0,
+               const unsigned int p_uiLedgerTypeId = 0,
                const QString &p_qsItemName = "",
                const int p_nItemCount = 0,
                const int p_nItemNetPrice = 0,

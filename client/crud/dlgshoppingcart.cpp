@@ -245,6 +245,46 @@ void cDlgShoppingCart::deleteClicked( bool )
         for( int i=0; i<qslItemIds.count(); i++ )
         {
             obDBShoppingCart.load( qslItemIds.at(i).toInt() );
+
+            if( obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PC_SELL || obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PC_REFILL )
+            {
+                try
+                {
+                    cDBPatientCard      obDBPatientCard;
+                    cDBPatientCardType  obDBPatientCardType;
+
+                    obDBPatientCard.load( obDBShoppingCart.patientCardId() );
+                    obDBPatientCardType.load( obDBPatientCard.patientCardTypeId() );
+
+                    obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
+                    if( obDBPatientCard.units() < 0 ) obDBPatientCard.setUnits( 0 );
+
+                    obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
+                    if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
+
+                    obDBPatientCard.save();
+                }
+                catch( cSevException &e )
+                {
+                    g_obLogger(e.severity()) << e.what() << EOM;
+                }
+            }
+            else if( obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PROD_SELL )
+            {
+                try
+                {
+                    cDBProduct  obDBProduct;
+
+                    obDBProduct.load( obDBShoppingCart.productId() );
+                    obDBProduct.increaseProductCount( obDBShoppingCart.itemCount() );
+                    obDBProduct.save();
+                }
+                catch( cSevException &e )
+                {
+                    g_obLogger(e.severity()) << e.what() << EOM;
+                }
+            }
+
             obDBShoppingCart.remove();
         }
         refreshTable();
@@ -329,8 +369,16 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                     cDBPatientCard  obDBPatientCard;
 
                     obDBPatientCard.load( obDBShoppingCart.patientCardId() );
-                    // 'TO BE SOLVED' mi alapján dõl el, hogy eladás, vagy újratöltés?
-                    g_obCassa.cassaProcessPatientCardSell( obDBPatientCard, obDBShoppingCart, qsComment, true, inPayType );
+                    bool bNewCard = obDBShoppingCart.ledgerTypeId()==cDBShoppingCart::LT_PC_SELL?true:false;
+                    if( bNewCard )
+                    {
+                        qsComment = tr("Sell patientcard [%1]").arg(obDBPatientCard.barcode());
+                    }
+                    else
+                    {
+                        qsComment = tr("Refill patientcard [%1]").arg(obDBPatientCard.barcode());
+                    }
+                    g_obCassa.cassaProcessPatientCardSell( obDBPatientCard, obDBShoppingCart, qsComment, bNewCard, inPayType );
                 }
 
                 obDBShoppingCart.remove();

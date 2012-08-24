@@ -31,6 +31,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const unsigned int p_uiProductId,
                             const unsigned int p_uiPatientCardId,
                             const unsigned int p_uiPanelId,
+                            const unsigned int p_uiLedgerTypeId,
                             const QString &p_qsItemName,
                             const int p_nItemCount,
                             const int p_nItemNetPrice,
@@ -46,6 +47,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
     m_uiProductId       = p_uiProductId;
     m_uiPatientCardId   = p_uiPatientCardId;
     m_uiPanelId         = p_uiPanelId;
+    m_uiLedgerTypeId    = p_uiLedgerTypeId;
     m_qsItemName        = p_qsItemName;
     m_nItemCount        = p_nItemCount;
     m_nItemNetPrice     = p_nItemNetPrice;
@@ -64,6 +66,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
+    int inLedgerTypeIdIdx       = p_obRecord.indexOf( "ledgerTypeId" );
     int inItemNameIdx           = p_obRecord.indexOf( "itemName" );
     int inItemCountIdx          = p_obRecord.indexOf( "itemCount" );
     int inItemNetPriceIdx       = p_obRecord.indexOf( "itemNetPrice" );
@@ -79,6 +82,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
+          p_obRecord.value( inLedgerTypeIdIdx ).toUInt(),
           p_obRecord.value( inItemNameIdx ).toString(),
           p_obRecord.value( inItemCountIdx ).toInt(),
           p_obRecord.value( inItemNetPriceIdx ).toInt(),
@@ -127,6 +131,7 @@ void cDBShoppingCart::save() throw( cSevException )
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
+    qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
     qsQuery += QString( "itemName = \"%1\", " ).arg( m_qsItemName );
     qsQuery += QString( "itemCount = \"%1\", " ).arg( m_nItemCount );
     qsQuery += QString( "itemNetPrice = \"%1\", " ).arg( m_nItemNetPrice );
@@ -232,6 +237,16 @@ unsigned int cDBShoppingCart::panelId() const throw()
 void cDBShoppingCart::setPanelId( const unsigned int p_uiPanelId ) throw()
 {
     m_uiPanelId = p_uiPanelId;
+}
+
+unsigned int cDBShoppingCart::ledgerTypeId() const throw()
+{
+    return m_uiLedgerTypeId;
+}
+
+void cDBShoppingCart::setLedgerTypeId( const unsigned int p_uiLedgerTypeId ) throw()
+{
+    m_uiLedgerTypeId = p_uiLedgerTypeId;
 }
 
 QString cDBShoppingCart::itemName() const throw()

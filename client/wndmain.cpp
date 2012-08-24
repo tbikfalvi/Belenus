@@ -1508,6 +1508,7 @@ void cWndMain::on_action_PayCash_triggered()
     obDBShoppingCart.setProductId( 0 );
     obDBShoppingCart.setPatientCardId( 0 );
     obDBShoppingCart.setPanelId( mdiPanels->activePanelId() );
+    obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_DEVICE_USAGE );
     obDBShoppingCart.setItemName( tr("Using panel") );
     obDBShoppingCart.setItemCount( 1 );
     obDBShoppingCart.setItemNetPrice( inPriceNet );
