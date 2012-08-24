@@ -242,7 +242,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         boCanBeSaved = false;
         qsErrorMessage.append( tr( "Barcode cannot be empty." ) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        ledBarcode->setEnabled( true );
+        //ledBarcode->setEnabled( true );
     }
     else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
@@ -250,7 +250,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        ledBarcode->setEnabled( true );
+        //ledBarcode->setEnabled( true );
     }
     else
     {
@@ -263,7 +263,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
             qsErrorMessage.append( tr( "Invalid barcode. This barcode already saved into database."  ) );
             lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-            ledBarcode->setEnabled( true );
+            //ledBarcode->setEnabled( true );
         }
     }
 
@@ -369,32 +369,8 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
                     g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, true, inPayType );
-/*
-                    if( inPayType == cDlgCassaAction::PAY_CASH && !bShoppingCart )
-                    {
-                        g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
-                    }
-                    cDBLedger_   obDBLedger;
-
-                    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-                    obDBLedger.setLedgerTypeId( 2 );
-                    obDBLedger.setLedgerDeviceId( 0 );
-                    obDBLedger.setPaymentMethod( inPayType );
-                    obDBLedger.setUserId( g_obUser.id() );
-                    obDBLedger.setProductId( 0 );
-                    obDBLedger.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
-                    obDBLedger.setPatientCardId( m_poPatientCard->id() );
-                    obDBLedger.setPanelId( 0 );
-                    obDBLedger.setName( m_poPatientCard->barcode() );
-                    obDBLedger.setNetPrice( m_poPatientCardType->price() );
-                    obDBLedger.setDiscount( inPriceTotal - inPriceDiscounted );
-                    obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
-                    obDBLedger.setComment( qsComment );
-                    obDBLedger.setActive( true );
-                    obDBLedger.save();
-*/
                 }
-                else
+                else if( inCassaAction != QDialog::Accepted )
                 {
                     // Nem tortent meg az eladas
                     return;

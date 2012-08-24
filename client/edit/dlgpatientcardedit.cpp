@@ -260,32 +260,8 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
     lblUnits->setStyleSheet( "QLabel {font: normal;}" );
     lblValidDate->setStyleSheet( "QLabel {font: normal;}" );
 
-    if( ledBarcode->text() == "" )
-    {
-        boCanBeSaved = false;
-        qsErrorMessage.append( tr( "Barcode cannot be empty." ) );
-        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-    }
-    else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
-    {
-        boCanBeSaved = false;
-        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
-        qsErrorMessage.append( tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
-        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-    }
-    else
-    {
-        QSqlQuery *poQuery;
+    boCanBeSaved = _checkCardJustForSave( &qsErrorMessage );
 
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE barcode=\"%1\" AND patientCardId<>%2" ).arg(ledBarcode->text()).arg(m_poPatientCard->id()) );
-        if( poQuery->numRowsAffected() > 0 )
-        {
-            boCanBeSaved = false;
-            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
-            qsErrorMessage.append( tr( "Invalid barcode. This barcode already saved into database."  ) );
-            lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        }
-    }
     if( cbActive->isChecked() )
     {
         if( cmbCardType->currentIndex() == 0 )
@@ -402,37 +378,9 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    // 'TO BE SOLVED' minden pénztárt és könyvelést érintõ dolog a g_obCassa által legyen megoldva
                     g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, m_bNewCard, inPayType );
-
-/*                    if( inPayType == cDlgCassaAction::PAY_CASH )
-                    {
-                        g_obCassa.cassaAddMoneyAction( inPriceDiscounted, qsComment );
-                    }
-                    cDBLedger_   obDBLedger;   <<<< ERRE KELL RÁKERESNI A TELJES FORRÁSBAN ÉS KICSERÉLNI MINT ITT 6 SORRAL FELJEBB
-
-                    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-                    if( m_bNewCard )
-                        obDBLedger.setLedgerTypeId( 2 );
-                    else
-                        obDBLedger.setLedgerTypeId( 3 );
-                    obDBLedger.setLedgerDeviceId( 0 );
-                    obDBLedger.setPaymentMethod( inPayType );
-                    obDBLedger.setUserId( g_obUser.id() );
-                    obDBLedger.setProductId( 0 );
-                    obDBLedger.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
-                    obDBLedger.setPatientCardId( m_poPatientCard->id() );
-                    obDBLedger.setPanelId( 0 );
-                    obDBLedger.setName( m_poPatientCard->barcode() );
-                    obDBLedger.setNetPrice( m_poPatientCardType->price() );
-                    obDBLedger.setDiscount( inPriceTotal - inPriceDiscounted );
-                    obDBLedger.setVatpercent( m_poPatientCardType->vatpercent() );
-                    obDBLedger.setComment( qsComment );
-                    obDBLedger.setActive( true );
-                    obDBLedger.save();
-*/
                 }
-                else
+                else if( inCassaAction != QDialog::Accepted )
                 {
                     // Nem tortent meg az eladas
                     return;
@@ -689,15 +637,31 @@ void cDlgPatientCardEdit::on_pbDeactivate_clicked()
 
 void cDlgPatientCardEdit::on_pbSell_clicked()
 {
-    cDBPatientCard  obDBPatientCard;
+    QString qsErrorMessage = "";
 
-    obDBPatientCard.load( m_poPatientCard->barcode() );
-
-    cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
-    obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
-    if( obDlgPatientCardSell.exec() == QDialog::Accepted )
+    if( _checkCardJustForSave( &qsErrorMessage ) )
     {
-        QDialog::accept();
+        m_poPatientCard->setBarcode( ledBarcode->text() );
+        if( checkIndependent->isChecked() )
+        {
+            m_poPatientCard->setLicenceId( 0 );
+        }
+        else
+        {
+            m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
+        }
+        m_poPatientCard->save();
+
+        cDlgPatientCardSell obDlgPatientCardSell( this, m_poPatientCard );
+        obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+        if( obDlgPatientCardSell.exec() == QDialog::Accepted )
+        {
+            QDialog::accept();
+        }
+    }
+    else
+    {
+        QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
     }
 }
 
@@ -718,3 +682,39 @@ void cDlgPatientCardEdit::on_pbRefill_clicked()
         QDialog::accept();
     }
 }
+
+bool cDlgPatientCardEdit::_checkCardJustForSave( QString *p_qsErrorMessage )
+{
+    bool boCanBeSaved = true;
+
+    if( ledBarcode->text() == "" )
+    {
+        boCanBeSaved = false;
+        p_qsErrorMessage->append( tr( "Barcode cannot be empty." ) );
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+    {
+        boCanBeSaved = false;
+        if( p_qsErrorMessage->length() ) p_qsErrorMessage->append( "\n\n" );
+        p_qsErrorMessage->append( tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else
+    {
+        QSqlQuery *poQuery;
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE barcode=\"%1\" AND patientCardId<>%2" ).arg(ledBarcode->text()).arg(m_poPatientCard->id()) );
+        if( poQuery->numRowsAffected() > 0 )
+        {
+            boCanBeSaved = false;
+            if( p_qsErrorMessage->length() ) p_qsErrorMessage->append( "\n\n" );
+            p_qsErrorMessage->append( tr( "Invalid barcode. This barcode already saved into database."  ) );
+            lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
+    }
+
+    return boCanBeSaved;
+}
+
+

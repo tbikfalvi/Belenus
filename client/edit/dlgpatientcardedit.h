@@ -28,6 +28,7 @@ private:
     bool                 m_bIsCardActivated;
 
     QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    bool                _checkCardJustForSave( QString *p_qsErrorMessage );
 
 private slots:
     void on_pbRefill_clicked();

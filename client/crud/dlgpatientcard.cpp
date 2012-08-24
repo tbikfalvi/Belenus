@@ -187,8 +187,8 @@ void cDlgPatientCard::newClicked( bool )
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         m_uiSelectedId = poPatientCard->id();
-        refreshTable();
     }
+    refreshTable();
 
     delete poPatientCard;
 }
@@ -204,10 +204,8 @@ void cDlgPatientCard::editClicked( bool )
 
         cDlgPatientCardEdit  obDlgEdit( this, poPatientCard );
         obDlgEdit.setWindowTitle( poPatientCard->barcode() );
-        if( obDlgEdit.exec() == QDialog::Accepted )
-        {
-            refreshTable();
-        }
+        obDlgEdit.exec();
+        refreshTable();
 
         if( poPatientCard ) delete poPatientCard;
     }
