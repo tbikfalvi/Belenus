@@ -1,6 +1,7 @@
 #include <QMessageBox>
 
 #include "belenus.h"
+#include "dlgpatientcard.h"
 #include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcard.h"
@@ -10,6 +11,15 @@ cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
 {
     setWindowTitle( tr( "Patient Cardtype List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
+
+    m_poParent = p_poParent;
+
+    pbPatientCard = new QPushButton( tr( "Patientcards" ), this );
+    pbPatientCard->setObjectName( QString::fromUtf8( "pbPatientCard" ) );
+    pbPatientCard->setIconSize( QSize(20, 20) );
+    pbPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    btbButtonsSide->addButton( pbPatientCard, QDialogButtonBox::ActionRole );
+    connect( pbPatientCard, SIGNAL(clicked()), this, SLOT(_slotPatientCards()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCardTypes", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -185,3 +195,12 @@ void cDlgPatientCardType::deleteClicked( bool )
         }
     }
 }
+
+void cDlgPatientCardType::_slotPatientCards()
+{
+    cDlgPatientCard   obDlgPatientCard( m_poParent );
+
+    QDialog::accept();
+    obDlgPatientCard.exec();
+}
+

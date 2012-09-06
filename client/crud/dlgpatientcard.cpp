@@ -2,12 +2,15 @@
 
 #include "belenus.h"
 #include "dlgpatientcard.h"
+#include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardedit.h"
 
 cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Card List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
+
+    m_poParent = p_poParent;
 
     horizontalLayout = new QHBoxLayout();
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
@@ -37,7 +40,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     QSqlQuery   *poQuery;
     QString      qsQuery;
 
-    cmbPatientCardType->addItem( tr("<All patientcard type>"), -1 );
+    cmbPatientCardType->addItem( tr("<All patientcard types>"), -1 );
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
         qsQuery = QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE archive<>\"DEL\"" );
@@ -52,6 +55,13 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     {
         cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
+
+    pbPatientCardType = new QPushButton( tr( "Patientcard types" ), this );
+    pbPatientCardType->setObjectName( QString::fromUtf8( "pbPatientCardType" ) );
+    pbPatientCardType->setIconSize( QSize(20, 20) );
+    pbPatientCardType->setIcon( QIcon("./resources/40x40_patientcardtype.png") );
+    btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::ActionRole );
+    connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCards", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -246,3 +256,13 @@ void cDlgPatientCard::deleteClicked( bool )
         }
     }
 }
+
+void cDlgPatientCard::_slotPatientCardTypes()
+{
+    cDlgPatientCardType   obDlgPatientCardType( m_poParent );
+
+    QDialog::accept();
+    obDlgPatientCardType.exec();
+}
+
+

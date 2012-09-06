@@ -1,7 +1,9 @@
 #include <QMessageBox>
 
 #include "belenus.h"
+#include "dlgproduct.h"
 #include "dlgproducttype.h"
+#include "dlgproductactiontype.h"
 #include "../edit/dlgproducttypeedit.h"
 #include "../db/dbproduct.h"
 
@@ -10,6 +12,21 @@ cDlgProductType::cDlgProductType( QWidget *p_poParent )
 {
     setWindowTitle( tr( "Product Type List" ) );
     setWindowIcon( QIcon("./resources/40x40_producttype.png") );
+
+    m_poParent = p_poParent;
+
+    pbProduct = new QPushButton( tr( "Products" ), this );
+    pbProduct->setObjectName( QString::fromUtf8( "pbProduct" ) );
+    pbProduct->setIconSize( QSize(20, 20) );
+    pbProduct->setIcon( QIcon("./resources/40x40_product.png") );
+    btbButtonsSide->addButton( pbProduct, QDialogButtonBox::ActionRole );
+    connect( pbProduct, SIGNAL(clicked()), this, SLOT(_slotProducts()) );
+    pbProductActionType = new QPushButton( tr( "Product action types" ), this );
+    pbProductActionType->setObjectName( QString::fromUtf8( "pbProductActionType" ) );
+    pbProductActionType->setIconSize( QSize(20, 20) );
+    pbProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
+    btbButtonsSide->addButton( pbProductActionType, QDialogButtonBox::ActionRole );
+    connect( pbProductActionType, SIGNAL(clicked()), this, SLOT(_slotProductActionTypes()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListProductTypes", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -159,3 +176,21 @@ void cDlgProductType::deleteClicked( bool )
         }
     }
 }
+
+void cDlgProductType::_slotProducts()
+{
+    cDlgProduct obDlgProduct( m_poParent );
+
+    QDialog::accept();
+    obDlgProduct.exec();
+}
+
+void cDlgProductType::_slotProductActionTypes()
+{
+    cDlgProductActionType   obDlgProductActionType( m_poParent );
+
+    QDialog::accept();
+    obDlgProductActionType.exec();
+}
+
+

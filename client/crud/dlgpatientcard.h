@@ -18,6 +18,7 @@ public:
     QLabel      *lblBarcode;
     QLineEdit   *ledBarcode;
     QSpacerItem *horizontalSpacer1;
+    QPushButton *pbPatientCardType;
 
     cDlgPatientCard( QWidget *p_poParent = 0 );
     virtual ~cDlgPatientCard();
@@ -26,11 +27,15 @@ protected:
     virtual void setupTableView();
     virtual void enableButtons();
 
+private:
+    QWidget     *m_poParent;
+
 protected slots:
     virtual void refreshTable( QString p_qsCondition = "");
     virtual void newClicked( bool );
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
+    virtual void _slotPatientCardTypes();
 };
 
 #endif // DLGPATIENTCARD_H

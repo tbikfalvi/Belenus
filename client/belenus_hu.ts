@@ -27,33 +27,33 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="cassa.cpp" line="148"/>
+        <location filename="cassa.cpp" line="150"/>
         <source>Open new cassa record.</source>
         <translation>Új pénztár nyitás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="214"/>
+        <location filename="cassa.cpp" line="216"/>
         <source>Reopen cassa record.</source>
         <translation>Lezárt pénztár folytatása.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="241"/>
+        <location filename="cassa.cpp" line="243"/>
         <source>Close cassa record.</source>
         <translation>Pénztár zárás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="172"/>
-        <location filename="cassa.cpp" line="194"/>
+        <location filename="cassa.cpp" line="174"/>
+        <location filename="cassa.cpp" line="196"/>
         <source>Continue cassa record.</source>
         <translation>Pénztár folytatás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="249"/>
+        <location filename="cassa.cpp" line="443"/>
         <source>Add money to cassa.</source>
         <translation>Pénztár bevétel.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="275"/>
+        <location filename="cassa.cpp" line="469"/>
         <source>Remove money from cassa.</source>
         <translation>Pénztár kiadás.</translation>
     </message>
@@ -325,12 +325,12 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation>Pozitív</translation>
     </message>
     <message>
-        <location filename="db/dbledger.cpp" line="254"/>
+        <location filename="db/dbledger.cpp" line="271"/>
         <source>Revoking action: %1</source>
         <translation>Sztornó: %1</translation>
     </message>
     <message>
-        <location filename="db/dbcassahistory.cpp" line="179"/>
+        <location filename="db/dbcassahistory.cpp" line="192"/>
         <source>Revoking cassa action: %1</source>
         <translation>Pénztár sztornó: %1</translation>
     </message>
@@ -737,47 +737,47 @@ and fill mandatory data later?</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="90"/>
+        <location filename="edit/dlgcassaedit.cpp" line="87"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="91"/>
+        <location filename="edit/dlgcassaedit.cpp" line="88"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="93"/>
-        <location filename="edit/dlgcassaedit.cpp" line="101"/>
+        <location filename="edit/dlgcassaedit.cpp" line="90"/>
+        <location filename="edit/dlgcassaedit.cpp" line="98"/>
         <source>Date/Time</source>
         <translation>Dátum/Idő</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="94"/>
-        <location filename="edit/dlgcassaedit.cpp" line="102"/>
+        <location filename="edit/dlgcassaedit.cpp" line="91"/>
+        <location filename="edit/dlgcassaedit.cpp" line="99"/>
         <source>Amount of money</source>
         <translation>Pénzösszeg</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="95"/>
-        <location filename="edit/dlgcassaedit.cpp" line="103"/>
+        <location filename="edit/dlgcassaedit.cpp" line="92"/>
+        <location filename="edit/dlgcassaedit.cpp" line="100"/>
         <source>Actual balance</source>
         <translation>Aktuális egyenleg</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="96"/>
-        <location filename="edit/dlgcassaedit.cpp" line="104"/>
+        <location filename="edit/dlgcassaedit.cpp" line="93"/>
+        <location filename="edit/dlgcassaedit.cpp" line="101"/>
         <source>User</source>
         <translation>Felhasználó</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="259"/>
+        <location filename="edit/dlgcassaedit.cpp" line="256"/>
         <source>More &gt;&gt;</source>
         <translation>Részletek &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="255"/>
-        <location filename="edit/dlgcassaedit.cpp" line="269"/>
+        <location filename="edit/dlgcassaedit.cpp" line="252"/>
+        <location filename="edit/dlgcassaedit.cpp" line="266"/>
         <source>Less &lt;&lt;</source>
         <translation>Elrejtés &lt;&lt;</translation>
     </message>
@@ -790,8 +790,8 @@ and fill mandatory data later?</source>
         <translation type="obsolete">Érték</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="92"/>
-        <location filename="edit/dlgcassaedit.cpp" line="100"/>
+        <location filename="edit/dlgcassaedit.cpp" line="89"/>
+        <location filename="edit/dlgcassaedit.cpp" line="97"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
@@ -800,14 +800,14 @@ and fill mandatory data later?</source>
         <translation type="obsolete">Státusz</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="201"/>
-        <location filename="edit/dlgcassaedit.cpp" line="229"/>
+        <location filename="edit/dlgcassaedit.cpp" line="198"/>
+        <location filename="edit/dlgcassaedit.cpp" line="226"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="202"/>
-        <location filename="edit/dlgcassaedit.cpp" line="230"/>
+        <location filename="edit/dlgcassaedit.cpp" line="199"/>
+        <location filename="edit/dlgcassaedit.cpp" line="227"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -2614,78 +2614,84 @@ Kérem adjon meg egy másik sorszámot.</translation>
 <context>
     <name>cDlgPatientCard</name>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="9"/>
+        <location filename="crud/dlgpatientcard.cpp" line="10"/>
         <source>Patient Card List</source>
         <translation>Bérletek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="16"/>
+        <location filename="crud/dlgpatientcard.cpp" line="19"/>
         <source>Patientcard type: </source>
         <translation>Bérlet típus:</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="25"/>
+        <location filename="crud/dlgpatientcard.cpp" line="28"/>
         <source>Barcode: </source>
         <translation>Vonalkód:</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="40"/>
-        <source>&lt;All patientcard type&gt;</source>
+        <location filename="crud/dlgpatientcard.cpp" line="43"/>
+        <source>&lt;All patientcard types&gt;</source>
+        <oldsource>&lt;All patientcard type&gt;</oldsource>
         <translation>&lt;Összes bérlettípus&gt;</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="80"/>
+        <location filename="crud/dlgpatientcard.cpp" line="59"/>
+        <source>Patientcard types</source>
+        <translation>Bérlet típusok</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcard.cpp" line="90"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="81"/>
+        <location filename="crud/dlgpatientcard.cpp" line="91"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="82"/>
-        <location filename="crud/dlgpatientcard.cpp" line="110"/>
+        <location filename="crud/dlgpatientcard.cpp" line="92"/>
+        <location filename="crud/dlgpatientcard.cpp" line="120"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="83"/>
-        <location filename="crud/dlgpatientcard.cpp" line="111"/>
+        <location filename="crud/dlgpatientcard.cpp" line="93"/>
+        <location filename="crud/dlgpatientcard.cpp" line="121"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="84"/>
-        <location filename="crud/dlgpatientcard.cpp" line="112"/>
+        <location filename="crud/dlgpatientcard.cpp" line="94"/>
+        <location filename="crud/dlgpatientcard.cpp" line="122"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="85"/>
-        <location filename="crud/dlgpatientcard.cpp" line="113"/>
+        <location filename="crud/dlgpatientcard.cpp" line="95"/>
+        <location filename="crud/dlgpatientcard.cpp" line="123"/>
         <source>Amount</source>
         <translation>Összeg</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="88"/>
-        <location filename="crud/dlgpatientcard.cpp" line="116"/>
+        <location filename="crud/dlgpatientcard.cpp" line="98"/>
+        <location filename="crud/dlgpatientcard.cpp" line="126"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="89"/>
-        <location filename="crud/dlgpatientcard.cpp" line="117"/>
+        <location filename="crud/dlgpatientcard.cpp" line="99"/>
+        <location filename="crud/dlgpatientcard.cpp" line="127"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="235"/>
+        <location filename="crud/dlgpatientcard.cpp" line="243"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="236"/>
+        <location filename="crud/dlgpatientcard.cpp" line="244"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -2694,35 +2700,35 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation type="obsolete">Felhasználható egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="86"/>
-        <location filename="crud/dlgpatientcard.cpp" line="114"/>
+        <location filename="crud/dlgpatientcard.cpp" line="96"/>
+        <location filename="crud/dlgpatientcard.cpp" line="124"/>
         <source>Patientcard type</source>
         <translation>Bérlettípus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="87"/>
-        <location filename="crud/dlgpatientcard.cpp" line="115"/>
+        <location filename="crud/dlgpatientcard.cpp" line="97"/>
+        <location filename="crud/dlgpatientcard.cpp" line="125"/>
         <source>All units</source>
         <translation>Összes egység</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="90"/>
-        <location filename="crud/dlgpatientcard.cpp" line="118"/>
+        <location filename="crud/dlgpatientcard.cpp" line="100"/>
+        <location filename="crud/dlgpatientcard.cpp" line="128"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="91"/>
+        <location filename="crud/dlgpatientcard.cpp" line="101"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="186"/>
+        <location filename="crud/dlgpatientcard.cpp" line="196"/>
         <source>New Patientcard</source>
         <translation>Új bérlet</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="225"/>
+        <location filename="crud/dlgpatientcard.cpp" line="233"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -2731,7 +2737,7 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="226"/>
+        <location filename="crud/dlgpatientcard.cpp" line="234"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a bérletet?</translation>
     </message>
@@ -2792,22 +2798,22 @@ A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="266"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="694"/>
         <source>Barcode cannot be empty.</source>
         <translation>A vonalkód megadása kötelező.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="273"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="701"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation>Nem megfelelő vonalkód. A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="285"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="713"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation>Hibás vonalkód. Ez a vonalkód már regisztrálva van az adatbázisban.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="295"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="271"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -2823,12 +2829,12 @@ Ha a bérletet ehhez a bérlettípushoz akarja kötni,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="306"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="282"/>
         <source>Available units cannot be empty.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="313"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="289"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card with unchecking the Active checkbox.</source>
@@ -2837,7 +2843,7 @@ Ha le akarja nullázni a kártya egységeinek számát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="320"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="296"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.</source>
@@ -2846,7 +2852,7 @@ Ha érvénytelenné akarja tenni a kártyát,
 deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="659"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="615"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation>Biztos benne, hogy deaktiválni akarja ezt a bérletet?</translation>
     </message>
@@ -2941,13 +2947,13 @@ deaktiválja a bérletet az Aktivál szöveg melletti pipa eltüntetésével.
 Kattintson az Ignore gombra, ha nem akar további hibaüzenetet kapni.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="357"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="658"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="333"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="614"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="358"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="334"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -2956,13 +2962,14 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="447"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="562"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="403"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="518"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="665"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="563"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="519"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation>Nincs jogosultsága ahhoz, hogy szervíz bérletet hozzon létre.</translation>
     </message>
@@ -3059,12 +3066,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="367"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="368"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="413"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="396"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -3237,12 +3244,12 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="364"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="365"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="410"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="393"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -3250,91 +3257,96 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
 <context>
     <name>cDlgPatientCardType</name>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="11"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="12"/>
         <source>Patient Cardtype List</source>
         <translation>Bérlet típusok</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="35"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="17"/>
+        <source>Patientcards</source>
+        <translation>Bérletek</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="45"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="36"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="46"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="37"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="63"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="47"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="73"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="38"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="64"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="48"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="74"/>
         <source>Price</source>
         <translation>Fizetendő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="39"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="65"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="49"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="75"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="40"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="66"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="50"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="76"/>
         <source>Unit time</source>
         <translation>Egységidő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="41"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="67"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="51"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="77"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="42"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="68"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="52"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="78"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="43"/>
-        <location filename="crud/dlgpatientcardtype.cpp" line="69"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="53"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="79"/>
         <source>Valid days</source>
         <oldsource>Valid
 days</oldsource>
         <translation>Érvényes napok</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="44"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="54"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="45"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="55"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="114"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="124"/>
         <source>New PatientCard Type</source>
         <translation>Új bérlet típus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="153"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="163"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="172"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="182"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="173"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="183"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -3343,17 +3355,17 @@ days</oldsource>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="154"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="164"/>
         <source>Are you sure you want to delete this PatientCard Type?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a bérlet típust?</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="162"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="172"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="163"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="173"/>
         <source>Unfortunatelly delete of this card type is not possible.
 There are patientcards attached to this card type.</source>
         <translation>A bérlet típus törlése sajnos nem lehetséges.
@@ -3940,73 +3952,108 @@ Az állomány neve: %1</translation>
 <context>
     <name>cDlgProduct</name>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="10"/>
+        <location filename="crud/dlgproduct.cpp" line="11"/>
         <source>Product List</source>
         <translation>Termékek listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="34"/>
+        <location filename="crud/dlgproduct.cpp" line="20"/>
+        <source>Product type: </source>
+        <translation>Termék típus: </translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="27"/>
+        <source>Product name: </source>
+        <translation>Termék neve: </translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="35"/>
+        <source>Product count minimum: </source>
+        <translation>Termék darabszám minimum: </translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="44"/>
+        <source>maximum: </source>
+        <translation>maximum: </translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="60"/>
+        <source>&lt;All product types&gt;</source>
+        <translation>&lt;Összes ťermék típus&gt;</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="67"/>
+        <source>Product types</source>
+        <translation>Termék típusok</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="73"/>
+        <source>Product action types</source>
+        <translation>Termék-események</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="106"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="35"/>
+        <location filename="crud/dlgproduct.cpp" line="107"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="36"/>
-        <location filename="crud/dlgproduct.cpp" line="58"/>
+        <location filename="crud/dlgproduct.cpp" line="108"/>
+        <location filename="crud/dlgproduct.cpp" line="130"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="37"/>
-        <location filename="crud/dlgproduct.cpp" line="59"/>
+        <location filename="crud/dlgproduct.cpp" line="109"/>
+        <location filename="crud/dlgproduct.cpp" line="131"/>
         <source>Net price</source>
         <oldsource>Price</oldsource>
         <translation>Nettó ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="38"/>
-        <location filename="crud/dlgproduct.cpp" line="60"/>
+        <location filename="crud/dlgproduct.cpp" line="110"/>
+        <location filename="crud/dlgproduct.cpp" line="132"/>
         <source>VAT percent</source>
         <translation>ÁFA</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="39"/>
-        <location filename="crud/dlgproduct.cpp" line="61"/>
+        <location filename="crud/dlgproduct.cpp" line="111"/>
+        <location filename="crud/dlgproduct.cpp" line="133"/>
         <source>Sum price</source>
         <translation>Bruttó ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="40"/>
-        <location filename="crud/dlgproduct.cpp" line="62"/>
+        <location filename="crud/dlgproduct.cpp" line="112"/>
+        <location filename="crud/dlgproduct.cpp" line="134"/>
         <source>Product count</source>
         <translation>Darabszám</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="41"/>
+        <location filename="crud/dlgproduct.cpp" line="113"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="42"/>
+        <location filename="crud/dlgproduct.cpp" line="114"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="105"/>
+        <location filename="crud/dlgproduct.cpp" line="206"/>
         <source>New Product</source>
         <translation>Új Termék</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="145"/>
+        <location filename="crud/dlgproduct.cpp" line="246"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a terméket?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="148"/>
+        <location filename="crud/dlgproduct.cpp" line="249"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -4017,17 +4064,17 @@ Biztos benne, hogy törölni akarja a terméket?
 A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="153"/>
+        <location filename="crud/dlgproduct.cpp" line="254"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="161"/>
+        <location filename="crud/dlgproduct.cpp" line="262"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="162"/>
+        <location filename="crud/dlgproduct.cpp" line="263"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -4035,58 +4082,68 @@ A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.<
 <context>
     <name>cDlgProductActionType</name>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="11"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="13"/>
         <source>Productaction Type List</source>
         <translation>Termékkel kapcsolatos események listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="35"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="18"/>
+        <source>Products</source>
+        <translation>Termékek</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="24"/>
+        <source>Product types</source>
+        <translation>Termék típusok</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductactiontype.cpp" line="52"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="36"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="53"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="37"/>
-        <location filename="crud/dlgproductactiontype.cpp" line="51"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="54"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="68"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="38"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="55"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="39"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="56"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="90"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="107"/>
         <source>New Productaction Type</source>
         <translation>Új Termék-Esemény típus</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="130"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="147"/>
         <source>Are you sure you want to delete this Productaction Type?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a Termék-Eseményt?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="132"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="149"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="140"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="157"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductactiontype.cpp" line="141"/>
+        <location filename="crud/dlgproductactiontype.cpp" line="158"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -4294,48 +4351,58 @@ Kérem válasszon egy másik nevet.</translation>
 <context>
     <name>cDlgProductType</name>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="11"/>
+        <location filename="crud/dlgproducttype.cpp" line="13"/>
         <source>Product Type List</source>
         <translation>Termék Típusok listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="35"/>
+        <location filename="crud/dlgproducttype.cpp" line="18"/>
+        <source>Products</source>
+        <translation>Termékek</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="24"/>
+        <source>Product action types</source>
+        <translation>Termék-események</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproducttype.cpp" line="52"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="36"/>
+        <location filename="crud/dlgproducttype.cpp" line="53"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="37"/>
-        <location filename="crud/dlgproducttype.cpp" line="51"/>
+        <location filename="crud/dlgproducttype.cpp" line="54"/>
+        <location filename="crud/dlgproducttype.cpp" line="68"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="38"/>
+        <location filename="crud/dlgproducttype.cpp" line="55"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="39"/>
+        <location filename="crud/dlgproducttype.cpp" line="56"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="90"/>
+        <location filename="crud/dlgproducttype.cpp" line="107"/>
         <source>New Product Type</source>
         <translation>Új Termék Típus</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="130"/>
+        <location filename="crud/dlgproducttype.cpp" line="147"/>
         <source>Are you sure you want to delete this Product Type?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a Termék Típust?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="133"/>
+        <location filename="crud/dlgproducttype.cpp" line="150"/>
         <source>There are products attached to this product type.
 Are you sure you want to delete this product type?
 
@@ -4346,17 +4413,17 @@ Biztos benne, hogy törölni akarja a termék típust?
 A terméktípus törlésével nem törli a kapcsolt terméket/termékeket.</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="138"/>
+        <location filename="crud/dlgproducttype.cpp" line="155"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="146"/>
+        <location filename="crud/dlgproducttype.cpp" line="163"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproducttype.cpp" line="147"/>
+        <location filename="crud/dlgproducttype.cpp" line="164"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -5307,14 +5374,24 @@ total income</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="316"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="336"/>
         <source>Using device: %1</source>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="320"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="340"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="375"/>
+        <source>Sell patientcard [%1]</source>
+        <translation>Bérlet eladás [%1]</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="379"/>
+        <source>Refill patientcard [%1]</source>
+        <translation>Bérlet feltöltés [%1]</translation>
     </message>
     <message>
         <source>Using device: %1 - %2</source>
@@ -5325,24 +5402,24 @@ total income</source>
         <translation type="obsolete">Géphasználat</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="234"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="238"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="235"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="239"/>
         <source>Deleting panel use is not allowed from shopping cart.
 Please return to the panel and press ESC to reject panel use.</source>
         <translation>A bevásárlókosárból nem törölhető a géphasználat.
 Kérem lépjen ki és a kiválasztott gépnél az ESC gombbal törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="261"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="219"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="262"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="220"/>
         <source>Are you sure you want to delete the selected items?</source>
         <translation>Biztos benne, hogy törölni akarja a kiválasztott sorokat?</translation>
     </message>
@@ -5808,12 +5885,11 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="275"/>
         <source>Revoking device (%1) usage.</source>
-        <translation>Géphasználat (%1) visszavonása.</translation>
+        <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1025"/>
+        <location filename="frmpanel.cpp" line="988"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -5824,12 +5900,12 @@ Do you want to revoke the payment from the cassa?</source>
 Vissza akarja vonni a pénztárbevételt?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="365"/>
+        <location filename="frmpanel.cpp" line="339"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="366"/>
+        <location filename="frmpanel.cpp" line="340"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -5838,29 +5914,29 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="440"/>
+        <location filename="frmpanel.cpp" line="414"/>
         <source>
 &lt;&lt; STOPPED &gt;&gt;</source>
         <translation>
 &lt;&lt; SZÜNETEL &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="490"/>
+        <location filename="frmpanel.cpp" line="464"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="571"/>
+        <location filename="frmpanel.cpp" line="545"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="854"/>
+        <location filename="frmpanel.cpp" line="828"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1026"/>
+        <location filename="frmpanel.cpp" line="989"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
@@ -6174,7 +6250,7 @@ Akarja most szinkronizálni az adatbázist a szerverrel?</translation>
     <message>
         <location filename="wndmain.cpp" line="829"/>
         <location filename="wndmain.cpp" line="970"/>
-        <location filename="wndmain.cpp" line="1820"/>
+        <location filename="wndmain.cpp" line="1769"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
@@ -6356,23 +6432,23 @@ Please relogin to enable cassa.</source>
 Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1511"/>
+        <location filename="wndmain.cpp" line="1512"/>
         <source>Using panel</source>
         <translation>Géphasználat</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1531"/>
+        <location filename="wndmain.cpp" line="1525"/>
         <source>Using device: %1</source>
         <oldsource>Using device: %1 - </oldsource>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1584"/>
+        <location filename="wndmain.cpp" line="1559"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1821"/>
+        <location filename="wndmain.cpp" line="1770"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation>A DEMO kulcshoz tartozó adatok törlése befejeződött.</translation>
     </message>
@@ -9404,12 +9480,12 @@ beavatkozás</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="17"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="19"/>
         <source>Product storage</source>
         <translation>Raktárkészlet</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="26"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="28"/>
         <source>Please check the cassa and action type again
 and make sure the correct amount of price and
 count of product selected before continue.
@@ -9424,17 +9500,17 @@ Figyelem: a Bruttó ár kerül archiválásra
 a pénztártörténetben.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="32"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="34"/>
         <source>&lt;General cassa&gt;</source>
         <translation>&lt;Stúdió költségvetés&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="33"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="35"/>
         <source>Daily, user related cassa</source>
         <translation>Napi, stúdió pénztár</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="34"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="36"/>
         <source>Select appropriate cassa type for product action.
 
 &lt;General cassa&gt; is related to the solarium studio
@@ -9449,22 +9525,27 @@ egyik esemény sem változtat a napi, aktuális pénztár egyenlegén.
 az események kihatással vannak a pénztár egyenlegére.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="230"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="133"/>
+        <source>Product name: %1</source>
+        <translation>Termék neve: %1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="229"/>
         <source>not modify</source>
         <translation>nem változtatja</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="233"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="232"/>
         <source>increase</source>
         <translation>növeli</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="237"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="236"/>
         <source>decrease</source>
         <translation>csökkenti</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="239"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="238"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -9474,12 +9555,12 @@ A kiválasztott &apos;Kapcsolódó pénztár&apos; függvényében a megadott ö
 módosítja az aktuális, illetve a stúdió általános pénztárának egyenlegét.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="249"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="248"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="250"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="249"/>
         <source>There is no product action type in the database.
 Without any action type modification of product count is not possible.
 Please create at least one product action type.</source>
@@ -9488,18 +9569,18 @@ Termék-esemény nélkül nem lehet módosítani a raktárkészletet.
 Kérem hozzon létre legalább egy termék-eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="254"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="253"/>
         <source>&lt;Product action type not found&gt;</source>
         <translation>&lt;Nincs termék-esemény&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="89"/>
-        <location filename="dlg/dlgproductstorage.cpp" line="97"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="91"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="99"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="90"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="92"/>
         <source>You have selected a product action that modifies the
 count of the selected product but the value has not defined.
 
@@ -9510,7 +9591,7 @@ a kiválasztott termék darabszámát, de darabszámot nem adott meg.
 Kérem adjon meg egy valós darabszámot, vagy válasszon másik eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="98"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="100"/>
         <source>You have defined price for the selected action
 but the count of product not defined.
 
@@ -9521,7 +9602,7 @@ de a termék darabszámát nem adta meg.
 Kérem adjon meg egy valós darabszámot, vagy törölje az árat.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="117"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="114"/>
         <source>Negative</source>
         <translation>Negatív</translation>
     </message>

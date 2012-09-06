@@ -11,15 +11,21 @@ public:
     cDlgPatientCardType( QWidget *p_poParent = 0 );
     virtual ~cDlgPatientCardType();
 
+    QPushButton *pbPatientCard;
+
 protected:
     virtual void setupTableView();
     virtual void enableButtons();
+
+private:
+    QWidget     *m_poParent;
 
 protected slots:
     virtual void refreshTable();
     virtual void newClicked( bool );
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
+    virtual void _slotPatientCards();
 };
 
 #endif // DLGPATIENTCARDTYPE_H

@@ -2,18 +2,90 @@
 
 #include "belenus.h"
 #include "dlgproduct.h"
+#include "dlgproducttype.h"
+#include "dlgproductactiontype.h"
 #include "../edit/dlgproductedit.h"
 
-cDlgProduct::cDlgProduct( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Product List" ) );
     setWindowIcon( QIcon("./resources/40x40_product.png") );
+
+    m_poParent = p_poParent;
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblFilterProductType = new QLabel( this );
+    lblFilterProductType->setObjectName( QString::fromUtf8( "lblFilterProductType" ) );
+    lblFilterProductType->setText( tr("Product type: ") );
+    horizontalLayout->addWidget( lblFilterProductType );
+    cmbFilterProductType = new QComboBox( this );
+    cmbFilterProductType->setObjectName( QString::fromUtf8( "cmbFilterProductType" ) );
+    horizontalLayout->addWidget( cmbFilterProductType );
+    lblFilterName = new QLabel( this );
+    lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
+    lblFilterName->setText( tr("Product name: ") );
+    horizontalLayout->addWidget( lblFilterName );
+    ledFilterName = new QLineEdit( this );
+    ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
+    ledFilterName->setMaximumWidth( 150 );
+    horizontalLayout->addWidget( ledFilterName );
+    lblFilterMinCount = new QLabel( this );
+    lblFilterMinCount->setObjectName( QString::fromUtf8( "lblFilterMinCount" ) );
+    lblFilterMinCount->setText( tr("Product count minimum: ") );
+    horizontalLayout->addWidget( lblFilterMinCount );
+    ledFilterMinCount = new QLineEdit( this );
+    ledFilterMinCount->setObjectName( QString::fromUtf8( "ledFilterMinCount" ) );
+    ledFilterMinCount->setMaximumWidth( 25 );
+    ledFilterMinCount->setInputMask( "000" );
+    horizontalLayout->addWidget( ledFilterMinCount );
+    lblFilterMaxCount = new QLabel( this );
+    lblFilterMaxCount->setObjectName( QString::fromUtf8( "lblFilterMaxCount" ) );
+    lblFilterMaxCount->setText( tr("maximum: ") );
+    horizontalLayout->addWidget( lblFilterMaxCount );
+    ledFilterMaxCount = new QLineEdit( this );
+    ledFilterMaxCount->setObjectName( QString::fromUtf8( "ledFilterMaxCount" ) );
+    ledFilterMaxCount->setMaximumWidth( 35 );
+    ledFilterMaxCount->setInputMask( "0000" );
+    horizontalLayout->addWidget( ledFilterMaxCount );
+
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+
+    verticalLayout->insertLayout( 0, horizontalLayout );
+
+    QSqlQuery   *poQuery;
+    QString      qsQuery = "SELECT * FROM producttypes WHERE productTypeId>0 AND active=1";
+
+    cmbFilterProductType->addItem( tr("<All product types>"), -1 );
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+    while( poQuery->next() )
+    {
+        cmbFilterProductType->addItem( poQuery->value( 2 ).toString(), poQuery->value( 0 ) );
+    }
+
+    pbProductType = new QPushButton( tr( "Product types" ), this );
+    pbProductType->setObjectName( QString::fromUtf8( "pbProductType" ) );
+    pbProductType->setIconSize( QSize(20, 20) );
+    pbProductType->setIcon( QIcon("./resources/40x40_producttype.png") );
+    btbButtonsSide->addButton( pbProductType, QDialogButtonBox::ActionRole );
+    connect( pbProductType, SIGNAL(clicked()), this, SLOT(_slotProductTypes()) );
+    pbProductActionType = new QPushButton( tr( "Product action types" ), this );
+    pbProductActionType->setObjectName( QString::fromUtf8( "pbProductActionType" ) );
+    pbProductActionType->setIconSize( QSize(20, 20) );
+    pbProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
+    btbButtonsSide->addButton( pbProductActionType, QDialogButtonBox::ActionRole );
+    connect( pbProductActionType, SIGNAL(clicked()), this, SLOT(_slotProductActionTypes()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListProducts", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
     setupTableView();
+
+    connect( cmbFilterProductType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
+    connect( ledFilterName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledFilterMinCount, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledFilterMaxCount, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 }
 
 cDlgProduct::~cDlgProduct()
@@ -77,11 +149,40 @@ void cDlgProduct::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT productId, licenceId, name, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount, active, archive FROM products WHERE productId>0";
+        m_qsQuery = "SELECT products.productId, products.licenceId, name, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount, active, archive FROM products JOIN connectproductwithtype ON products.productId = connectproductwithtype.productId WHERE products.productId>0 ";
     }
     else
     {
-        m_qsQuery = "SELECT productId AS id, name, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount FROM products WHERE active=1 AND productId>0";
+        m_qsQuery = "SELECT products.productId AS id, name, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount FROM products JOIN connectproductwithtype ON products.productId = connectproductwithtype.productId WHERE active=1 AND products.productId>0 ";
+    }
+
+    int uiProductTypeId = cmbFilterProductType->itemData( cmbFilterProductType->currentIndex() ).toInt();
+    if( uiProductTypeId > -1 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "connectproductwithtype.productTypeId=%1" ).arg( uiProductTypeId );
+    }
+    QString stTemp;
+
+    stTemp = ledFilterName->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
+    stTemp = ledFilterMinCount->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "productCount>=%1" ).arg( stTemp );
+    }
+
+    stTemp = ledFilterMaxCount->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "productCount<=%1" ).arg( stTemp );
     }
 
     cDlgCrud::refreshTable();
@@ -174,3 +275,21 @@ void cDlgProduct::deleteClicked( bool )
         }
     }
 }
+
+void cDlgProduct::_slotProductTypes()
+{
+    cDlgProductType obDlgProductType( m_poParent );
+
+    QDialog::accept();
+    obDlgProductType.exec();
+}
+
+void cDlgProduct::_slotProductActionTypes()
+{
+    cDlgProductActionType   obDlgProductActionType( m_poParent );
+
+    QDialog::accept();
+    obDlgProductActionType.exec();
+}
+
+
