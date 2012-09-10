@@ -271,18 +271,7 @@ void cDlgShoppingCart::deleteClicked( bool )
             }
             else if( obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PROD_SELL )
             {
-                try
-                {
-                    cDBProduct  obDBProduct;
-
-                    obDBProduct.load( obDBShoppingCart.productId() );
-                    obDBProduct.increaseProductCount( obDBShoppingCart.itemCount() );
-                    obDBProduct.save();
-                }
-                catch( cSevException &e )
-                {
-                    g_obLogger(e.severity()) << e.what() << EOM;
-                }
+                // No need to Increase product count. Product count only decreased by sell.
             }
 
             obDBShoppingCart.remove();
@@ -357,12 +346,6 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 else if( obDBShoppingCart.productId() > 0 )
                 {
                     g_obCassa.cassaProcessProductSell( obDBShoppingCart, qsComment, inPayType );
-
-                    cDBProduct  obDBProduct;
-
-                    obDBProduct.load( obDBShoppingCart.productId() );
-                    obDBProduct.decreaseProductCount( obDBShoppingCart.itemCount() );
-                    obDBProduct.save();
                 }
                 else if( obDBShoppingCart.patientCardId() > 0 )
                 {

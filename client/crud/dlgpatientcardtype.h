@@ -1,6 +1,9 @@
 #ifndef DLGPATIENTCARDTYPE_H
 #define DLGPATIENTCARDTYPE_H
 
+#include <QLabel>
+#include <QSpacerItem>
+
 #include "../framework/dlgcrud.h"
 
 class cDlgPatientCardType : public cDlgCrud
@@ -11,6 +14,11 @@ public:
     cDlgPatientCardType( QWidget *p_poParent = 0 );
     virtual ~cDlgPatientCardType();
 
+    QSpacerItem *horizontalSpacer1;
+    QLabel      *lblFilterName;
+    QLineEdit   *ledFilterName;
+    QLabel      *lblFilterUnits;
+    QLineEdit   *ledFilterUnits;
     QPushButton *pbPatientCard;
 
 protected:

@@ -6,13 +6,36 @@
 #include "../edit/dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcard.h"
 
-cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Cardtype List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
 
     m_poParent = p_poParent;
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblFilterName = new QLabel( this );
+    lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
+    lblFilterName->setText( tr("Patient card type name: ") );
+    horizontalLayout->addWidget( lblFilterName );
+    ledFilterName = new QLineEdit( this );
+    ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
+    ledFilterName->setMaximumWidth( 150 );
+    horizontalLayout->addWidget( ledFilterName );
+    lblFilterUnits = new QLabel( this );
+    lblFilterUnits->setObjectName( QString::fromUtf8( "lblFilterUnits" ) );
+    lblFilterUnits->setText( tr("Number of units: ") );
+    horizontalLayout->addWidget( lblFilterUnits );
+    ledFilterUnits = new QLineEdit( this );
+    ledFilterUnits->setObjectName( QString::fromUtf8( "ledFilterUnits" ) );
+    ledFilterUnits->setMaximumWidth( 30 );
+    horizontalLayout->addWidget( ledFilterUnits );
+
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+
+    verticalLayout->insertLayout( 0, horizontalLayout );
 
     pbPatientCard = new QPushButton( tr( "Patientcards" ), this );
     pbPatientCard->setObjectName( QString::fromUtf8( "pbPatientCard" ) );
@@ -25,6 +48,9 @@ cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
     setupTableView();
+
+    connect( ledFilterName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledFilterUnits, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 }
 
 cDlgPatientCardType::~cDlgPatientCardType()
@@ -101,6 +127,22 @@ void cDlgPatientCardType::refreshTable()
     else
     {
         m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units, unitTime, validDateFrom, validDateTo, validDays FROM patientCardTypes WHERE licenceId>0 AND active=1";
+    }
+
+    QString stTemp;
+
+    stTemp = ledFilterName->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
+    stTemp = ledFilterUnits->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "units=%1" ).arg( stTemp.toInt() );
     }
 
     cDlgCrud::refreshTable();
