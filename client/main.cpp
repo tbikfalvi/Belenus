@@ -59,6 +59,7 @@ BelenusServerConnection *g_poServer;
 cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
+cLicenceManager          g_obLicenceManager;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 
@@ -159,6 +160,8 @@ int main( int argc, char *argv[] )
 
         qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        g_obLicenceManager.initialize();
 
         //-------------------------------------------------------------------------------
         // If Internet component active, process connection initialization

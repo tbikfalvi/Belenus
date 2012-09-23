@@ -149,7 +149,8 @@ HEADERS = belenus.h \
     dlg/dlgprogress.h \
     dlg/dlgproductstorage.h \
     dlg/dlgsecondarywindow.h \
-    dsppanel.h
+    dsppanel.h \
+    licenceManager.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -260,7 +261,8 @@ SOURCES = main.cpp \
     dlg/dlgprogress.cpp \
     dlg/dlgproductstorage.cpp \
     dlg/dlgsecondarywindow.cpp \
-    dsppanel.cpp
+    dsppanel.cpp \
+    licenceManager.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
