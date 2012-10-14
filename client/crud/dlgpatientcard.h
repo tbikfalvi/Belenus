@@ -29,6 +29,7 @@ protected:
 
 private:
     QWidget     *m_poParent;
+    QString      m_qsCondition;
 
 protected slots:
     virtual void refreshTable( QString p_qsCondition = "");

@@ -70,6 +70,8 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+
+    m_qsCondition = "";
 }
 
 cDlgPatientCard::~cDlgPatientCard()
@@ -170,9 +172,12 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
     }
 
     if( p_qsCondition != "" )
+        m_qsCondition = p_qsCondition;
+
+    if( m_qsCondition != "" )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += p_qsCondition;
+        m_qsQuery += m_qsCondition;
     }
 
     cDlgCrud::refreshTable();
