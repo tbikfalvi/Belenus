@@ -60,7 +60,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     pbPatientCardType->setObjectName( QString::fromUtf8( "pbPatientCardType" ) );
     pbPatientCardType->setIconSize( QSize(20, 20) );
     pbPatientCardType->setIcon( QIcon("./resources/40x40_patientcardtype.png") );
-    btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::ActionRole );
+    btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::RejectRole );
     connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCards", QPoint(520,300) );

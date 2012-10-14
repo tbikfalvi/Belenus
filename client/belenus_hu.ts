@@ -58,12 +58,12 @@
         <translation>Pénztár kiadás.</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="124"/>
+        <location filename="main.cpp" line="125"/>
         <source>Connecting to database ...</source>
         <translation>Kapcsolódás az adatbázishoz ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="131"/>
+        <location filename="main.cpp" line="132"/>
         <source> SUCCEEDED.
 </source>
         <oldsource> CONNECTED.
@@ -118,17 +118,17 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete">SIKERTELEN</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="137"/>
+        <location filename="main.cpp" line="138"/>
         <source>License is ... </source>
         <translation>Az alkalmazás ... </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="154"/>
+        <location filename="main.cpp" line="155"/>
         <source>DEMO</source>
         <translation>DEMO</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="156"/>
+        <location filename="main.cpp" line="157"/>
         <source>OK</source>
         <translation>RENDBEN</translation>
     </message>
@@ -145,12 +145,12 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete"> (liszensz a szerver által elutasítva)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="278"/>
+        <location filename="main.cpp" line="281"/>
         <source>Checking hardware connection ...</source>
         <translation>Hardver kapcsolat ellenőrzése ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="285"/>
+        <location filename="main.cpp" line="288"/>
         <source>FAILED
 </source>
         <translation>SIKERTELEN
@@ -197,93 +197,93 @@ Probléma van az internet kapcsolattal?
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="105"/>
+        <location filename="main.cpp" line="106"/>
         <source>SystemID: </source>
         <translation>RendszerAzonosító: </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="141"/>
+        <location filename="main.cpp" line="142"/>
         <source>NO_SERIAL_DETECTED</source>
         <translation>LISZENSZ_KULCS_HIÁNYZIK</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="160"/>
+        <location filename="main.cpp" line="161"/>
         <source>Serial: %1
 </source>
         <translation>Liszensz kulcs: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="287"/>
-        <location filename="main.cpp" line="334"/>
-        <location filename="main.cpp" line="341"/>
+        <location filename="main.cpp" line="290"/>
+        <location filename="main.cpp" line="337"/>
+        <location filename="main.cpp" line="344"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Alkalmazás indítása DEMÓ módban.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="295"/>
+        <location filename="main.cpp" line="298"/>
         <source>CONNECTED
 </source>
         <translation>KAPCSOLÓDVA
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="298"/>
+        <location filename="main.cpp" line="301"/>
         <source>Initializing hardware device ... </source>
         <translation>Hardver eszköz beállítása ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="302"/>
+        <location filename="main.cpp" line="305"/>
         <source>FINISHED
 </source>
         <translation>BEFEJEZŐDÖTT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="305"/>
+        <location filename="main.cpp" line="308"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Hardver eszközben tárolt fejléc szöveg: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="308"/>
+        <location filename="main.cpp" line="311"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Hardver panelok száma: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="311"/>
+        <location filename="main.cpp" line="314"/>
         <source>Checking hardware panels:
 </source>
         <translation>Hardver panelok ellenőrzése:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="316"/>
+        <location filename="main.cpp" line="319"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Hardver panel ellenőrzése -%1-</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="321"/>
+        <location filename="main.cpp" line="324"/>
         <source> SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="326"/>
-        <location filename="main.cpp" line="385"/>
+        <location filename="main.cpp" line="329"/>
+        <location filename="main.cpp" line="388"/>
         <source> FAILED
 </source>
         <translation>SIKERTELEN
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="392"/>
+        <location filename="main.cpp" line="395"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
@@ -3084,75 +3084,75 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>Bérletek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="23"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="25"/>
         <source>Select</source>
         <translation>Kiválaszt</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="28"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="30"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="53"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="55"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="54"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="56"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="55"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="81"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="57"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="83"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="56"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="82"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="58"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="84"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="57"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="83"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="59"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="85"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="58"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="84"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="60"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="86"/>
         <source>Patientcard type</source>
         <translation>Bérlettípus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="59"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="85"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="61"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="87"/>
         <source>All units</source>
         <translation>Összes egység</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="60"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="86"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="62"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="88"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="61"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="87"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="63"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="89"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="62"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="88"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="64"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="90"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="63"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="65"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
@@ -3257,96 +3257,106 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
 <context>
     <name>cDlgPatientCardType</name>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="12"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="11"/>
         <source>Patient Cardtype List</source>
         <translation>Bérlet típusok</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="17"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="20"/>
+        <source>Patient card type name: </source>
+        <translation>Bérlet típus név: </translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="28"/>
+        <source>Number of units: </source>
+        <translation>Egységek száma :</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="40"/>
         <source>Patientcards</source>
         <translation>Bérletek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="45"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="71"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="46"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="72"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="47"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="73"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="99"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="48"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="74"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="100"/>
         <source>Price</source>
         <translation>Fizetendő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="49"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="75"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="101"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="50"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="76"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="102"/>
         <source>Unit time</source>
         <translation>Egységidő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="51"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="77"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="103"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="52"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="78"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="104"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="53"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="79"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="105"/>
         <source>Valid days</source>
         <oldsource>Valid
 days</oldsource>
         <translation>Érvényes napok</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="54"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="80"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="55"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="81"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="124"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="166"/>
         <source>New PatientCard Type</source>
         <translation>Új bérlet típus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="163"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="205"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="182"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="224"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="183"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="225"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -3355,17 +3365,17 @@ days</oldsource>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="164"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="206"/>
         <source>Are you sure you want to delete this PatientCard Type?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a bérlet típust?</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="172"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="214"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="173"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="215"/>
         <source>Unfortunatelly delete of this card type is not possible.
 There are patientcards attached to this card type.</source>
         <translation>A bérlet típus törlése sajnos nem lehetséges.
@@ -5247,9 +5257,76 @@ total income</source>
 <context>
     <name>cDlgSerialReg</name>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="14"/>
+        <location filename="dlg/dlgserialreg.cpp" line="21"/>
+        <location filename="dlg/dlgserialreg.cpp" line="64"/>
+        <source>Activate application</source>
+        <translation>Alkalmazás aktiválása</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="23"/>
+        <location filename="dlg/dlgserialreg.cpp" line="66"/>
+        <source>Enter activation key</source>
+        <translation>Írja be az aktiváló kulcsot</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="27"/>
         <source>Validate Serial key</source>
         <translation>Liszensz kulcs érvényesítése</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="29"/>
+        <source>Enter serial key</source>
+        <translation>Írja be a liszensz kulcsot</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="56"/>
+        <source>Information</source>
+        <translation>Információ</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="57"/>
+        <source>Your licence key has been verified successfully.
+Please send the following validation key to the
+provider of the Belenus application or validate
+the key through the internet and enter the given
+activation key into the edit box.
+
+Validation key: %1</source>
+        <translation>Az Ön liszensz kulcsát sikeresen azonosítottuk.
+Kérjük küldje el az alul található ellenőrző kódot
+a Belenus alkalmazás szolgáltatójának, vagy
+végezze el az aktiválást az interneten keresztül,
+majd írja be az aktiváló kulcsot a beviteli mezőbe.
+
+Ellenőrző kód: %1</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="70"/>
+        <location filename="dlg/dlgserialreg.cpp" line="76"/>
+        <location filename="dlg/dlgserialreg.cpp" line="82"/>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="71"/>
+        <source>The format of the licence key you entered is not valid.
+Please check your licence key and retype it if necessary..</source>
+        <translation>A megadott liszensz kulcs formátuma nem megfelelő.
+Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="77"/>
+        <source>The order number of the licence key you entered is not correct.
+Please check your licence key and retype it if necessary..</source>
+        <translation>A liszensz kulcsban szereplő szám nem megfelelő.
+Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <source>The licence key you entered is not valid.
+Please check your licence key and retype it if necessary..</source>
+        <translation>A megadott liszensz kulcs érvénytelen.
+Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.</translation>
     </message>
 </context>
 <context>
@@ -5374,22 +5451,22 @@ total income</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="336"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="325"/>
         <source>Using device: %1</source>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="340"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="329"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="375"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="358"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="379"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="362"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>

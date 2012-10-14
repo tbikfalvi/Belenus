@@ -14,11 +14,13 @@ cDlgPatientCardSelect::cDlgPatientCardSelect( QWidget *p_poParent )
     m_poBtnDelete->setEnabled(false);
     m_poBtnEdit->setEnabled(false);
     m_poBtnNew->setEnabled(false);
+    pbPatientCardType->setEnabled(false);
 
     m_poBtnClose->setVisible(false);
     m_poBtnDelete->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnNew->setVisible(false);
+    pbPatientCardType->setVisible(false);
 
     pbSelect = new QPushButton( tr( "Select" ), this );
     pbSelect->setObjectName( QString::fromUtf8( "pbSelect" ) );

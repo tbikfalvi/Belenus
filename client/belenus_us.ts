@@ -35,12 +35,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="124"/>
+        <location filename="main.cpp" line="125"/>
         <source>Connecting to database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="131"/>
+        <location filename="main.cpp" line="132"/>
         <source> SUCCEEDED.
 </source>
         <oldsource> CONNECTED.
@@ -48,117 +48,117 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="137"/>
+        <location filename="main.cpp" line="138"/>
         <source>License is ... </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="154"/>
+        <location filename="main.cpp" line="155"/>
         <source>DEMO</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="156"/>
+        <location filename="main.cpp" line="157"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="105"/>
+        <location filename="main.cpp" line="106"/>
         <source>SystemID: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="141"/>
+        <location filename="main.cpp" line="142"/>
         <source>NO_SERIAL_DETECTED</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="160"/>
+        <location filename="main.cpp" line="161"/>
         <source>Serial: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="278"/>
+        <location filename="main.cpp" line="281"/>
         <source>Checking hardware connection ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="285"/>
+        <location filename="main.cpp" line="288"/>
         <source>FAILED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="287"/>
-        <location filename="main.cpp" line="334"/>
-        <location filename="main.cpp" line="341"/>
+        <location filename="main.cpp" line="290"/>
+        <location filename="main.cpp" line="337"/>
+        <location filename="main.cpp" line="344"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="295"/>
+        <location filename="main.cpp" line="298"/>
         <source>CONNECTED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="298"/>
+        <location filename="main.cpp" line="301"/>
         <source>Initializing hardware device ... </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="302"/>
+        <location filename="main.cpp" line="305"/>
         <source>FINISHED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="305"/>
+        <location filename="main.cpp" line="308"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="308"/>
+        <location filename="main.cpp" line="311"/>
         <source>Number of hardware panels: %1
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="311"/>
+        <location filename="main.cpp" line="314"/>
         <source>Checking hardware panels:
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="316"/>
+        <location filename="main.cpp" line="319"/>
         <source>     Checking hardware panel -%1- </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="321"/>
+        <location filename="main.cpp" line="324"/>
         <source> SUCCEEDED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="326"/>
-        <location filename="main.cpp" line="385"/>
+        <location filename="main.cpp" line="329"/>
+        <location filename="main.cpp" line="388"/>
         <source> FAILED
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="392"/>
+        <location filename="main.cpp" line="395"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>
         <oldsource>Database server application is not running.
 Application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="db/dbuser.h" line="25"/>
@@ -188,17 +188,17 @@ Please start WampServer application then restart Belenus application.</oldsource
     <message>
         <location filename="db/dbproductactiontype.h" line="53"/>
         <source>Positive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="db/dbledger.cpp" line="271"/>
         <source>Revoking action: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="db/dbcassahistory.cpp" line="192"/>
         <source>Revoking cassa action: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -216,7 +216,7 @@ Please start WampServer application then restart Belenus application.</oldsource
     <message>
         <location filename="crud/dlgaddress.cpp" line="31"/>
         <source>&lt;All guests&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgaddress.cpp" line="82"/>
@@ -392,18 +392,18 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="79"/>
         <source>Amount :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="164"/>
         <location filename="dlg/dlgcassaaction.cpp" line="176"/>
         <source>Comment &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="168"/>
         <source>Comment &lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -427,36 +427,36 @@ Do you want to save them as new into the database?</source>
         <location filename="edit/dlgcassaedit.cpp" line="90"/>
         <location filename="edit/dlgcassaedit.cpp" line="98"/>
         <source>Date/Time</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="91"/>
         <location filename="edit/dlgcassaedit.cpp" line="99"/>
         <source>Amount of money</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="92"/>
         <location filename="edit/dlgcassaedit.cpp" line="100"/>
         <source>Actual balance</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="93"/>
         <location filename="edit/dlgcassaedit.cpp" line="101"/>
         <source>User</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="256"/>
         <source>More &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="252"/>
         <location filename="edit/dlgcassaedit.cpp" line="266"/>
         <source>Less &lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="89"/>
@@ -512,95 +512,95 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="9"/>
         <source>Discounts List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="14"/>
         <source>All discounts</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="17"/>
         <source>General discounts</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="20"/>
         <source>Guest discounts</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="23"/>
         <source>Product discounts</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="28"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="69"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="70"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="71"/>
         <location filename="crud/dlgdiscount.cpp" line="89"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="72"/>
         <location filename="crud/dlgdiscount.cpp" line="90"/>
         <source>Exact value</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="73"/>
         <location filename="crud/dlgdiscount.cpp" line="91"/>
         <source>Percent</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="74"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="75"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="165"/>
         <source>New Discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="204"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="205"/>
         <source>Are you sure you want to delete this Discount?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="214"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgdiscount.cpp" line="215"/>
         <source>You are not allowed to delete studio independent data.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -608,95 +608,95 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="13"/>
         <source>Discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="145"/>
         <source>Name of the discount can not be empty!
 Please add a name to the discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="155"/>
         <source>Discount for regular customer already exists!
 Please modify the existing discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="165"/>
         <source>Discount for employee already exists!
 Please modify the existing discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="175"/>
         <source>Discount for service person already exists!
 Please modify the existing discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="185"/>
         <source>Discount for selected guest already exists!
 Please modify the existing discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="195"/>
         <source>Discount for selected company already exists!
 Please modify the existing discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="215"/>
         <source>Discount for selected product already exists!
 Please modify the existing discount.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="228"/>
         <source>One of the item from the list must be selected!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="238"/>
         <source>Value of discount is invalid.
 Please use only numbers.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="266"/>
         <source>Guest discount - %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="271"/>
         <source>Company discount - %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="281"/>
         <source>Product discount - %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="308"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="326"/>
         <source>Regular customer discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="328"/>
         <source>Employee discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="330"/>
         <source>Service discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="332"/>
@@ -704,22 +704,22 @@ Please use only numbers.</source>
         <location filename="edit/dlgdiscountedit.cpp" line="350"/>
         <location filename="edit/dlgdiscountedit.cpp" line="374"/>
         <source>&lt;Not selected&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="336"/>
         <source>Guest discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="348"/>
         <source>Company discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgdiscountedit.cpp" line="372"/>
         <source>Product discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -727,91 +727,91 @@ Please use only numbers.</source>
     <message>
         <location filename="crud/dlgguest.cpp" line="10"/>
         <source>Guest List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="17"/>
         <source>Guest name: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="25"/>
         <source>Gender: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="32"/>
         <source>Age group: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="82"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="83"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="84"/>
         <location filename="crud/dlgguest.cpp" line="104"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="85"/>
         <location filename="crud/dlgguest.cpp" line="105"/>
         <source>Gender</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="86"/>
         <location filename="crud/dlgguest.cpp" line="106"/>
         <source>Age group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="87"/>
         <location filename="crud/dlgguest.cpp" line="107"/>
         <source>E-Mail</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="88"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="89"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="167"/>
         <source>New Guest</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="204"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="205"/>
         <source>Are you sure you want to delete this Guest?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="214"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgguest.cpp" line="215"/>
         <source>You are not allowed to delete studio independent data.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -819,51 +819,51 @@ Please use only numbers.</source>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="51"/>
         <source>Attendance List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="199"/>
         <location filename="edit/dlgguestedit.cpp" line="226"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="199"/>
         <location filename="edit/dlgguestedit.cpp" line="226"/>
         <source>Guest name cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="295"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="365"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="365"/>
         <source>Not implemented yet.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="519"/>
         <source>%1 $</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="294"/>
         <location filename="edit/dlgguestedit.cpp" line="343"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="344"/>
         <source>Are you sure you want to disjoin this card from patient?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1090,7 +1090,7 @@ Time value can not be greater than %1 minutes.</source>
         <location filename="crud/dlgpanelsettings.cpp" line="90"/>
         <source> Copy to all </source>
         <oldsource>Copy to all</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpanelsettings.cpp" line="91"/>
@@ -1451,12 +1451,12 @@ Please define a different one.</source>
         <location filename="crud/dlgpatientcard.cpp" line="43"/>
         <source>&lt;All patientcard types&gt;</source>
         <oldsource>&lt;All patientcard type&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="59"/>
         <source>Patientcard types</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="90"/>
@@ -1490,7 +1490,7 @@ Please define a different one.</source>
         <location filename="crud/dlgpatientcard.cpp" line="95"/>
         <location filename="crud/dlgpatientcard.cpp" line="123"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="96"/>
@@ -1508,13 +1508,13 @@ Please define a different one.</source>
         <location filename="crud/dlgpatientcard.cpp" line="98"/>
         <location filename="crud/dlgpatientcard.cpp" line="126"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="99"/>
         <location filename="crud/dlgpatientcard.cpp" line="127"/>
         <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="100"/>
@@ -1610,17 +1610,17 @@ The length of the new barcode should be %1.</source>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="694"/>
         <source>Barcode cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="701"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="713"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="271"/>
@@ -1633,26 +1633,26 @@ For active patientcard other type should be selected.
 
 If you want to connect the card to this type,
 deactivate the card with unchecking the Active checkbox.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="282"/>
         <source>Available units cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="289"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card with unchecking the Active checkbox.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="296"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="333"/>
@@ -1682,7 +1682,7 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="615"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1691,38 +1691,38 @@ Please relogin to enable cassa.</source>
         <location filename="edit/dlgpatientcardrefill.cpp" line="39"/>
         <source>Refilling Patientcard</source>
         <oldsource>Selling Patientcard</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="50"/>
         <location filename="edit/dlgpatientcardrefill.cpp" line="59"/>
         <source>&lt;Not selected&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="201"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="202"/>
         <source>You are not allowed to create System Service Patientcard.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="246"/>
         <source>Barcode cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="254"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="267"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="277"/>
@@ -1730,48 +1730,48 @@ Please relogin to enable cassa.</source>
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
 deactivate the card.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="288"/>
         <source>Available units cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="295"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="302"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="326"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="327"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="368"/>
         <source>Refill patientcard [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardrefill.cpp" line="396"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1779,80 +1779,80 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="10"/>
         <source>PatientCard List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="23"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="25"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="28"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="30"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="53"/>
-        <source>Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="54"/>
-        <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="55"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="81"/>
-        <source>Barcode</source>
-        <translation type="unfinished"></translation>
+        <source>Id</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="56"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="82"/>
-        <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <source>LicenceId</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="57"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="83"/>
-        <source>Units</source>
-        <translation type="unfinished"></translation>
+        <source>Barcode</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="58"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="84"/>
-        <source>Patientcard type</source>
-        <translation type="unfinished"></translation>
+        <source>Owner</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="59"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="85"/>
-        <source>All units</source>
-        <translation type="unfinished"></translation>
+        <source>Units</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="60"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="86"/>
-        <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <source>Patientcard type</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="61"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="87"/>
-        <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <source>All units</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="62"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="88"/>
-        <source>Active</source>
-        <translation type="unfinished"></translation>
+        <source>Valid from</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="63"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="89"/>
+        <source>Valid to</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="64"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="90"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="65"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1860,38 +1860,38 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="39"/>
         <source>Selling Patientcard</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="50"/>
         <location filename="edit/dlgpatientcardsell.cpp" line="59"/>
         <source>&lt;Not selected&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="198"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="199"/>
         <source>You are not allowed to create System Service Patientcard.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="243"/>
         <source>Barcode cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="251"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="264"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="274"/>
@@ -1899,159 +1899,169 @@ Please relogin to enable cassa.</source>
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
 deactivate the card.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="285"/>
         <source>Available units cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="292"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="299"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="323"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="324"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="365"/>
         <source>Sell patientcard [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardsell.cpp" line="393"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>cDlgPatientCardType</name>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="12"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="11"/>
         <source>Patient Cardtype List</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="17"/>
-        <source>Patientcards</source>
-        <translation type="unfinished"></translation>
+        <location filename="crud/dlgpatientcardtype.cpp" line="20"/>
+        <source>Patient card type name: </source>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="45"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="28"/>
+        <source>Number of units: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="40"/>
+        <source>Patientcards</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardtype.cpp" line="71"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="46"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="72"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="47"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="73"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="99"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="48"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="74"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="100"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="49"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="75"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="101"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="50"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="76"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="102"/>
         <source>Unit time</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="51"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="77"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="103"/>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="52"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="78"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="104"/>
         <source>Valid to</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="53"/>
         <location filename="crud/dlgpatientcardtype.cpp" line="79"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="105"/>
         <source>Valid days</source>
         <oldsource>Valid
 days</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="54"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="80"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="55"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="81"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="124"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="166"/>
         <source>New PatientCard Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="163"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="205"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="164"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="206"/>
         <source>Are you sure you want to delete this PatientCard Type?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="172"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="214"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="173"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="215"/>
         <source>Unfortunatelly delete of this card type is not possible.
 There are patientcards attached to this card type.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="182"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="224"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardtype.cpp" line="183"/>
+        <location filename="crud/dlgpatientcardtype.cpp" line="225"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -2066,12 +2076,12 @@ There are patientcards attached to this card type.</source>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="211"/>
         <source>One of the weekdays must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="225"/>
         <source>One time period must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="286"/>
@@ -2117,13 +2127,13 @@ There are patientcards attached to this card type.</source>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="303"/>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="324"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="304"/>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="325"/>
         <source>The selected time period already present in the list.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2165,66 +2175,66 @@ refill the patientcard before use.</source>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="8"/>
         <source>Select actual patient</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="25"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="41"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="46"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="79"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="80"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="81"/>
         <location filename="crud/dlgpatientselect.cpp" line="101"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="82"/>
         <location filename="crud/dlgpatientselect.cpp" line="102"/>
         <source>Gender</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="83"/>
         <location filename="crud/dlgpatientselect.cpp" line="103"/>
         <source>Age group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="84"/>
         <location filename="crud/dlgpatientselect.cpp" line="104"/>
         <source>E-Mail</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="85"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientselect.cpp" line="86"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2258,13 +2268,13 @@ refill the patientcard before use.</source>
         <location filename="dlg/dlgpreferences.cpp" line="72"/>
         <location filename="dlg/dlgpreferences.cpp" line="215"/>
         <source>Visible</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="77"/>
         <location filename="dlg/dlgpreferences.cpp" line="220"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2306,103 +2316,103 @@ Name of the file is: %1</source>
     <message>
         <location filename="crud/dlgproduct.cpp" line="11"/>
         <source>Product List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="20"/>
         <source>Product type: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="27"/>
         <source>Product name: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="35"/>
         <source>Product count minimum: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="44"/>
         <source>maximum: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="60"/>
         <source>&lt;All product types&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="67"/>
         <source>Product types</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="73"/>
         <source>Product action types</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="106"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="107"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="108"/>
         <location filename="crud/dlgproduct.cpp" line="130"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="109"/>
         <location filename="crud/dlgproduct.cpp" line="131"/>
         <source>Net price</source>
         <oldsource>Price</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="110"/>
         <location filename="crud/dlgproduct.cpp" line="132"/>
         <source>VAT percent</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="111"/>
         <location filename="crud/dlgproduct.cpp" line="133"/>
         <source>Sum price</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="112"/>
         <location filename="crud/dlgproduct.cpp" line="134"/>
         <source>Product count</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="113"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="114"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="206"/>
         <source>New Product</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="246"/>
         <source>Are you sure you want to delete this Product?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="249"/>
@@ -2410,22 +2420,22 @@ Name of the file is: %1</source>
 Are you sure you want to delete this product?
 
 Deleting this product will not delete the product types assigned.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="254"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="262"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="263"/>
         <source>You are not allowed to delete studio independent data.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2433,68 +2443,68 @@ Deleting this product will not delete the product types assigned.</source>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="13"/>
         <source>Productaction Type List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="18"/>
         <source>Products</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="24"/>
         <source>Product types</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="52"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="53"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="54"/>
         <location filename="crud/dlgproductactiontype.cpp" line="68"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="55"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="56"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="107"/>
         <source>New Productaction Type</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="147"/>
         <source>Are you sure you want to delete this Productaction Type?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="149"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="157"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductactiontype.cpp" line="158"/>
         <source>You are not allowed to delete studio independent data.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2502,41 +2512,41 @@ Deleting this product will not delete the product types assigned.</source>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="13"/>
         <source>Product type</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="22"/>
         <source>Positive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="23"/>
         <source>Negative</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="68"/>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="76"/>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="83"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="68"/>
         <source>Name of productaction type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="76"/>
         <source>Productaction type with this name already exists.
 Please set another one.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductactiontypeedit.cpp" line="83"/>
         <source>A product action can not increase and decrease
 the product count at the same time.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2544,30 +2554,30 @@ the product count at the same time.</source>
     <message>
         <location filename="edit/dlgproductedit.cpp" line="14"/>
         <source>Product</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductedit.cpp" line="101"/>
         <location filename="edit/dlgproductedit.cpp" line="109"/>
         <location filename="edit/dlgproductedit.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductedit.cpp" line="101"/>
         <source>Name of product must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductedit.cpp" line="109"/>
         <source>Product with this name already exists.
 Please set another one.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproductedit.cpp" line="120"/>
         <source>Sell price of product must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2575,115 +2585,115 @@ Please set another one.</source>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="26"/>
         <source>Selling Products</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="42"/>
         <source> Search filters </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="51"/>
         <source>Barcode: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="64"/>
         <source> Selected product to sell </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="73"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="83"/>
         <source>Count: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="107"/>
         <source>Total price: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="127"/>
         <source>Sell</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="133"/>
         <source>To shopping cart</source>
         <oldsource>To cart</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="121"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="139"/>
         <source>Product list</source>
         <oldsource>Edit products</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="180"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="181"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="182"/>
         <location filename="crud/dlgproductsell.cpp" line="206"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="183"/>
         <location filename="crud/dlgproductsell.cpp" line="207"/>
         <source>Barcode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="184"/>
         <location filename="crud/dlgproductsell.cpp" line="208"/>
         <source>Net price</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="185"/>
         <location filename="crud/dlgproductsell.cpp" line="209"/>
         <source>VAT percent</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="186"/>
         <location filename="crud/dlgproductsell.cpp" line="210"/>
         <source>Sum price</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="187"/>
         <location filename="crud/dlgproductsell.cpp" line="211"/>
         <source>Product count</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="188"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproductsell.cpp" line="189"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2691,53 +2701,53 @@ Please set another one.</source>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="13"/>
         <source>Product Type List</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="18"/>
         <source>Products</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="24"/>
         <source>Product action types</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="52"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="53"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="54"/>
         <location filename="crud/dlgproducttype.cpp" line="68"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="55"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="56"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="107"/>
         <source>New Product Type</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="147"/>
         <source>Are you sure you want to delete this Product Type?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="150"/>
@@ -2745,22 +2755,22 @@ Please set another one.</source>
 Are you sure you want to delete this product type?
 
 Deleting this product type will not delete the products assigned.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="155"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="163"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproducttype.cpp" line="164"/>
         <source>You are not allowed to delete studio independent data.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2768,24 +2778,24 @@ Deleting this product type will not delete the products assigned.</source>
     <message>
         <location filename="edit/dlgproducttypeedit.cpp" line="14"/>
         <source>Product type</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproducttypeedit.cpp" line="88"/>
         <location filename="edit/dlgproducttypeedit.cpp" line="96"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproducttypeedit.cpp" line="88"/>
         <source>Name of product type must be set.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgproducttypeedit.cpp" line="96"/>
         <source>Product type with this name already exists.
 Please set another one.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3298,8 +3308,66 @@ total income</source>
 <context>
     <name>cDlgSerialReg</name>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="14"/>
+        <location filename="dlg/dlgserialreg.cpp" line="21"/>
+        <location filename="dlg/dlgserialreg.cpp" line="64"/>
+        <source>Activate application</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="23"/>
+        <location filename="dlg/dlgserialreg.cpp" line="66"/>
+        <source>Enter activation key</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="27"/>
         <source>Validate Serial key</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="29"/>
+        <source>Enter serial key</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="56"/>
+        <source>Information</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="57"/>
+        <source>Your licence key has been verified successfully.
+Please send the following validation key to the
+provider of the Belenus application or validate
+the key through the internet and enter the given
+activation key into the edit box.
+
+Validation key: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="70"/>
+        <location filename="dlg/dlgserialreg.cpp" line="76"/>
+        <location filename="dlg/dlgserialreg.cpp" line="82"/>
+        <source>Warning</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="71"/>
+        <source>The format of the licence key you entered is not valid.
+Please check your licence key and retype it if necessary..</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="77"/>
+        <source>The order number of the licence key you entered is not correct.
+Please check your licence key and retype it if necessary..</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <source>The licence key you entered is not valid.
+Please check your licence key and retype it if necessary..</source>
         <translation></translation>
     </message>
 </context>
@@ -3308,162 +3376,162 @@ total income</source>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="16"/>
         <source>Shopping cart</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="29"/>
         <source>Panel :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="38"/>
         <source>Guest :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="52"/>
         <source>&lt;All panels&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="53"/>
         <source>&lt;Panel independent&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="61"/>
         <source>&lt;All guests&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="62"/>
         <source>&lt;Guest independent&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="73"/>
         <source>Payment</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="118"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="119"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="120"/>
         <location filename="crud/dlgshoppingcart.cpp" line="152"/>
         <source>Panel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="121"/>
         <location filename="crud/dlgshoppingcart.cpp" line="153"/>
         <source>Patient</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="122"/>
         <source>ProductId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="123"/>
         <source>PatientCardId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="124"/>
         <location filename="crud/dlgshoppingcart.cpp" line="154"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="125"/>
         <location filename="crud/dlgshoppingcart.cpp" line="155"/>
         <source>NetPrice</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="126"/>
         <location filename="crud/dlgshoppingcart.cpp" line="156"/>
         <source>VATPercent</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="127"/>
         <location filename="crud/dlgshoppingcart.cpp" line="157"/>
         <source>SumPrice</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="128"/>
         <location filename="crud/dlgshoppingcart.cpp" line="158"/>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="129"/>
         <location filename="crud/dlgshoppingcart.cpp" line="159"/>
         <source>Discount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="130"/>
         <location filename="crud/dlgshoppingcart.cpp" line="160"/>
         <source>TotalSumPrice</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="131"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="336"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="325"/>
         <source>Using device: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="340"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="329"/>
         <source>Selling product: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="375"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="358"/>
         <source>Sell patientcard [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="379"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="362"/>
         <source>Refill patientcard [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="238"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="239"/>
         <source>Deleting panel use is not allowed from shopping cart.
 Please return to the panel and press ESC to reject panel use.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="219"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="220"/>
         <source>Are you sure you want to delete the selected items?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3472,75 +3540,75 @@ Please return to the panel and press ESC to reject panel use.</source>
         <location filename="crud/dlgstorno.cpp" line="10"/>
         <source>Revoke selected cassa action</source>
         <oldsource>Select actual patient</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="27"/>
         <source>Comment: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="36"/>
         <source>Storno</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="41"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="73"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="74"/>
         <source>LicenceId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="75"/>
         <source>ParentId</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="76"/>
         <location filename="crud/dlgstorno.cpp" line="95"/>
         <source>Date/Time</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="77"/>
         <location filename="crud/dlgstorno.cpp" line="96"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="78"/>
         <location filename="crud/dlgstorno.cpp" line="97"/>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="79"/>
         <source>Active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="80"/>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="169"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgstorno.cpp" line="170"/>
         <source>Are you sure you want to revoke this cassa action?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3605,13 +3673,13 @@ Please return to the panel and press ESC to reject panel use.</source>
         <location filename="crud/dlgusers.cpp" line="39"/>
         <location filename="crud/dlgusers.cpp" line="48"/>
         <source>Privilege</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgusers.cpp" line="40"/>
         <location filename="crud/dlgusers.cpp" line="49"/>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgusers.cpp" line="104"/>
@@ -3644,17 +3712,17 @@ Please return to the panel and press ESC to reject panel use.</source>
     <message>
         <location filename="edit/dlgvalidtimeperiodedit.cpp" line="11"/>
         <source>Valid time period</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgvalidtimeperiodedit.cpp" line="14"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgvalidtimeperiodedit.cpp" line="15"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3853,7 +3921,7 @@ Do you want to save the defined region and city anyway?</source>
     <message>
         <location filename="dsppanel.cpp" line="174"/>
         <source>Panel Not Found in Database</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3894,12 +3962,12 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="frmpanel.cpp" line="988"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="frmpanel.cpp" line="989"/>
         <source>Do you want to jump to the next status of the device?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3994,7 +4062,7 @@ Balance: %2
 Do you want to continue this cassa?
 
 Please note: if you click NO, new cassa record will be opened and this cassa forced to close with reseting it&apos;s balance.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="380"/>
@@ -4013,7 +4081,7 @@ Please note: if you click NO, new cassa record will be opened and this cassa for
 from %1 to %2
 
 Do you want to continue this cassa?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="452"/>
@@ -4036,12 +4104,12 @@ Please note: if you click NO, the cassa will be closed with the actual balance.<
     <message>
         <location filename="wndmain.cpp" line="603"/>
         <source> &lt;=&gt; Current patient: [</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="609"/>
         <source> &lt;=&gt; NO PATIENT SELECTED</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="662"/>
@@ -4090,12 +4158,12 @@ Please stop them before closing the application.</source>
     <message>
         <location filename="wndmain.cpp" line="906"/>
         <source>New Patient</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="912"/>
         <source>Do you want to select the created patient as actual?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="930"/>
@@ -4115,13 +4183,13 @@ Please process the payment first.</source>
 attached to the actual patient.
 
 Do you want to use this patientcard?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1008"/>
         <source>There is no patientcard attached to the actual patient.
 Do you want to sell a patientcard for the actual patient?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1135"/>
@@ -4159,19 +4227,19 @@ reset the device first with pushing the ESC button.</source>
 %1
 
 Do you want to select this patient as actual?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1312"/>
         <source>This patientcard has been assigned to a different patient.
 Are you sure you want to use this patientcard?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1322"/>
         <source>There is no patient assigned to this patientcard.
 Do you want to assign this patientcard to the actual patient?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1425"/>
@@ -4190,18 +4258,18 @@ Please relogin to enable cassa.</source>
     <message>
         <location filename="wndmain.cpp" line="1512"/>
         <source>Using panel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1525"/>
         <source>Using device: %1</source>
         <oldsource>Using device: %1 - </oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1559"/>
         <source>Selling product: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1770"/>
@@ -4223,7 +4291,7 @@ for the actually selected device.</source>
 Do you want to continue this cassa?
 
 Please note: if you click NO, new cassa record will be opened and this cassa forced to close with reseting it&apos;s balance.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="446"/>
@@ -4234,7 +4302,7 @@ Please note: if you click NO, new cassa record will be opened and this cassa for
         <location filename="wndmain.cpp" line="1219"/>
         <source>This patientcard still can be used.
 Do you want to refill anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1340"/>
@@ -4333,47 +4401,47 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgcassaaction.ui" line="32"/>
         <source> Action </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="47"/>
         <source>Amount to pay :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="139"/>
         <source>Money given :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="207"/>
         <source>Money to give back :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="252"/>
         <source>.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="309"/>
         <source>Comment &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="327"/>
         <source> Action comment </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="348"/>
         <source>Payment</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="364"/>
         <source>To shopping cart</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="380"/>
@@ -4390,7 +4458,7 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgcassaaction.ui" line="283"/>
         <source> Action type </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="289"/>
@@ -4413,7 +4481,7 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgcassa.ui" line="50"/>
         <source> Cassa history </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgcassa.ui" line="87"/>
@@ -4479,93 +4547,93 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgdiscountedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="24"/>
         <source> Identification </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="30"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="49"/>
         <source> Category </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="55"/>
         <source>Regular customer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="62"/>
         <source>Employee</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="69"/>
         <source>Service person</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="79"/>
         <source>Guest</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="89"/>
         <source>Company</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="96"/>
         <source>Product</source>
         <oldsource>Product Type</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="108"/>
         <source>Guest / Company / Product ... </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="126"/>
         <source> Type </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="132"/>
         <source>fix value</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="139"/>
         <source>percent</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="152"/>
         <source> Value </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="213"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="226"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgdiscountedit.ui" line="259"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4573,47 +4641,47 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgguestedit.ui" line="20"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="28"/>
         <source> Identification </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="34"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="51"/>
         <source>Gender :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="60"/>
         <source>Male</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="67"/>
         <source>Female</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="89"/>
         <source>E-Mail :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="109"/>
         <source>Age :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="118"/>
         <source>Not defined</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="124"/>
@@ -4625,173 +4693,173 @@ Do you want to register it for a new patientcard?</source>
         <location filename="dlgguestedit.ui" line="184"/>
         <location filename="dlgguestedit.ui" line="194"/>
         <source>buttonGroup</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="131"/>
         <source>Under 18</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="141"/>
         <source>18 - 20</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="151"/>
         <source>21 - 30</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="161"/>
         <source>31 - 40</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="171"/>
         <source>41 - 50</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="181"/>
         <source>51 - 60</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="191"/>
         <source>Above 60</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="212"/>
         <source> Guest&apos;s card </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="220"/>
         <source>Barcode :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="283"/>
         <source>Disjoin card</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="252"/>
         <source>Type of card :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="551"/>
         <source> Statistical data </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="557"/>
         <source>Returning guest</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="320"/>
         <source> Discount </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="348"/>
         <source>KiwiSun service</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="341"/>
         <source>Employee</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="334"/>
         <source>Regular customer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="516"/>
         <source>Loyalty points :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="574"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="616"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="587"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="378"/>
         <source>Private discount :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="388"/>
         <source>fix value</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="401"/>
         <source>percent</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="443"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="466"/>
         <source>Sample :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="479"/>
         <source>if total price is 10,000 $ then discounted price is</source>
         <oldsource>if total price is 1,000 $ then discounted price is</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="486"/>
         <source>10,000 $</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="645"/>
         <source>Join existing card to guest</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="648"/>
         <source>Join card</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="661"/>
         <source>Sell unactivated patientcard to guest.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="664"/>
         <source>Sell card</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgguestedit.ui" line="696"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5178,7 +5246,7 @@ Do you want to save them as new into the database?</source>
         <location filename="dlgpanelappereance.ui" line="78"/>
         <source>Background color : </source>
         <oldsource>Backgournd color : </oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpanelappereance.ui" line="103"/>
@@ -5200,7 +5268,7 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpanelappereance.ui" line="351"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpanelappereance.ui" line="407"/>
@@ -5463,17 +5531,17 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpatientcardedit.ui" line="283"/>
         <source>Deactivate</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardedit.ui" line="312"/>
         <source>Sell</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardedit.ui" line="325"/>
         <source>Refill</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5481,84 +5549,84 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="22"/>
         <source> Refill patientcard with ... </source>
         <oldsource> Sell patientcard with ... </oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="28"/>
         <source>Barcode :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="48"/>
         <source>Cardtype :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="75"/>
         <source>Owner :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="106"/>
         <source>Comment :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="132"/>
         <source> Information </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="138"/>
         <source>Price :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="175"/>
         <source>Available units :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="212"/>
         <source>Time left (hh:mm:ss):</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="224"/>
         <source>hh:mm:ss</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="246"/>
         <source>Valid till ... :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="258"/>
         <location filename="dlgpatientcardrefill.ui" line="290"/>
         <source>yyyy/MM/dd</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="280"/>
         <source> -&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="309"/>
         <source>Sell</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="322"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5566,83 +5634,83 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpatientcardsell.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="22"/>
         <source> Sell patientcard with ... </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="28"/>
         <source>Barcode :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="48"/>
         <source>Cardtype :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="75"/>
         <source>Owner :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="102"/>
         <source>Comment :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="128"/>
         <source> Information </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="134"/>
         <source>Price :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="171"/>
         <source>Available units :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="208"/>
         <source>Time left (hh:mm:ss):</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="220"/>
         <source>hh:mm:ss</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="242"/>
         <source>Valid till ... :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="254"/>
         <location filename="dlgpatientcardsell.ui" line="286"/>
         <source>yyyy/MM/dd</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="276"/>
         <source> -&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="305"/>
         <source>Sell</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardsell.ui" line="318"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5723,62 +5791,62 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="233"/>
         <source>... on the selected days:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="257"/>
         <source>Monday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="267"/>
         <source>Tuesday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="277"/>
         <source>Wednesday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="287"/>
         <source>Thursday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="297"/>
         <source>Friday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="324"/>
         <source>Saturday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="334"/>
         <source>Sunday</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="361"/>
         <source>... on the defined time periods:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="390"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="400"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="410"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpatientcardtypeedit.ui" line="441"/>
@@ -5964,33 +6032,33 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpreferences.ui" line="290"/>
         <source>&amp;File Log Level:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="417"/>
         <source> Main window </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="425"/>
         <location filename="dlgpreferences.ui" line="537"/>
         <source>Background color: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="478"/>
         <source> Secondary window  </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="505"/>
         <source>Visible</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="605"/>
         <source> Panels </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="668"/>
@@ -6006,7 +6074,7 @@ Do you want to save them as new into the database?</source>
         <location filename="dlgpreferences.ui" line="855"/>
         <source>Product barcode length
 is different :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="887"/>
@@ -6124,57 +6192,57 @@ is different :</source>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="22"/>
         <source>Identification </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="28"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="41"/>
         <source> Action effect </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="49"/>
         <source>Action will ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="71"/>
         <source>increase the count of defined product</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="78"/>
         <source>decrease the count of defined product</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="87"/>
         <source>Amount of cassa action&apos;s indication :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="105"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="116"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductactiontypeedit.ui" line="129"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6182,116 +6250,116 @@ is different :</source>
     <message>
         <location filename="dlgproductedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="22"/>
         <source>Identification </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="28"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="38"/>
         <source>Barcode :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="64"/>
         <source> Information </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="72"/>
         <source>Product count :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="116"/>
         <source> Price </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="122"/>
         <source>Purchase price :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="144"/>
         <location filename="dlgproductedit.ui" line="198"/>
         <source>$</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="151"/>
         <location filename="dlgproductedit.ui" line="221"/>
         <source>VAT percent :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="176"/>
         <source>Sell price :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="262"/>
         <source> Product Types </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="270"/>
         <source>Assigned product types:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="316"/>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="329"/>
         <source>&lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="342"/>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="355"/>
         <source>&gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="366"/>
         <source>Independent product types:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="394"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="405"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="418"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="447"/>
         <source>Product storage
 action</source>
         <oldsource>Product storage</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6299,78 +6367,78 @@ action</source>
     <message>
         <location filename="dlgproductstorage.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="22"/>
         <source> Cassa </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="28"/>
         <source>Related cassa :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="60"/>
         <source> Storage action </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="68"/>
         <source>Action type :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="109"/>
         <source> Action details </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="115"/>
         <source>Product name :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="129"/>
         <source>Net price :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="151"/>
         <location filename="dlgproductstorage.ui" line="257"/>
         <source>$</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="192"/>
         <source>VAT Percent (%) :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="235"/>
         <source>SUM price :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="292"/>
         <source>Count of product :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="336"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="349"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="19"/>
         <source>Product storage</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="28"/>
@@ -6380,17 +6448,17 @@ count of product selected before continue.
 
 Please note: the value of SUM price will be
 archived in cassa history.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="34"/>
         <source>&lt;General cassa&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="35"/>
         <source>Daily, user related cassa</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="36"/>
@@ -6400,27 +6468,27 @@ archived in cassa history.</source>
 any action will not modify the balance of the actual cassa
 &lt;Daily, user related cassa&gt; is the currently used cassa
 any action will increase or decrease the balance of the cassa.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="133"/>
         <source>Product name: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="229"/>
         <source>not modify</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="232"/>
         <source>increase</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="236"/>
         <source>decrease</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="238"/>
@@ -6428,30 +6496,30 @@ any action will increase or decrease the balance of the cassa.</source>
 the count of the selected product.
 Based on the selected cassa type, the given price will be
 added to actual cassa or to the general ledger.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="248"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="249"/>
         <source>There is no product action type in the database.
 Without any action type modification of product count is not possible.
 Please create at least one product action type.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="253"/>
         <source>&lt;Product action type not found&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="91"/>
         <location filename="dlg/dlgproductstorage.cpp" line="99"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="92"/>
@@ -6459,7 +6527,7 @@ Please create at least one product action type.</source>
 count of the selected product but the value has not defined.
 
 Please define a valid product count or select another product action.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="100"/>
@@ -6467,12 +6535,12 @@ Please define a valid product count or select another product action.</source>
 but the count of product not defined.
 
 Please define a valid product count or reset the price.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgproductstorage.cpp" line="114"/>
         <source>Negative</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6480,67 +6548,67 @@ Please define a valid product count or reset the price.</source>
     <message>
         <location filename="dlgproducttypeedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="22"/>
         <source>Identification </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="28"/>
         <source>Name :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="41"/>
         <source> Products </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="49"/>
         <source>Assigned to product type:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="95"/>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="108"/>
         <source>&lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="121"/>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="134"/>
         <source>&gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="158"/>
         <source>Products independent from this type:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="189"/>
         <source>Independent from the local studio.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="200"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgproducttypeedit.ui" line="213"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6679,28 +6747,28 @@ Please define a valid product count or reset the price.</source>
     <message>
         <location filename="dlgvalidtimeperiodedit.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgvalidtimeperiodedit.ui" line="20"/>
         <source> Valid time period </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgvalidtimeperiodedit.ui" line="26"/>
         <source>From :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgvalidtimeperiodedit.ui" line="39"/>
         <location filename="dlgvalidtimeperiodedit.ui" line="59"/>
         <source>HH:mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgvalidtimeperiodedit.ui" line="46"/>
         <source>To :</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6805,7 +6873,7 @@ Please define a valid product count or reset the price.</source>
         <location filename="wndmain.ui" line="348"/>
         <source>Select actual patient...</source>
         <oldsource>Patient origin ...</oldsource>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="311"/>
@@ -6865,7 +6933,7 @@ Please define a valid product count or reset the price.</source>
     <message>
         <location filename="wndmain.ui" line="111"/>
         <source>Product</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="131"/>
@@ -6875,7 +6943,7 @@ Please define a valid product count or reset the price.</source>
     <message>
         <location filename="wndmain.ui" line="177"/>
         <source>toolBar_2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="351"/>
@@ -7110,42 +7178,42 @@ Please define a valid product count or reset the price.</source>
     <message>
         <location filename="wndmain.ui" line="543"/>
         <source>Guests ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="546"/>
         <source>Guests</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="551"/>
         <source>Product Types ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="556"/>
         <source>Products ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="561"/>
         <source>Product Action Types ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="566"/>
         <source>Sell Product</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="571"/>
         <source>Shopping cart</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="576"/>
         <source>Cassa action storno</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>

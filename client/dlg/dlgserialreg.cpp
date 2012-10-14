@@ -12,13 +12,25 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
 {
     setupUi( this );
 
-    setWindowTitle( tr("Validate Serial key") );
     setWindowIcon( QIcon("./resources/40x40_key.png") );
 
-    pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-// 'TO BE SOLVED'
-//    ledSerial->setText( g_obLicenceManager.getClientSerial() );
+
+    if( g_poPrefs->getLicenceId() > 1 )
+    {
+        setWindowTitle( tr("Activate application") );
+        pbValidate->setIcon( QIcon("./resources/40x40_ok.png") );
+        lblSerial->setText( tr("Enter activation key") );
+    }
+    else
+    {
+        setWindowTitle( tr("Validate Serial key") );
+        pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
+        lblSerial->setText( tr("Enter serial key") );
+
+        ledSerial->setText( g_obLicenceManager.licenceKey() );
+    }
+
     ledSerial->setFocus();
     ledSerial->selectAll();
 }
@@ -29,16 +41,50 @@ cDlgSerialReg::~cDlgSerialReg()
 
 void cDlgSerialReg::on_pbValidate_clicked()
 {
-// 'TO BE SOLVED'
-//    g_obLicenceManager.validateLicence(ledSerial->text());
+    if( g_poPrefs->getLicenceId() > 1 )
+    {
 
-    // be kell irni a liszensz kulcsot - minden exe-hez különbözõ van, SORSZÁMmal
-    // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\Registration -> ProductId
-    // HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\ComputerName\ComputerName -> ComputerName
-    // ebbõl a kettõbõl és a sorszámból csináljon egy ^11 -es karaktersort és azt küldje el
-    // válaszképp kap egy másik karaktersort, azt írja be és kész
+        QDialog::accept();
+    }
+    else
+    {
+        int nRet = g_obLicenceManager.validateLicence( ledSerial->text() );
 
-    QDialog::accept();
+        switch( nRet )
+        {
+            case cLicenceManager::ERR_NO_ERROR:
+                QMessageBox::information( this, tr("Information"),
+                                          tr("Your licence key has been verified successfully.\n"
+                                             "Please send the following validation key to the\n"
+                                             "provider of the Belenus application or validate\n"
+                                             "the key through the internet and enter the given\n"
+                                             "activation key into the edit box.\n\n"
+                                             "Validation key: %1").arg( g_obLicenceManager.validationKey() ) );
+
+                setWindowTitle( tr("Activate application") );
+                pbValidate->setIcon( QIcon("./resources/40x40_ok.png") );
+                lblSerial->setText( tr("Enter activation key") );
+                break;
+
+            case cLicenceManager::ERR_KEY_FORMAT_MISMATCH:
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("The format of the licence key you entered is not valid.\n"
+                                         "Please check your licence key and retype it if necessary..") );
+                break;
+
+            case cLicenceManager::ERR_KEY_NUMBER_INCORRECT:
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("The order number of the licence key you entered is not correct.\n"
+                                         "Please check your licence key and retype it if necessary..") );
+                break;
+
+            case cLicenceManager::ERR_KEY_NOT_EXISTS:
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("The licence key you entered is not valid.\n"
+                                         "Please check your licence key and retype it if necessary..") );
+                break;
+        }
+    }
 }
 
 void cDlgSerialReg::on_pbCancel_clicked()
