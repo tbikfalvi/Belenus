@@ -16,38 +16,28 @@
 #include <QtGui/QApplication>
 #include <QTranslator>
 #include <QMessageBox>
+#include <QSettings>
 
 //====================================================================================
 
 #include "dlgMain.h"
 
-#include "vregistry.h"
-#include "vqtconvert.h"
+//====================================================================================
 
-//=======================================================================================
-
-using namespace voidrealms::win32;
+cRegistry   g_obReg;
 
 //====================================================================================
 int main(int argc, char *argv[])
 //====================================================================================
 {
-    QApplication apMainApp(argc, argv);
-
-    QString     qsCurrentPath = QDir::currentPath();
+    QApplication    apMainApp(argc, argv);
+    QString         qsCurrentPath = QDir::currentPath();
 
     if( !QFile::exists( QString("%1\\setup.qm").arg(qsCurrentPath) ) )
     {
-        VRegistry   obReg;
-        QString     qsPathWindows;
+        QString     qsPathWindows = g_obReg.keyValue( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
 
-        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
-        {
-            qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
-            obReg.CloseKey();
-
-            QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
-        }
+        QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
     }
 
     QTranslator *poTrans = new QTranslator();

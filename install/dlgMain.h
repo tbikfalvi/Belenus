@@ -28,6 +28,7 @@
 
 #include "ui_dlgMain.h"
 #include "../client/communication.h"
+#include "cregistry.h"
 
 //====================================================================================
 
@@ -36,12 +37,15 @@
 #define CONST_PAGE_COMPONENT_SELECTION   2
 #define CONST_PAGE_WAMP_INSTALL          3
 #define CONST_PAGE_HARDWARE_INSTALL      4
-#define CONST_PAGE_INTERNET_INSTALL      5
-#define CONST_PAGE_CLIENT_INSTALL        6
-#define CONST_PAGE_PROCESS               7
-#define CONST_PAGE_FINISH                8
+#define CONST_PAGE_CLIENT_INSTALL        5
+#define CONST_PAGE_PROCESS               6
+#define CONST_PAGE_FINISH                7
 
 #define CONST_INSTALL_APP_VERSION       "1.0"
+
+//====================================================================================
+
+extern cRegistry   g_obReg;
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -90,7 +94,6 @@ private:
     bool                     m_bProcessWamp;
     bool                     m_bProcessDatabase;
     bool                     m_bProcessHWConnection;
-    bool                     m_bProcessInternet;
     bool                     m_bProcessBelenusClient;
     bool                     m_bProcessViewer;
     bool                     m_bRestartRequired;
@@ -126,7 +129,6 @@ private:
     void                    _installWampServer();
     void                    _installSQLServer();
     void                    _initializeHardwareInstallPage();
-    void                    _initializeInternetInstallPage();
     void                    _initializeClientInstallPage();
     void                    _initializeInstallProcessPage();
     void                    _initializeFinishPage();
@@ -136,7 +138,6 @@ private:
     bool                    _processComponentSelectionPage();
     bool                    _processWampInstallPage();
     bool                    _processHardwareInstallPage();
-    bool                    _processInternetInstallPage();
     bool                    _processClientInstallPage();
 
     bool                    _processWampServerInstall();
@@ -155,7 +156,6 @@ private:
     bool                    _copyUninstallFiles();
     bool                    _processClientInstall();
     bool                    _processHWSettings();
-    bool                    _processInternetSettings();
 
     bool                    _processDatabaseUpdate();
 
@@ -177,7 +177,6 @@ private:
 private slots:
     void on_pbTestHWConnection_clicked();
     void on_cmbCOMPorts_currentIndexChanged(int index);
-    void on_chkInternet_clicked();
     void on_chkBelenus_clicked();
     void on_chkHardware_clicked();
     void on_chkDatabase_clicked();

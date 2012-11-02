@@ -19,19 +19,13 @@
 #include <QSqlError>
 #include <QFileDialog>
 #include <QCloseEvent>
-
-#include "vregistry.h"
-#include "vqtconvert.h"
+#include <QSettings>
 
 //=======================================================================================
 
 #include "dlgMain.h"
 #include "ui_dlgMain.h"
 #include "../client/communication_serial.h"
-
-//=======================================================================================
-
-using namespace voidrealms::win32;
 
 //=======================================================================================
 dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
@@ -43,7 +37,6 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
     pagerControl->setCurrentIndex( CONST_PAGE_WELCOME );
 
     // Load the images, icons etc.
-    Logo->setPixmap( QPixmap( QString(":/images/Logo.png") ) );
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
 
     // Initialize variables
@@ -96,34 +89,10 @@ void dlgMain::_initializeInstall()
     //-----------------------------------------------------------------------------------
     //  Get Windows default values from registry
     //-----------------------------------------------------------------------------------
-//    VRegistry   obReg;
 
-    m_qsPathWindows     = "";
-    m_qsPathPrograms    = "";
-    m_qsPathDesktop     = "";
-
-/*    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
-    {
-        m_qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
-        obReg.CloseKey();
-    }
-
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders") ) )
-    {
-        m_qsPathPrograms    = obReg.get_REG_SZ( QString("Common Programs") );
-        m_qsPathDesktop     = obReg.get_REG_SZ( QString("Common Desktop") );
-        obReg.CloseKey();
-    }
-*/
-
-    QSettings   obRegSystem( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", QSettings::NativeFormat );
-
-    m_qsPathWindows = obRegSystem.value( "SystemRoot", "" ).toString();
-
-    QSettings   obRegShell( "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", QSettings::NativeFormat );
-
-    m_qsPathPrograms = obRegShell.value( "Common Programs" ).toString();
-    m_qsPathDesktop  = obRegShell.value( "Common Desktop" ).toString();
+    m_qsPathWindows     = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "SystemRoot", "c:\\windows" );
+    m_qsPathPrograms    = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Common Programs", "" );
+    m_qsPathDesktop     = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Common Desktop", "" );
 
     if( m_qsPathWindows.length() == 0 || m_qsPathPrograms.length() == 0 || m_qsPathDesktop.length() == 0 )
     {
@@ -196,7 +165,6 @@ void dlgMain::_initializeInstall()
     m_bProcessWamp              = true;
     m_bProcessDatabase          = true;
     m_bProcessHWConnection      = true;
-    m_bProcessInternet          = true;
     m_bProcessBelenusClient     = true;
     m_bProcessViewer            = true;
 
@@ -245,7 +213,7 @@ void dlgMain::_initializeInstall()
     //-----------------------------------------------------------------------------------
 
     // Check Wamp server
-    m_bWampServerAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" );
+    m_bWampServerAlreadyInstalled = g_obReg.isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" );
 
     // Initialize SQL connection
     m_poDB = NULL;
@@ -492,10 +460,6 @@ void dlgMain::_initializePage( int p_nPage )
             _initializeHardwareInstallPage();
             break;
 
-        case CONST_PAGE_INTERNET_INSTALL:
-            _initializeInternetInstallPage();
-            break;
-
         case CONST_PAGE_CLIENT_INSTALL:
             _initializeClientInstallPage();
             break;
@@ -537,10 +501,6 @@ bool dlgMain::_processPage( int p_nPage )
 
         case CONST_PAGE_HARDWARE_INSTALL:
             bRet = _processHardwareInstallPage();
-            break;
-
-        case CONST_PAGE_INTERNET_INSTALL:
-            bRet = _processInternetInstallPage();
             break;
 
         case CONST_PAGE_CLIENT_INSTALL:
@@ -680,7 +640,6 @@ bool dlgMain::_processSelectionPage()
         m_bProcessWamp          = true;
         m_bProcessDatabase      = true;
         m_bProcessHWConnection  = true;
-        m_bProcessInternet      = true;
         m_bProcessBelenusClient = true;
         m_bProcessViewer        = true;
     }
@@ -690,7 +649,6 @@ bool dlgMain::_processSelectionPage()
         m_bProcessWamp          = false;
         m_bProcessDatabase      = true;
         m_bProcessHWConnection  = true;
-        m_bProcessInternet      = true;
         m_bProcessBelenusClient = true;
         m_bProcessViewer        = true;
     }
@@ -733,7 +691,6 @@ void dlgMain::_initializeComponentSelectionPage()
         chkWamp->setEnabled( true );
         chkDatabase->setEnabled( true );
         chkHardware->setEnabled( true );
-        chkInternet->setEnabled( true );
         chkBelenus->setEnabled( true );
         chkViewer->setEnabled( true );
     }
@@ -747,8 +704,6 @@ void dlgMain::_initializeComponentSelectionPage()
                 m_bProcessDatabase = false;
             if( m_qslComponents.indexOf( "Hardware" ) == -1 )
                 m_bProcessHWConnection = false;
-            if( m_qslComponents.indexOf( "Internet" ) == -1 )
-                m_bProcessInternet = false;
             if( m_qslComponents.indexOf( "Client" ) == -1 )
                 m_bProcessBelenusClient = false;
             if( m_qslComponents.indexOf( "Viewer" ) == -1 )
@@ -766,7 +721,6 @@ void dlgMain::_initializeComponentSelectionPage()
     chkWamp->setChecked( m_bProcessWamp );
     chkDatabase->setChecked( m_bProcessDatabase );
     chkHardware->setChecked( m_bProcessHWConnection );
-    chkInternet->setChecked( m_bProcessInternet );
     chkBelenus->setChecked( m_bProcessBelenusClient );
     chkViewer->setChecked( m_bProcessViewer );
 
@@ -811,22 +765,6 @@ void dlgMain::on_chkHardware_clicked()
     _setEnableNextButton();
 }
 //=======================================================================================
-void dlgMain::on_chkInternet_clicked()
-//=======================================================================================
-{
-    m_bProcessInternet = chkInternet->isChecked();
-
-    if( m_pInstallType == rbInstall && chkInternet->isChecked() )
-    {
-        if( chkWamp->isEnabled() )
-            chkWamp->setChecked( true );
-        chkDatabase->setChecked( true );
-        chkBelenus->setChecked( true );
-    }
-
-    _setEnableNextButton();
-}
-//=======================================================================================
 void dlgMain::on_chkBelenus_clicked()
 //=======================================================================================
 {
@@ -851,8 +789,6 @@ void dlgMain::on_chkViewer_clicked()
     {
         chkWamp->setChecked( true );
         chkDatabase->setChecked( true );
-        if( !chkBelenus->isChecked() )
-            chkInternet->setChecked( true );
     }
 
     _setEnableNextButton();
@@ -867,8 +803,6 @@ bool dlgMain::_processComponentSelectionPage()
         {
             chkWamp->setChecked( true );
             chkDatabase->setChecked( true );
-            if( !chkBelenus->isChecked() )
-                chkInternet->setChecked( true );
         }
 
         if( chkBelenus->isChecked() )
@@ -890,7 +824,6 @@ bool dlgMain::_processComponentSelectionPage()
     m_bProcessWamp          = chkWamp->isChecked();
     m_bProcessDatabase      = chkDatabase->isChecked();
     m_bProcessHWConnection  = chkHardware->isChecked();
-    m_bProcessInternet      = chkInternet->isChecked();
     m_bProcessBelenusClient = chkBelenus->isChecked();
     m_bProcessViewer        = chkViewer->isChecked();
 
@@ -1018,15 +951,15 @@ bool dlgMain::_initializeMySQL()
 //=======================================================================================
 {
     bool        bRet = false;
-    VRegistry   obReg;
+    QSettings   obReg( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld"), QSettings::NativeFormat );
 
     if( _isRegPathExists( QString("SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
     {
         _logProcess( QString("Set wampmysql service to start auto") );
-        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
+        if( obReg.contains( QString("Start") ) )
         {
-            bRet = obReg.set_REG_DWORD( QString("Start"), 2 );
-            obReg.CloseKey();
+            obReg.setValue( QString("Start"), 2 );
+            bRet = true;
         }
         _logProcess( QString("Setting reg. value wampmysqld\\Start %1").arg((bRet?"SUCCEEDED":"FAILED")) );
     }
@@ -1106,66 +1039,6 @@ bool dlgMain::_processHardwareInstallPage()
     {
         delete m_poHardware;
         m_poHardware = NULL;
-    }
-
-    return bRet;
-}
-//=======================================================================================
-//
-//  I N T E R N E T  I N S T A L L
-//
-//=======================================================================================
-void dlgMain::_initializeInternetInstallPage()
-//=======================================================================================
-{
-    ledDBIPAddress->setText( m_qsIPAddress );
-    ledDBIPPort->setText( QString::number(m_nPort ) );
-}
-//=======================================================================================
-bool dlgMain::_processInternetInstallPage()
-//=======================================================================================
-{
-    bool        bRet            = true;
-    bool        ok              = false;
-    int         nValue          = 0;
-    QStringList qslIPAddress    = ledDBIPAddress->text().split( '.' );
-
-    if( qslIPAddress.size() != 4 )
-    {
-        bRet = false;
-    }
-    else
-    {
-        for( int i=0; i<qslIPAddress.size(); i++ )
-        {
-            nValue = qslIPAddress.at(i).toInt(&ok);
-            if( !ok || qslIPAddress.at(i).length() < 1 || nValue < 0 || nValue > 999 )
-            {
-                bRet = false;
-                break;
-            }
-        }
-    }
-    if( !bRet )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("IP Address of Database Server is invalid." ) );
-    }
-    else
-    {
-        m_qsIPAddress = ledDBIPAddress->text();
-
-        nValue = ledDBIPPort->text().toInt(&ok);
-        if( !ok || ledDBIPPort->text().length() < 1 || nValue < 1 )
-        {
-            QMessageBox::warning( this, tr("Attention"),
-                                  tr("Connection port of Database Server is invalid." ) );
-            bRet = false;
-        }
-        else
-        {
-            m_nPort = nValue;
-        }
     }
 
     return bRet;
@@ -1271,20 +1144,6 @@ void dlgMain::_processInstall()
                 _logProcess( QString(" FAIL") );
             }
         }
-        if( bProcessSucceeded && m_bProcessInternet )
-        {
-            bProcessSucceeded = _processInternetSettings();
-            if( bProcessSucceeded )
-            {
-                _logProcess( QString(" OK") );
-                m_qslComponents.append( "Internet" );
-            }
-            else
-            {
-                m_qsProcessErrorMsg = QString( "ProcessInternetSettingsFailed" );
-                _logProcess( QString(" FAIL") );
-            }
-        }
         if( bProcessSucceeded )
         {
             bProcessSucceeded = _copyUninstallFiles();
@@ -1295,20 +1154,6 @@ void dlgMain::_processInstall()
         if( bProcessSucceeded && m_bProcessDatabase )
         {
             bProcessSucceeded = _processDatabaseUpdate();
-        }
-        if( bProcessSucceeded && m_bProcessInternet )
-        {
-            bProcessSucceeded = _processInternetSettings();
-            if( bProcessSucceeded )
-            {
-                _logProcess( QString(" OK") );
-                m_qslComponents.append( "Internet" );
-            }
-            else
-            {
-                m_qsProcessErrorMsg = QString( "ProcessInternetSettingsFailed" );
-                _logProcess( QString(" FAIL") );
-            }
         }
         if( bProcessSucceeded && m_bProcessBelenusClient )
         {
@@ -1419,10 +1264,6 @@ int dlgMain::_getProcessActionCount()
         }
     }
     if( m_bProcessHWConnection )
-    {
-        nCount += 1;
-    }
-    if( m_bProcessInternet )
     {
         nCount += 1;
     }
@@ -1990,33 +1831,14 @@ bool dlgMain::_processHWSettings()
     return ( obPrefFile.value(QString::fromAscii("Hardware/ComPort" ),"-1").toInt()==m_nComPort ? true : false );
 }
 //=======================================================================================
-bool dlgMain::_processInternetSettings()
-//=======================================================================================
-{
-    _logProcess( QString("Process Internet settings ..."), false );
-    lblTextProcessInfo->setText( tr("Processing internet connection settings ...") );
-    QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
-    obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsIPAddress );
-    obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_nPort );
-    prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
-    prbDBInstallClient->update();
-    Sleep(50);
-
-    QString qsTemp  = obPrefFile.value(QString::fromAscii("Server/Address" ),"0.0.0.0").toString();
-    int     nTemp   = obPrefFile.value(QString::fromAscii("Server/Port"), "0" ).toInt();
-
-    return ( (qsTemp.compare(m_qsIPAddress)==0 && nTemp==m_nPort) ? true : false );
-}
-//=======================================================================================
 bool dlgMain::_copyUninstallFiles()
 //=======================================================================================
 {
-    VRegistry   obReg;
+    QSettings   obReg( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus"), QSettings::NativeFormat );
 
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
+    if( obReg.contains( QString("Components") ) )
     {
-        obReg.set_REG_SZ( QString("Components"), m_qslComponents.join("#") );
-        obReg.CloseKey();
+        obReg.setValue( QString("Components"), m_qslComponents.join("#") );
     }
 
     QString     qsFrom  = QString( "%1\\Setup.exe" ).arg(QDir::currentPath());
@@ -2281,8 +2103,6 @@ void dlgMain::_refreshPages()
             m_vPages.append( CONST_PAGE_WAMP_INSTALL );
         if( m_bProcessHWConnection )
             m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
-        if( m_bProcessInternet )
-            m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
         if( m_bProcessBelenusClient )
             m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
     }
@@ -2291,8 +2111,6 @@ void dlgMain::_refreshPages()
         m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
         if( m_bProcessHWConnection )
             m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
-        if( m_bProcessInternet )
-            m_vPages.append( CONST_PAGE_INTERNET_INSTALL );
         if( m_bProcessBelenusClient )
             m_vPages.append( CONST_PAGE_CLIENT_INSTALL );
     }
@@ -2301,26 +2119,11 @@ void dlgMain::_refreshPages()
     m_vPages.append( CONST_PAGE_FINISH );
 }
 //=======================================================================================
-bool dlgMain::_isRegPathExists( QString p_qsPath )
-//=======================================================================================
-{
-    bool        bRet = false;
-    VRegistry   obReg;
-
-    if( obReg.OpenKey( HKEY_LOCAL_MACHINE, p_qsPath ) )
-    {
-        bRet = true;
-        obReg.CloseKey();
-    }
-
-    return bRet;
-}
-//=======================================================================================
 bool dlgMain::_isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue )
 //=======================================================================================
 {
     bool        bRet = false;
-    VRegistry   obReg;
+/*    VRegistry   obReg;
 
     if( obReg.OpenKey( HKEY_LOCAL_MACHINE, p_qsPath ) )
     {
@@ -2329,14 +2132,14 @@ bool dlgMain::_isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qs
 
         obReg.CloseKey();
     }
-
+*/
     return bRet;
 }
 //=======================================================================================
 void dlgMain::_setEnableNextButton()
 //=======================================================================================
 {
-    if( !chkWamp->isChecked() && !chkDatabase->isChecked() && !chkHardware->isChecked() && !chkInternet->isChecked() && !chkBelenus->isChecked() )
+    if( !chkWamp->isChecked() && !chkDatabase->isChecked() && !chkHardware->isChecked() && !chkBelenus->isChecked() )
         pbNext->setEnabled( false );
     else
         pbNext->setEnabled( true );
@@ -2492,7 +2295,7 @@ bool dlgMain::_createFolderShortcut()
 //=======================================================================================
 {
     bool        bRet = true;
-    VRegistry   obReg;
+/*    VRegistry   obReg;
     QString     qsDirPrograms;
     QString     qsDirDesktop;
 
@@ -2561,7 +2364,7 @@ bool dlgMain::_createFolderShortcut()
     {
         bRet = false;
     }
-
+*/
     return bRet;
 }
 //=======================================================================================
@@ -2606,7 +2409,7 @@ bool dlgMain::_removeInstalledFilesFolders()
                 qdTarget.remove( qslFiles.at(i) );
             }
         }
-
+/*
         VRegistry   obReg;
 
         obReg.DeleteKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") );
@@ -2650,6 +2453,7 @@ bool dlgMain::_removeInstalledFilesFolders()
         }
 
         _emptyTargetDirectory( QString("%1\\Temp\\BelenusInstall\\").arg(m_qsPathWindows) );
+*/
     }
     else
     {
