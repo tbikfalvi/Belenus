@@ -91,16 +91,20 @@ void dlgMain::_initializeInstall()
     //-----------------------------------------------------------------------------------
 
     m_qsPathWindows     = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "SystemRoot", "c:\\windows" );
-    m_qsPathPrograms    = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Common Programs", "" );
-    m_qsPathDesktop     = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Common Desktop", "" );
+    m_qsPathPrograms    = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Common Programs", "" );
+    m_qsPathDesktop     = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Common Desktop", "" );
 
     if( m_qsPathWindows.length() == 0 || m_qsPathPrograms.length() == 0 || m_qsPathDesktop.length() == 0 )
     {
+        int nErrCode = 0;
+        if( m_qsPathWindows.length() == 0 ) nErrCode += 1;
+        if( m_qsPathPrograms.length() == 0 ) nErrCode += 2;
+        if( m_qsPathDesktop.length() == 0 ) nErrCode += 4;
         pbNext->setEnabled( false );
         QMessageBox::critical( this, tr("Error"),
                                tr("Error occured during initialization.\n"
                                   "Please contact system administrator.\n"
-                                  "Error code: ErrSysRegKeysFail") );
+                                  "Error code: ErrSysRegKeysFail%1").arg(nErrCode) );
         return;
     }
 
@@ -169,7 +173,7 @@ void dlgMain::_initializeInstall()
     m_bProcessViewer            = true;
 
     // Flags for timer
-    m_bStartWampInstall         = false;
+//    m_bStartWampInstall         = false;
     m_bInitializeWamp           = false;
     m_bInstallClient            = false;
     m_bInstallFinished          = false;
@@ -182,6 +186,9 @@ void dlgMain::_initializeInstall()
 
     // If belenus user created, set this flag
     m_bBelenusUserExists        = false;
+
+    // Determines which wamp needed to be installed
+    m_bIsWindows32Bit           = true;
 
     // Default settings for Wamp server
     m_qsPathWampServer          = "";
@@ -213,7 +220,7 @@ void dlgMain::_initializeInstall()
     //-----------------------------------------------------------------------------------
 
     // Check Wamp server
-    m_bWampServerAlreadyInstalled = g_obReg.isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" );
+    m_bWampServerAlreadyInstalled = g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" );
 
     // Initialize SQL connection
     m_poDB = NULL;
@@ -222,18 +229,11 @@ void dlgMain::_initializeInstall()
     // If Wamp server installed get settings and check Belenus database and user
     if( m_bWampServerAlreadyInstalled )
     {
-        QSettings obRegWamp( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1", QSettings::NativeFormat );
-//        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1") ) )
-//        {
-//            m_qsPathWampServer = obReg.get_REG_SZ( "Inno Setup: App Path" );
-//            m_qsUninstallWampExec = obReg.get_REG_SZ( "UninstallString" );
-//            obReg.CloseKey();
-            m_qsPathWampServer = obRegWamp.value( "Inno Setup: App Path", "" ).toString();
-            m_qsUninstallWampExec = obRegWamp.value( "UninstallString", "" ).toString();
+        m_qsPathWampServer = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1", "Inno Setup: App Path", "" );
+        m_qsUninstallWampExec = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1", "UninstallString", "" );
 
-            _logProcess( QString("Wamp Server: %1").arg(m_qsPathWampServer) );
-            _logProcess( QString("") );
-//        }
+        _logProcess( QString("Wamp Server: %1").arg(m_qsPathWampServer) );
+        _logProcess( QString("") );
 
         // Check root user
         m_poDB->setHostName( "localhost" );
@@ -263,29 +263,22 @@ void dlgMain::_initializeInstall()
     }
 
     // Check Belenus client
-    m_bBelenusAlreadyInstalled = _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
+    m_bBelenusAlreadyInstalled = g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
 
     if( m_bBelenusAlreadyInstalled )
     {
         _logProcess( QString("Belenus application installed") );
-        QSettings obRegBelenus( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QSettings::NativeFormat );
-//        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") ) )
-//        {
-//            m_qsClientInstallDir = obReg.get_REG_SZ( QString("InstallLocation") );
-//            QString qsTemp = obReg.get_REG_SZ( QString("Components") );
-            m_qsClientInstallDir = obRegBelenus.value( "InstallLocation", "" ).toString();
-            QString qsTemp = obRegBelenus.value( "Components", "" ).toString();
-            m_qslComponents = qsTemp.split( "#" );
-//            obReg.CloseKey();
-            _logProcess( QString("Application location: %1").arg(m_qsClientInstallDir) );
-            _logProcess( QString("Installed components:") );
-            for( int i=0; i<m_qslComponents.count(); i++ )
-            {
-                _logProcess( QString("%1").arg(m_qslComponents.at(i)) );
-            }
+        m_qsClientInstallDir = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", "InstallLocation", "" );
+        QString qsTemp = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", "Components", "" );
+        m_qslComponents = qsTemp.split( "#" );
+        _logProcess( QString("Application location: %1").arg(m_qsClientInstallDir) );
+        _logProcess( QString("Installed components:") );
+        for( int i=0; i<m_qslComponents.count(); i++ )
+        {
+            _logProcess( QString("%1").arg(m_qslComponents.at(i)) );
+        }
 
-            m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
-//        }
+        m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
     }
 }
 //=======================================================================================
@@ -521,12 +514,12 @@ void dlgMain::timerEvent(QTimerEvent *)
 //=======================================================================================
 {
     // If Wamp install needs to be started and not installed before
-    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
-    {
-        _installWampServer();
-    }
+//    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
+//    {
+//        _installWampServer();
+//    }
     // If Wamp installed and SQL needs to be initialized
-    else if( m_bInitializeWamp || (m_bStartWampInstall && m_bWampServerAlreadyInstalled) )
+    /*else */if( m_bInitializeWamp || (/*m_bStartWampInstall &&*/ m_bWampServerAlreadyInstalled) )
     {
         _installSQLServer();
     }
@@ -692,7 +685,8 @@ void dlgMain::_initializeComponentSelectionPage()
         chkDatabase->setEnabled( true );
         chkHardware->setEnabled( true );
         chkBelenus->setEnabled( true );
-        chkViewer->setEnabled( true );
+// Currently no standalone viewer exists
+//        chkViewer->setEnabled( true );
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -706,8 +700,9 @@ void dlgMain::_initializeComponentSelectionPage()
                 m_bProcessHWConnection = false;
             if( m_qslComponents.indexOf( "Client" ) == -1 )
                 m_bProcessBelenusClient = false;
-            if( m_qslComponents.indexOf( "Viewer" ) == -1 )
-                m_bProcessViewer = false;
+// Currently no standalone viewer exists
+//            if( m_qslComponents.indexOf( "Viewer" ) == -1 )
+//                m_bProcessViewer = false;
         }
     }
 
@@ -722,7 +717,8 @@ void dlgMain::_initializeComponentSelectionPage()
     chkDatabase->setChecked( m_bProcessDatabase );
     chkHardware->setChecked( m_bProcessHWConnection );
     chkBelenus->setChecked( m_bProcessBelenusClient );
-    chkViewer->setChecked( m_bProcessViewer );
+// Currently no standalone viewer exists
+//    chkViewer->setChecked( m_bProcessViewer );
 
     _setEnableNextButton();
 }
@@ -825,7 +821,8 @@ bool dlgMain::_processComponentSelectionPage()
     m_bProcessDatabase      = chkDatabase->isChecked();
     m_bProcessHWConnection  = chkHardware->isChecked();
     m_bProcessBelenusClient = chkBelenus->isChecked();
-    m_bProcessViewer        = chkViewer->isChecked();
+// Currently no standalone viewer exists
+//    m_bProcessViewer        = chkViewer->isChecked();
 
     _refreshPages();
 
@@ -851,8 +848,8 @@ void dlgMain::_initializeWampInstallPage()
         pbPrev->setEnabled( false );
         pbNext->setEnabled( false );
 
-        m_bStartWampInstall = true;
-        m_nTimer = startTimer( 200 );
+        rbWin32->setChecked( m_bIsWindows32Bit );
+        pbStartWampInstall->setEnabled( true );
     }
 }
 //=======================================================================================
@@ -860,9 +857,8 @@ void dlgMain::_installWampServer()
 //=======================================================================================
 {
     _logProcess( QString("Wamp installation ..."), false );
-    killTimer( m_nTimer );
     pbNext->setEnabled( false );
-    m_bStartWampInstall = false;
+//    m_bStartWampInstall = false;
     if( _processWampServerInstall() )
     {
         _logProcess( QString(" SUCCEEDED") );
@@ -889,7 +885,7 @@ bool dlgMain::_processWampServerInstall()
     bool    bVersion    = false;
 
     _logProcess( QString("Check Wamp install in registry") );
-    if( _isRegPathExists( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+    if( g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
     {
         bVersion = _isRegStringMatch( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
                                       "Inno Setup: Setup Version",
@@ -930,7 +926,7 @@ void dlgMain::_installSQLServer()
 {
     killTimer( m_nTimer );
     pbNext->setEnabled( false );
-    m_bStartWampInstall = false;
+//    m_bStartWampInstall = false;
     m_bInitializeWamp = false;
 
     if( !_initializeMySQL() )
@@ -953,7 +949,7 @@ bool dlgMain::_initializeMySQL()
     bool        bRet = false;
     QSettings   obReg( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld"), QSettings::NativeFormat );
 
-    if( _isRegPathExists( QString("SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
+    if( g_obReg.isRegPathExists( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
     {
         _logProcess( QString("Set wampmysql service to start auto") );
         if( obReg.contains( QString("Start") ) )

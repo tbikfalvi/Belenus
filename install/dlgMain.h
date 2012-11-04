@@ -108,6 +108,7 @@ private:
     QString                  m_qsClientInstallDir;
     QString                  m_qsIPAddress;
     int                      m_nPort;
+    bool                     m_bIsWindows32Bit;
 
     bool                     m_bUninstallCalled;
     QString                  m_qsProcessErrorMsg;
