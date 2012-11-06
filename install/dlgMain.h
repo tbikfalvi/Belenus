@@ -141,7 +141,8 @@ private:
     bool                    _processHardwareInstallPage();
     bool                    _processClientInstallPage();
 
-    bool                    _processWampServerInstall();
+    bool                    _processWampServerInstall( QString p_qsMessage );
+    QString                 _checkWampServer() const;
     bool                    _initializeMySQL();
     bool                    _processRootCreate();
     bool                    _processDatabaseCreate();
@@ -176,6 +177,7 @@ private:
     void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_pbStartWampInstall_clicked();
     void on_pbTestHWConnection_clicked();
     void on_cmbCOMPorts_currentIndexChanged(int index);
     void on_chkBelenus_clicked();

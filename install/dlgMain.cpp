@@ -19,7 +19,8 @@
 #include <QSqlError>
 #include <QFileDialog>
 #include <QCloseEvent>
-#include <QSettings>
+#include <QProcess>
+#include <QDir>
 
 //=======================================================================================
 
@@ -853,13 +854,20 @@ void dlgMain::_initializeWampInstallPage()
     }
 }
 //=======================================================================================
+void dlgMain::on_pbStartWampInstall_clicked()
+//=======================================================================================
+{
+    _installWampServer();
+}
+//=======================================================================================
 void dlgMain::_installWampServer()
 //=======================================================================================
 {
     _logProcess( QString("Wamp installation ..."), false );
     pbNext->setEnabled( false );
+    QString qsMessage;
 //    m_bStartWampInstall = false;
-    if( _processWampServerInstall() )
+    if( _processWampServerInstall(qsMessage) )
     {
         _logProcess( QString(" SUCCEEDED") );
         m_bInitializeWamp = true;
@@ -878,47 +886,85 @@ void dlgMain::_installWampServer()
     }
 }
 //=======================================================================================
-bool dlgMain::_processWampServerInstall()
+bool dlgMain::_processWampServerInstall( QString p_qsMessage )
 //=======================================================================================
 {
-    bool    bRet        = true;
-    bool    bVersion    = false;
+    bool    bRet            = true;
+    QString qsVersion       = "";
+    QString qsProcessPath   = "";
+    QString qsRedistPack    = "";
+    QString qsWampServer    = "";
+    int     nRet            = 0;
+
+    qsProcessPath = QDir::currentPath();
+
+    if( rbWin32->isChecked() )
+    {
+        qsProcessPath.append( "\\Win32" );
+        qsRedistPack = "vcredist_x86.exe";
+        qsWampServer = "wampserver2.2e_win32.exe";
+    }
+    else if( rbWin64->isChecked() )
+    {
+        qsProcessPath.append( "\\Win64" );
+        qsRedistPack = "vcredist_x64.exe";
+        qsWampServer = "wampserver2.2e_win64.exe";
+    }
 
     _logProcess( QString("Check Wamp install in registry") );
-    if( g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+
+    qsVersion = _checkWampServer();
+
+    if( qsVersion.compare("NOT_EXISTS") == 0 )
     {
-        bVersion = _isRegStringMatch( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
-                                      "Inno Setup: Setup Version",
-                                      "5.2.3");
-    }
-    else
-    {
-        _logProcess( QString("Start WampServer2.0i.exe") );
-        STARTUPINFO         si;
-        PROCESS_INFORMATION pi;
+        _logProcess( QString("Install Redistributable Package") );
+        p_qsMessage = QString("Wamp version is incorrect: %1").arg(qsVersion);
 
-        ZeroMemory(&si,sizeof(si));
-        si.cb=sizeof(si);
-        ZeroMemory(&pi,sizeof(pi));
+        QProcess *qpRedist = new QProcess();
+        nRet = qpRedist->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsRedistPack) );
+        delete qpRedist;
 
-        if(!CreateProcess("Wamp\\WampServer2.0i.exe",NULL,0,0,0,0,0,0,&si,&pi))
-            bRet = false;
+        QProcess *qpWamp = new QProcess();
+        nRet = qpWamp->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsWampServer) );
+        delete qpWamp;
 
-        WaitForSingleObject(pi.hProcess,INFINITE);
-
-        bVersion = _isRegStringMatch( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
-                                      "Inno Setup: Setup Version",
-                                      "5.2.3");
+        qsVersion = _checkWampServer();
     }
 
-    _logProcess( QString("Wamp version is correct: %1").arg((bVersion?"true":"false")) );
-
-    if( !bVersion )
+    if( qsVersion.compare("INSTALLED") != 0 )
     {
+        p_qsMessage = qsVersion;
         bRet = false;
     }
 
     return bRet;
+}
+//=======================================================================================
+QString dlgMain::_checkWampServer() const
+//=======================================================================================
+{
+    QString qsRet = "";
+
+    if( g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
+    {
+        qsVersion = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
+                                      "Inno Setup: Setup Version",
+                                      "" );
+        if( qsVersion.compare( "5.4.0 (a)" ) != 0 )
+        {
+            qsRet = qsVersion;
+        }
+        else
+        {
+            qsRet = "INSTALLED";
+        }
+    }
+    else
+    {
+        qsRet = "NOT_EXISTS";
+    }
+
+    return qsRet;
 }
 //=======================================================================================
 void dlgMain::_installSQLServer()
@@ -2472,3 +2518,4 @@ void dlgMain::_logProcess( QString p_qsLog, bool p_bInsertNewLine )
     }
 }
 //=======================================================================================
+

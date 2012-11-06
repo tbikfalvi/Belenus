@@ -34,7 +34,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -882,6 +882,9 @@
            </property>
            <property name="pixmap">
             <pixmap resource="install.qrc">:/images/WampServer.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
