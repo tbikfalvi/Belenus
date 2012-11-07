@@ -34,7 +34,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -83,7 +83,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Welcome to the installer for the Belenus Application System</string>
+            <string>Welcome to the installer of the Belenus Application System</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>

@@ -179,6 +179,9 @@ void dlgMain::_initializeInstall()
     m_bInstallClient            = false;
     m_bInstallFinished          = false;
 
+    // If Wamp server installed
+    m_bWampServerAlreadyInstalled = false;
+
     // If database created during install, set this flag
     m_bDatabaseAlreadyInstalled = false;
 
@@ -221,7 +224,8 @@ void dlgMain::_initializeInstall()
     //-----------------------------------------------------------------------------------
 
     // Check Wamp server
-    m_bWampServerAlreadyInstalled = g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" );
+    if( _checkWampServer() == 0 )
+        m_bWampServerAlreadyInstalled = true;
 
     // Initialize SQL connection
     m_poDB = NULL;
@@ -845,8 +849,6 @@ void dlgMain::_initializeWampInstallPage()
     }
     else
     {
-        pbCancel->setEnabled( false );
-        pbPrev->setEnabled( false );
         pbNext->setEnabled( false );
 
         rbWin32->setChecked( m_bIsWindows32Bit );
@@ -879,18 +881,15 @@ void dlgMain::_installWampServer()
         pbPrev->setEnabled( true );
         _logProcess( QString(" FAILED") );
         QMessageBox::warning( this, tr("Attention"),
-                              tr("Wamp server installation failed.\n"
-                                 "Please try to reinstall it with going back one page "
-                                 "then return to this page.\n\n"
-                                 "If Wamp install continuously fails please contact Belenus software support.") );
+                              tr("Wamp server installation failed.\n%1\n"
+                                 "If Wamp Server installation continuously fails\nplease contact Belenus software support.") );
     }
 }
 //=======================================================================================
 bool dlgMain::_processWampServerInstall( QString p_qsMessage )
 //=======================================================================================
 {
-    bool    bRet            = true;
-    QString qsVersion       = "";
+    bool    bRet            = false;
     QString qsProcessPath   = "";
     QString qsRedistPack    = "";
     QString qsWampServer    = "";
@@ -913,58 +912,84 @@ bool dlgMain::_processWampServerInstall( QString p_qsMessage )
 
     _logProcess( QString("Check Wamp install in registry") );
 
-    qsVersion = _checkWampServer();
+    nRet = _checkWampServer();
 
-    if( qsVersion.compare("NOT_EXISTS") == 0 )
+    if( nRet == 0 )
     {
         _logProcess( QString("Install Redistributable Package") );
-        p_qsMessage = QString("Wamp version is incorrect: %1").arg(qsVersion);
 
         QProcess *qpRedist = new QProcess();
-        nRet = qpRedist->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsRedistPack) );
+        if( qpRedist->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsRedistPack) ) )
+            nRet = 3;
         delete qpRedist;
 
         QProcess *qpWamp = new QProcess();
-        nRet = qpWamp->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsWampServer) );
+        if( qpWamp->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsWampServer) ) )
+            nRet = 4;
         delete qpWamp;
 
-        qsVersion = _checkWampServer();
+        nRet = _checkWampServer();
     }
 
-    if( qsVersion.compare("INSTALLED") != 0 )
+    switch( nRet )
     {
-        p_qsMessage = qsVersion;
-        bRet = false;
+        case 0:
+        {
+            bRet = true;
+            break;
+        }
+        case 2:
+        {
+            QString qsVersion = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
+                                                  "Inno Setup: Setup Version",
+                                                  "" );
+            p_qsMessage = QString( "Currently installed Wamp Server version (%1)\n"
+                                   "is not match with the required 5.4.0 (a)\n"
+                                   "Please uninstall the current Wamp Server and\n"
+                                   "restart the Wamp Server installation process." ).arg(qsVersion);
+            break;
+        }
+        case 3:
+        {
+            p_qsMessage = QString( "" );
+            break;
+        }
+        case 4:
+        {
+            p_qsMessage = QString( "" );
+            break;
+        }
+        default:
+        {
+            p_qsMessage = QString( "" );
+            break;
+        }
     }
 
     return bRet;
 }
 //=======================================================================================
-QString dlgMain::_checkWampServer() const
+int dlgMain::_checkWampServer()
 //=======================================================================================
 {
-    QString qsRet = "";
+    int nRet = 0;
 
     if( g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1" ) )
     {
-        qsVersion = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
-                                      "Inno Setup: Setup Version",
+        QString qsVersion = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
+                                              "Inno Setup: Setup Version",
                                       "" );
         if( qsVersion.compare( "5.4.0 (a)" ) != 0 )
         {
-            qsRet = qsVersion;
-        }
-        else
-        {
-            qsRet = "INSTALLED";
+            nRet = 2;
         }
     }
     else
     {
-        qsRet = "NOT_EXISTS";
+        nRet = 1;
     }
 
-    return qsRet;
+    return nRet;
 }
 //=======================================================================================
 void dlgMain::_installSQLServer()

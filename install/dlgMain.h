@@ -142,7 +142,7 @@ private:
     bool                    _processClientInstallPage();
 
     bool                    _processWampServerInstall( QString p_qsMessage );
-    QString                 _checkWampServer() const;
+    int                     _checkWampServer();
     bool                    _initializeMySQL();
     bool                    _processRootCreate();
     bool                    _processDatabaseCreate();
