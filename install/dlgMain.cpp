@@ -869,7 +869,7 @@ void dlgMain::_installWampServer()
     pbNext->setEnabled( false );
     QString qsMessage;
 //    m_bStartWampInstall = false;
-    if( _processWampServerInstall(qsMessage) )
+    if( _processWampServerInstall(&qsMessage) )
     {
         _logProcess( QString(" SUCCEEDED") );
         m_bInitializeWamp = true;
@@ -881,12 +881,12 @@ void dlgMain::_installWampServer()
         pbPrev->setEnabled( true );
         _logProcess( QString(" FAILED") );
         QMessageBox::warning( this, tr("Attention"),
-                              tr("Wamp server installation failed.\n%1\n"
-                                 "If Wamp Server installation continuously fails\nplease contact Belenus software support.") );
+                              tr("Error occured during installation.\n\n%1\n\n"
+                                 "If installation continuously fails please\ncontact Belenus software support.").arg(qsMessage) );
     }
 }
 //=======================================================================================
-bool dlgMain::_processWampServerInstall( QString p_qsMessage )
+bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
 //=======================================================================================
 {
     bool    bRet            = false;
@@ -910,18 +910,20 @@ bool dlgMain::_processWampServerInstall( QString p_qsMessage )
         qsWampServer = "wampserver2.2e_win64.exe";
     }
 
-    _logProcess( QString("Check Wamp install in registry") );
+    _logProcess( QString("Check Wamp install in registry\n") );
 
     nRet = _checkWampServer();
 
-    if( nRet == 0 )
+    if( nRet == 1 )
     {
-        _logProcess( QString("Install Redistributable Package") );
+        _logProcess( QString("Execute %1\\%2").arg(qsProcessPath).arg(qsRedistPack) );
 
         QProcess *qpRedist = new QProcess();
         if( qpRedist->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsRedistPack) ) )
             nRet = 3;
         delete qpRedist;
+
+        _logProcess( QString("Execute %1\\%2").arg(qsProcessPath).arg(qsWampServer) );
 
         QProcess *qpWamp = new QProcess();
         if( qpWamp->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsWampServer) ) )
@@ -935,15 +937,23 @@ bool dlgMain::_processWampServerInstall( QString p_qsMessage )
     {
         case 0:
         {
+            _logProcess( "Wamp Server installed and registered into registry\n" );
             bRet = true;
+            break;
+        }
+        case 1:
+        {
+            _logProcess( "Wamp Server application is not registered in Windows registry\n" );
+            *p_qsMessage = QString( "Wamp Server application is not registered in Windows registry" );
             break;
         }
         case 2:
         {
+            _logProcess( "Wamp version not match.\n" );
             QString qsVersion = g_obReg.keyValue( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\WampServer 2_is1",
                                                   "Inno Setup: Setup Version",
                                                   "" );
-            p_qsMessage = QString( "Currently installed Wamp Server version (%1)\n"
+            *p_qsMessage = QString( "Currently installed Wamp Server version (%1)\n"
                                    "is not match with the required 5.4.0 (a)\n"
                                    "Please uninstall the current Wamp Server and\n"
                                    "restart the Wamp Server installation process." ).arg(qsVersion);
@@ -951,17 +961,20 @@ bool dlgMain::_processWampServerInstall( QString p_qsMessage )
         }
         case 3:
         {
-            p_qsMessage = QString( "" );
+            _logProcess( "Installing Microsoft Redistributeable Package failed.\n" );
+            *p_qsMessage = QString( "Installing Microsoft Redistributeable Package failed." );
             break;
         }
         case 4:
         {
-            p_qsMessage = QString( "" );
+            _logProcess( "Installing Wamp Server application failed.\n" );
+            *p_qsMessage = QString( "Installing Wamp Server application failed." );
             break;
         }
         default:
         {
-            p_qsMessage = QString( "" );
+            _logProcess( "Unexpected error occured\n" );
+            *p_qsMessage = QString( "Unexpected error occured." );
             break;
         }
     }

@@ -23,7 +23,7 @@ SOURCES     += main.cpp \
                ../client/communication_serial.cpp \
                ../client/ClassSerialComm.cpp \
                ../client/ClassHardware.cpp \
-    cregistry.cpp
+               cregistry.cpp
 
 HEADERS     += dlgMain.h \
                ../client/ClassSerialComm.h \
@@ -31,6 +31,6 @@ HEADERS     += dlgMain.h \
                ../client/communication_serial.h \
                ../client/communication_defines.h \
                ../client/communication.h \
-    cregistry.h
+               cregistry.h
 
 RESOURCES   += install.qrc

@@ -222,7 +222,7 @@
     </message>
     <message>
         <location filename="dlgMain.ui" line="1456"/>
-        <location filename="dlgMain.cpp" line="1959"/>
+        <location filename="dlgMain.cpp" line="1972"/>
         <source>Installation finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -261,7 +261,7 @@
         <location filename="dlgMain.cpp" line="105"/>
         <location filename="dlgMain.cpp" line="124"/>
         <location filename="dlgMain.cpp" line="137"/>
-        <location filename="dlgMain.cpp" line="1063"/>
+        <location filename="dlgMain.cpp" line="1076"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -317,23 +317,29 @@ All of the data will be deleted from the computer.</source>
     </message>
     <message>
         <location filename="dlgMain.cpp" line="883"/>
-        <location filename="dlgMain.cpp" line="1005"/>
-        <location filename="dlgMain.cpp" line="1099"/>
-        <location filename="dlgMain.cpp" line="1835"/>
+        <location filename="dlgMain.cpp" line="1018"/>
+        <location filename="dlgMain.cpp" line="1112"/>
         <location filename="dlgMain.cpp" line="1848"/>
+        <location filename="dlgMain.cpp" line="1861"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dlgMain.cpp" line="884"/>
-        <source>Wamp server installation failed.
+        <source>Error occured during installation.
+
+%1
+
+If installation continuously fails please
+contact Belenus software support.</source>
+        <oldsource>Wamp server installation failed.
 %1
 If Wamp Server installation continuously fails
-please contact Belenus software support.</source>
+please contact Belenus software support.</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1006"/>
+        <location filename="dlgMain.cpp" line="1019"/>
         <source>Wamp server initialization failed.
 Please try to reinstall it with going back one page then return to this page.
 
@@ -341,42 +347,42 @@ If Wamp install continuously fails please contact Belenus software support.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1063"/>
+        <location filename="dlgMain.cpp" line="1076"/>
         <source>System error occured during COM ports initialization.
 Please restart application and/or the operating system.
 If the error continuously occures again, please contact system administrator.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1091"/>
+        <location filename="dlgMain.cpp" line="1104"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1092"/>
+        <location filename="dlgMain.cpp" line="1105"/>
         <source>There is no COM port selected for hardware unit communication.
 The Belenus client will be installed in DEMO mode.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1100"/>
+        <location filename="dlgMain.cpp" line="1113"/>
         <source>Invalid value in number of panels field.
 Please enter a valid number between 1 and %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1157"/>
+        <location filename="dlgMain.cpp" line="1170"/>
         <source>Uninstall process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1158"/>
+        <location filename="dlgMain.cpp" line="1171"/>
         <source>Please wait while the uninstall process finish.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1252"/>
+        <location filename="dlgMain.cpp" line="1265"/>
         <source>Error occured during installing Belenus Application System.
 Please contact Belenus software support.
 
@@ -384,42 +390,42 @@ Error code: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1406"/>
+        <location filename="dlgMain.cpp" line="1419"/>
         <source>Creating root user ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1420"/>
+        <location filename="dlgMain.cpp" line="1433"/>
         <source>Creating database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1433"/>
+        <location filename="dlgMain.cpp" line="1446"/>
         <source>Creating Belenus user ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1446"/>
+        <location filename="dlgMain.cpp" line="1459"/>
         <source>Granting privileges for Belenus user ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1461"/>
+        <location filename="dlgMain.cpp" line="1474"/>
         <source>Creating tables in database ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1474"/>
+        <location filename="dlgMain.cpp" line="1487"/>
         <source>Adding default data to tables ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1809"/>
+        <location filename="dlgMain.cpp" line="1822"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1836"/>
+        <location filename="dlgMain.cpp" line="1849"/>
         <source>The specified directory already exits.
 All the files will be deleted or overwritten.
 
@@ -427,99 +433,99 @@ Are you sure you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1849"/>
+        <location filename="dlgMain.cpp" line="1862"/>
         <source>Unable to empty the specified directory.
 %1
 Please manually delete the directory if copying new files fails.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1891"/>
+        <location filename="dlgMain.cpp" line="1904"/>
         <source>Processing hardware settings ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1960"/>
+        <location filename="dlgMain.cpp" line="1973"/>
         <source>Installing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1964"/>
+        <location filename="dlgMain.cpp" line="1977"/>
         <source>Update finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1965"/>
+        <location filename="dlgMain.cpp" line="1978"/>
         <source>Updating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1969"/>
+        <location filename="dlgMain.cpp" line="1982"/>
         <source>Uninstall finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1970"/>
+        <location filename="dlgMain.cpp" line="1983"/>
         <source>Removing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1977"/>
+        <location filename="dlgMain.cpp" line="1990"/>
         <source>%1 Belenus Application System has been finished.To use the system correcty you need to restart your computer after exiting the installer.
 
 Press Exit to close the installer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="1986"/>
+        <location filename="dlgMain.cpp" line="1999"/>
         <source>%1 Belenus Application System has been finished.
 
 Press Exit to close the installer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2125"/>
+        <location filename="dlgMain.cpp" line="2138"/>
         <source>Select Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2220"/>
+        <location filename="dlgMain.cpp" line="2233"/>
         <source>&lt;Not selected&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2277"/>
-        <location filename="dlgMain.cpp" line="2341"/>
-        <location filename="dlgMain.cpp" line="2344"/>
+        <location filename="dlgMain.cpp" line="2290"/>
+        <location filename="dlgMain.cpp" line="2354"/>
+        <location filename="dlgMain.cpp" line="2357"/>
         <source>System error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2278"/>
+        <location filename="dlgMain.cpp" line="2291"/>
         <source>Unable to create directory:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2332"/>
+        <location filename="dlgMain.cpp" line="2345"/>
         <source>Copying file: ..\%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2336"/>
+        <location filename="dlgMain.cpp" line="2349"/>
         <source>Updating file: ..\%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2342"/>
+        <location filename="dlgMain.cpp" line="2355"/>
         <source>Unable to copy file:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2345"/>
+        <location filename="dlgMain.cpp" line="2358"/>
         <source>Unable to update file:
 
 %1</source>
