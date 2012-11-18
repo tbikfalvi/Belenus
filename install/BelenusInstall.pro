@@ -12,7 +12,8 @@ RC_FILE      = setup.rc
 CONFIG      += qt
 QT          += core gui sql
 TRANSLATIONS = setup_us.ts \
-               setup_hu.ts
+               setup_hu.ts \
+               qt_hu.ts
 
 win32:DEFINES -= UNICODE
 

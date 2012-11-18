@@ -36,16 +36,21 @@
 #define CONST_PAGE_INSTALL_SELECTION     1
 #define CONST_PAGE_COMPONENT_SELECTION   2
 #define CONST_PAGE_WAMP_INSTALL          3
-#define CONST_PAGE_HARDWARE_INSTALL      4
-#define CONST_PAGE_CLIENT_INSTALL        5
-#define CONST_PAGE_PROCESS               6
-#define CONST_PAGE_FINISH                7
+#define CONST_PAGE_INIT_SQL              4
+#define CONST_PAGE_HARDWARE_INSTALL      5
+#define CONST_PAGE_CLIENT_INSTALL        6
+#define CONST_PAGE_PROCESS               7
+#define CONST_PAGE_FINISH                8
 
 #define CONST_INSTALL_APP_VERSION       "1.0"
 
 //====================================================================================
 
-extern cRegistry   g_obReg;
+extern cRegistry     g_obReg;
+extern QTranslator  *poTransSetup;
+extern QTranslator  *poTransQT;
+extern QApplication *apMainApp;
+extern QString       g_qsCurrentPath;
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -76,8 +81,6 @@ private:
     bool                     m_bBelenusUserExists;
 
     QStringList              m_qslComponents;
-
-
 
     QFile                   *m_obFile;
     int                      m_nTimer;
@@ -127,6 +130,7 @@ private:
     void                    _initializeSelectionPage();
     void                    _initializeComponentSelectionPage();
     void                    _initializeWampInstallPage();
+    void                    _initializeSQLPage();
     void                    _installWampServer();
     void                    _installSQLServer();
     void                    _initializeHardwareInstallPage();
@@ -138,6 +142,7 @@ private:
     bool                    _processSelectionPage();
     bool                    _processComponentSelectionPage();
     bool                    _processWampInstallPage();
+    bool                    _processSQLPage();
     bool                    _processHardwareInstallPage();
     bool                    _processClientInstallPage();
 
@@ -177,6 +182,7 @@ private:
     void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_cmbLanguage_currentIndexChanged(int index);
     void on_pbStartWampInstall_clicked();
     void on_pbTestHWConnection_clicked();
     void on_cmbCOMPorts_currentIndexChanged(int index);

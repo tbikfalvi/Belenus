@@ -24,26 +24,35 @@
 
 //====================================================================================
 
-cRegistry   g_obReg;
+cRegistry        g_obReg;
+QTranslator     *poTransSetup;
+QTranslator     *poTransQT;
+QApplication    *apMainApp;
+QString          g_qsCurrentPath;
 
 //====================================================================================
 int main(int argc, char *argv[])
 //====================================================================================
 {
-    QApplication    apMainApp(argc, argv);
-    QString         qsCurrentPath = QDir::currentPath();
+    apMainApp = new QApplication(argc, argv);
 
-    if( !QFile::exists( QString("%1\\setup.qm").arg(qsCurrentPath) ) )
+    g_qsCurrentPath = QDir::currentPath();
+
+    if( !QFile::exists( QString("%1\\setup.qm").arg(g_qsCurrentPath) ) )
     {
         QString     qsPathWindows = g_obReg.keyValue( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
 
         QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
     }
 
-    QTranslator *poTrans = new QTranslator();
+    poTransSetup = new QTranslator();
+    poTransQT = new QTranslator();
 
-    poTrans->load( QString("setup.qm") );
-    apMainApp.installTranslator( poTrans );
+    poTransSetup->load( QString("setup_hu.qm") );
+    poTransQT->load( QString("qt_hu.qm") );
+
+    apMainApp->installTranslator( poTransSetup );
+    apMainApp->installTranslator( poTransQT );
 
     bool bUninstall = false;
 
@@ -56,6 +65,6 @@ int main(int argc, char *argv[])
 
     w.show();
 
-    return apMainApp.exec();
+    return apMainApp->exec();
 }
 //====================================================================================

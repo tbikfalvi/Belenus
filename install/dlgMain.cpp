@@ -58,7 +58,7 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
     m_vPages.append( CONST_PAGE_FINISH );
 
     // Set current page index to welcome page
-    m_nCurrentPage          = CONST_PAGE_WELCOME;
+    m_nCurrentPage = CONST_PAGE_WELCOME;
 
     // Initialize GUI components
     cmbLanguage->addItem( "Magyar (hu)" );
@@ -454,6 +454,10 @@ void dlgMain::_initializePage( int p_nPage )
             _initializeWampInstallPage();
             break;
 
+        case CONST_PAGE_INIT_SQL:
+            _initializeSQLPage();
+            break;
+
         case CONST_PAGE_HARDWARE_INSTALL:
             _initializeHardwareInstallPage();
             break;
@@ -495,6 +499,10 @@ bool dlgMain::_processPage( int p_nPage )
 
         case CONST_PAGE_WAMP_INSTALL:
             bRet = _processWampInstallPage();
+            break;
+
+        case CONST_PAGE_INIT_SQL:
+            bRet = _processSQLPage();
             break;
 
         case CONST_PAGE_HARDWARE_INSTALL:
@@ -578,6 +586,29 @@ void dlgMain::_initializeWelcomePage()
     }
 }
 //=======================================================================================
+void dlgMain::on_cmbLanguage_currentIndexChanged(int index)
+//=======================================================================================
+{
+    QString qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
+
+    apMainApp->removeTranslator( poTransSetup );
+    apMainApp->removeTranslator( poTransQT );
+
+    if( qsLanguage.compare("en") )
+    {
+        QString qsLangSetup = QString("%1\\setup_%2.qm").arg(g_qsCurrentPath).arg( qsLanguage );
+        QString qsLangQT = QString("%1\\qt_%2.qm").arg(g_qsCurrentPath).arg( qsLanguage );
+
+        poTransSetup->load( qsLangSetup );
+        poTransQT->load( qsLangQT );
+
+        apMainApp->installTranslator( poTransSetup );
+        apMainApp->installTranslator( poTransQT );
+    }
+
+    retranslateUi( this );
+}
+//=======================================================================================
 //
 //  P A G E  S E L E C T I O N
 //
@@ -589,20 +620,26 @@ void dlgMain::_initializeSelectionPage()
     if( m_bBelenusAlreadyInstalled )
     {
         rbInstall->setEnabled( false );
+        imgInstall1->setEnabled( false );
         lblTextInstall->setEnabled( false );
         rbUpdate->setEnabled( true );
+        imgUpdate->setEnabled( true );
         lblTextUpdate->setEnabled( true );
         rbRemove->setEnabled( true );
+        imgRemove->setEnabled( true );
         lblTextRemove->setEnabled( true );
     }
     // If Belenus not or not fully installed enable only install
     else
     {
         rbInstall->setEnabled( true );
+        imgInstall1->setEnabled( true );
         lblTextInstall->setEnabled( true );
         rbUpdate->setEnabled( false );
+        imgUpdate->setEnabled( false );
         lblTextUpdate->setEnabled( false );
         rbRemove->setEnabled( false );
+        imgRemove->setEnabled( false );
         lblTextRemove->setEnabled( false );
 
         rbInstall->setChecked( true );
@@ -687,11 +724,25 @@ void dlgMain::_initializeComponentSelectionPage()
     if( m_pInstallType == rbInstall )
     {
         chkWamp->setEnabled( true );
+        imgWamp->setEnabled( true );
+        lblTextWamp->setEnabled( true );
+
         chkDatabase->setEnabled( true );
+        imgDatabase->setEnabled( true );
+        lblTextDatabase->setEnabled( true );
+
         chkHardware->setEnabled( true );
+        imgConnection->setEnabled( true );
+        lblTextHardware->setEnabled( true );
+
         chkBelenus->setEnabled( true );
+        imgBelenus->setEnabled( true );
+        lblTextBelenus->setEnabled( true );
+
 // Currently no standalone viewer exists
 //        chkViewer->setEnabled( true );
+//        imgViewer->setEnabled( true );
+//        lblTextViewer->setEnabled( true );
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -714,6 +765,7 @@ void dlgMain::_initializeComponentSelectionPage()
     if( m_bWampServerAlreadyInstalled )
     {
         chkWamp->setEnabled( false );
+        imgWamp->setEnabled( false );
         lblTextWamp->setEnabled( false );
         m_bProcessWamp = false;
     }
@@ -2181,6 +2233,8 @@ void dlgMain::_refreshPages()
         m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
         if( m_bProcessWamp)
             m_vPages.append( CONST_PAGE_WAMP_INSTALL );
+        if( m_bProcessDatabase )
+            m_vPages.append( CONST_PAGE_INIT_SQL );
         if( m_bProcessHWConnection )
             m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
         if( m_bProcessBelenusClient )
@@ -2189,6 +2243,8 @@ void dlgMain::_refreshPages()
     else if( m_pInstallType == rbUpdate )
     {
         m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
+        if( m_bProcessDatabase )
+            m_vPages.append( CONST_PAGE_INIT_SQL );
         if( m_bProcessHWConnection )
             m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
         if( m_bProcessBelenusClient )
@@ -2556,4 +2612,3 @@ void dlgMain::_logProcess( QString p_qsLog, bool p_bInsertNewLine )
     }
 }
 //=======================================================================================
-
