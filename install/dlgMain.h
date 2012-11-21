@@ -182,6 +182,7 @@ private:
     void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_chkShowSQLPassword_clicked();
     void on_cmbLanguage_currentIndexChanged(int index);
     void on_pbStartWampInstall_clicked();
     void on_pbTestHWConnection_clicked();
