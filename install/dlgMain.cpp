@@ -1900,7 +1900,7 @@ bool dlgMain::_processBelenusDeviceFill()
         for( int i=0; i<m_nCountDevices; i++ )
         {
             QString qsSQL = QString("INSERT INTO `panels` ( `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES"
-                                    "( 1, 1, \"%1 %2\", 0, 0, 1, \"ARC\" )").arg(tr("Device")).arg(i);
+                                    "( 1, 1, \"%1 %2\", 0, 0, 1, \"ARC\" )").arg(tr("KiwiSun device")).arg(i);
             m_poDB->exec( qsSQL );
             prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
             prbDBInstallClient->update();
@@ -1949,7 +1949,8 @@ bool dlgMain::_processClientInstall()
     _logProcess( QString("Creating directories (target, lang, resource) ..."), false );
     if( !_createTargetDirectory( m_qsClientInstallDir ) ||
         !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
-        !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) )
+        !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) ||
+        !_createTargetDirectory( QString("%1\\tools").arg(m_qsClientInstallDir) ))
     {
         _logProcess( QString(" FAIL") );
         m_qsProcessErrorMsg = QString( "CreateClientDirFailed" );
@@ -2403,7 +2404,7 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
     bool    bRet = true;
     QFile   file( p_qsFileName );
 
-    if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+    if( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
         pbCancel->setEnabled( true );
         m_qsProcessErrorMsg = QString( "OpenListFileFailed" );
