@@ -526,24 +526,28 @@ bool dlgMain::_processPage( int p_nPage )
 void dlgMain::timerEvent(QTimerEvent *)
 //=======================================================================================
 {
+    _logProcess( QString("Timer event occured") );
     // If Wamp install needs to be started and not installed before
 //    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
 //    {
 //        _installWampServer();
 //    }
     // If Wamp installed and SQL needs to be initialized
-    /*else */if( m_bInitializeWamp || (/*m_bStartWampInstall &&*/ m_bWampServerAlreadyInstalled) )
+    /*else */if( m_bInitializeWamp /*|| (m_bStartWampInstall && m_bWampServerAlreadyInstalled)*/ )
     {
+        _logProcess( "_installSQLServer" );
         _installSQLServer();
     }
     // If install process needs to be started
     else if( m_bInstallClient )
     {
+        _logProcess( "_processInstall" );
         _processInstall();
     }
     // If install process finished
     else if( m_bInstallFinished )
     {
+        _logProcess( "InstallFinished" );
         m_bInstallFinished = false;
         killTimer( m_nTimer );
         on_pbNext_clicked();
@@ -551,6 +555,7 @@ void dlgMain::timerEvent(QTimerEvent *)
     // In any other case (practically when uninstall called and welcome page displayed)
     else
     {
+        _logProcess( "else" );
         killTimer( m_nTimer );
         _initializePage( m_vPages.at( m_nCurrentPage ) );
     }
@@ -1242,6 +1247,8 @@ bool dlgMain::_processClientInstallPage()
 void dlgMain::_initializeInstallProcessPage()
 //=======================================================================================
 {
+    _logProcess( "Start main install process" );
+
     pbCancel->setEnabled( false );
     pbPrev->setEnabled( false );
     pbNext->setEnabled( false );
@@ -1268,6 +1275,7 @@ void dlgMain::_processInstall()
     prbDBInstallClient->setMaximum( _getProcessActionCount() );
     prbDBInstallClient->update();
 
+    _logProcess( QString("Number of actions to be processed: %1").arg(prbDBInstallClient->maximum()) );
     m_qsProcessErrorMsg = "";
 
     m_qsIniFileName = QString( "%1\\belenus.ini" ).arg(m_qsClientInstallDir);
@@ -1279,12 +1287,16 @@ void dlgMain::_processInstall()
         if( bProcessSucceeded && m_bProcessDatabase )
         {
             bProcessSucceeded = _processDatabaseInstall();
+            _logProcess( "Process database install ... ", false );
+            _logProcess( bProcessSucceeded?"OK":"FAILED" );
             if( bProcessSucceeded )
                 m_qslComponents.append( "Database" );
         }
         if( bProcessSucceeded && m_bProcessBelenusClient )
         {
             bProcessSucceeded = _processClientInstall();
+            _logProcess( "Process client install ... ", false );
+            _logProcess( bProcessSucceeded?"OK":"FAILED" );
             if( bProcessSucceeded )
             {
                 m_qslComponents.append( "Client" );
@@ -1294,15 +1306,15 @@ void dlgMain::_processInstall()
         if( bProcessSucceeded && m_bProcessHWConnection )
         {
             bProcessSucceeded = _processHWSettings();
+            _logProcess( "Process HW settings ... ", false );
+            _logProcess( bProcessSucceeded?"OK":"FAILED" );
             if( bProcessSucceeded )
             {
-                _logProcess( QString(" OK") );
                 m_qslComponents.append( "Hardware" );
             }
             else
             {
                 m_qsProcessErrorMsg = QString( "ProcessHWSettingsFailed" );
-                _logProcess( QString(" FAIL") );
             }
         }
         if( bProcessSucceeded )
@@ -1370,7 +1382,7 @@ int dlgMain::_getProcessActionCount()
             }
 
             // Increase number with table creates
-            QFile fileCreate("sql/db_create.sql");
+            QFile fileCreate("Sql/db_create.sql");
 
             if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1386,7 +1398,7 @@ int dlgMain::_getProcessActionCount()
             }
 
             // Increase number with default data fill
-            QFile fileFill("sql/db_fill.sql");
+            QFile fileFill("Sql/db_fill.sql");
 
             if( fileFill.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1404,7 +1416,7 @@ int dlgMain::_getProcessActionCount()
         else if( m_pInstallType == rbUpdate )
         {
             // Increase number with table creates
-            QFile fileCreate("sql/db_update.sql");
+            QFile fileCreate("Sql/db_update.sql");
 
             if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1607,7 +1619,7 @@ bool dlgMain::_processDatabaseUpdate()
 
     if( m_poDB->open() )
     {
-        QFile file("sql/db_update.sql");
+        QFile file("Sql/db_update.sql");
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
@@ -1805,7 +1817,8 @@ bool dlgMain::_processBelenusTablesCreate()
 
     if( m_poDB->open() )
     {
-        QFile file("sql/db_create.sql");
+        _logProcess( QString("%1/Sql/db_create.sql").arg(g_qsCurrentPath) );
+        QFile file( QString("%1/Sql/db_create.sql").arg(g_qsCurrentPath) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
@@ -1832,6 +1845,7 @@ bool dlgMain::_processBelenusTablesCreate()
     }
     else
     {
+        _logProcess( QString("LogInWithBelenusUser") );
         bRet = false;
     }
 
@@ -1850,7 +1864,7 @@ bool dlgMain::_processBelenusTablesFill()
 
     if( m_poDB->open() )
     {
-        QFile file("sql/db_fill.sql");
+        QFile file("Sql/db_fill.sql");
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
