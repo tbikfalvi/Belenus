@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
     if( !QFile::exists( QString("%1\\setup.qm").arg(g_qsCurrentPath) ) )
     {
-        QString     qsPathWindows = g_obReg.keyValue( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
+        QString     qsPathWindows = g_obReg.keyValueS( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
 
         QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
     }
