@@ -36,14 +36,14 @@ int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);
 
-    g_qsCurrentPath = QDir::currentPath();
-
-    if( !QFile::exists( QString("%1\\setup.qm").arg(g_qsCurrentPath) ) )
+    if( !QFile::exists( QString("%1\\setup_hu.qm").arg(QDir::currentPath()) ) )
     {
         QString     qsPathWindows = g_obReg.keyValueS( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
 
         QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
     }
+
+    g_qsCurrentPath = QDir::currentPath();
 
     poTransSetup = new QTranslator();
     poTransQT = new QTranslator();

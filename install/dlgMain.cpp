@@ -227,6 +227,8 @@ void dlgMain::_initializeInstall()
     if( _checkWampServer() == 0 )
         m_bWampServerAlreadyInstalled = true;
 
+    _logProcess( QString("Wamp server %1").arg(m_bWampServerAlreadyInstalled?"installed":"not installed") );
+
     // Initialize SQL connection
     m_poDB = NULL;
     m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
@@ -270,13 +272,17 @@ void dlgMain::_initializeInstall()
     // Check Belenus client
     m_bBelenusAlreadyInstalled = g_obReg.isRegPathExists( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
 
+    _logProcess( QString("Belenus application %1").arg(m_bBelenusAlreadyInstalled?"installed":"not installed") );
+
     if( m_bBelenusAlreadyInstalled )
     {
         _logProcess( QString("Belenus application installed") );
         m_qsClientInstallDir = g_obReg.keyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", "InstallLocation", "" );
+        m_qsLanguage = g_obReg.keyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Language"), "hu" );
         QString qsTemp = g_obReg.keyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", "Components", "" );
         m_qslComponents = qsTemp.split( "#" );
         _logProcess( QString("Application location: %1").arg(m_qsClientInstallDir) );
+        _logProcess( QString("Setup application language: %1").arg(m_qsLanguage) );
         _logProcess( QString("Installed components:") );
         for( int i=0; i<m_qslComponents.count(); i++ )
         {
@@ -526,13 +532,7 @@ bool dlgMain::_processPage( int p_nPage )
 void dlgMain::timerEvent(QTimerEvent *)
 //=======================================================================================
 {
-    // If Wamp install needs to be started and not installed before
-//    if( m_bStartWampInstall && !m_bWampServerAlreadyInstalled )
-//    {
-//        _installWampServer();
-//    }
-    // If Wamp installed and SQL needs to be initialized
-    /*else */if( m_bInitializeWamp /*|| (m_bStartWampInstall && m_bWampServerAlreadyInstalled)*/ )
+    if( m_bInitializeWamp  )
     {
         _installSQLServer();
     }
@@ -549,7 +549,7 @@ void dlgMain::timerEvent(QTimerEvent *)
         on_pbNext_clicked();
     }
     // In any other case (practically when uninstall called and welcome page displayed)
-    else
+    else // if( m_bUninstallCalled )
     {
         killTimer( m_nTimer );
         _initializePage( m_vPages.at( m_nCurrentPage ) );
@@ -565,6 +565,7 @@ void dlgMain::_initializeWelcomePage()
 {
     if( m_bUninstallCalled )
     {
+        //on_cmbLanguage_currentIndexChanged( cmbLanguage->findText( QString("(%1)").arg(m_qsLanguage) ) );
         pbCancel->setEnabled( false );
         pbNext->setEnabled( false );
         if( QMessageBox::question( this, tr("Question"),
@@ -589,15 +590,18 @@ void dlgMain::_initializeWelcomePage()
 void dlgMain::on_cmbLanguage_currentIndexChanged(int index)
 //=======================================================================================
 {
-    QString qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
+    if( !m_bUninstallCalled )
+        m_qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
+
+    _logProcess( QString("Language selected: %1").arg(m_qsLanguage) );
 
     apMainApp->removeTranslator( poTransSetup );
     apMainApp->removeTranslator( poTransQT );
 
-    if( qsLanguage.compare("en") )
+    if( m_qsLanguage.compare("en") )
     {
-        QString qsLangSetup = QString("%1\\setup_%2.qm").arg(g_qsCurrentPath).arg( qsLanguage );
-        QString qsLangQT = QString("%1\\qt_%2.qm").arg(g_qsCurrentPath).arg( qsLanguage );
+        QString qsLangSetup = QString("%1\\setup_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
+        QString qsLangQT = QString("%1\\qt_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
 
         poTransSetup->load( qsLangSetup );
         poTransQT->load( qsLangQT );
@@ -947,7 +951,7 @@ bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
     QString qsWampServer    = "";
     int     nRet            = 0;
 
-    qsProcessPath = QDir::currentPath();
+    qsProcessPath = g_qsCurrentPath;
 
     if( rbWin32->isChecked() )
     {
@@ -970,6 +974,8 @@ bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
     {
         _logProcess( QString("Execute %1\\%2").arg(qsProcessPath).arg(qsRedistPack) );
 
+        hide();
+
         QProcess *qpRedist = new QProcess();
         if( qpRedist->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsRedistPack) ) )
             nRet = 3;
@@ -981,6 +987,9 @@ bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
         if( qpWamp->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsWampServer) ) )
             nRet = 4;
         delete qpWamp;
+
+        show();
+        QApplication::processEvents();
 
         nRet = _checkWampServer();
     }
@@ -1114,6 +1123,9 @@ bool dlgMain::_processWampInstallPage()
 void dlgMain::_initializeSQLPage()
 //=======================================================================================
 {
+    pbCancel->setEnabled( true );
+    pbNext->setEnabled( true );
+
     ledSQLRootPsw->setText( m_qsRootPassword );
 }
 //=======================================================================================
@@ -1230,7 +1242,8 @@ bool dlgMain::_processClientInstallPage()
 {
     bool    bRet = true;
 
-    m_qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
+    if( m_pInstallType != rbRemove )
+        m_qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
 
     return bRet;
 }
@@ -1332,13 +1345,13 @@ void dlgMain::_processInstall()
     {
         bProcessSucceeded = _removeInstalledFilesFolders();
 
-        /*if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
+        if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
         {
             QMessageBox::information( this, tr("Attention"),
                                       tr("Unable to empty the specified directory.\n"
                                          "%1\n"
                                          "Some of the files or subdirectories can not be removed." ).arg(m_qsClientInstallDir) );
-        }*/
+        }
     }
 
     if( bProcessSucceeded )
@@ -1934,9 +1947,10 @@ bool dlgMain::_processClientInstall()
     if( qdInstallDir.exists() )
     {
         if( QMessageBox::warning( this, tr("Attention"),
-                                  tr("The specified directory already exits.\n"
+                                  tr("The Belenus Application systems target directory already exits.\n"
+                                     "%1\n"
                                      "All the files will be deleted or overwritten.\n\n"
-                                     "Are you sure you want to continue?"),
+                                     "Are you sure you want to continue?").arg(m_qsClientInstallDir),
                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
         {
             _logProcess( QString("Belenus target directory exists. User cancelled client install.") );
@@ -2036,6 +2050,19 @@ bool dlgMain::_copyUninstallFiles()
         return false;
     }
 
+    qsFrom  = QString( "%1/qt_hu.qm" ).arg(g_qsCurrentPath);
+    qsTo    = QString( "%1/Temp/BelenusInstall/qt_hu.qm" ).arg(m_qsPathWindows);
+
+    if( QFile::exists( qsTo ) )
+    {
+        QFile::remove( qsTo );
+    }
+    if( !QFile::copy( qsFrom, qsTo ) )
+    {
+        m_qsProcessErrorMsg = QString( "CopyQtQmFailed" );
+        return false;
+    }
+
     QFile   *obUnistall = new QFile( QString("%1/Temp/BelenusInstall/uninstall.li").arg(m_qsPathWindows) );
     if( obUnistall->open( QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text ) )
     {
@@ -2091,76 +2118,6 @@ void dlgMain::_initializeFinishPage()
         pbExitRestart->setVisible( false );
     }
 }
-//=======================================================================================
-//void dlgMain::on_pbCheckRootPsw_clicked()
-//=======================================================================================
-/*{
-    if( !m_bBelenusUserExists )
-    {
-        if( ledDBRootPassword1->text().compare( ledDBRootPassword2->text() ) != 0 )
-        {
-            QMessageBox::warning( this, tr("Attention"),
-                                  tr("Passwords in the two fields are different.\n"
-                                     "Please retype the passwords.") );
-            ledDBRootPassword1->setFocus();
-            return;
-        }
-
-        _logProcess( QString("Connect SQL server") );
-        m_poDB->setHostName( "localhost" );
-        m_poDB->setDatabaseName( "mysql" );
-        m_poDB->setUserName( "root" );
-        m_poDB->setPassword( "" );
-
-        if( m_poDB->open() )
-        {
-            _logProcess( QString("") );
-            m_poDB->exec( QString("SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD( '%1' );").arg(m_qsRootPassword) );
-            m_poDB->exec( QString("SET PASSWORD FOR 'root'@'localhost' = PASSWORD( '%1' );").arg(m_qsRootPassword) );
-            m_poDB->close();
-        }
-        else
-        {
-            imgOk3->setVisible( false );
-            imgFail3->setVisible( true );
-            imgFail3->update();
-            QString strErr = tr("Error occured when trying to set root password.\n"
-                                "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
-            QMessageBox::warning(this, "Attention", strErr );
-            pbNext->setEnabled( false );
-            m_qsRootPassword = "";
-            return;
-        }
-    }
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "mysql" );
-    m_poDB->setUserName( "root" );
-    m_poDB->setPassword( m_qsRootPassword );
-
-    if( m_poDB->open() )
-    {
-        imgOk3->setVisible( true );
-        imgFail3->setVisible( false );
-        m_poDB->close();
-        pbNext->setEnabled( true );
-        pbNext->setFocus();
-        ledDBRootPassword1->setEnabled( false );
-        ledDBRootPassword2->setEnabled( false );
-        pbCheckRootPsw->setEnabled( false );
-    }
-    else
-    {
-        imgOk3->setVisible( false );
-        imgFail3->setVisible( true );
-        imgFail3->update();
-        QString strErr = tr("Error occured when trying to connect to Wamp server.\n"
-                            "Wamp server error message:\n\n%1").arg(m_poDB->lastError().text() );
-        QMessageBox::warning(this, "Attention", strErr );
-        pbNext->setEnabled( false );
-        m_qsRootPassword = "";
-    }
-}*/
 //=======================================================================================
 void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
 //=======================================================================================
@@ -2470,55 +2427,43 @@ bool dlgMain::_createFolderShortcut()
 {
     bool        bRet = true;
 
-    QString     qsDirPrograms = g_obReg.keyValueS( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"), QString("Common Programs"), QString("<not_defined>") );
-    QString     qsDirDesktop = g_obReg.keyValueS( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"), QString("Common Desktop"), QString("<not_defined>") );
-
-    QMessageBox::information(this, "", QString("Programok: %1\nDesktop: %2").arg(qsDirPrograms).arg(qsDirDesktop) );
-
-    if( qsDirPrograms.compare("<not_defined>") != 0 && qsDirDesktop.compare("<not_defined>") != 0 )
+    if( m_qsPathPrograms.contains( ":\\" ) )
     {
-        if( qsDirPrograms.contains( ":\\" ) )
+        if( !_createTargetDirectory( QString("%1\\Belenus").arg(m_qsPathPrograms) ) )
         {
-            if( !_createTargetDirectory( QString("%1\\Belenus").arg(qsDirPrograms) ) )
-            {
-                m_qsProcessErrorMsg = QString( "CreateClientFolderFailed" );
-                return false;
-            }
-
-            m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
-            m_obFile->remove( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
-            m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
-            m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(qsDirPrograms) );
-            m_qslFiles.append( QString("%1\\Belenus\\").arg(qsDirPrograms) );
-            delete m_obFile;
+            m_qsProcessErrorMsg = QString( "CreateClientFolderFailed" );
+            return false;
         }
 
-        if( qsDirDesktop.contains( ":\\" ) )
-        {
-            m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
-            m_obFile->remove( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
-            m_obFile->link( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
-            m_qslFiles.append( QString("%1\\belenus.lnk").arg(qsDirDesktop) );
-            delete m_obFile;
-        }
-
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Components"), m_qslComponents.join("#") );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayIcon"), QString("%1\\resources\\belenus.ico").arg(m_qsClientInstallDir) );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayName"), tr("Belenus Application System") );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayVersion"), QString("1.0.0.0") );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("InstallLocation"), m_qsClientInstallDir );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
-        g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
-
-        prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
-        prbDBInstallClient->update();
+        m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
+        m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
+        delete m_obFile;
+        m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
+        m_qslFiles.append( QString("%1\\Belenus\\").arg(m_qsPathPrograms) );
     }
-    else
+
+    if( m_qsPathDesktop.contains( ":\\" ) )
     {
-        m_qsProcessErrorMsg = QString( "OpenClientRegFailed" );
-        bRet = false;
+        m_obFile = new QFile( QString("%1\\belenus.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\belenus.lnk").arg(m_qsPathDesktop) );
+        m_obFile->link( QString("%1\\belenus.lnk").arg(m_qsPathDesktop) );
+        m_qslFiles.append( QString("%1\\belenus.lnk").arg(m_qsPathDesktop) );
+        delete m_obFile;
     }
+
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Language"), m_qsLanguage );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Components"), m_qslComponents.join("#") );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayIcon"), QString("%1\\resources\\belenus.ico").arg(m_qsClientInstallDir) );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayName"), tr("Belenus Application System") );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayVersion"), QString("1.0.0.0") );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("InstallLocation"), m_qsClientInstallDir );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
+
+    prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+    prbDBInstallClient->update();
 
     return bRet;
 }
@@ -2564,10 +2509,8 @@ bool dlgMain::_removeInstalledFilesFolders()
                 qdTarget.remove( qslFiles.at(i) );
             }
         }
-/*
-        VRegistry   obReg;
 
-        obReg.DeleteKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") );
+        g_obReg.deleteRegPath( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus") );
 
         m_poDB->setHostName( "localhost" );
         m_poDB->setDatabaseName( "mysql" );
@@ -2584,34 +2527,22 @@ bool dlgMain::_removeInstalledFilesFolders()
 
         if( m_qsUninstallWampExec.length() > 0 )
         {
-            STARTUPINFO         si;
-            PROCESS_INFORMATION pi;
-
-            ZeroMemory(&si,sizeof(si));
-            si.cb=sizeof(si);
-            ZeroMemory(&pi,sizeof(pi));
-
-            WCHAR   wsUninstallWampExec[1000];
-
-            memset( wsUninstallWampExec, 0, 1000 );
-
             m_qsUninstallWampExec.remove( "\"" );
-            m_qsUninstallWampExec.toWCharArray( wsUninstallWampExec );
 
-            if(!CreateProcess((const CHAR*)wsUninstallWampExec,NULL,0,0,0,0,0,0,&si,&pi))
-            {
-                m_qsProcessErrorMsg = "UninstWampExec";
-                bRet = false;
-            }
-
-            WaitForSingleObject(pi.hProcess,INFINITE);
+            hide();
+            QProcess *qpWamp = new QProcess();
+            qpWamp->execute( m_qsUninstallWampExec );
+            delete qpWamp;
+            show();
+            QApplication::processEvents();
         }
 
         _emptyTargetDirectory( QString("%1\\Temp\\BelenusInstall\\").arg(m_qsPathWindows) );
-*/
     }
     else
     {
+        pbCancel->setEnabled( true );
+        m_qsProcessErrorMsg = QString( "ClientAppDirMissing" );
         bRet = false;
     }
 

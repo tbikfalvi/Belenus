@@ -2640,58 +2640,58 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation>Bérlet típusok</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="90"/>
+        <location filename="crud/dlgpatientcard.cpp" line="92"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="91"/>
+        <location filename="crud/dlgpatientcard.cpp" line="93"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="92"/>
-        <location filename="crud/dlgpatientcard.cpp" line="120"/>
+        <location filename="crud/dlgpatientcard.cpp" line="94"/>
+        <location filename="crud/dlgpatientcard.cpp" line="122"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="93"/>
-        <location filename="crud/dlgpatientcard.cpp" line="121"/>
+        <location filename="crud/dlgpatientcard.cpp" line="95"/>
+        <location filename="crud/dlgpatientcard.cpp" line="123"/>
         <source>Owner</source>
         <translation>Tulajdonos</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="94"/>
-        <location filename="crud/dlgpatientcard.cpp" line="122"/>
+        <location filename="crud/dlgpatientcard.cpp" line="96"/>
+        <location filename="crud/dlgpatientcard.cpp" line="124"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="95"/>
-        <location filename="crud/dlgpatientcard.cpp" line="123"/>
+        <location filename="crud/dlgpatientcard.cpp" line="97"/>
+        <location filename="crud/dlgpatientcard.cpp" line="125"/>
         <source>Amount</source>
         <translation>Összeg</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="98"/>
-        <location filename="crud/dlgpatientcard.cpp" line="126"/>
+        <location filename="crud/dlgpatientcard.cpp" line="100"/>
+        <location filename="crud/dlgpatientcard.cpp" line="128"/>
         <source>Valid from</source>
         <translation>Érvényes -tól</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="99"/>
-        <location filename="crud/dlgpatientcard.cpp" line="127"/>
+        <location filename="crud/dlgpatientcard.cpp" line="101"/>
+        <location filename="crud/dlgpatientcard.cpp" line="129"/>
         <source>Valid to</source>
         <translation>Érvényes -ig</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="243"/>
+        <location filename="crud/dlgpatientcard.cpp" line="248"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="244"/>
+        <location filename="crud/dlgpatientcard.cpp" line="249"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -2700,35 +2700,35 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation type="obsolete">Felhasználható egységek</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="96"/>
-        <location filename="crud/dlgpatientcard.cpp" line="124"/>
+        <location filename="crud/dlgpatientcard.cpp" line="98"/>
+        <location filename="crud/dlgpatientcard.cpp" line="126"/>
         <source>Patientcard type</source>
         <translation>Bérlettípus</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="97"/>
-        <location filename="crud/dlgpatientcard.cpp" line="125"/>
+        <location filename="crud/dlgpatientcard.cpp" line="99"/>
+        <location filename="crud/dlgpatientcard.cpp" line="127"/>
         <source>All units</source>
         <translation>Összes egység</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="100"/>
-        <location filename="crud/dlgpatientcard.cpp" line="128"/>
+        <location filename="crud/dlgpatientcard.cpp" line="102"/>
+        <location filename="crud/dlgpatientcard.cpp" line="130"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="101"/>
+        <location filename="crud/dlgpatientcard.cpp" line="103"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="196"/>
+        <location filename="crud/dlgpatientcard.cpp" line="201"/>
         <source>New Patientcard</source>
         <translation>Új bérlet</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="233"/>
+        <location filename="crud/dlgpatientcard.cpp" line="238"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -2737,7 +2737,7 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="234"/>
+        <location filename="crud/dlgpatientcard.cpp" line="239"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a bérletet?</translation>
     </message>

@@ -1459,96 +1459,96 @@ Please define a different one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="90"/>
+        <location filename="crud/dlgpatientcard.cpp" line="92"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="91"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcard.cpp" line="92"/>
-        <location filename="crud/dlgpatientcard.cpp" line="120"/>
-        <source>Barcode</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="crud/dlgpatientcard.cpp" line="93"/>
-        <location filename="crud/dlgpatientcard.cpp" line="121"/>
-        <source>Owner</source>
+        <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="94"/>
         <location filename="crud/dlgpatientcard.cpp" line="122"/>
-        <source>Units</source>
+        <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="95"/>
         <location filename="crud/dlgpatientcard.cpp" line="123"/>
-        <source>Amount</source>
+        <source>Owner</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="96"/>
         <location filename="crud/dlgpatientcard.cpp" line="124"/>
-        <source>Patientcard type</source>
+        <source>Units</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="97"/>
         <location filename="crud/dlgpatientcard.cpp" line="125"/>
-        <source>All units</source>
+        <source>Amount</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="98"/>
         <location filename="crud/dlgpatientcard.cpp" line="126"/>
-        <source>Valid from</source>
+        <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="99"/>
         <location filename="crud/dlgpatientcard.cpp" line="127"/>
-        <source>Valid to</source>
+        <source>All units</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="100"/>
         <location filename="crud/dlgpatientcard.cpp" line="128"/>
-        <source>Active</source>
+        <source>Valid from</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="101"/>
+        <location filename="crud/dlgpatientcard.cpp" line="129"/>
+        <source>Valid to</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcard.cpp" line="102"/>
+        <location filename="crud/dlgpatientcard.cpp" line="130"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcard.cpp" line="103"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="196"/>
+        <location filename="crud/dlgpatientcard.cpp" line="201"/>
         <source>New Patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="233"/>
+        <location filename="crud/dlgpatientcard.cpp" line="238"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="234"/>
+        <location filename="crud/dlgpatientcard.cpp" line="239"/>
         <source>Are you sure you want to delete this Patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="243"/>
+        <location filename="crud/dlgpatientcard.cpp" line="248"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcard.cpp" line="244"/>
+        <location filename="crud/dlgpatientcard.cpp" line="249"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
