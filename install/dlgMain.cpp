@@ -1827,7 +1827,10 @@ bool dlgMain::_processBelenusTablesCreate()
         QFile file( QString("%1/sql/db_create.sql").arg(g_qsCurrentPath) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
+        {
+            _logProcess( QString("OpenCreateSql %1").arg(QString("%1/sql/db_create.sql").arg(g_qsCurrentPath)) );
             return false;
+        }
 
         QString qsSQLCommand = "";
         QTextStream in(&file);
@@ -1838,10 +1841,15 @@ bool dlgMain::_processBelenusTablesCreate()
             qsSQLCommand.append( line );
             if( line.contains( QChar(';') ))
             {
-                m_poDB->exec( qsSQLCommand );
+                QSqlQuery sqlQuery( *m_poDB );
+
+                if( !sqlQuery.exec( qsSQLCommand ) )
+                {
+                    _logProcess( sqlQuery.lastError().text() );
+                }
                 prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
-                Sleep(50);
+                //Sleep(50);
                 qsSQLCommand = "";
             }
         }
@@ -1887,7 +1895,7 @@ bool dlgMain::_processBelenusTablesFill()
                 m_poDB->exec( qsSQLCommand );
                 prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
-                Sleep(50);
+                //Sleep(50);
                 qsSQLCommand = "";
             }
         }
