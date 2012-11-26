@@ -200,6 +200,7 @@ void dlgMain::_initializeInstall()
 
     // Default settings for database
     m_qsRootPassword            = "adminpass";
+    m_qsRootPasswordNew         = "";
 
     // Default settings for hardware
     m_poHardware                = NULL;
@@ -1091,19 +1092,14 @@ void dlgMain::_installSQLServer()
 bool dlgMain::_initializeMySQL()
 //=======================================================================================
 {
-    bool        bRet = false;
-    QSettings   obReg( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld"), QSettings::NativeFormat );
+    bool bRet = false;
 
     if( g_obReg.isRegPathExists( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
     {
-        _logProcess( QString("Set wampmysql service to start auto") );
-        if( obReg.contains( QString("Start") ) )
-        {
-            obReg.setValue( QString("Start"), 2 );
-            bRet = true;
-        }
-        _logProcess( QString("Setting reg. value wampmysqld\\Start %1").arg((bRet?"SUCCEEDED":"FAILED")) );
+        g_obReg.setKeyValueN( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld"), QString("Start"), 2 );
+        bRet = true;
     }
+    _logProcess( QString("Setting reg. value wampmysqld/Start ... %1").arg((bRet?"SUCCEEDED":"FAILED")) );
 
     return bRet;
 }
@@ -1126,16 +1122,52 @@ void dlgMain::_initializeSQLPage()
     pbCancel->setEnabled( true );
     pbNext->setEnabled( true );
 
-    ledSQLRootPsw->setText( m_qsRootPassword );
+    if( m_pInstallType == rbInstall )
+    {
+        lblTitleInitSQL->setText( tr("Initialize SQL connection") );
+        lblText4_1->setText( tr("Enter the root password :") );
+        lblText4_3->setVisible( false );
+        lblText4_4->setVisible( false );
+        lblText4_5->setVisible( false );
+        ledSQLRootPsw1->setVisible( false );
+        ledSQLRootPsw1->setEnabled( false );
+        ledSQLRootPsw2->setVisible( false );
+        ledSQLRootPsw2->setEnabled( false );
+
+        ledSQLRootPsw->setText( m_qsRootPassword );
+    }
+    else if( m_pInstallType == rbUpdate )
+    {
+        lblTitleInitSQL->setText( tr("Update SQL connection") );
+        lblText4_1->setText( tr("Enter original root password :") );
+        lblText4_3->setVisible( true );
+        lblText4_4->setVisible( true );
+        lblText4_5->setVisible( true );
+        ledSQLRootPsw1->setVisible( true );
+        ledSQLRootPsw1->setEnabled( true );
+        ledSQLRootPsw2->setVisible( true );
+        ledSQLRootPsw2->setEnabled( true );
+
+        ledSQLRootPsw1->setText( m_qsRootPasswordNew );
+        ledSQLRootPsw2->setText( m_qsRootPasswordNew );
+    }
 }
 //=======================================================================================
 void dlgMain::on_chkShowSQLPassword_clicked()
 //=======================================================================================
 {
     if( chkShowSQLPassword->isChecked() )
+    {
         ledSQLRootPsw->setEchoMode( QLineEdit::Normal );
+        ledSQLRootPsw1->setEchoMode( QLineEdit::Normal );
+        ledSQLRootPsw2->setEchoMode( QLineEdit::Normal );
+    }
     else
+    {
         ledSQLRootPsw->setEchoMode( QLineEdit::Password );
+        ledSQLRootPsw1->setEchoMode( QLineEdit::Password );
+        ledSQLRootPsw2->setEchoMode( QLineEdit::Password );
+    }
 }
 //=======================================================================================
 bool dlgMain::_processSQLPage()
@@ -1144,6 +1176,18 @@ bool dlgMain::_processSQLPage()
     bool    bRet = true;
 
     m_qsRootPassword = ledSQLRootPsw->text();
+
+    if( m_pInstallType == rbUpdate )
+    {
+        if( ledSQLRootPsw1->text().compare( ledSQLRootPsw2->text() ) )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("The new password is not the same in the two field.") );
+            bRet = false;
+        }
+        else
+            m_qsRootPasswordNew = ledSQLRootPsw1->text();
+    }
 
     return bRet;
 }
@@ -1332,6 +1376,10 @@ void dlgMain::_processInstall()
     }
     else if( m_pInstallType == rbUpdate )
     {
+        if( bProcessSucceeded && m_bProcessDatabase && m_qsRootPasswordNew.length() )
+        {
+            bProcessSucceeded = _processRootModify();
+        }
         if( bProcessSucceeded && m_bProcessDatabase )
         {
             bProcessSucceeded = _processDatabaseUpdate();
@@ -1638,10 +1686,19 @@ bool dlgMain::_processDatabaseUpdate()
         {
             QString line = in.readLine();
 
-            qsSQLCommand.append( line );
+            if( line.left(2).compare("--") )
+                qsSQLCommand.append( line );
+
             if( line.contains( QChar(';') ))
             {
-                m_poDB->exec( qsSQLCommand );
+                QSqlQuery sqlQuery;
+
+                if( !sqlQuery.exec( qsSQLCommand ) )
+                {
+                    _logProcess( sqlQuery.lastError().text() );
+                    bRet = false;
+                }
+
                 prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
                 Sleep(50);
@@ -1685,6 +1742,45 @@ bool dlgMain::_processRootCreate()
     {
         m_bRootUserExists = true;
         m_poDB->close();
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=======================================================================================
+bool dlgMain::_processRootModify()
+//=======================================================================================
+{
+    bool bRet = true;
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "mysql" );
+    m_poDB->setUserName( "root" );
+    m_poDB->setPassword( m_qsRootPassword );
+
+    if( m_poDB->open() )
+    {
+        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD( '%1' );").arg(m_qsRootPasswordNew) );
+        m_poDB->exec( QString("SET PASSWORD FOR 'root'@'localhost' = PASSWORD( '%1' );").arg(m_qsRootPasswordNew) );
+        m_poDB->close();
+
+        m_poDB->setHostName( "localhost" );
+        m_poDB->setDatabaseName( "mysql" );
+        m_poDB->setUserName( "root" );
+        m_poDB->setPassword( m_qsRootPasswordNew );
+
+        if( m_poDB->open() )
+        {
+            m_bRootUserExists = true;
+            m_poDB->close();
+        }
+        else
+        {
+            bRet = false;
+        }
     }
     else
     {
@@ -1838,14 +1934,17 @@ bool dlgMain::_processBelenusTablesCreate()
         {
             QString line = in.readLine();
 
-            qsSQLCommand.append( line );
+            if( line.left(2).compare("--") )
+                qsSQLCommand.append( line );
+
             if( line.contains( QChar(';') ))
             {
-                QSqlQuery sqlQuery( *m_poDB );
+                QSqlQuery sqlQuery;
 
                 if( !sqlQuery.exec( qsSQLCommand ) )
                 {
                     _logProcess( sqlQuery.lastError().text() );
+                    bRet = false;
                 }
                 prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
@@ -1889,10 +1988,18 @@ bool dlgMain::_processBelenusTablesFill()
         {
             QString line = in.readLine();
 
-            qsSQLCommand.append( line );
+            if( line.left(2).compare("--") )
+                qsSQLCommand.append( line );
+
             if( line.contains( QChar(';') ))
             {
-                m_poDB->exec( qsSQLCommand );
+                QSqlQuery sqlQuery;
+
+                if( !sqlQuery.exec( qsSQLCommand ) )
+                {
+                    _logProcess( sqlQuery.lastError().text() );
+                    bRet = false;
+                }
                 prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
                 prbDBInstallClient->update();
                 //Sleep(50);

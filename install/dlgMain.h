@@ -89,6 +89,7 @@ private:
     int                      m_nCurrentPage;
     QRadioButton            *m_pInstallType;
     QString                  m_qsRootPassword;
+    QString                  m_qsRootPasswordNew;
     int                      m_nComPort;
     int                      m_nCountDevices;
 
@@ -150,6 +151,7 @@ private:
     int                     _checkWampServer();
     bool                    _initializeMySQL();
     bool                    _processRootCreate();
+    bool                    _processRootModify();
     bool                    _processDatabaseCreate();
     bool                    _processBelenusUserCreate();
     bool                    _processBelenusUserRights();
