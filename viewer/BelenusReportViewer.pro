@@ -24,7 +24,8 @@ HEADERS = ../framework/dbconnection.h \
     wndmain.h \
     dlgdemo.h \
     dlgpreview.h \
-    creport.h
+    creport.h \
+    creportdaily.h
 SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
@@ -34,6 +35,7 @@ SOURCES = ../framework/dbconnection.cpp \
     wndmain.cpp \
     dlgdemo.cpp \
     dlgpreview.cpp \
-    creport.cpp
+    creport.cpp \
+    creportdaily.cpp
 QT += network
 QT += sql

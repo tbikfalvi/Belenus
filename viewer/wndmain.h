@@ -2,7 +2,10 @@
 #define WNDMAIN_H
 
 #include "ui_wndmain.h"
-#include "creport.h"
+#include "creportdaily.h"
+#include "../framework/qtframework.h"
+
+extern cQTMySQLConnection  *g_poDB;
 
 class cWndMain : public QMainWindow, private Ui::wndMain
 {
@@ -22,42 +25,47 @@ public:
     cWndMain( QWidget *parent = 0 );
     ~cWndMain();
 
+signals:
+    void                setCheckedReportDaily( bool p_bChecked );
+    void                setCheckedReportLedger( bool p_bChecked );
+    void                setCheckedReportPatientcardActive( bool p_bChecked );
+    void                setCheckedReportPatientcardInactive( bool p_bChecked );
+    void                setCheckedReportPatientcardUsage( bool p_bChecked );
+
+public slots:
+    void                slotCheckReportDaily( bool p_bChecked );
+    void                slotCheckReportLedger( bool p_bChecked );
+    void                slotCheckReportPatientcardActive( bool p_bChecked );
+    void                slotCheckReportPatientcardInactive( bool p_bChecked );
+    void                slotCheckReportPatientcardUsage( bool p_bChecked );
+
 private:
 
-    cReport     *m_repDaily;
+    QString             m_qsRPSW;
 
-    int          m_nReportDailyIndex;
-    int          m_nReportLedgerIndex;
-    int          m_nReportPatientcardsActiveIndex;
-    int          m_nReportPatientcardsInactiveIndex;
-    int          m_nReportPatientcardsUsageIndex;
+    cReportDaily        *m_repDaily;
 
-    void        _initActions();
-    void        _initToolbar();
-    void        _initFilterbar();
-    void        _initTabInformation();
+    int                  m_nReportDailyIndex;
+    int                  m_nReportLedgerIndex;
+    int                  m_nReportPatientcardsActiveIndex;
+    int                  m_nReportPatientcardsInactiveIndex;
+    int                  m_nReportPatientcardsUsageIndex;
 
-    void        _setAuthInfoType( authType p_tAuthType );
+    void                _initActions();
+    void                _initToolbar();
+    void                _initFilterbar();
+    void                _initTabInformation();
 
-    void        _showReportDaily( bool p_bShow );
-    void        _showReportLedger( bool p_bShow );
-    void        _showReportPatientcardsActive( bool p_bShow );
-    void        _showReportPatientcardsInactive( bool p_bShow );
-    void        _showReportPatientcardsUsage( bool p_bShow );
+    void                _setAuthInfoType( authType p_tAuthType );
 
-    authType    _authenticateUser();
-    void        _setReportsEnabled( bool p_bEnable = true );
+    authType            _authenticateUser();
+    void                _setReportsEnabled( bool p_bEnable = true );
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);
     void on_action_Demo_triggered();
     void on_action_Toolbar_triggered(bool checked);
     void on_action_FilterBar_triggered(bool checked);
-    void on_action_Bookkeeping_Daily_triggered(bool checked);
-    void on_action_Bookkeeping_Ledger_triggered(bool checked);
-    void on_action_Patientcards_Active_triggered(bool checked);
-    void on_action_Patientcards_Inactive_triggered(bool checked);
-    void on_action_Patientcards_Usage_triggered(bool checked);
     void on_pbAuthenticate_clicked();
 };
 
