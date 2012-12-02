@@ -3,13 +3,15 @@
 # # Belenus Report Viewer alkalmazas (c) Pagony Multimedia Studio Bt - 2010
 # #
 # #====================================================================================
-TARGET = BelenusReportViewer
+
+TARGET = ReportViewer
 TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
 
-# CONFIG += console
+RC_FILE         = reportviewer.rc
+RESOURCES      += reportviewer.qrc
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
 FORMS = wndmain.ui \
@@ -21,7 +23,8 @@ HEADERS = ../framework/dbconnection.h \
     ../framework/tracer.h \
     wndmain.h \
     dlgdemo.h \
-    dlgpreview.h
+    dlgpreview.h \
+    creport.h
 SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
@@ -30,6 +33,7 @@ SOURCES = ../framework/dbconnection.cpp \
     main.cpp \
     wndmain.cpp \
     dlgdemo.cpp \
-    dlgpreview.cpp
+    dlgpreview.cpp \
+    creport.cpp
 QT += network
 QT += sql
