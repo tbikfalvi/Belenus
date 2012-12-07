@@ -1,9 +1,15 @@
 #ifndef WNDMAIN_H
 #define WNDMAIN_H
 
+#include <QVector>
+
+#include "../framework/qtframework.h"
 #include "ui_wndmain.h"
 #include "creportdaily.h"
-#include "../framework/qtframework.h"
+#include "creportledger.h"
+#include "creportcardactive.h"
+#include "creportcardinactive.h"
+#include "creportcardusage.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -44,12 +50,12 @@ private:
     QString             m_qsRPSW;
 
     cReportDaily        *m_repDaily;
+    cReportLedger       *m_repLedger;
+    cReportCardActive   *m_repCardActive;
+    cReportCardInactive *m_repCardInactive;
+    cReportCardUsage    *m_repCardUsage;
 
-    int                  m_nReportDailyIndex;
-    int                  m_nReportLedgerIndex;
-    int                  m_nReportPatientcardsActiveIndex;
-    int                  m_nReportPatientcardsInactiveIndex;
-    int                  m_nReportPatientcardsUsageIndex;
+    QVector<cReport*>    m_qvReports;
 
     void                _initActions();
     void                _initToolbar();
@@ -60,6 +66,9 @@ private:
 
     authType            _authenticateUser();
     void                _setReportsEnabled( bool p_bEnable = true );
+    void                _setFiltersEnabled( bool p_bEnable );
+
+    void                _updateReportIndexes();
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);
@@ -67,6 +76,7 @@ private slots:
     void on_action_Toolbar_triggered(bool checked);
     void on_action_FilterBar_triggered(bool checked);
     void on_pbAuthenticate_clicked();
+    void on_tabReports_currentChanged(int index);
 };
 
 #endif // WNDMAIN_H

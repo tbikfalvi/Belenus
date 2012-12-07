@@ -31,20 +31,22 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_qsRPSW = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
 
     connect( this, SIGNAL(setCheckedReportDaily(bool)), this, SLOT(slotCheckReportDaily(bool)) );
+    connect( this, SIGNAL(setCheckedReportLedger(bool)), this, SLOT(slotCheckReportLedger(bool)) );
+    connect( this, SIGNAL(setCheckedReportPatientcardActive(bool)), this, SLOT(slotCheckReportPatientcardActive(bool)) );
+    connect( this, SIGNAL(setCheckedReportPatientcardInactive(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
+    connect( this, SIGNAL(setCheckedReportPatientcardUsage(bool)), this, SLOT(slotCheckReportPatientcardUsage(bool)) );
 
     connect( ledUserName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
-
-    m_nReportDailyIndex                 = 0;
-    m_nReportLedgerIndex                = 0;
-    m_nReportPatientcardsActiveIndex    = 0;
-    m_nReportPatientcardsInactiveIndex  = 0;
-    m_nReportPatientcardsUsageIndex     = 0;
 
     _initActions();
     _initToolbar();
     _initFilterbar();
     _initTabInformation();
+
+    on_tabReports_currentChanged( 0 );
+
+    ledUserName->setFocus();
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -191,8 +193,16 @@ void cWndMain::on_tabReports_tabCloseRequested(int index)
 {
     if( index > 0 )
     {
-        if( m_nReportDailyIndex == index )
+        if( m_repDaily && m_repDaily->index() == index )
             emit setCheckedReportDaily( false );
+        else if( m_repLedger && m_repLedger->index() == index )
+            emit setCheckedReportLedger( false );
+        else if( m_repCardActive && m_repCardActive->index() == index )
+            emit setCheckedReportPatientcardActive( false );
+        else if( m_repCardInactive && m_repCardInactive->index() == index )
+            emit setCheckedReportPatientcardInactive( false );
+        else if( m_repCardUsage && m_repCardUsage->index() == index )
+            emit setCheckedReportPatientcardUsage( false );
     }
 }
 //====================================================================================
@@ -314,17 +324,18 @@ void cWndMain::slotCheckReportDaily(bool p_bChecked)
     {
         m_repDaily = new cReportDaily();
 
-        m_nReportDailyIndex = tabReports->addTab( m_repDaily, QIcon("./resources/40x40_book_daily.png"), tr(" Daily ledger") );
-        tabReports->setCurrentIndex( m_nReportDailyIndex );
+        m_qvReports.append( m_repDaily );
+        m_repDaily->setIndex( tabReports->addTab( m_repDaily, QIcon("./resources/40x40_book_daily.png"), m_repDaily->name() ) );
+        tabReports->setCurrentIndex( m_repDaily->index() );
     }
     else
     {
-        tabReports->removeTab( m_nReportDailyIndex );
-        m_nReportDailyIndex = 0;
+        m_qvReports.remove( m_repDaily->index()-1 );
+        tabReports->removeTab( m_repDaily->index() );
         delete m_repDaily;
         m_repDaily = NULL;
+        _updateReportIndexes();
     }
-
 }
 //====================================================================================
 void cWndMain::slotCheckReportLedger( bool p_bChecked )
@@ -333,6 +344,22 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
     action_Bookkeeping_Ledger->setChecked( p_bChecked );
     pbBookkeepingLedger->setChecked( p_bChecked );
 
+    if( p_bChecked )
+    {
+        m_repLedger = new cReportLedger( this, tr(" Main ledger ") );
+
+        m_qvReports.append( m_repLedger );
+        m_repLedger->setIndex( tabReports->addTab( m_repLedger, QIcon("./resources/40x40_book_ledger.png"), m_repLedger->name() ) );
+        tabReports->setCurrentIndex( m_repLedger->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repLedger->index()-1 );
+        tabReports->removeTab( m_repLedger->index() );
+        delete m_repLedger;
+        m_repLedger = NULL;
+        _updateReportIndexes();
+    }
 }
 //====================================================================================
 void cWndMain::slotCheckReportPatientcardActive( bool p_bChecked )
@@ -341,6 +368,22 @@ void cWndMain::slotCheckReportPatientcardActive( bool p_bChecked )
     action_Patientcards_Active->setChecked( p_bChecked );
     pbPatientcardsActive->setChecked( p_bChecked );
 
+    if( p_bChecked )
+    {
+        m_repCardActive = new cReportCardActive( this, tr(" Active patientcards ") );
+
+        m_qvReports.append( m_repCardActive );
+        m_repCardActive->setIndex( tabReports->addTab( m_repCardActive, QIcon("./resources/40x40_book_daily.png"), m_repCardActive->name() ) );
+        tabReports->setCurrentIndex( m_repCardActive->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repCardActive->index()-1 );
+        tabReports->removeTab( m_repCardActive->index() );
+        delete m_repCardActive;
+        m_repCardActive = NULL;
+        _updateReportIndexes();
+    }
 }
 //====================================================================================
 void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
@@ -349,6 +392,22 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
     action_Patientcards_Inactive->setChecked( p_bChecked );
     pbPatientcardsInactive->setChecked( p_bChecked );
 
+    if( p_bChecked )
+    {
+        m_repCardInactive = new cReportCardInactive( this, tr(" Inactive patientcards ") );
+
+        m_qvReports.append( m_repCardInactive );
+        m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_book_daily.png"), m_repCardInactive->name() ) );
+        tabReports->setCurrentIndex( m_repCardInactive->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repCardInactive->index()-1 );
+        tabReports->removeTab( m_repCardInactive->index() );
+        delete m_repCardInactive;
+        m_repCardInactive = NULL;
+        _updateReportIndexes();
+    }
 }
 //====================================================================================
 void cWndMain::slotCheckReportPatientcardUsage( bool p_bChecked )
@@ -357,5 +416,75 @@ void cWndMain::slotCheckReportPatientcardUsage( bool p_bChecked )
     action_Patientcards_Usage->setChecked( p_bChecked );
     pbPatientcardsUsage->setChecked( p_bChecked );
 
+    if( p_bChecked )
+    {
+        m_repCardUsage = new cReportCardUsage( this, tr(" Patientcards usages ") );
+
+        m_qvReports.append( m_repCardUsage );
+        m_repCardUsage->setIndex( tabReports->addTab( m_repCardUsage, QIcon("./resources/40x40_book_daily.png"), m_repCardUsage->name() ) );
+        tabReports->setCurrentIndex( m_repCardUsage->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repCardUsage->index()-1 );
+        tabReports->removeTab( m_repCardUsage->index() );
+        delete m_repCardUsage;
+        m_repCardUsage = NULL;
+        _updateReportIndexes();
+    }
 }
 //====================================================================================
+void cWndMain::on_tabReports_currentChanged(int index)
+//====================================================================================
+{
+    if( index == 0 )
+    {
+        lblReportDescription->setText( tr("<i>Please select a report to show the related filters ...</i>") );
+        _setFiltersEnabled( false );
+    }
+    else
+    {
+        QString qsDescription = QString( "<b>%1</b>" ).arg( m_qvReports.at(index-1)->name() );
+
+        if( m_qvReports.at(index-1)->description().length() > 0 )
+        {
+            qsDescription.append( QString( " - %1" ).arg( m_qvReports.at(index-1)->description() ) );
+        }
+        lblReportDescription->setText( qsDescription );
+        _setFiltersEnabled( true );
+    }
+}
+//====================================================================================
+void cWndMain::_setFiltersEnabled(bool p_bEnable)
+//====================================================================================
+{
+    lblFilterDateStart->setVisible( p_bEnable );
+    dtFilterDateStart->setEnabled( p_bEnable );
+    dtFilterDateStart->setVisible( p_bEnable );
+
+    lblFilterDateStop->setVisible( p_bEnable );
+    dtFilterDateStop->setEnabled( p_bEnable );
+    dtFilterDateStop->setVisible( p_bEnable );
+
+    lblFilterDataName->setVisible( p_bEnable );
+    ledFilterDataName->setEnabled( p_bEnable );
+    ledFilterDataName->setVisible( p_bEnable );
+
+    lblFilterDataType->setVisible( p_bEnable );
+    cmbFilterDataTypes->setEnabled( p_bEnable );
+    cmbFilterDataTypes->setVisible( p_bEnable );
+
+    pbRefresh->setEnabled( p_bEnable );
+    pbRefresh->setVisible( p_bEnable );
+}
+//====================================================================================
+void cWndMain::_updateReportIndexes()
+//====================================================================================
+{
+    for( int i=0; i<m_qvReports.count(); i++ )
+    {
+        m_qvReports.at(i)->setIndex( i+1 );
+    }
+}
+//====================================================================================
+

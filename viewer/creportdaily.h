@@ -9,7 +9,7 @@ class cReportDaily : public cReport
 {
     Q_OBJECT
 public:
-    explicit cReportDaily(QWidget *parent = 0);
+    explicit cReportDaily(QWidget *parent = 0, QString p_qsReportName = "");
     
 signals:
     
