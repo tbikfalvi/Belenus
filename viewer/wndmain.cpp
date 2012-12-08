@@ -346,7 +346,7 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repLedger = new cReportLedger( this, tr(" Main ledger ") );
+        m_repLedger = new cReportLedger();
 
         m_qvReports.append( m_repLedger );
         m_repLedger->setIndex( tabReports->addTab( m_repLedger, QIcon("./resources/40x40_book_ledger.png"), m_repLedger->name() ) );
@@ -370,7 +370,7 @@ void cWndMain::slotCheckReportPatientcardActive( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardActive = new cReportCardActive( this, tr(" Active patientcards ") );
+        m_repCardActive = new cReportCardActive();
 
         m_qvReports.append( m_repCardActive );
         m_repCardActive->setIndex( tabReports->addTab( m_repCardActive, QIcon("./resources/40x40_book_daily.png"), m_repCardActive->name() ) );
@@ -394,7 +394,7 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardInactive = new cReportCardInactive( this, tr(" Inactive patientcards ") );
+        m_repCardInactive = new cReportCardInactive();
 
         m_qvReports.append( m_repCardInactive );
         m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_book_daily.png"), m_repCardInactive->name() ) );
@@ -418,7 +418,7 @@ void cWndMain::slotCheckReportPatientcardUsage( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardUsage = new cReportCardUsage( this, tr(" Patientcards usages ") );
+        m_repCardUsage = new cReportCardUsage();
 
         m_qvReports.append( m_repCardUsage );
         m_repCardUsage->setIndex( tabReports->addTab( m_repCardUsage, QIcon("./resources/40x40_book_daily.png"), m_repCardUsage->name() ) );
