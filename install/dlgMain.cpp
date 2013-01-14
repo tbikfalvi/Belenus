@@ -1454,7 +1454,7 @@ int dlgMain::_getProcessActionCount()
             }
 
             // Increase number with default data fill
-            QFile fileFill("sql/db_fill.sql");
+            QFile fileFill( QString("sql/db_fill_%1.sql").arg(m_qsLanguage) );
 
             if( fileFill.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1977,7 +1977,7 @@ bool dlgMain::_processBelenusTablesFill()
 
     if( m_poDB->open() )
     {
-        QFile file( QString("%1/sql/db_fill.sql").arg(g_qsCurrentPath) );
+        QFile file( QString("%1/sql/db_fill_%2.sql").arg(g_qsCurrentPath).arg(m_qsLanguage) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;

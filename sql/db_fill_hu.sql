@@ -4,7 +4,7 @@
 --
 -- -----------------------------------------------------------------------------------
 --
--- Filename    : db_fill.sql
+-- Filename    : db_fill_hu.sql
 -- AppVersion  : 1.0
 -- FileVersion : 1.0
 -- Author      : Bikfalvi Tamas
@@ -35,9 +35,11 @@ UPDATE `users` SET `userId`=0 WHERE `userId`=1;
 ALTER TABLE `users` auto_increment=1;
 
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
- ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Gyógycentrum alapértelmezett felhasználója rendszergazdai jogosultságokkal.', 'ARC' );
+ ( 1, 'system', 'KiwiSun Adminisztrátor', 'e607263781818a330152105561a6e85b9f8f57f2', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bõvített rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
- ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Gyógycentrum alapértelmezett felhasználója alap felhasználói jogosultságokkal', 'ARC' );
+ ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Szolárium stúdió alapértelmezett felhasználója rendszergazdai jogosultságokkal.', 'ARC' );
+INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
+ ( 1, 'kezelo', 'Kezelõ', 'e47c3168137789e3e0df75d23452cabcc9a890f5', 1, 1, 'Szolárium stúdió alapértelmezett felhasználója alap felhasználói jogosultságokkal', 'ARC' );
 
 -- -----------------------------------------------------------------------------------
 

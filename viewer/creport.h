@@ -7,6 +7,7 @@
 #include <QTextCharFormat>
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
+#include <QDate>
 
 class cReport : public QWidget
 {
@@ -27,6 +28,21 @@ public:
     bool                 isDateStopEnabled();
     bool                 isDataNameEnabled();
     bool                 isDataTypeEnabled();
+
+    QString              labelDateStartText() const;
+    QString              labelDateStopText() const;
+    QString              labelDataNameText() const;
+    QString              labelDataTypeText() const;
+
+    QDate                filterDateStart() const;
+    QDate                filterDateStop() const;
+    QString              filterName() const;
+    QString              filterType() const;
+
+    void                 setFilterDateStart( const QDate &p_qdDate );
+    void                 setFilterDateStop( const QDate &p_qdDate );
+    void                 setFilterDataName( const QString &p_qsName );
+    void                 setFilterDataType( const QString &p_qsType );
 
 protected:
 
@@ -54,10 +70,20 @@ protected:
     QString              m_qsLabelDataName;
     QString              m_qsLabelDataType;
 
-    void                 setDateStartEnabled( bool bEnabled = false );
-    void                 setDateStopEnabled( bool bEnabled = false );
-    void                 setDataNameEnabled( bool bEnabled = false );
-    void                 setDataTypeEnabled( bool bEnabled = false );
+    QDate                m_qdStartDate;
+    QDate                m_qdStopDate;
+    QString              m_qsName;
+    QString              m_qsType;
+
+    void                _setDateStartEnabled( bool bEnabled = false );
+    void                _setDateStopEnabled( bool bEnabled = false );
+    void                _setDataNameEnabled( bool bEnabled = false );
+    void                _setDataTypeEnabled( bool bEnabled = false );
+
+    void                _setDateStartLabelText( const QString &p_qsText );
+    void                _setDateStopLabelText( const QString &p_qsText );
+    void                _setDataNameLabelText( const QString &p_qsText );
+    void                _setDataTypeLabelText( const QString &p_qsText );
 
 signals:
     

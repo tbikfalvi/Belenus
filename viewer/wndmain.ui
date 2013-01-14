@@ -274,7 +274,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="dtFilterDateStart"/>
+          <widget class="QDateEdit" name="dtFilterDateStart">
+           <property name="currentSection">
+            <enum>QDateTimeEdit::DaySection</enum>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="lblFilterDateStop">
@@ -284,7 +291,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDateEdit" name="dtFilterDateStop"/>
+          <widget class="QDateEdit" name="dtFilterDateStop">
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+           <property name="currentSectionIndex">
+            <number>2</number>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="spacerFilter1">

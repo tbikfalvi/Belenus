@@ -15,6 +15,7 @@
 
 #include <QCryptographicHash>
 #include <QSqlQuery>
+#include <QMessageBox>
 
 //====================================================================================
 
@@ -22,9 +23,9 @@
 #include "dlgdemo.h"
 #include "creportdaily.h"
 
-//====================================================================================
+//------------------------------------------------------------------------------------
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     setupUi( this );
 
@@ -48,14 +49,14 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     ledUserName->setFocus();
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 cWndMain::~cWndMain()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_initActions()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     // SIGNALS
     connect( action_Bookkeeping_Daily, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDaily(bool)) );
@@ -85,9 +86,9 @@ void cWndMain::_initActions()
     action_Patientcards_Inactive->setEnabled( false );
     action_Patientcards_Usage->setEnabled( false );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_initToolbar()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     // SIGNALS
     connect( pbExit, SIGNAL(clicked()), this, SLOT(close()) );
@@ -121,9 +122,9 @@ void cWndMain::_initToolbar()
 
     pbPrint->setEnabled( false );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_initFilterbar()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     // ICONS
     pbRefresh->setIcon( QIcon("./resources/40x40_refresh.png") );
@@ -131,9 +132,9 @@ void cWndMain::_initFilterbar()
     // BEHAVIOUR
     frameFilterbar->setVisible( false );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_initTabInformation()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     // ICONS
     tabReports->setTabIcon( 0, QIcon("./resources/40x40_information.png") );
@@ -142,9 +143,9 @@ void cWndMain::_initTabInformation()
     // BEHAVIOUR
     _setAuthInfoType( AUTH_NEEDED );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_setAuthInfoType(authType p_tAuthType)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     ledUserName->setEnabled( true );
     ledPassword->setEnabled( true );
@@ -179,17 +180,17 @@ void cWndMain::_setAuthInfoType(authType p_tAuthType)
             lblAuthenticationInformation->setText( tr("Authentication failed. Please retry later ...") );
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::on_action_Demo_triggered()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     cDlgDemo  obDlgDemo( this );
 
     obDlgDemo.exec();
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::on_tabReports_tabCloseRequested(int index)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     if( index > 0 )
     {
@@ -205,21 +206,21 @@ void cWndMain::on_tabReports_tabCloseRequested(int index)
             emit setCheckedReportPatientcardUsage( false );
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::on_action_Toolbar_triggered(bool checked)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     frameToolbar->setVisible( checked );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::on_action_FilterBar_triggered(bool checked)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     frameFilterbar->setVisible( checked );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::on_pbAuthenticate_clicked()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     authType    atRet = AUTH_NEEDED;
 
@@ -240,9 +241,9 @@ void cWndMain::on_pbAuthenticate_clicked()
         _setReportsEnabled( false );
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 cWndMain::authType cWndMain::_authenticateUser()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     authType    atRet = AUTH_ERROR;
     QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
@@ -289,9 +290,9 @@ cWndMain::authType cWndMain::_authenticateUser()
 
     return atRet;
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_setReportsEnabled(bool p_bEnable)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     action_FilterBar->setEnabled( p_bEnable );
     action_FilterBar->setChecked( p_bEnable );
@@ -313,9 +314,9 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbPrint->setEnabled( p_bEnable );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportDaily(bool p_bChecked)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     action_Bookkeeping_Daily->setChecked( p_bChecked );
     pbBookkeepingDaily->setChecked( p_bChecked );
@@ -337,9 +338,9 @@ void cWndMain::slotCheckReportDaily(bool p_bChecked)
         _updateReportIndexes();
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportLedger( bool p_bChecked )
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     action_Bookkeeping_Ledger->setChecked( p_bChecked );
     pbBookkeepingLedger->setChecked( p_bChecked );
@@ -361,9 +362,9 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
         _updateReportIndexes();
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportPatientcardActive( bool p_bChecked )
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     action_Patientcards_Active->setChecked( p_bChecked );
     pbPatientcardsActive->setChecked( p_bChecked );
@@ -385,9 +386,9 @@ void cWndMain::slotCheckReportPatientcardActive( bool p_bChecked )
         _updateReportIndexes();
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     action_Patientcards_Inactive->setChecked( p_bChecked );
     pbPatientcardsInactive->setChecked( p_bChecked );
@@ -409,9 +410,9 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
         _updateReportIndexes();
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportPatientcardUsage( bool p_bChecked )
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     action_Patientcards_Usage->setChecked( p_bChecked );
     pbPatientcardsUsage->setChecked( p_bChecked );
@@ -433,9 +434,9 @@ void cWndMain::slotCheckReportPatientcardUsage( bool p_bChecked )
         _updateReportIndexes();
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::on_tabReports_currentChanged(int index)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     if( index == 0 )
     {
@@ -444,6 +445,7 @@ void cWndMain::on_tabReports_currentChanged(int index)
     }
     else
     {
+        cReport *obReport = m_qvReports.at(index-1);
         QString qsDescription = QString( "<b>%1</b>" ).arg( m_qvReports.at(index-1)->name() );
 
         if( m_qvReports.at(index-1)->description().length() > 0 )
@@ -451,12 +453,13 @@ void cWndMain::on_tabReports_currentChanged(int index)
             qsDescription.append( QString( " - %1" ).arg( m_qvReports.at(index-1)->description() ) );
         }
         lblReportDescription->setText( qsDescription );
-        _setFiltersEnabled( true );
+        _setFiltersEnabled( false );
+        _setFiltersEnabledReport( obReport );
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
 void cWndMain::_setFiltersEnabled(bool p_bEnable)
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     lblFilterDateStart->setVisible( p_bEnable );
     dtFilterDateStart->setEnabled( p_bEnable );
@@ -477,14 +480,87 @@ void cWndMain::_setFiltersEnabled(bool p_bEnable)
     pbRefresh->setEnabled( p_bEnable );
     pbRefresh->setVisible( p_bEnable );
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
+void cWndMain::_setFiltersEnabledReport(cReport *obReport)
+//------------------------------------------------------------------------------------
+{
+    if( obReport->isDateStartEnabled() )
+    {
+        lblFilterDateStart->setVisible( true );
+        dtFilterDateStart->setEnabled( true );
+        dtFilterDateStart->setVisible( true );
+        lblFilterDateStart->setText( obReport->labelDateStartText() );
+        dtFilterDateStart->setDate( obReport->filterDateStart() );
+    }
+
+    if( obReport->isDateStopEnabled() )
+    {
+        lblFilterDateStop->setVisible( true );
+        dtFilterDateStop->setEnabled( true );
+        dtFilterDateStop->setVisible( true );
+        lblFilterDateStop->setText( obReport->labelDateStopText() );
+        dtFilterDateStop->setDate( obReport->filterDateStop() );
+    }
+
+    if( obReport->isDataNameEnabled() )
+    {
+        lblFilterDataName->setVisible( true );
+        ledFilterDataName->setEnabled( true );
+        ledFilterDataName->setVisible( true );
+        lblFilterDataName->setText( obReport->labelDataNameText() );
+        ledFilterDataName->setText( obReport->filterName() );
+    }
+
+    if( obReport->isDataTypeEnabled() )
+    {
+        lblFilterDataType->setVisible( true );
+        cmbFilterDataTypes->setEnabled( true );
+        cmbFilterDataTypes->setVisible( true );
+        lblFilterDataType->setText( obReport->labelDataTypeText() );
+    }
+
+    pbRefresh->setEnabled( true );
+    pbRefresh->setVisible( true );
+}
+//------------------------------------------------------------------------------------
 void cWndMain::_updateReportIndexes()
-//====================================================================================
+//------------------------------------------------------------------------------------
 {
     for( int i=0; i<m_qvReports.count(); i++ )
     {
         m_qvReports.at(i)->setIndex( i+1 );
     }
 }
-//====================================================================================
+//------------------------------------------------------------------------------------
+void cWndMain::on_dtFilterDateStart_dateChanged(const QDate &date)
+//------------------------------------------------------------------------------------
+{
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
+    obReport->setFilterDateStart( date );
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_dtFilterDateStop_dateChanged(const QDate &date)
+//------------------------------------------------------------------------------------
+{
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->setFilterDateStop( date );
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_ledFilterDataName_textEdited(const QString &arg1)
+//------------------------------------------------------------------------------------
+{
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->setFilterDataName( arg1 );
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
+//------------------------------------------------------------------------------------
+{
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+
+}
+//------------------------------------------------------------------------------------

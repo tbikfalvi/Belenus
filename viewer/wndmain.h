@@ -67,6 +67,7 @@ private:
     authType            _authenticateUser();
     void                _setReportsEnabled( bool p_bEnable = true );
     void                _setFiltersEnabled( bool p_bEnable );
+    void                _setFiltersEnabledReport( cReport *obReport );
 
     void                _updateReportIndexes();
 
@@ -77,6 +78,10 @@ private slots:
     void on_action_FilterBar_triggered(bool checked);
     void on_pbAuthenticate_clicked();
     void on_tabReports_currentChanged(int index);
+    void on_dtFilterDateStart_dateChanged(const QDate &date);
+    void on_dtFilterDateStop_dateChanged(const QDate &date);
+    void on_ledFilterDataName_textEdited(const QString &arg1);
+    void on_cmbFilterDataTypes_currentIndexChanged(int index);
 };
 
 #endif // WNDMAIN_H
