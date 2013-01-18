@@ -1472,7 +1472,7 @@ int dlgMain::_getProcessActionCount()
         else if( m_pInstallType == rbUpdate )
         {
             // Increase number with table creates
-            QFile fileCreate("sql/db_update.sql");
+            QFile fileCreate( QString("sql/db_update_%1.sql").arg(m_qsLanguage) );
 
             if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1675,7 +1675,7 @@ bool dlgMain::_processDatabaseUpdate()
 
     if( m_poDB->open() )
     {
-        QFile file("sql/db_update.sql");
+        QFile file( QString("sql/db_update_%1.sql").arg(m_qsLanguage) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
