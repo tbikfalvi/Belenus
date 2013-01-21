@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
 
     connect( ui->rbProgramKiwiSun, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
-    connect( ui->rbProgramSensolite, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
+    //connect( ui->rbProgramSensolite, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
 
     ui->tabWidget->setCurrentIndex( 0 );
 
@@ -45,11 +45,11 @@ void MainWindow::slotProgramSelected()
         m_nProgramType      = DBTool::KiwiSun;
         ui->ledPExportS2->setEnabled( true );
     }
-    else if( ui->rbProgramSensolite->isChecked() )
+    /*else if( ui->rbProgramSensolite->isChecked() )
     {
         m_nProgramType      = DBTool::Sensolite;
         ui->ledPExportS2->setEnabled( false );
-    }
+    }*/
 }
 
 void MainWindow::closeEvent( QCloseEvent *p_poEvent )
@@ -71,10 +71,10 @@ void MainWindow::on_rbProgramKiwiSun_clicked()
     ui->imgLogo->setPixmap( QPixmap(":/imgLogo/KiwiSun.png") );
 }
 
-void MainWindow::on_rbProgramSensolite_clicked()
+/*void MainWindow::on_rbProgramSensolite_clicked()
 {
     ui->imgLogo->setPixmap( QPixmap(":/imgLogo/Sensolite.png") );
-}
+}*/
 
 void MainWindow::on_pbExpSelectDir_clicked()
 {
@@ -87,10 +87,16 @@ void MainWindow::on_pbExpSelectDir_clicked()
 
         m_qsPCTFileName = QString( "%1/brlttpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
         m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+        m_qsPTFileName  = QString( "%1/trmktpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+        m_qsPFileName   = QString( "%1/trmkfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+        m_qsUFileName   = QString( "%1/srfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
 
         ui->listLog->addItem( tr("Filenames of patientcard and patientcard types data:") );
         ui->listLog->addItem( m_qsPCTFileName );
         ui->listLog->addItem( m_qsPCFileName );
+        ui->listLog->addItem( m_qsPTFileName );
+        ui->listLog->addItem( m_qsPFileName );
+        ui->listLog->addItem( m_qsUFileName );
     }
 }
 
@@ -98,6 +104,9 @@ void MainWindow::on_pbImportDB_clicked()
 {
     _loadPatientCardTypes();
     _loadPatientCards();
+    _loadProductTypes();
+    _loadProducts();
+    _loadUsers();
 }
 
 //====================================================================================
@@ -125,6 +134,7 @@ void MainWindow::_loadPatientCardTypes()
             for( unsigned int i=0; i<nCount; i++ )
             {
                 fread( &stTemp.nID, 4, 1, file );
+                stTemp.nNewID = 0;
                 fread( &stTemp.nAr, 4, 1, file );
                 fread( &stTemp.nEgyseg, 4, 1, file );
                 fread( stTemp.strNev, 50, 1, file );
@@ -213,6 +223,112 @@ void MainWindow::_loadPatientCards()
     setCursor( Qt::ArrowCursor);
 }
 //====================================================================================
+void MainWindow::_loadProductTypes()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvPatientCards.clear();
+
+    file = fopen( m_qsPTFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listLog->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_termektipus stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                stTemp.nNewID = 0;
+                fread( stTemp.strNev, 100, 1, file );
+                _DeCode( stTemp.strNev, 100 );
+
+                //ui->listLog->addItem( QString( "[%1] \'%2\'" ).arg(stTemp.nID).arg(stTemp.strNev) );
+
+                m_qvProductTypes.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listLog->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadProducts()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvPatientCards.clear();
+
+    file = fopen( m_qsPFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listLog->addItem( tr("Count of products to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_termek stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                stTemp.nNewID = 0;
+                fread( stTemp.strVonalkod, 20, 1, file );
+                fread( stTemp.strNev, 100, 1, file );
+                fread( &stTemp.nAr, 4, 1, file );
+                fread( &stTemp.nDarab, 4, 1, file );
+                fread( &stTemp.nArBeszerzes, 4, 1, file );
+
+                _DeCode( stTemp.strVonalkod, 20 );
+                _DeCode( stTemp.strNev, 100 );
+
+                //ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
+
+                m_qvProducts.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listLog->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadUsers()
+//====================================================================================
+{
+
+}
+//====================================================================================
 void MainWindow::_EnCode( char *str, int size )
 //====================================================================================
 {
@@ -232,7 +348,7 @@ void MainWindow::_DeCode( char *str, int size )
 }
 //====================================================================================
 void MainWindow::_loadPatientCardTypeImport()
-{
+{/*
     QFile file( ui->ledImportFileName->text() );
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -284,17 +400,17 @@ void MainWindow::_loadPatientCardTypeImport()
     }
 
     ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(inPCTAppend) );
-}
+*/}
 
-void MainWindow::on_pbSelectImportFile_clicked()
+/*void MainWindow::on_pbSelectImportFile_clicked()
 {
     QString qsFileName = QFileDialog::getOpenFileName(this, tr("Open import file"), "", tr("Import Files (*.imp)"));
 
     if( qsFileName.length() )
         ui->ledImportFileName->setText( qsFileName );
-}
+}*/
 
-void MainWindow::on_pbImportPCTText_clicked()
+/*void MainWindow::on_pbImportPCTText_clicked()
 {
     if( ui->ledImportFileName->text().length() < 1 )
     {
@@ -304,7 +420,7 @@ void MainWindow::on_pbImportPCTText_clicked()
     }
 
     _loadPatientCardTypeImport();
-}
+}*/
 
 int MainWindow::_getPatientCardTypeId()
 {
@@ -320,7 +436,7 @@ int MainWindow::_getPatientCardTypeId()
 }
 
 
-void MainWindow::on_pbExportPCTDat_clicked()
+/*void MainWindow::on_pbExportPCTDat_clicked()
 {
     FILE    *file = NULL;
 
@@ -368,7 +484,7 @@ void MainWindow::on_pbExportPCTDat_clicked()
     }
 
     setCursor( Qt::ArrowCursor);
-}
+}*/
 
 void MainWindow::on_pbPExportConnect_clicked()
 {
@@ -383,6 +499,15 @@ void MainWindow::on_pbPExportConnect_clicked()
     {
         ui->listLog->addItem( tr("Successfully connected to Belenus database") );
         ui->pbExportProcess->setEnabled( true );
+
+        QString qsSQLCommand = QString( "SELECT * FROM licences" );
+
+        QSqlQuery qsQuery = m_poDB->exec( qsSQLCommand );
+
+        qsQuery.last();
+        m_nLicenceId = qsQuery.value(0).toInt();
+
+        ui->listLog->addItem( tr("License code: %1 [%2]").arg(qsQuery.value(1).toString()).arg(m_nLicenceId) );
     }
 }
 
@@ -400,6 +525,21 @@ void MainWindow::on_pbExportProcess_clicked()
         if( ui->chkPExportPC->isChecked() )
         {
             _exportToBelenusPatientCards();
+        }
+
+        if( ui->chkPExportPT->isChecked() )
+        {
+            _exportToBelenusProductTypes();
+        }
+
+        if( ui->chkPExportP->isChecked() )
+        {
+            _exportToBelenusProducts();
+        }
+
+        if( ui->chkPExportUser->isChecked() )
+        {
+            _exportToBelenusUsers();
         }
 
         m_poDB->close();
@@ -446,7 +586,7 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         QString qsSQLCommand = QString( "INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES ( " );
 
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
-        qsSQLCommand += QString( "1, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCardTypes.at(i).strNev );
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr );
         qsSQLCommand += QString( "0, " );
@@ -464,10 +604,11 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         }
         qsSQLCommand += QString( "1, 'ARC');" );
 
-        m_poDB->exec( qsSQLCommand );
+        QSqlQuery query = m_poDB->exec( qsSQLCommand );
+        m_qvPatientCardTypes[i].nNewID = query.lastInsertId().toInt();
 
         qsSQLCommand = QString( "INSERT INTO `patientcardtypeenabled` (`licenceId`, `patientCardTypeId`, `start`, `stop`, `modified`, `archive`) VALUES ( " );
-        qsSQLCommand += QString( "1, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
         qsSQLCommand += QString( "'00:00:00', " );
         qsSQLCommand += QString( "'23:59:00', " );
@@ -485,8 +626,8 @@ void MainWindow::_exportToBelenusPatientCards()
     {
         QString qsSQLCommand = QString( "INSERT INTO `patientCards` ( `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES ( " );
 
-        qsSQLCommand += QString( "1, " );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCards.at(i).nBerletTipus+1 );
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
+        qsSQLCommand += QString( "%1, " ).arg( _getPatientCardTypeNewId( m_qvPatientCards.at(i).nBerletTipus ) );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strVonalkod );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strMegjegyzes );
@@ -514,3 +655,52 @@ void MainWindow::_exportToBelenusUsers()
 {
 
 }
+
+int MainWindow::_getPatientCardTypeNewId( int p_nID )
+{
+    int nRet = 0;
+    int nCount = m_qvPatientCardTypes.size();
+
+    for( int i=0; i<nCount; i++ )
+    {
+        if( m_qvPatientCardTypes.at(i).nID == p_nID )
+        {
+            nRet = m_qvPatientCardTypes.at(i).nNewID;
+            break;
+        }
+    }
+    return nRet;
+}
+
+int MainWindow::_getProductTypeNewId( int p_nID )
+{
+    int nRet = 0;
+    int nCount = m_qvProductTypes.size();
+
+    for( int i=0; i<nCount; i++ )
+    {
+        if( m_qvProductTypes.at(i).nID == p_nID )
+        {
+            nRet = m_qvProductTypes.at(i).nNewID;
+            break;
+        }
+    }
+    return nRet;
+}
+
+int MainWindow::_getProductNewId( int p_nID )
+{
+    int nRet = 0;
+    int nCount = m_qvProducts.size();
+
+    for( int i=0; i<nCount; i++ )
+    {
+        if( m_qvProducts.at(i).nID == p_nID )
+        {
+            nRet = m_qvProducts.at(i).nNewID;
+            break;
+        }
+    }
+    return nRet;
+}
+

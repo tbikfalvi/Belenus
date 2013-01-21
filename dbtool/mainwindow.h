@@ -17,6 +17,7 @@
 typedef struct _typ_berlettipus
 {
    int   nID;
+   int   nNewID;
    int   nAr;
    int   nEgyseg;
    char  strNev[50];
@@ -59,6 +60,37 @@ typedef struct _typ_berlethasznalat
    int   nEgyseg;
 } typ_berlethasznalat;
 //====================================================================================
+//    TERMEK structure
+//====================================================================================
+typedef struct _typ_termek
+{
+   int   nID;
+   int   nNewID;
+   char  strVonalkod[20];
+   char  strNev[100];
+   int   nAr;
+   int   nDarab;
+   int   nArBeszerzes;
+} typ_termek;
+//====================================================================================
+//    TERMEKTIPUS structure
+//====================================================================================
+typedef struct _typ_termektipus
+{
+   int   nID;
+   int   nNewID;
+   char  strNev[100];
+} typ_termektipus;
+//====================================================================================
+//    TERMEKTIPUSASSIGN structure
+//====================================================================================
+typedef struct _typ_termektipusassign
+{
+   int  nTermekID;
+   int  nTTipusID;
+} typ_termektipusassign;
+//====================================================================================
+//  USER structure
 //====================================================================================
 typedef struct _typ_user
 {
@@ -100,6 +132,9 @@ protected:
 private:
     void                        _loadPatientCardTypes();
     void                        _loadPatientCards();
+    void                        _loadProductTypes();
+    void                        _loadProducts();
+    void                        _loadUsers();
     void                        _EnCode( char *str, int size );
     void                        _DeCode( char *str, int size );
     void                        _loadPatientCardTypeImport();
@@ -111,6 +146,10 @@ private:
     void                        _exportToBelenusProducts();
     void                        _exportToBelenusUsers();
 
+    int                         _getPatientCardTypeNewId( int p_nID );
+    int                         _getProductTypeNewId( int p_nID );
+    int                         _getProductNewId( int p_nID );
+
     Ui::MainWindow              *ui;
 
     QDir                         m_qdExpCurrentDir;
@@ -118,11 +157,18 @@ private:
 
     QVector<typ_berlet>          m_qvPatientCards;
     QVector<typ_berlettipus>     m_qvPatientCardTypes;
+    QVector<typ_termektipus>     m_qvProductTypes;
+    QVector<typ_termek>          m_qvProducts;
+    QVector<typ_user>            m_qvUsers;
 
     QString                      m_qsPCFileName;
     QString                      m_qsPCTFileName;
+    QString                      m_qsPTFileName;
+    QString                      m_qsPFileName;
+    QString                      m_qsUFileName;
 
     char                         m_strPatiencardTypeVersion[10];
+    int                          m_nLicenceId;
 
     QSqlDatabase                *m_poDB;
     cDlgProgress                *m_dlgProgress;
@@ -131,12 +177,12 @@ private slots:
     void on_pbExportProcess_clicked();
     void on_pbPExportConnect_clicked();
     void slotProgramSelected();
-    void on_pbExportPCTDat_clicked();
-    void on_pbImportPCTText_clicked();
-    void on_pbSelectImportFile_clicked();
+//    void on_pbExportPCTDat_clicked();
+//    void on_pbImportPCTText_clicked();
+//    void on_pbSelectImportFile_clicked();
     void on_pbImportDB_clicked();
     void on_pbExpSelectDir_clicked();
-    void on_rbProgramSensolite_clicked();
+//    void on_rbProgramSensolite_clicked();
     void on_rbProgramKiwiSun_clicked();
 };
 
