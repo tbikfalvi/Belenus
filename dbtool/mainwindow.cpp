@@ -725,6 +725,19 @@ void MainWindow::_exportToBelenusProducts()
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvProducts[i].nNewID = query.lastInsertId().toInt();
     }
+
+    int nProductAssign = m_qvProductAssigns.size();
+
+    for( int i=0; i<nProductAssign; i++ )
+    {
+        QString qsSQLCommand = QString( "INSERT INTO  `connectproductwithtype` (`productTypeId` ,`productId` ,`licenceId`) VALUES ( " );
+
+        qsSQLCommand += QString( "%1, " ).arg( _getProductTypeNewId(m_qvProductAssigns.at(i).nTTipusID) );
+        qsSQLCommand += QString( "%1, " ).arg( _getProductNewId(m_qvProductAssigns.at(i).nTermekID) );
+        qsSQLCommand += QString( "%1 ); " ).arg( m_nLicenceId );
+
+        m_poDB->exec( qsSQLCommand );
+    }
 }
 
 void MainWindow::_exportToBelenusUsers()
