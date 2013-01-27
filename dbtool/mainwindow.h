@@ -134,6 +134,7 @@ private:
     void                        _loadPatientCards();
     void                        _loadProductTypes();
     void                        _loadProducts();
+    void                        _loadProductAssign();
     void                        _loadUsers();
     void                        _EnCode( char *str, int size );
     void                        _DeCode( char *str, int size );
@@ -159,12 +160,14 @@ private:
     QVector<typ_berlettipus>     m_qvPatientCardTypes;
     QVector<typ_termektipus>     m_qvProductTypes;
     QVector<typ_termek>          m_qvProducts;
+    QVector<typ_termektipusassign>  m_qvProductAssigns;
     QVector<typ_user>            m_qvUsers;
 
     QString                      m_qsPCFileName;
     QString                      m_qsPCTFileName;
     QString                      m_qsPTFileName;
     QString                      m_qsPFileName;
+    QString                      m_qsPAFileName;
     QString                      m_qsUFileName;
 
     char                         m_strPatiencardTypeVersion[10];

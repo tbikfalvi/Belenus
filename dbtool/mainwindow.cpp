@@ -89,6 +89,7 @@ void MainWindow::on_pbExpSelectDir_clicked()
         m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
         m_qsPTFileName  = QString( "%1/trmktpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
         m_qsPFileName   = QString( "%1/trmkfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+        m_qsPAFileName  = QString( "%1/trmktpssgfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
         m_qsUFileName   = QString( "%1/srfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
 
         ui->listLog->addItem( tr("Filenames of patientcard and patientcard types data:") );
@@ -232,7 +233,7 @@ void MainWindow::_loadProductTypes()
 
     setCursor( Qt::WaitCursor);
 
-    m_qvPatientCards.clear();
+    m_qvProductTypes.clear();
 
     file = fopen( m_qsPTFileName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -264,7 +265,7 @@ void MainWindow::_loadProductTypes()
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+        ui->listLog->addItem( tr( "Error occured during opening trmktpsfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -279,7 +280,7 @@ void MainWindow::_loadProducts()
 
     setCursor( Qt::WaitCursor);
 
-    m_qvPatientCards.clear();
+    m_qvProducts.clear();
 
     file = fopen( m_qsPFileName.toStdString().c_str(), "rb" );
     if( file != NULL )
@@ -317,7 +318,52 @@ void MainWindow::_loadProducts()
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+        ui->listLog->addItem( tr( "Error occured during opening trmkfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadProductAssign()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvProductAssigns.clear();
+
+    file = fopen( m_qsPAFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listLog->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_termektipusassign stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nTermekID, 4, 1, file );
+                fread( &stTemp.nTTipusID, 4, 1, file );
+
+                //ui->listLog->addItem( QString( "[%1] [%2]" ).arg(stTemp.nTermekID).arg(stTemp.nTTipusID) );
+
+                m_qvProductAssigns.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listLog->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening trmktpssgfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -643,12 +689,42 @@ void MainWindow::_exportToBelenusPatientCards()
 
 void MainWindow::_exportToBelenusProductTypes()
 {
+    int nProductTypeCount = m_qvProductTypes.size();
 
+    for( int i=0; i<nProductTypeCount; i++ )
+    {
+        QString qsSQLCommand = QString( "INSERT INTO `productTypes` (`licenceId`, `name`, `active`, `archive`) VALUES ( " );
+
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvProductTypes.at(i).strNev );
+        qsSQLCommand += QString( "1, 'ARC' );" );
+
+        QSqlQuery query = m_poDB->exec( qsSQLCommand );
+        m_qvProductTypes[i].nNewID = query.lastInsertId().toInt();
+    }
 }
 
 void MainWindow::_exportToBelenusProducts()
 {
+    int nProductCount = m_qvProducts.size();
 
+    for( int i=0; i<nProductCount; i++ )
+    {
+        QString qsSQLCommand = QString( "INSERT INTO `products` (`licenceId`, `name`, `barcode`, `netPriceBuy`, `vatpercentBuy`, `netPriceSell`, `vatpercentSell`, `productCount`, `modified`, `active`, `archive`) VALUES ( " );
+
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strNev );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strVonalkod );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nDarab );
+        qsSQLCommand += QString( "0, 1, 'ARC');" );
+
+        QSqlQuery query = m_poDB->exec( qsSQLCommand );
+        m_qvProducts[i].nNewID = query.lastInsertId().toInt();
+    }
 }
 
 void MainWindow::_exportToBelenusUsers()
