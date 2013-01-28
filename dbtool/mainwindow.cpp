@@ -6,6 +6,7 @@
 #include <QCloseEvent>
 #include <QTextStream>
 #include <QtSql/QSqlQuery>
+#include <QCryptographicHash>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -107,6 +108,7 @@ void MainWindow::on_pbImportDB_clicked()
     _loadPatientCards();
     _loadProductTypes();
     _loadProducts();
+    _loadProductAssign();
     _loadUsers();
 }
 
@@ -372,7 +374,57 @@ void MainWindow::_loadProductAssign()
 void MainWindow::_loadUsers()
 //====================================================================================
 {
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
 
+    setCursor( Qt::WaitCursor);
+
+    m_qvUsers.clear();
+
+    file = fopen( m_qsUFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listLog->addItem( tr("Count of users to be imported: %1").arg(nCount) );
+        if( nCount > 0 )
+        {
+            typ_user stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                fread( stTemp.strAzonosito, 20, 1, file );
+                fread( stTemp.strLoginNev, 20, 1, file );
+                fread( stTemp.strNevCsalad, 100, 1, file );
+                fread( stTemp.strJelszo, 20, 1, file );
+                fread( stTemp.strMegjegyzes, 1000, 1, file );
+                fread( &stTemp.nUserLevel, 4, 1, file );
+
+                _DeCode( stTemp.strAzonosito, 20 );
+                _DeCode( stTemp.strLoginNev, 20 );
+                _DeCode( stTemp.strNevCsalad, 100 );
+                _DeCode( stTemp.strJelszo, 20 );
+                _DeCode( stTemp.strMegjegyzes, 1000 );
+
+                ui->listLog->addItem( QString( "\'%1\' \'%2\' \'%3\' \'%4\' \'%5\' [%6]" ).arg(stTemp.strAzonosito).arg(stTemp.strLoginNev).arg(stTemp.strNevCsalad).arg(stTemp.strJelszo).arg(stTemp.strMegjegyzes).arg(stTemp.nUserLevel) );
+
+                m_qvUsers.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listLog->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
+    }
+    else
+    {
+        ui->listLog->addItem( tr( "Error occured during opening srfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
 }
 //====================================================================================
 void MainWindow::_EnCode( char *str, int size )
@@ -736,13 +788,42 @@ void MainWindow::_exportToBelenusProducts()
         qsSQLCommand += QString( "%1, " ).arg( _getProductNewId(m_qvProductAssigns.at(i).nTermekID) );
         qsSQLCommand += QString( "%1 ); " ).arg( m_nLicenceId );
 
+        //ui->listLog->addItem( qsSQLCommand );
+
         m_poDB->exec( qsSQLCommand );
     }
 }
 
 void MainWindow::_exportToBelenusUsers()
 {
+    int nUSerCount = m_qvUsers.size();
 
+    for( int i=0; i<nUSerCount; i++ )
+    {
+        QString qsPassword;
+
+        if( QString(m_qvUsers.at(i).strJelszo).length() == 0 )
+        {
+            qsPassword = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
+        }
+        else
+        {
+            QByteArray  obPwdHash = QCryptographicHash::hash( QString( m_qvUsers.at(i).strJelszo ).toAscii(), QCryptographicHash::Sha1 );
+            qsPassword = QString( obPwdHash.toHex() );
+        }
+        QString qsSQLCommand = QString( "INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES ( " );
+
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strLoginNev );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strNevCsalad );
+        qsSQLCommand += QString( "'%1', 1, 1, " ).arg( qsPassword );
+        qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strMegjegyzes );
+        qsSQLCommand += QString( "'ARC');" );
+
+        //ui->listLog->addItem( qsSQLCommand );
+
+        m_poDB->exec( qsSQLCommand );
+    }
 }
 
 int MainWindow::_getPatientCardTypeNewId( int p_nID )
