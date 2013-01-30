@@ -3,8 +3,7 @@
 
 #include "dlgcassaaction.h"
 
-cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShoppingCart )
-    : QDialog( p_poParent )
+cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShoppingCart ) : QDialog( p_poParent )
 {
     setupUi( this );
 
@@ -46,6 +45,12 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
         ledAmountGiven->setEnabled( false );
     }
 
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentmethods WHERE active=1 AND archive<>\"DEL\"" ) );
+    while( poQuery->next() )
+    {
+        cmbPaymentType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+
     connect( ledAmountToPay, SIGNAL(textEdited(QString)), this, SLOT(ledAmountToPay_textEdited(QString)) );
     connect( ledAmountGiven, SIGNAL(textEdited(QString)), this, SLOT(ledAmountGiven_textEdited(QString)) );
 
@@ -62,20 +67,19 @@ cDlgCassaAction::~cDlgCassaAction()
 
 void cDlgCassaAction::setPayWithCash()
 {
-    rbPayCash->setChecked( true );
+    cmbPaymentType->setCurrentIndex( 0 );
 }
 
 void cDlgCassaAction::setPayWithCreditcard()
 {
-    rbCreditcard->setChecked( true );
+    cmbPaymentType->setCurrentIndex( 1 );
 }
 
 void cDlgCassaAction::actionCassaInOut()
 {
     setPayWithCash();
     pbShoppingCart->setEnabled( false );
-    rbPayCash->setEnabled( false );
-    rbCreditcard->setEnabled( false );
+    cmbPaymentType->setEnabled( false );
     lblMoneyToPay->setText( tr("Amount :") );
     frmPayment->setVisible( false );
     m_nHeightSmall  = 165;
@@ -91,8 +95,9 @@ void cDlgCassaAction::actionPayment()
 
 QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart )
 {
-    if( rbPayCash->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CASH;
-    else if( rbCreditcard->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
+    if( cmbPaymentType->currentIndex() == 0 ) *p_nPayType = cDlgCassaAction::PAY_CASH;
+    else if( cmbPaymentType->currentIndex() == 1 ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
+    else *p_nPayType = cDlgCassaAction::PAY_OTHER;
 
     if( teComment->toPlainText().length() > 0 )
         *p_qsComment += QString( " - " ).arg(teComment->toPlainText());

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
-    <height>337</height>
+    <width>382</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -284,21 +284,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QRadioButton" name="rbPayCash">
-          <property name="text">
-           <string>Cash</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rbCreditcard">
-          <property name="text">
-           <string>Credit card</string>
-          </property>
-         </widget>
+         <widget class="QComboBox" name="cmbPaymentType"/>
         </item>
        </layout>
       </widget>
@@ -397,8 +383,6 @@
  <tabstops>
   <tabstop>ledAmountToPay</tabstop>
   <tabstop>ledAmountGiven</tabstop>
-  <tabstop>rbPayCash</tabstop>
-  <tabstop>rbCreditcard</tabstop>
   <tabstop>pbComment</tabstop>
   <tabstop>teComment</tabstop>
   <tabstop>pbOk</tabstop>

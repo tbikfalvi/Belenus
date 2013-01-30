@@ -14,7 +14,8 @@ public:
     enum tePayType
     {
         PAY_CASH = 1,
-        PAY_CREDITCARD
+        PAY_CREDITCARD,
+        PAY_OTHER
     };
 
     cDlgCassaAction( QWidget *p_poParent = 0, cDBShoppingCart *p_poShoppingCart = NULL );

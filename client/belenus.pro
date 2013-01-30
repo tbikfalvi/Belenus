@@ -99,6 +99,7 @@ HEADERS = belenus.h \
     db/dbproducthistory.h \
     db/dbvalidtimeperiods.h \
     db/dbdiscount.h \
+    db/dbpaymentmethod.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -212,6 +213,7 @@ SOURCES = main.cpp \
     db/dbproducthistory.cpp \
     db/dbvalidtimeperiods.cpp \
     db/dbdiscount.cpp \
+    db/dbpaymentmethod.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

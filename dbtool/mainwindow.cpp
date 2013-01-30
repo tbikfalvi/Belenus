@@ -45,11 +45,13 @@ void MainWindow::slotProgramSelected()
     {
         m_nProgramType      = DBTool::KiwiSun;
         ui->ledPExportS2->setEnabled( true );
+        ui->ledBarcodeLength->setEnabled( true );
     }
     /*else if( ui->rbProgramSensolite->isChecked() )
     {
         m_nProgramType      = DBTool::Sensolite;
         ui->ledPExportS2->setEnabled( false );
+
     }*/
 }
 
@@ -722,12 +724,19 @@ void MainWindow::_exportToBelenusPatientCards()
 
     for( int i=0; i<nBerletCount; i++ )
     {
+        QString qsBarcode = m_qvPatientCards.at(i).strVonalkod;
+
+        while ( qsBarcode.length() < ui->ledBarcodeLength->text().toInt() )
+        {
+            qsBarcode = QString( "0%1" ).arg(qsBarcode);
+        }
+
         QString qsSQLCommand = QString( "INSERT INTO `patientCards` ( `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES ( " );
 
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "%1, " ).arg( _getPatientCardTypeNewId( m_qvPatientCards.at(i).nBerletTipus ) );
         qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strVonalkod );
+        qsSQLCommand += QString( "'%1', " ).arg( qsBarcode );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCards.at(i).strMegjegyzes );
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCards.at(i).nEgyseg );
         qsSQLCommand += QString( "%1, " ).arg( _getTimeLeft(m_qvPatientCards.at(i).nBerletTipus, m_qvPatientCards.at(i).nEgyseg) );
