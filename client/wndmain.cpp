@@ -47,6 +47,7 @@
 #include "crud/dlgshoppingcart.h"
 #include "crud/dlgproductsell.h"
 #include "crud/dlgstorno.h"
+#include "crud/dlgpaymentmethod.h"
 
 //====================================================================================
 
