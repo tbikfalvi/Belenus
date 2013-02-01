@@ -35,7 +35,7 @@ UPDATE `users` SET `userId`=0 WHERE `userId`=1;
 ALTER TABLE `users` auto_increment=1;
 
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
- ( 1, 'system', 'KiwiSun Adminisztrátor', 'e607263781818a330152105561a6e85b9f8f57f2', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bõvített rendszergazdai jogosultságokkal.', 'ARC' );
+ ( 1, 'system', 'KiwiSun Adminisztrátor', '2f8a0b522dff9ac531fe7a76d1393261c094c573', 3, 1, 'Szolárium stúdió alapértelmezett felhasználója bõvített rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 1, 'admin', 'Adminisztrátor', 'd033e22ae348aeb5660fc2140aec35850c4da997', 2, 1, 'Szolárium stúdió alapértelmezett felhasználója rendszergazdai jogosultságokkal.', 'ARC' );
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES

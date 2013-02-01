@@ -4,6 +4,8 @@
 #include "dlguseredit.h"
 #include "../dlg/dlgpwdconfirm.h"
 
+// KiwiSun rendszer adminisztrátor jelszó: KW13sun
+
 cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     : QDialog( p_poParent )
 {

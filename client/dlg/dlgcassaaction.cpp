@@ -100,7 +100,7 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, boo
     else *p_nPayType = cDlgCassaAction::PAY_OTHER;
 
     if( teComment->toPlainText().length() > 0 )
-        *p_qsComment += QString( " - " ).arg(teComment->toPlainText());
+        *p_qsComment += QString( " - %1" ).arg(teComment->toPlainText());
 
     *p_bShoppingCart = m_bShoppingCart;
 
