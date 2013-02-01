@@ -56,6 +56,7 @@ void cDlgPaymentMethodEdit::accept ()
     {
         try
         {
+            m_poPaymentMethod->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPaymentMethod->setName( ledName->text() );
 //            if( checkIndependent->isChecked() )
 //            {

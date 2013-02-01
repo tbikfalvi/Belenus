@@ -187,6 +187,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_EditLicenceInformation->setIcon( QIcon("./resources/40x40_key.png") );
     action_EmptyDemoDB->setIcon( QIcon("./resources/40x40_database_sync.png") );
+    action_PaymentMethods->setIcon( QIcon("./resources/40x40_paymentmethod.png") );
 
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
@@ -1790,4 +1791,11 @@ void cWndMain::slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_u
 void cWndMain::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo )
 {
     m_dlgSecondaryWindow->setPanelInfoText( p_uiPanelId, p_qsInfo );
+}
+
+void cWndMain::on_action_PaymentMethods_triggered()
+{
+    cDlgPaymentMethod   obDlgPaymentMethod( this );
+
+    obDlgPaymentMethod.exec();
 }

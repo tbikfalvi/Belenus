@@ -43,7 +43,6 @@
      </property>
      <addaction name="action_Users"/>
      <addaction name="separator"/>
-     <addaction name="separator"/>
      <addaction name="action_Company"/>
      <addaction name="action_HealthInsurance"/>
      <addaction name="separator"/>
@@ -57,6 +56,8 @@
      <addaction name="action_ProductTypes"/>
      <addaction name="action_ProductActionType"/>
      <addaction name="action_Products"/>
+     <addaction name="separator"/>
+     <addaction name="action_PaymentMethods"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
@@ -334,6 +335,9 @@
    <property name="text">
     <string>Patients ...</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="action_PatientNew">
    <property name="text">
@@ -574,6 +578,14 @@
   <action name="action_CassaActionStorno">
    <property name="text">
     <string>Cassa action storno</string>
+   </property>
+  </action>
+  <action name="action_PaymentMethods">
+   <property name="text">
+    <string>Payment methods</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage payment methods</string>
    </property>
   </action>
  </widget>

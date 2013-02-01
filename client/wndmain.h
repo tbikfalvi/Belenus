@@ -124,6 +124,7 @@ private slots:
     void on_action_AcquireGlobalData_triggered();
     void on_action_EstablishConnection_triggered();
     void on_action_EmptyDemoDB_triggered();
+    void on_action_PaymentMethods_triggered();
 };
 
 #endif
