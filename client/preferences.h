@@ -82,6 +82,8 @@ public:
     QString         getCurrencyLong() const;
     void            setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow = false );
     QString         getCurrencySeparator() const;
+    void            setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow = false );
+    QString         getCurrencyDecimalSeparator() const;
     void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow = false );
     unsigned int    getMaxTreatLength() const;
     void            setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow = false );
@@ -165,6 +167,7 @@ private:
     QString         m_qsCurrencyShort;
     QString         m_qsCurrencyLong;
     QString         m_qsCurrencySeparator;
+    QString         m_qsCurrencyDecimalSeparator;
     unsigned int    m_uiMaxTreatLength;
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;

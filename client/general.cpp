@@ -50,3 +50,51 @@ QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
     return qsRet;
 }
 //====================================================================================
+//====================================================================================
+cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
+{
+    m_ctCurrType    = p_ctCurrencyType;
+    m_nVatValue     = p_nVat;
+
+    QString qsPureCurrency;
+
+    // Remove currency string
+    if( p_qsCurrencyString.contains( g_poPrefs->getCurrencyLong() ) )
+    {
+        qsPureCurrency = p_qsCurrencyString.remove( g_poPrefs->getCurrencyLong() );
+    }
+    else if( p_qsCurrencyString.contains( g_poPrefs->getCurrencyShort() ) )
+    {
+        qsPureCurrency = p_qsCurrencyString.remove( g_poPrefs->getCurrencyShort() );
+    }
+    // Remove currency tousan separator
+    if( p_qsCurrencyString.contains( g_poPrefs->getCurrencySeparator() ) )
+    {
+        qsPureCurrency = qsPureCurrency.remove( g_poPrefs->getCurrencySeparator() );
+    }
+    // Remove spaces
+    qsPureCurrency = qsPureCurrency.remove( " " );
+
+    // Get value before and after decimal separator
+    if( qsPureCurrency.contains( g_poPrefs->getCurrencyDecimalSeparator() ) )
+    {
+        QStringList qslCurr = qsPureCurrency.split( g_poPrefs->getCurrencyDecimalSeparator() );
+
+        m_nValueLeft    = qslCurr.at(0).toInt();
+        m_nValueRight   = qslCurr.at(1).toInt();
+    }
+    else
+    {
+        m_nValueLeft    = qsPureCurrency.toInt();
+        m_nValueRight   = 0;
+    }
+
+    // Calculate full currency value (original *100)
+    m_nValue = m_nValueLeft * 100 + m_nValueRight;
+}
+//====================================================================================
+cCurrency::~cCurrency()
+{
+
+}
+//====================================================================================

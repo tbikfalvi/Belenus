@@ -422,6 +422,22 @@ QString cPreferences::getCurrencySeparator() const
     return m_qsCurrencySeparator;
 }
 
+void cPreferences::setCurrencyDecimalSeparatorSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow )
+{
+    m_qsCurrencyDecimalSeparator = p_qsCurrencyDecimalSeparator;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Currency/Decimal" ), m_qsCurrencyDecimalSeparator );
+    }
+}
+
+QString cPreferences::getCurrencyDecimalSeparator() const
+{
+    return m_qsCurrencyDecimalSeparator;
+}
+
 void cPreferences::setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow )
 {
     m_uiMaxTreatLength = p_uiMaxTreatLength;
@@ -718,6 +734,7 @@ void cPreferences::loadConfFileSettings()
         m_qsCurrencyShort     = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
         m_qsCurrencyLong      = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
         m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
+        m_qsCurrencyDecimalSeparator   = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "," ).toString();
 
         m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
         m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
@@ -821,6 +838,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
     obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
     obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
+    obPrefFile.setValue( QString::fromAscii( "Currency/Decimal" ), m_qsCurrencyDecimalSeparator );
 
     obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
     obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );

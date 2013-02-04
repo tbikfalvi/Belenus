@@ -33,5 +33,27 @@ public:
 
 };
 //====================================================================================
+class cCurrency
+{
+public:
+
+    enum currType
+    {
+        CURR_NET = 0,
+        CURR_GROSS
+    };
+
+    cCurrency( const QString &p_qsCurrencyString = "", currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );
+    ~cCurrency();
+
+private:
+
+    currType    m_ctCurrType;
+    int         m_nVatValue;
+    int         m_nValueLeft;
+    int         m_nValueRight;
+    int         m_nValue;
+};
+//====================================================================================
 
 #endif // GENERAL_H
