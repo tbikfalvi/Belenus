@@ -18,6 +18,7 @@
 #include "wndmain.h"
 #include "licenceManager.h"
 #include "../framework/logger/DatabaseWriter.h"
+#include "cdlgtest.h"
 
 //====================================================================================
 
@@ -1804,4 +1805,9 @@ void cWndMain::on_action_PaymentMethods_triggered()
     obDlgPaymentMethod.exec();
 }
 
-void cWndMain::on_action_
+void cWndMain::on_action_TestDlgStarted()
+{
+    cDlgTest    obDlgTest( this );
+
+    obDlgTest.exec();
+}

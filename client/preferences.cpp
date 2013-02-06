@@ -422,7 +422,7 @@ QString cPreferences::getCurrencySeparator() const
     return m_qsCurrencySeparator;
 }
 
-void cPreferences::setCurrencyDecimalSeparatorSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow )
+void cPreferences::setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow )
 {
     m_qsCurrencyDecimalSeparator = p_qsCurrencyDecimalSeparator;
 

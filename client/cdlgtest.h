@@ -15,6 +15,9 @@ public:
     explicit cDlgTest(QWidget *parent = 0);
     ~cDlgTest();
     
+private slots:
+    void on_pbCalculate_clicked();
+
 private:
     Ui::cDlgTest *ui;
 };
