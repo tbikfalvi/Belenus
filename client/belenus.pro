@@ -35,7 +35,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardsell.ui \
     dlgpatientcardrefill.ui \
     dlgdiscountedit.ui \
-    dlgpaymentmethodedit.ui
+    dlgpaymentmethodedit.ui \
+    cdlgtest.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -154,7 +155,8 @@ HEADERS = belenus.h \
     dlg/dlgproductstorage.h \
     dlg/dlgsecondarywindow.h \
     dsppanel.h \
-    licenceManager.h
+    licenceManager.h \
+    cdlgtest.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -269,7 +271,8 @@ SOURCES = main.cpp \
     dlg/dlgproductstorage.cpp \
     dlg/dlgsecondarywindow.cpp \
     dsppanel.cpp \
-    licenceManager.cpp
+    licenceManager.cpp \
+    cdlgtest.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp

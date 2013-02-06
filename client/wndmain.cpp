@@ -513,6 +513,10 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     {
         on_action_ShoppingCart_triggered();
     }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F12 )
+    {
+        on_action_TestDlgStarted();
+    }
     else if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
              (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
              (p_poEvent->key() == Qt::Key_Space) )
@@ -1799,3 +1803,5 @@ void cWndMain::on_action_PaymentMethods_triggered()
 
     obDlgPaymentMethod.exec();
 }
+
+void cWndMain::on_action_
