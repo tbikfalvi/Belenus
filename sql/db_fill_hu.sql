@@ -141,13 +141,13 @@ INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `
  ( 0, 1, 1, "Alap állapot", 0, 0, 1, "ARC" ),
  ( 0, 1, 2, "Elõkészület/Vetkõzés", 60, 1, 1, "ARC" ),
  ( 0, 1, 3, "Kezelés", 0, 3, 1, "ARC" ),
- ( 0, 1, 4, "Utóhûtés", 60, 4, 1, "ARC" ),
+ ( 0, 1, 4, "Utóhûtés", 300, 4, 1, "ARC" ),
  ( 0, 2, 1, "Alap állapot", 0, 0, 1, "ARC" ),
  ( 0, 2, 2, "Elõkészület/Vetkõzés", 60, 1, 1, "ARC" ),
- ( 0, 2, 1, "Szaunázás", 120, 2, 1, "ARC" ),
- ( 0, 2, 1, "Várakozás", 3, 9, 1, "ARC" ),
- ( 0, 2, 3, "Kezelés", 0, 3, 1, "ARC" ),
- ( 0, 2, 4, "Utóhûtés", 60, 4, 1, "ARC" );
+ ( 0, 2, 3, "Szaunázás", 120, 2, 1, "ARC" ),
+ ( 0, 2, 4, "Várakozás", 3, 9, 1, "ARC" ),
+ ( 0, 2, 5, "Kezelés", 0, 3, 1, "ARC" ),
+ ( 0, 2, 6, "Utóhûtés", 300, 4, 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 

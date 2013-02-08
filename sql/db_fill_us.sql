@@ -135,13 +135,13 @@ INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `
  ( 0, 1, 1, "Base status", 0, 0, 1, "ARC" ),
  ( 0, 1, 2, "Preparation/Undressing", 60, 1, 1, "ARC" ),
  ( 0, 1, 3, "Browning", 0, 3, 1, "ARC" ),
- ( 0, 1, 4, "Cooling", 60, 4, 1, "ARC" ),
+ ( 0, 1, 4, "Cooling", 300, 4, 1, "ARC" ),
  ( 0, 2, 1, "Base status", 0, 0, 1, "ARC" ),
  ( 0, 2, 2, "Preparation/Undressing", 60, 1, 1, "ARC" ),
- ( 0, 2, 1, "Sauna", 120, 2, 1, "ARC" ),
- ( 0, 2, 1, "Waiting", 3, 9, 1, "ARC" ),
- ( 0, 2, 3, "Browning", 0, 3, 1, "ARC" ),
- ( 0, 2, 4, "Cooling", 60, 4, 1, "ARC" );
+ ( 0, 2, 3, "Sauna", 120, 2, 1, "ARC" ),
+ ( 0, 2, 4, "Waiting", 3, 9, 1, "ARC" ),
+ ( 0, 2, 5, "Browning", 0, 3, 1, "ARC" ),
+ ( 0, 2, 6, "Cooling", 300, 4, 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 

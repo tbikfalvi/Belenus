@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 
+#include "belenus.h"
 #include "communication_serial.h"
 #include "communication_defines.h"
 #include "windows.h"
@@ -113,32 +114,47 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     int   nRecHossz = 0;
     bool  bRes = false;
 
+    g_obLogger(cSeverity::DEBUG) << QString("Check HW connections") << EOM;
+
     memset( chMessage, 0, sizeof(chMessage) );
     memset( chSerialIn, 0, sizeof(chSerialIn) );
 
+    g_obLogger(cSeverity::DEBUG) << QString("SPReadMessage") << EOM;
     if( SP_ReadMessage( chSerialIn, &nRecHossz ) )
     {
+       g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
        if( chSerialIn[ nRecHossz-1 ] == MODUL_IRQ )
        {
           chModulMessage = MODUL_IRQ;
        }
     }
+    else
+    {
+        g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
+    }
 
     chMessage[ 0 ]= SEARCH_HW;
     chMessage[ 1 ]= 'H';
 
+    g_obLogger(cSeverity::DEBUG) << QString("SP_SendMessage") << EOM;
     SP_SendMessage( chMessage, 2 );
 
     bySerial_Error++;
     Sleep( 100 ); //var, hogy a PIC tudjon válaszolni
 
+    g_obLogger(cSeverity::DEBUG) << QString("HW_ReadMessage") << EOM;
     if( HW_ReadMessage( chSerialIn, &nRecHossz, 5  ) )
     {
+        g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
        if( (chSerialIn[ nRecHossz-2 ] == 'Y') && ((unsigned char) chSerialIn[ nRecHossz-1 ] == HW_SUCCESS) )
        {
           bRes = true;
        }
        byHwWdtCounter = WDT_TIME;
+    }
+    else
+    {
+        g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
     }
 
     return bRes;
@@ -802,11 +818,14 @@ bool CS_Communication_Serial::SP_InitCommunication( int p_inPort, DWORD p_dwBaud
 //------------------------------------------------------------------------------------
 bool CS_Communication_Serial::SP_Open( bool bSync )
 {
+   cTracer obTrace( "CS_Communication_Serial::SP_Open" );
+
    char portName[20];
 
    memset( portName, 0, sizeof(portName) );
    sprintf( portName, "COM%d", PortNumber );
 
+   g_obLogger(cSeverity::DEBUG) << QString("Open serial connection with CreateFile") << EOM;
    if( bSync )
    {
       m_hPort = CreateFile( /*(WCHAR*)*/portName,              // port name
@@ -828,19 +847,24 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
                             NULL );                        // no file model
    }
 
-        if ( m_hPort == INVALID_HANDLE_VALUE )
-   {
-      m_hPort = NULL;
-      return false;
-   }
+    if ( m_hPort == INVALID_HANDLE_VALUE )
+    {
+        g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
+        m_hPort = NULL;
+        return false;
+    }
+    g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
 
    DCB dcb;
 
+   g_obLogger(cSeverity::DEBUG) << QString("GetCommState") << EOM;
    if ( !GetCommState( m_hPort, &dcb ) )
    {
+       g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
       ::CloseHandle(m_hPort);
       return false;
    }
+   g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
 
 // dcb.DCBlength;                         // sizeof(DCB)
    dcb.BaudRate = BaudRate;               // current baud rate
@@ -871,17 +895,22 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
 // dcb.EvtChar;                           // received event character
 // dcb.wReserved1;                        // reserved; do not use
 
+   g_obLogger(cSeverity::DEBUG) << QString("SetCommState") << EOM;
    if ( !SetCommState( m_hPort, &dcb ) )
    {
+       g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
       //throw ( EXCEPTION_SET_COM_PORT_CONFIG );
       ::CloseHandle(m_hPort);
       return false;
    }
+   g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
 
+   g_obLogger(cSeverity::DEBUG) << QString("SetupComm") << EOM;
    SetupComm( m_hPort, 512, 512 );
 
    COMMTIMEOUTS   timeout;
 
+   g_obLogger(cSeverity::DEBUG) << QString("SetCommTimeouts") << EOM;
    memset( (char*)&timeout, 0, sizeof(COMMTIMEOUTS) );
    timeout.ReadIntervalTimeout = MAXDWORD;
    SetCommTimeouts( m_hPort, &timeout );
