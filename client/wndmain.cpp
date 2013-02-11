@@ -778,6 +778,7 @@ void cWndMain::on_action_Preferences_triggered()
 
     if( obDlgPrefs.exec() == QDialog::Accepted )
     {
+        retranslateUi( this );
         mdiPanels->hide();
         mdiPanels->placeSubWindows();
         mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );

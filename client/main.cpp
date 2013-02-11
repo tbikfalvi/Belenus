@@ -46,6 +46,7 @@
 
 //====================================================================================
 
+QApplication            *apMainApp;
 cQTLogger                g_obLogger;
 DatabaseWriter           g_obLogDBWriter;
 GUIWriter                g_obLogGUIWriter;
@@ -68,9 +69,11 @@ cLicenceManager          g_obLicenceManager;
 //====================================================================================
 int main( int argc, char *argv[] )
 {
-    QApplication     apMainApp( argc, argv );
+    apMainApp = new QApplication(argc, argv);
 
-    apMainApp.setWindowIcon( QIcon(":/icons/Belenus.ico") );
+    g_obGen.setApplication( apMainApp );
+
+    apMainApp->setWindowIcon( QIcon(":/icons/Belenus.ico") );
 
     g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
     g_obLogger.attachWriter("db", &g_obLogDBWriter);
@@ -86,13 +89,7 @@ int main( int argc, char *argv[] )
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 
-    if( g_poPrefs->getLang() != "uk" )
-    {
-        QTranslator *poTrans = new QTranslator();
-        QString     qsTransFile = "lang/" + g_poPrefs->getLangFilePrefix() + g_poPrefs->getLang() + ".qm";
-        poTrans->load( qsTransFile );
-        apMainApp.installTranslator( poTrans );
-    }
+    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -103,7 +100,7 @@ int main( int argc, char *argv[] )
     obFont.setBold(true);
     obSplash.setFont(obFont);
     obSplash.show();
-    apMainApp.processEvents();
+    apMainApp->processEvents();
 
     QString qsSystemID = QObject::tr( "SystemID: " );
 
@@ -272,7 +269,7 @@ int main( int argc, char *argv[] )
         if( obMainWindow.showLogIn() )
         {
             obMainWindow.startMainTimer();
-            r = apMainApp.exec();
+            r = apMainApp->exec();
         }
         else
         {

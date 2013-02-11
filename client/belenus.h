@@ -38,6 +38,7 @@
 
 //====================================================================================
 
+extern QApplication            *apMainApp;
 extern cDBUser                  g_obUser;
 extern cPreferences            *g_poPrefs;
 extern CS_Communication        *g_poHardware;

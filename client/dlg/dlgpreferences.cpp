@@ -51,11 +51,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         int inPos = obLangCodeRegExp.indexIn( obLangFiles[i] );
         if( inPos != -1 ) obLangCodes << obLangCodeRegExp.cap( 1 );
     }
-    obLangCodes << "uk";
+    //obLangCodes << "uk";
     obLangCodes.sort();
     cmbAppLang->addItems( obLangCodes );
     m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
-    if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
+    //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
 
     ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
@@ -170,8 +170,11 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setLang( cmbAppLang->currentText() );
     if( m_inLangIdx != cmbAppLang->currentIndex() )
-        QMessageBox::information( this, tr( "Information" ),
-                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    {
+        g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+//        QMessageBox::information( this, tr( "Information" ),
+//                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    }
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
@@ -229,4 +232,11 @@ void cDlgPreferences::on_btnSecondaryBackground_clicked()
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
     btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_cmbAppLang_currentIndexChanged(int index)
+{
+/*    g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+
+    retranslateUi( this );*/
 }

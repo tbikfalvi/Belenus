@@ -436,8 +436,8 @@ void CS_Communication_Serial::HW_Kezel()
     if( wRelay_mem != wRelay )
     {
         chSerialOut[0] = SET_RELAY;
-                chSerialOut[1] = (unsigned char) wRelay;
-                chSerialOut[2] = (unsigned char) (wRelay>>8);
+        chSerialOut[1] = (unsigned char) wRelay;
+        chSerialOut[2] = (unsigned char) (wRelay>>8);
         chSerialOut[3] = 0x5a;
         if( HW_SendRelayMessage( chSerialOut, 4, NULL ) )
         {

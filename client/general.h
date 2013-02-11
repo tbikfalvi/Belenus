@@ -18,6 +18,8 @@
 
 //====================================================================================
 
+#include <QApplication>
+#include <QTranslator>
 #include <QString>
 
 //====================================================================================
@@ -29,8 +31,15 @@ public:
     cGeneral();
     ~cGeneral();
 
+    void        setApplication( QApplication *p_poApplication );
+    void        setApplicationLanguage( const QString &p_qsLang );
     QString     convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
+private:
+    QApplication    *m_poMainApplication;
+    QTranslator     *m_poBlTr;
+    QTranslator     *m_poQtTr;
+    bool             m_bIsLanguageLoaded;
 };
 //====================================================================================
 class cCurrency

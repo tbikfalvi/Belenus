@@ -20,13 +20,41 @@
 cGeneral::cGeneral()
 //====================================================================================
 {
-
+    m_poBlTr       = new QTranslator();
+    m_poQtTr            = new QTranslator();
+    m_bIsLanguageLoaded = false;
 }
 //====================================================================================
 cGeneral::~cGeneral()
 //====================================================================================
 {
+    delete m_poBlTr;
+    delete m_poQtTr;
+}
+//====================================================================================
+void cGeneral::setApplication( QApplication *p_poApplication )
+//====================================================================================
+{
+    m_poMainApplication = p_poApplication;
+}
+//====================================================================================
+void cGeneral::setApplicationLanguage( const QString &p_qsLang )
+//====================================================================================
+{
+    if( m_bIsLanguageLoaded )
+    {
+        m_poMainApplication->removeTranslator( m_poBlTr );
+        m_poMainApplication->removeTranslator( m_poQtTr );
+    }
 
+    QString qsLangBl = QString("lang/%1%2.qm").arg( g_poPrefs->getLangFilePrefix() ).arg( p_qsLang );
+    QString qsLangQT = QString("lang/qt_%1.qm").arg( p_qsLang );
+
+    m_poBlTr->load( qsLangBl );
+    m_poQtTr->load( qsLangQT );
+
+    m_poMainApplication->installTranslator( m_poBlTr );
+    m_poMainApplication->installTranslator( m_poQtTr );
 }
 //====================================================================================
 QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
@@ -49,8 +77,9 @@ QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 
     return qsRet;
 }
-//====================================================================================
-//====================================================================================
+//*********************************************************************************************************************
+// Class cCurrency
+//*********************************************************************************************************************
 cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {
     cTracer obTrace( "cCurrency::cCurrency" );
