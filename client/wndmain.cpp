@@ -101,6 +101,11 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_uiPatientId                   = 0;
 
+    pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
+
+    frmLogin->setVisible( false );
+    frmLogin->setEnabled( false );
+
     m_dlgProgress = new cDlgProgress( this );
 
     mdiPanels = new cMdiPanels( centralwidget );
@@ -253,6 +258,9 @@ bool cWndMain::showLogIn()
 {
     cTracer obTrace( "cWndMain::showLogIn" );
 
+    frmLogin->setVisible( true );
+    frmLogin->setEnabled( true );
+
     cDlgLogIn  obDlgLogIn( this );
 
     m_dlgProgress->hideProgress();
@@ -261,6 +269,9 @@ bool cWndMain::showLogIn()
 
     if( boLogInOK )
     {
+        frmLogin->setVisible( false );
+        frmLogin->setEnabled( false );
+
         g_obLogDBWriter.setAppUser( g_obUser.id() );
         g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
 

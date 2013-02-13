@@ -234,9 +234,3 @@ void cDlgPreferences::on_btnSecondaryBackground_clicked()
     btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
 }
 
-void cDlgPreferences::on_cmbAppLang_currentIndexChanged(int index)
-{
-/*    g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
-
-    retranslateUi( this );*/
-}

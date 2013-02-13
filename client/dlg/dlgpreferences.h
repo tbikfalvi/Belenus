@@ -31,7 +31,6 @@ private slots:
     void on_sliFileLogLevel_valueChanged( int p_inValue );
     void on_btnMainBackground_clicked( bool p_boClicked );
     void on_spbBarcodeLen_valueChanged( int p_inValue );
-    void on_cmbAppLang_currentIndexChanged(int index);
 };
 
 #endif
