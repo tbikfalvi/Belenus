@@ -54,6 +54,7 @@ private:
     int                  m_inGlobalDataRequestTimeout;
 
     void showElementsForComponents();
+    void enableElementsByLogin( bool p_bEnable );
     void updateTitle();
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
@@ -126,6 +127,7 @@ private slots:
     void on_action_EmptyDemoDB_triggered();
     void on_action_PaymentMethods_triggered();
     void on_action_TestDlgStarted();
+    void on_pbLogin_clicked();
 };
 
 #endif

@@ -14,6 +14,7 @@
 //====================================================================================
 
 #include <QMessageBox>
+#include <QCryptographicHash>
 
 #include "wndmain.h"
 #include "licenceManager.h"
@@ -110,6 +111,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     mdiPanels = new cMdiPanels( centralwidget );
     verticalLayout->addWidget(mdiPanels);
+    mdiPanels->setEnabled( false );
 
     mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
 
@@ -198,8 +200,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 
-    action_Exit->setEnabled( false );
     action_LogOut->setEnabled( false );
+    action_Exit->setEnabled( false );
+
     action_PatientSelect->setEnabled( false );
     action_PatientEmpty->setEnabled( false );
     action_PatientEmpty->setVisible( false );
@@ -258,13 +261,24 @@ bool cWndMain::showLogIn()
 {
     cTracer obTrace( "cWndMain::showLogIn" );
 
-    frmLogin->setVisible( true );
-    frmLogin->setEnabled( true );
+    cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
+    m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
+    cmbName->setModel( m_poModel );
 
-    cDlgLogIn  obDlgLogIn( this );
+    int inIdx = cmbName->findText( g_poPrefs->getLastUser() );
+    if( inIdx != -1 ) cmbName->setCurrentIndex( inIdx );
+
+    ledPassword->setText( "" );
+
+    enableElementsByLogin( false );
+//    frmLogin->setVisible( true );
+//    frmLogin->setEnabled( true );
+//    mdiPanels->setEnabled( false );
+
+//    cDlgLogIn  obDlgLogIn( this );
 
     m_dlgProgress->hideProgress();
-
+/*
     bool       boLogInOK = ( obDlgLogIn.exec() == QDialog::Accepted );
 
     if( boLogInOK )
@@ -297,6 +311,65 @@ bool cWndMain::showLogIn()
 
     obTrace << boLogInOK;
     return boLogInOK;
+*/
+    ledPassword->setFocus();
+
+    return true;
+}
+//====================================================================================
+void cWndMain::on_pbLogin_clicked()
+{
+    try
+    {
+        string  stName = cmbName->currentText().toStdString();
+        stName = stName.substr( 0, stName.find( '(' ) - 1 );
+        g_obUser.load( QString::fromStdString(stName) );
+        QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
+        g_obUser.logIn( QString( obPwdHash.toHex() ) );
+
+        g_poPrefs->setLastUser( cmbName->currentText(), true );
+
+        enableElementsByLogin( true );
+//        frmLogin->setVisible( false );
+//        frmLogin->setEnabled( false );
+//        mdiPanels->setEnabled( true );
+
+        g_obLogDBWriter.setAppUser( g_obUser.id() );
+        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
+
+        if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
+        {
+            QMessageBox::warning( this, tr( "Password" ),
+                                  tr( "Your password is empty. Please change it to a valid password." ) );
+
+            cDlgUserEdit  obDlgEdit( this, &g_obUser );
+            obDlgEdit.setWindowTitle( g_obUser.realName() );
+            obDlgEdit.exec();
+        }
+
+        updateTitle();
+
+        if( g_poPrefs->isComponentInternetInstalled() )
+        {
+            checkDemoLicenceKey();
+        }
+        loginUser();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(cSeverity::INFO) << "User " << cmbName->currentText() << " failed to log in" << EOM;
+
+        g_obUser.logOut();
+        QMessageBox::critical( this, tr( "Login failed" ),
+                               tr( "Incorrect User Name and/or Password. Please try again." ) );
+    }
+}
+//====================================================================================
+void cWndMain::enableElementsByLogin(bool p_bEnable)
+{
+    frmLogin->setVisible( !p_bEnable );
+    frmLogin->setEnabled( !p_bEnable );
+    mdiPanels->setEnabled( p_bEnable );
 }
 //====================================================================================
 void cWndMain::showProgress()
@@ -511,22 +584,27 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 
     if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_Q )
     {
+        m_bCtrlPressed = false;
         close();
     }
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_S )
     {
+        m_bCtrlPressed = false;
         on_action_DeviceStart_triggered();
     }
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F )
     {
+        m_bCtrlPressed = false;
         on_action_PayCash_triggered();
     }
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_K )
     {
+        m_bCtrlPressed = false;
         on_action_ShoppingCart_triggered();
     }
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F12 )
     {
+        m_bCtrlPressed = false;
         on_action_TestDlgStarted();
     }
     else if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
@@ -635,30 +713,65 @@ void cWndMain::updateTitle()
 //====================================================================================
 void cWndMain::updateToolbar()
 {
+    bool    bIsUserLoggedIn = g_obUser.isLoggedIn();
+
+    action_LogOut->setEnabled( bIsUserLoggedIn );
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
-    action_LogOut->setEnabled( true );
 
-    action_PatientSelect->setEnabled( !(g_obGuest.id()>0) );
+    action_Guests->setEnabled( bIsUserLoggedIn );
+    action_CardTypes->setEnabled( bIsUserLoggedIn );
+    action_Cards->setEnabled( bIsUserLoggedIn );
+    menuAdministrator->setEnabled( bIsUserLoggedIn );
+        action_Users->setEnabled( bIsUserLoggedIn );
+        action_Company->setEnabled( bIsUserLoggedIn );
+        action_HealthInsurance->setEnabled( bIsUserLoggedIn );
+        action_Discounts->setEnabled( bIsUserLoggedIn );
+        action_RegionZipCity->setEnabled( bIsUserLoggedIn );
+        action_Paneltypes->setEnabled( bIsUserLoggedIn );
+        action_PanelStatuses->setEnabled( bIsUserLoggedIn );
+        action_ProductTypes->setEnabled( bIsUserLoggedIn );
+        action_ProductActionType->setEnabled( bIsUserLoggedIn );
+        action_Products->setEnabled( bIsUserLoggedIn );
+        action_PaymentMethods->setEnabled( bIsUserLoggedIn );
+        action_ValidateSerialKey->setEnabled( bIsUserLoggedIn );
+        action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
+        action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
+    action_Preferences->setEnabled( bIsUserLoggedIn );
+
+    menuDevice->setEnabled( bIsUserLoggedIn );
+        action_UseWithCard->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByCard() );
+        action_UseByTime->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByTime() );
+        action_DeviceStart->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0 );
+        action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
+        action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
+    menuPatientCard->setEnabled( bIsUserLoggedIn );
+        action_PatientCardSell->setEnabled( bIsUserLoggedIn );
+        action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
+    menuProduct->setEnabled( bIsUserLoggedIn );
+        action_SellProduct->setEnabled( bIsUserLoggedIn );
+    menuCassa->setEnabled( bIsUserLoggedIn );
+        action_CassaActionStorno->setEnabled( bIsUserLoggedIn );
+    menu_Reports->setEnabled( bIsUserLoggedIn );
+
+    menu_View->setEnabled( bIsUserLoggedIn );
+        action_Cassa->setEnabled( bIsUserLoggedIn && g_obCassa.isCassaEnabled() );
+        action_Logs->setEnabled( bIsUserLoggedIn );
+        action_Hardwaretest->setEnabled( bIsUserLoggedIn );
+
+    toolBarPatient->setEnabled( bIsUserLoggedIn );
+        action_PatientNew->setEnabled( bIsUserLoggedIn );
+        action_PatientSelect->setEnabled( bIsUserLoggedIn && !(g_obGuest.id()>0) );
+        action_PatientEmpty->setEnabled( bIsUserLoggedIn && g_obGuest.id()>0 );
+        action_EditActualPatient->setEnabled( bIsUserLoggedIn && g_obGuest.id()>0 );
+
+    toolBarDeviceUse->setEnabled( bIsUserLoggedIn );
+        action_DeviceSettings->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
+
+    toolBarCassa->setEnabled( bIsUserLoggedIn );
+        action_PayCash->setEnabled( bIsUserLoggedIn && mdiPanels->isHasToPay() );
+
     action_PatientSelect->setVisible( !(g_obGuest.id()>0) );
-    action_PatientEmpty->setEnabled( g_obGuest.id()>0 );
     action_PatientEmpty->setVisible( g_obGuest.id()>0 );
-    action_PatientNew->setEnabled( true );
-    action_EditActualPatient->setEnabled( g_obGuest.id()>0 );
-
-    action_UseWithCard->setEnabled( mdiPanels->isCanBeStartedByCard() );
-    action_UseByTime->setEnabled( mdiPanels->isCanBeStartedByTime() );
-
-    action_DeviceStart->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) &&
-                                    mdiPanels->mainProcessTime() > 0 );
-    action_DeviceSkipStatus->setEnabled( mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
-    action_DeviceReset->setEnabled( mdiPanels->isMainProcess() );
-
-    action_DeviceSettings->setEnabled( !mdiPanels->isPanelWorking(mdiPanels->activePanel()) );
-
-    action_PatientCardSell->setEnabled( true );
-
-    action_PayCash->setEnabled( mdiPanels->isHasToPay() );
-    action_Cassa->setEnabled( g_obCassa.isCassaEnabled() );
 
     showElementsForComponents();
 }
@@ -719,14 +832,13 @@ void cWndMain::timerEvent(QTimerEvent *)
             }
         }
     }
-/*
+
     if( m_uiPatientId != g_obGuest.id() )
     {
         updateTitle();
 
         m_uiPatientId = g_obGuest.id();
     }
-*/
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -1823,3 +1935,4 @@ void cWndMain::on_action_TestDlgStarted()
 
     obDlgTest.exec();
 }
+
