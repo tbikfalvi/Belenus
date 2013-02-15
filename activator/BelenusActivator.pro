@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui xml
 
 DESTDIR         = ..
 TARGET          = BelenusActivator

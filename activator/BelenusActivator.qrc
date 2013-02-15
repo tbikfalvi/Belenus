@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/icons">
+        <file>BelenusActivator.ico</file>
     </qresource>
 </RCC>
