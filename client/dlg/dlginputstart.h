@@ -2,7 +2,7 @@
 #define DLGINPUTSTART_H
 
 #include "../belenus.h"
-#include "../../belenus-build-desktop/ui_dlginputstart.h"
+#include "../../build/belenus/ui_dlginputstart.h"
 
 class cDlgInputStart : public QDialog, protected Ui::dlgInputStart
 {

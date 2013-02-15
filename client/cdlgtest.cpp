@@ -22,5 +22,5 @@ void cDlgTest::on_pbCalculate_clicked()
 
     cCurrency   currTest( ui->ledCurrencyValue->text(), ctTest, ui->ledVat->text().toInt() );
 
-    ui->lblCurrencyFull->setText( currTest.currencyFullString() );
+    ui->lblCurrencyFull->setText( currTest.currencyFullStringShort() );
 }

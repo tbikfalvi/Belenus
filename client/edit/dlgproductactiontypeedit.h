@@ -2,7 +2,7 @@
 #define DLGPRODUCTACTIONTYPEEDIT_H
 
 #include "belenus.h"
-#include "../../belenus-build-desktop/ui_dlgproductactiontypeedit.h"
+#include "../../build/belenus/ui_dlgproductactiontypeedit.h"
 #include "../db/dbproductactiontype.h"
 
 class cDlgProductActionTypeEdit : public QDialog, protected Ui::dlgProductActionTypeEdit

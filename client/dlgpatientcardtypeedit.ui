@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>469</height>
+    <width>489</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,16 +67,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rbNet">
+           <widget class="QCheckBox" name="chkWithVAT">
             <property name="text">
-             <string>Net</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rbGross">
-            <property name="text">
-             <string>Gross</string>
+             <string>with</string>
             </property>
            </widget>
           </item>
@@ -109,6 +102,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblPriceFull">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

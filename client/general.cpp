@@ -135,22 +135,24 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
 
     if( m_nVatValue > 0 )
     {
-        int nValue;
-
         if( p_ctCurrencyType == CURR_NET )
         {
-            nValue = m_nValue + (m_nValue * m_nVatValue) / 100;
+            m_nValueNet   = m_nValue;
+            m_nValueGross = m_nValue + (m_nValue * m_nVatValue) / 100;
         }
         else
         {
-            nValue = m_nValue  * 100 / (100 + m_nVatValue);
+            m_nValueNet   = m_nValue  * 100 / (100 + m_nVatValue);
+            m_nValueGross = m_nValue;
         }
-        m_nValue = nValue;
-        m_nValueLeft    = m_nValue / 100;
-        m_nValueRight   = m_nValue % 100;
+    }
+    else
+    {
+        m_nValueNet   = m_nValue;
+        m_nValueGross = m_nValue;
     }
 
-    g_obLogger(cSeverity::INFO) << "full/left/right " << QString("%1/%2/%3").arg(m_nValue).arg(m_nValueLeft).arg(m_nValueRight) << EOM;
+    g_obLogger(cSeverity::INFO) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
 }
 //====================================================================================
 cCurrency::~cCurrency()
@@ -158,7 +160,67 @@ cCurrency::~cCurrency()
 
 }
 //====================================================================================
-QString cCurrency::currencyFullString() const
+QString cCurrency::currencyValue(currType p_ctCurrencyType)
 {
-    return QString( "%1%2%3 %4" ).arg(m_nValueLeft).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight).arg(g_poPrefs->getCurrencyShort());
+    if( p_ctCurrencyType == CURR_GROSS )
+    {
+        m_nValue = m_nValueGross;
+    }
+    else
+    {
+        m_nValue = m_nValueNet;
+    }
+
+    m_nValueLeft  = m_nValue / 100;
+    m_nValueRight = m_nValue % 100;
+
+    return QString( "%1" ).arg( m_nValue );
 }
+//====================================================================================
+QString cCurrency::currencyString(currType p_ctCurrencyType)
+{
+    currencyValue( p_ctCurrencyType );
+
+    return QString( "%1%2%3" ).arg(m_nValueLeft).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
+}
+//====================================================================================
+QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
+{
+    currencyValue( p_ctCurrencyType );
+
+    return QString( "%1%2%3" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
+}
+//====================================================================================
+QString cCurrency::currencyFullStringShort( currType p_ctCurrencyType )
+{
+    currencyValue( p_ctCurrencyType );
+
+    return QString( "%1%2%3 %4" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight).arg(g_poPrefs->getCurrencyShort());
+}
+//====================================================================================
+QString cCurrency::currencyFullStringLong( currType p_ctCurrencyType )
+{
+    currencyValue( p_ctCurrencyType );
+
+    return QString( "%1%2%3 %4" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight).arg(g_poPrefs->getCurrencyLong());
+}
+//====================================================================================
+QString cCurrency::_separatedValue(int p_nValue)
+{
+    QString qsValue = QString::number( p_nValue );
+    QString qsRet = "";
+
+    if( qsValue.length() > 3 )
+    {
+        while( qsValue.length() > 3 )
+        {
+            qsRet.insert( 0, qsValue.right(3) );
+            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
+            qsValue.truncate( qsValue.length()-3 );
+        }
+    }
+    qsRet.insert( 0, qsValue );
+
+    return qsRet;
+}
+//====================================================================================

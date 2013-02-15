@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDEDIT_H
 
 #include "belenus.h"
-#include "../../belenus-build-desktop/ui_dlgpatientcardedit.h"
+#include "../../build/belenus/ui_dlgpatientcardedit.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
 
