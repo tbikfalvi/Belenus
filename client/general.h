@@ -31,9 +31,9 @@ public:
     cGeneral();
     ~cGeneral();
 
-    void        setApplication( QApplication *p_poApplication );
-    void        setApplicationLanguage( const QString &p_qsLang );
-    QString     convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    void             setApplication( QApplication *p_poApplication );
+    void             setApplicationLanguage( const QString &p_qsLang );
+    QString          convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 private:
     QApplication    *m_poMainApplication;

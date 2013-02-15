@@ -383,9 +383,11 @@
  <tabstops>
   <tabstop>ledAmountToPay</tabstop>
   <tabstop>ledAmountGiven</tabstop>
+  <tabstop>cmbPaymentType</tabstop>
   <tabstop>pbComment</tabstop>
   <tabstop>teComment</tabstop>
   <tabstop>pbOk</tabstop>
+  <tabstop>pbShoppingCart</tabstop>
   <tabstop>pbCancel</tabstop>
  </tabstops>
  <resources/>

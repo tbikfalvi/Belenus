@@ -59,6 +59,11 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
 
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
+
+    if( ledAmountGiven->isEnabled() )
+    {
+        ledAmountGiven->selectAll();
+    }
 }
 
 cDlgCassaAction::~cDlgCassaAction()
@@ -173,6 +178,7 @@ void cDlgCassaAction::on_pbComment_clicked()
         pbComment->setText( tr("Comment <<") );
         setMinimumHeight( m_nHeightBig );
         setMaximumHeight( m_nHeightBig );
+        teComment->setFocus();
     }
     else
     {

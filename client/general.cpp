@@ -133,6 +133,23 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     // Calculate full currency value (original *100)
     m_nValue = m_nValueLeft * 100 + m_nValueRight;
 
+    if( m_nVatValue > 0 )
+    {
+        int nValue;
+
+        if( p_ctCurrencyType == CURR_NET )
+        {
+            nValue = m_nValue + (m_nValue * m_nVatValue) / 100;
+        }
+        else
+        {
+            nValue = m_nValue  * 100 / (100 + m_nVatValue);
+        }
+        m_nValue = nValue;
+        m_nValueLeft    = m_nValue / 100;
+        m_nValueRight   = m_nValue % 100;
+    }
+
     g_obLogger(cSeverity::INFO) << "full/left/right " << QString("%1/%2/%3").arg(m_nValue).arg(m_nValueLeft).arg(m_nValueRight) << EOM;
 }
 //====================================================================================
