@@ -44,6 +44,7 @@ public:
 private:
 
     QStringList     m_qslLicenceKeys;
+    QStringList     m_qslLicenceCodes;
     QStringList     m_qslCode;
 
     licenceType     m_LicenceType;

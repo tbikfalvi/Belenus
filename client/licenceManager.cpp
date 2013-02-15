@@ -52,6 +52,37 @@ cLicenceManager::cLicenceManager()
                                      << "A@RAZ@"  // BLNS28_JKYJQK <- BLNS28_904968
                                      << "LXRJGA"  // BLNS29_GSYALJ <- BLNS29_684016
                                      << "CZAJ_J"; // BLNS30_HQJATA <- BLNS30_766099
+
+    m_qslLicenceCodes = QStringList()<< "358194"
+                                     << "653212"
+                                     << "167652"
+                                     << "882602"
+                                     << "773460"
+                                     << "897988"
+                                     << "589070"
+                                     << "935137"
+                                     << "324397"
+                                     << "931803"
+                                     << "256557"
+                                     << "789876"
+                                     << "952095"
+                                     << "134051"
+                                     << "141028"
+                                     << "445072"
+                                     << "486233"
+                                     << "700176"
+                                     << "778457"
+                                     << "497581"
+                                     << "558305"
+                                     << "259891"
+                                     << "429280"
+                                     << "692059"
+                                     << "932295"
+                                     << "386401"
+                                     << "580046"
+                                     << "904968"
+                                     << "684016"
+                                     << "766099";
 }
 
 cLicenceManager::~cLicenceManager()
@@ -217,6 +248,8 @@ void cLicenceManager::_checkCode()
         m_qsCode += m_qslCode.at( i*10 + qsCodeReg.at(i).digitValue() );
     }
 /*
+    // THIS CODE CREATES THE ENCODED BELENUS LICENCE KEY STRINGLIST
+    // USE ONLY IF NEW CODES NEEDED
     QString qsLK = "";
     for( int j=0; j<30; j++ )
     {
@@ -247,8 +280,43 @@ void cLicenceManager::_checkCode()
 
 void cLicenceManager::_checkValidity()
 {
-    // 'TO BE SOLVED'
-    // regisztrált serial number esetén ellenõrzés
+    g_obLogger(cSeverity::INFO) << "Check validity" << EOM;
+
+    QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
+
+    if( settings.contains( "Active" ) )
+    {
+        QString qsCodeReg = settings.value( "Code", 999999 ).toString();
+        QString qsCodeAct = settings.value( "Active", 999999 ).toString();
+
+        g_obLogger(cSeverity::DEBUG) << "C:" << qsCodeReg << EOM;
+        g_obLogger(cSeverity::DEBUG) << "A:" << qsCodeAct << EOM;
+
+        int     nLicenceNumber = m_qsLicenceString.mid( 4, 2 ).toInt();
+
+        if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER )
+        {
+            return;
+        }
+        else
+        {
+            QString qsCodeLic = m_qslLicenceCodes.at( nLicenceNumber-1 );
+            QString qsCodeVer = QString::number( (qsCodeReg.toInt() + qsCodeLic.toInt()) % 1000000 );
+
+            g_obLogger(cSeverity::DEBUG) << "L:" << qsCodeLic << EOM;
+            g_obLogger(cSeverity::DEBUG) << "V:" << qsCodeVer << EOM;
+
+            if( qsCodeVer.compare(qsCodeAct) == 0 )
+            {
+                m_LicenceType = LTYPE_ACTIVATED;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+    g_obLogger(cSeverity::INFO) << "Check validity ... FINISHED" << EOM;
 }
 
 void cLicenceManager::_EnCode( char *str, int size )
