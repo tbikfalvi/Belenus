@@ -34,40 +34,11 @@
      <widget class="QLineEdit" name="ledCurrencyValue"/>
     </item>
     <item>
-     <widget class="QRadioButton" name="rbNet">
+     <widget class="QCheckBox" name="chkWithVAT">
       <property name="text">
-       <string>Net</string>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
+       <string>with</string>
       </property>
      </widget>
-    </item>
-    <item>
-     <widget class="QRadioButton" name="rbGros">
-      <property name="text">
-       <string>Gros</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Fixed</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item>
      <widget class="QLabel" name="lblVat">

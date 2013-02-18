@@ -23,8 +23,12 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     deValidDateFrom->setDate( QDate(2000,1,1) );
     deValidDateTo->setDate( QDate(2000,1,1) );
 
+    chkWithVAT->setChecked( true );
+
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
+
+    connect( ledVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPrice_textChanged(QString)) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPatientCardType", QPoint(420,245) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -34,7 +38,7 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     if( m_poPatientCardType )
     {
         ledName->setText( m_poPatientCardType->name() );
-        ledPrice->setText( QString::number(m_poPatientCardType->price()) );
+        ledPrice->setText( QString::number(m_poPatientCardType->price()/100) );
         ledVatpercent->setText( QString::number(m_poPatientCardType->vatpercent()) );
         ledUnits->setText( QString::number(m_poPatientCardType->units()) );
         ledUnitTime->setText( QString::number(m_poPatientCardType->unitTime()) );
@@ -239,8 +243,10 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             if( chkSaturday->isChecked() )  nWeekDays |= 32;
             if( chkSunday->isChecked() )    nWeekDays |= 64;
 
+            cCurrency currPrice( ledPrice->text(), (chkWithVAT->isChecked()?cCurrency::CURR_NET:cCurrency::CURR_GROSS), ledVatpercent->text().toInt() );
+
             m_poPatientCardType->setName( ledName->text() );
-            m_poPatientCardType->setPrice( ledPrice->text().toUInt() );
+            m_poPatientCardType->setPrice( currPrice.currencyValue(cCurrency::CURR_NET).toInt() );
             m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
             m_poPatientCardType->setUnitTime( ledUnitTime->text().toUInt() );
@@ -342,4 +348,17 @@ void cDlgPatientCardTypeEdit::on_listValidInterval_currentItemChanged(QListWidge
 {
     pbEdit->setEnabled( current != NULL ? true : false );
     pbDelete->setEnabled( current != NULL ? true : false );
+}
+
+void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &arg1)
+{
+    cCurrency currPrice( ledPrice->text(), (chkWithVAT->isChecked()?cCurrency::CURR_NET:cCurrency::CURR_GROSS), ledVatpercent->text().toInt() );
+
+    lblPriceFull->setText( currPrice.currencyFullStringShort() );
+}
+
+void cDlgPatientCardTypeEdit::on_chkWithVAT_clicked()
+{
+    if( !chkWithVAT->isChecked() ) ledVatpercent->setText( "0" );
+    on_ledPrice_textChanged("");
 }

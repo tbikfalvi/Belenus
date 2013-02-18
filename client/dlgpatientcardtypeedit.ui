@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>489</width>
+    <width>504</width>
     <height>481</height>
    </rect>
   </property>
@@ -60,7 +60,7 @@
            <widget class="QLineEdit" name="ledPrice">
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>100</width>
               <height>16777215</height>
              </size>
             </property>
@@ -69,14 +69,7 @@
           <item>
            <widget class="QCheckBox" name="chkWithVAT">
             <property name="text">
-             <string>with</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblVatpercent">
-            <property name="text">
-             <string>VAT :</string>
+             <string>with VAT</string>
             </property>
            </widget>
           </item>

@@ -6,6 +6,10 @@
 cDlgTest::cDlgTest(QWidget *parent) : QDialog(parent), ui(new Ui::cDlgTest)
 {
     ui->setupUi(this);
+
+    ui->ledVat->setText( "0" );
+
+    connect( ui->ledCurrencyValue, SIGNAL(textEdited(QString)), this, SLOT(on_pbCalculate_clicked()) );
 }
 
 cDlgTest::~cDlgTest()
@@ -15,12 +19,11 @@ cDlgTest::~cDlgTest()
 
 void cDlgTest::on_pbCalculate_clicked()
 {
-    cCurrency::currType ctTest = cCurrency::CURR_NET;
+    cCurrency::currType ctTest = cCurrency::CURR_GROSS;
 
-    if( ui->rbNet->isChecked() ) ctTest = cCurrency::CURR_NET;
-    else if( ui->rbGros->isChecked() ) ctTest = cCurrency::CURR_GROSS;
+    if( ui->chkWithVAT->isChecked() ) ctTest = cCurrency::CURR_NET;
 
-    cCurrency   currTest( ui->ledCurrencyValue->text(), ctTest, ui->ledVat->text().toInt() );
+    cCurrency currTest( ui->ledCurrencyValue->text(), ctTest, ui->ledVat->text().toInt() );
 
     ui->lblCurrencyFull->setText( currTest.currencyFullStringShort() );
 }

@@ -122,7 +122,7 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
         QStringList qslCurr = qsPureCurrency.split( g_poPrefs->getCurrencyDecimalSeparator() );
 
         m_nValueLeft    = qslCurr.at(0).toInt();
-        m_nValueRight   = qslCurr.at(1).toInt();
+        m_nValueRight   = qslCurr.at(1).left(2).toInt();
     }
     else
     {
