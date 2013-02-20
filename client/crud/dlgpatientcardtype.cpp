@@ -122,11 +122,11 @@ void cDlgPatientCardType::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, price, units, unitTime, validDateFrom, validDateTo, validDays, active, archive FROM patientCardTypes";
+        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, (price/100) as price, units, unitTime, validDateFrom, validDateTo, validDays, active, archive FROM patientCardTypes";
     }
     else
     {
-        m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units, unitTime, validDateFrom, validDateTo, validDays FROM patientCardTypes WHERE licenceId>0 AND active=1";
+        m_qsQuery = "SELECT patientCardTypeId AS id, name, (price/100) as price, units, unitTime, validDateFrom, validDateTo, validDays FROM patientCardTypes WHERE licenceId>0 AND active=1";
     }
 
     QString stTemp;

@@ -51,6 +51,9 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
+            if( poQuery->value(0) == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+                continue;
+
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
             if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
@@ -172,8 +175,10 @@ void cDlgPatientCardSell::on_cmbCardType_currentIndexChanged(int index)
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
     }
-    int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
 
+    cCurrency   cPrice( QString::number(m_poPatientCardType->price()), cCurrency::CURR_NET, m_poPatientCardType->vatpercent() );
+
+    int priceTotal = cPrice.currencyValue().toInt();
     int discount = 0;
 
     if( cmbPatient->currentIndex() > 0 )
@@ -188,10 +193,12 @@ void cDlgPatientCardSell::on_cmbCardType_currentIndexChanged(int index)
         discount = priceTotal;
     }
 
+    cCurrency cDiscount( QString::number(discount) );
+
     if( discount != priceTotal )
-        ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
+        ledPrice->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
     else
-        ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
+        ledPrice->setText( cPrice.currencyFullStringShort() );
 
     if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
@@ -326,7 +333,9 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                     return;
                 }
 
-                int     inPriceTotal        = m_poPatientCardType->price()+(m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
+                cCurrency   cPrice( QString::number(m_poPatientCardType->price()), cCurrency::CURR_NET, m_poPatientCardType->vatpercent() );
+
+                int     inPriceTotal        = cPrice.currencyValue().toInt();
                 int     inPriceDiscounted   = 0;
 
                 if( cmbPatient->currentIndex() > 0 )
@@ -340,6 +349,8 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 {
                     inPriceDiscounted = inPriceTotal;
                 }
+
+                cCurrency cDiscounted( QString::number(inPriceDiscounted) );
 
                 cDBShoppingCart obDBShoppingCart;
 
