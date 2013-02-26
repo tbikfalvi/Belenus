@@ -176,7 +176,7 @@ void cDlgPatientCardSell::on_cmbCardType_currentIndexChanged(int index)
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
     }
 
-    cCurrency   cPrice( QString::number(m_poPatientCardType->price()), cCurrency::CURR_NET, m_poPatientCardType->vatpercent() );
+    cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
 
     int priceTotal = cPrice.currencyValue().toInt();
     int discount = 0;
@@ -333,7 +333,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                     return;
                 }
 
-                cCurrency   cPrice( QString::number(m_poPatientCardType->price()), cCurrency::CURR_NET, m_poPatientCardType->vatpercent() );
+                cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
 
                 int     inPriceTotal        = cPrice.currencyValue().toInt();
                 int     inPriceDiscounted   = 0;
@@ -362,7 +362,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PC_SELL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
                 obDBShoppingCart.setItemCount( 1 );
-                obDBShoppingCart.setItemNetPrice( m_poPatientCardType->price() );
+                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue(cCurrency::CURR_NET).toInt() );
                 obDBShoppingCart.setItemVAT( m_poPatientCardType->vatpercent() );
                 obDBShoppingCart.setItemDiscount( inPriceTotal - inPriceDiscounted );
                 obDBShoppingCart.setItemSumPrice( inPriceDiscounted );

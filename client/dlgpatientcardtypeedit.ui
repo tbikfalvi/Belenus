@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
+    <width>499</width>
     <height>481</height>
    </rect>
   </property>
@@ -58,6 +58,12 @@
           </item>
           <item>
            <widget class="QLineEdit" name="ledPrice">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -67,19 +73,32 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="chkWithVAT">
+           <widget class="QLabel" name="lblIncluding">
             <property name="text">
-             <string>with VAT</string>
+             <string>including</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLineEdit" name="ledVatpercent">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximumSize">
              <size>
               <width>50</width>
               <height>16777215</height>
              </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblVAT">
+            <property name="text">
+             <string>VAT</string>
             </property>
            </widget>
           </item>

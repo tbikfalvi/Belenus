@@ -23,8 +23,6 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     deValidDateFrom->setDate( QDate(2000,1,1) );
     deValidDateTo->setDate( QDate(2000,1,1) );
 
-    chkWithVAT->setChecked( true );
-
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
 
@@ -243,10 +241,10 @@ void cDlgPatientCardTypeEdit::on_pbSave_clicked()
             if( chkSaturday->isChecked() )  nWeekDays |= 32;
             if( chkSunday->isChecked() )    nWeekDays |= 64;
 
-            cCurrency currPrice( ledPrice->text(), (chkWithVAT->isChecked()?cCurrency::CURR_NET:cCurrency::CURR_GROSS), ledVatpercent->text().toInt() );
+            cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatpercent->text().toInt() );
 
             m_poPatientCardType->setName( ledName->text() );
-            m_poPatientCardType->setPrice( currPrice.currencyValue(cCurrency::CURR_NET).toInt() );
+            m_poPatientCardType->setPrice( currPrice.currencyValue().toInt() );
             m_poPatientCardType->setVatpercent( ledVatpercent->text().toInt() );
             m_poPatientCardType->setUnits( ledUnits->text().toUInt() );
             m_poPatientCardType->setUnitTime( ledUnitTime->text().toUInt() );
@@ -352,13 +350,8 @@ void cDlgPatientCardTypeEdit::on_listValidInterval_currentItemChanged(QListWidge
 
 void cDlgPatientCardTypeEdit::on_ledPrice_textChanged(const QString &arg1)
 {
-    cCurrency currPrice( ledPrice->text(), (chkWithVAT->isChecked()?cCurrency::CURR_NET:cCurrency::CURR_GROSS), ledVatpercent->text().toInt() );
+    cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatpercent->text().toInt() );
 
-    lblPriceFull->setText( currPrice.currencyFullStringShort() );
+    lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledVatpercent->text()) );
 }
 
-void cDlgPatientCardTypeEdit::on_chkWithVAT_clicked()
-{
-    if( !chkWithVAT->isChecked() ) ledVatpercent->setText( "0" );
-    on_ledPrice_textChanged("");
-}

@@ -82,7 +82,7 @@ QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //*********************************************************************************************************************
 cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {
-    cTracer obTrace( "cCurrency::cCurrency" );
+    cTracer obTrace( "cCurrency::cCurrency(QString,currType,int)" );
 
     m_nValue        = 0;
     m_nValueLeft    = 0;
@@ -90,6 +90,34 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
 
+    _init( p_qsCurrencyString, p_ctCurrencyType, p_nVat );
+}
+//*********************************************************************************************************************
+// Class cCurrency
+//*********************************************************************************************************************
+cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat)
+{
+    cTracer obTrace( "cCurrency::cCurrency(int,currType,int)" );
+
+    m_nValue        = 0;
+    m_nValueLeft    = 0;
+    m_nValueRight   = 0;
+    m_ctCurrType    = p_ctCurrencyType;
+    m_nVatValue     = p_nVat;
+
+    QString qsCurrency = QString::number(p_nCurrencyValue);
+
+    qsCurrency.insert( qsCurrency.length()-2, g_poPrefs->getCurrencyDecimalSeparator() );
+
+    _init( qsCurrency, p_ctCurrencyType, p_nVat );
+
+    g_obLogger(cSeverity::INFO) << "m_nValue " << m_nValue << EOM;
+    g_obLogger(cSeverity::INFO) << "m_nValueNet " << m_nValueNet << EOM;
+    g_obLogger(cSeverity::INFO) << "m_nValueGross " << m_nValueGross << EOM;
+}
+//====================================================================================
+void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
+{
     g_obLogger(cSeverity::INFO) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
 
     QString qsPureCurrency = p_qsCurrencyString;
@@ -103,26 +131,24 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     {
         qsPureCurrency = qsPureCurrency.remove( g_poPrefs->getCurrencyShort() );
     }
-    g_obLogger(cSeverity::INFO) << "1: [" << qsPureCurrency << "]" << EOM;
 
     // Remove currency tousand separator
     if( p_qsCurrencyString.contains( g_poPrefs->getCurrencySeparator() ) )
     {
         qsPureCurrency = qsPureCurrency.remove( g_poPrefs->getCurrencySeparator() );
     }
-    g_obLogger(cSeverity::INFO) << "2: [" << qsPureCurrency << "]" << EOM;
 
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
-    g_obLogger(cSeverity::INFO) << "3: [" << qsPureCurrency << "]" << EOM;
 
     // Get value before and after decimal separator
     if( qsPureCurrency.contains( g_poPrefs->getCurrencyDecimalSeparator() ) )
     {
         QStringList qslCurr = qsPureCurrency.split( g_poPrefs->getCurrencyDecimalSeparator() );
+        QString     qsRight = qslCurr.at(1);
 
         m_nValueLeft    = qslCurr.at(0).toInt();
-        m_nValueRight   = qslCurr.at(1).left(2).toInt();
+        m_nValueRight   = qsRight.append("00").left(2).toInt();
     }
     else
     {
@@ -174,6 +200,8 @@ QString cCurrency::currencyValue(currType p_ctCurrencyType)
     m_nValueLeft  = m_nValue / 100;
     m_nValueRight = m_nValue % 100;
 
+    g_obLogger(cSeverity::DEBUG) << "L/R " << QString("%1/%2").arg(m_nValueLeft).arg(m_nValueRight) << EOM;
+
     return QString( "%1" ).arg( m_nValue );
 }
 //====================================================================================
@@ -181,14 +209,28 @@ QString cCurrency::currencyString(currType p_ctCurrencyType)
 {
     currencyValue( p_ctCurrencyType );
 
-    return QString( "%1%2%3" ).arg(m_nValueLeft).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
+    QString qsRet = "";
+
+    if( m_nValueRight > 0 )
+        qsRet = QString( "%1%2%3" ).arg(m_nValueLeft).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
+    else
+        qsRet = QString( "%1" ).arg(m_nValueLeft);
+
+    return qsRet;
 }
 //====================================================================================
 QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
 {
     currencyValue( p_ctCurrencyType );
 
-    return QString( "%1%2%3" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
+    QString qsRet = "";
+
+    if( m_nValueRight > 0 )
+        qsRet = QString( "%1%2%3" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight);
+    else
+        qsRet = QString( "%1" ).arg(_separatedValue(m_nValueLeft));
+
+    return qsRet;
 }
 //====================================================================================
 QString cCurrency::currencyFullStringShort( currType p_ctCurrencyType )

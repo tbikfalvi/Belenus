@@ -1939,3 +1939,8 @@ void cWndMain::on_action_TestDlgStarted()
     obDlgTest.exec();
 }
 
+
+void cWndMain::on_ledPassword_returnPressed()
+{
+    on_pbLogin_clicked();
+}

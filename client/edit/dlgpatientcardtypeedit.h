@@ -25,7 +25,6 @@ private slots:
     void on_pbSave_clicked();
     void on_rbInterval_toggled(bool checked);
     void on_ledPrice_textChanged(const QString &arg1);
-    void on_chkWithVAT_clicked();
 };
 
 #endif

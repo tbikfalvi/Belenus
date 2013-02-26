@@ -28,10 +28,16 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
         nMoney = m_poShoppingCart->itemSumPrice();
     }
 
+    g_obLogger(cSeverity::DEBUG) << "nMoney: [" << nMoney << "]" << EOM;
+
     if( nMoney > 0 )
     {
-        ledAmountToPay->setText( QString::number( nMoney ) );
-        ledAmountGiven->setText( QString::number( nMoney ) );
+        cCurrency   cPrice( nMoney );
+
+        g_obLogger(cSeverity::DEBUG) << "[" << cPrice.currencyValue() << "]" << EOM;
+
+        ledAmountToPay->setText( cPrice.currencyStringSeparator() );
+        ledAmountGiven->setText( cPrice.currencyStringSeparator() );
 
         ledAmountToPay->setEnabled( false );
         ledAmountGiven->setFocus();
@@ -128,6 +134,12 @@ void cDlgCassaAction::on_pbCancel_clicked()
 
 void cDlgCassaAction::updateMoneyBack()
 {
+    cCurrency   cGiven( ledAmountGiven->text() );
+    cCurrency   cToPay( ledAmountToPay->text() );
+    cCurrency   cToBack( cGiven.currencyValue().toInt() - cToPay.currencyValue().toInt() );
+
+    lblAmountToBack->setText( cToBack.currencyStringSeparator() );
+/*
     QString qsGiven = ledAmountGiven->text();
     QString qsToPay = ledAmountToPay->text();
 
@@ -135,16 +147,21 @@ void cDlgCassaAction::updateMoneyBack()
     qsToPay.remove(QChar(','));
 
     lblAmountToBack->setText( convertCurrency(QString::number( qsGiven.toInt() - qsToPay.toInt() )) );
+*/
 }
 
 void cDlgCassaAction::ledAmountToPay_textEdited(QString text)
 {
-    ledAmountToPay->setText( convertCurrency(text) );
+    cCurrency   cPrice( text );
+
+    ledAmountToPay->setText( cPrice.currencyStringSeparator() );
 }
 
 void cDlgCassaAction::ledAmountGiven_textEdited(QString text)
 {
-    ledAmountGiven->setText( convertCurrency(text) );
+//    cCurrency   cPrice( text );
+
+//    ledAmountGiven->setText( cPrice.currencyString() );
 }
 
 QString cDlgCassaAction::convertCurrency(const QString &text) const

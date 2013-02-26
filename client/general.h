@@ -53,6 +53,7 @@ public:
     };
 
     cCurrency( const QString &p_qsCurrencyString = "", currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );
+    cCurrency( int p_nCurrencyValue = 0, currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );
     ~cCurrency();
 
     QString     currencyValue( currType p_ctCurrencyType = CURR_GROSS );
@@ -71,6 +72,7 @@ private:
     int         m_nValueNet;
     int         m_nValueGross;
 
+    void        _init( const QString &p_qsCurrencyString = "", currType p_ctCurrencyType = CURR_GROSS, int p_nVat = 0 );
     QString     _separatedValue( int p_nValue );
 };
 //====================================================================================

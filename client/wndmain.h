@@ -128,6 +128,7 @@ private slots:
     void on_action_PaymentMethods_triggered();
     void on_action_TestDlgStarted();
     void on_pbLogin_clicked();
+    void on_ledPassword_returnPressed();
 };
 
 #endif
