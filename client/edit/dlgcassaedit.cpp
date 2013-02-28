@@ -49,9 +49,11 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
         m_qsStop.replace( 10, 1, " " );
     }
 
+    cCurrency   cBalance( obCassa.currentBalance() );
+
     dtStartDate->setText( m_qsStart );
     dtStopDate->setText( m_qsStop );
-    lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+    lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     lblUser->setText( obUser.realName() );
 
     pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
