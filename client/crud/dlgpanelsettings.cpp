@@ -194,11 +194,11 @@ void cDlgPanelSettings::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, (usePrice/100) as usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
     else
     {
-        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, (usePrice/100) as usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
 
     cDlgCrud::refreshTable();
@@ -335,6 +335,5 @@ void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
             if( poQuery ) delete poQuery;
         }
     }
-    QMessageBox::information( this, tr("Information"),
-                              tr("Device usage copy process finished.") );
+    QMessageBox::information( this, tr("Information"), tr("Device usage copy process finished.") );
 }

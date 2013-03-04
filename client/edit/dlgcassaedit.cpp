@@ -114,11 +114,11 @@ void cDlgCassaEdit::refreshTable()
 {
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString( "SELECT cassaHistoryId, cassahistory.licenceId, cassahistory.comment, actionTime, actionValue, actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaHistoryId, cassahistory.licenceId, cassahistory.comment, actionTime, (actionValue/100) as actionValue, (actionBalance/100) as actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
     }
     else
     {
-        m_qsQuery = QString( "SELECT cassaHistoryId as id, cassahistory.comment, actionTime, actionValue, actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaHistoryId as id, cassahistory.comment, actionTime, (actionValue/100) as actionValue, (actionBalance/100) as actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
     }
 
     tbvCassa->selectionModel()->blockSignals( true );
@@ -149,8 +149,7 @@ void cDlgCassaEdit::refreshTable()
     tbvCassa->selectionModel()->blockSignals( false );
 }
 
-void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected,
-                                     const QItemSelection &)
+void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected, const QItemSelection &)
 {
     m_inSelectedRow = -1;
     m_uiSelectedId  = 0;
@@ -212,11 +211,14 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
         QString     qsComment;
         int         nTemp = 0;
         bool        bShoppingCart = false;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart );
+        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart ) );
 
-        g_obCassa.cassaIncreaseMoney( stRet.toInt(), qsComment );
+        g_obCassa.cassaIncreaseMoney( cActionValue.currencyValue().toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );
-        lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+
+        cCurrency   cBalance( obCassa.currentBalance() );
+
+        lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     }
     refreshTable();
 }
@@ -240,11 +242,14 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
         QString     qsComment;
         int         nTemp = 0;
         bool        bShoppingCart = false;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart );
+        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart ) );
 
-        g_obCassa.cassaDecreaseMoney( stRet.toInt(), qsComment );
+        g_obCassa.cassaDecreaseMoney( cActionValue.currencyValue().toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );
-        lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+
+        cCurrency   cBalance( obCassa.currentBalance() );
+
+        lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     }
     refreshTable();
 }

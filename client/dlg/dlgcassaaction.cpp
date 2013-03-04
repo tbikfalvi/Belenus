@@ -152,9 +152,9 @@ void cDlgCassaAction::updateMoneyBack()
 
 void cDlgCassaAction::ledAmountToPay_textEdited(QString text)
 {
-    cCurrency   cPrice( text );
+//    cCurrency   cPrice( text );
 
-    ledAmountToPay->setText( cPrice.currencyStringSeparator() );
+//    ledAmountToPay->setText( cPrice.currencyStringSeparator() );
 }
 
 void cDlgCassaAction::ledAmountGiven_textEdited(QString text)

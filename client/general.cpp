@@ -235,16 +235,12 @@ QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
 //====================================================================================
 QString cCurrency::currencyFullStringShort( currType p_ctCurrencyType )
 {
-    currencyValue( p_ctCurrencyType );
-
-    return QString( "%1%2%3 %4" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight).arg(g_poPrefs->getCurrencyShort());
+    return QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyShort());
 }
 //====================================================================================
 QString cCurrency::currencyFullStringLong( currType p_ctCurrencyType )
 {
-    currencyValue( p_ctCurrencyType );
-
-    return QString( "%1%2%3 %4" ).arg(_separatedValue(m_nValueLeft)).arg(g_poPrefs->getCurrencyDecimalSeparator()).arg(m_nValueRight).arg(g_poPrefs->getCurrencyLong());
+    return QString( "%1 %2" ).arg(currencyStringSeparator(p_ctCurrencyType)).arg(g_poPrefs->getCurrencyLong());
 }
 //====================================================================================
 QString cCurrency::_separatedValue(int p_nValue)
