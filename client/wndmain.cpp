@@ -1944,3 +1944,14 @@ void cWndMain::on_ledPassword_returnPressed()
 {
     on_pbLogin_clicked();
 }
+
+
+
+
+
+
+
+
+
+
+

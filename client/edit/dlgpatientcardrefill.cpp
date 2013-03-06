@@ -175,8 +175,10 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
     }
-    int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
 
+    cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
+
+    int priceTotal = cPrice.currencyValue().toInt();
     int discount = 0;
 
     if( cmbPatient->currentIndex() > 0 )
@@ -191,10 +193,12 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
         discount = priceTotal;
     }
 
+    cCurrency cDiscount( QString::number(discount) );
+
     if( discount != priceTotal )
-        ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
+        ledPrice->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
     else
-        ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
+        ledPrice->setText( cPrice.currencyFullStringShort() );
 
     if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {

@@ -227,7 +227,7 @@ void cDlgPatientCardEdit::refillPatientCard()
 
     ledBarcode->setEnabled( false );
     cmbCardType->setCurrentIndex( 0 );
-    ledPrice->setText( convertCurrency(0,g_poPrefs->getCurrencyShort()) );
+    ledPrice->setText( QString("0 %1").arg(g_poPrefs->getCurrencyShort()) );
     cmbPatient->setEnabled( false );
     cmbCardType->setFocus();
 }
@@ -492,8 +492,10 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
             deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
         }
-        int priceTotal = m_poPatientCardType->price() + (m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
 
+        cCurrency   cPrice( m_poPatientCardType->price(), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
+
+        int priceTotal = cPrice.currencyValue().toInt();
         int discount = 0;
 
         if( cmbPatient->currentIndex() > 0 )
@@ -508,10 +510,12 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             discount = priceTotal;
         }
 
+        cCurrency cDiscount( QString::number(discount) );
+
         if( discount != priceTotal )
-            ledPrice->setText( QString("%1 (%2)").arg(convertCurrency(discount,g_poPrefs->getCurrencyShort())).arg(convertCurrency(priceTotal,g_poPrefs->getCurrencyShort())) );
+            ledPrice->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
         else
-            ledPrice->setText( convertCurrency(priceTotal,g_poPrefs->getCurrencyShort()) );
+            ledPrice->setText( cPrice.currencyFullStringShort() );
 
         if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
         {
@@ -548,26 +552,6 @@ void cDlgPatientCardEdit::on_cmbCardType_currentIndexChanged(int index)
             lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
         }
     }
-}
-
-QString cDlgPatientCardEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
-{
-    QString qsValue = QString::number( p_nCurrencyValue );
-    QString qsRet = "";
-
-    if( qsValue.length() > 3 )
-    {
-        while( qsValue.length() > 3 )
-        {
-            qsRet.insert( 0, qsValue.right(3) );
-            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
-            qsValue.truncate( qsValue.length()-3 );
-        }
-    }
-    qsRet.insert( 0, qsValue );
-    qsRet += " " + p_qsCurrency;
-
-    return qsRet;
 }
 
 void cDlgPatientCardEdit::on_cmbPatient_currentIndexChanged(int /*index*/)

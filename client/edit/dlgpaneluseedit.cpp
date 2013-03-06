@@ -22,9 +22,10 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
 
     if( m_poPanelUses )
     {
+        cCurrency   cPrice( m_poPanelUses->usePrice() );
         ledUseName->setText( m_poPanelUses->name() );
         ledUseTime->setText( QString::number(m_poPanelUses->useTime()) );
-        ledUsePrice->setText( QString::number(m_poPanelUses->usePrice()) );
+        ledUsePrice->setText( cPrice.currencyString() );
     }
 }
 
@@ -60,7 +61,9 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         QMessageBox::critical( this, tr( "Error" ), tr( "Use time must be greater than zero." ), QMessageBox::Ok );
     }
 
-    ledUsePrice->text().toInt( &bIsNumber );
+    cCurrency   cPrice( ledUsePrice->text() );
+
+    cPrice.currencyValue().toInt( &bIsNumber );
     if( ledUsePrice->text() == "" )
     {
         boCanBeSaved = false;
@@ -71,10 +74,10 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Use price value is invalid." ), QMessageBox::Ok );
     }
-    else if( ledUsePrice->text().toInt() < 1 )
+    else if( cPrice.currencyValue().toInt() <= 0 )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Use price must be greater than zero." ), QMessageBox::Ok );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Price of usage must be greater than zero." ), QMessageBox::Ok );
     }
 
     if( boCanBeSaved )
@@ -83,7 +86,7 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         m_poPanelUses->setPanelId( m_inPanelId );
         m_poPanelUses->setName( ledUseName->text() );
         m_poPanelUses->setUseTime( ledUseTime->text().toInt() );
-        m_poPanelUses->setUsePrice( ledUsePrice->text().toInt() );
+        m_poPanelUses->setUsePrice( cPrice.currencyValue().toInt() );
         m_poPanelUses->save();
         QDialog::accept();
     }

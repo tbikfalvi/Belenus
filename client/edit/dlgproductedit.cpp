@@ -53,12 +53,15 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
 
     if( m_poProduct )
     {
+        cCurrency   cPriceBuy( m_poProduct->netPriceBuy(), cCurrency::CURR_GROSS, m_poProduct->vatPercentBuy() );
+        cCurrency   cPriceSell( m_poProduct->netPriceSell(), cCurrency::CURR_GROSS, m_poProduct->vatPercentSell() );
+
         ledName->setText( m_poProduct->name() );
         ledBarcode->setText( m_poProduct->barcode() );
         ledProductCount->setText( QString::number(m_poProduct->productCount()) );
-        ledPriceBuy->setText( QString::number(m_poProduct->netPriceBuy()) );
+        ledPriceBuy->setText( cPriceBuy.currencyString() );
         ledVatpercentBuy->setText( QString::number(m_poProduct->vatPercentBuy()) );
-        ledPriceSell->setText( QString::number(m_poProduct->netPriceSell()) );
+        ledPriceSell->setText( cPriceSell.currencyString() );
         ledVatpercentSell->setText( QString::number(m_poProduct->vatPercentSell()) );
 
         if( m_poProduct->licenceId() == 0 && m_poProduct->id() > 0 )
