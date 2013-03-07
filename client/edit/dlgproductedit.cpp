@@ -138,12 +138,15 @@ void cDlgProductEdit::on_pbSave_clicked()
                 qslProductTypes.append( QString("%1").arg(poProductType.id()) );
             }
 
+            cCurrency currPriceBuy( ledPriceBuy->text(), cCurrency::CURR_GROSS, ledVatpercentBuy->text().toInt() );
+            cCurrency currPriceSell( ledPriceSell->text(), cCurrency::CURR_GROSS, ledVatpercentSell->text().toInt() );
+
             m_poProduct->setName( ledName->text() );
             m_poProduct->setBarcode( ledBarcode->text() );
             m_poProduct->setProductCount( ledProductCount->text().toUInt() );
-            m_poProduct->setNetPriceBuy( ledPriceBuy->text().toUInt() );
+            m_poProduct->setNetPriceBuy( currPriceBuy.currencyValue().toInt() );
             m_poProduct->setVatPercentBuy( ledVatpercentBuy->text().toInt() );
-            m_poProduct->setNetPriceSell( ledPriceSell->text().toUInt() );
+            m_poProduct->setNetPriceSell( currPriceSell.currencyValue().toUInt() );
             m_poProduct->setVatPercentSell( ledVatpercentSell->text().toInt() );
             m_poProduct->setProductTypes( qslProductTypes );
             m_poProduct->setActive( true );
@@ -220,3 +223,21 @@ void cDlgProductEdit::on_pbProductStorage_clicked()
         ledProductCount->setText( QString::number(m_poProduct->productCount()) );
     }
 }
+
+void cDlgProductEdit::slot_PriceCalculate()
+{
+    cCurrency currPriceSell( ledPriceSell->text(), cCurrency::CURR_GROSS, ledVatpercentSell->text().toInt() );
+
+    lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPriceSell.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledVatpercentSell->text()) );
+}
+
+void cDlgProductEdit::on_ledPriceSell_textChanged(const QString &arg1)
+{
+    slot_PriceCalculate();
+}
+
+void cDlgProductEdit::on_ledVatpercentSell_textChanged(const QString &arg1)
+{
+    slot_PriceCalculate();
+}
+

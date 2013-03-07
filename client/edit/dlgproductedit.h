@@ -17,6 +17,7 @@ protected:
     cDBProduct *m_poProduct;
 
 private slots:
+    void slot_PriceCalculate();
     void on_pbProductStorage_clicked();
     void on_pbProductRemoveAll_clicked();
     void on_pbProductRemove_clicked();
@@ -24,6 +25,8 @@ private slots:
     void on_pbProductAdd_clicked();
     void on_pbCancel_clicked();
     void on_pbSave_clicked();
+    void on_ledPriceSell_textChanged(const QString &arg1);
+    void on_ledVatpercentSell_textChanged(const QString &arg1);
 };
 
 #endif

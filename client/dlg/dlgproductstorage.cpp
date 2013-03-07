@@ -21,8 +21,6 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-    pbRefreshNP->setIcon( QIcon("./resources/40x40_refresh.png") );
-    pbRefreshSP->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbActionTypes->setIcon( QIcon("./resources/40x40_productactiontype.png") );
 
     pbSave->setToolTip( tr("Please check the cassa and action type again\n"
@@ -47,9 +45,8 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
     {
         ledProductName->setText( m_poProduct->name() );
     }
-    ledNetPrice->setText( "0" );
+    ledPrice->setText( "0" );
     ledVatPercent->setText( "0" );
-    ledSumPrice->setText( "0" );
     ledProductCount->setText( "0" );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductStorage", QPoint(400,310) );
@@ -72,14 +69,13 @@ void dlgProductStorage::on_pbSave_clicked()
     cDBProductActionType    obDBProductActionType;
     obDBProductActionType.load( uiPATypeId );
 
-    if( ledNetPrice->text().length() == 0 )
-        ledNetPrice->setText( "0" );
+    cCurrency   cPrice( ledPrice, cCurrency::CURR_GROSS, ledVatPercent );
+
+    if( ledPrice->text().length() == 0 )
+        ledPrice->setText( "0" );
 
     if( ledVatPercent->text().length() == 0 )
         ledVatPercent->setText( "0" );
-
-    if( ledSumPrice->text().length() == 0 )
-        ledSumPrice->setText( "0" );
 
     if( ledProductCount->text().length() == 0 )
         ledProductCount->setText( "0" );
@@ -94,7 +90,7 @@ void dlgProductStorage::on_pbSave_clicked()
                                  "Please define a valid product count or select another product action.") );
         boCanBeSaved = false;
     }
-    if( ledNetPrice->text().toInt() > 0 && ledProductCount->text().toInt() == 0 )
+    if( cPrice.currencyValue().toInt() > 0 && ledProductCount->text().toInt() == 0 )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("You have defined price for the selected action\n"
@@ -107,9 +103,9 @@ void dlgProductStorage::on_pbSave_clicked()
     {
         try
         {
-            if( ledSumPrice->text().toInt() > 0 )
+            if( cPrice.currencyValue().toInt() > 0 )
             {
-                int nPrice = ledSumPrice->text().toInt();
+                int nPrice = cPrice.currencyValue().toInt();
 
                 if( obDBProductActionType.cassaActionIndication().compare( tr("Negative") ) == 0 )
                 {

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>317</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -126,14 +126,14 @@
         <item row="2" column="0">
          <widget class="QLabel" name="lblNetPrice">
           <property name="text">
-           <string>Net price :</string>
+           <string>Price :</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QLineEdit" name="ledNetPrice">
+           <widget class="QLineEdit" name="ledPrice">
             <property name="maximumSize">
              <size>
               <width>60</width>
@@ -149,25 +149,6 @@
            <widget class="QLabel" name="lblNetPriceCurrency">
             <property name="text">
              <string>$</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pbRefreshNP">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>24</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
             </property>
            </widget>
           </item>
@@ -189,7 +170,7 @@
         <item row="3" column="0">
          <widget class="QLabel" name="lblVatPercent">
           <property name="text">
-           <string>VAT Percent (%) :</string>
+           <string>including :</string>
           </property>
          </widget>
         </item>
@@ -215,6 +196,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>VAT (%)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -232,42 +220,16 @@
         <item row="4" column="0">
          <widget class="QLabel" name="lblSumPrice">
           <property name="text">
-           <string>SUM price :</string>
+           <string> </string>
           </property>
          </widget>
         </item>
         <item row="4" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QLineEdit" name="ledSumPrice">
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="inputMethodHints">
-             <set>Qt::ImhFormattedNumbersOnly</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblSumPriceCurrency">
+           <widget class="QLabel" name="lblPriceFull">
             <property name="text">
-             <string>$</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pbRefreshSP">
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
+             <string>(net + vat )</string>
             </property>
            </widget>
           </item>
