@@ -44,7 +44,6 @@ private:
     cDBProduct   m_obProduct;
 
     void _calculateTotalPrice();
-    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 protected:
     virtual void setupTableView();

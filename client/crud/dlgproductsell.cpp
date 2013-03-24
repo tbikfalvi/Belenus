@@ -394,7 +394,10 @@ void cDlgProductSell::on_pbEditProducts_clicked()
 void cDlgProductSell::_calculateTotalPrice()
 {
     int     nCount = ledItemCount->text().toInt();
-    int     nTotalPrice = ( m_obProduct.netPriceSell() + (m_obProduct.netPriceSell()/100)*m_obProduct.vatPercentSell() ) * nCount;
+
+    cCurrency   cPrice( m_obProduct.netPriceSell() * nCount );
+
+    int     nTotalPrice = cPrice.currencyValue().toInt();
     int     nDiscountedPrice = nTotalPrice;
 
     if( g_obGuest.id() > 0 )
@@ -406,31 +409,12 @@ void cDlgProductSell::_calculateTotalPrice()
         nDiscountedPrice = m_obProduct.getDiscountedPrice( nTotalPrice );
     }
 
+    cCurrency cDiscount( QString::number(nDiscountedPrice) );
+
     if( nDiscountedPrice != nTotalPrice )
-        ledTotalPrice->setText( QString("%1 (%2)").arg(convertCurrency(nDiscountedPrice,g_poPrefs->getCurrencyShort())).arg(convertCurrency(nTotalPrice,g_poPrefs->getCurrencyShort())) );
+        ledTotalPrice->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
     else
-        ledTotalPrice->setText( convertCurrency(nTotalPrice,g_poPrefs->getCurrencyShort()) );
+        ledTotalPrice->setText( cPrice.currencyFullStringShort() );
 }
 //===========================================================================================================
-//
-//-----------------------------------------------------------------------------------------------------------
-QString cDlgProductSell::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
-{
-    QString qsValue = QString::number( p_nCurrencyValue );
-    QString qsRet = "";
-
-    if( qsValue.length() > 3 )
-    {
-        while( qsValue.length() > 3 )
-        {
-            qsRet.insert( 0, qsValue.right(3) );
-            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
-            qsValue.truncate( qsValue.length()-3 );
-        }
-    }
-    qsRet.insert( 0, qsValue );
-    qsRet += " " + p_qsCurrency;
-
-    return qsRet;
-}
 
