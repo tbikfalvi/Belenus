@@ -1633,7 +1633,9 @@ void cWndMain::on_action_PayCash_triggered()
 
     mdiPanels->getPanelCashData( &uiPatientId, &inPriceNet, &inPriceDiscount );
 
-    inPriceTotal = inPriceNet + ((inPriceNet / 100) * g_poPrefs->getDeviceUseVAT()) - inPriceDiscount;
+    cCurrency cPrice( inPriceNet, cCurrency::CURR_GROSS, g_poPrefs->getDeviceUseVAT() );
+
+    inPriceTotal = cPrice.currencyValue().toInt() - inPriceDiscount;
 
     cDBShoppingCart obDBShoppingCart;
 
@@ -1645,7 +1647,7 @@ void cWndMain::on_action_PayCash_triggered()
     obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_DEVICE_USAGE );
     obDBShoppingCart.setItemName( tr("Using panel") );
     obDBShoppingCart.setItemCount( 1 );
-    obDBShoppingCart.setItemNetPrice( inPriceNet );
+    obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
     obDBShoppingCart.setItemVAT( g_poPrefs->getDeviceUseVAT() );
     obDBShoppingCart.setItemDiscount( inPriceDiscount );
     obDBShoppingCart.setItemSumPrice( inPriceTotal );

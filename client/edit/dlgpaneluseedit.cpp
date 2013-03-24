@@ -27,6 +27,7 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
         ledUseTime->setText( QString::number(m_poPanelUses->useTime()) );
         ledUsePrice->setText( cPrice.currencyString() );
     }
+    on_ledUsePrice_textEdited("");
 }
 
 cDlgPanelUseEdit::~cDlgPanelUseEdit()
@@ -97,3 +98,10 @@ void cDlgPanelUseEdit::on_pbCancel_clicked()
     QDialog::reject();
 }
 
+
+void cDlgPanelUseEdit::on_ledUsePrice_textEdited(const QString &arg1)
+{
+    cCurrency currPrice( ledUsePrice->text(), cCurrency::CURR_GROSS, g_poPrefs->getDeviceUseVAT() );
+
+    lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(g_poPrefs->getDeviceUseVAT()) );
+}

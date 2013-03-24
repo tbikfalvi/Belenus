@@ -69,7 +69,7 @@ void dlgProductStorage::on_pbSave_clicked()
     cDBProductActionType    obDBProductActionType;
     obDBProductActionType.load( uiPATypeId );
 
-    cCurrency   cPrice( ledPrice, cCurrency::CURR_GROSS, ledVatPercent );
+    cCurrency   cPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatPercent->text().toInt() );
 
     if( ledPrice->text().length() == 0 )
         ledPrice->setText( "0" );
@@ -120,7 +120,7 @@ void dlgProductStorage::on_pbSave_clicked()
                 obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
                 obDBShoppingCart.setItemName( obDBProductActionType.name() );
                 obDBShoppingCart.setItemCount( ledProductCount->text().toInt() );
-                obDBShoppingCart.setItemNetPrice( ledNetPrice->text().toInt() );
+                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
                 obDBShoppingCart.setItemVAT( ledVatPercent->text().toInt() );
                 obDBShoppingCart.setItemSumPrice( nPrice );
 
@@ -149,7 +149,7 @@ void dlgProductStorage::on_pbSave_clicked()
             obDBProductHistory.setPATypeId( obDBProductActionType.id() );
             obDBProductHistory.setUserId( g_obUser.id() );
             obDBProductHistory.setItemCount( nProductCountChange );
-            obDBProductHistory.setNetPrice( ledNetPrice->text().toInt() );
+            obDBProductHistory.setNetPrice( cPrice.currencyValue().toInt() );
             obDBProductHistory.setVatPercent( ledVatPercent->text().toInt() );
             obDBProductHistory.save();
         }
@@ -164,36 +164,6 @@ void dlgProductStorage::on_pbSave_clicked()
 void dlgProductStorage::on_pbCancel_clicked()
 {
     QDialog::reject();
-}
-
-void dlgProductStorage::on_ledNetPrice_textEdited(QString )
-{
-    int nNetPrice = ledNetPrice->text().toInt();
-    int nVatPercent = ledVatPercent->text().toInt();
-
-    int nSumPrice = nNetPrice + (nNetPrice * nVatPercent) / 100;
-
-    ledSumPrice->setText( QString::number(nSumPrice) );
-}
-
-void dlgProductStorage::on_ledSumPrice_textEdited(QString )
-{
-    int nSumPrice = ledSumPrice->text().toInt();
-    int nVatPercent = ledVatPercent->text().toInt();
-
-    int nNetPrice = nSumPrice  * 100 / (100 + nVatPercent);
-
-    ledNetPrice->setText( QString::number(nNetPrice) );
-}
-
-void dlgProductStorage::on_pbRefreshNP_clicked()
-{
-    on_ledSumPrice_textEdited( ledSumPrice->text() );
-}
-
-void dlgProductStorage::on_pbRefreshSP_clicked()
-{
-    on_ledNetPrice_textEdited( ledNetPrice->text() );
 }
 
 void dlgProductStorage::on_cmbProductAction_currentIndexChanged(int index)
@@ -256,3 +226,21 @@ void dlgProductStorage::_fillProductActionList()
 
     m_bInit = false;
 }
+
+void dlgProductStorage::on_ledPrice_textEdited(const QString &arg1)
+{
+    slot_refreshPrice();
+}
+
+void dlgProductStorage::on_ledVatPercent_textEdited(const QString &arg1)
+{
+    slot_refreshPrice();
+}
+
+void dlgProductStorage::slot_refreshPrice()
+{
+    cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatPercent->text().toInt() );
+
+    lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledVatPercent->text()) );
+}
+

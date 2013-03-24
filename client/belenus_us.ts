@@ -390,18 +390,18 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="88"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="94"/>
         <source>Amount :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="174"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="187"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="191"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="204"/>
         <source>Comment &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="178"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="195"/>
         <source>Comment &lt;&lt;</source>
         <translation></translation>
     </message>
@@ -414,65 +414,65 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="87"/>
+        <location filename="edit/dlgcassaedit.cpp" line="89"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="88"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="edit/dlgcassaedit.cpp" line="90"/>
-        <location filename="edit/dlgcassaedit.cpp" line="98"/>
-        <source>Date/Time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="edit/dlgcassaedit.cpp" line="91"/>
-        <location filename="edit/dlgcassaedit.cpp" line="99"/>
-        <source>Amount of money</source>
+        <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="92"/>
         <location filename="edit/dlgcassaedit.cpp" line="100"/>
-        <source>Actual balance</source>
+        <source>Date/Time</source>
         <translation></translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="93"/>
         <location filename="edit/dlgcassaedit.cpp" line="101"/>
+        <source>Amount of money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgcassaedit.cpp" line="94"/>
+        <location filename="edit/dlgcassaedit.cpp" line="102"/>
+        <source>Actual balance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgcassaedit.cpp" line="95"/>
+        <location filename="edit/dlgcassaedit.cpp" line="103"/>
         <source>User</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="256"/>
+        <location filename="edit/dlgcassaedit.cpp" line="263"/>
         <source>More &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="252"/>
-        <location filename="edit/dlgcassaedit.cpp" line="266"/>
+        <location filename="edit/dlgcassaedit.cpp" line="259"/>
+        <location filename="edit/dlgcassaedit.cpp" line="273"/>
         <source>Less &lt;&lt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="89"/>
-        <location filename="edit/dlgcassaedit.cpp" line="97"/>
+        <location filename="edit/dlgcassaedit.cpp" line="91"/>
+        <location filename="edit/dlgcassaedit.cpp" line="99"/>
         <source>Comment</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="198"/>
-        <location filename="edit/dlgcassaedit.cpp" line="226"/>
+        <location filename="edit/dlgcassaedit.cpp" line="199"/>
+        <location filename="edit/dlgcassaedit.cpp" line="230"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="199"/>
-        <location filename="edit/dlgcassaedit.cpp" line="227"/>
+        <location filename="edit/dlgcassaedit.cpp" line="200"/>
+        <location filename="edit/dlgcassaedit.cpp" line="231"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -1173,7 +1173,7 @@ Time value can not be greater than %1 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="339"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="338"/>
         <source>Device usage copy process finished.</source>
         <translation></translation>
     </message>
@@ -1366,49 +1366,54 @@ Please define a different one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="43"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="50"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="67"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="72"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="77"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="43"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
         <source>Name can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="50"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
         <source>Use time can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
         <source>Use time value is invalid.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
         <source>Use time must be greater than zero.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="67"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
         <source>Use price can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="72"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
         <source>Use price value is invalid.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="77"/>
-        <source>Use price must be greater than zero.</source>
+        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <source>Price of usage must be greater than zero.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpaneluseedit.cpp" line="105"/>
+        <source>(%1 + %2 % VAT)</source>
         <translation></translation>
     </message>
 </context>
@@ -1608,17 +1613,17 @@ The length of the new barcode should be %1.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="694"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="678"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="701"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="685"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="713"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="697"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
@@ -1656,7 +1661,7 @@ deactivate the card with unchecking the Active checkbox.</source>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="333"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="614"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="598"/>
         <source>Attention</source>
         <translation></translation>
     </message>
@@ -1669,18 +1674,18 @@ Please relogin to enable cassa.</source>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="403"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="518"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="665"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="522"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="649"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="519"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="523"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="615"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="599"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation></translation>
     </message>
@@ -1700,32 +1705,32 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="201"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="205"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="202"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="206"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="246"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="250"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="254"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="258"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="267"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="271"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="277"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="281"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -1733,43 +1738,43 @@ deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="288"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="292"/>
         <source>Available units cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="295"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="299"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="302"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="306"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="326"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="330"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="327"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="331"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="368"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="372"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="396"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="400"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -2453,57 +2458,51 @@ Name of the file is: %1</source>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="108"/>
-        <location filename="crud/dlgproduct.cpp" line="130"/>
+        <location filename="crud/dlgproduct.cpp" line="128"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="109"/>
-        <location filename="crud/dlgproduct.cpp" line="131"/>
-        <source>Net price</source>
-        <oldsource>Price</oldsource>
+        <location filename="crud/dlgproduct.cpp" line="129"/>
+        <source>Price</source>
+        <oldsource>Net price</oldsource>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="110"/>
-        <location filename="crud/dlgproduct.cpp" line="132"/>
+        <location filename="crud/dlgproduct.cpp" line="130"/>
         <source>VAT percent</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="111"/>
-        <location filename="crud/dlgproduct.cpp" line="133"/>
-        <source>Sum price</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproduct.cpp" line="112"/>
-        <location filename="crud/dlgproduct.cpp" line="134"/>
+        <location filename="crud/dlgproduct.cpp" line="131"/>
         <source>Product count</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="113"/>
+        <location filename="crud/dlgproduct.cpp" line="112"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="114"/>
+        <location filename="crud/dlgproduct.cpp" line="113"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="206"/>
+        <location filename="crud/dlgproduct.cpp" line="202"/>
         <source>New Product</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="246"/>
+        <location filename="crud/dlgproduct.cpp" line="242"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="249"/>
+        <location filename="crud/dlgproduct.cpp" line="245"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -2511,17 +2510,17 @@ Deleting this product will not delete the product types assigned.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="254"/>
+        <location filename="crud/dlgproduct.cpp" line="250"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="262"/>
+        <location filename="crud/dlgproduct.cpp" line="258"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="263"/>
+        <location filename="crud/dlgproduct.cpp" line="259"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -2645,26 +2644,31 @@ the product count at the same time.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="101"/>
-        <location filename="edit/dlgproductedit.cpp" line="109"/>
-        <location filename="edit/dlgproductedit.cpp" line="120"/>
+        <location filename="edit/dlgproductedit.cpp" line="104"/>
+        <location filename="edit/dlgproductedit.cpp" line="112"/>
+        <location filename="edit/dlgproductedit.cpp" line="123"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="101"/>
+        <location filename="edit/dlgproductedit.cpp" line="104"/>
         <source>Name of product must be set.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="109"/>
+        <location filename="edit/dlgproductedit.cpp" line="112"/>
         <source>Product with this name already exists.
 Please set another one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="120"/>
+        <location filename="edit/dlgproductedit.cpp" line="123"/>
         <source>Sell price of product must be set.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgproductedit.cpp" line="231"/>
+        <source>(%1 + %2 % VAT)</source>
         <translation></translation>
     </message>
 </context>
@@ -4071,22 +4075,22 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="545"/>
+        <location filename="frmpanel.cpp" line="547"/>
         <source>Cash to pay: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="828"/>
+        <location filename="frmpanel.cpp" line="830"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="988"/>
+        <location filename="frmpanel.cpp" line="990"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="989"/>
+        <location filename="frmpanel.cpp" line="991"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>
@@ -5496,12 +5500,22 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="74"/>
+        <location filename="dlgpaneluseedit.ui" line="101"/>
+        <source>$</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpaneluseedit.ui" line="121"/>
+        <source>( net + VAT % )</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpaneluseedit.ui" line="148"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="61"/>
+        <location filename="dlgpaneluseedit.ui" line="135"/>
         <source>Save</source>
         <translation></translation>
     </message>
@@ -5522,7 +5536,7 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpaneluseedit.ui" line="46"/>
+        <location filename="dlgpaneluseedit.ui" line="76"/>
         <source>Price :</source>
         <translation></translation>
     </message>
@@ -6438,13 +6452,11 @@ is different :</source>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="144"/>
-        <location filename="dlgproductedit.ui" line="198"/>
         <source>$</source>
         <translation></translation>
     </message>
     <message>
         <location filename="dlgproductedit.ui" line="151"/>
-        <location filename="dlgproductedit.ui" line="221"/>
         <source>VAT percent :</source>
         <translation></translation>
     </message>
@@ -6454,57 +6466,72 @@ is different :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="262"/>
+        <location filename="dlgproductedit.ui" line="198"/>
+        <source>including</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="221"/>
+        <source>VAT</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="241"/>
+        <source>TextLabel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductedit.ui" line="253"/>
         <source> Product Types </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="270"/>
+        <location filename="dlgproductedit.ui" line="261"/>
         <source>Assigned product types:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="316"/>
+        <location filename="dlgproductedit.ui" line="307"/>
         <source>&lt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="329"/>
+        <location filename="dlgproductedit.ui" line="320"/>
         <source>&lt;&lt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="342"/>
+        <location filename="dlgproductedit.ui" line="333"/>
         <source>&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="355"/>
+        <location filename="dlgproductedit.ui" line="346"/>
         <source>&gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="366"/>
+        <location filename="dlgproductedit.ui" line="357"/>
         <source>Independent product types:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="394"/>
+        <location filename="dlgproductedit.ui" line="385"/>
         <source>Independent from the local studio.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="405"/>
+        <location filename="dlgproductedit.ui" line="396"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="418"/>
+        <location filename="dlgproductedit.ui" line="409"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductedit.ui" line="447"/>
+        <location filename="dlgproductedit.ui" line="438"/>
         <source>Product storage
 action</source>
         <oldsource>Product storage</oldsource>
@@ -6550,37 +6577,42 @@ action</source>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="129"/>
-        <source>Net price :</source>
+        <source>Price :</source>
+        <oldsource>Net price :</oldsource>
         <translation></translation>
     </message>
     <message>
         <location filename="dlgproductstorage.ui" line="151"/>
-        <location filename="dlgproductstorage.ui" line="257"/>
         <source>$</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="192"/>
-        <source>VAT Percent (%) :</source>
+        <location filename="dlgproductstorage.ui" line="173"/>
+        <source>including :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="235"/>
-        <source>SUM price :</source>
+        <location filename="dlgproductstorage.ui" line="201"/>
+        <source>VAT (%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="292"/>
+        <location filename="dlgproductstorage.ui" line="232"/>
+        <source>(net + vat )</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductstorage.ui" line="254"/>
         <source>Count of product :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="336"/>
+        <location filename="dlgproductstorage.ui" line="298"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="349"/>
+        <location filename="dlgproductstorage.ui" line="311"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
@@ -6590,7 +6622,7 @@ action</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="28"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="26"/>
         <source>Please check the cassa and action type again
 and make sure the correct amount of price and
 count of product selected before continue.
@@ -6600,17 +6632,17 @@ archived in cassa history.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="34"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="32"/>
         <source>&lt;General cassa&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="35"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="33"/>
         <source>Daily, user related cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="36"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="34"/>
         <source>Select appropriate cassa type for product action.
 
 &lt;General cassa&gt; is related to the solarium studio
@@ -6620,27 +6652,27 @@ any action will increase or decrease the balance of the cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="133"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="129"/>
         <source>Product name: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="229"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="195"/>
         <source>not modify</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="232"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="198"/>
         <source>increase</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="236"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="202"/>
         <source>decrease</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="238"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="204"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -6648,30 +6680,35 @@ added to actual cassa or to the general ledger.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="248"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="214"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="249"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="215"/>
         <source>There is no product action type in the database.
 Without any action type modification of product count is not possible.
 Please create at least one product action type.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="253"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="219"/>
         <source>&lt;Product action type not found&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="91"/>
-        <location filename="dlg/dlgproductstorage.cpp" line="99"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="244"/>
+        <source>(%1 + %2 % VAT)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgproductstorage.cpp" line="87"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="95"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="92"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="88"/>
         <source>You have selected a product action that modifies the
 count of the selected product but the value has not defined.
 
@@ -6679,7 +6716,7 @@ Please define a valid product count or select another product action.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="100"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="96"/>
         <source>You have defined price for the selected action
 but the count of product not defined.
 
@@ -6687,7 +6724,7 @@ Please define a valid product count or reset the price.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="114"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="110"/>
         <source>Negative</source>
         <translation></translation>
     </message>

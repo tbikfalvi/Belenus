@@ -24,14 +24,13 @@ private:
     void            _fillProductActionList();
 
 private slots:
+    void slot_refreshPrice();
     void on_pbActionTypes_clicked();
     void on_cmbProductAction_currentIndexChanged(int index);
-    void on_pbRefreshSP_clicked();
-    void on_pbRefreshNP_clicked();
-    void on_ledSumPrice_textEdited(QString );
-    void on_ledNetPrice_textEdited(QString );
     void on_pbCancel_clicked();
     void on_pbSave_clicked();
+    void on_ledPrice_textEdited(const QString &arg1);
+    void on_ledVatPercent_textEdited(const QString &arg1);
 };
 
 #endif // DLGPRODUCTSTORAGE_H

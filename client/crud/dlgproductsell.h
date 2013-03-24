@@ -24,6 +24,7 @@ public:
     QLabel      *lblBarcode;
     QLineEdit   *ledBarcode;
     QSpacerItem *spacerFilterGroup;
+    QSpacerItem *spacerToPay;
     QGroupBox   *gbItemToSell;
     QHBoxLayout *layoutItemToSellGroup;
     QLabel      *lblName;

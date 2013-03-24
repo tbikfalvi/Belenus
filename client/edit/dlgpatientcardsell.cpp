@@ -362,7 +362,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PC_SELL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
                 obDBShoppingCart.setItemCount( 1 );
-                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue(cCurrency::CURR_NET).toInt() );
+                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
                 obDBShoppingCart.setItemVAT( m_poPatientCardType->vatpercent() );
                 obDBShoppingCart.setItemDiscount( inPriceTotal - inPriceDiscounted );
                 obDBShoppingCart.setItemSumPrice( inPriceDiscounted );

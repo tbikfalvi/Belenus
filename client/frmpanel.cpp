@@ -341,7 +341,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
                                  "Please relogin to enable cassa.") );
         return;
     }
-    int inPriceTotal = (p_inPrice + (p_inPrice/100)*g_poPrefs->getDeviceUseVAT());
+    int inPriceTotal = p_inPrice;
 
     m_inCashLength += p_inLength;
     m_inCashTimeRemains = m_inCashLength;
@@ -542,7 +542,9 @@ void cFrmPanel::displayStatus()
 
     if( m_inCashToPay > 0 )
     {
-        qsInfo += tr("Cash to pay: ") + convertCurrency( m_inCashToPay, g_poPrefs->getCurrencyShort() );
+        cCurrency   cPrice( m_inCashToPay );
+
+        qsInfo += tr("Cash to pay: ") + cPrice.currencyFullStringShort();
     }
 
     QString     qsBackgroundColor;

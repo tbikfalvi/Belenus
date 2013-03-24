@@ -102,9 +102,12 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     pbItemCountDecrease->setIcon( QIcon("./resources/40x40_minus.png") );
     layoutItemToSellGroup->addWidget( pbItemCountDecrease );
 
+    spacerToPay = new QSpacerItem( 10, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
+    layoutItemToSellGroup->addItem( spacerToPay );
+
     lblTotalPrice = new QLabel( this );
     lblTotalPrice->setObjectName( QString::fromUtf8( "lblTotalPrice" ) );
-    lblTotalPrice->setText( tr("Total price: ") );
+    lblTotalPrice->setText( tr("Price to pay: ") );
     layoutItemToSellGroup->addWidget( lblTotalPrice );
 
     ledTotalPrice = new QLineEdit( this );
@@ -181,12 +184,11 @@ void cDlgProductSell::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Barcode" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Net price" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sum price" ) );
         m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "VAT percent" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Sum price" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Product count" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Product count" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -197,7 +199,6 @@ void cDlgProductSell::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
         tbvCrud->resizeColumnToContents( 8 );
-        tbvCrud->resizeColumnToContents( 9 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -205,17 +206,15 @@ void cDlgProductSell::setupTableView()
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Net price" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Sum price" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "VAT percent" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Sum price" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Product count" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Product count" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
-        tbvCrud->resizeColumnToContents( 6 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -227,11 +226,11 @@ void cDlgProductSell::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT productId, licenceId, name, barcode, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount, active, archive FROM products WHERE productId>0";
+        m_qsQuery = "SELECT productId, licenceId, name, barcode, (netPriceSell/100) as netPriceSell, vatpercentSell, productCount, active, archive FROM products WHERE productId>0";
     }
     else
     {
-        m_qsQuery = "SELECT productId AS id, name, barcode, netPriceSell, vatpercentSell, netPriceSell+((netPriceSell/100)*vatpercentSell) AS sumPriceSell, productCount FROM products WHERE active=1 AND productId>0";
+        m_qsQuery = "SELECT productId AS id, name, barcode, (netPriceSell/100) as netPriceSell, vatpercentSell, productCount FROM products WHERE active=1 AND productId>0";
     }
 
     QString qsTemp = ledBarcode->text();
@@ -321,7 +320,10 @@ void cDlgProductSell::on_pbPayment_clicked()
 
     int     nDiscount = 0;
     int     nCount = ledItemCount->text().toInt();
-    int     nTotalPrice = ( m_obProduct.netPriceSell() + (m_obProduct.netPriceSell()/100)*m_obProduct.vatPercentSell() ) * nCount;
+
+    cCurrency   cPrice( m_obProduct.netPriceSell()*nCount, cCurrency::CURR_GROSS, m_obProduct.vatPercentSell() );
+
+    int     nTotalPrice = cPrice.currencyValue().toInt();
 
     if( g_obGuest.id() > 0 )
     {
@@ -334,7 +336,7 @@ void cDlgProductSell::on_pbPayment_clicked()
     obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
     obDBShoppingCart.setItemName( m_obProduct.name() );
     obDBShoppingCart.setItemCount( nCount );
-    obDBShoppingCart.setItemNetPrice( m_obProduct.netPriceSell() );
+    obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
     obDBShoppingCart.setItemVAT( m_obProduct.vatPercentSell() );
     obDBShoppingCart.setItemDiscount( nDiscount );
     obDBShoppingCart.setItemSumPrice( nTotalPrice - nDiscount );
@@ -355,7 +357,10 @@ void cDlgProductSell::on_pbToCart_clicked()
 
     int     nDiscount = 0;
     int     nCount = ledItemCount->text().toInt();
-    int     nTotalPrice = ( m_obProduct.netPriceSell() + (m_obProduct.netPriceSell()/100)*m_obProduct.vatPercentSell() ) * nCount;
+
+    cCurrency   cPrice( m_obProduct.netPriceSell()*nCount, cCurrency::CURR_GROSS, m_obProduct.vatPercentSell() );
+
+    int     nTotalPrice = cPrice.currencyValue().toInt();
 
     if( g_obGuest.id() > 0 )
     {
@@ -368,7 +373,7 @@ void cDlgProductSell::on_pbToCart_clicked()
     obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
     obDBShoppingCart.setItemName( m_obProduct.name() );
     obDBShoppingCart.setItemCount( nCount );
-    obDBShoppingCart.setItemNetPrice( m_obProduct.netPriceSell() );
+    obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
     obDBShoppingCart.setItemVAT( m_obProduct.vatPercentSell() );
     obDBShoppingCart.setItemDiscount( nDiscount );
     obDBShoppingCart.setItemSumPrice( nTotalPrice - nDiscount );
