@@ -125,6 +125,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
+    m_uiCurrentPatient      = 0;
     m_inCashLength          = 0;
     m_inCashTimeRemains     = 0;
     m_inCardTimeRemains     = 0;
@@ -208,7 +209,7 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setLicenceId( g_poPrefs->getLicenceId() );
     m_pDBLedgerDevice->setUserId( g_obUser.id() );
     m_pDBLedgerDevice->setPanelId( m_uiId );
-    m_pDBLedgerDevice->setPatientId( g_obGuest.id() );
+    m_pDBLedgerDevice->setPatientId( m_uiCurrentPatient );
     m_pDBLedgerDevice->setActive( true );
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
@@ -281,6 +282,7 @@ void cFrmPanel::clear()
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
+    m_uiCurrentPatient      = 0;
     m_uiLedgerId            = 0;
     m_uiPaymentMethodId     = 0;
     m_pDBLedgerDevice->createNew();
@@ -348,7 +350,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
     m_inCashNetToPay += p_inPrice;
     m_inCashToPay += inPriceTotal;
     m_inCashDiscountToPay += inPriceTotal - g_obGuest.getDiscountedPrice( inPriceTotal );
-    m_uiPatientToPay = g_obGuest.id();
+    m_uiPatientToPay = m_uiCurrentPatient = g_obGuest.id();
 
     m_pDBLedgerDevice->setCash( m_inCashToPay );
     m_pDBLedgerDevice->setTimeCash( m_pDBLedgerDevice->timeCash()+p_inLength );
@@ -886,16 +888,17 @@ void cFrmPanel::closeAttendance()
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.inCountUnits     = 0;
     m_vrPatientCard.inUnitTime       = 0;
-    m_inCashToPay           = 0;
-    m_inCashNetToPay        = 0;
-    m_inCashDiscountToPay   = 0;
-    m_uiPaymentMethodId     = 0;
+    m_inCashToPay                    = 0;
+    m_inCashNetToPay                 = 0;
+    m_inCashDiscountToPay            = 0;
+    m_uiPaymentMethodId              = 0;
+    m_uiCurrentPatient               = 0;
     m_pDBLedgerDevice->createNew();
 
-    m_inMainProcessLength   = 0;
-    m_inCashLength          = 0;
-    m_inCashTimeRemains     = 0;
-    m_inCardTimeRemains     = 0;
+    m_inMainProcessLength            = 0;
+    m_inCashLength                   = 0;
+    m_inCashTimeRemains              = 0;
+    m_inCardTimeRemains              = 0;
 }
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )

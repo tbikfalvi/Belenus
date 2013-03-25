@@ -30,7 +30,7 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
                 cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
         }
         sbSeqNumber->setValue( m_poPanelStatuses->sequenceNumber() );
-        sbLength->setValue( m_poPanelStatuses->length()/60 );
+        sbLength->setValue( m_poPanelStatuses->length() );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT activateCommandId, name FROM activateCommand ORDER BY activateCommandId" ) );
         while( poQuery->next() )
         {
@@ -85,7 +85,7 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
     QSqlQuery *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE archive<>\"DEL\" AND panelStatusId<>%1 AND seqNumber=%2" ).arg(m_poPanelStatuses->id()).arg(sbSeqNumber->value()) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE archive<>\"DEL\" AND panelStatusId<>%1 AND seqNumber=%2 AND panelTypeId=%3" ).arg(m_poPanelStatuses->id()).arg(sbSeqNumber->value()).arg(cmbPanelType->itemData(cmbPanelType->currentIndex()).toInt()) );
         if( poQuery->size() > 0 )
         {
             boCanBeSaved = false;
@@ -98,7 +98,7 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
             m_poPanelStatuses->setName( ledName->text() );
             m_poPanelStatuses->setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toInt() );
             m_poPanelStatuses->setSequenceNumber( sbSeqNumber->value() );
-            m_poPanelStatuses->setLength( sbLength->value()*60 );
+            m_poPanelStatuses->setLength( sbLength->value() );
             m_poPanelStatuses->setActivateCommand( cmbActivateCmd->itemData( cmbActivateCmd->currentIndex() ).toInt() );
 
             /*if( checkIndependent->isChecked() )

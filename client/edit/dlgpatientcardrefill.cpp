@@ -51,6 +51,9 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
+            if( poQuery->value(0) == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+                continue;
+
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
             if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );

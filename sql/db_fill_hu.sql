@@ -76,7 +76,7 @@ ALTER TABLE `companies` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `agetypes` (`ageTypeId`, `licenceId`, `ageTypeName` ) VALUES
- ('0', '0', 'Nincs meghatározva');
+     ('0', '0', 'Nincs meghatározva');
 UPDATE `agetypes` SET `ageTypeId`=0 WHERE `ageTypeId`=1;
 ALTER TABLE `agetypes` auto_increment=1;
 
@@ -123,6 +123,9 @@ INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `
  (0, 0, 0, 0, '', NULL, 0, 0, '0000-00-00', '0000-00-00', NULL, 0, 'ARC');
 UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
+
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (1, 0, 1, 0, '000000', 'Szerviz kártya. Csak szerviz használatra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

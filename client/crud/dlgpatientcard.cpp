@@ -187,9 +187,24 @@ void cDlgPatientCard::enableButtons()
 {
     cTracer obTracer( "cDlgPatientCard::enableButtons" );
 
+    bool bUserCanModify = false;
+
+    if( m_uiSelectedId > 0 )
+    {
+        if( g_obUser.isInGroup( cAccessGroup::ADMIN ) && _isPatientCardNotForService() )
+        {
+            bUserCanModify = true;
+        }
+        else if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            bUserCanModify = true;
+        }
+    }
+
+
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnEdit->setEnabled( bUserCanModify );
+    m_poBtnDelete->setEnabled( bUserCanModify && m_uiSelectedId > 1 );
 }
 
 void cDlgPatientCard::newClicked( bool )
@@ -260,6 +275,32 @@ void cDlgPatientCard::deleteClicked( bool )
             g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
+}
+
+bool cDlgPatientCard::_isPatientCardNotForService()
+{
+    bool             bRet           = true;
+    cDBPatientCard  *poPatientCard  = NULL;
+
+    try
+    {
+        poPatientCard = new cDBPatientCard;
+        poPatientCard->load( m_uiSelectedId );
+
+        if( poPatientCard->patientCardTypeId() == 1 )
+        {
+            bRet = false;
+        }
+
+        if( poPatientCard ) delete poPatientCard;
+    }
+    catch( cSevException &e )
+    {
+        if( poPatientCard ) delete poPatientCard;
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    return bRet;
 }
 
 void cDlgPatientCard::_slotPatientCardTypes()

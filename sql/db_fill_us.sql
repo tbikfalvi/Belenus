@@ -118,6 +118,9 @@ INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `
 UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
 
+INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
+ (1, 0, 1, 0, '000000', 'Szerviz kártya. Csak szerviz használatra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
+
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archive` ) VALUES

@@ -76,12 +76,15 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
+            if( poQuery->value(0) == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+                continue;
+
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
             if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
                 cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
-        cmbPatient->addItem( tr("<Not selected>"), 0 );
 
+        cmbPatient->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\"" ) );
         while( poQuery->next() )
         {
@@ -119,6 +122,16 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
         }
         if( m_poPatientCard->id() > 0 )
             checkIndependent->setEnabled( false );
+
+        // If this is a service card, do not deactivate or modify sensitive data
+        if( m_poPatientCard->patientCardTypeId() == 1 )
+        {
+            pbDeactivate->setEnabled( false );
+            pbSell->setEnabled( false );
+            pbRefill->setEnabled( false );
+            deValidDateFrom->setEnabled( false );
+            cmbCardType->setEnabled( false );
+        }
     }
     if( m_poPatientCard->patientId() > 0 )
     {
@@ -197,17 +210,21 @@ void cDlgPatientCardEdit::slotEnableButtons()
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbRefill->setIcon( QIcon("./resources/40x40_cassa.png") );
 
-    if( m_poPatientCard->active() )
+    // If this is a NOT service card
+    if( m_poPatientCard->patientCardTypeId() != 1 )
     {
-        pbDeactivate->setEnabled( true );
-        pbSell->setEnabled( false );
-        pbRefill->setEnabled( true );
-    }
-    else
-    {
-        pbDeactivate->setEnabled( false );
-        pbSell->setEnabled( true );
-        pbRefill->setEnabled( false );
+        if( m_poPatientCard->active() )
+        {
+            pbDeactivate->setEnabled( true );
+            pbSell->setEnabled( false );
+            pbRefill->setEnabled( true );
+        }
+        else
+        {
+            pbDeactivate->setEnabled( false );
+            pbSell->setEnabled( true );
+            pbRefill->setEnabled( false );
+        }
     }
 }
 //===========================================================================================================

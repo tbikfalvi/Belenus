@@ -31,6 +31,8 @@ private:
     QWidget     *m_poParent;
     QString      m_qsCondition;
 
+    bool         _isPatientCardNotForService();
+
 protected slots:
     virtual void refreshTable( QString p_qsCondition = "");
     virtual void newClicked( bool );
