@@ -874,12 +874,12 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="212"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="205"/>
         <source>Hardware available</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="216"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="210"/>
         <source>Hardware unavailable</source>
         <translation></translation>
     </message>
@@ -1366,53 +1366,53 @@ Please define a different one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="45"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="52"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="57"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="62"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="71"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="76"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="81"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="45"/>
         <source>Name can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="52"/>
         <source>Use time can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="57"/>
         <source>Use time value is invalid.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="62"/>
         <source>Use time must be greater than zero.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="71"/>
         <source>Use price can not be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="76"/>
         <source>Use price value is invalid.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="81"/>
         <source>Price of usage must be greater than zero.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="105"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="106"/>
         <source>(%1 + %2 % VAT)</source>
         <translation></translation>
     </message>
@@ -2705,85 +2705,79 @@ Please set another one.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="107"/>
-        <source>Total price: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="127"/>
+        <location filename="crud/dlgproductsell.cpp" line="130"/>
         <source>Sell</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="133"/>
+        <location filename="crud/dlgproductsell.cpp" line="136"/>
         <source>To shopping cart</source>
         <oldsource>To cart</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="121"/>
+        <location filename="crud/dlgproductsell.cpp" line="124"/>
         <source>Exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="139"/>
+        <location filename="crud/dlgproductsell.cpp" line="110"/>
+        <source>Price to pay: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproductsell.cpp" line="142"/>
         <source>Product list</source>
         <oldsource>Edit products</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="180"/>
+        <location filename="crud/dlgproductsell.cpp" line="183"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="181"/>
+        <location filename="crud/dlgproductsell.cpp" line="184"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="182"/>
-        <location filename="crud/dlgproductsell.cpp" line="206"/>
+        <location filename="crud/dlgproductsell.cpp" line="185"/>
+        <location filename="crud/dlgproductsell.cpp" line="207"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="183"/>
-        <location filename="crud/dlgproductsell.cpp" line="207"/>
+        <location filename="crud/dlgproductsell.cpp" line="186"/>
+        <location filename="crud/dlgproductsell.cpp" line="208"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="184"/>
-        <location filename="crud/dlgproductsell.cpp" line="208"/>
-        <source>Net price</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="185"/>
-        <location filename="crud/dlgproductsell.cpp" line="209"/>
+        <location filename="crud/dlgproductsell.cpp" line="188"/>
+        <location filename="crud/dlgproductsell.cpp" line="210"/>
         <source>VAT percent</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="186"/>
-        <location filename="crud/dlgproductsell.cpp" line="210"/>
+        <location filename="crud/dlgproductsell.cpp" line="187"/>
+        <location filename="crud/dlgproductsell.cpp" line="209"/>
         <source>Sum price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="187"/>
+        <location filename="crud/dlgproductsell.cpp" line="189"/>
         <location filename="crud/dlgproductsell.cpp" line="211"/>
         <source>Product count</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="188"/>
+        <location filename="crud/dlgproductsell.cpp" line="190"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="189"/>
+        <location filename="crud/dlgproductsell.cpp" line="191"/>
         <source>Archive</source>
         <translation></translation>
     </message>
@@ -4281,7 +4275,7 @@ Please stop them before closing the application.</source>
     <message>
         <location filename="wndmain.cpp" line="963"/>
         <location filename="wndmain.cpp" line="1104"/>
-        <location filename="wndmain.cpp" line="1903"/>
+        <location filename="wndmain.cpp" line="1905"/>
         <source>Information</source>
         <translation></translation>
     </message>
@@ -4391,23 +4385,23 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1646"/>
+        <location filename="wndmain.cpp" line="1648"/>
         <source>Using panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1659"/>
+        <location filename="wndmain.cpp" line="1661"/>
         <source>Using device: %1</source>
         <oldsource>Using device: %1 - </oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1693"/>
+        <location filename="wndmain.cpp" line="1695"/>
         <source>Selling product: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1904"/>
+        <location filename="wndmain.cpp" line="1906"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation></translation>
     </message>
@@ -5020,105 +5014,88 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="474"/>
+        <location filename="dlghardwaretest.ui" line="535"/>
         <source>Exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="85"/>
+        <location filename="dlghardwaretest.ui" line="101"/>
         <source> Relay test </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="439"/>
+        <location filename="dlghardwaretest.ui" line="500"/>
         <source>Run relay test</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="106"/>
-        <location filename="dlghardwaretest.ui" line="116"/>
-        <location filename="dlghardwaretest.ui" line="136"/>
-        <location filename="dlghardwaretest.ui" line="146"/>
-        <location filename="dlghardwaretest.ui" line="166"/>
-        <location filename="dlghardwaretest.ui" line="176"/>
-        <location filename="dlghardwaretest.ui" line="196"/>
-        <location filename="dlghardwaretest.ui" line="206"/>
-        <location filename="dlghardwaretest.ui" line="226"/>
-        <location filename="dlghardwaretest.ui" line="236"/>
-        <location filename="dlghardwaretest.ui" line="256"/>
-        <location filename="dlghardwaretest.ui" line="266"/>
-        <location filename="dlghardwaretest.ui" line="286"/>
-        <location filename="dlghardwaretest.ui" line="296"/>
-        <location filename="dlghardwaretest.ui" line="316"/>
-        <location filename="dlghardwaretest.ui" line="326"/>
-        <location filename="dlghardwaretest.ui" line="346"/>
-        <location filename="dlghardwaretest.ui" line="356"/>
-        <location filename="dlghardwaretest.ui" line="370"/>
-        <location filename="dlghardwaretest.ui" line="380"/>
-        <location filename="dlghardwaretest.ui" line="394"/>
-        <location filename="dlghardwaretest.ui" line="404"/>
-        <location filename="dlghardwaretest.ui" line="418"/>
-        <location filename="dlghardwaretest.ui" line="428"/>
-        <source>ON</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlghardwaretest.ui" line="99"/>
+        <location filename="dlghardwaretest.ui" line="115"/>
         <source>Relay 1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="129"/>
+        <location filename="dlghardwaretest.ui" line="184"/>
         <source>Relay 2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="159"/>
+        <location filename="dlghardwaretest.ui" line="253"/>
         <source>Relay 3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="189"/>
+        <location filename="dlghardwaretest.ui" line="322"/>
         <source>Relay 4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="219"/>
+        <location filename="dlghardwaretest.ui" line="382"/>
         <source>Relay 5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="249"/>
+        <location filename="dlghardwaretest.ui" line="442"/>
         <source>Relay 6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="279"/>
+        <location filename="dlghardwaretest.ui" line="151"/>
         <source>Relay 7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="309"/>
+        <location filename="dlghardwaretest.ui" line="85"/>
+        <source> Module test </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="91"/>
+        <source>Set address of modules (reorder modules)</source>
+        <oldsource>Set address of modules</oldsource>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="220"/>
         <source>Relay 8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="339"/>
+        <location filename="dlghardwaretest.ui" line="289"/>
         <source>Relay 9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="363"/>
+        <location filename="dlghardwaretest.ui" line="349"/>
         <source>Relay 10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="387"/>
+        <location filename="dlghardwaretest.ui" line="409"/>
         <source>Relay 11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="411"/>
+        <location filename="dlghardwaretest.ui" line="469"/>
         <source>Relay 12</source>
         <translation></translation>
     </message>

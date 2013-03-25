@@ -786,7 +786,7 @@ void CS_Communication_Serial::GetAvailableCommPorts()
    }
 }
 //====================================================================================
-// CS_Communication_Serial::
+// CS_Communication_Serial::SP_InitCommunication
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
@@ -813,7 +813,7 @@ bool CS_Communication_Serial::SP_InitCommunication( int p_inPort, DWORD p_dwBaud
    return true;
 }
 //====================================================================================
-// CS_Communication_Serial::
+// CS_Communication_Serial::SP_Open
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
@@ -921,7 +921,7 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
    return true;
 }
 //====================================================================================
-// CS_Communication_Serial::
+// CS_Communication_Serial::SP_Close
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
@@ -1244,6 +1244,38 @@ unsigned char CS_Communication_Serial::GetHWModuleStatus( unsigned char byCim )
    {
       return 0xff;
    }
+}
+//---------------------------------------------------------------------------
+// HW_SetModuleAddress
+//---------------------------------------------------------------------------
+//
+//---------------------------------------------------------------------------
+// Parameterek:
+//    nincs
+//---------------------------------------------------------------------------
+// Visszateresi ertek:
+//    nincs
+//---------------------------------------------------------------------------
+// BitBtnLedModulCimSetClick
+bool CS_Communication_Serial::HW_SetModuleAddress()
+{
+    bool            bRet = true;
+    unsigned char   byStatus;
+    char            chMessage[2048];
+
+    for( int i=0; i<nHWModuleCount; i++ )
+    {
+        chMessage[0] = SEND_3BYTE_TO_MODUL;
+        chMessage[1] = SEND_SET_ADDR;
+        chMessage[2] = 0xa5;
+        chMessage[3] = 0x99;
+
+        if( !HW_SendModulMessage( chMessage, 4, i, &byStatus ) )
+        {
+            bRet = false;
+        }
+    }
+    return bRet;
 }
 //---------------------------------------------------------------------------
 // EnableModulIRQ

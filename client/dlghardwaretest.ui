@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>433</width>
-    <height>482</height>
+    <width>407</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,6 +80,22 @@
       </widget>
      </item>
      <item>
+      <widget class="QGroupBox" name="gbModuleTest">
+       <property name="title">
+        <string> Module test </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QPushButton" name="pbAddressModules">
+          <property name="text">
+           <string>Set address of modules (reorder modules)</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
       <widget class="QGroupBox" name="gbRelays">
        <property name="title">
         <string> Relay test </string>
@@ -102,8 +118,8 @@
           </item>
           <item row="0" column="1">
            <widget class="QCheckBox" name="rbRelay01_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -113,7 +129,46 @@
           <item row="0" column="2">
            <widget class="QPushButton" name="pbSwitchRelay01">
             <property name="text">
-             <string>ON</string>
+             <string/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="lblRelay07">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Relay 7</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QCheckBox" name="rbRelay07_On">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QPushButton" name="pbSwitchRelay07">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -132,8 +187,8 @@
           </item>
           <item row="1" column="1">
            <widget class="QCheckBox" name="rbRelay02_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -143,7 +198,46 @@
           <item row="1" column="2">
            <widget class="QPushButton" name="pbSwitchRelay02">
             <property name="text">
-             <string>ON</string>
+             <string/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="lblRelay08">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Relay 8</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QCheckBox" name="rbRelay08_On">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QPushButton" name="pbSwitchRelay08">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -162,8 +256,8 @@
           </item>
           <item row="2" column="1">
            <widget class="QCheckBox" name="rbRelay03_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -173,7 +267,46 @@
           <item row="2" column="2">
            <widget class="QPushButton" name="pbSwitchRelay03">
             <property name="text">
-             <string>ON</string>
+             <string/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="lblRelay09">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Relay 9</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QCheckBox" name="rbRelay09_On">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="5">
+           <widget class="QPushButton" name="pbSwitchRelay09">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -192,8 +325,8 @@
           </item>
           <item row="3" column="1">
            <widget class="QCheckBox" name="rbRelay04_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -202,8 +335,38 @@
           </item>
           <item row="3" column="2">
            <widget class="QPushButton" name="pbSwitchRelay04">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="lblRelay10_on">
             <property name="text">
-             <string>ON</string>
+             <string>Relay 10</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QCheckBox" name="rbRelay10_On">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="5">
+           <widget class="QPushButton" name="pbSwitchRelay10">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -222,8 +385,8 @@
           </item>
           <item row="4" column="1">
            <widget class="QCheckBox" name="rbRelay05_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -232,8 +395,38 @@
           </item>
           <item row="4" column="2">
            <widget class="QPushButton" name="pbSwitchRelay05">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QLabel" name="lblRelay11">
             <property name="text">
-             <string>ON</string>
+             <string>Relay 11</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <widget class="QCheckBox" name="rbRelay11_On">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="5">
+           <widget class="QPushButton" name="pbSwitchRelay11">
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -252,8 +445,8 @@
           </item>
           <item row="5" column="1">
            <widget class="QCheckBox" name="rbRelay06_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -262,170 +455,38 @@
           </item>
           <item row="5" column="2">
            <widget class="QPushButton" name="pbSwitchRelay06">
-            <property name="text">
-             <string>ON</string>
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="lblRelay07">
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Relay 7</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QCheckBox" name="rbRelay07_On">
-            <property name="text">
-             <string>ON</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QPushButton" name="pbSwitchRelay07">
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="lblRelay08">
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Relay 8</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QCheckBox" name="rbRelay08_On">
-            <property name="text">
-             <string>ON</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QPushButton" name="pbSwitchRelay08">
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="lblRelay09">
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Relay 9</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QCheckBox" name="rbRelay09_On">
-            <property name="text">
-             <string>ON</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2">
-           <widget class="QPushButton" name="pbSwitchRelay09">
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="lblRelay10_on">
-            <property name="text">
-             <string>Relay 10</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QCheckBox" name="rbRelay10_On">
-            <property name="text">
-             <string>ON</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2">
-           <widget class="QPushButton" name="pbSwitchRelay10">
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="lblRelay11">
-            <property name="text">
-             <string>Relay 11</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QCheckBox" name="rbRelay11_On">
-            <property name="text">
-             <string>ON</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="2">
-           <widget class="QPushButton" name="pbSwitchRelay11">
-            <property name="text">
-             <string>ON</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
+          <item row="5" column="3">
            <widget class="QLabel" name="lblRelay12">
             <property name="text">
              <string>Relay 12</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="1">
+          <item row="5" column="4">
            <widget class="QCheckBox" name="rbRelay12_On">
-            <property name="text">
-             <string>ON</string>
+            <property name="enabled">
+             <bool>false</bool>
             </property>
             <property name="checkable">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="11" column="2">
+          <item row="5" column="5">
            <widget class="QPushButton" name="pbSwitchRelay12">
-            <property name="text">
-             <string>ON</string>
+            <property name="iconSize">
+             <size>
+              <width>58</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -489,7 +550,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>408</height>
+         <height>58</height>
         </size>
        </property>
       </spacer>

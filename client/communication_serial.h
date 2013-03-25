@@ -87,6 +87,8 @@ public:
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
 
+    bool HW_SetModuleAddress();
+
     void HW_Kezel();
 
 private:
