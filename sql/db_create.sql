@@ -472,12 +472,36 @@ CREATE TABLE `productHistory` (
 -- -----------------------------------------------------------------------------------
 --
 -- -----------------------------------------------------------------------------------
+CREATE TABLE `patientHistoryType` (
+  `patientHistoryTypeId`    int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(100)            NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`patientHistoryTypeId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+--
+-- -----------------------------------------------------------------------------------
 CREATE TABLE `patientHistory` (
   `patientHistoryId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  `patientId`               int(10) unsigned        DEFAULT NULL,
+  `patientId`               int(10) unsigned        NOT NULL,
+  `patientHistoryTypeId`    int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `panelId`                 int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
   PRIMARY KEY (`patientHistoryId`,`licenceId`),
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientHistoryTypeId`) REFERENCES `patientHistoryType` (`patientHistoryTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardTypeId`) REFERENCES `patientCardTypes` (`patientCardTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

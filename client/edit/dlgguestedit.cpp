@@ -178,6 +178,9 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     slotEnableButtons();
     slotRefreshWarningColors();
 
+    // Temporary until patient history will be implemented
+    pbHistory->setVisible( false );
+
     m_bInit = false;
 }
 //===========================================================================================================

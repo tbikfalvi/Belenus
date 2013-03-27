@@ -33,6 +33,9 @@ cDlgPatientCardSelect::cDlgPatientCardSelect( QWidget *p_poParent )
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCardSelect", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
@@ -40,6 +43,7 @@ cDlgPatientCardSelect::cDlgPatientCardSelect( QWidget *p_poParent )
 
 cDlgPatientCardSelect::~cDlgPatientCardSelect()
 {
+    g_poPrefs->setDialogSize( "ListPatientCardSelect", QPoint( width(), height() ) );
 }
 
 void cDlgPatientCardSelect::setupTableView()

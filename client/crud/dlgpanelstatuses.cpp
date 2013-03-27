@@ -12,11 +12,15 @@ cDlgPanelStatuses::cDlgPanelStatuses( QWidget *p_poParent )
 
     m_bStatusChanged = false;
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelStatuses", QPoint(450,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgPanelStatuses::~cDlgPanelStatuses()
 {
+    g_poPrefs->setDialogSize( "ListPanelStatuses", QPoint( width(), height() ) );
 }
 
 void cDlgPanelStatuses::setupTableView()

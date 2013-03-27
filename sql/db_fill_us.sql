@@ -257,3 +257,14 @@ INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `le
 UPDATE `ledger` SET `ledgerId`=0 WHERE `ledgerId`=1;
 ALTER TABLE `ledger` auto_increment=1;
 
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `modified`, `active`, `archive`) VALUES
+ (1, 1, 'Guest entered into database', '0000-00-00 00:00:00', 1, 'ARC'),
+ (2, 1, 'Purchase patientcard', '0000-00-00 00:00:00', 1, 'ARC'),
+ (3, 1, 'Refill patientcard', '0000-00-00 00:00:00', 1, 'ARC'),
+ (4, 1, 'Purchase product', '0000-00-00 00:00:00', 1, 'ARC'),
+ (5, 1, 'Using device with card', '0000-00-00 00:00:00', 1, 'ARC'),
+ (6, 1, 'Using device with cash', '0000-00-00 00:00:00', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------

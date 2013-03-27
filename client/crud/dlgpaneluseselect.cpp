@@ -66,6 +66,9 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelUseSelect", QPoint(450,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
@@ -73,7 +76,7 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
 
 cDlgPanelUseSelect::~cDlgPanelUseSelect()
 {
-
+    g_poPrefs->setDialogSize( "ListPanelUseSelect", QPoint( width(), height() ) );
 }
 
 int cDlgPanelUseSelect::getPanelUsePrice()

@@ -163,7 +163,7 @@ cFrmPanel::~cFrmPanel()
 //====================================================================================
 bool cFrmPanel::isWorking() const
 {
-    return (m_uiStatus > 0);
+    return (m_obStatuses.at(m_uiStatus)->activateCommand() > 0);
 }
 //====================================================================================
 bool cFrmPanel::isStatusCanBeSkipped()
@@ -171,7 +171,7 @@ bool cFrmPanel::isStatusCanBeSkipped()
     bool bRet = true;
 
     if( m_obStatuses.at(m_uiStatus)->activateCommand() == 3 ||
-        m_uiStatus == 0 ||
+        m_obStatuses.at(m_uiStatus)->activateCommand() == 0 ||
         (m_obStatuses.at(m_uiStatus)->activateCommand() == 4 && !g_obUser.isInGroup( cAccessGroup::ADMIN )) )
     {
         bRet = false;
@@ -185,7 +185,7 @@ bool cFrmPanel::isStatusCanBeReseted()
     bool bRet = false;
 
     if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 ||
-        m_uiStatus == 0 )
+        m_obStatuses.at(m_uiStatus)->activateCommand() == 0 )
     {
         bRet = true;
     }
@@ -555,7 +555,7 @@ void cFrmPanel::displayStatus()
 
     try
     {
-        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+        obDBPanelStatusSettings.loadStatus( m_obStatuses.at(m_uiStatus)->id() );
         qsBackgroundColor = obDBPanelStatusSettings.backgroundColor();
     }
     catch( cSevException &e )
@@ -566,7 +566,7 @@ void cFrmPanel::displayStatus()
         }
         else
         {
-            switch( m_uiStatus )
+            switch( m_obStatuses.at(m_uiStatus)->activateCommand() )
             {
                 case 0:
                     qsBackgroundColor = "#00ff00";
@@ -578,6 +578,12 @@ void cFrmPanel::displayStatus()
                     qsBackgroundColor = "#ff0000";
                     break;
                 case 3:
+                    qsBackgroundColor = "#ffff00";
+                    break;
+                case 4:
+                    qsBackgroundColor = "#ffff00";
+                    break;
+                case 9:
                     qsBackgroundColor = "#ffff00";
                     break;
             }
@@ -624,7 +630,7 @@ void cFrmPanel::formatStatusString( QString p_qsStatusText )
 
     try
     {
-        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+        obDBPanelStatusSettings.loadStatus( m_obStatuses.at(m_uiStatus)->id() );
     }
     catch( cSevException &e )
     {
@@ -660,7 +666,7 @@ void cFrmPanel::formatTimerString( QString p_qsTimerText )
 
     try
     {
-        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+        obDBPanelStatusSettings.loadStatus( m_obStatuses.at(m_uiStatus)->id() );
     }
     catch( cSevException &e )
     {
@@ -697,7 +703,7 @@ void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
 
     try
     {
-        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+        obDBPanelStatusSettings.loadStatus( m_obStatuses.at(m_uiStatus)->id() );
     }
     catch( cSevException &e )
     {
@@ -732,7 +738,7 @@ void cFrmPanel::formatInfoString( QString p_qsInfoText )
 
     try
     {
-        obDBPanelStatusSettings.loadStatus( m_uiStatus+1 );
+        obDBPanelStatusSettings.loadStatus( m_obStatuses.at(m_uiStatus)->id() );
     }
     catch( cSevException &e )
     {

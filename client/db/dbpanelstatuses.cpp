@@ -57,7 +57,7 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inLengthIdx             = p_obRecord.indexOf( "length" );
     int inActivateCommandIdx    = p_obRecord.indexOf( "activateCmd" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 

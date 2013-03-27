@@ -49,6 +49,9 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientSelect", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 
     connect( ledName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
@@ -59,6 +62,8 @@ cDlgPatientSelect::cDlgPatientSelect( QWidget *p_poParent )
 cDlgPatientSelect::~cDlgPatientSelect()
 {
     cTracer obTrace( "cDlgPatientSelect::~cDlgPatientSelect" );
+
+    g_poPrefs->setDialogSize( "ListPatientSelect", QPoint( width(), height() ) );
 }
 
 void cDlgPatientSelect::setSearchPatientName( QString p_stName )

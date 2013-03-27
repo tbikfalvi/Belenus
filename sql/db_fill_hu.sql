@@ -3584,3 +3584,15 @@ INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `le
 UPDATE `ledger` SET `ledgerId`=0 WHERE `ledgerId`=1;
 ALTER TABLE `ledger` auto_increment=1;
 
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `modified`, `active`, `archive`) VALUES
+ (1, 1, 'Vendég felvétele az adatbázisba', '0000-00-00 00:00:00', 1, 'ARC'),
+ (2, 1, 'Bérlet vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
+ (3, 1, 'Bérlet feltöltés', '0000-00-00 00:00:00', 1, 'ARC'),
+ (4, 1, 'Termék vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
+ (5, 1, 'Gép használat kártyával', '0000-00-00 00:00:00', 1, 'ARC'),
+ (6, 1, 'Gép használat készpénzzel', '0000-00-00 00:00:00', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
