@@ -210,12 +210,13 @@ void cDlgPatientCard::enableButtons()
 
         cDBPatientCard  *poPatientCard = new cDBPatientCard;
         poPatientCard->load( m_uiSelectedId );
-        bCanBeReplaced = poPatientCard->isPatientCardTypeLinked()
+        bCanBeReplaced = poPatientCard->isPatientCardCanBeReplaced();
     }
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnEdit->setEnabled( bUserCanModify );
     m_poBtnDelete->setEnabled( bUserCanModify && m_uiSelectedId > 1 );
+    pbPatientCardReplace->setEnabled( bCanBeReplaced );
 }
 
 void cDlgPatientCard::newClicked( bool )

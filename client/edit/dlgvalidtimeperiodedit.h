@@ -20,6 +20,7 @@ public slots:
 
 protected:
     QString     m_qsValidTimePeriod;
+    int         m_nValidWeekDays;
 };
 
 #endif

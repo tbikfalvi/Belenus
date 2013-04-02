@@ -5,6 +5,7 @@
 #include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcard.h"
+#include "../db/dbvalidtimeperiods.h"
 
 cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -225,6 +226,9 @@ void cDlgPatientCardType::deleteClicked( bool )
                                       tr("You are not allowed to delete studio independent data."));
                 return;
             }
+            cDBValidTimePeriod  obDBValidTimePeriod;
+
+            obDBValidTimePeriod.removePatienCardTypes( m_uiSelectedId );
             poPatientCardType->remove();
             m_uiSelectedId = 0;
             refreshTable();

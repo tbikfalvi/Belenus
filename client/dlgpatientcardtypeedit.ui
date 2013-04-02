@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>499</width>
-    <height>481</height>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -307,134 +307,6 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QLabel" name="lblWeekDays">
-            <property name="text">
-             <string>... on the selected days:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QCheckBox" name="chkMonday">
-            <property name="text">
-             <string>Monday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="chkTuesday">
-            <property name="text">
-             <string>Tuesday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="chkWednesday">
-            <property name="text">
-             <string>Wednesday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="chkThursday">
-            <property name="text">
-             <string>Thursday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="chkFriday">
-            <property name="text">
-             <string>Friday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <item>
-           <widget class="QCheckBox" name="chkSaturday">
-            <property name="text">
-             <string>Saturday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="chkSunday">
-            <property name="text">
-             <string>Sunday</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
           <item>
            <widget class="QLabel" name="lblTimeInterval">
@@ -583,13 +455,6 @@
   <tabstop>deValidDateTo</tabstop>
   <tabstop>rbDays</tabstop>
   <tabstop>ledValidDays</tabstop>
-  <tabstop>chkMonday</tabstop>
-  <tabstop>chkTuesday</tabstop>
-  <tabstop>chkWednesday</tabstop>
-  <tabstop>chkThursday</tabstop>
-  <tabstop>chkFriday</tabstop>
-  <tabstop>chkSaturday</tabstop>
-  <tabstop>chkSunday</tabstop>
   <tabstop>listValidInterval</tabstop>
   <tabstop>pbAdd</tabstop>
   <tabstop>pbEdit</tabstop>

@@ -91,7 +91,17 @@ QStringList cDBValidTimePeriod::loadPeriods( const unsigned int p_uiId ) const t
 
     while( poQuery->next() )
     {
-        qslPeriods << QString( "%1 => %2" ).arg(poQuery->value(3).toString().left(5)).arg(poQuery->value(4).toString().left(5));
+        QString qsPeriod = QString( "%1 => %2" ).arg(poQuery->value(4).toString().left(5)).arg(poQuery->value(5).toString().left(5));
+
+        if( poQuery->value(3).toInt() & 1 )  qsPeriod.append( QObject::tr(" Mon") );
+        if( poQuery->value(3).toInt() & 2 )  qsPeriod.append( QObject::tr(" Tue") );
+        if( poQuery->value(3).toInt() & 4 )  qsPeriod.append( QObject::tr(" Wed") );
+        if( poQuery->value(3).toInt() & 8 )  qsPeriod.append( QObject::tr(" Thu") );
+        if( poQuery->value(3).toInt() & 16 ) qsPeriod.append( QObject::tr(" Fri") );
+        if( poQuery->value(3).toInt() & 32 ) qsPeriod.append( QObject::tr(" Sat") );
+        if( poQuery->value(3).toInt() & 64 ) qsPeriod.append( QObject::tr(" Sun") );
+
+        qslPeriods << qsPeriod;
     }
 
     return qslPeriods;
@@ -148,9 +158,20 @@ void cDBValidTimePeriod::saveList(const QStringList &m_qslPeriods) throw( cSevEx
 
     for( int i=0; i<m_qslPeriods.count(); i++ )
     {
-        m_uiId          = 0;
-        m_qsStartTime   = m_qslPeriods.at(i).left(5);
-        m_qsStopTime    = m_qslPeriods.at(i).right(5);
+        QString qsTimePeriod = m_qslPeriods.at(i).left(14);
+
+        m_uiId              = 0;
+        m_nValidWeekDays    = 0;
+        m_qsStartTime       = qsTimePeriod.left(5);
+        m_qsStopTime        = qsTimePeriod.right(5);
+
+        if( m_qslPeriods.at(i).contains(QObject::tr("Mon"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 1;
+        if( m_qslPeriods.at(i).contains(QObject::tr("Tue"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 2;
+        if( m_qslPeriods.at(i).contains(QObject::tr("Wed"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 4;
+        if( m_qslPeriods.at(i).contains(QObject::tr("Thu"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 8;
+        if( m_qslPeriods.at(i).contains(QObject::tr("Fri"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 16;
+        if( m_qslPeriods.at(i).contains(QObject::tr("Sat"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 32;
+        if( m_qslPeriods.at(i).contains(QObject::tr("Sun"), Qt::CaseInsensitive) ) m_nValidWeekDays |= 64;
 
         save();
     }
