@@ -19,6 +19,7 @@ public:
     QLineEdit   *ledBarcode;
     QSpacerItem *horizontalSpacer1;
     QPushButton *pbPatientCardType;
+    QPushButton *pbPatientCardReplace;
 
     cDlgPatientCard( QWidget *p_poParent = 0 );
     virtual ~cDlgPatientCard();
@@ -39,6 +40,7 @@ protected slots:
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
     virtual void _slotPatientCardTypes();
+    virtual void _slotPatientCardReplace();
 };
 
 #endif // DLGPATIENTCARD_H

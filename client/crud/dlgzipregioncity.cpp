@@ -42,6 +42,9 @@ cDlgZipRegionCity::cDlgZipRegionCity( QWidget *p_poParent )
     }
     if( poQuery ) delete poQuery;
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListZipRegionCity", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 
     connect( cmbRegion, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
@@ -49,6 +52,7 @@ cDlgZipRegionCity::cDlgZipRegionCity( QWidget *p_poParent )
 
 cDlgZipRegionCity::~cDlgZipRegionCity()
 {
+    g_poPrefs->setDialogSize( "ListZipRegionCity", QPoint( width(), height() ) );
 }
 
 void cDlgZipRegionCity::setupTableView()

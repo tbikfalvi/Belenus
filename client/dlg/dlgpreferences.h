@@ -2,7 +2,8 @@
 #define DLGPREFERENCES_H
 
 #include "../belenus.h"
-#include "../../build/belenus/ui_dlgpreferences.h"
+//#include "../../build/belenus/ui_dlgpreferences.h"
+#include "../../build/Belenus/ui_dlgpreferences.h"
 
 class cDlgPreferences : public QDialog, private Ui::dlgPreferences
 {
@@ -31,6 +32,7 @@ private slots:
     void on_sliFileLogLevel_valueChanged( int p_inValue );
     void on_btnMainBackground_clicked( bool p_boClicked );
     void on_spbBarcodeLen_valueChanged( int p_inValue );
+    void on_ledPCLostPrice_textChanged(const QString &arg1);
 };
 
 #endif

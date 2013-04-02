@@ -117,7 +117,7 @@ void dlgProductStorage::on_pbSave_clicked()
 
                 obDBShoppingCart.createNew();
                 obDBShoppingCart.setProductId( m_poProduct->id() );
-                obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
+                obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PROD_SELL );
                 obDBShoppingCart.setItemName( obDBProductActionType.name() );
                 obDBShoppingCart.setItemCount( ledProductCount->text().toInt() );
                 obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );

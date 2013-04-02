@@ -34,7 +34,6 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
                                const QString &p_qsValidDateFrom,
                                const QString &p_qsValidDateTo,
                                const int p_nValidDays,
-                               const int p_nValidWeekDays,
                                const int p_nUnitTime,
                                const QString &p_qsModified,
                                const bool p_bActive,
@@ -49,7 +48,6 @@ void cDBPatientCardType::init( const unsigned int p_uiId,
     m_qsValidDateFrom   = p_qsValidDateFrom;
     m_qsValidDateTo     = p_qsValidDateTo;
     m_nValidDays        = p_nValidDays;
-    m_nValidWeekDays    = p_nValidWeekDays;
     m_nUnitTime         = p_nUnitTime;
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
@@ -67,7 +65,6 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
     int inValidDaysIdx      = p_obRecord.indexOf( "validDays" );
-    int inValidWeekDaysIdx  = p_obRecord.indexOf( "validWeekDays" );
     int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
     int inModifiedIdx       = p_obRecord.indexOf( "modified" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
@@ -82,7 +79,6 @@ void cDBPatientCardType::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inValidDaysIdx ).toInt(),
-          p_obRecord.value( inValidWeekDaysIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
@@ -143,7 +139,6 @@ void cDBPatientCardType::save() throw( cSevException )
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "validDays = \"%1\", " ).arg( m_nValidDays );
-    qsQuery += QString( "validWeekDays = \"%1\", " ).arg( m_nValidWeekDays );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
@@ -276,16 +271,6 @@ int cDBPatientCardType::validDays() const throw()
 void cDBPatientCardType::setValidDays( const int p_nValidDays ) throw()
 {
     m_nValidDays = p_nValidDays;
-}
-
-int cDBPatientCardType::validWeekDays() const throw()
-{
-    return m_nValidWeekDays;
-}
-
-void cDBPatientCardType::setValidWeekDays( const int p_nValidWeekDays ) throw()
-{
-    m_nValidWeekDays = p_nValidWeekDays;
 }
 
 int cDBPatientCardType::unitTime() const throw()

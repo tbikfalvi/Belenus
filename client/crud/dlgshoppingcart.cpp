@@ -246,7 +246,7 @@ void cDlgShoppingCart::deleteClicked( bool )
         {
             obDBShoppingCart.load( qslItemIds.at(i).toInt() );
 
-            if( obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PC_SELL || obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PC_REFILL )
+            if( obDBShoppingCart.ledgerTypeId() == cDBLedger::LT_PC_SELL || obDBShoppingCart.ledgerTypeId() == cDBLedger::LT_PC_REFILL )
             {
                 try
                 {
@@ -269,7 +269,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                     g_obLogger(e.severity()) << e.what() << EOM;
                 }
             }
-            else if( obDBShoppingCart.ledgerTypeId() == cDBShoppingCart::LT_PROD_SELL )
+            else if( obDBShoppingCart.ledgerTypeId() == cDBLedger::LT_PROD_SELL )
             {
                 // No need to Increase product count. Product count only decreased by sell.
             }
@@ -352,7 +352,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                     cDBPatientCard  obDBPatientCard;
 
                     obDBPatientCard.load( obDBShoppingCart.patientCardId() );
-                    bool bNewCard = obDBShoppingCart.ledgerTypeId()==cDBShoppingCart::LT_PC_SELL?true:false;
+                    bool bNewCard = obDBShoppingCart.ledgerTypeId()==cDBLedger::LT_PC_SELL?true:false;
                     if( bNewCard )
                     {
                         qsComment = tr("Sell patientcard [%1]").arg(obDBPatientCard.barcode());

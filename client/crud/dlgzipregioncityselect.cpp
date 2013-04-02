@@ -36,6 +36,9 @@ cDlgZipRegionCitySelect::cDlgZipRegionCitySelect( QWidget *p_poParent, QString p
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListZipRegionCitySelect", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
@@ -43,6 +46,7 @@ cDlgZipRegionCitySelect::cDlgZipRegionCitySelect( QWidget *p_poParent, QString p
 
 cDlgZipRegionCitySelect::~cDlgZipRegionCitySelect()
 {
+    g_poPrefs->setDialogSize( "ListZipRegionCitySelect", QPoint( width(), height() ) );
 }
 
 void cDlgZipRegionCitySelect::setupTableView()

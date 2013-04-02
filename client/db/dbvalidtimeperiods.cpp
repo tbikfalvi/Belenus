@@ -28,6 +28,7 @@ cDBValidTimePeriod::~cDBValidTimePeriod()
 void cDBValidTimePeriod::init( const unsigned int p_uiId,
                                const unsigned int p_uiLicenceId,
                                const unsigned int p_uiPatientCardTypeId,
+                               const int p_nValidWeekDays,
                                const QString &p_qsStartTime,
                                const QString &p_qsStopTime,
                                const QString &p_qsModified,
@@ -36,6 +37,7 @@ void cDBValidTimePeriod::init( const unsigned int p_uiId,
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
     m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_nValidWeekDays        = p_nValidWeekDays;
     m_qsStartTime           = p_qsStartTime;
     m_qsStopTime            = p_qsStopTime;
     m_qsModified            = p_qsModified;
@@ -47,6 +49,7 @@ void cDBValidTimePeriod::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx                 = p_obRecord.indexOf( "patientCardTypeEnabledId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
+    int inValidWeekDaysIdx      = p_obRecord.indexOf( "validWeekDays" );
     int inStartTimeIdx          = p_obRecord.indexOf( "start" );
     int inStopTimeIdx           = p_obRecord.indexOf( "stop" );
     int inModifiedIdx           = p_obRecord.indexOf( "modified" );
@@ -55,6 +58,7 @@ void cDBValidTimePeriod::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
+          p_obRecord.value( inValidWeekDaysIdx ).toInt(),
           p_obRecord.value( inStartTimeIdx ).toString(),
           p_obRecord.value( inStopTimeIdx ).toString(),
           p_obRecord.value( inModifiedIdx ).toString(),
@@ -115,6 +119,7 @@ void cDBValidTimePeriod::save() throw( cSevException )
     qsQuery += " patientCardTypeEnabled SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+    qsQuery += QString( "validWeekDays = \"%1\", " ).arg( m_nValidWeekDays );
     qsQuery += QString( "start = \"%1\", " ).arg( m_qsStartTime );
     qsQuery += QString( "stop = \"%1\", " ).arg( m_qsStopTime );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
@@ -206,6 +211,16 @@ unsigned int cDBValidTimePeriod::patientCardTypeId() const throw()
 void cDBValidTimePeriod::setPatientCardTypeId( const unsigned int p_uiPCardTypeId ) throw()
 {
     m_uiPatientCardTypeId = p_uiPCardTypeId;
+}
+
+int cDBValidTimePeriod::validWeekDays() const throw()
+{
+    return m_nValidWeekDays;
+}
+
+void cDBValidTimePeriod::setValidWeekDays( const int p_nValidWeekDays ) throw()
+{
+    m_nValidWeekDays = p_nValidWeekDays;
 }
 
 QString cDBValidTimePeriod::startTime() const throw()

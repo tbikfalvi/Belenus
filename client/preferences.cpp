@@ -632,6 +632,26 @@ QString cPreferences::getSecondaryBackground() const
     return m_qsSecondaryBackground;
 }
 
+void cPreferences::setPatientCardLostPrice( const int p_inPrice )
+{
+    m_nPatientCardLostPrice = p_inPrice;
+}
+
+int cPreferences::getPatientCardLostPrice() const
+{
+    return m_nPatientCardLostPrice;
+}
+
+void cPreferences::setPatientCardLostPriceVat(const int p_inVat )
+{
+    m_nPatientCardLostPriceVat = p_inVat;
+}
+
+int cPreferences::getPatientCardLostPriceVat() const
+{
+    return m_nPatientCardLostPriceVat;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -739,6 +759,9 @@ void cPreferences::loadConfFileSettings()
         m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
         m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
 
+        m_nPatientCardLostPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
+        m_nPatientCardLostPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 25 ).toUInt();
+
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
             (uiConsoleLevel <= cSeverity::MIN) )
@@ -820,6 +843,9 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLost" ), m_nPatientCardLostPrice );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );

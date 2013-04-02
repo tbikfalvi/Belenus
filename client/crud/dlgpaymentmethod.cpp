@@ -10,11 +10,15 @@ cDlgPaymentMethod::cDlgPaymentMethod( QWidget *p_poParent )
     setWindowTitle( tr( "Payment Methods List" ) );
     setWindowIcon( QIcon("./resources/40x40_paymentmethod.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPaymentMethod", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 }
 
 cDlgPaymentMethod::~cDlgPaymentMethod()
 {
+    g_poPrefs->setDialogSize( "ListPaymentMethod", QPoint( width(), height() ) );
 }
 
 void cDlgPaymentMethod::setupTableView()

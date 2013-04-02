@@ -33,8 +33,6 @@ public:
     void            setValidDateTo( const QString &p_qsVDTo )           throw();
     int             validDays() const                                   throw();
     void            setValidDays( const int p_nValidDays )              throw();
-    int             validWeekDays() const                               throw();
-    void            setValidWeekDays( const int p_nValidWeekDays )      throw();
     int             unitTime() const                                    throw();
     void            setUnitTime( const int p_nUnitTime )                throw();
     QString         modified() const                                    throw();
@@ -53,7 +51,6 @@ private:
     QString         m_qsValidDateFrom;
     QString         m_qsValidDateTo;
     int             m_nValidDays;
-    int             m_nValidWeekDays;
     int             m_nUnitTime;
     QString         m_qsModified;
     bool            m_bActive;
@@ -68,7 +65,6 @@ private:
                const QString &p_qsValidDateFrom = "",
                const QString &p_qsValidDateTo = "",
                const int p_nValidDays = 0,
-               const int p_nValidWeekDays = 127,
                const int p_nUnitTime = 0,
                const QString &p_qsModified = "",
                const bool p_bActive = true,

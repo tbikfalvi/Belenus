@@ -8,15 +8,6 @@
 class cDBShoppingCart
 {
 public:
-    enum teLedgerType
-    {
-        LT_NOT_DEFINED = 0,
-        LT_DEVICE_USAGE,
-        LT_PC_SELL,
-        LT_PC_REFILL,
-        LT_PROD_SELL,
-        LT_OTHER
-    };
 
     cDBShoppingCart();
     ~cDBShoppingCart();

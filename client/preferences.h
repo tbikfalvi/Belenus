@@ -108,6 +108,10 @@ public:
     QSize           secondaryWindowSize() const;
     void            setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow = false );
     QString         getSecondaryBackground() const;
+    void            setPatientCardLostPrice( const int p_inPrice );
+    int             getPatientCardLostPrice() const;
+    void            setPatientCardLostPriceVat(const int p_inVat );
+    int             getPatientCardLostPriceVat() const;
 
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
@@ -181,6 +185,8 @@ private:
     QSize           m_qsSecondarySize;
     QString         m_qsSecondaryBackground;
     bool            m_bBarcodeLengthDifferent;
+    int             m_nPatientCardLostPrice;
+    int             m_nPatientCardLostPriceVat;
 
     void init();
 };

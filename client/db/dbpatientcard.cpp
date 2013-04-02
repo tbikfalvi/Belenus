@@ -222,6 +222,11 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
         return false;
 }
 
+bool cDBPatientCard::isPatientCardCanBeReplaced()
+{
+    bool
+}
+
 void cDBPatientCard::createNew() throw()
 {
     init();

@@ -18,6 +18,7 @@
 #include "belenus.h"
 #include "dlgproductsell.h"
 #include "dlgproduct.h"
+#include "../db/dbledger.h"
 
 cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : cDlgCrud( p_poParent )
 {
@@ -333,7 +334,7 @@ void cDlgProductSell::on_pbPayment_clicked()
     obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
     obDBShoppingCart.setGuestId( g_obGuest.id() );
     obDBShoppingCart.setProductId( m_obProduct.id() );
-    obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
+    obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PROD_SELL );
     obDBShoppingCart.setItemName( m_obProduct.name() );
     obDBShoppingCart.setItemCount( nCount );
     obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
@@ -370,7 +371,7 @@ void cDlgProductSell::on_pbToCart_clicked()
     obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
     obDBShoppingCart.setGuestId( g_obGuest.id() );
     obDBShoppingCart.setProductId( m_obProduct.id() );
-    obDBShoppingCart.setLedgerTypeId( cDBShoppingCart::LT_PROD_SELL );
+    obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PROD_SELL );
     obDBShoppingCart.setItemName( m_obProduct.name() );
     obDBShoppingCart.setItemCount( nCount );
     obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );

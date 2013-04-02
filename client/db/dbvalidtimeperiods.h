@@ -23,6 +23,8 @@ public:
     void            setLicenceId( const unsigned int p_nLicenceId )                 throw();
     unsigned int    patientCardTypeId() const                                       throw();
     void            setPatientCardTypeId( const unsigned int p_uiPCardTypeId )      throw();
+    int             validWeekDays() const                                           throw();
+    void            setValidWeekDays( const int p_nValidWeekDays )                  throw();
     QString         startTime() const                                               throw();
     void            setStartTime( const QString &p_qsStartTime )                    throw();
     QString         stopTime() const                                                throw();
@@ -35,6 +37,7 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientCardTypeId;
+    int             m_nValidWeekDays;
     QString         m_qsStartTime;
     QString         m_qsStopTime;
     QString         m_qsModified;
@@ -43,6 +46,7 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientCardTypeId = 0,
+               const int p_nValidWeekDays = 127,
                const QString &p_qsStartTime = "",
                const QString &p_qsStopTime = "",
                const QString &p_qsModified = "",

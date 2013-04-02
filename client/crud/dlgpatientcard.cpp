@@ -63,6 +63,13 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::RejectRole );
     connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
 
+    pbPatientCardReplace = new QPushButton( tr( "Replace lost" ), this );
+    pbPatientCardReplace->setObjectName( QString::fromUtf8( "pbPatientCardReplace" ) );
+    pbPatientCardReplace->setIconSize( QSize(20, 20) );
+    pbPatientCardReplace->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    btbButtons->addButton( pbPatientCardReplace, QDialogButtonBox::ActionRole );
+    connect( pbPatientCardReplace, SIGNAL(clicked()), this, SLOT(_slotPatientCardReplace()) );
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCards", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
@@ -188,6 +195,7 @@ void cDlgPatientCard::enableButtons()
     cTracer obTracer( "cDlgPatientCard::enableButtons" );
 
     bool bUserCanModify = false;
+    bool bCanBeReplaced = false;
 
     if( m_uiSelectedId > 0 )
     {
@@ -199,8 +207,11 @@ void cDlgPatientCard::enableButtons()
         {
             bUserCanModify = true;
         }
-    }
 
+        cDBPatientCard  *poPatientCard = new cDBPatientCard;
+        poPatientCard->load( m_uiSelectedId );
+        bCanBeReplaced = poPatientCard->isPatientCardTypeLinked()
+    }
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnEdit->setEnabled( bUserCanModify );
@@ -309,6 +320,11 @@ void cDlgPatientCard::_slotPatientCardTypes()
 
     QDialog::accept();
     obDlgPatientCardType.exec();
+}
+
+void cDlgPatientCard::_slotPatientCardReplace()
+{
+
 }
 
 

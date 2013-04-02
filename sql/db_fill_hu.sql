@@ -194,7 +194,11 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (2 , '0', 'Bérlet eladás', '1', 'ARC'),
  (3 , '0', 'Bérlet feltöltés', '1', 'ARC'),
  (4 , '0', 'Termék eladás', '1', 'ARC'),
- (5 , '0', 'Egyéb', '1', 'ARC');
+ (5 , '0', 'Elveszett bérlet csere', '1', 'ARC'),
+ (6 , '0', 'Egyéb', '1', 'ARC'),
+ (7 , '0', 'Egyéb', '1', 'ARC'),
+ (8 , '0', 'Egyéb', '1', 'ARC'),
+ (9 , '0', 'Egyéb', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
