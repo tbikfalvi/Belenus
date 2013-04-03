@@ -18,6 +18,7 @@ public:
     void            remove()                                                    throw( cSevException );
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();
     bool            isPatientCardCanBeReplaced()                                throw();
+    bool            isPatientCardCanBeUsed(QString *p_qsValid)                  throw();
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
     unsigned int    licenceId() const                                           throw();

@@ -325,7 +325,12 @@ void cDlgPatientCard::_slotPatientCardTypes()
 
 void cDlgPatientCard::_slotPatientCardReplace()
 {
+    cDBPatientCard  *poPatientCard = new cDBPatientCard;
+    poPatientCard->load( m_uiSelectedId );
 
+    emit signalReplacePatientCard( poPatientCard->barcode() );
+
+    refreshTable();
 }
 
 

@@ -28,6 +28,9 @@ protected:
     virtual void setupTableView();
     virtual void enableButtons();
 
+signals:
+    void signalReplacePatientCard( const QString &p_qsBarcode );
+
 private:
     QWidget     *m_poParent;
     QString      m_qsCondition;

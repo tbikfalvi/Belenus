@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbpatientcard.h"
+#include "dbvalidtimeperiods.h"
 
 cDBPatientCard::cDBPatientCard()
 {
@@ -224,7 +225,57 @@ bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw
 
 bool cDBPatientCard::isPatientCardCanBeReplaced() throw()
 {
+    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || patientCardTypeId() < 2 )
+        return false;
+
+    QDate   qdTo = QDate::fromString( m_qsValidDateTo, "yyyy-MM-dd" );
+
+    if( QDate::currentDate() > qdTo )
+        return false;
+
     return true;
+}
+
+bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
+{
+    QStringList         qslDays;
+    QDateTime           currDateTime( QDateTime::currentDateTime() );
+    cDBValidTimePeriod  obDBValidTimePeriod;
+
+    qslDays << QObject::tr("Mon") << QObject::tr("Tue") << QObject::tr("Wed") << QObject::tr("Thu") << QObject::tr("Fri") << QObject::tr("Sat") << QObject::tr("Sun");
+
+    QStringList         qslValidTimes = obDBValidTimePeriod.loadPeriods( m_uiPatientCardTypeId );
+
+    *p_qsValid = QObject::tr( "Patientcard can be used:" );
+    for( int i=0; i<qslValidTimes.count(); i++ )
+    {
+        QString qsValidTimeStr  = qslValidTimes.at(i);
+
+        p_qsValid->append( QString("\n%1").arg(qsValidTimeStr) );
+
+        if( qsValidTimeStr.contains( qslDays.at(currDateTime.date().dayOfWeek()) ) )
+        {
+            QString qsValidTime = qsValidTimeStr.left(14);
+            QString qsStart     = qsValidTime.left(5);
+            QString qsStop      = qsValidTime.right(5);
+            QTime   qtStart     = QTime::fromString( qsStart, "hh:mm" );
+            QTime   qtStop      = QTime::fromString( qsStop, "hh:mm" );
+
+            if( qtStart < qtStop )
+            {
+                if( qtStart <= currDateTime.time() && currDateTime.time() <= qtStop )
+                    return true;
+            }
+            else
+            {
+                if( (qtStart <= currDateTime.time() && currDateTime.time() <= QTime(23,59,59,0)) ||
+                    (QTime(0,0,0,0) <= currDateTime.time() && currDateTime.time() <= qtStop) )
+                    return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 void cDBPatientCard::createNew() throw()
