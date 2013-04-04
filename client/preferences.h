@@ -112,6 +112,10 @@ public:
     int             getPatientCardLostPrice() const;
     void            setPatientCardLostPriceVat(const int p_inVat );
     int             getPatientCardLostPriceVat() const;
+    void            setPatientCardPartnerPrice( const int p_inPrice );
+    int             getPatientCardPartnerPrice() const;
+    void            setPatientCardPartnerPriceVat(const int p_inVat );
+    int             getPatientCardPartnerPriceVat() const;
 
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
@@ -187,6 +191,8 @@ private:
     bool            m_bBarcodeLengthDifferent;
     int             m_nPatientCardLostPrice;
     int             m_nPatientCardLostPriceVat;
+    int             m_nPatientCardPartnerPrice;
+    int             m_nPatientCardPartnerPriceVat;
 
     void init();
 };

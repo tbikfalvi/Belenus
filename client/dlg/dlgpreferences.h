@@ -33,6 +33,7 @@ private slots:
     void on_btnMainBackground_clicked( bool p_boClicked );
     void on_spbBarcodeLen_valueChanged( int p_inValue );
     void on_ledPCLostPrice_textChanged(const QString &arg1);
+    void on_ledPCPartnerPrice_textChanged(const QString &arg1);
 };
 
 #endif

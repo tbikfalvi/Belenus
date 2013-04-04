@@ -56,6 +56,11 @@ void cPreferences::init()
 
     m_bCassaAutoClose       = false;
     m_bCassaAutoWithdrawal  = false;
+
+    m_nPatientCardLostPrice         = 0;
+    m_nPatientCardLostPriceVat      = 0;
+    m_nPatientCardPartnerPrice      = 0;
+    m_nPatientCardPartnerPriceVat   = 0;
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -652,6 +657,26 @@ int cPreferences::getPatientCardLostPriceVat() const
     return m_nPatientCardLostPriceVat;
 }
 
+void cPreferences::setPatientCardPartnerPrice( const int p_inPrice )
+{
+    m_nPatientCardPartnerPrice = p_inPrice;
+}
+
+int cPreferences::getPatientCardPartnerPrice() const
+{
+    return m_nPatientCardPartnerPrice;
+}
+
+void cPreferences::setPatientCardPartnerPriceVat(const int p_inVat )
+{
+    m_nPatientCardPartnerPriceVat = p_inVat;
+}
+
+int cPreferences::getPatientCardPartnerPriceVat() const
+{
+    return m_nPatientCardPartnerPriceVat;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -760,7 +785,9 @@ void cPreferences::loadConfFileSettings()
         m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
 
         m_nPatientCardLostPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
-        m_nPatientCardLostPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 25 ).toUInt();
+        m_nPatientCardLostPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
+        m_nPatientCardPartnerPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
+        m_nPatientCardPartnerPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -846,6 +873,8 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLost" ), m_nPatientCardLostPrice );
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartner" ), m_nPatientCardPartnerPrice );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartnerVat" ), m_nPatientCardPartnerPriceVat );
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );

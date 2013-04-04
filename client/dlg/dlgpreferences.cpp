@@ -103,12 +103,18 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
 
+    connect( ledPCLostVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCLostPrice_textChanged(QString)) );
+    connect( ledPCPartnerVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCPartnerPrice_textChanged(QString)) );
+
     cCurrency   cPrice( g_poPrefs->getPatientCardLostPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardLostPriceVat() );
 
     ledPCLostPrice->setText( cPrice.currencyString() );
     ledPCLostVatpercent->setText( QString::number(g_poPrefs->getPatientCardLostPriceVat()) );
 
-    connect( ledPCLostVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCLostPrice_textChanged(QString)) );
+    cCurrency   cPricePartner( g_poPrefs->getPatientCardPartnerPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardPartnerPriceVat() );
+
+    ledPCPartnerPrice->setText( cPricePartner.currencyString() );
+    ledPCPartnerVatpercent->setText( QString::number(g_poPrefs->getPatientCardPartnerPriceVat()) );
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
@@ -209,6 +215,11 @@ void cDlgPreferences::accept()
     g_poPrefs->setPatientCardLostPrice( cPrice.currencyValue().toInt() );
     g_poPrefs->setPatientCardLostPriceVat( ledPCLostVatpercent->text().toInt() );
 
+    cCurrency   cPricePartner( ledPCPartnerPrice->text(), cCurrency::CURR_GROSS, ledPCPartnerVatpercent->text().toInt() );
+
+    g_poPrefs->setPatientCardPartnerPrice( cPricePartner.currencyValue().toInt() );
+    g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
+
     g_poPrefs->save();
 
     QDialog::accept();
@@ -246,10 +257,17 @@ void cDlgPreferences::on_btnSecondaryBackground_clicked()
     btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
 }
 
-
 void cDlgPreferences::on_ledPCLostPrice_textChanged(const QString &arg1)
 {
     cCurrency currPrice( ledPCLostPrice->text(), cCurrency::CURR_GROSS, ledPCLostVatpercent->text().toInt() );
 
     lblPCLostPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCLostVatpercent->text()) );
 }
+
+void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &arg1)
+{
+    cCurrency currPrice( ledPCPartnerPrice->text(), cCurrency::CURR_GROSS, ledPCPartnerVatpercent->text().toInt() );
+
+    lblPCPartnerPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCPartnerVatpercent->text()) );
+}
+
