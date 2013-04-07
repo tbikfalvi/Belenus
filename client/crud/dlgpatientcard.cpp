@@ -70,6 +70,13 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     btbButtons->addButton( pbPatientCardReplace, QDialogButtonBox::ActionRole );
     connect( pbPatientCardReplace, SIGNAL(clicked()), this, SLOT(_slotPatientCardReplace()) );
 
+    pbPartnerCardAssign = new QPushButton( tr( "Assign partner" ), this );
+    pbPartnerCardAssign->setObjectName( QString::fromUtf8( "pbPartnerCardAssign" ) );
+    pbPartnerCardAssign->setIconSize( QSize(20, 20) );
+    pbPartnerCardAssign->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    btbButtons->addButton( pbPartnerCardAssign, QDialogButtonBox::ActionRole );
+    connect( pbPartnerCardAssign, SIGNAL(clicked()), this, SLOT(_slotPartnerCardAssign()) );
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCards", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
@@ -196,6 +203,7 @@ void cDlgPatientCard::enableButtons()
 
     bool bUserCanModify = false;
     bool bCanBeReplaced = false;
+    bool bCanBeParent   = false;
 
     if( m_uiSelectedId > 0 )
     {
@@ -211,12 +219,14 @@ void cDlgPatientCard::enableButtons()
         cDBPatientCard  *poPatientCard = new cDBPatientCard;
         poPatientCard->load( m_uiSelectedId );
         bCanBeReplaced = poPatientCard->isPatientCardCanBeReplaced();
+        bCanBeParent = poPatientCard->isPatientCardCanBeParent();
     }
 
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnEdit->setEnabled( bUserCanModify );
     m_poBtnDelete->setEnabled( bUserCanModify && m_uiSelectedId > 1 );
     pbPatientCardReplace->setEnabled( bCanBeReplaced );
+    pbPartnerCardAssign->setEnabled( bCanBeParent );
 }
 
 void cDlgPatientCard::newClicked( bool )
@@ -333,4 +343,13 @@ void cDlgPatientCard::_slotPatientCardReplace()
     refreshTable();
 }
 
+void cDlgPatientCard::_slotPartnerCardAssign()
+{
+    cDBPatientCard  *poPatientCard = new cDBPatientCard;
+    poPatientCard->load( m_uiSelectedId );
+
+    emit signalAssignPartnerCard( poPatientCard->barcode() );
+
+    refreshTable();
+}
 

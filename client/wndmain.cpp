@@ -1168,6 +1168,7 @@ void cWndMain::on_action_Cards_triggered()
     cDlgPatientCard obDlgPatientCard( this );
 
     connect( &obDlgPatientCard, SIGNAL(signalReplacePatientCard(QString)), this, SLOT(slotReplacePatientCard(QString)) );
+    connect( &obDlgPatientCard, SIGNAL(signalAssignPartnerCard(QString)), this, SLOT(slotAssignPartnerCard(QString)) );
 
     obDlgPatientCard.exec();
 }
@@ -1510,7 +1511,6 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
             if( obDlgPatientCardUse.exec() == QDialog::Accepted )
             {
                 QTime           tLength;
-                QTime           tNewLength;
                 int             inNewLength;
                 int             inUnits;
                 QString         qsLength;
@@ -1989,6 +1989,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
         {
             obDBPatientCardNew.setActive( true );
             obDBPatientCardNew.setPatientCardTypeId( obDBPatientCardOld.patientCardTypeId() );
+            obDBPatientCardNew.setParentId( obDBPatientCardOld.parentId() );
             obDBPatientCardNew.setPatientId( obDBPatientCardOld.patientId() );
             obDBPatientCardNew.setUnits( obDBPatientCardOld.units() );
             obDBPatientCardNew.setTimeLeftStr( obDBPatientCardOld.timeLeftStr() );
@@ -2046,6 +2047,107 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientCardOld.setValidDateTo( "2000-01-01" );
             obDBPatientCardOld.setActive( false );
             obDBPatientCardOld.save();
+        }
+    }
+}
+
+void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
+{
+    cDBPatientCard  obDBPatientCardOld;
+
+    obDBPatientCardOld.load( p_qsBarcode );
+
+    QMessageBox::warning( this, tr("Request"), tr("Please enter the barcode of the patientcard to be assigned.") );
+
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+        cDBPatientCard  obDBPatientCardNew;
+        try
+        {
+            obDBPatientCardNew.load( obDlgInputStart.getEditText() );
+        }
+        catch( cSevException &e )
+        {
+            if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
+            {
+                g_obLogger(e.severity()) << e.what() << EOM;
+            }
+            else
+            {
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This barcode has not found in the database.\n"
+                                              "Do you want to register it for a new patientcard?"),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCardNew.createNew();
+                    obDBPatientCardNew.setLicenceId( g_poPrefs->getLicenceId() );
+                    obDBPatientCardNew.setBarcode( obDlgInputStart.getEditText() );
+                    obDBPatientCardNew.save();
+                }
+            }
+        }
+
+        if( obDBPatientCardNew.active() )
+        {
+            QMessageBox::warning( this, tr("Warning"), tr("This patientcard already in use.\n"
+                                                          "Please select a non-active patientcard.") );
+            return;
+        }
+        else
+        {
+            obDBPatientCardNew.setActive( true );
+            obDBPatientCardNew.setPatientCardTypeId( obDBPatientCardOld.patientCardTypeId() );
+            obDBPatientCardNew.setParentId( obDBPatientCardOld.id() );
+            obDBPatientCardNew.setPatientId( 0 );
+            obDBPatientCardNew.setUnits( obDBPatientCardOld.units() );
+            obDBPatientCardNew.setTimeLeftStr( obDBPatientCardOld.timeLeftStr() );
+            obDBPatientCardNew.setValidDateFrom( obDBPatientCardOld.validDateFrom() );
+            obDBPatientCardNew.setValidDateTo( obDBPatientCardOld.validDateTo() );
+            obDBPatientCardNew.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardOld.barcode()) );
+
+            cCurrency cPrice( QString::number(g_poPrefs->getPatientCardPartnerPrice()/100) );
+
+            cDBShoppingCart obDBShoppingCart;
+
+            obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBShoppingCart.setGuestId( obDBPatientCardNew.patientId() );
+            obDBShoppingCart.setProductId( 0 );
+            obDBShoppingCart.setPatientCardId( obDBPatientCardNew.id() );
+            obDBShoppingCart.setPanelId( 0 );
+            obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_ASSIGN_PARTNER );
+            obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode()) );
+            obDBShoppingCart.setItemCount( 1 );
+            obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
+            obDBShoppingCart.setItemVAT( g_poPrefs->getPatientCardLostPriceVat() );
+            obDBShoppingCart.setItemDiscount( 0 );
+            obDBShoppingCart.setItemSumPrice( cPrice.currencyValue().toInt() );
+
+            cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
+
+            obDlgCassaAction.setPayWithCash();
+
+            int     inCassaAction   = obDlgCassaAction.exec();
+            int     inPayType       = 0;
+            QString qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
+            bool    bShoppingCart   = false;
+
+            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+
+            if( inCassaAction == QDialog::Accepted && !bShoppingCart )
+            {
+                g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
+            }
+            else if( inCassaAction != QDialog::Accepted )
+            {
+                // Nem tortent meg az eladas
+                return;
+            }
+
+            obDBPatientCardNew.save();
         }
     }
 }

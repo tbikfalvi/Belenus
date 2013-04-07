@@ -16,7 +16,7 @@ public:
         LT_PC_REFILL,
         LT_PROD_SELL,
         LT_PC_LOST_REPLACE,
-        LT_OTHER6,
+        LT_PC_ASSIGN_PARTNER,
         LT_OTHER7,
         LT_OTHER8,
         LT_OTHER9

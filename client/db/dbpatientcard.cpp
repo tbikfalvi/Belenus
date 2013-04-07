@@ -179,6 +179,31 @@ void cDBPatientCard::save() throw( cSevException )
 
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
+
+    if( isAssignedCardExists() )
+    {
+        qsQuery = "UPDATE";
+        qsQuery += " patientCards SET ";
+        qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
+        qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
+        qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
+        qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
+        qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
+        qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
+        qsQuery += QString( "validDateTo = \"%1\" " ).arg( m_qsValidDateTo );
+        if( m_uiParentId > 0 )
+        {
+            // update parent
+            qsQuery += QString( " WHERE patientCardId = %1" ).arg( m_uiParentId );
+        }
+        else
+        {
+            // update childs
+            qsQuery += QString( " WHERE parentCardId = %1" ).arg( m_uiId );
+        }
+        poQuery = g_poDB->executeQTQuery( qsQuery );
+    }
+
     if( poQuery ) delete poQuery;
 /*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
@@ -234,6 +259,31 @@ bool cDBPatientCard::isPatientCardCanBeReplaced() throw()
         return false;
 
     return true;
+}
+
+bool cDBPatientCard::isPatientCardCanBeParent() throw()
+{
+    if( m_bActive == 0 || m_nUnits < 1 || m_uiTimeLeft < 1 || patientCardTypeId() < 2 || m_uiParentId > 0 )
+        return false;
+
+    QDate   qdTo = QDate::fromString( m_qsValidDateTo, "yyyy-MM-dd" );
+
+    if( QDate::currentDate() > qdTo )
+        return false;
+
+    return true;
+}
+
+bool cDBPatientCard::isAssignedCardExists() throw()
+{
+    if( m_uiParentId > 0 )
+        return true;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE parentCardId = %1" ).arg( m_uiId ) );
+    if( poQuery->size() > 0 )
+        return true;
+
+    return false;
 }
 
 bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
