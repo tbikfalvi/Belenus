@@ -145,7 +145,7 @@ void cDBLedgerDevice::save() throw( cSevException )
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_inTimeLeft );
     qsQuery += QString( "timeCard = \"%1\", " ).arg( m_inTimeCard );
     qsQuery += QString( "timeCash = \"%1\", " ).arg( m_inTimeCash );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -326,7 +326,6 @@ QString cDBLedgerDevice::comment() const throw()
 void cDBLedgerDevice::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
-    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBLedgerDevice::modified() const throw()

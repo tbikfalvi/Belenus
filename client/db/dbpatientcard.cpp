@@ -162,7 +162,7 @@ void cDBPatientCard::save() throw( cSevException )
     qsQuery += QString( "parentCardId = \"%1\", " ).arg( m_uiParentId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
     qsQuery += QString( "amount = \"%1\", " ).arg( m_nAmount );
     qsQuery += QString( "timeLeft = \"%1\", " ).arg( m_uiTimeLeft );
@@ -397,7 +397,6 @@ QString cDBPatientCard::comment() const throw()
 void cDBPatientCard::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
-    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBPatientCard::units() const throw()

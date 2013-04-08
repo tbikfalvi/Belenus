@@ -175,7 +175,7 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += QString( "discount = \"%1\", " ).arg( m_inDiscount );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
     qsQuery += QString( "totalPrice = \"%1\", " ).arg( m_nTotalPrice );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -462,7 +462,6 @@ QString cDBLedger::comment() const throw()
 void cDBLedger::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
-    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBLedger::modified() const throw()

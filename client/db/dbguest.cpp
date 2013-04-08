@@ -247,7 +247,7 @@ void cDBGuest::save() throw( cSevException )
     qsQuery += QString( "service = %1, " ).arg( m_bService );
     qsQuery += QString( "company = %1, " ).arg( m_bCompany );
     qsQuery += QString( "discountType = %1, " ).arg( m_inDiscountType );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "loyaltyPoints = %1, " ).arg( m_inLoyaltyPoints );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
@@ -442,7 +442,6 @@ QString cDBGuest::comment() const throw()
 void cDBGuest::setComment( const QString &p_qsComment ) throw()
 {
     m_qsComment = p_qsComment;
-    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 int cDBGuest::loyaltyPoints() const throw()
