@@ -132,6 +132,22 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
             deValidDateFrom->setEnabled( false );
             cmbCardType->setEnabled( false );
         }
+
+        // If this is a partner card, do not modify it
+        if( m_poPatientCard->parentId() > 0 )
+        {
+            ledBarcode->setEnabled( false );
+            cbActive->setEnabled( false );
+            cmbCardType->setEnabled( false );
+            ledPrice->setEnabled( false );
+            ledUnits->setEnabled( false );
+            teTimeLeft->setEnabled( false );
+            deValidDateFrom->setEnabled( false );
+            deValidDateTo->setEnabled( false );
+            pteComment->setEnabled( false );
+            pbSell->setEnabled( false );
+            pbRefill->setEnabled( false );
+        }
     }
     if( m_poPatientCard->patientId() > 0 )
     {
@@ -210,8 +226,8 @@ void cDlgPatientCardEdit::slotEnableButtons()
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbRefill->setIcon( QIcon("./resources/40x40_cassa.png") );
 
-    // If this is a NOT service card
-    if( m_poPatientCard->patientCardTypeId() != 1 )
+    // If this is a NOT service card and not partner card
+    if( m_poPatientCard->patientCardTypeId() != 1 && m_poPatientCard->parentId() == 0 )
     {
         if( m_poPatientCard->active() )
         {

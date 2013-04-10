@@ -140,5 +140,6 @@ void cDlgPatientCardUse::on_cmbTimeUse_currentIndexChanged(int)
     {
         pbSave->setEnabled( true );
     }
+
     m_qsTimeUse = QTime(0,cmbTimeUse->itemData(cmbTimeUse->currentIndex()).toInt(),0,0).toString("mm:ss");
 }

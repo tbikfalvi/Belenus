@@ -336,7 +336,9 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                     return;
                 }
 
-                int     inPriceTotal        = m_poPatientCardType->price()+(m_poPatientCardType->price()/100)*m_poPatientCardType->vatpercent();
+                cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
+
+                int     inPriceTotal        = cPrice.currencyValue().toInt();
                 int     inPriceDiscounted   = 0;
 
                 if( cmbPatient->currentIndex() > 0 )
@@ -351,6 +353,8 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                     inPriceDiscounted = inPriceTotal;
                 }
 
+                cCurrency cDiscounted( QString::number(inPriceDiscounted) );
+
                 cDBShoppingCart obDBShoppingCart;
 
                 obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
@@ -361,7 +365,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_REFILL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
                 obDBShoppingCart.setItemCount( 1 );
-                obDBShoppingCart.setItemNetPrice( m_poPatientCardType->price() );
+                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
                 obDBShoppingCart.setItemVAT( m_poPatientCardType->vatpercent() );
                 obDBShoppingCart.setItemDiscount( inPriceTotal - inPriceDiscounted );
                 obDBShoppingCart.setItemSumPrice( inPriceDiscounted );
