@@ -1705,22 +1705,22 @@ The length of the new barcode should be %1.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="695"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="711"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="702"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="718"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="714"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="730"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="288"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="304"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -1733,51 +1733,51 @@ deactivate the card with unchecking the Active checkbox.</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="299"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="315"/>
         <source>Available units cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="306"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="322"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card with unchecking the Active checkbox.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="313"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="329"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="350"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="615"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="366"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="631"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="351"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="367"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="420"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="539"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="666"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="436"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="555"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="682"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="540"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="556"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="616"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="632"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation></translation>
     </message>
@@ -1861,12 +1861,12 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="375"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="379"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="403"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="407"/>
         <source>Error</source>
         <translation></translation>
     </message>

@@ -228,6 +228,7 @@
     <property name="title">
      <string>&amp;Reports</string>
     </property>
+    <addaction name="action_ReportViewer"/>
     <addaction name="action_Accounting"/>
     <addaction name="separator"/>
     <addaction name="action_ReportPatients"/>
@@ -683,6 +684,14 @@
    </property>
    <property name="toolTip">
     <string>Manage payment methods</string>
+   </property>
+  </action>
+  <action name="action_ReportViewer">
+   <property name="text">
+    <string>Report viewer</string>
+   </property>
+   <property name="toolTip">
+    <string>Start independent Report Viewer application</string>
    </property>
   </action>
  </widget>

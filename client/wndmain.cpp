@@ -15,6 +15,7 @@
 
 #include <QMessageBox>
 #include <QCryptographicHash>
+#include <QProcess>
 
 #include "wndmain.h"
 #include "licenceManager.h"
@@ -186,6 +187,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_PCActivate->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     menuDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
 
+    action_ReportViewer->setIcon( QIcon( "./resources/40x40_book_ledger.png" ) );
     action_Accounting->setIcon( QIcon( "./resources/40x40_book.png" ) );
     action_ReportPatients->setIcon( QIcon("./resources/40x40_patient.png") );
     action_ReportPatientcards->setIcon( QIcon( "./resources/40x40_patientcards.png" ) );
@@ -219,6 +221,19 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
+
+    action_Accounting->setEnabled( false );
+    action_Accounting->setVisible( false );
+    action_ReportPatients->setEnabled( false );
+    action_ReportPatients->setVisible( false );
+    action_ReportPatientcards->setEnabled( false );
+    action_ReportPatientcards->setVisible( false );
+    action_PatientcardsObsolete->setEnabled( false );
+    action_PatientcardsObsolete->setVisible( false );
+    action_ReportPatientcardUses->setEnabled( false );
+    action_ReportPatientcardUses->setVisible( false );
+    action_CassaHistory->setEnabled( false );
+    action_CassaHistory->setVisible( false );
 
     action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
 
@@ -2172,13 +2187,20 @@ void cWndMain::on_ledPassword_returnPressed()
     on_pbLogin_clicked();
 }
 
+void cWndMain::on_action_ReportViewer_triggered()
+{
+    QProcess *qpReportViewer = new QProcess(this);
 
-
-
-
-
-
-
-
-
+    if( !qpReportViewer->startDetached( QString("ReportViewer.exe") ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:ReportViewer.exe\n\nError code: %1\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.").arg(qpReportViewer->error()) );
+    }
+}
 

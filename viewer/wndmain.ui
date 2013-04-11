@@ -427,13 +427,17 @@
         <item>
          <widget class="QLabel" name="lblInformation1">
           <property name="text">
-           <string>Welcome to Belenus Report Viewer application.
-To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.
-After successfull authentication you will be able to query different filtered reports. Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.
-Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblInformation2">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -460,14 +464,7 @@ Click the Export button on the top right to export the actual report to a format
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="ledUserName">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-              </widget>
+              <widget class="QComboBox" name="cmbName"/>
              </item>
              <item>
               <widget class="QLabel" name="lblPassword">

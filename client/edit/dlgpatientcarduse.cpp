@@ -128,7 +128,7 @@ void cDlgPatientCardUse::on_cmbNoUnits_currentIndexChanged(int index)
 
 void cDlgPatientCardUse::on_cmbTimeUse_currentIndexChanged(int)
 {
-    if( cmbTimeUse->itemData(cmbTimeUse->currentIndex()).toUInt()*60 > m_poPatientCard->timeLeft() )
+    if( cmbNoUnits->itemData(cmbNoUnits->currentIndex()).toUInt()*60 > m_poPatientCard->timeLeft() )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("This patientcard has less time to use.\n"

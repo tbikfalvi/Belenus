@@ -22,6 +22,7 @@
 #include "wndmain.h"
 #include "dlgdemo.h"
 #include "creportdaily.h"
+#include "../framework/qtmysqlquerymodel.h"
 
 //------------------------------------------------------------------------------------
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
@@ -37,7 +38,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( this, SIGNAL(setCheckedReportPatientcardInactive(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardUsage(bool)), this, SLOT(slotCheckReportPatientcardUsage(bool)) );
 
-    connect( ledUserName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
+    connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
 
     _initActions();
@@ -47,7 +48,14 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     on_tabReports_currentChanged( 0 );
 
-    ledUserName->setFocus();
+    lblInformation1->setVisible( true );
+    lblInformation2->setVisible( false );
+
+    cQTMySQLQueryModel *m_poModel = new cQTMySQLQueryModel( this );
+    m_poModel->setQuery( "SELECT CONCAT(name,\" (\",realName,\")\") AS n FROM users WHERE active = 1 ORDER BY name" );
+    cmbName->setModel( m_poModel );
+
+    ledPassword->setFocus();
 }
 //------------------------------------------------------------------------------------
 cWndMain::~cWndMain()
@@ -147,7 +155,7 @@ void cWndMain::_initTabInformation()
 void cWndMain::_setAuthInfoType(authType p_tAuthType)
 //------------------------------------------------------------------------------------
 {
-    ledUserName->setEnabled( true );
+    cmbName->setEnabled( true );
     ledPassword->setEnabled( true );
 
     pbAuthenticate->setText( tr("Login") );
@@ -162,7 +170,7 @@ void cWndMain::_setAuthInfoType(authType p_tAuthType)
         lblAuthenticationInformation->setStyleSheet( "QLabel {font: bold; color: green;}" );
         lblAuthenticationInformation->setText( tr("User successfully authenticated.") );
 
-        ledUserName->setEnabled( false );
+        cmbName->setEnabled( false );
         ledPassword->setEnabled( false );
 
         pbAuthenticate->setText( tr("Logout") );
@@ -245,10 +253,12 @@ void cWndMain::on_pbAuthenticate_clicked()
 cWndMain::authType cWndMain::_authenticateUser()
 //------------------------------------------------------------------------------------
 {
+    string  stName = cmbName->currentText().toStdString();
+    stName = stName.substr( 0, stName.find( '(' ) - 1 );
     authType    atRet = AUTH_ERROR;
     QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
 
-    if( ledUserName->text().compare( "root" ) == 0 )
+    if( QString::fromStdString(stName).compare( "root" ) == 0 )
     {
         if( m_qsRPSW.compare( QString( obPwdHash.toHex() ) ) == 0 )
         {
@@ -263,7 +273,7 @@ cWndMain::authType cWndMain::_authenticateUser()
     {
         try
         {
-            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM users WHERE name = \"" + ledUserName->text() + "\"" );
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT * FROM users WHERE name = \"" + QString::fromStdString(stName) + "\"" );
 
             if( poQuery->size() != 1 )
             {
@@ -294,6 +304,8 @@ cWndMain::authType cWndMain::_authenticateUser()
 void cWndMain::_setReportsEnabled(bool p_bEnable)
 //------------------------------------------------------------------------------------
 {
+    lblInformation1->setVisible( !p_bEnable );
+    lblInformation2->setVisible( p_bEnable );
     action_FilterBar->setEnabled( p_bEnable );
     action_FilterBar->setChecked( p_bEnable );
     on_action_FilterBar_triggered( p_bEnable );

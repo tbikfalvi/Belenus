@@ -131,6 +131,7 @@ private slots:
     void on_action_TestDlgStarted();
     void on_pbLogin_clicked();
     void on_ledPassword_returnPressed();
+    void on_action_ReportViewer_triggered();
 };
 
 #endif
