@@ -50,6 +50,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Exit application</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -70,6 +73,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pbBookkeepingDaily">
+         <property name="toolTip">
+          <string>Daily ledger</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -86,6 +92,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pbBookkeepingLedger">
+         <property name="toolTip">
+          <string>Bookkeeping ledger</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -109,6 +118,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pbPatientcardsActive">
+         <property name="toolTip">
+          <string>Valid and active patientcards</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -125,6 +137,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pbPatientcardsInactive">
+         <property name="toolTip">
+          <string>Inactive or expiring patientcards</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -141,6 +156,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pbPatientcardsUsage">
+         <property name="toolTip">
+          <string>Patientcard usages</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -205,7 +223,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>90</height>
+        <height>30</height>
        </size>
       </property>
       <property name="frameShape">

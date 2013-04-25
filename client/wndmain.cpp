@@ -286,47 +286,9 @@ bool cWndMain::showLogIn()
     ledPassword->setText( "" );
 
     enableElementsByLogin( false );
-//    frmLogin->setVisible( true );
-//    frmLogin->setEnabled( true );
-//    mdiPanels->setEnabled( false );
-
-//    cDlgLogIn  obDlgLogIn( this );
 
     m_dlgProgress->hideProgress();
-/*
-    bool       boLogInOK = ( obDlgLogIn.exec() == QDialog::Accepted );
 
-    if( boLogInOK )
-    {
-        frmLogin->setVisible( false );
-        frmLogin->setEnabled( false );
-
-        g_obLogDBWriter.setAppUser( g_obUser.id() );
-        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
-
-        if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
-        {
-            QMessageBox::warning( this, tr( "Password" ),
-                                  tr( "Your password is empty. Please change it to a valid password." ) );
-
-            cDlgUserEdit  obDlgEdit( this, &g_obUser );
-            obDlgEdit.setWindowTitle( g_obUser.realName() );
-            obDlgEdit.exec();
-        }
-
-        updateTitle();
-
-        if( g_poPrefs->isComponentInternetInstalled() )
-        {
-            checkDemoLicenceKey();
-        }
-        loginUser();
-
-    } // if ( boLogInOK )
-
-    obTrace << boLogInOK;
-    return boLogInOK;
-*/
     ledPassword->setFocus();
 
     return true;
@@ -345,9 +307,6 @@ void cWndMain::on_pbLogin_clicked()
         g_poPrefs->setLastUser( cmbName->currentText(), true );
 
         enableElementsByLogin( true );
-//        frmLogin->setVisible( false );
-//        frmLogin->setEnabled( false );
-//        mdiPanels->setEnabled( true );
 
         g_obLogDBWriter.setAppUser( g_obUser.id() );
         g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
@@ -446,6 +405,8 @@ void cWndMain::checkDemoLicenceKey()
 //====================================================================================
 void cWndMain::loginUser()
 {
+    cTracer obTrace( "cWndMain::loginUser" );
+
     // Felhasznalo ellenorzese
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) )
     { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
@@ -466,13 +427,14 @@ void cWndMain::loginUser()
         if( g_obCassa.loadOpenCassa() )
         {// Van nyitva hagyott kassza rekord
 
+            cCurrency cBalance( g_obCassa.cassaBalance() );
             if( QMessageBox::question( this, tr("Question"),
                                        tr( "The latest cassa record still not closed:\n\n"
                                            "Owner: %1\n"
                                            "Balance: %2\n\n"
                                            "Do you want to continue this cassa?\n\n"
                                            "Please note: if you click NO, new cassa record will be opened "
-                                           "and this cassa forced to close with reseting it's balance.").arg( g_obCassa.cassaOwnerStr() ).arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                           "and this cassa forced to close with reseting it's balance.").arg( g_obCassa.cassaOwnerStr() ).arg( cBalance.currencyFullStringShort() ),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
             {
                 g_obCassa.cassaContinue( g_obUser.id() );
@@ -491,12 +453,13 @@ void cWndMain::loginUser()
             if( g_obCassa.loadLatestCassaWithCash() )
             {
                 // Akarja-e a felhasznalo folytatni a kasszat
+                cCurrency cBalance( g_obCassa.cassaBalance() );
                 if( QMessageBox::question( this, tr("Question"),
                                            tr( "The latest cassa record closed with balance:\n\n"
                                                "%1\n\n"
                                                "Do you want to continue this cassa?\n\n"
                                                "Please note: if you click NO, new cassa record will be opened "
-                                               "and this cassa forced to close with reseting it's balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                               "and this cassa forced to close with reseting it's balance.").arg( cBalance.currencyFullStringShort() ),
                                            QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                 {// Kassza folytatasa
                     g_obCassa.cassaReOpen();
@@ -550,13 +513,15 @@ void cWndMain::logoutUser()
             {
                 if( g_obCassa.cassaBalance() > 0 )
                 {
+                    cCurrency   cBalance( g_obCassa.cassaBalance() );
+
                     if( QMessageBox::question( this, tr("Question"),
                                                tr("There are some cash left in your cassa.\n"
                                                   "Current balance: %1\n\n"
                                                   "Do you want to close the cassa with automatic "
                                                   "cash withdawal?\n\n"
                                                   "Please note: if you click NO, the cassa will "
-                                                  "be closed with the actual balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                                  "be closed with the actual balance.").arg( cBalance.currencyFullStringShort() ),
                                                QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                     {
                         g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
@@ -569,13 +534,15 @@ void cWndMain::logoutUser()
         {
             if( g_obCassa.cassaBalance() > 0 && !g_poPrefs->getCassaAutoWithdrawal() )
             {
+                cCurrency   cBalance( g_obCassa.cassaBalance() );
+
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("There are some cash left in your cassa.\n"
                                               "Current balance: %1\n\n"
                                               "Do you want to close the cassa with automatic "
                                               "cash withdawal?\n\n"
                                               "Please note: if you click NO, the cassa will "
-                                              "be closed with the actual balance.").arg( g_obGen.convertCurrency(g_obCassa.cassaBalance(), g_poPrefs->getCurrencyShort()) ),
+                                              "be closed with the actual balance.").arg( cBalance.currencyFullStringShort() ),
                                            QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
                 {
                     g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
@@ -2191,7 +2158,7 @@ void cWndMain::on_action_ReportViewer_triggered()
 {
     QProcess *qpReportViewer = new QProcess(this);
 
-    if( !qpReportViewer->startDetached( QString("ReportViewer.exe") ) )
+    if( !qpReportViewer->startDetached( QString("ReportViewer.exe %1 %2").arg(g_obUser.name()).arg(ledPassword->text()) ) )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Error occured when starting process:ReportViewer.exe\n\nError code: %1\n"

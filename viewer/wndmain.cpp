@@ -63,6 +63,32 @@ cWndMain::~cWndMain()
 {
 }
 //------------------------------------------------------------------------------------
+void cWndMain::setLoginData(QString p_qsName, QString p_qsPassword)
+//------------------------------------------------------------------------------------
+{
+    if( p_qsName.length() > 0 )
+    {
+        for( int i=0; i<cmbName->count(); i++ )
+        {
+            if( cmbName->itemText(i).contains(p_qsName) )
+            {
+                cmbName->setCurrentIndex( i );
+                break;
+            }
+        }
+    }
+
+    if( p_qsPassword.length() > 0 )
+    {
+        ledPassword->setText( p_qsPassword );
+    }
+
+    if( ledPassword->text().length() > 0 )
+    {
+        on_pbAuthenticate_clicked();
+    }
+}
+//------------------------------------------------------------------------------------
 void cWndMain::_initActions()
 //------------------------------------------------------------------------------------
 {
@@ -386,7 +412,7 @@ void cWndMain::slotCheckReportPatientcardActive( bool p_bChecked )
         m_repCardActive = new cReportCardActive();
 
         m_qvReports.append( m_repCardActive );
-        m_repCardActive->setIndex( tabReports->addTab( m_repCardActive, QIcon("./resources/40x40_book_daily.png"), m_repCardActive->name() ) );
+        m_repCardActive->setIndex( tabReports->addTab( m_repCardActive, QIcon("./resources/40x40_patientcard_active.png"), m_repCardActive->name() ) );
         tabReports->setCurrentIndex( m_repCardActive->index() );
     }
     else
@@ -410,7 +436,7 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
         m_repCardInactive = new cReportCardInactive();
 
         m_qvReports.append( m_repCardInactive );
-        m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_book_daily.png"), m_repCardInactive->name() ) );
+        m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_patientcard_inactive.png"), m_repCardInactive->name() ) );
         tabReports->setCurrentIndex( m_repCardInactive->index() );
     }
     else
@@ -434,7 +460,7 @@ void cWndMain::slotCheckReportPatientcardUsage( bool p_bChecked )
         m_repCardUsage = new cReportCardUsage();
 
         m_qvReports.append( m_repCardUsage );
-        m_repCardUsage->setIndex( tabReports->addTab( m_repCardUsage, QIcon("./resources/40x40_book_daily.png"), m_repCardUsage->name() ) );
+        m_repCardUsage->setIndex( tabReports->addTab( m_repCardUsage, QIcon("./resources/40x40_patientcard_usage.png"), m_repCardUsage->name() ) );
         tabReports->setCurrentIndex( m_repCardUsage->index() );
     }
     else
@@ -550,6 +576,9 @@ void cWndMain::on_dtFilterDateStart_dateChanged(const QDate &date)
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->setFilterDateStart( date );
+
+    if( chkAutoRefresh->isChecked() )
+        on_pbRefresh_clicked();
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_dtFilterDateStop_dateChanged(const QDate &date)
@@ -558,6 +587,9 @@ void cWndMain::on_dtFilterDateStop_dateChanged(const QDate &date)
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->setFilterDateStop( date );
+
+    if( chkAutoRefresh->isChecked() )
+        on_pbRefresh_clicked();
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_ledFilterDataName_textEdited(const QString &arg1)
@@ -566,6 +598,9 @@ void cWndMain::on_ledFilterDataName_textEdited(const QString &arg1)
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->setFilterDataName( arg1 );
+
+    if( chkAutoRefresh->isChecked() )
+        on_pbRefresh_clicked();
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
@@ -573,6 +608,17 @@ void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
 {
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
+    obReport->setFilterDataType( cmbFilterDataTypes->itemText(index) );
 
+    if( chkAutoRefresh->isChecked() )
+        on_pbRefresh_clicked();
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_pbRefresh_clicked()
+//------------------------------------------------------------------------------------
+{
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->refreshReport();
 }
 //------------------------------------------------------------------------------------

@@ -31,6 +31,8 @@ public:
     cWndMain( QWidget *parent = 0 );
     ~cWndMain();
 
+    void                setLoginData(QString p_qsName = "", QString p_qsPassword = "" );
+
 signals:
     void                setCheckedReportDaily( bool p_bChecked );
     void                setCheckedReportLedger( bool p_bChecked );
@@ -82,6 +84,7 @@ private slots:
     void on_dtFilterDateStop_dateChanged(const QDate &date);
     void on_ledFilterDataName_textEdited(const QString &arg1);
     void on_cmbFilterDataTypes_currentIndexChanged(int index);
+    void on_pbRefresh_clicked();
 };
 
 #endif // WNDMAIN_H

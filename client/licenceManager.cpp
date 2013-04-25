@@ -13,8 +13,14 @@ extern cQTLogger g_obLogger;
 
 cLicenceManager::cLicenceManager()
 {
+    // Default licence type is DEMO
     m_LicenceType = LTYPE_DEMO;
 
+    // The licence order number defines which item in the stringlists should be used
+    // The value of the order number has to be greater than 0 and less than LICENCE_MAX_NUMBER+1
+    m_nLicenceOrderNumber = 0;
+
+    // Matrix for 6 element code string
     m_qslCode = QStringList() << "A" << "B" << "C" << "D" << "E" << "F" << "G" << "H" << "I" << "J"
                               << "K" << "L" << "M" << "N" << "O" << "P" << "Q" << "R" << "S" << "T"
                               << "U" << "V" << "O" << "X" << "Y" << "Z" << "J" << "T" << "K" << "A"
@@ -22,6 +28,18 @@ cLicenceManager::cLicenceManager()
                               << "K" << "L" << "M" << "N" << "O" << "P" << "Q" << "R" << "S" << "T"
                               << "U" << "V" << "O" << "X" << "Y" << "Z" << "J" << "T" << "K" << "A";
 
+    // String array with same characters like matrix for easier decode activation code to numbers
+    m_qslCodeString = QStringList() << "ABCDEFGHIJ"
+                                    << "KLMNOPQRST"
+                                    << "UVOXYZJTKA"
+                                    << "ABCDEFGHIJ"
+                                    << "KLMNOPQRST"
+                                    << "UVOXYZJTKA";
+
+    // Valid licence strings
+    // The last 6 digit is a random number int the third column
+    // The valid serial numbers located in the column in the middle
+    // The serial number's last 6 character is encoded in the first column
     m_qslLicenceKeys = QStringList() << "O[@I_R"  // BLNS01_DPKBTY <- BLNS01_358194
                                      << "L[SHGD"  // BLNS02_GPXCLO <- BLNS02_653212
                                      << "IZ_L[D"  // BLNS03_BQTGPO <- BLNS03_167652
@@ -53,6 +71,7 @@ cLicenceManager::cLicenceManager()
                                      << "LXRJGA"  // BLNS29_GSYALJ <- BLNS29_684016
                                      << "CZAJ_J"; // BLNS30_HQJATA <- BLNS30_766099
 
+    // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
                                      << "653212"
                                      << "167652"
@@ -97,8 +116,13 @@ void cLicenceManager::initialize()
 
     try
     {
+        // Check secret code and create if not exists
         _checkCode();
 
+        // Get latest serial string from database
+        // licenceId is 0 for default
+        // licenceId is 1 for DEMO
+        // First valid serial's id is 2
         poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences WHERE active=1 ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
@@ -191,6 +215,8 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
 
     if( nRet == ERR_NO_ERROR )
     {
+        m_nLicenceOrderNumber = nLicenceNumber;
+
         QSqlQuery   *poQuery = NULL;
 
         try
@@ -206,6 +232,53 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
             g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
+
+    return nRet;
+}
+
+int cLicenceManager::activateLicence(const QString &p_qsValidationString)
+{
+    int nRet = ERR_NO_ERROR;
+
+    if( m_nLicenceOrderNumber < 1 || m_nLicenceOrderNumber > LICENCE_MAX_NUMBER+1 )
+    {
+        g_obLogger(cSeverity::INFO) << "Licence order number is: " << m_nLicenceOrderNumber << EOM;
+        return ERR_KEY_NUMBER_INCORRECT;
+    }
+    if( p_qsValidationString.length() != 6 )
+    {
+        return ERR_KEY_FORMAT_MISMATCH;
+    }
+
+    QString qsCodeOrigin     = m_qslLicenceCodes.at( m_nLicenceOrderNumber-1 );
+    QString qsCodeValidation = "";
+
+    for( int i=0; i<p_qsValidationString.length(); i++ )
+    {
+        int nPos = m_qslCodeString.at(i).indexOf( p_qsValidationString.at(i), Qt::CaseInsensitive );
+
+        if( nPos == -1 )
+        {
+            return ERR_ACT_KEY_INCORRECT;
+        }
+        qsCodeValidation.append( QString::number(nPos) );
+    }
+
+    QString qsCodeActivation = "";
+
+    for( int i=0; i<6; i++ )
+    {
+        int nSum = QString( qsCodeOrigin.at(i) ).toInt() + QString( m_qsCode.at(i) ).toInt();
+
+        qsCodeActivation.append( nSum % 10 );
+    }
+
+    // a code-ot es a serial-bol jovo szamot osszeadni ugy hogy ne legyen nagyobb 6 szamjegynel
+    // es ezt osszehasonlitani a megkapott koddal, ezt adja egyebkent a activator
+
+    QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
+
+    settings.setValue( "Active", qsCodeActivation );
 
     return nRet;
 }
@@ -300,6 +373,8 @@ void cLicenceManager::_checkValidity()
         }
         else
         {
+            m_nLicenceOrderNumber = nLicenceNumber;
+
             QString qsCodeLic = m_qslLicenceCodes.at( nLicenceNumber-1 );
             QString qsCodeVer = QString::number( (qsCodeReg.toInt() + qsCodeLic.toInt()) % 1000000 );
 

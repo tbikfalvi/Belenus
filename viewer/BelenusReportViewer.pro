@@ -22,6 +22,7 @@ HEADERS = ../framework/dbconnection.h \
     ../framework/qtlogger.h \
     ../framework/tracer.h \
     wndmain.h \
+    currency.h \
     dlgdemo.h \
     dlgpreview.h \
     creport.h \
@@ -37,6 +38,7 @@ SOURCES = ../framework/dbconnection.cpp \
     ../framework/tracer.cpp \
     main.cpp \
     wndmain.cpp \
+    currency.cpp \
     dlgdemo.cpp \
     dlgpreview.cpp \
     creport.cpp \

@@ -43,8 +43,20 @@ void cDlgSerialReg::on_pbValidate_clicked()
 {
     if( g_poPrefs->getLicenceId() > 1 )
     {
+        int nRet = g_obLicenceManager.activateLicence( ledSerial->text() );
 
-        QDialog::accept();
+        switch( nRet )
+        {
+            case cLicenceManager::ERR_NO_ERROR:
+                QMessageBox::information( this, tr("Information"),
+                                          tr("Your licence key has been activated successfully.\n\n"
+                                             "Please note that you have to validate your application\n"
+                                             "regulary by your franchise partner.\n"
+                                             "Without validation the application can run in DEMO mode.\n\n"
+                                             "You have %1 days until the next validation.").arg( g_obLicenceManager.daysRemain() ) );
+                QDialog::accept();
+                break;
+        }
     }
     else
     {

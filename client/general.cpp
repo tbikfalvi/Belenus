@@ -57,9 +57,9 @@ void cGeneral::setApplicationLanguage( const QString &p_qsLang )
     m_poMainApplication->installTranslator( m_poQtTr );
 }
 //====================================================================================
-QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
+//QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //====================================================================================
-{
+/*{
     QString qsValue = QString::number( p_nCurrencyValue );
     QString qsRet = "";
 
@@ -76,7 +76,7 @@ QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
     qsRet += " " + p_qsCurrency;
 
     return qsRet;
-}
+}*/
 //*********************************************************************************************************************
 // Class cCurrency
 //*********************************************************************************************************************

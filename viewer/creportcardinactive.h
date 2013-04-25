@@ -15,6 +15,8 @@ signals:
     
 public slots:
     
+protected slots:
+    virtual void refreshReport();
 };
 
 #endif // CREPORTCARDINACTIVE_H

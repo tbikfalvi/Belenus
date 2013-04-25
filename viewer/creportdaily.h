@@ -14,7 +14,9 @@ public:
 signals:
     
 public slots:
-    
+
+protected slots:
+    virtual void refreshReport();
 };
 
 #endif // CREPORTDAILY_H

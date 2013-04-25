@@ -40,6 +40,13 @@ int main( int argc, char *argv[] )
 
         cWndMain  obMainWindow;
         obMainWindow.show();
+        if( argc > 2 )
+        {
+            QString qsName = QString( argv[1] );
+            QString qsPass = QString( argv[2] );
+
+            obMainWindow.setLoginData( qsName, qsPass );
+        }
         nRet = apMainApp.exec();
     }
     catch( cSevException &e )

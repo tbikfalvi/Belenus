@@ -303,7 +303,7 @@ bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
 
         p_qsValid->append( QString("\n%1").arg(qsValidTimeStr) );
 
-        if( qsValidTimeStr.contains( qslDays.at(currDateTime.date().dayOfWeek()) ) )
+        if( qsValidTimeStr.contains( qslDays.at(currDateTime.date().dayOfWeek()-1) ) )
         {
             QString qsValidTime = qsValidTimeStr.left(14);
             QString qsStart     = qsValidTime.left(5);

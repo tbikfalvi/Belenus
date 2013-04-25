@@ -36,6 +36,12 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     setLayout( mainLayout );
 
     //-----------------------------------------------------
+    // Report elemek beallitasa
+    //-----------------------------------------------------
+    m_tcReport = new QTextCursor( &m_tdReport );
+    m_teReport->setDocument( &m_tdReport );
+
+    //-----------------------------------------------------
     // Report filter gui elemek beallitasa
     //-----------------------------------------------------
     _setDateStartEnabled();
@@ -68,10 +74,30 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     obLeftCellFormat->setRightMargin( 10 );
     obLeftCellFormat->setAlignment( Qt::AlignLeft );
 
+    obCenterCellFormat = new QTextBlockFormat();
+    obCenterCellFormat->setLeftMargin( 10 );
+    obCenterCellFormat->setRightMargin( 10 );
+    obCenterCellFormat->setAlignment( Qt::AlignHCenter );
+
     obRightCellFormat = new QTextBlockFormat();
     obRightCellFormat->setLeftMargin( 10 );
     obRightCellFormat->setRightMargin( 10 );
     obRightCellFormat->setAlignment( Qt::AlignRight );
+}
+//------------------------------------------------------------------------------------
+cReport::~cReport()
+//------------------------------------------------------------------------------------
+{
+    delete m_tcReport;
+    delete mainLayout;
+    delete m_teReport;
+}
+//------------------------------------------------------------------------------------
+void cReport::refreshReport()
+//------------------------------------------------------------------------------------
+{
+    m_tdReport.clear();
+    m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
 }
 //=================================================================================================
 //=================================================================================================

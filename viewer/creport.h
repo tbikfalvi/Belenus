@@ -8,6 +8,7 @@
 #include <QTextTableFormat>
 #include <QTextBlockFormat>
 #include <QDate>
+#include <QSqlQuery>
 
 class cReport : public QWidget
 {
@@ -16,6 +17,9 @@ class cReport : public QWidget
 public:
 
     explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
+    ~cReport();
+
+    virtual void         refreshReport();
 
     QString              name() const;
     QString              description() const;
@@ -47,6 +51,8 @@ public:
 protected:
 
     QTextEdit           *m_teReport;
+    QTextDocument        m_tdReport;
+    QTextCursor         *m_tcReport;
     QVBoxLayout         *mainLayout;
 
     QTextCharFormat     *obTitleFormat;
@@ -54,6 +60,7 @@ protected:
     QTextCharFormat     *obBoldFormat;
     QTextTableFormat    *obTableFormat;
     QTextBlockFormat    *obLeftCellFormat;
+    QTextBlockFormat    *obCenterCellFormat;
     QTextBlockFormat    *obRightCellFormat;
 
     QString              m_qsReportName;

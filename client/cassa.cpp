@@ -164,6 +164,8 @@ void cCassa::createNew( unsigned int p_uiUserId, int p_inBalance )
 void cCassa::cassaContinue()
 //====================================================================================
 {
+    cTracer obTrace( "cCassa::cassaContinue" );
+
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
@@ -181,6 +183,8 @@ void cCassa::cassaContinue()
 void cCassa::cassaContinue( unsigned int p_uiUserId )
 //====================================================================================
 {
+    cTracer obTrace( QString("cCassa::cassaContinue %1").arg(p_uiUserId) );
+
 /*    int inCurrentBalance = m_pCassa->currentBalance();
 
     m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
@@ -203,6 +207,8 @@ void cCassa::cassaContinue( unsigned int p_uiUserId )
 void cCassa::cassaReOpen()
 //====================================================================================
 {
+    cTracer obTrace( "cCassa::cassaReOpen" );
+
     m_pCassa->setStopDateTime( "" );
     m_pCassa->save();
 
@@ -223,6 +229,8 @@ void cCassa::cassaReOpen()
 void cCassa::cassaReOpen( unsigned int p_uiCassaId )
 //====================================================================================
 {
+    cTracer obTrace( "cCassa::cassaReOpen", QString("%1").arg(p_uiCassaId) );
+
     m_pCassa->load( p_uiCassaId );
     cassaReOpen();
 }
@@ -230,6 +238,8 @@ void cCassa::cassaReOpen( unsigned int p_uiCassaId )
 void cCassa::cassaClose()
 //====================================================================================
 {
+    cTracer obTrace( "cCassa::cassaClose" );
+
     m_pCassa->setStopDateTime( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     m_pCassa->save();
 
@@ -549,6 +559,8 @@ bool cCassa::isCassaEnabled()
 QString cCassa::cassaOwnerStr()
 //====================================================================================
 {
+    cTracer obTrace( "cCassa::cassaOwnerStr" );
+
     cDBUser     obUser;
 
     obUser.load( m_pCassa->userId() );

@@ -28,7 +28,8 @@ public:
         ERR_NO_ERROR = 0,
         ERR_KEY_FORMAT_MISMATCH,    // Licence key format is not BLNSxx_ZZZZZZ where 'x' is a digit and 'ZZZZZZ' is a stored string
         ERR_KEY_NUMBER_INCORRECT,   // Licence key format is ok, but number after 'BLNS' is not ok
-        ERR_KEY_NOT_EXISTS          // Licence key format is ok, but licence key is not official
+        ERR_KEY_NOT_EXISTS,         // Licence key format is ok, but licence key is not official
+        ERR_ACT_KEY_INCORRECT
     };
 
     cLicenceManager();
@@ -38,6 +39,7 @@ public:
     bool            isDemo();
     int             daysRemain();
     int             validateLicence( const QString &p_qsLicenceString );
+    int             activateLicence( const QString &p_qsValidationString );
     QString         licenceKey() const;
     QString         validationKey() const;
 
@@ -46,12 +48,14 @@ private:
     QStringList     m_qslLicenceKeys;
     QStringList     m_qslLicenceCodes;
     QStringList     m_qslCode;
+    QStringList     m_qslCodeString;
 
     licenceType     m_LicenceType;
     QString         m_qsLicenceString;
     QString         m_qsCode;
     QDate           m_qdLastValidated;
     int             m_nLicenceId;
+    int             m_nLicenceOrderNumber;
 
     void            _checkCode();
     void            _checkValidity();
