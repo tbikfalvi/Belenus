@@ -22,10 +22,9 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
 
     if( m_poPanelUses )
     {
-        cCurrency   cPrice( m_poPanelUses->usePrice() );
         ledUseName->setText( m_poPanelUses->name() );
         ledUseTime->setText( QString::number(m_poPanelUses->useTime()) );
-        ledUsePrice->setText( cPrice.currencyString() );
+        ledUsePrice->setText( QString::number(m_poPanelUses->usePrice()/100) );
     }
     on_ledUsePrice_textEdited("");
 }
