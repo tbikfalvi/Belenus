@@ -288,15 +288,18 @@ void cDlgPanelSettings::saveClicked( bool )
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Title of panel can not be empty." ), QMessageBox::Ok );
     }
-    if( ledMaxWorkTime->text() == "" )
+    if( ledMaxWorkTime->isEnabled() )
     {
-        boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime of panel can not be empty." ), QMessageBox::Ok );
-    }
-    else if( ledMaxWorkTime->text().toUInt() < 1 )
-    {
-        boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime has to be greater than zero." ), QMessageBox::Ok );
+        if( ledMaxWorkTime->text() == "" )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime of panel can not be empty." ), QMessageBox::Ok );
+        }
+        else if( ledMaxWorkTime->text().toUInt() < 1 )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime has to be greater than zero." ), QMessageBox::Ok );
+        }
     }
 
     if( boCanBeSaved )
@@ -307,6 +310,7 @@ void cDlgPanelSettings::saveClicked( bool )
 
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
+        obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
         obDBPanel.setWorkTime( workTime.hour()*3600 + workTime.minute()*60 + workTime.second() );
         obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
         obDBPanel.save();

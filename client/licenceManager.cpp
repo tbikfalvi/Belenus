@@ -274,7 +274,7 @@ int cLicenceManager::activateLicence(const QString &p_qsValidationString)
     }
 
     // a code-ot es a serial-bol jovo szamot osszeadni ugy hogy ne legyen nagyobb 6 szamjegynel
-    // es ezt osszehasonlitani a megkapott koddal, ezt adja egyebkent a activator
+    // es ezt osszehasonlitani a megkapott koddal, ezt adja egyebkent az activator
 
     QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
 
