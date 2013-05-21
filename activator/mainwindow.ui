@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>674</width>
+    <width>785</width>
     <height>462</height>
    </rect>
   </property>
@@ -17,72 +17,166 @@
    <widget class="QGroupBox" name="gbLicenceKeys">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>361</width>
-      <height>441</height>
+      <x>10</x>
+      <y>80</y>
+      <width>471</width>
+      <height>371</height>
      </rect>
     </property>
     <property name="title">
      <string> Licence keys </string>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <widget class="QTreeWidget" name="treeLicences">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>25</y>
+       <width>351</width>
+       <height>331</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="columnCount">
+      <number>4</number>
+     </property>
+     <attribute name="headerCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="headerDefaultSectionSize">
+      <number>75</number>
+     </attribute>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">2</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">3</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string notr="true">4</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QPushButton" name="pbDeleteLicenceKey">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>381</x>
+       <y>85</y>
+       <width>75</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Delete</string>
+     </property>
+     <property name="icon">
+      <iconset resource="BelenusActivator.qrc">
+       <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pbEditLicenceKey">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>381</x>
+       <y>53</y>
+       <width>75</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Edit</string>
+     </property>
+     <property name="icon">
+      <iconset resource="BelenusActivator.qrc">
+       <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="gbRegistration">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>651</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string> Registration </string>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QListWidget" name="listLicenceKeys"/>
+      <widget class="QLabel" name="lblRegistrationCode">
+       <property name="text">
+        <string>Registration code :</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QPushButton" name="pbNewLicenceKey">
-         <property name="text">
-          <string>New</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbEditLicenceKey">
-         <property name="text">
-          <string>Edit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbDeleteLicenceKey">
-         <property name="text">
-          <string>Delete</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+      <widget class="QLineEdit" name="ledRegistrationCode"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>194</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbNewLicenceKey">
+       <property name="text">
+        <string>Register licence key</string>
+       </property>
+       <property name="icon">
+        <iconset resource="BelenusActivator.qrc">
+         <normaloff>:/icons/new.png</normaloff>:/icons/new.png</iconset>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
    <widget class="QGroupBox" name="gbInformation">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>160</y>
-      <width>267</width>
-      <height>181</height>
+      <x>490</x>
+      <y>180</y>
+      <width>221</width>
+      <height>173</height>
      </rect>
     </property>
     <property name="title">
      <string> Licence key information </string>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="lblLicenceKeyString">
        <property name="font">
@@ -99,70 +193,50 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
+      <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <item row="0" column="0">
         <widget class="QLabel" name="lblCode">
          <property name="text">
           <string>Activation code :</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLineEdit" name="ledCode"/>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="ledCode">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
+       <item row="1" column="0">
         <widget class="QLabel" name="lblValidator">
          <property name="text">
           <string>Validation code :</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLineEdit" name="ledValidator"/>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="ledValidator">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
+       <item row="2" column="0">
         <widget class="QLabel" name="lblActivated">
          <property name="text">
           <string>Activated on :</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="2" column="1">
         <widget class="QDateEdit" name="deActivated">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
          </property>
@@ -181,23 +255,13 @@
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
      <item>
       <widget class="QPushButton" name="pbValidateLicence">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -206,6 +270,10 @@
        </property>
        <property name="text">
         <string>Validate Licence Key</string>
+       </property>
+       <property name="icon">
+        <iconset resource="BelenusActivator.qrc">
+         <normaloff>:/icons/releases.png</normaloff>:/icons/releases.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -220,42 +288,97 @@
    <widget class="QGroupBox" name="gbEdit">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>10</y>
-      <width>261</width>
-      <height>131</height>
+      <x>491</x>
+      <y>80</y>
+      <width>222</width>
+      <height>95</height>
      </rect>
     </property>
     <property name="title">
      <string> Edit Licence Key </string>
     </property>
-    <widget class="QLabel" name="lblLicenceKey">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>46</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Licence Key :</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>30</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="lblLicenceKey">
+         <property name="text">
+          <string>Licence Key :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ledLicenceKeyName">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="pbSaveLicence">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Save Licence Key</string>
+         </property>
+         <property name="icon">
+          <iconset resource="BelenusActivator.qrc">
+           <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbCancelLicence">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+         <property name="icon">
+          <iconset resource="BelenusActivator.qrc">
+           <normaloff>:/icons/cancel.png</normaloff>:/icons/cancel.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="BelenusActivator.qrc"/>
+ </resources>
  <connections/>
 </ui>

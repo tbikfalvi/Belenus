@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/icons">
         <file>BelenusActivator.ico</file>
+        <file>save.png</file>
+        <file>releases.png</file>
+        <file>new.png</file>
+        <file>edit.png</file>
+        <file>delete.png</file>
+        <file>cancel.png</file>
     </qresource>
 </RCC>
