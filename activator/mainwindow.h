@@ -64,6 +64,8 @@ private:
     void            _EnCode( char *str, int size );
     void            _DeCode( char *str, int size );
     bool            _validateLicenceStr( QString p_qsLicenceString );
+    void            _fillLicenceTree();
+    void            _saveLicenceTree();
 
 private slots:
 

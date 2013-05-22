@@ -1,6 +1,9 @@
 
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QFile>
+#include <QTextStream>
+#include <QDomDocument>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -98,6 +101,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "904968"
                                      << "684016"
                                      << "766099";
+
+    _fillLicenceTree();
 }
 
 MainWindow::~MainWindow()
@@ -106,16 +111,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent( QCloseEvent *p_poEvent )
 {
-    if( QMessageBox::question( this, tr("Question"),
-                               tr("Are you sure you want to close the application?"),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
+//    if( QMessageBox::question( this, tr("Question"),
+//                               tr("Are you sure you want to close the application?"),
+//                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+//    {
         p_poEvent->accept();
-    }
-    else
-    {
-        p_poEvent->ignore();
-    }
+//    }
+//    else
+//    {
+//        p_poEvent->ignore();
+//    }
 }
 
 void MainWindow::_EnCode( char *str, int size )
@@ -217,9 +222,17 @@ void MainWindow::on_pbEditLicenceKey_clicked()
 
     ui->ledLicenceKeyName->setText( item->text( 0 ) );
 
+    int n1 = ui->ledLicenceKeyName->text().mid(4,1).toInt();
+    int n2 = ui->ledLicenceKeyName->text().mid(5,1).toInt();
+
+    int nOrder = n1*10+n2;
+
+    m_qsCode = m_qslLicenceCodes.at(nOrder-1);
+    ui->lblLicenceKeyString->setText( QString("%1 (%2)").arg(ui->ledLicenceKeyName->text()).arg(m_qslLicenceCodes.at(nOrder-1)) );
+
     if( item->text(2).length() > 0 )
     {
-        ui->deActivated->setDate( QDate::fromString( item->text(1), "yyyy-MM-dd" ) );
+        ui->deActivated->setDate( QDate::fromString( item->text(1), "yyyy/MM/dd" ) );
         ui->ledCode->setText( item->text(2) );
         ui->ledValidator->setText( item->text(3) );
     }
@@ -246,12 +259,22 @@ void MainWindow::on_pbSaveLicence_clicked()
     }
     else
     {
+        QList<QTreeWidgetItem *> lstResult = ui->treeLicences->findItems( ui->ledLicenceKeyName->text(), Qt::MatchFixedString );
+
+        if( lstResult.count() > 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"), tr("Defined licence already exists.") );
+            return;
+        }
+
         QTreeWidgetItem *item = new QTreeWidgetItem( ui->treeLicences );
         item->setData( 0, Qt::DisplayRole, ui->ledLicenceKeyName->text() );
         item->setData( 1, Qt::DisplayRole, ui->deActivated->text() );
         item->setData( 2, Qt::DisplayRole, ui->ledCode->text().left(6) );
         item->setData( 3, Qt::DisplayRole, ui->ledValidator->text().left(6) );
     }
+
+    _saveLicenceTree();
 
     on_pbCancelLicence_clicked();
 }
@@ -268,6 +291,7 @@ void MainWindow::on_pbCancelLicence_clicked()
 
     ui->ledLicenceKeyName->setText( "" );
 
+    ui->lblLicenceKeyString->setText( "BLNSxx_AAAAAA" );
     ui->ledCode->setText( "" );
     ui->ledValidator->setText( "" );
     ui->deActivated->setDate( QDate::currentDate() );
@@ -365,4 +389,43 @@ void MainWindow::on_pbValidateLicence_clicked()
     }
 
     ui->ledValidator->setText( QString("%1 (%2)").arg(qsStringValidation).arg(qsCodeValidation) );
+}
+
+void MainWindow::_fillLicenceTree()
+{
+    QFile   file( QString("licences.txt") );
+
+    if( !file.open(QIODevice::ReadOnly) )
+        return;
+
+    QTextStream in(&file);
+
+    while( !in.atEnd() )
+    {
+        QString     qsLine      = in.readLine();
+        QStringList qslLicences = qsLine.split( "\t" );
+
+        QTreeWidgetItem *item = new QTreeWidgetItem( ui->treeLicences );
+        item->setData( 0, Qt::DisplayRole, qslLicences.at(0) );
+        item->setData( 1, Qt::DisplayRole, qslLicences.at(1) );
+        item->setData( 2, Qt::DisplayRole, qslLicences.at(2) );
+        item->setData( 3, Qt::DisplayRole, qslLicences.at(3) );
+    }
+
+    file.close();
+}
+
+void MainWindow::_saveLicenceTree()
+{
+    QFile   file( QString("licences.txt") );
+
+    file.open( QIODevice::WriteOnly );
+
+    for( int i=0; i<ui->treeLicences->topLevelItemCount(); i++ )
+    {
+        QTreeWidgetItem *item = ui->treeLicences->topLevelItem(i);
+
+        file.write( QString("%1\t%2\t%3\t%4\n").arg(item->text(0)).arg(item->text(1)).arg(item->text(2)).arg(item->text(3)).toStdString().c_str() );
+    }
+    file.close();
 }
