@@ -159,21 +159,32 @@ void MainWindow::on_pbNewLicenceKey_clicked()
         return;
     }
 
-    QString qsOrder = "";
+    int n1 = m_qslCodeString.at(0).indexOf( qsRegKey.at(0), Qt::CaseInsensitive );
+    int n2 = m_qslCodeString.at(1).indexOf( qsRegKey.at(1), Qt::CaseInsensitive );
 
-    for( int i=0; i<2; i++ )
+    int nOrder = n1*10+n2;
+
+    if( nOrder > 0 && nOrder < LICENCE_MAX_NUMBER )
     {
-        int nPos = m_qslCodeString.at(i).indexOf( qsRegKey.at(i), Qt::CaseInsensitive );
+        char    strLicenceRandomCode[7];
 
-        if( nPos == -1 )
-        {
-            // ERR_ACT_KEY_INCORRECT;
-            return;
-        }
-        qsOrder.append( QString::number(nPos) );
+        strLicenceRandomCode[6] = 0;
+        strncpy( strLicenceRandomCode, m_qslLicenceKeys.at(nOrder-1).toStdString().c_str(), 6 );
+        _EnCode( strLicenceRandomCode, 6 );
+
+        m_qsCode = m_qslLicenceCodes.at(nOrder-1);
+
+        ui->ledLicenceKeyName->setText( QString("BLNS%1%2_%3").arg(n1).arg(n2).arg(strLicenceRandomCode) );
+        ui->lblLicenceKeyString->setText( QString("BLNS%1%2_%3 (%4)").arg(n1).arg(n2).arg(strLicenceRandomCode).arg(m_qslLicenceCodes.at(nOrder-1)) );
+        ui->ledCode->setText( ui->ledRegistrationCode->text().right(6) );
+        ui->deActivated->setDate( QDate::currentDate() );
+        ui->pbValidateLicence->setFocus();
     }
-
-    int nOrder = qsOrder.toInt();
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"), tr("Registration code is invalid - BLNS%1%2").arg(n1).arg(n2) );
+        return;
+    }
 
     m_bLicenceModify = false;
 
@@ -229,11 +240,17 @@ void MainWindow::on_pbSaveLicence_clicked()
     {
         QTreeWidgetItem *item = ui->treeLicences->currentItem();
         item->setText( 0, ui->ledLicenceKeyName->text() );
+        item->setText( 1, ui->deActivated->text() );
+        item->setText( 2, ui->ledCode->text().left(6) );
+        item->setText( 3, ui->ledValidator->text().left(6) );
     }
     else
     {
         QTreeWidgetItem *item = new QTreeWidgetItem( ui->treeLicences );
         item->setData( 0, Qt::DisplayRole, ui->ledLicenceKeyName->text() );
+        item->setData( 1, Qt::DisplayRole, ui->deActivated->text() );
+        item->setData( 2, Qt::DisplayRole, ui->ledCode->text().left(6) );
+        item->setData( 3, Qt::DisplayRole, ui->ledValidator->text().left(6) );
     }
 
     on_pbCancelLicence_clicked();
@@ -250,6 +267,10 @@ void MainWindow::on_pbCancelLicence_clicked()
     ui->pbCancelLicence->setEnabled( false );
 
     ui->ledLicenceKeyName->setText( "" );
+
+    ui->ledCode->setText( "" );
+    ui->ledValidator->setText( "" );
+    ui->deActivated->setDate( QDate::currentDate() );
 }
 
 
@@ -308,4 +329,40 @@ bool MainWindow::_validateLicenceStr(QString p_qsLicenceString )
     }
 
     return true;
+}
+
+void MainWindow::on_pbValidateLicence_clicked()
+{
+    QString qsCodeActivation = "";
+
+    for( int i=0; i<ui->ledCode->text().length(); i++ )
+    {
+        int nPos = m_qslCodeString.at(i).indexOf( ui->ledCode->text().at(i), Qt::CaseInsensitive );
+
+        if( nPos == -1 )
+        {
+            return; //ERR_ACT_KEY_INCORRECT;
+        }
+        qsCodeActivation.append( QString::number(nPos) );
+    }
+
+    ui->ledCode->setText( QString("%1 (%2)").arg(ui->ledCode->text()).arg(qsCodeActivation) );
+
+    QString qsCodeValidation = "";
+
+    for( int i=0; i<6; i++ )
+    {
+        int nSum = QString( qsCodeActivation.at(i) ).toInt() + QString( m_qsCode.at(i) ).toInt();
+
+        qsCodeValidation.append( QString::number(nSum % 10) );
+    }
+
+    QString qsStringValidation = "";
+
+    for( int i=0; i<6; i++ )
+    {
+        qsStringValidation.append( m_qslCode.at( i*10 + qsCodeValidation.at(i).digitValue() ) );
+    }
+
+    ui->ledValidator->setText( QString("%1 (%2)").arg(qsStringValidation).arg(qsCodeValidation) );
 }

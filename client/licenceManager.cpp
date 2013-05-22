@@ -270,7 +270,7 @@ int cLicenceManager::activateLicence(const QString &p_qsValidationString)
     {
         int nSum = QString( qsCodeOrigin.at(i) ).toInt() + QString( m_qsCode.at(i) ).toInt();
 
-        qsCodeActivation.append( nSum % 10 );
+        qsCodeActivation.append( QString::number(nSum % 10) );
     }
 
     // a code-ot es a serial-bol jovo szamot osszeadni ugy hogy ne legyen nagyobb 6 szamjegynel

@@ -74,6 +74,7 @@ private slots:
     void on_treeLicences_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_pbCancelLicence_clicked();
     void on_ledLicenceKeyName_textChanged(const QString &arg1);
+    void on_pbValidateLicence_clicked();
 };
 
 #endif // MAINWINDOW_H
