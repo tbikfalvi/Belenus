@@ -16,6 +16,8 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
 
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    g_obLogger(cSeverity::INFO) << "Licence id: " << g_poPrefs->getLicenceId() << EOM;
+
     if( g_poPrefs->getLicenceId() > 1 )
     {
         setWindowTitle( tr("Activate application") );
@@ -56,6 +58,12 @@ void cDlgSerialReg::on_pbValidate_clicked()
                                              "You have %1 days until the next validation.").arg( g_obLicenceManager.daysRemain() ) );
                 QDialog::accept();
                 break;
+
+            case cLicenceManager::ERR_ACT_KEY_INCORRECT:
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("The validation code you entered does not match with the requested.\n"
+                                         "Please check your code and retype it if necessary.") );
+                break;
         }
     }
     else
@@ -76,18 +84,19 @@ void cDlgSerialReg::on_pbValidate_clicked()
                 setWindowTitle( tr("Activate application") );
                 pbValidate->setIcon( QIcon("./resources/40x40_ok.png") );
                 lblSerial->setText( tr("Enter activation key") );
+                ledSerial->setText( "" );
                 break;
 
             case cLicenceManager::ERR_KEY_FORMAT_MISMATCH:
                 QMessageBox::warning( this, tr("Warning"),
                                       tr("The format of the licence key you entered is not valid.\n"
-                                         "Please check your licence key and retype it if necessary..") );
+                                         "Please check your licence key and retype it if necessary.") );
                 break;
 
             case cLicenceManager::ERR_KEY_NUMBER_INCORRECT:
                 QMessageBox::warning( this, tr("Warning"),
                                       tr("The order number of the licence key you entered is not correct.\n"
-                                         "Please check your licence key and retype it if necessary..") );
+                                         "Please check your licence key and retype it if necessary.") );
                 break;
 
             case cLicenceManager::ERR_KEY_NOT_EXISTS:

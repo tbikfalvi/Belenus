@@ -103,6 +103,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "766099";
 
     _fillLicenceTree();
+
+    QStringList qslHeader = QStringList() << tr("Licence string") << tr("Activation\ndate") << tr("Activation\ncode") << tr("Validation\ncode");
+
+    ui->treeLicences->setHeaderLabels( qslHeader );
 }
 
 MainWindow::~MainWindow()

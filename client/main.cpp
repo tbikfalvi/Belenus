@@ -122,12 +122,14 @@ int main( int argc, char *argv[] )
         g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
 
         qsSpalsh += QObject::tr("Connecting to database ...");
+        g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
         g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
+        g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
         qsSpalsh += QObject::tr(" SUCCEEDED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
@@ -148,6 +150,7 @@ int main( int argc, char *argv[] )
         }
         if( poQuery ) delete poQuery;
 
+        g_obLogger(cSeverity::INFO) << "Licence is: " << qsSerial << EOM;
         g_poPrefs->setLicenceId( nId );
 
         if( nId < 2 )

@@ -2,6 +2,7 @@
 #include <QSettings>
 #include <QDateTime>
 
+#include "../framework/qtframework.h"
 #include "licenceManager.h"
 #include "preferences.h"
 #include "../framework/qtmysqlconnection.h"
@@ -123,7 +124,8 @@ void cLicenceManager::initialize()
         // licenceId is 0 for default
         // licenceId is 1 for DEMO
         // First valid serial's id is 2
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences WHERE active=1 ORDER BY licenceId DESC LIMIT 1" ) );
+//        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences WHERE active=1 ORDER BY licenceId DESC LIMIT 1" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT licenceId, serial, lastValidated FROM licences ORDER BY licenceId DESC LIMIT 1" ) );
         if( poQuery->first() )
         {
             m_qdLastValidated   = poQuery->value( 2 ).toDate();
@@ -136,7 +138,7 @@ void cLicenceManager::initialize()
                 _checkValidity();
             }
             g_poPrefs->setLicenceId( nLicenceId );
-            g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString << " and " << nLicenceId << ". Last validated = " << m_qdLastValidated.toString() << EOM;
+            g_obLogger(cSeverity::INFO) << "Initialized with " << m_qsLicenceString << " and " << nLicenceId << ". Last validated = " << m_qdLastValidated.addMonths(6).toString("yyyy/MM/dd") << EOM;
         }
     }
     catch( cSevException &e )
@@ -156,7 +158,7 @@ int cLicenceManager::daysRemain()
     if ( !m_qdLastValidated.isValid() )
         return 0;
 
-    int nDays = m_qdLastValidated.daysTo(QDate::currentDate());
+    int nDays = QDate::currentDate().daysTo(m_qdLastValidated);
     // nDays<0 means currentdate is before lastvalidated - error
     if ( nDays < 0 )
         return 0;
@@ -171,9 +173,6 @@ int cLicenceManager::daysRemain()
 
 int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
 {
-    // liszensz kód mentése az adatbázisba, amennyiben nincs még kód
-    // ha van már kód, akkor hibaüzenet
-    // ...
     int nRet = ERR_NO_ERROR;
 
     if( p_qsLicenceString.length() != 13 )
@@ -221,7 +220,7 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
 
         try
         {
-            poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial` ) VALUES ( %1, '%2' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString) );
+            poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated` ) VALUES ( %1, '%2', '%3' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString).arg(QDate::currentDate().toString("yyyy-MM-dd")) );
             if( poQuery ) g_poPrefs->setLicenceId( poQuery->lastInsertId().toUInt() );
             m_nLicenceId = nLicenceNumber;
             m_qsLicenceString = p_qsLicenceString;
@@ -238,6 +237,8 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
 
 int cLicenceManager::activateLicence(const QString &p_qsValidationString)
 {
+    cTracer obTrace( "cLicenceManager::activateLicence" );
+
     int nRet = ERR_NO_ERROR;
 
     if( m_nLicenceOrderNumber < 1 || m_nLicenceOrderNumber > LICENCE_MAX_NUMBER+1 )
@@ -250,7 +251,19 @@ int cLicenceManager::activateLicence(const QString &p_qsValidationString)
         return ERR_KEY_FORMAT_MISMATCH;
     }
 
-    QString qsCodeOrigin     = m_qslLicenceCodes.at( m_nLicenceOrderNumber-1 );
+    QString qsCode = "";
+
+    for( int i=0; i<m_qsCode.length(); i++ )
+    {
+        int nPos = m_qslCodeString.at(i).indexOf( m_qsCode.at(i), Qt::CaseInsensitive );
+
+        if( nPos == -1 )
+        {
+            return ERR_ACT_KEY_INCORRECT;
+        }
+        qsCode.append( QString::number(nPos) );
+    }
+
     QString qsCodeValidation = "";
 
     for( int i=0; i<p_qsValidationString.length(); i++ )
@@ -264,17 +277,20 @@ int cLicenceManager::activateLicence(const QString &p_qsValidationString)
         qsCodeValidation.append( QString::number(nPos) );
     }
 
+    QString qsCodeOrigin     = m_qslLicenceCodes.at( m_nLicenceOrderNumber-1 );
     QString qsCodeActivation = "";
 
     for( int i=0; i<6; i++ )
     {
-        int nSum = QString( qsCodeOrigin.at(i) ).toInt() + QString( m_qsCode.at(i) ).toInt();
+        int nSum = QString( qsCodeOrigin.at(i) ).toInt() + QString( qsCode.at(i) ).toInt();
 
         qsCodeActivation.append( QString::number(nSum % 10) );
     }
 
-    // a code-ot es a serial-bol jovo szamot osszeadni ugy hogy ne legyen nagyobb 6 szamjegynel
-    // es ezt osszehasonlitani a megkapott koddal, ezt adja egyebkent az activator
+    if( qsCodeActivation.compare(qsCodeValidation) )
+    {
+        return ERR_ACT_KEY_INCORRECT;
+    }
 
     QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
 
@@ -353,32 +369,36 @@ void cLicenceManager::_checkCode()
 
 void cLicenceManager::_checkValidity()
 {
-    g_obLogger(cSeverity::INFO) << "Check validity" << EOM;
+    m_nLicenceOrderNumber = m_qsLicenceString.mid( 4, 2 ).toInt();
 
-    QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
-
-    if( settings.contains( "Active" ) )
+    if( m_nLicenceOrderNumber < 1 || m_nLicenceOrderNumber > LICENCE_MAX_NUMBER )
     {
-        QString qsCodeReg = settings.value( "Code", 999999 ).toString();
-        QString qsCodeAct = settings.value( "Active", 999999 ).toString();
+        g_obLogger(cSeverity::ERROR) << "Invalid order number: " << m_nLicenceOrderNumber << EOM;
+        return;
+    }
+    else
+    {
+        QSettings   settings( "HKEY_LOCAL_MACHINE\\Software\\SV", QSettings::NativeFormat );
 
-        g_obLogger(cSeverity::DEBUG) << "C:" << qsCodeReg << EOM;
-        g_obLogger(cSeverity::DEBUG) << "A:" << qsCodeAct << EOM;
-
-        int     nLicenceNumber = m_qsLicenceString.mid( 4, 2 ).toInt();
-
-        if( nLicenceNumber < 1 || nLicenceNumber > LICENCE_MAX_NUMBER )
+        if( settings.contains( "Active" ) )
         {
-            return;
-        }
-        else
-        {
-            m_nLicenceOrderNumber = nLicenceNumber;
-
-            QString qsCodeLic = m_qslLicenceCodes.at( nLicenceNumber-1 );
-            QString qsCodeVer = QString::number( (qsCodeReg.toInt() + qsCodeLic.toInt()) % 1000000 );
+            QString qsCodeReg = settings.value( "Code", 999999 ).toString();
+            QString qsCodeAct = settings.value( "Active", 999999 ).toString();
+            QString qsCodeLic = m_qslLicenceCodes.at( m_nLicenceOrderNumber-1 );
 
             g_obLogger(cSeverity::DEBUG) << "L:" << qsCodeLic << EOM;
+            g_obLogger(cSeverity::DEBUG) << "C:" << qsCodeReg << EOM;
+            g_obLogger(cSeverity::DEBUG) << "A:" << qsCodeAct << EOM;
+
+            QString qsCodeVer = "";
+
+            for( int i=0; i<6; i++ )
+            {
+                int nSum = QString( qsCodeReg.at(i) ).toInt() + QString( qsCodeLic.at(i) ).toInt();
+
+                qsCodeVer.append( QString::number(nSum % 10) );
+            }
+
             g_obLogger(cSeverity::DEBUG) << "V:" << qsCodeVer << EOM;
 
             if( qsCodeVer.compare(qsCodeAct) == 0 )
@@ -390,8 +410,11 @@ void cLicenceManager::_checkValidity()
                 return;
             }
         }
+        else
+        {
+            g_obLogger(cSeverity::INFO) << "Licence is not activated yet." << EOM;
+        }
     }
-    g_obLogger(cSeverity::INFO) << "Check validity ... FINISHED" << EOM;
 }
 
 void cLicenceManager::_EnCode( char *str, int size )

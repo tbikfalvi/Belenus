@@ -53,6 +53,7 @@ private:
     licenceType     m_LicenceType;
     QString         m_qsLicenceString;
     QString         m_qsCode;
+    QString         m_qsAct;
     QDate           m_qdLastValidated;
     int             m_nLicenceId;
     int             m_nLicenceOrderNumber;
