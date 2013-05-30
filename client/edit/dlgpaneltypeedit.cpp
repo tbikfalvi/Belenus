@@ -4,14 +4,13 @@
 #include "dlgpaneltypeedit.h"
 #include "belenus.h"
 
-cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPanelTypes )
-    : QDialog( p_poParent )
+cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPanelTypes ) : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgPanelTypeEdit::cDlgPanelTypeEdit" );
 
     setupUi( this );
 
-    setWindowTitle( tr( "Panel Type" ) );
+    setWindowTitle( tr( "Panel type" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
     m_poPanelTypes = p_poPanelTypes;

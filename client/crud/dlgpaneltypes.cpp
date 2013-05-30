@@ -73,9 +73,9 @@ void cDlgPanelTypes::enableButtons()
 {
     cTracer obTracer( "cDlgPanelTypes::enableButtons" );
 
-    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnEdit->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    m_poBtnDelete->setEnabled( m_uiSelectedId>0 && g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 }
 
 void cDlgPanelTypes::newClicked( bool )
@@ -83,7 +83,7 @@ void cDlgPanelTypes::newClicked( bool )
     cDBPanelTypes *poPanelTypes = new cDBPanelTypes;
     poPanelTypes->createNew();
 
-    cDlgPanelTypeEdit  obDlgEdit( this );
+    cDlgPanelTypeEdit  obDlgEdit( this, poPanelTypes );
     obDlgEdit.setWindowTitle( tr( "New Panel Type" ) );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
