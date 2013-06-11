@@ -1078,7 +1078,7 @@ void dlgMain::_installSQLServer()
     if( !_initializeMySQL() )
     {
         QMessageBox::warning( this, tr("Attention"),
-                              tr("Wamp server initialization failed.\n"
+                              tr("Database service initialization failed.\n"
                                  "Please try to reinstall it with going back one page "
                                  "then return to this page.\n\n"
                                  "If Wamp install continuously fails please contact Belenus software support.") );
@@ -1802,6 +1802,7 @@ bool dlgMain::_processDatabaseCreate()
 
     if( m_poDB->open() )
     {
+
         m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
         m_poDB->close();
 

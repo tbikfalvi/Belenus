@@ -36,6 +36,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardrefill.ui \
     dlgdiscountedit.ui \
     dlgpaymentmethodedit.ui \
+    dlgpaneltypecopy.ui \
     cdlgtest.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
@@ -113,6 +114,7 @@ HEADERS = belenus.h \
     dlg/dlgserialreg.h \
     dlg/dlgcassaaction.h \
     dlg/dlgpanelappereance.h \
+    dlg/dlgpaneltimecopy.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgreasontovisitedit.h \
@@ -230,6 +232,7 @@ SOURCES = main.cpp \
     dlg/dlgserialreg.cpp \
     dlg/dlgcassaaction.cpp \
     dlg/dlgpanelappereance.cpp \
+    dlg/dlgpaneltimecopy.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgreasontovisitedit.cpp \

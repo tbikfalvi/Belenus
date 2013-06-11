@@ -4,6 +4,7 @@
 #include "dlgpanelsettings.h"
 #include "../edit/dlgpaneluseedit.h"
 #include "../db/dbpanels.h"
+#include "../dlg/dlgpaneltimecopy.h"
 
 cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId )
     : cDlgCrud( p_poParent )
@@ -35,6 +36,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     cmbPanelType = new QComboBox( this );
     cmbPanelType->setObjectName( QString::fromUtf8( "cmbPanelType" ) );
+    cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout1->addWidget( cmbPanelType );
 
     horizontalLayout2 = new QHBoxLayout();
@@ -49,6 +51,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledWorkTime->setObjectName( QString::fromUtf8( "ledWorkTime" ) );
     ledWorkTime->setMinimumWidth( 70 );
     ledWorkTime->setMaximumWidth( 70 );
+    ledWorkTime->setEnabled( false );
     horizontalLayout2->addWidget( ledWorkTime );
 
     pbWTReset = new QPushButton( this );
@@ -71,7 +74,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledMaxWorkTime->setObjectName( QString::fromUtf8( "ledMaxWorkTime" ) );
     ledMaxWorkTime->setMinimumWidth( 50 );
     ledMaxWorkTime->setMaximumWidth( 50 );
-    ledMaxWorkTime->setInputMask( "0000" );
+    ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledMaxWorkTime );
 
     horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
@@ -97,11 +100,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     verticalLayout->insertLayout( 0, horizontalLayout1 );
     verticalLayout->insertLayout( 1, horizontalLayout2 );
     verticalLayout->insertLayout( 3, horizontalLayout3 );
-
-    cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    ledWorkTime->setEnabled( false );
-    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
-    ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
     m_poBtnSave->setEnabled( true );
     m_poBtnSave->setVisible( true );
@@ -327,6 +325,10 @@ void cDlgPanelSettings::on_pbWTReset_clicked( bool )
 
 void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
 {
+    cDlgPanelTypeCopy   obDlgPanelTypeCopy( this, m_uiPanelId );
+
+    obDlgPanelTypeCopy.exec();
+/*
     for( unsigned int i=1; i<g_poPrefs->getPanelCount()+1; i++ )
     {
         if( i != m_uiPanelId )
@@ -340,4 +342,5 @@ void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
         }
     }
     QMessageBox::information( this, tr("Information"), tr("Device usage copy process finished.") );
+*/
 }
