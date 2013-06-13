@@ -5,6 +5,7 @@
 
 #include "dlgpaneltimecopy.h"
 #include "general.h"
+#include "db/dbpaneluses.h"
 
 cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelId ) : QDialog( p_poParent )
 {
@@ -19,9 +20,9 @@ cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelI
 
     while( poQuery->next() )
     {
-        cCurrency   cPrice( poQuery->value(2).toInt() );
+        //cCurrency   cPrice( poQuery->value(2).toInt() );
         QString qsSellPrice = QString::number(poQuery->value(2).toInt()/100);
-        listPanelTimes->addItem( QString("%1\t%2\t%3").arg(poQuery->value(0).toString()).arg(poQuery->value(1).toString()).arg(cPrice.currencyFullStringShort()) );
+        listPanelTimes->addItem( QString("%1\t%2\t%3").arg(poQuery->value(0).toString()).arg(poQuery->value(1).toString()).arg(qsSellPrice) );
     }
 
     qsQuery = QString( "SELECT panelId, title FROM panels WHERE panelId<>%1 AND panelId>0" ).arg(uiPanelId);
@@ -62,5 +63,36 @@ void cDlgPanelTypeCopy::on_pbExit_clicked()
 
 void cDlgPanelTypeCopy::on_pbCopyTimes_clicked()
 {
-    for( int i=0; i<listPanelTimes->count(); i++ )
+    int nCountCopied = 0;
+    int nCountSkipped = 0;
+
+    for( int i=0; i<listPanelTimes->selectedItems().count(); i++ )
+    {
+        for( int j=0; j<listPanels->selectedItems().count(); j++ )
+        {
+            QStringList qslPanelUse = listPanelTimes->selectedItems().at(i)->text().split("\t");
+            QStringList qslPanel    = listPanels->selectedItems().at(j)->text().split("\t");
+
+            cDBPanelUses    obDbPanelUse;
+
+            obDbPanelUse.setPanelId( qslPanel.at(0).toUInt() );
+            obDbPanelUse.setName( qslPanelUse.at(0) );
+            obDbPanelUse.setUseTime( qslPanelUse.at(1).toInt() );
+            obDbPanelUse.setUsePrice( qslPanelUse.at(2).toInt()*100 );
+
+            if( obDbPanelUse.isPanelUseExists() )
+            {
+                nCountSkipped++;
+            }
+            else
+            {
+                obDbPanelUse.save();
+                nCountCopied++;
+            }
+        }
+    }
+    QMessageBox::information( this, tr("Information"),
+                              tr("Copy of the selected panel uses has been finished.\n"
+                                 "Number of copied items: %1\n"
+                                 "Number of skipped items (due to avoid duplication): %2").arg(nCountCopied).arg(nCountSkipped) );
 }

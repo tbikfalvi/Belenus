@@ -151,6 +151,18 @@ void cDBPanelUses::remove() throw( cSevException )
     }
 }
 
+bool cDBPanelUses::isPanelUseExists() throw()
+{
+    bool bRet = false;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelId=%1 AND useTime=%2 AND usePrice=%3" ).arg( m_uiPanelId ).arg(m_uiUseTime).arg(m_uiUsePrice) );
+
+    if( poQuery->size() > 0 )
+        bRet = true;
+
+    return bRet;
+}
+
 void cDBPanelUses::createNew() throw()
 {
     init();
