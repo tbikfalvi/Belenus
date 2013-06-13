@@ -256,6 +256,24 @@ CREATE TABLE `patientCardHistories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- A studioban eladott kartyak hasznalatait tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `patientCardUnits` (
+  `patientCardUnitId`       int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `unitTime`                int(11)                 NOT NULL DEFAULT 0,
+  `validDateFrom`           date                    DEFAULT NULL,
+  `validDateTo`             date                    DEFAULT NULL,
+  `dateTimeUsed`            timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`patientCardUnitId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- A kliens alkalmazasban mukodtetett panelok tipusait tartalmazza.
 -- Paneltipus hatarozza meg az adott panel mukodeset.
 -- -----------------------------------------------------------------------------------
