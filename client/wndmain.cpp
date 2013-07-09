@@ -27,6 +27,7 @@
 #include "db/dbpatientcard.h"
 #include "db/dbledger.h"
 #include "db/dbshoppingcart.h"
+#include "db/dbpatientcardunits.h"
 
 //====================================================================================
 
@@ -2017,7 +2018,11 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
                 return;
             }
 
+            cDBPatientcardUnit  obDBPatientcardUnit;
+
             obDBPatientCardNew.save();
+            obDBPatientcardUnit.setPatientCardId( obDBPatientCardOld.id() );
+            obDBPatientcardUnit.replacePatientCard( obDBPatientCardNew.id() );
 
             obDBPatientCardOld.setPatientCardTypeId( 0 );
             obDBPatientCardOld.setParentId( 0 );

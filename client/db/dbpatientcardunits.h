@@ -13,6 +13,7 @@ public:
 
     void            load( const unsigned int p_uiId )                       throw( cSevException );
     QStringList     loadPCId( const unsigned int p_uiId )                   throw( cSevException );
+    void            replacePatientCard( const unsigned int p_uiId )         throw( cSevException );
     void            save()                                                  throw( cSevException );
     void            remove()                                                throw( cSevException );
     void            createNew()                                             throw();

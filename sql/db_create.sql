@@ -246,6 +246,7 @@ CREATE TABLE `patientCardHistories` (
   `patientCardId`           int(10) unsigned        NOT NULL,
   `dateTimeUsed`            timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `units`                   int(11)                 NOT NULL,
+  `unitIds`                 varchar(100)            NOT NULL,
   `time`                    time                    NOT NULL,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,

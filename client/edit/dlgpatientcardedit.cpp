@@ -24,6 +24,7 @@
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbledger.h"
 #include "../db/dbshoppingcart.h"
+#include "../db/dbpatientcardunits.h"
 #include "dlgpatientcardsell.h"
 #include "dlgpatientcardrefill.h"
 
@@ -338,9 +339,15 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             if( !m_poPatientCard->active() && cbActive->isChecked() )
                 m_bIsCardActivated = true;
 
+            cDBPatientCardType  obDBPatientCardType;
+
+            obDBPatientCardType.load( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+
+            int     inNewUnits = ledUnits->text().toInt() - m_poPatientCard->units();
+
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setActive( cbActive->isChecked() );
-            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+            m_poPatientCard->setPatientCardTypeId( obDBPatientCardType.id() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
             m_poPatientCard->setTimeLeftStr( teTimeLeft->time().toString("hh:mm:ss") );
@@ -419,6 +426,19 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                     // Nem tortent meg az eladas
                     return;
                 }
+            }
+
+            for( int i=0; i<inNewUnits; i++ )
+            {
+                cDBPatientcardUnit  obDBPatientcardUnit;
+
+                obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
+                obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
+                obDBPatientcardUnit.setUnitTime( obDBPatientCardType.unitTime() );
+                obDBPatientcardUnit.setValidDateFrom( obDBPatientCardType.validDateFrom() );
+                obDBPatientcardUnit.setValidDateTo( obDBPatientCardType.validDateTo() );
+                obDBPatientcardUnit.setActive( true );
+                obDBPatientcardUnit.save();
             }
 
             m_poPatientCard->save();

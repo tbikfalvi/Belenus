@@ -9,13 +9,15 @@ TEMPLATE = app
 DESTDIR = ..
 win32:DEFINES -= UNICODE
 CONFIG += qt
+QT += network
+QT += sql
 
 RC_FILE         = reportviewer.rc
 RESOURCES      += reportviewer.qrc
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
-FORMS = wndmain.ui \
-    dlgpreview.ui
+FORMS = wndmain.ui
+
 HEADERS = ../framework/dbconnection.h \
     ../framework/qtmysqlconnection.h \
     ../framework/qtmysqlquerymodel.h \
@@ -23,14 +25,13 @@ HEADERS = ../framework/dbconnection.h \
     ../framework/tracer.h \
     wndmain.h \
     currency.h \
-    dlgdemo.h \
-    dlgpreview.h \
     creport.h \
     creportdaily.h \
     creportcardusage.h \
     creportcardinactive.h \
-    creportcardactive.h \
+    creportpatientcardtype.h \
     creportledger.h
+
 SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
@@ -39,13 +40,9 @@ SOURCES = ../framework/dbconnection.cpp \
     main.cpp \
     wndmain.cpp \
     currency.cpp \
-    dlgdemo.cpp \
-    dlgpreview.cpp \
     creport.cpp \
     creportdaily.cpp \
     creportledger.cpp \
     creportcardusage.cpp \
     creportcardinactive.cpp \
-    creportcardactive.cpp
-QT += network
-QT += sql
+    creportpatientcardtype.cpp

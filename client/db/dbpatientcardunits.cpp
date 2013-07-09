@@ -33,7 +33,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const QString &p_qsValidDateTo,
                                const QString &p_qsDateTime,
                                const bool p_bActive,
-                               const QString &p_qsArchive)
+                               const QString &p_qsArchive) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
@@ -96,12 +96,38 @@ QStringList cDBPatientcardUnit::loadPCId( const unsigned int p_uiId ) throw( cSe
 
     while( poQuery->next() )
     {
-        qslRet.append( poQuery->value(0).toString() );
+        QString qsPCUnit = "";
+
+        qsPCUnit.append( poQuery->value(0).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(2).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(3).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(4).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(5).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(6).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(7).toString() );
+        qslRet.append( qsPCUnit );
     }
 
     if( poQuery ) delete poQuery;
 
     return qslRet;
+}
+
+void cDBPatientcardUnit::replacePatientCard(const unsigned int p_uiId) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientcardUnit::replacePatientCard", QString( "oldid: %1 newid: %2" ).arg(m_uiPatientCardId).arg( p_uiId ) );
+
+    if( m_uiPatientCardId < 1 )
+        throw cSevException( cSeverity::ERROR, "Patientcard id not set" );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "UPDATE patientCardUnits SET patientCardId=%1 WHERE patientCardId=%2 AND active=1" ).arg(p_uiId).arg(m_uiPatientCardId) );
+    if( poQuery ) delete poQuery;
 }
 
 void cDBPatientcardUnit::save() throw( cSevException )
@@ -192,7 +218,7 @@ unsigned int cDBPatientcardUnit::patientCardId() const throw()
 
 void cDBPatientcardUnit::setPatientCardId( const unsigned int p_nPatientCardId ) throw()
 {
-    m_uiPatientCardId = p_uiPCardTypeId;
+    m_uiPatientCardId = p_nPatientCardId;
 }
 
 int cDBPatientcardUnit::unitTime() const throw()
@@ -200,7 +226,7 @@ int cDBPatientcardUnit::unitTime() const throw()
     return m_nUnitTime;
 }
 
-void cDBPatientcardUnit::setUnitTime(const int p_nUnitTime) const throw()
+void cDBPatientcardUnit::setUnitTime(const int p_nUnitTime) throw()
 {
     m_nUnitTime = p_nUnitTime;
 }

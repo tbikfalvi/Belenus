@@ -117,9 +117,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbPatientcardsActive">
+        <widget class="QPushButton" name="pbPatientcardType">
          <property name="toolTip">
-          <string>Valid and active patientcards</string>
+          <string>Active patientcard types</string>
          </property>
          <property name="text">
           <string/>
@@ -375,7 +375,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cmbFilterDataTypes"/>
+          <widget class="QComboBox" name="cmbFilterDataTypes">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="spacerFilter3">
@@ -387,7 +394,7 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
+             <width>100</width>
              <height>20</height>
             </size>
            </property>
@@ -576,14 +583,13 @@
      <x>0</x>
      <y>0</y>
      <width>769</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Demo"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
    </widget>
@@ -609,7 +615,7 @@
      <property name="title">
       <string>Patientcards</string>
      </property>
-     <addaction name="action_Patientcards_Active"/>
+     <addaction name="action_PatientcardTypes"/>
      <addaction name="action_Patientcards_Inactive"/>
      <addaction name="action_Patientcards_Usage"/>
     </widget>
@@ -621,11 +627,6 @@
    <addaction name="menu_Reports"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_Demo">
-   <property name="text">
-    <string>&amp;Demo</string>
-   </property>
-  </action>
   <action name="action_Exit">
    <property name="text">
     <string>E&amp;xit</string>
@@ -672,12 +673,15 @@
     <string>&amp;Ledger</string>
    </property>
   </action>
-  <action name="action_Patientcards_Active">
+  <action name="action_PatientcardTypes">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>&amp;Active patientcards</string>
+    <string>&amp;Active patientcard types</string>
+   </property>
+   <property name="toolTip">
+    <string>Active patientcard types</string>
    </property>
   </action>
   <action name="action_Patientcards_Inactive">

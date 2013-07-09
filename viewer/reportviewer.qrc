@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>belenus.ico</file>
+        <file>reportviewer.ico</file>
     </qresource>
 </RCC>

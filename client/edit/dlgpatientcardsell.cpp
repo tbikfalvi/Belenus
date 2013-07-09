@@ -24,6 +24,7 @@
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbledger.h"
 #include "../db/dbshoppingcart.h"
+#include "../db/dbpatientcardunits.h"
 
 //===========================================================================================================
 //
@@ -390,6 +391,21 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             }
 
             m_poPatientCard->save();
+
+            cDBPatientcardUnit  obDBPatientcardUnit;
+
+            for( int i=0; i<ledUnits->text().toInt(); i++ )
+            {
+                obDBPatientcardUnit.createNew();
+                obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
+                obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
+                obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
+                obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
+                obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
+                obDBPatientcardUnit.setDateTime( "" );
+                obDBPatientcardUnit.setActive( true );
+                obDBPatientcardUnit.save();
+            }
 
             QDialog::accept();
 

@@ -181,6 +181,7 @@ void MainWindow::_loadPatientCards()
 //====================================================================================
 {
     FILE           *file = NULL;
+    FILE           *filemod = NULL;
     unsigned int    nCount = 0;
     char            m_strPatiencardVersion[10];
 
@@ -189,14 +190,17 @@ void MainWindow::_loadPatientCards()
     m_qvPatientCards.clear();
 
     file = fopen( m_qsPCFileName.toStdString().c_str(), "rb" );
+filemod = fopen( QString("c:\\mod_brltfsv.dat").toStdString().c_str(), "wb" );
     if( file != NULL )
     {
         memset( m_strPatiencardVersion, 0, 10 );
         fread( m_strPatiencardVersion, 10, 1, file );
+fwrite( m_strPatiencardVersion, 10, 1, filemod );
         //ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
+fwrite( &nCount, 4, 1, filemod );
         ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
         if( nCount > 0 )
         {
@@ -211,6 +215,25 @@ void MainWindow::_loadPatientCards()
                 fread( &stTemp.nErvHo, 4, 1, file );
                 fread( &stTemp.nErvNap, 4, 1, file );
                 fread( &stTemp.nPin, 4, 1, file );
+
+int nErvEv = 0;
+if( stTemp.nErvEv < 2014 && stTemp.nEgyseg > 0 )
+{
+    nErvEv = stTemp.nErvEv + 1;
+}
+else
+{
+    nErvEv = stTemp.nErvEv;
+}
+fwrite( stTemp.strVonalkod, 20, 1, filemod );
+fwrite( stTemp.strMegjegyzes, 50, 1, filemod );
+fwrite( &stTemp.nBerletTipus, 4, 1, filemod );
+fwrite( &stTemp.nEgyseg, 4, 1, filemod );
+fwrite( &nErvEv, 4, 1, filemod );
+fwrite( &stTemp.nErvHo, 4, 1, filemod );
+fwrite( &stTemp.nErvNap, 4, 1, filemod );
+fwrite( &stTemp.nPin, 4, 1, filemod );
+
                 _DeCode( stTemp.strVonalkod, 20 );
                 _DeCode( stTemp.strMegjegyzes, 50 );
 
@@ -218,6 +241,7 @@ void MainWindow::_loadPatientCards()
             }
         }
         fclose( file );
+fclose( filemod );
         ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
     }
     else

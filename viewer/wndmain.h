@@ -7,7 +7,7 @@
 #include "ui_wndmain.h"
 #include "creportdaily.h"
 #include "creportledger.h"
-#include "creportcardactive.h"
+#include "creportpatientcardtype.h"
 #include "creportcardinactive.h"
 #include "creportcardusage.h"
 
@@ -36,14 +36,14 @@ public:
 signals:
     void                setCheckedReportDaily( bool p_bChecked );
     void                setCheckedReportLedger( bool p_bChecked );
-    void                setCheckedReportPatientcardActive( bool p_bChecked );
+    void                setCheckedReportPatientcardType( bool p_bChecked );
     void                setCheckedReportPatientcardInactive( bool p_bChecked );
     void                setCheckedReportPatientcardUsage( bool p_bChecked );
 
 public slots:
     void                slotCheckReportDaily( bool p_bChecked );
     void                slotCheckReportLedger( bool p_bChecked );
-    void                slotCheckReportPatientcardActive( bool p_bChecked );
+    void                slotCheckReportPatientcardType( bool p_bChecked );
     void                slotCheckReportPatientcardInactive( bool p_bChecked );
     void                slotCheckReportPatientcardUsage( bool p_bChecked );
 
@@ -51,11 +51,11 @@ private:
 
     QString             m_qsRPSW;
 
-    cReportDaily        *m_repDaily;
-    cReportLedger       *m_repLedger;
-    cReportCardActive   *m_repCardActive;
-    cReportCardInactive *m_repCardInactive;
-    cReportCardUsage    *m_repCardUsage;
+    cReportDaily            *m_repDaily;
+    cReportLedger           *m_repLedger;
+    cReportPatientCardType  *m_repCardType;
+    cReportCardInactive     *m_repCardInactive;
+    cReportCardUsage        *m_repCardUsage;
 
     QVector<cReport*>    m_qvReports;
 
@@ -75,7 +75,6 @@ private:
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);
-    void on_action_Demo_triggered();
     void on_action_Toolbar_triggered(bool checked);
     void on_action_FilterBar_triggered(bool checked);
     void on_pbAuthenticate_clicked();

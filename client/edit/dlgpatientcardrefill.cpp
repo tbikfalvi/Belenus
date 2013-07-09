@@ -24,6 +24,7 @@
 #include "../dlg/dlgcassaaction.h"
 #include "../db/dbledger.h"
 #include "../db/dbshoppingcart.h"
+#include "../db/dbpatientcardunits.h"
 
 //===========================================================================================================
 //
@@ -170,13 +171,25 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
     teTimeLeft->setTime( QTime(uiUnitTime/3600,(uiUnitTime%3600)/60,(uiUnitTime%3600)%60,0) );
     if( m_poPatientCardType->validDays() > 0 )
     {
+        QDate   newDate = QDate::currentDate().addDays(m_poPatientCardType->validDays());
         deValidDateFrom->setDate( QDate::currentDate() );
-        deValidDateTo->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
+        if( newDate > deValidDateTo->date() )
+        {
+            deValidDateTo->setDate( newDate );
+        }
     }
     else
     {
-        deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
-        deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
+        QDate   newDate = QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd");
+
+        if( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") < QDate::currentDate() )
+        {
+            deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
+        }
+        if( newDate > deValidDateTo->date() )
+        {
+            deValidDateTo->setDate( newDate );
+        }
     }
 
     cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
@@ -393,6 +406,21 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             }
 
             m_poPatientCard->save();
+
+            cDBPatientcardUnit  obDBPatientcardUnit;
+
+            for( int i=0; i<ledUnits->text().toInt(); i++ )
+            {
+                obDBPatientcardUnit.createNew();
+                obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
+                obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
+                obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
+                obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
+                obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
+                obDBPatientcardUnit.setDateTime( "" );
+                obDBPatientcardUnit.setActive( true );
+                obDBPatientcardUnit.save();
+            }
 
             QDialog::accept();
 
