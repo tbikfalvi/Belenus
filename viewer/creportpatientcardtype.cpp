@@ -21,19 +21,22 @@ cReportPatientCardType::cReportPatientCardType(QWidget *parent, QString p_qsRepo
 
 void cReportPatientCardType::refreshReport()
 {
+    m_dlgProgress.progressInit( tr("Get data from database ..."), 0, 100 );
+    m_dlgProgress.setProgressValue( 0 );
+    m_dlgProgress.progressShow();
+
     cReport::refreshReport();
 
     m_tcReport->insertHtml( "<html><body>" );
     m_tcReport->insertHtml( "<div>" );
 
-    m_tcReport->insertText( m_qsReportName + "   ", *obTitleFormat );
+    m_tcReport->insertText( m_qsReportName, *obTitleFormat );
     m_tcReport->setCharFormat( *obNormalFormat );
 
     m_tcReport->insertHtml( "</div>");
     m_tcReport->insertHtml( "<hr>" );
 
     m_tcReport->insertHtml( "<div>" );
-
 
     QString qsQueryCards;
     int     nFilterType = filterType().left(1).toInt();
@@ -57,6 +60,9 @@ void cReportPatientCardType::refreshReport()
     //m_tcReport->insertText( qsQueryCards, *obNormalFormat );
     QSqlQuery   *poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
     QStringList  qslQueryResult;
+
+    m_dlgProgress.setProgressMax( poQueryResultCards->size()+1 );
+    m_dlgProgress.increaseProgressValue();
 
     while( poQueryResultCards->next() )
     {
@@ -83,7 +89,11 @@ void cReportPatientCardType::refreshReport()
         }
 
         qslQueryResult << qslRecord.join("#");
+        m_dlgProgress.increaseProgressValue();
     }
+
+    m_dlgProgress.progressInit( tr("Displaying data ..."), 0, qslQueryResult.size() );
+    m_dlgProgress.setProgressValue( 0 );
 
     obTableFormat->setAlignment( Qt::AlignLeft );
     m_tcReport->insertTable( poQueryResultCards->size()+1, 5, *obTableFormat );
@@ -123,9 +133,13 @@ void cReportPatientCardType::refreshReport()
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qslRecord.at(4), *obNormalFormat );
+
+        m_dlgProgress.increaseProgressValue();
     }
 
     m_tcReport->insertHtml( "</div>");
 
     m_tcReport->insertHtml( QString("</body></html>") );
+
+    m_dlgProgress.hide();
 }

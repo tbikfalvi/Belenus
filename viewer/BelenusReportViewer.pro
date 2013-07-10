@@ -16,7 +16,8 @@ RC_FILE         = reportviewer.rc
 RESOURCES      += reportviewer.qrc
 TRANSLATIONS = brv_us.ts \
     brv_hu.ts
-FORMS = wndmain.ui
+FORMS = wndmain.ui \
+    dlgprogress.ui
 
 HEADERS = ../framework/dbconnection.h \
     ../framework/qtmysqlconnection.h \
@@ -27,10 +28,11 @@ HEADERS = ../framework/dbconnection.h \
     currency.h \
     creport.h \
     creportdaily.h \
-    creportcardusage.h \
+    creportcarddetails.h \
     creportcardinactive.h \
     creportpatientcardtype.h \
-    creportledger.h
+    creportledger.h \
+    dlgprogress.h
 
 SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
@@ -43,6 +45,10 @@ SOURCES = ../framework/dbconnection.cpp \
     creport.cpp \
     creportdaily.cpp \
     creportledger.cpp \
-    creportcardusage.cpp \
+    creportcarddetails.cpp \
     creportcardinactive.cpp \
-    creportpatientcardtype.cpp
+    creportpatientcardtype.cpp \
+    dlgprogress.cpp
+
+
+

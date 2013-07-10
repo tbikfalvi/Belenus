@@ -136,9 +136,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbPatientcardsInactive">
+        <widget class="QPushButton" name="pbPatientcardsDetails">
          <property name="toolTip">
-          <string>Inactive or expiring patientcards</string>
+          <string>Patientcard details</string>
          </property>
          <property name="text">
           <string/>
@@ -155,9 +155,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbPatientcardsUsage">
+        <widget class="QPushButton" name="pbPatientcardsInactive">
          <property name="toolTip">
-          <string>Patientcard usages</string>
+          <string>Inactive or expiring patientcards</string>
          </property>
          <property name="text">
           <string/>
@@ -617,7 +617,7 @@
      </property>
      <addaction name="action_PatientcardTypes"/>
      <addaction name="action_Patientcards_Inactive"/>
-     <addaction name="action_Patientcards_Usage"/>
+     <addaction name="action_Patientcards_Details"/>
     </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
@@ -692,12 +692,15 @@
     <string>Inactive patientcards</string>
    </property>
   </action>
-  <action name="action_Patientcards_Usage">
+  <action name="action_Patientcards_Details">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Patientcard usage</string>
+    <string>Patientcard details</string>
+   </property>
+   <property name="toolTip">
+    <string>Patientcard details</string>
    </property>
   </action>
  </widget>

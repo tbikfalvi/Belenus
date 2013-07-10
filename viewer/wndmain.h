@@ -9,7 +9,7 @@
 #include "creportledger.h"
 #include "creportpatientcardtype.h"
 #include "creportcardinactive.h"
-#include "creportcardusage.h"
+#include "creportcarddetails.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -38,14 +38,14 @@ signals:
     void                setCheckedReportLedger( bool p_bChecked );
     void                setCheckedReportPatientcardType( bool p_bChecked );
     void                setCheckedReportPatientcardInactive( bool p_bChecked );
-    void                setCheckedReportPatientcardUsage( bool p_bChecked );
+    void                setCheckedReportPatientcardDetails( bool p_bChecked );
 
 public slots:
     void                slotCheckReportDaily( bool p_bChecked );
     void                slotCheckReportLedger( bool p_bChecked );
     void                slotCheckReportPatientcardType( bool p_bChecked );
     void                slotCheckReportPatientcardInactive( bool p_bChecked );
-    void                slotCheckReportPatientcardUsage( bool p_bChecked );
+    void                slotCheckReportPatientcardDetails( bool p_bChecked );
 
 private:
 
@@ -55,7 +55,7 @@ private:
     cReportLedger           *m_repLedger;
     cReportPatientCardType  *m_repCardType;
     cReportCardInactive     *m_repCardInactive;
-    cReportCardUsage        *m_repCardUsage;
+    cReportCardDetails      *m_repCardDetails;
 
     QVector<cReport*>    m_qvReports;
 

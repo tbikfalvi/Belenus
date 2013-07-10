@@ -59,10 +59,15 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     obNormalFormat = new QTextCharFormat();
     obNormalFormat->setFontPointSize( 10.0 );
     obNormalFormat->setFontWeight( QFont::Normal );
+    obNormalFormat->setFontItalic( false );
 
     obBoldFormat = new QTextCharFormat();
     obBoldFormat->setFontPointSize( 10.0 );
     obBoldFormat->setFontWeight( QFont::Bold );
+
+    obItalicFormat = new QTextCharFormat();
+    obItalicFormat->setFontPointSize( 10.0 );
+    obItalicFormat->setFontItalic( true );
 
     obTableFormat = new QTextTableFormat();
     obTableFormat->setHeaderRowCount( 1 );

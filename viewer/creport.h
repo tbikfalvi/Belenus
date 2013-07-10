@@ -10,6 +10,8 @@
 #include <QDate>
 #include <QSqlQuery>
 
+#include "dlgprogress.h"
+
 class cReport : public QWidget
 {
     Q_OBJECT
@@ -50,6 +52,7 @@ public:
 
 protected:
 
+    dlgProgress          m_dlgProgress;
     QTextEdit           *m_teReport;
     QTextDocument        m_tdReport;
     QTextCursor         *m_tcReport;
@@ -58,6 +61,7 @@ protected:
     QTextCharFormat     *obTitleFormat;
     QTextCharFormat     *obNormalFormat;
     QTextCharFormat     *obBoldFormat;
+    QTextCharFormat     *obItalicFormat;
     QTextTableFormat    *obTableFormat;
     QTextBlockFormat    *obLeftCellFormat;
     QTextBlockFormat    *obCenterCellFormat;
