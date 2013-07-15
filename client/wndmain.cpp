@@ -74,6 +74,7 @@
 #include "dlg/dlgpatientcardadd.h"
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
+#include "dlg/dlgpaneluse.h"
 
 //====================================================================================
 
@@ -1488,6 +1489,12 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     obDBPatientCard.save();
                 }
             }
+
+            cDlgPanelUse obDlgPanelUse( this, mdiPanels->getActivePanelCaption() );
+
+            obDlgPanelUse.setPanelUsePatientCard( obDBPatientCard.id() );
+            obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
+            obDlgPanelUse.exec();
 
             cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );
 
