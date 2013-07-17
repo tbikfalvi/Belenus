@@ -6,14 +6,22 @@
 #include "../belenus.h"
 #include "ui_dlgpaneluse.h"
 
-class cPanelPCUnitUse : public QGroupBox
+//====================================================================================
+class cPanelPCUnitUse : public QFrame
 {
     Q_OBJECT
 
 public:
-    cPanelPCUnitUse( QWidget *p_poParent = 0, QStringList *p_qslParameters = NULL );
-};
+    QHBoxLayout     *horizontalLayout;
+    QPushButton     *pbUseUnitType;
+    QSpacerItem     *horizontalSpacer1;
+    QComboBox       *cmbUseUnitCount;
+    QSpacerItem     *horizontalSpacer2;
 
+    cPanelPCUnitUse( QWidget *p_poParent = 0, QStringList *p_qslParameters = NULL );
+
+};
+//====================================================================================
 class cDlgPanelUse : public QDialog, protected Ui::dlgPanelUse
 {
     Q_OBJECT
@@ -30,8 +38,11 @@ private:
     unsigned int     m_uiPanelUsePatientCardId;
     unsigned int     m_uiPanelUseTime;
 
+    void            _fillPatientCardUnits();
+
 private slots:
 
 };
+//====================================================================================
 
 #endif
