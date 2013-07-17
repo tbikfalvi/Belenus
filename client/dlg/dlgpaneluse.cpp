@@ -34,6 +34,13 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         obDBPatientCard.load( m_uiPanelUsePatientCardId );
 
         ledPatientCardBarcode->setText( obDBPatientCard.barcode() );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                                   "FROM patientcardunits "
+                                   "WHERE patientCardId=%1 "
+                                   "AND validDateFrom<CURDATE() AND validDateTo>=CURDATE() "
+                                   "AND active=1 "
+                                   "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( m_uiPanelUsePatientCardId );
     }
     catch( cSevException &e )
     {

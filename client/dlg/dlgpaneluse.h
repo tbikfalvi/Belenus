@@ -1,8 +1,18 @@
 #ifndef DLGPANELUSE_H
 #define DLGPANELUSE_H
 
+#include <QStringList>
+
 #include "../belenus.h"
 #include "ui_dlgpaneluse.h"
+
+class cPanelPCUnitUse : public QGroupBox
+{
+    Q_OBJECT
+
+public:
+    cPanelPCUnitUse( QWidget *p_poParent = 0, QStringList *p_qslParameters = NULL );
+};
 
 class cDlgPanelUse : public QDialog, protected Ui::dlgPanelUse
 {
