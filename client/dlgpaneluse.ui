@@ -101,13 +101,17 @@
        </property>
        <layout class="QVBoxLayout" name="vlUnits">
         <property name="spacing">
-         <number>3</number>
+         <number>0</number>
         </property>
         <property name="margin">
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_4"/>
+         <layout class="QVBoxLayout" name="vlUnits_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -197,6 +201,9 @@ color: rgb(0, 125, 0);</string>
       <widget class="QPushButton" name="pbOk">
        <property name="text">
         <string>Ok</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
