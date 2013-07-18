@@ -163,9 +163,9 @@ bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int
     return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice, p_inCount );
 }
 
-void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
+void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength )
 {
-    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_qslUnitIds, p_inLength );
 }
 
 void cMdiPanels::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )

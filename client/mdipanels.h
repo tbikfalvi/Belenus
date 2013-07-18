@@ -38,7 +38,7 @@ public:
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
-    void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
+    void            setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
     void            cashPayed( const unsigned int p_uiLedgerId );
     void            cashPayed( const unsigned int p_uiPanelId, const unsigned int p_uiLedgerId );

@@ -358,7 +358,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
     setMainProcessTime( p_inLength );
 }
 //====================================================================================
-void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
+void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength )
 {
     m_vrPatientCard.uiPatientCardId  = p_uiPatientCardId;
     m_vrPatientCard.inCountUnits     = p_inCountUnits;
