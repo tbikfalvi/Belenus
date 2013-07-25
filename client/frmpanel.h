@@ -36,7 +36,7 @@
 typedef struct _used_patientcard
 {
     unsigned int    uiPatientCardId;
-    int             inCountUnits;
+    QStringList     qslUnitIds;
     int             inUnitTime;
 } stUsedPatientCard;
 

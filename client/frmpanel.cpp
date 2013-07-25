@@ -28,12 +28,12 @@
 #include "db/dbpanelstatussettings.h"
 #include "db/dbshoppingcart.h"
 #include "crud/dlgshoppingcart.h"
+#include "db/dbpatientcardunits.h"
 
 #include <iostream>
 
 //====================================================================================
-cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
-    : QFrame()
+cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 {
     cTracer obTrace( "cFrmPanel::cFrmPanel" );
 
@@ -136,7 +136,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId )
     m_bIsPatientWaiting     = false;
 
     m_vrPatientCard.uiPatientCardId  = 0;
-    m_vrPatientCard.inCountUnits     = 0;
+    m_vrPatientCard.qslUnitIds       = QStringList();
     m_vrPatientCard.inUnitTime       = 0;
 
 //    m_uiAttendanceId        = 0;
@@ -240,7 +240,7 @@ void cFrmPanel::clear()
     m_uiAttendanceId        = 0;
 */
     m_vrPatientCard.uiPatientCardId  = 0;
-    m_vrPatientCard.inCountUnits     = 0;
+    m_vrPatientCard.qslUnitIds       = QStringList();
     m_vrPatientCard.inUnitTime       = 0;
 
     m_inMainProcessLength   = 0;
@@ -361,11 +361,11 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength )
 {
     m_vrPatientCard.uiPatientCardId  = p_uiPatientCardId;
-    m_vrPatientCard.inCountUnits     = p_inCountUnits;
+    m_vrPatientCard.qslUnitIds       = p_qslUnitIds;
     m_vrPatientCard.inUnitTime       = p_inLength;
     m_inCardTimeRemains              = p_inLength;
 
-    m_pDBLedgerDevice->setUnits( p_inCountUnits );
+    m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
     m_pDBLedgerDevice->setTimeCard( p_inLength );
 
     setMainProcessTime( p_inLength );
@@ -873,10 +873,20 @@ void cFrmPanel::closeAttendance()
         // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
         if( obDBPatientCard.patientCardTypeId() > 1 )
         {
-            obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.inCountUnits );
+            obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.qslUnitIds.count() );
             obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft()-m_vrPatientCard.inUnitTime+m_inCardTimeRemains );
 
             obDBPatientCard.save();
+
+            for( int i=0; i<m_vrPatientCard.qslUnitIds.count(); i++ )
+            {
+                cDBPatientcardUnit obDBPatientcardUnit;
+
+                obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+                obDBPatientcardUnit.setDateTime( QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm::ss") );
+                obDBPatientcardUnit.setActive( false );
+                obDBPatientcardUnit.save();
+            }
         }
 
         QTime m_qtTemp = QTime( 0, m_vrPatientCard.inUnitTime/60, m_vrPatientCard.inUnitTime%60, 0 );
@@ -884,7 +894,7 @@ void cFrmPanel::closeAttendance()
         obDBPatientCardHistory.createNew();
         obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
         obDBPatientCardHistory.setPatientCardId( obDBPatientCard.id() );
-        obDBPatientCardHistory.setUnits( m_vrPatientCard.inCountUnits );
+        obDBPatientCardHistory.setUnits( m_vrPatientCard.qslUnitIds.count() );
         obDBPatientCardHistory.setTime( m_qtTemp.toString("hh:mm:ss") );
         obDBPatientCardHistory.setActive( true );
 
@@ -892,7 +902,7 @@ void cFrmPanel::closeAttendance()
     }
 
     m_vrPatientCard.uiPatientCardId  = 0;
-    m_vrPatientCard.inCountUnits     = 0;
+    m_vrPatientCard.qslUnitIds       = QStringList();
     m_vrPatientCard.inUnitTime       = 0;
     m_inCashToPay                    = 0;
     m_inCashNetToPay                 = 0;

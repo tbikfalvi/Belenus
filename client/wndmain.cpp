@@ -1496,8 +1496,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
             obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
             if( obDlgPanelUse.exec() == QDialog::Accepted )
             {
-                QMessageBox::information( this, "", obDlgPanelUse.panelUnitIds().join(" - ") );
-                mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds().count(), obDlgPanelUse.panelUseSeconds() );
+//                QMessageBox::information( this, "", obDlgPanelUse.panelUnitIds().join(" - ") );
+                mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSeconds() );
             }
 /*
             cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );

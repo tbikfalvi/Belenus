@@ -212,6 +212,9 @@ color: rgb(0, 125, 0);</string>
        <property name="text">
         <string>Cancel</string>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
