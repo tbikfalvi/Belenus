@@ -323,6 +323,9 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
             m_poPatientCard->setComment( pteComment->toPlainText() );
 
+            cDBShoppingCart obDBShoppingCart;
+            bool            bShoppingCart = false;
+
             // Szerviz kartyat nem kell eladni
             if( m_poPatientCard->patientCardTypeId() > 1 )
             {
@@ -353,8 +356,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 
                 cCurrency cDiscounted( QString::number(inPriceDiscounted) );
 
-                cDBShoppingCart obDBShoppingCart;
-
                 obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
                 obDBShoppingCart.setProductId( 0 );
@@ -375,7 +376,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 int     inCassaAction   = obDlgCassaAction.exec();
                 int     inPayType       = 0;
                 QString qsComment       = tr("Sell patientcard [%1]").arg(m_poPatientCard->barcode());
-                bool    bShoppingCart   = false;
 
                 obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
 
@@ -393,6 +393,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
             m_poPatientCard->save();
 
             cDBPatientcardUnit  obDBPatientcardUnit;
+            QStringList         qslUnitIds;
 
             for( int i=0; i<ledUnits->text().toInt(); i++ )
             {
@@ -405,6 +406,13 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setDateTime( "" );
                 obDBPatientcardUnit.setActive( true );
                 obDBPatientcardUnit.save();
+                qslUnitIds << QString::number( obDBPatientcardUnit.id() );
+            }
+
+            if( bShoppingCart )
+            {
+                obDBShoppingCart.setComment( qslUnitIds.join("#") );
+                obDBShoppingCart.save();
             }
 
             QDialog::accept();

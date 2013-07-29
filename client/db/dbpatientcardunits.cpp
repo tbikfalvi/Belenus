@@ -28,6 +28,7 @@ cDBPatientcardUnit::~cDBPatientcardUnit()
 void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const unsigned int p_uiLicenceId,
                                const unsigned int p_uiPatientCardId,
+                               const unsigned int p_uiLedgerId,
                                const int p_nUnitTime,
                                const QString &p_qsValidDateFrom,
                                const QString &p_qsValidDateTo,
@@ -38,6 +39,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPatientCardId   = p_uiPatientCardId;
+    m_uiLedgerId        = p_uiLedgerId;
     m_nUnitTime         = p_nUnitTime;
     m_qsValidDateFrom   = p_qsValidDateFrom;
     m_qsValidDateTo     = p_qsValidDateTo;
@@ -51,6 +53,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "patientCardUnitId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inPatientCardIdIdx  = p_obRecord.indexOf( "patientCardId" );
+    int inLedgerIdIdx       = p_obRecord.indexOf( "ledgerId" );
     int inUnitTimeIdx       = p_obRecord.indexOf( "unitTime" );
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
@@ -61,6 +64,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inPatientCardIdIdx ).toInt(),
+          p_obRecord.value( inLedgerIdIdx ).toInt(),
           p_obRecord.value( inUnitTimeIdx ).toInt(),
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
@@ -152,6 +156,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     qsQuery += " patientCardUnits SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
+    qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "unitTime = \"%1\", " ).arg( m_nUnitTime );
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
@@ -219,6 +224,16 @@ unsigned int cDBPatientcardUnit::patientCardId() const throw()
 void cDBPatientcardUnit::setPatientCardId( const unsigned int p_nPatientCardId ) throw()
 {
     m_uiPatientCardId = p_nPatientCardId;
+}
+
+unsigned int cDBPatientcardUnit::ledgerId() const throw()
+{
+    return m_uiLedgerId;
+}
+
+void cDBPatientcardUnit::setLedgerId( const unsigned int p_nLedgerId ) throw()
+{
+    m_uiLedgerId = p_nLedgerId;
 }
 
 int cDBPatientcardUnit::unitTime() const throw()

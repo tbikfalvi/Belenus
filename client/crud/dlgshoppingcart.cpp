@@ -10,6 +10,7 @@
 #include "../db/dbledger.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
+#include "../db/dbpatientcardunits.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -263,6 +264,16 @@ void cDlgShoppingCart::deleteClicked( bool )
                     if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
 
                     obDBPatientCard.save();
+
+                    QStringList qslUnitIds = obDBShoppingCart.comment().split("#");
+
+                    for( int i=0; i<qslUnitIds.count(); i++ )
+                    {
+                        cDBPatientcardUnit  obDBPatientcardUnit;
+
+                        obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
+                        obDBPatientcardUnit.remove();
+                    }
                 }
                 catch( cSevException &e )
                 {

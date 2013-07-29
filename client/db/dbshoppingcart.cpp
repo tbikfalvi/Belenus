@@ -33,6 +33,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const unsigned int p_uiPanelId,
                             const unsigned int p_uiLedgerTypeId,
                             const QString &p_qsItemName,
+                            const QString p_qsComment,
                             const int p_nItemCount,
                             const int p_nItemNetPrice,
                             const int p_nItemVAT,
@@ -49,6 +50,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
     m_uiPanelId         = p_uiPanelId;
     m_uiLedgerTypeId    = p_uiLedgerTypeId;
     m_qsItemName        = p_qsItemName;
+    m_qsComment             = p_qsComment;
     m_nItemCount        = p_nItemCount;
     m_nItemNetPrice     = p_nItemNetPrice;
     m_nItemVAT          = p_nItemVAT;
@@ -68,6 +70,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inLedgerTypeIdIdx       = p_obRecord.indexOf( "ledgerTypeId" );
     int inItemNameIdx           = p_obRecord.indexOf( "itemName" );
+    int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inItemCountIdx          = p_obRecord.indexOf( "itemCount" );
     int inItemNetPriceIdx       = p_obRecord.indexOf( "itemNetPrice" );
     int inItemVATIdx            = p_obRecord.indexOf( "itemVAT" );
@@ -84,6 +87,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPanelIdIdx ).toUInt(),
           p_obRecord.value( inLedgerTypeIdIdx ).toUInt(),
           p_obRecord.value( inItemNameIdx ).toString(),
+          p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inItemCountIdx ).toInt(),
           p_obRecord.value( inItemNetPriceIdx ).toInt(),
           p_obRecord.value( inItemVATIdx ).toInt(),
@@ -133,6 +137,7 @@ void cDBShoppingCart::save() throw( cSevException )
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
     qsQuery += QString( "itemName = \"%1\", " ).arg( m_qsItemName );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "itemCount = \"%1\", " ).arg( m_nItemCount );
     qsQuery += QString( "itemNetPrice = \"%1\", " ).arg( m_nItemNetPrice );
     qsQuery += QString( "itemVAT = \"%1\", " ).arg( m_nItemVAT );
@@ -257,6 +262,16 @@ QString cDBShoppingCart::itemName() const throw()
 void cDBShoppingCart::setItemName(const QString &p_qsItemName) throw()
 {
     m_qsItemName = p_qsItemName;
+}
+
+QString cDBShoppingCart::comment() const throw()
+{
+    return m_qsComment;
+}
+
+void cDBShoppingCart::setComment( const QString &p_qsComment ) throw()
+{
+    m_qsComment = p_qsComment;
 }
 
 int cDBShoppingCart::itemCount() const throw()

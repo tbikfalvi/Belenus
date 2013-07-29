@@ -31,6 +31,8 @@ public:
     void            setLedgerTypeId( const unsigned int p_nLedgerTypeId )   throw();
     QString         itemName() const                                        throw();
     void            setItemName( const QString &p_qsItemName )              throw();
+    QString         comment() const                                         throw();
+    void            setComment( const QString &p_qsComment )                throw();
     int             itemCount() const                                       throw();
     void            setItemCount( const int p_nItemCount )                  throw();
     int             itemNetPrice() const                                    throw();
@@ -54,6 +56,7 @@ private:
     unsigned int    m_uiPanelId;
     unsigned int    m_uiLedgerTypeId;
     QString         m_qsItemName;
+    QString         m_qsComment;
     int             m_nItemCount;
     int             m_nItemNetPrice;
     int             m_nItemVAT;
@@ -70,6 +73,7 @@ private:
                const unsigned int p_uiPanelId = 0,
                const unsigned int p_uiLedgerTypeId = 0,
                const QString &p_qsItemName = "",
+               const QString p_qsComment = "",
                const int p_nItemCount = 0,
                const int p_nItemNetPrice = 0,
                const int p_nItemVAT = 0,
