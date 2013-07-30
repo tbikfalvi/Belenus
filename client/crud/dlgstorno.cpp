@@ -88,7 +88,7 @@ void cDlgStorno::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
 
-        tbvCrud->sortByColumn( 0, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 3, Qt::DescendingOrder );
     }
     else
     {
@@ -100,7 +100,7 @@ void cDlgStorno::setupTableView()
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
 
-        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 1, Qt::DescendingOrder );
     }
 }
 
@@ -110,11 +110,11 @@ void cDlgStorno::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT cassaHistoryId, licenceId, parentId, actionTime, actionValue, comment, active, archive FROM cassahistory WHERE actionValue<>0";
+        m_qsQuery = "SELECT cassaHistoryId, licenceId, parentId, actionTime, (actionValue/100) as actionValue, comment, active, archive FROM cassahistory WHERE actionValue<>0";
     }
     else
     {
-        m_qsQuery = "SELECT cassaHistoryId AS id, actionTime, actionValue, comment FROM cassahistory WHERE actionValue<>0 AND active=1";
+        m_qsQuery = "SELECT cassaHistoryId AS id, actionTime, (actionValue/100) as actionValue, comment FROM cassahistory WHERE actionValue<>0 AND active=1";
     }
 
     QString stTemp;
@@ -177,4 +177,6 @@ void cDlgStorno::on_pbStorno_clicked()
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
+
+    refreshTable();
 }

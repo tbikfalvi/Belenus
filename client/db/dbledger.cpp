@@ -18,6 +18,7 @@
 #include "dbpatientcardtype.h"
 #include "dbpatientcard.h"
 #include "dbproduct.h"
+#include "dbpatientcardunits.h"
 
 cDBLedger::cDBLedger()
 {
@@ -237,6 +238,10 @@ void cDBLedger::revoke() throw( cSevException )
             if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
 
             obDBPatientCard.save();
+
+            cDBPatientcardUnit obDBPatientcardUnit;
+
+            obDBPatientcardUnit.removeLedgerUnits( m_uiId );
         }
         catch( cSevException &e )
         {

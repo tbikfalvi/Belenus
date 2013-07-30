@@ -325,6 +325,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 
             cDBShoppingCart obDBShoppingCart;
             bool            bShoppingCart = false;
+            unsigned int    uiLedgerId = 0;
 
             // Szerviz kartyat nem kell eladni
             if( m_poPatientCard->patientCardTypeId() > 1 )
@@ -381,7 +382,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, true, inPayType );
+                    uiLedgerId = g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, true, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )
                 {
@@ -400,6 +401,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.createNew();
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
+                obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );

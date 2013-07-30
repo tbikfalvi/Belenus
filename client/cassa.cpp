@@ -255,7 +255,7 @@ void cCassa::cassaClose()
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )
+unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )
 //====================================================================================
 {
     cDBLedger   obDBLedger;
@@ -289,12 +289,14 @@ void cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard,
     {
         cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
+
+    return obDBLedger.id();
 }
 //====================================================================================
-void cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType )
+unsigned int cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType )
 //====================================================================================
 {
-    cassaProcessPatientCardSell( p_DBPatientCard, p_obDBShoppingCart, p_qsComment, false, p_inPayType );
+    return cassaProcessPatientCardSell( p_DBPatientCard, p_obDBShoppingCart, p_qsComment, false, p_inPayType );
 }
 //====================================================================================
 void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
