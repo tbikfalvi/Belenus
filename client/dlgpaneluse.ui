@@ -199,11 +199,14 @@ color: rgb(0, 125, 0);</string>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="pbOk">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Ok</string>
        </property>
        <property name="autoDefault">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -234,6 +237,11 @@ color: rgb(0, 125, 0);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pbOk</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>ledPatientCardBarcode</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

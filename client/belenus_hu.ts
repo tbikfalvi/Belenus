@@ -2485,12 +2485,17 @@ Kérem adjon meg egy másik sorszámot.</translation>
 <context>
     <name>cDlgPanelTypeCopy</name>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="94"/>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="14"/>
+        <source>Copy panel use times</source>
+        <translation>Panelhasználatok másolása</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="95"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="95"/>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="96"/>
         <source>Copy of the selected panel uses has been finished.
 Number of copied items: %1
 Number of skipped items (due to avoid duplication): %2</source>
@@ -6434,9 +6439,14 @@ Az alkalmazás csak %1 gép kezelését teszi lehetővé.</translation>
         <translation>A megadott bérletegységgel %1 percig használható a gép.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="52"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="53"/>
         <source>Valid for </source>
         <translation>Érvényes </translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="58"/>
+        <source>%1 day(s)</source>
+        <translation>%1 nap</translation>
     </message>
 </context>
 <context>
@@ -8717,12 +8727,12 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>Fizetendő :</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="203"/>
+        <location filename="dlgpaneluse.ui" line="206"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="213"/>
+        <location filename="dlgpaneluse.ui" line="216"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>

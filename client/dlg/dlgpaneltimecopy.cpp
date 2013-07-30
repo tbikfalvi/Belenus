@@ -11,6 +11,7 @@ cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelI
 {
     setupUi( this );
 
+    setWindowTitle( tr( "Copy panel use times" ) );
     setWindowIcon( QIcon("./resources/40x40_clock.png") );
     pbCopyTimes->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );

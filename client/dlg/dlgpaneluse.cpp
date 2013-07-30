@@ -27,6 +27,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     pbUseUnitType->setIconSize( QSize(20,20) );
     pbUseUnitType->setIcon( QIcon("./resources/40x40_device_withcard.png") );
     pbUseUnitType->setCheckable( true );
+    pbUseUnitType->setAutoDefault( false );
     horizontalLayout->addWidget( pbUseUnitType );
     connect( pbUseUnitType, SIGNAL(clicked()), this, SLOT(slotButtonClicked()) );
 
@@ -54,7 +55,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
 
     lblValidData = new QLabel( this );
     lblValidData->setObjectName( QString::fromUtf8( "lblValidData" ) );
-    lblValidData->setText( QString("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(p_qslParameters->at( 3 ), "yyyy-MM-dd") ) ) );
+    lblValidData->setText( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(p_qslParameters->at( 3 ), "yyyy-MM-dd") ) ) );
     lblValidData->setStyleSheet( "font: 75 12pt;\ncolor: rgb(0, 125, 0);" );
     horizontalLayout->addWidget( lblValidData );
 
@@ -198,6 +199,15 @@ void cDlgPanelUse::setPanelUseTime()
     QTime   qtPanelUseTime( m_uiPanelUseTime/3600, (m_uiPanelUseTime%3600)/60, (m_uiPanelUseTime%3600)%60 );
 
     lblTotalTimeValue->setText( qtPanelUseTime.toString( "hh:mm:ss" ) );
+
+    if( m_uiPanelUseTime > 0 )
+    {
+        pbOk->setEnabled( true );
+    }
+    else
+    {
+        pbOk->setEnabled( false );
+    }
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePrice()

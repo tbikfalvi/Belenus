@@ -1355,12 +1355,17 @@ Please define a different one.</source>
 <context>
     <name>cDlgPanelTypeCopy</name>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="94"/>
-        <source>Information</source>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="14"/>
+        <source>Copy panel use times</source>
         <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgpaneltimecopy.cpp" line="95"/>
+        <source>Information</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="96"/>
         <source>Copy of the selected panel uses has been finished.
 Number of copied items: %1
 Number of skipped items (due to avoid duplication): %2</source>
@@ -4319,8 +4324,13 @@ Only %1 panels will be displayed.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="52"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="53"/>
         <source>Valid for </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpaneluse.cpp" line="58"/>
+        <source>%1 day(s)</source>
         <translation></translation>
     </message>
 </context>
@@ -5844,12 +5854,12 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="203"/>
+        <location filename="dlgpaneluse.ui" line="206"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpaneluse.ui" line="213"/>
+        <location filename="dlgpaneluse.ui" line="216"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
