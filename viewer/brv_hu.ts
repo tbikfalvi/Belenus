@@ -397,117 +397,117 @@
     <message>
         <location filename="wndmain.ui" line="433"/>
         <source>How to use report viewer ...</source>
-        <translation>Hogyan használja a Kimutatás Megjelenítőt ...</translation>
+        <translation>Hogyan használja a Statisztika Megjelenítőt ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="455"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Üdvözöljük a Belenus Statisztika Megjelenítő alkalmazásában.&lt;br/&gt;Az alkalmazás használatához be kell jelentkeznie. Kérem adja meg a Belenus alkalmazás beli felhasználónevét és jelszavát.&lt;br/&gt;Sikeres beazonosítás után különböző szűrőfeltételek megadásával képes lesz kimutatások lekérésére..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="465"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A kívánt kimutatás megnyitásához kattintson a kapcsolódó gombra. A megjelenő szűrőfeltételek beállítása után lekérheti az adott kimutatást.&lt;br/&gt;Kattintson a nyomtató ikont tartalmazó gombra, ha ki akarja nyomtatni az aktuális kimutatást.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="472"/>
         <source> Authentication </source>
-        <translation type="unfinished"></translation>
+        <translation> Azonosítás </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="478"/>
         <source>Need authentication ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Szükség van azonosításra ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="487"/>
         <source>User name :</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="497"/>
         <source>Password :</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="517"/>
         <source> Login </source>
-        <translation type="unfinished"></translation>
+        <translation> Bejelentkezés </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="548"/>
         <source> Filter settings </source>
-        <translation type="unfinished"></translation>
+        <translation> Szűrő beállítások </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="554"/>
         <source>Refresh the report automatically after one of the filter has been changed</source>
-        <translation type="unfinished"></translation>
+        <translation>A kimutatás automatikusan frissüljön a szűrőfeltételek megváltoztatása után</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="591"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="598"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nézet</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="605"/>
         <source>&amp;Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kimutatások</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="609"/>
         <source>&amp;Bookkeeping</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Főkönyv</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="616"/>
         <source>Patientcards</source>
-        <translation type="unfinished"></translation>
+        <translation>Bérletek</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="632"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="643"/>
         <source>&amp;Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eszköztár</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="654"/>
         <source>&amp;Filter bar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Szűrő panel</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="662"/>
         <source>&amp;Daily</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Napi</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="665"/>
         <source>Daily bookkeeping</source>
-        <translation type="unfinished"></translation>
+        <translation>Napi könyv</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="673"/>
         <source>&amp;Ledger</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Könyvelés</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="681"/>
         <source>&amp;Active patientcard types</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aktív bérlettípusok</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="692"/>
         <source>Inactive patientcards</source>
-        <translation type="unfinished"></translation>
+        <translation>Érvénytelen bérletek</translation>
     </message>
 </context>
 </TS>

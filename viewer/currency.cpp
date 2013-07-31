@@ -19,7 +19,7 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
     m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
     m_qsCurrencySeparator           = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
-    m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "," ).toString();
+    m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
 
     _init( p_qsCurrencyString, p_ctCurrencyType, p_nVat );
 }

@@ -7,6 +7,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <iostream>
+#include <QSettings>
 
 #include "wndmain.h"
 //====================================================================================
@@ -37,6 +38,19 @@ int main( int argc, char *argv[] )
         g_poDB->setUserName( "belenus" );
         g_poDB->setPassword( "belenus" );
         g_poDB->open();
+
+        QSettings       iniFile( "belenus.ini", QSettings::IniFormat );
+        QTranslator     obBlTr;
+        QTranslator     obQtTr;
+        QString         qsLang = iniFile.value( "General/Lang", "hu" ).toString();
+        QString         qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
+        QString         qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
+
+        obBlTr.load( qsLangBl );
+        obQtTr.load( qsLangQT );
+
+        apMainApp.installTranslator( &obBlTr );
+        apMainApp.installTranslator( &obQtTr );
 
         cWndMain  obMainWindow;
         obMainWindow.show();

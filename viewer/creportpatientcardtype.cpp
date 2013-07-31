@@ -1,6 +1,7 @@
 
 #include "../framework/qtframework.h"
 #include "creportpatientcardtype.h"
+#include "currency.h"
 
 cReportPatientCardType::cReportPatientCardType(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
 {
@@ -118,12 +119,14 @@ void cReportPatientCardType::refreshReport()
     {
         QStringList qslRecord = qslQueryResult.at(i).split('#');
 
+        cCurrency   obPrice( qslRecord.at(1).toInt() );
+
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qslRecord.at(0), *obNormalFormat );
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qslRecord.at(1), *obNormalFormat );
+        m_tcReport->insertText( obPrice.currencyFullStringShort(), *obNormalFormat );
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qslRecord.at(2), *obNormalFormat );
