@@ -59,6 +59,8 @@ private:
 
     QVector<cReport*>    m_qvReports;
 
+    bool                 m_bReportTabSwitching;
+
     void                _initActions();
     void                _initToolbar();
     void                _initFilterbar();

@@ -26,7 +26,7 @@ void cReportCardInactive::refreshReport()
                                     "FROM patientcards as pc, patientcardtypes as pct, patients as p "
                                     "WHERE pc.patientCardTypeId=pct.patientCardTypeId "
                                     "AND pc.patientId=p.patientId "
-                                    "AND patientCardId>0 "
+                                    "AND patientCardId>1 "
                                     "AND pc.patientCardTypeId<>1 "
                                     "AND pc.active=0 "
                                     );
@@ -63,15 +63,19 @@ void cReportCardInactive::refreshReport()
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qsBarcode, *obNormalFormat );
+
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qsCardType, *obNormalFormat );
+
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qsComment, *obNormalFormat );
+
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qsUnits, *obNormalFormat );
+
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qsOwner, *obNormalFormat );

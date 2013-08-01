@@ -23,6 +23,7 @@ HEADERS = ../framework/dbconnection.h \
     ../framework/qtmysqlconnection.h \
     ../framework/qtmysqlquerymodel.h \
     ../framework/qtlogger.h \
+    ../framework/logger/FileWriter.h \
     ../framework/tracer.h \
     wndmain.h \
     currency.h \
@@ -38,6 +39,7 @@ SOURCES = ../framework/dbconnection.cpp \
     ../framework/qtmysqlconnection.cpp \
     ../framework/qtmysqlquerymodel.cpp \
     ../framework/qtlogger.cpp \
+    ../framework/logger/FileWriter.cpp \
     ../framework/tracer.cpp \
     main.cpp \
     wndmain.cpp \

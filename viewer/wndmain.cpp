@@ -27,9 +27,12 @@
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::cWndMain" );
+
     setupUi( this );
 
-    m_qsRPSW = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
+    m_qsRPSW                = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
+    m_bReportTabSwitching   = false;
 
     connect( this, SIGNAL(setCheckedReportDaily(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( this, SIGNAL(setCheckedReportLedger(bool)), this, SLOT(slotCheckReportLedger(bool)) );
@@ -65,6 +68,8 @@ cWndMain::~cWndMain()
 void cWndMain::setLoginData(QString p_qsName, QString p_qsPassword)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::setLoginData" );
+
     if( p_qsName.length() > 0 )
     {
         for( int i=0; i<cmbName->count(); i++ )
@@ -91,6 +96,8 @@ void cWndMain::setLoginData(QString p_qsName, QString p_qsPassword)
 void cWndMain::_initActions()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_initActions" );
+
     // SIGNALS
     connect( action_Bookkeeping_Daily, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( action_Bookkeeping_Ledger, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportLedger(bool)) );
@@ -106,7 +113,7 @@ void cWndMain::_initActions()
     action_Bookkeeping_Ledger->setIcon( QIcon("./resources/40x40_book_ledger.png") );
 
     action_PatientcardTypes->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
-    action_Patientcards_Inactive->setIcon( QIcon("./resources/40x40_patientcard_inactive.png") );
+    action_Patientcards_Inactive->setIcon( QIcon("./resources/40x40_report_patientcard_inactive.png") );
     action_Patientcards_Details->setIcon( QIcon("./resources/40x40_report_patientcard_details.png") );
 
     // BEHAVIOUR
@@ -123,6 +130,8 @@ void cWndMain::_initActions()
 void cWndMain::_initToolbar()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_initToolbar" );
+
     // SIGNALS
     connect( pbExit, SIGNAL(clicked()), this, SLOT(close()) );
 
@@ -140,7 +149,7 @@ void cWndMain::_initToolbar()
     pbBookkeepingLedger->setIcon( QIcon("./resources/40x40_book_ledger.png") );
 
     pbPatientcardType->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
-    pbPatientcardsInactive->setIcon( QIcon("./resources/40x40_patientcard_inactive.png") );
+    pbPatientcardsInactive->setIcon( QIcon("./resources/40x40_report_patientcard_inactive.png") );
     pbPatientcardsDetails->setIcon( QIcon("./resources/40x40_report_patientcard_details.png") );
 
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
@@ -159,6 +168,8 @@ void cWndMain::_initToolbar()
 void cWndMain::_initFilterbar()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_initFilterbar" );
+
     // ICONS
     pbRefresh->setIcon( QIcon("./resources/40x40_refresh.png") );
 
@@ -169,6 +180,8 @@ void cWndMain::_initFilterbar()
 void cWndMain::_initTabInformation()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_initTabInformation" );
+
     // ICONS
     tabReports->setTabIcon( 0, QIcon("./resources/40x40_information.png") );
     pbAuthenticate->setIcon( QIcon("./resources/40x40_key.png") );
@@ -180,6 +193,8 @@ void cWndMain::_initTabInformation()
 void cWndMain::_setAuthInfoType(authType p_tAuthType)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_setAuthInfoType" );
+
     cmbName->setEnabled( true );
     ledPassword->setEnabled( true );
 
@@ -217,6 +232,8 @@ void cWndMain::_setAuthInfoType(authType p_tAuthType)
 void cWndMain::on_tabReports_tabCloseRequested(int index)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_tabReports_tabCloseRequested" );
+
     if( index > 0 )
     {
         if( m_repDaily && m_repDaily->index() == index )
@@ -235,18 +252,24 @@ void cWndMain::on_tabReports_tabCloseRequested(int index)
 void cWndMain::on_action_Toolbar_triggered(bool checked)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_action_Toolbar_triggered" );
+
     frameToolbar->setVisible( checked );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_action_FilterBar_triggered(bool checked)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_action_FilterBar_triggered" );
+
     frameFilterbar->setVisible( checked );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_pbAuthenticate_clicked()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_pbAuthenticate_clicked" );
+
     authType    atRet = AUTH_NEEDED;
 
     if( pbAuthenticate->text().compare( tr("Login") ) == 0 )
@@ -270,6 +293,8 @@ void cWndMain::on_pbAuthenticate_clicked()
 cWndMain::authType cWndMain::_authenticateUser()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_authenticateUser" );
+
     string  stName = cmbName->currentText().toStdString();
     stName = stName.substr( 0, stName.find( '(' ) - 1 );
     authType    atRet = AUTH_ERROR;
@@ -321,6 +346,8 @@ cWndMain::authType cWndMain::_authenticateUser()
 void cWndMain::_setReportsEnabled(bool p_bEnable)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_setReportsEnabled" );
+
     lblInformation1->setVisible( !p_bEnable );
     lblInformation2->setVisible( p_bEnable );
     action_FilterBar->setEnabled( p_bEnable );
@@ -347,6 +374,10 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 void cWndMain::slotCheckReportDaily(bool p_bChecked)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::slotCheckReportDaily" );
+
+    m_bReportTabSwitching = true;
+
     action_Bookkeeping_Daily->setChecked( p_bChecked );
     pbBookkeepingDaily->setChecked( p_bChecked );
 
@@ -366,11 +397,17 @@ void cWndMain::slotCheckReportDaily(bool p_bChecked)
         m_repDaily = NULL;
         _updateReportIndexes();
     }
+
+    m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportLedger( bool p_bChecked )
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::slotCheckReportLedger" );
+
+    m_bReportTabSwitching = true;
+
     action_Bookkeeping_Ledger->setChecked( p_bChecked );
     pbBookkeepingLedger->setChecked( p_bChecked );
 
@@ -390,11 +427,17 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
         m_repLedger = NULL;
         _updateReportIndexes();
     }
+
+    m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportPatientcardType( bool p_bChecked )
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::slotCheckReportPatientcardType" );
+
+    m_bReportTabSwitching = true;
+
     action_PatientcardTypes->setChecked( p_bChecked );
     pbPatientcardType->setChecked( p_bChecked );
 
@@ -405,13 +448,6 @@ void cWndMain::slotCheckReportPatientcardType( bool p_bChecked )
         m_qvReports.append( m_repCardType );
         m_repCardType->setIndex( tabReports->addTab( m_repCardType, QIcon("./resources/40x40_report_patientcardtypes.png"), m_repCardType->name() ) );
         tabReports->setCurrentIndex( m_repCardType->index() );
-        QStringList qslDataTypes = m_repCardType->filterType().split('#');
-
-        for( int i=0; i<qslDataTypes.count(); i++ )
-        {
-            QStringList qslDataType = qslDataTypes.at(i).split('|');
-            cmbFilterDataTypes->addItem( qslDataType.at(1), qslDataType.at(0).toInt() );
-        }
     }
     else
     {
@@ -421,11 +457,17 @@ void cWndMain::slotCheckReportPatientcardType( bool p_bChecked )
         m_repCardType = NULL;
         _updateReportIndexes();
     }
+
+    m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::slotCheckReportPatientcardInactive" );
+
+    m_bReportTabSwitching = true;
+
     action_Patientcards_Inactive->setChecked( p_bChecked );
     pbPatientcardsInactive->setChecked( p_bChecked );
 
@@ -434,7 +476,7 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
         m_repCardInactive = new cReportCardInactive();
 
         m_qvReports.append( m_repCardInactive );
-        m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_patientcard_inactive.png"), m_repCardInactive->name() ) );
+        m_repCardInactive->setIndex( tabReports->addTab( m_repCardInactive, QIcon("./resources/40x40_report_patientcard_inactive.png"), m_repCardInactive->name() ) );
         tabReports->setCurrentIndex( m_repCardInactive->index() );
     }
     else
@@ -445,11 +487,17 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
         m_repCardInactive = NULL;
         _updateReportIndexes();
     }
+
+    m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::slotCheckReportPatientcardDetails" );
+
+    m_bReportTabSwitching = true;
+
     action_Patientcards_Details->setChecked( p_bChecked );
     pbPatientcardsDetails->setChecked( p_bChecked );
 
@@ -460,13 +508,6 @@ void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
         m_qvReports.append( m_repCardDetails );
         m_repCardDetails->setIndex( tabReports->addTab( m_repCardDetails, QIcon("./resources/40x40_report_patientcard_details.png"), m_repCardDetails->name() ) );
         tabReports->setCurrentIndex( m_repCardDetails->index() );
-        QStringList qslDataTypes = m_repCardDetails->filterType().split('#');
-
-        for( int i=0; i<qslDataTypes.count(); i++ )
-        {
-            QStringList qslDataType = qslDataTypes.at(i).split('|');
-            cmbFilterDataTypes->addItem( qslDataType.at(1), qslDataType.at(0).toInt() );
-        }
     }
     else
     {
@@ -476,11 +517,17 @@ void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
         m_repCardDetails = NULL;
         _updateReportIndexes();
     }
+
+    m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_tabReports_currentChanged(int index)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_tabReports_currentChanged" );
+
+    m_bReportTabSwitching = true;
+
     if( index == 0 )
     {
         lblReportDescription->setText( tr("<i>Please select a report to show the related filters ...</i>") );
@@ -499,11 +546,15 @@ void cWndMain::on_tabReports_currentChanged(int index)
         _setFiltersEnabled( false );
         _setFiltersEnabledReport( obReport );
     }
+
+    m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_setFiltersEnabled(bool p_bEnable)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_setFiltersEnabled" );
+
     lblFilterDateStart->setVisible( p_bEnable );
     dtFilterDateStart->setEnabled( p_bEnable );
     dtFilterDateStart->setVisible( p_bEnable );
@@ -527,6 +578,8 @@ void cWndMain::_setFiltersEnabled(bool p_bEnable)
 void cWndMain::_setFiltersEnabledReport(cReport *obReport)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_setFiltersEnabledReport" );
+
     spacerFilter1->changeSize( 0, 20 );
     spacerFilter2->changeSize( 0, 20 );
 
@@ -566,6 +619,15 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
         cmbFilterDataTypes->setEnabled( true );
         cmbFilterDataTypes->setVisible( true );
         lblFilterDataType->setText( obReport->labelDataTypeText() );
+
+        QStringList qslDataTypes = obReport->filterType().split('#');
+
+        cmbFilterDataTypes->clear();
+        for( int i=0; i<qslDataTypes.count(); i++ )
+        {
+            QStringList qslDataType = qslDataTypes.at(i).split('|');
+            cmbFilterDataTypes->addItem( qslDataType.at(1), qslDataType.at(0).toInt() );
+        }
     }
 
     pbRefresh->setEnabled( true );
@@ -575,6 +637,8 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
 void cWndMain::_updateReportIndexes()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::_updateReportIndexes" );
+
     for( int i=0; i<m_qvReports.count(); i++ )
     {
         m_qvReports.at(i)->setIndex( i+1 );
@@ -584,6 +648,10 @@ void cWndMain::_updateReportIndexes()
 void cWndMain::on_dtFilterDateStart_dateChanged(const QDate &date)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_dtFilterDateStart_dateChanged" );
+
+    if( m_bReportTabSwitching ) return;
+
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->setFilterDateStart( date );
@@ -595,6 +663,10 @@ void cWndMain::on_dtFilterDateStart_dateChanged(const QDate &date)
 void cWndMain::on_dtFilterDateStop_dateChanged(const QDate &date)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_dtFilterDateStop_dateChanged" );
+
+    if( m_bReportTabSwitching ) return;
+
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->setFilterDateStop( date );
@@ -606,6 +678,10 @@ void cWndMain::on_dtFilterDateStop_dateChanged(const QDate &date)
 void cWndMain::on_ledFilterDataName_textEdited(const QString &arg1)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_ledFilterDataName_textEdited" );
+
+    if( m_bReportTabSwitching ) return;
+
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->setFilterDataName( arg1 );
@@ -617,6 +693,10 @@ void cWndMain::on_ledFilterDataName_textEdited(const QString &arg1)
 void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_cmbFilterDataTypes_currentIndexChanged" );
+
+    if( m_bReportTabSwitching ) return;
+
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     QString qsDataType = QString( "%1|%2" ).arg( cmbFilterDataTypes->itemData(index).toInt() ).arg( cmbFilterDataTypes->itemText(index) );
@@ -630,6 +710,8 @@ void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
 void cWndMain::on_pbRefresh_clicked()
 //------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cWndMain::on_pbRefresh_clicked" );
+
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->refreshReport();

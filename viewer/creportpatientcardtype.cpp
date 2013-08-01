@@ -1,4 +1,6 @@
 
+#include <QMessageBox>
+
 #include "../framework/qtframework.h"
 #include "creportpatientcardtype.h"
 #include "currency.h"

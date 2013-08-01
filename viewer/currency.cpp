@@ -1,6 +1,7 @@
 
 #include <QSettings>
 #include <QStringList>
+#include <QMessageBox>
 #include "currency.h"
 
 //*********************************************************************************************************************
@@ -33,6 +34,13 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
     m_nValueRight   = 0;
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
+
+    QSettings obPrefFile( "belenus.ini", QSettings::IniFormat );
+
+    m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
+    m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
+    m_qsCurrencySeparator           = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
+    m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
 
     QString qsCurrency = QString::number(p_nCurrencyValue);
 
