@@ -38,8 +38,7 @@ void cReportCardDetails::refreshReport()
 
     cReport::refreshReport();
 
-    m_qsReportHtml.append( "<html><body>" );
-    m_qsReportHtml.append( "<div>" );
+    startReport();
 
     QString     qsTitle = m_qsReportName;
     QString     qsCondition;
@@ -271,96 +270,36 @@ void cReportCardDetails::refreshReport()
         m_dlgProgress.progressInit( tr("Displaying data ..."), 0, qslQueryResult.size() );
         m_dlgProgress.setProgressValue( 0 );
 
-        m_qsReportHtml.append( "<table>" );
-//        obTableFormat->setAlignment( Qt::AlignLeft );
-//        m_tcReport->insertTable( qslQueryResult.size()+1, 5, *obTableFormat );
+        addTable();
 
         // Add table header row
-/*        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Barcode" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obCenterCellFormat );
-        m_tcReport->insertText( tr( "No. units" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obCenterCellFormat );
-        m_tcReport->insertText( tr( "Time" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obCenterCellFormat );
-        m_tcReport->insertText( tr( "Valid" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Comment" ), *obBoldFormat );*/
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Barcode" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "No. units" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Time" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Valid" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Comment" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Barcode" ) );
+        addTableCell( tr( "No. units" ) );
+        addTableCell( tr( "Time" ) );
+        addTableCell( tr( "Valid" ) );
+        addTableCell( tr( "Comment" ) );
 
         for( int i=0; i<qslQueryResult.size(); i++ )
         {
-            QStringList qslRecord = qslQueryResult.at(i).split('#');
-
-/*            m_tcReport->movePosition( QTextCursor::NextCell );
-            m_tcReport->setBlockFormat( *obLeftCellFormat );
-            m_tcReport->insertText( qslRecord.at(0), *obNormalFormat );
-
-            m_tcReport->movePosition( QTextCursor::NextCell );
-            m_tcReport->setBlockFormat( *obCenterCellFormat );
-            m_tcReport->insertText( qslRecord.at(1), *obNormalFormat );*/
-
+            QStringList     qslRecord = qslQueryResult.at(i).split('#');
             unsigned int    uiTimeLeft = qslRecord.at(2).toInt();
             QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
 
-/*            m_tcReport->movePosition( QTextCursor::NextCell );
-            m_tcReport->setBlockFormat( *obCenterCellFormat );
-            m_tcReport->insertText( qtTemp.toString( "hh:mm:ss" ), *obNormalFormat );
-
-            m_tcReport->movePosition( QTextCursor::NextCell );
-            m_tcReport->setBlockFormat( *obCenterCellFormat );
-            m_tcReport->insertText( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ), *obNormalFormat );
-
-            m_tcReport->movePosition( QTextCursor::NextCell );
-            m_tcReport->setBlockFormat( *obLeftCellFormat );
-            m_tcReport->insertText( qslRecord.at(5), *obNormalFormat );*/
-
-            m_qsReportHtml.append( "<tr>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( qslRecord.at(0) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( qslRecord.at(1) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( qtTemp.toString( "hh:mm:ss" ) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( qslRecord.at(5) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "</tr>" );
+            addTableRow();
+            addTableCell( qslRecord.at(0) );
+            addTableCell( qslRecord.at(1) );
+            addTableCell( qtTemp.toString( "hh:mm:ss" ) );
+            addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ) );
+            addTableCell( qslRecord.at(5) );
 
             m_dlgProgress.increaseProgressValue();
         }
+        finishTable();
     }
 
-    m_qsReportHtml.append( "</div>");
-    m_qsReportHtml.append( "</body></html>" );
-
-    m_tcReport->insertHtml( m_qsReportHtml );
+    finishSection();
+    finishReport();
 
     m_dlgProgress.hide();
 }

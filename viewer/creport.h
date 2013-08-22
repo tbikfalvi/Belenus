@@ -50,6 +50,16 @@ public:
     void                 setFilterDataName( const QString &p_qsName );
     void                 setFilterDataType( const QString &p_qsType );
 
+    void                 startReport();
+    void                 finishReport();
+    void                 startSection();
+    void                 finishSection();
+    void                 addTable();
+    void                 finishTable();
+    void                 addTableRow();
+    void                 finishTableRow();
+    void                 addTableCell( QString p_qsCellText );
+
 protected:
 
     dlgProgress          m_dlgProgress;
@@ -96,6 +106,12 @@ protected:
     void                _setDateStopLabelText( const QString &p_qsText );
     void                _setDataNameLabelText( const QString &p_qsText );
     void                _setDataTypeLabelText( const QString &p_qsText );
+
+private:
+
+    int                  m_nSectionLevel;
+    bool                 m_bIsTableStarted;
+    bool                 m_bIsTableRowStarted;
 
 signals:
     
