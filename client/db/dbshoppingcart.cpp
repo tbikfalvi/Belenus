@@ -30,6 +30,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const unsigned int p_uiGuestId,
                             const unsigned int p_uiProductId,
                             const unsigned int p_uiPatientCardId,
+                            const unsigned int p_uiPatientCardTypeId,
                             const unsigned int p_uiPanelId,
                             const unsigned int p_uiLedgerTypeId,
                             const QString &p_qsItemName,
@@ -42,22 +43,23 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const QString &p_qsModified,
                             const QString &p_qsArchive ) throw()
 {
-    m_uiId              = p_uiId;
-    m_uiLicenceId       = p_uiLicenceId;
-    m_uiGuestId         = p_uiGuestId;
-    m_uiProductId       = p_uiProductId;
-    m_uiPatientCardId   = p_uiPatientCardId;
-    m_uiPanelId         = p_uiPanelId;
-    m_uiLedgerTypeId    = p_uiLedgerTypeId;
-    m_qsItemName        = p_qsItemName;
+    m_uiId                  = p_uiId;
+    m_uiLicenceId           = p_uiLicenceId;
+    m_uiGuestId             = p_uiGuestId;
+    m_uiProductId           = p_uiProductId;
+    m_uiPatientCardId       = p_uiPatientCardId;
+    m_uiPatientCardTypeId   = p_uiPatientCardTypeId;
+    m_uiPanelId             = p_uiPanelId;
+    m_uiLedgerTypeId        = p_uiLedgerTypeId;
+    m_qsItemName            = p_qsItemName;
     m_qsComment             = p_qsComment;
-    m_nItemCount        = p_nItemCount;
-    m_nItemNetPrice     = p_nItemNetPrice;
-    m_nItemVAT          = p_nItemVAT;
-    m_nItemDiscount     = p_nItemDiscount;
-    m_nItemSumPrice     = p_nItemSumPrice;
-    m_qsModified        = p_qsModified;
-    m_qsArchive         = p_qsArchive;
+    m_nItemCount            = p_nItemCount;
+    m_nItemNetPrice         = p_nItemNetPrice;
+    m_nItemVAT              = p_nItemVAT;
+    m_nItemDiscount         = p_nItemDiscount;
+    m_nItemSumPrice         = p_nItemSumPrice;
+    m_qsModified            = p_qsModified;
+    m_qsArchive             = p_qsArchive;
 }
 
 void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
@@ -67,6 +69,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
     int inGuestIdIdx            = p_obRecord.indexOf( "patientId" );
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
+    int inPatientCardTypeIdIdx  = p_obRecord.indexOf( "patientCardTypeId" );
     int inPanelIdIdx            = p_obRecord.indexOf( "panelId" );
     int inLedgerTypeIdIdx       = p_obRecord.indexOf( "ledgerTypeId" );
     int inItemNameIdx           = p_obRecord.indexOf( "itemName" );
@@ -84,6 +87,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inGuestIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardIdIdx ).toUInt(),
+          p_obRecord.value( inPatientCardTypeIdIdx ).toUInt(),
           p_obRecord.value( inPanelIdIdx ).toUInt(),
           p_obRecord.value( inLedgerTypeIdIdx ).toUInt(),
           p_obRecord.value( inItemNameIdx ).toString(),
@@ -134,6 +138,7 @@ void cDBShoppingCart::save() throw( cSevException )
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiGuestId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
+    qsQuery += QString( "patientCardTypeId = \"%1\", " ).arg( m_uiPatientCardTypeId );
     qsQuery += QString( "panelId = \"%1\", " ).arg( m_uiPanelId );
     qsQuery += QString( "ledgerTypeId = \"%1\", " ).arg( m_uiLedgerTypeId );
     qsQuery += QString( "itemName = \"%1\", " ).arg( m_qsItemName );
@@ -232,6 +237,16 @@ unsigned int cDBShoppingCart::patientCardId() const throw()
 void cDBShoppingCart::setPatientCardId( const unsigned int p_uiPatientCardId ) throw()
 {
     m_uiPatientCardId = p_uiPatientCardId;
+}
+
+unsigned int cDBShoppingCart::patientCardTypeId() const throw()
+{
+    return m_uiPatientCardTypeId;
+}
+
+void cDBShoppingCart::setPatientCardTypeId( const unsigned int p_uiPatientCardTypeId ) throw()
+{
+    m_uiPatientCardTypeId = p_uiPatientCardTypeId;
 }
 
 unsigned int cDBShoppingCart::panelId() const throw()

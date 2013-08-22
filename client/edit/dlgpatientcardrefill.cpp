@@ -164,23 +164,28 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
 
     m_poPatientCardType->load( cmbCardType->itemData( index ).toInt() );
 
-    unsigned int    uiUnits = m_poPatientCardType->units() + m_poPatientCard->units();
-    unsigned int    uiUnitTime = m_poPatientCardType->units()*m_poPatientCardType->unitTime()*60 + m_poPatientCard->timeLeft();
+    unsigned int    uiUnits = m_poPatientCardType->units();// + m_poPatientCard->units();
+    unsigned int    uiUnitTime = m_poPatientCardType->units()*m_poPatientCardType->unitTime()*60;// + m_poPatientCard->timeLeft();
 
     ledUnits->setText( QString::number(uiUnits) );
     teTimeLeft->setTime( QTime(uiUnitTime/3600,(uiUnitTime%3600)/60,(uiUnitTime%3600)%60,0) );
+
     if( m_poPatientCardType->validDays() > 0 )
     {
         QDate   newDate = QDate::currentDate().addDays(m_poPatientCardType->validDays());
         deValidDateFrom->setDate( QDate::currentDate() );
-        if( newDate > deValidDateTo->date() )
+        deValidDateTo->setDate( newDate );
+/*        if( newDate > deValidDateTo->date() )
         {
             deValidDateTo->setDate( newDate );
-        }
+        }*/
     }
     else
     {
-        QDate   newDate = QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd");
+        deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
+        deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
+
+/*        QDate   newDate = QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd");
 
         if( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") < QDate::currentDate() )
         {
@@ -189,7 +194,7 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
         if( newDate > deValidDateTo->date() )
         {
             deValidDateTo->setDate( newDate );
-        }
+        }*/
     }
 
     cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
@@ -319,7 +324,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
     {
         boCanBeSaved = false;
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
-        qsErrorMessage.append( tr( "Incorrect validation date.\nIf you want to reset the date of validation\ndeactivate the card." ) );
+        qsErrorMessage.append( tr( "Incorrect validation date.\nThe patientcard with the selected units would not be used." ) );
         lblValidDate->setStyleSheet( "QLabel {font: bold; color: red;}" );
     }
 
@@ -327,15 +332,21 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
     {
         try
         {
+            unsigned int    uiUnits = ledUnits->text().toInt() + m_poPatientCard->units();
+            unsigned int    uiUnitTime = teTimeLeft->time().hour()*3600 + teTimeLeft->time().minute()*60 + teTimeLeft->time().second() + m_poPatientCard->timeLeft();
+
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setActive( true );
-            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+//            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
-            m_poPatientCard->setUnits( ledUnits->text().toInt() );
-            m_poPatientCard->setTimeLeftStr( teTimeLeft->time().toString("hh:mm:ss") );
-            m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
-            m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
+            m_poPatientCard->setUnits( uiUnits );
+            m_poPatientCard->setTimeLeft( uiUnitTime );
+//            m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
+            if( deValidDateTo->date() > QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") )
+            {
+                m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
+            }
             m_poPatientCard->setComment( pteComment->toPlainText() );
 
             cDBShoppingCart obDBShoppingCart;
@@ -376,6 +387,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
                 obDBShoppingCart.setProductId( 0 );
                 obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
+                obDBShoppingCart.setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
                 obDBShoppingCart.setPanelId( 0 );
                 obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_REFILL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
@@ -418,8 +430,8 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
-                obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
-                obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
+                obDBPatientcardUnit.setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
+                obDBPatientcardUnit.setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
                 obDBPatientcardUnit.setDateTime( "" );
                 obDBPatientcardUnit.setActive( true );
                 obDBPatientcardUnit.save();

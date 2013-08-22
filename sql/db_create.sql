@@ -664,6 +664,7 @@ CREATE TABLE `shoppingCartItems` (
   `patientId`               int(10) unsigned        DEFAULT NULL,
   `productId`               int(10) unsigned        DEFAULT NULL,
   `patientCardId`           int(10) unsigned        DEFAULT NULL,
+  `patientCardTypeId`       int(10) unsigned        DEFAULT NULL,
   `panelId`                 int(10) unsigned        DEFAULT NULL,
   `ledgerTypeId`            int(10) unsigned        NOT NULL,
   `itemName`                varchar(100)            NOT NULL,

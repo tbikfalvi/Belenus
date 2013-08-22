@@ -103,6 +103,7 @@ void cReport::refreshReport()
 {
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
+    m_qsReportHtml = "";
 }
 //=================================================================================================
 //=================================================================================================

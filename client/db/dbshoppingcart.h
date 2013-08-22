@@ -23,9 +23,11 @@ public:
     void            setGuestId( const unsigned int p_uiGuestId )            throw();
     unsigned int    productId() const                                       throw();
     void            setProductId( const unsigned int p_uiProductId )        throw();
-    unsigned int    patientCardId() const                                   throw();
-    void            setPatientCardId( const unsigned int p_uiPatientCardId ) throw();
-    unsigned int    panelId() const                                         throw();
+    unsigned int    patientCardId() const                                               throw();
+    void            setPatientCardId( const unsigned int p_uiPatientCardId )            throw();
+    unsigned int    patientCardTypeId() const                                           throw();
+    void            setPatientCardTypeId( const unsigned int p_uiPatientCardTypeId )    throw();
+    unsigned int    panelId() const                                                     throw();
     void            setPanelId( const unsigned int p_uiPanelId )            throw();
     unsigned int    ledgerTypeId() const                                    throw();
     void            setLedgerTypeId( const unsigned int p_nLedgerTypeId )   throw();
@@ -53,6 +55,7 @@ private:
     unsigned int    m_uiGuestId;
     unsigned int    m_uiProductId;
     unsigned int    m_uiPatientCardId;
+    unsigned int    m_uiPatientCardTypeId;
     unsigned int    m_uiPanelId;
     unsigned int    m_uiLedgerTypeId;
     QString         m_qsItemName;
@@ -70,6 +73,7 @@ private:
                const unsigned int p_uiGuestId = 0,
                const unsigned int p_uiProductId = 0,
                const unsigned int p_uiPatientCardId = 0,
+               const unsigned int p_uiPatientCardTypeId = 0,
                const unsigned int p_uiPanelId = 0,
                const unsigned int p_uiLedgerTypeId = 0,
                const QString &p_qsItemName = "",

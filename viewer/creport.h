@@ -57,6 +57,7 @@ protected:
     QTextDocument        m_tdReport;
     QTextCursor         *m_tcReport;
     QVBoxLayout         *mainLayout;
+    QString              m_qsReportHtml;
 
     QTextCharFormat     *obTitleFormat;
     QTextCharFormat     *obNormalFormat;

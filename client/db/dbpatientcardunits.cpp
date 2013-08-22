@@ -220,6 +220,30 @@ void cDBPatientcardUnit::removeLedgerUnits(const unsigned int p_uiId) throw( cSe
     }
 }
 
+void cDBPatientcardUnit::deactivateUnits(const unsigned int p_uiId) throw( cSevException )
+{
+    cTracer obTrace( "cDBPatientcardUnit::deactivateUnits", QString( "id: %1" ).arg( p_uiId ) );
+
+    if( p_uiId > 0 )
+    {
+        QString     qsQuery;
+
+        if( m_qsArchive == "NEW" )
+        {
+            qsQuery = "DELETE FROM patientCardUnits ";
+        }
+        else
+        {
+            qsQuery = "UPDATE patientCardUnits SET active=0, archive=\"MOD\" ";
+        }
+        qsQuery += QString( " WHERE patientCardId = %1" ).arg( p_uiId );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery ) delete poQuery;
+    }
+}
+
 void cDBPatientcardUnit::createNew() throw()
 {
     init();

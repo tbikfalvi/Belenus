@@ -41,6 +41,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
     m_bNewCard          = true;
     m_bRefillCard       = false;
     m_bIsCardActivated  = false;
+    m_bIsCardDeactivated    = false;
 
     setWindowTitle( tr( "Patient card" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
@@ -397,6 +398,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
                 obDBShoppingCart.setProductId( 0 );
                 obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
+                obDBShoppingCart.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
                 obDBShoppingCart.setPanelId( 0 );
                 obDBShoppingCart.setLedgerTypeId( m_bNewCard?cDBLedger::LT_PC_SELL:cDBLedger::LT_PC_REFILL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
@@ -443,8 +445,11 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
             m_poPatientCard->save();
 
-            QDialog::accept();
-
+            if( !m_bIsCardDeactivated )
+            {
+                QDialog::accept();
+            }
+            m_bIsCardDeactivated = false;
         }
         catch( cSevException &e )
         {
@@ -652,6 +657,8 @@ void cDlgPatientCardEdit::on_pbDeactivate_clicked()
                               tr("Are you sure you want to deactivate this patientcard?"),
                               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
     {
+        m_bIsCardDeactivated = true;
+
         m_poPatientCard->setPatientCardTypeId( 0 );
         m_poPatientCard->setParentId( 0 );
         m_poPatientCard->setPatientId( 0 );
@@ -670,6 +677,12 @@ void cDlgPatientCardEdit::on_pbDeactivate_clicked()
         teTimeLeft->setTime( QTime(0, 0, 0) );
         deValidDateFrom->setDate( QDate(2000,1,1) );
         deValidDateTo->setDate( QDate(2000,1,1) );
+
+        cDBPatientcardUnit  obDBPatientcardUnit;
+
+        obDBPatientcardUnit.deactivateUnits( m_poPatientCard->id() );
+
+        on_pbSave_clicked();
     }
 }
 

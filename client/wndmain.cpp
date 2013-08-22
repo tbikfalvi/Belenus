@@ -1650,6 +1650,7 @@ void cWndMain::on_action_PayCash_triggered()
     obDBShoppingCart.setGuestId( g_obGuest.id() );
     obDBShoppingCart.setProductId( 0 );
     obDBShoppingCart.setPatientCardId( 0 );
+    obDBShoppingCart.setPatientCardTypeId( 0 );
     obDBShoppingCart.setPanelId( mdiPanels->activePanelId() );
     obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_DEVICE_USAGE );
     obDBShoppingCart.setItemName( tr("Using panel") );
@@ -2000,6 +2001,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBShoppingCart.setGuestId( obDBPatientCardNew.patientId() );
             obDBShoppingCart.setProductId( 0 );
             obDBShoppingCart.setPatientCardId( obDBPatientCardNew.id() );
+            obDBShoppingCart.setPatientCardTypeId( obDBPatientCardNew.patientCardTypeId() );
             obDBShoppingCart.setPanelId( 0 );
             obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_LOST_REPLACE );
             obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode()) );
@@ -2116,6 +2118,7 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
             obDBShoppingCart.setGuestId( obDBPatientCardNew.patientId() );
             obDBShoppingCart.setProductId( 0 );
             obDBShoppingCart.setPatientCardId( obDBPatientCardNew.id() );
+            obDBShoppingCart.setPatientCardTypeId( obDBPatientCardNew.patientCardTypeId() );
             obDBShoppingCart.setPanelId( 0 );
             obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_ASSIGN_PARTNER );
             obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode()) );

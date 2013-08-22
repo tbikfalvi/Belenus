@@ -38,8 +38,8 @@ void cReportCardDetails::refreshReport()
 
     cReport::refreshReport();
 
-    m_tcReport->insertHtml( "<html><body>" );
-    m_tcReport->insertHtml( "<div>" );
+    m_qsReportHtml.append( "<html><body>" );
+    m_qsReportHtml.append( "<div>" );
 
     QString     qsTitle = m_qsReportName;
     QString     qsCondition;
@@ -47,23 +47,27 @@ void cReportCardDetails::refreshReport()
     if( filterType().left(1).toInt() > 0 )
     {
         qsTitle.append( QString( " - %1" ).arg( filterType().mid(2) ) );
-        qsCondition.append( QString(" AND patientCardTypeId=%1 ").arg(filterType().left(1).toInt()) );
+        qsCondition.append( QString(" AND patientcards.patientCardTypeId=%1 ").arg(filterType().left(1).toInt()) );
     }
     if( filterName().length() > 0 )
     {
         qsTitle.append( QString( " - %1" ).arg( filterName() ) );
-        qsCondition.append( QString(" AND barcode LIKE \"\%%1\%\" ").arg(filterName()) );
+        qsCondition.append( QString(" AND patientcards.barcode LIKE \"\%%1\%\" ").arg(filterName()) );
     }
     m_tcReport->insertText( qsTitle, *obTitleFormat );
     m_tcReport->setCharFormat( *obNormalFormat );
 
-    m_tcReport->insertHtml( "</div>");
-    m_tcReport->insertHtml( "<hr>" );
+    m_qsReportHtml.append( "</div>");
+    m_qsReportHtml.append( "<hr>" );
 
-    m_tcReport->insertHtml( "<div>" );
+    m_qsReportHtml.append( "<div>" );
 
 
-    QString      qsQueryCards = "SELECT * FROM patientcards WHERE patientCardId>0 AND active=1";
+    QString      qsQueryCards = "SELECT * FROM patientcards, patientcardtypes, patients WHERE "
+                                "patientCardId>0 AND "
+                                "patientcards.active=1 AND "
+                                "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId AND "
+                                "patientcards.patientId=patients.patientId";
 
     if( qsCondition.length() > 0 )
     {
@@ -75,13 +79,136 @@ void cReportCardDetails::refreshReport()
 
     if( poQueryResultCards->size() < 1 )
     {
-        obTableFormat->setAlignment( Qt::AlignLeft );
+        m_qsReportHtml.append( "<center><i>" );
+        m_qsReportHtml.append( tr("No valid patientcard found for the selected filters") );
+        m_qsReportHtml.append( "</i></center>" );
+/*        obTableFormat->setAlignment( Qt::AlignLeft );
         m_tcReport->insertTable( 1, 1, *obTableFormat );
         m_tcReport->setBlockFormat( *obCenterCellFormat );
-        m_tcReport->insertText( tr("No valid patientcard found for the selected filters"), *obItalicFormat );
+        m_tcReport->insertText( tr("No valid patientcard found for the selected filters"), *obItalicFormat );*/
     }
     else if( poQueryResultCards->size() == 1 )
     {
+        poQueryResultCards->first();
+        m_dlgProgress.progressInit( tr("Displaying data ..."), 0, 7 );
+        m_dlgProgress.setProgressValue( 0 );
+
+        obTableFormat->setAlignment( Qt::AlignLeft );
+        m_qsReportHtml.append( "<table>" );
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Barcode" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( poQueryResultCards->value(5).toString() );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Patientcard type" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( poQueryResultCards->value(18).toString() );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Owner" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( poQueryResultCards->value(33).toString() );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "No. units" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( poQueryResultCards->value(7).toString() );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        unsigned int    uiTimeLeft = poQueryResultCards->value(9).toInt();
+        QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Time left" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( qtTemp.toString( "hh:mm:ss" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Valid" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( QString("%1 -> %2").arg( poQueryResultCards->value(10).toString() ).arg( poQueryResultCards->value(11).toString() ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Comment" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( poQueryResultCards->value(6).toString() );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.increaseProgressValue();
+
+        m_qsReportHtml.append( "</table>" );
+        m_qsReportHtml.append( "</div><p><div>" );
+        m_qsReportHtml.append( tr( "Valid and active units" ) );
+        m_qsReportHtml.append( "</div><p><div>" );
+
+        qsQueryCards = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                                "FROM patientcardunits "
+                                "WHERE patientCardId=%1 "
+                                "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                "AND active=1 "
+                                "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( poQueryResultCards->value(0).toString() );
+        poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+
+        m_qsReportHtml.append( "<table>" );
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Unit time" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Valid" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "No. units" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+        while( poQueryResultCards->next() )
+        {
+            m_qsReportHtml.append( "<tr>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( poQueryResultCards->value(1).toString() );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( poQueryResultCards->value(4).toString() );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "</tr>" );
+        }
+        m_qsReportHtml.append( "</table>" );
     }
     else
     {
@@ -156,9 +283,10 @@ void cReportCardDetails::refreshReport()
         }
     }
 
-    m_tcReport->insertHtml( "</div>");
+    m_qsReportHtml.append( "</div>");
+    m_qsReportHtml.append( "</body></html>" );
 
-    m_tcReport->insertHtml( QString("</body></html>") );
+    m_tcReport->insertHtml( m_qsReportHtml );
 
     m_dlgProgress.hide();
 }

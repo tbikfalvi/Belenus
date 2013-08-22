@@ -26,6 +26,7 @@ private:
     bool                 m_bNewCard;
     bool                 m_bRefillCard;
     bool                 m_bIsCardActivated;
+    bool                 m_bIsCardDeactivated;
 
     bool                _checkCardJustForSave( QString *p_qsErrorMessage );
 

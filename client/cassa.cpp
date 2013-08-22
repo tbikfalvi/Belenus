@@ -270,7 +270,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.setPaymentMethod( p_inPayType );
     obDBLedger.setUserId( g_obUser.id() );
     obDBLedger.setProductId( 0 );
-    obDBLedger.setPatientCardTypeId( p_DBPatientCard.patientCardTypeId() );
+    obDBLedger.setPatientCardTypeId( p_obDBShoppingCart.patientCardTypeId() );
     obDBLedger.setPatientCardId( p_DBPatientCard.id() );
     obDBLedger.setPanelId( 0 );
     obDBLedger.setName( p_DBPatientCard.barcode() );

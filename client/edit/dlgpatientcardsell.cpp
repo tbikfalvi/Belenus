@@ -361,6 +361,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBShoppingCart.setGuestId( m_poPatientCard->patientId() );
                 obDBShoppingCart.setProductId( 0 );
                 obDBShoppingCart.setPatientCardId( m_poPatientCard->id() );
+                obDBShoppingCart.setPatientCardTypeId( m_poPatientCard->patientCardTypeId() );
                 obDBShoppingCart.setPanelId( 0 );
                 obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_SELL );
                 obDBShoppingCart.setItemName( QString("%1 - %2").arg(m_poPatientCardType->name()).arg(m_poPatientCard->barcode()) );
