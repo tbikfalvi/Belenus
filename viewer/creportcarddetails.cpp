@@ -90,6 +90,9 @@ void cReportCardDetails::refreshReport()
     else if( poQueryResultCards->size() == 1 )
     {
         poQueryResultCards->first();
+
+        unsigned int    uiPatientCardId = poQueryResultCards->value(0).toUInt();
+
         m_dlgProgress.progressInit( tr("Displaying data ..."), 0, 7 );
         m_dlgProgress.setProgressValue( 0 );
 
@@ -170,6 +173,7 @@ void cReportCardDetails::refreshReport()
         m_dlgProgress.increaseProgressValue();
 
         m_qsReportHtml.append( "</table>" );
+
         m_qsReportHtml.append( "</div><p><div>" );
         m_qsReportHtml.append( tr( "Valid and active units" ) );
         m_qsReportHtml.append( "</div><p><div>" );
@@ -179,7 +183,7 @@ void cReportCardDetails::refreshReport()
                                 "WHERE patientCardId=%1 "
                                 "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
                                 "AND active=1 "
-                                "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( poQueryResultCards->value(0).toString() );
+                                "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
         m_qsReportHtml.append( "<table>" );
@@ -191,9 +195,13 @@ void cReportCardDetails::refreshReport()
         m_qsReportHtml.append( tr( "Valid" ) );
         m_qsReportHtml.append( "</td>" );
         m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Valid till ..." ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
         m_qsReportHtml.append( tr( "No. units" ) );
         m_qsReportHtml.append( "</td>" );
         m_qsReportHtml.append( "</tr>" );
+
         while( poQueryResultCards->next() )
         {
             m_qsReportHtml.append( "<tr>" );
@@ -204,7 +212,37 @@ void cReportCardDetails::refreshReport()
             m_qsReportHtml.append( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ) );
             m_qsReportHtml.append( "</td>" );
             m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(poQueryResultCards->value(3).toString(), "yyyy-MM-dd") ) ) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
             m_qsReportHtml.append( poQueryResultCards->value(4).toString() );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "</tr>" );
+        }
+        m_qsReportHtml.append( "</table>" );
+
+        m_qsReportHtml.append( "</div><p><div>" );
+        m_qsReportHtml.append( tr( "Patientcard unit usages" ) );
+        m_qsReportHtml.append( "</div><p><div>" );
+
+        qsQueryCards = QString( "SELECT dateTimeUsed "
+                                "FROM patientcardunits "
+                                "WHERE patientCardId=%1 "
+                                "AND active=0 " ).arg( uiPatientCardId );
+        poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
+
+        m_qsReportHtml.append( "<table>" );
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Date of usage" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
+
+        while( poQueryResultCards->next() )
+        {
+            m_qsReportHtml.append( "<tr>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ) );
             m_qsReportHtml.append( "</td>" );
             m_qsReportHtml.append( "</tr>" );
         }
@@ -233,11 +271,12 @@ void cReportCardDetails::refreshReport()
         m_dlgProgress.progressInit( tr("Displaying data ..."), 0, qslQueryResult.size() );
         m_dlgProgress.setProgressValue( 0 );
 
-        obTableFormat->setAlignment( Qt::AlignLeft );
-        m_tcReport->insertTable( qslQueryResult.size()+1, 5, *obTableFormat );
+        m_qsReportHtml.append( "<table>" );
+//        obTableFormat->setAlignment( Qt::AlignLeft );
+//        m_tcReport->insertTable( qslQueryResult.size()+1, 5, *obTableFormat );
 
         // Add table header row
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
+/*        m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( tr( "Barcode" ), *obBoldFormat );
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obCenterCellFormat );
@@ -250,24 +289,41 @@ void cReportCardDetails::refreshReport()
         m_tcReport->insertText( tr( "Valid" ), *obBoldFormat );
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Comment" ), *obBoldFormat );
+        m_tcReport->insertText( tr( "Comment" ), *obBoldFormat );*/
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Barcode" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "No. units" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Time" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Valid" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( tr( "Comment" ) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
 
         for( int i=0; i<qslQueryResult.size(); i++ )
         {
             QStringList qslRecord = qslQueryResult.at(i).split('#');
 
-            m_tcReport->movePosition( QTextCursor::NextCell );
+/*            m_tcReport->movePosition( QTextCursor::NextCell );
             m_tcReport->setBlockFormat( *obLeftCellFormat );
             m_tcReport->insertText( qslRecord.at(0), *obNormalFormat );
 
             m_tcReport->movePosition( QTextCursor::NextCell );
             m_tcReport->setBlockFormat( *obCenterCellFormat );
-            m_tcReport->insertText( qslRecord.at(1), *obNormalFormat );
+            m_tcReport->insertText( qslRecord.at(1), *obNormalFormat );*/
 
             unsigned int    uiTimeLeft = qslRecord.at(2).toInt();
             QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
 
-            m_tcReport->movePosition( QTextCursor::NextCell );
+/*            m_tcReport->movePosition( QTextCursor::NextCell );
             m_tcReport->setBlockFormat( *obCenterCellFormat );
             m_tcReport->insertText( qtTemp.toString( "hh:mm:ss" ), *obNormalFormat );
 
@@ -277,7 +333,25 @@ void cReportCardDetails::refreshReport()
 
             m_tcReport->movePosition( QTextCursor::NextCell );
             m_tcReport->setBlockFormat( *obLeftCellFormat );
-            m_tcReport->insertText( qslRecord.at(5), *obNormalFormat );
+            m_tcReport->insertText( qslRecord.at(5), *obNormalFormat );*/
+
+            m_qsReportHtml.append( "<tr>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( qslRecord.at(0) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( qslRecord.at(1) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( qtTemp.toString( "hh:mm:ss" ) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "<td>" );
+            m_qsReportHtml.append( qslRecord.at(5) );
+            m_qsReportHtml.append( "</td>" );
+            m_qsReportHtml.append( "</tr>" );
 
             m_dlgProgress.increaseProgressValue();
         }

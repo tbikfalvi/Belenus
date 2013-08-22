@@ -30,16 +30,16 @@ void cReportPatientCardType::refreshReport()
 
     cReport::refreshReport();
 
-    m_tcReport->insertHtml( "<html><body>" );
-    m_tcReport->insertHtml( "<div>" );
+    m_qsReportHtml.append( "<html><body>" );
+    m_qsReportHtml.append( "<div>" );
 
     m_tcReport->insertText( m_qsReportName, *obTitleFormat );
     m_tcReport->setCharFormat( *obNormalFormat );
 
-    m_tcReport->insertHtml( "</div>");
-    m_tcReport->insertHtml( "<hr>" );
+    m_qsReportHtml.append( "</div>");
+    m_qsReportHtml.append( "<hr>" );
 
-    m_tcReport->insertHtml( "<div>" );
+    m_qsReportHtml.append( "<div>" );
 
     QString qsQueryCards;
     int     nFilterType = filterType().left(1).toInt();
@@ -98,7 +98,7 @@ void cReportPatientCardType::refreshReport()
     m_dlgProgress.progressInit( tr("Displaying data ..."), 0, qslQueryResult.size() );
     m_dlgProgress.setProgressValue( 0 );
 
-    obTableFormat->setAlignment( Qt::AlignLeft );
+/*    obTableFormat->setAlignment( Qt::AlignLeft );
     m_tcReport->insertTable( poQueryResultCards->size()+1, 5, *obTableFormat );
 
     // Add table header row
@@ -115,7 +115,26 @@ void cReportPatientCardType::refreshReport()
     m_tcReport->insertText( tr( "Valid" ), *obBoldFormat );
     m_tcReport->movePosition( QTextCursor::NextCell );
     m_tcReport->setBlockFormat( *obLeftCellFormat );
-    m_tcReport->insertText( tr( "Unit time" ), *obBoldFormat );
+    m_tcReport->insertText( tr( "Unit time" ), *obBoldFormat );*/
+
+    m_qsReportHtml.append( "<table>" );
+    m_qsReportHtml.append( "<tr>" );
+    m_qsReportHtml.append( "<td>" );
+    m_qsReportHtml.append( tr( "Name" ) );
+    m_qsReportHtml.append( "</td>" );
+    m_qsReportHtml.append( "<td>" );
+    m_qsReportHtml.append( tr( "Price" ) );
+    m_qsReportHtml.append( "</td>" );
+    m_qsReportHtml.append( "<td>" );
+    m_qsReportHtml.append( tr( "Units" ) );
+    m_qsReportHtml.append( "</td>" );
+    m_qsReportHtml.append( "<td>" );
+    m_qsReportHtml.append( tr( "Valid" ) );
+    m_qsReportHtml.append( "</td>" );
+    m_qsReportHtml.append( "<td>" );
+    m_qsReportHtml.append( tr( "Unit time" ) );
+    m_qsReportHtml.append( "</td>" );
+    m_qsReportHtml.append( "</tr>" );
 
     for( int i=0; i<qslQueryResult.size(); i++ )
     {
@@ -123,7 +142,7 @@ void cReportPatientCardType::refreshReport()
 
         cCurrency   obPrice( qslRecord.at(1).toInt() );
 
-        m_tcReport->movePosition( QTextCursor::NextCell );
+/*        m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
         m_tcReport->insertText( qslRecord.at(0), *obNormalFormat );
         m_tcReport->movePosition( QTextCursor::NextCell );
@@ -137,14 +156,34 @@ void cReportPatientCardType::refreshReport()
         m_tcReport->insertText( qslRecord.at(3), *obNormalFormat );
         m_tcReport->movePosition( QTextCursor::NextCell );
         m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qslRecord.at(4), *obNormalFormat );
+        m_tcReport->insertText( qslRecord.at(4), *obNormalFormat );*/
+
+        m_qsReportHtml.append( "<tr>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( qslRecord.at(0) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( obPrice.currencyFullStringShort() );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( qslRecord.at(2) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( qslRecord.at(3) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "<td>" );
+        m_qsReportHtml.append( qslRecord.at(4) );
+        m_qsReportHtml.append( "</td>" );
+        m_qsReportHtml.append( "</tr>" );
 
         m_dlgProgress.increaseProgressValue();
     }
 
-    m_tcReport->insertHtml( "</div>");
+    m_qsReportHtml.append( "</div>");
 
-    m_tcReport->insertHtml( QString("</body></html>") );
+    m_qsReportHtml.append( QString("</body></html>") );
+
+    m_tcReport->insertHtml( m_qsReportHtml );
 
     m_dlgProgress.hide();
 }
