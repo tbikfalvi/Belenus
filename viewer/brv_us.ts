@@ -34,37 +34,95 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="81"/>
+        <location filename="creportcarddetails.cpp" line="79"/>
         <source>No valid patientcard found for the selected filters</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="106"/>
+        <location filename="creportcarddetails.cpp" line="89"/>
+        <location filename="creportcarddetails.cpp" line="214"/>
         <source>Displaying data ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="114"/>
+        <location filename="creportcarddetails.cpp" line="96"/>
+        <location filename="creportcarddetails.cpp" line="222"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="117"/>
+        <location filename="creportcarddetails.cpp" line="101"/>
+        <location filename="creportcarddetails.cpp" line="226"/>
+        <source>Patientcard type</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="106"/>
+        <source>Owner</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="111"/>
+        <location filename="creportcarddetails.cpp" line="154"/>
+        <location filename="creportcarddetails.cpp" line="223"/>
         <source>No. units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="120"/>
+        <location filename="creportcarddetails.cpp" line="119"/>
+        <source>Time left</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="137"/>
+        <source>Valid and active units</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="151"/>
+        <source>Unit time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="153"/>
+        <source>Valid till ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="161"/>
+        <source>%1 day(s)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="168"/>
+        <source>Patientcard unit usages</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="181"/>
+        <source>Date of usage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="182"/>
+        <source>Unit count</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="224"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="123"/>
+        <location filename="creportcarddetails.cpp" line="124"/>
+        <location filename="creportcarddetails.cpp" line="152"/>
+        <location filename="creportcarddetails.cpp" line="225"/>
         <source>Valid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="126"/>
+        <location filename="creportcarddetails.cpp" line="129"/>
+        <location filename="creportcarddetails.cpp" line="227"/>
         <source>Comment</source>
         <translation></translation>
     </message>
@@ -177,82 +235,82 @@
 <context>
     <name>cReportPatientCardType</name>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="7"/>
+        <location filename="creportpatientcardtype.cpp" line="10"/>
         <source> Active patientcardtypes </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="8"/>
+        <location filename="creportpatientcardtype.cpp" line="11"/>
         <source>This report shows the active patientcard types.  Please select type of expiration from the list box below.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="11"/>
+        <location filename="creportpatientcardtype.cpp" line="14"/>
         <source>Expiration ... :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="15"/>
+        <location filename="creportpatientcardtype.cpp" line="18"/>
         <source>All type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="16"/>
+        <location filename="creportpatientcardtype.cpp" line="19"/>
         <source>set by No. of days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="17"/>
+        <location filename="creportpatientcardtype.cpp" line="20"/>
         <source>set by date intervall</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="24"/>
+        <location filename="creportpatientcardtype.cpp" line="27"/>
         <source>Get data from database ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="77"/>
+        <location filename="creportpatientcardtype.cpp" line="80"/>
         <source>%1 -&gt; %2 | %3 days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="82"/>
+        <location filename="creportpatientcardtype.cpp" line="85"/>
         <source>%1 days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="87"/>
+        <location filename="creportpatientcardtype.cpp" line="90"/>
         <source>%1 -&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="95"/>
+        <location filename="creportpatientcardtype.cpp" line="98"/>
         <source>Displaying data ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="103"/>
+        <location filename="creportpatientcardtype.cpp" line="123"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="106"/>
+        <location filename="creportpatientcardtype.cpp" line="126"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="109"/>
+        <location filename="creportpatientcardtype.cpp" line="129"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="112"/>
+        <location filename="creportpatientcardtype.cpp" line="132"/>
         <source>Valid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="115"/>
+        <location filename="creportpatientcardtype.cpp" line="135"/>
         <source>Unit time</source>
         <translation></translation>
     </message>
@@ -260,48 +318,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="186"/>
-        <location filename="wndmain.cpp" line="252"/>
+        <location filename="wndmain.cpp" line="201"/>
+        <location filename="wndmain.cpp" line="275"/>
         <source>Login</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="191"/>
+        <location filename="wndmain.cpp" line="206"/>
         <source>Need authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="196"/>
+        <location filename="wndmain.cpp" line="211"/>
         <source>User successfully authenticated.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="201"/>
+        <location filename="wndmain.cpp" line="216"/>
         <source>Logout</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="207"/>
+        <location filename="wndmain.cpp" line="222"/>
         <source>The username entered not found in the Belenus database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="209"/>
+        <location filename="wndmain.cpp" line="224"/>
         <source>The password entered is incorrect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="211"/>
+        <location filename="wndmain.cpp" line="226"/>
         <source>Connection to Belenus database failed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="213"/>
+        <location filename="wndmain.cpp" line="228"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="486"/>
+        <location filename="wndmain.cpp" line="533"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation></translation>
     </message>

@@ -16,87 +16,97 @@ cReportDaily::cReportDaily(QWidget *parent, QString p_qsReportName) : cReport(pa
 
 void cReportDaily::refreshReport()
 {
+    m_dlgProgress.progressInit( tr("Create selected report ..."), 0, 100 );
+    m_dlgProgress.setProgressValue( 0 );
+    m_dlgProgress.progressShow();
+
     cReport::refreshReport();
 
-    m_tcReport->insertHtml( "<html><body>" );
-    m_tcReport->insertHtml( "<div>" );
+    startReport();
 
-    m_tcReport->insertText( m_qsReportName + "   ", *obTitleFormat );
-    m_tcReport->setCharFormat( *obNormalFormat );
-    m_tcReport->insertText( QString( "%1 %2" ).arg( tr( "Date :" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ) );
-
-    m_tcReport->insertHtml( "</div>");
-    m_tcReport->insertHtml( "<hr>" );
-//    m_tcReport->insertHtml( "<div align=left>" );
+    addTitle( m_qsReportName );
+    addSubTitle( QString( "%1 %2" ).arg( tr( "Date :" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ) );
+    addHorizontalLine();
 
     QString qsQueryCassa = QString( "SELECT cassaId, currentBalance, startDateTime, stopDateTime, cassa.modified, realName FROM cassa, users "
                                     "WHERE cassa.userId=users.userId AND "
                                     "( DATE(cassa.startDateTime)=\"%1\" OR DATE(cassa.stopDateTime)=\"%1\" OR DATE(cassa.modified)=\"%1\" ) " ).arg(filterDateStart().toString( "yyyy-MM-dd" ));
     QSqlQuery *poQueryResultCassa = g_poDB->executeQTQuery( qsQueryCassa );
-    //m_tcReport->insertText( qsQueryCassa, *obNormalFormat );
+
+    m_dlgProgress.setProgressMax( poQueryResultCassa->size()+11 );
+    m_dlgProgress.setProgressValue( 10 );
+
+    startSection();
+    addTable();
+
+    addTableRow();
+    addTableCell( tr( "Owner" ), "bold" );
+    addTableCell( tr( "Balance" ), "bold" );
+    addTableCell( tr( "Cassa started" ), "center bold" );
+    addTableCell( tr( "Cassa closed" ), "center bold" );
+    addTableCell( tr( "Last entry" ), "center bold" );
+    m_dlgProgress.increaseProgressValue();
 
     while( poQueryResultCassa->next() )
     {
         cCurrency   cBalance( poQueryResultCassa->value(1).toInt() );
 
-//        uint uiCassaId          = poQueryResultCassa->value(0).toUInt();
-        QString qsBalance       = cBalance.currencyFullStringLong();
-        QString qsDateStart     = poQueryResultCassa->value(2).toDateTime().toString("yyyy-MM-dd hh:mm");
-        QString qsDateStop      = poQueryResultCassa->value(3).toDateTime().toString("yyyy-MM-dd hh:mm");
-        QString qsLastModified  = poQueryResultCassa->value(4).toDateTime().toString("yyyy-MM-dd hh:mm");
-        QString qsCassaOwner    = poQueryResultCassa->value(5).toString();
-
-        obTableFormat->setHeaderRowCount( 0 );
-        obTableFormat->setAlignment(Qt::AlignLeft);
-        m_tcReport->insertTable( 5, 2, *obTableFormat );
-
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Cassa owner :" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qsCassaOwner, *obNormalFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Cassa balance :" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qsBalance, *obNormalFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Cassa started :" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qsDateStart, *obNormalFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Cassa stopped :" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qsDateStop, *obNormalFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( tr( "Cassa last entry :" ), *obBoldFormat );
-        m_tcReport->movePosition( QTextCursor::NextCell );
-        m_tcReport->setBlockFormat( *obLeftCellFormat );
-        m_tcReport->insertText( qsLastModified, *obNormalFormat );
+        addTableRow();
+        addTableCell( poQueryResultCassa->value(5).toString() );
+        addTableCell( cBalance.currencyFullStringLong() );
+        addTableCell( poQueryResultCassa->value(2).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        addTableCell( poQueryResultCassa->value(3).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        addTableCell( poQueryResultCassa->value(4).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        m_dlgProgress.increaseProgressValue();
     }
 
-//    m_tcReport->insertHtml( "</div>");
+    finishTable();
+    finishSection();
 
-/*
-    m_qsQuery = QString("SELECT name, totalPrice, comment, ledgerTime FROM ledger WHERE ledgerTime>\"%1 00:00:00\" AND ledgerTime<\"%1 24:00:00\"").arg(filterDateStart().toString("yyyy-MM-dd"));
-    poQueryResultCassa = g_poDB->executeQTQuery( m_qsQuery );
+    addSeparator();
+    addSubTitle( tr( "Products sold" ) );
+
+    m_dlgProgress.setProgressMax( 100 );
+    m_dlgProgress.setProgressValue( 0 );
+
+    QString qsQuery = QString("SELECT name, SUM(itemCount), SUM(totalPrice) FROM ledger WHERE ledgerTime>\"%1 00:00:00\" AND ledgerTime<\"%1 24:00:00\" AND productId>0 AND active=1 GROUP BY productId ").arg(filterDateStart().toString("yyyy-MM-dd"));
+    poQueryResultCassa = g_poDB->executeQTQuery( qsQuery );
+
+    m_dlgProgress.setProgressMax( poQueryResultCassa->size()+11 );
+    m_dlgProgress.setProgressValue( 10 );
+
+    startSection();
+    addTable();
+
+    addTableRow();
+    addTableCell( tr("Product name"), "bold" );
+    addTableCell( tr("Count"), "center bold" );
+    addTableCell( tr("Price"), "right bold" );
+
+    unsigned int uiTotal = 0;
 
     while( poQueryResultCassa->next() )
     {
-        cCurrency   cTotalPrice( poQueryResultCassa->value(1).toInt() );
-        m_tcReport->insertText( QString("%1\t%2\t%3\t%4\n").arg(poQueryResultCassa->value(0).toString()).arg(cTotalPrice.currencyFullStringShort()).arg(poQueryResultCassa->value(2).toString()).arg(poQueryResultCassa->value(3).toString()) );
-    }
-*/
-    m_tcReport->insertHtml( QString("</body></html>") );
+        cCurrency   obPrice( poQueryResultCassa->value(2).toInt() );
+        uiTotal += poQueryResultCassa->value(2).toInt();
 
+        addTableRow();
+        addTableCell( poQueryResultCassa->value(0).toString() );
+        addTableCell( poQueryResultCassa->value(1).toString(), "center" );
+        addTableCell( obPrice.currencyFullStringShort(), "right" );
+        m_dlgProgress.increaseProgressValue();
+    }
+    cCurrency   obTotalPrice( uiTotal );
+
+    addTableRow();
+    addTableCell( tr("Sum"), "bold" );
+    addTableCell( "" );
+    addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+
+    finishTable();
+    finishSection();
+
+    finishReport();
+
+    m_dlgProgress.hide();
 }

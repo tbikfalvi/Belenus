@@ -202,6 +202,32 @@ void cReport::finishSection()
     m_nSectionLevel--;
 }
 //------------------------------------------------------------------------------------
+void cReport::addHorizontalLine()
+//------------------------------------------------------------------------------------
+{
+    m_qsReportHtml.append( "<hr>" );
+}
+//------------------------------------------------------------------------------------
+void cReport::addSeparator()
+//------------------------------------------------------------------------------------
+{
+    startSection();
+    m_qsReportHtml.append( "<br>" );
+    finishSection();
+}
+//------------------------------------------------------------------------------------
+void cReport::addTitle( QString p_qsTitle )
+//------------------------------------------------------------------------------------
+{
+    m_qsReportHtml.append( QString("<div style=\"font-size:24px;font-weight:bold;\">%1</div>").arg( p_qsTitle ) );
+}
+//------------------------------------------------------------------------------------
+void cReport::addSubTitle( QString p_qsSubTitle )
+//------------------------------------------------------------------------------------
+{
+    m_qsReportHtml.append( QString("<div style=\"font-size:14px;font-weight:bold;\">%1</div>").arg( p_qsSubTitle ) );
+}
+//------------------------------------------------------------------------------------
 void cReport::addTable()
 //------------------------------------------------------------------------------------
 {
@@ -209,7 +235,7 @@ void cReport::addTable()
     {
         m_qsReportHtml.append( "</table>" );
     }
-    m_qsReportHtml.append( "<table>" );
+    m_qsReportHtml.append( "<table cellpadding=\"2\" cellspacing=\"5\" >" );
     m_bIsTableStarted = true;
 }
 //------------------------------------------------------------------------------------
@@ -242,10 +268,30 @@ void cReport::finishTableRow()
     m_bIsTableRowStarted = false;
 }
 //------------------------------------------------------------------------------------
-void cReport::addTableCell(QString p_qsCellText)
+void cReport::addTableCell(QString p_qsCellText, QString p_qsFormat)
 //------------------------------------------------------------------------------------
 {
-    m_qsReportHtml.append( QString("<td>%1</td>").arg(p_qsCellText) );
+    m_qsReportHtml.append( "<td" );
+
+    if( p_qsFormat.contains("center") )         m_qsReportHtml.append( " align=\"center\" " );
+    else if( p_qsFormat.contains("right") )     m_qsReportHtml.append( " align=\"right\" " );
+    else                                        m_qsReportHtml.append( " align=\"left\" " );
+
+    if( p_qsFormat.contains("middle") )         m_qsReportHtml.append( " valign=\"middle\" " );
+    else if( p_qsFormat.contains("bottom") )    m_qsReportHtml.append( " valign=\"bottom\" " );
+    else                                        m_qsReportHtml.append( " valign=\"top\" " );
+
+    m_qsReportHtml.append( ">" );
+
+    if( p_qsFormat.contains("bold") )   m_qsReportHtml.append( "<b>" );
+    if( p_qsFormat.contains("italic") )   m_qsReportHtml.append( "<i>" );
+
+    m_qsReportHtml.append( p_qsCellText );
+
+    if( p_qsFormat.contains("italic") )   m_qsReportHtml.append( "</i>" );
+    if( p_qsFormat.contains("bold") )   m_qsReportHtml.append( "</b>" );
+
+    m_qsReportHtml.append( "</td>" );
 }
 //=================================================================================================
 //=================================================================================================

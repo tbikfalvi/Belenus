@@ -34,37 +34,95 @@
         <translation>Adatok lekérdezése az adatbázisból ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="81"/>
+        <location filename="creportcarddetails.cpp" line="79"/>
         <source>No valid patientcard found for the selected filters</source>
         <translation>Nem találtam a megadott szűrőfeltételeknek megfelelő érvényes bérletet</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="106"/>
+        <location filename="creportcarddetails.cpp" line="89"/>
+        <location filename="creportcarddetails.cpp" line="214"/>
         <source>Displaying data ...</source>
         <translation>Adatok megjelenítése ...</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="114"/>
+        <location filename="creportcarddetails.cpp" line="96"/>
+        <location filename="creportcarddetails.cpp" line="222"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="117"/>
+        <location filename="creportcarddetails.cpp" line="101"/>
+        <location filename="creportcarddetails.cpp" line="226"/>
+        <source>Patientcard type</source>
+        <translation>Bérlettípus</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="106"/>
+        <source>Owner</source>
+        <translation>Tulajdonos</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="111"/>
+        <location filename="creportcarddetails.cpp" line="154"/>
+        <location filename="creportcarddetails.cpp" line="223"/>
         <source>No. units</source>
         <translation>Egységek száma</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="120"/>
+        <location filename="creportcarddetails.cpp" line="119"/>
+        <source>Time left</source>
+        <translation>Idő</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="137"/>
+        <source>Valid and active units</source>
+        <translation>Érvényes egységek</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="151"/>
+        <source>Unit time</source>
+        <translation>Egység idő</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="153"/>
+        <source>Valid till ...</source>
+        <translation>Érvényes még ...</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="161"/>
+        <source>%1 day(s)</source>
+        <translation>%1 napig</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="168"/>
+        <source>Patientcard unit usages</source>
+        <translation>Bérlet egység használatok</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="181"/>
+        <source>Date of usage</source>
+        <translation>Használat dátuma</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="182"/>
+        <source>Unit count</source>
+        <translation>Egységek száma</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="224"/>
         <source>Time</source>
         <translation>Idő</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="123"/>
+        <location filename="creportcarddetails.cpp" line="124"/>
+        <location filename="creportcarddetails.cpp" line="152"/>
+        <location filename="creportcarddetails.cpp" line="225"/>
         <source>Valid</source>
         <translation>Érvényes</translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="126"/>
+        <location filename="creportcarddetails.cpp" line="129"/>
+        <location filename="creportcarddetails.cpp" line="227"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
@@ -177,82 +235,82 @@
 <context>
     <name>cReportPatientCardType</name>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="7"/>
+        <location filename="creportpatientcardtype.cpp" line="10"/>
         <source> Active patientcardtypes </source>
         <translation> Aktív bérlettípusok </translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="8"/>
+        <location filename="creportpatientcardtype.cpp" line="11"/>
         <source>This report shows the active patientcard types.  Please select type of expiration from the list box below.</source>
         <translation>Ez a kimutatás az aktív, érvényes bérlettípusokat mutatja meg.  Kérem válassza ki az Önt érdeklő bérlettípus csoportot.</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="11"/>
+        <location filename="creportpatientcardtype.cpp" line="14"/>
         <source>Expiration ... :</source>
         <translation>Lejárat ... :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="15"/>
+        <location filename="creportpatientcardtype.cpp" line="18"/>
         <source>All type</source>
         <translation>Összes típus</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="16"/>
+        <location filename="creportpatientcardtype.cpp" line="19"/>
         <source>set by No. of days</source>
         <translation>napok számával meghatározva</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="17"/>
+        <location filename="creportpatientcardtype.cpp" line="20"/>
         <source>set by date intervall</source>
         <translation>időintervallum megadásával</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="24"/>
+        <location filename="creportpatientcardtype.cpp" line="27"/>
         <source>Get data from database ...</source>
         <translation>Adatok lekérdezése az adatbázisból ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="77"/>
+        <location filename="creportpatientcardtype.cpp" line="80"/>
         <source>%1 -&gt; %2 | %3 days</source>
         <translation>%1 -&gt; %2 | %3 nap</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="82"/>
+        <location filename="creportpatientcardtype.cpp" line="85"/>
         <source>%1 days</source>
         <translation>%1 nap</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="87"/>
+        <location filename="creportpatientcardtype.cpp" line="90"/>
         <source>%1 -&gt; %2</source>
         <translation>%1 -&gt; %2</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="95"/>
+        <location filename="creportpatientcardtype.cpp" line="98"/>
         <source>Displaying data ...</source>
         <translation>Adatok megjelenítése ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="103"/>
+        <location filename="creportpatientcardtype.cpp" line="123"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="106"/>
+        <location filename="creportpatientcardtype.cpp" line="126"/>
         <source>Price</source>
         <translation>Ár</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="109"/>
+        <location filename="creportpatientcardtype.cpp" line="129"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="112"/>
+        <location filename="creportpatientcardtype.cpp" line="132"/>
         <source>Valid</source>
         <translation>Érvényes</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="115"/>
+        <location filename="creportpatientcardtype.cpp" line="135"/>
         <source>Unit time</source>
         <translation>Egység idő</translation>
     </message>
@@ -260,48 +318,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="186"/>
-        <location filename="wndmain.cpp" line="252"/>
+        <location filename="wndmain.cpp" line="201"/>
+        <location filename="wndmain.cpp" line="275"/>
         <source>Login</source>
         <translation>Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="191"/>
+        <location filename="wndmain.cpp" line="206"/>
         <source>Need authentication ...</source>
         <translation>Szükség van azonosításra ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="196"/>
+        <location filename="wndmain.cpp" line="211"/>
         <source>User successfully authenticated.</source>
         <translation>A felhasználó sikeresen azonosítva.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="201"/>
+        <location filename="wndmain.cpp" line="216"/>
         <source>Logout</source>
         <translation>Kijelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="207"/>
+        <location filename="wndmain.cpp" line="222"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználónév nem található meg a Belenus adatbázisában.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="209"/>
+        <location filename="wndmain.cpp" line="224"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó helytelen</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="211"/>
+        <location filename="wndmain.cpp" line="226"/>
         <source>Connection to Belenus database failed</source>
         <translation>A kapcsolódás a Belenus adatbázishoz nem sikerült</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="213"/>
+        <location filename="wndmain.cpp" line="228"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Az azonosítás sikertelen volt. Kérem próbálja meg később ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="486"/>
+        <location filename="wndmain.cpp" line="533"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Kérem válasszon ki egy kimutatást a szűrőfeltételek megjelenítéséhez ...&lt;/i&gt;</translation>
     </message>

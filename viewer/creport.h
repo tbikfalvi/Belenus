@@ -54,11 +54,15 @@ public:
     void                 finishReport();
     void                 startSection();
     void                 finishSection();
+    void                 addHorizontalLine();
+    void                 addSeparator();
+    void                 addTitle( QString p_qsTitle );
+    void                 addSubTitle( QString p_qsSubTitle );
     void                 addTable();
     void                 finishTable();
     void                 addTableRow();
     void                 finishTableRow();
-    void                 addTableCell( QString p_qsCellText );
+    void                 addTableCell( QString p_qsCellText, QString p_qsFormat="" );
 
 protected:
 

@@ -32,13 +32,11 @@ cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName) 
 
 void cReportCardDetails::refreshReport()
 {
-    m_dlgProgress.progressInit( tr("Get data from database ..."), 0, 100 );
+    m_dlgProgress.progressInit( tr("Create selected report ..."), 0, 100 );
     m_dlgProgress.setProgressValue( 0 );
     m_dlgProgress.progressShow();
 
     cReport::refreshReport();
-
-    startReport();
 
     QString     qsTitle = m_qsReportName;
     QString     qsCondition;
@@ -53,14 +51,7 @@ void cReportCardDetails::refreshReport()
         qsTitle.append( QString( " - %1" ).arg( filterName() ) );
         qsCondition.append( QString(" AND patientcards.barcode LIKE \"\%%1\%\" ").arg(filterName()) );
     }
-    m_tcReport->insertText( qsTitle, *obTitleFormat );
-    m_tcReport->setCharFormat( *obNormalFormat );
-
-    m_qsReportHtml.append( "</div>");
-    m_qsReportHtml.append( "<hr>" );
-
-    m_qsReportHtml.append( "<div>" );
-
+    m_dlgProgress.increaseProgressValue();
 
     QString      qsQueryCards = "SELECT * FROM patientcards, patientcardtypes, patients WHERE "
                                 "patientCardId>0 AND "
@@ -76,106 +67,89 @@ void cReportCardDetails::refreshReport()
     QSqlQuery   *poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
     QStringList  qslQueryResult;
 
+    m_dlgProgress.setProgressValue( 90 );
+
+    startReport();
+
+    addTitle( qsTitle );
+    addHorizontalLine();
+
+    m_dlgProgress.setProgressValue( 100 );
+
     if( poQueryResultCards->size() < 1 )
     {
-        m_qsReportHtml.append( "<center><i>" );
-        m_qsReportHtml.append( tr("No valid patientcard found for the selected filters") );
-        m_qsReportHtml.append( "</i></center>" );
-/*        obTableFormat->setAlignment( Qt::AlignLeft );
-        m_tcReport->insertTable( 1, 1, *obTableFormat );
-        m_tcReport->setBlockFormat( *obCenterCellFormat );
-        m_tcReport->insertText( tr("No valid patientcard found for the selected filters"), *obItalicFormat );*/
+        startSection();
+        addTable();
+        addTableRow();
+        addTableCell( tr("No valid patientcard found for the selected filters"), "center italic" );
+        finishTable();
+        finishSection();
     }
     else if( poQueryResultCards->size() == 1 )
     {
+        m_dlgProgress.setProgressMax( 7 );
+        m_dlgProgress.setProgressValue( 0 );
+
         poQueryResultCards->first();
 
         unsigned int    uiPatientCardId = poQueryResultCards->value(0).toUInt();
 
-        m_dlgProgress.progressInit( tr("Displaying data ..."), 0, 7 );
-        m_dlgProgress.setProgressValue( 0 );
+        startSection();
+        addTable();
 
-        obTableFormat->setAlignment( Qt::AlignLeft );
-        m_qsReportHtml.append( "<table>" );
-
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Barcode" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( poQueryResultCards->value(5).toString() );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Barcode" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( poQueryResultCards->value(5).toString() );
         m_dlgProgress.increaseProgressValue();
 
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Patientcard type" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( poQueryResultCards->value(18).toString() );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Patientcard type" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( poQueryResultCards->value(18).toString() );
         m_dlgProgress.increaseProgressValue();
 
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Owner" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( poQueryResultCards->value(33).toString() );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Owner" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( poQueryResultCards->value(33).toString() );
         m_dlgProgress.increaseProgressValue();
 
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "No. units" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( poQueryResultCards->value(7).toString() );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "No. units" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( poQueryResultCards->value(7).toString() );
         m_dlgProgress.increaseProgressValue();
 
         unsigned int    uiTimeLeft = poQueryResultCards->value(9).toInt();
         QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
 
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Time left" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( qtTemp.toString( "hh:mm:ss" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Time left" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( qtTemp.toString( "hh:mm:ss" ) );
         m_dlgProgress.increaseProgressValue();
 
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Valid" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( QString("%1 -> %2").arg( poQueryResultCards->value(10).toString() ).arg( poQueryResultCards->value(11).toString() ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Valid" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( QString("%1 -> %2").arg( poQueryResultCards->value(10).toString() ).arg( poQueryResultCards->value(11).toString() ) );
         m_dlgProgress.increaseProgressValue();
 
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Comment" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( poQueryResultCards->value(6).toString() );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        addTableRow();
+        addTableCell( tr( "Comment" ), "bold" );
+        addTableCell( " : ", "bold" );
+        addTableCell( poQueryResultCards->value(6).toString() );
         m_dlgProgress.increaseProgressValue();
 
-        m_qsReportHtml.append( "</table>" );
+        finishTable();
+        finishSection();
 
-        m_qsReportHtml.append( "</div><p><div>" );
-        m_qsReportHtml.append( tr( "Valid and active units" ) );
-        m_qsReportHtml.append( "</div><p><div>" );
+        addSeparator();
+        addSubTitle( tr( "Valid and active units" ) );
+
+        m_dlgProgress.setProgressMax( 100 );
+        m_dlgProgress.setProgressValue( 0 );
 
         qsQueryCards = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
                                 "FROM patientcardunits "
@@ -185,72 +159,69 @@ void cReportCardDetails::refreshReport()
                                 "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
-        m_qsReportHtml.append( "<table>" );
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Unit time" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Valid" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Valid till ..." ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "No. units" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.setProgressValue( 10 );
+
+        startSection();
+        addTable();
+
+        addTableRow();
+        addTableCell( tr( "Unit time" ), "center bold" );
+        addTableCell( tr( "Valid" ), "center bold" );
+        addTableCell( tr( "Valid till ..." ), "center bold" );
+        addTableCell( tr( "No. units" ), "center bold" );
+
+        m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
         while( poQueryResultCards->next() )
         {
-            m_qsReportHtml.append( "<tr>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( poQueryResultCards->value(1).toString() );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(poQueryResultCards->value(3).toString(), "yyyy-MM-dd") ) ) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( poQueryResultCards->value(4).toString() );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "</tr>" );
+            addTableRow();
+            addTableCell( poQueryResultCards->value(1).toString(), "center" );
+            addTableCell( QString("%1 -> %2").arg( poQueryResultCards->value(2).toString() ).arg( poQueryResultCards->value(3).toString() ), "center" );
+            addTableCell( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(poQueryResultCards->value(3).toString(), "yyyy-MM-dd") ) ), "center" );
+            addTableCell( poQueryResultCards->value(4).toString(), "center" );
+            m_dlgProgress.increaseProgressValue();
         }
-        m_qsReportHtml.append( "</table>" );
+        finishTable();
+        finishSection();
 
-        m_qsReportHtml.append( "</div><p><div>" );
-        m_qsReportHtml.append( tr( "Patientcard unit usages" ) );
-        m_qsReportHtml.append( "</div><p><div>" );
+        addSeparator();
+        addSubTitle( tr( "Patientcard unit usages" ) );
 
-        qsQueryCards = QString( "SELECT dateTimeUsed "
+        m_dlgProgress.setProgressMax( 100 );
+        m_dlgProgress.setProgressValue( 0 );
+
+        qsQueryCards = QString( "SELECT dateTimeUsed, COUNT(dateTimeUsed) "
                                 "FROM patientcardunits "
                                 "WHERE patientCardId=%1 "
-                                "AND active=0 " ).arg( uiPatientCardId );
+                                "AND active=0 "
+                                "GROUP BY dateTimeUsed" ).arg( uiPatientCardId );
         poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
-        m_qsReportHtml.append( "<table>" );
-        m_qsReportHtml.append( "<tr>" );
-        m_qsReportHtml.append( "<td>" );
-        m_qsReportHtml.append( tr( "Date of usage" ) );
-        m_qsReportHtml.append( "</td>" );
-        m_qsReportHtml.append( "</tr>" );
+        m_dlgProgress.setProgressValue( 10 );
+
+        startSection();
+        addTable();
+
+        addTableRow();
+        addTableCell( tr( "Date of usage" ), "center bold" );
+        addTableCell( tr( "Unit count" ), "center bold" );
+
+        m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
         while( poQueryResultCards->next() )
         {
-            m_qsReportHtml.append( "<tr>" );
-            m_qsReportHtml.append( "<td>" );
-            m_qsReportHtml.append( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ) );
-            m_qsReportHtml.append( "</td>" );
-            m_qsReportHtml.append( "</tr>" );
+            addTableRow();
+            addTableCell( poQueryResultCards->value(0).toDateTime().toString( "yyyy-MM-dd hh:mm" ), "center" );
+            addTableCell( poQueryResultCards->value(1).toString(), "center" );
+            m_dlgProgress.increaseProgressValue();
         }
-        m_qsReportHtml.append( "</table>" );
+        finishTable();
+        finishSection();
     }
     else
     {
-        m_dlgProgress.setProgressMax( poQueryResultCards->size()+1 );
-        m_dlgProgress.increaseProgressValue();
+        m_dlgProgress.setProgressMax( poQueryResultCards->size()*2+1 );
+        m_dlgProgress.setProgressValue( 0 );
 
         while( poQueryResultCards->next() )
         {
@@ -261,24 +232,24 @@ void cReportCardDetails::refreshReport()
             qslRecord << poQueryResultCards->value(9).toString();
             qslRecord << poQueryResultCards->value(10).toString();
             qslRecord << poQueryResultCards->value(11).toString();
+            qslRecord << poQueryResultCards->value(18).toString();
             qslRecord << poQueryResultCards->value(6).toString();
 
             qslQueryResult << qslRecord.join("#");
             m_dlgProgress.increaseProgressValue();
         }
 
-        m_dlgProgress.progressInit( tr("Displaying data ..."), 0, qslQueryResult.size() );
-        m_dlgProgress.setProgressValue( 0 );
-
+        startSection();
         addTable();
 
         // Add table header row
         addTableRow();
-        addTableCell( tr( "Barcode" ) );
-        addTableCell( tr( "No. units" ) );
-        addTableCell( tr( "Time" ) );
-        addTableCell( tr( "Valid" ) );
-        addTableCell( tr( "Comment" ) );
+        addTableCell( tr( "Barcode" ), "center bold" );
+        addTableCell( tr( "No. units"), "center bold"  );
+        addTableCell( tr( "Time" ), "center bold" );
+        addTableCell( tr( "Valid" ), "center bold" );
+        addTableCell( tr( "Patientcard type" ), "bold" );
+        addTableCell( tr( "Comment" ), "bold" );
 
         for( int i=0; i<qslQueryResult.size(); i++ )
         {
@@ -287,18 +258,19 @@ void cReportCardDetails::refreshReport()
             QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
 
             addTableRow();
-            addTableCell( qslRecord.at(0) );
-            addTableCell( qslRecord.at(1) );
-            addTableCell( qtTemp.toString( "hh:mm:ss" ) );
-            addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ) );
+            addTableCell( qslRecord.at(0), "center" );
+            addTableCell( qslRecord.at(1), "center" );
+            addTableCell( qtTemp.toString( "hh:mm:ss" ), "center" );
+            addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ), "center" );
             addTableCell( qslRecord.at(5) );
+            addTableCell( qslRecord.at(6) );
 
             m_dlgProgress.increaseProgressValue();
         }
         finishTable();
+        finishSection();
     }
 
-    finishSection();
     finishReport();
 
     m_dlgProgress.hide();
