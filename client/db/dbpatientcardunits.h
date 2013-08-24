@@ -26,6 +26,8 @@ public:
     void            setPatientCardId( const unsigned int p_nPatientCardId ) throw();
     unsigned int    ledgerId() const                                        throw();
     void            setLedgerId( const unsigned int p_nLedgerId )           throw();
+    unsigned int    panelId() const                                         throw();
+    void            setPanelId( const unsigned int p_nPanelId )             throw();
     int             unitTime() const                                        throw();
     void            setUnitTime( const int p_nUnitTime )                    throw();
     QString         validDateFrom() const                                   throw();
@@ -44,6 +46,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientCardId;
     unsigned int    m_uiLedgerId;
+    unsigned int    m_uiPanelId;
     int             m_nUnitTime;
     QString         m_qsValidDateFrom;
     QString         m_qsValidDateTo;
@@ -55,6 +58,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiLedgerId = 0,
+               const unsigned int p_uiPanelId = 0,
                const int p_nUnitTime = 0,
                const QString &p_qsValidDateFrom = "",
                const QString &p_qsValidDateTo = "",

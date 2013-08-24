@@ -18,6 +18,20 @@ class cReport : public QWidget
 
 public:
 
+    enum teLedgerType
+    {
+        LT_NOT_DEFINED = 0,
+        LT_DEVICE_USAGE,
+        LT_PC_SELL,
+        LT_PC_REFILL,
+        LT_PROD_SELL,
+        LT_PC_LOST_REPLACE,
+        LT_PC_ASSIGN_PARTNER,
+        LT_OTHER7,
+        LT_OTHER8,
+        LT_OTHER9
+    };
+
     explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
     ~cReport();
 

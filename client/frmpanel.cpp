@@ -883,6 +883,7 @@ void cFrmPanel::closeAttendance()
                 cDBPatientcardUnit obDBPatientcardUnit;
 
                 obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+                obDBPatientcardUnit.setPanelId( m_uiId );
                 obDBPatientcardUnit.setDateTime( QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm::ss") );
                 obDBPatientcardUnit.setActive( false );
                 obDBPatientcardUnit.save();
