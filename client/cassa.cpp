@@ -263,9 +263,9 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
     if( p_bNewCard )
-        obDBLedger.setLedgerTypeId( 2 );
+        obDBLedger.setLedgerTypeId( cDBLedger::LT_PC_SELL );
     else
-        obDBLedger.setLedgerTypeId( 3 );
+        obDBLedger.setLedgerTypeId( cDBLedger::LT_PC_REFILL );
     obDBLedger.setLedgerDeviceId( 0 );
     obDBLedger.setPaymentMethod( p_inPayType );
     obDBLedger.setUserId( g_obUser.id() );
@@ -306,7 +306,7 @@ void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShop
 
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-    obDBLedger.setLedgerTypeId( 5 );
+    obDBLedger.setLedgerTypeId( cDBLedger::LT_OTHER9 );
     obDBLedger.setPaymentMethod( 1 );
     obDBLedger.setUserId( 0 );
     obDBLedger.setProductId( p_obDBShoppingCart.productId() );
@@ -335,7 +335,7 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
 
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-    obDBLedger.setLedgerTypeId( 1 );
+    obDBLedger.setLedgerTypeId( cDBLedger::LT_DEVICE_USAGE );
     obDBLedger.setPaymentMethod( p_inPayType );
     obDBLedger.setUserId( g_obUser.id() );
     obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
@@ -365,7 +365,7 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
 
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-    obDBLedger.setLedgerTypeId( 4 );
+    obDBLedger.setLedgerTypeId( cDBLedger::LT_PROD_SELL );
     obDBLedger.setPaymentMethod( p_inPayType );
     obDBLedger.setUserId( g_obUser.id() );
     obDBLedger.setProductId( p_obDBShoppingCart.productId() );

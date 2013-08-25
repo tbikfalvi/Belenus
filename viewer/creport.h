@@ -76,7 +76,7 @@ public:
     void                 finishTable();
     void                 addTableRow();
     void                 finishTableRow();
-    void                 addTableCell( QString p_qsCellText, QString p_qsFormat="" );
+    void                 addTableCell( QString p_qsCellText="", QString p_qsFormat="" );
 
 protected:
 

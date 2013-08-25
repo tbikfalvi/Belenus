@@ -31,6 +31,7 @@ private:
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );
     int             _sumPanelUseMorning( unsigned int p_uiPanelTypeId );
     int             _sumPanelUseAfternoon( unsigned int p_uiPanelTypeId );
+    int             _sumPaymentMethod( unsigned int p_uiPaymentMethodId );
 };
 
 #endif // CREPORTDAILY_H
