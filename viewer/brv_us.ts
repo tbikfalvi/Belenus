@@ -29,100 +29,94 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="35"/>
-        <source>Get data from database ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="79"/>
+        <location filename="creportcarddetails.cpp" line="84"/>
         <source>No valid patientcard found for the selected filters</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="89"/>
-        <location filename="creportcarddetails.cpp" line="214"/>
-        <source>Displaying data ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="96"/>
-        <location filename="creportcarddetails.cpp" line="222"/>
+        <location filename="creportcarddetails.cpp" line="101"/>
+        <location filename="creportcarddetails.cpp" line="247"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="101"/>
-        <location filename="creportcarddetails.cpp" line="226"/>
+        <location filename="creportcarddetails.cpp" line="107"/>
+        <location filename="creportcarddetails.cpp" line="251"/>
         <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="106"/>
+        <location filename="creportcarddetails.cpp" line="113"/>
         <source>Owner</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="111"/>
-        <location filename="creportcarddetails.cpp" line="154"/>
-        <location filename="creportcarddetails.cpp" line="223"/>
+        <location filename="creportcarddetails.cpp" line="119"/>
+        <location filename="creportcarddetails.cpp" line="171"/>
+        <location filename="creportcarddetails.cpp" line="248"/>
         <source>No. units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="119"/>
+        <location filename="creportcarddetails.cpp" line="128"/>
         <source>Time left</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="137"/>
+        <location filename="creportcarddetails.cpp" line="149"/>
         <source>Valid and active units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="151"/>
+        <location filename="creportcarddetails.cpp" line="168"/>
         <source>Unit time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="153"/>
+        <location filename="creportcarddetails.cpp" line="170"/>
         <source>Valid till ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="161"/>
+        <location filename="creportcarddetails.cpp" line="180"/>
         <source>%1 day(s)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="168"/>
+        <location filename="creportcarddetails.cpp" line="188"/>
         <source>Patientcard unit usages</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="181"/>
+        <location filename="creportcarddetails.cpp" line="206"/>
         <source>Date of usage</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="182"/>
+        <location filename="creportcarddetails.cpp" line="207"/>
         <source>Unit count</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="224"/>
+        <location filename="creportcarddetails.cpp" line="249"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="124"/>
-        <location filename="creportcarddetails.cpp" line="152"/>
-        <location filename="creportcarddetails.cpp" line="225"/>
+        <location filename="creportcarddetails.cpp" line="134"/>
+        <location filename="creportcarddetails.cpp" line="169"/>
+        <location filename="creportcarddetails.cpp" line="250"/>
         <source>Valid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcarddetails.cpp" line="129"/>
-        <location filename="creportcarddetails.cpp" line="227"/>
+        <location filename="creportcarddetails.cpp" line="35"/>
+        <source>Create selected report ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="140"/>
+        <location filename="creportcarddetails.cpp" line="252"/>
         <source>Comment</source>
         <translation></translation>
     </message>
@@ -140,17 +134,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcardinactive.cpp" line="41"/>
+        <location filename="creportcardinactive.cpp" line="13"/>
+        <source>Create selected report ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportcardinactive.cpp" line="48"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcardinactive.cpp" line="44"/>
+        <location filename="creportcardinactive.cpp" line="49"/>
         <source>Card type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcardinactive.cpp" line="47"/>
+        <location filename="creportcardinactive.cpp" line="52"/>
         <source>Comment</source>
         <translation></translation>
     </message>
@@ -160,7 +159,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportcardinactive.cpp" line="53"/>
+        <location filename="creportcardinactive.cpp" line="51"/>
         <source>Card owner</source>
         <translation></translation>
     </message>
@@ -168,44 +167,144 @@
 <context>
     <name>cReportDaily</name>
     <message>
-        <location filename="creportdaily.cpp" line="8"/>
+        <location filename="creportdaily.cpp" line="10"/>
         <source> Daily ledger </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="9"/>
+        <location filename="creportdaily.cpp" line="11"/>
         <source>This report shows the daily bookkeepings the cash book and every accounting data for the selected day. Please select the day you interested in.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="13"/>
-        <location filename="creportdaily.cpp" line="26"/>
+        <location filename="creportdaily.cpp" line="15"/>
+        <location filename="creportdaily.cpp" line="32"/>
         <source>Date :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="54"/>
-        <source>Cassa owner :</source>
+        <location filename="creportdaily.cpp" line="23"/>
+        <source>Create selected report ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="61"/>
-        <source>Cassa balance :</source>
+        <location filename="creportdaily.cpp" line="39"/>
+        <source>Cassa list</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="68"/>
-        <source>Cassa started :</source>
+        <location filename="creportdaily.cpp" line="45"/>
+        <location filename="creportdaily.cpp" line="129"/>
+        <source>Products sold</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="51"/>
+        <source>Product name</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="52"/>
+        <source>Count</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="53"/>
+        <location filename="creportdaily.cpp" line="331"/>
+        <location filename="creportdaily.cpp" line="379"/>
+        <location filename="creportdaily.cpp" line="478"/>
+        <source>Amount</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="65"/>
+        <location filename="creportdaily.cpp" line="145"/>
+        <location filename="creportdaily.cpp" line="205"/>
+        <location filename="creportdaily.cpp" line="360"/>
+        <location filename="creportdaily.cpp" line="424"/>
+        <location filename="creportdaily.cpp" line="463"/>
+        <location filename="creportdaily.cpp" line="504"/>
+        <source>Sum total</source>
         <translation></translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="75"/>
-        <source>Cassa stopped :</source>
+        <location filename="creportdaily.cpp" line="134"/>
+        <source>Patientcards sold</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="82"/>
-        <source>Cassa last entry :</source>
+        <location filename="creportdaily.cpp" line="87"/>
+        <location filename="creportdaily.cpp" line="139"/>
+        <source>Device usages</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="99"/>
+        <source>Device usages by patientcard units</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="111"/>
+        <source>Income by payment methods</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="123"/>
+        <source>Income summary</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="173"/>
+        <source>Owner</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="174"/>
+        <source>Balance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="175"/>
+        <source>Income</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="176"/>
+        <source>Cassa started</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="177"/>
+        <source>Cassa closed</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="178"/>
+        <source>Last entry</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="238"/>
+        <location filename="creportdaily.cpp" line="329"/>
+        <location filename="creportdaily.cpp" line="377"/>
+        <location filename="creportdaily.cpp" line="441"/>
+        <source>Morning</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="261"/>
+        <location filename="creportdaily.cpp" line="313"/>
+        <location filename="creportdaily.cpp" line="443"/>
+        <source>Sum</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="290"/>
+        <location filename="creportdaily.cpp" line="330"/>
+        <location filename="creportdaily.cpp" line="378"/>
+        <location filename="creportdaily.cpp" line="442"/>
+        <source>Afternoon</source>
         <translation></translation>
     </message>
 </context>
@@ -266,51 +365,46 @@
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="27"/>
-        <source>Get data from database ...</source>
+        <source>Create selected report ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="80"/>
+        <location filename="creportpatientcardtype.cpp" line="73"/>
         <source>%1 -&gt; %2 | %3 days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="85"/>
+        <location filename="creportpatientcardtype.cpp" line="78"/>
         <source>%1 days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="90"/>
+        <location filename="creportpatientcardtype.cpp" line="83"/>
         <source>%1 -&gt; %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="98"/>
-        <source>Displaying data ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportpatientcardtype.cpp" line="123"/>
+        <location filename="creportpatientcardtype.cpp" line="100"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="126"/>
+        <location filename="creportpatientcardtype.cpp" line="101"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="129"/>
+        <location filename="creportpatientcardtype.cpp" line="102"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="132"/>
+        <location filename="creportpatientcardtype.cpp" line="103"/>
         <source>Valid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="135"/>
+        <location filename="creportpatientcardtype.cpp" line="104"/>
         <source>Unit time</source>
         <translation></translation>
     </message>

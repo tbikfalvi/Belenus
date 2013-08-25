@@ -24,6 +24,7 @@ private:
     unsigned int    _reportPartProductSellAfternoon();
     unsigned int    _reportPartPatientCardSell();
     unsigned int    _reportPartPanelUse();
+    void            _reportPartPanelUseUnits();
     void            _reportPartPaymentMethods();
     QString         _countPatientCardTypeSellMorning( unsigned int p_uiPatientCardTypeId );
     QString         _countPatientCardTypeSellAfternoon( unsigned int p_uiPatientCardTypeId );
@@ -32,6 +33,9 @@ private:
     int             _sumPanelUseMorning( unsigned int p_uiPanelTypeId );
     int             _sumPanelUseAfternoon( unsigned int p_uiPanelTypeId );
     int             _sumPaymentMethod( unsigned int p_uiPaymentMethodId );
+    int             _sumCassaIncome( unsigned int p_uiCassaId );
+    int             _countPanelUseUnitsMorning( unsigned int p_uiPanelTypeId );
+    int             _countPanelUseUnitsAfternoon( unsigned int p_uiPanelTypeId );
 };
 
 #endif // CREPORTDAILY_H
