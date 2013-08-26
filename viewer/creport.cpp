@@ -13,12 +13,15 @@
 // Report-ok szulo osztalya
 //====================================================================================
 
+#include "../framework/qtframework.h"
 #include "creport.h"
 
 //====================================================================================
 cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
 //====================================================================================
 {
+    cTracer obTrace( "cReport::cReport" );
+
     //-----------------------------------------------------
     // Valtozok inicializalasa
     //-----------------------------------------------------
@@ -55,7 +58,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     //-----------------------------------------------------
     // Report formazo elemek beallitasa
     //-----------------------------------------------------
-    obTitleFormat = new QTextCharFormat();
+/*    obTitleFormat = new QTextCharFormat();
     obTitleFormat->setFontPointSize( 14.0 );
     obTitleFormat->setFontWeight( QFont::Bold );
 
@@ -90,7 +93,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     obRightCellFormat = new QTextBlockFormat();
     obRightCellFormat->setLeftMargin( 10 );
     obRightCellFormat->setRightMargin( 10 );
-    obRightCellFormat->setAlignment( Qt::AlignRight );
+    obRightCellFormat->setAlignment( Qt::AlignRight );*/
 }
 //------------------------------------------------------------------------------------
 cReport::~cReport()

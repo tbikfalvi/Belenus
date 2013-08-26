@@ -110,6 +110,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbBookkeepingCassaHistory">
+         <property name="toolTip">
+          <string>History of cassa events and actions</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="Line" name="line_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -610,6 +629,8 @@
      </property>
      <addaction name="action_Bookkeeping_Daily"/>
      <addaction name="action_Bookkeeping_Ledger"/>
+     <addaction name="separator"/>
+     <addaction name="action_Bookkeeping_CassaHistory"/>
     </widget>
     <widget class="QMenu" name="menuPatientcards">
      <property name="title">
@@ -701,6 +722,17 @@
    </property>
    <property name="toolTip">
     <string>Patientcard details</string>
+   </property>
+  </action>
+  <action name="action_Bookkeeping_CassaHistory">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Cassa history</string>
+   </property>
+   <property name="toolTip">
+    <string>History of cassa events and actions</string>
    </property>
   </action>
  </widget>

@@ -531,7 +531,7 @@ void cCassa::cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId,
     obDBCassaHistory.setParentId( p_uiParentId );
     obDBCassaHistory.setCassaId( 0 );
     obDBCassaHistory.setLedgerId( p_uiLedgerId );
-    obDBCassaHistory.setUserId( 0 );
+    obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setPatientId( 0 );
     obDBCassaHistory.setActionValue( p_nMoney );
     obDBCassaHistory.setActionBalance( cassaGlobalBalance()+p_nMoney );

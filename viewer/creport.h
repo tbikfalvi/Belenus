@@ -87,14 +87,14 @@ protected:
     QVBoxLayout         *mainLayout;
     QString              m_qsReportHtml;
 
-    QTextCharFormat     *obTitleFormat;
+/*    QTextCharFormat     *obTitleFormat;
     QTextCharFormat     *obNormalFormat;
     QTextCharFormat     *obBoldFormat;
     QTextCharFormat     *obItalicFormat;
     QTextTableFormat    *obTableFormat;
     QTextBlockFormat    *obLeftCellFormat;
     QTextBlockFormat    *obCenterCellFormat;
-    QTextBlockFormat    *obRightCellFormat;
+    QTextBlockFormat    *obRightCellFormat;*/
 
     QString              m_qsReportName;
     QString              m_qsReportDescription;

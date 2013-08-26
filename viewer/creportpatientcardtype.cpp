@@ -7,6 +7,8 @@
 
 cReportPatientCardType::cReportPatientCardType(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
 {
+    cTracer obTrace( "cReportPatientCardType::cReportPatientCardType" );
+
     m_qsReportName          = tr(" Active patientcardtypes ");
     m_qsReportDescription   = tr( "This report shows the active patientcard types.  Please select type of expiration from the list box below." );
 
@@ -98,10 +100,10 @@ void cReportPatientCardType::refreshReport()
 
     addTableRow();
     addTableCell( tr( "Name" ), "bold" );
-    addTableCell( tr( "Price" ), "bold" );
-    addTableCell( tr( "Units" ), "bold" );
-    addTableCell( tr( "Valid" ), "bold" );
-    addTableCell( tr( "Unit time" ), "bold" );
+    addTableCell( tr( "Price" ), "center bold" );
+    addTableCell( tr( "Units" ), "center bold" );
+    addTableCell( tr( "Valid" ), "center bold" );
+    addTableCell( tr( "Unit time" ), "center bold" );
 
     for( int i=0; i<qslQueryResult.size(); i++ )
     {
@@ -111,10 +113,10 @@ void cReportPatientCardType::refreshReport()
 
         addTableRow();
         addTableCell( qslRecord.at(0) );
-        addTableCell( obPrice.currencyFullStringShort() );
-        addTableCell( qslRecord.at(2) );
-        addTableCell( qslRecord.at(3) );
-        addTableCell( qslRecord.at(4) );
+        addTableCell( obPrice.currencyFullStringShort(), "right" );
+        addTableCell( qslRecord.at(2), "center" );
+        addTableCell( qslRecord.at(3), "center" );
+        addTableCell( tr( "%1 minute(s)" ).arg( qslRecord.at(4) ), "center" );
 
         m_dlgProgress.increaseProgressValue();
     }

@@ -5,11 +5,13 @@
 
 #include "../framework/qtframework.h"
 #include "ui_wndmain.h"
+// <_NEW_REPORT_> report header file include-olasa
 #include "creportdaily.h"
 #include "creportledger.h"
 #include "creportpatientcardtype.h"
 #include "creportcardinactive.h"
 #include "creportcarddetails.h"
+#include "creportcassahistory.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -31,49 +33,53 @@ public:
     cWndMain( QWidget *parent = 0 );
     ~cWndMain();
 
-    void                setLoginData(QString p_qsName = "", QString p_qsPassword = "" );
+    void                    setLoginData(QString p_qsName = "", QString p_qsPassword = "" );
 
-signals:
-    void                setCheckedReportDaily( bool p_bChecked );
-    void                setCheckedReportLedger( bool p_bChecked );
-    void                setCheckedReportPatientcardType( bool p_bChecked );
-    void                setCheckedReportPatientcardInactive( bool p_bChecked );
-    void                setCheckedReportPatientcardDetails( bool p_bChecked );
+signals: // <_NEW_REPORT_>  report signal-ja
+    void                    setCheckedReportDaily( bool p_bChecked );
+    void                    setCheckedReportLedger( bool p_bChecked );
+    void                    setCheckedReportCassaHistory( bool p_bChecked );
+    void                    setCheckedReportPatientcardType( bool p_bChecked );
+    void                    setCheckedReportPatientcardInactive( bool p_bChecked );
+    void                    setCheckedReportPatientcardDetails( bool p_bChecked );
 
-public slots:
-    void                slotCheckReportDaily( bool p_bChecked );
-    void                slotCheckReportLedger( bool p_bChecked );
-    void                slotCheckReportPatientcardType( bool p_bChecked );
-    void                slotCheckReportPatientcardInactive( bool p_bChecked );
-    void                slotCheckReportPatientcardDetails( bool p_bChecked );
+public slots: // <_NEW_REPORT_> report slot-ja
+    void                    slotCheckReportDaily( bool p_bChecked );
+    void                    slotCheckReportLedger( bool p_bChecked );
+    void                    slotCheckReportCassaHistory( bool p_bChecked );
+    void                    slotCheckReportPatientcardType( bool p_bChecked );
+    void                    slotCheckReportPatientcardInactive( bool p_bChecked );
+    void                    slotCheckReportPatientcardDetails( bool p_bChecked );
 
 private:
 
-    QString             m_qsRPSW;
+    QString                  m_qsRPSW;
 
+    // <_NEW_REPORT_> report osztaly objektum pointer-e
     cReportDaily            *m_repDaily;
     cReportLedger           *m_repLedger;
+    cReportCassaHistory     *m_repCassaHistory;
     cReportPatientCardType  *m_repCardType;
     cReportCardInactive     *m_repCardInactive;
     cReportCardDetails      *m_repCardDetails;
 
-    QVector<cReport*>    m_qvReports;
+    QVector<cReport*>        m_qvReports;
 
-    bool                 m_bReportTabSwitching;
+    bool                     m_bReportTabSwitching;
 
-    void                _initActions();
-    void                _initToolbar();
-    void                _initFilterbar();
-    void                _initTabInformation();
+    void                    _initActions();
+    void                    _initToolbar();
+    void                    _initFilterbar();
+    void                    _initTabInformation();
 
-    void                _setAuthInfoType( authType p_tAuthType );
+    void                    _setAuthInfoType( authType p_tAuthType );
 
-    authType            _authenticateUser();
-    void                _setReportsEnabled( bool p_bEnable = true );
-    void                _setFiltersEnabled( bool p_bEnable );
-    void                _setFiltersEnabledReport( cReport *obReport );
+    authType                _authenticateUser();
+    void                    _setReportsEnabled( bool p_bEnable = true );
+    void                    _setFiltersEnabled( bool p_bEnable );
+    void                    _setFiltersEnabledReport( cReport *obReport );
 
-    void                _updateReportIndexes();
+    void                    _updateReportIndexes();
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);

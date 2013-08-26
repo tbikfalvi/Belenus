@@ -23,6 +23,15 @@
 #include "creportdaily.h"
 #include "../framework/qtmysqlquerymodel.h"
 
+//====================================================================================
+//
+// Uj report hozzaadasakor a gui-n kell csinalni egy action-t es a toolbar-ban egy
+// kulon gombot. Az action-t a menu reszbe kell berakni
+// A wndmain.h-ban illetve itt a cpp-ben a <_NEW_REPORT_> szovegre rakeresve lehet
+// megtalalni azokat a reszeket, ahova be kell illeszteni az uj report-ot
+// Minden report-nak sajat cReport osztalya van ezeket a sajat creport...cpp es .h
+// file-jaikban kell megcsinalni.
+//
 //------------------------------------------------------------------------------------
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 //------------------------------------------------------------------------------------
@@ -34,8 +43,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_qsRPSW                = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
     m_bReportTabSwitching   = false;
 
+    // <_NEW_REPORT_> signal es slot osszekapcsolas
     connect( this, SIGNAL(setCheckedReportDaily(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( this, SIGNAL(setCheckedReportLedger(bool)), this, SLOT(slotCheckReportLedger(bool)) );
+    connect( this, SIGNAL(setCheckedReportCassaHistory(bool)), this, SLOT(slotCheckReportCassaHistory(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardType(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardInactive(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardDetails(bool)), this, SLOT(slotCheckReportPatientcardDetails(bool)) );
@@ -99,8 +110,10 @@ void cWndMain::_initActions()
     cTracer obTrace( "cWndMain::_initActions" );
 
     // SIGNALS
+    // <_NEW_REPORT_> az action es a slot osszekapcsolasa
     connect( action_Bookkeeping_Daily, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( action_Bookkeeping_Ledger, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportLedger(bool)) );
+    connect( action_Bookkeeping_CassaHistory, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportCassaHistory(bool)) );
 
     connect( action_PatientcardTypes, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
     connect( action_Patientcards_Inactive, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
@@ -109,8 +122,10 @@ void cWndMain::_initActions()
     // ICONS
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
 
+    // <_NEW_REPORT_> az action es az ikonjanak osszekapcsolasa
     action_Bookkeeping_Daily->setIcon( QIcon("./resources/40x40_book_daily.png") );
     action_Bookkeeping_Ledger->setIcon( QIcon("./resources/40x40_book_ledger.png") );
+    action_Bookkeeping_CassaHistory->setIcon( QIcon("./resources/40x40_cassa.png") );
 
     action_PatientcardTypes->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
     action_Patientcards_Inactive->setIcon( QIcon("./resources/40x40_report_patientcard_inactive.png") );
@@ -119,8 +134,10 @@ void cWndMain::_initActions()
     // BEHAVIOUR
     action_FilterBar->setEnabled( false );
 
+    // <_NEW_REPORT_> az action alapertelmezett letiltasa
     action_Bookkeeping_Daily->setEnabled( false );
     action_Bookkeeping_Ledger->setEnabled( false );
+    action_Bookkeeping_CassaHistory->setEnabled( false );
 
     action_PatientcardTypes->setEnabled( false );
     action_Patientcards_Inactive->setEnabled( false );
@@ -135,8 +152,10 @@ void cWndMain::_initToolbar()
     // SIGNALS
     connect( pbExit, SIGNAL(clicked()), this, SLOT(close()) );
 
+    // <_NEW_REPORT_> a toolbar gomb es a slot osszekapcsolasa
     connect( pbBookkeepingDaily, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( pbBookkeepingLedger, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportLedger(bool)) );
+    connect( pbBookkeepingCassaHistory, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportCassaHistory(bool)) );
 
     connect( pbPatientcardType, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
     connect( pbPatientcardsInactive, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
@@ -145,8 +164,10 @@ void cWndMain::_initToolbar()
     // ICONS
     pbExit->setIcon( QIcon("./resources/40x40_shutdown.png") );
 
+    // <_NEW_REPORT_> a toolbar gomb es az ikon osszekapcsolasa
     pbBookkeepingDaily->setIcon( QIcon("./resources/40x40_book_daily.png") );
     pbBookkeepingLedger->setIcon( QIcon("./resources/40x40_book_ledger.png") );
+    pbBookkeepingCassaHistory->setIcon( QIcon("./resources/40x40_cassa.png") );
 
     pbPatientcardType->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
     pbPatientcardsInactive->setIcon( QIcon("./resources/40x40_report_patientcard_inactive.png") );
@@ -155,8 +176,10 @@ void cWndMain::_initToolbar()
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
 
     // BEHAVIOUR
+    // <_NEW_REPORT_> a toolbar gomb alapertelmezett letiltasa
     pbBookkeepingDaily->setEnabled( false );
     pbBookkeepingLedger->setEnabled( false );
+    pbBookkeepingCassaHistory->setEnabled( false );
 
     pbPatientcardType->setEnabled( false );
     pbPatientcardsInactive->setEnabled( false );
@@ -234,12 +257,18 @@ void cWndMain::on_tabReports_tabCloseRequested(int index)
 {
     cTracer obTrace( "cWndMain::on_tabReports_tabCloseRequested" );
 
+// addig amig nem jovok ra, hogy miert szall el a program, addig nem engedelyezem az X-et
+return;
+
     if( index > 0 )
     {
+        // <_NEW_REPORT_> a megfelelo report tab X gombjanak lekezelese
         if( m_repDaily && m_repDaily->index() == index )
             emit setCheckedReportDaily( false );
         else if( m_repLedger && m_repLedger->index() == index )
             emit setCheckedReportLedger( false );
+        else if( m_repCassaHistory && m_repCassaHistory->index() == index )
+            emit setCheckedReportCassaHistory( false );
         else if( m_repCardType && m_repCardType->index() == index )
             emit setCheckedReportPatientcardType( false );
         else if( m_repCardInactive && m_repCardInactive->index() == index )
@@ -354,15 +383,19 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     action_FilterBar->setChecked( p_bEnable );
     on_action_FilterBar_triggered( p_bEnable );
 
+    // <_NEW_REPORT_> az action engedelyezese/tiltasa
     action_Bookkeeping_Daily->setEnabled( p_bEnable );
     action_Bookkeeping_Ledger->setEnabled( p_bEnable );
+    action_Bookkeeping_CassaHistory->setEnabled( p_bEnable );
 
     action_PatientcardTypes->setEnabled( p_bEnable );
     action_Patientcards_Inactive->setEnabled( p_bEnable );
     action_Patientcards_Details->setEnabled( p_bEnable );
 
+    // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
     pbBookkeepingDaily->setEnabled( p_bEnable );
     pbBookkeepingLedger->setEnabled( p_bEnable );
+    pbBookkeepingCassaHistory->setEnabled( p_bEnable );
 
     pbPatientcardType->setEnabled( p_bEnable );
     pbPatientcardsInactive->setEnabled( p_bEnable );
@@ -370,6 +403,11 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbPrint->setEnabled( p_bEnable );
 }
+
+//====================================================================================
+// <_NEW_REPORT_> a report sajat slot-ja
+//====================================================================================
+
 //------------------------------------------------------------------------------------
 void cWndMain::slotCheckReportDaily(bool p_bChecked)
 //------------------------------------------------------------------------------------
@@ -425,6 +463,36 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
         tabReports->removeTab( m_repLedger->index() );
         delete m_repLedger;
         m_repLedger = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportCassaHistory(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportCassaHistory" );
+
+    m_bReportTabSwitching = true;
+
+    action_Bookkeeping_CassaHistory->setChecked( p_bChecked );
+    pbBookkeepingCassaHistory->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repCassaHistory = new cReportCassaHistory();
+
+        m_qvReports.append( m_repCassaHistory );
+        m_repCassaHistory->setIndex( tabReports->addTab( m_repCassaHistory, QIcon("./resources/40x40_cassa.png"), m_repCassaHistory->name() ) );
+        tabReports->setCurrentIndex( m_repCassaHistory->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repCassaHistory->index()-1 );
+        tabReports->removeTab( m_repCassaHistory->index() );
+        delete m_repCassaHistory;
+        m_repCassaHistory = NULL;
         _updateReportIndexes();
     }
 
@@ -520,6 +588,10 @@ void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
 
     m_bReportTabSwitching = false;
 }
+//====================================================================================
+// Altalanos fuggvenyek
+//====================================================================================
+
 //------------------------------------------------------------------------------------
 void cWndMain::on_tabReports_currentChanged(int index)
 //------------------------------------------------------------------------------------
@@ -549,6 +621,11 @@ void cWndMain::on_tabReports_currentChanged(int index)
 
     m_bReportTabSwitching = false;
 }
+
+//====================================================================================
+// Privat fuggvenyek
+//====================================================================================
+
 //------------------------------------------------------------------------------------
 void cWndMain::_setFiltersEnabled(bool p_bEnable)
 //------------------------------------------------------------------------------------
