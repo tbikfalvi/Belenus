@@ -92,6 +92,7 @@ private slots:
     void on_ledFilterDataName_textEdited(const QString &arg1);
     void on_cmbFilterDataTypes_currentIndexChanged(int index);
     void on_pbRefresh_clicked();
+    void on_chkFilterIsVisible_clicked();
 };
 
 #endif // WNDMAIN_H

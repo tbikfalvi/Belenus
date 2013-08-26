@@ -34,6 +34,9 @@ cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName
     }
 
     setFilterDataType( qslDataTypes.join("#") );
+
+    _setDataIsVisibleEnabled( true );
+    _setDataIsVisibleText( tr("Hide storno entries") );
 }
 
 void cReportCassaHistory::refreshReport()
@@ -52,6 +55,9 @@ void cReportCassaHistory::refreshReport()
     {
         qsCondition = QString( "cassahistory.userId=%1 AND " ).arg( filterType().left(1).toInt() );
     }
+
+    bool         bIsStornoEntriesHidden = filterIsVisible();
+    QStringList  qslEntriesToHide = QStringList();
 
     QString      qsQuery = QString( "SELECT users.realName, actionTime, actionValue, cassahistory.comment, cassaHistoryId, parentId "
                                     "FROM cassahistory, users WHERE "
@@ -84,15 +90,26 @@ void cReportCassaHistory::refreshReport()
 
     while( poQueryResult->next() )
     {
-        cCurrency   obCassaActionValue( poQueryResult->value(2).toInt() );
+        if( bIsStornoEntriesHidden && poQueryResult->value(5).toInt() > 0 )
+        {
+            qslEntriesToHide << poQueryResult->value(5).toString();
+        }
+        else if( bIsStornoEntriesHidden && qslEntriesToHide.contains( poQueryResult->value(4).toString() ) )
+        {
+            // this is the parent of a storno entry
+        }
+        else
+        {
+            cCurrency   obCassaActionValue( poQueryResult->value(2).toInt() );
 
-        nTotalAmount += poQueryResult->value(2).toInt();
+            nTotalAmount += poQueryResult->value(2).toInt();
 
-        addTableRow();
-        addTableCell( poQueryResult->value(0).toString() );
-        addTableCell( poQueryResult->value(1).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
-        addTableCell( obCassaActionValue.currencyFullStringShort(), "right" );
-        addTableCell( poQueryResult->value(3).toString() );
+            addTableRow();
+            addTableCell( poQueryResult->value(0).toString() );
+            addTableCell( poQueryResult->value(1).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+            addTableCell( obCassaActionValue.currencyFullStringShort(), "right" );
+            addTableCell( poQueryResult->value(3).toString() );
+        }
     }
 
     cCurrency   obTotalAmount( nTotalAmount );

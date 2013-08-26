@@ -54,46 +54,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     _setDateStopEnabled();
     _setDataNameEnabled();
     _setDataTypeEnabled();
-
-    //-----------------------------------------------------
-    // Report formazo elemek beallitasa
-    //-----------------------------------------------------
-/*    obTitleFormat = new QTextCharFormat();
-    obTitleFormat->setFontPointSize( 14.0 );
-    obTitleFormat->setFontWeight( QFont::Bold );
-
-    obNormalFormat = new QTextCharFormat();
-    obNormalFormat->setFontPointSize( 10.0 );
-    obNormalFormat->setFontWeight( QFont::Normal );
-    obNormalFormat->setFontItalic( false );
-
-    obBoldFormat = new QTextCharFormat();
-    obBoldFormat->setFontPointSize( 10.0 );
-    obBoldFormat->setFontWeight( QFont::Bold );
-
-    obItalicFormat = new QTextCharFormat();
-    obItalicFormat->setFontPointSize( 10.0 );
-    obItalicFormat->setFontItalic( true );
-
-    obTableFormat = new QTextTableFormat();
-    obTableFormat->setHeaderRowCount( 1 );
-    obTableFormat->setBorderStyle( QTextFrameFormat::BorderStyle_None );
-    obTableFormat->setAlignment( Qt::AlignHCenter );
-
-    obLeftCellFormat = new QTextBlockFormat();
-    obLeftCellFormat->setLeftMargin( 10 );
-    obLeftCellFormat->setRightMargin( 10 );
-    obLeftCellFormat->setAlignment( Qt::AlignLeft );
-
-    obCenterCellFormat = new QTextBlockFormat();
-    obCenterCellFormat->setLeftMargin( 10 );
-    obCenterCellFormat->setRightMargin( 10 );
-    obCenterCellFormat->setAlignment( Qt::AlignHCenter );
-
-    obRightCellFormat = new QTextBlockFormat();
-    obRightCellFormat->setLeftMargin( 10 );
-    obRightCellFormat->setRightMargin( 10 );
-    obRightCellFormat->setAlignment( Qt::AlignRight );*/
+    _setDataIsVisibleEnabled();
 }
 //------------------------------------------------------------------------------------
 cReport::~cReport()
@@ -122,14 +83,17 @@ bool    cReport::isDateStartEnabled()       { return m_bDateStartEnabled; }
 bool    cReport::isDateStopEnabled()        { return m_bDateStopEnabled; }
 bool    cReport::isDataNameEnabled()        { return m_bDataNameEnabled; }
 bool    cReport::isDataTypeEnabled()        { return m_bDataTypeEnabled; }
+bool    cReport::isDataIsVisibleEnabled()   { return m_bIsVisibleEnabled; }
 QString cReport::labelDateStartText() const { return m_qsLabelDateStart; }
 QString cReport::labelDateStopText() const  { return m_qsLabelDateStop; }
 QString cReport::labelDataNameText() const  { return m_qsLabelDataName; }
 QString cReport::labelDataTypeText() const  { return m_qsLabelDataType; }
+QString cReport::labelIsVisibleText() const { return m_qsLabelIsVisible; }
 QDate   cReport::filterDateStart() const    { return m_qdStartDate; }
 QDate   cReport::filterDateStop() const     { return m_qdStopDate; }
 QString cReport::filterName() const         { return m_qsName; }
 QString cReport::filterType() const         { return m_qsType; }
+bool    cReport::filterIsVisible() const    { return m_bIsVisible; }
 //=================================================================================================
 //=================================================================================================
 // Adatokat beallito fuggvenyek
@@ -168,6 +132,12 @@ void cReport::setFilterDataType( const QString &p_qsType )
 //------------------------------------------------------------------------------------
 {
     m_qsType = p_qsType;
+}
+//------------------------------------------------------------------------------------
+void cReport::setFilterIsVisible( const bool p_bIsVisible )
+//------------------------------------------------------------------------------------
+{
+    m_bIsVisible = p_bIsVisible;
 }
 //=================================================================================================
 //=================================================================================================
@@ -326,6 +296,12 @@ void cReport::_setDataTypeEnabled(bool bEnabled)
     m_bDataTypeEnabled = bEnabled;
 }
 //------------------------------------------------------------------------------------
+void cReport::_setDataIsVisibleEnabled(bool bEnabled)
+//------------------------------------------------------------------------------------
+{
+    m_bIsVisibleEnabled = bEnabled;
+}
+//------------------------------------------------------------------------------------
 void cReport::_setDateStartLabelText( const QString &p_qsText )
 //------------------------------------------------------------------------------------
 {
@@ -348,5 +324,11 @@ void cReport::_setDataTypeLabelText( const QString &p_qsText )
 //------------------------------------------------------------------------------------
 {
     m_qsLabelDataType = p_qsText;
+}
+//------------------------------------------------------------------------------------
+void cReport::_setDataIsVisibleText(const QString &p_qsText)
+//------------------------------------------------------------------------------------
+{
+    m_qsLabelIsVisible = p_qsText;
 }
 //------------------------------------------------------------------------------------

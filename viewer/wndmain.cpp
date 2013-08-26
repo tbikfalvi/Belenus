@@ -648,6 +648,9 @@ void cWndMain::_setFiltersEnabled(bool p_bEnable)
     cmbFilterDataTypes->setEnabled( p_bEnable );
     cmbFilterDataTypes->setVisible( p_bEnable );
 
+    chkFilterIsVisible->setEnabled( p_bEnable );
+    chkFilterIsVisible->setVisible( p_bEnable );
+
     pbRefresh->setEnabled( p_bEnable );
     pbRefresh->setVisible( p_bEnable );
 }
@@ -659,6 +662,7 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
 
     spacerFilter1->changeSize( 0, 20 );
     spacerFilter2->changeSize( 0, 20 );
+    spacerFilter3->changeSize( 0, 20 );
 
     if( obReport->isDateStartEnabled() )
     {
@@ -705,6 +709,15 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
             QStringList qslDataType = qslDataTypes.at(i).split('|');
             cmbFilterDataTypes->addItem( qslDataType.at(1), qslDataType.at(0).toInt() );
         }
+        spacerFilter3->changeSize( 20, 20 );
+    }
+
+    if( obReport->isDataIsVisibleEnabled() )
+    {
+        chkFilterIsVisible->setEnabled( true );
+        chkFilterIsVisible->setVisible( true );
+        chkFilterIsVisible->setText( obReport->labelIsVisibleText() );
+        chkFilterIsVisible->setChecked( obReport->filterIsVisible() );
     }
 
     pbRefresh->setEnabled( true );
@@ -779,6 +792,21 @@ void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
     QString qsDataType = QString( "%1|%2" ).arg( cmbFilterDataTypes->itemData(index).toInt() ).arg( cmbFilterDataTypes->itemText(index) );
 
     obReport->setFilterDataType( qsDataType );
+
+    if( chkAutoRefresh->isChecked() )
+        on_pbRefresh_clicked();
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_chkFilterIsVisible_clicked()
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::on_chkFilterIsVisible_clicked" );
+
+    if( m_bReportTabSwitching ) return;
+
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->setFilterIsVisible( chkFilterIsVisible->isChecked() );
 
     if( chkAutoRefresh->isChecked() )
         on_pbRefresh_clicked();
