@@ -1,7 +1,7 @@
 
 #include "../framework/qtframework.h"
-#include "currency.h"
 #include "creportdaily.h"
+#include "currency.h"
 
 //------------------------------------------------------------------------------------
 cReportDaily::cReportDaily(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
@@ -40,7 +40,7 @@ void cReportDaily::refreshReport()
 
         _reportPartGeneral();
 
-    // Product sold of the selected date
+    // Product sold
     addSeparator();
     addSubTitle( tr( "Products sold" ) );
 
@@ -70,7 +70,7 @@ void cReportDaily::refreshReport()
         finishTable();
         finishSection();
 
-    // Product sold of the selected date
+    // Patientcards sold
     addSeparator();
     addSubTitle( tr( "Patientcards sold" ) );
 
