@@ -28,14 +28,16 @@ void cReportLedger::refreshReport()
 
     cReport::refreshReport();
 
-    QString      qsQuery = QString( "" );
-//    QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( qsQuery );
-
     startReport();
 
     addTitle( m_qsReportName );
     addSubTitle( QString( "%1 %2 -> %3" ).arg( tr( "Date intervall:" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ).arg( filterDateStop().toString( "yyyy MMM dd" ) ) );
     addHorizontalLine();
+
+    addSeparator();
+    addSubTitle( tr( "Cassa list" ) );
+
+        _reportPartCassaList();
 
     // Product sold
     addSeparator();
@@ -140,6 +142,71 @@ void cReportLedger::refreshReport()
     finishReport();
 
     m_dlgProgress.hide();
+}
+//------------------------------------------------------------------------------------
+void cReportLedger::_reportPartCassaList()
+//------------------------------------------------------------------------------------
+{
+    QString     qsQuery;
+    QSqlQuery  *poQueryResult;
+
+    qsQuery = QString( "SELECT cassaId, currentBalance, startDateTime, stopDateTime, cassa.modified, realName, cassa.userId "
+                       "FROM cassa, users "
+                       "WHERE cassa.userId=users.userId AND ("
+                       " (DATE(cassa.startDateTime)>\"%1\" AND DATE(cassa.startDateTime)<\"%2\") OR "
+                       " (DATE(cassa.stopDateTime)>\"%1\" AND DATE(cassa.stopDateTime)<\"%2\") OR "
+                       " (DATE(cassa.modified)>\"%1\" AND DATE(cassa.modified)<\"%2\") "
+                       ") ORDER BY startDateTime" ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
+    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+
+    m_dlgProgress.setProgressMax( poQueryResult->size()+11 );
+    m_dlgProgress.setProgressValue( 10 );
+
+    startSection();
+    addTable();
+
+    addTableRow();
+    addTableCell( tr( "Owner" ), "bold" );
+    addTableCell( tr( "Balance" ), "center bold" );
+    addTableCell( tr( "Income" ), "center bold" );
+    addTableCell( tr( "Cassa started" ), "center bold" );
+    addTableCell( tr( "Cassa closed" ), "center bold" );
+    addTableCell( tr( "Last entry" ), "center bold" );
+    m_dlgProgress.increaseProgressValue();
+
+    int nSumTotal = 0;
+
+    while( poQueryResult->next() )
+    {
+        cCurrency       cBalance( poQueryResult->value(1).toInt() );
+        unsigned int    uiCassaId   = poQueryResult->value(0).toUInt();
+        int             nSum = _sumCassaIncome(uiCassaId);
+        cCurrency       obIncome( nSum );
+
+        nSumTotal += nSum;
+
+        addTableRow();
+        addTableCell( poQueryResult->value(5).toString() );
+        addTableCell( cBalance.currencyFullStringShort(), "right" );
+        addTableCell( obIncome.currencyFullStringShort(), "right" );
+        addTableCell( poQueryResult->value(2).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        addTableCell( poQueryResult->value(3).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        addTableCell( poQueryResult->value(4).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        m_dlgProgress.increaseProgressValue();
+    }
+
+    cCurrency obSumTotal( nSumTotal );
+
+    addTableRow();
+    addTableCell( tr( "Sum total" ), "bold" );
+    addTableCell();
+    addTableCell( obSumTotal.currencyFullStringShort(), "right bold" );
+    addTableCell();
+    addTableCell();
+    addTableCell();
+
+    finishTable();
+    finishSection();
 }
 //------------------------------------------------------------------------------------
 unsigned int cReportLedger::_reportPartProductSell()

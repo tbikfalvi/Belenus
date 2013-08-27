@@ -17,6 +17,7 @@ public slots:
     virtual void refreshReport();
 
 private:
+    void            _reportPartCassaList();
     unsigned int    _reportPartProductSell();
     unsigned int    _reportPartPatientCardSell();
     unsigned int    _reportPartPanelUse();
