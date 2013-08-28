@@ -193,6 +193,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbPatientcardSells">
+         <property name="toolTip">
+          <string>History of patientcard cassa actions</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -660,8 +679,9 @@
       <string>Patientcards</string>
      </property>
      <addaction name="action_PatientcardTypes"/>
-     <addaction name="action_Patientcards_Inactive"/>
      <addaction name="action_Patientcards_Details"/>
+     <addaction name="action_Patientcards_Inactive"/>
+     <addaction name="action_Patientcard_Sells"/>
     </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
@@ -756,6 +776,17 @@
    </property>
    <property name="toolTip">
     <string>History of cassa events and actions</string>
+   </property>
+  </action>
+  <action name="action_Patientcard_Sells">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Patientcard sells</string>
+   </property>
+   <property name="toolTip">
+    <string>History of patientcard cassa actions</string>
    </property>
   </action>
  </widget>

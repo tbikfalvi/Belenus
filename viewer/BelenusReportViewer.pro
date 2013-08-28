@@ -28,12 +28,14 @@ HEADERS = ../framework/dbconnection.h \
     wndmain.h \
     currency.h \
     creport.h \
+    creporttemplate.h \
     creportdaily.h \
     creportcarddetails.h \
     creportcardinactive.h \
     creportpatientcardtype.h \
     creportledger.h \
     creportcassahistory.h \
+    creportpatientcardsell.h \
     dlgprogress.h
 
 SOURCES = ../framework/dbconnection.cpp \
@@ -46,12 +48,14 @@ SOURCES = ../framework/dbconnection.cpp \
     wndmain.cpp \
     currency.cpp \
     creport.cpp \
+    creporttemplate.cpp \
     creportdaily.cpp \
     creportledger.cpp \
     creportcarddetails.cpp \
     creportcardinactive.cpp \
     creportpatientcardtype.cpp \
     creportcassahistory.cpp \
+    creportpatientcardsell.cpp \
     dlgprogress.cpp
 
 
