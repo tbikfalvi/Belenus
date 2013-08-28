@@ -27,6 +27,9 @@ private slots:
     void on_pbSave_clicked();
     void on_ledPriceSell_textChanged(const QString &arg1);
     void on_ledVatpercentSell_textChanged(const QString &arg1);
+
+private:
+    bool    m_bIsOnlySave;
 };
 
 #endif

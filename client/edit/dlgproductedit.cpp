@@ -167,7 +167,10 @@ void cDlgProductEdit::on_pbSave_clicked()
             g_obLogger(cSeverity::DEBUG) << e.what() << EOM;
         }
 
-        QDialog::accept();
+        if( !m_bIsOnlySave )
+        {
+            QDialog::accept();
+        }
     }
 }
 
@@ -216,6 +219,27 @@ void cDlgProductEdit::on_pbProductRemoveAll_clicked()
 
 void cDlgProductEdit::on_pbProductStorage_clicked()
 {
+    if( m_poProduct->id() == 0 )
+    {
+        if( QMessageBox::warning( this,
+                                  tr("Attention"),
+                                  tr("This product has not been saved yet.\n"
+                                     "Changing the product storage data is not allowed\n"
+                                     "for newly created products."
+                                     "Do you want to save the product data now?"),
+                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+        {
+            m_bIsOnlySave = true;
+            on_pbSave_clicked();
+            m_bIsOnlySave = false;
+            on_pbProductStorage_clicked();
+        }
+        else
+        {
+            return;
+        }
+    }
+
     dlgProductStorage   *obDlgProductStorage = new dlgProductStorage( this, m_poProduct );
 
     if( obDlgProductStorage->exec() == QDialog::Accepted )

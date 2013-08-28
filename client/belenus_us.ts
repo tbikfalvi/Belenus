@@ -1704,33 +1704,33 @@ The length of the new barcode should be %1.</source>
 <context>
     <name>cDlgPatientCardEdit</name>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="45"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="46"/>
         <source>Patient card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="76"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="88"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="77"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="89"/>
         <source>&lt;Not selected&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="731"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="744"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="738"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="751"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="750"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="763"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="305"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="306"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -1743,51 +1743,51 @@ deactivate the card with unchecking the Active checkbox.</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="316"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="317"/>
         <source>Available units cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="323"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="324"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card with unchecking the Active checkbox.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="330"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="331"/>
         <source>Incorrect validation date.
 If you want to reset the date of validation
 deactivate the card with unchecking the Active checkbox.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="373"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="651"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="374"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="656"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="374"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="375"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="456"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="575"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="702"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="461"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="580"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="715"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="576"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="581"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="652"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="657"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation></translation>
     </message>
@@ -1807,32 +1807,32 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="221"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="226"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="222"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="227"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="266"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="271"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="274"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="279"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="287"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="292"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="297"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="302"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -1840,43 +1840,42 @@ deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="308"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="313"/>
         <source>Available units cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="315"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="320"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="322"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="327"/>
         <source>Incorrect validation date.
-If you want to reset the date of validation
-deactivate the card.</source>
+The patientcard with the selected units would not be used.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="350"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="361"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="351"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="362"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="394"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="406"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="445"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="457"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -2040,12 +2039,12 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="379"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="380"/>
         <source>Sell patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="430"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="431"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -2566,51 +2565,57 @@ Name of the file is: %1</source>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="108"/>
-        <location filename="crud/dlgproduct.cpp" line="128"/>
+        <location filename="crud/dlgproduct.cpp" line="130"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="109"/>
-        <location filename="crud/dlgproduct.cpp" line="129"/>
+        <location filename="crud/dlgproduct.cpp" line="131"/>
+        <source>Barcode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="110"/>
+        <location filename="crud/dlgproduct.cpp" line="132"/>
         <source>Price</source>
         <oldsource>Net price</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="110"/>
-        <location filename="crud/dlgproduct.cpp" line="130"/>
+        <location filename="crud/dlgproduct.cpp" line="111"/>
+        <location filename="crud/dlgproduct.cpp" line="133"/>
         <source>VAT percent</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="111"/>
-        <location filename="crud/dlgproduct.cpp" line="131"/>
+        <location filename="crud/dlgproduct.cpp" line="112"/>
+        <location filename="crud/dlgproduct.cpp" line="134"/>
         <source>Product count</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="112"/>
+        <location filename="crud/dlgproduct.cpp" line="113"/>
         <source>Active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="113"/>
+        <location filename="crud/dlgproduct.cpp" line="114"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="202"/>
+        <location filename="crud/dlgproduct.cpp" line="208"/>
         <source>New Product</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="242"/>
+        <location filename="crud/dlgproduct.cpp" line="248"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="245"/>
+        <location filename="crud/dlgproduct.cpp" line="251"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -2618,17 +2623,17 @@ Deleting this product will not delete the product types assigned.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="250"/>
+        <location filename="crud/dlgproduct.cpp" line="256"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="258"/>
+        <location filename="crud/dlgproduct.cpp" line="264"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="259"/>
+        <location filename="crud/dlgproduct.cpp" line="265"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -4286,12 +4291,12 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1009"/>
+        <location filename="frmpanel.cpp" line="1010"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1010"/>
+        <location filename="frmpanel.cpp" line="1011"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>
@@ -4377,8 +4382,8 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1483"/>
         <location filename="wndmain.cpp" line="1522"/>
         <location filename="wndmain.cpp" line="1541"/>
-        <location filename="wndmain.cpp" line="1964"/>
-        <location filename="wndmain.cpp" line="2080"/>
+        <location filename="wndmain.cpp" line="1965"/>
+        <location filename="wndmain.cpp" line="2082"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -4388,9 +4393,9 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1451"/>
         <location filename="wndmain.cpp" line="1573"/>
         <location filename="wndmain.cpp" line="1603"/>
-        <location filename="wndmain.cpp" line="1979"/>
-        <location filename="wndmain.cpp" line="2095"/>
-        <location filename="wndmain.cpp" line="2180"/>
+        <location filename="wndmain.cpp" line="1980"/>
+        <location filename="wndmain.cpp" line="2097"/>
+        <location filename="wndmain.cpp" line="2183"/>
         <source>Warning</source>
         <translation></translation>
     </message>
@@ -4511,7 +4516,7 @@ Please stop them before closing the application.</source>
     <message>
         <location filename="wndmain.cpp" line="947"/>
         <location filename="wndmain.cpp" line="1088"/>
-        <location filename="wndmain.cpp" line="1912"/>
+        <location filename="wndmain.cpp" line="1913"/>
         <source>Information</source>
         <translation></translation>
     </message>
@@ -4629,66 +4634,66 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1655"/>
+        <location filename="wndmain.cpp" line="1656"/>
         <source>Using panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1668"/>
+        <location filename="wndmain.cpp" line="1669"/>
         <source>Using device: %1</source>
         <oldsource>Using device: %1 - </oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1702"/>
+        <location filename="wndmain.cpp" line="1703"/>
         <source>Selling product: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1913"/>
+        <location filename="wndmain.cpp" line="1914"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1943"/>
-        <location filename="wndmain.cpp" line="2059"/>
+        <location filename="wndmain.cpp" line="1944"/>
+        <location filename="wndmain.cpp" line="2061"/>
         <source>Request</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1943"/>
+        <location filename="wndmain.cpp" line="1944"/>
         <source>Please enter the new patientcard&apos;s barcode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="1979"/>
-        <location filename="wndmain.cpp" line="2095"/>
+        <location filename="wndmain.cpp" line="1980"/>
+        <location filename="wndmain.cpp" line="2097"/>
         <source>This patientcard already in use.
 Please select a non-active patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2018"/>
+        <location filename="wndmain.cpp" line="2020"/>
         <source>Replace patientcard [%1]-&gt;[%2]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2059"/>
+        <location filename="wndmain.cpp" line="2061"/>
         <source>Please enter the barcode of the patientcard to be assigned.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2109"/>
+        <location filename="wndmain.cpp" line="2111"/>
         <source>Partner card of &quot;%1&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2134"/>
+        <location filename="wndmain.cpp" line="2137"/>
         <source>Assign patientcard [%1]&lt;-[%2]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2181"/>
+        <location filename="wndmain.cpp" line="2184"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -4747,8 +4752,8 @@ Do you want to activate it now?</source>
     <message>
         <location filename="wndmain.cpp" line="1296"/>
         <location filename="wndmain.cpp" line="1542"/>
-        <location filename="wndmain.cpp" line="1965"/>
-        <location filename="wndmain.cpp" line="2081"/>
+        <location filename="wndmain.cpp" line="1966"/>
+        <location filename="wndmain.cpp" line="2083"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation></translation>

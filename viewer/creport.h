@@ -29,7 +29,7 @@ public:
         LT_PC_ASSIGN_PARTNER,
         LT_OTHER7,
         LT_OTHER8,
-        LT_OTHER9
+        LT_PROD_STORAGE_CHANGE
     };
 
     explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
@@ -62,11 +62,15 @@ public:
     QString              filterType() const;
     bool                 filterIsVisible() const;
 
+    QString              filterTypeList() const;
+
     void                 setFilterDateStart( const QDate &p_qdDate );
     void                 setFilterDateStop( const QDate &p_qdDate );
     void                 setFilterDataName( const QString &p_qsName );
     void                 setFilterDataType( const QString &p_qsType );
     void                 setFilterIsVisible( const bool p_bIsVisible );
+
+    void                 setFilterDataTypeList( const QString &p_qsTypeList );
 
     void                 startReport();
     void                 finishReport();
@@ -91,15 +95,6 @@ protected:
     QVBoxLayout         *mainLayout;
     QString              m_qsReportHtml;
 
-/*    QTextCharFormat     *obTitleFormat;
-    QTextCharFormat     *obNormalFormat;
-    QTextCharFormat     *obBoldFormat;
-    QTextCharFormat     *obItalicFormat;
-    QTextTableFormat    *obTableFormat;
-    QTextBlockFormat    *obLeftCellFormat;
-    QTextBlockFormat    *obCenterCellFormat;
-    QTextBlockFormat    *obRightCellFormat;*/
-
     QString              m_qsReportName;
     QString              m_qsReportDescription;
     int                  m_nIndex;
@@ -121,6 +116,8 @@ protected:
     QString              m_qsName;
     QString              m_qsType;
     bool                 m_bIsVisible;
+
+    QString              m_qsTypeList;
 
     void                _setDateStartEnabled( bool bEnabled = false );
     void                _setDateStopEnabled( bool bEnabled = false );

@@ -27,7 +27,8 @@ cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName) 
         qslDataTypes << QString( "%1|%2" ).arg( poQueryResult->value(0).toString() ).arg( poQueryResult->value(1).toString() );
     }
 
-    setFilterDataType( qslDataTypes.join("#") );
+    setFilterDataType( QString( "0|%1" ).arg( tr("All type") ) );
+    setFilterDataTypeList( qslDataTypes.join("#") );
 }
 
 void cReportCardDetails::refreshReport()

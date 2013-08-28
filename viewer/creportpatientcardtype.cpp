@@ -21,7 +21,8 @@ cReportPatientCardType::cReportPatientCardType(QWidget *parent, QString p_qsRepo
     qslDataTypes << QString( "1|%1" ).arg( tr("set by No. of days") );
     qslDataTypes << QString( "2|%1" ).arg( tr("set by date intervall") );
 
-    setFilterDataType( qslDataTypes.join("#") );
+    setFilterDataType( QString( "0|%1" ).arg( tr("All type") ) );
+    setFilterDataTypeList( qslDataTypes.join("#") );
 }
 
 void cReportPatientCardType::refreshReport()

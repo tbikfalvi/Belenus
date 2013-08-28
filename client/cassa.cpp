@@ -306,9 +306,9 @@ void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShop
 
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
-    obDBLedger.setLedgerTypeId( cDBLedger::LT_OTHER9 );
+    obDBLedger.setLedgerTypeId( cDBLedger::LT_PROD_STORAGE_CHANGE );
     obDBLedger.setPaymentMethod( 1 );
-    obDBLedger.setUserId( 0 );
+    obDBLedger.setUserId( g_obUser.id() );
     obDBLedger.setProductId( p_obDBShoppingCart.productId() );
     obDBLedger.setName( p_obDBShoppingCart.itemName() );
     obDBLedger.setItemCount( p_obDBShoppingCart.itemCount() );

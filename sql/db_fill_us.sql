@@ -192,7 +192,7 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (6 , '0', 'Other', '1', 'ARC'),
  (7 , '0', 'Other', '1', 'ARC'),
  (8 , '0', 'Other', '1', 'ARC'),
- (9 , '0', 'Other', '1', 'ARC');
+ (9 , '0', 'Storage action', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

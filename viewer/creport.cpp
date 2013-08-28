@@ -94,6 +94,7 @@ QDate   cReport::filterDateStop() const     { return m_qdStopDate; }
 QString cReport::filterName() const         { return m_qsName; }
 QString cReport::filterType() const         { return m_qsType; }
 bool    cReport::filterIsVisible() const    { return m_bIsVisible; }
+QString cReport::filterTypeList() const     { return m_qsTypeList; }
 //=================================================================================================
 //=================================================================================================
 // Adatokat beallito fuggvenyek
@@ -138,6 +139,12 @@ void cReport::setFilterIsVisible( const bool p_bIsVisible )
 //------------------------------------------------------------------------------------
 {
     m_bIsVisible = p_bIsVisible;
+}
+//------------------------------------------------------------------------------------
+void cReport::setFilterDataTypeList( const QString &p_qsTypeList )
+//------------------------------------------------------------------------------------
+{
+    m_qsTypeList = p_qsTypeList;
 }
 //=================================================================================================
 //=================================================================================================

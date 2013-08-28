@@ -212,6 +212,32 @@
         </widget>
        </item>
        <item>
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbProducts">
+         <property name="toolTip">
+          <string>Products registered in database</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -683,8 +709,15 @@
      <addaction name="action_Patientcards_Inactive"/>
      <addaction name="action_Patientcard_Sells"/>
     </widget>
+    <widget class="QMenu" name="menuProducts_2">
+     <property name="title">
+      <string>Products</string>
+     </property>
+     <addaction name="action_Products"/>
+    </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
+    <addaction name="menuProducts_2"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
@@ -787,6 +820,17 @@
    </property>
    <property name="toolTip">
     <string>History of patientcard cassa actions</string>
+   </property>
+  </action>
+  <action name="action_Products">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Products</string>
+   </property>
+   <property name="toolTip">
+    <string>Products registered in database</string>
    </property>
   </action>
  </widget>

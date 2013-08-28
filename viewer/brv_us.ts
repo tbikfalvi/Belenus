@@ -687,6 +687,64 @@
     </message>
 </context>
 <context>
+    <name>cReportProducts</name>
+    <message>
+        <location filename="creportproducts.cpp" line="8"/>
+        <source> Products </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="9"/>
+        <source>This report shows the products registered in database.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="12"/>
+        <source>Product types :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="16"/>
+        <source>All type</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="17"/>
+        <source>Products with no type</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="29"/>
+        <source>Show producst with zero item count</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="34"/>
+        <source>Create selected report ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="106"/>
+        <source>Name</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="107"/>
+        <source>Barcode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="108"/>
+        <source>Price</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportproducts.cpp" line="109"/>
+        <source>Count</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>cReport__Template_ClassName__</name>
     <message>
         <location filename="creporttemplate.cpp" line="7"/>
@@ -707,48 +765,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="230"/>
-        <location filename="wndmain.cpp" line="312"/>
+        <location filename="wndmain.cpp" line="243"/>
+        <location filename="wndmain.cpp" line="327"/>
         <source>Login</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="235"/>
+        <location filename="wndmain.cpp" line="248"/>
         <source>Need authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="240"/>
+        <location filename="wndmain.cpp" line="253"/>
         <source>User successfully authenticated.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="245"/>
+        <location filename="wndmain.cpp" line="258"/>
         <source>Logout</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="251"/>
+        <location filename="wndmain.cpp" line="264"/>
         <source>The username entered not found in the Belenus database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="253"/>
+        <location filename="wndmain.cpp" line="266"/>
         <source>The password entered is incorrect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="255"/>
+        <location filename="wndmain.cpp" line="268"/>
         <source>Connection to Belenus database failed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="257"/>
+        <location filename="wndmain.cpp" line="270"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="645"/>
+        <location filename="wndmain.cpp" line="694"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation></translation>
     </message>
@@ -785,20 +843,20 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="115"/>
-        <location filename="wndmain.ui" line="778"/>
+        <location filename="wndmain.ui" line="811"/>
         <source>History of cassa events and actions</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="141"/>
-        <location filename="wndmain.ui" line="748"/>
+        <location filename="wndmain.ui" line="781"/>
         <source>Active patientcard types</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="160"/>
-        <location filename="wndmain.ui" line="764"/>
-        <location filename="wndmain.ui" line="767"/>
+        <location filename="wndmain.ui" line="797"/>
+        <location filename="wndmain.ui" line="800"/>
         <source>Patientcard details</source>
         <translation></translation>
     </message>
@@ -809,177 +867,189 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="198"/>
-        <location filename="wndmain.ui" line="789"/>
+        <location filename="wndmain.ui" line="822"/>
         <source>History of patientcard cassa actions</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="230"/>
+        <location filename="wndmain.ui" line="224"/>
+        <location filename="wndmain.ui" line="833"/>
+        <source>Products registered in database</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="256"/>
         <source> Print report </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="279"/>
+        <location filename="wndmain.ui" line="305"/>
         <source>Report description ... </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="295"/>
+        <location filename="wndmain.ui" line="321"/>
         <source> Refresh </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="328"/>
+        <location filename="wndmain.ui" line="354"/>
         <source>Date start :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="345"/>
+        <location filename="wndmain.ui" line="371"/>
         <source>Date stop :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="378"/>
+        <location filename="wndmain.ui" line="404"/>
         <source>Data name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="411"/>
+        <location filename="wndmain.ui" line="437"/>
         <source>Data types :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="444"/>
+        <location filename="wndmain.ui" line="470"/>
         <source>Is visible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="479"/>
+        <location filename="wndmain.ui" line="505"/>
         <source> Information </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="494"/>
+        <location filename="wndmain.ui" line="520"/>
         <source>How to use report viewer ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="516"/>
+        <location filename="wndmain.ui" line="542"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="526"/>
+        <location filename="wndmain.ui" line="552"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="533"/>
+        <location filename="wndmain.ui" line="559"/>
         <source> Authentication </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="539"/>
+        <location filename="wndmain.ui" line="565"/>
         <source>Need authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="548"/>
+        <location filename="wndmain.ui" line="574"/>
         <source>User name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="558"/>
+        <location filename="wndmain.ui" line="584"/>
         <source>Password :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="578"/>
+        <location filename="wndmain.ui" line="604"/>
         <source> Login </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="609"/>
+        <location filename="wndmain.ui" line="635"/>
         <source> Filter settings </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="615"/>
+        <location filename="wndmain.ui" line="641"/>
         <source>Refresh the report automatically after one of the filter has been changed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="652"/>
+        <location filename="wndmain.ui" line="678"/>
         <source>&amp;File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="659"/>
+        <location filename="wndmain.ui" line="685"/>
         <source>&amp;View</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="666"/>
+        <location filename="wndmain.ui" line="692"/>
         <source>&amp;Reports</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="670"/>
+        <location filename="wndmain.ui" line="696"/>
         <source>&amp;Bookkeeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="679"/>
+        <location filename="wndmain.ui" line="705"/>
         <source>Patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="696"/>
-        <source>E&amp;xit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="707"/>
-        <source>&amp;Toolbar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="718"/>
-        <source>&amp;Filter bar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.ui" line="726"/>
-        <source>&amp;Daily</source>
+        <location filename="wndmain.ui" line="714"/>
+        <location filename="wndmain.ui" line="830"/>
+        <source>Products</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="729"/>
+        <source>E&amp;xit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="740"/>
+        <source>&amp;Toolbar</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="751"/>
+        <source>&amp;Filter bar</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="759"/>
+        <source>&amp;Daily</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="762"/>
         <source>Daily bookkeeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="737"/>
+        <location filename="wndmain.ui" line="770"/>
         <source>&amp;Ledger</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="745"/>
+        <location filename="wndmain.ui" line="778"/>
         <source>&amp;Active patientcard types</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="756"/>
+        <location filename="wndmain.ui" line="789"/>
         <source>Inactive patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="775"/>
+        <location filename="wndmain.ui" line="808"/>
         <source>&amp;Cassa history</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="786"/>
+        <location filename="wndmain.ui" line="819"/>
         <source>Patientcard sells</source>
         <translation></translation>
     </message>

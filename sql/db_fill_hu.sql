@@ -198,7 +198,7 @@ INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archi
  (6 , '0', 'Egyéb', '1', 'ARC'),
  (7 , '0', 'Egyéb', '1', 'ARC'),
  (8 , '0', 'Egyéb', '1', 'ARC'),
- (9 , '0', 'Egyéb', '1', 'ARC');
+ (9 , '0', 'Raktár esemény', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -3599,4 +3599,3 @@ INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `
  (6, 1, 'Gép használat készpénzzel', '0000-00-00 00:00:00', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
-

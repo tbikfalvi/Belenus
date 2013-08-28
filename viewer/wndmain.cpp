@@ -50,6 +50,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( this, SIGNAL(setCheckedReportPatientcardInactive(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardDetails(bool)), this, SLOT(slotCheckReportPatientcardDetails(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardSells(bool)), this, SLOT(slotCheckReportPatientcardSells(bool)) );
+    connect( this, SIGNAL(setCheckedReportProducts(bool)), this, SLOT(slotCheckReportProducts(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -120,6 +121,8 @@ void cWndMain::_initActions()
     connect( action_Patientcards_Details, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardDetails(bool)) );
     connect( action_Patientcard_Sells, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardSells(bool)) );
 
+    connect( action_Products, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportProducts(bool)) );
+
     // ICONS
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
 
@@ -133,6 +136,8 @@ void cWndMain::_initActions()
     action_Patientcards_Details->setIcon( QIcon("./resources/40x40_report_patientcard_details.png") );
     action_Patientcard_Sells->setIcon( QIcon("./resources/40x40_report_patientcard_sell.png") );
 
+    action_Products->setIcon( QIcon("./resources/40x40_report_products.png") );
+
     // BEHAVIOUR
     action_FilterBar->setEnabled( false );
 
@@ -145,6 +150,8 @@ void cWndMain::_initActions()
     action_Patientcards_Inactive->setEnabled( false );
     action_Patientcards_Details->setEnabled( false );
     action_Patientcard_Sells->setEnabled( false );
+
+    action_Products->setEnabled( false );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_initToolbar()
@@ -165,6 +172,8 @@ void cWndMain::_initToolbar()
     connect( pbPatientcardsDetails, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardDetails(bool)) );
     connect( pbPatientcardSells, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardSells(bool)) );
 
+    connect( pbProducts, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportProducts(bool)) );
+
     // ICONS
     pbExit->setIcon( QIcon("./resources/40x40_shutdown.png") );
 
@@ -178,6 +187,8 @@ void cWndMain::_initToolbar()
     pbPatientcardsDetails->setIcon( QIcon("./resources/40x40_report_patientcard_details.png") );
     pbPatientcardSells->setIcon( QIcon("./resources/40x40_report_patientcard_sell.png") );
 
+    pbProducts->setIcon( QIcon("./resources/40x40_report_products.png") );
+
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
 
     // BEHAVIOUR
@@ -190,6 +201,8 @@ void cWndMain::_initToolbar()
     pbPatientcardsInactive->setEnabled( false );
     pbPatientcardsDetails->setEnabled( false );
     pbPatientcardSells->setEnabled( false );
+
+    pbProducts->setEnabled( false );
 
     pbPrint->setEnabled( false );
 }
@@ -283,6 +296,8 @@ return;
             emit setCheckedReportPatientcardDetails( false );
         else if( m_repCardSells && m_repCardSells->index() == index )
             emit setCheckedReportPatientcardSells( false );
+        else if( m_repProducts && m_repProducts->index() == index )
+            emit setCheckedReportProducts( false );
     }
 }
 //------------------------------------------------------------------------------------
@@ -401,6 +416,8 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     action_Patientcards_Details->setEnabled( p_bEnable );
     action_Patientcard_Sells->setEnabled( p_bEnable );
 
+    action_Products->setEnabled( p_bEnable );
+
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
     pbBookkeepingDaily->setEnabled( p_bEnable );
     pbBookkeepingLedger->setEnabled( p_bEnable );
@@ -410,6 +427,8 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     pbPatientcardsInactive->setEnabled( p_bEnable );
     pbPatientcardsDetails->setEnabled( p_bEnable );
     pbPatientcardSells->setEnabled( p_bEnable );
+
+    pbProducts->setEnabled( p_bEnable );
 
     pbPrint->setEnabled( p_bEnable );
 }
@@ -628,6 +647,36 @@ void cWndMain::slotCheckReportPatientcardSells( bool p_bChecked )
 
     m_bReportTabSwitching = false;
 }
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportProducts(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportProducts" );
+
+    m_bReportTabSwitching = true;
+
+    action_Products->setChecked( p_bChecked );
+    pbProducts->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repProducts = new cReportProducts();
+
+        m_qvReports.append( m_repProducts );
+        m_repProducts->setIndex( tabReports->addTab( m_repProducts, QIcon("./resources/40x40_report_products.png"), m_repProducts->name() ) );
+        tabReports->setCurrentIndex( m_repProducts->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repProducts->index()-1 );
+        tabReports->removeTab( m_repProducts->index() );
+        delete m_repProducts;
+        m_repProducts = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
 //====================================================================================
 // Altalanos fuggvenyek
 //====================================================================================
@@ -741,14 +790,20 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
         cmbFilterDataTypes->setVisible( true );
         lblFilterDataType->setText( obReport->labelDataTypeText() );
 
-        QStringList qslDataTypes = obReport->filterType().split('#');
+        QStringList qslDataTypes    = obReport->filterTypeList().split('#');
+        int         nCurrentIndex   = 0;
 
         cmbFilterDataTypes->clear();
         for( int i=0; i<qslDataTypes.count(); i++ )
         {
             QStringList qslDataType = qslDataTypes.at(i).split('|');
             cmbFilterDataTypes->addItem( qslDataType.at(1), qslDataType.at(0).toInt() );
+            if( obReport->filterType().compare( qslDataTypes.at(i) ) == 0 )
+            {
+                nCurrentIndex = i;
+            }
         }
+        cmbFilterDataTypes->setCurrentIndex( nCurrentIndex );
         spacerFilter3->changeSize( 20, 20 );
     }
 
