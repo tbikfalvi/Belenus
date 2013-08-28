@@ -744,10 +744,9 @@ void dlgMain::_initializeComponentSelectionPage()
         imgBelenus->setEnabled( true );
         lblTextBelenus->setEnabled( true );
 
-// Currently no standalone viewer exists
-//        chkViewer->setEnabled( true );
-//        imgViewer->setEnabled( true );
-//        lblTextViewer->setEnabled( true );
+        chkViewer->setEnabled( true );
+        imgViewer->setEnabled( true );
+        lblTextViewer->setEnabled( true );
     }
     else if( m_pInstallType == rbUpdate )
     {
@@ -761,9 +760,8 @@ void dlgMain::_initializeComponentSelectionPage()
                 m_bProcessHWConnection = false;
             if( m_qslComponents.indexOf( "Client" ) == -1 )
                 m_bProcessBelenusClient = false;
-// Currently no standalone viewer exists
-//            if( m_qslComponents.indexOf( "Viewer" ) == -1 )
-//                m_bProcessViewer = false;
+            if( m_qslComponents.indexOf( "Viewer" ) == -1 )
+                m_bProcessViewer = false;
         }
     }
 
@@ -779,8 +777,7 @@ void dlgMain::_initializeComponentSelectionPage()
     chkDatabase->setChecked( m_bProcessDatabase );
     chkHardware->setChecked( m_bProcessHWConnection );
     chkBelenus->setChecked( m_bProcessBelenusClient );
-// Currently no standalone viewer exists
-//    chkViewer->setChecked( m_bProcessViewer );
+    chkViewer->setChecked( m_bProcessViewer );
 
     _setEnableNextButton();
 }
@@ -883,8 +880,7 @@ bool dlgMain::_processComponentSelectionPage()
     m_bProcessDatabase      = chkDatabase->isChecked();
     m_bProcessHWConnection  = chkHardware->isChecked();
     m_bProcessBelenusClient = chkBelenus->isChecked();
-// Currently no standalone viewer exists
-//    m_bProcessViewer        = chkViewer->isChecked();
+    m_bProcessViewer        = chkViewer->isChecked();
 
     _refreshPages();
 

@@ -20,6 +20,7 @@
 
 //====================================================================================
 
+#include "../framework/qtlogger.h"
 #include "dlgMain.h"
 
 //====================================================================================
@@ -29,6 +30,7 @@ QTranslator     *poTransSetup;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 QString          g_qsCurrentPath;
+cQTLogger                g_obLogger;
 
 //====================================================================================
 int main(int argc, char *argv[])

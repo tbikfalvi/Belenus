@@ -19,14 +19,26 @@ win32:DEFINES -= UNICODE
 
 FORMS       += dlgMain.ui
 
-SOURCES     += main.cpp \
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               main.cpp \
                dlgMain.cpp \
                ../client/communication_serial.cpp \
                ../client/ClassSerialComm.cpp \
                ../client/ClassHardware.cpp \
                cregistry.cpp
 
-HEADERS     += dlgMain.h \
+HEADERS     += ../framework/dbconnection.h \
+               ../framework/qtmysqlconnection.h \
+               ../framework/qtmysqlquerymodel.h \
+               ../framework/qtlogger.h \
+               ../framework/logger/FileWriter.h \
+               ../framework/tracer.h \
+               dlgMain.h \
                ../client/ClassSerialComm.h \
                ../client/ClassHardware.h \
                ../client/communication_serial.h \

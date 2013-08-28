@@ -34,7 +34,7 @@
       <number>2</number>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageStart">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -815,7 +815,7 @@
        <item>
         <widget class="QCheckBox" name="chkViewer">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>Report viewer application</string>
@@ -843,7 +843,7 @@
          <item>
           <widget class="QLabel" name="imgViewer">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="maximumSize">
             <size>
@@ -881,7 +881,7 @@
          <item>
           <widget class="QLabel" name="lblTextViewer">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Setup Belenus report viewer application. Wamp database server and Belenus client database is required for this component. This component can be installed independently from Client application with Internet connection.</string>
