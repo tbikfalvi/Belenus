@@ -45,20 +45,9 @@ void cReportLedger::refreshReport()
 
         startSection();
         addTable();
-        addTableRow();
-        addTableCell();
-        addTableCell( tr("Product name"), "bold" );
-        addTableCell( tr("Count"), "center bold" );
-        addTableCell( tr("Amount"), "right bold" );
 
         // Total of product sold
         cCurrency   obProductTotal( _reportPartProductSell() );
-
-        addTableRow();
-        addTableCell( tr("Sum total"), "bold" );
-        addTableCell();
-        addTableCell();
-        addTableCell( obProductTotal.currencyFullStringShort(), "right bold" );
 
         finishTable();
         finishSection();
@@ -231,10 +220,9 @@ unsigned int cReportLedger::_reportPartProductSell()
     m_dlgProgress.setProgressValue( 10 );
 
     addTableRow();
-    addTableCell( tr("Morning"), "bold" );
-    addTableCell();
-    addTableCell();
-    addTableCell();
+    addTableCell( tr("Product name"), "bold" );
+    addTableCell( tr("Count"), "center bold" );
+    addTableCell( tr("Amount"), "right bold" );
 
     unsigned int uiTotal = 0;
 
@@ -244,7 +232,6 @@ unsigned int cReportLedger::_reportPartProductSell()
         uiTotal += poQueryResult->value(2).toInt();
 
         addTableRow();
-        addTableCell();
         addTableCell( poQueryResult->value(0).toString() );
         addTableCell( poQueryResult->value(1).toString(), "center" );
         addTableCell( obPrice.currencyFullStringShort(), "right" );
@@ -253,8 +240,7 @@ unsigned int cReportLedger::_reportPartProductSell()
     cCurrency   obTotalPrice( uiTotal );
 
     addTableRow();
-    addTableCell();
-    addTableCell( tr("Sum"), "bold" );
+    addTableCell( tr("Sum total"), "bold" );
     addTableCell();
     addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
 

@@ -233,6 +233,7 @@ void cDlgProductEdit::on_pbProductStorage_clicked()
             on_pbSave_clicked();
             m_bIsOnlySave = false;
             on_pbProductStorage_clicked();
+            return;
         }
         else
         {

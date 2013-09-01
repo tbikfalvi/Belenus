@@ -288,6 +288,9 @@
               <height>20</height>
              </size>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -579,6 +582,9 @@
          <height>20</height>
         </size>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -591,6 +597,9 @@
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -640,6 +649,25 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="pbSellCard">
+       <property name="toolTip">
+        <string>Sell unactivated patientcard to guest.</string>
+       </property>
+       <property name="text">
+        <string>Sell card</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pbAssignCard">
        <property name="toolTip">
         <string>Join existing card to guest</string>
@@ -653,21 +681,8 @@
          <height>20</height>
         </size>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbSellCard">
-       <property name="toolTip">
-        <string>Sell unactivated patientcard to guest.</string>
-       </property>
-       <property name="text">
-        <string>Sell card</string>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -700,6 +715,9 @@
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -736,14 +754,20 @@
   <tabstop>ledBarcode</tabstop>
   <tabstop>ledPatientcardType</tabstop>
   <tabstop>pbDislink</tabstop>
-  <tabstop>chkReturning</tabstop>
+  <tabstop>chkRegularCustomer</tabstop>
+  <tabstop>chkEmployee</tabstop>
   <tabstop>chkService</tabstop>
+  <tabstop>rbDiscountValue</tabstop>
+  <tabstop>rbDiscountPercent</tabstop>
+  <tabstop>ledDiscount</tabstop>
+  <tabstop>pbEditDiscount</tabstop>
   <tabstop>ledLoyaltyPoints</tabstop>
+  <tabstop>chkReturning</tabstop>
   <tabstop>pbSaveExit</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
-  <tabstop>pbAssignCard</tabstop>
   <tabstop>pbSellCard</tabstop>
+  <tabstop>pbAssignCard</tabstop>
   <tabstop>pbHistory</tabstop>
  </tabstops>
  <resources/>

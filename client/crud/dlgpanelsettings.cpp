@@ -62,7 +62,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbWTReset->setToolTip( tr("Reset the worktime of the device.") );
     pbWTReset->setIconSize( QSize(20,20) );
     pbWTReset->setIcon( QIcon("./resources/40x40_hourglass.png") );
-    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( pbWTReset );
 
     lblMaxWorkTime = new QLabel( this );

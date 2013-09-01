@@ -288,7 +288,16 @@ bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
 
     qslDays << QObject::tr("Mon") << QObject::tr("Tue") << QObject::tr("Wed") << QObject::tr("Thu") << QObject::tr("Fri") << QObject::tr("Sat") << QObject::tr("Sun");
 
-    QStringList         qslValidTimes = obDBValidTimePeriod.loadPeriods( m_uiPatientCardTypeId );
+    QStringList qslValidTimes;
+
+    try
+    {
+        qslValidTimes = obDBValidTimePeriod.loadPeriods( m_uiPatientCardTypeId );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 
     *p_qsValid = QObject::tr( "Patientcard can be used:" );
     for( int i=0; i<qslValidTimes.count(); i++ )

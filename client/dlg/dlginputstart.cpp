@@ -3,6 +3,7 @@
 
 #include "dlginputstart.h"
 #include "../crud/dlgpatientselect.h"
+#include "../db/dbpatientcard.h"
 
 cDlgInputStart::cDlgInputStart( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -124,6 +125,18 @@ void cDlgInputStart::on_ledInputStart_textChanged(QString )
         pbPatient->setEnabled( false );
     }
 
+    if( _IsServiceCard() )
+    {
+        m_bCard = true;
+        m_bTime = false;
+        m_bPat  = false;
+        m_bProd = false;
+        pbCardcode->setEnabled( true );
+        pbTime->setEnabled( false );
+        pbPatient->setEnabled( false );
+        pbProduct->setEnabled( false );
+    }
+
     if( m_bTime )
     {
         lblAction->setText( tr("Entering time period ...") );
@@ -149,12 +162,22 @@ void cDlgInputStart::on_pbPatient_clicked()
 
 void cDlgInputStart::on_pbCardcode_clicked()
 {
-    if( ledInputStart->text().length() != g_poPrefs->getBarcodeLength() )
+    if( !_IsServiceCard() )
     {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("Barcode of patientcard should be %1 character length.").arg(g_poPrefs->getBarcodeLength()) );
-        ledInputStart->setFocus();
-        return;
+        if( ledInputStart->text().length() != g_poPrefs->getBarcodeLength() )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("Barcode of patientcard should be %1 character length.").arg(g_poPrefs->getBarcodeLength()) );
+            ledInputStart->setFocus();
+            return;
+        }
+    }
+    else
+    {
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( 1 );
+        ledInputStart->setText( obDBPatientCard.barcode() );
     }
     m_bPat = false;
     m_bCard = true;
@@ -217,4 +240,22 @@ void cDlgInputStart::on_ledInputStart_returnPressed()
     {
         QMessageBox::information( this, tr("Attention"),tr("Please click on the desired button for the defined search value!"));
     }
+}
+
+bool cDlgInputStart::_IsServiceCard()
+{
+    QString qsVerif;
+    bool    bRet = false;
+
+    for( int i=0; i<ledInputStart->text().length(); i++ )
+    {
+        qsVerif.append( '0' );
+    }
+
+    if( qsVerif.compare(ledInputStart->text()) == 0 )
+    {
+        bRet = true;
+    }
+
+    return bRet;
 }

@@ -23,7 +23,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     pbUseUnitType->setMinimumHeight( 30 );
     pbUseUnitType->setMaximumHeight( 30 );
     pbUseUnitType->setText( tr("%1 minute(s) unit").arg( p_qslParameters->at(1) ) );
-    pbUseUnitType->setToolTip( tr("Using this patient card unit type gives %1 minute(s) device usage.") );
+    pbUseUnitType->setToolTip( tr("Using this patient card unit type gives %1 minute(s) device usage.").arg( p_qslParameters->at(1) ) );
     pbUseUnitType->setIconSize( QSize(20,20) );
     pbUseUnitType->setIcon( QIcon("./resources/40x40_device_withcard.png") );
     pbUseUnitType->setCheckable( true );
@@ -161,13 +161,19 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         obDBPatientCard.load( m_uiPanelUsePatientCardId );
 
         ledPatientCardBarcode->setText( obDBPatientCard.barcode() );
+        ledPatientCardBarcode->setEnabled( false );
+
+        if( obDBPatientCard.parentId() > 1 )
+        {
+            obDBPatientCard.load( obDBPatientCard.parentId() );
+        }
 
         QString qsQuery = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
                                    "FROM patientcardunits "
                                    "WHERE patientCardId=%1 "
                                    "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
                                    "AND active=1 "
-                                   "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( m_uiPanelUsePatientCardId );
+                                   "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( obDBPatientCard.id() );
         QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         while( poQuery->next() )

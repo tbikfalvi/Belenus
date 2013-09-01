@@ -24,6 +24,8 @@ public:
 private:
     bool     m_bInitCalled;
 
+    bool    _IsServiceCard();
+
 private slots:
     void on_pbProduct_clicked();
     void on_ledInputStart_returnPressed();

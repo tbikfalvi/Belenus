@@ -216,7 +216,7 @@ void cCassa::cassaReOpen()
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
-    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Reopen cassa record.") );
@@ -247,7 +247,7 @@ void cCassa::cassaClose()
 
     obDBCassaHistory.setLicenceId( m_pCassa->licenceId() );
     obDBCassaHistory.setCassaId( m_pCassa->id() );
-    obDBCassaHistory.setUserId( g_obUser.id() );
+    obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Close cassa record.") );
@@ -501,6 +501,32 @@ void cCassa::cassaDecreaseMoney( int p_nMoney, QString p_qsComment )
     obDBCassaHistory.save();
 }
 //====================================================================================
+void cCassa::cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString p_qsComment )
+//====================================================================================
+{
+    QString m_qsComment = QObject::tr("Remove money from cassa.");
+
+    if( p_qsComment.length() > 0 )
+    {
+        m_qsComment += " - ";
+        m_qsComment += p_qsComment;
+    }
+
+    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()-p_nMoney );
+    m_pCassa->save();
+
+    cDBCassaHistory obDBCassaHistory;
+
+    obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBCassaHistory.setCassaId( m_pCassa->id() );
+    obDBCassaHistory.setUserId( p_uiUserId );
+    obDBCassaHistory.setActionValue( -p_nMoney );
+    obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
+    obDBCassaHistory.setComment( m_qsComment );
+    obDBCassaHistory.setActive( true );
+    obDBCassaHistory.save();
+}
+//====================================================================================
 void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
@@ -556,6 +582,12 @@ bool cCassa::isCassaEnabled()
 //====================================================================================
 {
     return m_bCassaEnabled;
+}
+//====================================================================================
+unsigned int cCassa::cassaOwnerId()
+//====================================================================================
+{
+    return m_pCassa->userId();
 }
 //====================================================================================
 QString cCassa::cassaOwnerStr()
