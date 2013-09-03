@@ -114,7 +114,12 @@ void cDlgStorno::refreshTable()
     }
     else
     {
-        m_qsQuery = "SELECT cassaHistoryId AS id, actionTime, (actionValue/100) as actionValue, comment FROM cassahistory WHERE actionValue<>0 AND active=1";
+        m_qsQuery = QString( "SELECT cassaHistoryId AS id, actionTime, (actionValue/100) as actionValue, comment FROM cassahistory WHERE actionValue<>0 AND cassaId=%1 AND active=1" ).arg( g_obCassa.cassaId() );
+        if( g_obUser.isInGroup( cAccessGroup::USER ) )
+        {
+            m_qsQuery += " AND ";
+            m_qsQuery += QString( "userId=%1" ).arg( g_obUser.id() );
+        }
     }
 
     QString stTemp;

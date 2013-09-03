@@ -287,6 +287,13 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
         try
         {
             obDBPatientCard.load( qsBarcode );
+
+            if( obDBPatientCard.pincode().compare("LOST") == 0 )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
+                return;
+            }
         }
         catch( cSevException &e )
         {

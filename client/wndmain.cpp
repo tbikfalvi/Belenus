@@ -1291,6 +1291,13 @@ void cWndMain::on_action_PatientCardSell_triggered()
         try
         {
             obDBPatientCard.load( obDlgInputStart.getEditText() );
+
+            if( obDBPatientCard.pincode().compare("LOST") == 0 )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
+                return;
+            }
         }
         catch( cSevException &e )
         {
@@ -1409,6 +1416,13 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     try
     {
         obDBPatientCard.load( p_stBarcode );
+
+        if( obDBPatientCard.pincode().compare("LOST") == 0 )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
+            return;
+        }
 
         if( !mdiPanels->isCanBeStartedByCard() )
         {
@@ -1932,17 +1946,17 @@ void cWndMain::slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qs
 {
     m_dlgSecondaryWindow->setCounterText( p_uiPanelId, p_qsCounter );
 }
-
+//====================================================================================
 void cWndMain::slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime )
 {
     m_dlgSecondaryWindow->setPanelWaitTime( p_uiPanelId, p_uiWaitTime );
 }
-
+//====================================================================================
 void cWndMain::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo )
 {
     m_dlgSecondaryWindow->setPanelInfoText( p_uiPanelId, p_qsInfo );
 }
-
+//====================================================================================
 void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 {
     cDBPatientCard  obDBPatientCardOld;
@@ -1961,6 +1975,13 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
         try
         {
             obDBPatientCardNew.load( obDlgInputStart.getEditText() );
+
+            if( obDBPatientCardNew.pincode().compare("LOST") == 0 )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
+                return;
+            }
         }
         catch( cSevException &e )
         {
@@ -2046,6 +2067,8 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientcardUnit.setPatientCardId( obDBPatientCardOld.id() );
             obDBPatientcardUnit.replacePatientCard( obDBPatientCardNew.id() );
 
+            // Nem kell törölni a kártyát, csak jelezni, hogy elveszett
+            /*
             obDBPatientCardOld.setPatientCardTypeId( 0 );
             obDBPatientCardOld.setParentId( 0 );
             obDBPatientCardOld.setPatientId( 0 );
@@ -2054,12 +2077,15 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientCardOld.setTimeLeft( 0 );
             obDBPatientCardOld.setValidDateFrom( "2000-01-01" );
             obDBPatientCardOld.setValidDateTo( "2000-01-01" );
+            */
+            obDBPatientCardOld.setComment( tr("Lost and replaced with card: %1").arg(obDBPatientCardNew.barcode()) );
+            obDBPatientCardOld.setPincode( "LOST" );
             obDBPatientCardOld.setActive( false );
             obDBPatientCardOld.save();
         }
     }
 }
-
+//====================================================================================
 void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 {
     cDBPatientCard  obDBPatientCardOld;
@@ -2078,6 +2104,13 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
         try
         {
             obDBPatientCardNew.load( obDlgInputStart.getEditText() );
+
+            if( obDBPatientCardNew.pincode().compare("LOST") == 0 )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
+                return;
+            }
         }
         catch( cSevException &e )
         {

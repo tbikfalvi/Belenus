@@ -111,6 +111,12 @@ void cReport::setDescription(const QString &p_qsDescription)
     m_qsReportDescription = p_qsDescription;
 }
 //------------------------------------------------------------------------------------
+void cReport::printReport(QPrinter *p_obPrinter)
+//------------------------------------------------------------------------------------
+{
+    m_tdReport.print( p_obPrinter );
+}
+//------------------------------------------------------------------------------------
 void cReport::setFilterDateStart( const QDate &p_qdDate )
 //------------------------------------------------------------------------------------
 {

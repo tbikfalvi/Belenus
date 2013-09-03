@@ -9,6 +9,7 @@
 #include <QTextBlockFormat>
 #include <QDate>
 #include <QSqlQuery>
+#include <QPrinter>
 
 #include "dlgprogress.h"
 
@@ -43,6 +44,8 @@ public:
 
     void                 setIndex( int p_nIndex );
     void                 setDescription( const QString &p_qsDescription );
+
+    void                 printReport( QPrinter *p_obPrinter );
 
     bool                 isDateStartEnabled();
     bool                 isDateStopEnabled();

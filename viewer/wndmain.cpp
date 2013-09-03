@@ -16,6 +16,7 @@
 #include <QCryptographicHash>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QPrintDialog>
 
 //====================================================================================
 
@@ -915,5 +916,19 @@ void cWndMain::on_pbRefresh_clicked()
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 
     obReport->refreshReport();
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_pbPrint_clicked()
+//------------------------------------------------------------------------------------
+{
+    QPrinter        obQPrinter;
+    QPrintDialog    obDlgPrinter( &obQPrinter, this );
+
+    if( obDlgPrinter.exec() == QDialog::Accepted )
+    {
+        cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+        obReport->printReport( &obQPrinter );
+    }
 }
 //------------------------------------------------------------------------------------

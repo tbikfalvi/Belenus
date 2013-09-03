@@ -555,12 +555,11 @@ void cCassa::cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId,
     obDBCassaHistory.createNew();
     obDBCassaHistory.setLicenceId( g_poPrefs->getLicenceId() );
     obDBCassaHistory.setParentId( p_uiParentId );
-    obDBCassaHistory.setCassaId( 0 );
+    obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setLedgerId( p_uiLedgerId );
     obDBCassaHistory.setUserId( g_obUser.id() );
-    obDBCassaHistory.setPatientId( 0 );
     obDBCassaHistory.setActionValue( p_nMoney );
-    obDBCassaHistory.setActionBalance( cassaGlobalBalance()+p_nMoney );
+    obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( p_qsComment );
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();

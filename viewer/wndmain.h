@@ -101,6 +101,7 @@ private slots:
     void on_cmbFilterDataTypes_currentIndexChanged(int index);
     void on_pbRefresh_clicked();
     void on_chkFilterIsVisible_clicked();
+    void on_pbPrint_clicked();
 };
 
 #endif // WNDMAIN_H
