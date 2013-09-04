@@ -212,6 +212,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbPatientcardDebts">
+         <property name="toolTip">
+          <string>Summary of valid patientcards and the price of its units available</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="Line" name="line_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -708,6 +727,7 @@
      <addaction name="action_Patientcards_Details"/>
      <addaction name="action_Patientcards_Inactive"/>
      <addaction name="action_Patientcard_Sells"/>
+     <addaction name="action_Patientcard_Debts"/>
     </widget>
     <widget class="QMenu" name="menuProducts_2">
      <property name="title">
@@ -831,6 +851,17 @@
    </property>
    <property name="toolTip">
     <string>Products registered in database</string>
+   </property>
+  </action>
+  <action name="action_Patientcard_Debts">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Patientcard debts</string>
+   </property>
+   <property name="toolTip">
+    <string>Summary of valid patientcards and the price of its units available</string>
    </property>
   </action>
  </widget>

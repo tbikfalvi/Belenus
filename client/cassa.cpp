@@ -263,7 +263,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.createNew();
     obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
     if( p_bNewCard )
-        obDBLedger.setLedgerTypeId( cDBLedger::LT_PC_SELL );
+        obDBLedger.setLedgerTypeId( p_obDBShoppingCart.ledgerTypeId() );
     else
         obDBLedger.setLedgerTypeId( cDBLedger::LT_PC_REFILL );
     obDBLedger.setLedgerDeviceId( 0 );

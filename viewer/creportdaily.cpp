@@ -11,8 +11,8 @@ cReportDaily::cReportDaily(QWidget *parent, QString p_qsReportName) : cReport(pa
     m_qsReportDescription   = tr( "This report shows the daily bookkeepings the cash book and every accounting data for the selected day. "
                                   "Please select the day you interested in." );
 
-  cReportDaily::_setDateStartEnabled( true );
-  cReportDaily::_setDateStartLabelText( tr("Date :") );
+    cReportDaily::_setDateStartEnabled( true );
+    cReportDaily::_setDateStartLabelText( tr("Date :") );
     m_qdStartDate = QDate::currentDate();
 }
 //------------------------------------------------------------------------------------
