@@ -103,31 +103,28 @@ void dlgProductStorage::on_pbSave_clicked()
     {
         try
         {
-            if( cPrice.currencyValue().toInt() > 0 )
+            int nPrice = cPrice.currencyValue().toInt();
+
+            if( obDBProductActionType.cassaActionIndication().compare( tr("Negative") ) == 0 )
             {
-                int nPrice = cPrice.currencyValue().toInt();
-
-                if( obDBProductActionType.cassaActionIndication().compare( tr("Negative") ) == 0 )
-                {
-                    nPrice *= (-1);
-                }
-                nPrice *= ledProductCount->text().toInt();
-
-                cDBShoppingCart obDBShoppingCart;
-
-                obDBShoppingCart.createNew();
-                obDBShoppingCart.setProductId( m_poProduct->id() );
-                obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PROD_SELL );
-                obDBShoppingCart.setItemName( obDBProductActionType.name() );
-                obDBShoppingCart.setItemCount( ledProductCount->text().toInt() );
-                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
-                obDBShoppingCart.setItemVAT( ledVatPercent->text().toInt() );
-                obDBShoppingCart.setItemSumPrice( nPrice );
-
-                bool bGlobalCassa = ( cmbCassa->currentIndex()==0 ? true : false );
-
-                g_obCassa.cassaProcessProductStorageChange( obDBShoppingCart, tr("Product name: %1").arg( m_poProduct->name() ), bGlobalCassa );
+                nPrice *= (-1);
             }
+            nPrice *= ledProductCount->text().toInt();
+
+            cDBShoppingCart obDBShoppingCart;
+
+            obDBShoppingCart.createNew();
+            obDBShoppingCart.setProductId( m_poProduct->id() );
+            obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PROD_SELL );
+            obDBShoppingCart.setItemName( obDBProductActionType.name() );
+            obDBShoppingCart.setItemCount( ledProductCount->text().toInt() );
+            obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
+            obDBShoppingCart.setItemVAT( ledVatPercent->text().toInt() );
+            obDBShoppingCart.setItemSumPrice( nPrice );
+
+            bool bGlobalCassa = ( cmbCassa->currentIndex()==0 ? true : false );
+
+            unsigned int uiLedgerId = g_obCassa.cassaProcessProductStorageChange( obDBShoppingCart, tr("Product name: %1").arg( m_poProduct->name() ), bGlobalCassa );
 
             int nProductCount = m_poProduct->productCount();
             int nProductCountChange = 0;
@@ -146,6 +143,7 @@ void dlgProductStorage::on_pbSave_clicked()
             obDBProductHistory.createNew();
             obDBProductHistory.setLicenceId( g_poPrefs->getLicenceId() );
             obDBProductHistory.setProductId( m_poProduct->id() );
+            obDBProductHistory.setLedgerId( uiLedgerId );
             obDBProductHistory.setPATypeId( obDBProductActionType.id() );
             obDBProductHistory.setUserId( g_obUser.id() );
             obDBProductHistory.setItemCount( nProductCountChange );

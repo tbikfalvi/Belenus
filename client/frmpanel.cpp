@@ -413,7 +413,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
     {
-        formatStatusString( m_obStatuses.at( m_uiStatus )->name() + tr("\n<< STOPPED >>") );
+        formatStatusString( QString( "%1 (%2)" ).arg( m_obStatuses.at( m_uiStatus )->name() ).arg( tr("PAUSED") ) );
     }
     else
     {

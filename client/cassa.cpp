@@ -277,6 +277,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
+    obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
     obDBLedger.setComment( p_qsComment );
     obDBLedger.setActive( true );
     obDBLedger.save();
@@ -299,7 +300,7 @@ unsigned int cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPa
     return cassaProcessPatientCardSell( p_DBPatientCard, p_obDBShoppingCart, p_qsComment, false, p_inPayType );
 }
 //====================================================================================
-void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
+unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
 //====================================================================================
 {
     cDBLedger   obDBLedger;
@@ -326,6 +327,8 @@ void cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShop
     {
         cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice(), obDBLedger.id(), p_qsComment );
     }
+
+    return obDBLedger.id();
 }
 //====================================================================================
 unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType, QString p_qsPanelTitle )
@@ -343,6 +346,7 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
+    obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
     obDBLedger.setComment( p_qsComment );
     obDBLedger.save();
 
@@ -375,6 +379,7 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
+    obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
     obDBLedger.setComment( p_qsComment );
     obDBLedger.save();
 

@@ -237,7 +237,7 @@ void cDlgPanelSettings::editClicked( bool )
         poPanelUse->load( m_uiSelectedId );
 
         cDlgPanelUseEdit  obDlgEdit( this, poPanelUse, m_uiPanelId );
-        obDlgEdit.setWindowTitle( "Edit paneluse" );
+        obDlgEdit.setWindowTitle( tr("Edit paneluse") );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();
@@ -328,19 +328,4 @@ void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
     cDlgPanelTypeCopy   obDlgPanelTypeCopy( this, m_uiPanelId );
 
     obDlgPanelTypeCopy.exec();
-/*
-    for( unsigned int i=1; i<g_poPrefs->getPanelCount()+1; i++ )
-    {
-        if( i != m_uiPanelId )
-        {
-            QString qsQuery = QString( "INSERT INTO panelUses (licenceId, panelId, name, useTime, usePrice, active, archive) "
-                                       "SELECT panelUses.licenceId, %1, panelUses.name, panelUses.useTime, panelUses.usePrice, 1, \"NEW\" "
-                                       "FROM panelUses, panels WHERE panelUses.panelId=panels.panelId AND panels.panelId=%2" ).arg(i).arg(m_uiPanelId);
-
-            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-            if( poQuery ) delete poQuery;
-        }
-    }
-    QMessageBox::information( this, tr("Information"), tr("Device usage copy process finished.") );
-*/
 }

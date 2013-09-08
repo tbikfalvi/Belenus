@@ -465,10 +465,22 @@ action</string>
  </widget>
  <tabstops>
   <tabstop>ledName</tabstop>
+  <tabstop>ledBarcode</tabstop>
+  <tabstop>ledProductCount</tabstop>
   <tabstop>ledPriceBuy</tabstop>
   <tabstop>ledVatpercentBuy</tabstop>
-  <tabstop>checkIndependent</tabstop>
+  <tabstop>ledPriceSell</tabstop>
+  <tabstop>ledVatpercentSell</tabstop>
+  <tabstop>listProductsAssigned</tabstop>
+  <tabstop>pbProductAdd</tabstop>
+  <tabstop>pbProductAddAll</tabstop>
+  <tabstop>pbProductRemove</tabstop>
+  <tabstop>pbProductRemoveAll</tabstop>
+  <tabstop>listProductsIndependent</tabstop>
   <tabstop>pbSave</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbProductStorage</tabstop>
+  <tabstop>checkIndependent</tabstop>
  </tabstops>
  <resources/>
  <connections/>

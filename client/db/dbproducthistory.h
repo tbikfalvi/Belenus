@@ -20,6 +20,8 @@ public:
     void            setLicenceId( const unsigned int p_uiLicenceId )    throw();
     unsigned int    productId() const                                     throw();
     void            setProductId( const unsigned int p_uiProductId )        throw();
+    unsigned int    ledgerId() const                                     throw();
+    void            setLedgerId( const unsigned int p_uiLedgerId )        throw();
     unsigned int    productActionTypeId() const                                     throw();
     void            setPATypeId( const unsigned int p_uiPATypeId )        throw();
     unsigned int    userId() const                                      throw();
@@ -42,6 +44,7 @@ private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiProductId;
+    unsigned int    m_uiLedgerId;
     unsigned int    m_uiPATypeId;
     unsigned int    m_uiUserId;
     int             m_inItemCount;
@@ -55,6 +58,7 @@ private:
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiProductId = 0,
+               const unsigned int p_uiLedgerId = 0,
                const unsigned int p_uiProductActionTypeId = 0,
                const unsigned int p_uiUserId = 0,
                const int p_inItemCount = 0,

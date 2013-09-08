@@ -33,7 +33,7 @@ public:
 
     unsigned int            cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType );
     unsigned int            cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType );
-    void                    cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa = false );
+    unsigned int            cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa = false );
     unsigned int            cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType, QString p_qsPanelTitle );
     void                    cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType );
     void                    cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsigned int p_uiLedgerDeviceId );

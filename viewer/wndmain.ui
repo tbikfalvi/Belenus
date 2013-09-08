@@ -257,6 +257,44 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pbProductStatus">
+         <property name="toolTip">
+          <string>Product status on the selected date</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbProductHistory">
+         <property name="toolTip">
+          <string>History of the selected product</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -734,6 +772,8 @@
       <string>Products</string>
      </property>
      <addaction name="action_Products"/>
+     <addaction name="action_Product_Status"/>
+     <addaction name="action_Product_History"/>
     </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
@@ -862,6 +902,28 @@
    </property>
    <property name="toolTip">
     <string>Summary of valid patientcards and the price of its units available</string>
+   </property>
+  </action>
+  <action name="action_Product_Status">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Product status</string>
+   </property>
+   <property name="toolTip">
+    <string>Product status on the selected date</string>
+   </property>
+  </action>
+  <action name="action_Product_History">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Product history</string>
+   </property>
+   <property name="toolTip">
+    <string>History of the selected product</string>
    </property>
   </action>
  </widget>

@@ -139,7 +139,7 @@ void cDlgProduct::setupTableView()
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
 
-        tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 1 );
     }
 }
 

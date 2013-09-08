@@ -18,14 +18,11 @@ void cReportCardInactive::refreshReport()
 
     m_dlgProgress.increaseProgressValue();
 
-    QString qsQueryCards = QString( "SELECT pc.barcode, pct.name as cardtype, pc.units, p.name as owner, pc.comment "
-                                    "FROM patientcards as pc, patientcardtypes as pct, patients as p "
-                                    "WHERE pc.patientCardTypeId=pct.patientCardTypeId "
-                                    "AND pc.patientId=p.patientId "
-                                    "AND patientCardId>1 "
-                                    "AND pc.patientCardTypeId<>1 "
-                                    "AND pc.active=0 "
-                                    );
+    QString qsQueryCards = QString( "SELECT barcode FROM patientcards WHERE "
+                                    "patientCardId>1 AND "
+                                    "patientCardTypeId<>1 AND "
+                                    "pincode!=\"LOST\" AND "
+                                    "active=0 " );
 
     m_dlgProgress.increaseProgressValue();
 
@@ -45,21 +42,20 @@ void cReportCardInactive::refreshReport()
     addTable();
 
     addTableRow();
-    addTableCell( tr( "Barcode" ), "center bold" );
-    addTableCell( tr( "Card type" ), "bold" );
-    addTableCell( tr( "No. units" ), "center bold" );
-    addTableCell( tr( "Card owner" ), "bold" );
-    addTableCell( tr( "Comment" ), "bold" );
+    addTableCell( tr( "Barcode" ), "bold" );
+    addTableRow();
 
-    while( poQueryResultCards->next() )
+    QString qsBarcodes = "";
+
+    if( poQueryResultCards->first() )
     {
-        addTableRow();
-        addTableCell( poQueryResultCards->value(0).toString(), "center" );
-        addTableCell( poQueryResultCards->value(1).toString() );
-        addTableCell( poQueryResultCards->value(2).toString(), "center" );
-        addTableCell( poQueryResultCards->value(3).toString() );
-        addTableCell( poQueryResultCards->value(4).toString() );
+        qsBarcodes.append( poQueryResultCards->value(0).toString() );
+        while( poQueryResultCards->next() )
+        {
+            qsBarcodes.append( QString( ", %1" ).arg( poQueryResultCards->value(0).toString() ) );
+        }
     }
+    addTableCell( qsBarcodes );
     finishTable();
     finishSection();
 

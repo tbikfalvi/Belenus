@@ -475,6 +475,7 @@ CREATE TABLE `productHistory` (
   `productHistoryId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `productId`               int(10) unsigned        NOT NULL,
+  `ledgerId`                int(10) unsigned        NOT NULL,
   `productActionTypeId`     int(10) unsigned        NOT NULL,
   `userId`                  int(10) unsigned        NOT NULL,
   `productItemCount`        int(11)                 NOT NULL,
@@ -486,6 +487,7 @@ CREATE TABLE `productHistory` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`productHistoryId`),
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productActionTypeId`) REFERENCES `productActionType` (`productActionTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT

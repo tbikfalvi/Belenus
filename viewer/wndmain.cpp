@@ -53,6 +53,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( this, SIGNAL(setCheckedReportPatientcardSells(bool)), this, SLOT(slotCheckReportPatientcardSells(bool)) );
     connect( this, SIGNAL(setCheckedReportProducts(bool)), this, SLOT(slotCheckReportProducts(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardDebts(bool)), this, SLOT(slotCheckReportPatientcardDebts(bool)) );
+    connect( this, SIGNAL(setCheckedReportProductStatus(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
+    connect( this, SIGNAL(setCheckedReportProductHistory(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -125,6 +127,8 @@ void cWndMain::_initActions()
     connect( action_Patientcard_Debts, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardDebts(bool)) );
 
     connect( action_Products, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportProducts(bool)) );
+    connect( action_Product_Status, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
+    connect( action_Product_History, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
 
     // ICONS
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
@@ -141,6 +145,8 @@ void cWndMain::_initActions()
     action_Patientcard_Debts->setIcon( QIcon("./resources/40x40_report_patientcard_debt.png") );
 
     action_Products->setIcon( QIcon("./resources/40x40_report_products.png") );
+    action_Product_Status->setIcon( QIcon("./resources/40x40_report_product_status.png") );
+    action_Product_History->setIcon( QIcon("./resources/40x40_report_product_history.png") );
 
     // BEHAVIOUR
     action_FilterBar->setEnabled( false );
@@ -157,6 +163,8 @@ void cWndMain::_initActions()
     action_Patientcard_Debts->setEnabled( false );
 
     action_Products->setEnabled( false );
+    action_Product_Status->setEnabled( false );
+    action_Product_History->setEnabled( false );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_initToolbar()
@@ -179,6 +187,8 @@ void cWndMain::_initToolbar()
     connect( pbPatientcardDebts, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardDebts(bool)) );
 
     connect( pbProducts, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportProducts(bool)) );
+    connect( pbProductStatus, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
+    connect( pbProductHistory, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
 
     // ICONS
     pbExit->setIcon( QIcon("./resources/40x40_shutdown.png") );
@@ -195,6 +205,8 @@ void cWndMain::_initToolbar()
     pbPatientcardDebts->setIcon( QIcon("./resources/40x40_report_patientcard_debt.png") );
 
     pbProducts->setIcon( QIcon("./resources/40x40_report_products.png") );
+    pbProductStatus->setIcon( QIcon("./resources/40x40_report_product_status.png") );
+    pbProductHistory->setIcon( QIcon("./resources/40x40_report_product_history.png") );
 
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
 
@@ -211,6 +223,8 @@ void cWndMain::_initToolbar()
     pbPatientcardDebts->setEnabled( false );
 
     pbProducts->setEnabled( false );
+    pbProductStatus->setEnabled( false );
+    pbProductHistory->setEnabled( false );
 
     pbPrint->setEnabled( false );
 }
@@ -308,6 +322,10 @@ return;
             emit setCheckedReportProducts( false );
         else if( m_repCardDebts && m_repCardDebts->index() == index )
             emit setCheckedReportPatientcardDebts( false );
+        else if( m_repProdStatus && m_repProdStatus->index() == index )
+            emit setCheckedReportProductStatus( false );
+        else if( m_repProdHistory && m_repProdHistory->index() == index )
+            emit setCheckedReportProductHistory( false );
     }
 }
 //------------------------------------------------------------------------------------
@@ -428,6 +446,8 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     action_Patientcard_Debts->setEnabled( p_bEnable );
 
     action_Products->setEnabled( p_bEnable );
+    action_Product_Status->setEnabled( p_bEnable );
+    action_Product_History->setEnabled( p_bEnable );
 
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
     pbBookkeepingDaily->setEnabled( p_bEnable );
@@ -441,6 +461,8 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     pbPatientcardDebts->setEnabled( p_bEnable );
 
     pbProducts->setEnabled( p_bEnable );
+    pbProductStatus->setEnabled( p_bEnable );
+    pbProductHistory->setEnabled( p_bEnable );
 
     pbPrint->setEnabled( p_bEnable );
 }
@@ -714,6 +736,66 @@ void cWndMain::slotCheckReportProducts(bool p_bChecked)
         tabReports->removeTab( m_repProducts->index() );
         delete m_repProducts;
         m_repProducts = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportProductStatus(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportProducts" );
+
+    m_bReportTabSwitching = true;
+
+    action_Product_Status->setChecked( p_bChecked );
+    pbProductStatus->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repProdStatus = new cReportProductStatus();
+
+        m_qvReports.append( m_repProdStatus );
+        m_repProdStatus->setIndex( tabReports->addTab( m_repProdStatus, QIcon("./resources/40x40_report_product_status.png"), m_repProdStatus->name() ) );
+        tabReports->setCurrentIndex( m_repProdStatus->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repProdStatus->index()-1 );
+        tabReports->removeTab( m_repProdStatus->index() );
+        delete m_repProdStatus;
+        m_repProdStatus = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportProductHistory(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportProducts" );
+
+    m_bReportTabSwitching = true;
+
+    action_Product_History->setChecked( p_bChecked );
+    pbProductHistory->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repProdHistory = new cReportProductHistory();
+
+        m_qvReports.append( m_repProdHistory );
+        m_repProdHistory->setIndex( tabReports->addTab( m_repProdHistory, QIcon("./resources/40x40_report_product_history.png"), m_repProdHistory->name() ) );
+        tabReports->setCurrentIndex( m_repProdHistory->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repProdHistory->index()-1 );
+        tabReports->removeTab( m_repProdHistory->index() );
+        delete m_repProdHistory;
+        m_repProdHistory = NULL;
         _updateReportIndexes();
     }
 

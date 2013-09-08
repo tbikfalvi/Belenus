@@ -232,6 +232,11 @@ INSERT INTO `productActionType` (`productActionTypeId`, `name`, `increaseProduct
 UPDATE `productActionType` SET `productActionTypeId`='0' WHERE `productActionTypeId`=1;
 ALTER TABLE `productActionType` auto_increment=1;
 
+INSERT INTO `productactiontype` (`productActionTypeId`, `licenceId`, `name`, `increaseProductCount`, `decreaseProductCount`, `cassaActionIndication`, `modified`, `active`, `archive`) VALUES
+ (1, 0, 'Termék felvétele raktárba', 1, 0, 'Negatív', '2013-09-08 17:38:16', 1, 'NEW'),
+ (2, 0, 'Termék leselejtezése', 0, 1, 'Pozitív', '2013-09-08 17:38:33', 1, 'NEW'),
+ (3, 0, 'Termék ajándékozása', 0, 1, 'Pozitív', '2013-09-08 17:38:46', 1, 'NEW');
+
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `productTypeId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES

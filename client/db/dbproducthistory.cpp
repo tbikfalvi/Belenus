@@ -26,21 +26,23 @@ cDBProductHistory::~cDBProductHistory()
 }
 
 void cDBProductHistory::init( const unsigned int p_uiId,
-                             const unsigned int p_uiLicenceId,
-                             const unsigned int p_uiProductId,
-                             const unsigned int p_uiProductActionTypeId,
-                             const unsigned int p_uiUserId,
-                             const int p_inItemCount,
-                             const int p_inNetPrice,
-                             const int p_inVatPercent,
-                             const QString &p_qsActionTime,
-                             const QString &p_qsModified,
-                             const bool p_bActive,
-                             const QString &p_qsArchive ) throw()
+                              const unsigned int p_uiLicenceId,
+                              const unsigned int p_uiProductId,
+                              const unsigned int p_uiLedgerId,
+                              const unsigned int p_uiProductActionTypeId,
+                              const unsigned int p_uiUserId,
+                              const int p_inItemCount,
+                              const int p_inNetPrice,
+                              const int p_inVatPercent,
+                              const QString &p_qsActionTime,
+                              const QString &p_qsModified,
+                              const bool p_bActive,
+                              const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiProductId       = p_uiProductId;
+    m_uiLedgerId        = p_uiLedgerId;
     m_uiPATypeId        = p_uiProductActionTypeId;
     m_uiUserId          = p_uiUserId;
     m_inItemCount       = p_inItemCount;
@@ -57,6 +59,7 @@ void cDBProductHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "productHistoryId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inProductIdIdx      = p_obRecord.indexOf( "productId" );
+    int inLedgerIdIdx       = p_obRecord.indexOf( "ledgerId" );
     int inPATypeIdIdx       = p_obRecord.indexOf( "productActionTypeId" );
     int inUserIdIdx         = p_obRecord.indexOf( "userId" );
     int inItemCountIdx      = p_obRecord.indexOf( "productItemCount" );
@@ -70,6 +73,7 @@ void cDBProductHistory::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
+          p_obRecord.value( inLedgerIdIdx ).toUInt(),
           p_obRecord.value( inPATypeIdIdx ).toUInt(),
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inItemCountIdx ).toInt(),
@@ -116,6 +120,7 @@ void cDBProductHistory::save() throw( cSevException )
     qsQuery += " productHistory SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
+    qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
     qsQuery += QString( "productActionTypeId = \"%1\", " ).arg( m_uiPATypeId );
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "productItemCount = \"%1\", " ).arg( m_inItemCount );
@@ -191,6 +196,16 @@ unsigned int cDBProductHistory::productId() const throw()
 void cDBProductHistory::setProductId( const unsigned int p_uiProductId ) throw()
 {
     m_uiProductId = p_uiProductId;
+}
+
+unsigned int cDBProductHistory::ledgerId() const throw()
+{
+    return m_uiLedgerId;
+}
+
+void cDBProductHistory::setLedgerId( const unsigned int p_uiLedgerId ) throw()
+{
+    m_uiLedgerId = p_uiLedgerId;
 }
 
 unsigned int cDBProductHistory::productActionTypeId() const throw()

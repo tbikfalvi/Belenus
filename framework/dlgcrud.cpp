@@ -113,6 +113,9 @@ void cDlgCrud::refreshTable()
         m_inSelectedRow = -1;
         m_inSelectedCount = 0;
     }
+
+    tbvCrud->resizeColumnsToContents();
+
     enableButtons();
 
     tbvCrud->selectionModel()->blockSignals( false );

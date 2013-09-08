@@ -85,6 +85,13 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
             checkIndependent->setEnabled( false );
     }
 
+    connect( ledName, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( ledBarcode, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( ledPriceSell, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+    connect( ledVatpercentSell, SIGNAL(textEdited(QString)), this, SLOT(slotRefreshWarningColors()) );
+
+    slotRefreshWarningColors();
+
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditProduct", QPoint(600,360) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 }
@@ -266,3 +273,38 @@ void cDlgProductEdit::on_ledVatpercentSell_textChanged(const QString &arg1)
     slot_PriceCalculate();
 }
 
+void cDlgProductEdit::slotRefreshWarningColors()
+{
+    lblName->setStyleSheet( "QLabel {font: normal;}" );
+    lblBarcode->setStyleSheet( "QLabel {font: normal;}" );
+    lblPriceSell->setStyleSheet( "QLabel {font: normal;}" );
+    lblVatpercentSell->setStyleSheet( "QLabel {font: normal;}" );
+
+    if( ledName->text().length() == 0 )
+        lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+
+    if( ledBarcode->text().length() == 0 )
+        lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
+
+    if( ledPriceSell->text().length() == 0 )
+    {
+        lblPriceSell->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else
+    {
+        if( ledPriceSell->text().toInt() == 0 )
+            lblPriceSell->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+    }
+
+    if( ledVatpercentSell->text().length() == 0 )
+    {
+        lblVatpercentSell->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    }
+    else
+    {
+        if( ledVatpercentSell->text().toInt() == 0 )
+        {
+            lblVatpercentSell->setStyleSheet( "QLabel {font: bold; color: blue;}" );
+        }
+    }
+}
