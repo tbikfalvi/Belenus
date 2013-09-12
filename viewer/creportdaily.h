@@ -20,15 +20,13 @@ protected slots:
 
 private:
     void            _reportPartGeneral();
-    unsigned int    _reportPartProductSellMorning();
-    unsigned int    _reportPartProductSellAfternoon();
+    unsigned int    _reportPartProductSell();
     unsigned int    _reportPartPatientCardSell();
     unsigned int    _reportPartPanelUse();
     void            _reportPartPanelUseUnits();
     void            _reportPartPaymentMethods();
-    QString         _countPatientCardTypeSellMorning( unsigned int p_uiPatientCardTypeId );
-    QString         _countPatientCardTypeSellAfternoon( unsigned int p_uiPatientCardTypeId );
-    int             _sumPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
+    QString         _countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
+    int             _sumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );
     int             _sumPanelUseMorning( unsigned int p_uiPanelTypeId );
     int             _sumPanelUseAfternoon( unsigned int p_uiPanelTypeId );

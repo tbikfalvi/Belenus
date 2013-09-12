@@ -535,8 +535,15 @@ void cCassa::cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString 
 void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
-    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
-    m_pCassa->save();
+    cDBLedger   obDBLedger;
+
+    obDBLedger.load( p_uiLedgerId );
+
+    if( obDBLedger.paymentMethod() == 1 /* cash */ )
+    {
+        m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
+        m_pCassa->save();
+    }
 
     cDBCassaHistory obDBCassaHistory;
 
