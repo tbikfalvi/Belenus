@@ -214,3 +214,8 @@ void cDlgCassaAction::on_pbShoppingCart_clicked()
 
     QDialog::accept();
 }
+
+void cDlgCassaAction::on_cmbPaymentType_currentIndexChanged(int index)
+{
+
+}

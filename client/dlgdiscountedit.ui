@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
-    <height>271</height>
+    <width>532</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -83,7 +83,7 @@
             <item>
              <widget class="QRadioButton" name="rbCompany">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="text">
                <string>Company</string>
@@ -94,6 +94,13 @@
              <widget class="QRadioButton" name="rbProduct">
               <property name="text">
                <string>Product</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="rbPaymentMethod">
+              <property name="text">
+               <string>Payment method</string>
               </property>
              </widget>
             </item>

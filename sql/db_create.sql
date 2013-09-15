@@ -469,31 +469,6 @@ CREATE TABLE `productActionType` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A studioban forgalmazott termekek esemeny tortenete.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `productHistory` (
-  `productHistoryId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `productId`               int(10) unsigned        NOT NULL,
-  `ledgerId`                int(10) unsigned        NOT NULL,
-  `productActionTypeId`     int(10) unsigned        NOT NULL,
-  `userId`                  int(10) unsigned        NOT NULL,
-  `productItemCount`        int(11)                 NOT NULL,
-  `netPrice`                decimal(10,0)           NOT NULL,
-  `vatpercent`              int(11)                 NOT NULL,
-  `actionDateTime`          timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `modified`                datetime                NOT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`productHistoryId`),
-  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`productActionTypeId`) REFERENCES `productActionType` (`productActionTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
 --
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patientHistoryType` (
@@ -537,7 +512,7 @@ CREATE TABLE `discounts` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        DEFAULT NULL,
   `companyId`               int(10) unsigned        DEFAULT NULL,
-  `productTypeId`           int(10) unsigned        DEFAULT NULL,
+  `paymentMethodId`         int(10) unsigned        DEFAULT NULL,
   `productId`               int(10) unsigned        DEFAULT NULL,
   `regularCustomer`         tinyint(1)              DEFAULT 0,
   `employee`                tinyint(1)              DEFAULT 0,
@@ -552,7 +527,7 @@ CREATE TABLE `discounts` (
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`productTypeId`) REFERENCES `productTypes` (`productTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentmethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -756,6 +731,31 @@ CREATE TABLE `ledger` (
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelId`) REFERENCES `panels` (`panelId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A studioban forgalmazott termekek esemeny tortenete.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `productHistory` (
+  `productHistoryId`        int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `productId`               int(10) unsigned        NOT NULL,
+  `ledgerId`                int(10) unsigned        NOT NULL,
+  `productActionTypeId`     int(10) unsigned        NOT NULL,
+  `userId`                  int(10) unsigned        NOT NULL,
+  `productItemCount`        int(11)                 NOT NULL,
+  `netPrice`                decimal(10,0)           NOT NULL,
+  `vatpercent`              int(11)                 NOT NULL,
+  `actionDateTime`          timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`productHistoryId`),
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productActionTypeId`) REFERENCES `productActionType` (`productActionTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------

@@ -19,6 +19,9 @@ cReportDaily::cReportDaily(QWidget *parent, QString p_qsReportName) : cReport(pa
 void cReportDaily::refreshReport()
 //------------------------------------------------------------------------------------
 {
+    m_qslCassaIds.clear();
+    m_qslCassaOwners.clear();
+
     // General report init
     m_dlgProgress.progressInit( tr("Create selected report ..."), 0, 100 );
     m_dlgProgress.setProgressValue( 0 );
@@ -32,7 +35,18 @@ void cReportDaily::refreshReport()
     addSubTitle( QString( "%1 %2" ).arg( tr( "Date :" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ) );
     addHorizontalLine();
 
-    QString qsQuery;
+    // Get the cassa Id's affected
+    QSqlQuery *poQueryResult = g_poDB->executeQTQuery( QString( "SELECT cassaId, realName "
+                                                                "FROM cassa, users "
+                                                                "WHERE cassa.userId=users.userId AND "
+                                                                "( DATE(cassa.startDateTime)=\"%1\" OR "
+                                                                "DATE(cassa.stopDateTime)=\"%1\" OR "
+                                                                "DATE(cassa.modified)=\"%1\" ) " ).arg(filterDateStart().toString( "yyyy-MM-dd" )) );
+    while( poQueryResult->next() )
+    {
+        m_qslCassaIds << poQueryResult->value( 0 ).toString();
+        m_qslCassaOwners << poQueryResult->value( 1 ).toString();
+    }
 
     // Main data about cassa entries of the selected date
     addSeparator();
@@ -43,101 +57,42 @@ void cReportDaily::refreshReport()
     // Product sold
     addSeparator();
     addSubTitle( tr( "Products sold" ) );
-
-        startSection();
-        addTable();
-        addTableRow();
-        addTableCell();
-        addTableCell( tr("Product name"), "bold" );
-        addTableCell( tr("Count"), "center bold" );
-        addTableCell( tr("Amount"), "right bold" );
-
-        cCurrency   obTotalPrice( _reportPartProductSell() );
-
-        addTableRow();
-        addTableCell( tr("Sum total"), "bold" );
-        addTableCell();
-        addTableCell();
-        addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
-
-        finishTable();
-        finishSection();
+    unsigned int uiTotalPrice = _reportPartProductSell();
 
     // Patientcards sold
     addSeparator();
     addSubTitle( tr( "Patientcards sold" ) );
-
-        startSection();
-        addTable();
-
-        cCurrency obPatientCardTotal( _reportPartPatientCardSell() );
-
-        finishTable();
-        finishSection();
+    unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
 
     // Panel related data of the selected date
     addSeparator();
     addSubTitle( tr( "Device usages" ) );
-
-        startSection();
-        addTable();
-
-        cCurrency obDeviceUsagesTotal( _reportPartPanelUse() );
-
-        finishTable();
-        finishSection();
+    unsigned int uiDeviceUsagesTotal = _reportPartPanelUse();
 
     // Panel usage by patientcard units
     addSeparator();
     addSubTitle( tr( "Device usages by patientcard units" ) );
-
-        startSection();
-        addTable();
-
-        _reportPartPanelUseUnits();
-
-        finishTable();
-        finishSection();
+    _reportPartPanelUseUnits();
 
     // Income based on payment methods
     addSeparator();
     addSubTitle( tr( "Income by payment methods" ) );
+    _reportPartPaymentMethods();
 
-        startSection();
-        addTable();
+    // Cassa expenses
+    addSeparator();
+    addSubTitle( tr( "Expenses" ) );
+    int nExpenses = _reportPartExpenses();
 
-        _reportPartPaymentMethods();
-
-        finishTable();
-        finishSection();
+    // Withdrawed items (storno)
+    addSeparator();
+    addSubTitle( tr( "Storno items" ) );
+    _reportPartStorno();
 
     // Income summary
     addSeparator();
     addSubTitle( tr( "Income summary" ) );
-
-        startSection();
-        addTable();
-
-        addTableRow();
-        addTableCell( tr("Products sold") );
-        addTableCell( ":", "bold");
-        addTableCell( obTotalPrice.currencyFullStringShort(), "right" );
-
-        addTableRow();
-        addTableCell( tr("Patientcards sold") );
-        addTableCell( ":", "bold");
-        addTableCell( obPatientCardTotal.currencyFullStringShort(), "right" );
-
-        addTableRow();
-        addTableCell( tr("Device usages") );
-        addTableCell( ":", "bold");
-        addTableCell( obDeviceUsagesTotal.currencyFullStringShort(), "right" );
-
-        cCurrency   obTotal( obTotalPrice.currencyValue().toInt()+obPatientCardTotal.currencyValue().toInt()+obDeviceUsagesTotal.currencyValue().toInt() );
-        addTableRow();
-        addTableCell( tr("Sum total"), "bold" );
-        addTableCell( ":", "bold");
-        addTableCell( obTotal.currencyFullStringShort(), "right bold" );
+    _reportPartIncomeSummary( uiTotalPrice, uiPatientCardTotal, uiDeviceUsagesTotal, nExpenses );
 
     finishReport();
 
@@ -209,21 +164,20 @@ void cReportDaily::_reportPartGeneral()
 unsigned int cReportDaily::_reportPartProductSell()
 //------------------------------------------------------------------------------------
 {
-    QString     qsQuery;
-    QSqlQuery  *poQueryResult;
-
-    qsQuery = QString( "SELECT cassaId, realName "
-                       "FROM cassa, users "
-                       "WHERE cassa.userId=users.userId AND "
-                       "( DATE(cassa.startDateTime)=\"%1\" OR DATE(cassa.stopDateTime)=\"%1\" OR DATE(cassa.modified)=\"%1\" ) " ).arg(filterDateStart().toString( "yyyy-MM-dd" ));
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
-
     unsigned int uiTotal = 0;
 
-    while( poQueryResult->next() )
+    startSection();
+    addTable();
+    addTableRow();
+    addTableCell();
+    addTableCell( tr("Product name"), "bold" );
+    addTableCell( tr("Count"), "center bold" );
+    addTableCell( tr("Amount"), "right bold" );
+
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
     {
-        unsigned int    uiCassaId   = poQueryResult->value(0).toUInt();
-        QString         qsUserName  = poQueryResult->value(1).toString();
+        unsigned int    uiCassaId   = m_qslCassaIds.at(i).toUInt();
+        QString         qsUserName  = m_qslCassaOwners.at(i);
 
         addTableRow();
         addTableCell( qsUserName, "bold" );
@@ -262,61 +216,7 @@ unsigned int cReportDaily::_reportPartProductSell()
         uiTotal += uiTotalCassa;
     }
 
-    return uiTotal;
-}
-//------------------------------------------------------------------------------------
-unsigned int cReportDaily::_reportPartPatientCardSell()
-//------------------------------------------------------------------------------------
-{
-    unsigned int    uiTotalCardSell = 0;
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
-
-    qsQuery = QString( "SELECT cassaId, realName "
-                       "FROM cassa, users "
-                       "WHERE cassa.userId=users.userId AND "
-                       "( DATE(cassa.startDateTime)=\"%1\" OR DATE(cassa.stopDateTime)=\"%1\" OR DATE(cassa.modified)=\"%1\" ) " ).arg(filterDateStart().toString( "yyyy-MM-dd" ));
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
-
-    QStringList qslCassaIds = QStringList();
-
-    addTableRow();
-    addTableCell();
-    while( poQueryResult->next() )
-    {
-        qslCassaIds << poQueryResult->value( 0 ).toString();
-
-        addTableCell( poQueryResult->value(1).toString(), "center bold" );
-    }
-    addTableCell( tr("Amount"), "center bold" );
-
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1" );
-
-    while( poQueryResult->next() )
-    {
-        QString qsSumPrice  = "";
-        int     nTotalPrice = 0;
-
-        addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
-        for( int i=0; i<qslCassaIds.count(); i++ )
-        {
-            addTableCell( _countPatientCardTypeSell(qslCassaIds.at(i), poQueryResult->value(0).toUInt()), "center" );
-
-            nTotalPrice += _sumPatientCardTypeSell(qslCassaIds.at(i), poQueryResult->value(0).toUInt());
-        }
-        if( nTotalPrice > 0 )
-        {
-            cCurrency obPrice( nTotalPrice );
-
-            qsSumPrice = obPrice.currencyFullStringShort();
-        }
-        addTableCell( qsSumPrice, "right" );
-
-        uiTotalCardSell += nTotalPrice;
-    }
-
-    cCurrency   obTotalPrice( uiTotalCardSell );
+    cCurrency   obTotalPrice( uiTotal );
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
@@ -324,108 +224,233 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
     addTableCell();
     addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
 
+    finishTable();
+    finishSection();
+
+    return uiTotal;
+}
+//------------------------------------------------------------------------------------
+unsigned int cReportDaily::_reportPartPatientCardSell()
+//------------------------------------------------------------------------------------
+{
+    unsigned int    uiTotalCardSell = 0;
+    QSqlQuery      *poQueryResult;
+    unsigned int    uiCountPCSell[ m_qslCassaIds.count() ];
+    unsigned int    uiSumPCSell[ m_qslCassaIds.count() ];
+
+    startSection();
+    addTable();
+
+    addTableRow();
+    addTableCell();
+    for( int i=0; i<m_qslCassaOwners.count(); i++ )
+    {
+        uiCountPCSell[ i ] = 0;
+        uiSumPCSell[ i ] = 0;
+        addTableCell( m_qslCassaOwners.at(i), "center bold" );
+    }
+    addTableCell( tr("Sum"), "center bold" );
+
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1" );
+
+    while( poQueryResult->next() )
+    {
+        unsigned int    uiCountPCTSum = 0;
+        unsigned int    uiPricePCTSum = 0;
+        QString         qsPricePCTSum = "";
+
+        addTableRow();
+        addTableCell( poQueryResult->value(2).toString() );
+
+        for( int i=0; i<m_qslCassaIds.count(); i++ )
+        {
+            QString         qsCountPCSell = _countPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+            unsigned int    uiPricePCSell = _sumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+            QString         qsPricePCSell = "";
+
+            if( uiPricePCSell > 0 )
+            {
+                cCurrency   obPricePCSell( uiPricePCSell );
+
+                qsPricePCSell = obPricePCSell.currencyFullStringShort();
+                addTableCell( QString( "%1 / %2" ).arg( qsCountPCSell ).arg( qsPricePCSell ), "right" );
+            }
+            else
+            {
+                addTableCell();
+            }
+
+            uiCountPCSell[ i ] += qsCountPCSell.toInt();
+            uiSumPCSell[ i ]   += uiPricePCSell;
+
+            uiCountPCTSum += qsCountPCSell.toInt();
+            uiPricePCTSum += uiPricePCSell;
+        }
+
+        if( uiPricePCTSum > 0 )
+        {
+            cCurrency   obPricePCTSum( uiPricePCTSum );
+
+            qsPricePCTSum = obPricePCTSum.currencyFullStringShort();
+            addTableCell( QString( "%1 / %2" ).arg( uiCountPCTSum ).arg( qsPricePCTSum ) );
+        }
+        else
+        {
+            addTableCell();
+        }
+
+        uiTotalCardSell += uiPricePCTSum;
+    }
+
+    cCurrency obTotalCardSell( uiTotalCardSell );
+
+    addTableRow();
+    addTableCell( tr("Sum total"), "bold" );
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    {
+        cCurrency   obPricePCTSum( uiSumPCSell[ i ] );
+
+        addTableCell( QString( "%1 / %2" ).arg( uiCountPCSell[ i ] ).arg( obPricePCTSum.currencyFullStringShort() ) );
+    }
+    addTableCell( obTotalCardSell.currencyFullStringShort(), "right bold" );
+
+    finishTable();
+    finishSection();
+
     return uiTotalCardSell;
 }
 //------------------------------------------------------------------------------------
 unsigned int cReportDaily::_reportPartPanelUse()
 //------------------------------------------------------------------------------------
 {
-    QString         qsQuery;
+    unsigned int    uiPriceSumTotal = 0;
     QSqlQuery      *poQueryResult;
-    unsigned int    uiTotalPanelUse = 0;
+    unsigned int    uiPricePanelUse[ m_qslCassaIds.count() ];
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
-    addTableCell( tr("Morning"), "center bold" );
-    addTableCell( tr("Afternoon"), "center bold" );
+    for( int i=0; i<m_qslCassaOwners.count(); i++ )
+    {
+        addTableCell( m_qslCassaOwners.at(i), "center bold" );
+        uiPricePanelUse[ i ] = 0;
+    }
     addTableCell( tr("Amount"), "center bold" );
 
-    qsQuery = "SELECT * FROM paneltypes WHERE panelTypeId>0";
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
 
     while( poQueryResult->next() )
     {
-        int nPriceMorning   = _sumPanelUseMorning( poQueryResult->value(0).toUInt() );
-        int nPriceAfternoon = _sumPanelUseAfternoon( poQueryResult->value(0).toUInt() );
-
-        uiTotalPanelUse += nPriceMorning+nPriceAfternoon;
-
-        QString qsPanelUseMorning   = "";
-        QString qsPanelUseAfternoon = "";
-        QString qsPanelUseFullday   = "";
-
-        if( nPriceMorning > 0 )
-        {
-            cCurrency   obPanelUseMorning( nPriceMorning );
-
-            qsPanelUseMorning = obPanelUseMorning.currencyFullStringShort();
-        }
-        if( nPriceAfternoon > 0 )
-        {
-            cCurrency   obPanelUseAfternoon( nPriceAfternoon );
-
-            qsPanelUseAfternoon = obPanelUseAfternoon.currencyFullStringShort();
-        }
-        if( nPriceMorning+nPriceAfternoon > 0 )
-        {
-            cCurrency   obPanelUseFullday( nPriceMorning+nPriceAfternoon );
-
-            qsPanelUseFullday = obPanelUseFullday.currencyFullStringShort();
-        }
+        unsigned int    uiPricePanelTotal = 0;
+        QString         qsPricePanelTotal = "";
+        QString         qsTitlePanel = poQueryResult->value(2).toString();
 
         addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
-        addTableCell( qsPanelUseMorning, "right" );
-        addTableCell( qsPanelUseAfternoon, "right" );
-        addTableCell( qsPanelUseFullday, "right" );
+        addTableCell( qsTitlePanel );
+
+        for( int i=0; i<m_qslCassaIds.count(); i++ )
+        {
+            int             nPricePanel  = _sumPanelUse( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+            QString         qsPricePanel = "";
+
+            if( nPricePanel > 0 )
+            {
+                cCurrency obPrice( nPricePanel );
+
+                qsPricePanel = obPrice.currencyFullStringShort();
+            }
+            addTableCell( qsPricePanel, "right" );
+
+            uiPricePanelUse[ i ] += nPricePanel;
+            uiPricePanelTotal += nPricePanel;
+        }
+
+        if( uiPricePanelTotal > 0 )
+        {
+            cCurrency   obPanelUseFullday( uiPricePanelTotal );
+
+            qsPricePanelTotal = obPanelUseFullday.currencyFullStringShort();
+        }
+
+        addTableCell( qsPricePanelTotal, "right" );
+
+        uiPriceSumTotal += uiPricePanelTotal;
     }
 
-    cCurrency   obTotalPanelUse( uiTotalPanelUse );
+    cCurrency   obPriceSumTotal( uiPriceSumTotal );
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
-    addTableCell();
-    addTableCell();
-    addTableCell( obTotalPanelUse.currencyFullStringShort(), "right bold" );
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    {
+        cCurrency   obPricePanel( uiPricePanelUse[ i ] );
 
-    return uiTotalPanelUse;
+        addTableCell( obPricePanel.currencyFullStringShort(), "right" );
+    }
+    addTableCell( obPriceSumTotal.currencyFullStringShort(), "right bold" );
+
+    finishTable();
+    finishSection();
+
+    return uiPriceSumTotal;
 }
 //------------------------------------------------------------------------------------
 void cReportDaily::_reportPartPanelUseUnits()
 //------------------------------------------------------------------------------------
 {
-    QString         qsQuery;
+    unsigned int    uiCountSumTotal = 0;
     QSqlQuery      *poQueryResult;
-    int             nCountTotal = 0;
+    unsigned int    uiCountPanelUseUnits[ m_qslCassaIds.count() ];
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
-    addTableCell( tr("Morning"), "center bold" );
-    addTableCell( tr("Afternoon"), "center bold" );
-    addTableCell( tr("Sum"), "center bold" );
+    for( int i=0; i<m_qslCassaOwners.count(); i++ )
+    {
+        addTableCell( m_qslCassaOwners.at(i), "center bold" );
+        uiCountPanelUseUnits[ i ] = 0;
+    }
+    addTableCell( tr("Amount"), "center bold" );
 
-    qsQuery = QString( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
 
     while( poQueryResult->next() )
     {
-        int nCountMorning   = _countPanelUseUnitsMorning( poQueryResult->value(0).toUInt() );
-        int nCountAfternoon = _countPanelUseUnitsAfternoon( poQueryResult->value(0).toUInt() );
-
-        nCountTotal += nCountMorning + nCountAfternoon;
+        unsigned int    uiCountPanelTotal = 0;
+        QString         qsTitlePanel = poQueryResult->value(2).toString();
 
         addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
-        addTableCell( QString::number(nCountMorning), "center" );
-        addTableCell( QString::number(nCountAfternoon), "center" );
-        addTableCell( QString::number(nCountMorning+nCountAfternoon), "center" );
+        addTableCell( qsTitlePanel );
+
+        for( int i=0; i<m_qslCassaIds.count(); i++ )
+        {
+            int nCountPanel  = _countPanelUseUnits( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+
+            addTableCell( QString::number(nCountPanel), "center" );
+
+            uiCountPanelUseUnits[ i ] += nCountPanel;
+            uiCountPanelTotal += nCountPanel;
+        }
+
+        addTableCell( QString::number(uiCountPanelTotal), "center" );
+
+        uiCountSumTotal += uiCountPanelTotal;
     }
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
-    addTableCell();
-    addTableCell();
-    addTableCell( QString::number(nCountTotal), "center bold" );
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    {
+        addTableCell( QString::number( uiCountPanelUseUnits[ i ] ), "center" );
+    }
+    addTableCell( QString::number(uiCountSumTotal), "center bold" );
+
+    finishTable();
+    finishSection();
 }
 //------------------------------------------------------------------------------------
 void cReportDaily::_reportPartPaymentMethods()
@@ -433,38 +458,234 @@ void cReportDaily::_reportPartPaymentMethods()
 {
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
-    int             nSumPayment = 0;
+    unsigned int    nPaymentSumTotal = 0;
+    unsigned int    uiPricePayment[ m_qslCassaIds.count() ];
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
-    addTableCell( tr("Amount"), "center bold");
+    for( int i=0; i<m_qslCassaOwners.count(); i++ )
+    {
+        addTableCell( m_qslCassaOwners.at(i), "center bold" );
+        uiPricePayment[ i ] = 0;
+    }
+    addTableCell( tr("Amount"), "center bold" );
 
     qsQuery = QString( "SELECT * FROM paymentmethods WHERE paymentMethodId>0" );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     while( poQueryResult->next() )
     {
-        int     nPayment = _sumPaymentMethod( poQueryResult->value(0).toInt() );
-        QString qsPayment = "";
-
-        nSumPayment += nPayment;
-
-        if( nPayment > 0 )
-        {
-            cCurrency   obSum( nPayment );
-            qsPayment = obSum.currencyFullStringShort();
-        }
+        unsigned int    nPaymentSum = 0;
+        QString         qsPaymentSum = "";
+        QString         qsPaymentName = poQueryResult->value(2).toString();
 
         addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
-        addTableCell( qsPayment, "right" );
+        addTableCell( qsPaymentName );
+
+        for( int i=0; i<m_qslCassaIds.count(); i++ )
+        {
+            int     nPayment = _sumPaymentMethod( m_qslCassaIds.at(i), poQueryResult->value(0).toInt() );
+            QString qsPayment = "";
+
+            if( nPayment > 0 )
+            {
+                cCurrency   obSum( nPayment );
+                qsPayment = obSum.currencyFullStringShort();
+            }
+            addTableCell( qsPayment, "right" );
+            nPaymentSum += nPayment;
+            uiPricePayment[ i ] += nPayment;
+        }
+
+        if( nPaymentSum > 0 )
+        {
+            cCurrency   obPaymentSum( nPaymentSum );
+
+            qsPaymentSum = obPaymentSum.currencyFullStringShort();
+        }
+        addTableCell( qsPaymentSum, "right" );
+
+        nPaymentSumTotal += nPaymentSum;
     }
 
-    cCurrency   obSumTotal( nSumPayment );
+    cCurrency obPaymentSumTotal( nPaymentSumTotal );
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
-    addTableCell( obSumTotal.currencyFullStringShort(), "right bold");
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    {
+        cCurrency obPricePayment( uiPricePayment[ i ] );
+
+        addTableCell( obPricePayment.currencyFullStringShort(), "right" );
+    }
+    addTableCell( obPaymentSumTotal.currencyFullStringShort(), "right bold");
+
+    finishTable();
+    finishSection();
+}
+//------------------------------------------------------------------------------------
+unsigned int cReportDaily::_reportPartExpenses()
+//------------------------------------------------------------------------------------
+{
+    unsigned int uiTotal = 0;
+
+    startSection();
+    addTable();
+    addTableRow();
+    addTableCell();
+    addTableCell( tr("Description"), "bold" );
+    addTableCell( tr("Amount"), "right bold" );
+
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    {
+        unsigned int    uiCassaId   = m_qslCassaIds.at(i).toUInt();
+        QString         qsUserName  = m_qslCassaOwners.at(i);
+
+        addTableRow();
+        addTableCell( qsUserName, "bold" );
+        addTableCell();
+        addTableCell();
+
+        QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT comment, actionValue "
+                                                                      "FROM cassahistory WHERE "
+                                                                      "parentId=0 AND "
+                                                                      "cassaId=%1 AND "
+                                                                      "actionValue<0 AND "
+                                                                      "actionBalance>0 " ).arg( uiCassaId ) );
+        unsigned int uiTotalCassa = 0;
+        while( poQueryResults->next() )
+        {
+            cCurrency   obPrice( poQueryResults->value(1).toInt() );
+            uiTotalCassa += poQueryResults->value(1).toInt();
+
+            addTableRow();
+            addTableCell();
+            addTableCell( poQueryResults->value(0).toString() );
+            addTableCell( obPrice.currencyFullStringShort(), "right" );
+        }
+        cCurrency   obTotalPrice( uiTotalCassa );
+
+        addTableRow();
+        addTableCell();
+        addTableCell( tr("Sum"), "bold" );
+        addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+
+        uiTotal += uiTotalCassa;
+    }
+
+    cCurrency   obTotalPrice( uiTotal );
+
+    addTableRow();
+    addTableCell( tr("Sum total"), "bold" );
+    addTableCell();
+    addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+
+    finishTable();
+    finishSection();
+
+    return uiTotal;
+}
+//------------------------------------------------------------------------------------
+void cReportDaily::_reportPartStorno()
+//------------------------------------------------------------------------------------
+{
+    unsigned int uiTotal = 0;
+
+    startSection();
+    addTable();
+    addTableRow();
+    addTableCell();
+    addTableCell( tr("Description"), "bold" );
+    addTableCell( tr("Amount"), "right bold" );
+
+    for( int i=0; i<m_qslCassaIds.count(); i++ )
+    {
+        unsigned int    uiCassaId   = m_qslCassaIds.at(i).toUInt();
+        QString         qsUserName  = m_qslCassaOwners.at(i);
+
+        addTableRow();
+        addTableCell( qsUserName, "bold" );
+        addTableCell();
+        addTableCell();
+
+        QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT comment, actionValue "
+                                                                      "FROM cassahistory WHERE "
+                                                                      "parentId<>0 AND "
+                                                                      "cassaId=%1 " ).arg( uiCassaId ) );
+        unsigned int uiTotalCassa = 0;
+        while( poQueryResults->next() )
+        {
+            cCurrency   obPrice( poQueryResults->value(1).toInt() );
+            uiTotalCassa += poQueryResults->value(1).toInt();
+
+            addTableRow();
+            addTableCell();
+            addTableCell( poQueryResults->value(0).toString() );
+            addTableCell( obPrice.currencyFullStringShort(), "right" );
+        }
+        cCurrency   obTotalPrice( uiTotalCassa );
+
+        addTableRow();
+        addTableCell();
+        addTableCell( tr("Sum"), "bold" );
+        addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+
+        uiTotal += uiTotalCassa;
+    }
+
+    cCurrency   obTotalPrice( uiTotal );
+
+    addTableRow();
+    addTableCell( tr("Sum total"), "bold" );
+    addTableCell();
+    addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
+
+    finishTable();
+    finishSection();
+}
+//------------------------------------------------------------------------------------
+void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiTotalPrice, unsigned int p_uiPatientCardTotal, unsigned int p_uiDeviceUsagesTotal, int p_nExpenses )
+//------------------------------------------------------------------------------------
+{
+    startSection();
+    addTable();
+
+    cCurrency obPriceProducts = cCurrency( p_uiTotalPrice );
+
+    addTableRow();
+    addTableCell( tr("Products sold") );
+    addTableCell( ":", "bold");
+    addTableCell( obPriceProducts.currencyFullStringShort(), "right" );
+
+    cCurrency obPricePatientcards = cCurrency( p_uiPatientCardTotal );
+
+    addTableRow();
+    addTableCell( tr("Patientcards sold") );
+    addTableCell( ":", "bold");
+    addTableCell( obPricePatientcards.currencyFullStringShort(), "right" );
+
+    cCurrency obPriceDevices = cCurrency( p_uiDeviceUsagesTotal );
+
+    addTableRow();
+    addTableCell( tr("Device usages") );
+    addTableCell( ":", "bold");
+    addTableCell( obPriceDevices.currencyFullStringShort(), "right" );
+
+    cCurrency obPriceExpenses = cCurrency( p_nExpenses );
+
+    addTableRow();
+    addTableCell( tr("Expenses") );
+    addTableCell( ":", "bold");
+    addTableCell( obPriceExpenses.currencyFullStringShort(), "right" );
+
+    cCurrency   obTotal( p_uiTotalPrice + p_uiPatientCardTotal + p_uiDeviceUsagesTotal + p_nExpenses );
+    addTableRow();
+    addTableCell( tr("Sum total"), "bold" );
+    addTableCell( ":", "bold");
+    addTableCell( obTotal.currencyFullStringShort(), "right bold" );
 }
 //------------------------------------------------------------------------------------
 QString cReportDaily::_countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId )
@@ -480,7 +701,8 @@ QString cReportDaily::_countPatientCardTypeSell( QString p_qsCassaId, unsigned i
                       "ledger.patientCardTypeId=patientCardTypes.patientCardTypeId AND "
                       "cassahistory.cassaId=%1 AND "
                       "ledgerTypeId=%2 AND "
-                      "ledger.patientCardTypeId=%3" ).arg(p_qsCassaId).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
+                      "ledger.patientCardTypeId=%3 AND "
+                      "ledger.active=1 " ).arg(p_qsCassaId).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     if( poQueryResult->size() > 0 )
@@ -508,7 +730,8 @@ int cReportDaily::_sumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_u
                       "ledger.patientCardTypeId=patientCardTypes.patientCardTypeId AND "
                       "cassahistory.cassaId=%1 AND "
                       "ledgerTypeId=%2 AND "
-                      "ledger.patientCardTypeId=%3" ).arg(p_qsCassaId).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
+                      "ledger.patientCardTypeId=%3 AND "
+                      "ledger.active=1 " ).arg(p_qsCassaId).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     if( poQueryResult->size() > 0 )
@@ -542,57 +765,40 @@ int cReportDaily::_sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QS
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportDaily::_sumPanelUseMorning( unsigned int p_uiPanelTypeId )
+int cReportDaily::_sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId )
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
 
     qsQuery = QString("SELECT SUM(totalPrice) "
-                      "FROM ledger, panels WHERE "
+                      "FROM cassahistory, ledger, panels WHERE "
+                      "cassahistory.ledgerId=ledger.ledgerId AND "
                       "ledger.panelId=panels.panelId AND "
-                      "ledgerTime>\"%1 00:00:00\" AND "
-                      "ledgerTime<\"%1 12:00:00\" AND "
+                      "cassahistory.cassaId=%1 AND "
                       "ledgerTypeId=%2 AND "
-                      "panelTypeId=%3" ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(LT_DEVICE_USAGE).arg(p_uiPanelTypeId);
+                      "panelTypeId=%3 AND "
+                      "ledger.active=1 " ).arg( p_qsCassaId ).arg( LT_DEVICE_USAGE ).arg( p_uiPanelTypeId );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportDaily::_sumPanelUseAfternoon( unsigned int p_uiPanelTypeId )
+int cReportDaily::_sumPaymentMethod( QString p_qsCassaId, unsigned int p_uiPaymentMethodId )
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
 
     qsQuery = QString("SELECT SUM(totalPrice) "
-                      "FROM ledger, panels WHERE "
-                      "ledger.panelId=panels.panelId AND "
-                      "ledgerTime>\"%1 12:00:00\" AND "
-                      "ledgerTime<\"%1 24:00:00\" AND "
-                      "ledgerTypeId=%2 AND "
-                      "panelTypeId=%3" ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(LT_DEVICE_USAGE).arg(p_uiPanelTypeId);
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
-    poQueryResult->first();
-
-    return poQueryResult->value(0).toInt();
-}
-//------------------------------------------------------------------------------------
-int cReportDaily::_sumPaymentMethod( unsigned int p_uiPaymentMethodId )
-//------------------------------------------------------------------------------------
-{
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
-
-    qsQuery = QString("SELECT SUM(totalPrice) "
-                      "FROM ledger WHERE "
-                      "modified>\"%1 00:00:00\" AND "
-                      "modified<\"%1 24:00:00\" AND "
+                      "FROM ledger, cassahistory WHERE "
+                      "ledger.ledgerId=cassahistory.ledgerId AND "
+                      "cassaId=%1 AND "
                       "ledgerTypeId>0 AND "
                       "ledgerTypeId<9 AND "
-                      "paymentMethodId=%2 ").arg(filterDateStart().toString("yyyy-MM-dd")).arg(p_uiPaymentMethodId);
+                      "paymentMethodId=%2 AND "
+                      "ledger.active=1 " ).arg(p_qsCassaId).arg(p_uiPaymentMethodId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 
@@ -616,42 +822,21 @@ int cReportDaily::_sumCassaIncome( unsigned int p_uiCassaId )
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportDaily::_countPanelUseUnitsMorning( unsigned int p_uiPanelTypeId )
+int cReportDaily::_countPanelUseUnits( QString p_qsCassaId, unsigned int p_uiPanelTypeId )
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
 
     qsQuery = QString("SELECT COUNT(patientCardUnitId) "
-                      "FROM patientcardunits, panels, paneltypes WHERE "
+                      "FROM patientcardunits, panels, paneltypes, cassahistory WHERE "
                       "patientcardunits.panelId=panels.panelId AND "
                       "panels.panelTypeId=paneltypes.panelTypeId AND "
+                      "patientcardunits.ledgerId=cassahistory.ledgerId AND "
                       "patientcardunits.panelId>0 AND "
-                      "dateTimeUsed>\"%1 00:00:00\" AND "
-                      "dateTimeUsed<\"%1 12:00:00\" AND "
+                      "cassaId=%1 AND "
                       "paneltypes.panelTypeId=%2 "
-                      "GROUP BY paneltypes.panelTypeId ").arg(filterDateStart().toString("yyyy-MM-dd")).arg(p_uiPanelTypeId);
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
-    poQueryResult->first();
-
-    return poQueryResult->value(0).toInt();
-}
-//------------------------------------------------------------------------------------
-int cReportDaily::_countPanelUseUnitsAfternoon( unsigned int p_uiPanelTypeId )
-//------------------------------------------------------------------------------------
-{
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
-
-    qsQuery = QString("SELECT COUNT(patientCardUnitId) "
-                      "FROM patientcardunits, panels, paneltypes WHERE "
-                      "patientcardunits.panelId=panels.panelId AND "
-                      "panels.panelTypeId=paneltypes.panelTypeId AND "
-                      "patientcardunits.panelId>0 AND "
-                      "dateTimeUsed>\"%1 12:00:00\" AND "
-                      "dateTimeUsed<\"%1 24:00:00\" AND "
-                      "paneltypes.panelTypeId=%2 "
-                      "GROUP BY paneltypes.panelTypeId ").arg(filterDateStart().toString("yyyy-MM-dd")).arg(p_uiPanelTypeId);
+                      "GROUP BY paneltypes.panelTypeId ").arg(p_qsCassaId).arg(p_uiPanelTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 

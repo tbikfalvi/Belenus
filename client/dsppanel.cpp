@@ -38,13 +38,13 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     verticalLayout  = new QVBoxLayout( this );
     lblTitle        = new QLabel( this );
-    spacer1         = new QSpacerItem( 20, 30, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer1         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
     lblCurrStatus   = new QLabel( this );
-    spacer2         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer2         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed );
     lblCurrTimer    = new QLabel( this );
-    spacer3         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer3         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed );
     lblEstTimer     = new QLabel( this );
-    spacer4         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer4         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed );
     lblInfo         = new QLabel( this );
     spacer5         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
 
@@ -56,6 +56,9 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     QPalette  obNewPalette = lblTitle->palette();
     obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#4387cb" ) ) );
     lblTitle->setPalette( obNewPalette );
+
+    lblCurrStatus->setWordWrap( true );
+    lblInfo->setWordWrap( true );
 
     verticalLayout->addWidget( lblTitle );
     verticalLayout->addItem( spacer1 );

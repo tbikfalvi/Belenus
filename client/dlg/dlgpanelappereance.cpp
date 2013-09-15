@@ -28,10 +28,10 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
 
     QSqlQuery               *poQuery = NULL;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, name FROM panelStatuses WHERE active=1 AND panelStatusId>0" ) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, paneltypes.name, panelStatuses.name FROM panelStatuses, paneltypes WHERE panelStatuses.panelTypeId=paneltypes.panelTypeId AND panelStatuses.active=1 AND panelStatusId>0" ) );
     while( poQuery->next() )
     {
-        cmbPanelStatus->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        cmbPanelStatus->addItem( QString( "%1 - %2" ).arg( poQuery->value( 1 ).toString() ).arg( poQuery->value( 2 ).toString() ), poQuery->value( 0 ).toUInt() );
 
         cDBPanelStatusSettings  *pDBPanelStatusSettings = new cDBPanelStatusSettings();
 
@@ -41,44 +41,7 @@ cDlgPanelAppereance::cDlgPanelAppereance( QWidget *p_poParent ) : QDialog( p_poP
         }
         catch( cSevException &e )
         {
-            if( QString(e.what()).compare("Panelstatus settings id not found") != 0 )
-            {
-                g_obLogger(e.severity()) << e.what() << EOM;
-            }
-            else
-            {
-                pDBPanelStatusSettings->createNew();
-                pDBPanelStatusSettings->setLicenceId( g_poPrefs->getLicenceId() );
-                pDBPanelStatusSettings->setPanelStatusId( poQuery->value( 0 ).toUInt() );
-                switch( poQuery->value( 0 ).toUInt() )
-                {
-                    case 1:
-                        pDBPanelStatusSettings->setBackgroundColor( "#00ff00" );
-                        break;
-                    case 2:
-                        pDBPanelStatusSettings->setBackgroundColor( "#ffff00" );
-                        break;
-                    case 3:
-                        pDBPanelStatusSettings->setBackgroundColor( "#ff0000" );
-                        break;
-                    case 4:
-                        pDBPanelStatusSettings->setBackgroundColor( "#ffff00" );
-                        break;
-                }
-                pDBPanelStatusSettings->setStatusFontName( "Arial" );
-                pDBPanelStatusSettings->setStatusFontSize( 18 );
-                pDBPanelStatusSettings->setStatusFontColor( "#000000" );
-                pDBPanelStatusSettings->setTimerFontName( "Book Antiqua" );
-                pDBPanelStatusSettings->setTimerFontSize( 30 );
-                pDBPanelStatusSettings->setTimerFontColor( "#000000" );
-                pDBPanelStatusSettings->setNextFontName( "Arial" );
-                pDBPanelStatusSettings->setNextFontSize( 18 );
-                pDBPanelStatusSettings->setNextFontColor( "#000000" );
-                pDBPanelStatusSettings->setInfoFontName( "Arial" );
-                pDBPanelStatusSettings->setInfoFontSize( 10 );
-                pDBPanelStatusSettings->setInfoFontColor( "#000000" );
-                pDBPanelStatusSettings->setActive( true );
-            }
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
         m_obStatusSettings.push_back( pDBPanelStatusSettings );
     }
@@ -144,6 +107,8 @@ void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
 void cDlgPanelAppereance::on_cmbFontNames_currentIndexChanged(int index)
 //====================================================================================
 {
+    if( m_bInit ) return;
+
     switch( cmbPanelText->currentIndex() )
     {
         case 0:
@@ -165,6 +130,8 @@ void cDlgPanelAppereance::on_cmbFontNames_currentIndexChanged(int index)
 void cDlgPanelAppereance::on_spinFontSize_valueChanged(int )
 //====================================================================================
 {
+    if( m_bInit ) return;
+
     switch( cmbPanelText->currentIndex() )
     {
         case 0:
@@ -186,6 +153,8 @@ void cDlgPanelAppereance::on_spinFontSize_valueChanged(int )
 void cDlgPanelAppereance::on_pbFont_clicked()
 //====================================================================================
 {
+    if( m_bInit ) return;
+
     QFontDialog obFontDialog( this );
 
     QFont obFont = lblFont->font();
@@ -240,6 +209,8 @@ void cDlgPanelAppereance::on_pbFont_clicked()
 void cDlgPanelAppereance::on_pbTextColor_clicked()
 //====================================================================================
 {
+    if( m_bInit ) return;
+
     QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ), this );
     if( obNewColor.isValid() )
         m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontColor( obNewColor.name() );
@@ -254,6 +225,8 @@ void cDlgPanelAppereance::on_pbTextColor_clicked()
 void cDlgPanelAppereance::updatePanelSettings()
 //====================================================================================
 {
+    m_bInit = true;
+
     QPixmap  obColorIcon( 24, 24 );
 
     QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
@@ -306,6 +279,8 @@ void cDlgPanelAppereance::updatePanelSettings()
     pbTextColor->setIcon( QIcon( obColorIcon ) );
     cmbFontNames->setCurrentIndex( cmbFontNames->findText( obFont.family() ) );
     spinFontSize->setValue( obFont.pixelSize() );
+
+    m_bInit = false;
 }
 //====================================================================================
 void cDlgPanelAppereance::accept ()

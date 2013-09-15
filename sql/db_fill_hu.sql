@@ -154,6 +154,20 @@ INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `panelstatussettings` (`panelStatusSettingId`, `licenceId`, `panelStatusId`, `backgroundColor`, `statusFontName`, `statusFontSize`, `statusFontColor`, `timerFontName`, `timerFontSize`, `timerFontColor`, `nextFontName`, `nextFontSize`, `nextFontColor`, `infoFontName`, `infoFontSize`, `infoFontColor`, `modified`, `active`, `archive`) VALUES
+ (1, 1, 1, '#00ff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (2, 1, 2, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (3, 1, 3, '#ff0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (4, 1, 4, '#ffff7f', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (5, 1, 5, '#00aa00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (6, 1, 6, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (7, 1, 7, '#aa0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (8, 1, 8, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (9, 1, 9, '#ff0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
+ (10, 1, 10, '#ffff7f', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW');
+
+-- -----------------------------------------------------------------------------------
+
 INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
   ( 0, 0, 0, "", 0, 0, 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
@@ -239,7 +253,7 @@ INSERT INTO `productactiontype` (`productActionTypeId`, `licenceId`, `name`, `in
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `productTypeId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
+INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `paymentMethodId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
  (NULL, '', NULL, NULL, NULL, NULL, '0', '0', '0', '', '', '', '', '0', 'ARC');
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
 ALTER TABLE `discounts` auto_increment=1;

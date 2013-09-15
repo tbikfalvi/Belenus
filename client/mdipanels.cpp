@@ -204,6 +204,19 @@ bool cMdiPanels::isPanelWorking()
     return bRet;
 }
 
+void cMdiPanels::refreshDisplay()
+{
+    for( int i=0; i<(int)m_obPanels.size(); i++ )
+    {
+        m_obPanels.at(i)->refreshDisplay();
+    }
+}
+
+void cMdiPanels::setTextInformation(QString p_qsInfoText)
+{
+    m_obPanels.at( m_uiActivePanel )->setTextInformation( p_qsInfoText );
+}
+
 bool cMdiPanels::isPanelWorking( const unsigned int p_uiPanel )
 {
     if( p_uiPanel < m_obPanels.size() )

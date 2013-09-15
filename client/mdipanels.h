@@ -33,6 +33,8 @@ public:
     bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );
     bool            isStatusCanBeReseted();
     void            reload();
+    void            refreshDisplay();
+    void            setTextInformation( QString p_qsInfoText );
 
     bool            isMainProcess();
     int             mainProcessTime();

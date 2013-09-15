@@ -36,69 +36,32 @@ void cReportLedger::refreshReport()
 
     addSeparator();
     addSubTitle( tr( "Cassa list" ) );
-
-        _reportPartCassaList();
+    _reportPartCassaList();
 
     // Product sold
     addSeparator();
     addSubTitle( tr( "Products sold" ) );
-
-        startSection();
-        addTable();
-
-        // Total of product sold
-        cCurrency   obProductTotal( _reportPartProductSell() );
-
-        finishTable();
-        finishSection();
+    cCurrency   obProductTotal( _reportPartProductSell() );
 
     // Patientcards sold
     addSeparator();
     addSubTitle( tr( "Patientcards sold" ) );
-
-        startSection();
-        addTable();
-
-        cCurrency obPatientCardTotal( _reportPartPatientCardSell() );
-
-        finishTable();
-        finishSection();
+    cCurrency obPatientCardTotal( _reportPartPatientCardSell() );
 
     // Panel related data of the selected date
     addSeparator();
     addSubTitle( tr( "Device usages" ) );
-
-        startSection();
-        addTable();
-
-        cCurrency obDeviceUsagesTotal( _reportPartPanelUse() );
-
-        finishTable();
-        finishSection();
+    cCurrency obDeviceUsagesTotal( _reportPartPanelUse() );
 
     // Panel usage by patientcard units
     addSeparator();
     addSubTitle( tr( "Device usages by patientcard units" ) );
-
-        startSection();
-        addTable();
-
-        _reportPartPanelUseUnits();
-
-        finishTable();
-        finishSection();
+    _reportPartPanelUseUnits();
 
     // Income based on payment methods
     addSeparator();
     addSubTitle( tr( "Income by payment methods" ) );
-
-        startSection();
-        addTable();
-
-        _reportPartPaymentMethods();
-
-        finishTable();
-        finishSection();
+    _reportPartPaymentMethods();
 
     // Income summary
     addSeparator();
@@ -142,9 +105,9 @@ void cReportLedger::_reportPartCassaList()
     qsQuery = QString( "SELECT cassaId, currentBalance, startDateTime, stopDateTime, cassa.modified, realName, cassa.userId "
                        "FROM cassa, users "
                        "WHERE cassa.userId=users.userId AND ("
-                       " (DATE(cassa.startDateTime)>\"%1\" AND DATE(cassa.startDateTime)<\"%2\") OR "
-                       " (DATE(cassa.stopDateTime)>\"%1\" AND DATE(cassa.stopDateTime)<\"%2\") OR "
-                       " (DATE(cassa.modified)>\"%1\" AND DATE(cassa.modified)<\"%2\") "
+                       " (DATE(cassa.startDateTime)>=\"%1\" AND DATE(cassa.startDateTime)<=\"%2\") OR "
+                       " (DATE(cassa.stopDateTime)>=\"%1\" AND DATE(cassa.stopDateTime)<=\"%2\") OR "
+                       " (DATE(cassa.modified)>=\"%1\" AND DATE(cassa.modified)<=\"%2\") "
                        ") ORDER BY startDateTime" ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
@@ -204,6 +167,9 @@ unsigned int cReportLedger::_reportPartProductSell()
     QString     qsQuery;
     QSqlQuery  *poQueryResult;
 
+    startSection();
+    addTable();
+
     m_dlgProgress.setProgressMax( 100 );
     m_dlgProgress.setProgressValue( 0 );
 
@@ -244,6 +210,9 @@ unsigned int cReportLedger::_reportPartProductSell()
     addTableCell();
     addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
 
+    finishTable();
+    finishSection();
+
     return uiTotal;
 }
 //------------------------------------------------------------------------------------
@@ -253,6 +222,9 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     unsigned int    uiTotalCardSell = 0;
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
@@ -289,6 +261,9 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
     addTableCell();
     addTableCell( obTotalPrice.currencyFullStringShort(), "right bold" );
 
+    finishTable();
+    finishSection();
+
     return uiTotalCardSell;
 }
 //------------------------------------------------------------------------------------
@@ -298,6 +273,9 @@ unsigned int cReportLedger::_reportPartPanelUse()
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     unsigned int    uiTotalPanelUse = 0;
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
@@ -332,6 +310,9 @@ unsigned int cReportLedger::_reportPartPanelUse()
     addTableCell( tr("Sum total"), "bold" );
     addTableCell( obTotalPanelUse.currencyFullStringShort(), "right bold" );
 
+    finishTable();
+    finishSection();
+
     return uiTotalPanelUse;
 }
 //------------------------------------------------------------------------------------
@@ -341,6 +322,9 @@ void cReportLedger::_reportPartPanelUseUnits()
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     int             nCountTotal = 0;
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
@@ -363,6 +347,9 @@ void cReportLedger::_reportPartPanelUseUnits()
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
     addTableCell( QString::number(nCountTotal), "center bold" );
+
+    finishTable();
+    finishSection();
 }
 //------------------------------------------------------------------------------------
 void cReportLedger::_reportPartPaymentMethods()
@@ -371,6 +358,9 @@ void cReportLedger::_reportPartPaymentMethods()
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     int             nSumPayment = 0;
+
+    startSection();
+    addTable();
 
     addTableRow();
     addTableCell();
@@ -402,6 +392,9 @@ void cReportLedger::_reportPartPaymentMethods()
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
     addTableCell( obSumTotal.currencyFullStringShort(), "right bold");
+
+    finishTable();
+    finishSection();
 }
 //------------------------------------------------------------------------------------
 int cReportLedger::_sumPatientCardTypeSell( unsigned int p_uiPatientCardTypeId )
@@ -417,7 +410,8 @@ int cReportLedger::_sumPatientCardTypeSell( unsigned int p_uiPatientCardTypeId )
                       "ledgerTime>\"%1 00:00:00\" AND "
                       "ledgerTime<\"%2 24:00:00\" AND "
                       "ledgerTypeId=%3 AND "
-                      "ledger.patientCardTypeId=%4" ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
+                      "ledger.patientCardTypeId=%4 AND "
+                      "ledger.active=1 " ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     if( poQueryResult->size() > 0 )
@@ -442,7 +436,8 @@ QString cReportLedger::_countPatientCardTypeSell( unsigned int p_uiPatientCardTy
                       "ledgerTime>\"%1 00:00:00\" AND "
                       "ledgerTime<\"%2 24:00:00\" AND "
                       "ledgerTypeId=%3 AND "
-                      "ledger.patientCardTypeId=%4" ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
+                      "ledger.patientCardTypeId=%4 AND "
+                      "ledger.active=1 " ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     if( poQueryResult->size() > 0 )
@@ -469,7 +464,8 @@ int cReportLedger::_sumPanelUse( unsigned int p_uiPanelTypeId )
                       "ledgerTime>\"%1 00:00:00\" AND "
                       "ledgerTime<\"%2 24:00:00\" AND "
                       "ledgerTypeId=%3 AND "
-                      "panelTypeId=%4" ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(LT_DEVICE_USAGE).arg(p_uiPanelTypeId);
+                      "panelTypeId=%4 AND "
+                      "ledger.active=1 " ).arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(LT_DEVICE_USAGE).arg(p_uiPanelTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 
@@ -509,7 +505,8 @@ int cReportLedger::_sumPaymentMethod( unsigned int p_uiPaymentMethodId )
                       "modified<\"%2 24:00:00\" AND "
                       "ledgerTypeId>0 AND "
                       "ledgerTypeId<9 AND "
-                      "paymentMethodId=%3 ").arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(p_uiPaymentMethodId);
+                      "paymentMethodId=%3 AND "
+                      "ledger.active=1 ").arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(p_uiPaymentMethodId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 

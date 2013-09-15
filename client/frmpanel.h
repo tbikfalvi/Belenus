@@ -60,6 +60,8 @@ public:
     void            inactivate();
     void            activate();
     void            reload();
+    void            refreshDisplay();
+    void            setTextInformation( QString p_qsInfoText );
 
     unsigned int    panelId();
     bool            isMainProcess();

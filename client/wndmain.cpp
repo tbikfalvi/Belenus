@@ -144,6 +144,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
     action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.png" ) );
 
+    action_DeviceClear->setIcon( QIcon( "./resources/40x40_device_clear.png" ) );
+
     action_DeviceStart->setIcon( QIcon( "./resources/40x40_device_start.png" ) );
     action_DeviceSkipStatus->setIcon( QIcon( "./resources/40x40_device_next.png" ) );
     action_DeviceReset->setIcon( QIcon( "./resources/40x40_stop.png" ) );
@@ -214,6 +216,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_EditActualPatient->setEnabled( false );
     action_UseWithCard->setEnabled( false );
     action_UseByTime->setEnabled( false );
+    action_DeviceClear->setEnabled( false );
     action_DeviceStart->setEnabled( false );
     action_DeviceSkipStatus->setEnabled( false );
     action_DeviceReset->setEnabled( false );
@@ -265,6 +268,7 @@ cWndMain::~cWndMain()
 //====================================================================================
 void cWndMain::startMainTimer()
 {
+    mdiPanels->refreshDisplay();
     m_nTimer = startTimer( 300 );
 }
 //====================================================================================
@@ -727,6 +731,7 @@ void cWndMain::updateToolbar()
         menuDevice->setEnabled( bIsUserLoggedIn );
             action_UseWithCard->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByCard() );
             action_UseByTime->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByTime() );
+            action_DeviceClear->setEnabled( bIsUserLoggedIn );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0 );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
@@ -893,17 +898,18 @@ void cWndMain::on_action_Preferences_triggered()
         mdiPanels->placeSubWindows();
         mdiPanels->setBackground( QBrush( QColor( g_poPrefs->getMainBackground() ) ) );
         mdiPanels->show();
+        mdiPanels->refreshDisplay();
 
         m_dlgSecondaryWindow->refreshBackground();
 
-        if( g_poPrefs->isSecondaryWindowVisible() )
+        if( g_poPrefs->isSecondaryWindowVisible() && !m_dlgSecondaryWindow->isVisible() )
         {
             m_dlgSecondaryWindow->move( g_poPrefs->secondaryWindowPosition() );
             m_dlgSecondaryWindow->resize( g_poPrefs->secondaryWindowSize() );
             m_dlgSecondaryWindow->show();
             this->setFocus();
         }
-        else
+        else if( !g_poPrefs->isSecondaryWindowVisible() )
         {
             g_poPrefs->setSecondaryWindowPosition( QPoint( m_dlgSecondaryWindow->x(), m_dlgSecondaryWindow->y() ), true );
             g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
@@ -1035,6 +1041,10 @@ void cWndMain::on_action_PatientNew_triggered()
     }
 
     delete poGuest;
+}
+void cWndMain::on_action_DeviceClear_triggered()
+{
+    mdiPanels->setTextInformation( "" );
 }
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
@@ -1417,6 +1427,13 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         obDBPatientCard.load( p_stBarcode );
 
+        if( obDBPatientCard.patientCardTypeId() == 1 && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("You are not allowed to use system administrator card.\nPlease log in as a system administrator if you want to use this card.") );
+            return;
+        }
+
         if( obDBPatientCard.pincode().compare("LOST") == 0 )
         {
             QMessageBox::warning( this, tr("Attention"),
@@ -1441,7 +1458,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
                 if( obDBPatientCard.timeLeft() < 1 )
                 {
-                    qsTemp = tr("\nDue to there is no time left, the patientcard will be reseted and deactivated.");
+                    qsTemp = tr("\n\nDue to there is no time left, the patientcard will be reseted and deactivated.");
                 }
                 if( QMessageBox::question( this, tr("Question"),
                                            tr("This patientcard can not be used with these settings:\n\n"
@@ -1457,12 +1474,31 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                     if( obDBPatientCard.timeLeft() < 1 )
                     {
                         obDBPatientCard.setPatientCardTypeId( 0 );
-                    }
-                    cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+                        obDBPatientCard.setParentId( 0 );
+                        obDBPatientCard.setPatientId( 0 );
+                        obDBPatientCard.setUnits( 0 );
+                        obDBPatientCard.setAmount( 0 );
+                        obDBPatientCard.setTimeLeft( 0 );
+                        obDBPatientCard.setValidDateFrom( "2000-01-01" );
+                        obDBPatientCard.setValidDateTo( "2000-01-01" );
+                        obDBPatientCard.setActive( false );
 
-                    if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
+                        cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
+                        obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+
+                        if( obDlgPatientCardSell.exec() != QDialog::Accepted )
+                        {
+                            return;
+                        }
+                    }
+                    else
                     {
-                        return;
+                        cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+
+                        if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
+                        {
+                            return;
+                        }
                     }
                 }
             }
@@ -1520,6 +1556,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
             {
 //                QMessageBox::information( this, "", obDlgPanelUse.panelUnitIds().join(" - ") );
                 mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSeconds() );
+                int nCount = obDBPatientCard.units()-obDlgPanelUse.panelUnitIds().count();
+                mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
             }
 /*
             cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );

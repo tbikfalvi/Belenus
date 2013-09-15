@@ -15,14 +15,14 @@ public:
     void            load( const QString &p_qsName )                                     throw( cSevException );
     void            loadGuest( const unsigned int p_uiId )                              throw( cSevException );
     void            loadCompany( const unsigned int p_uiId )                            throw( cSevException );
-    void            loadProductType( const unsigned int p_uiId )                        throw( cSevException );
+    void            loadPaymentMethod( const unsigned int p_uiId )                        throw( cSevException );
     void            loadProduct( const unsigned int p_uiId )                            throw( cSevException );
     bool            isRegularCustomerExists()                                           throw( cSevException );
     bool            isEmployeeExists()                                                  throw( cSevException );
     bool            isServiceExists()                                                   throw( cSevException );
     bool            isGuestExists( const unsigned int p_uiId )                          throw( cSevException );
     bool            isCompanyExists( const unsigned int p_uiId )                        throw( cSevException );
-    bool            isProductTypeExists( const unsigned int p_uiId )                    throw( cSevException );
+    bool            isPaymentMethodExists( const unsigned int p_uiId )                    throw( cSevException );
     bool            isProductExists( const unsigned int p_uiId )                        throw( cSevException );
     void            save()                                                              throw( cSevException );
     void            remove()                                                            throw( cSevException );
@@ -34,10 +34,10 @@ public:
     void            setGuestId( const unsigned int p_uiGuestId )                        throw();
     unsigned int    companyId() const                                                   throw();
     void            setCompanyId( const unsigned int p_uiCompanyId )                    throw();
-    unsigned int    productTypeId() const                                               throw();
-    void            setProductTypeId( const unsigned int p_uiProductTypeId )            throw();
+    unsigned int    paymentMethodId() const                                               throw();
+    void            setPaymentMethodId( const unsigned int p_uiPaymentMethodId )            throw();
     unsigned int    productId() const                                                   throw();
-    void            setProductId( const unsigned int p_uiProductTypeId )                throw();
+    void            setProductId( const unsigned int p_uiPaymentMethodId )                throw();
     bool            regularCustomer() const                                             throw();
     void            setRegularCustomer( const bool p_bRegularCustomer )                 throw();
     bool            employee() const                                                    throw();
@@ -61,7 +61,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiGuestId;
     unsigned int    m_uiCompanyId;
-    unsigned int    m_uiProductTypeId;
+    unsigned int    m_uiPaymentMethodId;
     unsigned int    m_uiProductId;
     bool            m_bRegularCustomer;
     bool            m_bEmployee;
@@ -77,7 +77,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiGuestId = 0,
                const unsigned int p_uiCompanyId = 0,
-               const unsigned int p_uiProductTypeId = 0,
+               const unsigned int p_uiPaymentMethodId = 0,
                const unsigned int p_uiProductId = 0,
                const bool p_bRegularCustomer = false,
                const bool p_bEmployee = false,

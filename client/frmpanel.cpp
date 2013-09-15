@@ -56,6 +56,9 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     icoShoppingCart     = new QPushButton( this );
     icoScheduledGuest   = new QPushButton( this );
 
+    lblCurrStatus->setWordWrap( true );
+    lblInfo->setWordWrap( true );
+
     layoutIcons->setContentsMargins( 5, 0, 5, 5 );
     layoutIcons->setSpacing( 2 );
     layoutIcons->addWidget( icoPanelStart );
@@ -295,6 +298,11 @@ void cFrmPanel::clear()
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
 
+    if( m_qsInfo.compare( tr("NOT STERILE") ) )
+    {
+        setTextInformation( "" );
+    }
+
     displayStatus();
 }
 //====================================================================================
@@ -413,7 +421,7 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
     {
-        formatStatusString( QString( "%1 (%2)" ).arg( m_obStatuses.at( m_uiStatus )->name() ).arg( tr("PAUSED") ) );
+        formatStatusString( QString( "%1<br>!! %2 !!" ).arg( m_obStatuses.at( m_uiStatus )->name() ).arg( tr("PAUSED") ) );
     }
     else
     {
@@ -512,6 +520,12 @@ void cFrmPanel::reload()
     }
 }
 //====================================================================================
+void cFrmPanel::refreshDisplay()
+//====================================================================================
+{
+    displayStatus();
+}
+//====================================================================================
 void cFrmPanel::displayStatus()
 {
     if( m_uiStatus )
@@ -540,13 +554,11 @@ void cFrmPanel::displayStatus()
         m_qsTimerNextStatus = "";
     }
 
-    QString qsInfo = "";
-
     if( m_inCashToPay > 0 )
     {
         cCurrency   cPrice( m_inCashToPay );
 
-        qsInfo += tr("Cash to pay: ") + cPrice.currencyFullStringShort();
+        m_qsInfo += tr("Cash to pay: ") + cPrice.currencyFullStringShort();
     }
 
     QString     qsBackgroundColor;
@@ -597,9 +609,11 @@ void cFrmPanel::displayStatus()
     formatStatusString( m_qsStatus );
     formatTimerString( m_qsTimer );
     formatNextLengthString( m_qsTimerNextStatus );
-    formatInfoString( qsInfo );
+    formatInfoString( m_qsInfo );
 
-    emit signalStatusChanged( m_uiId-1, m_uiStatus+1, m_qsStatus );
+    emit signalSetInfoText( m_uiId-1, m_qsInfo );
+    emit signalStatusChanged( m_uiId-1, m_obStatuses.at(m_uiStatus)->id(), m_qsStatus );
+
     if( m_uiStatus == 0 && m_inMainProcessLength == 0 )
     {
         emit signalSetWaitTime( m_uiId-1, 0 );
@@ -789,10 +803,17 @@ QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 //====================================================================================
 void cFrmPanel::activateNextStatus()
 {
+    if( m_uiStatus == 0 )
+    {
+        // Gep hasznalat inditas
+        m_qsInfo = "";
+    }
+
     if( isMainProcess() )
     {
         // Kezeles vege
         closeAttendance();
+        m_qsInfo = tr( "NOT STERILE" );
     }
 
     m_uiStatus++;
@@ -820,6 +841,7 @@ void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
     m_uiLedgerId            = p_uiLedgerId;
+    m_qsInfo                = "";
 
     displayStatus();
 }
@@ -1049,9 +1071,16 @@ unsigned int cFrmPanel::_calculateWaitTime()
     for( int i=m_uiStatus+1; i<(int)m_obStatuses.size(); i++ )
     {
         uiWaitTime += m_obStatuses.at(i)->length();
+        break;
     }
-
-    // m_uiProcessWaitTime;
 
     return uiWaitTime;
 }
+//====================================================================================
+void cFrmPanel::setTextInformation(QString p_qsInfoText)
+//====================================================================================
+{
+    m_qsInfo = p_qsInfoText;
+    displayStatus();
+}
+//====================================================================================

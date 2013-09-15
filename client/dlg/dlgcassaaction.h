@@ -44,6 +44,7 @@ private slots:
     void updateMoneyBack();
     void ledAmountToPay_textEdited(QString text);
     void ledAmountGiven_textEdited(QString text);
+    void on_cmbPaymentType_currentIndexChanged(int index);
 };
 
 #endif

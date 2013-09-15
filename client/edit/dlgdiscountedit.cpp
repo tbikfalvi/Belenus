@@ -27,7 +27,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         rbService->setEnabled( false );
         rbGuest->setEnabled( false );
         rbCompany->setEnabled( false );
-//        rbProductType->setEnabled( false );
+        rbPaymentMethod->setEnabled( false );
         rbProduct->setEnabled( false );
         cmbHCDList->setEnabled( false );
 
@@ -51,11 +51,11 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         {
             rbCompany->setChecked( true );
         }
-/*        else if( m_poDiscount->productTypeId() > 0 )
+        else if( m_poDiscount->paymentMethodId() > 0 )
         {
-            rbProductType->setChecked( true );
+            rbPaymentMethod->setChecked( true );
         }
-*/        else if( m_poDiscount->productId() > 0 )
+        else if( m_poDiscount->productId() > 0 )
         {
             rbProduct->setChecked( true );
         }
@@ -87,7 +87,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
             rbService->setEnabled( false );
             rbGuest->setEnabled( false );
             rbCompany->setEnabled( false );
-//            rbProductType->setEnabled( false );
+            rbPaymentMethod->setEnabled( false );
             rbProduct->setEnabled( false );
             cmbHCDList->setEnabled( false );
             rbDiscountValue->setEnabled( false );
@@ -104,7 +104,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     connect( rbService, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbGuest, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbCompany, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
-//    connect( rbProductType, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbPaymentMethod, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbProduct, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditDiscount", QPoint(517,269) );
@@ -196,17 +196,17 @@ void cDlgDiscountEdit::accept ()
                                        "Please modify the existing discount." ) );
         }
     }
-/*    else if( rbProductType->isChecked() )
+    else if( rbPaymentMethod->isChecked() )
     {
-        if( m_poDiscount->isProductTypeExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
+        if( m_poDiscount->isPaymentMethodExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
         {
             boCanBeSaved = false;
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
-            qsErrorMessage.append( tr( "Discount for selected product type already exists!\n"
+            qsErrorMessage.append( tr( "Discount for selected payment method already exists!\n"
                                        "Please modify the existing discount." ) );
         }
     }
-*/    else if( rbProduct->isChecked() )
+    else if( rbProduct->isChecked() )
     {
         if( m_poDiscount->isProductExists(cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt()) )
         {
@@ -219,7 +219,7 @@ void cDlgDiscountEdit::accept ()
 
     if( (rbGuest->isChecked() ||
          rbCompany->isChecked() ||
-//         rbProductType->isChecked() ||
+         rbPaymentMethod->isChecked() ||
          rbProduct->isChecked()) &&
         cmbHCDList->currentIndex() < 1 )
     {
@@ -258,7 +258,7 @@ void cDlgDiscountEdit::accept ()
             }
             else if( rbGuest->isChecked() ||
                      rbCompany->isChecked() ||
-//                     rbProductType->isChecked() ||
+                     rbPaymentMethod->isChecked() ||
                      rbProduct->isChecked() )
             {
                 if( rbGuest->isChecked() )
@@ -271,12 +271,12 @@ void cDlgDiscountEdit::accept ()
                     ledName->setText( tr("Company discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
                     m_poDiscount->setCompanyId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
                 }
-/*                else if( rbProductType->isChecked() )
+                else if( rbPaymentMethod->isChecked() )
                 {
-                    ledName->setText( tr("Product type discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
-                    m_poDiscount->setProductTypeId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
+                    ledName->setText( tr("Payment method discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
+                    m_poDiscount->setPaymentMethodId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
                 }
-*/                else if( rbProduct->isChecked() )
+                else if( rbProduct->isChecked() )
                 {
                     ledName->setText( tr("Product discount - %1").arg(cmbHCDList->itemText(cmbHCDList->currentIndex())) );
                     m_poDiscount->setProductId( cmbHCDList->itemData(cmbHCDList->currentIndex()).toUInt() );
@@ -355,19 +355,19 @@ void cDlgDiscountEdit::slotFillHCDComboList()
                 cmbHCDList->setCurrentIndex( cmbHCDList->count()-1 );
         }
     }
-/*    else if( rbProductType->isChecked() )
+    else if( rbPaymentMethod->isChecked() )
     {
-        ledName->setText( tr("Product type discount") );
-        poQuery = g_poDB->executeQTQuery( QString("SELECT productTypeId, name FROM productTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name") );
+        ledName->setText( tr("Payment method discount") );
+        poQuery = g_poDB->executeQTQuery( QString("SELECT paymentMethodId, name FROM paymentmethods WHERE paymentMethodId>1 AND active=1 AND archive<>\"DEL\" ORDER BY name") );
         cmbHCDList->addItem( tr("<Not selected>"), 0 );
         while( poQuery->next() )
         {
             cmbHCDList->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-            if( m_poDiscount->productTypeId() == poQuery->value( 0 ) )
+            if( m_poDiscount->paymentMethodId() == poQuery->value( 0 ) )
                 cmbHCDList->setCurrentIndex( cmbHCDList->count()-1 );
         }
     }
-*/    else if( rbProduct->isChecked() )
+    else if( rbProduct->isChecked() )
     {
         ledName->setText( tr("Product discount") );
         poQuery = g_poDB->executeQTQuery( QString("SELECT productId, name FROM products WHERE active=1 AND archive<>\"DEL\" ORDER BY name") );

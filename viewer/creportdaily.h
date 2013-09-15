@@ -2,6 +2,7 @@
 #define CREPORTDAILY_H
 
 #include <QWidget>
+#include <QStringList>
 
 #include "creport.h"
 
@@ -25,15 +26,22 @@ private:
     unsigned int    _reportPartPanelUse();
     void            _reportPartPanelUseUnits();
     void            _reportPartPaymentMethods();
+    unsigned int    _reportPartExpenses();
+    void            _reportPartStorno();
+    void            _reportPartIncomeSummary( unsigned int p_uiTotalPrice,
+                                              unsigned int p_uiPatientCardTotal,
+                                              unsigned int p_uiDeviceUsagesTotal,
+                                              int p_nExpenses );
     QString         _countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );
-    int             _sumPanelUseMorning( unsigned int p_uiPanelTypeId );
-    int             _sumPanelUseAfternoon( unsigned int p_uiPanelTypeId );
-    int             _sumPaymentMethod( unsigned int p_uiPaymentMethodId );
+    int             _sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId );
+    int             _sumPaymentMethod( QString p_qsCassaId, unsigned int p_uiPaymentMethodId );
     int             _sumCassaIncome( unsigned int p_uiCassaId );
-    int             _countPanelUseUnitsMorning( unsigned int p_uiPanelTypeId );
-    int             _countPanelUseUnitsAfternoon( unsigned int p_uiPanelTypeId );
+    int             _countPanelUseUnits( QString p_qsCassaId, unsigned int p_uiPanelTypeId );
+
+    QStringList      m_qslCassaIds;
+    QStringList      m_qslCassaOwners;
 };
 
 #endif // CREPORTDAILY_H

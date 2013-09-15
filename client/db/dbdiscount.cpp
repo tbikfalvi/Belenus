@@ -29,7 +29,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
                         const unsigned int p_uiLicenceId,
                         const unsigned int p_uiGuestId,
                         const unsigned int p_uiCompanyId,
-                        const unsigned int p_uiProductTypeId,
+                        const unsigned int p_uiPaymentMethodId,
                         const unsigned int p_uiProductId,
                         const bool p_bRegularCustomer,
                         const bool p_bEmployee,
@@ -45,7 +45,7 @@ void cDBDiscount::init( const unsigned int p_uiId,
     m_uiLicenceId           = p_uiLicenceId;
     m_uiGuestId             = p_uiGuestId;
     m_uiCompanyId           = p_uiCompanyId;
-    m_uiProductTypeId       = p_uiProductTypeId;
+    m_uiPaymentMethodId       = p_uiPaymentMethodId;
     m_uiProductId           = p_uiProductId;
     m_bRegularCustomer      = p_bRegularCustomer;
     m_bEmployee             = p_bEmployee;
@@ -64,7 +64,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
     int inGuestIdIdx            = p_obRecord.indexOf( "patientId" );
     int inCompanyIdIdx          = p_obRecord.indexOf( "companyId" );
-    int inProductTypeIdIdx      = p_obRecord.indexOf( "productTypeId" );
+    int inPaymentMethodIdIdx      = p_obRecord.indexOf( "paymentMethodId" );
     int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
     int inEmpoyeeIdx            = p_obRecord.indexOf( "employee" );
@@ -80,7 +80,7 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inLicenceIdIdx ).toInt(),
           p_obRecord.value( inGuestIdIdx ).toUInt(),
           p_obRecord.value( inCompanyIdIdx ).toUInt(),
-          p_obRecord.value( inProductTypeIdIdx ).toUInt(),
+          p_obRecord.value( inPaymentMethodIdIdx ).toUInt(),
           p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
           p_obRecord.value( inEmpoyeeIdx ).toBool(),
@@ -145,11 +145,11 @@ void cDBDiscount::loadCompany( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
-void cDBDiscount::loadProductType( const unsigned int p_uiId ) throw( cSevException )
+void cDBDiscount::loadPaymentMethod( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBDiscount::loadProductType", QString( "id: %1" ).arg( p_uiId ) );
+    cTracer obTrace( "cDBDiscount::loadPaymentMethod", QString( "id: %1" ).arg( p_uiId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE productTypeId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE paymentMethodId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Discount id not found" );
@@ -221,9 +221,9 @@ bool cDBDiscount::isCompanyExists( const unsigned int p_uiId ) throw( cSevExcept
         return false;
 }
 
-bool cDBDiscount::isProductTypeExists( const unsigned int p_uiId ) throw( cSevException )
+bool cDBDiscount::isPaymentMethodExists( const unsigned int p_uiId ) throw( cSevException )
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE productTypeId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE paymentMethodId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
 
     if( poQuery->size() > 0 )
         return true;
@@ -264,7 +264,7 @@ void cDBDiscount::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiGuestId );
     qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );
-    qsQuery += QString( "productTypeId = \"%1\", " ).arg( m_uiProductTypeId );
+    qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( m_uiPaymentMethodId );
     qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "regularCustomer = \"%1\", " ).arg( m_bRegularCustomer );
     qsQuery += QString( "employee = \"%1\", " ).arg( m_bEmployee );
@@ -354,14 +354,14 @@ void cDBDiscount::setCompanyId( const unsigned int p_uiCompanyId ) throw()
     m_uiCompanyId = p_uiCompanyId;
 }
 
-unsigned int cDBDiscount::productTypeId() const throw()
+unsigned int cDBDiscount::paymentMethodId() const throw()
 {
-    return m_uiProductTypeId;
+    return m_uiPaymentMethodId;
 }
 
-void cDBDiscount::setProductTypeId( const unsigned int p_uiProductTypeId ) throw()
+void cDBDiscount::setPaymentMethodId( const unsigned int p_uiPaymentMethodId ) throw()
 {
-    m_uiProductTypeId = p_uiProductTypeId;
+    m_uiPaymentMethodId = p_uiPaymentMethodId;
 }
 
 unsigned int cDBDiscount::productId() const throw()

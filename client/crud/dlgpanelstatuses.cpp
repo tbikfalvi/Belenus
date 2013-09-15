@@ -3,6 +3,7 @@
 #include "belenus.h"
 #include "dlgpanelstatuses.h"
 #include "../edit/dlgpanelstatusesedit.h"
+#include "../db/dbpanelstatussettings.h"
 
 cDlgPanelStatuses::cDlgPanelStatuses( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
@@ -97,6 +98,42 @@ void cDlgPanelStatuses::newClicked( bool )
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         m_uiSelectedId = poPanelStatuses->id();
+
+        cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+        obDBPanelStatusSettings.createNew();
+        obDBPanelStatusSettings.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBPanelStatusSettings.setPanelStatusId( m_uiSelectedId );
+        switch( poPanelStatuses->activateCommand() )
+        {
+            case 0:
+                obDBPanelStatusSettings.setBackgroundColor( "#00ff00" );
+                break;
+            case 1:
+            case 4:
+            case 9:
+                obDBPanelStatusSettings.setBackgroundColor( "#ffff00" );
+                break;
+            case 2:
+            case 3:
+                obDBPanelStatusSettings.setBackgroundColor( "#ff0000" );
+                break;
+        }
+        obDBPanelStatusSettings.setStatusFontName( "Arial" );
+        obDBPanelStatusSettings.setStatusFontSize( 18 );
+        obDBPanelStatusSettings.setStatusFontColor( "#000000" );
+        obDBPanelStatusSettings.setTimerFontName( "Book Antiqua" );
+        obDBPanelStatusSettings.setTimerFontSize( 30 );
+        obDBPanelStatusSettings.setTimerFontColor( "#000000" );
+        obDBPanelStatusSettings.setNextFontName( "Arial" );
+        obDBPanelStatusSettings.setNextFontSize( 18 );
+        obDBPanelStatusSettings.setNextFontColor( "#000000" );
+        obDBPanelStatusSettings.setInfoFontName( "Arial" );
+        obDBPanelStatusSettings.setInfoFontSize( 10 );
+        obDBPanelStatusSettings.setInfoFontColor( "#000000" );
+        obDBPanelStatusSettings.setActive( true );
+        obDBPanelStatusSettings.save();
+
         refreshTable();
         m_bStatusChanged = true;
     }
@@ -148,7 +185,13 @@ void cDlgPanelStatuses::deleteClicked( bool )
                                       tr("You are not allowed to delete studio independent data."));
                 return;
             }
-            poPanelStatuses->remove();
+
+            cDBPanelStatusSettings  obDBPanelStatusSettings;
+
+            obDBPanelStatusSettings.loadStatus( poPanelStatuses->id() );
+            obDBPanelStatusSettings.remove();
+
+            poPanelStatuses->remove();            
             m_uiSelectedId = 0;
             refreshTable();
             if( poPanelStatuses ) delete poPanelStatuses;
