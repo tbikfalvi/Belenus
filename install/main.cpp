@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);
 
-    if( !QFile::exists( QString("%1\\setup_hu.qm").arg(QDir::currentPath()) ) )
+    if( !QFile::exists( QString("%1\\lang\\setup_hu.qm").arg(QDir::currentPath()) ) )
     {
         QString     qsPathWindows = g_obReg.keyValueS( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
 
@@ -50,8 +50,8 @@ int main(int argc, char *argv[])
     poTransSetup = new QTranslator();
     poTransQT = new QTranslator();
 
-    poTransSetup->load( QString("setup_hu.qm") );
-    poTransQT->load( QString("qt_hu.qm") );
+    poTransSetup->load( QString("%1\\lang\\setup_hu.qm").arg(QDir::currentPath()) );
+    poTransQT->load( QString("%1\\lang\\qt_hu.qm").arg(QDir::currentPath()) );
 
     apMainApp->installTranslator( poTransSetup );
     apMainApp->installTranslator( poTransQT );

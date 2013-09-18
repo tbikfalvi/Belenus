@@ -128,6 +128,16 @@ void dlgMain::_initializeInstall()
                                       "[%1]").arg(QString("%1\\Temp\\BelenusInstall").arg(m_qsPathWindows)) );
             return;
         }
+        if( !_createTargetDirectory( QString("%1\\Temp\\BelenusInstall\\lang").arg(m_qsPathWindows) ) )
+        {
+            pbNext->setEnabled( false );
+            QMessageBox::critical( this, tr("Error"),
+                                   tr("Error occured during initialization.\n"
+                                      "Please contact system administrator.\n"
+                                      "Error code: ErrInstDirCreateFail\n"
+                                      "[%1]").arg(QString("%1\\Temp\\BelenusInstall\\lang").arg(m_qsPathWindows)) );
+            return;
+        }
     }
 
     m_obLog = new QFile( QString("%1\\Temp\\BelenusInstall\\BelenusSetup.log").arg(m_qsPathWindows) );
@@ -601,9 +611,11 @@ void dlgMain::on_cmbLanguage_currentIndexChanged(int index)
 
     if( m_qsLanguage.compare("en") )
     {
-        QString qsLangSetup = QString("%1\\setup_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
-        QString qsLangQT = QString("%1\\qt_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
+        QString qsLangSetup = QString("%1\\lang\\setup_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
+        QString qsLangQT = QString("%1\\lang\\qt_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
 
+        _logProcess( QString("Load language file: %1").arg( qsLangSetup ) );
+        _logProcess( QString("Load language file: %1").arg( qsLangQT ) );
         poTransSetup->load( qsLangSetup );
         poTransQT->load( qsLangQT );
 
@@ -2149,8 +2161,8 @@ bool dlgMain::_copyUninstallFiles()
         return false;
     }
 
-    qsFrom  = QString( "%1/setup_hu.qm" ).arg(g_qsCurrentPath);
-    qsTo    = QString( "%1/Temp/BelenusInstall/setup_hu.qm" ).arg(m_qsPathWindows);
+    qsFrom  = QString( "%1/lang/setup_hu.qm" ).arg(g_qsCurrentPath);
+    qsTo    = QString( "%1/Temp/BelenusInstall/lang/setup_hu.qm" ).arg(m_qsPathWindows);
 
     if( QFile::exists( qsTo ) )
     {
@@ -2163,7 +2175,7 @@ bool dlgMain::_copyUninstallFiles()
     }
 
     qsFrom  = QString( "%1/qt_hu.qm" ).arg(g_qsCurrentPath);
-    qsTo    = QString( "%1/Temp/BelenusInstall/qt_hu.qm" ).arg(m_qsPathWindows);
+    qsTo    = QString( "%1/Temp/BelenusInstall/lang/qt_hu.qm" ).arg(m_qsPathWindows);
 
     if( QFile::exists( qsTo ) )
     {
