@@ -2174,7 +2174,7 @@ bool dlgMain::_copyUninstallFiles()
         return false;
     }
 
-    qsFrom  = QString( "%1/qt_hu.qm" ).arg(g_qsCurrentPath);
+    qsFrom  = QString( "%1/lang/qt_hu.qm" ).arg(g_qsCurrentPath);
     qsTo    = QString( "%1/Temp/BelenusInstall/lang/qt_hu.qm" ).arg(m_qsPathWindows);
 
     if( QFile::exists( qsTo ) )

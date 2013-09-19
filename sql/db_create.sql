@@ -505,33 +505,6 @@ CREATE TABLE `patientHistory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- Kulonbozo a rendszerbe felvett kedvezmenyeket tartalmazza.
--- -----------------------------------------------------------------------------------
-CREATE TABLE `discounts` (
-  `discountId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `patientId`               int(10) unsigned        DEFAULT NULL,
-  `companyId`               int(10) unsigned        DEFAULT NULL,
-  `paymentMethodId`         int(10) unsigned        DEFAULT NULL,
-  `productId`               int(10) unsigned        DEFAULT NULL,
-  `regularCustomer`         tinyint(1)              DEFAULT 0,
-  `employee`                tinyint(1)              DEFAULT 0,
-  `service`                 tinyint(1)              DEFAULT 0,
-  `name`                    varchar(100)            NOT NULL,
-  `discountValue`           decimal(10,0)           NOT NULL,
-  `discountPercent`         int(11)                 NOT NULL,
-  `modified`                datetime                NOT NULL,
-  `active`                  tinyint(1) unsigned     NOT NULL,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`discountId`,`licenceId`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentmethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -----------------------------------------------------------------------------------
 -- Cimekhez elore feltoltott megye, telepules es iranyitoszam rekordokat tartalmaz.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `zipRegionCity` (
@@ -632,6 +605,33 @@ CREATE TABLE `paymentMethods` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`paymentMethodId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Kulonbozo a rendszerbe felvett kedvezmenyeket tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `discounts` (
+  `discountId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientId`               int(10) unsigned        DEFAULT NULL,
+  `companyId`               int(10) unsigned        DEFAULT NULL,
+  `paymentMethodId`         int(10) unsigned        DEFAULT NULL,
+  `productId`               int(10) unsigned        DEFAULT NULL,
+  `regularCustomer`         tinyint(1)              DEFAULT 0,
+  `employee`                tinyint(1)              DEFAULT 0,
+  `service`                 tinyint(1)              DEFAULT 0,
+  `name`                    varchar(100)            NOT NULL,
+  `discountValue`           decimal(10,0)           NOT NULL,
+  `discountPercent`         int(11)                 NOT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1) unsigned     NOT NULL,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`discountId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`paymentMethodId`) REFERENCES `paymentmethods` (`paymentMethodId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`productId`) REFERENCES `products` (`productId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------

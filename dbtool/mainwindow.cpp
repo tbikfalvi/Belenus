@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QtSql/QSqlQuery>
 #include <QCryptographicHash>
+#include <QDate>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -181,7 +182,8 @@ void MainWindow::_loadPatientCards()
 //====================================================================================
 {
     FILE           *file = NULL;
-    FILE           *filemod = NULL;
+//FILE           *filemod = NULL;
+FILE *filetxt = NULL;
     unsigned int    nCount = 0;
     char            m_strPatiencardVersion[10];
 
@@ -190,17 +192,18 @@ void MainWindow::_loadPatientCards()
     m_qvPatientCards.clear();
 
     file = fopen( m_qsPCFileName.toStdString().c_str(), "rb" );
-filemod = fopen( QString("c:\\mod_brltfsv.dat").toStdString().c_str(), "wb" );
+//filemod = fopen( QString("c:\\mod_brltfsv.dat").toStdString().c_str(), "wb" );
+filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
     if( file != NULL )
     {
         memset( m_strPatiencardVersion, 0, 10 );
         fread( m_strPatiencardVersion, 10, 1, file );
-fwrite( m_strPatiencardVersion, 10, 1, filemod );
+//fwrite( m_strPatiencardVersion, 10, 1, filemod );
         //ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
-fwrite( &nCount, 4, 1, filemod );
+//fwrite( &nCount, 4, 1, filemod );
         ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
         if( nCount > 0 )
         {
@@ -214,8 +217,8 @@ fwrite( &nCount, 4, 1, filemod );
                 fread( &stTemp.nErvEv, 4, 1, file );
                 fread( &stTemp.nErvHo, 4, 1, file );
                 fread( &stTemp.nErvNap, 4, 1, file );
-                fread( &stTemp.nPin, 4, 1, file );
-
+                //fread( &stTemp.nPin, 4, 1, file );
+/*
 int nErvEv = 0;
 if( stTemp.nErvEv < 2014 && stTemp.nEgyseg > 0 )
 {
@@ -233,15 +236,25 @@ fwrite( &nErvEv, 4, 1, filemod );
 fwrite( &stTemp.nErvHo, 4, 1, filemod );
 fwrite( &stTemp.nErvNap, 4, 1, filemod );
 fwrite( &stTemp.nPin, 4, 1, filemod );
-
+*/
                 _DeCode( stTemp.strVonalkod, 20 );
                 _DeCode( stTemp.strMegjegyzes, 50 );
-
+QString qsLine = "";
+qsLine.append( QString("%1\t").arg( stTemp.strVonalkod ) );
+qsLine.append( QString("%1\t").arg( stTemp.strMegjegyzes ) );
+qsLine.append( QString("%1\t").arg( stTemp.nBerletTipus ) );
+qsLine.append( QString("%1\t").arg( stTemp.nEgyseg ) );
+qsLine.append( QString("%1\t").arg( stTemp.nErvEv ) );
+qsLine.append( QString("%1\t").arg( stTemp.nErvHo ) );
+qsLine.append( QString("%1\t").arg( stTemp.nErvNap ) );
+fputs( qsLine.toStdString().c_str(), filetxt );
+fputs( "\n", filetxt );
                 m_qvPatientCards.append( stTemp );
             }
         }
         fclose( file );
-fclose( filemod );
+//fclose( filemod );
+fclose( filetxt );
         ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
     }
     else
@@ -731,9 +744,10 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvPatientCardTypes[i].nNewID = query.lastInsertId().toInt();
 
-        qsSQLCommand = QString( "INSERT INTO `patientcardtypeenabled` (`licenceId`, `patientCardTypeId`, `start`, `stop`, `modified`, `archive`) VALUES ( " );
+        qsSQLCommand = QString( "INSERT INTO `patientcardtypeenabled` (`licenceId`, `patientCardTypeId`, `validWeekDays`, `start`, `stop`, `modified`, `archive`) VALUES ( " );
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
+        qsSQLCommand += QString( "'127', " );
         qsSQLCommand += QString( "'00:00:00', " );
         qsSQLCommand += QString( "'23:59:00', " );
         qsSQLCommand += QString( "0, 'ARC');" );
@@ -748,6 +762,14 @@ void MainWindow::_exportToBelenusPatientCards()
 
     for( int i=0; i<nBerletCount; i++ )
     {
+        QDate obDateValid( m_qvPatientCards.at(i).nErvEv, m_qvPatientCards.at(i).nErvHo, m_qvPatientCards.at(i).nErvNap );
+
+        if( m_qvPatientCards.at(i).nEgyseg < 1 ||
+            obDateValid <= QDate::currentDate() )
+        {
+            continue;
+        }
+
         QString qsBarcode = m_qvPatientCards.at(i).strVonalkod;
 
         while ( qsBarcode.length() < ui->ledBarcodeLength->text().toInt() )
@@ -768,7 +790,22 @@ void MainWindow::_exportToBelenusPatientCards()
         qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
         qsSQLCommand += QString( "NULL, 1, 'ARC' );" );
 
-        m_poDB->exec( qsSQLCommand );
+        QSqlQuery query = m_poDB->exec( qsSQLCommand );
+
+        for( int j=0; j<m_qvPatientCards.at(i).nEgyseg; j++ )
+        {
+            qsSQLCommand = QString( "INSERT INTO `patientcardunits` (`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES ( " );
+
+            qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
+            qsSQLCommand += QString( "%1, " ).arg( query.lastInsertId().toInt() );
+            qsSQLCommand += QString( "0, " );
+            qsSQLCommand += QString( "0, " );
+            qsSQLCommand += QString( "%1, " ).arg( ui->ledPExportS2->text().toInt() );
+            qsSQLCommand += QString( "'2013-01-01', " );
+            qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
+            qsSQLCommand += QString( "CURRENT_TIMESTAMP, 1, 'ARC' );" );
+            query = m_poDB->exec( qsSQLCommand );
+        }
     }
 }
 
