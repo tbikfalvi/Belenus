@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->tabWidget->setCurrentIndex( 0 );
 
     m_poDB = NULL;
+    m_qsLogFileName = "";
 
     m_dlgProgress = new cDlgProgress( this );
 
@@ -107,6 +108,17 @@ void MainWindow::on_pbExpSelectDir_clicked()
 
 void MainWindow::on_pbImportDB_clicked()
 {
+    m_qsLogFileName = QString("c:/belenus_dbtool_%1.log").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmm"));
+
+    _logAction( tr("Filenames of patientcard and patientcard types data:") );
+    _logAction( m_qsPCTFileName );
+    _logAction( m_qsPCFileName );
+    _logAction( m_qsPTFileName );
+    _logAction( m_qsPFileName );
+    _logAction( m_qsUFileName );
+
+    m_nCountItems = 0;
+
     _loadPatientCardTypes();
     _loadPatientCards();
     _loadProductTypes();
@@ -134,6 +146,8 @@ void MainWindow::_loadPatientCardTypes()
         nCount = 0;
         fread( &nCount, 4, 1, file );
         ui->listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of patientcard types to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
         if( nCount > 0 )
         {
             typ_berlettipus stTemp;
@@ -168,6 +182,7 @@ void MainWindow::_loadPatientCardTypes()
         }
         fclose( file );
         ui->listLog->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
+        _logAction( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
     }
     else
     {
@@ -205,6 +220,8 @@ filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
         fread( &nCount, 4, 1, file );
 //fwrite( &nCount, 4, 1, filemod );
         ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of patientcards to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
         if( nCount > 0 )
         {
             typ_berlet   stTemp;
@@ -256,6 +273,7 @@ fputs( "\n", filetxt );
 //fclose( filemod );
 fclose( filetxt );
         ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
+        _logAction( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
     }
     else
     {
@@ -285,6 +303,8 @@ void MainWindow::_loadProductTypes()
         nCount = 0;
         fread( &nCount, 4, 1, file );
         ui->listLog->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of product types to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
         if( nCount > 0 )
         {
             typ_termektipus stTemp;
@@ -303,6 +323,7 @@ void MainWindow::_loadProductTypes()
 
         fclose( file );
         ui->listLog->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
+        _logAction( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
     }
     else
     {
@@ -332,6 +353,8 @@ void MainWindow::_loadProducts()
         nCount = 0;
         fread( &nCount, 4, 1, file );
         ui->listLog->addItem( tr("Count of products to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of products to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
         if( nCount > 0 )
         {
             typ_termek stTemp;
@@ -356,6 +379,7 @@ void MainWindow::_loadProducts()
 
         fclose( file );
         ui->listLog->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
+        _logAction( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
     }
     else
     {
@@ -385,6 +409,8 @@ void MainWindow::_loadProductAssign()
         nCount = 0;
         fread( &nCount, 4, 1, file );
         ui->listLog->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of product assigns to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
         if( nCount > 0 )
         {
             typ_termektipusassign stTemp;
@@ -401,6 +427,7 @@ void MainWindow::_loadProductAssign()
 
         fclose( file );
         ui->listLog->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
+        _logAction( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
     }
     else
     {
@@ -430,6 +457,8 @@ void MainWindow::_loadUsers()
         nCount = 0;
         fread( &nCount, 4, 1, file );
         ui->listLog->addItem( tr("Count of users to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of users to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
         if( nCount > 0 )
         {
             typ_user stTemp;
@@ -457,6 +486,7 @@ void MainWindow::_loadUsers()
 
         fclose( file );
         ui->listLog->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
+        _logAction( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
     }
     else
     {
@@ -753,6 +783,7 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         qsSQLCommand += QString( "0, 'ARC');" );
 //QMessageBox::information(this,"",qsSQLCommand);
         m_poDB->exec( qsSQLCommand );
+        m_dlgProgress->stepValue();
     }
 }
 
@@ -806,6 +837,7 @@ void MainWindow::_exportToBelenusPatientCards()
             qsSQLCommand += QString( "CURRENT_TIMESTAMP, 1, 'ARC' );" );
             query = m_poDB->exec( qsSQLCommand );
         }
+        m_dlgProgress->stepValue();
     }
 }
 
@@ -823,6 +855,7 @@ void MainWindow::_exportToBelenusProductTypes()
 
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvProductTypes[i].nNewID = query.lastInsertId().toInt();
+        m_dlgProgress->stepValue();
     }
 }
 
@@ -846,6 +879,7 @@ void MainWindow::_exportToBelenusProducts()
 
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvProducts[i].nNewID = query.lastInsertId().toInt();
+        m_dlgProgress->stepValue();
     }
 
     int nProductAssign = m_qvProductAssigns.size();
@@ -861,6 +895,7 @@ void MainWindow::_exportToBelenusProducts()
         //ui->listLog->addItem( qsSQLCommand );
 
         m_poDB->exec( qsSQLCommand );
+        m_dlgProgress->stepValue();
     }
 }
 
@@ -893,6 +928,7 @@ void MainWindow::_exportToBelenusUsers()
         //ui->listLog->addItem( qsSQLCommand );
 
         m_poDB->exec( qsSQLCommand );
+        m_dlgProgress->stepValue();
     }
 }
 
@@ -944,3 +980,11 @@ int MainWindow::_getProductNewId( int p_nID )
     return nRet;
 }
 
+void MainWindow::_logAction(QString p_qsLogMessage)
+{
+    QFile   qfFileLog( m_qsLogFileName );
+
+    qfFileLog.open( QIODevice::Append | QIODevice::Text );
+    qfFileLog.write( QString("%1\n").arg(p_qsLogMessage).toStdString().c_str() );
+    qfFileLog.close();
+}

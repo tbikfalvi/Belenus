@@ -13,6 +13,8 @@ public:
 
     void    showProgress();
     void    hideProgress();
+    void    setMaxValue( int p_nMaxValue );
+    void    stepValue();
 
 protected:
 

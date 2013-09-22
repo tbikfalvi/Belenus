@@ -151,10 +151,14 @@ private:
     int                         _getProductTypeNewId( int p_nID );
     int                         _getProductNewId( int p_nID );
 
+    void                        _logAction( QString p_qsLogMessage );
+
     Ui::MainWindow              *ui;
 
     QDir                         m_qdExpCurrentDir;
     int                          m_nProgramType;
+
+    int                          m_nCountItems;
 
     QVector<typ_berlet>          m_qvPatientCards;
     QVector<typ_berlettipus>     m_qvPatientCardTypes;
@@ -175,6 +179,8 @@ private:
 
     QSqlDatabase                *m_poDB;
     cDlgProgress                *m_dlgProgress;
+
+    QString                      m_qsLogFileName;
 
 private slots:
     void on_pbExportProcess_clicked();
