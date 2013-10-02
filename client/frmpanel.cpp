@@ -86,6 +86,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblTitle->setAutoFillBackground( true );
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
+    lblTitle->setStyleSheet( "QLabel {font: bold; color: white; font-size:14px;}" );
 
     icoPanelStart->setIconSize( QSize(20,20) );
     icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
@@ -316,7 +317,7 @@ void cFrmPanel::inactivate()
     setFrameShadow( QFrame::Sunken );
 
     QPalette  obNewPalette = lblTitle->palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#b9b9b9") ) );
+    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#00003C") ) );
     lblTitle->setPalette( obNewPalette );
 }
 //====================================================================================
@@ -325,7 +326,7 @@ void cFrmPanel::activate()
     setFrameShadow( QFrame::Raised );
 
     QPalette  obNewPalette = lblTitle->palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#4387cb" ) ) );
+    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#0000FF" ) ) );
     lblTitle->setPalette( obNewPalette );
 }
 //====================================================================================
@@ -509,7 +510,7 @@ void cFrmPanel::reload()
         {
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
-            emit signalStatusChanged( m_uiId-1, m_uiStatus+1, lblTitle->text() );
+//            emit signalStatusChanged( m_uiId-1, m_uiStatus+1, lblTitle->text() );
         }
         delete poQuery;
     }
@@ -558,7 +559,7 @@ void cFrmPanel::displayStatus()
     {
         cCurrency   cPrice( m_inCashToPay );
 
-        m_qsInfo += tr("Cash to pay: ") + cPrice.currencyFullStringShort();
+        m_qsInfo = tr("Cash to pay: ") + cPrice.currencyFullStringShort();
     }
 
     QString     qsBackgroundColor;
@@ -818,6 +819,15 @@ void cFrmPanel::activateNextStatus()
 
     m_uiStatus++;
 
+    if( m_uiStatus < m_obStatuses.size() && isMainProcess() )
+    {
+        if( m_uiLedgerId > 0 )
+        {
+            m_pDBLedgerDevice->save();
+            g_obCassa.cassaConnectLedgerWithLedgerDevice( m_uiLedgerId, m_pDBLedgerDevice->id() );
+        }
+    }
+
     if( m_uiStatus == m_obStatuses.size() )
     {
         m_uiStatus  = 0;
@@ -863,7 +873,7 @@ void cFrmPanel::closeAttendance()
 
     if( m_uiLedgerId > 0 )
     {
-        g_obCassa.cassaConnectLedgerWithLedgerDevice( m_uiLedgerId, m_pDBLedgerDevice->id() );
+//        g_obCassa.cassaConnectLedgerWithLedgerDevice( m_uiLedgerId, m_pDBLedgerDevice->id() );
         m_uiLedgerId = 0;
     }
 

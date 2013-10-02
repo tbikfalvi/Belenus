@@ -17,6 +17,9 @@ cDlgSecondaryWindow::cDlgSecondaryWindow(QWidget *parent) : QDialog(parent)
     layoutMain = new QGridLayout( this );
     m_poParent = parent;
 
+    layoutMain->setContentsMargins( 2, 2, 2, 2 );
+    layoutMain->setSpacing( 3 );
+
     setLayout( layoutMain );
 
     QPalette  obFramePalette = palette();

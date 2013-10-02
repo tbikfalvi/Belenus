@@ -47,6 +47,15 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     layoutFilterGroup = new QHBoxLayout();
     layoutFilterGroup->setObjectName( QString::fromUtf8( "layoutFilterGroup" ) );
 
+    lblFilterName = new QLabel( this );
+    lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
+    lblFilterName->setText( tr("Name: ") );
+    layoutFilterGroup->addWidget( lblFilterName );
+
+    ledFilterName = new QLineEdit( this );
+    ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
+    layoutFilterGroup->addWidget( ledFilterName );
+
     lblBarcode = new QLabel( this );
     lblBarcode->setObjectName( QString::fromUtf8( "lblBarcode" ) );
     lblBarcode->setText( tr("Barcode: ") );
@@ -58,6 +67,12 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
 
     spacerFilterGroup = new QSpacerItem( 13, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layoutFilterGroup->addItem( spacerFilterGroup );
+
+    pbRefresh = new QPushButton( tr( "Refresh" ), this );
+    pbRefresh->setObjectName( QString::fromUtf8( "pbRefresh" ) );
+    pbRefresh->setIconSize( QSize(20, 20) );
+    pbRefresh->setIcon( QIcon("./resources/40x40_refresh.png") );
+    layoutFilterGroup->addWidget( pbRefresh );
 
     gbFilter->setLayout( layoutFilterGroup );
 
@@ -149,7 +164,8 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductSell", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
-    connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( pbRefresh, SIGNAL(clicked()), this, SLOT(refreshTable()) );
+//    connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( pbItemCountIncrease, SIGNAL(clicked(bool)), this, SLOT(on_pbItemCountIncrease_clicked()) );
     connect( pbItemCountDecrease, SIGNAL(clicked(bool)), this, SLOT(on_pbItemCountDecrease_clicked()) );
     connect( pbPayment, SIGNAL(clicked(bool)), this, SLOT(on_pbPayment_clicked()) );
@@ -161,7 +177,10 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     setupTableView();
 
     if( p_qsBarcode.length() )
+    {
         ledBarcode->setText( p_qsBarcode );
+        refreshTable();
+    }
 }
 
 cDlgProductSell::~cDlgProductSell()
@@ -234,11 +253,16 @@ void cDlgProductSell::refreshTable()
         m_qsQuery = "SELECT productId AS id, name, barcode, (netPriceSell/100) as netPriceSell, vatpercentSell, productCount FROM products WHERE active=1 AND productId>0";
     }
 
-    QString qsTemp = ledBarcode->text();
-    if( qsTemp != "" )
+    if( ledBarcode->text().length() > 0 )
     {
         m_qsQuery += " AND ";
-        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( qsTemp );
+        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( ledBarcode->text() );
+    }
+
+    if( ledFilterName->text().length() > 0 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
     }
 
     cDlgCrud::refreshTable();

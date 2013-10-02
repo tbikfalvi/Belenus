@@ -3,7 +3,7 @@
 CS_Communication_Demo::CS_Communication_Demo() : CS_Communication()
 {
     m_stCustomCaption = "DEMO";
-    m_inPanelCount    = 9;
+    m_inPanelCount    = 12;
 }
 
 CS_Communication_Demo::~CS_Communication_Demo()

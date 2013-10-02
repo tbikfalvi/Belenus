@@ -27,6 +27,8 @@ public:
     QSpacerItem *spacerToPay;
     QGroupBox   *gbItemToSell;
     QHBoxLayout *layoutItemToSellGroup;
+    QLabel      *lblFilterName;
+    QLineEdit   *ledFilterName;
     QLabel      *lblName;
     QLineEdit   *ledName;
     QLabel      *lblItemCount;
@@ -39,6 +41,7 @@ public:
     QPushButton *pbToCart;
     QPushButton *pbCancel;
     QPushButton *pbEditProducts;
+    QPushButton *pbRefresh;
 
 private:
     cDBProduct   m_obProduct;

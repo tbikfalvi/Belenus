@@ -92,6 +92,7 @@ void cDlgCassaAction::actionCassaInOut()
     pbShoppingCart->setEnabled( false );
     cmbPaymentType->setEnabled( false );
     lblMoneyToPay->setText( tr("Amount :") );
+    pbOk->setText( tr("Ok") );
     frmPayment->setVisible( false );
     m_nHeightSmall  = 165;
     m_nHeightBig    = 285;

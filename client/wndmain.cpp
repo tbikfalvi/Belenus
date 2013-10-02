@@ -254,6 +254,12 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         m_dlgSecondaryWindow->initPanels();
         this->setFocus();
     }
+
+    m_lblStatusRight.setAlignment( Qt::AlignRight );
+    m_lblStatusRight.setStyleSheet( "QLabel {font: bold; font-size:14px;}" );
+
+    statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
+    statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -831,6 +837,8 @@ void cWndMain::timerEvent(QTimerEvent *)
 
         m_uiPatientId = g_obGuest.id();
     }
+
+    m_lblStatusRight.setText( QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss  " ) );
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
@@ -1581,7 +1589,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         {
             if( QMessageBox::question( this, tr("Question"),
                                        tr("This barcode has not been activated yet.\n"
-                                          "Do you want to activate it now?"),
+                                          "Do you want to activate and sell it now?"),
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
                 cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
@@ -1600,14 +1608,18 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
         {
             if( QMessageBox::question( this, tr("Question"),
                                        tr("This barcode has not found in the database.\n"
-                                          "Do you want to register it for a new patientcard?"),
+                                          "Do you want to save it and sell it now?"),
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
             {
                 obDBPatientCard.createNew();
                 obDBPatientCard.setLicenceId( g_poPrefs->getLicenceId() );
                 obDBPatientCard.setBarcode( p_stBarcode );
                 obDBPatientCard.save();
-                processInputPatientCard( p_stBarcode );
+
+                cDlgPatientCardSell obDlgPatientCardSell( this, &obDBPatientCard );
+                obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+                obDlgPatientCardSell.exec();
+//                processInputPatientCard( p_stBarcode );
             }
         }
     }
@@ -1644,7 +1656,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
     {
         if( inCount > 1 )
         {
-            cDlgPanelUseSelect  obDlgPanelUseSelect( this, mdiPanels->activePanel()+1, p_inSecond );
+            cDlgPanelUseSelect  obDlgPanelUseSelect( this, mdiPanels->activePanelId(), p_inSecond );
 
             if( obDlgPanelUseSelect.exec() == QDialog::Accepted )
             {
@@ -1675,11 +1687,13 @@ void cWndMain::on_action_EditActualPatient_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
 {
-    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanel()+1 );
+    cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanelId() );
 
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         mdiPanels->reload();
+        g_obLogger(cSeverity::DEBUG) << QString::number( mdiPanels->activePanel() ) << EOM;
+        m_dlgSecondaryWindow->refreshTitle( mdiPanels->activePanel() );
     }
 }
 //====================================================================================

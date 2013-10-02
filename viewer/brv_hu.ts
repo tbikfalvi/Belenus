@@ -1074,7 +1074,7 @@
         <location filename="wndmain.ui" line="115"/>
         <location filename="wndmain.ui" line="871"/>
         <source>History of cassa events and actions</source>
-        <translation></translation>
+        <translation>Pénztár események és beavatkozások története</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="141"/>

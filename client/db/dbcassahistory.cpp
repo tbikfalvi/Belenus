@@ -219,6 +219,14 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
         return false;
     }
 
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger, cassaHistory WHERE cassaHistoryId = %1 AND ledger.ledgerId=cassaHistory.ledgerId" ).arg( p_uiId ) );
+    poQuery->first();
+
+    if( poQuery->size() > 0 && poQuery->value(4).toUInt() > 0 )
+    {
+        return false;
+    }
+
     return true;
 }
 

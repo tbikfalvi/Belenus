@@ -16,6 +16,8 @@ cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelI
     pbCopyTimes->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
+    m_dlgProgress = new cDlgProgress( this );
+
     QString qsQuery = QString( "SELECT name, useTime, usePrice, 1 FROM panelUses WHERE panelId=%1" ).arg(uiPanelId);
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
@@ -42,6 +44,7 @@ cDlgPanelTypeCopy::cDlgPanelTypeCopy( QWidget *p_poParent, unsigned int uiPanelI
 
 cDlgPanelTypeCopy::~cDlgPanelTypeCopy()
 {
+    delete m_dlgProgress;
 }
 
 void cDlgPanelTypeCopy::updateButtonCopy()
@@ -64,6 +67,8 @@ void cDlgPanelTypeCopy::on_pbExit_clicked()
 
 void cDlgPanelTypeCopy::on_pbCopyTimes_clicked()
 {
+    m_dlgProgress->showProgress();
+
     int nCountCopied = 0;
     int nCountSkipped = 0;
 
@@ -92,6 +97,9 @@ void cDlgPanelTypeCopy::on_pbCopyTimes_clicked()
             }
         }
     }
+
+    m_dlgProgress->hideProgress();
+
     QMessageBox::information( this, tr("Information"),
                               tr("Copy of the selected panel uses has been finished.\n"
                                  "Number of copied items: %1\n"

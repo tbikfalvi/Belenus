@@ -38,6 +38,8 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
+    QLabel               m_lblStatusLeft;
+    QLabel               m_lblStatusRight;
     cMdiPanels          *mdiPanels;
     cDlgProgress        *m_dlgProgress;
     int                  m_nTimer;

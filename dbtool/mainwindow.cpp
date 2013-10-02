@@ -234,7 +234,7 @@ filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
                 fread( &stTemp.nErvEv, 4, 1, file );
                 fread( &stTemp.nErvHo, 4, 1, file );
                 fread( &stTemp.nErvNap, 4, 1, file );
-                //fread( &stTemp.nPin, 4, 1, file );
+                fread( &stTemp.nPin, 4, 1, file );
 /*
 int nErvEv = 0;
 if( stTemp.nErvEv < 2014 && stTemp.nEgyseg > 0 )
@@ -748,6 +748,8 @@ void MainWindow::_exportToBelenusPatientCardTypes()
 {
     int nBerletTypeCount = m_qvPatientCardTypes.size();
 
+    _logAction( "Export to database Patientcard types:" );
+
     for( int i=0; i<nBerletTypeCount; i++ )
     {
         QString qsSQLCommand = QString( "INSERT INTO `patientCardTypes` (`patientCardTypeId`, `licenceId`, `name`, `price`, `vatpercent`, `units`, `validDateFrom`, `validDateTo`, `validDays`, `unitTime`, `active`, `archive`) VALUES ( " );
@@ -755,7 +757,7 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCardTypes.at(i).strNev );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr * 100 );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nEgyseg );
         qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCardTypes.at(i).nErvTolEv ).arg( m_qvPatientCardTypes.at(i).nErvTolHo ).arg( m_qvPatientCardTypes.at(i).nErvTolNap );
@@ -771,6 +773,8 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         }
         qsSQLCommand += QString( "1, 'ARC');" );
 
+        _logAction( qsSQLCommand );
+
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvPatientCardTypes[i].nNewID = query.lastInsertId().toInt();
 
@@ -785,10 +789,14 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         m_poDB->exec( qsSQLCommand );
         m_dlgProgress->stepValue();
     }
+
+    _logAction( "Export finished\n" );
 }
 
 void MainWindow::_exportToBelenusPatientCards()
 {
+    _logAction( "Export to database Patientcards:" );
+
     int nBerletCount = m_qvPatientCards.size();
 
     for( int i=0; i<nBerletCount; i++ )
@@ -821,14 +829,18 @@ void MainWindow::_exportToBelenusPatientCards()
         qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
         qsSQLCommand += QString( "NULL, 1, 'ARC' );" );
 
+        _logAction( qsSQLCommand );
+
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
+
+        unsigned int uiPatientcardId = query.lastInsertId().toInt();
 
         for( int j=0; j<m_qvPatientCards.at(i).nEgyseg; j++ )
         {
             qsSQLCommand = QString( "INSERT INTO `patientcardunits` (`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES ( " );
 
             qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
-            qsSQLCommand += QString( "%1, " ).arg( query.lastInsertId().toInt() );
+            qsSQLCommand += QString( "%1, " ).arg( uiPatientcardId );
             qsSQLCommand += QString( "0, " );
             qsSQLCommand += QString( "0, " );
             qsSQLCommand += QString( "%1, " ).arg( ui->ledPExportS2->text().toInt() );
@@ -839,11 +851,15 @@ void MainWindow::_exportToBelenusPatientCards()
         }
         m_dlgProgress->stepValue();
     }
+
+    _logAction( "Export finished\n" );
 }
 
 void MainWindow::_exportToBelenusProductTypes()
 {
     int nProductTypeCount = m_qvProductTypes.size();
+
+    _logAction( "Export to database Product types:" );
 
     for( int i=0; i<nProductTypeCount; i++ )
     {
@@ -853,15 +869,21 @@ void MainWindow::_exportToBelenusProductTypes()
         qsSQLCommand += QString( "'%1', " ).arg( m_qvProductTypes.at(i).strNev );
         qsSQLCommand += QString( "1, 'ARC' );" );
 
+        _logAction( qsSQLCommand );
+
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvProductTypes[i].nNewID = query.lastInsertId().toInt();
         m_dlgProgress->stepValue();
     }
+
+    _logAction( "Export finished\n" );
 }
 
 void MainWindow::_exportToBelenusProducts()
 {
     int nProductCount = m_qvProducts.size();
+
+    _logAction( "Export to database Products:" );
 
     for( int i=0; i<nProductCount; i++ )
     {
@@ -870,12 +892,14 @@ void MainWindow::_exportToBelenusProducts()
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strNev );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strVonalkod );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes * 100 );
         qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr * 100 );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nDarab );
         qsSQLCommand += QString( "0, 1, 'ARC');" );
+
+        _logAction( qsSQLCommand );
 
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
         m_qvProducts[i].nNewID = query.lastInsertId().toInt();
@@ -883,6 +907,8 @@ void MainWindow::_exportToBelenusProducts()
     }
 
     int nProductAssign = m_qvProductAssigns.size();
+
+    _logAction( "Export to database Product assigns:" );
 
     for( int i=0; i<nProductAssign; i++ )
     {
@@ -893,15 +919,20 @@ void MainWindow::_exportToBelenusProducts()
         qsSQLCommand += QString( "%1 ); " ).arg( m_nLicenceId );
 
         //ui->listLog->addItem( qsSQLCommand );
+        _logAction( qsSQLCommand );
 
         m_poDB->exec( qsSQLCommand );
         m_dlgProgress->stepValue();
     }
+
+    _logAction( "Export finished\n" );
 }
 
 void MainWindow::_exportToBelenusUsers()
 {
     int nUSerCount = m_qvUsers.size();
+
+    _logAction( "Export to database Users:" );
 
     for( int i=0; i<nUSerCount; i++ )
     {
@@ -926,10 +957,13 @@ void MainWindow::_exportToBelenusUsers()
         qsSQLCommand += QString( "'ARC');" );
 
         //ui->listLog->addItem( qsSQLCommand );
+        _logAction( qsSQLCommand );
 
         m_poDB->exec( qsSQLCommand );
         m_dlgProgress->stepValue();
     }
+
+    _logAction( "Export finished\n" );
 }
 
 int MainWindow::_getPatientCardTypeNewId( int p_nID )

@@ -38,15 +38,15 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     verticalLayout  = new QVBoxLayout( this );
     lblTitle        = new QLabel( this );
-    spacer1         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer1         = new QSpacerItem( 20, 5, QSizePolicy::Minimum, QSizePolicy::Minimum );
     lblCurrStatus   = new QLabel( this );
-    spacer2         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed );
+    spacer2         = new QSpacerItem( 20, 2, QSizePolicy::Minimum, QSizePolicy::Minimum );
     lblCurrTimer    = new QLabel( this );
-    spacer3         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed );
+    spacer3         = new QSpacerItem( 20, 2, QSizePolicy::Minimum, QSizePolicy::Minimum );
     lblEstTimer     = new QLabel( this );
-    spacer4         = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed );
+    spacer4         = new QSpacerItem( 20, 2, QSizePolicy::Minimum, QSizePolicy::Minimum );
     lblInfo         = new QLabel( this );
-    spacer5         = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
+    spacer5         = new QSpacerItem( 20, 5, QSizePolicy::Minimum, QSizePolicy::Minimum );
 
     verticalLayout->setContentsMargins( 0, 0, 0, 0 );
 
@@ -54,8 +54,9 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
     QPalette  obNewPalette = lblTitle->palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#4387cb" ) ) );
+    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#0000FF" ) ) );
     lblTitle->setPalette( obNewPalette );
+    lblTitle->setStyleSheet( "QLabel {font: bold; color: white; font-size:14px;}" );
 
     lblCurrStatus->setWordWrap( true );
     lblInfo->setWordWrap( true );
@@ -163,13 +164,15 @@ void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
 //====================================================================================
 void cDspPanel::_load()
 {
+    cTracer obTrace( "cDspPanel::_load" );
+
     QSqlQuery  *poQuery = NULL;
     try
     {
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
-        if( poQuery->size() )
+        if( poQuery->first() )
         {
-            poQuery->first();
+            g_obLogger(cSeverity::DEBUG) << poQuery->value( 1 ).toString() << EOM;
             lblTitle->setText( poQuery->value( 1 ).toString() );
         }
         else

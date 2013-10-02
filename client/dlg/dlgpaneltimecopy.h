@@ -3,6 +3,7 @@
 
 #include "../belenus.h"
 #include "../../Build/belenus/ui_dlgpaneltypecopy.h"
+#include "dlgprogress.h"
 
 class cDlgPanelTypeCopy : public QDialog, protected Ui::dlgPanelTypeCopy
 {
@@ -16,6 +17,9 @@ private slots:
     void updateButtonCopy();
     void on_pbExit_clicked();
     void on_pbCopyTimes_clicked();
+
+private:
+    cDlgProgress        *m_dlgProgress;
 };
 
 #endif
