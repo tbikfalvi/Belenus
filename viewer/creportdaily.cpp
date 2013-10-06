@@ -1,4 +1,6 @@
 
+#include <QMessageBox>
+
 #include "../framework/qtframework.h"
 #include "creportdaily.h"
 #include "currency.h"
@@ -66,13 +68,23 @@ void cReportDaily::refreshReport()
 
     // Panel related data of the selected date
     addSeparator();
-    addSubTitle( tr( "Device usages" ) );
+    addSubTitle( tr( "Device usages income" ) );
     unsigned int uiDeviceUsagesTotal = _reportPartPanelUse();
 
     // Panel usage by patientcard units
     addSeparator();
     addSubTitle( tr( "Device usages by patientcard units" ) );
-    _reportPartPanelUseUnits();
+    _reportPartPanelUseType( PU_USE_WITH_CARD );
+
+    // Panel usage by cash
+    addSeparator();
+    addSubTitle( tr( "Device usages by cash" ) );
+    _reportPartPanelUseType( PU_USE_WITH_CASH );
+
+    // Panel usage by cash and units
+    addSeparator();
+    addSubTitle( tr( "Device usages by patientcard units and cash" ) );
+    _reportPartPanelUseType( PU_USE_COMBINED );
 
     // Income based on payment methods
     addSeparator();
@@ -258,9 +270,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
         unsigned int    uiCountPCTSum = 0;
         unsigned int    uiPricePCTSum = 0;
         QString         qsPricePCTSum = "";
-
-        addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
+        QStringList     qslCells = QStringList();
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
@@ -273,11 +283,11 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
                 cCurrency   obPricePCSell( uiPricePCSell );
 
                 qsPricePCSell = obPricePCSell.currencyFullStringShort();
-                addTableCell( QString( "%1 / %2" ).arg( qsCountPCSell ).arg( qsPricePCSell ), "right" );
+                qslCells << QString( "%1 / %2" ).arg( qsCountPCSell ).arg( qsPricePCSell );
             }
             else
             {
-                addTableCell();
+                qslCells << "";
             }
 
             uiCountPCSell[ i ] += qsCountPCSell.toInt();
@@ -289,14 +299,18 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
 
         if( uiPricePCTSum > 0 )
         {
+            addTableRow();
+            addTableCell( poQueryResult->value(2).toString() );
+
+            for( int i=0; i<qslCells.count(); i++ )
+            {
+                addTableCell( qslCells.at(i), "right" );
+            }
+
             cCurrency   obPricePCTSum( uiPricePCTSum );
 
             qsPricePCTSum = obPricePCTSum.currencyFullStringShort();
             addTableCell( QString( "%1 / %2" ).arg( uiCountPCTSum ).arg( qsPricePCTSum ) );
-        }
-        else
-        {
-            addTableCell();
         }
 
         uiTotalCardSell += uiPricePCTSum;
@@ -310,7 +324,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
     {
         cCurrency   obPricePCTSum( uiSumPCSell[ i ] );
 
-        addTableCell( QString( "%1 / %2" ).arg( uiCountPCSell[ i ] ).arg( obPricePCTSum.currencyFullStringShort() ) );
+        addTableCell( QString( "%1 / %2" ).arg( uiCountPCSell[ i ] ).arg( obPricePCTSum.currencyFullStringShort() ), "right" );
     }
     addTableCell( obTotalCardSell.currencyFullStringShort(), "right bold" );
 
@@ -397,7 +411,7 @@ unsigned int cReportDaily::_reportPartPanelUse()
     return uiPriceSumTotal;
 }
 //------------------------------------------------------------------------------------
-void cReportDaily::_reportPartPanelUseUnits()
+void cReportDaily::_reportPartPanelUseType(tePanelUse p_tePanelUse)
 //------------------------------------------------------------------------------------
 {
     unsigned int    uiCountSumTotal = 0;
@@ -414,7 +428,7 @@ void cReportDaily::_reportPartPanelUseUnits()
         addTableCell( m_qslCassaOwners.at(i), "center bold" );
         uiCountPanelUseUnits[ i ] = 0;
     }
-    addTableCell( tr("Amount"), "center bold" );
+    addTableCell( tr("Sum"), "center bold" );
 
     poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
 
@@ -428,7 +442,7 @@ void cReportDaily::_reportPartPanelUseUnits()
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
-            int nCountPanel  = _countPanelUseUnits( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+            int nCountPanel  = _countPanelUse( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), p_tePanelUse );
 
             addTableCell( QString::number(nCountPanel), "center" );
 
@@ -822,21 +836,46 @@ int cReportDaily::_sumCassaIncome( unsigned int p_uiCassaId )
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportDaily::_countPanelUseUnits( QString p_qsCassaId, unsigned int p_uiPanelTypeId )
+int cReportDaily::_countPanelUse(QString p_qsCassaId, unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse)
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
 
-    qsQuery = QString("SELECT COUNT(patientCardUnitId) "
-                      "FROM patientcardunits, panels, paneltypes, cassahistory WHERE "
-                      "patientcardunits.panelId=panels.panelId AND "
-                      "panels.panelTypeId=paneltypes.panelTypeId AND "
-                      "patientcardunits.ledgerId=cassahistory.ledgerId AND "
-                      "patientcardunits.panelId>0 AND "
-                      "cassaId=%1 AND "
-                      "paneltypes.panelTypeId=%2 "
-                      "GROUP BY paneltypes.panelTypeId ").arg(p_qsCassaId).arg(p_uiPanelTypeId);
+    qsQuery = QString("SELECT * FROM cassa WHERE cassaId=%1 ").arg(p_qsCassaId);
+    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    poQueryResult->first();
+
+    QString qsStart = poQueryResult->value(4).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" );
+    QString qsStop  = poQueryResult->value(5).toDateTime().toString( "yyyy-MM-dd hh:mm:ss" );
+    QString qsCond  = "";
+
+//QMessageBox::information(this,"",qsStop);
+    if( qsStop.length() == 0 )
+    {
+        qsStop = QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss" );
+    }
+
+    switch( p_tePanelUse )
+    {
+        case PU_USE_WITH_CARD:
+            qsCond = "units>0 AND cash=0 AND ";
+            break;
+        case PU_USE_WITH_CASH:
+            qsCond = "units=0 AND cash>0 AND ";
+            break;
+        case PU_USE_COMBINED:
+            qsCond = "units>0 AND cash>0 AND ";
+            break;
+    }
+
+    qsQuery = QString("SELECT COUNT(ledgerDeviceId) FROM "
+                      "ledgerdevice, panels WHERE "
+                      "ledgerdevice.panelId = panels.panelId AND "
+                      "%1 "
+                      "panelTypeId=%2 AND "
+                      "ledgerTime>\"%3\" AND "
+                      "ledgerTime<=\"%4\" ").arg( qsCond ).arg( p_uiPanelTypeId ).arg( qsStart ).arg( qsStop );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 

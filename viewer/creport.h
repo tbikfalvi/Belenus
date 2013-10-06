@@ -33,6 +33,13 @@ public:
         LT_PROD_STORAGE_CHANGE
     };
 
+    enum tePanelUse
+    {
+        PU_USE_WITH_CARD = 1,
+        PU_USE_WITH_CASH,
+        PU_USE_COMBINED
+    };
+
     explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
     ~cReport();
 
