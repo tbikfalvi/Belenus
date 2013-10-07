@@ -50,13 +50,23 @@ void cReportLedger::refreshReport()
 
     // Panel related data of the selected date
     addSeparator();
-    addSubTitle( tr( "Device usages" ) );
+    addSubTitle( tr( "Device usages income" ) );
     cCurrency obDeviceUsagesTotal( _reportPartPanelUse() );
 
     // Panel usage by patientcard units
     addSeparator();
     addSubTitle( tr( "Device usages by patientcard units" ) );
-    _reportPartPanelUseUnits();
+    _reportPartPanelUseType( PU_USE_WITH_CARD );
+
+    // Panel usage by cash
+    addSeparator();
+    addSubTitle( tr( "Device usages by cash" ) );
+    _reportPartPanelUseType( PU_USE_WITH_CASH );
+
+    // Panel usage by cash and units
+    addSeparator();
+    addSubTitle( tr( "Device usages by patientcard units and cash" ) );
+    _reportPartPanelUseType( PU_USE_COMBINED );
 
     // Income based on payment methods
     addSeparator();
@@ -219,9 +229,8 @@ unsigned int cReportLedger::_reportPartProductSell()
 unsigned int cReportLedger::_reportPartPatientCardSell()
 //------------------------------------------------------------------------------------
 {
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
     unsigned int    uiTotalCardSell = 0;
+    QSqlQuery      *poQueryResult;
 
     startSection();
     addTable();
@@ -231,13 +240,11 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
     addTableCell( tr("Count"), "center bold" );
     addTableCell( tr("Amount"), "center bold" );
 
-    qsQuery = "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1";
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM patientcardtypes WHERE patientCardTypeId>1" );
 
     while( poQueryResult->next() )
     {
-        QString qsSumPrice  = "";
-        int     nTotalPrice = _sumPatientCardTypeSell(poQueryResult->value(0).toUInt());
+        int nTotalPrice = _sumPatientCardTypeSell(poQueryResult->value(0).toUInt());
 
         uiTotalCardSell += nTotalPrice;
 
@@ -245,13 +252,11 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
         {
             cCurrency obPrice( nTotalPrice );
 
-            qsSumPrice = obPrice.currencyFullStringShort();
+            addTableRow();
+            addTableCell( poQueryResult->value(2).toString() );
+            addTableCell( _countPatientCardTypeSell(poQueryResult->value(0).toUInt()), "center" );
+            addTableCell( obPrice.currencyFullStringShort(), "right" );
         }
-
-        addTableRow();
-        addTableCell( poQueryResult->value(2).toString() );
-        addTableCell( _countPatientCardTypeSell(poQueryResult->value(0).toUInt()), "center" );
-        addTableCell( qsSumPrice, "right" );
     }
 
     cCurrency   obTotalPrice( uiTotalCardSell );
@@ -316,7 +321,7 @@ unsigned int cReportLedger::_reportPartPanelUse()
     return uiTotalPanelUse;
 }
 //------------------------------------------------------------------------------------
-void cReportLedger::_reportPartPanelUseUnits()
+void cReportLedger::_reportPartPanelUseType(tePanelUse p_tePanelUse)
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
@@ -335,7 +340,7 @@ void cReportLedger::_reportPartPanelUseUnits()
 
     while( poQueryResult->next() )
     {
-        int nCount = _countPanelUseUnits( poQueryResult->value(0).toUInt() );
+        int nCount = _countPanelUse( poQueryResult->value(0).toUInt(), p_tePanelUse );
 
         nCountTotal += nCount;
 
@@ -472,21 +477,33 @@ int cReportLedger::_sumPanelUse( unsigned int p_uiPanelTypeId )
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportLedger::_countPanelUseUnits( unsigned int p_uiPanelTypeId )
+int cReportLedger::_countPanelUse(unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse)
 //------------------------------------------------------------------------------------
 {
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
+    QString     qsQuery;
+    QSqlQuery  *poQueryResult;
+    QString     qsCond;
 
-    qsQuery = QString("SELECT COUNT(patientCardUnitId) "
-                      "FROM patientcardunits, panels, paneltypes WHERE "
-                      "patientcardunits.panelId=panels.panelId AND "
-                      "panels.panelTypeId=paneltypes.panelTypeId AND "
-                      "patientcardunits.panelId>0 AND "
-                      "dateTimeUsed>\"%1 00:00:00\" AND "
-                      "dateTimeUsed<\"%2 24:00:00\" AND "
-                      "paneltypes.panelTypeId=%3 "
-                      "GROUP BY paneltypes.panelTypeId ").arg(filterDateStart().toString("yyyy-MM-dd")).arg(filterDateStop().toString("yyyy-MM-dd")).arg(p_uiPanelTypeId);
+    switch( p_tePanelUse )
+    {
+        case PU_USE_WITH_CARD:
+            qsCond = "units>0 AND cash=0 AND ";
+            break;
+        case PU_USE_WITH_CASH:
+            qsCond = "units=0 AND cash>0 AND ";
+            break;
+        case PU_USE_COMBINED:
+            qsCond = "units>0 AND cash>0 AND ";
+            break;
+    }
+
+    qsQuery = QString("SELECT COUNT(ledgerDeviceId) FROM "
+                      "ledgerdevice, panels WHERE "
+                      "ledgerdevice.panelId = panels.panelId AND "
+                      "%1 "
+                      "panelTypeId=%2 AND "
+                      "ledgerTime>\"%3 00:00:00\" AND "
+                      "ledgerTime<\"%4 24:00:00\" ").arg( qsCond ).arg( p_uiPanelTypeId ).arg( filterDateStart().toString("yyyy-MM-dd") ).arg( filterDateStop().toString("yyyy-MM-dd") );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 

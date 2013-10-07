@@ -21,12 +21,14 @@ private:
     unsigned int    _reportPartProductSell();
     unsigned int    _reportPartPatientCardSell();
     unsigned int    _reportPartPanelUse();
-    void            _reportPartPanelUseUnits();
+    void            _reportPartPanelUseType( tePanelUse p_tePanelUse );
+//    void            _reportPartPanelUseUnits();
     void            _reportPartPaymentMethods();
     int             _sumPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
     QString         _countPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
     int             _sumPanelUse( unsigned int p_uiPanelTypeId );
-    int             _countPanelUseUnits( unsigned int p_uiPanelTypeId );
+//    int             _countPanelUseUnits( unsigned int p_uiPanelTypeId );
+    int             _countPanelUse( unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse );
     int             _sumPaymentMethod( unsigned int p_uiPaymentMethodId );
     int             _sumCassaIncome( unsigned int p_uiCassaId );
 };

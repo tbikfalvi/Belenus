@@ -53,9 +53,11 @@ void cReportCassaHistory::refreshReport()
 
     QString      qsCondition = "";
 
-    if( filterType().left(1).toInt() > 0 )
+    QStringList qslFilterType = filterType().split("|");
+
+    if( qslFilterType.at(0).toInt() > 0 )
     {
-        qsCondition = QString( "cassahistory.userId=%1 AND " ).arg( filterType().left(1).toInt() );
+        qsCondition = QString( "cassahistory.userId=%1 AND " ).arg( qslFilterType.at(0).toInt() );
     }
 
     bool         bIsStornoEntriesHidden = filterIsVisible();
@@ -73,7 +75,17 @@ void cReportCassaHistory::refreshReport()
 
     startReport();
 
+    QString qsFilter;
+
+    qsFilter.append( QString( " %1 %2 -> %3" ).arg( tr( "Date intervall:" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ).arg( filterDateStop().toString( "yyyy MMM dd" ) ) );
+
+    if( qslFilterType.at(0).toInt() > 0 )
+    {
+        qsFilter.append( tr( "  -  Related to user: %1" ).arg( qslFilterType.at(1) ) );
+    }
+
     addTitle( m_qsReportName );
+    addSubTitle( qsFilter );
     addHorizontalLine();
 
 //    m_dlgProgress.setProgressMax( poQueryResultCards->size()+1 );

@@ -253,6 +253,9 @@ void cCassa::cassaClose()
     obDBCassaHistory.setComment( QObject::tr("Close cassa record.") );
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();
+
+    m_pCassa->createNew();
+    m_bCassaEnabled = false;
 }
 //====================================================================================
 unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )

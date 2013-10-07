@@ -574,6 +574,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
+        m_lblStatusLeft.setText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
     }
 
     if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_Q )
@@ -586,6 +587,11 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         m_bCtrlPressed = false;
         on_action_DeviceStart_triggered();
     }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_T )
+    {
+        m_bCtrlPressed = false;
+        on_action_DeviceClear_triggered();
+    }
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F )
     {
         m_bCtrlPressed = false;
@@ -596,14 +602,20 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         m_bCtrlPressed = false;
         on_action_ShoppingCart_triggered();
     }
+    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_N )
+    {
+        m_bCtrlPressed = false;
+        on_action_DeviceSkipStatus_triggered();
+    }
     else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F12 )
     {
         m_bCtrlPressed = false;
         on_action_TestDlgStarted();
     }
-    else if( (p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
+    else if( m_bCtrlPressed == false &&
+            ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
              (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
-             (p_poEvent->key() == Qt::Key_Space) )
+             (p_poEvent->key() == Qt::Key_Space)) )
     {
         cDlgInputStart  obDlgInputStart( this );
 
@@ -643,6 +655,7 @@ void cWndMain::keyReleaseEvent ( QKeyEvent *p_poEvent )
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = false;
+        m_lblStatusLeft.setText( "" );
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -1050,6 +1063,7 @@ void cWndMain::on_action_PatientNew_triggered()
 
     delete poGuest;
 }
+//====================================================================================
 void cWndMain::on_action_DeviceClear_triggered()
 {
     mdiPanels->setTextInformation( "" );
