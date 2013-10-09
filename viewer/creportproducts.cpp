@@ -8,6 +8,9 @@ cReportProducts::cReportProducts(QWidget *parent, QString p_qsReportName) : cRep
     m_qsReportName          = tr(" Products ");
     m_qsReportDescription   = tr( "This report shows the products registered in database." );
 
+    _setDataNameEnabled( true );
+    _setDataNameLabelText( tr("Name contains :") );
+
     _setDataTypeEnabled( true );
     _setDataTypeLabelText( tr("Product types :") );
 
@@ -42,9 +45,19 @@ void cReportProducts::refreshReport()
     m_dlgProgress.increaseProgressValue();
 
     QString qsQuery;
+    QString qsTitle = "";
     QString qsCondition = "";
     QStringList qslFilterType = filterType().split("|");
 
+    if( qslFilterType.at(0).toInt() > -1 )
+    {
+        qsTitle.append( tr( "Product type: '%1'" ).arg( qslFilterType.at(1) ) );
+    }
+    if( filterName().length() > 0 )
+    {
+        qsTitle.append( tr( "%1Product name contains: '%2'" ).arg( qsTitle.length()?"  -  ":"" ).arg( filterName() ) );
+        qsCondition.append( QString( " AND products.name LIKE \"\%%1\%\" ").arg( filterName() ) );
+    }
     if( !filterIsVisible() )
     {
         qsCondition.append( " AND products.productCount>0 " );
@@ -86,7 +99,7 @@ void cReportProducts::refreshReport()
                            "products.active=1 AND "
                            "connectproductwithtype.productTypeId=%1 "
                            "%2"
-                           "GROUP BY products.productId" ).arg(filterType().left(1).toInt()).arg( qsCondition );
+                           "GROUP BY products.productId" ).arg( qslFilterType.at(0).toInt() ).arg( qsCondition );
     }
 
     QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
@@ -96,6 +109,8 @@ void cReportProducts::refreshReport()
     startReport();
 
     addTitle( m_qsReportName );
+    if( qsTitle.length() )
+        addSubTitle( qsTitle );
     addHorizontalLine();
 
     m_dlgProgress.setProgressMax( poQueryResult->size()+1 );

@@ -11,7 +11,7 @@ cReportCardDetails::cReportCardDetails(QWidget *parent, QString p_qsReportName) 
                                   "Please enter the barcode of the patient card you interested in." );
 
     _setDataNameEnabled( true );
-    _setDataNameLabelText( tr("Barcode :") );
+    _setDataNameLabelText( tr("Barcode contains :") );
 
     _setDataTypeEnabled( true );
     _setDataTypeLabelText( tr("Patientcard types :") );
@@ -39,17 +39,18 @@ void cReportCardDetails::refreshReport()
 
     cReport::refreshReport();
 
-    QString     qsTitle = m_qsReportName;
+    QString     qsTitle = "";
     QString     qsCondition;
+    QStringList qslFilterType = filterType().split("|");
 
-    if( filterType().left(1).toInt() > 0 )
+    if( qslFilterType.at(0).toInt() > 0 )
     {
-        qsTitle.append( QString( " - %1" ).arg( filterType().mid(2) ) );
-        qsCondition.append( QString(" AND patientcards.patientCardTypeId=%1 ").arg(filterType().left(1).toInt()) );
+        qsTitle.append( tr( "Patientcard type: '%1'" ).arg( qslFilterType.at(1) ) );
+        qsCondition.append( QString(" AND patientcards.patientCardTypeId=%1 ").arg( qslFilterType.at(0).toInt() ) );
     }
     if( filterName().length() > 0 )
     {
-        qsTitle.append( QString( " - %1" ).arg( filterName() ) );
+        qsTitle.append( tr( "%1Patientcard barcode contains: '%2'" ).arg( qsTitle.length()?"  -  ":"" ).arg( filterName() ) );
         qsCondition.append( QString(" AND patientcards.barcode LIKE \"\%%1\%\" ").arg(filterName()) );
     }
     m_dlgProgress.increaseProgressValue();
@@ -72,7 +73,9 @@ void cReportCardDetails::refreshReport()
 
     startReport();
 
-    addTitle( qsTitle );
+    addTitle( m_qsReportName );
+    if( qsTitle.length() )
+        addSubTitle( qsTitle );
     addHorizontalLine();
 
     m_dlgProgress.setProgressValue( 100 );

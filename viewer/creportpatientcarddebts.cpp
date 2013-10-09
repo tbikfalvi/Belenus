@@ -36,10 +36,12 @@ void cReportPatientcardDebts::refreshReport()
                                "FROM patientcards LEFT JOIN patientcardunits ON "
                                "patientcards.patientCardId=patientcardunits.patientCardId WHERE "
                                "patientcards.active=1 AND "
-                               "patientcardunits.active=1 AND "
+                               "ledgerId>0 AND "
                                "patientcards.patientCardId>1 AND "
-                               "patientcardunits.validDateFrom<=\"%1\" AND "
-                               "patientcardunits.validDateTo>=\"%1\" "
+                               "(patientcardunits.active=1 OR "
+                               " patientcardunits.dateTimeUsed>\"%1 00:00:00\") AND "
+                               "patientcardunits.validDateFrom<\"%1 24:00:00\" AND "
+                               "patientcardunits.validDateTo>\"%1 00:00:00\" "
                                "GROUP BY ledgerId ORDER BY barcode " ).arg( filterDateStart().toString("yyyy-MM-dd") );
     QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
@@ -48,6 +50,7 @@ void cReportPatientcardDebts::refreshReport()
     startReport();
 
     addTitle( m_qsReportName );
+    addSubTitle( tr("On date: %1").arg( filterDateStart().toString( "yyyy MMM dd" ) ) );
     addHorizontalLine();
 
     m_dlgProgress.setProgressMax( poQueryResult->size()+1 );

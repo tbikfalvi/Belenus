@@ -33,6 +33,7 @@ void cReportPatientcardSell::refreshReport()
     startReport();
 
     addTitle( m_qsReportName );
+    addSubTitle( QString( "%1 %2 -> %3" ).arg( tr( "Date intervall:" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ).arg( filterDateStop().toString( "yyyy MMM dd" ) ) );
     addHorizontalLine();
 
     //

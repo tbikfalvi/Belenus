@@ -15,7 +15,7 @@ cReportProductHistory::cReportProductHistory(QWidget *parent, QString p_qsReport
 
     qslDataTypes << QString( "0|%1" ).arg( tr("<No product selected>") );
 
-    QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( "SELECT productId, name FROM products WHERE productId>0 AND active=1" );
+    QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( "SELECT productId, name FROM products WHERE productId>0 AND active=1 ORDER BY name" );
 
     while( poQueryResult->next() )
     {

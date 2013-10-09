@@ -31,6 +31,7 @@ void cReportProductStatus::refreshReport()
     startReport();
 
     addTitle( m_qsReportName );
+    addSubTitle( tr("On date: %1").arg( filterDateStart().toString( "yyyy MMM dd" ) ) );
     addHorizontalLine();
 
     m_dlgProgress.setProgressMax( poQueryResult->size()+1 );
