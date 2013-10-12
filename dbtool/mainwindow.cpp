@@ -834,21 +834,52 @@ void MainWindow::_exportToBelenusPatientCards()
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
 
         unsigned int uiPatientcardId = query.lastInsertId().toInt();
+        unsigned int uiPatientCardUnitPrice = _getPatientCardTypePrice( m_qvPatientCards.at(i).nBerletTipus ) / m_qvPatientCards.at(i).nEgyseg;
 
         for( int j=0; j<m_qvPatientCards.at(i).nEgyseg; j++ )
         {
-            qsSQLCommand = QString( "INSERT INTO `patientcardunits` (`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES ( " );
+            qsSQLCommand = QString( "INSERT INTO `patientcardunits` (`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES ( " );
 
             qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
             qsSQLCommand += QString( "%1, " ).arg( uiPatientcardId );
             qsSQLCommand += QString( "0, " );
             qsSQLCommand += QString( "0, " );
             qsSQLCommand += QString( "%1, " ).arg( ui->ledPExportS2->text().toInt() );
+            qsSQLCommand += QString( "%1, " ).arg( uiPatientCardUnitPrice );
             qsSQLCommand += QString( "'2013-01-01', " );
             qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
             qsSQLCommand += QString( "CURRENT_TIMESTAMP, 1, 'ARC' );" );
+
+            _logAction( qsSQLCommand );
+
             query = m_poDB->exec( qsSQLCommand );
         }
+
+        qsSQLCommand = QString( "INSERT INTO `ledger` (`licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES ( " );
+
+        qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "2, " );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "1, " );
+        qsSQLCommand += QString( "2, " );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "%1, " ).arg( uiPatientcardId );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "'%1', " ).arg( qsBarcode );
+        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypePrice( m_qvPatientCards.at(i).nBerletTipus ) );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "0, " );
+        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypePrice( m_qvPatientCards.at(i).nBerletTipus ) );
+        qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv-1 ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
+        qsSQLCommand += QString( "NULL ,  '',  '1',  'ARC' );" );
+
+        _logAction( qsSQLCommand );
+
+        query = m_poDB->exec( qsSQLCommand );
+
         m_dlgProgress->stepValue();
     }
 
@@ -976,6 +1007,22 @@ int MainWindow::_getPatientCardTypeNewId( int p_nID )
         if( m_qvPatientCardTypes.at(i).nID == p_nID )
         {
             nRet = m_qvPatientCardTypes.at(i).nNewID;
+            break;
+        }
+    }
+    return nRet;
+}
+
+int MainWindow::_getPatientCardTypePrice( int p_nID )
+{
+    int nRet = 0;
+    int nCount = m_qvPatientCardTypes.size();
+
+    for( int i=0; i<nCount; i++ )
+    {
+        if( m_qvPatientCardTypes.at(i).nID == p_nID )
+        {
+            nRet = m_qvPatientCardTypes.at(i).nAr*100;
             break;
         }
     }

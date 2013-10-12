@@ -138,6 +138,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     m_bIsItemInShoppingCart = false;
     m_bIsPatientWaiting     = false;
+    m_bIsNeedToBeCleaned    = false;
 
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.qslUnitIds       = QStringList();
@@ -310,6 +311,16 @@ void cFrmPanel::clear()
 void cFrmPanel::next()
 {
     activateNextStatus();
+}
+//====================================================================================
+void cFrmPanel::clean()
+//====================================================================================
+{
+    m_bIsNeedToBeCleaned = false;
+    if( m_qsInfo.compare( tr("NOT STERILE") ) == 0 )
+    {
+        setTextInformation( "" );
+    }
 }
 //====================================================================================
 void cFrmPanel::inactivate()
@@ -815,6 +826,7 @@ void cFrmPanel::activateNextStatus()
         // Kezeles vege
         closeAttendance();
         m_qsInfo = tr( "NOT STERILE" );
+        m_bIsNeedToBeCleaned = true;
     }
 
     m_uiStatus++;

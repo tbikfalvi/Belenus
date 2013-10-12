@@ -437,6 +437,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
                 obDBPatientcardUnit.setLicenceId( m_poPatientCard->licenceId() );
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setUnitTime( obDBPatientCardType.unitTime() );
+                obDBPatientcardUnit.setUnitPrice( obDBPatientCardType.price()/inNewUnits );
                 obDBPatientcardUnit.setValidDateFrom( obDBPatientCardType.validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( obDBPatientCardType.validDateTo() );
                 obDBPatientcardUnit.setActive( true );

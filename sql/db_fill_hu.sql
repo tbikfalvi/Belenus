@@ -182,8 +182,8 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '1', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '0', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------
@@ -3523,6 +3523,7 @@ INSERT INTO zipRegionCity ( `licenceId`, `zip`, `region`, `city`, `active`, `arc
  ( '0', '8933', 'Zala', 'Zalakomár', 1, 'ARC' ),
  ( '0', '8354', 'Zala', 'Zalaköveskút', 1, 'ARC' ),
  ( '0', '8999', 'Zala', 'Zalalövõ', 1, 'ARC' ),
+
  ( '0', '8348', 'Veszprém', 'Zalameggyes', 1, 'ARC' ),
  ( '0', '8747', 'Zala', 'Zalamerenye', 1, 'ARC' ),
  ( '0', '8756', 'Zala', 'Zalasárszeg', 1, 'ARC' ),
@@ -3602,8 +3603,7 @@ ALTER TABLE `paymentMethods` auto_increment=1;
 
 INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, `archive`) VALUES
  (1, 0, 'Készpénzes fizetés', 1, 'ARC'),
- (2, 0, 'Fizetés bankkártyával', 1, 'ARC'),
- (3, 0, 'Fizetés utalvánnyal', 1, 'ARC');
+ (2, 0, 'Fizetés bankkártyával', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -3614,8 +3614,8 @@ ALTER TABLE `ledgerDevice` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES
- ( 0 ,  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0',  '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );
+INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `voucher` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES
+ ( 0 ,  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0', '0', '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );
 UPDATE `ledger` SET `ledgerId`=0 WHERE `ledgerId`=1;
 ALTER TABLE `ledger` auto_increment=1;
 

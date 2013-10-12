@@ -57,6 +57,7 @@ public:
     void            reset();
     void            clear();
     void            next();
+    void            clean();
     void            inactivate();
     void            activate();
     void            reload();
@@ -82,6 +83,8 @@ public:
     void            itemRemovedFromShoppingCart();
     void            patientAddedToWaitingQueue();
     void            patientWaitingQueueEmpty();
+
+    bool            isNeedToBeCleaned() { return m_bIsNeedToBeCleaned; }
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -115,6 +118,7 @@ private:
     bool                         m_bIsItemInShoppingCart;
     bool                         m_bIsPatientWaiting;
     unsigned int                 m_uiProcessWaitTime;
+    bool                         m_bIsNeedToBeCleaned;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

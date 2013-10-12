@@ -30,6 +30,8 @@ public:
     void            setPanelId( const unsigned int p_nPanelId )             throw();
     int             unitTime() const                                        throw();
     void            setUnitTime( const int p_nUnitTime )                    throw();
+    int             unitPrice() const                                       throw();
+    void            setUnitPrice( const int p_nUnitPrice )                  throw();
     QString         validDateFrom() const                                   throw();
     void            setValidDateFrom( const QString &p_qsVDFrom )           throw();
     QString         validDateTo() const                                     throw();
@@ -48,6 +50,7 @@ private:
     unsigned int    m_uiLedgerId;
     unsigned int    m_uiPanelId;
     int             m_nUnitTime;
+    int             m_nUnitPrice;
     QString         m_qsValidDateFrom;
     QString         m_qsValidDateTo;
     QString         m_qsDateTime;
@@ -60,6 +63,7 @@ private:
                const unsigned int p_uiLedgerId = 0,
                const unsigned int p_uiPanelId = 0,
                const int p_nUnitTime = 0,
+               const int p_nUnitPrice = 0,
                const QString &p_qsValidDateFrom = "",
                const QString &p_qsValidDateTo = "",
                const QString &p_qsDateTime = "",

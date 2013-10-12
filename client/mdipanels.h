@@ -26,6 +26,8 @@ public:
     void            reset();
     void            clear();
     void            next();
+    void            clean();
+    bool            isNeedToBeCleaned();
     int             activePanel();
     unsigned int    activePanelId();
     bool            isPanelWorking();

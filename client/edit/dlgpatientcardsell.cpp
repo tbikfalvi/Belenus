@@ -404,6 +404,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBPatientcardUnit.setPatientCardId( m_poPatientCard->id() );
                 obDBPatientcardUnit.setLedgerId( uiLedgerId );
                 obDBPatientcardUnit.setUnitTime( m_poPatientCardType->unitTime() );
+                obDBPatientcardUnit.setUnitPrice( m_poPatientCardType->price()/ledUnits->text().toInt() );
                 obDBPatientcardUnit.setValidDateFrom( m_poPatientCard->validDateFrom() );
                 obDBPatientcardUnit.setValidDateTo( m_poPatientCard->validDateTo() );
                 obDBPatientcardUnit.setDateTime( "" );

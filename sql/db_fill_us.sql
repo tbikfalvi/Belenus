@@ -176,8 +176,8 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '1', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '1', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------
@@ -275,8 +275,7 @@ ALTER TABLE `paymentMethods` auto_increment=1;
 
 INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, `archive`) VALUES
  (1, 0, 'Pay with cash', 1, 'ARC'),
- (2, 0, 'Pay with creditcard', 1, 'ARC'),
- (3, 0, 'Pay with vouchers', 1, 'ARC');
+ (2, 0, 'Pay with creditcard', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -287,8 +286,8 @@ ALTER TABLE `ledgerDevice` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES
- ( 0 ,  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0',  '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );
+INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `voucher` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES
+ ( 0 ,  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0', '0', '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );
 UPDATE `ledger` SET `ledgerId`=0 WHERE `ledgerId`=1;
 ALTER TABLE `ledger` auto_increment=1;
 

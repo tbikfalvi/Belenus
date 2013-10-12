@@ -96,14 +96,14 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     setupUi( this );
 
+    m_qsStatusText                  = "";
     m_bCtrlPressed                  = false;
     m_bSerialRegistration           = false;
     m_inRegistrationTimeout         = 0;
-
     m_bGlobalDataRequested          = false;
     m_inGlobalDataRequestTimeout    = 0;
-
     m_uiPatientId                   = 0;
+    m_nEnterAction                  = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -275,7 +275,7 @@ cWndMain::~cWndMain()
 void cWndMain::startMainTimer()
 {
     mdiPanels->refreshDisplay();
-    m_nTimer = startTimer( 300 );
+    m_nTimer = startTimer( 250 );
 }
 //====================================================================================
 void cWndMain::autoSynchronizeGlobalData()
@@ -577,74 +577,114 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         m_lblStatusLeft.setText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
     }
 
-    if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_Q )
+    if( m_bCtrlPressed )
     {
-        m_bCtrlPressed = false;
-        close();
-    }
-    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_S )
-    {
-        m_bCtrlPressed = false;
-        on_action_DeviceStart_triggered();
-    }
-    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_T )
-    {
-        m_bCtrlPressed = false;
-        on_action_DeviceClear_triggered();
-    }
-    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F )
-    {
-        m_bCtrlPressed = false;
-        on_action_PayCash_triggered();
-    }
-    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_K )
-    {
-        m_bCtrlPressed = false;
-        on_action_ShoppingCart_triggered();
-    }
-    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_N )
-    {
-        m_bCtrlPressed = false;
-        on_action_DeviceSkipStatus_triggered();
-    }
-    else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F12 )
-    {
-        m_bCtrlPressed = false;
-        on_action_TestDlgStarted();
-    }
-    else if( m_bCtrlPressed == false &&
-            ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
-             (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
-             (p_poEvent->key() == Qt::Key_Space)) )
-    {
-        cDlgInputStart  obDlgInputStart( this );
-
-        obDlgInputStart.setInitialText( p_poEvent->text() );
-        if( obDlgInputStart.exec() == QDialog::Accepted )
+        if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_Q )
         {
-            if( obDlgInputStart.m_bPat )
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            close();
+        }
+        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
+        {
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            on_action_DeviceStart_triggered();
+        }
+        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
+        {
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            on_action_DeviceClear_triggered();
+        }
+        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
+        {
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            on_action_PayCash_triggered();
+        }
+        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
+        {
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            on_action_ShoppingCart_triggered();
+        }
+        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
+        {
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            on_action_DeviceSkipStatus_triggered();
+        }
+        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F12 )
+        {
+            m_bCtrlPressed = false;
+            m_lblStatusLeft.setText( m_qsStatusText );
+            on_action_TestDlgStarted();
+        }
+    }
+    else
+    {
+        if( p_poEvent->key() == Qt::Key_Enter || p_poEvent->key() == Qt::Key_Return )
+        {
+            switch( m_nEnterAction )
             {
-                processInputPatient( obDlgInputStart.getEditText().trimmed() );
-            }
-            else if( obDlgInputStart.m_bCard )
-            {
-                processInputPatientCard( obDlgInputStart.getEditText() );
-            }
-            else if( obDlgInputStart.m_bProd )
-            {
-                processInputProduct( obDlgInputStart.getEditText() );
-            }
-            else if( obDlgInputStart.m_bTime )
-            {
-                processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+                case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
+                    m_lblStatusLeft.setText( m_qsStatusText );
+                    on_action_PayCash_triggered();
+                    break;
+
+                case cDBApplicationAction::APPACT_DEVICE_START:
+                    m_lblStatusLeft.setText( m_qsStatusText );
+                    on_action_DeviceStart_triggered();
+                    break;
+
+                case cDBApplicationAction::APPACT_DEVICE_SKIP:
+                    m_lblStatusLeft.setText( m_qsStatusText );
+                    on_action_DeviceSkipStatus_triggered();
+                    break;
+
+                case cDBApplicationAction::APPACT_DEVICE_CLEAN:
+                    m_lblStatusLeft.setText( m_qsStatusText );
+                    on_action_DeviceClear_triggered();
+                    break;
             }
         }
+        else if( ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
+                  (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
+                  (p_poEvent->key() == Qt::Key_Space)) )
+        {
+            m_lblStatusLeft.setText( m_qsStatusText );
 
-        p_poEvent->ignore();
-    }
-    else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
-    {
-        mdiPanels->clear();
+            cDlgInputStart  obDlgInputStart( this );
+
+            obDlgInputStart.setInitialText( p_poEvent->text() );
+            if( obDlgInputStart.exec() == QDialog::Accepted )
+            {
+                if( obDlgInputStart.m_bPat )
+                {
+                    processInputPatient( obDlgInputStart.getEditText().trimmed() );
+                }
+                else if( obDlgInputStart.m_bCard )
+                {
+                    processInputPatientCard( obDlgInputStart.getEditText() );
+                }
+                else if( obDlgInputStart.m_bProd )
+                {
+                    processInputProduct( obDlgInputStart.getEditText() );
+                }
+                else if( obDlgInputStart.m_bTime )
+                {
+                    processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
+                }
+            }
+
+            p_poEvent->ignore();
+        }
+        else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
+        {
+            m_lblStatusLeft.setText( m_qsStatusText );
+            mdiPanels->clear();
+        }
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -655,7 +695,7 @@ void cWndMain::keyReleaseEvent ( QKeyEvent *p_poEvent )
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = false;
-        m_lblStatusLeft.setText( "" );
+        m_lblStatusLeft.setText( m_qsStatusText );
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -718,6 +758,41 @@ void cWndMain::updateTitle()
     setWindowTitle( qsTitle );
 }
 //====================================================================================
+void cWndMain::updateStatusText( QString p_qsStatusText )
+//====================================================================================
+{
+    if( m_bCtrlPressed )
+        return;
+
+    bool    bIsUserLoggedIn = g_obUser.isLoggedIn();
+
+    m_qsStatusText = tr("SPACE -> Enter time/barcode ...");
+    m_nEnterAction = 0;
+
+    if( bIsUserLoggedIn && mdiPanels->isHasToPay() )
+    {
+        m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_PayCash->toolTip() ) );
+        m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_PAYCASH;
+    }
+    else if( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0 )
+    {
+        m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceStart->toolTip() ) );
+        m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_START;
+    }
+    else if( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) )
+    {
+        m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceSkipStatus->toolTip() ) );
+        m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_SKIP;
+    }
+    else if( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() )
+    {
+        m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceClear->toolTip() ) );
+        m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_CLEAN;
+    }
+
+    m_lblStatusLeft.setText( m_qsStatusText );
+}
+//====================================================================================
 void cWndMain::updateToolbar()
 {
     bool    bIsUserLoggedIn = g_obUser.isLoggedIn();
@@ -750,7 +825,7 @@ void cWndMain::updateToolbar()
         menuDevice->setEnabled( bIsUserLoggedIn );
             action_UseWithCard->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByCard() );
             action_UseByTime->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByTime() );
-            action_DeviceClear->setEnabled( bIsUserLoggedIn );
+            action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0 );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
@@ -789,6 +864,7 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
+    updateStatusText();
     updateToolbar();
 
     if( m_bSerialRegistration )
@@ -1066,7 +1142,7 @@ void cWndMain::on_action_PatientNew_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceClear_triggered()
 {
-    mdiPanels->setTextInformation( "" );
+    mdiPanels->clean();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()

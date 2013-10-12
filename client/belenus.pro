@@ -106,6 +106,7 @@ HEADERS = belenus.h \
     db/dbdiscount.h \
     db/dbpaymentmethod.h \
     db/dbpatientcardunits.h \
+    db/dbapplicationaction.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -226,6 +227,7 @@ SOURCES = main.cpp \
     db/dbdiscount.cpp \
     db/dbpaymentmethod.cpp \
     db/dbpatientcardunits.cpp \
+    db/dbapplicationaction.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \

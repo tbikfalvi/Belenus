@@ -9,6 +9,7 @@
 #include "db/dbshoppingcart.h"
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgsecondarywindow.h"
+#include "db/dbapplicationaction.h"
 
 using namespace std;
 
@@ -38,26 +39,26 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
-    QLabel               m_lblStatusLeft;
-    QLabel               m_lblStatusRight;
-    cMdiPanels          *mdiPanels;
-    cDlgProgress        *m_dlgProgress;
-    int                  m_nTimer;
-    cDlgSecondaryWindow *m_dlgSecondaryWindow;
-
-    unsigned int         m_uiPatientId;
-
-    bool                 m_bCtrlPressed;
-
-    bool                 m_bSerialRegistration;
-    int                  m_inRegistrationTimeout;
-
-    bool                 m_bGlobalDataRequested;
-    int                  m_inGlobalDataRequestTimeout;
+    QLabel                   m_lblStatusLeft;
+    QLabel                   m_lblStatusRight;
+    cMdiPanels              *mdiPanels;
+    cDlgProgress            *m_dlgProgress;
+    int                      m_nTimer;
+    cDlgSecondaryWindow     *m_dlgSecondaryWindow;
+    unsigned int             m_uiPatientId;
+    bool                     m_bCtrlPressed;
+    bool                     m_bSerialRegistration;
+    int                      m_inRegistrationTimeout;
+    bool                     m_bGlobalDataRequested;
+    int                      m_inGlobalDataRequestTimeout;
+    QString                  m_qsStatusText;
+    cDBApplicationAction     m_obApplicationAction;
+    int                      m_nEnterAction;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );
     void updateTitle();
+    void updateStatusText( QString p_qsStatusText="" );
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
     void processInputProduct( QString p_stBarcode );

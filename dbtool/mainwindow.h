@@ -148,6 +148,7 @@ private:
     void                        _exportToBelenusUsers();
 
     int                         _getPatientCardTypeNewId( int p_nID );
+    int                         _getPatientCardTypePrice( int p_nID );
     int                         _getProductTypeNewId( int p_nID );
     int                         _getProductNewId( int p_nID );
 

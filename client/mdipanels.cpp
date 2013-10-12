@@ -133,6 +133,16 @@ void cMdiPanels::next()
     m_obPanels.at( m_uiActivePanel )->next();
 }
 
+void cMdiPanels::clean()
+{
+    m_obPanels.at( m_uiActivePanel )->clean();
+}
+
+bool cMdiPanels::isNeedToBeCleaned()
+{
+    return m_obPanels.at( m_uiActivePanel )->isNeedToBeCleaned();
+}
+
 void cMdiPanels::reload()
 {
     m_obPanels.at( m_uiActivePanel )->reload();
