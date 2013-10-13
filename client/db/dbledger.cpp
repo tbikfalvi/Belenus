@@ -43,6 +43,7 @@ void cDBLedger::init( const unsigned int p_uiId,
                       const QString &p_qsName,
                       const int p_nItemCount,
                       const int p_nNetPrice,
+                      const int p_nVoucher,
                       const int p_inDiscount,
                       const int p_nVatpercent,
                       const int p_nTotalPrice,
@@ -66,6 +67,7 @@ void cDBLedger::init( const unsigned int p_uiId,
     m_qsName                = p_qsName;
     m_nItemCount            = p_nItemCount;
     m_nNetPrice             = p_nNetPrice;
+    m_nVoucher              = p_nVoucher;
     m_inDiscount            = p_inDiscount;
     m_nVatpercent           = p_nVatpercent;
     m_nTotalPrice           = p_nTotalPrice;
@@ -92,6 +94,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inItemCountIdx          = p_obRecord.indexOf( "itemCount" );
     int inNetPriceIdx           = p_obRecord.indexOf( "netPrice" );
+    int inVoucherIdx            = p_obRecord.indexOf( "voucher" );
     int inDiscountIdx           = p_obRecord.indexOf( "discount" );
     int inVatpercentIdx         = p_obRecord.indexOf( "vatpercent" );
     int inTotalPriceIdx         = p_obRecord.indexOf( "totalPrice" );
@@ -115,6 +118,7 @@ void cDBLedger::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inItemCountIdx ).toInt(),
           p_obRecord.value( inNetPriceIdx ).toInt(),
+          p_obRecord.value( inVoucherIdx ).toInt(),
           p_obRecord.value( inDiscountIdx ).toInt(),
           p_obRecord.value( inVatpercentIdx ).toInt(),
           p_obRecord.value( inTotalPriceIdx ).toInt(),
@@ -173,6 +177,7 @@ void cDBLedger::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "itemCount = \"%1\", " ).arg( m_nItemCount );
     qsQuery += QString( "netPrice = \"%1\", " ).arg( m_nNetPrice );
+    qsQuery += QString( "voucher = \"%1\", " ).arg( m_nVoucher );
     qsQuery += QString( "discount = \"%1\", " ).arg( m_inDiscount );
     qsQuery += QString( "vatpercent = \"%1\", " ).arg( m_nVatpercent );
     qsQuery += QString( "totalPrice = \"%1\", " ).arg( m_nTotalPrice );
@@ -417,6 +422,16 @@ int cDBLedger::netPrice() const throw()
 void cDBLedger::setNetPrice( const int p_nNetPrice ) throw()
 {
     m_nNetPrice = p_nNetPrice;
+}
+
+int cDBLedger::voucher() const throw()
+{
+    return m_nVoucher;
+}
+
+void cDBLedger::setVoucher( const int p_nVoucher ) throw()
+{
+    m_nVoucher = p_nVoucher;
 }
 
 int cDBLedger::discount() const throw()

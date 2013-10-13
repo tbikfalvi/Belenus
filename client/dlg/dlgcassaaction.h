@@ -45,6 +45,9 @@ private slots:
     void ledAmountToPay_textEdited(QString text);
     void ledAmountGiven_textEdited(QString text);
     void on_cmbPaymentType_currentIndexChanged(int index);
+    void on_pbPayCash_clicked();
+    void on_pbPayCard_clicked();
+    void on_pbPayOther_clicked();
 };
 
 #endif

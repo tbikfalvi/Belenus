@@ -241,6 +241,16 @@ bool cDBDiscount::isProductExists( const unsigned int p_uiId ) throw( cSevExcept
         return false;
 }
 
+bool cDBDiscount::isCouponExists(const QString &p_qsName) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND name=\"%1\" AND discountId<>%2" ).arg(p_qsName).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
 void cDBDiscount::save() throw( cSevException )
 {
     cTracer obTrace( "cDBDiscount::save" );

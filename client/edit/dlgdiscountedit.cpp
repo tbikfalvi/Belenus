@@ -29,6 +29,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         rbCompany->setEnabled( false );
         rbPaymentMethod->setEnabled( false );
         rbProduct->setEnabled( false );
+        rbCoupon->setEnabled( false );
         cmbHCDList->setEnabled( false );
 
         if( m_poDiscount->regularCustomer() > 0 )
@@ -58,6 +59,10 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         else if( m_poDiscount->productId() > 0 )
         {
             rbProduct->setChecked( true );
+        }
+        else
+        {
+            rbCoupon->setChecked( true );
         }
         slotFillHCDComboList();
 
@@ -89,6 +94,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
             rbCompany->setEnabled( false );
             rbPaymentMethod->setEnabled( false );
             rbProduct->setEnabled( false );
+            rbCoupon->setEnabled( false );
             cmbHCDList->setEnabled( false );
             rbDiscountValue->setEnabled( false );
             rbDiscountPercent->setEnabled( false );
@@ -106,6 +112,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     connect( rbCompany, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbPaymentMethod, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbProduct, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( rbCoupon, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditDiscount", QPoint(517,269) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -216,6 +223,16 @@ void cDlgDiscountEdit::accept ()
                                        "Please modify the existing discount." ) );
         }
     }
+    else if( rbCoupon->isChecked() )
+    {
+        if( m_poDiscount->isCouponExists( ledName->text() ) )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Discount with the name defined already exists!\n"
+                                       "Please modify the existing discount." ) );
+        }
+    }
 
     if( (rbGuest->isChecked() ||
          rbCompany->isChecked() ||
@@ -315,12 +332,19 @@ void cDlgDiscountEdit::slotFillHCDComboList()
 {
     QSqlQuery *poQuery = NULL;
 
+    ledName->setEnabled( false );
     cmbHCDList->setEnabled( true );
     cmbHCDList->clear();
 
+    if( rbCoupon->isChecked() )
+    {
+        ledName->setEnabled( true );
+    }
+
     if( rbRegularCustomer->isChecked() ||
         rbEmployee->isChecked() ||
-        rbService->isChecked() )
+        rbService->isChecked() ||
+        rbCoupon->isChecked() )
     {
         if( rbRegularCustomer->isChecked() )
             ledName->setText( tr("Regular customer discount") );
@@ -384,6 +408,7 @@ void cDlgDiscountEdit::slotFillHCDComboList()
     if( rbRegularCustomer->isChecked() ||
         rbEmployee->isChecked() ||
         rbService->isChecked() ||
+        rbCoupon->isChecked() ||
         m_poDiscount->id() > 0 )
     {
         cmbHCDList->setEnabled( false );

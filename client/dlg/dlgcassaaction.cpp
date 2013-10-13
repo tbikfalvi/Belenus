@@ -10,6 +10,10 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     setWindowTitle( tr("Cassa action") );
     setWindowIcon( QIcon("./resources/40x40_cassa.png") );
 
+    pbPayCash->setIcon( QIcon("./resources/40x40_paywithcash.png") );
+    pbPayCard->setIcon( QIcon("./resources/40x40_paywithcard.png") );
+    pbPayOther->setIcon( QIcon("./resources/40x40_question.png") );
+
     pbComment->setIcon( QIcon("./resources/40x40_edit.png") );
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbShoppingCart->setIcon( QIcon("./resources/40x40_shoppingcart.png") );
@@ -51,17 +55,25 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
         ledAmountGiven->setEnabled( false );
     }
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentmethods WHERE active=1 AND archive<>\"DEL\"" ) );
+    cmbPaymentType->addItem( tr("<Not selected>"), -1 );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentmethods WHERE active=1 AND archive<>\"DEL\" AND paymentMethodId>2" ) );
     while( poQuery->next() )
     {
         cmbPaymentType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
 
+    cmbCoupon->addItem( tr("<Not selected>"), -1 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT discountId, name FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND active=1 AND archive<>\"DEL\" " ) );
+    while( poQuery->next() )
+    {
+        cmbCoupon->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+    }
+
     connect( ledAmountToPay, SIGNAL(textEdited(QString)), this, SLOT(ledAmountToPay_textEdited(QString)) );
     connect( ledAmountGiven, SIGNAL(textEdited(QString)), this, SLOT(ledAmountGiven_textEdited(QString)) );
 
-    m_nHeightSmall  = 217;
-    m_nHeightBig    = 337;
+    m_nHeightSmall  = 315;
+    m_nHeightBig    = 430;
 
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
@@ -70,6 +82,7 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     {
         ledAmountGiven->selectAll();
     }
+    on_pbPayCash_clicked();
 }
 
 cDlgCassaAction::~cDlgCassaAction()
@@ -78,24 +91,27 @@ cDlgCassaAction::~cDlgCassaAction()
 
 void cDlgCassaAction::setPayWithCash()
 {
-    cmbPaymentType->setCurrentIndex( 0 );
+    on_pbPayCash_clicked();
 }
 
 void cDlgCassaAction::setPayWithCreditcard()
 {
-    cmbPaymentType->setCurrentIndex( 1 );
+    on_pbPayCard_clicked();
 }
 
 void cDlgCassaAction::actionCassaInOut()
 {
     setPayWithCash();
+    pbPayCard->setEnabled( false );
+    pbPayOther->setEnabled( false );
     pbShoppingCart->setEnabled( false );
-    cmbPaymentType->setEnabled( false );
     lblMoneyToPay->setText( tr("Amount :") );
     pbOk->setText( tr("Ok") );
+    frmMoneyVoucher->setVisible( false );
+    frmCoupon->setVisible( false );
     frmPayment->setVisible( false );
-    m_nHeightSmall  = 165;
-    m_nHeightBig    = 285;
+    m_nHeightSmall  = 217;
+    m_nHeightBig    = 332;
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
 }
@@ -107,8 +123,8 @@ void cDlgCassaAction::actionPayment()
 
 QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart )
 {
-    if( cmbPaymentType->currentIndex() == 0 ) *p_nPayType = cDlgCassaAction::PAY_CASH;
-    else if( cmbPaymentType->currentIndex() == 1 ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
+    if( pbPayCash->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CASH;
+    else if( pbPayCard->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
     else *p_nPayType = cDlgCassaAction::PAY_OTHER;
 
     if( teComment->toPlainText().length() > 0 )
@@ -219,4 +235,75 @@ void cDlgCassaAction::on_pbShoppingCart_clicked()
 void cDlgCassaAction::on_cmbPaymentType_currentIndexChanged(int index)
 {
 
+}
+
+void cDlgCassaAction::on_pbPayCash_clicked()
+{
+    pbPayCash->setStyleSheet( "QPushButton {font: bold; color: blue;}" );
+    pbPayCard->setStyleSheet( "QPushButton {font: normal;}" );
+    pbPayOther->setStyleSheet( "QPushButton {font: normal;}" );
+
+    cmbPaymentType->setEnabled( false );
+
+    if( pbPayCash->isChecked() )
+    {
+        pbPayCard->setChecked( false );
+        pbPayOther->setChecked( false );
+    }
+    else
+    {
+        pbPayCash->setChecked( true );
+    }
+
+    ledAmountGiven->setFocus();
+    if( ledAmountGiven->isEnabled() )
+    {
+        ledAmountGiven->selectAll();
+    }
+}
+
+void cDlgCassaAction::on_pbPayCard_clicked()
+{
+    pbPayCash->setStyleSheet( "QPushButton {font: normal;}" );
+    pbPayCard->setStyleSheet( "QPushButton {font: bold; color: blue;}" );
+    pbPayOther->setStyleSheet( "QPushButton {font: normal;}" );
+
+    cmbPaymentType->setEnabled( false );
+
+    if( pbPayCard->isChecked() )
+    {
+        pbPayCash->setChecked( false );
+        pbPayOther->setChecked( false );
+    }
+    else
+    {
+        pbPayCard->setChecked( true );
+    }
+
+    ledAmountGiven->setFocus();
+    if( ledAmountGiven->isEnabled() )
+    {
+        ledAmountGiven->selectAll();
+    }
+}
+
+void cDlgCassaAction::on_pbPayOther_clicked()
+{
+    pbPayCash->setStyleSheet( "QPushButton {font: normal;}" );
+    pbPayCard->setStyleSheet( "QPushButton {font: normal;}" );
+    pbPayOther->setStyleSheet( "QPushButton {font: bold; color: blue;}" );
+
+    cmbPaymentType->setEnabled( true );
+
+    if( pbPayOther->isChecked() )
+    {
+        pbPayCash->setChecked( false );
+        pbPayCard->setChecked( false );
+    }
+    else
+    {
+        pbPayOther->setChecked( true );
+    }
+
+    cmbPaymentType->setFocus();
 }

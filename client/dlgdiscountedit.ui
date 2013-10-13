@@ -104,6 +104,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QRadioButton" name="rbCoupon">
+              <property name="text">
+               <string>Coupon</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>

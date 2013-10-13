@@ -579,43 +579,43 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
 
     if( m_bCtrlPressed )
     {
-        if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_Q )
+        if( p_poEvent->key() == Qt::Key_Q )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             close();
         }
-        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
+        else if( p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceStart_triggered();
         }
-        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
+        else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceClear_triggered();
         }
-        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
+        else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_PayCash_triggered();
         }
-        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
+        else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_ShoppingCart_triggered();
         }
-        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
+        else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceSkipStatus_triggered();
         }
-        else if( m_bCtrlPressed && p_poEvent->key() == Qt::Key_F12 )
+        else if( p_poEvent->key() == Qt::Key_F12 )
         {
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
@@ -1652,28 +1652,10 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
             obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
             if( obDlgPanelUse.exec() == QDialog::Accepted )
             {
-//                QMessageBox::information( this, "", obDlgPanelUse.panelUnitIds().join(" - ") );
                 mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSeconds() );
                 int nCount = obDBPatientCard.units()-obDlgPanelUse.panelUnitIds().count();
                 mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
             }
-/*
-            cDlgPatientCardUse  obDlgPatientCardUse( this, &obDBPatientCard, mdiPanels->activePanel()+1 );
-
-            if( obDlgPatientCardUse.exec() == QDialog::Accepted )
-            {
-                QTime           tLength;
-                int             inNewLength;
-                int             inUnits;
-                QString         qsLength;
-
-                obDlgPatientCardUse.getUseUnitsTime( &inUnits, &qsLength );
-
-                tLength  = QTime::fromString(qsLength,"mm:ss");
-                inNewLength = tLength.minute()*60 + tLength.second();
-                mdiPanels->setMainProcessTime( obDBPatientCard.id(), inUnits, inNewLength );
-            }
-*/
         }
         else
         {
