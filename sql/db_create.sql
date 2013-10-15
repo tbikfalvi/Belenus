@@ -1,6 +1,6 @@
 -- -----------------------------------------------------------------------------------
 --
--- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2012
+-- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 --
 -- -----------------------------------------------------------------------------------
 --

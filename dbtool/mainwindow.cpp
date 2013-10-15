@@ -854,7 +854,7 @@ void MainWindow::_exportToBelenusPatientCards()
 
             query = m_poDB->exec( qsSQLCommand );
         }
-
+/*
         qsSQLCommand = QString( "INSERT INTO `ledger` (`licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES ( " );
 
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
@@ -879,7 +879,7 @@ void MainWindow::_exportToBelenusPatientCards()
         _logAction( qsSQLCommand );
 
         query = m_poDB->exec( qsSQLCommand );
-
+*/
         m_dlgProgress->stepValue();
     }
 
