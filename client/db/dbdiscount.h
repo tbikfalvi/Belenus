@@ -57,6 +57,9 @@ public:
     QString         archive() const                                                     throw();
     void            setArchive( const QString &p_qsArchive )                            throw();
 
+    int             discountedValue( int p_inValue );
+    int             discount( int p_inValue );
+
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;

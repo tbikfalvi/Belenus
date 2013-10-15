@@ -207,11 +207,14 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
     obDlgCassaAction.actionCassaInOut();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
-        cDBCassa    obCassa;
-        QString     qsComment;
-        int         nTemp = 0;
-        bool        bShoppingCart = false;
-        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart ) );
+        cDBCassa        obCassa;
+        QString         qsComment;
+        int             nTemp = 0;
+        bool            bShoppingCart = false;
+        int             inVoucher = 0;
+        unsigned int    uiCouponId = 0;
+
+        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId ) );
 
         g_obCassa.cassaIncreaseMoney( cActionValue.currencyValue().toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );
@@ -238,11 +241,14 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
     obDlgCassaAction.actionCassaInOut();
     if( obDlgCassaAction.exec() == QDialog::Accepted )
     {
-        cDBCassa    obCassa;
-        QString     qsComment;
-        int         nTemp = 0;
-        bool        bShoppingCart = false;
-        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart ) );
+        cDBCassa        obCassa;
+        QString         qsComment;
+        int             nTemp = 0;
+        bool            bShoppingCart = false;
+        int             inVoucher = 0;
+        unsigned int    uiCouponId = 0;
+
+        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId ) );
 
         g_obCassa.cassaDecreaseMoney( cActionValue.currencyValue().toInt(), qsComment );
         obCassa.load( g_obCassa.cassaId() );

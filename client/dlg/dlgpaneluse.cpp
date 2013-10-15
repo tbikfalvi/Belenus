@@ -16,6 +16,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
     horizontalLayout->setSpacing( 0 );
     horizontalLayout->setMargin( 1 );
+    setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
     pbUseUnitType = new QPushButton( this );
     pbUseUnitType->setObjectName( QString::fromUtf8( "pbUseUnitType" ) );
@@ -90,6 +91,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
 void cPanelPCUnitUse::slotButtonClicked()
 {
     cmbUseUnitCount->setEnabled( pbUseUnitType->isChecked() );
+    cmbUseUnitCount->setFocus();
     emit signalButtonClicked();
 }
 //----------------------------------------------------------------------------------------------
@@ -122,6 +124,11 @@ QStringList cPanelPCUnitUse::usedUnitIds()
     }
 
     return qslUnitIds;
+}
+//----------------------------------------------------------------------------------------------
+void cPanelPCUnitUse::setFocus()
+{
+    pbUseUnitType->setFocus();
 }
 //==============================================================================================
 //
@@ -186,11 +193,16 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
             connect( pPanelUseFrame, SIGNAL(signalComboIndexChanged()), this, SLOT(slotPatientCardUseUpdated()) );
             qvPanelUseUnits.append( pPanelUseFrame );
         }
+        if( qvPanelUseUnits.count() > 0 )
+            qvPanelUseUnits.at(0)->setFocus();
     }
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
+
+    setMinimumHeight( 255 + (qvPanelUseUnits.count()-1)*40 );
+    setMaximumHeight( 255 + (qvPanelUseUnits.count()-1)*40 );
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)

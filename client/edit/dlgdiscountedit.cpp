@@ -69,7 +69,7 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
         if( m_poDiscount->discountValue() > 0 )
         {
             rbDiscountValue->setChecked(true);
-            ledDiscount->setText( QString::number(m_poDiscount->discountValue()) );
+            ledDiscount->setText( QString::number(m_poDiscount->discountValue()/100) );
         }
         else
         {
@@ -301,7 +301,7 @@ void cDlgDiscountEdit::accept ()
             }
             if( rbDiscountValue->isChecked() )
             {
-                m_poDiscount->setDiscountValue( ledDiscount->text().toInt() );
+                m_poDiscount->setDiscountValue( ledDiscount->text().toInt()*100 );
                 m_poDiscount->setDiscountPercent( 0 );
             }
             else

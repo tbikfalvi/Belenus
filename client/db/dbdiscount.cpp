@@ -470,3 +470,26 @@ void cDBDiscount::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
+int cDBDiscount::discountedValue( int p_inValue )
+{
+    int nRet = p_inValue;
+
+    if( m_inDiscountValue > 0 )
+    {
+        nRet -= m_inDiscountValue;
+    }
+    else
+    {
+        nRet -= (p_inValue / 100 * m_inDiscountPercent);
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "Value [" << p_inValue << "] discount [" << p_inValue-nRet  << "] discounted[" << nRet << "]" << EOM;
+
+    return nRet;
+}
+
+int cDBDiscount::discount(int p_inValue)
+{
+    return p_inValue - discountedValue( p_inValue );
+}
+

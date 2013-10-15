@@ -28,6 +28,7 @@
 #include "db/dbledger.h"
 #include "db/dbshoppingcart.h"
 #include "db/dbpatientcardunits.h"
+#include "db/dbdiscount.h"
 
 //====================================================================================
 
@@ -984,9 +985,11 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
 //====================================================================================
 void cWndMain::on_action_Preferences_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_Preferences_triggered" );
+    m_dlgProgress->showProgress();
 
     cDlgPreferences  obDlgPrefs( this );
+
+    m_dlgProgress->hideProgress();
 
     if( obDlgPrefs.exec() == QDialog::Accepted )
     {
@@ -1017,9 +1020,11 @@ void cWndMain::on_action_Preferences_triggered()
 //====================================================================================
 void cWndMain::on_action_Users_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_Users_triggered" );
+    m_dlgProgress->showProgress();
 
     cDlgUsers  obDlgUsers( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgUsers.exec();
 
@@ -1069,62 +1074,38 @@ void cWndMain::on_action_LogOut_triggered()
 //====================================================================================
 void cWndMain::on_action_Paneltypes_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_Paneltypes_triggered" );
+    m_dlgProgress->showProgress();
 
     cDlgPanelTypes  obDlgPanelTypes( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgPanelTypes.exec();
 }
 //====================================================================================
-void cWndMain::on_action_Patientorigin_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_Patientorigin_triggered" );
-
-    cDlgPatientOrigin  obDlgPatientOrigin( this );
-
-    obDlgPatientOrigin.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_ReasonToVisit_triggered()
-{
-    cTracer obTrace( "cWndMain::on_action_ReasonToVisit_triggered" );
-
-    cDlgReasonToVisit  obDlgReasonToVisit( this );
-
-    obDlgReasonToVisit.exec();
-}
-//====================================================================================
-void cWndMain::on_action_Patients_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_Patiens_triggered" );
-
-    cDlgPatient  obDlgPatient( this );
-
-    obDlgPatient.exec();
-*/
-}
-//====================================================================================
 void cWndMain::on_action_Guests_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_Guests_triggered" );
+    m_dlgProgress->showProgress();
 
     cDlgGuest  obDlgGuest( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgGuest.exec();
 }
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_PatienNew_triggered" );
+    m_dlgProgress->showProgress();
 
     cDBGuest *poGuest = new cDBGuest;
     poGuest->createNew();
 
     cDlgGuestEdit  obDlgEdit( this, poGuest );
     obDlgEdit.setWindowTitle( tr( "New Patient" ) );
+
+    m_dlgProgress->hideProgress();
+
     obDlgEdit.exec();
 
     if( poGuest->id() > 0 )
@@ -1170,9 +1151,11 @@ void cWndMain::on_action_DeviceReset_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientSelect_triggered()
 {
-    cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
+    m_dlgProgress->showProgress();
 
     cDlgPatientSelect  obDlgPatientSelect( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgPatientSelect.exec();
     updateTitle();
@@ -1183,14 +1166,20 @@ void cWndMain::on_action_PatientEmpty_triggered()
     cTracer obTrace( "cWndMain::on_action_PatientEmpty_triggered" );
 
     g_obGuest.createNew();
+
     updateTitle();
 }
 //====================================================================================
 void cWndMain::on_action_PanelStatuses_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPanelStatuses   obDlgPanelStatuses( this );
 
+    m_dlgProgress->hideProgress();
+
     obDlgPanelStatuses.exec();
+
     if( obDlgPanelStatuses.isStatusChanged() )
     {
         QMessageBox::information( this, tr( "Information" ),
@@ -1265,38 +1254,58 @@ void cWndMain::on_action_UseByTime_triggered()
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCard obDlgPatientCard( this );
 
     connect( &obDlgPatientCard, SIGNAL(signalReplacePatientCard(QString)), this, SLOT(slotReplacePatientCard(QString)) );
     connect( &obDlgPatientCard, SIGNAL(signalAssignPartnerCard(QString)), this, SLOT(slotAssignPartnerCard(QString)) );
+
+    m_dlgProgress->hideProgress();
 
     obDlgPatientCard.exec();
 }
 //====================================================================================
 void cWndMain::on_action_CardTypes_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCardType obDlgPatientCardType( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgPatientCardType.exec();
 }
 //====================================================================================
 void cWndMain::on_action_ProductTypes_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgProductType obDlgProductType( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgProductType.exec();
 }
 //====================================================================================
 void cWndMain::on_action_ProductActionType_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgProductActionType obDlgProductActionType( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgProductActionType.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Products_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgProduct obDlgProduct( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgProduct.exec();
 }
@@ -1308,9 +1317,13 @@ void cWndMain::on_action_SellProduct_triggered()
 //====================================================================================
 void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
 {
+    m_dlgProgress->showProgress();
+
     cDlgProductSell obDlgProductSell( this, p_qsBarcode );
 
     connect( &obDlgProductSell, SIGNAL(signalPaymentProcessed(cDBShoppingCart)), this, SLOT(processProductSellPayment(cDBShoppingCart)) );
+
+    m_dlgProgress->hideProgress();
 
     obDlgProductSell.exec();
 }
@@ -1322,12 +1335,17 @@ void cWndMain::on_action_ShoppingCart_triggered()
 //====================================================================================
 void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
 {
+    m_dlgProgress->showProgress();
+
     cDlgShoppingCart    obDlgShoppingCart( this );
 
     connect( &obDlgShoppingCart, SIGNAL(signalPaymentProcessed(unsigned int,unsigned int,int)), this, SLOT(processDeviceUsePayment(unsigned int,unsigned int,int)) );
 
     if( p_uiPanelId > 0 )
         obDlgShoppingCart.setPanelFilter( p_uiPanelId );
+
+    m_dlgProgress->hideProgress();
+
     obDlgShoppingCart.exec();
 }
 //====================================================================================
@@ -1338,30 +1356,44 @@ void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
 //====================================================================================
 void cWndMain::on_action_CassaActionStorno_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgStorno  obDlgStorno( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgStorno.exec();
 }
 //====================================================================================
 void cWndMain::on_action_PCSaveToDatabase_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCardAdd  obDlgPatientCardAdd( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgPatientCardAdd.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Cassa_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgCassaEdit   obDlgCassaEdit( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgCassaEdit.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
 {
-    setCursor( Qt::WaitCursor);
+    m_dlgProgress->showProgress();
+
     cDlgRepLedgerMain  obDlgLedgerMain( this );
-    setCursor( Qt::ArrowCursor);
+
+    m_dlgProgress->hideProgress();
 
     obDlgLedgerMain.exec();
 }
@@ -1752,14 +1784,23 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgGuestEdit  obDlgEdit( this, &g_obGuest );
     obDlgEdit.setWindowTitle( g_obGuest.name() );
+
+    m_dlgProgress->hideProgress();
+
     obDlgEdit.exec();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanelId() );
+
+    m_dlgProgress->hideProgress();
 
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
@@ -1810,15 +1851,25 @@ void cWndMain::on_action_PayCash_triggered()
 
     obDlgCassaAction.setPayWithCash();
 
-    int     inCassaAction   = obDlgCassaAction.exec();
-    int     inPayType       = 0;
-    QString qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
-    bool    bShoppingCart   = false;
+    int             inCassaAction   = obDlgCassaAction.exec();
+    int             inPayType       = 0;
+    QString         qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
+    bool            bShoppingCart   = false;
+    int             inVoucher = 0;
+    unsigned int    uiCouponId = 0;
+    cDBDiscount     obDBDiscount;
 
-    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
+        if( uiCouponId > 0 )
+        {
+            obDBDiscount.load( uiCouponId );
+
+            obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+        }
+        obDBShoppingCart.setVoucher( inVoucher );
         unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
         processDeviceUsePayment( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
     }
@@ -1844,92 +1895,37 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
 
     obDlgCassaAction.setPayWithCash();
 
-    int     inCassaAction   = obDlgCassaAction.exec();
-    int     inPayType = 0;
-    QString qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
-    bool    bShoppingCart = false;
+    int             inCassaAction   = obDlgCassaAction.exec();
+    int             inPayType = 0;
+    QString         qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
+    bool            bShoppingCart = false;
+    int             inVoucher = 0;
+    unsigned int    uiCouponId = 0;
+    cDBDiscount     obDBDiscount;
 
-    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
+        if( uiCouponId > 0 )
+        {
+            obDBDiscount.load( uiCouponId );
+
+            obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+        }
+        obDBShoppingCart.setVoucher( inVoucher );
         g_obCassa.cassaProcessProductSell( p_obDBShoppingCart, qsComment, inPayType );
     }
-}
-//====================================================================================
-void cWndMain::on_action_IllnessGroup_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_IllnessGroup_triggered" );
-
-    cDlgIllnessGroup  obDlgIllnessGroup( this );
-
-    obDlgIllnessGroup.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_Company_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_Company_triggered" );
-
-    cDlgCompany  obDlgCompany( this );
-
-    obDlgCompany.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_Doctor_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_Doctor_triggered" );
-
-    cDlgDoctor  obDlgDoctor( this );
-
-    obDlgDoctor.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_HealthInsurance_triggered()
-{
-/*
-    cTracer obTrace( "cWndMain::on_action_HealthInsurance_triggered" );
-
-    cDlgHealthInsurance  obDlgHealthInsurance( this );
-
-    obDlgHealthInsurance.exec();
-*/
-}
-//====================================================================================
-void cWndMain::on_action_RegionZipCity_triggered()
-{
-    m_dlgProgress->showProgress();
-
-    cDlgZipRegionCity   obDlgZipRegionCity( this );
-
-    m_dlgProgress->hideProgress();
-
-    obDlgZipRegionCity.exec();
-}
-//====================================================================================
-void cWndMain::on_action_ReportPatients_triggered()
-//====================================================================================
-{
-/*
-    setCursor( Qt::WaitCursor);
-    cDlgReportPatients  obDlgReportPatients( this );
-    setCursor( Qt::ArrowCursor);
-
-    obDlgReportPatients.exec();
-*/
 }
 //====================================================================================
 void cWndMain::on_action_CassaHistory_triggered()
 //====================================================================================
 {
-    setCursor( Qt::WaitCursor);
+    m_dlgProgress->showProgress();
+
     cDlgReportCassaList  obDlgReportCassaList( this );
-    setCursor( Qt::ArrowCursor);
+
+    m_dlgProgress->hideProgress();
 
     obDlgReportCassaList.exec();
 }
@@ -1937,9 +1933,11 @@ void cWndMain::on_action_CassaHistory_triggered()
 void cWndMain::on_action_ReportPatientcardUses_triggered()
 //====================================================================================
 {
-    setCursor( Qt::WaitCursor);
+    m_dlgProgress->showProgress();
+
     cDlgReportCardUses  obDlgReportCardUses( this );
-    setCursor( Qt::ArrowCursor);
+
+    m_dlgProgress->hideProgress();
 
     obDlgReportCardUses.exec();
 }
@@ -1955,9 +1953,11 @@ void cWndMain::on_action_EditLicenceInformation_triggered()
 void cWndMain::on_action_ReportPatientcards_triggered()
 //====================================================================================
 {
-    setCursor( Qt::WaitCursor);
+    m_dlgProgress->showProgress();
+
     cDlgReportPatientCard  obDlgReportPatientCard( this );
-    setCursor( Qt::ArrowCursor);
+
+    m_dlgProgress->hideProgress();
 
     obDlgReportPatientCard.exec();
 }
@@ -1965,9 +1965,11 @@ void cWndMain::on_action_ReportPatientcards_triggered()
 void cWndMain::on_action_Discounts_triggered()
 //====================================================================================
 {
-    setCursor( Qt::WaitCursor);
+    m_dlgProgress->showProgress();
+
     cDlgDiscount  obDlgDiscount( this );
-    setCursor( Qt::ArrowCursor);
+
+    m_dlgProgress->hideProgress();
 
     obDlgDiscount.exec();
 }
@@ -1975,55 +1977,13 @@ void cWndMain::on_action_Discounts_triggered()
 void cWndMain::on_action_PatientcardsObsolete_triggered()
 //====================================================================================
 {
-    setCursor( Qt::WaitCursor);
+    m_dlgProgress->showProgress();
+
     cDlgReportPatientCardObs  obDlgReportPatientCardObs( this );
-    setCursor( Qt::ArrowCursor);
+
+    m_dlgProgress->hideProgress();
 
     obDlgReportPatientCardObs.exec();
-}
-//====================================================================================
-void cWndMain::on_action_SynchronizeDatabase_triggered()
-//====================================================================================
-{
-/*
-    if( g_obDBMirror.isAvailable() )
-    {
-        cDlgSynchronization obDlgSynchronization( this );
-
-        obDlgSynchronization.exec();
-    }
-    else
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("Connection to Belenus server is not available."));
-    }
-*/
-}
-//====================================================================================
-void cWndMain::on_action_AcquireGlobalData_triggered()
-//====================================================================================
-{
-/*
-    if( g_obDBMirror.isAvailable() )
-    {
-        g_obDBMirror.requestGlobalDataTimestamp();
-        m_bGlobalDataRequested = true;
-
-        cDlgDBGlobals   obDlgDBGlobals( this );
-
-        obDlgDBGlobals.exec();
-    }
-    else
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("Connection to Belenus server is not available."));
-    }
-*/
-}
-//====================================================================================
-void cWndMain::on_action_EstablishConnection_triggered()
-//====================================================================================
-{
 }
 //====================================================================================
 void cWndMain::on_action_EmptyDemoDB_triggered()
@@ -2083,6 +2043,8 @@ void cWndMain::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInf
 //====================================================================================
 void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 {
+    m_dlgProgress->showProgress();
+
     cDBPatientCard  obDBPatientCardOld;
 
     obDBPatientCardOld.load( p_qsBarcode );
@@ -2093,6 +2055,9 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
+
+    m_dlgProgress->hideProgress();
+
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
         cDBPatientCard  obDBPatientCardNew;
@@ -2168,15 +2133,25 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 
             obDlgCassaAction.setPayWithCash();
 
-            int     inCassaAction   = obDlgCassaAction.exec();
-            int     inPayType       = 0;
-            QString qsComment       = tr("Replace patientcard [%1]->[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
-            bool    bShoppingCart   = false;
+            int             inCassaAction   = obDlgCassaAction.exec();
+            int             inPayType       = 0;
+            QString         qsComment       = tr("Replace patientcard [%1]->[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
+            bool            bShoppingCart   = false;
+            int             inVoucher = 0;
+            unsigned int    uiCouponId = 0;
+            cDBDiscount     obDBDiscount;
 
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
+                if( uiCouponId > 0 )
+                {
+                    obDBDiscount.load( uiCouponId );
+
+                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+                }
+                obDBShoppingCart.setVoucher( inVoucher );
                 g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
             }
             else if( inCassaAction != QDialog::Accepted )
@@ -2212,6 +2187,8 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 //====================================================================================
 void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 {
+    m_dlgProgress->showProgress();
+
     cDBPatientCard  obDBPatientCardOld;
 
     obDBPatientCardOld.load( p_qsBarcode );
@@ -2222,6 +2199,9 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
     obDlgInputStart.m_bCard = true;
     obDlgInputStart.init();
+
+    m_dlgProgress->hideProgress();
+
     if( obDlgInputStart.exec() == QDialog::Accepted )
     {
         cDBPatientCard  obDBPatientCardNew;
@@ -2297,15 +2277,25 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
             obDlgCassaAction.setPayWithCash();
 
-            int     inCassaAction   = obDlgCassaAction.exec();
-            int     inPayType       = 0;
-            QString qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
-            bool    bShoppingCart   = false;
+            int             inCassaAction   = obDlgCassaAction.exec();
+            int             inPayType       = 0;
+            QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
+            bool            bShoppingCart   = false;
+            int             inVoucher = 0;
+            unsigned int    uiCouponId = 0;
+            cDBDiscount     obDBDiscount;
 
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
+                if( uiCouponId > 0 )
+                {
+                    obDBDiscount.load( uiCouponId );
+
+                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+                }
+                obDBShoppingCart.setVoucher( inVoucher );
                 g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
             }
             else if( inCassaAction != QDialog::Accepted )
@@ -2321,7 +2311,11 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
 void cWndMain::on_action_PaymentMethods_triggered()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPaymentMethod   obDlgPaymentMethod( this );
+
+    m_dlgProgress->hideProgress();
 
     obDlgPaymentMethod.exec();
 }

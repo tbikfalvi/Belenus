@@ -111,7 +111,7 @@ void cDBPanelStatusSettings::init( const QSqlRecord &p_obRecord ) throw()
 
 void cDBPanelStatusSettings::load( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelStatusSettings::load", QString( "id: %1" ).arg( p_uiId ) );
+//    cTracer obTrace( "cDBPanelStatusSettings::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatusSettings WHERE panelStatusSettingId = %1" ).arg( p_uiId ) );
 
@@ -124,7 +124,7 @@ void cDBPanelStatusSettings::load( const unsigned int p_uiId ) throw( cSevExcept
 
 void cDBPanelStatusSettings::loadStatus( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBPanelStatusSettings::load", QString( "id: %1" ).arg( p_uiId ) );
+//    cTracer obTrace( "cDBPanelStatusSettings::load", QString( "id: %1" ).arg( p_uiId ) );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatusSettings WHERE panelStatusId = %1" ).arg( p_uiId ) );
 

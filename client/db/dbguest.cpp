@@ -178,8 +178,10 @@ int cDBGuest::getDiscountedPrice( const int p_inPriceTotal ) throw( cSevExceptio
         qsCondition += QString( "service>0 OR " );
     if( m_bCompany && m_uiCompanyId )
         qsCondition += QString( "companyId=%1 OR " ).arg(m_uiCompanyId);
-
-    qsCondition += QString( "patientId=%1" ).arg(m_uiId);
+    if( m_uiId>0 )
+        qsCondition += QString( "patientId=%1" ).arg(m_uiId);
+    else
+        qsCondition += QString( "patientId>0" );
 
     qsQuery = QString( "SELECT * FROM discounts WHERE (%1) AND active=1" ).arg(qsCondition);
     poQuery = g_poDB->executeQTQuery( qsQuery );

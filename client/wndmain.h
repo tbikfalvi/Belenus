@@ -90,9 +90,9 @@ private slots:
     void on_action_Hardwaretest_triggered();
     void on_action_LogOut_triggered();
     void on_action_Paneltypes_triggered();
-    void on_action_Patientorigin_triggered();
-    void on_action_ReasonToVisit_triggered();
-    void on_action_Patients_triggered();
+    void on_action_Patientorigin_triggered()        {}
+    void on_action_ReasonToVisit_triggered()        {}
+    void on_action_Patients_triggered()             {}
     void on_action_PatientNew_triggered();
     void on_action_DeviceClear_triggered();
     void on_action_DeviceStart_triggered();
@@ -115,21 +115,21 @@ private slots:
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
     void on_action_PayCash_triggered();
-    void on_action_IllnessGroup_triggered();
-    void on_action_Company_triggered();
-    void on_action_Doctor_triggered();
-    void on_action_HealthInsurance_triggered();
-    void on_action_RegionZipCity_triggered();
-    void on_action_ReportPatients_triggered();
+    void on_action_IllnessGroup_triggered()             {}
+    void on_action_Company_triggered()                  {}
+    void on_action_Doctor_triggered()                   {}
+    void on_action_HealthInsurance_triggered()          {}
+    void on_action_RegionZipCity_triggered()            {}
+    void on_action_ReportPatients_triggered()           {}
     void on_action_CassaHistory_triggered();
     void on_action_ReportPatientcardUses_triggered();
     void on_action_EditLicenceInformation_triggered();
     void on_action_ReportPatientcards_triggered();
     void on_action_Discounts_triggered();
     void on_action_PatientcardsObsolete_triggered();
-    void on_action_SynchronizeDatabase_triggered();
-    void on_action_AcquireGlobalData_triggered();
-    void on_action_EstablishConnection_triggered();
+    void on_action_SynchronizeDatabase_triggered()      {}
+    void on_action_AcquireGlobalData_triggered()        {}
+    void on_action_EstablishConnection_triggered()      {}
     void on_action_EmptyDemoDB_triggered();
     void on_action_PaymentMethods_triggered();
     void on_action_TestDlgStarted();

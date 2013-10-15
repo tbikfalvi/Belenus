@@ -26,11 +26,9 @@ public:
     void setPayWithCreditcard();
     void actionCassaInOut();
     void actionPayment();
-    QString cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart );
+    QString cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart, int *p_nVoucher, unsigned int *p_uiCouponId );
 
 private:
-    QString convertCurrency(const QString &text) const;
-
     cDBShoppingCart     *m_poShoppingCart;
     int                  m_nHeightSmall;
     int                  m_nHeightBig;
@@ -48,6 +46,8 @@ private slots:
     void on_pbPayCash_clicked();
     void on_pbPayCard_clicked();
     void on_pbPayOther_clicked();
+    void on_ledVoucherGiven_textChanged(const QString &arg1);
+    void on_cmbCoupon_currentIndexChanged(int index);
 };
 
 #endif

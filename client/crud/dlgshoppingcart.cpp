@@ -11,6 +11,7 @@
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
 #include "../db/dbpatientcardunits.h"
+#include "../db/dbdiscount.h"
 
 cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -322,9 +323,12 @@ void cDlgShoppingCart::on_pbPayment_clicked()
             {
                 obDBShoppingCart.load( tbvCrud->selectionModel()->selectedRows().at(i).data().toUInt() );
 
-                int     inPayType = 0;
-                QString qsComment = "";
-                bool    bShoppingCart = false;
+                int             inPayType = 0;
+                QString         qsComment = "";
+                bool            bShoppingCart = false;
+                int             inVoucher = 0;
+                unsigned int    uiCouponId = 0;
+                cDBDiscount     obDBDiscount;
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&
@@ -340,7 +344,15 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                     qsComment = tr("Selling product: %1").arg(obDBShoppingCart.itemName());
                 }
 
-                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart );
+                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+
+                if( uiCouponId > 0 )
+                {
+                    obDBDiscount.load( uiCouponId );
+
+                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+                }
+                obDBShoppingCart.setVoucher( inVoucher );
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&

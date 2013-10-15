@@ -651,6 +651,7 @@ CREATE TABLE `shoppingCartItems` (
   `comment`                 text                    DEFAULT NULL,
   `itemCount`               int(11)                 NOT NULL,
   `itemNetPrice`            decimal(10,0)           NOT NULL,
+  `voucher`                 decimal(10,0)           NOT NULL,
   `itemVAT`                 int(11)                 NOT NULL,
   `discountValue`           decimal(10,0)           NOT NULL,
   `itemSumPrice`            decimal(10,0)           NOT NULL,

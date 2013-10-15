@@ -24,6 +24,7 @@ public:
     QSpacerItem     *horizontalSpacer3;
     cPanelPCUnitUse( QWidget *p_poParent = 0, QStringList *p_qslParameters = NULL );
 
+    void             setFocus();
     int              lengthSeconds();
     QStringList      usedUnitIds();
 

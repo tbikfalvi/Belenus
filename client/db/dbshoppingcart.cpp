@@ -37,6 +37,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
                             const QString p_qsComment,
                             const int p_nItemCount,
                             const int p_nItemNetPrice,
+                            const int p_nVoucher,
                             const int p_nItemVAT,
                             const int p_nItemDiscount,
                             const int p_nItemSumPrice,
@@ -55,6 +56,7 @@ void cDBShoppingCart::init( const unsigned int p_uiId,
     m_qsComment             = p_qsComment;
     m_nItemCount            = p_nItemCount;
     m_nItemNetPrice         = p_nItemNetPrice;
+    m_nVoucher              = p_nVoucher;
     m_nItemVAT              = p_nItemVAT;
     m_nItemDiscount         = p_nItemDiscount;
     m_nItemSumPrice         = p_nItemSumPrice;
@@ -76,6 +78,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inItemCountIdx          = p_obRecord.indexOf( "itemCount" );
     int inItemNetPriceIdx       = p_obRecord.indexOf( "itemNetPrice" );
+    int inVoucherIdx            = p_obRecord.indexOf( "voucher" );
     int inItemVATIdx            = p_obRecord.indexOf( "itemVAT" );
     int inItemDiscountIdx       = p_obRecord.indexOf( "discountValue" );
     int inItemSumPriceIdx       = p_obRecord.indexOf( "itemSumPrice" );
@@ -94,6 +97,7 @@ void cDBShoppingCart::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inItemCountIdx ).toInt(),
           p_obRecord.value( inItemNetPriceIdx ).toInt(),
+          p_obRecord.value( inVoucherIdx ).toInt(),
           p_obRecord.value( inItemVATIdx ).toInt(),
           p_obRecord.value( inItemDiscountIdx ).toInt(),
           p_obRecord.value( inItemSumPriceIdx ).toInt(),
@@ -145,6 +149,7 @@ void cDBShoppingCart::save() throw( cSevException )
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "itemCount = \"%1\", " ).arg( m_nItemCount );
     qsQuery += QString( "itemNetPrice = \"%1\", " ).arg( m_nItemNetPrice );
+    qsQuery += QString( "voucher = \"%1\", " ).arg( m_nVoucher );
     qsQuery += QString( "itemVAT = \"%1\", " ).arg( m_nItemVAT );
     qsQuery += QString( "discountValue = \"%1\", " ).arg( m_nItemDiscount );
     qsQuery += QString( "itemSumPrice = \"%1\", " ).arg( m_nItemSumPrice );
@@ -307,6 +312,16 @@ int cDBShoppingCart::itemNetPrice() const throw()
 void cDBShoppingCart::setItemNetPrice( const int p_nItemNetPrice ) throw()
 {
     m_nItemNetPrice = p_nItemNetPrice;
+}
+
+int cDBShoppingCart::voucher() const throw()
+{
+    return m_nVoucher;
+}
+
+void cDBShoppingCart::setVoucher( const int p_nVoucher ) throw()
+{
+    m_nVoucher = p_nVoucher;
 }
 
 int cDBShoppingCart::itemVAT() const throw()
