@@ -12,5 +12,6 @@
         <file>imgButton/connectdb.png</file>
         <file>imgButton/checkdb.png</file>
         <file>imgButton/ok.png</file>
+        <file>imgButton/fail.png</file>
     </qresource>
 </RCC>

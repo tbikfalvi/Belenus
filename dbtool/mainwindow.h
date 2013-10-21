@@ -11,6 +11,11 @@
 
 #include "dlgprogress.h"
 
+extern QTranslator  *poTransTool;
+extern QTranslator  *poTransQT;
+extern QApplication *apMainApp;
+extern QString       g_qsCurrentPath;
+
 //====================================================================================
 // BERLETTIPUS structure
 //====================================================================================
@@ -104,10 +109,20 @@ typedef struct _typ_user
 } typ_user;
 //====================================================================================
 
-namespace Ui {
-    class MainWindow;
-}
+const int   CONST_PAGE_START        = 0;
+const int   CONST_PAGE_VERIFICATION = 1;
+const int   CONST_PAGE_IMPORT       = 2;
+const int   CONST_PAGE_PREPROC_PCT  = 3;
+const int   CONST_PAGE_PREPROC_PC   = 4;
+const int   CONST_PAGE_EXPORT       = 5;
 
+//====================================================================================
+
+namespace Ui { class MainWindow; }
+
+//====================================================================================
+//
+//====================================================================================
 class DBTool
 {
 public:
@@ -130,63 +145,69 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
-    void                        _loadPatientCardTypes();
-    void                        _loadPatientCards();
-    void                        _loadProductTypes();
-    void                        _loadProducts();
-    void                        _loadProductAssign();
-    void                        _loadUsers();
-    void                        _EnCode( char *str, int size );
-    void                        _DeCode( char *str, int size );
-    void                        _loadPatientCardTypeImport();
-    int                         _getPatientCardTypeId();
-    int                         _getTimeLeft(int p_nBerletTipus, int p_nEgyseg );
-    void                        _exportToBelenusPatientCardTypes();
-    void                        _exportToBelenusPatientCards();
-    void                        _exportToBelenusProductTypes();
-    void                        _exportToBelenusProducts();
-    void                        _exportToBelenusUsers();
+    void                            _initializePage();
+    bool                            _isSystemVerificationOk();
 
-    int                         _getPatientCardTypeNewId( int p_nID );
-    int                         _getPatientCardTypePrice( int p_nID );
-    int                         _getProductTypeNewId( int p_nID );
-    int                         _getProductNewId( int p_nID );
+    void                            _loadPatientCardTypes();
+    void                            _loadPatientCards();
+    void                            _loadProductTypes();
+    void                            _loadProducts();
+    void                            _loadProductAssign();
+    void                            _loadUsers();
+    void                            _EnCode( char *str, int size );
+    void                            _DeCode( char *str, int size );
+    void                            _loadPatientCardTypeImport();
+    int                             _getPatientCardTypeId();
+    int                             _getTimeLeft(int p_nBerletTipus, int p_nEgyseg );
+    void                            _exportToBelenusPatientCardTypes();
+    void                            _exportToBelenusPatientCards();
+    void                            _exportToBelenusProductTypes();
+    void                            _exportToBelenusProducts();
+    void                            _exportToBelenusUsers();
 
-    void                        _logAction( QString p_qsLogMessage );
+    int                             _getPatientCardTypeNewId( int p_nID );
+    int                             _getPatientCardTypePrice( int p_nID );
+    int                             _getProductTypeNewId( int p_nID );
+    int                             _getProductNewId( int p_nID );
 
-    Ui::MainWindow              *ui;
+    void                            _logAction( QString p_qsLogMessage );
 
-    QDir                         m_qdExpCurrentDir;
-    int                          m_nProgramType;
+    Ui::MainWindow                  *ui;
 
-    int                          m_nCountItems;
+    QDir                             m_qdExpCurrentDir;
+    int                              m_nProgramType;
 
-    QVector<typ_berlet>          m_qvPatientCards;
-    QVector<typ_berlettipus>     m_qvPatientCardTypes;
-    QVector<typ_termektipus>     m_qvProductTypes;
-    QVector<typ_termek>          m_qvProducts;
-    QVector<typ_termektipusassign>  m_qvProductAssigns;
-    QVector<typ_user>            m_qvUsers;
+    int                              m_nCountItems;
 
-    QString                      m_qsPCFileName;
-    QString                      m_qsPCTFileName;
-    QString                      m_qsPTFileName;
-    QString                      m_qsPFileName;
-    QString                      m_qsPAFileName;
-    QString                      m_qsUFileName;
+    int                              m_nCurrentPage;
 
-    char                         m_strPatiencardTypeVersion[10];
-    int                          m_nLicenceId;
+    QString                          m_qsLanguage;
 
-    QSqlDatabase                *m_poDB;
-    cDlgProgress                *m_dlgProgress;
+    QVector<typ_berlet>              m_qvPatientCards;
+    QVector<typ_berlettipus>         m_qvPatientCardTypes;
+    QVector<typ_termektipus>         m_qvProductTypes;
+    QVector<typ_termek>              m_qvProducts;
+    QVector<typ_termektipusassign>   m_qvProductAssigns;
+    QVector<typ_user>                m_qvUsers;
 
-    QString                      m_qsLogFileName;
+    QString                          m_qsPCFileName;
+    QString                          m_qsPCTFileName;
+    QString                          m_qsPTFileName;
+    QString                          m_qsPFileName;
+    QString                          m_qsPAFileName;
+    QString                          m_qsUFileName;
+
+    char                             m_strPatiencardTypeVersion[10];
+    int                              m_nLicenceId;
+
+    QSqlDatabase                    *m_poDB;
+    cDlgProgress                    *m_dlgProgress;
+
+    QString                          m_qsLogFileName;
 
 private slots:
     void on_pbExportProcess_clicked();
     void on_pbPExportConnect_clicked();
-    void slotProgramSelected();
 //    void on_pbExportPCTDat_clicked();
 //    void on_pbImportPCTText_clicked();
 //    void on_pbSelectImportFile_clicked();
@@ -194,6 +215,13 @@ private slots:
     void on_pbExpSelectDir_clicked();
 //    void on_rbProgramSensolite_clicked();
     void on_rbProgramKiwiSun_clicked();
+    void on_pbNext_clicked();
+    void on_pbPrev_clicked();
+    void on_pbCancel_clicked();
+    void on_pbStartExit_clicked();
+    void on_cmbLanguage_currentIndexChanged(int index);
+    void on_pbLogin_clicked();
+    void on_pbCheckSVDatFiles_clicked();
 };
 
 #endif // MAINWINDOW_H

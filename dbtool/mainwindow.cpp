@@ -8,6 +8,7 @@
 #include <QtSql/QSqlQuery>
 #include <QCryptographicHash>
 #include <QDate>
+#include <QTranslator>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -16,45 +17,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
 
-    m_qdExpCurrentDir   = QDir::currentPath();
+    m_nCurrentPage      = CONST_PAGE_START;
+    m_qdExpCurrentDir   = "C:/Program Files/Solarium/";
     m_nProgramType      = DBTool::KiwiSun;
+    m_poDB              = NULL;
+    m_qsLogFileName     = "";
+    m_dlgProgress       = new cDlgProgress( this );
+    m_qsLanguage        = "hu";
 
-    ui->rbProgramKiwiSun->setChecked( true );
     ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
+    ui->pageController->setCurrentIndex( m_nCurrentPage );
 
-    connect( ui->rbProgramKiwiSun, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
-    //connect( ui->rbProgramSensolite, SIGNAL(toggled(bool)), this, SLOT(slotProgramSelected()) );
+    // Initialize GUI components
+    ui->cmbLanguage->addItem( "Magyar (hu)" );
+    ui->cmbLanguage->addItem( "English (en)" );
 
-    ui->tabWidget->setCurrentIndex( 0 );
-
-    m_poDB = NULL;
-    m_qsLogFileName = "";
-
-    m_dlgProgress = new cDlgProgress( this );
-
-    slotProgramSelected();
+    _initializePage();
 }
 
 MainWindow::~MainWindow()
 {
     delete m_dlgProgress;
     delete ui;
-}
-
-void MainWindow::slotProgramSelected()
-{
-    if( ui->rbProgramKiwiSun->isChecked() )
-    {
-        m_nProgramType      = DBTool::KiwiSun;
-        ui->ledPExportS2->setEnabled( true );
-        ui->ledBarcodeLength->setEnabled( true );
-    }
-    /*else if( ui->rbProgramSensolite->isChecked() )
-    {
-        m_nProgramType      = DBTool::Sensolite;
-        ui->ledPExportS2->setEnabled( false );
-
-    }*/
 }
 
 void MainWindow::closeEvent( QCloseEvent *p_poEvent )
@@ -68,6 +52,83 @@ void MainWindow::closeEvent( QCloseEvent *p_poEvent )
     else
     {
         p_poEvent->ignore();
+    }
+}
+
+
+void MainWindow::on_pbNext_clicked()
+{
+    if( m_nCurrentPage < CONST_PAGE_EXPORT )
+        m_nCurrentPage++;
+
+    ui->pbPrev->setEnabled( m_nCurrentPage > CONST_PAGE_START );
+    ui->pbNext->setEnabled( m_nCurrentPage < CONST_PAGE_EXPORT );
+
+    ui->pageController->setCurrentIndex( m_nCurrentPage );
+
+    _initializePage();
+}
+
+void MainWindow::on_pbPrev_clicked()
+{
+    if( m_nCurrentPage > CONST_PAGE_START )
+        m_nCurrentPage--;
+
+    ui->pbPrev->setEnabled( m_nCurrentPage > CONST_PAGE_START );
+    ui->pbNext->setEnabled( m_nCurrentPage < CONST_PAGE_EXPORT );
+
+    ui->pageController->setCurrentIndex( m_nCurrentPage );
+
+    // Enable Cancel button
+    ui->pbCancel->setEnabled( true );
+    // Disable Start/Exit button
+    ui->pbStartExit->setEnabled( false );
+}
+
+void MainWindow::_initializePage()
+{
+    switch( m_nCurrentPage )
+    {
+        case CONST_PAGE_START:
+        {
+            break;
+        }
+        case CONST_PAGE_VERIFICATION:
+        {
+            ui->ledSystemPassword->setText( "" );
+            ui->ledPathDB->setText( m_qdExpCurrentDir.absolutePath() );
+            ui->pbExpSelectDir->setEnabled( false );
+            ui->pbCheckSVDatFiles->setEnabled( false );
+            ui->pbPExportConnect->setEnabled( false );
+            ui->ledSystemPassword->setFocus();
+            ui->imgCheckPswFail->setVisible( false );
+            ui->imgCheckPswOk->setVisible( false );
+            ui->lblCheckPswInfo->setVisible( false );
+            ui->imgCheckDbFail->setVisible( false );
+            ui->imgCheckDbOk->setVisible( false );
+            ui->lblCheckDbInfo->setVisible( false );
+            ui->imgConnectDbFail->setVisible( false );
+            ui->imgConnectDbOk->setVisible( false );
+            ui->lblConnectDbInfo->setVisible( false );
+            ui->pbNext->setEnabled( false );
+            break;
+        }
+        case CONST_PAGE_IMPORT:
+        {
+            break;
+        }
+        case CONST_PAGE_PREPROC_PCT:
+        {
+            break;
+        }
+        case CONST_PAGE_PREPROC_PC:
+        {
+            break;
+        }
+        case CONST_PAGE_EXPORT:
+        {
+            break;
+        }
     }
 }
 
@@ -90,19 +151,12 @@ void MainWindow::on_pbExpSelectDir_clicked()
         m_qdExpCurrentDir = QDir( qsDirectory );
         ui->ledPathDB->setText( qsDirectory );
 
-        m_qsPCTFileName = QString( "%1/brlttpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-        m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-        m_qsPTFileName  = QString( "%1/trmktpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-        m_qsPFileName   = QString( "%1/trmkfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-        m_qsPAFileName  = QString( "%1/trmktpssgfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-        m_qsUFileName   = QString( "%1/srfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
-
-        ui->listLog->addItem( tr("Filenames of patientcard and patientcard types data:") );
-        ui->listLog->addItem( m_qsPCTFileName );
-        ui->listLog->addItem( m_qsPCFileName );
-        ui->listLog->addItem( m_qsPTFileName );
-        ui->listLog->addItem( m_qsPFileName );
-        ui->listLog->addItem( m_qsUFileName );
+        //ui->listLog->addItem( tr("Filenames of patientcard and patientcard types data:") );
+        //ui->listLog->addItem( m_qsPCTFileName );
+        //ui->listLog->addItem( m_qsPCFileName );
+        //ui->listLog->addItem( m_qsPTFileName );
+        //ui->listLog->addItem( m_qsPFileName );
+        //ui->listLog->addItem( m_qsUFileName );
     }
 }
 
@@ -145,7 +199,7 @@ void MainWindow::_loadPatientCardTypes()
         fread( m_strPatiencardTypeVersion, 10, 1, file );
         nCount = 0;
         fread( &nCount, 4, 1, file );
-        ui->listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
+        //ui->listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
         _logAction( tr("Count of patientcard types to be imported: %1").arg(nCount) );
         m_nCountItems += nCount;
         if( nCount > 0 )
@@ -181,12 +235,12 @@ void MainWindow::_loadPatientCardTypes()
             }
         }
         fclose( file );
-        ui->listLog->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
+        //ui->listLog->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
         _logAction( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -219,7 +273,7 @@ filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
         nCount = 0;
         fread( &nCount, 4, 1, file );
 //fwrite( &nCount, 4, 1, filemod );
-        ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
+        //ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
         _logAction( tr("Count of patientcards to be imported: %1").arg(nCount) );
         m_nCountItems += nCount;
         if( nCount > 0 )
@@ -272,12 +326,12 @@ fputs( "\n", filetxt );
         fclose( file );
 //fclose( filemod );
 fclose( filetxt );
-        ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
+        //ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
         _logAction( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -302,7 +356,7 @@ void MainWindow::_loadProductTypes()
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
-        ui->listLog->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
+        //ui->listLog->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
         _logAction( tr("Count of product types to be imported: %1").arg(nCount) );
         m_nCountItems += nCount;
         if( nCount > 0 )
@@ -315,19 +369,19 @@ void MainWindow::_loadProductTypes()
                 fread( stTemp.strNev, 100, 1, file );
                 _DeCode( stTemp.strNev, 100 );
 
-                //ui->listLog->addItem( QString( "[%1] \'%2\'" ).arg(stTemp.nID).arg(stTemp.strNev) );
+                ////ui->listLog->addItem( QString( "[%1] \'%2\'" ).arg(stTemp.nID).arg(stTemp.strNev) );
 
                 m_qvProductTypes.append( stTemp );
             }
         }
 
         fclose( file );
-        ui->listLog->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
+        //ui->listLog->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
         _logAction( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening trmktpsfsv.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening trmktpsfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -352,7 +406,7 @@ void MainWindow::_loadProducts()
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
-        ui->listLog->addItem( tr("Count of products to be imported: %1").arg(nCount) );
+        //ui->listLog->addItem( tr("Count of products to be imported: %1").arg(nCount) );
         _logAction( tr("Count of products to be imported: %1").arg(nCount) );
         m_nCountItems += nCount;
         if( nCount > 0 )
@@ -371,19 +425,19 @@ void MainWindow::_loadProducts()
                 _DeCode( stTemp.strVonalkod, 20 );
                 _DeCode( stTemp.strNev, 100 );
 
-                //ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
+                ////ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
 
                 m_qvProducts.append( stTemp );
             }
         }
 
         fclose( file );
-        ui->listLog->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
+        //ui->listLog->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
         _logAction( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening trmkfsv.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening trmkfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -408,7 +462,7 @@ void MainWindow::_loadProductAssign()
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
-        ui->listLog->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
+        //ui->listLog->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
         _logAction( tr("Count of product assigns to be imported: %1").arg(nCount) );
         m_nCountItems += nCount;
         if( nCount > 0 )
@@ -419,19 +473,19 @@ void MainWindow::_loadProductAssign()
                 fread( &stTemp.nTermekID, 4, 1, file );
                 fread( &stTemp.nTTipusID, 4, 1, file );
 
-                //ui->listLog->addItem( QString( "[%1] [%2]" ).arg(stTemp.nTermekID).arg(stTemp.nTTipusID) );
+                ////ui->listLog->addItem( QString( "[%1] [%2]" ).arg(stTemp.nTermekID).arg(stTemp.nTTipusID) );
 
                 m_qvProductAssigns.append( stTemp );
             }
         }
 
         fclose( file );
-        ui->listLog->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
+        //ui->listLog->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
         _logAction( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening trmktpssgfsv.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening trmktpssgfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -456,7 +510,7 @@ void MainWindow::_loadUsers()
 
         nCount = 0;
         fread( &nCount, 4, 1, file );
-        ui->listLog->addItem( tr("Count of users to be imported: %1").arg(nCount) );
+        //ui->listLog->addItem( tr("Count of users to be imported: %1").arg(nCount) );
         _logAction( tr("Count of users to be imported: %1").arg(nCount) );
         m_nCountItems += nCount;
         if( nCount > 0 )
@@ -478,19 +532,19 @@ void MainWindow::_loadUsers()
                 _DeCode( stTemp.strJelszo, 20 );
                 _DeCode( stTemp.strMegjegyzes, 1000 );
 
-                ui->listLog->addItem( QString( "\'%1\' \'%2\' \'%3\' \'%4\' \'%5\' [%6]" ).arg(stTemp.strAzonosito).arg(stTemp.strLoginNev).arg(stTemp.strNevCsalad).arg(stTemp.strJelszo).arg(stTemp.strMegjegyzes).arg(stTemp.nUserLevel) );
+                //ui->listLog->addItem( QString( "\'%1\' \'%2\' \'%3\' \'%4\' \'%5\' [%6]" ).arg(stTemp.strAzonosito).arg(stTemp.strLoginNev).arg(stTemp.strNevCsalad).arg(stTemp.strJelszo).arg(stTemp.strMegjegyzes).arg(stTemp.nUserLevel) );
 
                 m_qvUsers.append( stTemp );
             }
         }
 
         fclose( file );
-        ui->listLog->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
+        //ui->listLog->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
         _logAction( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening srfsv.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening srfsv.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
@@ -566,7 +620,7 @@ void MainWindow::_loadPatientCardTypeImport()
         }
     }
 
-    ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(inPCTAppend) );
+    //ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(inPCTAppend) );
 */}
 
 /*void MainWindow::on_pbSelectImportFile_clicked()
@@ -643,40 +697,15 @@ int MainWindow::_getPatientCardTypeId()
             }
         }
         fclose( file );
-        ui->listLog->addItem( tr( "'brlttpsfsv_new.dat' file created with %2 patientcard types" ).arg(nBerletTypeCount) );
+        //ui->listLog->addItem( tr( "'brlttpsfsv_new.dat' file created with %2 patientcard types" ).arg(nBerletTypeCount) );
     }
     else
     {
-        ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv_new.dat file." ) );
+        //ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv_new.dat file." ) );
     }
 
     setCursor( Qt::ArrowCursor);
 }*/
-
-void MainWindow::on_pbPExportConnect_clicked()
-{
-    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
-
-    m_poDB->setHostName( "localhost" );
-    m_poDB->setDatabaseName( "belenus" );
-    m_poDB->setUserName( "belenus" );
-    m_poDB->setPassword( "belenus" );
-
-    if( m_poDB->open() )
-    {
-        ui->listLog->addItem( tr("Successfully connected to Belenus database") );
-        ui->pbExportProcess->setEnabled( true );
-
-        QString qsSQLCommand = QString( "SELECT * FROM licences" );
-
-        QSqlQuery qsQuery = m_poDB->exec( qsSQLCommand );
-
-        qsQuery.last();
-        m_nLicenceId = qsQuery.value(0).toInt();
-
-        ui->listLog->addItem( tr("License code: %1 [%2]").arg(qsQuery.value(1).toString()).arg(m_nLicenceId) );
-    }
-}
 
 void MainWindow::on_pbExportProcess_clicked()
 {
@@ -711,7 +740,7 @@ void MainWindow::on_pbExportProcess_clicked()
 
         m_poDB->close();
         m_dlgProgress->hideProgress();
-        ui->listLog->addItem( tr("Connection to Belenus database closed") );
+        //ui->listLog->addItem( tr("Connection to Belenus database closed") );
     }
     ui->pbExportProcess->setEnabled( false );
     if( m_poDB != NULL ) delete m_poDB;
@@ -949,7 +978,7 @@ void MainWindow::_exportToBelenusProducts()
         qsSQLCommand += QString( "%1, " ).arg( _getProductNewId(m_qvProductAssigns.at(i).nTermekID) );
         qsSQLCommand += QString( "%1 ); " ).arg( m_nLicenceId );
 
-        //ui->listLog->addItem( qsSQLCommand );
+        ////ui->listLog->addItem( qsSQLCommand );
         _logAction( qsSQLCommand );
 
         m_poDB->exec( qsSQLCommand );
@@ -987,7 +1016,7 @@ void MainWindow::_exportToBelenusUsers()
         qsSQLCommand += QString( "'%1', " ).arg( m_qvUsers.at(i).strMegjegyzes );
         qsSQLCommand += QString( "'ARC');" );
 
-        //ui->listLog->addItem( qsSQLCommand );
+        ////ui->listLog->addItem( qsSQLCommand );
         _logAction( qsSQLCommand );
 
         m_poDB->exec( qsSQLCommand );
@@ -1069,3 +1098,183 @@ void MainWindow::_logAction(QString p_qsLogMessage)
     qfFileLog.write( QString("%1\n").arg(p_qsLogMessage).toStdString().c_str() );
     qfFileLog.close();
 }
+
+void MainWindow::on_pbCancel_clicked()
+{
+    close();
+}
+
+void MainWindow::on_pbStartExit_clicked()
+{
+    close();
+}
+
+//====================================================================================
+// START
+//====================================================================================
+void MainWindow::on_cmbLanguage_currentIndexChanged(int index)
+//====================================================================================
+{
+    m_qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
+
+    apMainApp->removeTranslator( poTransTool );
+    apMainApp->removeTranslator( poTransQT );
+
+    if( m_qsLanguage.compare("en") )
+    {
+        QString qsLangTool = QString("%1\\lang\\dbtool_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
+        QString qsLangQT = QString("%1\\lang\\qt_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
+
+        poTransTool->load( qsLangTool );
+        poTransQT->load( qsLangQT );
+
+        apMainApp->installTranslator( poTransTool );
+        apMainApp->installTranslator( poTransQT );
+    }
+
+    ui->retranslateUi( this );
+}
+
+//====================================================================================
+// SYSTEM VERIFICATION
+//====================================================================================
+void MainWindow::on_pbLogin_clicked()
+//====================================================================================
+{
+    QByteArray  obPwdHash = QCryptographicHash::hash( ui->ledSystemPassword->text().toAscii(), QCryptographicHash::Sha1 );
+
+    if( QString( obPwdHash.toHex() ).compare( "2f8a0b522dff9ac531fe7a76d1393261c094c573" ) == 0 )
+    {
+        ui->pbExpSelectDir->setEnabled( true );
+        ui->pbCheckSVDatFiles->setEnabled( true );
+        ui->pbPExportConnect->setEnabled( true );
+        ui->lblCheckPswInfo->setText( tr("Password verification succeeded") );
+        ui->imgCheckPswFail->setVisible( false );
+        ui->imgCheckPswOk->setVisible( true );
+        ui->lblCheckPswInfo->setVisible( true );
+    }
+    else
+    {
+        ui->ledSystemPassword->setText( "" );
+        ui->pbExpSelectDir->setEnabled( false );
+        ui->pbCheckSVDatFiles->setEnabled( false );
+        ui->pbPExportConnect->setEnabled( false );
+        ui->lblCheckPswInfo->setText( tr("Password verification failed") );
+        ui->imgCheckPswFail->setVisible( true );
+        ui->imgCheckPswOk->setVisible( false );
+        ui->lblCheckPswInfo->setVisible( true );
+
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The password you entered is not match with the\n"
+                                 "requested System Administrator password.\n"
+                                 "Please contact your System Administrator.") );
+    }
+}
+//====================================================================================
+void MainWindow::on_pbCheckSVDatFiles_clicked()
+//====================================================================================
+{
+    QString qsToolTip   = "";
+    bool    bIsOk       = true;
+
+    m_qsPCTFileName = QString( "%1/brlttpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+    m_qsPCFileName  = QString( "%1/brltfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+    m_qsPTFileName  = QString( "%1/trmktpsfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+    m_qsPFileName   = QString( "%1/trmkfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+    m_qsPAFileName  = QString( "%1/trmktpssgfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+    m_qsUFileName   = QString( "%1/srfsv.dat" ).arg( ui->ledPathDB->text() ).replace( "/", "\\" );
+
+    if( !QFile::exists( m_qsPCTFileName ) )
+    {
+        bIsOk = false;
+        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPCTFileName ) );
+    }
+    if( !QFile::exists( m_qsPCFileName ) )
+    {
+        bIsOk = false;
+        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPCFileName ) );
+    }
+    if( !QFile::exists( m_qsPTFileName ) )
+    {
+        bIsOk = false;
+        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPTFileName ) );
+    }
+    if( !QFile::exists( m_qsPFileName ) )
+    {
+        bIsOk = false;
+        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPFileName ) );
+    }
+    if( !QFile::exists( m_qsPAFileName ) )
+    {
+        bIsOk = false;
+        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsPAFileName ) );
+    }
+    if( !QFile::exists( m_qsUFileName ) )
+    {
+        bIsOk = false;
+        qsToolTip.append( tr("%1 file does not exists\n").arg( m_qsUFileName ) );
+    }
+
+    if( bIsOk )
+    {
+        ui->lblCheckDbInfo->setText( tr("Database files are exists and checked successfully.") );
+        ui->lblCheckDbInfo->setToolTip( "" );
+        ui->imgCheckDbFail->setVisible( false );
+        ui->imgCheckDbOk->setVisible( true );
+        ui->lblCheckDbInfo->setVisible( true );
+    }
+    else
+    {
+        ui->lblCheckDbInfo->setText( tr("Database files are missing or corrupt.") );
+        ui->lblCheckDbInfo->setToolTip( qsToolTip );
+        ui->imgCheckDbFail->setVisible( true );
+        ui->imgCheckDbOk->setVisible( false );
+        ui->lblCheckDbInfo->setVisible( true );
+    }
+
+    ui->pbNext->setEnabled( _isSystemVerificationOk() );
+}
+//====================================================================================
+bool MainWindow::_isSystemVerificationOk()
+//====================================================================================
+{
+    return ( ui->imgCheckPswOk->isVisible() && ui->imgCheckDbOk->isVisible() && ui->imgConnectDbOk->isVisible() );
+}
+//====================================================================================
+void MainWindow::on_pbPExportConnect_clicked()
+//====================================================================================
+{
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
+
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        ui->lblConnectDbInfo->setText( tr("Connection with Belenus database established") );
+        ui->imgConnectDbFail->setVisible( false );
+        ui->imgConnectDbOk->setVisible( true );
+        ui->lblConnectDbInfo->setVisible( true );
+
+        QSqlQuery qsQuery = m_poDB->exec( "SELECT * FROM licences" );
+
+        qsQuery.last();
+        m_nLicenceId = qsQuery.value(0).toInt();
+
+        ui->lblConnectDbInfo->setToolTip( tr("License code: %1 [%2]").arg(qsQuery.value(1).toString()).arg(m_nLicenceId) );
+    }
+    else
+    {
+        ui->lblConnectDbInfo->setText( tr("Unable to connect to Belenus database") );
+        ui->imgConnectDbFail->setVisible( true );
+        ui->imgConnectDbOk->setVisible( false );
+        ui->lblConnectDbInfo->setVisible( true );
+        ui->lblConnectDbInfo->setToolTip( "" );
+    }
+
+    ui->pbNext->setEnabled( _isSystemVerificationOk() );
+}
+//====================================================================================
+
