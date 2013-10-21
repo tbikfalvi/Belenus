@@ -12,6 +12,8 @@
 //==============================================================================================
 cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParameters)
 {
+    m_uiOrderNum    = 0;
+
     horizontalLayout = new QHBoxLayout( this );
     horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
     horizontalLayout->setSpacing( 0 );
@@ -130,6 +132,20 @@ void cPanelPCUnitUse::setFocus()
 {
     pbUseUnitType->setFocus();
 }
+//----------------------------------------------------------------------------------------------
+void cPanelPCUnitUse::setAutoSelected()
+{
+    pbUseUnitType->setChecked( true );
+    pbUseUnitType->setEnabled( false );
+    cmbUseUnitCount->setCurrentIndex(0);
+    slotButtonClicked();
+}
+//----------------------------------------------------------------------------------------------
+void cPanelPCUnitUse::setOrderNum(unsigned int p_uiOrderNum)
+{
+    m_uiOrderNum = p_uiOrderNum;
+    pbUseUnitType->setText( QString("&%1. %2").arg(p_uiOrderNum).arg(pbUseUnitType->text()) );
+}
 //==============================================================================================
 //
 //
@@ -147,6 +163,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, QString p_qsPanelTitle ) : QDia
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     m_uiPanelUsePatientCardId   = 0;
+    m_uiPanelBaseTime           = 0;
     m_uiPanelUseTime            = 0;
     m_uiPanelUsePrice           = 0;
 
@@ -180,7 +197,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                                    "WHERE patientCardId=%1 "
                                    "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
                                    "AND active=1 "
-                                   "GROUP BY unitTime, validDateTo ORDER BY validDateTo" ).arg( obDBPatientCard.id() );
+                                   "GROUP BY unitTime, validDateTo ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
         QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         while( poQuery->next() )
@@ -192,6 +209,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
             connect( pPanelUseFrame, SIGNAL(signalButtonClicked()), this, SLOT(slotPatientCardUseUpdated()) );
             connect( pPanelUseFrame, SIGNAL(signalComboIndexChanged()), this, SLOT(slotPatientCardUseUpdated()) );
             qvPanelUseUnits.append( pPanelUseFrame );
+            pPanelUseFrame->setOrderNum( qvPanelUseUnits.count() );
         }
         if( qvPanelUseUnits.count() > 0 )
             qvPanelUseUnits.at(0)->setFocus();
@@ -201,20 +219,28 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         g_obLogger(e.severity()) << e.what() << EOM;
     }
 
+    if( qvPanelUseUnits.count() == 1 )
+    {
+        qvPanelUseUnits.at(0)->setAutoSelected();
+        slotPatientCardUseUpdated();
+    }
+
     setMinimumHeight( 255 + (qvPanelUseUnits.count()-1)*40 );
     setMaximumHeight( 255 + (qvPanelUseUnits.count()-1)*40 );
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
 {
-    m_uiPanelUseTime = p_uiSeconds;
+    m_uiPanelBaseTime = p_uiSeconds;
 
     setPanelUseTime();
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime()
 {
-    QTime   qtPanelUseTime( m_uiPanelUseTime/3600, (m_uiPanelUseTime%3600)/60, (m_uiPanelUseTime%3600)%60 );
+    QTime   qtPanelUseTime( (m_uiPanelBaseTime+m_uiPanelUseTime)/3600,
+                            ((m_uiPanelBaseTime+m_uiPanelUseTime)%3600)/60,
+                            ((m_uiPanelBaseTime+m_uiPanelUseTime)%3600)%60 );
 
     lblTotalTimeValue->setText( qtPanelUseTime.toString( "hh:mm:ss" ) );
 

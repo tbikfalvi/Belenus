@@ -51,21 +51,26 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     {
         ledAmountGiven->setEnabled( false );
     }
-
+g_obLogger(cSeverity::DEBUG) << "1" << EOM;
     cmbPaymentType->addItem( tr("<Not selected>"), 0 );
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT paymentMethodId, name FROM paymentmethods WHERE active=1 AND archive<>\"DEL\" AND paymentMethodId>2" ) );
     while( poQuery->next() )
     {
         cmbPaymentType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
-
-    cmbCoupon->addItem( tr("<Not selected>"), 0 );
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT discountId, name FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND active=1 AND archive<>\"DEL\" " ) );
-    while( poQuery->next() )
+g_obLogger(cSeverity::DEBUG) << "2" << EOM;
+/*    if( cmbCoupon )
     {
-        cmbCoupon->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+g_obLogger(cSeverity::DEBUG) << "3" << EOM;
+//        cmbCoupon->addItem( tr("<Not selected>"), 0 );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT discountId, name FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND active=1 AND archive<>\"DEL\" " ) );
+g_obLogger(cSeverity::DEBUG) << "4" << EOM;
+        while( poQuery->next() )
+        {
+            cmbCoupon->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        }
     }
-
+*/
     connect( ledAmountToPay, SIGNAL(textEdited(QString)), this, SLOT(ledAmountToPay_textEdited(QString)) );
     connect( ledAmountGiven, SIGNAL(textEdited(QString)), this, SLOT(ledAmountGiven_textEdited(QString)) );
 
@@ -116,6 +121,15 @@ void cDlgCassaAction::actionCassaInOut()
 void cDlgCassaAction::actionPayment()
 {
     pbShoppingCart->setEnabled( false );
+    ledVoucherGiven->setEnabled( false );
+    cmbCoupon->setEnabled( false );
+    frmMoneyVoucher->setVisible( false );
+    frmCoupon->setVisible( false );
+    frmPayment->setVisible( false );
+    m_nHeightSmall  = 217;
+    m_nHeightBig    = 332;
+    setMinimumHeight( m_nHeightSmall );
+    setMaximumHeight( m_nHeightSmall );
 }
 
 QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart, int *p_nVoucher, unsigned int *p_uiCouponId )
@@ -125,7 +139,7 @@ QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, boo
     else *p_nPayType = cDlgCassaAction::PAY_OTHER;
 
     *p_bShoppingCart    = m_bShoppingCart;
-    *p_nVoucher         = ledVoucherGiven->text().remove( QChar(',') ).toInt();
+    *p_nVoucher         = ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100;
     *p_uiCouponId       = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
 
     if( *p_uiCouponId > 0 )
@@ -210,6 +224,24 @@ void cDlgCassaAction::on_pbComment_clicked()
 
 void cDlgCassaAction::on_pbShoppingCart_clicked()
 {
+    m_poShoppingCart->setVoucher( ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100 );
+
+    cDBDiscount     obDBDiscount;
+    unsigned int    uiCouponId       = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
+
+    if( uiCouponId > 0 )
+    {
+        obDBDiscount.load( uiCouponId );
+        m_poShoppingCart->setItemDiscount( m_poShoppingCart->itemDiscount()+obDBDiscount.discount(m_poShoppingCart->itemSumPrice()) );
+
+        if( teComment->toPlainText().length() > 0 )
+            teComment->append( "\n" );
+        teComment->append( tr("Coupon used: %1").arg( cmbCoupon->currentText() ) );
+    }
+
+    if( teComment->toPlainText().length() > 0 )
+        m_poShoppingCart->setComment( QString( "%1 - %2" ).arg(m_poShoppingCart->comment()).arg(teComment->toPlainText()) );
+
     m_poShoppingCart->save();
     m_bShoppingCart = true;
 
@@ -291,7 +323,12 @@ void cDlgCassaAction::on_ledVoucherGiven_textChanged(const QString &arg1)
     cCurrency   cPrice( m_poShoppingCart->itemSumPrice() );
     cCurrency   cVoucher( ledVoucherGiven->text() );
 
-    cCurrency   cToPay( cPrice.currencyValue().toInt() - cVoucher.currencyValue().toInt() );
+    int nSum = cPrice.currencyValue().toInt() - cVoucher.currencyValue().toInt();
+
+    if( nSum < 0 )
+        nSum = 0;
+
+    cCurrency   cToPay( nSum );
 
     ledAmountToPay->setText( cToPay.currencyStringSeparator() );
 }

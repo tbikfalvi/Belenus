@@ -797,33 +797,34 @@ and fill mandatory data later?</source>
     </message>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="55"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="62"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="65"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="105"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="109"/>
         <source>Amount :</source>
         <translation>Összeg :</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="106"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="110"/>
         <source>Ok</source>
         <translation>Rendben</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="135"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="148"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="238"/>
         <source>Coupon used: %1</source>
         <translation>Kupon használat: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="192"/>
         <location filename="dlg/dlgcassaaction.cpp" line="205"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="218"/>
         <source>Comment &gt;&gt;</source>
         <translation>Megjegyzés &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="196"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="209"/>
         <source>Comment &lt;&lt;</source>
         <translation>Megjegyzés &lt;&lt;</translation>
     </message>
@@ -5752,13 +5753,13 @@ Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.<
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="122"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="154"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="158"/>
         <source>Panel</source>
         <translation>Gép</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="123"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="155"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="159"/>
         <source>Patient</source>
         <translation>Vendég</translation>
     </message>
@@ -5774,68 +5775,80 @@ Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.<
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="126"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="156"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="160"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="127"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="157"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="161"/>
         <source>NetPrice</source>
         <translation>Nettó ár</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="128"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="158"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="162"/>
         <source>VATPercent</source>
         <translation>ÁFA</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="129"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="159"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="163"/>
         <source>SumPrice</source>
         <translation>Bruttó ár</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="130"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="160"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="164"/>
         <source>Count</source>
         <translation>Db.</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="131"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="161"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="165"/>
         <source>Discount</source>
         <translation>Kedvezmény</translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="132"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="162"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="166"/>
+        <source>Voucher</source>
+        <translation>Utalvány</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="133"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="167"/>
         <source>TotalSumPrice</source>
         <translation>Bruttó összesen</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="133"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="134"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="168"/>
+        <source>Comment</source>
+        <translation>Megjegyzés</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="135"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="340"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="348"/>
         <source>Using device: %1</source>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="344"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="352"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="381"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="389"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="385"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="393"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
@@ -5848,24 +5861,24 @@ Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.<
         <translation type="obsolete">Géphasználat</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="240"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="248"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="241"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="249"/>
         <source>Deleting panel use is not allowed from shopping cart.
 Please return to the panel and press ESC to reject panel use.</source>
         <translation>A bevásárlókosárból nem törölhető a géphasználat.
 Kérem lépjen ki és a kiválasztott gépnél az ESC gombbal törölje a géphasználatot.</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="221"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="229"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="222"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="230"/>
         <source>Are you sure you want to delete the selected items?</source>
         <translation>Biztos benne, hogy törölni akarja a kiválasztott sorokat?</translation>
     </message>
@@ -6539,22 +6552,22 @@ Az alkalmazás csak %1 gép kezelését teszi lehetővé.</translation>
 <context>
     <name>cPanelPCUnitUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="26"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="28"/>
         <source>%1 minute(s) unit</source>
         <translation>%1 perces egység</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="27"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="29"/>
         <source>Using this patient card unit type gives %1 minute(s) device usage.</source>
         <translation>A megadott bérletegységgel %1 percig használható a gép.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="54"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="56"/>
         <source>Valid for </source>
         <translation>Érvényes </translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="59"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="61"/>
         <source>%1 day(s)</source>
         <translation>%1 nap</translation>
     </message>

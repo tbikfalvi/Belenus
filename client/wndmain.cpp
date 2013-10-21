@@ -1680,8 +1680,8 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
             cDlgPanelUse obDlgPanelUse( this, mdiPanels->getActivePanelCaption() );
 
-            obDlgPanelUse.setPanelUsePatientCard( obDBPatientCard.id() );
             obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
+            obDlgPanelUse.setPanelUsePatientCard( obDBPatientCard.id() );
             if( obDlgPanelUse.exec() == QDialog::Accepted )
             {
                 mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSeconds() );

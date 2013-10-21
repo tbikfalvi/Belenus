@@ -25,11 +25,14 @@ public:
     cPanelPCUnitUse( QWidget *p_poParent = 0, QStringList *p_qslParameters = NULL );
 
     void             setFocus();
+    void             setAutoSelected();
+    void             setOrderNum( unsigned int p_uiOrderNum );
     int              lengthSeconds();
     QStringList      usedUnitIds();
 
 private:
     int              m_nUnitTime;
+    unsigned int     m_uiOrderNum;
     QStringList      m_qslUnitIds;
 
 signals:
@@ -63,6 +66,7 @@ private:
     QVector<cPanelPCUnitUse*>    qvPanelUseUnits;
     unsigned int                 m_uiPanelUsePatientCardId;
     unsigned int                 m_uiPanelUseTime;
+    unsigned int                 m_uiPanelBaseTime;
     unsigned int                 m_uiPanelUsePrice;
     QStringList                  m_qslUnitIds;
 

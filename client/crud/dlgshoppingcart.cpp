@@ -129,8 +129,10 @@ void cDlgShoppingCart::setupTableView()
         m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "SumPrice" ) );
         m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Count" ) );
         m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Discount" ) );
-        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "TotalSumPrice" ) );
-        m_poModel->setHeaderData( 13, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "Voucher" ) );
+        m_poModel->setHeaderData( 13, Qt::Horizontal, tr( "TotalSumPrice" ) );
+        m_poModel->setHeaderData( 14, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 15, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -146,6 +148,8 @@ void cDlgShoppingCart::setupTableView()
         tbvCrud->resizeColumnToContents( 11 );
         tbvCrud->resizeColumnToContents( 12 );
         tbvCrud->resizeColumnToContents( 13 );
+        tbvCrud->resizeColumnToContents( 14 );
+        tbvCrud->resizeColumnToContents( 15 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -159,7 +163,9 @@ void cDlgShoppingCart::setupTableView()
         m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "SumPrice" ) );
         m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Count" ) );
         m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Discount" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "TotalSumPrice" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Voucher" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "TotalSumPrice" ) );
+        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Comment" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
@@ -170,6 +176,8 @@ void cDlgShoppingCart::setupTableView()
         tbvCrud->resizeColumnToContents( 7 );
         tbvCrud->resizeColumnToContents( 8 );
         tbvCrud->resizeColumnToContents( 9 );
+        tbvCrud->resizeColumnToContents( 10 );
+        tbvCrud->resizeColumnToContents( 11 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -181,11 +189,11 @@ void cDlgShoppingCart::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
     }
     else
     {
-        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
     }
 
     int nPanelId = cmbPanel->itemData( cmbPanel->currentIndex() ).toInt();
@@ -303,7 +311,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
             qslIds << tbvCrud->selectionModel()->selectedRows().at(i).data().toString();
         }
 
-        QString     qsQuery = QString("SELECT SUM(itemSumPrice) AS shoppingCartSum FROM shoppingcartitems WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
+        QString     qsQuery = QString("SELECT SUM(itemSumPrice-discountValue) AS shoppingCartSum FROM shoppingcartitems WHERE shoppingCartItemId IN (%1) ").arg(qslIds.join(QString(",")));
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         cDBShoppingCart obDBShoppingCart;

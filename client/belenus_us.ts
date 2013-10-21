@@ -474,33 +474,34 @@ Do you want to save them as new into the database?</source>
     </message>
     <message>
         <location filename="dlg/dlgcassaaction.cpp" line="55"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="62"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="65"/>
         <source>&lt;Not selected&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="105"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="109"/>
         <source>Amount :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="106"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="110"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="135"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="148"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="238"/>
         <source>Coupon used: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="192"/>
         <location filename="dlg/dlgcassaaction.cpp" line="205"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="218"/>
         <source>Comment &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="196"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="209"/>
         <source>Comment &lt;&lt;</source>
         <translation></translation>
     </message>
@@ -3730,13 +3731,13 @@ Please check your licence key and retype it if necessary..</source>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="122"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="154"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="158"/>
         <source>Panel</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="123"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="155"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="159"/>
         <source>Patient</source>
         <translation></translation>
     </message>
@@ -3752,89 +3753,101 @@ Please check your licence key and retype it if necessary..</source>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="126"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="156"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="160"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="127"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="157"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="161"/>
         <source>NetPrice</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="128"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="158"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="162"/>
         <source>VATPercent</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="129"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="159"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="163"/>
         <source>SumPrice</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="130"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="160"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="164"/>
         <source>Count</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="131"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="161"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="165"/>
         <source>Discount</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="132"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="162"/>
-        <source>TotalSumPrice</source>
+        <location filename="crud/dlgshoppingcart.cpp" line="166"/>
+        <source>Voucher</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="133"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="167"/>
+        <source>TotalSumPrice</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="134"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="168"/>
+        <source>Comment</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="135"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="340"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="348"/>
         <source>Using device: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="344"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="352"/>
         <source>Selling product: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="381"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="389"/>
         <source>Sell patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="385"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="393"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="240"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="248"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="241"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="249"/>
         <source>Deleting panel use is not allowed from shopping cart.
 Please return to the panel and press ESC to reject panel use.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="221"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="229"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="222"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="230"/>
         <source>Are you sure you want to delete the selected items?</source>
         <translation></translation>
     </message>
@@ -4412,22 +4425,22 @@ Only %1 panels will be displayed.</source>
 <context>
     <name>cPanelPCUnitUse</name>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="26"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="28"/>
         <source>%1 minute(s) unit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="27"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="29"/>
         <source>Using this patient card unit type gives %1 minute(s) device usage.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="54"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="56"/>
         <source>Valid for </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="59"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="61"/>
         <source>%1 day(s)</source>
         <translation></translation>
     </message>
