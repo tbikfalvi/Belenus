@@ -415,13 +415,12 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
                 int             inCassaAction   = obDlgCassaAction.exec();
                 int             inPayType       = 0;
-                QString         qsComment       = QString("[%1] - %2 - ").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
+                QString         qsComment       = QString("[%1] - %2").arg(m_poPatientCard->barcode()).arg(m_poPatientCard->comment());
                 bool            bShoppingCart   = false;
-                int             inVoucher = 0;
                 unsigned int    uiCouponId = 0;
                 cDBDiscount     obDBDiscount;
 
-                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
@@ -431,7 +430,6 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
                         obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
                     }
-                    obDBShoppingCart.setVoucher( inVoucher );
                     g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, m_bNewCard, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )

@@ -38,7 +38,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpaymentmethodedit.ui \
     dlgpaneltypecopy.ui \
     cdlgtest.ui \
-    dlgpaneluse.ui
+    dlgpaneluse.ui \
+    dlgCassaInOut.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -119,6 +120,7 @@ HEADERS = belenus.h \
     dlg/dlgpanelappereance.h \
     dlg/dlgpaneltimecopy.h \
     dlg/dlgpaneluse.h \
+    dlg/dlgcassainout.h \
     edit/dlgpaneltypeedit.h \
     edit/dlguseredit.h \
     edit/dlgreasontovisitedit.h \
@@ -240,6 +242,7 @@ SOURCES = main.cpp \
     dlg/dlgpanelappereance.cpp \
     dlg/dlgpaneltimecopy.cpp \
     dlg/dlgpaneluse.cpp \
+    dlg/dlgcassainout.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgreasontovisitedit.cpp \
@@ -300,4 +303,5 @@ win32:DEFINES -= UNICODE
 
 RESOURCES += \
     belenus.qrc
+
 

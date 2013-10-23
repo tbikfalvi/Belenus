@@ -126,6 +126,8 @@
     <property name="title">
      <string>&amp;System</string>
     </property>
+    <addaction name="action_About"/>
+    <addaction name="separator"/>
     <addaction name="action_LogOut"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
@@ -706,12 +708,26 @@
     <string>The device has been cleaned and ready to use</string>
    </property>
   </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset resource="belenus.qrc">
+     <normaloff>:/icons/belenus.ico</normaloff>:/icons/belenus.ico</iconset>
+   </property>
+   <property name="text">
+    <string>About ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Application information</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>cmbName</tabstop>
   <tabstop>ledPassword</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="belenus.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_Exit</sender>

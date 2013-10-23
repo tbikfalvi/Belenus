@@ -334,9 +334,17 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 int             inPayType = 0;
                 QString         qsComment = "";
                 bool            bShoppingCart = false;
-                int             inVoucher = 0;
                 unsigned int    uiCouponId = 0;
                 cDBDiscount     obDBDiscount;
+
+                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
+
+                if( uiCouponId > 0 )
+                {
+                    obDBDiscount.load( uiCouponId );
+
+                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+                }
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&
@@ -346,29 +354,6 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
                     obDBPanel.load( obDBShoppingCart.panelId() );
                     qsComment = tr("Using device: %1").arg(obDBPanel.title());
-                }
-                else if( obDBShoppingCart.productId() > 0 )
-                {
-                    qsComment = tr("Selling product: %1").arg(obDBShoppingCart.itemName());
-                }
-
-                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
-
-                if( uiCouponId > 0 )
-                {
-                    obDBDiscount.load( uiCouponId );
-
-                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }
-                obDBShoppingCart.setVoucher( inVoucher );
-
-                if( obDBShoppingCart.panelId() > 0 &&
-                    obDBShoppingCart.productId() == 0 &&
-                    obDBShoppingCart.patientCardId() == 0)
-                {
-                    cDBPanel    obDBPanel;
-
-                    obDBPanel.load( obDBShoppingCart.panelId() );
 
                     unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, obDBPanel.title() );
 
@@ -376,6 +361,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
                 }
                 else if( obDBShoppingCart.productId() > 0 )
                 {
+                    qsComment = tr("Selling product: %1").arg(obDBShoppingCart.itemName());
                     g_obCassa.cassaProcessProductSell( obDBShoppingCart, qsComment, inPayType );
                 }
                 else if( obDBShoppingCart.patientCardId() > 0 )

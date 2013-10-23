@@ -405,11 +405,10 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 int             inCassaAction   = obDlgCassaAction.exec();
                 int             inPayType       = 0;
                 QString         qsComment       = tr("Refill patientcard [%1]").arg(m_poPatientCard->barcode());
-                int             inVoucher = 0;
                 unsigned int    uiCouponId = 0;
                 cDBDiscount     obDBDiscount;
 
-                obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
@@ -419,7 +418,6 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
 
                         obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
                     }
-                    obDBShoppingCart.setVoucher( inVoucher );
                     uiLedgerId = g_obCassa.cassaProcessPatientCardRefill( *m_poPatientCard, obDBShoppingCart, qsComment, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )

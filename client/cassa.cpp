@@ -261,6 +261,12 @@ void cCassa::cassaClose()
 unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPatientCard, const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bNewCard, int p_inPayType )
 //====================================================================================
 {
+    QString     qsComment = p_qsComment;
+
+    if( qsComment.length() > 0 && p_obDBShoppingCart.comment().length() > 0 )
+        qsComment.append( "\n" );
+    qsComment.append( p_obDBShoppingCart.comment() );
+
     cDBLedger   obDBLedger;
 
     obDBLedger.createNew();
@@ -282,7 +288,7 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
     obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
-    obDBLedger.setComment( p_qsComment );
+    obDBLedger.setComment( qsComment );
     obDBLedger.setActive( true );
     obDBLedger.save();
 
@@ -307,6 +313,12 @@ unsigned int cCassa::cassaProcessPatientCardRefill( const cDBPatientCard &p_DBPa
 unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, bool p_bGlobalCassa )
 //====================================================================================
 {
+    QString     qsComment = p_qsComment;
+
+    if( qsComment.length() > 0 && p_obDBShoppingCart.comment().length() > 0 )
+        qsComment.append( "\n" );
+    qsComment.append( p_obDBShoppingCart.comment() );
+
     cDBLedger   obDBLedger;
 
     obDBLedger.createNew();
@@ -321,7 +333,7 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
     obDBLedger.setVoucher( p_obDBShoppingCart.voucher() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
     obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
-    obDBLedger.setComment( p_qsComment );
+    obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
     if( !p_bGlobalCassa )
@@ -339,6 +351,12 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
 unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType, QString p_qsPanelTitle )
 //====================================================================================
 {
+    QString     qsComment = p_qsComment;
+
+    if( qsComment.length() > 0 && p_obDBShoppingCart.comment().length() > 0 )
+        qsComment.append( "\n" );
+    qsComment.append( p_obDBShoppingCart.comment() );
+
     cDBLedger   obDBLedger;
 
     obDBLedger.createNew();
@@ -353,7 +371,7 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
     obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
-    obDBLedger.setComment( p_qsComment );
+    obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
     if( p_inPayType == 1 /*PAY_CASH*/ )
@@ -371,6 +389,12 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
 void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart, QString p_qsComment, int p_inPayType )
 //====================================================================================
 {
+    QString     qsComment = p_qsComment;
+
+    if( qsComment.length() > 0 && p_obDBShoppingCart.comment().length() > 0 )
+        qsComment.append( "\n" );
+    qsComment.append( p_obDBShoppingCart.comment() );
+
     cDBLedger   obDBLedger;
 
     obDBLedger.createNew();
@@ -387,7 +411,7 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
     obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
-    obDBLedger.setComment( p_qsComment );
+    obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
     if( p_inPayType == 1 /*PAY_CASH*/ )

@@ -3,7 +3,7 @@
 
 #include "dlgcassaedit.h"
 #include "../db/dbuser.h"
-#include "../dlg/dlgcassaaction.h"
+#include "../dlg/dlgcassainout.h"
 
 cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -202,21 +202,13 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
         return;
     }
 
-    cDlgCassaAction     obDlgCassaAction( this );
+    cDlgCassaInOut     obDlgCassaInOut( this, tr("Cash payment") );
 
-    obDlgCassaAction.actionCassaInOut();
-    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    if( obDlgCassaInOut.exec() == QDialog::Accepted )
     {
         cDBCassa        obCassa;
-        QString         qsComment;
-        int             nTemp = 0;
-        bool            bShoppingCart = false;
-        int             inVoucher = 0;
-        unsigned int    uiCouponId = 0;
 
-        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId ) );
-
-        g_obCassa.cassaIncreaseMoney( cActionValue.currencyValue().toInt(), qsComment );
+        g_obCassa.cassaIncreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
 
         cCurrency   cBalance( obCassa.currentBalance() );
@@ -236,21 +228,13 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
         return;
     }
 
-    cDlgCassaAction     obDlgCassaAction( this );
+    cDlgCassaInOut     obDlgCassaInOut( this, tr("Cash withdrawal") );
 
-    obDlgCassaAction.actionCassaInOut();
-    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    if( obDlgCassaInOut.exec() == QDialog::Accepted )
     {
         cDBCassa        obCassa;
-        QString         qsComment;
-        int             nTemp = 0;
-        bool            bShoppingCart = false;
-        int             inVoucher = 0;
-        unsigned int    uiCouponId = 0;
 
-        cCurrency   cActionValue( obDlgCassaAction.cassaResult( &nTemp, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId ) );
-
-        g_obCassa.cassaDecreaseMoney( cActionValue.currencyValue().toInt(), qsComment );
+        g_obCassa.cassaDecreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
 
         cCurrency   cBalance( obCassa.currentBalance() );

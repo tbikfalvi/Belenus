@@ -18,9 +18,9 @@ USE `belenus`;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', 'Hungary', 'Pest', 'Budapest', 'H-1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+ ( 0, 'BLNS_SERIAL_GLOBAL', '', '', '', '', '', '', NULL, '0000-00-00', 1, 'ARC');
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', 'Hungary', 'Pest', 'Budapest', 'H-1139', 'ROZSNYAI U. 11', 'Polarium Kft.', NULL, '0000-00-00', 1, 'ARC');
+ ( 1, 'BLNS_SERIAL_DEMO', '', '', '', '', '', '', NULL, '0000-00-00', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

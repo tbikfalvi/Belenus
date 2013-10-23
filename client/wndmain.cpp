@@ -168,6 +168,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     //--------------------------------------------------------------------------------
     // Menu items
     //--------------------------------------------------------------------------------
+    action_About->setIcon( QIcon("./resources/40x40_information.png") );
+
     action_Patients->setIcon( QIcon("./resources/40x40_patient.png") );
     action_Guests->setIcon( QIcon("./resources/40x40_patient.png") );
     action_CardTypes->setIcon( QIcon( "./resources/40x40_patientcardtype.png" ) );
@@ -780,15 +782,15 @@ void cWndMain::updateStatusText( QString p_qsStatusText )
         m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceStart->toolTip() ) );
         m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_START;
     }
-    else if( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) )
-    {
-        m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceSkipStatus->toolTip() ) );
-        m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_SKIP;
-    }
     else if( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() )
     {
         m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceClear->toolTip() ) );
         m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_CLEAN;
+    }
+    else if( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) )
+    {
+        m_qsStatusText.append( tr(" | ENTER -> %1").arg( action_DeviceSkipStatus->toolTip() ) );
+        m_nEnterAction = cDBApplicationAction::APPACT_DEVICE_SKIP;
     }
 
     m_lblStatusLeft.setText( m_qsStatusText );
@@ -1855,11 +1857,10 @@ void cWndMain::on_action_PayCash_triggered()
     int             inPayType       = 0;
     QString         qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
     bool            bShoppingCart   = false;
-    int             inVoucher = 0;
     unsigned int    uiCouponId = 0;
     cDBDiscount     obDBDiscount;
 
-    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+    obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
@@ -1869,7 +1870,6 @@ void cWndMain::on_action_PayCash_triggered()
 
             obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
         }
-        obDBShoppingCart.setVoucher( inVoucher );
         unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
         processDeviceUsePayment( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
     }
@@ -1899,11 +1899,10 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
     int             inPayType = 0;
     QString         qsComment = tr("Selling product: %1").arg( obDBShoppingCart.itemName() );
     bool            bShoppingCart = false;
-    int             inVoucher = 0;
     unsigned int    uiCouponId = 0;
     cDBDiscount     obDBDiscount;
 
-    obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+    obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
@@ -1913,7 +1912,6 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
 
             obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
         }
-        obDBShoppingCart.setVoucher( inVoucher );
         g_obCassa.cassaProcessProductSell( p_obDBShoppingCart, qsComment, inPayType );
     }
 }
@@ -2137,11 +2135,10 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             int             inPayType       = 0;
             QString         qsComment       = tr("Replace patientcard [%1]->[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
             bool            bShoppingCart   = false;
-            int             inVoucher = 0;
             unsigned int    uiCouponId = 0;
             cDBDiscount     obDBDiscount;
 
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+            obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
@@ -2151,7 +2148,6 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
                 }
-                obDBShoppingCart.setVoucher( inVoucher );
                 g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
             }
             else if( inCassaAction != QDialog::Accepted )
@@ -2281,11 +2277,10 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
             int             inPayType       = 0;
             QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
             bool            bShoppingCart   = false;
-            int             inVoucher = 0;
             unsigned int    uiCouponId = 0;
             cDBDiscount     obDBDiscount;
 
-            obDlgCassaAction.cassaResult( &inPayType, &qsComment, &bShoppingCart, &inVoucher, &uiCouponId );
+            obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
@@ -2295,7 +2290,6 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
                 }
-                obDBShoppingCart.setVoucher( inVoucher );
                 g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
             }
             else if( inCassaAction != QDialog::Accepted )
@@ -2350,3 +2344,22 @@ void cWndMain::on_action_ReportViewer_triggered()
     }
 }
 
+void cWndMain::on_action_About_triggered()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences WHERE licenceId=%1" ).arg( g_poPrefs->getLicenceId() ) );
+    poQuery->first();
+
+    QMessageBox::information( this, tr("About"),
+                              tr("<h2>Belenus Software Application System</h2>"
+                                 "<p>"
+                                 "Version : %1"
+                                 "<p>"
+                                 "Copyright 2013 Tamas Bikfalvi. All rights reserved."
+                                 "<p>"
+                                 "Application Licence : %2"
+                                 "<p>"
+                                 "The application and all of its related products<br>"
+                                 "is the property of KiwiSun Franchise.<br>"
+                                 "For more information visit the <a href=\"http://www.kiwisun.eu\">KiwiSun website</a>"
+                                 ).arg( g_poPrefs->getVersion() ).arg( poQuery->value( 1 ).toString() ) );
+}

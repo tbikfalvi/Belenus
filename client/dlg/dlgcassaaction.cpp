@@ -59,10 +59,10 @@ g_obLogger(cSeverity::DEBUG) << "1" << EOM;
         cmbPaymentType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
 g_obLogger(cSeverity::DEBUG) << "2" << EOM;
-/*    if( cmbCoupon )
+    if( cmbCoupon )
     {
 g_obLogger(cSeverity::DEBUG) << "3" << EOM;
-//        cmbCoupon->addItem( tr("<Not selected>"), 0 );
+        cmbCoupon->addItem( tr("<Not selected>"), 0 );
         poQuery = g_poDB->executeQTQuery( QString( "SELECT discountId, name FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND active=1 AND archive<>\"DEL\" " ) );
 g_obLogger(cSeverity::DEBUG) << "4" << EOM;
         while( poQuery->next() )
@@ -70,7 +70,7 @@ g_obLogger(cSeverity::DEBUG) << "4" << EOM;
             cmbCoupon->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
         }
     }
-*/
+
     connect( ledAmountToPay, SIGNAL(textEdited(QString)), this, SLOT(ledAmountToPay_textEdited(QString)) );
     connect( ledAmountGiven, SIGNAL(textEdited(QString)), this, SLOT(ledAmountGiven_textEdited(QString)) );
 
@@ -101,23 +101,6 @@ void cDlgCassaAction::setPayWithCreditcard()
     on_pbPayCard_clicked();
 }
 
-void cDlgCassaAction::actionCassaInOut()
-{
-    setPayWithCash();
-    pbPayCard->setEnabled( false );
-    pbPayOther->setEnabled( false );
-    pbShoppingCart->setEnabled( false );
-    lblMoneyToPay->setText( tr("Amount :") );
-    pbOk->setText( tr("Ok") );
-    frmMoneyVoucher->setVisible( false );
-    frmCoupon->setVisible( false );
-    frmPayment->setVisible( false );
-    m_nHeightSmall  = 217;
-    m_nHeightBig    = 332;
-    setMinimumHeight( m_nHeightSmall );
-    setMaximumHeight( m_nHeightSmall );
-}
-
 void cDlgCassaAction::actionPayment()
 {
     pbShoppingCart->setEnabled( false );
@@ -125,6 +108,7 @@ void cDlgCassaAction::actionPayment()
     cmbCoupon->setEnabled( false );
     frmMoneyVoucher->setVisible( false );
     frmCoupon->setVisible( false );
+    frmMoneyGiven->setVisible( false );
     frmPayment->setVisible( false );
     m_nHeightSmall  = 217;
     m_nHeightBig    = 332;
@@ -132,41 +116,16 @@ void cDlgCassaAction::actionPayment()
     setMaximumHeight( m_nHeightSmall );
 }
 
-QString cDlgCassaAction::cassaResult( int *p_nPayType, QString *p_qsComment, bool *p_bShoppingCart, int *p_nVoucher, unsigned int *p_uiCouponId )
+QString cDlgCassaAction::cassaResult( int *p_nPayType, bool *p_bShoppingCart, unsigned int *p_uiCouponId )
 {
     if( pbPayCash->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CASH;
     else if( pbPayCard->isChecked() ) *p_nPayType = cDlgCassaAction::PAY_CREDITCARD;
     else *p_nPayType = cDlgCassaAction::PAY_OTHER;
 
     *p_bShoppingCart    = m_bShoppingCart;
-    *p_nVoucher         = ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100;
     *p_uiCouponId       = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
 
-    if( *p_uiCouponId > 0 )
-    {
-        if( teComment->toPlainText().length() > 0 )
-            teComment->append( "\n" );
-        teComment->append( tr("Coupon used: %1").arg( cmbCoupon->currentText() ) );
-    }
-
-    if( teComment->toPlainText().length() > 0 )
-        *p_qsComment += QString( " - %1" ).arg(teComment->toPlainText());
-
     return ledAmountToPay->text().remove( QChar(',') );
-}
-
-void cDlgCassaAction::on_pbOk_clicked()
-{
-    m_bShoppingCart = false;
-
-    QDialog::accept();
-}
-
-void cDlgCassaAction::on_pbCancel_clicked()
-{
-    m_bShoppingCart = false;
-
-    QDialog::reject();
 }
 
 void cDlgCassaAction::updateMoneyBack()
@@ -220,32 +179,6 @@ void cDlgCassaAction::on_pbComment_clicked()
         setMinimumHeight( m_nHeightSmall );
         setMaximumHeight( m_nHeightSmall );
     }
-}
-
-void cDlgCassaAction::on_pbShoppingCart_clicked()
-{
-    m_poShoppingCart->setVoucher( ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100 );
-
-    cDBDiscount     obDBDiscount;
-    unsigned int    uiCouponId       = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
-
-    if( uiCouponId > 0 )
-    {
-        obDBDiscount.load( uiCouponId );
-        m_poShoppingCart->setItemDiscount( m_poShoppingCart->itemDiscount()+obDBDiscount.discount(m_poShoppingCart->itemSumPrice()) );
-
-        if( teComment->toPlainText().length() > 0 )
-            teComment->append( "\n" );
-        teComment->append( tr("Coupon used: %1").arg( cmbCoupon->currentText() ) );
-    }
-
-    if( teComment->toPlainText().length() > 0 )
-        m_poShoppingCart->setComment( QString( "%1 - %2" ).arg(m_poShoppingCart->comment()).arg(teComment->toPlainText()) );
-
-    m_poShoppingCart->save();
-    m_bShoppingCart = true;
-
-    QDialog::accept();
 }
 
 void cDlgCassaAction::on_cmbPaymentType_currentIndexChanged(int index)
@@ -353,3 +286,55 @@ void cDlgCassaAction::on_cmbCoupon_currentIndexChanged(int index)
         ledAmountToPay->setText( cPrice.currencyStringSeparator() );
     }
 }
+
+void cDlgCassaAction::updateShoppingCartItem()
+{
+    unsigned int uiCouponId = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
+
+    m_poShoppingCart->setVoucher( ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100 );
+
+    if( uiCouponId > 0 )
+    {
+        cDBDiscount     obDBDiscount;
+
+        obDBDiscount.load( uiCouponId );
+        m_poShoppingCart->setItemDiscount( m_poShoppingCart->itemDiscount()+obDBDiscount.discount(m_poShoppingCart->itemSumPrice()) );
+
+        if( teComment->toPlainText().length() > 0 )
+            teComment->append( "\n" );
+        teComment->append( tr("Coupon used: %1").arg( cmbCoupon->currentText() ) );
+    }
+
+    QString qsComment = m_poShoppingCart->comment();
+
+    if( qsComment.length() > 0 && teComment->toPlainText().length() > 0 )
+        qsComment.append( "\n" );
+    qsComment.append( teComment->toPlainText() );
+
+    m_poShoppingCart->setComment( qsComment );
+}
+
+void cDlgCassaAction::on_pbOk_clicked()
+{
+    updateShoppingCartItem();
+    m_bShoppingCart = false;
+
+    QDialog::accept();
+}
+
+void cDlgCassaAction::on_pbShoppingCart_clicked()
+{
+    updateShoppingCartItem();
+    m_poShoppingCart->save();
+    m_bShoppingCart = true;
+
+    QDialog::accept();
+}
+
+void cDlgCassaAction::on_pbCancel_clicked()
+{
+    m_bShoppingCart = false;
+
+    QDialog::reject();
+}
+
