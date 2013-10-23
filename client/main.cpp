@@ -161,9 +161,32 @@ int main( int argc, char *argv[] )
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
-        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
         g_obLicenceManager.initialize();
+
+        int     nDaysRemain = g_obLicenceManager.daysRemain();
+
+        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( nDaysRemain < 7 )
+        {
+            qsSpalsh += QObject::tr("\nVALIDATE YOUR APPLICATION\nWITH YOUR FRANCHISE PROVIDER\n\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+            if( nDaysRemain < 1 )
+            {
+                qsSpalsh += QObject::tr("The application validity has been expired.\n"
+                                        "The application can be used only in DEMO mode.\n\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+            }
+#ifdef __WIN32__
+            Sleep(3000);
+#else
+            sleep( 3 );
+#endif
+        }
 
         //-------------------------------------------------------------------------------
         // End of process connection initialization
@@ -177,7 +200,7 @@ int main( int argc, char *argv[] )
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
         g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg(nId).arg(g_poPrefs->isComponentHardwareInstalled()) << EOM;
-        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ )
+        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ && nDaysRemain > 0 )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

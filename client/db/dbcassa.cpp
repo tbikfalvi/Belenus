@@ -100,6 +100,12 @@ void cDBCassa::save() throw( cSevException )
     cTracer obTrace( "cDBCassa::save" );
     QString  qsQuery;
 
+    if( m_uiUserId < 2 )
+    {
+        throw cSevException( cSeverity::INFO, QString("Cassa can not be saved with userId=%1").arg(m_uiUserId).toStdString().c_str() );
+        return;
+    }
+
     if( m_uiId )
     {
         qsQuery = "UPDATE";

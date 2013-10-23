@@ -18,9 +18,9 @@ USE `belenus`;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 0, 'BLNS_SERIAL_GLOBAL', '', '', '', '', '', '', NULL, '0000-00-00', 1, 'ARC');
+ ( 0, 'BLNS_SERIAL_GLOBAL', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
 INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip`, `address`, `studio`, `contact`, `lastValidated`, `active`, `archive`) VALUES
- ( 1, 'BLNS_SERIAL_DEMO', '', '', '', '', '', '', NULL, '0000-00-00', 1, 'ARC');
+ ( 1, 'BLNS_SERIAL_DEMO', 'Magyarország', 'Budapest', 'Budapest', '', '', 'KiwiSun Franchise', NULL, '2013-10-01', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
@@ -254,7 +254,7 @@ INSERT INTO `productactiontype` (`productActionTypeId`, `licenceId`, `name`, `in
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `discounts` (`discountId`, `licenceId`, `patientId`, `companyId`, `paymentMethodId`, `productId`, `regularCustomer`, `employee`, `service`, `name`, `discountValue`, `discountPercent`, `modified`, `active`, `archive`) VALUES
- (NULL, '', NULL, NULL, NULL, NULL, '0', '0', '0', '', '', '', '', '0', 'ARC');
+ (NULL, '0', NULL, NULL, NULL, NULL, '0', '0', '0', '', '', '', '', '0', 'ARC');
 UPDATE `discounts` SET `discountId`='0' WHERE `discountId`=1;
 ALTER TABLE `discounts` auto_increment=1;
 
@@ -3616,18 +3616,18 @@ ALTER TABLE `ledgerDevice` auto_increment=1;
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `ledger` (`ledgerId`, `licenceId`, `parentId` , `ledgerTypeId` , `ledgerDeviceId` , `paymentMethodId` , `userId` , `productId` , `patientCardTypeId` , `patientCardId` , `panelId` , `patientId` , `name` , `netPrice` , `voucher` , `discount` , `vatpercent` , `totalPrice` , `ledgerTime` , `comment` , `modified` , `active` , `archive` ) VALUES
- ( 0 ,  '1',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0', '0', '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );
+ ( 0 ,  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '',  '0', '0', '0',  '0',  '0', CURRENT_TIMESTAMP , NULL ,  '',  '0',  'ARC' );
 UPDATE `ledger` SET `ledgerId`=0 WHERE `ledgerId`=1;
 ALTER TABLE `ledger` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `modified`, `active`, `archive`) VALUES
- (1, 1, 'Vendég felvétele az adatbázisba', '0000-00-00 00:00:00', 1, 'ARC'),
- (2, 1, 'Bérlet vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
- (3, 1, 'Bérlet feltöltés', '0000-00-00 00:00:00', 1, 'ARC'),
- (4, 1, 'Termék vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
- (5, 1, 'Gép használat kártyával', '0000-00-00 00:00:00', 1, 'ARC'),
- (6, 1, 'Gép használat készpénzzel', '0000-00-00 00:00:00', 1, 'ARC');
+ (1, 0, 'Vendég felvétele az adatbázisba', '0000-00-00 00:00:00', 1, 'ARC'),
+ (2, 0, 'Bérlet vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
+ (3, 0, 'Bérlet feltöltés', '0000-00-00 00:00:00', 1, 'ARC'),
+ (4, 0, 'Termék vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
+ (5, 0, 'Gép használat kártyával', '0000-00-00 00:00:00', 1, 'ARC'),
+ (6, 0, 'Gép használat készpénzzel', '0000-00-00 00:00:00', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------

@@ -876,8 +876,8 @@ void cWndMain::timerEvent(QTimerEvent *)
         {
             m_bSerialRegistration = false;
 
-            g_obCassa.cassaClose();
-            g_obCassa.createNew( g_obUser.id() );
+//            g_obCassa.cassaClose();
+//            g_obCassa.createNew( g_obUser.id() );
 
             if( QMessageBox::question( this, tr("Question"),
                                        tr("Application licence key successfully registered.\n"
@@ -1412,12 +1412,21 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
 //====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()
 {
-    cDlgSerialReg   obDlgSerialReg( this );
-
-    if( obDlgSerialReg.exec() == QDialog::Accepted )
+    if( !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
     {
-        m_inRegistrationTimeout = 0;
-        m_bSerialRegistration = true;
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("You are not authorized to activate or modify\n"
+                                 "the licence key or the application's validity.") );
+    }
+    else
+    {
+        cDlgSerialReg   obDlgSerialReg( this );
+
+        if( obDlgSerialReg.exec() == QDialog::Accepted )
+        {
+            m_inRegistrationTimeout = 0;
+            m_bSerialRegistration = true;
+        }
     }
 }
 //====================================================================================
@@ -1989,33 +1998,37 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
 {
     m_dlgProgress->showProgress();
 
-    g_poDB->executeQTQuery( QString( "DELETE FROM ledger WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM ledgerDevice WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM cassaDenominations WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM cassaHistory WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM cassa WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM address WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM zipRegionCity WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM discounts WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM products WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM productTypes WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM patientCardHistories WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM patientCards WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM patientCardTypes WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM patients WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM doctors WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM companies WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM healthInsurances WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM illnessGroups WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM reasonToVisit WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM patientOrigin WHERE licenceId=1" ) );
-    g_poDB->executeQTQuery( QString( "DELETE FROM users WHERE licenceId=1 and userId>2" ) );
+    try
+    {
+        g_poDB->executeQTQuery( QString( "DELETE FROM ledger WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM ledgerDevice WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM cassaDenominations WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM cassaHistory WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM cassa WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM address WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM zipRegionCity WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM discounts WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM products WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM productTypes WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientCardHistories WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientCards WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientCardTypes WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patients WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM companies WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM users WHERE licenceId=1 and userId>2" ) );
 
-    m_dlgProgress->hideProgress();
+        m_dlgProgress->hideProgress();
 
-    QMessageBox::information( this, tr("Information"),
-                              tr("Deleting data attached to DEMO licence key has been finished."));
+        QMessageBox::information( this, tr("Information"),
+                                  tr("Deleting data attached to DEMO licence key has been finished."));
+    }
+    catch( cSevException &e )
+    {
+        m_dlgProgress->hideProgress();
+
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 //====================================================================================
 void cWndMain::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )

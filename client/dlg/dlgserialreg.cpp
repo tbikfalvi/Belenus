@@ -14,33 +14,142 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
 
     setWindowIcon( QIcon("./resources/40x40_key.png") );
 
-    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbActivateKey->setIcon( QIcon("./resources/40x40_key.png") );
+    pbValidateCode->setIcon( QIcon("./resources/40x40_validate.png") );
+    pbValidateApplication->setIcon( QIcon("./resources/40x40_hourglass.png") );
+    pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
 
     g_obLogger(cSeverity::INFO) << "Licence id: " << g_poPrefs->getLicenceId() << EOM;
 
-    if( g_poPrefs->getLicenceId() > 1 )
-    {
-        setWindowTitle( tr("Activate application") );
-        pbValidate->setIcon( QIcon("./resources/40x40_ok.png") );
-        lblSerial->setText( tr("Enter activation key") );
-    }
-    else
-    {
-        setWindowTitle( tr("Validate Serial key") );
-        pbValidate->setIcon( QIcon("./resources/40x40_edit.png") );
-        lblSerial->setText( tr("Enter serial key") );
+    ledSerialKey->setText( g_obLicenceManager.licenceKey() );
+    lblValidDays->setText( "   " );
 
-        ledSerial->setText( g_obLicenceManager.licenceKey() );
-    }
+    pbValidateApplication->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
-    ledSerial->setFocus();
-    ledSerial->selectAll();
+    if( g_poPrefs->getLicenceId() > 1 && g_obLicenceManager.activateLicence( ledSerialKey->text() ) == cLicenceManager::ERR_NO_ERROR )
+    {
+        ledCodeActivation->setText( g_obLicenceManager.validationKey() );
+        ledLastValidated->setText( g_obLicenceManager.lastValidated() );
+        ledCodeValidation->setEnabled( true );
+        ledCodeValidation->setText( g_obLicenceManager.activationKey() );
+        pbValidateCode->setEnabled( true );
+        lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
+        ledCodeValidation->setFocus();
+    }
 }
 
 cDlgSerialReg::~cDlgSerialReg()
 {
 }
 
+void cDlgSerialReg::on_pbActivateKey_clicked()
+{
+    int nRet = g_obLicenceManager.activateLicence( ledSerialKey->text() );
+
+    switch( nRet )
+    {
+        case cLicenceManager::ERR_NO_ERROR:
+            g_obLicenceManager.initialize();
+            QMessageBox::information( this, tr("Information"),
+                                      tr("Your licence key has been verified successfully.\n"
+                                         "Please send the 'Activation code' to the\n"
+                                         "provider of the Belenus application and\n"
+                                         "enter the given code into the 'Validation code' field.\n"
+                                         "Finally click on the 'Validate' button.") );
+            ledCodeActivation->setText( g_obLicenceManager.validationKey() );
+            ledCodeActivation->setFocus();
+            ledCodeActivation->selectAll();
+            ledCodeValidation->setEnabled( true );
+            pbValidateCode->setEnabled( true );
+            lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
+            ledLastValidated->setText( g_obLicenceManager.lastValidated() );
+            break;
+
+        case cLicenceManager::ERR_KEY_FORMAT_MISMATCH:
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The format of the licence key you entered is not valid.\n"
+                                     "Please check your licence key and retype it if necessary.") );
+            ledCodeActivation->setText( "" );
+            pbValidateCode->setEnabled( false );
+            break;
+
+        case cLicenceManager::ERR_KEY_NUMBER_INCORRECT:
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The order number of the licence key you entered is not correct.\n"
+                                     "Please check your licence key and retype it if necessary.") );
+            ledCodeActivation->setText( "" );
+            pbValidateCode->setEnabled( false );
+            break;
+
+        case cLicenceManager::ERR_KEY_NOT_EXISTS:
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The licence key you entered is not valid.\n"
+                                     "Please check your licence key and retype it if necessary..") );
+            ledCodeActivation->setText( "" );
+            pbValidateCode->setEnabled( false );
+            break;
+    }
+}
+
+void cDlgSerialReg::on_pbValidateCode_clicked()
+{
+    int nRet = g_obLicenceManager.validateLicence( ledCodeValidation->text() );
+
+    switch( nRet )
+    {
+        case cLicenceManager::ERR_NO_ERROR:
+            QMessageBox::information( this, tr("Information"),
+                                      tr("Your licence key has been activated successfully.\n\n"
+                                         "Please note that you have to validate your application\n"
+                                         "regulary by your franchise partner.\n"
+                                         "Without validation the application can run in DEMO mode.\n\n"
+                                         "You have %1 days until the next validation.").arg( g_obLicenceManager.daysRemain() ) );
+            break;
+
+        case cLicenceManager::ERR_ACT_KEY_INCORRECT:
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The validation code you entered does not match with the requested.\n"
+                                     "Please check your code and retype it if necessary.") );
+            break;
+    }
+}
+
+void cDlgSerialReg::on_pbValidateApplication_clicked()
+{
+    if( !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("You are not authorized to validate the application.") );
+    }
+    else
+    {
+        if( g_poPrefs->getLicenceId() > 1 )
+        {
+            ledLastValidated->setText( g_obLicenceManager.validateApplication() );
+            lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
+        }
+    }
+}
+
+void cDlgSerialReg::on_pbOk_clicked()
+{
+    QDialog::accept();
+}
+
+void cDlgSerialReg::on_pbCancel_clicked()
+{
+    QDialog::reject();
+}
+
+
+
+
+
+
+
+
+/*
 void cDlgSerialReg::on_pbValidate_clicked()
 {
     if( g_poPrefs->getLicenceId() > 1 )
@@ -107,8 +216,4 @@ void cDlgSerialReg::on_pbValidate_clicked()
         }
     }
 }
-
-void cDlgSerialReg::on_pbCancel_clicked()
-{
-    QDialog::reject();
-}
+*/

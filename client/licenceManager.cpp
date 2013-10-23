@@ -153,12 +153,17 @@ bool cLicenceManager::isDemo()
     return m_LicenceType == LTYPE_DEMO || m_LicenceType == LTYPE_EXPIRED || m_LicenceType == LTYPE_INVALID;
 }
 
+QString cLicenceManager::lastValidated()
+{
+    return m_qdLastValidated.toString( "yyyy-MM-dd" );
+}
+
 int cLicenceManager::daysRemain()
 {
     if ( !m_qdLastValidated.isValid() )
         return 0;
 
-    int nDays = QDate::currentDate().daysTo(m_qdLastValidated);
+    int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
     // nDays<0 means currentdate is before lastvalidated - error
     if ( nDays < 0 )
         return 0;
@@ -171,7 +176,17 @@ int cLicenceManager::daysRemain()
     return nDays;
 }
 
-int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
+QString cLicenceManager::validateApplication()
+{
+    m_qdLastValidated = QDate::currentDate();
+    QString qsLastValidated = m_qdLastValidated.toString( "yyyy-MM-dd" );
+
+    g_poDB->executeQTQuery( QString("UPDATE licences SET lastValidated=\"%1\" WHERE licenceId=%2").arg( qsLastValidated ).arg( g_poPrefs->getLicenceId() ) );
+
+    return qsLastValidated;
+}
+
+int cLicenceManager::activateLicence( const QString &p_qsLicenceString )
 {
     int nRet = ERR_NO_ERROR;
 
@@ -212,7 +227,7 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
         return ERR_KEY_NOT_EXISTS;
     }
 
-    if( nRet == ERR_NO_ERROR )
+    if( nRet == ERR_NO_ERROR && m_qsLicenceString.compare( p_qsLicenceString ) != 0 )
     {
         m_nLicenceOrderNumber = nLicenceNumber;
 
@@ -222,7 +237,6 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
         {
             poQuery = g_poDB->executeQTQuery( QString( "INSERT INTO licences ( `licenceId`, `serial`, `lastValidated` ) VALUES ( %1, '%2', '%3' )" ).arg(nLicenceNumber+1).arg(p_qsLicenceString).arg(QDate::currentDate().toString("yyyy-MM-dd")) );
             if( poQuery ) g_poPrefs->setLicenceId( poQuery->lastInsertId().toUInt() );
-            m_nLicenceId = nLicenceNumber;
             m_qsLicenceString = p_qsLicenceString;
         }
         catch( cSevException &e )
@@ -235,9 +249,9 @@ int cLicenceManager::validateLicence( const QString &p_qsLicenceString )
     return nRet;
 }
 
-int cLicenceManager::activateLicence(const QString &p_qsValidationString)
+int cLicenceManager::validateLicence(const QString &p_qsValidationString)
 {
-    cTracer obTrace( "cLicenceManager::activateLicence" );
+    cTracer obTrace( "cLicenceManager::validateLicence" );
 
     int nRet = ERR_NO_ERROR;
 
@@ -296,6 +310,8 @@ int cLicenceManager::activateLicence(const QString &p_qsValidationString)
 
     settings.setValue( "Active", qsCodeActivation );
 
+    g_poDB->executeQTQuery( QString("UPDATE licences SET active=1 WHERE licenceId=%1").arg( g_poPrefs->getLicenceId() ) );
+
     return nRet;
 }
 
@@ -310,6 +326,17 @@ QString cLicenceManager::validationKey() const
     int n2 = m_qsLicenceString.mid( 5, 1 ).toInt();
 
     return QString( "%1%2%3" ).arg( m_qslCode.at(n1) ).arg( m_qslCode.at(10 + n2) ).arg( m_qsCode );
+}
+
+QString cLicenceManager::activationKey()
+{
+    QString qsAct = "";
+
+    for( int i=0; i<6; i++ )
+    {
+        qsAct.append( m_qslCode.at( i*10 + m_qsAct.at(i).digitValue() ) );
+    }
+    return qsAct;
 }
 
 void cLicenceManager::_checkCode()
@@ -403,6 +430,7 @@ void cLicenceManager::_checkValidity()
 
             if( qsCodeVer.compare(qsCodeAct) == 0 )
             {
+                m_qsAct = qsCodeAct;
                 m_LicenceType = LTYPE_ACTIVATED;
             }
             else
