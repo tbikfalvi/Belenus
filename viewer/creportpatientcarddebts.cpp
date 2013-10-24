@@ -30,19 +30,16 @@ void cReportPatientcardDebts::refreshReport()
     QString qsQuery = QString( "SELECT patientcards.patientCardId, "
                                "patientCardTypeId, "
                                "barcode, "
-                               "ledgerId, "
-                               "COUNT(ledgerId), "
-                               "patientcardunits.unitTime "
+                               "SUM(patientcardunits.unitPrice)/100 AS price, "
+                               "COUNT(patientcardunits.unitPrice) AS units "
                                "FROM patientcards LEFT JOIN patientcardunits ON "
                                "patientcards.patientCardId=patientcardunits.patientCardId WHERE "
-                               "patientcards.active=1 AND "
-                               "ledgerId>0 AND "
-                               "patientcards.patientCardId>1 AND "
-                               "(patientcardunits.active=1 OR "
-                               " patientcardunits.dateTimeUsed>\"%1 00:00:00\") AND "
+                               "(patientcardunits.active=1 OR patientcardunits.dateTimeUsed>\"%1 00:00:00\") AND "
                                "patientcardunits.validDateFrom<\"%1 24:00:00\" AND "
-                               "patientcardunits.validDateTo>\"%1 00:00:00\" "
-                               "GROUP BY ledgerId ORDER BY barcode " ).arg( filterDateStart().toString("yyyy-MM-dd") );
+                               "patientcardunits.validDateTo>\"%1 00:00:00\" AND "
+                               "patientcards.active=1 AND "
+                               "patientcards.patientCardId>1 "
+                               "GROUP BY barcode ORDER BY barcode " ).arg( filterDateStart().toString("yyyy-MM-dd") );
     QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     m_dlgProgress.setProgressValue( 90 );
