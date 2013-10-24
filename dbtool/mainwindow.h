@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QDir>
 #include <QtSql/QSqlDatabase>
+#include <QListWidgetItem>
 
 #include "dlgprogress.h"
 
@@ -167,6 +168,7 @@ private:
 
     int                             _getPatientCardTypeNewId( int p_nID );
     int                             _getPatientCardTypePrice( int p_nID );
+    int                             _getPatientCardTypeUnitTime( int p_nID );
     int                             _getProductTypeNewId( int p_nID );
     int                             _getProductNewId( int p_nID );
 
@@ -174,12 +176,20 @@ private:
 
     void                            _fillListPatientCardTypes();
 
+    void                            _checkExportSelection();
+
     Ui::MainWindow                  *ui;
 
     QDir                             m_qdExpCurrentDir;
     int                              m_nProgramType;
 
     int                              m_nCountItems;
+    int                              m_nCountPCT;
+    int                              m_nCountPC;
+    int                              m_nCountPT;
+    int                              m_nCountP;
+    int                              m_nCountPA;
+    int                              m_nCountU;
 
     int                              m_nCurrentPage;
 
@@ -216,13 +226,8 @@ private:
 private slots:
     void on_pbExportProcess_clicked();
     void on_pbPExportConnect_clicked();
-//    void on_pbExportPCTDat_clicked();
-//    void on_pbImportPCTText_clicked();
-//    void on_pbSelectImportFile_clicked();
     void on_pbImportDB_clicked();
     void on_pbExpSelectDir_clicked();
-//    void on_rbProgramSensolite_clicked();
-    void on_rbProgramKiwiSun_clicked();
     void on_pbNext_clicked();
     void on_pbPrev_clicked();
     void on_pbCancel_clicked();
@@ -232,6 +237,13 @@ private slots:
     void on_pbCheckSVDatFiles_clicked();
     void on_pbSaveUnitTimeGeneral_clicked();
     void on_listPatientCardTypes_itemDoubleClicked(QListWidgetItem *item);
+    void on_pbSaveUnitTime_clicked();
+    void on_ledBarcodeLength_textEdited(const QString &arg1);
+    void on_chkPExportPCT_toggled(bool checked);
+    void on_chkPExportPC_toggled(bool checked);
+    void on_chkPExportPT_toggled(bool checked);
+    void on_chkPExportP_toggled(bool checked);
+    void on_chkPExportUser_toggled(bool checked);
 };
 
 #endif // MAINWINDOW_H
