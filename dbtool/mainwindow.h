@@ -172,6 +172,8 @@ private:
 
     void                            _logAction( QString p_qsLogMessage );
 
+    void                            _fillListPatientCardTypes();
+
     Ui::MainWindow                  *ui;
 
     QDir                             m_qdExpCurrentDir;

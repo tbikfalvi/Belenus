@@ -128,10 +128,7 @@ void MainWindow::_initializePage()
         {
             ui->ledPCTUnitTimeGeneral->setText( "" );
             ui->listPatientCardTypes->clear();
-            for( int i=0; i<m_qvPatientCardTypes.count(); i++ )
-            {
-                ui->listPatientCardTypes->addItem( tr("%1\t%2 eur\t%3 minutes").arg( QString(m_qvPatientCardTypes.at(i).strNev) ).arg( m_qvPatientCardTypes.at(i).nAr ).arg( m_qvPatientCardTypes.at(i).nEgysegIdo ) );
-            }
+            _fillListPatientCardTypes();
             ui->ledPCTName->setText( "" );
             ui->ledPCTUnitTime->setText( "" );
             ui->pbNext->setEnabled( false );
@@ -1322,6 +1319,20 @@ void MainWindow::_DeCode( char *str, int size )
 //====================================================================================
 // PREPROCESS PATIENTCARD TYPE
 //====================================================================================
+void MainWindow::_fillListPatientCardTypes()
+//====================================================================================
+{
+    setCursor( Qt::WaitCursor);
+
+    ui->listPatientCardTypes->clear();
+    for( int i=0; i<m_qvPatientCardTypes.count(); i++ )
+    {
+        ui->listPatientCardTypes->addItem( tr("%1\t%2 eur\t%3 minutes").arg( QString(m_qvPatientCardTypes.at(i).strNev) ).arg( m_qvPatientCardTypes.at(i).nAr ).arg( m_qvPatientCardTypes.at(i).nEgysegIdo ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
 void MainWindow::on_pbSaveUnitTimeGeneral_clicked()
 //====================================================================================
 {
@@ -1334,5 +1345,8 @@ void MainWindow::on_pbSaveUnitTimeGeneral_clicked()
 void MainWindow::on_listPatientCardTypes_itemDoubleClicked(QListWidgetItem *item)
 //====================================================================================
 {
+    QStringList qslItem = item->text().split( '\t' );
 
+    ui->ledPCTName->setText( qslItem.at(0) );
+    ui->ledPCTUnitTime->setText( qslItem.at(2) );
 }

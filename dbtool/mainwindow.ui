@@ -802,7 +802,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Set the general patientcard unit time in seconds :</string>
+               <string>Set the general patientcard unit time in minutes :</string>
               </property>
               <property name="wordWrap">
                <bool>false</bool>
@@ -865,7 +865,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Set the selected patientcard unit time in seconds :</string>
+             <string>Set the selected patientcard unit time in minutes :</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
