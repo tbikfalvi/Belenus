@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by Qt Creator 2.3.0, 2013-10-23T20:49:53. -->
+=======
+<!-- Written by Qt Creator 2.3.0, 2013-10-24T21:06:30. -->
+>>>>>>> origin/DBTool_Wizard
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>

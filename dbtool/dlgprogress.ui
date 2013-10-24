@@ -60,6 +60,9 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="format">
+         <string>Actions processed: %v / %m</string>
+        </property>
        </widget>
       </item>
      </layout>
