@@ -70,7 +70,7 @@
          <number>2</number>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -810,7 +810,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="ledPExportS2">
+             <widget class="QLineEdit" name="ledPCTUnitTimeGeneral">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -825,6 +825,17 @@
                 <width>50</width>
                 <height>16777215</height>
                </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbSaveUnitTimeGeneral">
+              <property name="text">
+               <string>Save</string>
+              </property>
+              <property name="icon">
+               <iconset resource="DBTool.qrc">
+                <normaloff>:/imgButton/ok.png</normaloff>:/imgButton/ok.png</iconset>
               </property>
              </widget>
             </item>
@@ -901,7 +912,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="ledPExportS2_2">
+             <widget class="QLineEdit" name="ledPCTUnitTime">
               <property name="enabled">
                <bool>true</bool>
               </property>

@@ -17,13 +17,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
 
-    m_nCurrentPage      = CONST_PAGE_START;
-    m_qdExpCurrentDir   = "C:/Program Files/Solarium/";
-    m_nProgramType      = DBTool::KiwiSun;
-    m_poDB              = NULL;
-    m_qsLogFileName     = "";
-    m_dlgProgress       = new cDlgProgress( this );
-    m_qsLanguage        = "hu";
+    m_nCurrentPage              = CONST_PAGE_START;
+    m_qdExpCurrentDir           = "C:/Program Files/Solarium/";
+    m_nProgramType              = DBTool::KiwiSun;
+    m_poDB                      = NULL;
+    m_qsLogFileName             = "";
+    m_dlgProgress               = new cDlgProgress( this );
+    m_qsLanguage                = "hu";
+    m_bIsPatientCardTypesLoaded = false;
+    m_bIsPatientCardsLoaded     = false;
+    m_bIsProductTypesLoaded     = false;
+    m_bIsProductsLoaded         = false;
+    m_bIsUsersLoaded            = false;
 
     ui->ledPathDB->setText( m_qdExpCurrentDir.path() );
     ui->pageController->setCurrentIndex( m_nCurrentPage );
@@ -115,10 +120,21 @@ void MainWindow::_initializePage()
         }
         case CONST_PAGE_IMPORT:
         {
+            ui->listResultImport->clear();
+            ui->pbNext->setEnabled( false );
             break;
         }
         case CONST_PAGE_PREPROC_PCT:
         {
+            ui->ledPCTUnitTimeGeneral->setText( "" );
+            ui->listPatientCardTypes->clear();
+            for( int i=0; i<m_qvPatientCardTypes.count(); i++ )
+            {
+                ui->listPatientCardTypes->addItem( tr("%1\t%2 eur\t%3 minutes").arg( QString(m_qvPatientCardTypes.at(i).strNev) ).arg( m_qvPatientCardTypes.at(i).nAr ).arg( m_qvPatientCardTypes.at(i).nEgysegIdo ) );
+            }
+            ui->ledPCTName->setText( "" );
+            ui->ledPCTUnitTime->setText( "" );
+            ui->pbNext->setEnabled( false );
             break;
         }
         case CONST_PAGE_PREPROC_PC:
@@ -160,413 +176,7 @@ void MainWindow::on_pbExpSelectDir_clicked()
     }
 }
 
-void MainWindow::on_pbImportDB_clicked()
-{
-    m_qsLogFileName = QString("c:/belenus_dbtool_%1.log").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmm"));
 
-    _logAction( tr("Filenames of patientcard and patientcard types data:") );
-    _logAction( m_qsPCTFileName );
-    _logAction( m_qsPCFileName );
-    _logAction( m_qsPTFileName );
-    _logAction( m_qsPFileName );
-    _logAction( m_qsUFileName );
-
-    m_nCountItems = 0;
-
-    _loadPatientCardTypes();
-    _loadPatientCards();
-    _loadProductTypes();
-    _loadProducts();
-    _loadProductAssign();
-    _loadUsers();
-}
-
-//====================================================================================
-void MainWindow::_loadPatientCardTypes()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int   nCount = 0;
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvPatientCardTypes.clear();
-
-    file = fopen( m_qsPCTFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strPatiencardTypeVersion, 0, 10 );
-        fread( m_strPatiencardTypeVersion, 10, 1, file );
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        //ui->listLog->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of patientcard types to be imported: %1").arg(nCount) );
-        m_nCountItems += nCount;
-        if( nCount > 0 )
-        {
-            typ_berlettipus stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                stTemp.nNewID = 0;
-                fread( &stTemp.nAr, 4, 1, file );
-                fread( &stTemp.nEgyseg, 4, 1, file );
-                fread( stTemp.strNev, 50, 1, file );
-                fread( &stTemp.nErvTolEv, 4, 1, file );
-                fread( &stTemp.nErvTolHo, 4, 1, file );
-                fread( &stTemp.nErvTolNap, 4, 1, file );
-                fread( &stTemp.nErvIgEv, 4, 1, file );
-                fread( &stTemp.nErvIgHo, 4, 1, file );
-                fread( &stTemp.nErvIgNap, 4, 1, file );
-                fread( &stTemp.nErvNapok, 4, 1, file );
-                fread( &stTemp.bSzolariumHaszn, 1, 1, file );
-                if( m_nProgramType == DBTool::Sensolite )
-                {
-                    fread( &stTemp.nEgysegIdo, 4, 1, file );
-                }
-                else
-                {
-                    stTemp.nEgysegIdo = 0;
-                }
-
-                _DeCode( stTemp.strNev, 50 );
-
-                m_qvPatientCardTypes.append( stTemp );
-            }
-        }
-        fclose( file );
-        //ui->listLog->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
-        _logAction( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
-    }
-    else
-    {
-        //ui->listLog->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-
-//====================================================================================
-void MainWindow::_loadPatientCards()
-//====================================================================================
-{
-    FILE           *file = NULL;
-//FILE           *filemod = NULL;
-FILE *filetxt = NULL;
-    unsigned int    nCount = 0;
-    char            m_strPatiencardVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvPatientCards.clear();
-
-    file = fopen( m_qsPCFileName.toStdString().c_str(), "rb" );
-//filemod = fopen( QString("c:\\mod_brltfsv.dat").toStdString().c_str(), "wb" );
-filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
-    if( file != NULL )
-    {
-        memset( m_strPatiencardVersion, 0, 10 );
-        fread( m_strPatiencardVersion, 10, 1, file );
-//fwrite( m_strPatiencardVersion, 10, 1, filemod );
-        //ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-//fwrite( &nCount, 4, 1, filemod );
-        //ui->listLog->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of patientcards to be imported: %1").arg(nCount) );
-        m_nCountItems += nCount;
-        if( nCount > 0 )
-        {
-            typ_berlet   stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( stTemp.strVonalkod, 20, 1, file );
-                fread( stTemp.strMegjegyzes, 50, 1, file );
-                fread( &stTemp.nBerletTipus, 4, 1, file );
-                fread( &stTemp.nEgyseg, 4, 1, file );
-                fread( &stTemp.nErvEv, 4, 1, file );
-                fread( &stTemp.nErvHo, 4, 1, file );
-                fread( &stTemp.nErvNap, 4, 1, file );
-                fread( &stTemp.nPin, 4, 1, file );
-/*
-int nErvEv = 0;
-if( stTemp.nErvEv < 2014 && stTemp.nEgyseg > 0 )
-{
-    nErvEv = stTemp.nErvEv + 1;
-}
-else
-{
-    nErvEv = stTemp.nErvEv;
-}
-fwrite( stTemp.strVonalkod, 20, 1, filemod );
-fwrite( stTemp.strMegjegyzes, 50, 1, filemod );
-fwrite( &stTemp.nBerletTipus, 4, 1, filemod );
-fwrite( &stTemp.nEgyseg, 4, 1, filemod );
-fwrite( &nErvEv, 4, 1, filemod );
-fwrite( &stTemp.nErvHo, 4, 1, filemod );
-fwrite( &stTemp.nErvNap, 4, 1, filemod );
-fwrite( &stTemp.nPin, 4, 1, filemod );
-*/
-                _DeCode( stTemp.strVonalkod, 20 );
-                _DeCode( stTemp.strMegjegyzes, 50 );
-QString qsLine = "";
-qsLine.append( QString("%1\t").arg( stTemp.strVonalkod ) );
-qsLine.append( QString("%1\t").arg( stTemp.strMegjegyzes ) );
-qsLine.append( QString("%1\t").arg( stTemp.nBerletTipus ) );
-qsLine.append( QString("%1\t").arg( stTemp.nEgyseg ) );
-qsLine.append( QString("%1\t").arg( stTemp.nErvEv ) );
-qsLine.append( QString("%1\t").arg( stTemp.nErvHo ) );
-qsLine.append( QString("%1\t").arg( stTemp.nErvNap ) );
-fputs( qsLine.toStdString().c_str(), filetxt );
-fputs( "\n", filetxt );
-                m_qvPatientCards.append( stTemp );
-            }
-        }
-        fclose( file );
-//fclose( filemod );
-fclose( filetxt );
-        //ui->listLog->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
-        _logAction( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
-    }
-    else
-    {
-        //ui->listLog->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadProductTypes()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvProductTypes.clear();
-
-    file = fopen( m_qsPTFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        //ui->listLog->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of product types to be imported: %1").arg(nCount) );
-        m_nCountItems += nCount;
-        if( nCount > 0 )
-        {
-            typ_termektipus stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                stTemp.nNewID = 0;
-                fread( stTemp.strNev, 100, 1, file );
-                _DeCode( stTemp.strNev, 100 );
-
-                ////ui->listLog->addItem( QString( "[%1] \'%2\'" ).arg(stTemp.nID).arg(stTemp.strNev) );
-
-                m_qvProductTypes.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        //ui->listLog->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
-        _logAction( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
-    }
-    else
-    {
-        //ui->listLog->addItem( tr( "Error occured during opening trmktpsfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadProducts()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvProducts.clear();
-
-    file = fopen( m_qsPFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        //ui->listLog->addItem( tr("Count of products to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of products to be imported: %1").arg(nCount) );
-        m_nCountItems += nCount;
-        if( nCount > 0 )
-        {
-            typ_termek stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                stTemp.nNewID = 0;
-                fread( stTemp.strVonalkod, 20, 1, file );
-                fread( stTemp.strNev, 100, 1, file );
-                fread( &stTemp.nAr, 4, 1, file );
-                fread( &stTemp.nDarab, 4, 1, file );
-                fread( &stTemp.nArBeszerzes, 4, 1, file );
-
-                _DeCode( stTemp.strVonalkod, 20 );
-                _DeCode( stTemp.strNev, 100 );
-
-                ////ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
-
-                m_qvProducts.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        //ui->listLog->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
-        _logAction( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
-    }
-    else
-    {
-        //ui->listLog->addItem( tr( "Error occured during opening trmkfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadProductAssign()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvProductAssigns.clear();
-
-    file = fopen( m_qsPAFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        //ui->listLog->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of product assigns to be imported: %1").arg(nCount) );
-        m_nCountItems += nCount;
-        if( nCount > 0 )
-        {
-            typ_termektipusassign stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nTermekID, 4, 1, file );
-                fread( &stTemp.nTTipusID, 4, 1, file );
-
-                ////ui->listLog->addItem( QString( "[%1] [%2]" ).arg(stTemp.nTermekID).arg(stTemp.nTTipusID) );
-
-                m_qvProductAssigns.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        //ui->listLog->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
-        _logAction( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
-    }
-    else
-    {
-        //ui->listLog->addItem( tr( "Error occured during opening trmktpssgfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_loadUsers()
-//====================================================================================
-{
-    FILE           *file = NULL;
-    unsigned int    nCount = 0;
-    char            m_strVersion[10];
-
-    setCursor( Qt::WaitCursor);
-
-    m_qvUsers.clear();
-
-    file = fopen( m_qsUFileName.toStdString().c_str(), "rb" );
-    if( file != NULL )
-    {
-        memset( m_strVersion, 0, 10 );
-        fread( m_strVersion, 10, 1, file );
-
-        nCount = 0;
-        fread( &nCount, 4, 1, file );
-        //ui->listLog->addItem( tr("Count of users to be imported: %1").arg(nCount) );
-        _logAction( tr("Count of users to be imported: %1").arg(nCount) );
-        m_nCountItems += nCount;
-        if( nCount > 0 )
-        {
-            typ_user stTemp;
-            for( unsigned int i=0; i<nCount; i++ )
-            {
-                fread( &stTemp.nID, 4, 1, file );
-                fread( stTemp.strAzonosito, 20, 1, file );
-                fread( stTemp.strLoginNev, 20, 1, file );
-                fread( stTemp.strNevCsalad, 100, 1, file );
-                fread( stTemp.strJelszo, 20, 1, file );
-                fread( stTemp.strMegjegyzes, 1000, 1, file );
-                fread( &stTemp.nUserLevel, 4, 1, file );
-
-                _DeCode( stTemp.strAzonosito, 20 );
-                _DeCode( stTemp.strLoginNev, 20 );
-                _DeCode( stTemp.strNevCsalad, 100 );
-                _DeCode( stTemp.strJelszo, 20 );
-                _DeCode( stTemp.strMegjegyzes, 1000 );
-
-                //ui->listLog->addItem( QString( "\'%1\' \'%2\' \'%3\' \'%4\' \'%5\' [%6]" ).arg(stTemp.strAzonosito).arg(stTemp.strLoginNev).arg(stTemp.strNevCsalad).arg(stTemp.strJelszo).arg(stTemp.strMegjegyzes).arg(stTemp.nUserLevel) );
-
-                m_qvUsers.append( stTemp );
-            }
-        }
-
-        fclose( file );
-        //ui->listLog->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
-        _logAction( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
-    }
-    else
-    {
-        //ui->listLog->addItem( tr( "Error occured during opening srfsv.dat file." ) );
-    }
-
-    setCursor( Qt::ArrowCursor);
-}
-//====================================================================================
-void MainWindow::_EnCode( char *str, int size )
-//====================================================================================
-{
-   for(int i=0;i<size;i++)
-   {
-      str[i] ^= 11;
-   }
-}
-//====================================================================================
-void MainWindow::_DeCode( char *str, int size )
-//====================================================================================
-{
-   for(int i=0;i<size;i++)
-   {
-      str[i] ^= 11;
-   }
-}
 //====================================================================================
 void MainWindow::_loadPatientCardTypeImport()
 {/*
@@ -1277,4 +887,452 @@ void MainWindow::on_pbPExportConnect_clicked()
     ui->pbNext->setEnabled( _isSystemVerificationOk() );
 }
 //====================================================================================
+// DATABASE IMPORT
+//====================================================================================
+void MainWindow::on_pbImportDB_clicked()
+//====================================================================================
+{
+    ui->listResultImport->clear();
 
+    m_qsLogFileName = QString("c:/belenus_dbtool_%1.log").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmm"));
+
+    _logAction( tr("Filenames of patientcard and patientcard types data:") );
+    _logAction( m_qsPCTFileName );
+    _logAction( m_qsPCFileName );
+    _logAction( m_qsPTFileName );
+    _logAction( m_qsPFileName );
+    _logAction( m_qsUFileName );
+
+    m_nCountItems = 0;
+
+    m_bIsPatientCardTypesLoaded = false;
+    m_bIsPatientCardsLoaded     = false;
+    m_bIsProductTypesLoaded     = false;
+    m_bIsProductsLoaded         = false;
+    m_bIsUsersLoaded            = false;
+
+    _loadPatientCardTypes();
+    _loadPatientCards();
+    _loadProductTypes();
+    _loadProducts();
+    _loadProductAssign();
+    _loadUsers();
+
+    if( m_bIsPatientCardTypesLoaded &&
+        m_bIsPatientCardsLoaded &&
+        m_bIsProductTypesLoaded &&
+        m_bIsProductsLoaded &&
+        m_bIsUsersLoaded )
+    {
+        ui->pbNext->setEnabled( true );
+    }
+}
+//====================================================================================
+//====================================================================================
+void MainWindow::_loadPatientCardTypes()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int   nCount = 0;
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvPatientCardTypes.clear();
+
+    file = fopen( m_qsPCTFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strPatiencardTypeVersion, 0, 10 );
+        fread( m_strPatiencardTypeVersion, 10, 1, file );
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listResultImport->addItem( tr("Count of patientcard types to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of patientcard types to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
+        if( nCount > 0 )
+        {
+            typ_berlettipus stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                stTemp.nNewID = 0;
+                fread( &stTemp.nAr, 4, 1, file );
+                fread( &stTemp.nEgyseg, 4, 1, file );
+                fread( stTemp.strNev, 50, 1, file );
+                fread( &stTemp.nErvTolEv, 4, 1, file );
+                fread( &stTemp.nErvTolHo, 4, 1, file );
+                fread( &stTemp.nErvTolNap, 4, 1, file );
+                fread( &stTemp.nErvIgEv, 4, 1, file );
+                fread( &stTemp.nErvIgHo, 4, 1, file );
+                fread( &stTemp.nErvIgNap, 4, 1, file );
+                fread( &stTemp.nErvNapok, 4, 1, file );
+                fread( &stTemp.bSzolariumHaszn, 1, 1, file );
+                if( m_nProgramType == DBTool::Sensolite )
+                {
+                    fread( &stTemp.nEgysegIdo, 4, 1, file );
+                }
+                else
+                {
+                    stTemp.nEgysegIdo = 0;
+                }
+
+                _DeCode( stTemp.strNev, 50 );
+
+                m_qvPatientCardTypes.append( stTemp );
+            }
+        }
+        fclose( file );
+        ui->listResultImport->addItem( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
+        _logAction( tr("Importing %1 patientcard types finished.").arg(m_qvPatientCardTypes.size()) );
+        m_bIsPatientCardTypesLoaded = true;
+    }
+    else
+    {
+        ui->listResultImport->addItem( tr( "Error occured during opening brlttpsfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+
+//====================================================================================
+void MainWindow::_loadPatientCards()
+//====================================================================================
+{
+    FILE           *file = NULL;
+//FILE           *filemod = NULL;
+FILE *filetxt = NULL;
+    unsigned int    nCount = 0;
+    char            m_strPatiencardVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvPatientCards.clear();
+
+    file = fopen( m_qsPCFileName.toStdString().c_str(), "rb" );
+//filemod = fopen( QString("c:\\mod_brltfsv.dat").toStdString().c_str(), "wb" );
+filetxt = fopen( QString("c:\\brltfsv.txt").toStdString().c_str(), "wt" );
+    if( file != NULL )
+    {
+        memset( m_strPatiencardVersion, 0, 10 );
+        fread( m_strPatiencardVersion, 10, 1, file );
+//fwrite( m_strPatiencardVersion, 10, 1, filemod );
+        //ledVersionPCDAT->setText( QString::fromStdString(m_strPatiencardVersion) );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+//fwrite( &nCount, 4, 1, filemod );
+        ui->listResultImport->addItem( tr("Count of patientcards to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of patientcards to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
+        if( nCount > 0 )
+        {
+            typ_berlet   stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( stTemp.strVonalkod, 20, 1, file );
+                fread( stTemp.strMegjegyzes, 50, 1, file );
+                fread( &stTemp.nBerletTipus, 4, 1, file );
+                fread( &stTemp.nEgyseg, 4, 1, file );
+                fread( &stTemp.nErvEv, 4, 1, file );
+                fread( &stTemp.nErvHo, 4, 1, file );
+                fread( &stTemp.nErvNap, 4, 1, file );
+                fread( &stTemp.nPin, 4, 1, file );
+/*
+int nErvEv = 0;
+if( stTemp.nErvEv < 2014 && stTemp.nEgyseg > 0 )
+{
+    nErvEv = stTemp.nErvEv + 1;
+}
+else
+{
+    nErvEv = stTemp.nErvEv;
+}
+fwrite( stTemp.strVonalkod, 20, 1, filemod );
+fwrite( stTemp.strMegjegyzes, 50, 1, filemod );
+fwrite( &stTemp.nBerletTipus, 4, 1, filemod );
+fwrite( &stTemp.nEgyseg, 4, 1, filemod );
+fwrite( &nErvEv, 4, 1, filemod );
+fwrite( &stTemp.nErvHo, 4, 1, filemod );
+fwrite( &stTemp.nErvNap, 4, 1, filemod );
+fwrite( &stTemp.nPin, 4, 1, filemod );
+*/
+                _DeCode( stTemp.strVonalkod, 20 );
+                _DeCode( stTemp.strMegjegyzes, 50 );
+QString qsLine = "";
+qsLine.append( QString("%1\t").arg( stTemp.strVonalkod ) );
+qsLine.append( QString("%1\t").arg( stTemp.strMegjegyzes ) );
+qsLine.append( QString("%1\t").arg( stTemp.nBerletTipus ) );
+qsLine.append( QString("%1\t").arg( stTemp.nEgyseg ) );
+qsLine.append( QString("%1\t").arg( stTemp.nErvEv ) );
+qsLine.append( QString("%1\t").arg( stTemp.nErvHo ) );
+qsLine.append( QString("%1\t").arg( stTemp.nErvNap ) );
+fputs( qsLine.toStdString().c_str(), filetxt );
+fputs( "\n", filetxt );
+                m_qvPatientCards.append( stTemp );
+            }
+        }
+        fclose( file );
+//fclose( filemod );
+fclose( filetxt );
+        ui->listResultImport->addItem( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
+        _logAction( tr("Importing %1 patientcards finished.").arg(m_qvPatientCards.size()) );
+        m_bIsPatientCardsLoaded = true;
+    }
+    else
+    {
+        ui->listResultImport->addItem( tr( "Error occured during opening brltfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadProductTypes()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvProductTypes.clear();
+
+    file = fopen( m_qsPTFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listResultImport->addItem( tr("Count of product types to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of product types to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
+        if( nCount > 0 )
+        {
+            typ_termektipus stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                stTemp.nNewID = 0;
+                fread( stTemp.strNev, 100, 1, file );
+                _DeCode( stTemp.strNev, 100 );
+
+                ////ui->listLog->addItem( QString( "[%1] \'%2\'" ).arg(stTemp.nID).arg(stTemp.strNev) );
+
+                m_qvProductTypes.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listResultImport->addItem( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
+        _logAction( tr("Importing %1 product types finished.").arg(m_qvProductTypes.size()) );
+        m_bIsProductTypesLoaded = true;
+    }
+    else
+    {
+        ui->listResultImport->addItem( tr( "Error occured during opening trmktpsfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadProducts()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvProducts.clear();
+
+    file = fopen( m_qsPFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listResultImport->addItem( tr("Count of products to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of products to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
+        if( nCount > 0 )
+        {
+            typ_termek stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                stTemp.nNewID = 0;
+                fread( stTemp.strVonalkod, 20, 1, file );
+                fread( stTemp.strNev, 100, 1, file );
+                fread( &stTemp.nAr, 4, 1, file );
+                fread( &stTemp.nDarab, 4, 1, file );
+                fread( &stTemp.nArBeszerzes, 4, 1, file );
+
+                _DeCode( stTemp.strVonalkod, 20 );
+                _DeCode( stTemp.strNev, 100 );
+
+                ////ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
+
+                m_qvProducts.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listResultImport->addItem( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
+        _logAction( tr("Importing %1 products finished.").arg(m_qvProducts.size()) );
+        m_bIsProductsLoaded = true;
+    }
+    else
+    {
+        ui->listResultImport->addItem( tr( "Error occured during opening trmkfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadProductAssign()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvProductAssigns.clear();
+
+    file = fopen( m_qsPAFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listResultImport->addItem( tr("Count of product assigns to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of product assigns to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
+        if( nCount > 0 )
+        {
+            typ_termektipusassign stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nTermekID, 4, 1, file );
+                fread( &stTemp.nTTipusID, 4, 1, file );
+
+                ////ui->listLog->addItem( QString( "[%1] [%2]" ).arg(stTemp.nTermekID).arg(stTemp.nTTipusID) );
+
+                m_qvProductAssigns.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listResultImport->addItem( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
+        _logAction( tr("Importing %1 product assigns finished.").arg(m_qvProductAssigns.size()) );
+    }
+    else
+    {
+        ui->listResultImport->addItem( tr( "Error occured during opening trmktpssgfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_loadUsers()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    unsigned int    nCount = 0;
+    char            m_strVersion[10];
+
+    setCursor( Qt::WaitCursor);
+
+    m_qvUsers.clear();
+
+    file = fopen( m_qsUFileName.toStdString().c_str(), "rb" );
+    if( file != NULL )
+    {
+        memset( m_strVersion, 0, 10 );
+        fread( m_strVersion, 10, 1, file );
+
+        nCount = 0;
+        fread( &nCount, 4, 1, file );
+        ui->listResultImport->addItem( tr("Count of users to be imported: %1").arg(nCount) );
+        _logAction( tr("Count of users to be imported: %1").arg(nCount) );
+        m_nCountItems += nCount;
+        if( nCount > 0 )
+        {
+            typ_user stTemp;
+            for( unsigned int i=0; i<nCount; i++ )
+            {
+                fread( &stTemp.nID, 4, 1, file );
+                fread( stTemp.strAzonosito, 20, 1, file );
+                fread( stTemp.strLoginNev, 20, 1, file );
+                fread( stTemp.strNevCsalad, 100, 1, file );
+                fread( stTemp.strJelszo, 20, 1, file );
+                fread( stTemp.strMegjegyzes, 1000, 1, file );
+                fread( &stTemp.nUserLevel, 4, 1, file );
+
+                _DeCode( stTemp.strAzonosito, 20 );
+                _DeCode( stTemp.strLoginNev, 20 );
+                _DeCode( stTemp.strNevCsalad, 100 );
+                _DeCode( stTemp.strJelszo, 20 );
+                _DeCode( stTemp.strMegjegyzes, 1000 );
+
+                //ui->listLog->addItem( QString( "\'%1\' \'%2\' \'%3\' \'%4\' \'%5\' [%6]" ).arg(stTemp.strAzonosito).arg(stTemp.strLoginNev).arg(stTemp.strNevCsalad).arg(stTemp.strJelszo).arg(stTemp.strMegjegyzes).arg(stTemp.nUserLevel) );
+
+                m_qvUsers.append( stTemp );
+            }
+        }
+
+        fclose( file );
+        ui->listResultImport->addItem( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
+        _logAction( tr("Importing %1 users finished.").arg(m_qvUsers.size()) );
+        m_bIsUsersLoaded = true;
+    }
+    else
+    {
+        ui->listResultImport->addItem( tr( "Error occured during opening srfsv.dat file." ) );
+    }
+
+    setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void MainWindow::_EnCode( char *str, int size )
+//====================================================================================
+{
+   for(int i=0;i<size;i++)
+   {
+      str[i] ^= 11;
+   }
+}
+//====================================================================================
+void MainWindow::_DeCode( char *str, int size )
+//====================================================================================
+{
+   for(int i=0;i<size;i++)
+   {
+      str[i] ^= 11;
+   }
+}
+//====================================================================================
+// PREPROCESS PATIENTCARD TYPE
+//====================================================================================
+void MainWindow::on_pbSaveUnitTimeGeneral_clicked()
+//====================================================================================
+{
+    for( int i=0; i<m_qvPatientCardTypes.count(); i++ )
+    {
+        m_qvPatientCardTypes.at(i).nEgysegIdo = ui->ledPCTUnitTimeGeneral->text().toInt();
+    }
+}
+//====================================================================================
+void MainWindow::on_listPatientCardTypes_itemDoubleClicked(QListWidgetItem *item)
+//====================================================================================
+{
+
+}

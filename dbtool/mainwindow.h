@@ -190,6 +190,12 @@ private:
     QVector<typ_termektipusassign>   m_qvProductAssigns;
     QVector<typ_user>                m_qvUsers;
 
+    bool                             m_bIsPatientCardTypesLoaded;
+    bool                             m_bIsPatientCardsLoaded;
+    bool                             m_bIsProductTypesLoaded;
+    bool                             m_bIsProductsLoaded;
+    bool                             m_bIsUsersLoaded;
+
     QString                          m_qsPCFileName;
     QString                          m_qsPCTFileName;
     QString                          m_qsPTFileName;
@@ -222,6 +228,8 @@ private slots:
     void on_cmbLanguage_currentIndexChanged(int index);
     void on_pbLogin_clicked();
     void on_pbCheckSVDatFiles_clicked();
+    void on_pbSaveUnitTimeGeneral_clicked();
+    void on_listPatientCardTypes_itemDoubleClicked(QListWidgetItem *item);
 };
 
 #endif // MAINWINDOW_H
