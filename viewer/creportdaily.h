@@ -37,6 +37,7 @@ private:
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );
     int             _sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId );
     int             _sumPaymentMethod( QString p_qsCassaId, unsigned int p_uiPaymentMethodId );
+    int             _sumPaymentMethodVoucher( QString p_qsCassaId, unsigned int p_uiPaymentMethodId );
     int             _sumCassaIncome( unsigned int p_uiCassaId );
     int             _countPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse );
 

@@ -306,7 +306,7 @@ void MainWindow::_exportToBelenusPatientCards()
         QSqlQuery query = m_poDB->exec( qsSQLCommand );
 
         unsigned int uiPatientcardId = query.lastInsertId().toInt();
-        unsigned int uiPatientCardUnitPrice = _getPatientCardTypePrice( m_qvPatientCards.at(i).nBerletTipus ) / m_qvPatientCards.at(i).nEgyseg;
+        unsigned int uiPatientCardUnitPrice = _getPatientCardTypeUnitPrice( m_qvPatientCards.at(i).nBerletTipus );
 
         for( int j=0; j<m_qvPatientCards.at(i).nEgyseg; j++ )
         {
@@ -343,10 +343,10 @@ void MainWindow::_exportToBelenusPatientCards()
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "'%1', " ).arg( qsBarcode );
-        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypePrice( m_qvPatientCards.at(i).nBerletTipus ) );
+        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypeUnitPrice( m_qvPatientCards.at(i).nBerletTipus ) );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypePrice( m_qvPatientCards.at(i).nBerletTipus ) );
+        qsSQLCommand += QString( "'%1', " ).arg( _getPatientCardTypeUnitPrice( m_qvPatientCards.at(i).nBerletTipus ) );
         qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCards.at(i).nErvEv-1 ).arg( m_qvPatientCards.at(i).nErvHo ).arg( m_qvPatientCards.at(i).nErvNap );
         qsSQLCommand += QString( "NULL ,  '',  '1',  'ARC' );" );
 
@@ -505,7 +505,7 @@ int MainWindow::_getPatientCardTypeNewId( int p_nID )
     return nRet;
 }
 
-int MainWindow::_getPatientCardTypePrice( int p_nID )
+int MainWindow::_getPatientCardTypeUnitPrice( int p_nID )
 {
     int nRet = 0;
     int nCount = m_qvPatientCardTypes.size();
@@ -514,7 +514,7 @@ int MainWindow::_getPatientCardTypePrice( int p_nID )
     {
         if( m_qvPatientCardTypes.at(i).nID == p_nID )
         {
-            nRet = m_qvPatientCardTypes.at(i).nAr*100;
+            nRet = ( m_qvPatientCardTypes.at(i).nAr * 100 ) / m_qvPatientCardTypes.at(i).nEgyseg;
             break;
         }
     }

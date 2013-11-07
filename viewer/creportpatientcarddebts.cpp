@@ -30,7 +30,7 @@ void cReportPatientcardDebts::refreshReport()
     QString qsQuery = QString( "SELECT patientcards.patientCardId, "
                                "patientCardTypeId, "
                                "barcode, "
-                               "SUM(patientcardunits.unitPrice)/100 AS price, "
+                               "SUM(patientcardunits.unitPrice) AS price, "
                                "COUNT(patientcardunits.unitPrice) AS units "
                                "FROM patientcards LEFT JOIN patientcardunits ON "
                                "patientcards.patientCardId=patientcardunits.patientCardId WHERE "
@@ -69,8 +69,8 @@ void cReportPatientcardDebts::refreshReport()
 
     while( poQueryResult->next() )
     {
-        int         nUnitPrice = _unitPrice( poQueryResult->value(0).toUInt(), poQueryResult->value(3).toUInt() );
-        int         nUnitTotalPrice = nUnitPrice * poQueryResult->value(4).toInt();
+        int         nUnitPrice = poQueryResult->value(3).toInt() / poQueryResult->value(4).toInt(); //_unitPrice( poQueryResult->value(0).toUInt(), poQueryResult->value(3).toUInt() );
+        int         nUnitTotalPrice = poQueryResult->value(3).toInt();
 
         nTotalUnits += poQueryResult->value(4).toInt();
         nTotalPrice += nUnitTotalPrice;

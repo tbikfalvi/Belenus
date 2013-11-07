@@ -76,6 +76,7 @@
 #include "dlg/dlgserialreg.h"
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgpaneluse.h"
+#include "dlg/dlgpatientcardassign.h"
 
 //====================================================================================
 
@@ -2196,122 +2197,112 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 //====================================================================================
 void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 {
-    m_dlgProgress->showProgress();
+    cTracer obTracer( "cWndMain::slotAssignPartnerCard" );
 
-    cDBPatientCard  obDBPatientCardOld;
+    cDlgPatientCardAssign obDlgPatientCardAssign( this, p_qsBarcode );
 
-    obDBPatientCardOld.load( p_qsBarcode );
-
-    QMessageBox::warning( this, tr("Request"), tr("Please enter the barcode of the patientcard to be assigned.") );
-
-    cDlgInputStart  obDlgInputStart( this );
-
-    obDlgInputStart.m_bCard = true;
-    obDlgInputStart.init();
-
-    m_dlgProgress->hideProgress();
-
-    if( obDlgInputStart.exec() == QDialog::Accepted )
+    if( obDlgPatientCardAssign.exec() == QDialog::Accepted )
     {
-        cDBPatientCard  obDBPatientCardNew;
+        QString qsBarcodeMain;
+        QString qsBarcodeAssign;
+
+        obDlgPatientCardAssign.getCardsBarcode( &qsBarcodeMain, &qsBarcodeAssign );
+
         try
         {
-            obDBPatientCardNew.load( obDlgInputStart.getEditText() );
+            cDBPatientCard  obDBPatientCardMain;
+            cDBPatientCard  obDBPatientCardAssign;
 
-            if( obDBPatientCardNew.pincode().compare("LOST") == 0 )
+            obDBPatientCardMain.load( qsBarcodeMain );
+            obDBPatientCardAssign.load( qsBarcodeAssign );
+
+            if( obDBPatientCardAssign.active() )
             {
-                QMessageBox::warning( this, tr("Attention"),
-                                      tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
-                return;
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("Are you sure about to merge these patientcards?\n"
+                                              "Main card: %1\n"
+                                              "Assigned card: %2").arg( obDBPatientCardMain.barcode() ).arg( obDBPatientCardAssign.barcode() ),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                {
+                    obDBPatientCardMain.setUnits( obDBPatientCardMain.units()+obDBPatientCardAssign.units() );
+                    obDBPatientCardMain.save();
+
+                    obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
+                    obDBPatientCardAssign.setUnits( obDBPatientCardMain.units() );
+                    obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
+                    obDBPatientCardAssign.save();
+
+                    cDBPatientcardUnit  obDBPatientcardUnit;
+
+                    obDBPatientcardUnit.setPatientCardId( obDBPatientCardAssign.id() );
+                    obDBPatientcardUnit.replacePatientCard( obDBPatientCardMain.id() );
+                }
+            }
+            else
+            {
+                obDBPatientCardAssign.setActive( true );
+                obDBPatientCardAssign.setPatientCardTypeId( obDBPatientCardMain.patientCardTypeId() );
+                obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
+                obDBPatientCardAssign.setPatientId( 0 );
+                obDBPatientCardAssign.setUnits( obDBPatientCardMain.units() );
+                obDBPatientCardAssign.setTimeLeftStr( obDBPatientCardMain.timeLeftStr() );
+                obDBPatientCardAssign.setValidDateFrom( obDBPatientCardMain.validDateFrom() );
+                obDBPatientCardAssign.setValidDateTo( obDBPatientCardMain.validDateTo() );
+                obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
+
+                cCurrency cPrice( QString::number(g_poPrefs->getPatientCardPartnerPrice()/100) );
+
+                cDBShoppingCart obDBShoppingCart;
+
+                obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
+                obDBShoppingCart.setGuestId( obDBPatientCardAssign.patientId() );
+                obDBShoppingCart.setProductId( 0 );
+                obDBShoppingCart.setPatientCardId( obDBPatientCardAssign.id() );
+                obDBShoppingCart.setPatientCardTypeId( obDBPatientCardAssign.patientCardTypeId() );
+                obDBShoppingCart.setPanelId( 0 );
+                obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_ASSIGN_PARTNER );
+                obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode()) );
+                obDBShoppingCart.setItemCount( 1 );
+                obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
+                obDBShoppingCart.setItemVAT( g_poPrefs->getPatientCardLostPriceVat() );
+                obDBShoppingCart.setItemDiscount( 0 );
+                obDBShoppingCart.setItemSumPrice( cPrice.currencyValue().toInt() );
+
+                cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
+
+                obDlgCassaAction.setPayWithCash();
+
+                int             inCassaAction   = obDlgCassaAction.exec();
+                int             inPayType       = 0;
+                QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardMain.barcode()).arg(obDBPatientCardAssign.barcode());
+                bool            bShoppingCart   = false;
+                unsigned int    uiCouponId = 0;
+                cDBDiscount     obDBDiscount;
+
+                obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
+
+                if( inCassaAction == QDialog::Accepted && !bShoppingCart )
+                {
+                    if( uiCouponId > 0 )
+                    {
+                        obDBDiscount.load( uiCouponId );
+
+                        obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
+                    }
+                    g_obCassa.cassaProcessPatientCardSell( obDBPatientCardAssign, obDBShoppingCart, qsComment, true, inPayType );
+                }
+                else if( inCassaAction != QDialog::Accepted )
+                {
+                    // Nem tortent meg az eladas
+                    return;
+                }
+
+                obDBPatientCardAssign.save();
             }
         }
         catch( cSevException &e )
         {
-            if( QString(e.what()).compare("Patientcard barcode not found") != 0 )
-            {
-                g_obLogger(e.severity()) << e.what() << EOM;
-            }
-            else
-            {
-                if( QMessageBox::question( this, tr("Question"),
-                                           tr("This barcode has not found in the database.\n"
-                                              "Do you want to register it for a new patientcard?"),
-                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
-                {
-                    obDBPatientCardNew.createNew();
-                    obDBPatientCardNew.setLicenceId( g_poPrefs->getLicenceId() );
-                    obDBPatientCardNew.setBarcode( obDlgInputStart.getEditText() );
-                    obDBPatientCardNew.save();
-                }
-            }
-        }
-
-        if( obDBPatientCardNew.active() )
-        {
-            QMessageBox::warning( this, tr("Warning"), tr("This patientcard already in use.\n"
-                                                          "Please select a non-active patientcard.") );
-            return;
-        }
-        else
-        {
-            obDBPatientCardNew.setActive( true );
-            obDBPatientCardNew.setPatientCardTypeId( obDBPatientCardOld.patientCardTypeId() );
-            obDBPatientCardNew.setParentId( obDBPatientCardOld.id() );
-            obDBPatientCardNew.setPatientId( 0 );
-            obDBPatientCardNew.setUnits( obDBPatientCardOld.units() );
-            obDBPatientCardNew.setTimeLeftStr( obDBPatientCardOld.timeLeftStr() );
-            obDBPatientCardNew.setValidDateFrom( obDBPatientCardOld.validDateFrom() );
-            obDBPatientCardNew.setValidDateTo( obDBPatientCardOld.validDateTo() );
-            obDBPatientCardNew.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardOld.barcode()) );
-
-            cCurrency cPrice( QString::number(g_poPrefs->getPatientCardPartnerPrice()/100) );
-
-            cDBShoppingCart obDBShoppingCart;
-
-            obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
-            obDBShoppingCart.setGuestId( obDBPatientCardNew.patientId() );
-            obDBShoppingCart.setProductId( 0 );
-            obDBShoppingCart.setPatientCardId( obDBPatientCardNew.id() );
-            obDBShoppingCart.setPatientCardTypeId( obDBPatientCardNew.patientCardTypeId() );
-            obDBShoppingCart.setPanelId( 0 );
-            obDBShoppingCart.setLedgerTypeId( cDBLedger::LT_PC_ASSIGN_PARTNER );
-            obDBShoppingCart.setItemName( QString("%1 -> %2").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode()) );
-            obDBShoppingCart.setItemCount( 1 );
-            obDBShoppingCart.setItemNetPrice( cPrice.currencyValue().toInt() );
-            obDBShoppingCart.setItemVAT( g_poPrefs->getPatientCardLostPriceVat() );
-            obDBShoppingCart.setItemDiscount( 0 );
-            obDBShoppingCart.setItemSumPrice( cPrice.currencyValue().toInt() );
-
-            cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
-
-            obDlgCassaAction.setPayWithCash();
-
-            int             inCassaAction   = obDlgCassaAction.exec();
-            int             inPayType       = 0;
-            QString         qsComment       = tr("Assign patientcard [%1]<-[%2]").arg(obDBPatientCardOld.barcode()).arg(obDBPatientCardNew.barcode());
-            bool            bShoppingCart   = false;
-            unsigned int    uiCouponId = 0;
-            cDBDiscount     obDBDiscount;
-
-            obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
-
-            if( inCassaAction == QDialog::Accepted && !bShoppingCart )
-            {
-                if( uiCouponId > 0 )
-                {
-                    obDBDiscount.load( uiCouponId );
-
-                    obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }
-                g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
-            }
-            else if( inCassaAction != QDialog::Accepted )
-            {
-                // Nem tortent meg az eladas
-                return;
-            }
-
-            obDBPatientCardNew.save();
+            g_obLogger(e.severity()) << e.what() << EOM;
         }
     }
 }

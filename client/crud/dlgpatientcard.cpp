@@ -95,7 +95,7 @@ cDlgPatientCard::~cDlgPatientCard()
 
 void cDlgPatientCard::setupTableView()
 {
-    cTracer obTracer( "cDlgPatientCard::setupTableView" );
+//    cTracer obTracer( "cDlgPatientCard::setupTableView" );
 
     refreshTable();
 
@@ -163,7 +163,7 @@ void cDlgPatientCard::setupTableView()
 
 void cDlgPatientCard::refreshTable( QString p_qsCondition )
 {
-    cTracer obTracer( "cDlgPatientCard::refreshTable" );
+//    cTracer obTracer( "cDlgPatientCard::refreshTable" );
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
@@ -203,7 +203,7 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
 
 void cDlgPatientCard::enableButtons()
 {
-    cTracer obTracer( "cDlgPatientCard::enableButtons" );
+//    cTracer obTracer( "cDlgPatientCard::enableButtons" );
 
     bool bUserCanModify = false;
     bool bCanBeReplaced = false;
@@ -354,6 +354,8 @@ void cDlgPatientCard::_slotPatientCardReplace()
 
 void cDlgPatientCard::_slotPartnerCardAssign()
 {
+    cTracer obTracer( "cDlgPatientCard::_slotPartnerCardAssign" );
+
     cDBPatientCard  *poPatientCard = new cDBPatientCard;
     poPatientCard->load( m_uiSelectedId );
 

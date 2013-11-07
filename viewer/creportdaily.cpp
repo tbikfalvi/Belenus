@@ -502,12 +502,14 @@ void cReportDaily::_reportPartPaymentMethods()
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
             int     nPayment = _sumPaymentMethod( m_qslCassaIds.at(i), poQueryResult->value(0).toInt() );
+            int     nVoucher = _sumPaymentMethodVoucher( m_qslCassaIds.at(i), poQueryResult->value(0).toInt() );
             QString qsPayment = "";
 
             if( nPayment > 0 )
             {
                 cCurrency   obSum( nPayment );
-                qsPayment = obSum.currencyFullStringShort();
+                cCurrency   obVoucher( nVoucher );
+                qsPayment = QString( "%1 (%2)" ).arg(obSum.currencyFullStringShort()).arg(obVoucher.currencyStringSeparator());
             }
             addTableCell( qsPayment, "right" );
             nPaymentSum += nPayment;
@@ -806,6 +808,26 @@ int cReportDaily::_sumPaymentMethod( QString p_qsCassaId, unsigned int p_uiPayme
     QSqlQuery      *poQueryResult;
 
     qsQuery = QString("SELECT SUM(totalPrice) "
+                      "FROM ledger, cassahistory WHERE "
+                      "ledger.ledgerId=cassahistory.ledgerId AND "
+                      "cassaId=%1 AND "
+                      "ledgerTypeId>0 AND "
+                      "ledgerTypeId<9 AND "
+                      "paymentMethodId=%2 AND "
+                      "ledger.active=1 " ).arg(p_qsCassaId).arg(p_uiPaymentMethodId);
+    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    poQueryResult->first();
+
+    return poQueryResult->value(0).toInt();
+}
+//------------------------------------------------------------------------------------
+int cReportDaily::_sumPaymentMethodVoucher( QString p_qsCassaId, unsigned int p_uiPaymentMethodId )
+//------------------------------------------------------------------------------------
+{
+    QString         qsQuery;
+    QSqlQuery      *poQueryResult;
+
+    qsQuery = QString("SELECT SUM(voucher) "
                       "FROM ledger, cassahistory WHERE "
                       "ledger.ledgerId=cassahistory.ledgerId AND "
                       "cassaId=%1 AND "
