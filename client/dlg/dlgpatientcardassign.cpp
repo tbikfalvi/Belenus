@@ -36,6 +36,8 @@ cDlgPatientCardAssign::cDlgPatientCardAssign( QWidget *p_poParent, QString p_qsM
 
     pbMainVerify->setIcon( QIcon("./resources/40x40_question.png") );
     pbAssignVerify->setIcon( QIcon("./resources/40x40_question.png") );
+    pbAssign->setIcon( QIcon("./resources/40x40_patientcards.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     ledMainBarcode->setText( p_qsMainBarcode );
 }

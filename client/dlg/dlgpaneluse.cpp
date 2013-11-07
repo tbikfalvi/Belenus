@@ -151,21 +151,41 @@ void cPanelPCUnitUse::setOrderNum(unsigned int p_uiOrderNum)
 //
 //
 //==============================================================================================
-cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, QString p_qsPanelTitle ) : QDialog( p_poParent )
+cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
     setupUi( this );
 
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
-    lblPanelTitle->setText( p_qsPanelTitle );
-
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    m_uiPanelId                 = p_uiPanelId;
     m_uiPanelUsePatientCardId   = 0;
     m_uiPanelBaseTime           = 0;
-    m_uiPanelUseTime            = 0;
+    m_uiPanelUseTimeCard        = 0;
+    m_uiPanelUseTimeCash        = 0;
     m_uiPanelUsePrice           = 0;
+
+    QString qsQuery = "";
+    QSqlQuery *poQuery = NULL;
+
+    qsQuery = QString( "SELECT title FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+    poQuery->first();
+
+    lblPanelTitle->setText( poQuery->value(0).toString() );
+
+    qsQuery = QString( "SELECT * FROM paneluses WHERE panelId=%1 ORDER BY useTime " ).arg( m_uiPanelId );
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
+    while( poQuery->next() )
+    {
+        cCurrency   cPrice( poQuery->value(5).toInt() );
+
+        cmbTimeIntervall->addItem( QString( "%1 - %2 (%3) " ).arg( poQuery->value(4).toInt() ).arg( poQuery->value(3).toString() ).arg( cPrice.currencyFullStringShort() ), poQuery->value(0).toUInt() );
+    }
 
     setPanelUsePrice();
 }
@@ -185,7 +205,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         obDBPatientCard.load( m_uiPanelUsePatientCardId );
 
         ledPatientCardBarcode->setText( obDBPatientCard.barcode() );
-        ledPatientCardBarcode->setEnabled( false );
+//        ledPatientCardBarcode->setEnabled( false );
 
         if( obDBPatientCard.parentId() > 1 )
         {
@@ -198,7 +218,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                                    "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
                                    "AND active=1 "
                                    "GROUP BY unitTime, validDateTo ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
-        QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         while( poQuery->next() )
         {
@@ -225,8 +245,12 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         slotPatientCardUseUpdated();
     }
 
-    setMinimumHeight( 255 + (qvPanelUseUnits.count()-1)*40 );
-    setMaximumHeight( 255 + (qvPanelUseUnits.count()-1)*40 );
+    int nUnitHeight = (qvPanelUseUnits.count()-1)*40;
+
+    if( nUnitHeight < 0 ) nUnitHeight = 0;
+
+    setMinimumHeight( 310 + nUnitHeight );
+    setMaximumHeight( 310 + nUnitHeight );
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
@@ -238,13 +262,13 @@ void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime()
 {
-    QTime   qtPanelUseTime( (m_uiPanelBaseTime+m_uiPanelUseTime)/3600,
-                            ((m_uiPanelBaseTime+m_uiPanelUseTime)%3600)/60,
-                            ((m_uiPanelBaseTime+m_uiPanelUseTime)%3600)%60 );
+    QTime   qtPanelUseTime( (m_uiPanelBaseTime+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)/3600,
+                            ((m_uiPanelBaseTime+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)/60,
+                            ((m_uiPanelBaseTime+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)%60 );
 
     lblTotalTimeValue->setText( qtPanelUseTime.toString( "hh:mm:ss" ) );
 
-    if( m_uiPanelUseTime > 0 )
+    if( (m_uiPanelUseTimeCard+m_uiPanelUseTimeCash) > 0 )
     {
         pbOk->setEnabled( true );
     }
@@ -263,7 +287,7 @@ void cDlgPanelUse::setPanelUsePrice()
 //----------------------------------------------------------------------------------------------
 unsigned int cDlgPanelUse::panelUseSeconds()
 {
-    return m_uiPanelUseTime;
+    return (m_uiPanelUseTimeCard+m_uiPanelUseTimeCash);
 }
 //----------------------------------------------------------------------------------------------
 unsigned int cDlgPanelUse::panelUsePrice()
@@ -278,12 +302,12 @@ QStringList cDlgPanelUse::panelUnitIds()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::slotPatientCardUseUpdated()
 {
-    m_uiPanelUseTime = 0;
+    m_uiPanelUseTimeCard = 0;
     m_qslUnitIds.clear();
 
     for( int i=0; i<qvPanelUseUnits.count(); i++ )
     {
-        m_uiPanelUseTime += qvPanelUseUnits.at(i)->lengthSeconds();
+        m_uiPanelUseTimeCard += qvPanelUseUnits.at(i)->lengthSeconds();
         m_qslUnitIds << qvPanelUseUnits.at(i)->usedUnitIds();
     }
     setPanelUseTime();
@@ -297,5 +321,25 @@ void cDlgPanelUse::on_pbOk_clicked()
 void cDlgPanelUse::on_pbCancel_clicked()
 {
     QDialog::reject();
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::on_cmbTimeIntervall_currentIndexChanged(int index)
+{
+    QString qsQuery = QString( "SELECT * FROM paneluses WHERE panelUseId=%1" ).arg( cmbTimeIntervall->itemData( index ).toUInt() );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+    poQuery->first();
+
+    m_uiPanelUseTimeCash = poQuery->value(4).toInt()*60;
+    m_uiPanelUsePrice    = poQuery->value(5).toInt();
+
+    setPanelUseTime();
+    setPanelUsePrice();
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
+{
+    qvPanelUseUnits.clear();
+
+    slotPatientCardUseUpdated();
 }
 //----------------------------------------------------------------------------------------------

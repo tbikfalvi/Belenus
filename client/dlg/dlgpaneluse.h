@@ -50,7 +50,7 @@ class cDlgPanelUse : public QDialog, protected Ui::dlgPanelUse
     Q_OBJECT
 
 public:
-    cDlgPanelUse( QWidget *p_poParent = 0, QString p_qsPanelTitle = "" );
+    cDlgPanelUse( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
     virtual ~cDlgPanelUse();
 
     void                         setPanelUsePatientCard( unsigned int p_uiPatientCardId );
@@ -63,10 +63,12 @@ public:
 
 private:
 
+    unsigned int                 m_uiPanelId;
     QVector<cPanelPCUnitUse*>    qvPanelUseUnits;
     unsigned int                 m_uiPanelUsePatientCardId;
-    unsigned int                 m_uiPanelUseTime;
     unsigned int                 m_uiPanelBaseTime;
+    unsigned int                 m_uiPanelUseTimeCard;
+    unsigned int                 m_uiPanelUseTimeCash;
     unsigned int                 m_uiPanelUsePrice;
     QStringList                  m_qslUnitIds;
 
@@ -74,6 +76,8 @@ private slots:
     void                         slotPatientCardUseUpdated();
     void                         on_pbOk_clicked();
     void                         on_pbCancel_clicked();
+    void                         on_cmbTimeIntervall_currentIndexChanged(int index);
+    void on_ledPatientCardBarcode_returnPressed();
 };
 //====================================================================================
 

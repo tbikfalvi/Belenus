@@ -1690,7 +1690,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 }
             }
 
-            cDlgPanelUse obDlgPanelUse( this, mdiPanels->getActivePanelCaption() );
+            cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
 
             obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
             obDlgPanelUse.setPanelUsePatientCard( obDBPatientCard.id() );
