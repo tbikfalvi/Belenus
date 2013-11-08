@@ -100,8 +100,8 @@ private slots:
     void on_action_PatientSelect_triggered();
     void on_action_PatientEmpty_triggered();
     void on_action_PanelStatuses_triggered();
-    void on_action_UseWithCard_triggered();
-    void on_action_UseByTime_triggered();
+    void on_action_UseDevice_triggered();
+    void on_action_UseDeviceLater_triggered();
     void on_action_Cards_triggered();
     void on_action_CardTypes_triggered();
     void on_action_ProductTypes_triggered();

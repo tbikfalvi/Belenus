@@ -83,6 +83,13 @@
            <widget class="QLineEdit" name="ledPatientCardBarcode"/>
           </item>
           <item>
+           <widget class="QPushButton" name="pbReloadPC">
+            <property name="text">
+             <string>Reload</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -276,9 +283,11 @@ color: rgb(0, 125, 0);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>cmbTimeIntervall</tabstop>
   <tabstop>pbOk</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>ledPatientCardBarcode</tabstop>
+  <tabstop>pbReloadPC</tabstop>
  </tabstops>
  <resources/>
  <connections/>

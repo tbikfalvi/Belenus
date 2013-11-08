@@ -143,8 +143,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_EditActualPatient->setIcon( QIcon("./resources/40x40_patient_edit.png") );
     action_PatientNew->setIcon( QIcon("./resources/40x40_patient_new.png") );
 
-    action_UseWithCard->setIcon( QIcon( "./resources/40x40_device_withcard.png" ) );
-    action_UseByTime->setIcon( QIcon( "./resources/40x40_device_withtime.png" ) );
+    action_UseDevice->setIcon( QIcon( "./resources/40x40_device.png" ) );
+    action_UseDeviceLater->setIcon( QIcon( "./resources/40x40_device_later.png" ) );
 
     action_DeviceClear->setIcon( QIcon( "./resources/40x40_device_clear.png" ) );
 
@@ -218,8 +218,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_PatientEmpty->setVisible( false );
     action_PatientNew->setEnabled( false );
     action_EditActualPatient->setEnabled( false );
-    action_UseWithCard->setEnabled( false );
-    action_UseByTime->setEnabled( false );
+    action_UseDevice->setEnabled( false );
+    action_UseDeviceLater->setEnabled( false );
     action_DeviceClear->setEnabled( false );
     action_DeviceStart->setEnabled( false );
     action_DeviceSkipStatus->setEnabled( false );
@@ -654,8 +654,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
             }
         }
         else if( ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
-                  (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z) ||
-                  (p_poEvent->key() == Qt::Key_Space)) )
+                  (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z)) )
         {
             m_lblStatusLeft.setText( m_qsStatusText );
 
@@ -688,6 +687,10 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         {
             m_lblStatusLeft.setText( m_qsStatusText );
             mdiPanels->clear();
+        }
+        else if( p_poEvent->key() == Qt::Key_Space )
+        {
+            on_action_UseDevice_triggered();
         }
     }
 
@@ -827,8 +830,8 @@ void cWndMain::updateToolbar()
 
     menu_Action->setEnabled( bIsUserLoggedIn );
         menuDevice->setEnabled( bIsUserLoggedIn );
-            action_UseWithCard->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByCard() );
-            action_UseByTime->setEnabled( bIsUserLoggedIn && mdiPanels->isCanBeStartedByTime() );
+            action_UseDevice->setEnabled( bIsUserLoggedIn && (mdiPanels->isCanBeStartedByCard() || mdiPanels->isCanBeStartedByTime()) );
+            action_UseDeviceLater->setEnabled( bIsUserLoggedIn );
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0 );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
@@ -1191,68 +1194,37 @@ void cWndMain::on_action_PanelStatuses_triggered()
 
 }
 //====================================================================================
-void cWndMain::on_action_UseWithCard_triggered()
+void cWndMain::on_action_UseDevice_triggered()
 {
-    cDlgInputStart  obDlgInputStart( this );
+    cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
 
-    obDlgInputStart.m_bCard = true;
-    obDlgInputStart.init( g_poPrefs->getBarcodePrefix() );
-
-    QString      qsBarcode = "";
-    QSqlQuery   *poQuery;
-
-    if( g_obGuest.id() > 0 )
+    obDlgPanelUse.setPanelUseTimeCard( mdiPanels->mainProcessTime() );
+    obDlgPanelUse.enableCashUsage( false );
+    if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode FROM patientCards WHERE patientId=%1" ).arg(g_obGuest.id()) );
-        if( poQuery->first() )
+        if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
         {
-            qsBarcode = poQuery->value(0).toString();
+            mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
-            if( QMessageBox::question( this, tr("Question"),
-                                       tr("A patientcard with barcode [%1]\n"
-                                          "attached to the actual patient.\n\n"
-                                          "Do you want to use this patientcard?").arg(qsBarcode),
-                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+            int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
+            mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
+        }
+        if( obDlgPanelUse.panelUseSecondsCash() > 0 )
+        {
+            if( !mdiPanels->isCanBeStartedByTime() )
             {
-                processInputPatientCard( qsBarcode );
-            }
-            else
-            {
-                if( obDlgInputStart.exec() == QDialog::Accepted )
-                    processInputPatientCard( obDlgInputStart.getEditText() );
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("This device already prepared with a time period.\n"
+                                         "To start the device with other conditions, please\n"
+                                         "reset the device first with pushing the ESC button.") );
+                return;
             }
         }
-        else
-        {
-            if( QMessageBox::question( this, tr("Question"),
-                                       tr("There is no patientcard attached to the actual patient.\n"
-                                          "Do you want to sell a patientcard for the actual patient?"),
-                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-            {
-                on_action_PatientCardSell_triggered();
-            }
-            else
-            {
-                if( obDlgInputStart.exec() == QDialog::Accepted )
-                    processInputPatientCard( obDlgInputStart.getEditText() );
-            }
-        }
-    }
-    else
-    {
-        if( obDlgInputStart.exec() == QDialog::Accepted )
-            processInputPatientCard( obDlgInputStart.getEditText() );
     }
 }
 //====================================================================================
-void cWndMain::on_action_UseByTime_triggered()
+void cWndMain::on_action_UseDeviceLater_triggered()
 {
-    cDlgInputStart  obDlgInputStart( this );
-
-    obDlgInputStart.m_bTime = true;
-    obDlgInputStart.init();
-    if( obDlgInputStart.exec() == QDialog::Accepted )
-        processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
@@ -1692,11 +1664,11 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
             cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
 
-            obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
+            obDlgPanelUse.setPanelUseTimeCash( mdiPanels->mainProcessTime() );
             obDlgPanelUse.setPanelUsePatientCard( obDBPatientCard.id() );
             if( obDlgPanelUse.exec() == QDialog::Accepted )
             {
-                mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSeconds() );
+                mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard()+obDlgPanelUse.panelUseSecondsCash() );
                 int nCount = obDBPatientCard.units()-obDlgPanelUse.panelUnitIds().count();
                 mdiPanels->setTextInformation( tr( "%1 units left on the selected card" ).arg(nCount) );
             }

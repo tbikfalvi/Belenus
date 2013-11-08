@@ -5,6 +5,7 @@
 #include <QVector>
 
 #include "../belenus.h"
+#include "db/dbpatientcard.h"
 #include "ui_dlgpaneluse.h"
 
 //====================================================================================
@@ -53,31 +54,45 @@ public:
     cDlgPanelUse( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
     virtual ~cDlgPanelUse();
 
+    void                         enableCardUsage( bool p_bEnabled );
+    void                         enableCashUsage( bool p_bEnabled );
     void                         setPanelUsePatientCard( unsigned int p_uiPatientCardId );
-    void                         setPanelUseTime( unsigned int p_uiSeconds );
+    void                         setPanelUseTimeCard( unsigned int p_uiSeconds );
+    void                         setPanelUseTimeCash( unsigned int p_uiSeconds );
     void                         setPanelUseTime();
     void                         setPanelUsePrice();
-    unsigned int                 panelUseSeconds();
+    unsigned int                 panelUseSecondsCard();
+    unsigned int                 panelUseSecondsCash();
     unsigned int                 panelUsePrice();
+    unsigned int                 panelUsePatientCardId();
+    int                          countPatientCardUnitsLeft();
     QStringList                  panelUnitIds();
 
 private:
 
+    cDBPatientCard               m_obDBPatientCard;
     unsigned int                 m_uiPanelId;
     QVector<cPanelPCUnitUse*>    qvPanelUseUnits;
     unsigned int                 m_uiPanelUsePatientCardId;
-    unsigned int                 m_uiPanelBaseTime;
+    unsigned int                 m_uiPanelBaseTimeCard;
+    unsigned int                 m_uiPanelBaseTimeCash;
     unsigned int                 m_uiPanelUseTimeCard;
     unsigned int                 m_uiPanelUseTimeCash;
     unsigned int                 m_uiPanelUsePrice;
     QStringList                  m_qslUnitIds;
+    bool                         m_bIsEnterAccepted;
+    bool                         m_bIsCardCanBeUsed;
+    bool                         m_bIsCashCanBeUsed;
+
+    void                        _enablePanelUseTypes();
 
 private slots:
     void                         slotPatientCardUseUpdated();
     void                         on_pbOk_clicked();
     void                         on_pbCancel_clicked();
     void                         on_cmbTimeIntervall_currentIndexChanged(int index);
-    void on_ledPatientCardBarcode_returnPressed();
+    void                         on_ledPatientCardBarcode_returnPressed();
+    void                         on_pbReloadPC_clicked();
 };
 //====================================================================================
 

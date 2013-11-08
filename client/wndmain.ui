@@ -191,8 +191,8 @@
      <property name="title">
       <string>Device</string>
      </property>
-     <addaction name="action_UseWithCard"/>
-     <addaction name="action_UseByTime"/>
+     <addaction name="action_UseDeviceLater"/>
+     <addaction name="action_UseDevice"/>
      <addaction name="separator"/>
      <addaction name="action_DeviceStart"/>
      <addaction name="action_DeviceSkipStatus"/>
@@ -318,8 +318,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_UseByTime"/>
-   <addaction name="action_UseWithCard"/>
+   <addaction name="action_UseDevice"/>
+   <addaction name="action_UseDeviceLater"/>
    <addaction name="separator"/>
    <addaction name="action_DeviceClear"/>
    <addaction name="separator"/>
@@ -475,20 +475,26 @@
     <string>Patient cards</string>
    </property>
   </action>
-  <action name="action_UseWithCard">
+  <action name="action_UseDeviceLater">
    <property name="text">
-    <string>Use with card ...</string>
+    <string>Use device later ...</string>
+   </property>
+   <property name="iconText">
+    <string>Use later</string>
    </property>
    <property name="toolTip">
-    <string>Use device with patient card</string>
+    <string>Use device later with defined time period or with patient card</string>
    </property>
   </action>
-  <action name="action_UseByTime">
+  <action name="action_UseDevice">
    <property name="text">
-    <string>Use by time ...</string>
+    <string>Use by time or patientcard ...</string>
+   </property>
+   <property name="iconText">
+    <string>Use device</string>
    </property>
    <property name="toolTip">
-    <string>Use device with defined time period</string>
+    <string>Use device with defined time period or with patient card</string>
    </property>
   </action>
   <action name="action_PanelStatuses">
