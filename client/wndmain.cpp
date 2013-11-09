@@ -1225,6 +1225,12 @@ void cWndMain::on_action_UseDevice_triggered()
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
 {
+    QMessageBox customQuestion( QMessageBox::Question, tr("Warning"), tr("Custom text"), QMessageBox::Yes | QMessageBox::No, this );
+
+    customQuestion.setButtonText( QMessageBox::Yes, tr("custom text 1") );
+    customQuestion.setButtonText( QMessageBox::No, tr("custom text 2") );
+
+    customQuestion.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
