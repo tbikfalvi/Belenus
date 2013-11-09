@@ -494,7 +494,7 @@
     <string>Use device</string>
    </property>
    <property name="toolTip">
-    <string>Use device with defined time period or with patient card</string>
+    <string>Use device with defined time period or with patientcard</string>
    </property>
   </action>
   <action name="action_PanelStatuses">

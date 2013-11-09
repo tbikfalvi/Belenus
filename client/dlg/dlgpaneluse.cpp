@@ -154,12 +154,18 @@ void cPanelPCUnitUse::setOrderNum(unsigned int p_uiOrderNum)
 //==============================================================================================
 cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
+    m_bInit = true;
+
     setupUi( this );
 
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
+    pbReloadPC->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
+    lblCardType->setText( tr("Type :") );
+    lblCardOwner->setText( tr("Owner :") );
 
     m_uiPanelId                 = p_uiPanelId;
     m_uiPanelUsePatientCardId   = 0;
@@ -167,6 +173,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_uiPanelUseTimeCash        = 0;
     m_uiPanelUsePrice           = 0;
     m_bIsEnterAccepted          = true;
+    m_qslPanelUseTimes          = QStringList();
 
     m_obDBPatientCard.createNew();
 
@@ -179,18 +186,22 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
 
     lblPanelTitle->setText( poQuery->value(0).toString() );
 
+    cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
+    m_qslPanelUseTimes.append( QString("0|0") );
+
     qsQuery = QString( "SELECT * FROM paneluses WHERE panelId=%1 ORDER BY useTime " ).arg( m_uiPanelId );
     poQuery = g_poDB->executeQTQuery( qsQuery );
-
-    cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
     while( poQuery->next() )
     {
         cCurrency   cPrice( poQuery->value(5).toInt() );
 
         cmbTimeIntervall->addItem( QString( "%1 - %2 (%3) " ).arg( poQuery->value(4).toInt() ).arg( poQuery->value(3).toString() ).arg( cPrice.currencyFullStringShort() ), poQuery->value(0).toUInt() );
+        m_qslPanelUseTimes.append( QString("%1|%2").arg( poQuery->value(4).toInt()*60 ).arg( poQuery->value(5).toInt() ) );
     }
 
     setPanelUsePrice();
+
+    m_bInit = false;
 }
 //----------------------------------------------------------------------------------------------
 cDlgPanelUse::~cDlgPanelUse()
@@ -274,20 +285,14 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
     if( nUnitHeight < 0 ) nUnitHeight = 0;
 
-    setMinimumHeight( 310 + nUnitHeight );
-    setMaximumHeight( 310 + nUnitHeight );
+    setMinimumHeight( 340 + nUnitHeight );
+    setMaximumHeight( 340 + nUnitHeight );
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUseTimeCard(unsigned int p_uiSeconds)
+void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
 {
-    m_uiPanelBaseTimeCard = p_uiSeconds;
-
-    setPanelUseTime();
-}
-//----------------------------------------------------------------------------------------------
-void cDlgPanelUse::setPanelUseTimeCash(unsigned int p_uiSeconds)
-{
-    m_uiPanelBaseTimeCash = p_uiSeconds;
+    if( m_bIsCardCanBeUsed )      m_uiPanelBaseTimeCard = p_uiSeconds;
+    else if( m_bIsCashCanBeUsed ) m_uiPanelBaseTimeCash = p_uiSeconds;
 
     setPanelUseTime();
 }
@@ -378,12 +383,12 @@ void cDlgPanelUse::on_pbCancel_clicked()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_cmbTimeIntervall_currentIndexChanged(int index)
 {
-    QString qsQuery = QString( "SELECT * FROM paneluses WHERE panelUseId=%1" ).arg( cmbTimeIntervall->itemData( index ).toUInt() );
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
-    poQuery->first();
+    if( m_bInit ) return;
 
-    m_uiPanelUseTimeCash = poQuery->value(4).toInt()*60;
-    m_uiPanelUsePrice    = poQuery->value(5).toInt();
+    QStringList qslTimePrice = m_qslPanelUseTimes.at( index ).split('|');
+
+    m_uiPanelUseTimeCash = qslTimePrice.at(0).toInt();
+    m_uiPanelUsePrice    = qslTimePrice.at(1).toInt();
 
     setPanelUseTime();
     setPanelUsePrice();
@@ -450,6 +455,16 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         }
     }
 
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patientcardtypes.name AS type, patients.name AS owner "
+                                                         "FROM patientcards JOIN patientcardtypes ON "
+                                                         "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId "
+                                                         "JOIN patients ON "
+                                                         "patientcards.patientId=patients.patientId "
+                                                         "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
+    poQuery->first();
+
+    lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
+    lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
     setPanelUsePatientCard( m_obDBPatientCard.id() );
     slotPatientCardUseUpdated();
 }

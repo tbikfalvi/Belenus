@@ -57,8 +57,7 @@ public:
     void                         enableCardUsage( bool p_bEnabled );
     void                         enableCashUsage( bool p_bEnabled );
     void                         setPanelUsePatientCard( unsigned int p_uiPatientCardId );
-    void                         setPanelUseTimeCard( unsigned int p_uiSeconds );
-    void                         setPanelUseTimeCash( unsigned int p_uiSeconds );
+    void                         setPanelUseTime( unsigned int p_uiSeconds );
     void                         setPanelUseTime();
     void                         setPanelUsePrice();
     unsigned int                 panelUseSecondsCard();
@@ -70,6 +69,7 @@ public:
 
 private:
 
+    bool                         m_bInit;
     cDBPatientCard               m_obDBPatientCard;
     unsigned int                 m_uiPanelId;
     QVector<cPanelPCUnitUse*>    qvPanelUseUnits;
@@ -83,6 +83,7 @@ private:
     bool                         m_bIsEnterAccepted;
     bool                         m_bIsCardCanBeUsed;
     bool                         m_bIsCashCanBeUsed;
+    QStringList                  m_qslPanelUseTimes;
 
     void                        _enablePanelUseTypes();
 

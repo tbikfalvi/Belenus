@@ -1198,8 +1198,10 @@ void cWndMain::on_action_UseDevice_triggered()
 {
     cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
 
-    obDlgPanelUse.setPanelUseTimeCard( mdiPanels->mainProcessTime() );
-    obDlgPanelUse.enableCashUsage( false );
+    obDlgPanelUse.enableCardUsage( mdiPanels->isCanBeStartedByCard() );
+    obDlgPanelUse.enableCashUsage( mdiPanels->isCanBeStartedByTime() );
+    obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
+
     if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
         if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
@@ -1211,26 +1213,18 @@ void cWndMain::on_action_UseDevice_triggered()
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
-            if( !mdiPanels->isCanBeStartedByTime() )
-            {
-                QMessageBox::warning( this, tr("Attention"),
-                                      tr("This device already prepared with a time period.\n"
-                                         "To start the device with other conditions, please\n"
-                                         "reset the device first with pushing the ESC button.") );
-                return;
-            }
         }
     }
 }
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
 {
-    QMessageBox customQuestion( QMessageBox::Question, tr("Warning"), tr("Custom text"), QMessageBox::Yes | QMessageBox::No, this );
+/*    QMessageBox customQuestion( QMessageBox::Question, tr("Warning"), tr("Custom text"), QMessageBox::Yes | QMessageBox::No, this );
 
     customQuestion.setButtonText( QMessageBox::Yes, tr("custom text 1") );
     customQuestion.setButtonText( QMessageBox::No, tr("custom text 2") );
 
-    customQuestion.exec();
+    customQuestion.exec();*/
 }
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
@@ -1670,8 +1664,11 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 
             cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
 
-            obDlgPanelUse.setPanelUseTimeCash( mdiPanels->mainProcessTime() );
+            obDlgPanelUse.enableCardUsage( mdiPanels->isCanBeStartedByCard() );
+            obDlgPanelUse.enableCashUsage( mdiPanels->isCanBeStartedByTime() );
+            obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
             obDlgPanelUse.setPanelUsePatientCard( obDBPatientCard.id() );
+
             if( obDlgPanelUse.exec() == QDialog::Accepted )
             {
                 mdiPanels->setMainProcessTime( obDBPatientCard.id(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard()+obDlgPanelUse.panelUseSecondsCash() );
