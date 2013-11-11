@@ -83,6 +83,28 @@
            <widget class="QLineEdit" name="ledPatientCardBarcode"/>
           </item>
           <item>
+           <widget class="QLabel" name="lblCardInfo">
+            <property name="minimumSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pbReloadPC">
             <property name="text">
              <string>Reload</string>
@@ -121,7 +143,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Type : %1</string>
+             <string>Card type : </string>
             </property>
            </widget>
           </item>
@@ -140,7 +162,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Owner : %1</string>
+             <string>Owner : </string>
             </property>
            </widget>
           </item>
@@ -239,7 +261,7 @@
 color: rgb(0, 125, 0);</string>
           </property>
           <property name="text">
-           <string>00 : 00 : 00</string>
+           <string>00:00:00</string>
           </property>
          </widget>
         </item>
@@ -325,11 +347,11 @@ color: rgb(0, 125, 0);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>ledPatientCardBarcode</tabstop>
+  <tabstop>pbReloadPC</tabstop>
   <tabstop>cmbTimeIntervall</tabstop>
   <tabstop>pbOk</tabstop>
   <tabstop>pbCancel</tabstop>
-  <tabstop>ledPatientCardBarcode</tabstop>
-  <tabstop>pbReloadPC</tabstop>
  </tabstops>
  <resources/>
  <connections/>

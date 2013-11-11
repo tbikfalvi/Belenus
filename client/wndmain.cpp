@@ -21,6 +21,7 @@
 #include "licenceManager.h"
 #include "../framework/logger/DatabaseWriter.h"
 #include "cdlgtest.h"
+#include "belenus.h"
 
 //====================================================================================
 
@@ -1213,13 +1214,21 @@ void cWndMain::on_action_UseDevice_triggered()
         }
         if( obDlgPanelUse.panelUseSecondsCash() > 0 )
         {
+            mdiPanels->setMainProcessTime( obDlgPanelUse.panelUseSecondsCash(), obDlgPanelUse.panelUsePrice() );
         }
     }
 }
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
 {
-/*    QMessageBox customQuestion( QMessageBox::Question, tr("Warning"), tr("Custom text"), QMessageBox::Yes | QMessageBox::No, this );
+/*    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.setDetailedText("Do you want to save your changes?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int ret = msgBox.exec();
+
+    QMessageBox customQuestion( QMessageBox::Question, tr("Warning"), tr("Custom text"), QMessageBox::Yes | QMessageBox::No, this );
 
     customQuestion.setButtonText( QMessageBox::Yes, tr("custom text 1") );
     customQuestion.setButtonText( QMessageBox::No, tr("custom text 2") );
@@ -1725,13 +1734,36 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
 {
     if( !mdiPanels->isCanBeStartedByTime() )
     {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("This device already prepared with a time period.\n"
-                                 "To start the device with other conditions, please\n"
-                                 "reset the device first with pushing the ESC button.") );
-        return;
+        switch( customMsgBox( this, MSG_ATTENTION,
+                              tr("Reset device|Add to wait list ...|Cancel"),
+                              tr("This device already prepared with a time period."),
+                              tr("To start the device with other conditions, please\n"
+                                 "reset the device first with pushing the ESC button.") ) )
+        {
+            case 1:
+                if( mdiPanels->isStatusCanBeReseted() )
+                {
+                    m_lblStatusLeft.setText( m_qsStatusText );
+                    mdiPanels->clear();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            case 2:
+                on_action_UseDeviceLater_triggered();
+                return;
+                break;
+            case 3:
+            default:
+                return;
+        }
     }
-    if( mdiPanels->isHasToPay() )
+
+    on_action_UseDevice_triggered();
+
+/*    if( mdiPanels->isHasToPay() )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("The device usage has to be payed.\n"
@@ -1766,7 +1798,7 @@ void cWndMain::processInputTimePeriod( int p_inSecond )
         QMessageBox::warning( this, tr("Warning"),
                               tr("This time period did not saved in the database\n"
                                  "for the actually selected device.") );
-    }
+    }*/
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
@@ -2341,4 +2373,61 @@ void cWndMain::on_action_About_triggered()
                                  "is the property of KiwiSun Franchise.<br>"
                                  "For more information visit the <a href=\"http://www.kiwisun.eu\">KiwiSun website</a>"
                                  ).arg( g_poPrefs->getVersion() ).arg( poQuery->value( 1 ).toString() ) );
+}
+//====================================================================================
+int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
+//====================================================================================
+{
+    QMessageBox msgBox;
+
+    switch(msgtype)
+    {
+        case MSG_INFORMATION:
+            msgBox.setWindowTitle( QObject::tr("Information") );
+            msgBox.setIcon( QMessageBox::Information );
+            break;
+        case MSG_WARNING:
+            msgBox.setWindowTitle( QObject::tr("Warning") );
+            msgBox.setIcon( QMessageBox::Warning );
+            break;
+        case MSG_ATTENTION:
+            msgBox.setWindowTitle( QObject::tr("Attention") );
+            msgBox.setIcon( QMessageBox::Warning );
+            break;
+        case MSG_ERROR:
+            msgBox.setWindowTitle( QObject::tr("Error") );
+            msgBox.setIcon( QMessageBox::Critical );
+            break;
+        case MSG_QUESTION:
+            msgBox.setWindowTitle( QObject::tr("Question") );
+            msgBox.setIcon( QMessageBox::Question );
+            break;
+    }
+
+    msgBox.setText( msg );
+    if( details.length() > 0 ) msgBox.setDetailedText( details );
+
+    QList<QPushButton*> qlButtons;
+    QStringList         qslButtons = buttonstext.split('|');
+
+    for( int i=0; i<qslButtons.size(); i++ )
+    {
+        QPushButton *pButton = msgBox.addButton( qslButtons.at(i), QMessageBox::ActionRole );
+        qlButtons.append( pButton );
+    }
+
+    msgBox.exec();
+
+    int nRet = 0;
+
+    for( int i=0; i<qslButtons.size(); i++ )
+    {
+        if( msgBox.clickedButton() == (QAbstractButton*)qlButtons.at(i) )
+        {
+            nRet = i+1;
+            break;
+        }
+    }
+
+    return nRet;
 }

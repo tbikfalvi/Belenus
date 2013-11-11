@@ -28,11 +28,22 @@ class cGeneral
     //Q_OBJECT
 
 public:
+
+    enum msgBoxType
+    {
+        MSG_INFORMATION = 0,
+        MSG_WARNING,
+        MSG_ATTENTION,
+        MSG_ERROR,
+        MSG_QUESTION
+    };
+
     cGeneral();
     ~cGeneral();
 
     void             setApplication( QApplication *p_poApplication );
     void             setApplicationLanguage( const QString &p_qsLang );
+    int              customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 //    QString          convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
 
 private:

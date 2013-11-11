@@ -18,6 +18,16 @@ class cWndMain : public QMainWindow, private Ui::wndMain
     Q_OBJECT
 
 public:
+
+    enum msgBoxType
+    {
+        MSG_INFORMATION = 0,
+        MSG_WARNING,
+        MSG_ATTENTION,
+        MSG_ERROR,
+        MSG_QUESTION
+    };
+
     cWndMain( QWidget *parent = 0 );
     ~cWndMain();
 
@@ -31,6 +41,8 @@ public:
     void startMainTimer();
     void autoSynchronizeGlobalData();
     void showProgress();
+
+    int customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );

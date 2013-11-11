@@ -13,6 +13,9 @@
 // Altalanos, tobb resz altal hasznalt fuggvenyek, process-ek
 //====================================================================================
 
+#include <QMessageBox>
+#include <QList>
+
 #include "general.h"
 #include "belenus.h"
 
@@ -20,7 +23,7 @@
 cGeneral::cGeneral()
 //====================================================================================
 {
-    m_poBlTr       = new QTranslator();
+    m_poBlTr            = new QTranslator();
     m_poQtTr            = new QTranslator();
     m_bIsLanguageLoaded = false;
 }
@@ -55,6 +58,63 @@ void cGeneral::setApplicationLanguage( const QString &p_qsLang )
 
     m_poMainApplication->installTranslator( m_poBlTr );
     m_poMainApplication->installTranslator( m_poQtTr );
+}
+//====================================================================================
+int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
+//====================================================================================
+{
+    QMessageBox msgBox;
+
+    switch(msgtype)
+    {
+        case MSG_INFORMATION:
+            msgBox.setWindowTitle( QObject::tr("Information") );
+            msgBox.setIcon( QMessageBox::Information );
+            break;
+        case MSG_WARNING:
+            msgBox.setWindowTitle( QObject::tr("Warning") );
+            msgBox.setIcon( QMessageBox::Warning );
+            break;
+        case MSG_ATTENTION:
+            msgBox.setWindowTitle( QObject::tr("Attention") );
+            msgBox.setIcon( QMessageBox::Warning );
+            break;
+        case MSG_ERROR:
+            msgBox.setWindowTitle( QObject::tr("Error") );
+            msgBox.setIcon( QMessageBox::Critical );
+            break;
+        case MSG_QUESTION:
+            msgBox.setWindowTitle( QObject::tr("Question") );
+            msgBox.setIcon( QMessageBox::Question );
+            break;
+    }
+
+    msgBox.setText( msg );
+    if( details.length() > 0 ) msgBox.setDetailedText( details );
+
+    QList<QPushButton*> qlButtons;
+    QStringList         qslButtons = buttonstext.split('|');
+
+    for( int i=0; i<qslButtons.size(); i++ )
+    {
+        QPushButton *pButton = msgBox.addButton( qslButtons.at(i), QMessageBox::ActionRole );
+        qlButtons.append( pButton );
+    }
+
+    msgBox.exec();
+
+    int nRet = 0;
+
+    for( int i=0; i<qslButtons.size(); i++ )
+    {
+        if( msgBox.clickedButton() == (QAbstractButton*)qlButtons.at(i) )
+        {
+            nRet = i+1;
+            break;
+        }
+    }
+
+    return nRet;
 }
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

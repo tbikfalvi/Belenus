@@ -164,11 +164,15 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    lblCardType->setText( tr("Type :") );
-    lblCardOwner->setText( tr("Owner :") );
+    lblCardInfo->setPixmap( QPixmap("resources/40x40_search.png") );
+
+    lblCardType->setText( tr("Card type : ") );
+    lblCardOwner->setText( tr("Owner : ") );
 
     m_uiPanelId                 = p_uiPanelId;
     m_uiPanelUsePatientCardId   = 0;
+    m_uiPanelBaseTimeCard       = 0;
+    m_uiPanelBaseTimeCash       = 0;
     m_uiPanelUseTimeCard        = 0;
     m_uiPanelUseTimeCash        = 0;
     m_uiPanelUsePrice           = 0;
@@ -195,13 +199,14 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     {
         cCurrency   cPrice( poQuery->value(5).toInt() );
 
-        cmbTimeIntervall->addItem( QString( "%1 - %2 (%3) " ).arg( poQuery->value(4).toInt() ).arg( poQuery->value(3).toString() ).arg( cPrice.currencyFullStringShort() ), poQuery->value(0).toUInt() );
+        cmbTimeIntervall->addItem( QString( "%1 (%2 %3) " ).arg( poQuery->value(4).toInt() ).arg( poQuery->value(3).toString() ).arg( cPrice.currencyFullStringShort() ), poQuery->value(0).toUInt() );
         m_qslPanelUseTimes.append( QString("%1|%2").arg( poQuery->value(4).toInt()*60 ).arg( poQuery->value(5).toInt() ) );
     }
 
-    setPanelUsePrice();
-
     m_bInit = false;
+
+    setPanelUseTime();
+    setPanelUsePrice();
 }
 //----------------------------------------------------------------------------------------------
 cDlgPanelUse::~cDlgPanelUse()
@@ -299,7 +304,7 @@ void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime()
 {
-    QTime   qtPanelUseTime( (m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)/3600,
+    QTime   qtPanelUseTime = QTime( (m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)/3600,
                             ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)/60,
                             ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)%60 );
 
@@ -403,6 +408,9 @@ void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbReloadPC_clicked()
 {
+    if( ledPatientCardBarcode->text().length() == 0 )
+        return;
+
     if( ledPatientCardBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -463,6 +471,11 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
                                                          "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
     poQuery->first();
 
+    lblCardInfo->setPixmap( QPixmap("resources/40x40_information.png") );
+    lblCardInfo->setToolTip( tr("<h3>%1</h3>"
+                                "<b>Type:</b> %2<br>"
+                                "<b>Owner:</b> %3<br>"
+                                "<b>Valid until:</b> %4").arg( m_obDBPatientCard.barcode() ).arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ).arg(m_obDBPatientCard.validDateTo()) );
     lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
     lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
     setPanelUsePatientCard( m_obDBPatientCard.id() );
@@ -472,5 +485,19 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 void cDlgPanelUse::_enablePanelUseTypes()
 {
     gbTime->setEnabled( m_bIsCashCanBeUsed );
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &arg1)
+{
+    if( m_obDBPatientCard.id() > 0 )
+    {
+        m_obDBPatientCard.createNew();
+        setPanelUsePatientCard( m_obDBPatientCard.id() );
+        slotPatientCardUseUpdated();
+        lblCardInfo->setPixmap( QPixmap("resources/40x40_search.png") );
+        lblCardInfo->setToolTip( "" );
+        lblCardType->setText( "" );
+        lblCardOwner->setText( "" );
+    }
 }
 //----------------------------------------------------------------------------------------------

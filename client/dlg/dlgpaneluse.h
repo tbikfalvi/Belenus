@@ -94,6 +94,7 @@ private slots:
     void                         on_cmbTimeIntervall_currentIndexChanged(int index);
     void                         on_ledPatientCardBarcode_returnPressed();
     void                         on_pbReloadPC_clicked();
+    void on_ledPatientCardBarcode_textEdited(const QString &arg1);
 };
 //====================================================================================
 
