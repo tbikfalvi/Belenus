@@ -501,3 +501,27 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &arg1)
     }
 }
 //----------------------------------------------------------------------------------------------
+bool cDlgPanelUse::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *key = static_cast<QKeyEvent *>(event);
+
+        if((key->key() == Qt::Key_Enter) || (key->key() == Qt::Key_Return))
+        {
+            pbOk->setFocus();
+        }
+        else
+        {
+            return QObject::eventFilter(obj, event);
+        }
+        return true;
+    }
+    else
+    {
+        return QObject::eventFilter(obj, event);
+    }
+
+    return false;
+}
+//----------------------------------------------------------------------------------------------

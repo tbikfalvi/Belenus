@@ -87,6 +87,9 @@ private:
 
     void                        _enablePanelUseTypes();
 
+protected:
+    bool                         eventFilter(QObject *obj, QEvent *event);
+
 private slots:
     void                         slotPatientCardUseUpdated();
     void                         on_pbOk_clicked();
