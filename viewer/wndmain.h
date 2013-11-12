@@ -17,6 +17,7 @@
 #include "creportpatientcarddebts.h"
 #include "creportproductstatus.h"
 #include "creportproducthistory.h"
+#include "creportpatientcardusages.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -47,6 +48,7 @@ signals: // <_NEW_REPORT_>  report signal-ja
     void                    setCheckedReportPatientcardType( bool p_bChecked );
     void                    setCheckedReportPatientcardInactive( bool p_bChecked );
     void                    setCheckedReportPatientcardDetails( bool p_bChecked );
+    void                    setCheckedReportPatientcardUsages( bool p_bChecked );
     void                    setCheckedReportPatientcardSells( bool p_bChecked );
     void                    setCheckedReportProducts( bool p_bChecked );
     void                    setCheckedReportPatientcardDebts( bool p_bChecked );
@@ -60,6 +62,7 @@ public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportPatientcardType( bool p_bChecked );
     void                    slotCheckReportPatientcardInactive( bool p_bChecked );
     void                    slotCheckReportPatientcardDetails( bool p_bChecked );
+    void                    slotCheckReportPatientcardUsages( bool p_bChecked );
     void                    slotCheckReportPatientcardSells( bool p_bChecked );
     void                    slotCheckReportProducts( bool p_bChecked );
     void                    slotCheckReportPatientcardDebts( bool p_bChecked );
@@ -77,6 +80,7 @@ private:
     cReportPatientCardType  *m_repCardType;
     cReportCardInactive     *m_repCardInactive;
     cReportCardDetails      *m_repCardDetails;
+    cReportPCUsages         *m_repCardUsages;
     cReportPatientcardSell  *m_repCardSells;
     cReportProducts         *m_repProducts;
     cReportPatientcardDebts *m_repCardDebts;

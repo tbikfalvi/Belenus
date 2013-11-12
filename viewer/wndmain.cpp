@@ -55,6 +55,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( this, SIGNAL(setCheckedReportPatientcardDebts(bool)), this, SLOT(slotCheckReportPatientcardDebts(bool)) );
     connect( this, SIGNAL(setCheckedReportProductStatus(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
     connect( this, SIGNAL(setCheckedReportProductHistory(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
+    connect( this, SIGNAL(setCheckedReportPatientcardUsages(bool)), this, SLOT(slotCheckReportPatientcardUsages(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -123,6 +124,7 @@ void cWndMain::_initActions()
     connect( action_PatientcardTypes, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
     connect( action_Patientcards_Inactive, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
     connect( action_Patientcards_Details, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardDetails(bool)) );
+    connect( action_Patientcard_Usages, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardUsages(bool)) );
     connect( action_Patientcard_Sells, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardSells(bool)) );
     connect( action_Patientcard_Debts, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardDebts(bool)) );
 
@@ -141,6 +143,7 @@ void cWndMain::_initActions()
     action_PatientcardTypes->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
     action_Patientcards_Inactive->setIcon( QIcon("./resources/40x40_report_patientcard_inactive.png") );
     action_Patientcards_Details->setIcon( QIcon("./resources/40x40_report_patientcard_details.png") );
+    action_Patientcard_Usages->setIcon( QIcon("./resources/40x40_report_patientcard_usages.png") );
     action_Patientcard_Sells->setIcon( QIcon("./resources/40x40_report_patientcard_sell.png") );
     action_Patientcard_Debts->setIcon( QIcon("./resources/40x40_report_patientcard_debt.png") );
 
@@ -159,6 +162,7 @@ void cWndMain::_initActions()
     action_PatientcardTypes->setEnabled( false );
     action_Patientcards_Inactive->setEnabled( false );
     action_Patientcards_Details->setEnabled( false );
+    action_Patientcard_Usages->setEnabled( false );
     action_Patientcard_Sells->setEnabled( false );
     action_Patientcard_Debts->setEnabled( false );
 
@@ -183,6 +187,7 @@ void cWndMain::_initToolbar()
     connect( pbPatientcardType, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
     connect( pbPatientcardsInactive, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardInactive(bool)) );
     connect( pbPatientcardsDetails, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardDetails(bool)) );
+    connect( pbPatientcardUsages, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardUsages(bool)) );
     connect( pbPatientcardSells, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardSells(bool)) );
     connect( pbPatientcardDebts, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardDebts(bool)) );
 
@@ -201,6 +206,7 @@ void cWndMain::_initToolbar()
     pbPatientcardType->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
     pbPatientcardsInactive->setIcon( QIcon("./resources/40x40_report_patientcard_inactive.png") );
     pbPatientcardsDetails->setIcon( QIcon("./resources/40x40_report_patientcard_details.png") );
+    pbPatientcardUsages->setIcon( QIcon("./resources/40x40_report_patientcard_usages.png") );
     pbPatientcardSells->setIcon( QIcon("./resources/40x40_report_patientcard_sell.png") );
     pbPatientcardDebts->setIcon( QIcon("./resources/40x40_report_patientcard_debt.png") );
 
@@ -219,6 +225,7 @@ void cWndMain::_initToolbar()
     pbPatientcardType->setEnabled( false );
     pbPatientcardsInactive->setEnabled( false );
     pbPatientcardsDetails->setEnabled( false );
+    pbPatientcardUsages->setEnabled( false );
     pbPatientcardSells->setEnabled( false );
     pbPatientcardDebts->setEnabled( false );
 
@@ -316,6 +323,8 @@ return;
             emit setCheckedReportPatientcardInactive( false );
         else if( m_repCardDetails && m_repCardDetails->index() == index )
             emit setCheckedReportPatientcardDetails( false );
+        else if( m_repCardUsages && m_repCardUsages->index() == index )
+            emit setCheckedReportPatientcardUsages( false );
         else if( m_repCardSells && m_repCardSells->index() == index )
             emit setCheckedReportPatientcardSells( false );
         else if( m_repProducts && m_repProducts->index() == index )
@@ -442,6 +451,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     action_PatientcardTypes->setEnabled( p_bEnable );
     action_Patientcards_Inactive->setEnabled( p_bEnable );
     action_Patientcards_Details->setEnabled( p_bEnable );
+    action_Patientcard_Usages->setEnabled( p_bEnable );
     action_Patientcard_Sells->setEnabled( p_bEnable );
     action_Patientcard_Debts->setEnabled( p_bEnable );
 
@@ -457,6 +467,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     pbPatientcardType->setEnabled( p_bEnable );
     pbPatientcardsInactive->setEnabled( p_bEnable );
     pbPatientcardsDetails->setEnabled( p_bEnable );
+    pbPatientcardUsages->setEnabled( p_bEnable );
     pbPatientcardSells->setEnabled( p_bEnable );
     pbPatientcardDebts->setEnabled( p_bEnable );
 
@@ -646,6 +657,36 @@ void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
         tabReports->removeTab( m_repCardDetails->index() );
         delete m_repCardDetails;
         m_repCardDetails = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportPatientcardUsages( bool p_bChecked )
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportPatientcardUsages" );
+
+    m_bReportTabSwitching = true;
+
+    action_Patientcard_Usages->setChecked( p_bChecked );
+    pbPatientcardUsages->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repCardUsages = new cReportPCUsages();
+
+        m_qvReports.append( m_repCardUsages );
+        m_repCardUsages->setIndex( tabReports->addTab( m_repCardUsages, QIcon("./resources/40x40_report_patientcard_usages.png"), m_repCardUsages->name() ) );
+        tabReports->setCurrentIndex( m_repCardUsages->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repCardUsages->index()-1 );
+        tabReports->removeTab( m_repCardUsages->index() );
+        delete m_repCardUsages;
+        m_repCardUsages = NULL;
         _updateReportIndexes();
     }
 

@@ -66,6 +66,7 @@ private:
     QString                  m_qsStatusText;
     cDBApplicationAction     m_obApplicationAction;
     int                      m_nEnterAction;
+    int                      m_inPanelStartMinute;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );
@@ -74,7 +75,7 @@ private:
     void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
     void processInputProduct( QString p_stBarcode );
-    void processInputTimePeriod( int p_inSecond );
+    void processInputTimePeriod( int p_inMinute );
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );

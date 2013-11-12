@@ -1201,6 +1201,8 @@ void cWndMain::on_action_UseDevice_triggered()
 
     obDlgPanelUse.enableCardUsage( mdiPanels->isCanBeStartedByCard() );
     obDlgPanelUse.enableCashUsage( mdiPanels->isCanBeStartedByTime() );
+
+    if( m_inPanelStartMinute > 0 )
     obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
 
     if( obDlgPanelUse.exec() == QDialog::Accepted )

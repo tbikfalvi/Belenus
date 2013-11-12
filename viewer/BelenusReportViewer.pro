@@ -40,6 +40,7 @@ HEADERS = ../framework/dbconnection.h \
     creportpatientcarddebts.h \
     creportproductstatus.h \
     creportproducthistory.h \
+    creportpatientcardusages.h \
     dlgprogress.h
 
 SOURCES = ../framework/dbconnection.cpp \
@@ -64,5 +65,6 @@ SOURCES = ../framework/dbconnection.cpp \
     creportproductstatus.cpp \
     creportpatientcarddebts.cpp \
     creportproducthistory.cpp \
+    creportpatientcardusages.cpp \
     dlgprogress.cpp
 

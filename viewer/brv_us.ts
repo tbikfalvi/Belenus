@@ -267,7 +267,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="61"/>
-        <location filename="creportdaily.cpp" line="673"/>
+        <location filename="creportdaily.cpp" line="675"/>
         <source>Products sold</source>
         <translation></translation>
     </message>
@@ -285,8 +285,8 @@
         <location filename="creportdaily.cpp" line="187"/>
         <location filename="creportdaily.cpp" line="354"/>
         <location filename="creportdaily.cpp" line="488"/>
-        <location filename="creportdaily.cpp" line="554"/>
-        <location filename="creportdaily.cpp" line="616"/>
+        <location filename="creportdaily.cpp" line="556"/>
+        <location filename="creportdaily.cpp" line="618"/>
         <source>Amount</source>
         <translation></translation>
     </message>
@@ -296,21 +296,21 @@
         <location filename="creportdaily.cpp" line="322"/>
         <location filename="creportdaily.cpp" line="399"/>
         <location filename="creportdaily.cpp" line="459"/>
-        <location filename="creportdaily.cpp" line="531"/>
-        <location filename="creportdaily.cpp" line="596"/>
-        <location filename="creportdaily.cpp" line="656"/>
-        <location filename="creportdaily.cpp" line="700"/>
+        <location filename="creportdaily.cpp" line="533"/>
+        <location filename="creportdaily.cpp" line="598"/>
+        <location filename="creportdaily.cpp" line="658"/>
+        <location filename="creportdaily.cpp" line="702"/>
         <source>Sum total</source>
         <translation></translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="66"/>
-        <location filename="creportdaily.cpp" line="680"/>
+        <location filename="creportdaily.cpp" line="682"/>
         <source>Patientcards sold</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="687"/>
+        <location filename="creportdaily.cpp" line="689"/>
         <source>Device usages</source>
         <translation></translation>
     </message>
@@ -341,7 +341,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="96"/>
-        <location filename="creportdaily.cpp" line="694"/>
+        <location filename="creportdaily.cpp" line="696"/>
         <source>Expenses</source>
         <translation></translation>
     </message>
@@ -386,8 +386,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="553"/>
-        <location filename="creportdaily.cpp" line="615"/>
+        <location filename="creportdaily.cpp" line="555"/>
+        <location filename="creportdaily.cpp" line="617"/>
         <source>Description</source>
         <translation></translation>
     </message>
@@ -395,8 +395,8 @@
         <location filename="creportdaily.cpp" line="224"/>
         <location filename="creportdaily.cpp" line="264"/>
         <location filename="creportdaily.cpp" line="431"/>
-        <location filename="creportdaily.cpp" line="587"/>
-        <location filename="creportdaily.cpp" line="647"/>
+        <location filename="creportdaily.cpp" line="589"/>
+        <location filename="creportdaily.cpp" line="649"/>
         <source>Sum</source>
         <translation></translation>
     </message>
@@ -548,6 +548,54 @@
     </message>
 </context>
 <context>
+    <name>cReportPCUsages</name>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="8"/>
+        <source> Patientcard usages </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="9"/>
+        <source>This report shows the patientcard usages for the selected date intervall. Please select the first and last day of the date intervall you interested in.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="13"/>
+        <source>First date of intervall :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="17"/>
+        <source>Last date of intervall :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="25"/>
+        <source>Create selected report ...</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="34"/>
+        <source>Date intervall:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="55"/>
+        <source>Date of usage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="56"/>
+        <source>Patientcard barcode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="57"/>
+        <source>Unit count</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>cReportPatientCardType</name>
     <message>
         <location filename="creportpatientcardtype.cpp" line="12"/>
@@ -655,42 +703,42 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="53"/>
+        <location filename="creportpatientcarddebts.cpp" line="50"/>
         <source>On date: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="63"/>
+        <location filename="creportpatientcarddebts.cpp" line="60"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="64"/>
+        <location filename="creportpatientcarddebts.cpp" line="61"/>
         <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="65"/>
+        <location filename="creportpatientcarddebts.cpp" line="62"/>
         <source>Unit time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="66"/>
+        <location filename="creportpatientcarddebts.cpp" line="63"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="67"/>
+        <location filename="creportpatientcarddebts.cpp" line="64"/>
         <source>Unit price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="68"/>
+        <location filename="creportpatientcarddebts.cpp" line="65"/>
         <source>Sum</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="96"/>
+        <location filename="creportpatientcarddebts.cpp" line="93"/>
         <source>Sum total</source>
         <translation></translation>
     </message>
@@ -1005,48 +1053,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="265"/>
-        <location filename="wndmain.cpp" line="355"/>
+        <location filename="wndmain.cpp" line="272"/>
+        <location filename="wndmain.cpp" line="364"/>
         <source>Login</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="270"/>
+        <location filename="wndmain.cpp" line="277"/>
         <source>Need authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="275"/>
+        <location filename="wndmain.cpp" line="282"/>
         <source>User successfully authenticated.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="280"/>
+        <location filename="wndmain.cpp" line="287"/>
         <source>Logout</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="286"/>
+        <location filename="wndmain.cpp" line="293"/>
         <source>The username entered not found in the Belenus database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="288"/>
+        <location filename="wndmain.cpp" line="295"/>
         <source>The password entered is incorrect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="290"/>
+        <location filename="wndmain.cpp" line="297"/>
         <source>Connection to Belenus database failed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="292"/>
+        <location filename="wndmain.cpp" line="299"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="818"/>
+        <location filename="wndmain.cpp" line="859"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation></translation>
     </message>
@@ -1083,247 +1131,262 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="115"/>
-        <location filename="wndmain.ui" line="871"/>
+        <location filename="wndmain.ui" line="891"/>
         <source>History of cassa events and actions</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="141"/>
-        <location filename="wndmain.ui" line="841"/>
+        <location filename="wndmain.ui" line="861"/>
         <source>Active patientcard types</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="160"/>
-        <location filename="wndmain.ui" line="857"/>
-        <location filename="wndmain.ui" line="860"/>
+        <location filename="wndmain.ui" line="877"/>
+        <location filename="wndmain.ui" line="880"/>
         <source>Patientcard details</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="179"/>
-        <source>Inactive or expiring patientcards</source>
+        <source>Patientcard usages</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="198"/>
-        <location filename="wndmain.ui" line="882"/>
-        <source>History of patientcard cassa actions</source>
+        <source>Inactive or expiring patientcards</source>
         <translation></translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="217"/>
-        <location filename="wndmain.ui" line="904"/>
+        <location filename="wndmain.ui" line="902"/>
+        <source>History of patientcard cassa actions</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="236"/>
+        <location filename="wndmain.ui" line="924"/>
         <source>Summary of valid patientcards and the price of its units available</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="243"/>
-        <location filename="wndmain.ui" line="893"/>
+        <location filename="wndmain.ui" line="262"/>
+        <location filename="wndmain.ui" line="913"/>
         <source>Products registered in database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="262"/>
-        <location filename="wndmain.ui" line="915"/>
+        <location filename="wndmain.ui" line="281"/>
+        <location filename="wndmain.ui" line="935"/>
         <source>Product status on the selected date</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="281"/>
-        <location filename="wndmain.ui" line="926"/>
+        <location filename="wndmain.ui" line="300"/>
+        <location filename="wndmain.ui" line="946"/>
         <source>History of the selected product</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="313"/>
+        <location filename="wndmain.ui" line="332"/>
         <source> Print report </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="362"/>
+        <location filename="wndmain.ui" line="381"/>
         <source>Report description ... </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="378"/>
+        <location filename="wndmain.ui" line="397"/>
         <source> Refresh </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="411"/>
+        <location filename="wndmain.ui" line="430"/>
         <source>Date start :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="428"/>
+        <location filename="wndmain.ui" line="447"/>
         <source>Date stop :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="461"/>
+        <location filename="wndmain.ui" line="480"/>
         <source>Data name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="494"/>
+        <location filename="wndmain.ui" line="513"/>
         <source>Data types :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="527"/>
+        <location filename="wndmain.ui" line="546"/>
         <source>Is visible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="562"/>
+        <location filename="wndmain.ui" line="581"/>
         <source> Information </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="577"/>
+        <location filename="wndmain.ui" line="596"/>
         <source>How to use report viewer ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="599"/>
+        <location filename="wndmain.ui" line="618"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="609"/>
+        <location filename="wndmain.ui" line="628"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="616"/>
+        <location filename="wndmain.ui" line="635"/>
         <source> Authentication </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="622"/>
+        <location filename="wndmain.ui" line="641"/>
         <source>Need authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="631"/>
+        <location filename="wndmain.ui" line="650"/>
         <source>User name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="641"/>
+        <location filename="wndmain.ui" line="660"/>
         <source>Password :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="661"/>
+        <location filename="wndmain.ui" line="680"/>
         <source> Login </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="692"/>
+        <location filename="wndmain.ui" line="711"/>
         <source> Filter settings </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="698"/>
+        <location filename="wndmain.ui" line="717"/>
         <source>Refresh the report automatically after one of the filter has been changed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="735"/>
+        <location filename="wndmain.ui" line="754"/>
         <source>&amp;File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="742"/>
+        <location filename="wndmain.ui" line="761"/>
         <source>&amp;View</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="749"/>
+        <location filename="wndmain.ui" line="768"/>
         <source>&amp;Reports</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="753"/>
+        <location filename="wndmain.ui" line="772"/>
         <source>&amp;Bookkeeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="762"/>
+        <location filename="wndmain.ui" line="781"/>
         <source>Patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="772"/>
-        <location filename="wndmain.ui" line="890"/>
+        <location filename="wndmain.ui" line="792"/>
+        <location filename="wndmain.ui" line="910"/>
         <source>Products</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="789"/>
+        <location filename="wndmain.ui" line="809"/>
         <source>E&amp;xit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="800"/>
+        <location filename="wndmain.ui" line="820"/>
         <source>&amp;Toolbar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="811"/>
+        <location filename="wndmain.ui" line="831"/>
         <source>&amp;Filter bar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="819"/>
+        <location filename="wndmain.ui" line="839"/>
         <source>&amp;Daily</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="822"/>
+        <location filename="wndmain.ui" line="842"/>
         <source>Daily bookkeeping</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="830"/>
+        <location filename="wndmain.ui" line="850"/>
         <source>&amp;Ledger</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="838"/>
+        <location filename="wndmain.ui" line="858"/>
         <source>&amp;Active patientcard types</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="849"/>
+        <location filename="wndmain.ui" line="869"/>
         <source>Inactive patientcards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="868"/>
+        <location filename="wndmain.ui" line="888"/>
         <source>&amp;Cassa history</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="879"/>
+        <location filename="wndmain.ui" line="899"/>
         <source>Patientcard sells</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="901"/>
+        <location filename="wndmain.ui" line="921"/>
         <source>Patientcard debts</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="912"/>
+        <location filename="wndmain.ui" line="932"/>
         <source>Product status</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="923"/>
+        <location filename="wndmain.ui" line="943"/>
         <source>Product history</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="951"/>
+        <source>Patient card usages</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="954"/>
+        <source>Patientcard usages on a defined date intervall</source>
         <translation></translation>
     </message>
 </context>
