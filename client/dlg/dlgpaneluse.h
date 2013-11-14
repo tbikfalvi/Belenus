@@ -56,7 +56,9 @@ public:
 
     void                         enableCardUsage( bool p_bEnabled );
     void                         enableCashUsage( bool p_bEnabled );
+    void                         setPanelUsePatientCard( QString p_qsPatientCardBarcode );
     void                         setPanelUsePatientCard( unsigned int p_uiPatientCardId );
+    void                         setPanelUseTimeCash( unsigned int p_uiSeconds );
     void                         setPanelUseTime( unsigned int p_uiSeconds );
     void                         setPanelUseTime();
     void                         setPanelUsePrice();
@@ -69,6 +71,7 @@ public:
 
 private:
 
+    QWidget                     *m_poParent;
     bool                         m_bInit;
     cDBPatientCard               m_obDBPatientCard;
     unsigned int                 m_uiPanelId;
@@ -86,9 +89,6 @@ private:
     QStringList                  m_qslPanelUseTimes;
 
     void                        _enablePanelUseTypes();
-
-protected:
-    bool                         eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     void                         slotPatientCardUseUpdated();

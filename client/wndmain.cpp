@@ -107,6 +107,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_inGlobalDataRequestTimeout    = 0;
     m_uiPatientId                   = 0;
     m_nEnterAction                  = 0;
+    m_inPanelStartMinute            = 0;
+    m_qsPanelStartBarcode           = "";
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -1201,7 +1203,19 @@ void cWndMain::on_action_UseDevice_triggered()
 
     obDlgPanelUse.enableCardUsage( mdiPanels->isCanBeStartedByCard() );
     obDlgPanelUse.enableCashUsage( mdiPanels->isCanBeStartedByTime() );
+
     obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
+
+    if( m_inPanelStartMinute > 0 )
+    {
+        obDlgPanelUse.setPanelUseTimeCash( m_inPanelStartMinute*60 );
+        m_inPanelStartMinute = 0;
+    }
+    if( m_qsPanelStartBarcode.length() > 0 )
+    {
+        obDlgPanelUse.setPanelUsePatientCard( m_qsPanelStartBarcode );
+        m_qsPanelStartBarcode = "";
+    }
 
     if( obDlgPanelUse.exec() == QDialog::Accepted )
     {
@@ -1544,6 +1558,43 @@ void cWndMain::processInputPatient( QString p_stPatientName )
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
+    if( !mdiPanels->isCanBeStartedByCard() )
+    {
+        switch( customMsgBox( this, MSG_ATTENTION,
+                              tr("Reset device|Add to wait list ...|Cancel"),
+                              tr("This device already prepared with a patientcard."),
+                              tr("To start the device with other conditions, please\n"
+                                 "reset the device first with pushing the ESC button.") ) )
+        {
+            case 1:
+                if( mdiPanels->isStatusCanBeReseted() )
+                {
+                    m_lblStatusLeft.setText( m_qsStatusText );
+                    mdiPanels->clear();
+                }
+                else
+                {
+                    return;
+                }
+                break;
+            case 2:
+                m_qsPanelStartBarcode = p_stBarcode;
+                on_action_UseDeviceLater_triggered();
+                return;
+                break;
+            case 3:
+            default:
+                return;
+        }
+    }
+
+    m_qsPanelStartBarcode = p_stBarcode;
+    on_action_UseDevice_triggered();
+
+
+
+
+return;
     cDBPatientCard  obDBPatientCard;
 
     try
@@ -1752,6 +1803,7 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
                 }
                 break;
             case 2:
+                m_inPanelStartMinute = p_inMinute;
                 on_action_UseDeviceLater_triggered();
                 return;
                 break;

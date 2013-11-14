@@ -67,6 +67,7 @@ private:
     cDBApplicationAction     m_obApplicationAction;
     int                      m_nEnterAction;
     int                      m_inPanelStartMinute;
+    QString                  m_qsPanelStartBarcode;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );

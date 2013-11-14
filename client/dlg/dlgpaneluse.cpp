@@ -169,6 +169,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     lblCardType->setText( tr("Card type : ") );
     lblCardOwner->setText( tr("Owner : ") );
 
+    m_poParent                  = p_poParent;
     m_uiPanelId                 = p_uiPanelId;
     m_uiPanelUsePatientCardId   = 0;
     m_uiPanelBaseTimeCard       = 0;
@@ -225,6 +226,14 @@ void cDlgPanelUse::enableCashUsage(bool p_bEnabled)
     m_bIsCashCanBeUsed = p_bEnabled;
 
     _enablePanelUseTypes();
+}
+//----------------------------------------------------------------------------------------------
+void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode)
+{
+    ledPatientCardBarcode->setText( p_qsPatientCardBarcode );
+    m_bIsEnterAccepted = false;
+    pbOk->setEnabled( false );
+    on_pbReloadPC_clicked();
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
@@ -286,6 +295,25 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         slotPatientCardUseUpdated();
     }
 
+    if( m_obDBPatientCard.id() > 0 )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patientcardtypes.name AS type, patients.name AS owner "
+                                                             "FROM patientcards JOIN patientcardtypes ON "
+                                                             "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId "
+                                                             "JOIN patients ON "
+                                                             "patientcards.patientId=patients.patientId "
+                                                             "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
+        poQuery->first();
+
+        lblCardInfo->setPixmap( QPixmap("resources/40x40_information.png") );
+        lblCardInfo->setToolTip( tr("<h3>%1</h3>"
+                                    "<b>Type:</b> %2<br>"
+                                    "<b>Owner:</b> %3<br>"
+                                    "<b>Valid until:</b> %4").arg( m_obDBPatientCard.barcode() ).arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ).arg(m_obDBPatientCard.validDateTo()) );
+        lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
+        lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
+    }
+
     int nUnitHeight = (qvPanelUseUnits.count()-1)*40;
 
     if( nUnitHeight < 0 ) nUnitHeight = 0;
@@ -294,16 +322,44 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
     setMaximumHeight( 340 + nUnitHeight );
 }
 //----------------------------------------------------------------------------------------------
+void cDlgPanelUse::setPanelUseTimeCash(unsigned int p_uiSeconds)
+{
+    m_uiPanelUseTimeCash = p_uiSeconds;
+    setPanelUseTime();
+}
+//----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
 {
-    if( m_bIsCardCanBeUsed )      m_uiPanelBaseTimeCard = p_uiSeconds;
-    else if( m_bIsCashCanBeUsed ) m_uiPanelBaseTimeCash = p_uiSeconds;
+    if( !m_bIsCardCanBeUsed )       m_uiPanelBaseTimeCard = p_uiSeconds;
+    else if( !m_bIsCashCanBeUsed )  m_uiPanelBaseTimeCash = p_uiSeconds;
 
     setPanelUseTime();
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime()
 {
+    if( m_uiPanelUseTimeCash > 0 )
+    {
+        for( int i=0; i<m_qslPanelUseTimes.count(); i++ )
+        {
+            QStringList qslTemp = m_qslPanelUseTimes.at(i).split('|');
+            if( qslTemp.at(0).compare( QString::number(m_uiPanelUseTimeCash) ) == 0 )
+            {
+                cmbTimeIntervall->setCurrentIndex( i );
+                break;
+            }
+        }
+        if( cmbTimeIntervall->currentIndex() == 0 )
+        {
+            QMessageBox::warning( m_poParent, tr("Warning"),
+                                  tr("This time period did not saved in the database\n"
+                                     "for the actually selected device.\n"
+                                     "Please select valid value from the list.") );
+            m_uiPanelUseTimeCash = 0;
+        }
+        cmbTimeIntervall->setFocus();
+    }
+
     QTime   qtPanelUseTime = QTime( (m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)/3600,
                             ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)/60,
                             ((m_uiPanelBaseTimeCard+m_uiPanelBaseTimeCash+m_uiPanelUseTimeCard+m_uiPanelUseTimeCash)%3600)%60 );
@@ -372,6 +428,7 @@ void cDlgPanelUse::slotPatientCardUseUpdated()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbOk_clicked()
 {
+    cTracer obTracer( "cDlgPanelUse::on_pbOk_clicked" );
     if( !m_bIsEnterAccepted )
     {
         m_bIsEnterAccepted = true;
@@ -401,6 +458,7 @@ void cDlgPanelUse::on_cmbTimeIntervall_currentIndexChanged(int index)
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
 {
+    cTracer obTracer( "cDlgPanelUse::on_ledPatientCardBarcode_returnPressed" );
     m_bIsEnterAccepted = false;
     pbOk->setEnabled( false );
     on_pbReloadPC_clicked();
@@ -408,6 +466,7 @@ void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbReloadPC_clicked()
 {
+    cTracer obTracer( "cDlgPanelUse::on_pbReloadPC_clicked" );
     if( ledPatientCardBarcode->text().length() == 0 )
         return;
 
@@ -437,6 +496,13 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
             return;
         }
 
+        if( m_obDBPatientCard.active() )
+        {
+            if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
+            {
+                if( obDBPatientCard.timeLeft() < 1 )
+            }
+        }
     }
     catch( cSevException &e )
     {
@@ -463,32 +529,20 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         }
     }
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patientcardtypes.name AS type, patients.name AS owner "
-                                                         "FROM patientcards JOIN patientcardtypes ON "
-                                                         "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId "
-                                                         "JOIN patients ON "
-                                                         "patientcards.patientId=patients.patientId "
-                                                         "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
-    poQuery->first();
-
-    lblCardInfo->setPixmap( QPixmap("resources/40x40_information.png") );
-    lblCardInfo->setToolTip( tr("<h3>%1</h3>"
-                                "<b>Type:</b> %2<br>"
-                                "<b>Owner:</b> %3<br>"
-                                "<b>Valid until:</b> %4").arg( m_obDBPatientCard.barcode() ).arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ).arg(m_obDBPatientCard.validDateTo()) );
-    lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
-    lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
     setPanelUsePatientCard( m_obDBPatientCard.id() );
     slotPatientCardUseUpdated();
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::_enablePanelUseTypes()
 {
+    gbPatientCard->setEnabled( m_bIsCardCanBeUsed );
+
     gbTime->setEnabled( m_bIsCashCanBeUsed );
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &arg1)
 {
+    cTracer obTracer( "cDlgPanelUse::on_ledPatientCardBarcode_textEdited" );
     if( m_obDBPatientCard.id() > 0 )
     {
         m_obDBPatientCard.createNew();
@@ -499,29 +553,5 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &arg1)
         lblCardType->setText( "" );
         lblCardOwner->setText( "" );
     }
-}
-//----------------------------------------------------------------------------------------------
-bool cDlgPanelUse::eventFilter(QObject *obj, QEvent *event)
-{
-    if(event->type() == QEvent::KeyPress)
-    {
-        QKeyEvent *key = static_cast<QKeyEvent *>(event);
-
-        if((key->key() == Qt::Key_Enter) || (key->key() == Qt::Key_Return))
-        {
-            pbOk->setFocus();
-        }
-        else
-        {
-            return QObject::eventFilter(obj, event);
-        }
-        return true;
-    }
-    else
-    {
-        return QObject::eventFilter(obj, event);
-    }
-
-    return false;
 }
 //----------------------------------------------------------------------------------------------
