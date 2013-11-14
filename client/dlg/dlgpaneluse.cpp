@@ -498,9 +498,39 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 
         if( m_obDBPatientCard.active() )
         {
-            if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
+            if( m_obDBPatientCard.units() < 1 || m_obDBPatientCard.timeLeft() < 1 )
             {
-                if( obDBPatientCard.timeLeft() < 1 )
+                if( m_obDBPatientCard.timeLeft() < 1 )
+                {
+                    m_obDBPatientCard.setPatientCardTypeId( 0 );
+                    m_obDBPatientCard.setParentId( 0 );
+                    m_obDBPatientCard.setPatientId( 0 );
+                    m_obDBPatientCard.setUnits( 0 );
+                    m_obDBPatientCard.setAmount( 0 );
+                    m_obDBPatientCard.setTimeLeft( 0 );
+                    m_obDBPatientCard.setValidDateFrom( "2000-01-01" );
+                    m_obDBPatientCard.setValidDateTo( "2000-01-01" );
+                    m_obDBPatientCard.setActive( false );
+                    m_obDBPatientCard.save();
+                }
+                if( QMessageBox::question( this, tr("Question"),
+                                           tr("This patientcard can not be used with these settings:\n\n"
+                                              "Available units: %1\n"
+                                              "Available time: %2 (hh:mm:ss)\n\n"
+                                              "Do you want to refill the patientcard now?").arg(m_obDBPatientCard.units()).arg(m_obDBPatientCard.timeLeftStr()).arg(qsTemp),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+                else
+                {
+                    cDlgPatientCardRefill obDlgPatientCardRefill( this, &obDBPatientCard );
+
+                    if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
+                    {
+                        return;
+                    }
+                }
             }
         }
     }
