@@ -505,6 +505,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 
         if( m_obDBPatientCard.active() )
         {
+            // resolved conflict
             if(m_obDBPatientCard.units() < 1 ||m_obDBPatientCard.timeLeft() < 1 )
             {
                 QString     qsTemp = "";
