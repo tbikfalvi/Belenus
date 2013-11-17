@@ -25,15 +25,20 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
     ledSerialKey->setText( g_obLicenceManager.licenceKey() );
     lblValidDays->setText( "   " );
 
+    ledSerialKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    pbActivateKey->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    ledCodeActivation->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    deLastValidated->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbValidateApplication->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    pbOk->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
-    if( g_poPrefs->getLicenceId() > 1 && g_obLicenceManager.activateLicence( ledSerialKey->text() ) == cLicenceManager::ERR_NO_ERROR )
+    if( /*g_poPrefs->getLicenceId() > 1 &&*/ g_obLicenceManager.activateLicence( ledSerialKey->text() ) == cLicenceManager::ERR_NO_ERROR )
     {
         ledCodeActivation->setText( g_obLicenceManager.validationKey() );
-        ledLastValidated->setText( g_obLicenceManager.lastValidated() );
-        ledCodeValidation->setEnabled( true );
+        deLastValidated->setDate( QDate::fromString( g_obLicenceManager.lastValidated(), "yyyy-MM-dd" ) );
+        ledCodeValidation->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
         ledCodeValidation->setText( g_obLicenceManager.activationKey() );
-        pbValidateCode->setEnabled( true );
+        pbValidateCode->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
         lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
         ledCodeValidation->setFocus();
     }
@@ -63,7 +68,7 @@ void cDlgSerialReg::on_pbActivateKey_clicked()
             ledCodeValidation->setEnabled( true );
             pbValidateCode->setEnabled( true );
             lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
-            ledLastValidated->setText( g_obLicenceManager.lastValidated() );
+            deLastValidated->setDate( QDate::fromString( g_obLicenceManager.lastValidated(), "yyyy-MM-dd" ) );
             break;
 
         case cLicenceManager::ERR_KEY_FORMAT_MISMATCH:
@@ -124,11 +129,11 @@ void cDlgSerialReg::on_pbValidateApplication_clicked()
     }
     else
     {
-        if( g_poPrefs->getLicenceId() > 1 )
-        {
-            ledLastValidated->setText( g_obLicenceManager.validateApplication() );
+//        if( g_poPrefs->getLicenceId() > 1 )
+//        {
+            g_obLicenceManager.validateApplication( deLastValidated->date().toString("yyyy-MM-dd") );
             lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
-        }
+//        }
     }
 }
 

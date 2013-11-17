@@ -170,7 +170,7 @@ int main( int argc, char *argv[] )
         qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
 
-        if( nDaysRemain < 7 )
+        if( nDaysRemain < cLicenceManager::EXPIRE_IN_DAYS )
         {
             qsSpalsh += QObject::tr("\nVALIDATE YOUR APPLICATION\nWITH YOUR FRANCHISE PROVIDER\n\n");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));

@@ -2027,19 +2027,31 @@ void cWndMain::on_action_EmptyDemoDB_triggered()
 
     try
     {
+        g_poDB->executeQTQuery( QString( "DELETE FROM cassaHistory WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM productHistory WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM ledger WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM ledgerDevice WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM shoppingCartItems WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM discounts WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM paymentMethods WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM cassaDenominations WHERE licenceId=1" ) );
-        g_poDB->executeQTQuery( QString( "DELETE FROM cassaHistory WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM cassa WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM address WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM publicPlaces WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM zipRegionCity WHERE licenceId=1" ) );
-        g_poDB->executeQTQuery( QString( "DELETE FROM discounts WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientHistory WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientHistoryType WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM productActionType WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM connectProductWithType WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM products WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM productTypes WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM ledgerTypes WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM denominations WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientCardUnits WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM patientCardHistories WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM patientCards WHERE licenceId=1" ) );
+        g_poDB->executeQTQuery( QString( "DELETE FROM patientCardTypeEnabled WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM patientCardTypes WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM patients WHERE licenceId=1" ) );
         g_poDB->executeQTQuery( QString( "DELETE FROM companies WHERE licenceId=1" ) );
@@ -2376,8 +2388,17 @@ void cWndMain::on_action_ReportViewer_triggered()
 
 void cWndMain::on_action_About_triggered()
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences WHERE licenceId=%1" ).arg( g_poPrefs->getLicenceId() ) );
+    QSqlQuery   *poQuery            = NULL;
+    QString      qsLicenceString    = "";
+    QString qsInfoLink              = "";
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT serial FROM licences WHERE licenceId=%1" ).arg( g_poPrefs->getLicenceId() ) );
     poQuery->first();
+    qsLicenceString = poQuery->value( 0 ).toString();
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\"" ) );
+    poQuery->first();
+    qsInfoLink = poQuery->value( 0 ).toString();
 
     QMessageBox::information( this, tr("About"),
                               tr("<h2>Belenus Software Application System</h2>"
@@ -2390,8 +2411,8 @@ void cWndMain::on_action_About_triggered()
                                  "<p>"
                                  "The application and all of its related products<br>"
                                  "is the property of KiwiSun Franchise.<br>"
-                                 "For more information visit the <a href=\"http://www.kiwisun.eu\">KiwiSun website</a>"
-                                 ).arg( g_poPrefs->getVersion() ).arg( poQuery->value( 1 ).toString() ) );
+                                 "For more information visit the <a href=\"%3\">KiwiSun website</a>"
+                                 ).arg( g_poPrefs->getVersion() ).arg( qsLicenceString ).arg( qsInfoLink ) );
 }
 //====================================================================================
 int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)

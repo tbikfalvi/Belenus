@@ -308,31 +308,31 @@ Please start WampServer application then restart Belenus application.</oldsource
     </message>
     <message>
         <location filename="general.cpp" line="71"/>
-        <location filename="wndmain.cpp" line="2405"/>
+        <location filename="wndmain.cpp" line="2414"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="75"/>
-        <location filename="wndmain.cpp" line="2409"/>
+        <location filename="wndmain.cpp" line="2418"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="79"/>
-        <location filename="wndmain.cpp" line="2413"/>
+        <location filename="wndmain.cpp" line="2422"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="83"/>
-        <location filename="wndmain.cpp" line="2417"/>
+        <location filename="wndmain.cpp" line="2426"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="87"/>
-        <location filename="wndmain.cpp" line="2421"/>
+        <location filename="wndmain.cpp" line="2430"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -4961,6 +4961,11 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="wndmain.cpp" line="2392"/>
+        <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Version : %1&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %2&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%3&quot;&gt;KiwiSun website&lt;/a&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="wndmain.cpp" line="1248"/>
         <source>This patientcard has been assigned to the following patient.
 
@@ -5098,13 +5103,8 @@ Error code: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2382"/>
+        <location filename="wndmain.cpp" line="2391"/>
         <source>About</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="wndmain.cpp" line="2383"/>
-        <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Version : %1&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %2&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;http://www.kiwisun.eu&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation></translation>
     </message>
     <message>

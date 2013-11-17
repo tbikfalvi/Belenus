@@ -12,7 +12,7 @@ class cLicenceManager : public QObject
 
 public:
 
-    static const int EXPIRE_IN_DAYS = 182;
+    static const int EXPIRE_IN_DAYS = 7;
     static const int DEMO_LICENCE_KEY_ID = 1;
     static const int LICENCE_MAX_NUMBER = 30;
 
@@ -40,7 +40,7 @@ public:
     int             daysRemain();
     int             validateLicence( const QString &p_qsLicenceString );
     int             activateLicence( const QString &p_qsValidationString );
-    QString         validateApplication();
+    void            validateApplication( QString p_qsDate );
     QString         licenceKey() const;
     QString         validationKey() const;
     QString         activationKey();

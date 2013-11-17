@@ -164,11 +164,7 @@ int cLicenceManager::daysRemain()
         return 0;
 
     int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
-    // nDays<0 means currentdate is before lastvalidated - error
-    if ( nDays < 0 )
-        return 0;
 
-    // itt lehet nDays 0..n .. EXP-days lehet -vegtelen..EXP
     nDays = EXPIRE_IN_DAYS - nDays;
     if ( nDays < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
         nDays = 0;
@@ -176,14 +172,11 @@ int cLicenceManager::daysRemain()
     return nDays;
 }
 
-QString cLicenceManager::validateApplication()
+void cLicenceManager::validateApplication( QString p_qsDate )
 {
-    m_qdLastValidated = QDate::currentDate();
-    QString qsLastValidated = m_qdLastValidated.toString( "yyyy-MM-dd" );
+    m_qdLastValidated = QDate::fromString( p_qsDate, "yyyy-MM-dd" );
 
-    g_poDB->executeQTQuery( QString("UPDATE licences SET lastValidated=\"%1\" WHERE licenceId=%2").arg( qsLastValidated ).arg( g_poPrefs->getLicenceId() ) );
-
-    return qsLastValidated;
+    g_poDB->executeQTQuery( QString("UPDATE licences SET lastValidated=\"%1\" WHERE licenceId=%2").arg( p_qsDate ).arg( g_poPrefs->getLicenceId() ) );
 }
 
 int cLicenceManager::activateLicence( const QString &p_qsLicenceString )
