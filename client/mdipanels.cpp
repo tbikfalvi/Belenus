@@ -382,14 +382,19 @@ void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
     }
 }
 //====================================================================================
-void cMdiPanels::patientAddedToWaitingQueue()
+void cMdiPanels::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
 {
-    m_obPanels.at( m_uiActivePanel )->patientAddedToWaitingQueue();
+    m_obPanels.at( m_uiActivePanel )->addPatientToWaitingQueue( p_inLengthCash, p_inPrice, p_uiPatientCardId, p_qsUnitIds, p_inLenghtCard, p_uiLedgerId, p_inPayType );
 }
 //====================================================================================
-void cMdiPanels::patientWaitingQueueEmpty()
+bool cMdiPanels::isPatientWaiting()
 {
-    m_obPanels.at( m_uiActivePanel )->patientWaitingQueueEmpty();
+    return m_obPanels.at( m_uiActivePanel )->isPatientWaiting();
+}
+//====================================================================================
+void cMdiPanels::setUsageFromWaitingQueue()
+{
+    m_obPanels.at( m_uiActivePanel )->setUsageFromWaitingQueue();
 }
 //====================================================================================
 void cMdiPanels::openShoppingCart( unsigned int p_uiPanelId )
@@ -414,6 +419,18 @@ void cMdiPanels::slotPaymentActivated( unsigned int p_uiPanelId )
 void cMdiPanels::slotOpenScheduleTable( unsigned int p_uiPanelId )
 {
     emit signalOpenScheduleTable( p_uiPanelId );
+}
+//====================================================================================
+void cMdiPanels::activatePanelId( unsigned int p_uiPanelId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            activatePanel( i );
+            break;
+        }
+    }
 }
 //====================================================================================
 void cMdiPanels::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )

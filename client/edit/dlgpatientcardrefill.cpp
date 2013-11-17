@@ -173,29 +173,13 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
 
     if( m_poPatientCardType->validDays() > 0 )
     {
-        QDate   newDate = QDate::currentDate().addDays(m_poPatientCardType->validDays());
         deValidDateFrom->setDate( QDate::currentDate() );
-        deValidDateTo->setDate( newDate );
-/*        if( newDate > deValidDateTo->date() )
-        {
-            deValidDateTo->setDate( newDate );
-        }*/
+        deValidDateTo->setDate( QDate::currentDate().addDays(m_poPatientCardType->validDays()) );
     }
     else
     {
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd") );
-
-/*        QDate   newDate = QDate::fromString(m_poPatientCardType->validDateTo(),"yyyy-MM-dd");
-
-        if( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") < QDate::currentDate() )
-        {
-            deValidDateFrom->setDate( QDate::fromString(m_poPatientCardType->validDateFrom(),"yyyy-MM-dd") );
-        }
-        if( newDate > deValidDateTo->date() )
-        {
-            deValidDateTo->setDate( newDate );
-        }*/
     }
 
     cCurrency   cPrice( QString::number(m_poPatientCardType->price()/100), cCurrency::CURR_GROSS, m_poPatientCardType->vatpercent() );
@@ -473,26 +457,4 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
 void cDlgPatientCardRefill::on_pbCancel_clicked()
 {
     QDialog::reject();
-}
-//===========================================================================================================
-//
-//-----------------------------------------------------------------------------------------------------------
-QString cDlgPatientCardRefill::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
-{
-    QString qsValue = QString::number( p_nCurrencyValue );
-    QString qsRet = "";
-
-    if( qsValue.length() > 3 )
-    {
-        while( qsValue.length() > 3 )
-        {
-            qsRet.insert( 0, qsValue.right(3) );
-            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
-            qsValue.truncate( qsValue.length()-3 );
-        }
-    }
-    qsRet.insert( 0, qsValue );
-    qsRet += " " + p_qsCurrency;
-
-    return qsRet;
 }

@@ -40,6 +40,17 @@ typedef struct _used_patientcard
     int             inUnitTime;
 } stUsedPatientCard;
 
+typedef struct _waiting_queue
+{
+    int             inLengthCash;
+    int             inPrice;
+    unsigned int    uiPatientCardId;
+    QString         qsUnitIds;
+    int             inLengthCard;
+    unsigned int    uiLedgerId;
+    int             inPayType;
+} stWaitingQueue;
+
 //====================================================================================
 
 class cFrmPanel : public QFrame
@@ -81,9 +92,9 @@ public:
     bool            isItemInShoppingCart();
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
-    void            patientAddedToWaitingQueue();
-    void            patientWaitingQueueEmpty();
-
+    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    bool            isPatientWaiting();
+    void            setUsageFromWaitingQueue();
     bool            isNeedToBeCleaned() { return m_bIsNeedToBeCleaned; }
 
 signals:
@@ -145,6 +156,7 @@ private:
     QString                      m_qsInfo;
 
     vector<cDBPanelStatuses*>    m_obStatuses;
+    vector<stWaitingQueue*>      m_vrWaitingQueue;
 
     void            load( const unsigned int p_uiPanelId );
     void            displayStatus();

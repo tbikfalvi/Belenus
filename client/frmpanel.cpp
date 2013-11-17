@@ -1074,15 +1074,50 @@ void cFrmPanel::slotScheduledGuestClicked()
     emit signalOpenScheduleTable( m_uiId );
 }
 //====================================================================================
-void cFrmPanel::patientAddedToWaitingQueue()
+void cFrmPanel::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
 {
+    stWaitingQueue  *poTemp = new stWaitingQueue;
+
+    poTemp->inLengthCash    = p_inLengthCash;
+    poTemp->inPrice         = p_inPrice;
+    poTemp->uiPatientCardId = p_uiPatientCardId;
+    poTemp->qsUnitIds       = p_qsUnitIds;
+    poTemp->inLengthCard    = p_inLenghtCard;
+    poTemp->uiLedgerId      = p_uiLedgerId;
+    poTemp->inPayType       = p_inPayType;
+
+    m_vrWaitingQueue.push_back( poTemp );
+
     m_bIsPatientWaiting = true;
     displayStatus();
 }
 //====================================================================================
-void cFrmPanel::patientWaitingQueueEmpty()
+bool cFrmPanel::isPatientWaiting()
 {
-    m_bIsPatientWaiting = false;
+    return m_bIsPatientWaiting;
+}
+//====================================================================================
+void cFrmPanel::setUsageFromWaitingQueue()
+{
+    if( m_vrWaitingQueue.size() > 0 )
+    {
+        stWaitingQueue  *poTemp = m_vrWaitingQueue.at(m_vrWaitingQueue.size()-1);
+        setMainProcessTime( poTemp->inLengthCash, poTemp->inPrice );
+        setMainProcessTime( poTemp->uiPatientCardId, poTemp->qsUnitIds.split('|'), poTemp->inLengthCard );
+        if( poTemp->inPrice == 0 )
+        {
+            setPaymentMethod( poTemp->inPayType );
+            cashPayed( poTemp->uiLedgerId );
+        }
+
+        delete poTemp;
+        m_vrWaitingQueue.pop_back();
+    }
+    if( m_vrWaitingQueue.size() < 1 )
+    {
+        m_bIsPatientWaiting = false;
+    }
+
     displayStatus();
 }
 //====================================================================================

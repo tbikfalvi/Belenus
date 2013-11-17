@@ -20,6 +20,7 @@ public:
     ~cMdiPanels();
 
     void            initPanels();
+    void            activatePanelId( unsigned int p_uiPanelId );
     void            placeSubWindows();
 
     void            start();
@@ -58,8 +59,9 @@ public:
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
     void            itemRemovedFromShoppingCart( const unsigned int p_uiPanelId );
-    void            patientAddedToWaitingQueue();
-    void            patientWaitingQueueEmpty();
+    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    bool            isPatientWaiting();
+    void            setUsageFromWaitingQueue();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;

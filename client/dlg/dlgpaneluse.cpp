@@ -5,6 +5,7 @@
 #include "db/dbpatientcard.h"
 #include "db/dbpatientcardunits.h"
 #include "edit/dlgpatientcardsell.h"
+#include "edit/dlgpatientcardrefill.h"
 
 //==============================================================================================
 //
@@ -170,6 +171,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     lblCardOwner->setText( tr("Owner : ") );
 
     m_poParent                  = p_poParent;
+    m_poMsg                     = p_poParent;
     m_uiPanelId                 = p_uiPanelId;
     m_uiPanelUsePatientCardId   = 0;
     m_uiPanelBaseTimeCard       = 0;
@@ -233,7 +235,9 @@ void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode)
     ledPatientCardBarcode->setText( p_qsPatientCardBarcode );
     m_bIsEnterAccepted = false;
     pbOk->setEnabled( false );
+    m_poMsg = m_poParent;
     on_pbReloadPC_clicked();
+    m_poMsg = this;
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
@@ -325,7 +329,9 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 void cDlgPanelUse::setPanelUseTimeCash(unsigned int p_uiSeconds)
 {
     m_uiPanelUseTimeCash = p_uiSeconds;
+    m_poMsg = m_poParent;
     setPanelUseTime();
+    m_poMsg = this;
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
@@ -351,7 +357,7 @@ void cDlgPanelUse::setPanelUseTime()
         }
         if( cmbTimeIntervall->currentIndex() == 0 )
         {
-            QMessageBox::warning( m_poParent, tr("Warning"),
+            QMessageBox::warning( m_poMsg, tr("Warning"),
                                   tr("This time period did not saved in the database\n"
                                      "for the actually selected device.\n"
                                      "Please select valid value from the list.") );
@@ -467,12 +473,13 @@ void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
 void cDlgPanelUse::on_pbReloadPC_clicked()
 {
     cTracer obTracer( "cDlgPanelUse::on_pbReloadPC_clicked" );
+
     if( ledPatientCardBarcode->text().length() == 0 )
         return;
 
     if( ledPatientCardBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
-        QMessageBox::warning( this, tr("Warning"),
+        QMessageBox::warning( m_poMsg, tr("Warning"),
                               tr( "Invalid barcode length.\n"
                                   "The length of the barcode should be %1." ).arg(g_poPrefs->getBarcodeLength()) );
         return;
@@ -484,23 +491,91 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 
         if( m_obDBPatientCard.patientCardTypeId() == 1 && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
         {
-            QMessageBox::warning( this, tr("Attention"),
+            QMessageBox::warning( m_poMsg, tr("Attention"),
                                   tr("You are not allowed to use system administrator card.\nPlease log in as a system administrator if you want to use this card.") );
             return;
         }
 
         if( m_obDBPatientCard.pincode().compare("LOST") == 0 )
         {
-            QMessageBox::warning( this, tr("Attention"),
+            QMessageBox::warning( m_poMsg, tr("Attention"),
                                   tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
             return;
         }
 
         if( m_obDBPatientCard.active() )
         {
-            if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
+            if(m_obDBPatientCard.units() < 1 ||m_obDBPatientCard.timeLeft() < 1 )
             {
-                if( obDBPatientCard.timeLeft() < 1 )
+                QString     qsTemp = "";
+
+                if( m_obDBPatientCard.timeLeft() < 1 )
+                {
+                    qsTemp = tr("\n\nDue to there is no time left, the patientcard will be reseted and deactivated.");
+                }
+                if( QMessageBox::question( m_poMsg, tr("Question"),
+                                           tr("This patientcard can not be used with these settings:\n\n"
+                                              "Available units: %1\n"
+                                              "Available time: %2 (hh:mm:ss)\n\n"
+                                              "Do you want to refill the patientcard now?%3").arg(m_obDBPatientCard.units()).arg(m_obDBPatientCard.timeLeftStr()).arg(qsTemp),
+                                           QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+                else
+                {
+                    if( m_obDBPatientCard.timeLeft() < 1 )
+                    {
+                        m_obDBPatientCard.setPatientCardTypeId( 0 );
+                        m_obDBPatientCard.setParentId( 0 );
+                        m_obDBPatientCard.setPatientId( 0 );
+                        m_obDBPatientCard.setUnits( 0 );
+                        m_obDBPatientCard.setAmount( 0 );
+                        m_obDBPatientCard.setTimeLeft( 0 );
+                        m_obDBPatientCard.setValidDateFrom( "2000-01-01" );
+                        m_obDBPatientCard.setValidDateTo( "2000-01-01" );
+                        m_obDBPatientCard.setActive( false );
+
+                        cDlgPatientCardSell obDlgPatientCardSell( this, &m_obDBPatientCard );
+                        obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+
+                        if( obDlgPatientCardSell.exec() != QDialog::Accepted )
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        cDlgPatientCardRefill obDlgPatientCardRefill( this, &m_obDBPatientCard );
+
+                        if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+
+            QString qsValid;
+            if( !m_obDBPatientCard.isPatientCardCanBeUsed( &qsValid ) )
+            {
+                QMessageBox::warning( m_poMsg, tr("Warning"),
+                                      tr("This patientcard currently can not be used.\n"
+                                         "Please check it's validity time period.\n\n%1").arg(qsValid) );
+                return;
+            }
+
+        }
+        else
+        {
+            if( QMessageBox::question( m_poMsg, tr("Question"),
+                                       tr("This barcode has not been activated yet.\n"
+                                          "Do you want to activate and sell it now?"),
+                                       QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+            {
+                cDlgPatientCardSell obDlgPatientCardSell( this, &m_obDBPatientCard );
+                obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
+                obDlgPatientCardSell.exec();
             }
         }
     }
@@ -512,7 +587,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         }
         else
         {
-            if( QMessageBox::question( this, tr("Question"),
+            if( QMessageBox::question( m_poMsg, tr("Question"),
                                        tr("This barcode has not found in the database.\n"
                                           "Do you want to save it and sell it now?"),
                                        QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )

@@ -22,8 +22,6 @@ protected:
 private:
     bool                 m_bDlgLoaded;
 
-    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
-
 private slots:
     void slotRefreshWarningColors();
     void slotEnableButtons();

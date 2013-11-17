@@ -448,25 +448,3 @@ void cDlgPatientCardSell::on_pbCancel_clicked()
 {
     QDialog::reject();
 }
-//===========================================================================================================
-//
-//-----------------------------------------------------------------------------------------------------------
-QString cDlgPatientCardSell::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
-{
-    QString qsValue = QString::number( p_nCurrencyValue );
-    QString qsRet = "";
-
-    if( qsValue.length() > 3 )
-    {
-        while( qsValue.length() > 3 )
-        {
-            qsRet.insert( 0, qsValue.right(3) );
-            qsRet.insert( 0, g_poPrefs->getCurrencySeparator() );
-            qsValue.truncate( qsValue.length()-3 );
-        }
-    }
-    qsRet.insert( 0, qsValue );
-    qsRet += " " + p_qsCurrency;
-
-    return qsRet;
-}

@@ -72,6 +72,7 @@ public:
 private:
 
     QWidget                     *m_poParent;
+    QWidget                     *m_poMsg;
     bool                         m_bInit;
     cDBPatientCard               m_obDBPatientCard;
     unsigned int                 m_uiPanelId;
