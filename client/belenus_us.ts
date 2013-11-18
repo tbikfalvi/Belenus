@@ -308,31 +308,31 @@ Please start WampServer application then restart Belenus application.</oldsource
     </message>
     <message>
         <location filename="general.cpp" line="71"/>
-        <location filename="wndmain.cpp" line="2414"/>
+        <location filename="wndmain.cpp" line="2426"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="75"/>
-        <location filename="wndmain.cpp" line="2418"/>
+        <location filename="wndmain.cpp" line="2430"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="79"/>
-        <location filename="wndmain.cpp" line="2422"/>
+        <location filename="wndmain.cpp" line="2434"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="83"/>
-        <location filename="wndmain.cpp" line="2426"/>
+        <location filename="wndmain.cpp" line="2438"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="87"/>
-        <location filename="wndmain.cpp" line="2430"/>
+        <location filename="wndmain.cpp" line="2442"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -3866,13 +3866,13 @@ total income</source>
 <context>
     <name>cDlgSerialReg</name>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="54"/>
-        <location filename="dlg/dlgserialreg.cpp" line="102"/>
+        <location filename="dlg/dlgserialreg.cpp" line="59"/>
+        <location filename="dlg/dlgserialreg.cpp" line="107"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="55"/>
+        <location filename="dlg/dlgserialreg.cpp" line="60"/>
         <source>Your licence key has been verified successfully.
 Please send the &apos;Activation code&apos; to the
 provider of the Belenus application and
@@ -3885,7 +3885,7 @@ enter the given code into the &apos;Validation code&apos; field.</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="103"/>
+        <location filename="dlg/dlgserialreg.cpp" line="108"/>
         <source>Your licence key has been activated successfully.
 
 Please note that you have to validate your application
@@ -3896,39 +3896,39 @@ You have %1 days until the next validation.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="112"/>
+        <location filename="dlg/dlgserialreg.cpp" line="117"/>
         <source>The validation code you entered does not match with the requested.
 Please check your code and retype it if necessary.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="123"/>
+        <location filename="dlg/dlgserialreg.cpp" line="128"/>
         <source>You are not authorized to validate the application.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="71"/>
+        <location filename="dlg/dlgserialreg.cpp" line="76"/>
         <source>The format of the licence key you entered is not valid.
 Please check your licence key and retype it if necessary.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="79"/>
+        <location filename="dlg/dlgserialreg.cpp" line="84"/>
         <source>The order number of the licence key you entered is not correct.
 Please check your licence key and retype it if necessary.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="70"/>
-        <location filename="dlg/dlgserialreg.cpp" line="78"/>
-        <location filename="dlg/dlgserialreg.cpp" line="86"/>
-        <location filename="dlg/dlgserialreg.cpp" line="111"/>
-        <location filename="dlg/dlgserialreg.cpp" line="122"/>
+        <location filename="dlg/dlgserialreg.cpp" line="75"/>
+        <location filename="dlg/dlgserialreg.cpp" line="83"/>
+        <location filename="dlg/dlgserialreg.cpp" line="91"/>
+        <location filename="dlg/dlgserialreg.cpp" line="116"/>
+        <location filename="dlg/dlgserialreg.cpp" line="127"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgserialreg.cpp" line="87"/>
+        <location filename="dlg/dlgserialreg.cpp" line="92"/>
         <source>The licence key you entered is not valid.
 Please check your licence key and retype it if necessary..</source>
         <translation></translation>
@@ -4719,7 +4719,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1322"/>
         <location filename="wndmain.cpp" line="1580"/>
         <location filename="wndmain.cpp" line="1855"/>
-        <location filename="wndmain.cpp" line="2108"/>
+        <location filename="wndmain.cpp" line="2120"/>
         <source>Attention</source>
         <translation></translation>
     </message>
@@ -4742,8 +4742,8 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1593"/>
         <location filename="wndmain.cpp" line="1615"/>
         <location filename="wndmain.cpp" line="1637"/>
-        <location filename="wndmain.cpp" line="2121"/>
-        <location filename="wndmain.cpp" line="2247"/>
+        <location filename="wndmain.cpp" line="2133"/>
+        <location filename="wndmain.cpp" line="2259"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -4751,8 +4751,8 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="918"/>
         <location filename="wndmain.cpp" line="1155"/>
         <location filename="wndmain.cpp" line="1549"/>
-        <location filename="wndmain.cpp" line="2136"/>
-        <location filename="wndmain.cpp" line="2366"/>
+        <location filename="wndmain.cpp" line="2148"/>
+        <location filename="wndmain.cpp" line="2378"/>
         <source>Warning</source>
         <translation></translation>
     </message>
@@ -4891,7 +4891,7 @@ Please stop them before closing the application.</source>
     <message>
         <location filename="wndmain.cpp" line="1064"/>
         <location filename="wndmain.cpp" line="1204"/>
-        <location filename="wndmain.cpp" line="2050"/>
+        <location filename="wndmain.cpp" line="2062"/>
         <source>Information</source>
         <translation></translation>
     </message>
@@ -4939,7 +4939,7 @@ the licence key or the application&apos;s validity.</source>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1581"/>
-        <location filename="wndmain.cpp" line="2109"/>
+        <location filename="wndmain.cpp" line="2121"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation></translation>
@@ -4961,7 +4961,7 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2392"/>
+        <location filename="wndmain.cpp" line="2404"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Version : %1&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %2&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%3&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation></translation>
     </message>
@@ -5041,56 +5041,56 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2051"/>
+        <location filename="wndmain.cpp" line="2063"/>
         <source>Deleting data attached to DEMO licence key has been finished.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2090"/>
+        <location filename="wndmain.cpp" line="2102"/>
         <source>Request</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2090"/>
+        <location filename="wndmain.cpp" line="2102"/>
         <source>Please enter the new patientcard&apos;s barcode.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2136"/>
+        <location filename="wndmain.cpp" line="2148"/>
         <source>This patientcard already in use.
 Please select a non-active patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2176"/>
+        <location filename="wndmain.cpp" line="2188"/>
         <source>Replace patientcard [%1]-&gt;[%2]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2216"/>
+        <location filename="wndmain.cpp" line="2228"/>
         <source>Lost and replaced with card: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2248"/>
+        <location filename="wndmain.cpp" line="2260"/>
         <source>Are you sure about to merge these patientcards?
 Main card: %1
 Assigned card: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2258"/>
-        <location filename="wndmain.cpp" line="2277"/>
+        <location filename="wndmain.cpp" line="2270"/>
+        <location filename="wndmain.cpp" line="2289"/>
         <source>Partner card of &quot;%1&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2303"/>
+        <location filename="wndmain.cpp" line="2315"/>
         <source>Assign patientcard [%1]&lt;-[%2]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2367"/>
+        <location filename="wndmain.cpp" line="2379"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -5103,7 +5103,7 @@ Error code: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2391"/>
+        <location filename="wndmain.cpp" line="2403"/>
         <source>About</source>
         <translation></translation>
     </message>
@@ -5131,7 +5131,7 @@ Do you want to refill anyway?</source>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1594"/>
-        <location filename="wndmain.cpp" line="2122"/>
+        <location filename="wndmain.cpp" line="2134"/>
         <source>This barcode has not found in the database.
 Do you want to register it for a new patientcard?</source>
         <translation></translation>
@@ -7783,41 +7783,37 @@ Please define a valid product count or reset the price.</source>
     </message>
     <message>
         <location filename="dlgserialreg.ui" line="190"/>
-        <source>Last validated on :</source>
+        <source>Valid until :</source>
+        <oldsource>Last validated on :</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="212"/>
-        <source>0000-00-00</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgserialreg.ui" line="239"/>
+        <location filename="dlgserialreg.ui" line="231"/>
         <source>The application can be used for ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="256"/>
+        <location filename="dlgserialreg.ui" line="248"/>
         <source>XXX</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="263"/>
+        <location filename="dlgserialreg.ui" line="255"/>
         <source>days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="291"/>
+        <location filename="dlgserialreg.ui" line="283"/>
         <source>Validate application</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="311"/>
+        <location filename="dlgserialreg.ui" line="303"/>
         <source>Ok</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgserialreg.ui" line="324"/>
+        <location filename="dlgserialreg.ui" line="316"/>
         <source>Exit</source>
         <translation></translation>
     </message>

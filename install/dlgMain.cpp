@@ -1102,11 +1102,11 @@ bool dlgMain::_initializeMySQL()
 {
     bool bRet = false;
 
-    if( g_obReg.isRegPathExists( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
-    {
+//    if( g_obReg.isRegPathExists( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld") ) )
+//    {
         g_obReg.setKeyValueN( QString("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\wampmysqld"), QString("Start"), 2 );
         bRet = true;
-    }
+//    }
     _logProcess( QString("Setting reg. value wampmysqld/Start ... %1").arg((bRet?"SUCCEEDED":"FAILED")) );
 
     return bRet;
