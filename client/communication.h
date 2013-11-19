@@ -41,6 +41,7 @@ public:
     virtual bool isHardwareMovedNextStatus( const int p_nIndex ) = 0;
     virtual void setHardwareMovedNextStatus( const int p_nIndex ) = 0;
     virtual bool isHardwareStopped( const int p_nIndex ) = 0;
+    virtual void continueStoppedDevice( const int p_nIndex ) = 0;
 
     virtual bool HW_SetModuleAddress() = 0;
 

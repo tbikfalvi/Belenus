@@ -703,42 +703,47 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="50"/>
+        <location filename="creportpatientcarddebts.cpp" line="51"/>
         <source>On date: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="60"/>
+        <location filename="creportpatientcarddebts.cpp" line="61"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="61"/>
+        <location filename="creportpatientcarddebts.cpp" line="62"/>
         <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="62"/>
+        <location filename="creportpatientcarddebts.cpp" line="63"/>
         <source>Unit time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="63"/>
+        <location filename="creportpatientcarddebts.cpp" line="64"/>
         <source>Units</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="64"/>
+        <location filename="creportpatientcarddebts.cpp" line="65"/>
         <source>Unit price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="65"/>
+        <location filename="creportpatientcarddebts.cpp" line="66"/>
         <source>Sum</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportpatientcarddebts.cpp" line="93"/>
+        <location filename="creportpatientcarddebts.cpp" line="85"/>
+        <source>%1 minute(s)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="creportpatientcarddebts.cpp" line="94"/>
         <source>Sum total</source>
         <translation></translation>
     </message>

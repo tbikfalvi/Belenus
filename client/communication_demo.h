@@ -40,6 +40,7 @@ public:
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
+    void continueStoppedDevice( const int p_nIndex );
 
     bool HW_SetModuleAddress();
 

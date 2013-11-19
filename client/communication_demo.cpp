@@ -92,6 +92,10 @@ bool CS_Communication_Demo::isHardwareStopped( const int )
 {
     return false;
 }
+void CS_Communication_Demo::continueStoppedDevice( const int )
+{
+}
+
 bool CS_Communication_Demo::HW_SetModuleAddress()
 {
     return false;

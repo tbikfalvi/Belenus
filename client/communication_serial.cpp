@@ -367,6 +367,10 @@ bool CS_Communication_Serial::isHardwareStopped( const int p_nIndex )
 {
     return pModul[p_nIndex].bStop;
 }
+void CS_Communication_Serial::continueStoppedDevice(const int p_nIndex)
+{
+    pModul[p_nIndex].bStop = false;
+}
 
 //---------------------------------------------------------------------------
 // HW_Kezel

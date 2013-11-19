@@ -118,6 +118,11 @@ void cMdiPanels::start()
     m_obPanels.at( m_uiActivePanel )->start();
 }
 
+void cMdiPanels::continueStoppedDevice()
+{
+    m_obPanels.at( m_uiActivePanel )->continueStoppedDevice();
+}
+
 void cMdiPanels::reset()
 {
     m_obPanels.at( m_uiActivePanel )->reset();
@@ -141,6 +146,11 @@ void cMdiPanels::clean()
 bool cMdiPanels::isNeedToBeCleaned()
 {
     return m_obPanels.at( m_uiActivePanel )->isNeedToBeCleaned();
+}
+
+bool cMdiPanels::isDeviceStopped()
+{
+    return m_obPanels.at( m_uiActivePanel )->isDeviceStopped();
 }
 
 void cMdiPanels::reload()

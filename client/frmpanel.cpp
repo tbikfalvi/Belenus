@@ -139,6 +139,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_bIsItemInShoppingCart = false;
     m_bIsPatientWaiting     = false;
     m_bIsNeedToBeCleaned    = false;
+    m_bIsDeviceStopped      = false;
 
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.qslUnitIds       = QStringList();
@@ -200,6 +201,7 @@ bool cFrmPanel::isStatusCanBeReseted()
 //====================================================================================
 void cFrmPanel::start()
 {
+    m_bIsDeviceStopped = false;
     if( m_inMainProcessLength == 0 )
         return;
 
@@ -221,6 +223,11 @@ void cFrmPanel::start()
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
+}
+//====================================================================================
+void cFrmPanel::continueStoppedDevice()
+{
+    g_poHardware->continueStoppedDevice( m_uiId-1 );
 }
 //====================================================================================
 void cFrmPanel::reset()
@@ -434,10 +441,12 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
     {
         formatStatusString( QString( "%1<br>!! %2 !!" ).arg( m_obStatuses.at( m_uiStatus )->name() ).arg( tr("PAUSED") ) );
+        m_bIsDeviceStopped = true;
     }
     else
     {
         formatStatusString( m_obStatuses.at( m_uiStatus )->name() );
+        m_bIsDeviceStopped = false;
     }
 
     if( m_uiCounter )

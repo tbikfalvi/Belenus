@@ -31,7 +31,8 @@ void cReportPatientcardDebts::refreshReport()
                                "patientCardTypeId, "
                                "barcode, "
                                "SUM(patientcardunits.unitPrice) AS price, "
-                               "COUNT(patientcardunits.unitPrice) AS units "
+                               "COUNT(patientcardunits.unitPrice) AS units, "
+                               "patientcardunits.unitTime "
                                "FROM patientcards LEFT JOIN patientcardunits ON "
                                "patientcards.patientCardId=patientcardunits.patientCardId WHERE "
                                "(patientcardunits.active=1 OR patientcardunits.dateTimeUsed>\"%1 00:00:00\") AND "
@@ -81,7 +82,7 @@ void cReportPatientcardDebts::refreshReport()
         addTableRow();
         addTableCell( poQueryResult->value(2).toString() );
         addTableCell( _patientCardType( poQueryResult->value(1).toUInt() ) );
-        addTableCell( QString( "%1 minute(s)" ).arg( poQueryResult->value(5).toInt() ), "center" );
+        addTableCell( tr( "%1 minute(s)" ).arg( poQueryResult->value(5).toInt() ), "center" );
         addTableCell( poQueryResult->value(4).toString(), "center" );
         addTableCell( unitPrice.currencyFullStringShort(), "right" );
         addTableCell( totalPrice.currencyFullStringShort(), "right" );

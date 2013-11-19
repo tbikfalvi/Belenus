@@ -836,7 +836,7 @@ void cWndMain::updateToolbar()
             action_UseDevice->setEnabled( bIsUserLoggedIn && (mdiPanels->isCanBeStartedByCard() || mdiPanels->isCanBeStartedByTime()) );
             action_UseDeviceLater->setEnabled( bIsUserLoggedIn );
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
-            action_DeviceStart->setEnabled( bIsUserLoggedIn && !mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0 );
+            action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
@@ -1150,17 +1150,24 @@ void cWndMain::on_action_DeviceStart_triggered()
     if( !action_DeviceStart->isEnabled() )
         return;
 
-    if( mdiPanels->isHasToPay() )
+    if( mdiPanels->isDeviceStopped() )
     {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("The device usage has to be payed.\n"
-                                 "Please process the payment first.") );
-        return;
+        mdiPanels->continueStoppedDevice();
     }
+    else
+    {
+        if( mdiPanels->isHasToPay() )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The device usage has to be payed.\n"
+                                     "Please process the payment first.") );
+            return;
+        }
 
-    mdiPanels->start();
+        mdiPanels->start();
 
-    on_action_PatientEmpty_triggered();
+        on_action_PatientEmpty_triggered();
+    }
 }
 //====================================================================================
 void cWndMain::on_action_DeviceReset_triggered()

@@ -95,7 +95,9 @@ public:
     void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
     bool            isPatientWaiting();
     void            setUsageFromWaitingQueue();
-    bool            isNeedToBeCleaned() { return m_bIsNeedToBeCleaned; }
+    bool            isNeedToBeCleaned()     { return m_bIsNeedToBeCleaned;  }
+    bool            isDeviceStopped()       { return m_bIsDeviceStopped;    }
+    void            continueStoppedDevice();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -130,6 +132,7 @@ private:
     bool                         m_bIsPatientWaiting;
     unsigned int                 m_uiProcessWaitTime;
     bool                         m_bIsNeedToBeCleaned;
+    bool                         m_bIsDeviceStopped;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;

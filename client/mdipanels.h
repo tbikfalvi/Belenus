@@ -62,6 +62,8 @@ public:
     void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
     bool            isPatientWaiting();
     void            setUsageFromWaitingQueue();
+    bool            isDeviceStopped();
+    void            continueStoppedDevice();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;
