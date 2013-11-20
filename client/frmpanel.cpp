@@ -25,7 +25,6 @@
 #include "db/dbpatientcardhistory.h"
 #include "db/dbledger.h"
 //#include "db/dbattendance.h"
-#include "db/dbpanelstatussettings.h"
 #include "db/dbshoppingcart.h"
 #include "crud/dlgshoppingcart.h"
 #include "db/dbpatientcardunits.h"
@@ -500,6 +499,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 
         m_uiProcessWaitTime = 0;
         m_obStatuses.clear();
+        m_obStatusSettings.clear();
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelStatusId, length, panelTypeId, seqNumber from panelStatuses WHERE panelTypeId=%1 ORDER BY seqNumber" ).arg( m_uiType ) );
         while( poQuery->next() )
         {
@@ -509,6 +509,10 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             cDBPanelStatuses  *poStatus = new cDBPanelStatuses();
             poStatus->load( uiStatusId );
             m_obStatuses.push_back( poStatus );
+
+            cDBPanelStatusSettings  *poStatusSettings = new cDBPanelStatusSettings();
+            poStatusSettings->loadStatus( poStatus->id() );
+            m_obStatusSettings.push_back( poStatusSettings );
         }
 
         delete poQuery;
@@ -582,9 +586,9 @@ void cFrmPanel::displayStatus()
         m_qsInfo = tr("Cash to pay: ") + cPrice.currencyFullStringShort();
     }
 
-    QString     qsBackgroundColor;
+    QString     qsBackgroundColor = m_obStatusSettings.at(m_uiStatus)->backgroundColor();
 
-    cDBPanelStatusSettings  obDBPanelStatusSettings;
+/*    cDBPanelStatusSettings  obDBPanelStatusSettings;
 
     try
     {
@@ -622,7 +626,7 @@ void cFrmPanel::displayStatus()
             }
         }
     }
-
+*/
     QPalette  obFramePalette = palette();
     obFramePalette.setBrush( QPalette::Window, QBrush( QColor(qsBackgroundColor) ) );
     setPalette( obFramePalette );
@@ -661,7 +665,7 @@ void cFrmPanel::displayStatus()
 //====================================================================================
 void cFrmPanel::formatStatusString( QString p_qsStatusText )
 {
-    cDBPanelStatusSettings  obDBPanelStatusSettings;
+/*    cDBPanelStatusSettings  obDBPanelStatusSettings;
 
     try
     {
@@ -681,23 +685,23 @@ void cFrmPanel::formatStatusString( QString p_qsStatusText )
             obDBPanelStatusSettings.setStatusFontColor( "#000000" );
         }
     }
-
+*/
     QFont   obFont;
 
     obFont = lblCurrStatus->font();
-    obFont.setFamily( obDBPanelStatusSettings.statusFontName() );
-    obFont.setPixelSize( obDBPanelStatusSettings.statusFontSize() );
+    obFont.setFamily( m_obStatusSettings.at(m_uiStatus)->statusFontName() );
+    obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->statusFontSize() );
     obFont.setBold( true );
     obFont.setCapitalization( QFont::AllUppercase );
 
     lblCurrStatus->setAlignment( Qt::AlignCenter );
     lblCurrStatus->setFont( obFont );
-    lblCurrStatus->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.statusFontColor()).name()).arg(p_qsStatusText) );
+    lblCurrStatus->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->statusFontColor()).name()).arg(p_qsStatusText) );
 }
 //====================================================================================
 void cFrmPanel::formatTimerString( QString p_qsTimerText )
 {
-    cDBPanelStatusSettings  obDBPanelStatusSettings;
+/*    cDBPanelStatusSettings  obDBPanelStatusSettings;
 
     try
     {
@@ -717,24 +721,24 @@ void cFrmPanel::formatTimerString( QString p_qsTimerText )
             obDBPanelStatusSettings.setTimerFontColor( "#000000" );
         }
     }
-
+*/
     QFont   obFont;
 
     obFont = lblCurrTimer->font();
-    obFont.setFamily( obDBPanelStatusSettings.timerFontName() );
-    obFont.setPixelSize( obDBPanelStatusSettings.timerFontSize() );
+    obFont.setFamily( m_obStatusSettings.at(m_uiStatus)->timerFontName() );
+    obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->timerFontSize() );
     obFont.setBold( true );
 
     emit signalSetCounterText( m_uiId-1, p_qsTimerText );
 
     lblCurrTimer->setAlignment( Qt::AlignCenter );
     lblCurrTimer->setFont( obFont );
-    lblCurrTimer->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.timerFontColor()).name()).arg(p_qsTimerText) );
+    lblCurrTimer->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->timerFontColor()).name()).arg(p_qsTimerText) );
 }
 //====================================================================================
 void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
 {
-    cDBPanelStatusSettings  obDBPanelStatusSettings;
+/*    cDBPanelStatusSettings  obDBPanelStatusSettings;
 
     try
     {
@@ -754,22 +758,22 @@ void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
             obDBPanelStatusSettings.setNextFontColor( "#000000" );
         }
     }
-
+*/
     QFont   obFont;
 
     obFont = lblNextStatusLen->font();
-    obFont.setFamily( obDBPanelStatusSettings.nextFontName() );
-    obFont.setPixelSize( obDBPanelStatusSettings.nextFontSize() );
+    obFont.setFamily( m_obStatusSettings.at(m_uiStatus)->nextFontName() );
+    obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->nextFontSize() );
     obFont.setBold( true );
 
     lblNextStatusLen->setAlignment( Qt::AlignCenter );
     lblNextStatusLen->setFont( obFont );
-    lblNextStatusLen->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.nextFontColor()).name()).arg(p_qsNextLengthText) );
+    lblNextStatusLen->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->nextFontColor()).name()).arg(p_qsNextLengthText) );
 }
 //====================================================================================
 void cFrmPanel::formatInfoString( QString p_qsInfoText )
 {
-    cDBPanelStatusSettings  obDBPanelStatusSettings;
+/*    cDBPanelStatusSettings  obDBPanelStatusSettings;
 
     try
     {
@@ -789,17 +793,17 @@ void cFrmPanel::formatInfoString( QString p_qsInfoText )
             obDBPanelStatusSettings.setInfoFontColor( "#000000" );
         }
     }
-
+*/
     QFont   obFont;
 
     obFont = lblInfo->font();
-    obFont.setFamily( obDBPanelStatusSettings.infoFontName() );
-    obFont.setPixelSize( obDBPanelStatusSettings.infoFontSize() );
+    obFont.setFamily( m_obStatusSettings.at(m_uiStatus)->infoFontName() );
+    obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->infoFontSize() );
     obFont.setBold( true );
 
     lblInfo->setAlignment( Qt::AlignCenter );
     lblInfo->setFont( obFont );
-    lblInfo->setText( QString("<font color=%1>%2</font>").arg(QColor( obDBPanelStatusSettings.infoFontColor()).name()).arg(p_qsInfoText) );
+    lblInfo->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name()).arg(p_qsInfoText) );
 }
 //====================================================================================
 QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

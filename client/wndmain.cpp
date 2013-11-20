@@ -447,22 +447,35 @@ void cWndMain::loginUser()
         {// Van nyitva hagyott kassza rekord
 
             cCurrency cBalance( g_obCassa.cassaBalance() );
-            if( QMessageBox::question( this, tr("Question"),
-                                       tr( "The latest cassa record still not closed:\n\n"
-                                           "Owner: %1\n"
-                                           "Balance: %2\n\n"
-                                           "Do you want to continue this cassa?\n\n"
-                                           "Please note: if you click NO, new cassa record will be opened "
-                                           "and this cassa forced to close with reseting it's balance.").arg( g_obCassa.cassaOwnerStr() ).arg( cBalance.currencyFullStringShort() ),
-                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+
+            switch( customMsgBox( this, MSG_QUESTION,
+                                  tr("Use opened cassa|Use own cassa"),
+                                  tr("The latest cassa record still not closed:\n\n"
+                                     "Owner: %1\n"
+                                     "Balance: %2\n\n"
+                                     "What would you like to do?").arg( g_obCassa.cassaOwnerStr() ).arg( cBalance.currencyFullStringShort() ),
+                                  tr("The opened cassa means the cassa owner did not closed his/her cassa "
+                                     "and possibly would like to continue the work with the cassa.\n"
+                                     "But it is possible that the cassa owner forgot to close his/her cassa.\n"
+                                     "You can decide how to start your work:\n"
+                                     "Click the 'Use opened cassa'' if you logged in just for a short time. "
+                                     "In this case your actions will be linked to your name, "
+                                     "but every cassa action will belong to the cassa owner.\n"
+                                     "Click the 'Use own cassa'' if you logged in for managing the actions in the studio "
+                                     "for a long time. In this case the previously opened cassa will be closed "
+                                     "with reseting it's balance and every action will be linked to your name and to your "
+                                     "cassa.") ) )
             {
-                g_obCassa.cassaContinue( g_obUser.id() );
-            }
-            else
-            {
-                g_obCassa.cassaDecreaseMoney( g_obCassa.cassaOwnerId(), g_obCassa.cassaBalance(), tr("Cassa left in open.") );
-                g_obCassa.cassaClose();
-                g_obCassa.createNew( g_obUser.id() );
+                case 1:
+                    g_obCassa.cassaContinue( g_obUser.id() );
+                    break;
+
+                case 2:
+                default:
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaOwnerId(), g_obCassa.cassaBalance(), tr("Cassa left in open.") );
+                    g_obCassa.cassaClose();
+                    g_obCassa.createNew( g_obUser.id() );
+                    break;
             }
         }// Volt nyitva hagyott kassza rekord
         else
@@ -473,22 +486,33 @@ void cWndMain::loginUser()
             {
                 // Akarja-e a felhasznalo folytatni a kasszat
                 cCurrency cBalance( g_obCassa.cassaBalance() );
-                if( QMessageBox::question( this, tr("Question"),
-                                           tr( "The latest cassa record closed with balance:\n\n"
-                                               "%1\n\n"
-                                               "Do you want to continue this cassa?\n\n"
-                                               "Please note: if you click NO, new cassa record will be opened "
-                                               "and this cassa forced to close with reseting it's balance.").arg( cBalance.currencyFullStringShort() ),
-                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                {// Kassza folytatasa
-                    g_obCassa.cassaReOpen();
-                }
-                else
-                {// Uj kassza nyitasa
-                    g_obCassa.cassaReOpen();
-                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
-                    g_obCassa.cassaClose();
-                    g_obCassa.createNew( g_obUser.id() );
+                switch( customMsgBox( this, MSG_QUESTION,
+                                      tr("Continue cassa|Start new cassa"),
+                                      tr( "The latest cassa record closed with balance:\n\n"
+                                          "%1\n\n"
+                                          "Do you want to continue this cassa?\n" ).arg( cBalance.currencyFullStringShort() ),
+                                      tr( "Cassa closed with balance means that previously you closed your cassa "
+                                          "but there are cash left in cassa. The default action when closing the cassa "
+                                          "is to withdraw money from the cassa therefore the cassa balance will be zero.\n"
+                                          "Click the 'Continue cassa' if previously the cassa closed with reason without "
+                                          "money withdraw and now you want to use that cassa again.\n"
+                                          "Click the 'Start new cassa' if you want to use a new cassa. In this case the "
+                                          "previous cassa balance will be reseted and a new cassa will be opened for you."
+                                          ) ) )
+                {
+                    case 1:
+                        // Kassza folytatasa
+                        g_obCassa.cassaReOpen();
+                        break;
+
+                    case 2:
+                    default:
+                        // Uj kassza nyitasa
+                        g_obCassa.cassaReOpen();
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                        break;
                 }
             }
             else
@@ -498,17 +522,26 @@ void cWndMain::loginUser()
                 if( g_obCassa.loadLatestCassa( g_obUser.id() ) )
                 {
                     // Akarja-e a felhasznalo folytatni a kasszat
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr( "The latest cassa record used:\n\n"
-                                                   "from %1 to %2\n\n"
-                                                   "Do you want to continue this cassa?").arg( g_obCassa.cassaOpenDate() ).arg( g_obCassa.cassaCloseDate() ),
-                                                   QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-                    {// Kassza folytatasa
-                        g_obCassa.cassaReOpen();
-                    }
-                    else
-                    {// Uj kassza nyitasa
-                        g_obCassa.createNew( g_obUser.id() );
+                    switch( customMsgBox( this, MSG_QUESTION,
+                                          tr("Reopen cassa|Start new cassa"),
+                                          tr( "The latest cassa record used:\n\n"
+                                              "from %1 to %2\n\n"
+                                              "Do you want to continue this cassa?").arg( g_obCassa.cassaOpenDate() ).arg( g_obCassa.cassaCloseDate() ),
+                                          tr( "It is possible to use your latest cassa with reopening it for example "
+                                              "if you closed it previously for security reasons.\n"
+                                              "Click the 'Reopen cassa' if you want to use your previously closed cassa.\n"
+                                              "Click the 'Start new cassa' if you don't want to use the previously closed cassa. "
+                                              "In this case a new cassa will be opened for you.") ) )
+                    {
+                        case 1:
+                            // Kassza folytatasa
+                            g_obCassa.cassaReOpen();
+                            break;
+                        case 2:
+                        default:
+                            // Uj kassza nyitasa
+                            g_obCassa.createNew( g_obUser.id() );
+                            break;
                     }
                 }
                 else
@@ -518,6 +551,8 @@ void cWndMain::loginUser()
             }
         }// Nem volt nyitva hagyott kassza rekord
     }// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
+
+    g_obCassa.setEnabled();
 }
 //====================================================================================
 void cWndMain::logoutUser()

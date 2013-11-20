@@ -230,7 +230,11 @@ void cDlgPreferences::on_pbPanelSettings_clicked()
 {
     cDlgPanelAppereance     obDlgPanelAppereance( this );
 
-    obDlgPanelAppereance.exec();
+    if( obDlgPanelAppereance.exec() == QDialog::Accepted )
+    {
+        QMessageBox::information( this, tr( "Information" ),
+                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    }
 }
 
 void cDlgPreferences::on_pbSecondaryWindow_toggled(bool checked)

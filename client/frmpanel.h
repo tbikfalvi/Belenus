@@ -30,6 +30,7 @@
 
 #include "db/dbpanelstatuses.h"
 #include "db/dbledgerdevice.h"
+#include "db/dbpanelstatussettings.h"
 
 //====================================================================================
 
@@ -153,13 +154,14 @@ private:
     QPushButton                 *icoPanelCassa;
     QPushButton                 *icoScheduledGuest;
 
-    QString                      m_qsStatus;
-    QString                      m_qsTimer;
-    QString                      m_qsTimerNextStatus;
-    QString                      m_qsInfo;
+    QString                         m_qsStatus;
+    QString                         m_qsTimer;
+    QString                         m_qsTimerNextStatus;
+    QString                         m_qsInfo;
 
-    vector<cDBPanelStatuses*>    m_obStatuses;
-    vector<stWaitingQueue*>      m_vrWaitingQueue;
+    vector<cDBPanelStatuses*>       m_obStatuses;
+    vector<cDBPanelStatusSettings*> m_obStatusSettings;
+    vector<stWaitingQueue*>         m_vrWaitingQueue;
 
     void            load( const unsigned int p_uiPanelId );
     void            displayStatus();
