@@ -27,9 +27,10 @@
 //====================================================================================
 cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 {
-    cTracer obTrace( "cDspPanel::cDspPanel" );
+//    cTracer obTrace( "cDspPanel::cDspPanel" );
 
-    m_uiId          = p_uiPanelId;
+    m_uiId              = p_uiPanelId;
+    m_uiPanelStatusId   = 0;
 
     setFrameShape( QFrame::Panel );
     setFrameShadow( QFrame::Raised );
@@ -80,9 +81,7 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
 //====================================================================================
 cDspPanel::~cDspPanel()
 {
-    cTracer obTrace( "cDspPanel::~cDspPanel" );
-/*
-    for( unsigned int i = 0; i < m_obStatuses.size(); i ++ ) if( m_obStatuses.at( i ) ) delete m_obStatuses.at( i );*/
+//    cTracer obTrace( "cDspPanel::~cDspPanel" );
 }
 //====================================================================================
 void cDspPanel::refreshTitle()
@@ -92,11 +91,15 @@ void cDspPanel::refreshTitle()
 //====================================================================================
 void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 {
-    cTracer obTrace( "cDspPanel::setPanelStatus" );
+//    cTracer obTrace( "cDspPanel::setPanelStatus" );
 
     try
     {
-        m_obDBPanelStatusSettings.load( p_uiPanelStatusId );
+        if( m_uiPanelStatusId != p_uiPanelStatusId )
+        {
+            m_uiPanelStatusId = p_uiPanelStatusId;
+            m_obDBPanelStatusSettings.load( p_uiPanelStatusId );
+        }
 
         _displayStatus();
     }
@@ -126,21 +129,21 @@ void cDspPanel::setPanelStatus( const unsigned int p_uiPanelStatusId )
 //====================================================================================
 void cDspPanel::setPanelStatusText( const QString &p_qsStatus )
 {
-    cTracer obTrace( "cDspPanel::setPanelStatusText" );
+//    cTracer obTrace( "cDspPanel::setPanelStatusText" );
 
     _formatStatusString( p_qsStatus );
 }
 //====================================================================================
 void cDspPanel::setPanelInfoText( const QString &p_qsInfo )
 {
-    cTracer obTrace( "cDspPanel::setPanelInfoText" );
+//    cTracer obTrace( "cDspPanel::setPanelInfoText" );
 
     _formatInfoString( p_qsInfo );
 }
 //====================================================================================
 void cDspPanel::setCounterText( const QString &p_qsCounter )
 {
-    cTracer obTrace( "cDspPanel::setCounterText" );
+//    cTracer obTrace( "cDspPanel::setCounterText" );
 
     _formatTimerString( p_qsCounter );
 }
@@ -148,7 +151,7 @@ void cDspPanel::setCounterText( const QString &p_qsCounter )
 //====================================================================================
 void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
 {
-    cTracer obTrace( "cDspPanel::setPanelWaitTime" );
+//    cTracer obTrace( "cDspPanel::setPanelWaitTime" );
 
     m_uiWaitTime = p_uiWaitTime;
 
@@ -164,7 +167,7 @@ void cDspPanel::setPanelWaitTime( const unsigned int p_uiWaitTime )
 //====================================================================================
 void cDspPanel::_load()
 {
-    cTracer obTrace( "cDspPanel::_load" );
+//    cTracer obTrace( "cDspPanel::_load" );
 
     QSqlQuery  *poQuery = NULL;
     try
@@ -199,7 +202,7 @@ void cDspPanel::_displayStatus()
 //====================================================================================
 void cDspPanel::_formatStatusString( QString p_qsStatusText )
 {
-    cTracer obTrace( QString("cDspPanel::_formatStatusString - %1").arg(p_qsStatusText) );
+//    cTracer obTrace( QString("cDspPanel::_formatStatusString - %1").arg(p_qsStatusText) );
 
     QFont   obFont;
 
@@ -216,7 +219,7 @@ void cDspPanel::_formatStatusString( QString p_qsStatusText )
 //====================================================================================
 void cDspPanel::_formatTimerString( QString p_qsTimerText )
 {
-    cTracer obTrace( QString("cDspPanel::_formatTimerString - %1").arg(p_qsTimerText) );
+//    cTracer obTrace( QString("cDspPanel::_formatTimerString - %1").arg(p_qsTimerText) );
 
     QFont   obFont;
 
@@ -232,7 +235,7 @@ void cDspPanel::_formatTimerString( QString p_qsTimerText )
 //====================================================================================
 void cDspPanel::_formatWaitTimeString( QString p_qsTimerText )
 {
-    cTracer obTrace( QString("cDspPanel::_formatWaitTimeString - %1").arg(p_qsTimerText) );
+//    cTracer obTrace( QString("cDspPanel::_formatWaitTimeString - %1").arg(p_qsTimerText) );
 
     QFont   obFont;
 
@@ -248,7 +251,7 @@ void cDspPanel::_formatWaitTimeString( QString p_qsTimerText )
 //====================================================================================
 void cDspPanel::_formatInfoString( QString p_qsInfoText )
 {
-    cTracer obTrace( QString("cDspPanel::_formatInfoString - %1").arg(p_qsInfoText) );
+//    cTracer obTrace( QString("cDspPanel::_formatInfoString - %1").arg(p_qsInfoText) );
 
     QFont   obFont;
 

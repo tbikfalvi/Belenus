@@ -64,6 +64,7 @@ private:
     unsigned int                 m_uiId;
     unsigned int                 m_uiWaitTime;
     int                          m_inTimerId;
+    unsigned int                 m_uiPanelStatusId;
 
 protected:
 

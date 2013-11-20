@@ -142,7 +142,7 @@ int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
 //*********************************************************************************************************************
 cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {
-    cTracer obTrace( "cCurrency::cCurrency(QString,currType,int)" );
+//    cTracer obTrace( "cCurrency::cCurrency(QString,currType,int)" );
 
     m_nValue        = 0;
     m_nValueLeft    = 0;
@@ -157,7 +157,7 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
 //*********************************************************************************************************************
 cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat)
 {
-    cTracer obTrace( "cCurrency::cCurrency(int,currType,int)" );
+//    cTracer obTrace( "cCurrency::cCurrency(int,currType,int)" );
 
     m_nValue        = 0;
     m_nValueLeft    = 0;
@@ -171,14 +171,14 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
 
     _init( qsCurrency, p_ctCurrencyType, p_nVat );
 
-    g_obLogger(cSeverity::INFO) << "m_nValue " << m_nValue << EOM;
-    g_obLogger(cSeverity::INFO) << "m_nValueNet " << m_nValueNet << EOM;
-    g_obLogger(cSeverity::INFO) << "m_nValueGross " << m_nValueGross << EOM;
+//    g_obLogger(cSeverity::INFO) << "m_nValue " << m_nValue << EOM;
+//    g_obLogger(cSeverity::INFO) << "m_nValueNet " << m_nValueNet << EOM;
+//    g_obLogger(cSeverity::INFO) << "m_nValueGross " << m_nValueGross << EOM;
 }
 //====================================================================================
 void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {
-    g_obLogger(cSeverity::INFO) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
+//    g_obLogger(cSeverity::INFO) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
 
     QString qsPureCurrency = p_qsCurrencyString;
 
@@ -201,7 +201,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
 
-    g_obLogger(cSeverity::INFO) << "purestr: [" << qsPureCurrency << "]" << EOM;
+//    g_obLogger(cSeverity::INFO) << "purestr: [" << qsPureCurrency << "]" << EOM;
     // Get value before and after decimal separator
     if( qsPureCurrency.contains( g_poPrefs->getCurrencyDecimalSeparator() ) )
     {
@@ -239,7 +239,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
         m_nValueGross = m_nValue;
     }
 
-    g_obLogger(cSeverity::INFO) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
+//    g_obLogger(cSeverity::INFO) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
 }
 //====================================================================================
 cCurrency::~cCurrency()
@@ -261,7 +261,7 @@ QString cCurrency::currencyValue(currType p_ctCurrencyType)
     m_nValueLeft  = m_nValue / 100;
     m_nValueRight = m_nValue % 100;
 
-    g_obLogger(cSeverity::DEBUG) << "L/R " << QString("%1/%2").arg(m_nValueLeft).arg(m_nValueRight) << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "L/R " << QString("%1/%2").arg(m_nValueLeft).arg(m_nValueRight) << EOM;
 
     return QString( "%1" ).arg( m_nValue );
 }
