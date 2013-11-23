@@ -215,7 +215,7 @@ Please start WampServer application then restart Belenus application.</oldsource
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbledger.cpp" line="281"/>
+        <location filename="db/dbledger.cpp" line="291"/>
         <source>Revoking action: %1</source>
         <translation></translation>
     </message>
@@ -526,24 +526,24 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="55"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="65"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="48"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="57"/>
         <source>&lt;Not selected&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="305"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="294"/>
         <source>Coupon used: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="165"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="178"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="148"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="161"/>
         <source>Comment &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="169"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="152"/>
         <source>Comment &lt;&lt;</source>
         <translation></translation>
     </message>
@@ -4078,22 +4078,22 @@ Please check your licence key and retype it if necessary..</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="356"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="357"/>
         <source>Using device: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="364"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="365"/>
         <source>Selling product: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="375"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="376"/>
         <source>Sell patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="379"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="380"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
@@ -5286,42 +5286,37 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="205"/>
+        <location filename="dlgcassaaction.ui" line="202"/>
         <source>Amount to pay :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="400"/>
-        <source>Money given :</source>
+        <location filename="dlgcassaaction.ui" line="282"/>
+        <source>Cash given :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="285"/>
+        <location filename="dlgcassaaction.ui" line="365"/>
+        <source>Card given :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="448"/>
         <source>Voucher given :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="366"/>
+        <location filename="dlgcassaaction.ui" line="529"/>
         <source>Coupon given :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="484"/>
-        <source>Money to give back :</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcassaaction.ui" line="529"/>
-        <source>.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="dlgcassaaction.ui" line="571"/>
+        <location filename="dlgcassaaction.ui" line="560"/>
         <source>Comment &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="601"/>
+        <location filename="dlgcassaaction.ui" line="590"/>
         <source> Action comment </source>
         <translation></translation>
     </message>
@@ -5341,10 +5336,10 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="255"/>
-        <location filename="dlgcassaaction.ui" line="335"/>
-        <location filename="dlgcassaaction.ui" line="450"/>
-        <location filename="dlgcassaaction.ui" line="543"/>
+        <location filename="dlgcassaaction.ui" line="252"/>
+        <location filename="dlgcassaaction.ui" line="332"/>
+        <location filename="dlgcassaaction.ui" line="415"/>
+        <location filename="dlgcassaaction.ui" line="498"/>
         <source>$</source>
         <translation></translation>
     </message>

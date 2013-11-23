@@ -325,6 +325,7 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
         cDlgCassaAction obDlgCassaAction( this, &obDBShoppingCart );
         obDlgCassaAction.actionPayment();
+        obDlgCassaAction.setPayWithCash();
         if( obDlgCassaAction.exec() == QDialog::Accepted )
         {
             for( int i=0; i< tbvCrud->selectionModel()->selectedRows().count(); i++ )

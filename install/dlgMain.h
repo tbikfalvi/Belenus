@@ -122,6 +122,9 @@ private:
     QString                  m_qsLanguage;
     QString                  m_qsUninstallWampExec;
 
+    QString                  m_qsAppVersion;
+    QString                  m_qsDBVersion;
+
     void                    _initializeInstall();
     void                    _uninstallBelenus();
 
@@ -180,6 +183,7 @@ private:
     bool                    _createFolderShortcut();
     void                    _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
     bool                    _removeInstalledFilesFolders();
+    void                    _getApplicationVersions();
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 

@@ -230,6 +230,11 @@ void dlgMain::_initializeInstall()
     // Language of the client application
     m_qsLanguage                = "hu";
 
+    // Version number of application from database settings table
+    m_qsAppVersion              = "";
+    // Version number of database from database settings table
+    m_qsDBVersion               = "";
+
     //-----------------------------------------------------------------------------------
     //  Check install components
     //-----------------------------------------------------------------------------------
@@ -277,6 +282,8 @@ void dlgMain::_initializeInstall()
             _logProcess( QString("Belenus user already set") );
             m_bBelenusUserExists = true;
             m_poDB->close();
+
+            _getApplicationVersions();
         }
     }
 
@@ -700,7 +707,7 @@ bool dlgMain::_processSelectionPage()
     {
         m_bProcessWamp          = false;
         m_bProcessDatabase      = true;
-        m_bProcessHWConnection  = true;
+        m_bProcessHWConnection  = false;
         m_bProcessBelenusClient = true;
         m_bProcessViewer        = true;
     }
@@ -763,6 +770,11 @@ void dlgMain::_initializeComponentSelectionPage()
     else if( m_pInstallType == rbUpdate )
     {
         m_bProcessWamp = false;
+        m_bProcessHWConnection = false;
+
+        chkHardware->setEnabled( false );
+        imgConnection->setEnabled( false );
+        lblTextHardware->setEnabled( false );
 
         if( m_qslComponents.count() > 0 )
         {
@@ -1194,7 +1206,9 @@ bool dlgMain::_processSQLPage()
             bRet = false;
         }
         else
+        {
             m_qsRootPasswordNew = ledSQLRootPsw1->text();
+        }
     }
 
     return bRet;
@@ -1394,7 +1408,7 @@ void dlgMain::_processInstall()
         }
         if( bProcessSucceeded && m_bProcessBelenusClient )
         {
-            bProcessSucceeded = _copyInstallFiles( QString("%1/update.li").arg(g_qsCurrentPath), false );
+            bProcessSucceeded = _copyInstallFiles( QString("%1/update%2.li").arg(g_qsCurrentPath).arg(m_qsAppVersion), false );
         }
     }
     else if( m_pInstallType == rbRemove )
@@ -1480,7 +1494,7 @@ int dlgMain::_getProcessActionCount()
         else if( m_pInstallType == rbUpdate )
         {
             // Increase number with table creates
-            QFile fileCreate( QString("sql/db_update_%1.sql").arg(m_qsLanguage) );
+            QFile fileCreate( QString("sql/db_update_%1%2.sql").arg(m_qsLanguage).arg(m_qsDBVersion) );
 
             if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1683,7 +1697,7 @@ bool dlgMain::_processDatabaseUpdate()
 
     if( m_poDB->open() )
     {
-        QFile file( QString("sql/db_update_%1.sql").arg(m_qsLanguage) );
+        QFile file( QString("sql/db_update_%1%2.sql").arg(m_qsLanguage).arg(m_qsDBVersion) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
@@ -1692,6 +1706,8 @@ bool dlgMain::_processDatabaseUpdate()
         QTextStream in(&file);
         while( !in.atEnd() )
         {
+            QSqlQuery   sqlQuery;
+
             QString line = in.readLine();
 
             if( line.left(2).compare("--") )
@@ -1699,8 +1715,6 @@ bool dlgMain::_processDatabaseUpdate()
 
             if( line.contains( QChar(';') ))
             {
-                QSqlQuery sqlQuery;
-
                 if( !sqlQuery.exec( qsSQLCommand ) )
                 {
                     _logProcess( sqlQuery.lastError().text() );
@@ -1810,7 +1824,6 @@ bool dlgMain::_processDatabaseCreate()
 
     if( m_poDB->open() )
     {
-
         m_poDB->exec( "DROP DATABASE IF EXISTS `belenus`; CREATE DATABASE `belenus` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;" );
         m_poDB->close();
 
@@ -2360,7 +2373,7 @@ void dlgMain::_refreshPages()
     }
     else if( m_pInstallType == rbUpdate )
     {
-        m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
+//        m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
         if( m_bProcessDatabase )
             m_vPages.append( CONST_PAGE_INIT_SQL );
         if( m_bProcessHWConnection )
@@ -2481,7 +2494,29 @@ bool dlgMain::_copyClientFile( QString p_qsFileName, bool p_bInstall )
 
     if( !p_bInstall )
     {
-        QFile::remove( qsTo );
+        int     nPos    = p_qsFileName.indexOf("/");
+        QString qsDir   = "";
+        QString qsFile  = "";
+
+        if( nPos > 0 )
+        {
+            qsDir   = p_qsFileName.left( p_qsFileName.indexOf("/")+1 );
+            qsFile  = p_qsFileName.right( p_qsFileName.length()-p_qsFileName.indexOf("/")-1 );
+        }
+        else
+        {
+            qsFile  = p_qsFileName;
+        }
+
+        QString qsBackup = QString( "%1/%2backup_%3%4" ).arg(m_qsClientInstallDir).arg(qsDir).arg(m_qsAppVersion).arg(qsFile);
+        qsBackup.replace( '\\', '/' );
+
+        if( !QFile::rename( qsTo, qsBackup ) )
+        {
+            _logProcess( "Rename failed" );
+            _logProcess( qsTo );
+            _logProcess( qsBackup );
+        }
     }
 
     return QFile::copy( qsFrom, qsTo );
@@ -2671,6 +2706,32 @@ bool dlgMain::_removeInstalledFilesFolders()
     }
 
     return bRet;
+}
+//=======================================================================================
+void dlgMain::_getApplicationVersions()
+//=======================================================================================
+{
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
+
+    if( m_poDB->open() )
+    {
+        QSqlQuery   sqlQuery;
+
+        sqlQuery.exec( "SELECT value FROM settings WHERE identifier='APPLICATION_VERSION' " );
+        if( sqlQuery.first() )
+        {
+            m_qsAppVersion = QString( "_%1" ).arg( sqlQuery.value(0).toString() );
+        }
+        sqlQuery.exec( "SELECT value FROM settings WHERE identifier='DATABASE_VERSION' " );
+        if( sqlQuery.first() )
+        {
+            m_qsDBVersion = QString( "_%1" ).arg( sqlQuery.value(0).toString() );
+        }
+        m_poDB->close();
+    }
 }
 //=======================================================================================
 void dlgMain::_logProcess( QString p_qsLog, bool p_bInsertNewLine )

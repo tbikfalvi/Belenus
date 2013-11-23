@@ -39,6 +39,10 @@ public:
     void            setItemCount( const int p_nItemCount )                  throw();
     int             itemNetPrice() const                                    throw();
     void            setItemNetPrice( const int p_nItemNetPrice )            throw();
+    int             card() const                                                    throw();
+    void            setCard( const int p_nCard )                                    throw();
+    int             cash() const                                                    throw();
+    void            setCash( const int p_nCash )                                    throw();
     int             voucher() const                                                 throw();
     void            setVoucher( const int p_nVoucher )                              throw();
     int             itemVAT() const                                         throw();
@@ -64,6 +68,8 @@ private:
     QString         m_qsComment;
     int             m_nItemCount;
     int             m_nItemNetPrice;
+    int             m_nCard;
+    int             m_nCash;
     int             m_nVoucher;
     int             m_nItemVAT;
     int             m_nItemDiscount;
@@ -83,6 +89,8 @@ private:
                const QString p_qsComment = "",
                const int p_nItemCount = 0,
                const int p_nItemNetPrice = 0,
+               const int p_nCard = 0,
+               const int p_nCash = 0,
                const int p_nVoucher = 0,
                const int p_nItemVAT = 0,
                const int p_nItemDiscount = 0,

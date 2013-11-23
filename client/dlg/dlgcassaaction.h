@@ -34,20 +34,19 @@ private:
     bool                 m_bShoppingCart;
 
 private slots:
+    void checkGivenValues();
     void on_pbShoppingCart_clicked();
     void on_pbComment_clicked();
     void on_pbCancel_clicked();
     void on_pbOk_clicked();
-    void updateMoneyBack();
     void updateShoppingCartItem();
-    void ledAmountToPay_textEdited(QString text);
-    void ledAmountGiven_textEdited(QString text);
-    void on_cmbPaymentType_currentIndexChanged(int index);
     void on_pbPayCash_clicked();
     void on_pbPayCard_clicked();
     void on_pbPayOther_clicked();
     void on_ledVoucherGiven_textChanged(const QString &arg1);
     void on_cmbCoupon_currentIndexChanged(int index);
+    void on_ledCashGiven_textChanged(const QString &arg1);
+    void on_ledCardGiven_textChanged(const QString &arg1);
 };
 
 #endif

@@ -774,7 +774,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="install.qrc">:/icons/belenus.ico</pixmap>
+            <pixmap resource="install.qrc">:/icons/40x40_belenus.png</pixmap>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -983,6 +983,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="rbWin64">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Windows 64 bit</string>
               </property>
@@ -1624,7 +1627,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap>:/images/Logo_small.png</pixmap>
+            <pixmap resource="install.qrc">:/images/Logo.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>

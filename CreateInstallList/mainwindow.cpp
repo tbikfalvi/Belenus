@@ -98,7 +98,13 @@ void MainWindow::on_pbCreateInstallFile_clicked()
 
 void MainWindow::on_pbGenerateUpdateFile_clicked()
 {
+    QFile   qfUpdate( QString("%1update.li").arg(ui->ledDirectory->text()) );
 
+    if( !qfUpdate.open(QIODevice::WriteOnly | QIODevice::Text) )
+        return;
+
+    qfUpdate.write( ui->teFileList->toPlainText().toStdString().c_str() );
+    qfUpdate.close();
 }
 
 void MainWindow::on_pbDeleteAllFiles_clicked()

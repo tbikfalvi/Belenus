@@ -5,7 +5,8 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_create.sql
--- AppVersion  : 1.0
+-- AppVersion  : 1.0.0
+-- DbVersion   : 1.0
 -- FileVersion : 1.0
 -- Author      : Ballok Peter, Bikfalvi Tamas
 --
@@ -651,6 +652,8 @@ CREATE TABLE `shoppingCartItems` (
   `comment`                 text                    DEFAULT NULL,
   `itemCount`               int(11)                 NOT NULL,
   `itemNetPrice`            decimal(10,0)           NOT NULL,
+  `card`                    decimal(10,0)           NOT NULL,
+  `cash`                    decimal(10,0)           NOT NULL,
   `voucher`                 decimal(10,0)           NOT NULL,
   `itemVAT`                 int(11)                 NOT NULL,
   `discountValue`           decimal(10,0)           NOT NULL,
@@ -714,6 +717,8 @@ CREATE TABLE `ledger` (
   `name`                    varchar(100)            NOT NULL,
   `itemCount`               int(11)                 NOT NULL DEFAULT '1',
   `netPrice`                decimal(10,0)           NOT NULL,
+  `card`                    decimal(10,0)           NOT NULL,
+  `cash`                    decimal(10,0)           NOT NULL,
   `voucher`                 decimal(10,0)           NOT NULL,
   `discount`                decimal(10,0)           NOT NULL,
   `vatpercent`              int(11)                 NOT NULL,
