@@ -284,6 +284,8 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.setPanelId( 0 );
     obDBLedger.setName( p_DBPatientCard.barcode() );
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setCard( p_obDBShoppingCart.card() );
+    obDBLedger.setCash( p_obDBShoppingCart.cash() );
     obDBLedger.setVoucher( p_obDBShoppingCart.voucher() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
@@ -330,6 +332,8 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
     obDBLedger.setName( p_obDBShoppingCart.itemName() );
     obDBLedger.setItemCount( p_obDBShoppingCart.itemCount() );
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setCard( p_obDBShoppingCart.card() );
+    obDBLedger.setCash( p_obDBShoppingCart.cash() );
     obDBLedger.setVoucher( p_obDBShoppingCart.voucher() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
     obDBLedger.setTotalPrice( p_obDBShoppingCart.itemSumPrice() );
@@ -367,6 +371,8 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
     obDBLedger.setPanelId( p_obDBShoppingCart.panelId() );
     obDBLedger.setName( p_qsPanelTitle );
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setCard( p_obDBShoppingCart.card() );
+    obDBLedger.setCash( p_obDBShoppingCart.cash() );
     obDBLedger.setVoucher( p_obDBShoppingCart.voucher() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( g_poPrefs->getDeviceUseVAT() );
@@ -407,6 +413,8 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setName( p_obDBShoppingCart.itemName() );
     obDBLedger.setItemCount( p_obDBShoppingCart.itemCount() );
     obDBLedger.setNetPrice( p_obDBShoppingCart.itemNetPrice() );
+    obDBLedger.setCard( p_obDBShoppingCart.card() );
+    obDBLedger.setCash( p_obDBShoppingCart.cash() );
     obDBLedger.setVoucher( p_obDBShoppingCart.voucher() );
     obDBLedger.setDiscount( p_obDBShoppingCart.itemDiscount() );
     obDBLedger.setVatpercent( p_obDBShoppingCart.itemVAT() );
@@ -562,15 +570,8 @@ void cCassa::cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString 
 void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
-    cDBLedger   obDBLedger;
-
-    obDBLedger.load( p_uiLedgerId );
-
-    if( obDBLedger.paymentMethod() == 1 /* cash */ )
-    {
-        m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
-        m_pCassa->save();
-    }
+    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
+    m_pCassa->save();
 
     cDBCassaHistory obDBCassaHistory;
 

@@ -2018,12 +2018,11 @@ void cWndMain::on_action_PayCash_triggered()
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        if( uiCouponId > 0 )
+        /*if( uiCouponId > 0 )
         {
             obDBDiscount.load( uiCouponId );
-
             obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-        }
+        }*/
         unsigned int uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
         processDeviceUsePayment( obDBShoppingCart.panelId(), uiLedgerId, inPayType );
     }
