@@ -12,6 +12,7 @@ public:
     virtual ~cDlgProgress();
 
     void    showProgress();
+    void    showError( QString p_qsMessage );
     void    hideProgress();
 
 protected:

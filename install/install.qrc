@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/images" lang="hu">
         <file>WampServer.png</file>
-        <file>Logo_small.png</file>
+        <file>Logo.png</file>
     </qresource>
     <qresource prefix="/icons" lang="hu">
         <file>belenus.ico</file>

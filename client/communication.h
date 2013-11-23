@@ -7,6 +7,7 @@ using namespace std;
 
 class CS_Communication
 {
+
 //-------------------------------------------------------------------
 public:
     CS_Communication() { m_stCustomCaption = "";
@@ -46,6 +47,9 @@ public:
     virtual bool HW_SetModuleAddress() = 0;
 
     virtual void HW_Kezel( void ) = 0;
+
+    virtual bool isCommunicationStopped( void ) = 0;
+
 //-------------------------------------------------------------------
 protected:
     string m_stCustomCaption;

@@ -46,7 +46,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="install.qrc">:/images/Logo_small.png</pixmap>
+            <pixmap resource="install.qrc">:/images/Logo.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1624,7 +1624,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="install.qrc">:/images/Logo_small.png</pixmap>
+            <pixmap>:/images/Logo_small.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>

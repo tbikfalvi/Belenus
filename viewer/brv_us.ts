@@ -594,6 +594,11 @@
         <source>Unit count</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="creportpatientcardusages.cpp" line="75"/>
+        <source>Sum</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>cReportPatientCardType</name>

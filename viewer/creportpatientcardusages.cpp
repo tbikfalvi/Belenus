@@ -58,6 +58,8 @@ void cReportPCUsages::refreshReport()
 
     m_dlgProgress.setProgressMax( poQueryResultCards->size()+10 );
 
+    int sumCount = 0;
+
     while( poQueryResultCards->next() )
     {
         addTableRow();
@@ -65,7 +67,15 @@ void cReportPCUsages::refreshReport()
         addTableCell( poQueryResultCards->value(1).toString(), "center" );
         addTableCell( poQueryResultCards->value(2).toString(), "center" );
         m_dlgProgress.increaseProgressValue();
+
+        sumCount += poQueryResultCards->value(2).toInt();
     }
+
+    addTableRow();
+    addTableCell( tr( "Sum" ), "bold" );
+    addTableCell();
+    addTableCell( QString::number( sumCount ), "center bold" );
+
     finishTable();
     finishSection();
 

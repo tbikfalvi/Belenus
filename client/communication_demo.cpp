@@ -103,3 +103,8 @@ bool CS_Communication_Demo::HW_SetModuleAddress()
 void CS_Communication_Demo::HW_Kezel()
 {
 }
+
+bool CS_Communication_Demo::isCommunicationStopped()
+{
+    return false;
+}

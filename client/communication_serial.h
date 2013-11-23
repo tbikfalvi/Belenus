@@ -92,6 +92,8 @@ public:
 
     void HW_Kezel();
 
+    bool isCommunicationStopped();
+
 private:
     vector<typ_panel_data>   pPanel;
     vector<typ_LED_Modul>    pModul;
@@ -116,6 +118,7 @@ private:
     int                      PortNumber;
     int                      nHWModuleCount;         // Hardware-ben a kezelendo panel-ek szama,
     WORD                     m_wRelay;
+    bool                     m_bCommunicationStopped;
 
     void GetAvailableCommPorts();
 

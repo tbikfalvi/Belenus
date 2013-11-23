@@ -232,24 +232,18 @@ void cFrmPanel::continueStoppedDevice()
 void cFrmPanel::reset()
 {
     if( !isMainProcess() )
-        return;
-
-    emit signalSetCounterText( m_uiId-1, "" );
-
-    activateNextStatus();
+    {
+        clear();
+    }
+    else
+    {
+        emit signalSetCounterText( m_uiId-1, "" );
+        activateNextStatus();
+    }
 }
 //====================================================================================
 void cFrmPanel::clear()
 {
-/*
-    cDBAttendance   obDBAttendance;
-
-    obDBAttendance.load( m_uiAttendanceId );
-    obDBAttendance.setLength( 0 );
-    obDBAttendance.save();
-
-    m_uiAttendanceId        = 0;
-*/
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.qslUnitIds       = QStringList();
     m_vrPatientCard.inUnitTime       = 0;
@@ -298,7 +292,8 @@ void cFrmPanel::clear()
     m_uiPaymentMethodId     = 0;
     m_pDBLedgerDevice->createNew();
 
-    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 )
+    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 ||
+        m_obStatuses.at(m_uiStatus)->activateCommand() == 4 )
     {
         m_uiStatus  = 0;
         m_uiCounter = 0;
@@ -853,7 +848,7 @@ void cFrmPanel::activateNextStatus()
         }
     }
 
-    if( m_uiStatus == m_obStatuses.size() )
+    if( m_uiStatus > m_obStatuses.size()-1 )
     {
         m_uiStatus  = 0;
         m_uiCounter = 0;

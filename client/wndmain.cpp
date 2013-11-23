@@ -109,6 +109,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nEnterAction                  = 0;
     m_inPanelStartMinute            = 0;
     m_qsPanelStartBarcode           = "";
+    m_inCommunicationCounter        = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -429,6 +430,7 @@ void cWndMain::loginUser()
     // Felhasznalo ellenorzese
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) || g_obUser.isInGroup( cAccessGroup::SYSTEM) )
     { // root, vagy rendszeradmin felhasznalo lepett be, NINCS penztar akcio
+        g_obLogger(cSeverity::INFO) << "User is system administrator. Cassa disabled." << EOM;
         g_obCassa.setDisabled();
         return;
     }
@@ -437,15 +439,19 @@ void cWndMain::loginUser()
     if( g_obCassa.loadOpenCassa(g_obUser.id()) )
     {// Letezik nyitva hagyott, felhasznalohoz tartozo rekord
 
+        g_obLogger(cSeverity::INFO) << "Opened cassa found for user" << EOM;
         g_obCassa.cassaContinue();
+        g_obLogger(cSeverity::INFO) << "Continue cassa automatically" << EOM;
     }
     else
     {// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
 
+        g_obLogger(cSeverity::INFO) << "Opened cassa for user not found" << EOM;
         // Legutolso nem lezart kassza keresese
         if( g_obCassa.loadOpenCassa() )
         {// Van nyitva hagyott kassza rekord
 
+            g_obLogger(cSeverity::INFO) << "Opened cassa found. Owner: " << g_obCassa.cassaOwnerStr() << EOM;
             cCurrency cBalance( g_obCassa.cassaBalance() );
 
             switch( customMsgBox( this, MSG_QUESTION,
@@ -468,6 +474,7 @@ void cWndMain::loginUser()
             {
                 case 1:
                     g_obCassa.cassaContinue( g_obUser.id() );
+                    g_obLogger(cSeverity::INFO) << "User selected to use cassa" << EOM;
                     break;
 
                 case 2:
@@ -475,15 +482,18 @@ void cWndMain::loginUser()
                     g_obCassa.cassaDecreaseMoney( g_obCassa.cassaOwnerId(), g_obCassa.cassaBalance(), tr("Cassa left in open.") );
                     g_obCassa.cassaClose();
                     g_obCassa.createNew( g_obUser.id() );
+                    g_obLogger(cSeverity::INFO) << "User selected to close previous and create new cassa" << EOM;
                     break;
             }
         }// Volt nyitva hagyott kassza rekord
         else
         {// Nem volt nyitva hagyott kassza rekord
 
+            g_obLogger(cSeverity::INFO) << "Opened cassa not found" << EOM;
             // Legutolso nem kiuritett kassza rekord betoltese
             if( g_obCassa.loadLatestCassaWithCash() )
             {
+                g_obLogger(cSeverity::INFO) << "Closed latest cassa with non zero cash found" << EOM;
                 // Akarja-e a felhasznalo folytatni a kasszat
                 cCurrency cBalance( g_obCassa.cassaBalance() );
                 switch( customMsgBox( this, MSG_QUESTION,
@@ -503,6 +513,7 @@ void cWndMain::loginUser()
                     case 1:
                         // Kassza folytatasa
                         g_obCassa.cassaReOpen();
+                        g_obLogger(cSeverity::INFO) << "User selected to reopen cassa" << EOM;
                         break;
 
                     case 2:
@@ -512,15 +523,18 @@ void cWndMain::loginUser()
                         g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
                         g_obCassa.cassaClose();
                         g_obCassa.createNew( g_obUser.id() );
+                        g_obLogger(cSeverity::INFO) << "User selected to close cassa with money withdraw and create new cassa" << EOM;
                         break;
                 }
             }
             else
             {// Nem volt nem kiuritett kassza
 
+                g_obLogger(cSeverity::INFO) << "Load latest cassa" << EOM;
                 // Felhasznalo utolso kasszajanak betoltese
                 if( g_obCassa.loadLatestCassa( g_obUser.id() ) )
                 {
+                    g_obLogger(cSeverity::INFO) << "Latest cassa related to user" << EOM;
                     // Akarja-e a felhasznalo folytatni a kasszat
                     switch( customMsgBox( this, MSG_QUESTION,
                                           tr("Reopen cassa|Start new cassa"),
@@ -536,23 +550,28 @@ void cWndMain::loginUser()
                         case 1:
                             // Kassza folytatasa
                             g_obCassa.cassaReOpen();
+                            g_obLogger(cSeverity::INFO) << "User selected to reopen last cassa" << EOM;
                             break;
                         case 2:
                         default:
                             // Uj kassza nyitasa
                             g_obCassa.createNew( g_obUser.id() );
+                            g_obLogger(cSeverity::INFO) << "User selected to create new cassa" << EOM;
                             break;
                     }
                 }
                 else
                 {// Uj kassza nyitasa
+                    g_obLogger(cSeverity::INFO) << "Latest cassa related to different user" << EOM;
                     g_obCassa.createNew( g_obUser.id() );
+                    g_obLogger(cSeverity::INFO) << "Create new cassa automatically" << EOM;
                 }
             }
         }// Nem volt nyitva hagyott kassza rekord
     }// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
 
     g_obCassa.setEnabled();
+    g_obLogger(cSeverity::INFO) << "Cassa enabled" << EOM;
 }
 //====================================================================================
 void cWndMain::logoutUser()
@@ -565,23 +584,40 @@ void cWndMain::logoutUser()
                                        tr("Do you want to close your cassa?"),
                                        QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
             {
+                g_obLogger(cSeverity::INFO) << "User selected to close cassa" << EOM;
                 if( g_obCassa.cassaBalance() > 0 )
                 {
                     cCurrency   cBalance( g_obCassa.cassaBalance() );
 
-                    if( QMessageBox::question( this, tr("Question"),
-                                               tr("There are some cash left in your cassa.\n"
-                                                  "Current balance: %1\n\n"
-                                                  "Do you want to close the cassa with automatic "
-                                                  "cash withdawal?\n\n"
-                                                  "Please note: if you click NO, the cassa will "
-                                                  "be closed with the actual balance.").arg( cBalance.currencyFullStringShort() ),
-                                               QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                    switch( customMsgBox( this, MSG_QUESTION,
+                                          tr("Withdraw cash|Leave cash in cassa"),
+                                          tr("There are some cash left in your cassa.\n"
+                                             "Current balance: %1\n\n"
+                                             "Do you want to close the cassa with automatic cash withdawal?\n" ).arg( cBalance.currencyFullStringShort() ),
+                                          tr( "You can decide if you want to leave the cash in the cassa "
+                                              "or withdraw cash from the cassa.\n"
+                                              "Click on the 'Withdraw cash' button if you want to withdraw cash "
+                                              "from cassa before closing it\n"
+                                              "Click on the 'Leave cash in cassa' if you want to leave the cash "
+                                              "in the cassa before closing it") ) )
                     {
-                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                        case 1:
+                            g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                            g_obLogger(cSeverity::INFO) << "User selected to withdraw cash from cassa" << EOM;
+                            break;
+
+                        case 2:
+                        default:
+                            g_obLogger(cSeverity::INFO) << "User selected to leave cash in cassa" << EOM;
+                            break;
                     }
                 }
                 g_obCassa.cassaClose();
+                g_obLogger(cSeverity::INFO) << "Cassa closed" << EOM;
+            }
+            else
+            {
+                g_obLogger(cSeverity::INFO) << "User selected to leave cassa opened" << EOM;
             }
         }
         else
@@ -590,23 +626,36 @@ void cWndMain::logoutUser()
             {
                 cCurrency   cBalance( g_obCassa.cassaBalance() );
 
-                if( QMessageBox::question( this, tr("Question"),
-                                           tr("There are some cash left in your cassa.\n"
-                                              "Current balance: %1\n\n"
-                                              "Do you want to close the cassa with automatic "
-                                              "cash withdawal?\n\n"
-                                              "Please note: if you click NO, the cassa will "
-                                              "be closed with the actual balance.").arg( cBalance.currencyFullStringShort() ),
-                                           QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+                switch( customMsgBox( this, MSG_QUESTION,
+                                      tr("Withdraw cash|Leave cash in cassa"),
+                                      tr("There are some cash left in your cassa.\n"
+                                         "Current balance: %1\n\n"
+                                         "Do you want to close the cassa with automatic cash withdawal?\n" ).arg( cBalance.currencyFullStringShort() ),
+                                      tr( "You can decide if you want to leave the cash in the cassa "
+                                          "or withdraw cash from the cassa.\n"
+                                          "Click on the 'Withdraw cash' button if you want to withdraw cash "
+                                          "from cassa before closing it\n"
+                                          "Click on the 'Leave cash in cassa' if you want to leave the cash "
+                                          "in the cassa before closing it") ) )
                 {
-                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                    case 1:
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                        g_obLogger(cSeverity::INFO) << "User selected to withdraw cash from cassa" << EOM;
+                        break;
+
+                    case 2:
+                    default:
+                        g_obLogger(cSeverity::INFO) << "User selected to leave cash in cassa" << EOM;
+                        break;
                 }
             }
             else if( g_obCassa.cassaBalance() > 0 && g_poPrefs->getCassaAutoWithdrawal() )
             {
                 g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Automatic cassa close.") );
+                g_obLogger(cSeverity::INFO) << "Automatic cassa withdraw" << EOM;
             }
             g_obCassa.cassaClose();
+            g_obLogger(cSeverity::INFO) << "Cassa closed" << EOM;
         }
     }
 }
@@ -623,42 +672,49 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     {
         if( p_poEvent->key() == Qt::Key_Q )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + Q" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             close();
         }
         else if( p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + S" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceStart_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + T" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceClear_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + F" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_PayCash_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + K" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_ShoppingCart_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + N" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceSkipStatus_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F12 )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_TestDlgStarted();
@@ -668,6 +724,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     {
         if( p_poEvent->key() == Qt::Key_Enter || p_poEvent->key() == Qt::Key_Return )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed ENTER" << EOM;
             switch( m_nEnterAction )
             {
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
@@ -723,11 +780,13 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         }
         else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed ESC" << EOM;
             m_lblStatusLeft.setText( m_qsStatusText );
             mdiPanels->clear();
         }
         else if( p_poEvent->key() == Qt::Key_Space )
         {
+            g_obLogger(cSeverity::INFO) << "User pressed SPACE" << EOM;
             on_action_UseDevice_triggered();
         }
     }
@@ -873,7 +932,7 @@ void cWndMain::updateToolbar()
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
-            action_DeviceReset->setEnabled( bIsUserLoggedIn && mdiPanels->isMainProcess() );
+            action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
@@ -911,6 +970,19 @@ void cWndMain::timerEvent(QTimerEvent *)
 {
     updateStatusText();
     updateToolbar();
+
+    m_inCommunicationCounter++;
+
+    if( m_inCommunicationCounter > 4 )
+    {
+        m_inCommunicationCounter = 0;
+
+        if( g_poHardware->isCommunicationStopped() )
+        {
+            g_obLogger(cSeverity::ERROR) << "Communication stopped with hardware controller" << EOM;
+            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+        }
+    }
 
     if( m_bSerialRegistration )
     {
@@ -979,6 +1051,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
 {
     bool    bIsShutdown = true;
 
+    g_obLogger(cSeverity::INFO) << "Application closure started ..." << EOM;
+
     if( mdiPanels->isPanelWorking() )
     {
         QMessageBox::warning( this, tr("Attention"),
@@ -993,6 +1067,7 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
                                    tr("Are you sure you want to close the application?"),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
+            g_obLogger(cSeverity::INFO) << "User selected to close the application" << EOM;
             logoutUser();
 /*
             if( g_obDBMirror.isAvailable() )
@@ -1037,6 +1112,7 @@ void cWndMain::on_action_Preferences_triggered()
 
     if( obDlgPrefs.exec() == QDialog::Accepted )
     {
+        g_obLogger(cSeverity::INFO) << "Preferences dialog closed with OK button pressed" << EOM;
         retranslateUi( this );
         mdiPanels->hide();
         mdiPanels->placeSubWindows();

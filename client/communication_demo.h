@@ -45,6 +45,8 @@ public:
     bool HW_SetModuleAddress();
 
     void HW_Kezel();
+
+    bool isCommunicationStopped();
 };
 
 #endif // COMMUNICATION_DEMO_H

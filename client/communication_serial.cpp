@@ -56,6 +56,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     bSendToModulPower_OFF       = false;
     PortNumber                  = 0;
     nHWModuleCount              = 0;
+    m_bCommunicationStopped     = false;
 
     GetAvailableCommPorts();
 }
@@ -100,6 +101,7 @@ void CS_Communication_Serial::init( int p_nPort )
     else
         SP_InitCommunication();
 
+    m_bCommunicationStopped = false;
     SP_Open();
 }
 //====================================================================================
@@ -158,6 +160,10 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     }
 
     return bRes;
+}
+bool CS_Communication_Serial::isCommunicationStopped()
+{
+    return m_bCommunicationStopped;
 }
 //====================================================================================
 // CS_Communication_Serial::
@@ -713,6 +719,7 @@ void CS_Communication_Serial::HW_Kezel()
                   }
                   else
                   {
+                      m_bCommunicationStopped = true;
 /*------------------------------------------------------------------------------------/
 
     __TO_BE_SOLVED__
