@@ -548,4 +548,5 @@ tr_setup_hu.bat
 CreateInstallList-build-desktop/
 CreateInstallList.exe
 build/
-createinstalllist/CreateInstallList.pro.user
+CreateInstallList\CreateInstallList.pro.user
+
