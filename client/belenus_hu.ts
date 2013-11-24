@@ -920,7 +920,7 @@ and fill mandatory data later?</source>
         <location filename="edit/dlgcassaedit.cpp" line="73"/>
         <location filename="edit/dlgcassaedit.cpp" line="83"/>
         <source>Card usage</source>
-        <translation>Bérlethasználat</translation>
+        <translation>Bankkártya</translation>
     </message>
     <message>
         <location filename="edit/dlgcassaedit.cpp" line="74"/>

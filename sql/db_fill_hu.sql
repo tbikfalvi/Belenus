@@ -3607,8 +3607,8 @@ UPDATE `paymentMethods` SET `paymentMethodId`=0 WHERE `paymentMethodId`=1;
 ALTER TABLE `paymentMethods` auto_increment=1;
 
 INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'Készpénzes fizetés', 1, 'ARC'),
- (2, 0, 'Fizetés bankkártyával', 1, 'ARC');
+ (1, 0, 'Készpénz', 1, 'ARC'),
+ (2, 0, 'Bankkártya', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 

@@ -278,8 +278,8 @@ UPDATE `paymentMethods` SET `paymentMethodId`=0 WHERE `paymentMethodId`=1;
 ALTER TABLE `paymentMethods` auto_increment=1;
 
 INSERT INTO `paymentMethods` (`paymentMethodId`, `licenceId`, `name`, `active`, `archive`) VALUES
- (1, 0, 'Pay with cash', 1, 'ARC'),
- (2, 0, 'Pay with creditcard', 1, 'ARC');
+ (1, 0, 'Cash', 1, 'ARC'),
+ (2, 0, 'Creditcard', 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
