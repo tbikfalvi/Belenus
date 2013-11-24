@@ -25,7 +25,6 @@ protected:
     QSortFilterProxyModel   *m_poSortedModel;
     unsigned int             m_uiSelectedId;
     int                      m_inSelectedRow;
-
     cDBCassa                *m_poCassa;
 
     void setupTableView();
@@ -38,7 +37,6 @@ protected slots:
                                const QItemSelection &p_obDeSelected );
 
 private slots:
-    void on_pbMore_clicked();
     void on_pbCashGet_clicked();
     void on_pbCashAdd_clicked();
     void on_pbClose_clicked();

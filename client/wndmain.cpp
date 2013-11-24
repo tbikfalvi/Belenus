@@ -440,8 +440,59 @@ void cWndMain::loginUser()
     {// Letezik nyitva hagyott, felhasznalohoz tartozo rekord
 
         g_obLogger(cSeverity::INFO) << "Opened cassa found for user" << EOM;
-        g_obCassa.cassaContinue();
-        g_obLogger(cSeverity::INFO) << "Continue cassa automatically" << EOM;
+        if( g_obCassa.cassaOpenDate().left(10).compare( QDate::currentDate().toString("yyyy-MM-dd") ) )
+        {
+            g_obLogger(cSeverity::INFO) << "Opened cassa started different date: "
+                                        << g_obCassa.cassaOpenDate().left(10)
+                                        << " "
+                                        << QDate::currentDate().toString( "yyyy-MM-dd" )
+                                        << EOM;
+            switch( customMsgBox( this, MSG_QUESTION,
+                                  tr(" Use opened cassa | Start new cassa with balance | Start new cassa "),
+                                  tr("The latest cassa opened on a different date.\n"
+                                     "What would you like to do?"),
+                                  tr("The previously created and not closed cassa started to be used on "
+                                     "a different date. If you continue to use that cassa, your daily "
+                                     "report will include summary of more than one day.\n"
+                                     "Click the 'Use opened cassa' button if you want to use the opened cassa. "
+                                     "In this case the start and the end date will be different of the cassa and the "
+                                     "cassa daily report could be misleading.\n"
+                                     "Click the 'Start new cassa with balance' button if you want to use a new cassa "
+                                     "but you want to use the balance of the old cassa as a starting balance. In this "
+                                     "case the previous cassa balance will be reseted and a new cassa will be opened for you "
+                                     "with balance of the previous cassa\n"
+                                     "Click the 'Start new cassa' button if you want to use a new cassa. In this case the "
+                                     "previous cassa balance will be reseted and a new cassa will be opened for you."
+                                     )))
+            {
+                case 1:
+                    g_obCassa.cassaContinue();
+                    g_obLogger(cSeverity::INFO) << "User selected to continue to use cassa" << EOM;
+                    break;
+                case 2:
+                {
+                    int inBalance = g_obCassa.cassaBalance();
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                    g_obCassa.cassaClose();
+                    g_obCassa.createNew( g_obUser.id() );
+                    g_obCassa.cassaIncreaseMoney( inBalance, tr("Cassa continue with balance") );
+                    g_obLogger(cSeverity::INFO) << "User selected to start new cassa with balance" << EOM;
+                    break;
+                }
+                case 3:
+                default:
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                    g_obCassa.cassaClose();
+                    g_obCassa.createNew( g_obUser.id() );
+                    g_obLogger(cSeverity::INFO) << "User selected to close cassa with money withdraw and create new cassa" << EOM;
+                    break;
+            }
+        }
+        else
+        {
+            g_obCassa.cassaContinue();
+            g_obLogger(cSeverity::INFO) << "Continue cassa automatically" << EOM;
+        }
     }
     else
     {// Nincs korabban nyitva hagyott, felhasznalohoz tartozo rekord
@@ -455,29 +506,41 @@ void cWndMain::loginUser()
             cCurrency cBalance( g_obCassa.cassaBalance() );
 
             switch( customMsgBox( this, MSG_QUESTION,
-                                  tr("Use opened cassa|Use own cassa"),
+                                  tr(" Use opened cassa | Start new cassa with balance | Start new cassa "),
                                   tr("The latest cassa record still not closed:\n\n"
                                      "Owner: %1\n"
                                      "Balance: %2\n\n"
                                      "What would you like to do?").arg( g_obCassa.cassaOwnerStr() ).arg( cBalance.currencyFullStringShort() ),
-                                  tr("The opened cassa means the cassa owner did not closed his/her cassa "
+                                  tr("Cassa still not closed means the cassa owner did not closed his/her cassa "
                                      "and possibly would like to continue the work with the cassa.\n"
                                      "But it is possible that the cassa owner forgot to close his/her cassa.\n"
                                      "You can decide how to start your work:\n"
                                      "Click the 'Use opened cassa'' if you logged in just for a short time. "
                                      "In this case your actions will be linked to your name, "
                                      "but every cassa action will belong to the cassa owner.\n"
-                                     "Click the 'Use own cassa'' if you logged in for managing the actions in the studio "
-                                     "for a long time. In this case the previously opened cassa will be closed "
-                                     "with reseting it's balance and every action will be linked to your name and to your "
-                                     "cassa.") ) )
+                                     "Click the 'Start new cassa with balance' button if you want to use a new cassa "
+                                     "but you want to use the balance of the old cassa as a starting balance. In this "
+                                     "case the previous cassa balance will be reseted and a new cassa will be opened for you "
+                                     "with balance of the previous cassa\n"
+                                     "Click the 'Start new cassa' button if you want to use a new cassa. In this case the "
+                                     "previous cassa balance will be reseted and a new cassa will be opened for you."
+                                     ) ) )
             {
                 case 1:
                     g_obCassa.cassaContinue( g_obUser.id() );
                     g_obLogger(cSeverity::INFO) << "User selected to use cassa" << EOM;
                     break;
-
                 case 2:
+                {
+                    int inBalance = g_obCassa.cassaBalance();
+                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cassa left in open.") );
+                    g_obCassa.cassaClose();
+                    g_obCassa.createNew( g_obUser.id() );
+                    g_obCassa.cassaIncreaseMoney( inBalance, tr("Cassa continue with balance") );
+                    g_obLogger(cSeverity::INFO) << "User selected to start new cassa with balance" << EOM;
+                    break;
+                }
+                case 3:
                 default:
                     g_obCassa.cassaDecreaseMoney( g_obCassa.cassaOwnerId(), g_obCassa.cassaBalance(), tr("Cassa left in open.") );
                     g_obCassa.cassaClose();
@@ -497,16 +560,21 @@ void cWndMain::loginUser()
                 // Akarja-e a felhasznalo folytatni a kasszat
                 cCurrency cBalance( g_obCassa.cassaBalance() );
                 switch( customMsgBox( this, MSG_QUESTION,
-                                      tr("Continue cassa|Start new cassa"),
+                                      tr(" Reopen cassa | Start new cassa with balance | Start new cassa "),
                                       tr( "The latest cassa record closed with balance:\n\n"
-                                          "%1\n\n"
-                                          "Do you want to continue this cassa?\n" ).arg( cBalance.currencyFullStringShort() ),
-                                      tr( "Cassa closed with balance means that previously you closed your cassa "
+                                          "Owner: %1\n"
+                                          "Balance: %2\n\n"
+                                          "Do you want to continue this cassa?\n" ).arg( g_obCassa.cassaOwnerStr() ).arg( cBalance.currencyFullStringShort() ),
+                                      tr( "Cassa closed with balance means that previously the owner closed the cassa "
                                           "but there are cash left in cassa. The default action when closing the cassa "
                                           "is to withdraw money from the cassa therefore the cassa balance will be zero.\n"
-                                          "Click the 'Continue cassa' if previously the cassa closed with reason without "
+                                          "Click the 'Reopen cassa' if previously the cassa closed with reason without "
                                           "money withdraw and now you want to use that cassa again.\n"
-                                          "Click the 'Start new cassa' if you want to use a new cassa. In this case the "
+                                          "Click the 'Start new cassa with balance' button if you want to use a new cassa "
+                                          "but you want to use the balance of the old cassa as a starting balance. In this "
+                                          "case the previous cassa balance will be reseted and a new cassa will be opened for you "
+                                          "with balance of the previous cassa\n"
+                                          "Click the 'Start new cassa' button if you want to use a new cassa. In this case the "
                                           "previous cassa balance will be reseted and a new cassa will be opened for you."
                                           ) ) )
                 {
@@ -515,13 +583,19 @@ void cWndMain::loginUser()
                         g_obCassa.cassaReOpen();
                         g_obLogger(cSeverity::INFO) << "User selected to reopen cassa" << EOM;
                         break;
-
                     case 2:
+                    {
+                        int inBalance = g_obCassa.cassaBalance();
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.createNew( g_obUser.id() );
+                        g_obCassa.cassaIncreaseMoney( inBalance, tr("Start cassa with balance") );
+                        g_obLogger(cSeverity::INFO) << "User selected to start new cassa with balance" << EOM;
+                        break;
+                    }
+                    case 3:
                     default:
                         // Uj kassza nyitasa
-                        g_obCassa.cassaReOpen();
                         g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
-                        g_obCassa.cassaClose();
                         g_obCassa.createNew( g_obUser.id() );
                         g_obLogger(cSeverity::INFO) << "User selected to close cassa with money withdraw and create new cassa" << EOM;
                         break;
@@ -537,7 +611,7 @@ void cWndMain::loginUser()
                     g_obLogger(cSeverity::INFO) << "Latest cassa related to user" << EOM;
                     // Akarja-e a felhasznalo folytatni a kasszat
                     switch( customMsgBox( this, MSG_QUESTION,
-                                          tr("Reopen cassa|Start new cassa"),
+                                          tr(" Reopen cassa | Start new cassa "),
                                           tr( "The latest cassa record used:\n\n"
                                               "from %1 to %2\n\n"
                                               "Do you want to continue this cassa?").arg( g_obCassa.cassaOpenDate() ).arg( g_obCassa.cassaCloseDate() ),
@@ -1480,12 +1554,12 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
-                if( uiCouponId > 0 )
+                /*if( uiCouponId > 0 )
                 {
                     obDBDiscount.load( uiCouponId );
 
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }
+                }*/
                 uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
                 inPrice = 0;
             }
@@ -2059,13 +2133,23 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
 
     if( inCassaAction == QDialog::Accepted && !bShoppingCart )
     {
-        if( uiCouponId > 0 )
+        /*if( uiCouponId > 0 )
         {
             obDBDiscount.load( uiCouponId );
 
             obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-        }
-        g_obCassa.cassaProcessProductSell( p_obDBShoppingCart, qsComment, inPayType );
+        }*/
+
+        g_obLogger(cSeverity::DEBUG) << "processProductSellPayment >> Name: " << obDBShoppingCart.itemName() <<
+                                        " | Net: " << obDBShoppingCart.itemNetPrice() <<
+                                        " | Count: " << obDBShoppingCart.itemCount() <<
+                                        " | Disc.: " << obDBShoppingCart.itemDiscount() <<
+                                        " | Cash: " << obDBShoppingCart.cash() <<
+                                        " | Card: " << obDBShoppingCart.card() <<
+                                        " | Vouc.: " << obDBShoppingCart.voucher() <<
+                                        " | Sum: " << obDBShoppingCart.itemSumPrice() << EOM;
+
+        g_obCassa.cassaProcessProductSell( obDBShoppingCart, qsComment, inPayType );
     }
 }
 //====================================================================================
@@ -2311,12 +2395,12 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 
             if( inCassaAction == QDialog::Accepted && !bShoppingCart )
             {
-                if( uiCouponId > 0 )
+                /*if( uiCouponId > 0 )
                 {
                     obDBDiscount.load( uiCouponId );
 
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }
+                }*/
                 g_obCassa.cassaProcessPatientCardSell( obDBPatientCardNew, obDBShoppingCart, qsComment, true, inPayType );
             }
             else if( inCassaAction != QDialog::Accepted )
@@ -2438,12 +2522,12 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    if( uiCouponId > 0 )
+                    /*if( uiCouponId > 0 )
                     {
                         obDBDiscount.load( uiCouponId );
 
                         obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                    }
+                    }*/
                     g_obCassa.cassaProcessPatientCardSell( obDBPatientCardAssign, obDBShoppingCart, qsComment, true, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )

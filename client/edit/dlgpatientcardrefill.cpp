@@ -255,7 +255,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
         boCanBeSaved = false;
         qsErrorMessage.append( tr( "Barcode cannot be empty." ) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        ledBarcode->setEnabled( true );
+        //ledBarcode->setEnabled( true );
     }
     else if( ledBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
@@ -263,7 +263,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
         if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
         qsErrorMessage.append( tr( "Invalid barcode. Barcode should be %1 character length." ).arg(g_poPrefs->getBarcodeLength()) );
         lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-        ledBarcode->setEnabled( true );
+        //ledBarcode->setEnabled( true );
     }
     else
     {
@@ -276,7 +276,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
             qsErrorMessage.append( tr( "Invalid barcode. This barcode already saved into database."  ) );
             lblBarcode->setStyleSheet( "QLabel {font: bold; color: red;}" );
-            ledBarcode->setEnabled( true );
+            //ledBarcode->setEnabled( true );
         }
     }
 
@@ -323,7 +323,8 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPatientCard->setBarcode( ledBarcode->text() );
             m_poPatientCard->setActive( true );
-//            m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
+            if( m_poPatientCard->patientCardTypeId() == 0 )
+                m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( uiUnits );
             m_poPatientCard->setTimeLeft( uiUnitTime );
@@ -396,12 +397,12 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    if( uiCouponId > 0 )
+                    /*if( uiCouponId > 0 )
                     {
                         obDBDiscount.load( uiCouponId );
 
                         obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                    }
+                    }*/
                     uiLedgerId = g_obCassa.cassaProcessPatientCardRefill( *m_poPatientCard, obDBShoppingCart, qsComment, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )

@@ -43,8 +43,8 @@ public:
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString p_qsComment = "" );
-    void                    cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
-    void                    cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
+    void                    cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
+//    void                    cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment = "", unsigned int p_uiParentId = 0 );
 
     void                    setEnabled();
     void                    setDisabled();

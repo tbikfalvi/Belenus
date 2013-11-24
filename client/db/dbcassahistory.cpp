@@ -34,6 +34,8 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
                              const unsigned int p_uiUserId,
                              const unsigned int p_uiPatientId,
                              const int p_inActionValue,
+                            const int p_inActionCard,
+                            const int p_inActionCash,
                              const int p_inActionBalance,
                              const QString &p_qsActionTime,
                              const QString &p_qsComment,
@@ -49,6 +51,8 @@ void cDBCassaHistory::init( const unsigned int p_uiId,
     m_uiUserId          = p_uiUserId;
     m_uiPatientId       = p_uiPatientId;
     m_inActionValue     = p_inActionValue;
+    m_inActionCard      = p_inActionCard;
+    m_inActionCash      = p_inActionCash;
     m_inActionBalance   = p_inActionBalance;
     m_qsActionTime      = p_qsActionTime;
     m_qsComment         = p_qsComment;
@@ -67,6 +71,8 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inUserIdIdx         = p_obRecord.indexOf( "userId" );
     int inPatientIdIdx      = p_obRecord.indexOf( "patientId" );
     int inActionValueIdx    = p_obRecord.indexOf( "actionValue" );
+    int inActionCardIdx     = p_obRecord.indexOf( "actionCard" );
+    int inActionCashIdx     = p_obRecord.indexOf( "actionCash" );
     int inActionBalanceIdx  = p_obRecord.indexOf( "actionBalance" );
     int inActionTimeIdx     = p_obRecord.indexOf( "actionTime" );
     int inCommentIdx        = p_obRecord.indexOf( "comment" );
@@ -82,6 +88,8 @@ void cDBCassaHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inUserIdIdx ).toUInt(),
           p_obRecord.value( inPatientIdIdx ).toUInt(),
           p_obRecord.value( inActionValueIdx ).toInt(),
+          p_obRecord.value( inActionCardIdx ).toInt(),
+          p_obRecord.value( inActionCashIdx ).toInt(),
           p_obRecord.value( inActionBalanceIdx ).toInt(),
           p_obRecord.value( inActionTimeIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
@@ -143,6 +151,8 @@ void cDBCassaHistory::save() throw( cSevException )
     qsQuery += QString( "userId = \"%1\", " ).arg( m_uiUserId );
     qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiPatientId );
     qsQuery += QString( "actionValue = \"%1\", " ).arg( m_inActionValue );
+    qsQuery += QString( "actionCard = \"%1\", " ).arg( m_inActionCard );
+    qsQuery += QString( "actionCash = \"%1\", " ).arg( m_inActionCash );
     qsQuery += QString( "actionBalance = \"%1\", " ).arg( m_inActionBalance );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
@@ -191,7 +201,7 @@ void cDBCassaHistory::revoke() throw( cSevException )
 {
     QString         qsComment   = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
 
-    g_obCassa.cassaAddMoneyAction( actionValue()*(-1), m_uiLedgerId, qsComment, m_uiId );
+    g_obCassa.cassaAddMoneyAction( actionCash()*(-1), actionCard()*(-1), m_uiLedgerId, qsComment, m_uiId );
 }
 
 void cDBCassaHistory::createNew() throw()
@@ -303,6 +313,26 @@ int cDBCassaHistory::actionValue() const throw()
 void cDBCassaHistory::setActionValue( const int p_inActionValue ) throw()
 {
     m_inActionValue = p_inActionValue;
+}
+
+int cDBCassaHistory::actionCard() const throw()
+{
+    return m_inActionCard;
+}
+
+void cDBCassaHistory::setActionCard( const int p_inActionCard ) throw()
+{
+    m_inActionCard = p_inActionCard;
+}
+
+int cDBCassaHistory::actionCash() const throw()
+{
+    return m_inActionCash;
+}
+
+void cDBCassaHistory::setActionCash( const int p_inActionCash ) throw()
+{
+    m_inActionCash = p_inActionCash;
 }
 
 int cDBCassaHistory::actionBalance() const throw()

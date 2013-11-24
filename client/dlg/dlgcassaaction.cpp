@@ -89,12 +89,11 @@ void cDlgCassaAction::setPayWithCreditcard()
 void cDlgCassaAction::actionPayment()
 {
     pbShoppingCart->setEnabled( false );
-    ledVoucherGiven->setEnabled( false );
-    cmbCoupon->setEnabled( false );
-    frmMoneyVoucher->setVisible( false );
     frmCoupon->setVisible( false );
-    m_nHeightSmall  = 217;
-    m_nHeightBig    = 332;
+    frmCoupon->setEnabled( false );
+
+    m_nHeightSmall  = 308;
+    m_nHeightBig    = 424;
     setMinimumHeight( m_nHeightSmall );
     setMaximumHeight( m_nHeightSmall );
 }

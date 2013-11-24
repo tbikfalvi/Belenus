@@ -779,6 +779,8 @@ CREATE TABLE `cassaHistory` (
   `userId`                  int(10) unsigned        NOT NULL,
   `patientId`               int(10) unsigned        NOT NULL,
   `actionValue`             int(11)                 NOT NULL,
+  `actionCard`              decimal(10,0)           NOT NULL,
+  `actionCash`              decimal(10,0)           NOT NULL,
   `actionBalance`           decimal(10,0)           NOT NULL,
   `actionTime`              timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment`                 text                    DEFAULT NULL,

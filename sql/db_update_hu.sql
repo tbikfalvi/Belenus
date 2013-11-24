@@ -20,6 +20,7 @@ USE `belenus`;
 
 ALTER TABLE `ledger` ADD `card` DECIMAL NOT NULL AFTER `netPrice`, ADD `cash` DECIMAL NOT NULL AFTER `card`;
 ALTER TABLE `shoppingCartItems` ADD `card` DECIMAL NOT NULL AFTER `itemNetPrice`, ADD `cash` DECIMAL NOT NULL AFTER `card`;
+ALTER TABLE `cassahistory` ADD `actionCard` DECIMAL NOT NULL AFTER `actionValue`, ADD `actionCash` DECIMAL NOT NULL AFTER `actionCard`;
 
 -- -----------------------------------------------------------------------------------
 

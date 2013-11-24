@@ -146,6 +146,8 @@ void cCassa::createNew( unsigned int p_uiUserId, int p_inBalance )
         obDBCassaHistory.setUserId( p_uiUserId );
         obDBCassaHistory.setPatientId( 0 );
         obDBCassaHistory.setActionValue( 0 );
+        obDBCassaHistory.setActionCard( 0 );
+        obDBCassaHistory.setActionCash( 0 );
         obDBCassaHistory.setActionBalance( p_inBalance );
         obDBCassaHistory.setComment( QObject::tr("Open new cassa record.") );
         obDBCassaHistory.setActive( true );
@@ -172,6 +174,8 @@ void cCassa::cassaContinue()
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Continue cassa record.") );
     obDBCassaHistory.setActive( true );
@@ -196,6 +200,8 @@ void cCassa::cassaContinue( unsigned int p_uiUserId )
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( p_uiUserId );
     obDBCassaHistory.setActionValue( 0 );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Continue cassa record.") );
     obDBCassaHistory.setActive( true );
@@ -218,6 +224,8 @@ void cCassa::cassaReOpen()
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Reopen cassa record.") );
     obDBCassaHistory.setActive( true );
@@ -249,6 +257,8 @@ void cCassa::cassaClose()
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( m_pCassa->userId() );
     obDBCassaHistory.setActionValue( 0 );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( 0 );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( QObject::tr("Close cassa record.") );
     obDBCassaHistory.setActive( true );
@@ -294,14 +304,14 @@ unsigned int cCassa::cassaProcessPatientCardSell( const cDBPatientCard &p_DBPati
     obDBLedger.setActive( true );
     obDBLedger.save();
 
-    if( p_inPayType == 1 /*PAY_CASH*/ )
+//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
+//    {
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+//    }
+/*    if( p_obDBShoppingCart.card() > 0 )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
-    }
-    else
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
-    }
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+    }*/
 
     return obDBLedger.id();
 }
@@ -342,11 +352,12 @@ unsigned int cCassa::cassaProcessProductStorageChange( const cDBShoppingCart &p_
 
     if( !p_bGlobalCassa )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), 0, obDBLedger.id(), p_qsComment );
     }
     else
     {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
+        cassaAddMoneyAction( 0, p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
+//        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
     }
 
     return obDBLedger.id();
@@ -380,14 +391,14 @@ unsigned int cCassa::cassaProcessDeviceUse( const cDBShoppingCart &p_obDBShoppin
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
-    if( p_inPayType == 1 /*PAY_CASH*/ )
+//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
+//    {
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+//    }
+/*    if( p_obDBShoppingCart.card() > 0 )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
-    }
-    else
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
-    }
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+    }*/
 
     return obDBLedger.id();
 }
@@ -422,14 +433,14 @@ void cCassa::cassaProcessProductSell( const cDBShoppingCart &p_obDBShoppingCart,
     obDBLedger.setComment( qsComment );
     obDBLedger.save();
 
-    if( p_inPayType == 1 /*PAY_CASH*/ )
+//    if( (p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher()) > 0 )
+//    {
+        cassaAddMoneyAction( p_obDBShoppingCart.cash()+p_obDBShoppingCart.voucher(), p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+//    }
+/*    if( p_obDBShoppingCart.card() > 0 )
     {
-        cassaAddMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
-    }
-    else
-    {
-        cassaAddGlobalMoneyAction( p_obDBShoppingCart.itemSumPrice()-p_obDBShoppingCart.itemDiscount(), obDBLedger.id(), p_qsComment );
-    }
+        cassaAddGlobalMoneyAction( p_obDBShoppingCart.card(), obDBLedger.id(), p_qsComment );
+    }*/
 
     cDBProduct  obDBProduct;
 
@@ -509,6 +520,8 @@ void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( p_nMoney );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( p_nMoney );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( m_qsComment );
     obDBCassaHistory.setActive( true );
@@ -535,6 +548,8 @@ void cCassa::cassaDecreaseMoney( int p_nMoney, QString p_qsComment )
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( g_obUser.id() );
     obDBCassaHistory.setActionValue( -p_nMoney );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( -p_nMoney );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( m_qsComment );
     obDBCassaHistory.setActive( true );
@@ -561,16 +576,18 @@ void cCassa::cassaDecreaseMoney( unsigned int p_uiUserId, int p_nMoney, QString 
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setUserId( p_uiUserId );
     obDBCassaHistory.setActionValue( -p_nMoney );
+    obDBCassaHistory.setActionCard( 0 );
+    obDBCassaHistory.setActionCash( -p_nMoney );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( m_qsComment );
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
+void cCassa::cassaAddMoneyAction( int p_nCash, int p_nCard, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
-    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nMoney );
+    m_pCassa->setCurrentBalance( m_pCassa->currentBalance()+p_nCash );
     m_pCassa->save();
 
     cDBCassaHistory obDBCassaHistory;
@@ -580,14 +597,16 @@ void cCassa::cassaAddMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QStri
     obDBCassaHistory.setCassaId( m_pCassa->id() );
     obDBCassaHistory.setLedgerId( p_uiLedgerId );
     obDBCassaHistory.setUserId( g_obUser.id() );
-    obDBCassaHistory.setActionValue( p_nMoney );
+    obDBCassaHistory.setActionValue( p_nCash+p_nCard );
+    obDBCassaHistory.setActionCard( p_nCard );
+    obDBCassaHistory.setActionCash( p_nCash );
     obDBCassaHistory.setActionBalance( m_pCassa->currentBalance() );
     obDBCassaHistory.setComment( p_qsComment );
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();
 }
 //====================================================================================
-void cCassa::cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
+/*void cCassa::cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId, QString p_qsComment, unsigned int p_uiParentId )
 //====================================================================================
 {
     cDBCassaHistory     obDBCassaHistory;
@@ -603,7 +622,7 @@ void cCassa::cassaAddGlobalMoneyAction( int p_nMoney, unsigned int p_uiLedgerId,
     obDBCassaHistory.setComment( p_qsComment );
     obDBCassaHistory.setActive( true );
     obDBCassaHistory.save();
-}
+}*/
 //====================================================================================
 void cCassa::setEnabled()
 //====================================================================================

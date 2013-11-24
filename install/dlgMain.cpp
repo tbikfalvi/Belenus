@@ -1400,14 +1400,17 @@ void dlgMain::_processInstall()
     {
         if( bProcessSucceeded && m_bProcessDatabase && m_qsRootPasswordNew.length() )
         {
+            _logProcess( "Process root password modify " );
             bProcessSucceeded = _processRootModify();
         }
         if( bProcessSucceeded && m_bProcessDatabase )
         {
+            _logProcess( "Process databas update" );
             bProcessSucceeded = _processDatabaseUpdate();
         }
         if( bProcessSucceeded && m_bProcessBelenusClient )
         {
+            _logProcess( "Process update files" );
             bProcessSucceeded = _copyInstallFiles( QString("%1/update%2.li").arg(g_qsCurrentPath).arg(m_qsAppVersion), false );
         }
     }
@@ -1539,7 +1542,7 @@ int dlgMain::_getProcessActionCount()
         }
         else if( m_pInstallType == rbUpdate )
         {
-            QFile fileUpdate( QString("%1/update.li").arg(g_qsCurrentPath) );
+            QFile fileUpdate( QString("%1/update%2.li").arg(g_qsCurrentPath).arg(m_qsAppVersion) );
 
             if( fileUpdate.open(QIODevice::ReadOnly | QIODevice::Text) )
             {
@@ -1698,6 +1701,8 @@ bool dlgMain::_processDatabaseUpdate()
     if( m_poDB->open() )
     {
         QFile file( QString("sql/db_update_%1%2.sql").arg(m_qsLanguage).arg(m_qsDBVersion) );
+
+        _logProcess( QString("Update file: %1").arg( QString("sql/db_update_%1%2.sql").arg(m_qsLanguage).arg(m_qsDBVersion) ) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
@@ -2508,7 +2513,7 @@ bool dlgMain::_copyClientFile( QString p_qsFileName, bool p_bInstall )
             qsFile  = p_qsFileName;
         }
 
-        QString qsBackup = QString( "%1/%2backup_%3%4" ).arg(m_qsClientInstallDir).arg(qsDir).arg(m_qsAppVersion).arg(qsFile);
+        QString qsBackup = QString( "%1/%2backup%3_%4" ).arg(m_qsClientInstallDir).arg(qsDir).arg(m_qsAppVersion).arg(qsFile);
         qsBackup.replace( '\\', '/' );
 
         if( !QFile::rename( qsTo, qsBackup ) )
@@ -2528,6 +2533,7 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
     bool    bRet = true;
     QFile   file( p_qsFileName );
 
+    _logProcess( QString( "Process file: %1" ).arg( p_qsFileName ) );
     if( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
     {
         pbCancel->setEnabled( true );
@@ -2598,7 +2604,12 @@ bool dlgMain::_createFolderShortcut()
         m_obFile->remove( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
         m_obFile->link( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
         delete m_obFile;
+        m_obFile = new QFile( QString("%1\\ReportViewer.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
+        m_obFile->link( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
+        delete m_obFile;
         m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
+        m_qslFiles.append( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
         m_qslFiles.append( QString("%1\\Belenus\\").arg(m_qsPathPrograms) );
     }
 

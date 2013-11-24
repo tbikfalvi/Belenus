@@ -424,12 +424,12 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
 
                 if( inCassaAction == QDialog::Accepted && !bShoppingCart )
                 {
-                    if( uiCouponId > 0 )
+                    /*if( uiCouponId > 0 )
                     {
                         obDBDiscount.load( uiCouponId );
 
                         obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                    }
+                    }*/
                     g_obCassa.cassaProcessPatientCardSell( *m_poPatientCard, obDBShoppingCart, qsComment, m_bNewCard, inPayType );
                 }
                 else if( inCassaAction != QDialog::Accepted )

@@ -33,6 +33,10 @@ public:
     void            setPatientId( const unsigned int p_uiPatientId )    throw();
     int             actionValue() const                                 throw();
     void            setActionValue( const int p_inActionValue )         throw();
+    int             actionCard() const                                  throw();
+    void            setActionCard( const int p_inActionCard )           throw();
+    int             actionCash() const                                  throw();
+    void            setActionCash( const int p_inActionCash )           throw();
     int             actionBalance() const                               throw();
     void            setActionBalance( const int p_inActionBalance )     throw();
     QString         actionTime() const                                  throw();
@@ -54,6 +58,8 @@ private:
     unsigned int    m_uiUserId;
     unsigned int    m_uiPatientId;
     int             m_inActionValue;
+    int             m_inActionCard;
+    int             m_inActionCash;
     int             m_inActionBalance;
     QString         m_qsActionTime;
     QString         m_qsComment;
@@ -69,6 +75,8 @@ private:
                const unsigned int p_uiUserId = 0,
                const unsigned int p_uiPatientId = 0,
                const int p_inActionValue = 0,
+               const int p_inActionCard = 0,
+               const int p_inActionCash = 0,
                const int p_inActionBalance = 0,
                const QString &p_qsActionTime = "",
                const QString &p_qsComment = "",

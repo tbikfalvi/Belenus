@@ -340,12 +340,12 @@ void cDlgShoppingCart::on_pbPayment_clicked()
 
                 obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
-                if( uiCouponId > 0 )
+                /*if( uiCouponId > 0 )
                 {
                     obDBDiscount.load( uiCouponId );
 
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
-                }
+                }*/
 
                 if( obDBShoppingCart.panelId() > 0 &&
                     obDBShoppingCart.productId() == 0 &&
