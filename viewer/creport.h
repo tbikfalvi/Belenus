@@ -40,6 +40,12 @@ public:
         PU_USE_COMBINED
     };
 
+    enum tePanelCountType
+    {
+        PU_COUNT_GUEST = 1,
+        PU_COUNT_PCUNITS
+    };
+
     explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
     ~cReport();
 

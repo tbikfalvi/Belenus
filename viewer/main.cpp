@@ -19,7 +19,8 @@
 //====================================================================================
 
 cQTLogger            g_obLogger;
-FileWriter           g_obLogFileWriter("client_%1_%2.log");
+//FileWriter           g_obLogFileWriter("client_%1_%2.log");
+FileWriter           g_obLogFileWriter("reportviewer_%1.log");
 
 cQTMySQLConnection  *g_poDB;
 
