@@ -586,7 +586,7 @@ void cReportDaily::_reportPartPaymentMethods()
                                                                       "SUM(totalPrice) "
                                                                       "FROM ledger, cassahistory WHERE "
                                                                       "ledger.ledgerId=cassahistory.ledgerId AND "
-                                                                      "ledger.totalPrice>0 AND "
+                                                                      "ledger.totalPrice<>0 AND "
                                                                       "cassaId=%1 " ).arg( uiCassaId ) );
         poQueryResults->first();
 

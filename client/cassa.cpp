@@ -467,15 +467,15 @@ void cCassa::cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId )
 {
     try
     {
-        cDBCassaHistory obDBCassaHistory;
-
-        obDBCassaHistory.loadByLedger( p_uiLedgerId );
-        obDBCassaHistory.revoke();
-
         cDBLedger   obDBLedger;
 
         obDBLedger.load( p_uiLedgerId );
         obDBLedger.revoke();
+
+        cDBCassaHistory obDBCassaHistory;
+
+        obDBCassaHistory.loadByLedger( p_uiLedgerId );
+        obDBCassaHistory.revoke( obDBLedger.id() );
     }
     catch( cSevException &e )
     {
@@ -486,10 +486,11 @@ void cCassa::cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId )
 void cCassa::cassaProcessRevokeCassaAction( unsigned int p_uiCassaHistoryId )
 //====================================================================================
 {
+    unsigned int uiLedgerId = 0;
+
     cDBCassaHistory obDBCassaHistory;
 
     obDBCassaHistory.load( p_uiCassaHistoryId );
-    obDBCassaHistory.revoke();
 
     if( obDBCassaHistory.ledgerId() > 0 )
     {
@@ -497,7 +498,10 @@ void cCassa::cassaProcessRevokeCassaAction( unsigned int p_uiCassaHistoryId )
 
         obDBLedger.load( obDBCassaHistory.ledgerId() );
         obDBLedger.revoke();
+        uiLedgerId = obDBLedger.id();
     }
+
+    obDBCassaHistory.revoke( uiLedgerId );
 }
 //====================================================================================
 void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )

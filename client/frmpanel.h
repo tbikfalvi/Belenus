@@ -172,7 +172,7 @@ private:
     void            activateNextStatus();
     void            closeAttendance();
 
-    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+//    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
     unsigned int    _calculateWaitTime();
 
 signals:

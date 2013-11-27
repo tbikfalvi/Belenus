@@ -1750,7 +1750,7 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
 
     if( QMessageBox::question( this, tr("Question"),
                                tr("Do you want to jump to the next status of the device?"),
-                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
     {
         mdiPanels->next();
     }

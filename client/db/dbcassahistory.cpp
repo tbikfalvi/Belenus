@@ -197,11 +197,11 @@ void cDBCassaHistory::remove() throw( cSevException )
     }
 }
 
-void cDBCassaHistory::revoke() throw( cSevException )
+void cDBCassaHistory::revoke(const unsigned int p_uiLedgerId) throw( cSevException )
 {
-    QString         qsComment   = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
+    QString qsComment = QString( QObject::tr("Revoking cassa action: %1").arg(comment()) );
 
-    g_obCassa.cassaAddMoneyAction( actionCash()*(-1), actionCard()*(-1), m_uiLedgerId, qsComment, m_uiId );
+    g_obCassa.cassaAddMoneyAction( actionCash()*(-1), actionCard()*(-1), p_uiLedgerId, qsComment, m_uiId );
 }
 
 void cDBCassaHistory::createNew() throw()

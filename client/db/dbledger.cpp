@@ -290,6 +290,10 @@ void cDBLedger::revoke() throw( cSevException )
     m_uiId = 0;
     setComment( QObject::tr("Revoking action: %1").arg(comment()) );
     setNetPrice( netPrice()*(-1) );
+    setCard( card()*(-1) );
+    setCash( cash()*(-1) );
+    setVoucher( voucher()*(-1) );
+    setTotalPrice( totalPrice()*(-1) );
     save();
 }
 
