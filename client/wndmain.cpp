@@ -100,6 +100,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     setupUi( this );
 
     m_qsStatusText                  = "";
+    m_bKeyPressed                   = false;
     m_bCtrlPressed                  = false;
     m_bSerialRegistration           = false;
     m_inRegistrationTimeout         = 0;
@@ -282,6 +283,8 @@ cWndMain::~cWndMain()
 //====================================================================================
 void cWndMain::startMainTimer()
 {
+    cTracer obTrace( "cWndMain::startMainTimer" );
+
     mdiPanels->refreshDisplay();
     m_nTimer = startTimer( 250 );
 }
@@ -316,6 +319,8 @@ bool cWndMain::showLogIn()
 //====================================================================================
 void cWndMain::on_pbLogin_clicked()
 {
+    cTracer obTrace( "cWndMain::on_pbLogin_clicked" );
+
     try
     {
         string  stName = cmbName->currentText().toStdString();
@@ -329,7 +334,7 @@ void cWndMain::on_pbLogin_clicked()
         enableElementsByLogin( true );
 
         g_obLogDBWriter.setAppUser( g_obUser.id() );
-        g_obLogger(cSeverity::INFO) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
+        g_obLogger(cSeverity::WARNING) << "User " << g_obUser.name() << " (" << g_obUser.realName() << ") logged in" << EOM;
 
         if( g_obUser.password() == "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) //password is an empty string
         {
@@ -342,16 +347,11 @@ void cWndMain::on_pbLogin_clicked()
         }
 
         updateTitle();
-
-        if( g_poPrefs->isComponentInternetInstalled() )
-        {
-            checkDemoLicenceKey();
-        }
         loginUser();
     }
     catch( cSevException &e )
     {
-        g_obLogger(cSeverity::INFO) << "User " << cmbName->currentText() << " failed to log in" << EOM;
+        g_obLogger(cSeverity::WARNING) << "User " << cmbName->currentText() << " failed to log in" << EOM;
 
         g_obUser.logOut();
         QMessageBox::critical( this, tr( "Login failed" ),
@@ -373,54 +373,9 @@ void cWndMain::showProgress()
 //====================================================================================
 void cWndMain::initPanels()
 {
+    cTracer obTrace( "cWndMain::initPanels" );
+
     mdiPanels->initPanels();
-}
-//====================================================================================
-void cWndMain::checkDemoLicenceKey()
-{
-/*
-    if( g_obLicenceManager.getType() == LicenceManager::VALID_SERVER_ERROR )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("The application has valid serial key registered but was not able to validate it with the server.\n"
-                                 "Please note that without validation the application will work only for the next %1 days\n\n"
-                                 "Please also note you need live internet connection for the validation process.").arg(g_obLicenceManager.getDaysRemaining()) );
-    }
-    else if( g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_ERROR )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("The application has valid serial key registered but failed to validate the installation with the server.\n"
-                                 "Please call Service to validate your installation.\n\n"
-                                 "Note that without validation the application will work only for the next %1 days").arg(g_obLicenceManager.getDaysRemaining()) );
-    }
-    else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
-             g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("Your licence key has expired.\n"
-                                 "The application has a serial key registered but failed to validate it with the server since the last %1 days.\n\n"
-                                 "Please note you need live internet connection for the validation process.").arg(LicenceManager::EXPIRE_IN_DAYS) );
-    }
-    else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
-    {
-        QMessageBox::warning( this, tr("Attention"),
-                              tr("Your licence key validation has failed.\n"
-                                 "Please call Service") );
-    } else if ( g_obLicenceManager.getType()==LicenceManager::DEMO )
-    {
-        if( QMessageBox::warning( this,
-                                  tr("Attention"),
-                                  tr("The application has no valid serial key registered.\n"
-                                     "The application will only control the hardware with DEMO serial key for %1 days.\n\n"
-                                     "Do you want to enter a valid serial key and register the application?\n"
-                                     "Please note you need live internet connection for the registration process.").arg(LicenceManager::EXPIRE_IN_DAYS),
-                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
-        {
-            cDlgSerialReg   obDlgSerialReg( this );
-            obDlgSerialReg.exec();
-        }
-    }
-*/
 }
 //====================================================================================
 void cWndMain::loginUser()
@@ -650,6 +605,8 @@ void cWndMain::loginUser()
 //====================================================================================
 void cWndMain::logoutUser()
 {
+    cTracer obTrace( "cWndMain::logoutUser" );
+
     if( g_obCassa.isCassaEnabled() )
     {
         if( !g_poPrefs->getCassaAutoClose() )
@@ -734,19 +691,22 @@ void cWndMain::logoutUser()
     }
 }
 //====================================================================================
-void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
+void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
+    cTracer obTrace( "cWndMain::keyPressEvent" );
+
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
         m_lblStatusLeft.setText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
     }
 
-    if( m_bCtrlPressed )
+    if( m_bCtrlPressed && !m_bKeyPressed )
     {
         if( p_poEvent->key() == Qt::Key_Q )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + Q" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             close();
@@ -754,6 +714,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + S" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceStart_triggered();
@@ -761,6 +722,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + T" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceClear_triggered();
@@ -768,6 +730,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_PayCash_triggered();
@@ -775,6 +738,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + K" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_ShoppingCart_triggered();
@@ -782,6 +746,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + N" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceSkipStatus_triggered();
@@ -789,16 +754,18 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_F12 )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
+            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_TestDlgStarted();
         }
     }
-    else
+    else if( !m_bKeyPressed )
     {
         if( p_poEvent->key() == Qt::Key_Enter || p_poEvent->key() == Qt::Key_Return )
         {
             g_obLogger(cSeverity::INFO) << "User pressed ENTER" << EOM;
+            m_bKeyPressed = true;
             switch( m_nEnterAction )
             {
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
@@ -825,6 +792,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
                   (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z)) )
         {
+            m_bKeyPressed = true;
             m_lblStatusLeft.setText( m_qsStatusText );
 
             cDlgInputStart  obDlgInputStart( this );
@@ -832,11 +800,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
             obDlgInputStart.setInitialText( p_poEvent->text() );
             if( obDlgInputStart.exec() == QDialog::Accepted )
             {
-                if( obDlgInputStart.m_bPat )
-                {
-                    processInputPatient( obDlgInputStart.getEditText().trimmed() );
-                }
-                else if( obDlgInputStart.m_bCard )
+                if( obDlgInputStart.m_bCard )
                 {
                     processInputPatientCard( obDlgInputStart.getEditText() );
                 }
@@ -854,6 +818,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         }
         else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
         {
+            m_bKeyPressed = true;
             g_obLogger(cSeverity::INFO) << "User pressed ESC" << EOM;
             m_lblStatusLeft.setText( m_qsStatusText );
             mdiPanels->clear();
@@ -861,6 +826,7 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_Space )
         {
             g_obLogger(cSeverity::INFO) << "User pressed SPACE" << EOM;
+            m_bKeyPressed = true;
             on_action_UseDevice_triggered();
         }
     }
@@ -868,21 +834,23 @@ void cWndMain::keyPressEvent ( QKeyEvent *p_poEvent )
     QMainWindow::keyPressEvent( p_poEvent );
 }
 //====================================================================================
-void cWndMain::keyReleaseEvent ( QKeyEvent *p_poEvent )
+void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
 {
+    cTracer obTrace( "cWndMain::keyReleaseEvent" );
+
+    m_bKeyPressed = false;
+
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = false;
         m_lblStatusLeft.setText( m_qsStatusText );
     }
 
-    QMainWindow::keyPressEvent( p_poEvent );
+    QMainWindow::keyReleaseEvent( p_poEvent );
 }
 //====================================================================================
 void cWndMain::showElementsForComponents()
 {
-//    cTracer obTrace( "cWndMain::showElementsForComponents" );
-
     if( g_poPrefs->isComponentKiwiSunInstalled() )
     {
         toolBarSchedule->setEnabled( false );
@@ -897,8 +865,6 @@ void cWndMain::showElementsForComponents()
 //====================================================================================
 void cWndMain::updateTitle()
 {
-    //cTracer obTrace( "cWndMain::updateTitle" );
-
     QString  qsTitle = tr( "Belenus " );
     qsTitle += g_poPrefs->getVersion();
 
@@ -1123,6 +1089,8 @@ void cWndMain::timerEvent(QTimerEvent *)
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
 {
+    cTracer obTrace( "cWndMain::closeEvent" );
+
     bool    bIsShutdown = true;
 
     g_obLogger(cSeverity::INFO) << "Application closure started ..." << EOM;
@@ -1178,6 +1146,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
 //====================================================================================
 void cWndMain::on_action_Preferences_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Preferences_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPreferences  obDlgPrefs( this );
@@ -1214,6 +1184,8 @@ void cWndMain::on_action_Preferences_triggered()
 //====================================================================================
 void cWndMain::on_action_Users_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Users_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgUsers  obDlgUsers( this );
@@ -1268,6 +1240,8 @@ void cWndMain::on_action_LogOut_triggered()
 //====================================================================================
 void cWndMain::on_action_Paneltypes_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Paneltypes_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPanelTypes  obDlgPanelTypes( this );
@@ -1279,6 +1253,8 @@ void cWndMain::on_action_Paneltypes_triggered()
 //====================================================================================
 void cWndMain::on_action_Guests_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Guests_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgGuest  obDlgGuest( this );
@@ -1290,6 +1266,8 @@ void cWndMain::on_action_Guests_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientNew_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PatientNew_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDBGuest *poGuest = new cDBGuest;
@@ -1317,6 +1295,8 @@ void cWndMain::on_action_PatientNew_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceClear_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_DeviceClear_triggered" );
+
     mdiPanels->clean();
 
     if( mdiPanels->isPatientWaiting() )
@@ -1332,6 +1312,8 @@ void cWndMain::on_action_DeviceClear_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_DeviceStart_triggered" );
+
     if( !action_DeviceStart->isEnabled() )
         return;
 
@@ -1357,11 +1339,15 @@ void cWndMain::on_action_DeviceStart_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceReset_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_DeviceReset_triggered" );
+
     mdiPanels->reset();
 }
 //====================================================================================
 void cWndMain::on_action_PatientSelect_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PatientSelect_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPatientSelect  obDlgPatientSelect( this );
@@ -1383,6 +1369,8 @@ void cWndMain::on_action_PatientEmpty_triggered()
 //====================================================================================
 void cWndMain::on_action_PanelStatuses_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PanelStatuses_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPanelStatuses   obDlgPanelStatuses( this );
@@ -1401,6 +1389,8 @@ void cWndMain::on_action_PanelStatuses_triggered()
 //====================================================================================
 void cWndMain::on_action_UseDevice_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_UseDevice_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
@@ -1481,6 +1471,8 @@ void cWndMain::on_action_UseDevice_triggered()
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_UseDeviceLater_triggered" );
+
     m_dlgProgress->showProgress();
     cDlgPanelUse obDlgPanelUse( this, mdiPanels->activePanelId() );
     m_dlgProgress->hideProgress();
@@ -1576,6 +1568,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
 //====================================================================================
 void cWndMain::on_action_Cards_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Cards_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPatientCard obDlgPatientCard( this );
@@ -1590,6 +1584,8 @@ void cWndMain::on_action_Cards_triggered()
 //====================================================================================
 void cWndMain::on_action_CardTypes_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_CardTypes_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPatientCardType obDlgPatientCardType( this );
@@ -1601,6 +1597,8 @@ void cWndMain::on_action_CardTypes_triggered()
 //====================================================================================
 void cWndMain::on_action_ProductTypes_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_ProductTypes_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgProductType obDlgProductType( this );
@@ -1612,6 +1610,8 @@ void cWndMain::on_action_ProductTypes_triggered()
 //====================================================================================
 void cWndMain::on_action_ProductActionType_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_ProductActionType_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgProductActionType obDlgProductActionType( this );
@@ -1623,6 +1623,8 @@ void cWndMain::on_action_ProductActionType_triggered()
 //====================================================================================
 void cWndMain::on_action_Products_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Products_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgProduct obDlgProduct( this );
@@ -1634,11 +1636,15 @@ void cWndMain::on_action_Products_triggered()
 //====================================================================================
 void cWndMain::on_action_SellProduct_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_SellProduct_triggered" );
+
     on_action_SellProduct_triggered( "" );
 }
 //====================================================================================
 void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
 {
+    cTracer obTrace( "cWndMain::on_action_SellProduct_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgProductSell obDlgProductSell( this, p_qsBarcode );
@@ -1652,11 +1658,15 @@ void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
 //====================================================================================
 void cWndMain::on_action_ShoppingCart_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_ShoppingCart_triggered" );
+
     slotOpenShoppingCart( 0 );
 }
 //====================================================================================
 void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
 {
+    cTracer obTrace( "cWndMain::slotOpenShoppingCart" );
+
     m_dlgProgress->showProgress();
 
     cDlgShoppingCart    obDlgShoppingCart( this );
@@ -1673,6 +1683,8 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
 //====================================================================================
 void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
 {
+    cTracer obTrace( "cWndMain::slotOpenScheduleTable" );
+
     mdiPanels->activatePanelId( p_uiPanelId );
     if( !mdiPanels->isPanelWorking( mdiPanels->activePanel() ) )
     {
@@ -1682,6 +1694,8 @@ void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
 //====================================================================================
 void cWndMain::on_action_CassaActionStorno_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_CassaActionStorno_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgStorno  obDlgStorno( this );
@@ -1693,6 +1707,8 @@ void cWndMain::on_action_CassaActionStorno_triggered()
 //====================================================================================
 void cWndMain::on_action_PCSaveToDatabase_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PCSaveToDatabase_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPatientCardAdd  obDlgPatientCardAdd( this );
@@ -1704,6 +1720,8 @@ void cWndMain::on_action_PCSaveToDatabase_triggered()
 //====================================================================================
 void cWndMain::on_action_Cassa_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Cassa_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgCassaEdit   obDlgCassaEdit( this );
@@ -1715,6 +1733,8 @@ void cWndMain::on_action_Cassa_triggered()
 //====================================================================================
 void cWndMain::on_action_Accounting_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_Accounting_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgRepLedgerMain  obDlgLedgerMain( this );
@@ -1726,9 +1746,11 @@ void cWndMain::on_action_Accounting_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceSkipStatus_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_DeviceSkipStatus_triggered" );
+
     if( QMessageBox::question( this, tr("Question"),
                                tr("Do you want to jump to the next status of the device?"),
-                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
     {
         mdiPanels->next();
     }
@@ -1736,6 +1758,8 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
 //====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_ValidateSerialKey_triggered" );
+
     if( !g_obUser.isInGroup( cAccessGroup::ADMIN ) )
     {
         QMessageBox::warning( this, tr("Warning"),
@@ -1756,6 +1780,8 @@ void cWndMain::on_action_ValidateSerialKey_triggered()
 //====================================================================================
 void cWndMain::on_action_PatientCardSell_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PatientCardSell_triggered" );
+
     cDlgInputStart  obDlgInputStart( this );
 
     obDlgInputStart.m_bCard = true;
@@ -1846,46 +1872,10 @@ void cWndMain::on_action_PatientCardSell_triggered()
     }
 }
 //====================================================================================
-void cWndMain::processInputPatient( QString p_stPatientName )
-{
-// 'SOLARIUM GUEST'
-/*
-    cDBPatient      obDBPatient;
-    unsigned int    uiPatientCount = obDBPatient.getPatientCount(p_stPatientName.trimmed());
-
-    if( uiPatientCount > 1 )
-    {
-        cDlgPatientSelect  obDlgPatientSelect( this );
-        obDlgPatientSelect.setSearchPatientName( p_stPatientName.trimmed() );
-        obDlgPatientSelect.exec();
-    }
-    else if( uiPatientCount == 1 )
-    {
-        g_obGuest.load( obDBPatient.id() );
-    }
-    else
-    {
-        if( QMessageBox::question( this, tr("Question"),
-                                   tr("There is no patient in the database with name like\n\n"
-                                      "\'%1\'\n\n"
-                                      "Do you want to create a new patient record with this name?").arg(p_stPatientName.trimmed()),
-                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-        {
-            cDBPatient  obDBPatient;
-
-            obDBPatient.createNew();
-            obDBPatient.setName( p_stPatientName );
-
-            cDlgPatientEdit  obDlgEdit( this, &obDBPatient );
-            obDlgEdit.setWindowTitle( obDBPatient.name() );
-            obDlgEdit.exec();
-        }
-    }
-*/
-}
-//====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )
 {
+    cTracer obTrace( "cWndMain::processInputPatientCard" );
+
     if( !mdiPanels->isCanBeStartedByCard() )
     {
         switch( customMsgBox( this, MSG_ATTENTION,
@@ -1929,11 +1919,15 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
 //====================================================================================
 void cWndMain::processInputProduct( QString p_stBarcode )
 {
+    cTracer obTrace( "cWndMain::processInputProduct" );
+
     on_action_SellProduct_triggered( p_stBarcode );
 }
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inMinute )
 {
+    cTracer obTrace( "cWndMain::processInputTimePeriod" );
+
     if( !mdiPanels->isCanBeStartedByTime() )
     {
         switch( customMsgBox( this, MSG_ATTENTION,
@@ -1973,47 +1967,12 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
     {
         on_action_UseDevice_triggered();
     }
-
-/*    if( mdiPanels->isHasToPay() )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("The device usage has to be payed.\n"
-                                 "Please process the payment first.") );
-        return;
-    }
-
-    int inPrice;
-    int inCount;
-
-    mdiPanels->isTimeIntervallValid( p_inSecond, &inPrice, &inCount );
-    if( inCount > 0 )
-    {
-        if( inCount > 1 )
-        {
-            cDlgPanelUseSelect  obDlgPanelUseSelect( this, mdiPanels->activePanelId(), p_inSecond );
-
-            if( obDlgPanelUseSelect.exec() == QDialog::Accepted )
-            {
-                inPrice = obDlgPanelUseSelect.getPanelUsePrice();
-            }
-            else
-            {
-                return;
-            }
-        }
-
-        mdiPanels->setMainProcessTime( p_inSecond*60, inPrice );
-    }
-    else
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("This time period did not saved in the database\n"
-                                 "for the actually selected device.") );
-    }*/
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_EditActualPatient_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgGuestEdit  obDlgEdit( this, &g_obGuest );
@@ -2026,6 +1985,8 @@ void cWndMain::on_action_EditActualPatient_triggered()
 //====================================================================================
 void cWndMain::on_action_DeviceSettings_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_DeviceSettings_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPanelSettings   obDlgEdit( this, mdiPanels->activePanelId() );
@@ -2042,6 +2003,8 @@ void cWndMain::on_action_DeviceSettings_triggered()
 //====================================================================================
 void cWndMain::on_action_PayCash_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PayCash_triggered" );
+
     if( !g_obCassa.isCassaEnabled() )
     {
         QMessageBox::warning( this, tr("Attention"),
@@ -2109,6 +2072,8 @@ void cWndMain::on_action_PayCash_triggered()
 //====================================================================================
 void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType )
 {
+    cTracer obTrace( "cWndMain::processDeviceUsePayment" );
+
     mdiPanels->setPaymentMethod( p_uiPanelId, p_nPaymentType );
     mdiPanels->cashPayed( p_uiPanelId, p_uiLedgerId );
     mdiPanels->itemRemovedFromShoppingCart( p_uiPanelId );
@@ -2116,6 +2081,8 @@ void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p
 //====================================================================================
 void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart )
 {
+    cTracer obTrace( "cWndMain::processProductSellPayment" );
+
     cDBShoppingCart obDBShoppingCart = p_obDBShoppingCart;
 
     cDlgCassaAction     obDlgCassaAction( this, &obDBShoppingCart );
@@ -2156,6 +2123,8 @@ void cWndMain::processProductSellPayment( const cDBShoppingCart &p_obDBShoppingC
 void cWndMain::on_action_CassaHistory_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_CassaHistory_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgReportCassaList  obDlgReportCassaList( this );
@@ -2168,6 +2137,8 @@ void cWndMain::on_action_CassaHistory_triggered()
 void cWndMain::on_action_ReportPatientcardUses_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_ReportPatientcardUses_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgReportCardUses  obDlgReportCardUses( this );
@@ -2180,6 +2151,8 @@ void cWndMain::on_action_ReportPatientcardUses_triggered()
 void cWndMain::on_action_EditLicenceInformation_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_EditLicenceInformation_triggered" );
+
     dlgLicenceEdit  obDlgLicenceEdit( this );
 
     obDlgLicenceEdit.exec();
@@ -2188,6 +2161,8 @@ void cWndMain::on_action_EditLicenceInformation_triggered()
 void cWndMain::on_action_ReportPatientcards_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_ReportPatientcards_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgReportPatientCard  obDlgReportPatientCard( this );
@@ -2200,6 +2175,8 @@ void cWndMain::on_action_ReportPatientcards_triggered()
 void cWndMain::on_action_Discounts_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_Discounts_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgDiscount  obDlgDiscount( this );
@@ -2212,6 +2189,8 @@ void cWndMain::on_action_Discounts_triggered()
 void cWndMain::on_action_PatientcardsObsolete_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_PatientcardsObsolete_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgReportPatientCardObs  obDlgReportPatientCardObs( this );
@@ -2224,6 +2203,8 @@ void cWndMain::on_action_PatientcardsObsolete_triggered()
 void cWndMain::on_action_EmptyDemoDB_triggered()
 //====================================================================================
 {
+    cTracer obTrace( "cWndMain::on_action_EmptyDemoDB_triggered" );
+
     m_dlgProgress->showProgress();
 
     try
@@ -2294,6 +2275,8 @@ void cWndMain::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInf
 //====================================================================================
 void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
 {
+    cTracer obTrace( "cWndMain::slotReplacePatientCard" );
+
     m_dlgProgress->showProgress();
 
     cDBPatientCard  obDBPatientCardOld;
@@ -2548,6 +2531,8 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
 
 void cWndMain::on_action_PaymentMethods_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_PaymentMethods_triggered" );
+
     m_dlgProgress->showProgress();
 
     cDlgPaymentMethod   obDlgPaymentMethod( this );
@@ -2559,9 +2544,14 @@ void cWndMain::on_action_PaymentMethods_triggered()
 
 void cWndMain::on_action_TestDlgStarted()
 {
-    cDlgTest    obDlgTest( this );
+    cTracer obTrace( "cWndMain::on_action_TestDlgStarted" );
 
-    obDlgTest.exec();
+    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
+    {
+        cDlgTest    obDlgTest( this );
+
+        obDlgTest.exec();
+    }
 }
 
 
@@ -2572,6 +2562,8 @@ void cWndMain::on_ledPassword_returnPressed()
 
 void cWndMain::on_action_ReportViewer_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_ReportViewer_triggered" );
+
     QProcess *qpReportViewer = new QProcess(this);
 
     if( !qpReportViewer->startDetached( QString("ReportViewer.exe %1 %2").arg(g_obUser.name()).arg(ledPassword->text()) ) )
@@ -2589,6 +2581,8 @@ void cWndMain::on_action_ReportViewer_triggered()
 
 void cWndMain::on_action_About_triggered()
 {
+    cTracer obTrace( "cWndMain::on_action_About_triggered" );
+
     QSqlQuery   *poQuery            = NULL;
     QString      qsLicenceString    = "";
     QString qsInfoLink              = "";

@@ -37,7 +37,6 @@ public:
     void loginUser();
     void logoutUser();
 
-    void checkDemoLicenceKey();
     void startMainTimer();
     void autoSynchronizeGlobalData();
     void showProgress();
@@ -58,6 +57,7 @@ private:
     int                      m_nTimer;
     cDlgSecondaryWindow     *m_dlgSecondaryWindow;
     unsigned int             m_uiPatientId;
+    bool                     m_bKeyPressed;
     bool                     m_bCtrlPressed;
     bool                     m_bSerialRegistration;
     int                      m_inRegistrationTimeout;
@@ -74,7 +74,6 @@ private:
     void enableElementsByLogin( bool p_bEnable );
     void updateTitle();
     void updateStatusText( QString p_qsStatusText="" );
-    void processInputPatient( QString p_stPatientName );
     void processInputPatientCard( QString p_stBarcode );
     void processInputProduct( QString p_stBarcode );
     void processInputTimePeriod( int p_inMinute );
