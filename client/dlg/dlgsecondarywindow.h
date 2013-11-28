@@ -18,6 +18,7 @@ public:
     ~cDlgSecondaryWindow();
 
     void                         initPanels();
+    void                         placeSubWindows();
     void                         refreshBackground();
     void                         refreshTitle( unsigned int p_uiPanelId );
     void                         setPanelStatus( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId );
@@ -27,6 +28,7 @@ public:
     void                         setPanelWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
 
 protected:
+    void resizeEvent ( QResizeEvent *p_poEvent );
     void keyPressEvent ( QKeyEvent *p_poEvent );
 
 private:

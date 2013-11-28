@@ -1,6 +1,7 @@
 
 #include <QPoint>
 #include <QSize>
+#include <QMdiSubWindow>
 
 #include "belenus.h"
 #include "dlgsecondarywindow.h"
@@ -14,7 +15,7 @@ cDlgSecondaryWindow::cDlgSecondaryWindow(QWidget *parent) : QDialog(parent)
 
     setWindowIcon( QIcon("./resources/belenus.ico") );
 
-    layoutMain = new QGridLayout( this );
+/*    layoutMain = new QGridLayout( this );
     m_poParent = parent;
 
     layoutMain->setContentsMargins( 2, 2, 2, 2 );
@@ -25,6 +26,7 @@ cDlgSecondaryWindow::cDlgSecondaryWindow(QWidget *parent) : QDialog(parent)
     QPalette  obFramePalette = palette();
     obFramePalette.setBrush( QPalette::Window, QBrush( QColor( g_poPrefs->getSecondaryBackground() ) ) );
     setPalette( obFramePalette );
+*/
 }
 
 cDlgSecondaryWindow::~cDlgSecondaryWindow()
@@ -43,24 +45,66 @@ void cDlgSecondaryWindow::initPanels()
 
     m_obPanels.reserve( inPanelCount );
 
-    int nRow = 0;
-    int nColumn = 0;
+//    int nRow = 0;
+//    int nColumn = 0;
 
     cDspPanel   *pDspPanel;
+    QMdiSubWindow *poPanel;
 
     for( int i=0; i<inPanelCount; i++ )
     {
         pDspPanel = new cDspPanel( i+1 );
         pDspPanel->setPanelStatus( 1 );
 
-        m_obPanels.push_back( pDspPanel );
+        poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
+        poPanel->setWidget( pDspPanel );
 
-        layoutMain->addWidget( pDspPanel, nRow, nColumn++, 1, 1 );
+        m_obPanels.push_back( pDspPanel );
+        mdiArea->addSubWindow( poPanel );
+
+/*        layoutMain->addWidget( pDspPanel, nRow, nColumn++, 1, 1 );
 
         if( nColumn > (int)g_poPrefs->getPanelsPerRow()-1 )
         {
             nRow++;
             nColumn = 0;
+        }*/
+    }
+    placeSubWindows();
+}
+
+void cDlgSecondaryWindow::placeSubWindows()
+{
+    QList<QMdiSubWindow*> obSubWindowList = mdiArea->subWindowList();
+
+    if( obSubWindowList.size() )
+    {
+        int inPanelColumns = g_poPrefs->getPanelsPerRow();
+        int inPanelRows    = ceil( (double)g_poPrefs->getPanelCount() / (double)inPanelColumns );
+        int inPanelW       = width();
+        int inPanelH       = height();
+        int inPanelMargin  = 2;
+
+        inPanelW -= (inPanelColumns+1)*inPanelMargin;
+        inPanelW /= inPanelColumns;
+        inPanelH -= (inPanelRows+1)*inPanelMargin;
+        inPanelH /= inPanelRows;
+
+        obSubWindowList.first();
+        int inPosX = inPanelMargin;
+        int inPosY = inPanelMargin;
+        for( int i = 0; i < obSubWindowList.size(); i++ )
+        {
+            QMdiSubWindow *poSubWindow = obSubWindowList.at( i );
+            poSubWindow->move( inPosX, inPosY );
+            poSubWindow->resize( inPanelW, inPanelH );
+
+            inPosX += inPanelMargin + inPanelW;
+            if( inPosX + inPanelW > width() )
+            {
+                inPosX = inPanelMargin;
+                inPosY += inPanelMargin + inPanelH;
+            }
         }
     }
 }
@@ -109,6 +153,12 @@ void cDlgSecondaryWindow::setPanelWaitTime( unsigned int p_uiPanelId, const unsi
 }
 
 //====================================================================================
+void cDlgSecondaryWindow::resizeEvent ( QResizeEvent *p_poEvent )
+{
+    placeSubWindows();
+    p_poEvent->accept();
+}
+
 void cDlgSecondaryWindow::keyPressEvent ( QKeyEvent */*p_poEvent*/ )
 {
     return;
