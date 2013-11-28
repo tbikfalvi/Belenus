@@ -55,7 +55,7 @@ void cDlgSecondaryWindow::initPanels()
 
         m_obPanels.push_back( pDspPanel );
 
-        layoutMain->addWidget( pDspPanel, nRow, nColumn++ );
+        layoutMain->addWidget( pDspPanel, nRow, nColumn++, 1, 1 );
 
         if( nColumn > (int)g_poPrefs->getPanelsPerRow()-1 )
         {

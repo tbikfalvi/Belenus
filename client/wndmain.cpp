@@ -255,12 +255,13 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_dlgSecondaryWindow = new cDlgSecondaryWindow( this );
 
+    m_dlgSecondaryWindow->initPanels();
+
     if( g_poPrefs->isSecondaryWindowVisible() )
     {
         m_dlgSecondaryWindow->move( g_poPrefs->secondaryWindowPosition() );
         m_dlgSecondaryWindow->resize( g_poPrefs->secondaryWindowSize() );
         m_dlgSecondaryWindow->show();
-        m_dlgSecondaryWindow->initPanels();
         this->setFocus();
     }
 
