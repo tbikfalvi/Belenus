@@ -105,25 +105,28 @@ void cReportDaily::refreshReport()
     addSubTitle( tr( "Number of patientcard units used" ) );
     _reportPartUsedPatientcardunits();
 
-    // Income based on payment methods
-    addSeparator();
-    addSubTitle( tr( "Income by payment methods" ) );
-    _reportPartPaymentMethods();
-
     // Cassa expenses
     addSeparator();
     addSubTitle( tr( "Expenses" ) );
     int nExpenses = _reportPartExpenses();
 
-    // Withdrawed items (storno)
+    // Income based on payment methods
     addSeparator();
-    addSubTitle( tr( "Storno items" ) );
-    _reportPartStorno();
+    addSubTitle( tr( "Income by payment methods" ) );
+    _reportPartPaymentMethods();
 
     // Income summary
     addSeparator();
     addSubTitle( tr( "Income summary" ) );
     _reportPartIncomeSummary( uiTotalPrice, uiPatientCardTotal, uiDeviceUsagesTotal, nExpenses );
+
+    // Withdrawed items (storno)
+    addSeparator();
+    addSubTitle( tr( "Storno items" ) );
+    m_qsReportHtml.append( QString("<div style=\"font-size:12px;\">%1</div>").arg( tr("This list is only an extra information for better understanding.<br>"
+                                                                                      "The items in the storno list are automatically handled, the related values automatically processed by the application.<br>"
+                                                                                      "No further calculation or process is needed related to these items.") ) );
+    _reportPartStorno();
 
     finishReport();
 
@@ -566,11 +569,11 @@ void cReportDaily::_reportPartPaymentMethods()
     addTableCell( tr("Cash and voucher"), "center bold" );
     addTableCell( tr("Amount"), "center bold" );
 
-    int inSumCard       = 0;
-    int inSumCash       = 0;
-    int inSumVoucher    = 0;
-    int inSumCassa      = 0;
-    int inSumTotal      = 0;
+    int inTotalCard     = 0;
+    int inTotalCash     = 0;
+    int inTotalVoucher  = 0;
+    int inTotalCassa    = 0;
+    int inTotal         = 0;
 
     for( int i=0; i<m_qslCassaIds.count(); i++ )
     {
@@ -579,44 +582,81 @@ void cReportDaily::_reportPartPaymentMethods()
 
         addTableRow();
         addTableCell( qsUserName, "bold" );
+        addTableCell();
+        addTableCell();
+        addTableCell();
+        addTableCell();
+        addTableCell();
 
-        QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT SUM(card), "
+        QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT ledgertypes.name, "
+                                                                      "SUM(card), "
                                                                       "SUM(cash), "
                                                                       "SUM(voucher), "
                                                                       "SUM(totalPrice) "
-                                                                      "FROM ledger, cassahistory WHERE "
+                                                                      "FROM ledger, cassahistory, ledgertypes WHERE "
                                                                       "ledger.ledgerId=cassahistory.ledgerId AND "
+                                                                      "ledger.ledgerTypeId=ledgertypes.ledgerTypeId AND "
                                                                       "ledger.totalPrice<>0 AND "
-                                                                      "cassaId=%1 " ).arg( uiCassaId ) );
-        poQueryResults->first();
+                                                                      "cassaId=%1 "
+                                                                      "GROUP BY ledgertypes.ledgerTypeId" ).arg( uiCassaId ) );
+        int inSumCard       = 0;
+        int inSumCash       = 0;
+        int inSumVoucher    = 0;
+        int inSumCassa      = 0;
+        int inSumTotal      = 0;
 
-        cCurrency   obCard( poQueryResults->value(0).toInt() );
-        cCurrency   obCash( poQueryResults->value(1).toInt() );
-        cCurrency   obVoucher( poQueryResults->value(2).toInt() );
-        cCurrency   obCassa( poQueryResults->value(1).toInt()+poQueryResults->value(2).toInt() );
-        cCurrency   obTotal( poQueryResults->value(3).toInt() );
+        while( poQueryResults->next() )
+        {
+            cCurrency   obCard( poQueryResults->value(1).toInt() );
+            cCurrency   obCash( poQueryResults->value(2).toInt() );
+            cCurrency   obVoucher( poQueryResults->value(3).toInt() );
+            cCurrency   obCassa( poQueryResults->value(2).toInt()+poQueryResults->value(3).toInt() );
+            cCurrency   obTotal( poQueryResults->value(4).toInt() );
 
-        inSumCard       += poQueryResults->value(0).toInt();
-        inSumCash       += poQueryResults->value(1).toInt();
-        inSumVoucher    += poQueryResults->value(2).toInt();
-        inSumCassa      += poQueryResults->value(1).toInt()+poQueryResults->value(2).toInt();
-        inSumTotal      += poQueryResults->value(3).toInt();
+            inSumCard       += poQueryResults->value(1).toInt();
+            inSumCash       += poQueryResults->value(2).toInt();
+            inSumVoucher    += poQueryResults->value(3).toInt();
+            inSumCassa      += poQueryResults->value(2).toInt()+poQueryResults->value(3).toInt();
+            inSumTotal      += poQueryResults->value(4).toInt();
 
-        addTableCell( obCard.currencyFullStringShort(), "right" );
-        addTableCell( obCash.currencyFullStringShort(), "right italic" );
-        addTableCell( obVoucher.currencyFullStringShort(), "right italic" );
-        addTableCell( obCassa.currencyFullStringShort(), "right" );
+            addTableRow();
+            addTableCell( poQueryResults->value(0).toString() );
+            addTableCell( obCard.currencyFullStringShort(), "right" );
+            addTableCell( obCash.currencyFullStringShort(), "right italic" );
+            addTableCell( obVoucher.currencyFullStringShort(), "right italic" );
+            addTableCell( obCassa.currencyFullStringShort(), "right" );
+            addTableCell( obTotal.currencyFullStringShort(), "right bold" );
+        }
+        addTableRow();
+        addTableCell( tr("Sum"), "bold" );
+
+        cCurrency   obCard( inSumCard );
+        cCurrency   obCash( inSumCash );
+        cCurrency   obVoucher( inSumVoucher );
+        cCurrency   obCassa( inSumCassa );
+        cCurrency   obTotal( inSumTotal );
+
+        addTableCell( obCard.currencyFullStringShort(), "right bold" );
+        addTableCell( obCash.currencyFullStringShort(), "right bold italic" );
+        addTableCell( obVoucher.currencyFullStringShort(), "right bold italic" );
+        addTableCell( obCassa.currencyFullStringShort(), "right bold" );
         addTableCell( obTotal.currencyFullStringShort(), "right bold" );
+
+        inTotalCard     += inSumCard;
+        inTotalCash     += inSumCash;
+        inTotalVoucher  += inSumVoucher;
+        inTotalCassa    += inSumCassa;
+        inTotal         += inSumTotal;
     }
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
 
-    cCurrency   obCard( inSumCard );
-    cCurrency   obCash( inSumCash );
-    cCurrency   obVoucher( inSumVoucher );
-    cCurrency   obCassa( inSumCassa );
-    cCurrency   obTotal( inSumTotal );
+    cCurrency   obCard( inTotalCard );
+    cCurrency   obCash( inTotalCash );
+    cCurrency   obVoucher( inTotalVoucher );
+    cCurrency   obCassa( inTotalCassa );
+    cCurrency   obTotal( inTotal );
 
     addTableCell( obCard.currencyFullStringShort(), "right bold" );
     addTableCell( obCash.currencyFullStringShort(), "right bold italic" );
@@ -789,8 +829,8 @@ void cReportDaily::_reportPartStorno()
         unsigned int uiTotalCassa = 0;
         while( poQueryResults->next() )
         {
-            cCurrency   obPrice( poQueryResults->value(1).toInt() );
-            uiTotalCassa += poQueryResults->value(1).toInt();
+            cCurrency   obPrice( abs(poQueryResults->value(1).toInt()) );
+            uiTotalCassa += abs(poQueryResults->value(1).toInt());
 
             addTableRow();
             addTableCell();
@@ -857,6 +897,9 @@ void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiTotalPrice, unsign
     addTableCell( tr("Sum total"), "bold" );
     addTableCell( ":", "bold");
     addTableCell( obTotal.currencyFullStringShort(), "right bold" );
+
+    finishTable();
+    finishSection();
 }
 //------------------------------------------------------------------------------------
 QString cReportDaily::_countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId )

@@ -21,6 +21,8 @@ public:
     QComboBox   *cmbGuest;
     QSpacerItem *horizontalSpacer;
     QPushButton *pbPayment;
+    QPushButton *pbPatientCard;
+    QPushButton *pbProduct;
 
     cDlgShoppingCart( QWidget *p_poParent = 0 );
     virtual ~cDlgShoppingCart();
@@ -28,6 +30,8 @@ public:
 
 signals:
     void signalPaymentProcessed( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
+    void signalSellPatientCard();
+    void signalSellProduct();
 
 protected:
     virtual void setupTableView();
@@ -39,6 +43,8 @@ protected slots:
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
     virtual void on_pbPayment_clicked();
+    virtual void on_pbPatientCard_clicked();
+    virtual void on_pbProduct_clicked();
 };
 
 #endif // DLGSHOPPINGCART_H

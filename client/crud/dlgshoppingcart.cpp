@@ -72,6 +72,18 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
     connect( cmbPanel, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( cmbGuest, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
 
+    pbPatientCard = new QPushButton( tr( "Add Patient card to cart" ), this );
+    pbPatientCard->setObjectName( QString::fromUtf8( "pbPatientCard" ) );
+    pbPatientCard->setIconSize( QSize(20, 20) );
+    pbPatientCard->setIcon( QIcon("./resources/40x40_ok.png") );
+    btbButtons->addButton( pbPatientCard, QDialogButtonBox::ActionRole );
+
+    pbProduct = new QPushButton( tr( "Add Product to cart" ), this );
+    pbProduct->setObjectName( QString::fromUtf8( "pbProduct" ) );
+    pbProduct->setIconSize( QSize(20, 20) );
+    pbProduct->setIcon( QIcon("./resources/40x40_ok.png") );
+    btbButtons->addButton( pbProduct, QDialogButtonBox::ActionRole );
+
     pbPayment = new QPushButton( tr( "Payment" ), this );
     pbPayment->setObjectName( QString::fromUtf8( "pbPayment" ) );
     pbPayment->setIconSize( QSize(20, 20) );
@@ -88,6 +100,7 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
     m_poBtnNew->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnSave->setVisible(false);
+    m_poBtnDelete->setVisible( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 }
 
 cDlgShoppingCart::~cDlgShoppingCart()
@@ -217,7 +230,7 @@ void cDlgShoppingCart::enableButtons()
 {
     cTracer obTracer( "cDlgShoppingCart::enableButtons" );
 
-    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 );
+    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 && g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbPayment->setEnabled( m_inSelectedCount > 0 );
 }
 
@@ -298,6 +311,16 @@ void cDlgShoppingCart::deleteClicked( bool )
         }
         refreshTable();
     }
+}
+
+void cDlgShoppingCart::on_pbPatientCard_clicked()
+{
+    emit signalSellPatientCard();
+}
+
+void cDlgShoppingCart::on_pbProduct_clicked()
+{
+    emit signalSellProduct();
 }
 
 void cDlgShoppingCart::on_pbPayment_clicked()

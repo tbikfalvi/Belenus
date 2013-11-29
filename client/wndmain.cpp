@@ -1673,6 +1673,8 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
     cDlgShoppingCart    obDlgShoppingCart( this );
 
     connect( &obDlgShoppingCart, SIGNAL(signalPaymentProcessed(unsigned int,unsigned int,int)), this, SLOT(processDeviceUsePayment(unsigned int,unsigned int,int)) );
+    connect( &obDlgShoppingCart, SIGNAL(signalSellPatientCard()), this, SLOT(on_action_PatientCardSell_triggered()) );
+    connect( &obDlgShoppingCart, SIGNAL(signalSellProduct()), this, SLOT(on_action_SellProduct_triggered()) );
 
     if( p_uiPanelId > 0 )
         obDlgShoppingCart.setPanelFilter( p_uiPanelId );
