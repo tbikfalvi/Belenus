@@ -41,34 +41,10 @@ void cReportDaily::refreshReport()
     addSubTitle( QString( "%1 %2" ).arg( tr( "Date :" ) ).arg( filterDateStart().toString( "yyyy MMM dd" ) ) );
     addHorizontalLine();
 
-    QString qsDateCondition = "";
-
-    if( filterIsVisible() )
-    {
-        qsDateCondition = QString( "DATE(cassa.startDateTime)=\"%1\"  " ).arg( filterDateStart().toString( "yyyy-MM-dd" ) );
-    }
-    else
-    {
-        qsDateCondition = QString( "( DATE(cassa.startDateTime)=\"%1\" OR "
-                                   "DATE(cassa.stopDateTime)=\"%1\" OR "
-                                   "DATE(cassa.modified)=\"%1\" ) " ).arg( filterDateStart().toString( "yyyy-MM-dd" ) );
-    }
-
-    // Get the cassa Id's affected
-    QSqlQuery *poQueryResult = g_poDB->executeQTQuery( QString( "SELECT cassaId, realName "
-                                                                "FROM cassa, users "
-                                                                "WHERE cassa.userId=users.userId AND %1 " ).arg(qsDateCondition) );
-    while( poQueryResult->next() )
-    {
-        m_qslCassaIds << poQueryResult->value( 0 ).toString();
-        m_qslCassaOwners << poQueryResult->value( 1 ).toString();
-    }
-
     // Main data about cassa entries of the selected date
     addSeparator();
     addSubTitle( tr( "Cassa list" ) );
-
-        _reportPartGeneral();
+    _reportPartGeneral();
 
     // Product sold
     addSeparator();
@@ -84,6 +60,31 @@ void cReportDaily::refreshReport()
     addSeparator();
     addSubTitle( tr( "Device usages income" ) );
     unsigned int uiDeviceUsagesTotal = _reportPartPanelUse();
+
+    // Income based on payment methods
+    addSeparator();
+    addSubTitle( tr( "Income by payment methods" ) );
+    int nCassaTotal = _reportPartPaymentMethods();
+
+    // Cassa expenses
+    addSeparator();
+    addSubTitle( tr( "Expenses" ) );
+    int nExpenses = _reportPartExpenses();
+
+    // Income summary
+    addSeparator();
+    addSubTitle( tr( "Income summary" ) );
+    _reportPartIncomeSummary( uiTotalPrice, uiPatientCardTotal, uiDeviceUsagesTotal, nExpenses, nCassaTotal );
+
+    addHorizontalLine();
+
+    // Withdrawed items (storno)
+    addSeparator();
+    addSubTitle( tr( "Storno items" ) );
+    addDescription( tr( "The items in the storno list are automatically handled, the "
+                        "related values automatically processed by the application. "
+                        "No further calculation or process is needed related to these items.") );
+    _reportPartStorno();
 
     // Panel usage by patientcard units
     addSeparator();
@@ -104,29 +105,6 @@ void cReportDaily::refreshReport()
     addSeparator();
     addSubTitle( tr( "Number of patientcard units used" ) );
     _reportPartUsedPatientcardunits();
-
-    // Cassa expenses
-    addSeparator();
-    addSubTitle( tr( "Expenses" ) );
-    int nExpenses = _reportPartExpenses();
-
-    // Income based on payment methods
-    addSeparator();
-    addSubTitle( tr( "Income by payment methods" ) );
-    _reportPartPaymentMethods();
-
-    // Income summary
-    addSeparator();
-    addSubTitle( tr( "Income summary" ) );
-    _reportPartIncomeSummary( uiTotalPrice, uiPatientCardTotal, uiDeviceUsagesTotal, nExpenses );
-
-    // Withdrawed items (storno)
-    addSeparator();
-    addSubTitle( tr( "Storno items" ) );
-    m_qsReportHtml.append( QString("<div style=\"font-size:12px;\">%1</div>").arg( tr("This list is only an extra information for better understanding.<br>"
-                                                                                      "The items in the storno list are automatically handled, the related values automatically processed by the application.<br>"
-                                                                                      "No further calculation or process is needed related to these items.") ) );
-    _reportPartStorno();
 
     finishReport();
 
@@ -153,7 +131,8 @@ void cReportDaily::_reportPartGeneral()
 
     qsQuery = QString( "SELECT cassaId, currentBalance, startDateTime, stopDateTime, cassa.modified, realName, cassa.userId "
                        "FROM cassa, users "
-                       "WHERE cassa.userId=users.userId AND %1 " ).arg(qsDateCondition);
+                       "WHERE cassa.userId=users.userId AND %1 "
+                       "ORDER BY cassa.startDateTime " ).arg(qsDateCondition);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     m_dlgProgress.setProgressMax( poQueryResult->size()+11 );
@@ -175,6 +154,9 @@ void cReportDaily::_reportPartGeneral()
 
     while( poQueryResult->next() )
     {
+        m_qslCassaIds << poQueryResult->value( 0 ).toString();
+        m_qslCassaOwners << poQueryResult->value( 5 ).toString();
+
         cCurrency       cBalance( poQueryResult->value(1).toInt() );
         unsigned int    uiCassaId   = poQueryResult->value(0).toUInt();
         int             nSum = _sumCassaIncome(uiCassaId);
@@ -357,7 +339,7 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
     {
         cCurrency   obPricePCTSum( uiSumPCSell[ i ] );
 
-        addTableCell( QString( "%1 / %2" ).arg( uiCountPCSell[ i ] ).arg( obPricePCTSum.currencyFullStringShort() ), "right" );
+        addTableCell( QString( "%1 / %2" ).arg( uiCountPCSell[ i ] ).arg( obPricePCTSum.currencyFullStringShort() ), "right bold" );
     }
     addTableCell( obTotalCardSell.currencyFullStringShort(), "right bold" );
 
@@ -434,7 +416,7 @@ unsigned int cReportDaily::_reportPartPanelUse()
     {
         cCurrency   obPricePanel( uiPricePanelUse[ i ] );
 
-        addTableCell( obPricePanel.currencyFullStringShort(), "right" );
+        addTableCell( obPricePanel.currencyFullStringShort(), "right bold" );
     }
     addTableCell( obPriceSumTotal.currencyFullStringShort(), "right bold" );
 
@@ -556,7 +538,7 @@ void cReportDaily::_reportPartUsedPatientcardunits()
     finishSection();
 }
 //------------------------------------------------------------------------------------
-void cReportDaily::_reportPartPaymentMethods()
+int cReportDaily::_reportPartPaymentMethods()
 //------------------------------------------------------------------------------------
 {
     startSection();
@@ -664,78 +646,10 @@ void cReportDaily::_reportPartPaymentMethods()
     addTableCell( obCassa.currencyFullStringShort(), "right bold" );
     addTableCell( obTotal.currencyFullStringShort(), "right bold" );
 
-/*
-    QString         qsQuery;
-    QSqlQuery      *poQueryResult;
-    unsigned int    nPaymentSumTotal = 0;
-    unsigned int    uiPricePayment[ m_qslCassaIds.count() ];
-
-    startSection();
-    addTable();
-
-    addTableRow();
-    addTableCell();
-    for( int i=0; i<m_qslCassaOwners.count(); i++ )
-    {
-        addTableCell( m_qslCassaOwners.at(i), "center bold" );
-        uiPricePayment[ i ] = 0;
-    }
-    addTableCell( tr("Amount"), "center bold" );
-
-    qsQuery = QString( "SELECT * FROM paymentmethods WHERE paymentMethodId>0" );
-    poQueryResult = g_poDB->executeQTQuery( qsQuery );
-
-    while( poQueryResult->next() )
-    {
-        unsigned int    nPaymentSum = 0;
-        QString         qsPaymentSum = "";
-        QString         qsPaymentName = poQueryResult->value(2).toString();
-
-        addTableRow();
-        addTableCell( qsPaymentName );
-
-        for( int i=0; i<m_qslCassaIds.count(); i++ )
-        {
-            int     nPayment = _sumPaymentMethod( m_qslCassaIds.at(i), poQueryResult->value(0).toInt() );
-            int     nVoucher = _sumPaymentMethodVoucher( m_qslCassaIds.at(i), poQueryResult->value(0).toInt() );
-            QString qsPayment = "";
-
-            if( nPayment > 0 )
-            {
-                cCurrency   obSum( nPayment );
-                cCurrency   obVoucher( nVoucher );
-                qsPayment = QString( "%1 (%2)" ).arg(obSum.currencyFullStringShort()).arg(obVoucher.currencyStringSeparator());
-            }
-            addTableCell( qsPayment, "right" );
-            nPaymentSum += nPayment;
-            uiPricePayment[ i ] += nPayment;
-        }
-
-        if( nPaymentSum > 0 )
-        {
-            cCurrency   obPaymentSum( nPaymentSum );
-
-            qsPaymentSum = obPaymentSum.currencyFullStringShort();
-        }
-        addTableCell( qsPaymentSum, "right" );
-
-        nPaymentSumTotal += nPaymentSum;
-    }
-
-    cCurrency obPaymentSumTotal( nPaymentSumTotal );
-
-    addTableRow();
-    addTableCell( tr("Sum total"), "bold" );
-    for( int i=0; i<m_qslCassaIds.count(); i++ )
-    {
-        cCurrency obPricePayment( uiPricePayment[ i ] );
-
-        addTableCell( obPricePayment.currencyFullStringShort(), "right" );
-    }
-    addTableCell( obPaymentSumTotal.currencyFullStringShort(), "right bold");
-*/
     finishTable();
     finishSection();
+
+    return inTotalCassa;
 }
 //------------------------------------------------------------------------------------
 unsigned int cReportDaily::_reportPartExpenses()
@@ -858,7 +772,7 @@ void cReportDaily::_reportPartStorno()
     finishSection();
 }
 //------------------------------------------------------------------------------------
-void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiTotalPrice, unsigned int p_uiPatientCardTotal, unsigned int p_uiDeviceUsagesTotal, int p_nExpenses )
+void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiTotalPrice, unsigned int p_uiPatientCardTotal, unsigned int p_uiDeviceUsagesTotal, int p_nExpenses, int p_nCassaTotal )
 //------------------------------------------------------------------------------------
 {
     startSection();
@@ -897,6 +811,20 @@ void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiTotalPrice, unsign
     addTableCell( tr("Sum total"), "bold" );
     addTableCell( ":", "bold");
     addTableCell( obTotal.currencyFullStringShort(), "right bold" );
+
+    cCurrency obPriceCashProfit = cCurrency( p_nCassaTotal+p_nExpenses );
+
+    addTableRow();
+    addTableCell( tr("Cash/voucher") );
+    addTableCell( ":", "bold");
+    addTableCell( obPriceCashProfit.currencyFullStringShort(), "right" );
+
+    cCurrency obPriceCardProfit = cCurrency( obTotal.currencyValue().toInt()-obPriceCashProfit.currencyValue().toInt() );
+
+    addTableRow();
+    addTableCell( tr("Card") );
+    addTableCell( ":", "bold");
+    addTableCell( obPriceCardProfit.currencyFullStringShort(), "right" );
 
     finishTable();
     finishSection();

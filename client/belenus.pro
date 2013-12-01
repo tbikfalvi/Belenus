@@ -40,7 +40,8 @@ FORMS = ../framework/dlgcrud.ui \
     cdlgtest.ui \
     dlgpaneluse.ui \
     dlgCassaInOut.ui \
-    dlgpatientcardassign.ui
+    dlgpatientcardassign.ui \
+    dlgproductsell.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -306,6 +307,7 @@ win32:DEFINES -= UNICODE
 
 RESOURCES += \
     belenus.qrc
+
 
 
 

@@ -20,13 +20,13 @@
 #include "dlgproduct.h"
 #include "../db/dbledger.h"
 
-cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : cDlgCrud( p_poParent )
+cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : QDialog( p_poParent )
 {
     cTracer obTrace( "cDlgProductSell::cDlgProductSell" );
 
     setWindowTitle( tr( "Selling Products" ) );
     setWindowIcon( QIcon("./resources/40x40_product.png") );
-
+/*
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
     m_poBtnEdit->setEnabled(false);
@@ -171,16 +171,19 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : c
     connect( pbPayment, SIGNAL(clicked(bool)), this, SLOT(on_pbPayment_clicked()) );
     connect( pbToCart, SIGNAL(clicked(bool)), this, SLOT(on_pbToCart_clicked()) );
     connect( pbEditProducts, SIGNAL(clicked()), this, SLOT(on_pbEditProducts_clicked()) );
-
+*/
     m_obProduct.createNew();
 
-    setupTableView();
+//    setupTableView();
 
     if( p_qsBarcode.length() )
     {
         ledBarcode->setText( p_qsBarcode );
-        refreshTable();
+//        refreshTable();
     }
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductSell", QPoint(555,200) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 cDlgProductSell::~cDlgProductSell()
@@ -190,7 +193,7 @@ cDlgProductSell::~cDlgProductSell()
     g_poPrefs->setDialogSize( "ProductSell", QPoint( width(), height() ) );
 }
 
-void cDlgProductSell::setupTableView()
+/*void cDlgProductSell::setupTableView()
 {
     cTracer obTracer( "cDlgProductSell::setupTableView" );
 
@@ -335,7 +338,7 @@ void cDlgProductSell::on_pbItemCountDecrease_clicked()
         _calculateTotalPrice();
     }
 }
-
+*/
 void cDlgProductSell::on_pbPayment_clicked()
 {
     cTracer obTrace( "cDlgProductSell::on_pbPayment_clicked" );
@@ -344,7 +347,7 @@ void cDlgProductSell::on_pbPayment_clicked()
     obDBShoppingCart.createNew();
 
     int     nDiscount = 0;
-    int     nCount = ledItemCount->text().toInt();
+    int     nCount = 0;//ledItemCount->text().toInt();
 
     cCurrency   cPrice( m_obProduct.netPriceSell()*nCount, cCurrency::CURR_GROSS, m_obProduct.vatPercentSell() );
 
@@ -371,7 +374,7 @@ void cDlgProductSell::on_pbPayment_clicked()
     QDialog::accept();
 }
 
-void cDlgProductSell::on_pbToCart_clicked()
+/*void cDlgProductSell::on_pbToCart_clicked()
 {
     cTracer obTrace( "cDlgProductSell::on_pbToCart_clicked" );
 
@@ -413,10 +416,10 @@ void cDlgProductSell::on_pbEditProducts_clicked()
     obDlgProduct.exec();
     refreshTable();
 }
-
+*/
 void cDlgProductSell::_calculateTotalPrice()
 {
-    int     nCount = ledItemCount->text().toInt();
+    int     nCount = 0;//ledItemCount->text().toInt();
 
     cCurrency   cPrice( m_obProduct.netPriceSell() * nCount );
 
@@ -435,9 +438,9 @@ void cDlgProductSell::_calculateTotalPrice()
     cCurrency cDiscount( QString::number(nDiscountedPrice) );
 
     if( nDiscountedPrice != nTotalPrice )
-        ledTotalPrice->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
+        ledAmountToPay->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
     else
-        ledTotalPrice->setText( cPrice.currencyFullStringShort() );
+        ledAmountToPay->setText( cPrice.currencyFullStringShort() );
 }
 //===========================================================================================================
 

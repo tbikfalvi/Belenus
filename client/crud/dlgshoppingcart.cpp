@@ -75,21 +75,23 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
     pbPatientCard = new QPushButton( tr( "Add Patient card to cart" ), this );
     pbPatientCard->setObjectName( QString::fromUtf8( "pbPatientCard" ) );
     pbPatientCard->setIconSize( QSize(20, 20) );
-    pbPatientCard->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
     btbButtons->addButton( pbPatientCard, QDialogButtonBox::ActionRole );
 
     pbProduct = new QPushButton( tr( "Add Product to cart" ), this );
     pbProduct->setObjectName( QString::fromUtf8( "pbProduct" ) );
     pbProduct->setIconSize( QSize(20, 20) );
-    pbProduct->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbProduct->setIcon( QIcon("./resources/40x40_product.png") );
     btbButtons->addButton( pbProduct, QDialogButtonBox::ActionRole );
 
     pbPayment = new QPushButton( tr( "Payment" ), this );
     pbPayment->setObjectName( QString::fromUtf8( "pbPayment" ) );
     pbPayment->setIconSize( QSize(20, 20) );
-    pbPayment->setIcon( QIcon("./resources/40x40_ok.png") );
+    pbPayment->setIcon( QIcon("./resources/40x40_cassa.png") );
     btbButtons->addButton( pbPayment, QDialogButtonBox::ActionRole );
 
+    connect( pbPatientCard, SIGNAL(clicked()), this, SLOT(on_pbPatientCard_clicked()) );
+    connect( pbProduct, SIGNAL(clicked()), this, SLOT(on_pbProduct_clicked()) );
     connect( pbPayment, SIGNAL(clicked(bool)), this, SLOT(on_pbPayment_clicked()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ShoppingCart", QPoint(800,400) );
@@ -316,11 +318,13 @@ void cDlgShoppingCart::deleteClicked( bool )
 void cDlgShoppingCart::on_pbPatientCard_clicked()
 {
     emit signalSellPatientCard();
+    refreshTable();
 }
 
 void cDlgShoppingCart::on_pbProduct_clicked()
 {
     emit signalSellProduct();
+    refreshTable();
 }
 
 void cDlgShoppingCart::on_pbPayment_clicked()

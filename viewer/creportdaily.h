@@ -26,13 +26,14 @@ private:
     unsigned int    _reportPartPanelUse();
     void            _reportPartPanelUseType( tePanelUse p_tePanelUse );
     void            _reportPartUsedPatientcardunits();
-    void            _reportPartPaymentMethods();
+    int             _reportPartPaymentMethods();
     unsigned int    _reportPartExpenses();
     void            _reportPartStorno();
     void            _reportPartIncomeSummary( unsigned int p_uiTotalPrice,
                                               unsigned int p_uiPatientCardTotal,
                                               unsigned int p_uiDeviceUsagesTotal,
-                                              int p_nExpenses );
+                                              int p_nExpenses,
+                                              int p_nCassaTotal );
     QString         _countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );

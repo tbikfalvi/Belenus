@@ -8,6 +8,14 @@ cReportProductHistory::cReportProductHistory(QWidget *parent, QString p_qsReport
     m_qsReportName          = tr(" Product history ");
     m_qsReportDescription   = tr( "This report shows the product history. Please select the product you are interested in." );
 
+    _setDateStartEnabled( true );
+    _setDateStartLabelText( tr("First date of intervall :") );
+    m_qdStartDate = QDate::currentDate();
+
+    _setDateStopEnabled( true );
+    _setDateStopLabelText( tr("Last date of intervall :") );
+    m_qdStopDate = QDate::currentDate();
+
     _setDataTypeEnabled( true );
     _setDataTypeLabelText( tr("Products :") );
 
@@ -67,7 +75,9 @@ void cReportProductHistory::refreshReport()
                                    "LEFT JOIN productactiontype ON productactiontype.productActionTypeId=producthistory.productActionTypeId "
                                    "WHERE "
                                    "ledger.productId=%1 AND "
-                                   "ledger.active=1" ).arg( qslFilterType.at(0).toInt() );
+                                   "DATE(ledgerTime)>=\"%2\" AND "
+                                   "DATE(ledgerTime)<=\"%3\" AND "
+                                   "ledger.active=1" ).arg( qslFilterType.at(0).toInt() ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
         QSqlQuery *poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
         m_dlgProgress.setProgressValue( 90 );

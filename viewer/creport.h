@@ -96,6 +96,7 @@ public:
     void                 addSeparator();
     void                 addTitle( QString p_qsTitle );
     void                 addSubTitle( QString p_qsSubTitle );
+    void                 addDescription( QString p_qsDescription );
     void                 addTable();
     void                 finishTable();
     void                 addTableRow();

@@ -400,7 +400,15 @@ void MainWindow::_exportToBelenusProducts()
 
     for( int i=0; i<nProductCount; i++ )
     {
-        QString qsSQLCommand = QString( "INSERT INTO `products` (`licenceId`, `name`, `barcode`, `netPriceBuy`, `vatpercentBuy`, `netPriceSell`, `vatpercentSell`, `productCount`, `modified`, `active`, `archive`) VALUES ( " );
+        QString qsSQLCommand;
+        QSqlQuery query;
+
+        qsSQLCommand = QString( "INSERT INTO `producthistory` ( `productHistoryId`, `licenceId`, `productId`, `ledgerId`, `productActionTypeId`, `userId`, `productItemCount`, `netPrice`, `vatpercent`, `actionDateTime`, `modified`, `active`, `archive` ) VALUES ( "
+                                "NULL , '0', '1', '0', '1', '1', '%1', '0', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '1', 'ARC' );" ).arg( m_qvProducts.at(i).nDarab );
+        _logAction( qsSQLCommand );
+        query = m_poDB->exec( qsSQLCommand );
+
+        qsSQLCommand = QString( "INSERT INTO `products` (`licenceId`, `name`, `barcode`, `netPriceBuy`, `vatpercentBuy`, `netPriceSell`, `vatpercentSell`, `productCount`, `modified`, `active`, `archive`) VALUES ( " );
 
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strNev );
@@ -414,7 +422,7 @@ void MainWindow::_exportToBelenusProducts()
 
         _logAction( qsSQLCommand );
 
-        QSqlQuery query = m_poDB->exec( qsSQLCommand );
+        query = m_poDB->exec( qsSQLCommand );
         m_qvProducts[i].nNewID = query.lastInsertId().toInt();
         m_dlgProgress->stepValue();
     }

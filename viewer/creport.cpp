@@ -214,6 +214,12 @@ void cReport::addSubTitle( QString p_qsSubTitle )
     m_qsReportHtml.append( QString("<div style=\"font-size:14px;font-weight:bold;\">%1</div>").arg( p_qsSubTitle ) );
 }
 //------------------------------------------------------------------------------------
+void cReport::addDescription(QString p_qsDescription)
+//------------------------------------------------------------------------------------
+{
+    m_qsReportHtml.append( QString("<div style=\"font-size:9px;\">%1</div>").arg( p_qsDescription ) );
+}
+//------------------------------------------------------------------------------------
 void cReport::addTable()
 //------------------------------------------------------------------------------------
 {
