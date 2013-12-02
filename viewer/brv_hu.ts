@@ -1189,48 +1189,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="272"/>
-        <location filename="wndmain.cpp" line="364"/>
+        <location filename="wndmain.cpp" line="273"/>
+        <location filename="wndmain.cpp" line="367"/>
         <source>Login</source>
         <translation>Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="277"/>
+        <location filename="wndmain.cpp" line="278"/>
         <source>Need authentication ...</source>
         <translation>Szükség van azonosításra ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="282"/>
+        <location filename="wndmain.cpp" line="283"/>
         <source>User successfully authenticated.</source>
         <translation>A felhasználó sikeresen azonosítva.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="287"/>
+        <location filename="wndmain.cpp" line="288"/>
         <source>Logout</source>
         <translation>Kijelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="293"/>
+        <location filename="wndmain.cpp" line="294"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználónév nem található meg a Belenus adatbázisában.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="295"/>
+        <location filename="wndmain.cpp" line="296"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó helytelen</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="297"/>
+        <location filename="wndmain.cpp" line="298"/>
         <source>Connection to Belenus database failed</source>
         <translation>A kapcsolódás a Belenus adatbázishoz nem sikerült</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="299"/>
+        <location filename="wndmain.cpp" line="300"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Az azonosítás sikertelen volt. Kérem próbálja meg később ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="859"/>
+        <location filename="wndmain.cpp" line="866"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Kérem válasszon ki egy kimutatást a szűrőfeltételek megjelenítéséhez ...&lt;/i&gt;</translation>
     </message>

@@ -42,6 +42,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_qsRPSW                = "7c01fcbe9cab6ae14c98c76cf943a7b2be6a7922";
     m_bReportTabSwitching   = false;
+    m_enGroup               = GROUP_MIN;
 
     // <_NEW_REPORT_> signal es slot osszekapcsolas
     connect( this, SIGNAL(setCheckedReportDaily(bool)), this, SLOT(slotCheckReportDaily(bool)) );
@@ -361,6 +362,8 @@ void cWndMain::on_pbAuthenticate_clicked()
 
     authType    atRet = AUTH_NEEDED;
 
+    m_enGroup = GROUP_MIN;
+
     if( pbAuthenticate->text().compare( tr("Login") ) == 0 )
     {
         atRet = _authenticateUser();
@@ -389,11 +392,14 @@ cWndMain::authType cWndMain::_authenticateUser()
     authType    atRet = AUTH_ERROR;
     QByteArray  obPwdHash = QCryptographicHash::hash( ledPassword->text().toAscii(), QCryptographicHash::Sha1 );
 
+    m_enGroup = GROUP_MIN;
+
     if( QString::fromStdString(stName).compare( "root" ) == 0 )
     {
         if( m_qsRPSW.compare( QString( obPwdHash.toHex() ) ) == 0 )
         {
             atRet = AUTH_OK;
+            m_enGroup = GROUP_ROOT;
         }
         else
         {
@@ -416,6 +422,7 @@ cWndMain::authType cWndMain::_authenticateUser()
                 if( poQuery->value(4).toString().compare( QString( obPwdHash.toHex() ) ) == 0 )
                 {
                     atRet = AUTH_OK;
+                    m_enGroup = poQuery->value(5).toInt();
                 }
                 else
                 {
@@ -444,36 +451,36 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     on_action_FilterBar_triggered( p_bEnable );
 
     // <_NEW_REPORT_> az action engedelyezese/tiltasa
-    action_Bookkeeping_Daily->setEnabled( p_bEnable );
-    action_Bookkeeping_Ledger->setEnabled( p_bEnable );
-    action_Bookkeeping_CassaHistory->setEnabled( p_bEnable );
+    action_Bookkeeping_Daily->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Bookkeeping_Ledger->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
+    action_Bookkeeping_CassaHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
-    action_PatientcardTypes->setEnabled( p_bEnable );
-    action_Patientcards_Inactive->setEnabled( p_bEnable );
-    action_Patientcards_Details->setEnabled( p_bEnable );
-    action_Patientcard_Usages->setEnabled( p_bEnable );
-    action_Patientcard_Sells->setEnabled( p_bEnable );
-    action_Patientcard_Debts->setEnabled( p_bEnable );
+    action_PatientcardTypes->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Patientcards_Inactive->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Patientcards_Details->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Patientcard_Usages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Patientcard_Sells->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Patientcard_Debts->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
-    action_Products->setEnabled( p_bEnable );
-    action_Product_Status->setEnabled( p_bEnable );
-    action_Product_History->setEnabled( p_bEnable );
+    action_Products->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Product_Status->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    action_Product_History->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
-    pbBookkeepingDaily->setEnabled( p_bEnable );
-    pbBookkeepingLedger->setEnabled( p_bEnable );
-    pbBookkeepingCassaHistory->setEnabled( p_bEnable );
+    pbBookkeepingDaily->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbBookkeepingLedger->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
+    pbBookkeepingCassaHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
-    pbPatientcardType->setEnabled( p_bEnable );
-    pbPatientcardsInactive->setEnabled( p_bEnable );
-    pbPatientcardsDetails->setEnabled( p_bEnable );
-    pbPatientcardUsages->setEnabled( p_bEnable );
-    pbPatientcardSells->setEnabled( p_bEnable );
-    pbPatientcardDebts->setEnabled( p_bEnable );
+    pbPatientcardType->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardsInactive->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardsDetails->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardSells->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbPatientcardDebts->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
 
-    pbProducts->setEnabled( p_bEnable );
-    pbProductStatus->setEnabled( p_bEnable );
-    pbProductHistory->setEnabled( p_bEnable );
+    pbProducts->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbProductStatus->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+    pbProductHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     pbPrint->setEnabled( p_bEnable );
 }
@@ -555,7 +562,7 @@ void cWndMain::slotCheckReportCassaHistory(bool p_bChecked)
 
     if( p_bChecked )
     {
-        m_repCassaHistory = new cReportCassaHistory();
+        m_repCassaHistory = new cReportCassaHistory( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCassaHistory );
         m_repCassaHistory->setIndex( tabReports->addTab( m_repCassaHistory, QIcon("./resources/40x40_cassa.png"), m_repCassaHistory->name() ) );
@@ -705,7 +712,7 @@ void cWndMain::slotCheckReportPatientcardSells( bool p_bChecked )
 
     if( p_bChecked )
     {
-        m_repCardSells = new cReportPatientcardSell();
+        m_repCardSells = new cReportPatientcardSell( this, "", _isInGroup( GROUP_ADMIN ) );
 
         m_qvReports.append( m_repCardSells );
         m_repCardSells->setIndex( tabReports->addTab( m_repCardSells, QIcon("./resources/40x40_report_patientcard_sell.png"), m_repCardSells->name() ) );
@@ -1094,5 +1101,11 @@ void cWndMain::on_pbPrint_clicked()
 
         obReport->printReport( &obQPrinter );
     }
+}
+//------------------------------------------------------------------------------------
+bool cWndMain::_isInGroup(groupUser p_enGroup)
+//------------------------------------------------------------------------------------
+{
+    return ( p_enGroup <= m_enGroup );
 }
 //------------------------------------------------------------------------------------

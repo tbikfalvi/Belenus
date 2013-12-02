@@ -1121,48 +1121,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="272"/>
-        <location filename="wndmain.cpp" line="364"/>
+        <location filename="wndmain.cpp" line="273"/>
+        <location filename="wndmain.cpp" line="367"/>
         <source>Login</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="277"/>
+        <location filename="wndmain.cpp" line="278"/>
         <source>Need authentication ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="282"/>
+        <location filename="wndmain.cpp" line="283"/>
         <source>User successfully authenticated.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="287"/>
+        <location filename="wndmain.cpp" line="288"/>
         <source>Logout</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="293"/>
+        <location filename="wndmain.cpp" line="294"/>
         <source>The username entered not found in the Belenus database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="295"/>
+        <location filename="wndmain.cpp" line="296"/>
         <source>The password entered is incorrect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="297"/>
+        <location filename="wndmain.cpp" line="298"/>
         <source>Connection to Belenus database failed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="299"/>
+        <location filename="wndmain.cpp" line="300"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="859"/>
+        <location filename="wndmain.cpp" line="866"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation></translation>
     </message>

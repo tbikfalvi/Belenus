@@ -1,9 +1,21 @@
 #ifndef DLGPRODUCTSELL_H
 #define DLGPRODUCTSELL_H
 
+#include <QVector>
+
 #include "ui_dlgproductsell.h"
 #include "../db/dbproduct.h"
 #include "../db/dbshoppingcart.h"
+
+typedef struct
+{
+    unsigned int    uiId;
+    QString         qsName;
+    QString         qsBarcode;
+    int             inNetPrice;
+    int             inVatPercent;
+    int             inProductCount;
+} tsProducts;
 
 class cDlgProductSell : public QDialog, protected Ui::dlgProductSell
 {
@@ -39,7 +51,9 @@ public:
     QPushButton *pbRefresh;
 */
 private:
-    cDBProduct   m_obProduct;
+
+    QVector<tsProducts*>    qvProducts;
+    cDBProduct              m_obProduct;
 
     void _calculateTotalPrice();
 
@@ -61,6 +75,9 @@ protected slots:
 //    void on_pbToCart_clicked();
 //    void on_pbEditProducts_clicked();
 //    void enablePayment();
+private slots:
+    void on_pbRefresh_clicked();
+    void on_cmbProduct_currentIndexChanged(int index);
 };
 
 #endif // DLGPRODUCTSELL_H

@@ -3,7 +3,7 @@
 #include "creportcassahistory.h"
 #include "currency.h"
 
-cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
+cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName, bool p_bFilterEnable ) : cReport(parent,p_qsReportName)
 {
     cTracer obTrace( "cReportCassaHistory::cReportCassaHistory" );
 
@@ -11,11 +11,11 @@ cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName
     m_qsReportDescription   = tr( "This report shows all of the events and action for the selected owner and date intervall. "
                                   "Please select the first and last day of the date intervall and the cassa owner you interested in." );
 
-    _setDateStartEnabled( true );
+    _setDateStartEnabled( p_bFilterEnable );
     _setDateStartLabelText( tr("First date of intervall :") );
     m_qdStartDate = QDate::currentDate();
 
-    _setDateStopEnabled( true );
+    _setDateStopEnabled( p_bFilterEnable );
     _setDateStopLabelText( tr("Last date of intervall :") );
     m_qdStopDate = QDate::currentDate();
 

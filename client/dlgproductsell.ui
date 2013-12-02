@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>555</width>
-    <height>199</height>
+    <height>208</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,7 +74,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cmbProduct"/>
+           <widget class="QComboBox" name="cmbProduct">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblItemCount">
@@ -98,19 +105,6 @@
              </size>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -170,6 +164,13 @@
            </spacer>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">

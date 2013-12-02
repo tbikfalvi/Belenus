@@ -24,8 +24,18 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : Q
 {
     cTracer obTrace( "cDlgProductSell::cDlgProductSell" );
 
+    setupUi( this );
+
     setWindowTitle( tr( "Selling Products" ) );
     setWindowIcon( QIcon("./resources/40x40_product.png") );
+
+    pbRefresh->setIcon( QIcon("./resources/40x40_refresh.png") );
+    pbPayment->setIcon( QIcon("./resources/40x40_cassa.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
+
+    connect( ledFilterName, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
+    connect( ledBarcode, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
+
 /*
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
@@ -181,6 +191,9 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : Q
         ledBarcode->setText( p_qsBarcode );
 //        refreshTable();
     }
+
+    on_pbRefresh_clicked();
+    pbRefresh->setFocus();
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductSell", QPoint(555,200) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -419,9 +432,9 @@ void cDlgProductSell::on_pbEditProducts_clicked()
 */
 void cDlgProductSell::_calculateTotalPrice()
 {
-    int     nCount = 0;//ledItemCount->text().toInt();
+    int     nCount = cmbProductCount->itemData( cmbProductCount->currentIndex() ).toInt();
 
-    cCurrency   cPrice( m_obProduct.netPriceSell() * nCount );
+    cCurrency   cPrice( qvProducts.at(cmbProduct->currentIndex())->inNetPrice * nCount, cCurrency::CURR_NET, qvProducts.at(cmbProduct->currentIndex())->inVatPercent );
 
     int     nTotalPrice = cPrice.currencyValue().toInt();
     int     nDiscountedPrice = nTotalPrice;
@@ -435,12 +448,103 @@ void cDlgProductSell::_calculateTotalPrice()
         nDiscountedPrice = m_obProduct.getDiscountedPrice( nTotalPrice );
     }
 
-    cCurrency cDiscount( QString::number(nDiscountedPrice) );
+    g_obLogger(cSeverity::DEBUG) << "**********"
+                                 << " netprice: " << qvProducts.at(cmbProduct->currentIndex())->inNetPrice
+                                 << " count: " << nCount
+                                 << " total " << nTotalPrice
+                                 << " discount " << nDiscountedPrice
+                                 << EOM;
+
+    cCurrency cDiscount( nDiscountedPrice );
 
     if( nDiscountedPrice != nTotalPrice )
-        ledAmountToPay->setText( QString("%1 (%2)").arg(cDiscount.currencyFullStringShort()).arg(cPrice.currencyFullStringShort()) );
+        ledAmountToPay->setText( QString("%1 (%2)").arg(cDiscount.currencyStringSeparator()).arg(cPrice.currencyStringSeparator()) );
     else
-        ledAmountToPay->setText( cPrice.currencyFullStringShort() );
+        ledAmountToPay->setText( cPrice.currencyStringSeparator() );
+}
+//===========================================================================================================
+void cDlgProductSell::on_pbRefresh_clicked()
+//===========================================================================================================
+{
+    QString m_qsQuery = "SELECT productId AS id, name, barcode, netPriceSell, vatpercentSell, productCount FROM products WHERE active=1 AND productId>0";
+
+    if( ledBarcode->text().length() > 0 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( ledBarcode->text() );
+    }
+
+    if( ledFilterName->text().length() > 0 )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( ledFilterName->text() );
+    }
+
+    m_qsQuery += " ORDER BY name ";
+
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( m_qsQuery );
+    tsProducts  *tsTemp;
+
+    qvProducts.clear();
+    cmbProduct->clear();
+
+    if( poQuery->size() > 1 )
+    {
+        tsTemp = new tsProducts;
+
+        tsTemp->uiId            = 0;
+        tsTemp->qsName          = "";
+        tsTemp->qsBarcode       = "";
+        tsTemp->inNetPrice      = 0;
+        tsTemp->inVatPercent    = 0;
+        tsTemp->inProductCount  = 0;
+
+        qvProducts.append( tsTemp );
+
+        cmbProduct->addItem( tr("<Select product to sell>"), 0 );
+    }
+    while( poQuery->next() )
+    {
+        tsTemp = new tsProducts;
+
+        tsTemp->uiId            = poQuery->value(0).toUInt();
+        tsTemp->qsName          = poQuery->value(1).toString();
+        tsTemp->qsBarcode       = poQuery->value(2).toString();
+        tsTemp->inNetPrice      = poQuery->value(3).toInt();
+        tsTemp->inVatPercent    = poQuery->value(4).toInt();
+        tsTemp->inProductCount  = poQuery->value(5).toInt();
+
+        qvProducts.append( tsTemp );
+
+        cmbProduct->addItem( poQuery->value(1).toString(), poQuery->value(0).toUInt() );
+    }
+
+    cmbProduct->setCurrentIndex( 0 );
+    cmbProduct->setFocus();
+}
+//===========================================================================================================
+void cDlgProductSell::on_cmbProduct_currentIndexChanged(int index)
+//===========================================================================================================
+{
+    cmbProductCount->clear();
+    cmbProductCount->setEnabled( false );
+    ledPrice->setText( "" );
+    ledCurrentCount->setText( "" );
+
+    if( cmbProduct->itemData(index).toInt() > 0 )
+    {
+        cCurrency   cPrice( qvProducts.at(index)->inNetPrice, cCurrency::CURR_NET, qvProducts.at(index)->inVatPercent );
+
+        ledPrice->setText( cPrice.currencyFullStringShort() );
+        ledCurrentCount->setText( QString::number(qvProducts.at(index)->inProductCount) );
+
+        for( int i=0; i<qvProducts.at(index)->inProductCount; i++ )
+        {
+            cmbProductCount->addItem( QString::number(i+1), i+1 );
+        }
+        cmbProductCount->setEnabled( true );
+        _calculateTotalPrice();
+    }
 }
 //===========================================================================================================
 

@@ -3157,111 +3157,8 @@ for newly created products.Do you want to save the product data now?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="43"/>
-        <source> Search filters </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="61"/>
-        <source>Barcode: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="80"/>
-        <source> Selected product to sell </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="52"/>
-        <location filename="crud/dlgproductsell.cpp" line="89"/>
-        <source>Name: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="99"/>
-        <source>Count: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="146"/>
-        <source>Sell</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="152"/>
-        <source>To shopping cart</source>
-        <oldsource>To cart</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="140"/>
-        <source>Exit</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="71"/>
-        <source>Refresh</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="126"/>
-        <source>Price to pay: </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="158"/>
-        <source>Product list</source>
-        <oldsource>Edit products</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="203"/>
-        <source>Id</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="204"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="205"/>
-        <location filename="crud/dlgproductsell.cpp" line="227"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="206"/>
-        <location filename="crud/dlgproductsell.cpp" line="228"/>
-        <source>Barcode</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="208"/>
-        <location filename="crud/dlgproductsell.cpp" line="230"/>
-        <source>VAT percent</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="207"/>
-        <location filename="crud/dlgproductsell.cpp" line="229"/>
-        <source>Sum price</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="209"/>
-        <location filename="crud/dlgproductsell.cpp" line="231"/>
-        <source>Product count</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="210"/>
-        <source>Active</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproductsell.cpp" line="211"/>
-        <source>Archive</source>
+        <location filename="crud/dlgproductsell.cpp" line="487"/>
+        <source>&lt;Select product to sell&gt;</source>
         <translation></translation>
     </message>
 </context>
@@ -3998,134 +3895,134 @@ Please check your licence key and retype it if necessary..</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="133"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="135"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="134"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="136"/>
         <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="135"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="171"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="137"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="173"/>
         <source>Panel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="136"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="172"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="138"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="174"/>
         <source>Patient</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="137"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="139"/>
         <source>ProductId</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="138"/>
-        <source>PatientCardId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="139"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="173"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="crud/dlgshoppingcart.cpp" line="140"/>
-        <location filename="crud/dlgshoppingcart.cpp" line="174"/>
-        <source>NetPrice</source>
+        <source>PatientCardId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="141"/>
         <location filename="crud/dlgshoppingcart.cpp" line="175"/>
-        <source>VATPercent</source>
+        <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="142"/>
         <location filename="crud/dlgshoppingcart.cpp" line="176"/>
-        <source>SumPrice</source>
+        <source>NetPrice</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="143"/>
         <location filename="crud/dlgshoppingcart.cpp" line="177"/>
-        <source>Count</source>
+        <source>VATPercent</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="144"/>
         <location filename="crud/dlgshoppingcart.cpp" line="178"/>
-        <source>Discount</source>
+        <source>SumPrice</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="145"/>
         <location filename="crud/dlgshoppingcart.cpp" line="179"/>
-        <source>Voucher</source>
+        <source>Count</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="146"/>
         <location filename="crud/dlgshoppingcart.cpp" line="180"/>
-        <source>TotalSumPrice</source>
+        <source>Discount</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="147"/>
         <location filename="crud/dlgshoppingcart.cpp" line="181"/>
-        <source>Comment</source>
+        <source>Voucher</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgshoppingcart.cpp" line="148"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="182"/>
+        <source>TotalSumPrice</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="149"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="183"/>
+        <source>Comment</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgshoppingcart.cpp" line="150"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="380"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="384"/>
         <source>Using device: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="388"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="392"/>
         <source>Selling product: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="399"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="403"/>
         <source>Sell patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="403"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="407"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="261"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="263"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="262"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="264"/>
         <source>Deleting panel use is not allowed from shopping cart.
 Please return to the panel and press ESC to reject panel use.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="242"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="244"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="243"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="245"/>
         <source>Are you sure you want to delete the selected items?</source>
         <translation></translation>
     </message>
@@ -7504,6 +7401,75 @@ is different :</source>
         <source>Product storage
 action</source>
         <oldsource>Product storage</oldsource>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>dlgProductSell</name>
+    <message>
+        <location filename="dlgproductsell.ui" line="14"/>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="22"/>
+        <source> Search filters </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="28"/>
+        <location filename="dlgproductsell.ui" line="72"/>
+        <source>Name: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="38"/>
+        <source>Barcode: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="48"/>
+        <source>Refresh</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="64"/>
+        <source> Selected product to sell </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="82"/>
+        <source>Count: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="122"/>
+        <source>Price: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="136"/>
+        <source>Items in storage: </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="186"/>
+        <source>Amount to pay :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="236"/>
+        <source>$</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="265"/>
+        <source>Sell</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgproductsell.ui" line="281"/>
+        <source>Cancel</source>
         <translation></translation>
     </message>
 </context>

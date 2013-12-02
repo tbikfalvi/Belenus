@@ -1644,7 +1644,7 @@ void cWndMain::on_action_SellProduct_triggered()
 //====================================================================================
 void cWndMain::on_action_SellProduct_triggered( QString p_qsBarcode )
 {
-    cTracer obTrace( "cWndMain::on_action_SellProduct_triggered" );
+    cTracer obTrace( "cWndMain::on_action_SellProduct_triggered( QString )" );
 
     m_dlgProgress->showProgress();
 

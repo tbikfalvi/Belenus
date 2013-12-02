@@ -35,6 +35,16 @@ class cWndMain : public QMainWindow, private Ui::wndMain
         AUTH_ERROR
     };
 
+    enum groupUser
+    {
+        GROUP_MIN = 0,
+        GROUP_USER,
+        GROUP_ADMIN,
+        GROUP_SYSTEM,
+        GROUP_ROOT,
+        GROUP_MAX
+    };
+
 public:
     cWndMain( QWidget *parent = 0 );
     ~cWndMain();
@@ -91,6 +101,9 @@ private:
 
     bool                     m_bReportTabSwitching;
 
+    int                      m_enGroup;
+
+    bool                    _isInGroup( groupUser p_enGroup );
     void                    _initActions();
     void                    _initToolbar();
     void                    _initFilterbar();
