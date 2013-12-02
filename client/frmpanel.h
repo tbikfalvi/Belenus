@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QPushButton>
+#include <QProgressBar>
 
 #include <vector>
 
@@ -153,6 +154,7 @@ private:
     QPushButton                 *icoPanelStop;
     QPushButton                 *icoPanelCassa;
     QPushButton                 *icoScheduledGuest;
+    QProgressBar                *prgUsageMonitor;
 
     QString                         m_qsStatus;
     QString                         m_qsTimer;

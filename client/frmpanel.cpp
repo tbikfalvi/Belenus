@@ -54,6 +54,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     icoPanelCassa       = new QPushButton( this );
     icoShoppingCart     = new QPushButton( this );
     icoScheduledGuest   = new QPushButton( this );
+    prgUsageMonitor     = new QProgressBar( this );
 
     lblCurrStatus->setWordWrap( true );
     lblInfo->setWordWrap( true );
@@ -79,6 +80,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     verticalLayout->addWidget( lblInfo );
     verticalLayout->addItem( spacer4 );
     verticalLayout->addLayout( layoutIcons );
+    verticalLayout->addWidget( prgUsageMonitor );
 
     setAutoFillBackground( true );
 
@@ -116,6 +118,12 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     icoScheduledGuest->setIcon( QIcon(QString("./resources/40x40_hourglass.png")) );
     icoScheduledGuest->setFocusPolicy( Qt::NoFocus );
     connect( icoScheduledGuest, SIGNAL(clicked()), this, SLOT(slotScheduledGuestClicked()) );
+
+    prgUsageMonitor->setTextVisible( false );
+    prgUsageMonitor->setFormat( "" );
+    prgUsageMonitor->setMinimum( 0 );
+    prgUsageMonitor->setValue( 0 );
+    prgUsageMonitor->setFixedHeight( 8 );
 
     m_uiId                  = 0;
     m_uiType                = 0;
@@ -510,7 +518,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             poQuery->first();
@@ -521,6 +529,9 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         {
             lblTitle->setText( tr("Panel Not Found in Database") );
         }
+
+        prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
+        prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
 
         delete poQuery;
         poQuery = NULL;
@@ -559,12 +570,13 @@ void cFrmPanel::reload()
     QSqlQuery  *poQuery = NULL;
     try
     {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title from panels WHERE panelId=%1" ).arg( m_uiId ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
-//            emit signalStatusChanged( m_uiId-1, m_uiStatus+1, lblTitle->text() );
+            prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
+            prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
         }
         delete poQuery;
     }
@@ -820,6 +832,8 @@ void cFrmPanel::closeAttendance()
     poQuery->first();
 
     unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
+
+    prgUsageMonitor->setValue( uiWorkTime/3600 );
 
     QString  qsQuery;
 
