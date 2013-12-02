@@ -78,6 +78,8 @@ protected slots:
 private slots:
     void on_pbRefresh_clicked();
     void on_cmbProduct_currentIndexChanged(int index);
+    void on_cmbProductCount_currentIndexChanged(int index);
+    void on_pbCancel_clicked();
 };
 
 #endif // DLGPRODUCTSELL_H

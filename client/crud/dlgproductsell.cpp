@@ -31,7 +31,7 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : Q
 
     pbRefresh->setIcon( QIcon("./resources/40x40_refresh.png") );
     pbPayment->setIcon( QIcon("./resources/40x40_cassa.png") );
-    pbCancel->setIcon( QIcon("./resources/40x40_exit.png") );
+    pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     connect( ledFilterName, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
     connect( ledBarcode, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
@@ -192,8 +192,13 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : Q
 //        refreshTable();
     }
 
+    pbPayment->setEnabled( false );
+    ledFilterName->setFocus();
+
     on_pbRefresh_clicked();
-    pbRefresh->setFocus();
+
+    if( ledFilterName->text().length() == 0 && ledBarcode->text().length() == 0 )
+        ledFilterName->setFocus();
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductSell", QPoint(555,200) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -360,15 +365,19 @@ void cDlgProductSell::on_pbPayment_clicked()
     obDBShoppingCart.createNew();
 
     int     nDiscount = 0;
-    int     nCount = 0;//ledItemCount->text().toInt();
+    int     nCount = cmbProductCount->itemData( cmbProductCount->currentIndex() ).toInt();
 
-    cCurrency   cPrice( m_obProduct.netPriceSell()*nCount, cCurrency::CURR_GROSS, m_obProduct.vatPercentSell() );
+    cCurrency   cPrice( m_obProduct.netPriceSell() * nCount, cCurrency::CURR_NET, m_obProduct.vatPercentSell() );
 
     int     nTotalPrice = cPrice.currencyValue().toInt();
 
     if( g_obGuest.id() > 0 )
     {
         nDiscount = nTotalPrice - g_obGuest.getDiscountedPrice( nTotalPrice );
+    }
+    else
+    {
+        nDiscount = nTotalPrice - m_obProduct.getDiscountedPrice( nTotalPrice );
     }
 
     obDBShoppingCart.setLicenceId( g_poPrefs->getLicenceId() );
@@ -432,9 +441,14 @@ void cDlgProductSell::on_pbEditProducts_clicked()
 */
 void cDlgProductSell::_calculateTotalPrice()
 {
+    if( cmbProduct->currentIndex() < 0 || cmbProduct->currentIndex() >= qvProducts.count() )
+        return;
+
     int     nCount = cmbProductCount->itemData( cmbProductCount->currentIndex() ).toInt();
 
-    cCurrency   cPrice( qvProducts.at(cmbProduct->currentIndex())->inNetPrice * nCount, cCurrency::CURR_NET, qvProducts.at(cmbProduct->currentIndex())->inVatPercent );
+    m_obProduct.load( qvProducts.at(cmbProduct->currentIndex())->uiId );
+
+    cCurrency   cPrice( m_obProduct.netPriceSell() * nCount, cCurrency::CURR_NET, m_obProduct.vatPercentSell() );
 
     int     nTotalPrice = cPrice.currencyValue().toInt();
     int     nDiscountedPrice = nTotalPrice;
@@ -461,6 +475,8 @@ void cDlgProductSell::_calculateTotalPrice()
         ledAmountToPay->setText( QString("%1 (%2)").arg(cDiscount.currencyStringSeparator()).arg(cPrice.currencyStringSeparator()) );
     else
         ledAmountToPay->setText( cPrice.currencyStringSeparator() );
+
+    pbPayment->setEnabled( nCount>0 );
 }
 //===========================================================================================================
 void cDlgProductSell::on_pbRefresh_clicked()
@@ -520,12 +536,15 @@ void cDlgProductSell::on_pbRefresh_clicked()
     }
 
     cmbProduct->setCurrentIndex( 0 );
-    cmbProduct->setFocus();
+    cmbProductCount->setFocus();
 }
 //===========================================================================================================
 void cDlgProductSell::on_cmbProduct_currentIndexChanged(int index)
 //===========================================================================================================
 {
+    if(  index < 0 || index >= qvProducts.count() )
+        return;
+
     cmbProductCount->clear();
     cmbProductCount->setEnabled( false );
     ledPrice->setText( "" );
@@ -542,9 +561,18 @@ void cDlgProductSell::on_cmbProduct_currentIndexChanged(int index)
         {
             cmbProductCount->addItem( QString::number(i+1), i+1 );
         }
-        cmbProductCount->setEnabled( true );
+        cmbProductCount->setEnabled( qvProducts.at(index)->inProductCount > 0 );
         _calculateTotalPrice();
     }
 }
 //===========================================================================================================
-
+void cDlgProductSell::on_cmbProductCount_currentIndexChanged(int index)
+//===========================================================================================================
+{
+    _calculateTotalPrice();
+}
+//===========================================================================================================
+void cDlgProductSell::on_pbCancel_clicked()
+{
+    QDialog::reject();
+}

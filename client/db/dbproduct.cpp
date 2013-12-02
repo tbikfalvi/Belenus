@@ -379,6 +379,12 @@ int cDBProduct::getDiscountedPrice( const int p_inPriceTotal ) throw()
     {
         obDBDiscount.loadProduct( m_uiId );
 
+        g_obLogger(cSeverity::DEBUG) << "DISCOUNT value: "
+                                     << obDBDiscount.discountValue()
+                                     << " percent: "
+                                     << obDBDiscount.discountPercent()
+                                     << EOM;
+
         if( obDBDiscount.discountValue() > 0 )
         {
             nRet = p_inPriceTotal - obDBDiscount.discountValue();
