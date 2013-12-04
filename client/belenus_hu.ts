@@ -4891,12 +4891,12 @@ El akarja menteni most a termék adatait?</translation>
 <context>
     <name>cDlgProductSell</name>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="27"/>
+        <location filename="crud/dlgproductsell.cpp" line="29"/>
         <source>Selling Products</source>
         <translation>Termék eladás</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="487"/>
+        <location filename="crud/dlgproductsell.cpp" line="520"/>
         <source>&lt;Select product to sell&gt;</source>
         <translation>&lt;Válassza ki az eladni kívánt terméket&gt;</translation>
     </message>
@@ -6796,7 +6796,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
         <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="990"/>
+        <location filename="frmpanel.cpp" line="1004"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -6807,12 +6807,12 @@ Do you want to revoke the payment from the cassa?</source>
 Vissza akarja vonni a pénztárbevételt?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="388"/>
+        <location filename="frmpanel.cpp" line="396"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="389"/>
+        <location filename="frmpanel.cpp" line="397"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -6827,34 +6827,34 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation type="obsolete">SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="317"/>
-        <location filename="frmpanel.cpp" line="338"/>
-        <location filename="frmpanel.cpp" line="750"/>
+        <location filename="frmpanel.cpp" line="325"/>
+        <location filename="frmpanel.cpp" line="346"/>
+        <location filename="frmpanel.cpp" line="762"/>
         <source>NOT STERILE</source>
         <translation>NEM STERIL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="468"/>
+        <location filename="frmpanel.cpp" line="476"/>
         <source>PAUSED</source>
         <translation>SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="522"/>
+        <location filename="frmpanel.cpp" line="530"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="616"/>
+        <location filename="frmpanel.cpp" line="628"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="808"/>
+        <location filename="frmpanel.cpp" line="820"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="991"/>
+        <location filename="frmpanel.cpp" line="1005"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
@@ -11060,7 +11060,7 @@ beavatkozás</translation>
     </message>
     <message>
         <location filename="dlgproductsell.ui" line="28"/>
-        <location filename="dlgproductsell.ui" line="72"/>
+        <location filename="dlgproductsell.ui" line="75"/>
         <source>Name: </source>
         <translation>Név: </translation>
     </message>
@@ -11075,42 +11075,42 @@ beavatkozás</translation>
         <translation>Frissítés</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="64"/>
+        <location filename="dlgproductsell.ui" line="67"/>
         <source> Selected product to sell </source>
         <translation> Eladásra kiválasztott termék </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="82"/>
+        <location filename="dlgproductsell.ui" line="92"/>
         <source>Count: </source>
         <translation>Darab: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="122"/>
+        <location filename="dlgproductsell.ui" line="119"/>
         <source>Price: </source>
         <translation>Ár: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="136"/>
+        <location filename="dlgproductsell.ui" line="133"/>
         <source>Items in storage: </source>
         <translation>Raktárkészlet: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="186"/>
+        <location filename="dlgproductsell.ui" line="190"/>
         <source>Amount to pay :</source>
         <translation>Fizetendő összeg :</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="236"/>
+        <location filename="dlgproductsell.ui" line="240"/>
         <source>$</source>
         <translation>Ft.</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="265"/>
+        <location filename="dlgproductsell.ui" line="269"/>
         <source>Sell</source>
         <translation>Eladás</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="281"/>
+        <location filename="dlgproductsell.ui" line="285"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>

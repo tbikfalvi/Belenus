@@ -124,6 +124,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     prgUsageMonitor->setMinimum( 0 );
     prgUsageMonitor->setValue( 0 );
     prgUsageMonitor->setFixedHeight( 8 );
+    prgUsageMonitor->setStyleSheet( "QProgressBar::chunk { background-color: #5500FF; }" );
 
     m_uiId                  = 0;
     m_uiType                = 0;

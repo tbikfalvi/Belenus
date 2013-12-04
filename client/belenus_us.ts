@@ -3152,12 +3152,12 @@ for newly created products.Do you want to save the product data now?</source>
 <context>
     <name>cDlgProductSell</name>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="27"/>
+        <location filename="crud/dlgproductsell.cpp" line="29"/>
         <source>Selling Products</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="487"/>
+        <location filename="crud/dlgproductsell.cpp" line="520"/>
         <source>&lt;Select product to sell&gt;</source>
         <translation></translation>
     </message>
@@ -4533,51 +4533,51 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="317"/>
-        <location filename="frmpanel.cpp" line="338"/>
-        <location filename="frmpanel.cpp" line="750"/>
+        <location filename="frmpanel.cpp" line="325"/>
+        <location filename="frmpanel.cpp" line="346"/>
+        <location filename="frmpanel.cpp" line="762"/>
         <source>NOT STERILE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="388"/>
+        <location filename="frmpanel.cpp" line="396"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="389"/>
+        <location filename="frmpanel.cpp" line="397"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="468"/>
+        <location filename="frmpanel.cpp" line="476"/>
         <source>PAUSED</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="522"/>
+        <location filename="frmpanel.cpp" line="530"/>
         <source>Panel Not Found in Database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="616"/>
+        <location filename="frmpanel.cpp" line="628"/>
         <source>Cash to pay: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="808"/>
+        <location filename="frmpanel.cpp" line="820"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="990"/>
+        <location filename="frmpanel.cpp" line="1004"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="991"/>
+        <location filename="frmpanel.cpp" line="1005"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>
@@ -7418,7 +7418,7 @@ action</source>
     </message>
     <message>
         <location filename="dlgproductsell.ui" line="28"/>
-        <location filename="dlgproductsell.ui" line="72"/>
+        <location filename="dlgproductsell.ui" line="75"/>
         <source>Name: </source>
         <translation></translation>
     </message>
@@ -7433,42 +7433,42 @@ action</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="64"/>
+        <location filename="dlgproductsell.ui" line="67"/>
         <source> Selected product to sell </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="82"/>
+        <location filename="dlgproductsell.ui" line="92"/>
         <source>Count: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="122"/>
+        <location filename="dlgproductsell.ui" line="119"/>
         <source>Price: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="136"/>
+        <location filename="dlgproductsell.ui" line="133"/>
         <source>Items in storage: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="186"/>
+        <location filename="dlgproductsell.ui" line="190"/>
         <source>Amount to pay :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="236"/>
+        <location filename="dlgproductsell.ui" line="240"/>
         <source>$</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="265"/>
+        <location filename="dlgproductsell.ui" line="269"/>
         <source>Sell</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="281"/>
+        <location filename="dlgproductsell.ui" line="285"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
