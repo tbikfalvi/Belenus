@@ -2588,29 +2588,44 @@ void cWndMain::on_action_About_triggered()
 
     QSqlQuery   *poQuery            = NULL;
     QString      qsLicenceString    = "";
-    QString qsInfoLink              = "";
+    QString      qsInfoLink         = "";
+    QString      qsAppVersion       = "";
+    QString      qsDbVersion        = "";
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT serial FROM licences WHERE licenceId=%1" ).arg( g_poPrefs->getLicenceId() ) );
     poQuery->first();
     qsLicenceString = poQuery->value( 0 ).toString();
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\"" ) );
-    poQuery->first();
-    qsInfoLink = poQuery->value( 0 ).toString();
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM settings " ) );
+    while( poQuery->next() )
+    {
+        QString qsIdentifier = poQuery->value(1).toString();
+
+        if( qsIdentifier.compare("ABOUT_INFO_LINK") == 0 )
+            qsInfoLink = poQuery->value( 2 ).toString();
+        else if( qsIdentifier.compare("APPLICATION_VERSION") == 0 )
+            qsAppVersion = poQuery->value( 2 ).toString();
+        else if( qsIdentifier.compare("DATABASE_VERSION") == 0 )
+            qsDbVersion = poQuery->value( 2 ).toString();
+    }
+
+    qsAppVersion.replace( "_", "." );
+    qsDbVersion.replace( "_", "." );
 
     QMessageBox::information( this, tr("About"),
                               tr("<h2>Belenus Software Application System</h2>"
                                  "<p>"
-                                 "Version : %1"
+                                 "Application version : %1<br>"
+                                 "Database version : %2"
                                  "<p>"
                                  "Copyright 2013 Tamas Bikfalvi. All rights reserved."
                                  "<p>"
-                                 "Application Licence : %2"
+                                 "Application Licence : %3"
                                  "<p>"
                                  "The application and all of its related products<br>"
                                  "is the property of KiwiSun Franchise.<br>"
-                                 "For more information visit the <a href=\"%3\">KiwiSun website</a>"
-                                 ).arg( g_poPrefs->getVersion() ).arg( qsLicenceString ).arg( qsInfoLink ) );
+                                 "For more information visit the <a href=\"%4\">KiwiSun website</a>"
+                                 ).arg( qsAppVersion ).arg( qsDbVersion ).arg( qsLicenceString ).arg( qsInfoLink ) );
 }
 //====================================================================================
 int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
