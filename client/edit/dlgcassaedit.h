@@ -40,6 +40,7 @@ private slots:
     void on_pbCashGet_clicked();
     void on_pbCashAdd_clicked();
     void on_pbClose_clicked();
+    void on_pbExpense_clicked();
 };
 
 #endif

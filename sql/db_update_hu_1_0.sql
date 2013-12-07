@@ -18,7 +18,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
-UPDATE settings SET value='1_0_1' WHERE identifier='APPLICATION_VERSION';
-UPDATE settings SET value='1_0' WHERE identifier='DATABASE_VERSION';
+UPDATE settings SET value='1_0_4' WHERE identifier='APPLICATION_VERSION';
+UPDATE settings SET value='1_1' WHERE identifier='DATABASE_VERSION';
+
+INSERT INTO `ledgerTypes` (`ledgerTypeId` ,`licenceId` ,`name` ,`active` ,`archive`) VALUES
+ (10, '0', 'Pénztár kiadás', '1', 'ARC');
 
 -- -----------------------------------------------------------------------------------

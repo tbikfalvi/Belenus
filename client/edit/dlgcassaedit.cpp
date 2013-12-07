@@ -36,6 +36,7 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );
     pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.png") );
+    pbExpense->setIcon( QIcon("./resources/40x40_paywithcash.png") );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "CassaHistory", QPoint(800,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -220,6 +221,32 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
         cDBCassa        obCassa;
 
         g_obCassa.cassaDecreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
+        obCassa.load( g_obCassa.cassaId() );
+
+        cCurrency   cBalance( obCassa.currentBalance() );
+
+        lblBalanceValue->setText( cBalance.currencyFullStringShort() );
+    }
+    refreshTable();
+}
+
+void cDlgCassaEdit::on_pbExpense_clicked()
+{
+    if( !g_obCassa.isCassaEnabled() )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
+    }
+
+    cDlgCassaInOut     obDlgCassaInOut( this, tr("Cash withdrawal") );
+
+    if( obDlgCassaInOut.exec() == QDialog::Accepted )
+    {
+        cDBCassa        obCassa;
+
+        g_obCassa.cassaProcessCashExpense( (obDlgCassaInOut.resultAmount()*100)*(-1), obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
 
         cCurrency   cBalance( obCassa.currentBalance() );

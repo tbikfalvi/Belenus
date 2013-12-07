@@ -39,6 +39,7 @@ public:
     void                    cassaConnectLedgerWithLedgerDevice( unsigned int p_uiLedgerId, unsigned int p_uiLedgerDeviceId );
     void                    cassaProcessRevokeDeviceUse( unsigned int p_uiLedgerId );
     void                    cassaProcessRevokeCassaAction( unsigned int p_uiCassaHistoryId );
+    void                    cassaProcessCashExpense( int p_nMoney, QString p_qsComment );
 
     void                    cassaIncreaseMoney( int p_nMoney, QString p_qsComment = "" );
     void                    cassaDecreaseMoney( int p_nMoney, QString p_qsComment = "" );

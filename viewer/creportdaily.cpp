@@ -579,8 +579,9 @@ int cReportDaily::_reportPartPaymentMethods()
                                                                       "ledger.ledgerId=cassahistory.ledgerId AND "
                                                                       "ledger.ledgerTypeId=ledgertypes.ledgerTypeId AND "
                                                                       "ledger.totalPrice<>0 AND "
+                                                                      "ledger.ledgerTypeId<%2 AND "
                                                                       "cassaId=%1 "
-                                                                      "GROUP BY ledgertypes.ledgerTypeId" ).arg( uiCassaId ) );
+                                                                      "GROUP BY ledgertypes.ledgerTypeId" ).arg( uiCassaId ).arg( LT_PROD_STORAGE_CHANGE ) );
         int inSumCard       = 0;
         int inSumCash       = 0;
         int inSumVoucher    = 0;
@@ -679,7 +680,7 @@ unsigned int cReportDaily::_reportPartExpenses()
                                                                       "parentId=0 AND "
                                                                       "cassaId=%1 AND "
                                                                       "actionValue<0 AND "
-                                                                      "actionBalance>0 " ).arg( uiCassaId ) );
+                                                                      "ledgerId>0 " ).arg( uiCassaId ) );
         unsigned int uiTotalCassa = 0;
         while( poQueryResults->next() )
         {

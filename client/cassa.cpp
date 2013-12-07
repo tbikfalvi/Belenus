@@ -504,6 +504,33 @@ void cCassa::cassaProcessRevokeCassaAction( unsigned int p_uiCassaHistoryId )
     obDBCassaHistory.revoke( uiLedgerId );
 }
 //====================================================================================
+void cCassa::cassaProcessCashExpense(int p_nMoney, QString p_qsComment)
+//====================================================================================
+{
+    cDBLedger   obDBLedger;
+
+    obDBLedger.createNew();
+    obDBLedger.setLicenceId( g_poPrefs->getLicenceId() );
+    obDBLedger.setLedgerTypeId( cDBLedger::LT_CASSA_EXPENSE );
+    obDBLedger.setPaymentMethod( 1 );
+    obDBLedger.setUserId( g_obUser.id() );
+    obDBLedger.setProductId( 0 );
+    obDBLedger.setPanelId( 0 );
+    obDBLedger.setName( QObject::tr("Cassa expense") );
+    obDBLedger.setItemCount( 1 );
+    obDBLedger.setNetPrice( p_nMoney );
+    obDBLedger.setCard( 0 );
+    obDBLedger.setCash( p_nMoney );
+    obDBLedger.setVoucher( 0 );
+    obDBLedger.setDiscount( 0 );
+    obDBLedger.setVatpercent( 0 );
+    obDBLedger.setTotalPrice( p_nMoney );
+    obDBLedger.setComment( p_qsComment );
+    obDBLedger.save();
+
+    cassaAddMoneyAction( p_nMoney, 0, obDBLedger.id(), p_qsComment );
+}
+//====================================================================================
 void cCassa::cassaIncreaseMoney( int p_nMoney, QString p_qsComment )
 //====================================================================================
 {

@@ -30,7 +30,8 @@ public:
         LT_PC_ASSIGN_PARTNER,
         LT_OTHER7,
         LT_OTHER8,
-        LT_PROD_STORAGE_CHANGE
+        LT_PROD_STORAGE_CHANGE,
+        LT_CASSA_EXPENSE
     };
 
     enum tePanelUse

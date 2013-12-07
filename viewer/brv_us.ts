@@ -267,7 +267,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="51"/>
-        <location filename="creportdaily.cpp" line="784"/>
+        <location filename="creportdaily.cpp" line="785"/>
         <source>Products sold</source>
         <translation></translation>
     </message>
@@ -285,8 +285,8 @@
         <location filename="creportdaily.cpp" line="202"/>
         <location filename="creportdaily.cpp" line="369"/>
         <location filename="creportdaily.cpp" line="552"/>
-        <location filename="creportdaily.cpp" line="665"/>
-        <location filename="creportdaily.cpp" line="727"/>
+        <location filename="creportdaily.cpp" line="666"/>
+        <location filename="creportdaily.cpp" line="728"/>
         <source>Amount</source>
         <translation></translation>
     </message>
@@ -297,21 +297,21 @@
         <location filename="creportdaily.cpp" line="414"/>
         <location filename="creportdaily.cpp" line="474"/>
         <location filename="creportdaily.cpp" line="530"/>
-        <location filename="creportdaily.cpp" line="635"/>
-        <location filename="creportdaily.cpp" line="707"/>
-        <location filename="creportdaily.cpp" line="767"/>
-        <location filename="creportdaily.cpp" line="811"/>
+        <location filename="creportdaily.cpp" line="636"/>
+        <location filename="creportdaily.cpp" line="708"/>
+        <location filename="creportdaily.cpp" line="768"/>
+        <location filename="creportdaily.cpp" line="812"/>
         <source>Sum total</source>
         <translation></translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <location filename="creportdaily.cpp" line="791"/>
+        <location filename="creportdaily.cpp" line="792"/>
         <source>Patientcards sold</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="798"/>
+        <location filename="creportdaily.cpp" line="799"/>
         <source>Device usages</source>
         <translation></translation>
     </message>
@@ -352,7 +352,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="71"/>
-        <location filename="creportdaily.cpp" line="805"/>
+        <location filename="creportdaily.cpp" line="806"/>
         <source>Expenses</source>
         <translation></translation>
     </message>
@@ -422,18 +422,18 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="664"/>
-        <location filename="creportdaily.cpp" line="726"/>
+        <location filename="creportdaily.cpp" line="665"/>
+        <location filename="creportdaily.cpp" line="727"/>
         <source>Description</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="818"/>
+        <location filename="creportdaily.cpp" line="819"/>
         <source>Cash/voucher</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="825"/>
+        <location filename="creportdaily.cpp" line="826"/>
         <source>Card</source>
         <translation></translation>
     </message>
@@ -442,9 +442,9 @@
         <location filename="creportdaily.cpp" line="279"/>
         <location filename="creportdaily.cpp" line="446"/>
         <location filename="creportdaily.cpp" line="502"/>
-        <location filename="creportdaily.cpp" line="613"/>
-        <location filename="creportdaily.cpp" line="698"/>
-        <location filename="creportdaily.cpp" line="758"/>
+        <location filename="creportdaily.cpp" line="614"/>
+        <location filename="creportdaily.cpp" line="699"/>
+        <location filename="creportdaily.cpp" line="759"/>
         <source>Sum</source>
         <translation></translation>
     </message>

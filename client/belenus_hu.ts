@@ -48,13 +48,13 @@
         <translation>Pénztár folytatás.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="510"/>
+        <location filename="cassa.cpp" line="537"/>
         <source>Add money to cassa.</source>
         <translation>Pénztár bevétel.</translation>
     </message>
     <message>
-        <location filename="cassa.cpp" line="538"/>
-        <location filename="cassa.cpp" line="566"/>
+        <location filename="cassa.cpp" line="565"/>
+        <location filename="cassa.cpp" line="593"/>
         <source>Remove money from cassa.</source>
         <translation>Pénztár kiadás.</translation>
     </message>
@@ -480,6 +480,14 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
     </message>
 </context>
 <context>
+    <name>cCassa</name>
+    <message>
+        <location filename="cassa.cpp" line="519"/>
+        <source>Cassa expense</source>
+        <translation>Pénztár kiadás</translation>
+    </message>
+</context>
+<context>
     <name>cDlgAddress</name>
     <message>
         <location filename="crud/dlgaddress.cpp" line="10"/>
@@ -895,58 +903,59 @@ and fill mandatory data later?</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="68"/>
+        <location filename="edit/dlgcassaedit.cpp" line="69"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="69"/>
+        <location filename="edit/dlgcassaedit.cpp" line="70"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="71"/>
-        <location filename="edit/dlgcassaedit.cpp" line="81"/>
+        <location filename="edit/dlgcassaedit.cpp" line="72"/>
+        <location filename="edit/dlgcassaedit.cpp" line="82"/>
         <source>Date/Time</source>
         <translation>Dátum/Idő</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="72"/>
-        <location filename="edit/dlgcassaedit.cpp" line="82"/>
+        <location filename="edit/dlgcassaedit.cpp" line="73"/>
+        <location filename="edit/dlgcassaedit.cpp" line="83"/>
         <source>Amount of money</source>
         <translation>Pénzösszeg</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="73"/>
-        <location filename="edit/dlgcassaedit.cpp" line="83"/>
+        <location filename="edit/dlgcassaedit.cpp" line="74"/>
+        <location filename="edit/dlgcassaedit.cpp" line="84"/>
         <source>Card usage</source>
         <translation>Bankkártya</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="74"/>
-        <location filename="edit/dlgcassaedit.cpp" line="84"/>
+        <location filename="edit/dlgcassaedit.cpp" line="75"/>
+        <location filename="edit/dlgcassaedit.cpp" line="85"/>
         <source>Cash/Voucher</source>
         <translation>Készpénz/Utalvány</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="75"/>
-        <location filename="edit/dlgcassaedit.cpp" line="85"/>
+        <location filename="edit/dlgcassaedit.cpp" line="76"/>
+        <location filename="edit/dlgcassaedit.cpp" line="86"/>
         <source>Actual balance</source>
         <translation>Aktuális egyenleg</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="76"/>
-        <location filename="edit/dlgcassaedit.cpp" line="86"/>
+        <location filename="edit/dlgcassaedit.cpp" line="77"/>
+        <location filename="edit/dlgcassaedit.cpp" line="87"/>
         <source>User</source>
         <translation>Felhasználó</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="190"/>
+        <location filename="edit/dlgcassaedit.cpp" line="191"/>
         <source>Cash payment</source>
         <translation>Készpénz befizetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="216"/>
+        <location filename="edit/dlgcassaedit.cpp" line="217"/>
+        <location filename="edit/dlgcassaedit.cpp" line="243"/>
         <source>Cash withdrawal</source>
         <translation>Készpénz kivét</translation>
     </message>
@@ -967,8 +976,8 @@ and fill mandatory data later?</source>
         <translation type="obsolete">Érték</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="70"/>
-        <location filename="edit/dlgcassaedit.cpp" line="80"/>
+        <location filename="edit/dlgcassaedit.cpp" line="71"/>
+        <location filename="edit/dlgcassaedit.cpp" line="81"/>
         <source>Comment</source>
         <translation>Megjegyzés</translation>
     </message>
@@ -977,14 +986,16 @@ and fill mandatory data later?</source>
         <translation type="obsolete">Státusz</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="184"/>
-        <location filename="edit/dlgcassaedit.cpp" line="210"/>
+        <location filename="edit/dlgcassaedit.cpp" line="185"/>
+        <location filename="edit/dlgcassaedit.cpp" line="211"/>
+        <location filename="edit/dlgcassaedit.cpp" line="237"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgcassaedit.cpp" line="185"/>
-        <location filename="edit/dlgcassaedit.cpp" line="211"/>
+        <location filename="edit/dlgcassaedit.cpp" line="186"/>
+        <location filename="edit/dlgcassaedit.cpp" line="212"/>
+        <location filename="edit/dlgcassaedit.cpp" line="238"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -6796,7 +6807,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
         <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1004"/>
+        <location filename="frmpanel.cpp" line="1005"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -6807,12 +6818,12 @@ Do you want to revoke the payment from the cassa?</source>
 Vissza akarja vonni a pénztárbevételt?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="396"/>
+        <location filename="frmpanel.cpp" line="397"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="397"/>
+        <location filename="frmpanel.cpp" line="398"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
@@ -6827,34 +6838,34 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation type="obsolete">SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="325"/>
-        <location filename="frmpanel.cpp" line="346"/>
-        <location filename="frmpanel.cpp" line="762"/>
+        <location filename="frmpanel.cpp" line="326"/>
+        <location filename="frmpanel.cpp" line="347"/>
+        <location filename="frmpanel.cpp" line="763"/>
         <source>NOT STERILE</source>
         <translation>NEM STERIL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="476"/>
+        <location filename="frmpanel.cpp" line="477"/>
         <source>PAUSED</source>
         <translation>SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="530"/>
+        <location filename="frmpanel.cpp" line="531"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="628"/>
+        <location filename="frmpanel.cpp" line="629"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="820"/>
+        <location filename="frmpanel.cpp" line="821"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1005"/>
+        <location filename="frmpanel.cpp" line="1006"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
@@ -8227,14 +8238,13 @@ allergia :</translation>
         <translation type="obsolete">Részletek &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="180"/>
+        <location filename="dlgcassa.ui" line="209"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="123"/>
         <source>Add cash</source>
-        <translation>Pénz befizetés</translation>
+        <translation type="obsolete">Pénz befizetés</translation>
     </message>
     <message>
         <location filename="dlgcassa.ui" line="66"/>
@@ -8247,9 +8257,20 @@ allergia :</translation>
         <translation>...</translation>
     </message>
     <message>
+        <location filename="dlgcassa.ui" line="123"/>
+        <source>Put cash into cassa</source>
+        <translation>Készpénz berakás kasszába</translation>
+    </message>
+    <message>
         <location filename="dlgcassa.ui" line="145"/>
-        <source>Remove cash</source>
-        <translation>Pénz kivétel</translation>
+        <source>Remove cash from cassa</source>
+        <oldsource>Remove cash</oldsource>
+        <translation>Készpénz kivétel kasszából</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="177"/>
+        <source>Expense</source>
+        <translation>Kiadás</translation>
     </message>
 </context>
 <context>
@@ -11080,37 +11101,37 @@ beavatkozás</translation>
         <translation> Eladásra kiválasztott termék </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="92"/>
+        <location filename="dlgproductsell.ui" line="95"/>
         <source>Count: </source>
         <translation>Darab: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="119"/>
+        <location filename="dlgproductsell.ui" line="122"/>
         <source>Price: </source>
         <translation>Ár: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="133"/>
+        <location filename="dlgproductsell.ui" line="136"/>
         <source>Items in storage: </source>
         <translation>Raktárkészlet: </translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="190"/>
+        <location filename="dlgproductsell.ui" line="193"/>
         <source>Amount to pay :</source>
         <translation>Fizetendő összeg :</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="240"/>
+        <location filename="dlgproductsell.ui" line="243"/>
         <source>$</source>
         <translation>Ft.</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="269"/>
+        <location filename="dlgproductsell.ui" line="272"/>
         <source>Sell</source>
         <translation>Eladás</translation>
     </message>
     <message>
-        <location filename="dlgproductsell.ui" line="285"/>
+        <location filename="dlgproductsell.ui" line="288"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
