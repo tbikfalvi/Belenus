@@ -54,6 +54,7 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     _setDateStopEnabled();
     _setDataNameEnabled();
     _setDataTypeEnabled();
+    _setDataSubTypeEnabled();
     _setDataIsVisibleEnabled();
 }
 //------------------------------------------------------------------------------------
@@ -76,25 +77,29 @@ void cReport::refreshReport()
 //=================================================================================================
 // Adatokat szolgaltato fuggvenyek
 //------------------------------------------------------------------------------------
-QString cReport::name() const               { return m_qsReportName; }
-QString cReport::description() const        { return m_qsReportDescription; }
-int     cReport::index()                    { return m_nIndex; }
-bool    cReport::isDateStartEnabled()       { return m_bDateStartEnabled; }
-bool    cReport::isDateStopEnabled()        { return m_bDateStopEnabled; }
-bool    cReport::isDataNameEnabled()        { return m_bDataNameEnabled; }
-bool    cReport::isDataTypeEnabled()        { return m_bDataTypeEnabled; }
-bool    cReport::isDataIsVisibleEnabled()   { return m_bIsVisibleEnabled; }
-QString cReport::labelDateStartText() const { return m_qsLabelDateStart; }
-QString cReport::labelDateStopText() const  { return m_qsLabelDateStop; }
-QString cReport::labelDataNameText() const  { return m_qsLabelDataName; }
-QString cReport::labelDataTypeText() const  { return m_qsLabelDataType; }
-QString cReport::labelIsVisibleText() const { return m_qsLabelIsVisible; }
-QDate   cReport::filterDateStart() const    { return m_qdStartDate; }
-QDate   cReport::filterDateStop() const     { return m_qdStopDate; }
-QString cReport::filterName() const         { return m_qsName; }
-QString cReport::filterType() const         { return m_qsType; }
-bool    cReport::filterIsVisible() const    { return m_bIsVisible; }
-QString cReport::filterTypeList() const     { return m_qsTypeList; }
+QString cReport::name() const                   { return m_qsReportName;        }
+QString cReport::description() const            { return m_qsReportDescription; }
+int     cReport::index()                        { return m_nIndex;              }
+bool    cReport::isDateStartEnabled()           { return m_bDateStartEnabled;   }
+bool    cReport::isDateStopEnabled()            { return m_bDateStopEnabled;    }
+bool    cReport::isDataNameEnabled()            { return m_bDataNameEnabled;    }
+bool    cReport::isDataTypeEnabled()            { return m_bDataTypeEnabled;    }
+bool    cReport::isDataSubTypeEnabled()         { return m_bDataSubTypeEnabled; }
+bool    cReport::isDataIsVisibleEnabled()       { return m_bIsVisibleEnabled;   }
+QString cReport::labelDateStartText() const     { return m_qsLabelDateStart;    }
+QString cReport::labelDateStopText() const      { return m_qsLabelDateStop;     }
+QString cReport::labelDataNameText() const      { return m_qsLabelDataName;     }
+QString cReport::labelDataTypeText() const      { return m_qsLabelDataType;     }
+QString cReport::labelDataSubTypeText() const   { return m_qsLabelDataSubType;  }
+QString cReport::labelIsVisibleText() const     { return m_qsLabelIsVisible;    }
+QDate   cReport::filterDateStart() const        { return m_qdStartDate;         }
+QDate   cReport::filterDateStop() const         { return m_qdStopDate;          }
+QString cReport::filterName() const             { return m_qsName;              }
+QString cReport::filterType() const             { return m_qsType;              }
+QString cReport::filterSubType() const          { return m_qsSubType;           }
+bool    cReport::filterIsVisible() const        { return m_bIsVisible;          }
+QString cReport::filterTypeList() const         { return m_qsTypeList;          }
+QString cReport::filterSubTypeList() const      { return m_qsSubTypeList;       }
 //=================================================================================================
 //=================================================================================================
 // Adatokat beallito fuggvenyek
@@ -141,6 +146,12 @@ void cReport::setFilterDataType( const QString &p_qsType )
     m_qsType = p_qsType;
 }
 //------------------------------------------------------------------------------------
+void cReport::setFilterDataSubType( const QString &p_qsSubType )
+//------------------------------------------------------------------------------------
+{
+    m_qsSubType = p_qsSubType;
+}
+//------------------------------------------------------------------------------------
 void cReport::setFilterIsVisible( const bool p_bIsVisible )
 //------------------------------------------------------------------------------------
 {
@@ -151,6 +162,12 @@ void cReport::setFilterDataTypeList( const QString &p_qsTypeList )
 //------------------------------------------------------------------------------------
 {
     m_qsTypeList = p_qsTypeList;
+}
+//------------------------------------------------------------------------------------
+void cReport::setFilterDataSubTypeList( const QString &p_qsSubTypeList )
+//------------------------------------------------------------------------------------
+{
+    m_qsSubTypeList = p_qsSubTypeList;
 }
 //=================================================================================================
 //=================================================================================================
@@ -315,6 +332,12 @@ void cReport::_setDataTypeEnabled(bool bEnabled)
     m_bDataTypeEnabled = bEnabled;
 }
 //------------------------------------------------------------------------------------
+void cReport::_setDataSubTypeEnabled(bool bEnabled)
+//------------------------------------------------------------------------------------
+{
+    m_bDataSubTypeEnabled = bEnabled;
+}
+//------------------------------------------------------------------------------------
 void cReport::_setDataIsVisibleEnabled(bool bEnabled)
 //------------------------------------------------------------------------------------
 {
@@ -343,6 +366,12 @@ void cReport::_setDataTypeLabelText( const QString &p_qsText )
 //------------------------------------------------------------------------------------
 {
     m_qsLabelDataType = p_qsText;
+}
+//------------------------------------------------------------------------------------
+void cReport::_setDataSubTypeLabelText( const QString &p_qsText )
+//------------------------------------------------------------------------------------
+{
+    m_qsLabelDataSubType = p_qsText;
 }
 //------------------------------------------------------------------------------------
 void cReport::_setDataIsVisibleText(const QString &p_qsText)

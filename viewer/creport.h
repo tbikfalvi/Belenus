@@ -65,29 +65,35 @@ public:
     bool                 isDateStopEnabled();
     bool                 isDataNameEnabled();
     bool                 isDataTypeEnabled();
+    bool                 isDataSubTypeEnabled();
     bool                 isDataIsVisibleEnabled();
 
     QString              labelDateStartText() const;
     QString              labelDateStopText() const;
     QString              labelDataNameText() const;
     QString              labelDataTypeText() const;
+    QString              labelDataSubTypeText() const;
     QString              labelIsVisibleText() const;
 
     QDate                filterDateStart() const;
     QDate                filterDateStop() const;
     QString              filterName() const;
     QString              filterType() const;
+    QString              filterSubType() const;
     bool                 filterIsVisible() const;
 
     QString              filterTypeList() const;
+    QString              filterSubTypeList() const;
 
     void                 setFilterDateStart( const QDate &p_qdDate );
     void                 setFilterDateStop( const QDate &p_qdDate );
     void                 setFilterDataName( const QString &p_qsName );
     void                 setFilterDataType( const QString &p_qsType );
+    void                 setFilterDataSubType( const QString &p_qsSubType );
     void                 setFilterIsVisible( const bool p_bIsVisible );
 
     void                 setFilterDataTypeList( const QString &p_qsTypeList );
+    void                 setFilterDataSubTypeList( const QString &p_qsSubTypeList );
 
     void                 startReport();
     void                 finishReport();
@@ -121,32 +127,38 @@ protected:
     bool                 m_bDateStopEnabled;
     bool                 m_bDataNameEnabled;
     bool                 m_bDataTypeEnabled;
+    bool                 m_bDataSubTypeEnabled;
     bool                 m_bIsVisibleEnabled;
 
     QString              m_qsLabelDateStart;
     QString              m_qsLabelDateStop;
     QString              m_qsLabelDataName;
     QString              m_qsLabelDataType;
+    QString              m_qsLabelDataSubType;
     QString              m_qsLabelIsVisible;
 
     QDate                m_qdStartDate;
     QDate                m_qdStopDate;
     QString              m_qsName;
     QString              m_qsType;
+    QString              m_qsSubType;
     bool                 m_bIsVisible;
 
     QString              m_qsTypeList;
+    QString              m_qsSubTypeList;
 
     void                _setDateStartEnabled( bool bEnabled = false );
     void                _setDateStopEnabled( bool bEnabled = false );
     void                _setDataNameEnabled( bool bEnabled = false );
     void                _setDataTypeEnabled( bool bEnabled = false );
+    void                _setDataSubTypeEnabled( bool bEnabled = false );
     void                _setDataIsVisibleEnabled( bool bEnabled = false );
 
     void                _setDateStartLabelText( const QString &p_qsText );
     void                _setDateStopLabelText( const QString &p_qsText );
     void                _setDataNameLabelText( const QString &p_qsText );
     void                _setDataTypeLabelText( const QString &p_qsText );
+    void                _setDataSubTypeLabelText( const QString &p_qsText );
     void                _setDataIsVisibleText( const QString &p_qsText );
 
 private:

@@ -525,6 +525,16 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="lblFilterDataSubType">
+           <property name="text">
+            <string>Data subtypes :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbFilterDataSubTypes"/>
+         </item>
+         <item>
           <spacer name="spacerFilter3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>

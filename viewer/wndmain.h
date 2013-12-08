@@ -128,6 +128,7 @@ private slots:
     void on_dtFilterDateStop_dateChanged(const QDate &date);
     void on_ledFilterDataName_textEdited(const QString &arg1);
     void on_cmbFilterDataTypes_currentIndexChanged(int index);
+    void on_cmbFilterDataSubTypes_currentIndexChanged(int index);
     void on_pbRefresh_clicked();
     void on_chkFilterIsVisible_clicked();
     void on_pbPrint_clicked();

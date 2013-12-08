@@ -160,6 +160,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
 
     action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    action_PatientCardAssign->setIcon( QIcon("./resources/40x40_patientcard_assign.png") );
 
     action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
     action_ProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
@@ -232,6 +233,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceSettings->setEnabled( false );
 
     action_PatientCardSell->setEnabled( false );
+    action_PatientCardAssign->setEnabled( false );
 
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
@@ -976,6 +978,7 @@ void cWndMain::updateToolbar()
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
+            action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
             action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
         menuProduct->setEnabled( bIsUserLoggedIn );
             action_SellProduct->setEnabled( bIsUserLoggedIn );
@@ -1873,6 +1876,11 @@ void cWndMain::on_action_PatientCardSell_triggered()
             obDlgPatientCardSell.exec();
         }
     }
+}
+//====================================================================================
+void cWndMain::on_action_PatientCardAssign_triggered()
+{
+    slotAssignPartnerCard( "" );
 }
 //====================================================================================
 void cWndMain::processInputPatientCard( QString p_stBarcode )

@@ -909,6 +909,10 @@ void cWndMain::_setFiltersEnabled(bool p_bEnable)
     cmbFilterDataTypes->setEnabled( p_bEnable );
     cmbFilterDataTypes->setVisible( p_bEnable );
 
+    lblFilterDataSubType->setVisible( p_bEnable );
+    cmbFilterDataSubTypes->setEnabled( p_bEnable );
+    cmbFilterDataSubTypes->setVisible( p_bEnable );
+
     chkFilterIsVisible->setEnabled( p_bEnable );
     chkFilterIsVisible->setVisible( p_bEnable );
 
@@ -976,6 +980,30 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
             }
         }
         cmbFilterDataTypes->setCurrentIndex( nCurrentIndex );
+        spacerFilter3->changeSize( 20, 20 );
+    }
+
+    if( obReport->isDataSubTypeEnabled() )
+    {
+        lblFilterDataSubType->setVisible( true );
+        cmbFilterDataSubTypes->setEnabled( true );
+        cmbFilterDataSubTypes->setVisible( true );
+        lblFilterDataSubType->setText( obReport->labelDataSubTypeText() );
+
+        QStringList qslDataSubTypes    = obReport->filterSubTypeList().split('#');
+        int         nCurrentIndex   = 0;
+
+        cmbFilterDataSubTypes->clear();
+        for( int i=0; i<qslDataSubTypes.count(); i++ )
+        {
+            QStringList qslDataSubType = qslDataSubTypes.at(i).split('|');
+            cmbFilterDataSubTypes->addItem( qslDataSubType.at(1), qslDataSubType.at(0).toInt() );
+            if( obReport->filterSubType().compare( qslDataSubTypes.at(i) ) == 0 )
+            {
+                nCurrentIndex = i;
+            }
+        }
+        cmbFilterDataSubTypes->setCurrentIndex( nCurrentIndex );
         spacerFilter3->changeSize( 20, 20 );
     }
 
@@ -1059,6 +1087,23 @@ void cWndMain::on_cmbFilterDataTypes_currentIndexChanged(int index)
     QString qsDataType = QString( "%1|%2" ).arg( cmbFilterDataTypes->itemData(index).toInt() ).arg( cmbFilterDataTypes->itemText(index) );
 
     obReport->setFilterDataType( qsDataType );
+
+    if( chkAutoRefresh->isChecked() )
+        on_pbRefresh_clicked();
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_cmbFilterDataSubTypes_currentIndexChanged(int index)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::on_cmbFilterDataSubTypes_currentIndexChanged" );
+
+    if( m_bReportTabSwitching ) return;
+
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    QString qsDataSubType = QString( "%1|%2" ).arg( cmbFilterDataSubTypes->itemData(index).toInt() ).arg( cmbFilterDataSubTypes->itemText(index) );
+
+    obReport->setFilterDataSubType( qsDataSubType );
 
     if( chkAutoRefresh->isChecked() )
         on_pbRefresh_clicked();

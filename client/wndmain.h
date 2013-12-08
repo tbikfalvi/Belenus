@@ -126,6 +126,7 @@ private slots:
     void on_action_DeviceSkipStatus_triggered();
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
+    void on_action_PatientCardAssign_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
     void on_action_PayCash_triggered();
