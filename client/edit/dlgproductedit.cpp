@@ -16,7 +16,8 @@ cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
-    pbProductStorage->setIcon( QIcon("./resources/40x40_storage.png") );
+    pbProductStorageAdd->setIcon( QIcon("./resources/40x40_stock_add.png") );
+    pbProductStorageRemove->setIcon( QIcon("./resources/40x40_stock_remove.png") );
 
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
@@ -224,7 +225,7 @@ void cDlgProductEdit::on_pbProductRemoveAll_clicked()
     }
 }
 
-void cDlgProductEdit::on_pbProductStorage_clicked()
+void cDlgProductEdit::on_pbProductStorageAdd_clicked()
 {
     if( m_poProduct->id() == 0 )
     {
@@ -239,7 +240,7 @@ void cDlgProductEdit::on_pbProductStorage_clicked()
             m_bIsOnlySave = true;
             on_pbSave_clicked();
             m_bIsOnlySave = false;
-            on_pbProductStorage_clicked();
+            on_pbProductStorageAdd_clicked();
             return;
         }
         else
@@ -249,6 +250,38 @@ void cDlgProductEdit::on_pbProductStorage_clicked()
     }
 
     dlgProductStorage   *obDlgProductStorage = new dlgProductStorage( this, m_poProduct );
+
+    if( obDlgProductStorage->exec() == QDialog::Accepted )
+    {
+        ledProductCount->setText( QString::number(m_poProduct->productCount()) );
+    }
+}
+
+void cDlgProductEdit::on_pbProductStorageRemove_clicked()
+{
+    if( m_poProduct->id() == 0 )
+    {
+        if( QMessageBox::warning( this,
+                                  tr("Attention"),
+                                  tr("This product has not been saved yet.\n"
+                                     "Changing the product storage data is not allowed\n"
+                                     "for newly created products."
+                                     "Do you want to save the product data now?"),
+                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
+        {
+            m_bIsOnlySave = true;
+            on_pbSave_clicked();
+            m_bIsOnlySave = false;
+            on_pbProductStorageRemove_clicked();
+            return;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    dlgProductStorage   *obDlgProductStorage = new dlgProductStorage( this, m_poProduct, false );
 
     if( obDlgProductStorage->exec() == QDialog::Accepted )
     {

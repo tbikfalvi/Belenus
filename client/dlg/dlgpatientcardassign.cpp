@@ -72,6 +72,12 @@ void cDlgPatientCardAssign::on_pbMainVerify_clicked()
                                   "The length of the barcode should be %1." ).arg(g_poPrefs->getBarcodeLength()) );
         return;
     }
+    else if( ledMainBarcode->text().compare( ledAssignBarcode->text() ) == 0 )
+    {
+        QMessageBox::warning( this, tr( "Error" ),
+                              tr( "Barcode of the Main card and Assigned card can not be the same." ) );
+        return;
+    }
 
     cDBPatientCard  obDBPatientCard;
 
@@ -149,6 +155,12 @@ void cDlgPatientCardAssign::on_pbAssignVerify_clicked()
         QMessageBox::warning( this, tr( "Error" ),
                               tr( "Invalid barcode length.\n"
                                   "The length of the barcode should be %1." ).arg(g_poPrefs->getBarcodeLength()) );
+        return;
+    }
+    else if( ledAssignBarcode->text().compare( ledMainBarcode->text() ) == 0 )
+    {
+        QMessageBox::warning( this, tr( "Error" ),
+                              tr( "Barcode of the Main card and Assigned card can not be the same." ) );
         return;
     }
 

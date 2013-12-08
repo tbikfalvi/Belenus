@@ -5,6 +5,7 @@
 #include "dlgproducttype.h"
 #include "dlgproductactiontype.h"
 #include "../edit/dlgproductedit.h"
+#include "../dlg/dlgproductstorage.h"
 
 cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
@@ -24,12 +25,20 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     horizontalLayout->addWidget( cmbFilterProductType );
     lblFilterName = new QLabel( this );
     lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
-    lblFilterName->setText( tr("Product name: ") );
+    lblFilterName->setText( tr("Name: ") );
     horizontalLayout->addWidget( lblFilterName );
     ledFilterName = new QLineEdit( this );
     ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
     ledFilterName->setMaximumWidth( 150 );
     horizontalLayout->addWidget( ledFilterName );
+    lblFilterBarcode = new QLabel( this );
+    lblFilterBarcode->setObjectName( QString::fromUtf8( "lblFilterBarcode" ) );
+    lblFilterBarcode->setText( tr("Barcode: ") );
+    horizontalLayout->addWidget( lblFilterBarcode );
+    ledFilterBarcode = new QLineEdit( this );
+    ledFilterBarcode->setObjectName( QString::fromUtf8( "ledFilterBarcode" ) );
+    ledFilterBarcode->setMaximumWidth( 150 );
+    horizontalLayout->addWidget( ledFilterBarcode );
     lblFilterMinCount = new QLabel( this );
     lblFilterMinCount->setObjectName( QString::fromUtf8( "lblFilterMinCount" ) );
     lblFilterMinCount->setText( tr("Product count minimum: ") );
@@ -37,7 +46,6 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     ledFilterMinCount = new QLineEdit( this );
     ledFilterMinCount->setObjectName( QString::fromUtf8( "ledFilterMinCount" ) );
     ledFilterMinCount->setMaximumWidth( 25 );
-    ledFilterMinCount->setInputMask( "000" );
     horizontalLayout->addWidget( ledFilterMinCount );
     lblFilterMaxCount = new QLabel( this );
     lblFilterMaxCount->setObjectName( QString::fromUtf8( "lblFilterMaxCount" ) );
@@ -46,7 +54,6 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     ledFilterMaxCount = new QLineEdit( this );
     ledFilterMaxCount->setObjectName( QString::fromUtf8( "ledFilterMaxCount" ) );
     ledFilterMaxCount->setMaximumWidth( 35 );
-    ledFilterMaxCount->setInputMask( "0000" );
     horizontalLayout->addWidget( ledFilterMaxCount );
 
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
@@ -68,14 +75,31 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     pbProductType->setObjectName( QString::fromUtf8( "pbProductType" ) );
     pbProductType->setIconSize( QSize(20, 20) );
     pbProductType->setIcon( QIcon("./resources/40x40_producttype.png") );
+    pbProductType->setAutoDefault( false );
     btbButtonsSide->addButton( pbProductType, QDialogButtonBox::ActionRole );
     connect( pbProductType, SIGNAL(clicked()), this, SLOT(_slotProductTypes()) );
     pbProductActionType = new QPushButton( tr( "Product action types" ), this );
     pbProductActionType->setObjectName( QString::fromUtf8( "pbProductActionType" ) );
     pbProductActionType->setIconSize( QSize(20, 20) );
     pbProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
+    pbProductActionType->setAutoDefault( false );
     btbButtonsSide->addButton( pbProductActionType, QDialogButtonBox::ActionRole );
     connect( pbProductActionType, SIGNAL(clicked()), this, SLOT(_slotProductActionTypes()) );
+
+    pbStockIncrease = new QPushButton( tr( "Increase stock" ), this );
+    pbStockIncrease->setObjectName( QString::fromUtf8( "pbStockIncrease" ) );
+    pbStockIncrease->setIconSize( QSize(20, 20) );
+    pbStockIncrease->setIcon( QIcon("./resources/40x40_stock_add.png") );
+    pbStockIncrease->setAutoDefault( false );
+    btbButtons->addButton( pbStockIncrease, QDialogButtonBox::ActionRole );
+    connect( pbStockIncrease, SIGNAL(clicked()), this, SLOT(_slotStockIncrease()) );
+    pbStockDecrease = new QPushButton( tr( "Decrease stock" ), this );
+    pbStockDecrease->setObjectName( QString::fromUtf8( "pbStockDecrease" ) );
+    pbStockDecrease->setIconSize( QSize(20, 20) );
+    pbStockDecrease->setIcon( QIcon("./resources/40x40_stock_remove.png") );
+    pbStockDecrease->setAutoDefault( false );
+    btbButtons->addButton( pbStockDecrease, QDialogButtonBox::ActionRole );
+    connect( pbStockDecrease, SIGNAL(clicked()), this, SLOT(_slotStockDecrease()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListProducts", QPoint(520,300) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -84,6 +108,7 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     connect( cmbFilterProductType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledFilterName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledFilterBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledFilterMinCount, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledFilterMaxCount, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 }
@@ -171,6 +196,13 @@ void cDlgProduct::refreshTable()
         m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
     }
 
+    stTemp = ledFilterBarcode->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
     stTemp = ledFilterMinCount->text();
     if( stTemp != "" )
     {
@@ -197,6 +229,8 @@ void cDlgProduct::enableButtons()
     m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     m_poBtnDelete->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    pbStockIncrease->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    pbStockDecrease->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 }
 
 void cDlgProduct::newClicked( bool )
@@ -294,4 +328,33 @@ void cDlgProduct::_slotProductActionTypes()
     obDlgProductActionType.exec();
 }
 
+void cDlgProduct::_slotStockIncrease()
+{
+    cDBProduct m_poProduct;
 
+    m_poProduct.load( m_uiSelectedId );
+
+    dlgProductStorage   *obDlgProductStorage = new dlgProductStorage( this, &m_poProduct );
+
+    if( obDlgProductStorage->exec() == QDialog::Accepted )
+    {
+        refreshTable();
+    }
+}
+
+void cDlgProduct::_slotStockDecrease()
+{
+    cDBProduct m_poProduct;
+
+    m_poProduct.load( m_uiSelectedId );
+
+    if( m_poProduct.productCount() < 1 )
+        return;
+
+    dlgProductStorage   *obDlgProductStorage = new dlgProductStorage( this, &m_poProduct, false );
+
+    if( obDlgProductStorage->exec() == QDialog::Accepted )
+    {
+        refreshTable();
+    }
+}

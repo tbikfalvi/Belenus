@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>601</width>
-    <height>429</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_4">
+  <layout class="QHBoxLayout" name="horizontalLayout_5">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
       <widget class="QGroupBox" name="gbIdentification">
        <property name="title">
-        <string>Identification </string>
+        <string> Product </string>
        </property>
        <layout class="QFormLayout" name="formLayout">
         <item row="0" column="0">
@@ -49,128 +49,7 @@
           </property>
          </widget>
         </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="gbInformation">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="title">
-        <string> Information </string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="lblProductCount">
-            <property name="text">
-             <string>Product count :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ledProductCount">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="gbPrice">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="title">
-        <string> Price </string>
-       </property>
-       <layout class="QFormLayout" name="formLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="lblPriceBuy">
-          <property name="text">
-           <string>Purchase price :</string>
-          </property>
-          <property name="textFormat">
-           <enum>Qt::AutoText</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QLineEdit" name="ledPriceBuy">
-            <property name="maximumSize">
-             <size>
-              <width>100</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblCurrencyBuy">
-            <property name="text">
-             <string>$</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblVatpercentBuy">
-            <property name="text">
-             <string>VAT percent :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="ledVatpercentBuy">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="lblPriceSell">
           <property name="text">
            <string>Sell price :</string>
@@ -180,7 +59,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLineEdit" name="ledPriceSell">
@@ -229,8 +108,8 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>48</width>
-              <height>17</height>
+              <width>28</width>
+              <height>14</height>
              </size>
             </property>
            </spacer>
@@ -244,6 +123,91 @@
           </item>
          </layout>
         </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblProductCount">
+          <property name="text">
+           <string>Product count :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLineEdit" name="ledProductCount">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>30</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbProductStorageAdd">
+            <property name="text">
+             <string> Increase stock </string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbProductStorageRemove">
+            <property name="text">
+             <string> Decrease stock </string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
      </item>
@@ -252,9 +216,9 @@
        <property name="title">
         <string> Product Types </string>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QLabel" name="lblAssigned">
             <property name="text">
@@ -287,10 +251,13 @@
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>18</height>
+              <height>17</height>
              </size>
             </property>
            </spacer>
@@ -350,7 +317,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLabel" name="lblProductsIndependent">
             <property name="text">
@@ -380,16 +347,70 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkIndependent">
-       <property name="text">
-        <string>Independent from the local studio.</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QCheckBox" name="checkIndependent">
+         <property name="text">
+          <string>Independent from the local studio.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblPriceBuy">
+         <property name="text">
+          <string>Purchase price :</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ledPriceBuy">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblCurrencyBuy">
+         <property name="text">
+          <string>$</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblVatpercentBuy">
+         <property name="text">
+          <string>VAT percent :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ledVatpercentBuy">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_4">
      <item>
       <widget class="QPushButton" name="pbSave">
        <property name="text">
@@ -400,6 +421,9 @@
          <width>20</width>
          <height>20</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -414,35 +438,8 @@
          <height>20</height>
         </size>
        </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="verticalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>15</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbProductStorage">
-       <property name="text">
-        <string>Product storage
-action</string>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>20</width>
-         <height>20</height>
-        </size>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -466,21 +463,22 @@ action</string>
  <tabstops>
   <tabstop>ledName</tabstop>
   <tabstop>ledBarcode</tabstop>
-  <tabstop>ledProductCount</tabstop>
-  <tabstop>ledPriceBuy</tabstop>
-  <tabstop>ledVatpercentBuy</tabstop>
   <tabstop>ledPriceSell</tabstop>
   <tabstop>ledVatpercentSell</tabstop>
+  <tabstop>ledProductCount</tabstop>
+  <tabstop>pbProductStorageAdd</tabstop>
+  <tabstop>pbProductStorageRemove</tabstop>
   <tabstop>listProductsAssigned</tabstop>
   <tabstop>pbProductAdd</tabstop>
   <tabstop>pbProductAddAll</tabstop>
   <tabstop>pbProductRemove</tabstop>
   <tabstop>pbProductRemoveAll</tabstop>
   <tabstop>listProductsIndependent</tabstop>
+  <tabstop>checkIndependent</tabstop>
+  <tabstop>ledPriceBuy</tabstop>
+  <tabstop>ledVatpercentBuy</tabstop>
   <tabstop>pbSave</tabstop>
   <tabstop>pbCancel</tabstop>
-  <tabstop>pbProductStorage</tabstop>
-  <tabstop>checkIndependent</tabstop>
  </tabstops>
  <resources/>
  <connections/>

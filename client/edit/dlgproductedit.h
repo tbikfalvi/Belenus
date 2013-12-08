@@ -19,7 +19,8 @@ protected:
 private slots:
     void slot_PriceCalculate();
     void slotRefreshWarningColors();
-    void on_pbProductStorage_clicked();
+    void on_pbProductStorageAdd_clicked();
+    void on_pbProductStorageRemove_clicked();
     void on_pbProductRemoveAll_clicked();
     void on_pbProductRemove_clicked();
     void on_pbProductAddAll_clicked();

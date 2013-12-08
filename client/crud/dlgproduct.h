@@ -21,12 +21,16 @@ public:
     QSpacerItem *horizontalSpacer1;
     QLabel      *lblFilterName;
     QLineEdit   *ledFilterName;
+    QLabel      *lblFilterBarcode;
+    QLineEdit   *ledFilterBarcode;
     QLabel      *lblFilterMinCount;
     QLineEdit   *ledFilterMinCount;
     QLabel      *lblFilterMaxCount;
     QLineEdit   *ledFilterMaxCount;
     QPushButton *pbProductType;
     QPushButton *pbProductActionType;
+    QPushButton *pbStockIncrease;
+    QPushButton *pbStockDecrease;
 
 protected:
     virtual void setupTableView();
@@ -42,6 +46,8 @@ protected slots:
     virtual void editClicked( bool );
     virtual void _slotProductTypes();
     virtual void _slotProductActionTypes();
+    virtual void _slotStockIncrease();
+    virtual void _slotStockDecrease();
 };
 
 #endif // DLGPRODUCT_H

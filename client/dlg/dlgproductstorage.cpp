@@ -10,11 +10,12 @@
 #include "../db/dbledger.h"
 #include "../db/dbshoppingcart.h"
 
-dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct ) : QDialog(parent)
+dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct, bool p_bStockIncrease ) : QDialog(parent)
 {
     setupUi( this );
 
     m_bInit = true;
+    m_bStockIncrease = p_bStockIncrease;
 
     setWindowTitle( tr( "Product storage" ) );
     setWindowIcon( QIcon("./resources/40x40_storage.png") );
@@ -48,6 +49,7 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct )
     ledPrice->setText( "0" );
     ledVatPercent->setText( "0" );
     ledProductCount->setText( "0" );
+    ledProductCount->selectAll();
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductStorage", QPoint(400,310) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -185,7 +187,18 @@ void dlgProductStorage::_fillProductActionList()
     cmbProductAction->clear();
     m_qslActionTooltip.clear();
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productActionType WHERE active=1" ) );
+    QString qsCondition = "";
+
+    if( m_bStockIncrease )
+    {
+        qsCondition = "increaseProductCount=1 AND ";
+    }
+    else
+    {
+        qsCondition = "decreaseProductCount=1 AND ";
+    }
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM productActionType WHERE %1 active=1" ).arg( qsCondition ) );
     while( poQuery->next() )
     {
         cmbProductAction->addItem( poQuery->value(2).toString(), poQuery->value(0).toInt() );
@@ -239,6 +252,6 @@ void dlgProductStorage::slot_refreshPrice()
 {
     cCurrency currPrice( ledPrice->text(), cCurrency::CURR_GROSS, ledVatPercent->text().toInt() );
 
-    lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledVatPercent->text()) );
+    lblPriceFull->setText( tr("(%1+%2\%VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledVatPercent->text()) );
 }
 

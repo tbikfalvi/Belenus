@@ -13,13 +13,14 @@ class dlgProductStorage : public QDialog, protected Ui::dlgProductStorage
     Q_OBJECT
 
 public:
-    explicit dlgProductStorage( QWidget *parent = 0, cDBProduct *p_poProduct = NULL );
+    explicit dlgProductStorage( QWidget *parent = 0, cDBProduct *p_poProduct = NULL, bool p_bStockIncrease = true );
     ~dlgProductStorage();
 
 private:
     bool             m_bInit;
     QStringList      m_qslActionTooltip;
     cDBProduct      *m_poProduct;
+    bool             m_bStockIncrease;
 
     void            _fillProductActionList();
 
