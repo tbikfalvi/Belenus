@@ -34,7 +34,7 @@ private:
                                               unsigned int p_uiDeviceUsagesTotal,
                                               int p_nExpenses,
                                               int p_nCassaTotal );
-    QString         _countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
+    QString         _countsumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId, unsigned int *p_uiPricePCSell );
     int             _sumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );
     int             _sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId );

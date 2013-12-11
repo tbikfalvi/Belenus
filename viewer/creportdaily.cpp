@@ -289,16 +289,17 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
 
         for( int i=0; i<m_qslCassaIds.count(); i++ )
         {
-            QString         qsCountPCSell = _countPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
-            unsigned int    uiPricePCSell = _sumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
-            QString         qsPricePCSell = "";
+            unsigned int uiPricePCSell = 0;
+            QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), &uiPricePCSell );
+//            unsigned int    uiPricePCSell = _sumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
+//            QString         qsPricePCSell = "";
 
             if( uiPricePCSell > 0 )
             {
                 cCurrency   obPricePCSell( uiPricePCSell );
 
-                qsPricePCSell = obPricePCSell.currencyFullStringShort();
-                qslCells << QString( "%1 / %2" ).arg( qsCountPCSell ).arg( qsPricePCSell );
+//                qsPricePCSell = obPricePCSell.currencyFullStringShort();
+                qslCells << QString( "%1 / %2" ).arg( qsCountPCSell ).arg( obPricePCSell.currencyFullStringShort() );
             }
             else
             {
@@ -831,21 +832,22 @@ void cReportDaily::_reportPartIncomeSummary( unsigned int p_uiTotalPrice, unsign
     finishSection();
 }
 //------------------------------------------------------------------------------------
-QString cReportDaily::_countPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId )
+QString cReportDaily::_countsumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId, unsigned int *p_uiPricePCSell )
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
     QSqlQuery      *poQueryResult;
     QString         qsRet = "";
+    QString         qsPCCondition = QString( "(ledgerTypeId=%1 OR ledgerTypeId=%2 OR ledgerTypeId=%3 OR ledgerTypeId=%4)" ).arg(LT_PC_SELL).arg(LT_PC_REFILL).arg(LT_PC_LOST_REPLACE).arg(LT_PC_ASSIGN_PARTNER);
 
-    qsQuery = QString("SELECT COUNT(totalPrice) "
+    qsQuery = QString("SELECT COUNT(totalPrice), SUM(totalPrice) "
                       "FROM cassahistory, ledger, patientCardTypes WHERE "
                       "cassahistory.ledgerId=ledger.ledgerId AND "
                       "ledger.patientCardTypeId=patientCardTypes.patientCardTypeId AND "
                       "cassahistory.cassaId=%1 AND "
-                      "ledgerTypeId=%2 AND "
+                      "%2 AND "
                       "ledger.patientCardTypeId=%3 AND "
-                      "ledger.active=1 " ).arg(p_qsCassaId).arg(LT_PC_SELL).arg(p_uiPatientCardTypeId);
+                      "ledger.active=1 " ).arg(p_qsCassaId).arg(qsPCCondition).arg(p_uiPatientCardTypeId);
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     if( poQueryResult->size() > 0 )
@@ -854,6 +856,7 @@ QString cReportDaily::_countPatientCardTypeSell( QString p_qsCassaId, unsigned i
         if( poQueryResult->value(0).toInt() > 0 )
         {
             qsRet = QString::number( poQueryResult->value(0).toInt() );
+            *p_uiPricePCSell = poQueryResult->value(1).toUInt();
         }
     }
 

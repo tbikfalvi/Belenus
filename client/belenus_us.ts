@@ -2932,73 +2932,73 @@ Name of the file is: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="95"/>
+        <location filename="crud/dlgproduct.cpp" line="96"/>
         <source>Decrease stock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="129"/>
+        <location filename="crud/dlgproduct.cpp" line="131"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="130"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgproduct.cpp" line="131"/>
-        <location filename="crud/dlgproduct.cpp" line="153"/>
-        <source>Name</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="crud/dlgproduct.cpp" line="132"/>
-        <location filename="crud/dlgproduct.cpp" line="154"/>
-        <source>Barcode</source>
+        <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="133"/>
         <location filename="crud/dlgproduct.cpp" line="155"/>
-        <source>Price</source>
-        <oldsource>Net price</oldsource>
+        <source>Name</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="134"/>
         <location filename="crud/dlgproduct.cpp" line="156"/>
-        <source>VAT percent</source>
+        <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="135"/>
         <location filename="crud/dlgproduct.cpp" line="157"/>
-        <source>Product count</source>
+        <source>Price</source>
+        <oldsource>Net price</oldsource>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="136"/>
-        <source>Active</source>
+        <location filename="crud/dlgproduct.cpp" line="158"/>
+        <source>VAT percent</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="137"/>
+        <location filename="crud/dlgproduct.cpp" line="159"/>
+        <source>Product count</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="138"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="139"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="240"/>
+        <location filename="crud/dlgproduct.cpp" line="242"/>
         <source>New Product</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="280"/>
+        <location filename="crud/dlgproduct.cpp" line="282"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="283"/>
+        <location filename="crud/dlgproduct.cpp" line="285"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -3006,17 +3006,17 @@ Deleting this product will not delete the product types assigned.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="288"/>
+        <location filename="crud/dlgproduct.cpp" line="290"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="296"/>
+        <location filename="crud/dlgproduct.cpp" line="298"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="297"/>
+        <location filename="crud/dlgproduct.cpp" line="299"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -7513,7 +7513,7 @@ is different :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="245"/>
+        <location filename="dlgproductstorage.ui" line="248"/>
         <source>Related cassa :</source>
         <translation></translation>
     </message>
@@ -7538,28 +7538,28 @@ is different :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="161"/>
+        <location filename="dlgproductstorage.ui" line="164"/>
         <source>Price :</source>
         <oldsource>Net price :</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="181"/>
+        <location filename="dlgproductstorage.ui" line="184"/>
         <source>$</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="188"/>
+        <location filename="dlgproductstorage.ui" line="191"/>
         <source>including :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="214"/>
+        <location filename="dlgproductstorage.ui" line="217"/>
         <source>VAT (%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgproductstorage.ui" line="221"/>
+        <location filename="dlgproductstorage.ui" line="224"/>
         <source>(net+vat)</source>
         <oldsource>(net + vat )</oldsource>
         <translation></translation>
