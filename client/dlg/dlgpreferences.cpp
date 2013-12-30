@@ -58,6 +58,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
 
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\" " ) );
+    poQuery->first();
+    ledAboutLink->setText( poQuery->value(0).toString() );
+    ledAboutLink->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
     ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
     spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
     ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
@@ -221,6 +226,11 @@ void cDlgPreferences::accept()
     g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
 
     g_poPrefs->save();
+
+    if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"ABOUT_INFO_LINK\" " ).arg( ledAboutLink->text() ) );
+    }
 
     QDialog::accept();
 }

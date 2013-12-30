@@ -100,7 +100,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     setupUi( this );
 
     m_qsStatusText                  = "";
-    m_bKeyPressed                   = false;
     m_bCtrlPressed                  = false;
     m_bSerialRegistration           = false;
     m_inRegistrationTimeout         = 0;
@@ -696,6 +695,9 @@ void cWndMain::logoutUser()
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
+    if( !g_obUser.isLoggedIn() )
+        return;
+
     cTracer obTrace( "cWndMain::keyPressEvent" );
 
     if( p_poEvent->key() == Qt::Key_Control )
@@ -704,12 +706,11 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         m_lblStatusLeft.setText( tr("Q -> Exit application | F -> pay device usage | S -> start device | N -> skip status | T -> device cleared | K -> open shopping kart") );
     }
 
-    if( m_bCtrlPressed && !m_bKeyPressed )
+    if( m_bCtrlPressed )
     {
         if( p_poEvent->key() == Qt::Key_Q )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + Q" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             close();
@@ -717,7 +718,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_S && action_DeviceStart->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + S" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceStart_triggered();
@@ -725,7 +725,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + T" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceClear_triggered();
@@ -733,7 +732,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_PayCash_triggered();
@@ -741,7 +739,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + K" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_ShoppingCart_triggered();
@@ -749,7 +746,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + N" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_DeviceSkipStatus_triggered();
@@ -757,18 +753,32 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_F12 )
         {
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F12" << EOM;
-            m_bKeyPressed = true;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
             on_action_TestDlgStarted();
         }
     }
-    else if( !m_bKeyPressed )
+
+    QMainWindow::keyPressEvent( p_poEvent );
+}
+//====================================================================================
+void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
+{
+    if( !g_obUser.isLoggedIn() )
+        return;
+
+    cTracer obTrace( "cWndMain::keyReleaseEvent" );
+
+    if( p_poEvent->key() == Qt::Key_Control )
+    {
+        m_bCtrlPressed = false;
+        m_lblStatusLeft.setText( m_qsStatusText );
+    }
+    else
     {
         if( p_poEvent->key() == Qt::Key_Enter || p_poEvent->key() == Qt::Key_Return )
         {
             g_obLogger(cSeverity::INFO) << "User pressed ENTER" << EOM;
-            m_bKeyPressed = true;
             switch( m_nEnterAction )
             {
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
@@ -795,7 +805,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( ((p_poEvent->key() >= Qt::Key_0 && p_poEvent->key() <= Qt::Key_9) ||
                   (p_poEvent->key() >= Qt::Key_A && p_poEvent->key() <= Qt::Key_Z)) )
         {
-            m_bKeyPressed = true;
             m_lblStatusLeft.setText( m_qsStatusText );
 
             cDlgInputStart  obDlgInputStart( this );
@@ -821,32 +830,15 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         }
         else if( p_poEvent->key() == Qt::Key_Escape && mdiPanels->isStatusCanBeReseted() )
         {
-            m_bKeyPressed = true;
             g_obLogger(cSeverity::INFO) << "User pressed ESC" << EOM;
             m_lblStatusLeft.setText( m_qsStatusText );
             mdiPanels->clear();
         }
-        else if( p_poEvent->key() == Qt::Key_Space )
+/*        else if( p_poEvent->key() == Qt::Key_Space )
         {
             g_obLogger(cSeverity::INFO) << "User pressed SPACE" << EOM;
-            m_bKeyPressed = true;
             on_action_UseDevice_triggered();
-        }
-    }
-
-    QMainWindow::keyPressEvent( p_poEvent );
-}
-//====================================================================================
-void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
-{
-    cTracer obTrace( "cWndMain::keyReleaseEvent" );
-
-    m_bKeyPressed = false;
-
-    if( p_poEvent->key() == Qt::Key_Control )
-    {
-        m_bCtrlPressed = false;
-        m_lblStatusLeft.setText( m_qsStatusText );
+        }*/
     }
 
     QMainWindow::keyReleaseEvent( p_poEvent );
@@ -974,7 +966,7 @@ void cWndMain::updateToolbar()
             action_UseDeviceLater->setEnabled( bIsUserLoggedIn );
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
-            action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
+            action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup( cAccessGroup::ADMIN ) && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
@@ -1756,7 +1748,7 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
 
     if( QMessageBox::question( this, tr("Question"),
                                tr("Do you want to jump to the next status of the device?"),
-                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
+                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
     {
         mdiPanels->next();
     }

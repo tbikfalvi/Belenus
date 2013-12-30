@@ -186,7 +186,7 @@ bool cFrmPanel::isStatusCanBeSkipped()
 
     if( m_obStatuses.at(m_uiStatus)->activateCommand() == 3 ||
         m_obStatuses.at(m_uiStatus)->activateCommand() == 0 ||
-        (m_obStatuses.at(m_uiStatus)->activateCommand() == 4 && !g_obUser.isInGroup( cAccessGroup::ADMIN )) )
+        /*(m_obStatuses.at(m_uiStatus)->activateCommand() == 4 && */!g_obUser.isInGroup( cAccessGroup::ADMIN )/*)*/ )
     {
         bRet = false;
     }
