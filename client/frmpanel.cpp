@@ -532,6 +532,7 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
         }
 
         prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
+        g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' " << EOM;
         prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
 
         delete poQuery;
@@ -577,6 +578,7 @@ void cFrmPanel::reload()
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
             prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
+            g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' " << EOM;
             prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
         }
         delete poQuery;
@@ -835,6 +837,7 @@ void cFrmPanel::closeAttendance()
     unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
 
     prgUsageMonitor->setValue( uiWorkTime/3600 );
+    g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' " << EOM;
 
     QString  qsQuery;
 

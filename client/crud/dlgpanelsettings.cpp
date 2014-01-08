@@ -118,10 +118,8 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         unsigned int minute     = (obDBPanel.workTime()-(hour*3600))/60;
         unsigned int second     = (obDBPanel.workTime()-(hour*3600))%60;
 
-        QTime   workTime = QTime( hour, minute, second, 0 );
-
         ledTitle->setText( obDBPanel.title() );
-        ledWorkTime->setText( workTime.toString("hh:mm:ss") );
+        ledWorkTime->setText( QString("%1:%2:%3").arg(hour).arg(minute).arg(second) );
         ledMaxWorkTime->setText( QString::number(obDBPanel.maxWorkTime()) );
 
         QSqlQuery *poQueryType;
