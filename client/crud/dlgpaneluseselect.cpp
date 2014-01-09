@@ -32,8 +32,12 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
     cmbPanelType->setEnabled( false );
     cmbPanelType->setVisible(false);
     lblWorkTime->setVisible(false);
-    ledWorkTime->setEnabled( false );
-    ledWorkTime->setVisible(false);
+    ledWorkTimeHour->setEnabled( false );
+    ledWorkTimeMin->setEnabled( false );
+    ledWorkTimeSec->setEnabled( false );
+    ledWorkTimeHour->setVisible(false);
+    ledWorkTimeMin->setVisible(false);
+    ledWorkTimeSec->setVisible(false);
     lblMaxWorkTime->setEnabled(false);
     lblMaxWorkTime->setVisible(false);
     ledMaxWorkTime->setEnabled(false);

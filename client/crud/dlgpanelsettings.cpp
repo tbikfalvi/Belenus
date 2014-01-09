@@ -47,12 +47,29 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     lblWorkTime->setText( tr("Work time (hh:mm:ss): ") );
     horizontalLayout2->addWidget( lblWorkTime );
 
-    ledWorkTime = new QLineEdit( this );
-    ledWorkTime->setObjectName( QString::fromUtf8( "ledWorkTime" ) );
-    ledWorkTime->setMinimumWidth( 70 );
-    ledWorkTime->setMaximumWidth( 70 );
-    ledWorkTime->setEnabled( false );
-    horizontalLayout2->addWidget( ledWorkTime );
+    ledWorkTimeHour = new QLineEdit( this );
+    ledWorkTimeHour->setObjectName( QString::fromUtf8( "ledWorkTimeHour" ) );
+    ledWorkTimeHour->setMinimumWidth( 35 );
+    ledWorkTimeHour->setMaximumWidth( 35 );
+    ledWorkTimeHour->setAlignment( Qt::AlignRight );
+    ledWorkTimeHour->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout2->addWidget( ledWorkTimeHour );
+
+    ledWorkTimeMin = new QLineEdit( this );
+    ledWorkTimeMin->setObjectName( QString::fromUtf8( "ledWorkTimeMin" ) );
+    ledWorkTimeMin->setMinimumWidth( 20 );
+    ledWorkTimeMin->setMaximumWidth( 20 );
+    ledWorkTimeMin->setAlignment( Qt::AlignCenter );
+    ledWorkTimeMin->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout2->addWidget( ledWorkTimeMin );
+
+    ledWorkTimeSec = new QLineEdit( this );
+    ledWorkTimeSec->setObjectName( QString::fromUtf8( "ledWorkTimeSec" ) );
+    ledWorkTimeSec->setMinimumWidth( 20 );
+    ledWorkTimeSec->setMaximumWidth( 20 );
+    ledWorkTimeSec->setAlignment( Qt::AlignCenter );
+    ledWorkTimeSec->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout2->addWidget( ledWorkTimeSec );
 
     pbWTReset = new QPushButton( this );
     pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
@@ -119,7 +136,9 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         unsigned int second     = (obDBPanel.workTime()-(hour*3600))%60;
 
         ledTitle->setText( obDBPanel.title() );
-        ledWorkTime->setText( QString("%1:%2:%3").arg(hour).arg(minute).arg(second) );
+        ledWorkTimeHour->setText( QString::number(hour) );
+        ledWorkTimeMin->setText( QString::number(minute) );
+        ledWorkTimeSec->setText( QString::number(second) );
         ledMaxWorkTime->setText( QString::number(obDBPanel.maxWorkTime()) );
 
         QSqlQuery *poQueryType;
@@ -300,15 +319,21 @@ void cDlgPanelSettings::saveClicked( bool )
 
     if( boCanBeSaved )
     {
-        QTime   workTime = QTime::fromString(ledWorkTime->text(),"hh:mm:ss");
-
         cDBPanel    obDBPanel;
 
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
-        obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
-        obDBPanel.setWorkTime( workTime.hour()*3600 + workTime.minute()*60 + workTime.second() );
-        obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+
+        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        {
+            int hour    = ledWorkTimeHour->text().toInt();
+            int minute  = ledWorkTimeMin->text().toInt();
+            int second  = ledWorkTimeSec->text().toInt();
+
+            obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+            obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+            obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+        }
         obDBPanel.save();
 
         QDialog::accept();
@@ -317,7 +342,9 @@ void cDlgPanelSettings::saveClicked( bool )
 
 void cDlgPanelSettings::on_pbWTReset_clicked( bool )
 {
-    ledWorkTime->setText( "00:00:00" );
+    ledWorkTimeHour->setText( "0" );
+    ledWorkTimeMin->setText( "0" );
+    ledWorkTimeSec->setText( "0" );
     m_bIsSettingChanged = true;
 }
 

@@ -531,9 +531,9 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             lblTitle->setText( tr("Panel Not Found in Database") );
         }
 
-        prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
-        g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' " << EOM;
         prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
+        prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
+        g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
 
         delete poQuery;
         poQuery = NULL;
@@ -577,9 +577,9 @@ void cFrmPanel::reload()
         {
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
-            prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
-            g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' " << EOM;
             prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
+            prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
+            g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
         }
         delete poQuery;
     }
@@ -837,7 +837,7 @@ void cFrmPanel::closeAttendance()
     unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
 
     prgUsageMonitor->setValue( uiWorkTime/3600 );
-    g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' " << EOM;
+    g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
 
     QString  qsQuery;
 

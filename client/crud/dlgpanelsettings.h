@@ -22,7 +22,9 @@ public:
     QComboBox       *cmbPanelType;
     QHBoxLayout     *horizontalLayout2;
     QLabel          *lblWorkTime;
-    QLineEdit       *ledWorkTime;
+    QLineEdit       *ledWorkTimeHour;
+    QLineEdit       *ledWorkTimeMin;
+    QLineEdit       *ledWorkTimeSec;
     QPushButton     *pbWTReset;
     QLabel          *lblMaxWorkTime;
     QLineEdit       *ledMaxWorkTime;
