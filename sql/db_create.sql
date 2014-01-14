@@ -320,12 +320,28 @@ CREATE TABLE `panelStatusSettings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- A kliens alkalmazasban mukodtetett panelcsoportokat tartalmazza.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `panelgroups` (
+  `panelgroupId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                    varchar(20)             NOT NULL,
+  `description`             text                    DEFAULT NULL,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`panelgroupId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- A kliens alkalmazasban mukodtetett panelokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panels` (
   `panelId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `panelTypeId`             int(10) unsigned        NOT NULL,
+  `panelgroupId`            int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
   `maxWorkTime`             int(10) unsigned        NOT NULL,
@@ -334,7 +350,8 @@ CREATE TABLE `panels` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`panelId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelGroupId`) REFERENCES `panelgroups` (`panelGroupId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------

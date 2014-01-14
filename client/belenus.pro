@@ -5,6 +5,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlglogin.ui \
     dlglogs.ui \
     dlgpaneltypeedit.ui \
+    dlgpanelgroupedit.ui \
     dlgpreferences.ui \
     dlgpwdconfirm.ui \
     dlguseredit.ui \
@@ -60,6 +61,7 @@ HEADERS = belenus.h \
     ../framework/network/packet.h \
     ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
+    crud/dlgpanelgroups.h \
     crud/dlgusers.h \
     crud/dlgreasontovisit.h \
     crud/dlgpanelstatuses.h \
@@ -86,6 +88,7 @@ HEADERS = belenus.h \
     db/dbpanelstatuses.h \
     db/dbuser.h \
     db/dbpaneltypes.h \
+    db/dbpanelgroups.h \
     db/dbpaneluses.h \
     db/dbcassa.h \
     db/dbdenomination.h \
@@ -125,6 +128,7 @@ HEADERS = belenus.h \
     dlg/dlgcassainout.h \
     dlg/dlgpatientcardassign.h \
     edit/dlgpaneltypeedit.h \
+    edit/dlgpanelgroupedit.h \
     edit/dlguseredit.h \
     edit/dlgreasontovisitedit.h \
     edit/dlgpanelstatusesedit.h \
@@ -183,6 +187,7 @@ SOURCES = main.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
+    crud/dlgpanelgroups.cpp \
     crud/dlgusers.cpp \
     crud/dlgreasontovisit.cpp \
     crud/dlgpanelstatuses.cpp \
@@ -209,6 +214,7 @@ SOURCES = main.cpp \
     db/dbpanelstatuses.cpp \
     db/dbuser.cpp \
     db/dbpaneltypes.cpp \
+    db/dbpanelgroups.cpp \
     db/dbpaneluses.cpp \
     db/dbcassa.cpp \
     db/dbdenomination.cpp \
@@ -248,6 +254,7 @@ SOURCES = main.cpp \
     dlg/dlgcassainout.cpp \
     dlg/dlgpatientcardassign.cpp \
     edit/dlgpaneltypeedit.cpp \
+    edit/dlgpanelgroupedit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgreasontovisitedit.cpp \
     edit/dlgpanelstatusesedit.cpp \
