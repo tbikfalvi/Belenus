@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>dlgPanelTypeEdit</class>
- <widget class="QDialog" name="dlgPanelTypeEdit">
+ <class>dlgPanelGroupEdit</class>
+ <widget class="QDialog" name="dlgPanelGroupEdit">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -45,7 +45,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>dlgPanelTypeEdit</receiver>
+   <receiver>dlgPanelGroupEdit</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -61,7 +61,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>dlgPanelTypeEdit</receiver>
+   <receiver>dlgPanelGroupEdit</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -2,8 +2,8 @@
 #define DLGPANELGROUPEDIT_H
 
 #include "belenus.h"
-#include "ui_dlgpaneltypeedit.h"
-#include "../db/dbpaneltypes.h"
+#include "ui_dlgpanelgroupedit.h"
+#include "../db/dbpanelgroups.h"
 
 class cDlgPanelGroupEdit : public QDialog, private Ui::dlgPanelGroupEdit
 {

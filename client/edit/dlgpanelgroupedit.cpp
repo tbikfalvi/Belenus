@@ -1,34 +1,34 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-#include "dlgpaneltypeedit.h"
+#include "dlgpanelgroupedit.h"
 #include "belenus.h"
 
-cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPanelTypes ) : QDialog( p_poParent )
+cDlgPanelGroupEdit::cDlgPanelGroupEdit( QWidget *p_poParent, cDBPanelGroups *p_poPanelGroups ) : QDialog( p_poParent )
 {
-    cTracer obTrace( "cDlgPanelTypeEdit::cDlgPanelTypeEdit" );
+    cTracer obTrace( "cDlgPanelGroupEdit::cDlgPanelGroupEdit" );
 
     setupUi( this );
 
     setWindowTitle( tr( "Panel type" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
-    m_poPanelTypes = p_poPanelTypes;
+    m_poPanelGroups = p_poPanelGroups;
 
-    if( m_poPanelTypes )
+    if( m_poPanelGroups )
     {
-        ledNameVal->setText( m_poPanelTypes->name() );
+        ledNameVal->setText( m_poPanelGroups->name() );
     }
 
-    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelType", QPoint(270,70) );
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPanelGroup", QPoint(270,70) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
-cDlgPanelTypeEdit::~cDlgPanelTypeEdit()
+cDlgPanelGroupEdit::~cDlgPanelGroupEdit()
 {
 }
 
-void cDlgPanelTypeEdit::accept()
+void cDlgPanelGroupEdit::accept()
 {
     bool  boCanBeSaved = true;
 
@@ -40,10 +40,10 @@ void cDlgPanelTypeEdit::accept()
 
     if( boCanBeSaved )
     {
-        m_poPanelTypes->setLicenceId( g_poPrefs->getLicenceId() );
-        m_poPanelTypes->setName( ledNameVal->text() );
-        m_poPanelTypes->setActive( true );
-        m_poPanelTypes->save();
+        m_poPanelGroups->setLicenceId( g_poPrefs->getLicenceId() );
+        m_poPanelGroups->setName( ledNameVal->text() );
+        m_poPanelGroups->setActive( true );
+        m_poPanelGroups->save();
         QDialog::accept();
     }
 }

@@ -41,6 +41,6 @@ CREATE TABLE `panelgroups` (
 ALTER TABLE  `panels` ADD  `panelgroupId` INT( 10 ) NOT NULL AFTER `panelTypeId`;
 
 ALTER TABLE `panels`
-  ADD CONSTRAINT `panels_ibfk_3` FOREIGN KEY (`panelgroupId`) REFERENCES `panelgroups` (`panelgroupId`) ON UPDATE CASCADE;
+  ADD FOREIGN KEY (`panelgroupId`) REFERENCES `panelgroups` (`panelgroupId`) ON UPDATE CASCADE;
 
 -- -----------------------------------------------------------------------------------
