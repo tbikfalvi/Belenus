@@ -28,6 +28,7 @@ cDBPanel::~cDBPanel()
 void cDBPanel::init( const unsigned int p_uiId,
                      const unsigned int p_uiLicenceId,
                      const unsigned int p_uiPanelTypeId,
+                     const unsigned int p_uiPanelGroupId,
                      const QString &p_qsTitle,
                      const unsigned int p_uiWorkTime,
                      const unsigned int p_uiMaxWorkTime,
@@ -38,6 +39,7 @@ void cDBPanel::init( const unsigned int p_uiId,
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
     m_uiPanelTypeId     = p_uiPanelTypeId;
+    m_uiPanelGroupId     = p_uiPanelGroupId;
     m_qsTitle           = p_qsTitle;
     m_uiWorkTime        = p_uiWorkTime;
     m_uiMaxWorkTime     = p_uiMaxWorkTime;
@@ -51,6 +53,7 @@ void cDBPanel::init( const QSqlRecord &p_obRecord ) throw()
     int inIdIdx             = p_obRecord.indexOf( "panelId" );
     int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
     int inPanelTypeIdIdx    = p_obRecord.indexOf( "panelTypeId" );
+    int inPanelGroupIdIdx   = p_obRecord.indexOf( "panelGroupId" );
     int inTitleIdx          = p_obRecord.indexOf( "title" );
     int inWorkTimeIdx       = p_obRecord.indexOf( "workTime" );
     int inMaxWorkTimeIdx    = p_obRecord.indexOf( "maxWorkTime" );
@@ -61,6 +64,7 @@ void cDBPanel::init( const QSqlRecord &p_obRecord ) throw()
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inPanelTypeIdIdx ).toUInt(),
+          p_obRecord.value( inPanelGroupIdIdx ).toUInt(),
           p_obRecord.value( inTitleIdx ).toString(),
           p_obRecord.value( inWorkTimeIdx ).toUInt(),
           p_obRecord.value( inMaxWorkTimeIdx ).toUInt(),
@@ -104,6 +108,7 @@ void cDBPanel::save() throw( cSevException )
     qsQuery += " panels SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "panelTypeId = \"%1\", " ).arg( m_uiPanelTypeId );
+    qsQuery += QString( "panelGroupId = \"%1\", " ).arg( m_uiPanelTypeId );
     qsQuery += QString( "title = \"%1\", " ).arg( m_qsTitle );
     qsQuery += QString( "workTime = \"%1\", " ).arg( m_uiWorkTime );
     qsQuery += QString( "maxWorkTime = \"%1\", " ).arg( m_uiMaxWorkTime );
@@ -177,6 +182,16 @@ unsigned int cDBPanel::panelTypeId() const throw()
 void cDBPanel::setPanelTypeId( const unsigned int p_uiPanelTypeId ) throw()
 {
     m_uiPanelTypeId = p_uiPanelTypeId;
+}
+
+unsigned int cDBPanel::panelGroupId() const throw()
+{
+    return m_uiPanelGroupId;
+}
+
+void cDBPanel::setPanelGroupId( const unsigned int p_uiPanelGroupId ) throw()
+{
+    m_uiPanelGroupId = p_uiPanelGroupId;
 }
 
 QString cDBPanel::title() const throw()

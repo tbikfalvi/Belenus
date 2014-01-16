@@ -94,7 +94,17 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledMaxWorkTime );
 
-    horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    lblGroup = new QLabel( this );
+    lblGroup->setObjectName( QString::fromUtf8( "lblGroup" ) );
+    lblGroup->setText( tr("Group: ") );
+    horizontalLayout1->addWidget( lblGroup );
+
+    cmbPanelGroup = new QComboBox( this );
+    cmbPanelGroup->setObjectName( QString::fromUtf8( "cmbPanelGroup" ) );
+    cmbPanelGroup->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    horizontalLayout1->addWidget( cmbPanelGroup );
+
+    horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
 
     horizontalLayout3 = new QHBoxLayout();
@@ -142,12 +152,21 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         ledMaxWorkTime->setText( QString::number(obDBPanel.maxWorkTime()) );
 
         QSqlQuery *poQueryType;
+
         poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE active=1" ) );
         while( poQueryType->next() )
         {
             cmbPanelType->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
             if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelTypeId() )
                 cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
+        }
+
+        poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelGroups WHERE active=1" ) );
+        while( poQueryType->next() )
+        {
+            cmbPanelGroup->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
+            if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelGroupId() )
+                cmbPanelGroup->setCurrentIndex( cmbPanelGroup->count()-1 );
         }
         if( poQueryType ) delete poQueryType;
     }
@@ -323,6 +342,11 @@ void cDlgPanelSettings::saveClicked( bool )
 
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
+
+        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        {
+            obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
+        }
 
         if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
         {

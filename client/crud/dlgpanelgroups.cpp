@@ -7,7 +7,7 @@
 cDlgPanelGroups::cDlgPanelGroups( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
 {
-    setWindowTitle( tr( "Panel Types List" ) );
+    setWindowTitle( tr( "Panel Groups List" ) );
     setWindowIcon( QIcon("./resources/40x40_device.png") );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelGroups", QPoint(520,300) );
@@ -59,11 +59,11 @@ void cDlgPanelGroups::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT panelTypeId, name, active, archive FROM panelTypes WHERE panelTypeId>0";
+        m_qsQuery = "SELECT panelGroupId, name, active, archive FROM panelGroups WHERE panelGroupId>0";
     }
     else
     {
-        m_qsQuery = "SELECT panelTypeId AS id, name FROM panelTypes WHERE panelTypeId>0";
+        m_qsQuery = "SELECT panelGroupId AS id, name FROM panelGroups WHERE panelGroupId>0";
     }
 
     cDlgCrud::refreshTable();
@@ -84,7 +84,7 @@ void cDlgPanelGroups::newClicked( bool )
     poPanelGroups->createNew();
 
     cDlgPanelGroupEdit  obDlgEdit( this, poPanelGroups );
-    obDlgEdit.setWindowTitle( tr( "New Panel Type" ) );
+    obDlgEdit.setWindowTitle( tr( "New Panel Group" ) );
     if( obDlgEdit.exec() == QDialog::Accepted )
     {
         m_uiSelectedId = poPanelGroups->id();
@@ -124,7 +124,7 @@ void cDlgPanelGroups::deleteClicked( bool )
     cDBPanelGroups *poPanelGroups = NULL;
 
     if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to delete this Panel Type?" ),
+                               tr( "Are you sure you want to delete this Panel Group?" ),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         try

@@ -28,6 +28,8 @@ public:
     QPushButton     *pbWTReset;
     QLabel          *lblMaxWorkTime;
     QLineEdit       *ledMaxWorkTime;
+    QLabel          *lblGroup;
+    QComboBox       *cmbPanelGroup;
     QSpacerItem     *horizontalSpacer2;
     QSpacerItem     *horizontalSpacer3;
     QPushButton     *pbCopyToAll;
