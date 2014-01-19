@@ -37,7 +37,7 @@ CREATE TABLE `panelgroups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `panelgroups` (`panelGroupId`, `licenceId`, `name`, `description`, `modified`, `active`, `archive`) VALUES
- (0, 2, '<Nincs csoporthoz rendelve>', NULL, '0000-00-00 00:00:00', 1, 'ARC');
+ (0, 0, '<Nincs csoporthoz rendelve>', NULL, '0000-00-00 00:00:00', 1, 'ARC');
 UPDATE `panelgroups` SET `panelGroupId`='0' WHERE `panelGroupId`=1;
 ALTER TABLE `panelgroups` auto_increment=1;
 

@@ -891,6 +891,7 @@ void cFrmPanel::closeAttendance()
                 obDBPatientcardUnit.setActive( false );
                 obDBPatientcardUnit.save();
             }
+            obDBPatientCard.synchronizeUnits();
         }
 
         QTime m_qtTemp = QTime( 0, m_vrPatientCard.inUnitTime/60, m_vrPatientCard.inUnitTime%60, 0 );

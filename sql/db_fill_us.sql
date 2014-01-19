@@ -138,17 +138,17 @@ INSERT INTO `panelTypes` ( `panelTypeId`, `licenceId`, `name`, `active`, `archiv
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `active`, `archive` ) VALUES
- ( 0, 1, 1, "Base status", 0, 0, 1, "ARC" ),
- ( 0, 1, 2, "Preparation/Undressing", 60, 1, 1, "ARC" ),
- ( 0, 1, 3, "Browning", 0, 3, 1, "ARC" ),
- ( 0, 1, 4, "Cooling", 300, 4, 1, "ARC" ),
- ( 0, 2, 1, "Base status", 0, 0, 1, "ARC" ),
- ( 0, 2, 2, "Preparation/Undressing", 60, 1, 1, "ARC" ),
- ( 0, 2, 3, "Sauna", 120, 2, 1, "ARC" ),
- ( 0, 2, 4, "Waiting", 3, 9, 1, "ARC" ),
- ( 0, 2, 5, "Browning", 0, 3, 1, "ARC" ),
- ( 0, 2, 6, "Cooling", 300, 4, 1, "ARC" );
+INSERT INTO `panelStatuses` ( `licenceId`, `panelTypeId`, `seqNumber`, `name`, `length`, `activateCmd`, `skipLevel`, `allowedToSkip`, `active`, `archive` ) VALUES
+ ( 0, 1, 1, "Base status", 0, 0, 4, 0, 1, "ARC" ),
+ ( 0, 1, 2, "Preparation/Undressing", 60, 1, 1, 1, 1, "ARC" ),
+ ( 0, 1, 3, "Browning", 0, 3, 4, 0, 1, "ARC" ),
+ ( 0, 1, 4, "Cooling", 300, 4, 4, 0, 1, "ARC" ),
+ ( 0, 2, 1, "Base status", 0, 0, 4, 0, 1, "ARC" ),
+ ( 0, 2, 2, "Preparation/Undressing", 60, 1, 1, 1, 1, "ARC" ),
+ ( 0, 2, 3, "Sauna", 120, 2, 4, 0, 1, "ARC" ),
+ ( 0, 2, 4, "Waiting", 3, 9, 4, 0, 1, "ARC" ),
+ ( 0, 2, 5, "Browning", 0, 3, 4, 0, 1, "ARC" ),
+ ( 0, 2, 6, "Cooling", 300, 4, 4, 0, 1, "ARC" );
 
 -- -----------------------------------------------------------------------------------
 
@@ -167,14 +167,14 @@ INSERT INTO `panelstatussettings` (`panelStatusSettingId`, `licenceId`, `panelSt
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `panelgroups` (`panelGroupId`, `licenceId`, `name`, `description`, `modified`, `active`, `archive`) VALUES
-(0, 2, '<No group associated>', NULL, '0000-00-00 00:00:00', 1, 'ARC');
+(0, 0, '<No group associated>', NULL, '0000-00-00 00:00:00', 1, 'ARC');
 UPDATE `panelgroups` SET `panelGroupId`='0' WHERE `panelGroupId`=1;
 ALTER TABLE `panelgroups` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
-  ( 0, 0, 0, "", 0, 0, 0, "ARC" );
+INSERT INTO `panels` ( `panelId`, `licenceId`, `panelTypeId`, `panelGroupId`, `title`, `workTime`, `maxWorkTime`, `active`, `archive` ) VALUES
+  ( 0, 0, 0, 0, "", 0, 0, 0, "ARC" );
 UPDATE `panels` SET `panelId`='0' WHERE `panelId`=1;
 ALTER TABLE `panels` auto_increment=1;
 

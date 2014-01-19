@@ -454,6 +454,7 @@ void cDlgPatientCardEdit::on_pbSave_clicked()
             }
 
             m_poPatientCard->save();
+            m_poPatientCard->synchronizeUnits();
 
             if( !m_bIsCardDeactivated )
             {

@@ -220,7 +220,7 @@ Please start WampServer application then restart Belenus application.</oldsource
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbledger.cpp" line="291"/>
+        <location filename="db/dbledger.cpp" line="293"/>
         <source>Revoking action: %1</source>
         <translation></translation>
     </message>
@@ -265,79 +265,79 @@ Please start WampServer application then restart Belenus application.</oldsource
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <source>Mon</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <source>Tue</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <source>Wed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="171"/>
         <source>Thu</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="172"/>
         <source>Fri</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="173"/>
         <source>Sat</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="289"/>
+        <location filename="db/dbpatientcard.cpp" line="298"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="174"/>
         <source>Sun</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="302"/>
+        <location filename="db/dbpatientcard.cpp" line="311"/>
         <source>Patientcard can be used:</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="71"/>
-        <location filename="wndmain.cpp" line="2656"/>
+        <location filename="wndmain.cpp" line="2657"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="75"/>
-        <location filename="wndmain.cpp" line="2660"/>
+        <location filename="wndmain.cpp" line="2661"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="79"/>
-        <location filename="wndmain.cpp" line="2664"/>
+        <location filename="wndmain.cpp" line="2665"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="83"/>
-        <location filename="wndmain.cpp" line="2668"/>
+        <location filename="wndmain.cpp" line="2669"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="87"/>
-        <location filename="wndmain.cpp" line="2672"/>
+        <location filename="wndmain.cpp" line="2673"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -2162,17 +2162,17 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="754"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="755"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="761"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="762"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="773"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="774"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
@@ -2210,7 +2210,7 @@ deactivate the card with unchecking the Active checkbox.</source>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="375"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="666"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="667"/>
         <source>Attention</source>
         <translation></translation>
     </message>
@@ -2222,19 +2222,19 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="471"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="590"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="725"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="472"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="591"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="726"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="591"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="592"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="667"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="668"/>
         <source>Are you sure you want to deactivate this patientcard?</source>
         <translation></translation>
     </message>
@@ -2322,7 +2322,7 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="452"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="454"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -2491,7 +2491,7 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardsell.cpp" line="441"/>
+        <location filename="edit/dlgpatientcardsell.cpp" line="443"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -4108,22 +4108,22 @@ Please check your licence key and retype it if necessary..</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="384"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="385"/>
         <source>Using device: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="392"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="393"/>
         <source>Selling product: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="403"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="404"/>
         <source>Sell patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="407"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="408"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
@@ -4655,51 +4655,51 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="326"/>
-        <location filename="frmpanel.cpp" line="347"/>
-        <location filename="frmpanel.cpp" line="765"/>
+        <location filename="frmpanel.cpp" line="327"/>
+        <location filename="frmpanel.cpp" line="348"/>
+        <location filename="frmpanel.cpp" line="780"/>
         <source>NOT STERILE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="397"/>
+        <location filename="frmpanel.cpp" line="398"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="398"/>
+        <location filename="frmpanel.cpp" line="399"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="477"/>
+        <location filename="frmpanel.cpp" line="478"/>
         <source>PAUSED</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="531"/>
+        <location filename="frmpanel.cpp" line="546"/>
         <source>Panel Not Found in Database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="631"/>
+        <location filename="frmpanel.cpp" line="646"/>
         <source>Cash to pay: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="823"/>
+        <location filename="frmpanel.cpp" line="838"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1008"/>
+        <location filename="frmpanel.cpp" line="1024"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1009"/>
+        <location filename="frmpanel.cpp" line="1025"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>
@@ -4778,7 +4778,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1848"/>
         <location filename="wndmain.cpp" line="1870"/>
         <location filename="wndmain.cpp" line="2337"/>
-        <location filename="wndmain.cpp" line="2463"/>
+        <location filename="wndmain.cpp" line="2464"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -4787,7 +4787,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1341"/>
         <location filename="wndmain.cpp" line="1780"/>
         <location filename="wndmain.cpp" line="2352"/>
-        <location filename="wndmain.cpp" line="2591"/>
+        <location filename="wndmain.cpp" line="2592"/>
         <source>Warning</source>
         <translation></translation>
     </message>
@@ -5037,7 +5037,7 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2633"/>
+        <location filename="wndmain.cpp" line="2634"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation></translation>
     </message>
@@ -5203,25 +5203,25 @@ Please select a non-active patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2464"/>
+        <location filename="wndmain.cpp" line="2465"/>
         <source>Are you sure about to merge these patientcards?
 Main card: %1
 Assigned card: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2474"/>
-        <location filename="wndmain.cpp" line="2493"/>
+        <location filename="wndmain.cpp" line="2475"/>
+        <location filename="wndmain.cpp" line="2494"/>
         <source>Partner card of &quot;%1&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2519"/>
+        <location filename="wndmain.cpp" line="2520"/>
         <source>Assign patientcard [%1]&lt;-[%2]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2592"/>
+        <location filename="wndmain.cpp" line="2593"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -5234,7 +5234,7 @@ Error code: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2632"/>
+        <location filename="wndmain.cpp" line="2633"/>
         <source>About</source>
         <translation></translation>
     </message>

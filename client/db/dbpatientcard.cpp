@@ -280,6 +280,15 @@ bool cDBPatientCard::isAssignedCardExists() throw()
     return false;
 }
 
+void cDBPatientCard::synchronizeUnits() throw()
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(patientCardId) FROM patientcardunits WHERE patientCardId=%1 AND active=1" ).arg( m_uiId ) );
+    if( poQuery->size() > 0 )
+        setUnits( poQuery->value(0).toInt() );
+    else
+        setUnits( 0 );
+}
+
 bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
 {
     QStringList         qslDays;

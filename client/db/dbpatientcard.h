@@ -21,6 +21,7 @@ public:
     bool            isPatientCardCanBeParent()                                  throw();
     bool            isPatientCardCanBeUsed(QString *p_qsValid)                  throw();
     bool            isAssignedCardExists()                                      throw();
+    void            synchronizeUnits()                                          throw();
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
     unsigned int    licenceId() const                                           throw();

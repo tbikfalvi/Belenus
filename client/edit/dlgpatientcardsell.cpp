@@ -422,6 +422,8 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 qslUnitIds << QString::number( obDBPatientcardUnit.id() );
             }
 
+            m_poPatientCard->synchronizeUnits();
+
             if( bShoppingCart )
             {
                 obDBShoppingCart.setComment( qslUnitIds.join("#") );

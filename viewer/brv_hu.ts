@@ -291,7 +291,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="51"/>
-        <location filename="creportdaily.cpp" line="785"/>
+        <location filename="creportdaily.cpp" line="786"/>
         <source>Products sold</source>
         <translation>Eladott termékek</translation>
     </message>
@@ -307,35 +307,35 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="202"/>
-        <location filename="creportdaily.cpp" line="369"/>
-        <location filename="creportdaily.cpp" line="552"/>
-        <location filename="creportdaily.cpp" line="666"/>
-        <location filename="creportdaily.cpp" line="728"/>
+        <location filename="creportdaily.cpp" line="370"/>
+        <location filename="creportdaily.cpp" line="553"/>
+        <location filename="creportdaily.cpp" line="667"/>
+        <location filename="creportdaily.cpp" line="729"/>
         <source>Amount</source>
         <translation>Összeg</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="180"/>
         <location filename="creportdaily.cpp" line="249"/>
-        <location filename="creportdaily.cpp" line="337"/>
-        <location filename="creportdaily.cpp" line="414"/>
-        <location filename="creportdaily.cpp" line="474"/>
-        <location filename="creportdaily.cpp" line="530"/>
-        <location filename="creportdaily.cpp" line="636"/>
-        <location filename="creportdaily.cpp" line="708"/>
-        <location filename="creportdaily.cpp" line="768"/>
-        <location filename="creportdaily.cpp" line="812"/>
+        <location filename="creportdaily.cpp" line="338"/>
+        <location filename="creportdaily.cpp" line="415"/>
+        <location filename="creportdaily.cpp" line="475"/>
+        <location filename="creportdaily.cpp" line="531"/>
+        <location filename="creportdaily.cpp" line="637"/>
+        <location filename="creportdaily.cpp" line="709"/>
+        <location filename="creportdaily.cpp" line="769"/>
+        <location filename="creportdaily.cpp" line="813"/>
         <source>Sum total</source>
         <translation>Mind összesen</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <location filename="creportdaily.cpp" line="792"/>
+        <location filename="creportdaily.cpp" line="793"/>
         <source>Patientcards sold</source>
         <translation>Eladott bérletek</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="799"/>
+        <location filename="creportdaily.cpp" line="800"/>
         <source>Device usages</source>
         <translation>Géphasználatok</translation>
     </message>
@@ -376,7 +376,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="71"/>
-        <location filename="creportdaily.cpp" line="806"/>
+        <location filename="creportdaily.cpp" line="807"/>
         <source>Expenses</source>
         <translation>Kiadások</translation>
     </message>
@@ -426,38 +426,38 @@
         <translation>Utolsó bejegyzés</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="548"/>
+        <location filename="creportdaily.cpp" line="549"/>
         <source>Payed by card</source>
         <translation>Bankkártyával fizetve</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="549"/>
+        <location filename="creportdaily.cpp" line="550"/>
         <source>Payed by cash</source>
         <translation>Készpénzzel fizetve</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="550"/>
+        <location filename="creportdaily.cpp" line="551"/>
         <source>Payed by voucher</source>
         <translation>Utalvánnyal fizetve</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="551"/>
+        <location filename="creportdaily.cpp" line="552"/>
         <source>Cash and voucher</source>
         <translation>Készpénz és utalvány</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="665"/>
-        <location filename="creportdaily.cpp" line="727"/>
+        <location filename="creportdaily.cpp" line="666"/>
+        <location filename="creportdaily.cpp" line="728"/>
         <source>Description</source>
         <translation>Leírás</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="819"/>
+        <location filename="creportdaily.cpp" line="820"/>
         <source>Cash/voucher</source>
         <translation>Készpénz/utalvány</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="826"/>
+        <location filename="creportdaily.cpp" line="827"/>
         <source>Card</source>
         <translation>Bankkártya</translation>
     </message>
@@ -468,11 +468,11 @@
     <message>
         <location filename="creportdaily.cpp" line="239"/>
         <location filename="creportdaily.cpp" line="279"/>
-        <location filename="creportdaily.cpp" line="446"/>
-        <location filename="creportdaily.cpp" line="502"/>
-        <location filename="creportdaily.cpp" line="614"/>
-        <location filename="creportdaily.cpp" line="699"/>
-        <location filename="creportdaily.cpp" line="759"/>
+        <location filename="creportdaily.cpp" line="447"/>
+        <location filename="creportdaily.cpp" line="503"/>
+        <location filename="creportdaily.cpp" line="615"/>
+        <location filename="creportdaily.cpp" line="700"/>
+        <location filename="creportdaily.cpp" line="760"/>
         <source>Sum</source>
         <translation>Összesen</translation>
     </message>

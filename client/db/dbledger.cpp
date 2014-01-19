@@ -257,6 +257,8 @@ void cDBLedger::revoke() throw( cSevException )
             cDBPatientcardUnit obDBPatientcardUnit;
 
             obDBPatientcardUnit.removeLedgerUnits( m_uiId );
+
+            obDBPatientCard.synchronizeUnits();
         }
         catch( cSevException &e )
         {

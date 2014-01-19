@@ -343,7 +343,7 @@ CREATE TABLE `panels` (
   `panelId`                 int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `panelTypeId`             int(10) unsigned        NOT NULL,
-  `panelgroupId`            int(10) unsigned        NOT NULL,
+  `panelGroupId`            int(10) unsigned        NOT NULL,
   `title`                   varchar(50)             NOT NULL,
   `workTime`                int(10) unsigned        NOT NULL DEFAULT 0,
   `maxWorkTime`             int(10) unsigned        NOT NULL,

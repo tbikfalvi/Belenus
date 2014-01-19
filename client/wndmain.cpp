@@ -2433,6 +2433,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientCardOld.setPincode( "LOST" );
             obDBPatientCardOld.setActive( false );
             obDBPatientCardOld.save();
+            obDBPatientCardNew.synchronizeUnits();
         }
     }
 }

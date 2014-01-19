@@ -298,6 +298,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                         obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
                         obDBPatientcardUnit.remove();
                     }
+                    obDBPatientCard.synchronizeUnits();
                 }
                 catch( cSevException &e )
                 {
