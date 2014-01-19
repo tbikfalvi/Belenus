@@ -5,8 +5,8 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_fill_hu.sql
--- AppVersion  : 1.0.0
--- DbVersion   : 1.0
+-- AppVersion  : 1.1.0
+-- DbVersion   : 1.2
 -- FileVersion : 1.0
 -- Author      : Bikfalvi Tamas
 --
@@ -28,8 +28,8 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2013-10-01 00:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_0_0'),
- (NULL, 'DATABASE_VERSION', '1_0');
+ (NULL, 'APPLICATION_VERSION', '1_1_0'),
+ (NULL, 'DATABASE_VERSION', '1_2');
 
 -- -----------------------------------------------------------------------------------
 
@@ -169,6 +169,13 @@ INSERT INTO `panelstatussettings` (`panelStatusSettingId`, `licenceId`, `panelSt
  (8, 1, 8, '#ffff00', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
  (9, 1, 9, '#ff0000', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW'),
  (10, 1, 10, '#ffff7f', 'Arial', 18, '#000000', 'Book Antiqua', 30, '#000000', 'Arial', 18, '#000000', 'Arial', 10, '#000000', '2013-01-01 12:00:00', 1, 'NEW');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `panelgroups` (`panelGroupId`, `licenceId`, `name`, `description`, `modified`, `active`, `archive`) VALUES
+(0, 2, '<Nincs csoporthoz rendelve>', NULL, '0000-00-00 00:00:00', 1, 'ARC');
+UPDATE `panelgroups` SET `panelGroupId`='0' WHERE `panelGroupId`=1;
+ALTER TABLE `panelgroups` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 

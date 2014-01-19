@@ -39,6 +39,13 @@ cDlgPanelStatusesEdit::cDlgPanelStatusesEdit( QWidget *p_poParent, cDBPanelStatu
                 cmbActivateCmd->setCurrentIndex( cmbActivateCmd->count()-1 );
         }
 
+        chkAllowToSkip->setChecked( m_poPanelStatuses->allowedToSkip() );
+
+        for( int i = cAccessGroup::MIN + 1; i < cAccessGroup::MAX; i++ )
+            if( g_obUser.isInGroup( (cAccessGroup::teAccessGroup)i ) ) cmbSkipLevel->addItem( cAccessGroup::toStr( (cAccessGroup::teAccessGroup)i ) );
+        cmbSkipLevel->setCurrentIndex( m_poPanelStatuses->skipLevel() - 1 );
+        cmbSkipLevel->setEnabled( m_poPanelStatuses->allowedToSkip() );
+
         /*if( m_poPanelStatuses->licenceId() == 0 && m_poPanelStatuses->id() > 0 )
             checkIndependent->setChecked( true );
 
@@ -70,6 +77,7 @@ cDlgPanelStatusesEdit::~cDlgPanelStatusesEdit()
 void cDlgPanelStatusesEdit::on_pbOk_clicked()
 {
     bool  boCanBeSaved = true;
+
     if( (ledName->text() == "") )
     {
         boCanBeSaved = false;
@@ -80,6 +88,12 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
     {
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Length of status process time cannot be zero." ) );
+    }
+
+    if( cmbActivateCmd->currentIndex() == 0 )
+    {
+        chkAllowToSkip->setChecked( false );
+        cmbSkipLevel->setCurrentIndex( -1 );
     }
 
     QSqlQuery *poQuery = NULL;
@@ -100,6 +114,8 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
             m_poPanelStatuses->setSequenceNumber( sbSeqNumber->value() );
             m_poPanelStatuses->setLength( sbLength->value() );
             m_poPanelStatuses->setActivateCommand( cmbActivateCmd->itemData( cmbActivateCmd->currentIndex() ).toInt() );
+            m_poPanelStatuses->setAllowedToSkip( chkAllowToSkip->isChecked() );
+            m_poPanelStatuses->setSkipLevel( (cmbSkipLevel->currentIndex() + 1) );
 
             /*if( checkIndependent->isChecked() )
             {
@@ -125,4 +141,9 @@ void cDlgPanelStatusesEdit::on_pbOk_clicked()
 void cDlgPanelStatusesEdit::on_pbCancel_clicked()
 {
     QDialog::reject();
+}
+
+void cDlgPanelStatusesEdit::on_chkAllowToSkip_clicked(bool checked)
+{
+    cmbSkipLevel->setEnabled( checked );
 }

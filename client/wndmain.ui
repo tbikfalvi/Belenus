@@ -149,6 +149,7 @@
      <addaction name="separator"/>
      <addaction name="action_RegionZipCity"/>
      <addaction name="separator"/>
+     <addaction name="action_Panelgroups"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
      <addaction name="separator"/>
@@ -734,6 +735,14 @@
   <action name="action_PatientCardAssign">
    <property name="text">
     <string>Assign patientcards</string>
+   </property>
+  </action>
+  <action name="action_Panelgroups">
+   <property name="text">
+    <string>Device groups</string>
+   </property>
+   <property name="toolTip">
+    <string>Groups for devices</string>
    </property>
   </action>
  </widget>

@@ -103,6 +103,7 @@ private slots:
     void on_action_Hardwaretest_triggered();
     void on_action_LogOut_triggered();
     void on_action_Paneltypes_triggered();
+    void on_action_Panelgroups_triggered();
     void on_action_Patientorigin_triggered()        {}
     void on_action_ReasonToVisit_triggered()        {}
     void on_action_Patients_triggered()             {}

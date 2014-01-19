@@ -39,27 +39,30 @@ void cDlgPanelStatuses::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "PanelType" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Sequence order" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Allowed to skip" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
 
-        tbvCrud->sortByColumn( 4, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 3, Qt::AscendingOrder );
     }
     else
     {
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "PanelType" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Sequence order" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Allowed to skip" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
 
-        tbvCrud->sortByColumn( 3, Qt::AscendingOrder );
+        tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
 }
 
@@ -69,11 +72,11 @@ void cDlgPanelStatuses::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, panelTypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.active, panelStatuses.archive FROM panelStatuses, panelTypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
+        m_qsQuery = "SELECT panelStatuses.panelStatusId, panelStatuses.licenceId, panelStatuses.name, panelTypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.allowedToSkip, panelStatuses.active, panelStatuses.archive FROM panelStatuses, panelTypes WHERE panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
     else
     {
-        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, panelTypes.name AS panelType, panelStatuses.seqNumber FROM panelStatuses, panelTypes WHERE panelStatuses.active=1 AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
+        m_qsQuery = "SELECT panelStatuses.panelStatusId AS id, panelStatuses.name, panelTypes.name AS panelType, panelStatuses.seqNumber, panelStatuses.allowedToSkip FROM panelStatuses, panelTypes WHERE panelStatuses.active=1 AND panelStatuses.panelTypeId=panelTypes.panelTypeId";
     }
 
     cDlgCrud::refreshTable();

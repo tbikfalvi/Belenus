@@ -30,6 +30,10 @@ public:
     void            setLength( const unsigned int p_uiLength )                      throw();
     unsigned int    activateCommand() const                                         throw();
     void            setActivateCommand( const unsigned int p_uiActivateCommand )    throw();
+    int             skipLevel() const                                               throw();
+    void            setSkipLevel( const int p_nSkipLevel )                          throw();
+    bool            allowedToSkip() const                                           throw();
+    void            setAllowedToSkip( const bool p_bAllowedToSkip )                 throw();
     QString         modified() const                                                throw();
     bool            active() const                                                  throw();
     void            setActive( const bool p_bActive )                               throw();
@@ -44,6 +48,8 @@ private:
     QString         m_qsName;
     unsigned int    m_uiLength;
     unsigned int    m_uiActivateCommand;
+    int             m_nSkipLevel;
+    bool            m_bAllowedToSkip;
     QString         m_qsModified;
     bool            m_bActive;
     QString         m_qsArchive;
@@ -55,6 +61,8 @@ private:
                const QString &p_qsName = "",
                const unsigned int p_uiLength = 0,
                const unsigned int p_uiActivateCommand = 0,
+               const int m_nSkipLevel = 4,
+               const bool m_bAllowedToSkip = false,
                const QString &p_qsModified = "",
                const bool p_bActive = true,
                const QString &p_qsArchive = "NEW" )                     throw();

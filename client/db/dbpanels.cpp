@@ -108,7 +108,7 @@ void cDBPanel::save() throw( cSevException )
     qsQuery += " panels SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "panelTypeId = \"%1\", " ).arg( m_uiPanelTypeId );
-    qsQuery += QString( "panelGroupId = \"%1\", " ).arg( m_uiPanelTypeId );
+    qsQuery += QString( "panelGroupId = \"%1\", " ).arg( m_uiPanelGroupId );
     qsQuery += QString( "title = \"%1\", " ).arg( m_qsTitle );
     qsQuery += QString( "workTime = \"%1\", " ).arg( m_uiWorkTime );
     qsQuery += QString( "maxWorkTime = \"%1\", " ).arg( m_uiMaxWorkTime );

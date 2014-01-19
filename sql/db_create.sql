@@ -283,6 +283,8 @@ CREATE TABLE `panelStatuses` (
   `name`                    varchar(20)             NOT NULL,
   `length`                  int(10) unsigned        NOT NULL DEFAULT 0,
   `activateCmd`             int(10) unsigned        NOT NULL DEFAULT 0,
+  `skipLevel`               int(10)                 NOT NULL DEFAULT 4,
+  `allowedToSkip`           tinyint(1)              DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
@@ -323,14 +325,14 @@ CREATE TABLE `panelStatusSettings` (
 -- A kliens alkalmazasban mukodtetett panelcsoportokat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `panelgroups` (
-  `panelgroupId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `panelGroupId`            int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  `name`                    varchar(20)             NOT NULL,
+  `name`                    varchar(50)             NOT NULL,
   `description`             text                    DEFAULT NULL,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`panelgroupId`,`licenceId`),
+  PRIMARY KEY (`panelGroupId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

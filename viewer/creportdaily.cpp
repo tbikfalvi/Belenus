@@ -369,7 +369,7 @@ unsigned int cReportDaily::_reportPartPanelUse()
     }
     addTableCell( tr("Amount"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
@@ -446,7 +446,7 @@ void cReportDaily::_reportPartPanelUseType(tePanelUse p_tePanelUse)
     }
     addTableCell( tr("Sum"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
@@ -502,7 +502,7 @@ void cReportDaily::_reportPartUsedPatientcardunits()
     }
     addTableCell( tr("Sum"), "center bold" );
 
-    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM paneltypes WHERE panelTypeId>0" );
+    poQueryResult = g_poDB->executeQTQuery( "SELECT * FROM panelgroups WHERE panelGroupId>0" );
 
     while( poQueryResult->next() )
     {
@@ -911,7 +911,7 @@ int cReportDaily::_sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QS
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportDaily::_sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId )
+int cReportDaily::_sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelGroupId )
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
@@ -923,8 +923,8 @@ int cReportDaily::_sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeI
                       "ledger.panelId=panels.panelId AND "
                       "cassahistory.cassaId=%1 AND "
                       "ledgerTypeId=%2 AND "
-                      "panelTypeId=%3 AND "
-                      "ledger.active=1 " ).arg( p_qsCassaId ).arg( LT_DEVICE_USAGE ).arg( p_uiPanelTypeId );
+                      "panelGroupId=%3 AND "
+                      "ledger.active=1 " ).arg( p_qsCassaId ).arg( LT_DEVICE_USAGE ).arg( p_uiPanelGroupId );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 
@@ -988,7 +988,7 @@ int cReportDaily::_sumCassaIncome( unsigned int p_uiCassaId )
     return poQueryResult->value(0).toInt();
 }
 //------------------------------------------------------------------------------------
-int cReportDaily::_countPanelUse(QString p_qsCassaId, unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse, tePanelCountType p_tePanelCountType)
+int cReportDaily::_countPanelUse(QString p_qsCassaId, unsigned int p_uiPanelgroupId, tePanelUse p_tePanelUse, tePanelCountType p_tePanelCountType)
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
@@ -1036,9 +1036,9 @@ int cReportDaily::_countPanelUse(QString p_qsCassaId, unsigned int p_uiPanelType
                       "ledgerdevice, panels WHERE "
                       "ledgerdevice.panelId = panels.panelId AND "
                       "%2 "
-                      "panelTypeId=%3 AND "
+                      "panelGroupId=%3 AND "
                       "ledgerTime>\"%4\" AND "
-                      "ledgerTime<=\"%5\" ").arg(qsData).arg( qsCond ).arg( p_uiPanelTypeId ).arg( qsStart ).arg( qsStop );
+                      "ledgerTime<=\"%5\" ").arg(qsData).arg( qsCond ).arg( p_uiPanelgroupId ).arg( qsStart ).arg( qsStop );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 

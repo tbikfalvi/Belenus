@@ -54,6 +54,7 @@
 #include "crud/dlgproductsell.h"
 #include "crud/dlgstorno.h"
 #include "crud/dlgpaymentmethod.h"
+#include "crud/dlgpanelgroups.h"
 
 //====================================================================================
 
@@ -186,6 +187,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_HealthInsurance->setIcon( QIcon("./resources/40x40_health_insurance.png") );
         action_Discounts->setIcon( QIcon("./resources/40x40_discount.png") );
         action_RegionZipCity->setIcon( QIcon("./resources/40x40_address.png") );
+        action_Panelgroups->setIcon( QIcon("./resources/40x40_panel.png") );
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
@@ -758,22 +760,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             on_action_TestDlgStarted();
         }
     }
-
-    QMainWindow::keyPressEvent( p_poEvent );
-}
-//====================================================================================
-void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
-{
-    if( !g_obUser.isLoggedIn() )
-        return;
-
-    cTracer obTrace( "cWndMain::keyReleaseEvent" );
-
-    if( p_poEvent->key() == Qt::Key_Control )
-    {
-        m_bCtrlPressed = false;
-        m_lblStatusLeft.setText( m_qsStatusText );
-    }
     else
     {
         if( p_poEvent->key() == Qt::Key_Enter || p_poEvent->key() == Qt::Key_Return )
@@ -841,6 +827,22 @@ void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
         }*/
     }
 
+    QMainWindow::keyPressEvent( p_poEvent );
+}
+//====================================================================================
+void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
+{
+    if( !g_obUser.isLoggedIn() )
+        return;
+
+    cTracer obTrace( "cWndMain::keyReleaseEvent" );
+
+    if( p_poEvent->key() == Qt::Key_Control )
+    {
+        m_bCtrlPressed = false;
+        m_lblStatusLeft.setText( m_qsStatusText );
+    }
+
     QMainWindow::keyReleaseEvent( p_poEvent );
 }
 //====================================================================================
@@ -891,6 +893,7 @@ void cWndMain::updateTitle()
         qsTitle += tr(" <=> NO PATIENT SELECTED");
     }
 
+    action_Panelgroups->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     action_Paneltypes->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     action_PanelStatuses->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
@@ -949,6 +952,7 @@ void cWndMain::updateToolbar()
             action_HealthInsurance->setEnabled( bIsUserLoggedIn );
             action_Discounts->setEnabled( bIsUserLoggedIn );
             action_RegionZipCity->setEnabled( bIsUserLoggedIn );
+            action_Panelgroups->setEnabled( bIsUserLoggedIn );
             action_Paneltypes->setEnabled( bIsUserLoggedIn );
             action_PanelStatuses->setEnabled( bIsUserLoggedIn );
             action_ProductTypes->setEnabled( bIsUserLoggedIn );
@@ -1232,6 +1236,19 @@ void cWndMain::on_action_LogOut_triggered()
     updateTitle();
 
     if( !showLogIn() ) close();
+}
+//====================================================================================
+void cWndMain::on_action_Panelgroups_triggered()
+{
+    cTracer obTrace( "cWndMain::on_action_Panelgroups_triggered" );
+
+    m_dlgProgress->showProgress();
+
+    cDlgPanelGroups  obDlgPanelGroups( this );
+
+    m_dlgProgress->hideProgress();
+
+    obDlgPanelGroups.exec();
 }
 //====================================================================================
 void cWndMain::on_action_Paneltypes_triggered()
@@ -1748,7 +1765,7 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
 
     if( QMessageBox::question( this, tr("Question"),
                                tr("Do you want to jump to the next status of the device?"),
-                               QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
+                               QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
     {
         mdiPanels->next();
     }

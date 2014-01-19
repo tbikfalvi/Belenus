@@ -10,7 +10,7 @@ cDlgPanelGroupEdit::cDlgPanelGroupEdit( QWidget *p_poParent, cDBPanelGroups *p_p
 
     setupUi( this );
 
-    setWindowTitle( tr( "Panel type" ) );
+    setWindowTitle( tr( "Panel group" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
     m_poPanelGroups = p_poPanelGroups;
@@ -35,7 +35,7 @@ void cDlgPanelGroupEdit::accept()
     if( ledNameVal->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Name of Panel Type can not be empty." ), QMessageBox::Ok );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Name of Panel Group can not be empty." ), QMessageBox::Ok );
     }
 
     if( boCanBeSaved )
