@@ -505,8 +505,10 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 
         if( m_obDBPatientCard.active() )
         {
+            m_obDBPatientCard.synchronizeUnits();
+            m_obDBPatientCard.save();
             // resolved conflict
-            if(m_obDBPatientCard.units() < 1 ||m_obDBPatientCard.timeLeft() < 1 )
+            if( m_obDBPatientCard.units() < 1 || m_obDBPatientCard.timeLeft() < 1 )
             {
                 QString     qsTemp = "";
 
@@ -525,34 +527,14 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
                 }
                 else
                 {
-                    if( m_obDBPatientCard.timeLeft() < 1 )
+                    m_obDBPatientCard.setParentId( 0 );
+                    m_obDBPatientCard.setActive( false );
+
+                    cDlgPatientCardRefill obDlgPatientCardRefill( this, &m_obDBPatientCard );
+
+                    if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
                     {
-                        m_obDBPatientCard.setPatientCardTypeId( 0 );
-                        m_obDBPatientCard.setParentId( 0 );
-                        m_obDBPatientCard.setPatientId( 0 );
-                        m_obDBPatientCard.setUnits( 0 );
-                        m_obDBPatientCard.setAmount( 0 );
-                        m_obDBPatientCard.setTimeLeft( 0 );
-                        m_obDBPatientCard.setValidDateFrom( "2000-01-01" );
-                        m_obDBPatientCard.setValidDateTo( "2000-01-01" );
-                        m_obDBPatientCard.setActive( false );
-
-                        cDlgPatientCardSell obDlgPatientCardSell( this, &m_obDBPatientCard );
-                        obDlgPatientCardSell.setPatientCardOwner( g_obGuest.id() );
-
-                        if( obDlgPatientCardSell.exec() != QDialog::Accepted )
-                        {
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        cDlgPatientCardRefill obDlgPatientCardRefill( this, &m_obDBPatientCard );
-
-                        if( obDlgPatientCardRefill.exec() != QDialog::Accepted )
-                        {
-                            return;
-                        }
+                        return;
                     }
                 }
             }

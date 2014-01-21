@@ -1307,7 +1307,7 @@ void cWndMain::on_action_PatientNew_triggered()
 
     obDlgEdit.exec();
 
-    if( poGuest->id() > 0 )
+    /*if( poGuest->id() > 0 )
     {
         if( QMessageBox::question( this, tr("Question"),
                                    tr("Do you want to select the created patient as actual?"),
@@ -1315,7 +1315,7 @@ void cWndMain::on_action_PatientNew_triggered()
         {
             g_obGuest.load( poGuest->id() );
         }
-    }
+    }*/
 
     delete poGuest;
 }
@@ -1452,7 +1452,7 @@ void cWndMain::on_action_UseDevice_triggered()
 
             if( g_obGuest.id() == 0 && obDBPatientCard.patientId() > 0 )
             {
-                cDBGuest  obDBGuest;
+                /*cDBGuest  obDBGuest;
 
                 obDBGuest.load( obDBPatientCard.patientId() );
                 if( QMessageBox::question( this, tr("Question"),
@@ -1462,7 +1462,7 @@ void cWndMain::on_action_UseDevice_triggered()
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
                     g_obGuest.load( obDBPatientCard.patientId() );
-                }
+                }*/
             }
             else if( obDBPatientCard.patientId() != g_obGuest.id() && g_obGuest.id() > 0 && obDBPatientCard.patientId() > 0 )
             {

@@ -75,6 +75,14 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCard->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );
+
+        if( m_poPatientCard->active() )
+        {
+            QMessageBox::warning( this, tr("Attention"),
+                                  tr("This patientcard is in use. Active patientcard can not be sold.\n"
+                                     "Please refill the card if you want to add additional units.") );
+            pbSell->setEnabled( false );
+        }
     }
 
     slotRefreshWarningColors();
@@ -208,7 +216,7 @@ void cDlgPatientCardSell::on_cmbCardType_currentIndexChanged(int index)
                               tr("You are not allowed to create System Service Patientcard.") );
         pbSell->setEnabled( false );
     }
-    else
+    else if( !m_poPatientCard->active() )
     {
         pbSell->setEnabled( true );
     }
@@ -315,7 +323,6 @@ void cDlgPatientCardSell::on_pbSell_clicked()
         {
             m_poPatientCard->setLicenceId( g_poPrefs->getLicenceId() );
             m_poPatientCard->setBarcode( ledBarcode->text() );
-            m_poPatientCard->setActive( true );
             m_poPatientCard->setPatientCardTypeId( cmbCardType->itemData( cmbCardType->currentIndex() ).toUInt() );
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( ledUnits->text().toInt() );
@@ -401,6 +408,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 }
             }
 
+            m_poPatientCard->setActive( true );
             m_poPatientCard->save();
 
             cDBPatientcardUnit  obDBPatientcardUnit;

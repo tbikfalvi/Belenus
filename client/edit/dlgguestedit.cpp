@@ -273,7 +273,7 @@ void cDlgGuestEdit::on_pbAssignCard_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbSellCard_clicked()
 {
-    hide();
+//    hide();
 
     cDlgInputStart  obDlgInputStart( this );
 
@@ -341,17 +341,18 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
                 _fillPatientCardData();
             }
         }
+
+        slotEnableButtons();
+
+        if( QMessageBox::question( this, tr( "Question" ),
+                                   tr( "Do you want to save changes then close the dialog?" ),
+                                   QMessageBox::Yes|QMessageBox::No ) == QMessageBox::Yes )
+        {
+            on_pbSaveExit_clicked();
+        }
     }
 
-    show();
-    slotEnableButtons();
-
-    if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Do you want to save changes and close the dialog?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::Yes )
-    {
-        on_pbSaveExit_clicked();
-    }
+//    show();
 }
 //===========================================================================================================
 //
