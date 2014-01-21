@@ -212,6 +212,12 @@ void cFrmPanel::start()
 {
     cTracer obTrace( "cFrmPanel::start" );
 
+    if( m_inTimerId != 0 )
+    {
+        g_obLogger(cSeverity::INFO) << "Device ID[" << m_uiId-1 << "] already started." << EOM;
+        return;
+    }
+
     m_bIsDeviceStopped = false;
     if( m_inMainProcessLength == 0 )
         return;
@@ -270,6 +276,7 @@ void cFrmPanel::clear()
         m_uiStatus  = 0;
         m_uiCounter = 0;
         killTimer( m_inTimerId );
+        m_inTimerId = 0;
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
 
@@ -797,6 +804,7 @@ void cFrmPanel::activateNextStatus()
         m_uiStatus  = 0;
         m_uiCounter = 0;
         killTimer( m_inTimerId );
+        m_inTimerId = 0;
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
     else

@@ -68,6 +68,7 @@ private:
     int                      m_inPanelStartMinute;
     QString                  m_qsPanelStartBarcode;
     int                      m_inCommunicationCounter;
+    bool                     m_bActionProcessing;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );

@@ -111,6 +111,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_inPanelStartMinute            = 0;
     m_qsPanelStartBarcode           = "";
     m_inCommunicationCounter        = 0;
+    m_bActionProcessing             = false;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -697,7 +698,7 @@ void cWndMain::logoutUser()
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
-    if( !g_obUser.isLoggedIn() )
+    if( !g_obUser.isLoggedIn() || m_bActionProcessing )
         return;
 
     cTracer obTrace( "cWndMain::keyPressEvent" );
@@ -722,6 +723,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + S" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
+            m_bActionProcessing = true;
             on_action_DeviceStart_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
@@ -729,6 +731,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + T" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
+            m_bActionProcessing = true;
             on_action_DeviceClear_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
@@ -736,6 +739,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
+            m_bActionProcessing = true;
             on_action_PayCash_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
@@ -743,6 +747,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + K" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
+            m_bActionProcessing = true;
             on_action_ShoppingCart_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
@@ -750,6 +755,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + N" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
+            m_bActionProcessing = true;
             on_action_DeviceSkipStatus_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F12 )
@@ -769,21 +775,25 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             {
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
                     m_lblStatusLeft.setText( m_qsStatusText );
+                    m_bActionProcessing = true;
                     on_action_PayCash_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_START:
                     m_lblStatusLeft.setText( m_qsStatusText );
+                    m_bActionProcessing = true;
                     on_action_DeviceStart_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_SKIP:
                     m_lblStatusLeft.setText( m_qsStatusText );
+                    m_bActionProcessing = true;
                     on_action_DeviceSkipStatus_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_CLEAN:
                     m_lblStatusLeft.setText( m_qsStatusText );
+                    m_bActionProcessing = true;
                     on_action_DeviceClear_triggered();
                     break;
             }
@@ -800,14 +810,17 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             {
                 if( obDlgInputStart.m_bCard )
                 {
+                    m_bActionProcessing = true;
                     processInputPatientCard( obDlgInputStart.getEditText() );
                 }
                 else if( obDlgInputStart.m_bProd )
                 {
+                    m_bActionProcessing = true;
                     processInputProduct( obDlgInputStart.getEditText() );
                 }
                 else if( obDlgInputStart.m_bTime )
                 {
+                    m_bActionProcessing = true;
                     processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
                 }
             }
@@ -820,11 +833,12 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             m_lblStatusLeft.setText( m_qsStatusText );
             mdiPanels->clear();
         }
-/*        else if( p_poEvent->key() == Qt::Key_Space )
+        else if( p_poEvent->key() == Qt::Key_Space )
         {
             g_obLogger(cSeverity::INFO) << "User pressed SPACE" << EOM;
+            m_bActionProcessing = true;
             on_action_UseDevice_triggered();
-        }*/
+        }
     }
 
     QMainWindow::keyPressEvent( p_poEvent );
@@ -1321,6 +1335,7 @@ void cWndMain::on_action_DeviceClear_triggered()
             mdiPanels->setUsageFromWaitingQueue();
         }
     }
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
@@ -1347,6 +1362,7 @@ void cWndMain::on_action_DeviceStart_triggered()
         mdiPanels->start();
 
         on_action_PatientEmpty_triggered();
+        m_bActionProcessing = false;
     }
 }
 //====================================================================================
@@ -1455,6 +1471,7 @@ void cWndMain::on_action_UseDevice_triggered()
                                               "Are you sure you want to use this patientcard?"),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {
+                    m_bActionProcessing = false;
                     return;
                 }
             }
@@ -1480,6 +1497,7 @@ void cWndMain::on_action_UseDevice_triggered()
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUseSecondsCash(), obDlgPanelUse.panelUsePrice() );
         }
     }
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
@@ -1694,6 +1712,7 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
     m_dlgProgress->hideProgress();
 
     obDlgShoppingCart.exec();
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
@@ -1769,6 +1788,7 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
     {
         mdiPanels->next();
     }
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()
@@ -1935,6 +1955,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         on_action_UseDevice_triggered();
     }
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::processInputProduct( QString p_stBarcode )
@@ -1942,6 +1963,8 @@ void cWndMain::processInputProduct( QString p_stBarcode )
     cTracer obTrace( "cWndMain::processInputProduct" );
 
     on_action_SellProduct_triggered( p_stBarcode );
+
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inMinute )
@@ -1987,6 +2010,7 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
     {
         on_action_UseDevice_triggered();
     }
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
@@ -2088,6 +2112,7 @@ void cWndMain::on_action_PayCash_triggered()
         mdiPanels->itemAddedToShoppingCart();
         mdiPanels->cashPayed( 0 );
     }
+    m_bActionProcessing = false;
 }
 //====================================================================================
 void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType )
