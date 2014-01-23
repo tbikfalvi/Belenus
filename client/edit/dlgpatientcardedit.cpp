@@ -257,7 +257,7 @@ void cDlgPatientCardEdit::activatePatientCard()
 //===========================================================================================================
 //
 //-----------------------------------------------------------------------------------------------------------
-void cDlgPatientCardEdit::refillPatientCard()
+/*void cDlgPatientCardEdit::refillPatientCard()
 {
     m_bRefillCard = true;
 
@@ -266,7 +266,7 @@ void cDlgPatientCardEdit::refillPatientCard()
     ledPrice->setText( QString("0 %1").arg(g_poPrefs->getCurrencyShort()) );
     cmbPatient->setEnabled( false );
     cmbCardType->setFocus();
-}
+}*/
 //===========================================================================================================
 //
 //-----------------------------------------------------------------------------------------------------------

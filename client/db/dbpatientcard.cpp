@@ -109,6 +109,7 @@ void cDBPatientCard::load( const unsigned int p_uiId ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
+    synchronizeUnits();
 }
 
 void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
@@ -122,6 +123,7 @@ void cDBPatientCard::load( const QString &p_qsBarcode ) throw( cSevException )
 
     poQuery->first();
     init( poQuery->record() );
+    synchronizeUnits();
 }
 
 void cDBPatientCard::loadPatient( const unsigned int p_uiId ) throw( cSevException )
@@ -282,8 +284,20 @@ bool cDBPatientCard::isAssignedCardExists() throw()
 
 void cDBPatientCard::synchronizeUnits() throw()
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(patientCardId) FROM patientcardunits WHERE patientCardId=%1 AND active=1" ).arg( m_uiId ) );
+    QString qsQuery = "";
+
+    qsQuery += QString( "SELECT COUNT(patientCardId) FROM patientcardunits WHERE " );
+    qsQuery += QString( "( patientCardId=%1 " ).arg( m_uiId );
+    if( parentId() > 0 )
+    {
+        qsQuery += QString( "OR patientCardId=%2 " ).arg( parentId() );
+    }
+    qsQuery += QString( " ) AND active=1 " );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
     poQuery->first();
+
     if( poQuery->size() > 0 )
         setUnits( poQuery->value(0).toInt() );
     else

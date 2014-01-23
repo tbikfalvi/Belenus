@@ -14,7 +14,7 @@ public:
     cDlgPatientCardEdit( QWidget *p_poParent = 0, cDBPatientCard *p_poPatientCard = NULL );
     virtual ~cDlgPatientCardEdit();
     void activatePatientCard();
-    void refillPatientCard();
+//    void refillPatientCard();
     void setPatientCardOwner( const unsigned int p_uiPatientId );
 
 protected:
