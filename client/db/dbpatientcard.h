@@ -2,6 +2,7 @@
 #define DB_PATIENTCARD_H
 
 #include <QSqlRecord>
+#include <QDate>
 
 #include "../../framework/sevexception.h"
 
@@ -22,6 +23,7 @@ public:
     bool            isPatientCardCanBeUsed(QString *p_qsValid)                  throw();
     bool            isAssignedCardExists()                                      throw();
     void            synchronizeUnits()                                          throw();
+    void            updateActiveUnits( QDate p_qdNew )                          throw();
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();
     unsigned int    licenceId() const                                           throw();

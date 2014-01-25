@@ -304,6 +304,13 @@ void cDBPatientCard::synchronizeUnits() throw()
         setUnits( 0 );
 }
 
+void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
+{
+    QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" ).arg( p_qdNew.toString("yyyy-MM-dd") ).arg( m_uiId );
+
+    g_poDB->executeQTQuery( qsQuery );
+}
+
 bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
 {
     QStringList         qslDays;
