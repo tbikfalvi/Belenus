@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDEDIT_H
 
 #include "belenus.h"
-#include "../../build/belenus/ui_dlgpatientcardedit.h"
+#include "ui_dlgpatientcardedit.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
 
@@ -13,8 +13,6 @@ class cDlgPatientCardEdit : public QDialog, protected Ui::dlgPatientCardEdit
 public:
     cDlgPatientCardEdit( QWidget *p_poParent = 0, cDBPatientCard *p_poPatientCard = NULL );
     virtual ~cDlgPatientCardEdit();
-    void activatePatientCard();
-//    void refillPatientCard();
     void setPatientCardOwner( const unsigned int p_uiPatientId );
 
 protected:
@@ -39,7 +37,6 @@ private slots:
     void on_ledBarcode_lostFocus();
     void on_cmbPatient_currentIndexChanged(int index);
     void on_cmbCardType_currentIndexChanged(int index);
-    void on_cbActive_toggled(bool checked);
     void on_pbCancel_clicked();
     void on_pbSave_clicked();
 };

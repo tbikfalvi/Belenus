@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>380</height>
+    <width>419</width>
+    <height>298</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_5">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
@@ -31,6 +31,12 @@
         </item>
         <item row="0" column="1">
          <widget class="QLineEdit" name="ledBarcode">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
             <width>150</width>
@@ -40,55 +46,58 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="lblSpacer">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QCheckBox" name="cbActive">
-          <property name="text">
-           <string>Active</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
          <widget class="QLabel" name="lblCardType">
           <property name="text">
            <string>Cardtype :</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="cmbCardType"/>
+        <item row="1" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QComboBox" name="cmbCardType"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="lblPrice">
-          <property name="text">
-           <string>Price :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="ledPrice">
-          <property name="maximumSize">
-           <size>
-            <width>150</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="lblPatient">
           <property name="text">
            <string>Owner :</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QComboBox" name="cmbPatient"/>
+        <item row="2" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QComboBox" name="cmbPatient"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -102,51 +111,51 @@
         <item row="0" column="0">
          <widget class="QLabel" name="lblUnits">
           <property name="text">
-           <string>Available units :</string>
+           <string>Balance :</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="ledUnits">
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>16777215</height>
-           </size>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLineEdit" name="ledBalance">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="lblTimeLeft">
+         <widget class="QLabel" name="lblValidDate">
           <property name="text">
-           <string>Time left (hh:mm:ss):</string>
+           <string>Valid :</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QTimeEdit" name="teTimeLeft">
-          <property name="maximumSize">
-           <size>
-            <width>80</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="displayFormat">
-           <string>hh:mm:ss</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="lblValidDate">
-          <property name="text">
-           <string>Valid till ... :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QDateEdit" name="deValidDateFrom">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>80</width>
@@ -182,6 +191,9 @@
           </item>
           <item>
            <widget class="QDateEdit" name="deValidDateTo">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="maximumSize">
              <size>
               <width>80</width>
@@ -193,6 +205,13 @@
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbChangeValidity">
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -211,24 +230,17 @@
           </item>
          </layout>
         </item>
-        <item row="3" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="lblComment">
           <property name="text">
            <string>Comment :</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item row="2" column="1">
          <widget class="QPlainTextEdit" name="pteComment"/>
         </item>
        </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkIndependent">
-       <property name="text">
-        <string>Independent from the local studio.</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -351,14 +363,8 @@
  </widget>
  <tabstops>
   <tabstop>ledBarcode</tabstop>
-  <tabstop>cbActive</tabstop>
-  <tabstop>cmbCardType</tabstop>
-  <tabstop>cmbPatient</tabstop>
-  <tabstop>ledUnits</tabstop>
-  <tabstop>teTimeLeft</tabstop>
   <tabstop>deValidDateFrom</tabstop>
   <tabstop>pteComment</tabstop>
-  <tabstop>checkIndependent</tabstop>
   <tabstop>pbSave</tabstop>
   <tabstop>pbCancel</tabstop>
  </tabstops>

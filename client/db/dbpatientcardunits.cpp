@@ -246,15 +246,7 @@ void cDBPatientcardUnit::deactivateUnits(const unsigned int p_uiId) throw( cSevE
     {
         QString     qsQuery;
 
-        if( m_qsArchive == "NEW" )
-        {
-            qsQuery = "DELETE FROM patientCardUnits ";
-        }
-        else
-        {
-            qsQuery = "UPDATE patientCardUnits SET active=0, archive=\"MOD\" ";
-        }
-        qsQuery += QString( " WHERE patientCardId = %1" ).arg( p_uiId );
+        qsQuery = QString( "UPDATE patientCardUnits SET validDateFrom='0000-00-00', validDateTo='0000-00-00', dateTimeUsed='0000-00-00 00:00:00', active=0, archive=\"MOD\" WHERE patientCardId=%1" ).arg( p_uiId );
 
         QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
 
