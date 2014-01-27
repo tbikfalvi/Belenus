@@ -124,11 +124,11 @@ void cDlgDiscount::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT discountId, licenceId, name, discountValue, discountPercent, active, archive FROM discounts WHERE discountId>0";
+        m_qsQuery = "SELECT discountId, licenceId, name, discountValue/100, discountPercent, active, archive FROM discounts WHERE discountId>0";
     }
     else
     {
-        m_qsQuery = "SELECT discountId AS id, name, discountValue, discountPercent FROM discounts WHERE discountId>0 AND active=1";
+        m_qsQuery = "SELECT discountId AS id, name, discountValue/100, discountPercent FROM discounts WHERE discountId>0 AND active=1";
     }
 
     if( rbFilterGeneral->isChecked() )

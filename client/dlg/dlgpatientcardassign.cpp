@@ -184,7 +184,7 @@ void cDlgPatientCardAssign::on_pbAssignVerify_clicked()
         {
             qsReason = tr( "This patientcard is already a main card." );
         }
-        else if( obDBPatientCard.patientCardTypeId() < 2 )
+        else if( obDBPatientCard.patientCardTypeId() == 1 )
         {
             qsReason = tr( "Service cards can not be assigned card." );
         }

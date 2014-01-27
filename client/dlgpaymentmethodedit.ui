@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>302</width>
-    <height>111</height>
+    <height>82</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,19 +29,12 @@
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkIndependent">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Independent from the local studio.</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QDialogButtonBox" name="btbButtons">
      <property name="standardButtons">
       <set>QDialogButtonBox::NoButton</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

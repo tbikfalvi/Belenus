@@ -20,7 +20,7 @@ protected:
 
 private slots:
     void slotRefreshWarningColors();
-    void on_ledBarcode_editingFinished();
+    void on_ledBarcode_textChanged(const QString &arg1);
     void on_pbCheckBarcode_clicked();
     void on_pbChangeValidity_clicked();
     void on_pbSave_clicked();

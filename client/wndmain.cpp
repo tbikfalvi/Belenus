@@ -862,16 +862,14 @@ void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
 //====================================================================================
 void cWndMain::showElementsForComponents()
 {
-    if( g_poPrefs->isComponentKiwiSunInstalled() )
-    {
-        toolBarSchedule->setEnabled( false );
-        toolBarSchedule->setVisible( false );
+    toolBarSchedule->setEnabled( false );
+    toolBarSchedule->setVisible( false );
 
-        action_Patients->setVisible( false );
-        action_Company->setVisible( false );
-        action_HealthInsurance->setVisible( false );
-        action_ReportPatients->setVisible( false );
-    }
+    action_Patients->setVisible( false );
+    action_Company->setVisible( false );
+    action_HealthInsurance->setVisible( false );
+    action_RegionZipCity->setVisible( false );
+    action_ReportPatients->setVisible( false );
 }
 //====================================================================================
 void cWndMain::updateTitle()
@@ -962,10 +960,10 @@ void cWndMain::updateToolbar()
         action_Cards->setEnabled( bIsUserLoggedIn );
         menuAdministrator->setEnabled( bIsUserLoggedIn );
             action_Users->setEnabled( bIsUserLoggedIn );
-            action_Company->setEnabled( bIsUserLoggedIn );
-            action_HealthInsurance->setEnabled( bIsUserLoggedIn );
+            action_Company->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
+            action_HealthInsurance->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
             action_Discounts->setEnabled( bIsUserLoggedIn );
-            action_RegionZipCity->setEnabled( bIsUserLoggedIn );
+            action_RegionZipCity->setEnabled( bIsUserLoggedIn && g_poPrefs->isComponentKiwiSunInstalled() );
             action_Panelgroups->setEnabled( bIsUserLoggedIn );
             action_Paneltypes->setEnabled( bIsUserLoggedIn );
             action_PanelStatuses->setEnabled( bIsUserLoggedIn );

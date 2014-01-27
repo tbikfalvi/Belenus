@@ -111,6 +111,9 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     connect( ledFilterBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledFilterMinCount, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
     connect( ledFilterMaxCount, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+
+    m_poBtnSave->setEnabled( false );
+    m_poBtnSave->setVisible( false );
 }
 
 cDlgProduct::~cDlgProduct()

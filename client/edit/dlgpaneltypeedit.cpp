@@ -13,6 +13,9 @@ cDlgPanelTypeEdit::cDlgPanelTypeEdit( QWidget *p_poParent, cDBPanelTypes *p_poPa
     setWindowTitle( tr( "Panel type" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
+    buttonBox->button(QDialogButtonBox::Ok)->setIcon( QIcon("./resources/40x40_ok.png") );
+    buttonBox->button(QDialogButtonBox::Cancel)->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     m_poPanelTypes = p_poPanelTypes;
 
     if( m_poPanelTypes )

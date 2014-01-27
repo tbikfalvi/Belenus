@@ -51,7 +51,7 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct, 
     ledProductCount->setText( "0" );
     ledProductCount->selectAll();
 
-    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductStorage", QPoint(400,310) );
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ProductStorage", QPoint(200,100) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
 
     m_bInit = false;

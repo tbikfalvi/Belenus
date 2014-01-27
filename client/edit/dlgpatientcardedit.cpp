@@ -77,7 +77,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
                     cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
             }
 
-            poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\"" ) );
+            poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
             while( poQuery->next() )
             {
                 cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
@@ -166,7 +166,7 @@ void cDlgPatientCardEdit::slotRefreshWarningColors()
     }
 }
 //-----------------------------------------------------------------------------------------------------------
-void cDlgPatientCardEdit::on_ledBarcode_editingFinished()
+void cDlgPatientCardEdit::on_ledBarcode_textChanged(const QString &arg1)
 //-----------------------------------------------------------------------------------------------------------
 {
     pbCheckBarcode->setIcon( QIcon("./resources/40x40_question.png") );
@@ -320,12 +320,23 @@ void cDlgPatientCardEdit::on_pbDeactivate_clicked()
 
         cmbCardType->setCurrentIndex( 0 );
         cmbPatient->setCurrentIndex( 0 );
+        ledBalance->setText( "" );
         deValidDateFrom->setDate( QDate(0,0,0) );
-        deValidDateTo->setDate( QDate(0000,0,0) );
+        deValidDateTo->setDate( QDate(0,0,0) );
 
         cDBPatientcardUnit  obDBPatientcardUnit;
 
         obDBPatientcardUnit.deactivateUnits( m_poPatientCard->id() );
+
+        cmbCardType->setEnabled( m_poPatientCard->active() );
+        cmbPatient->setEnabled( m_poPatientCard->active() );
+        ledBalance->setEnabled( false );
+        deValidDateFrom->setEnabled( false );
+        deValidDateTo->setEnabled( false );
+        pbChangeValidity->setEnabled( m_poPatientCard->active() );
+        pbDeactivate->setEnabled( m_poPatientCard->active() );
+        pbSell->setEnabled( !m_poPatientCard->active() );
+        pbRefill->setEnabled( m_poPatientCard->active() );
 
         pbCancel->setEnabled( false );
     }
@@ -801,12 +812,5 @@ void cDlgPatientCardEdit::on_ledBarcode_lostFocus()
     }
 }
 */
-
-
-
-
-
-
-
 
 

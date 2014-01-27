@@ -13,6 +13,9 @@ cDlgPanelGroupEdit::cDlgPanelGroupEdit( QWidget *p_poParent, cDBPanelGroups *p_p
     setWindowTitle( tr( "Panel group" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
+    buttonBox->button(QDialogButtonBox::Ok)->setIcon( QIcon("./resources/40x40_ok.png") );
+    buttonBox->button(QDialogButtonBox::Cancel)->setIcon( QIcon("./resources/40x40_cancel.png") );
+
     m_poPanelGroups = p_poPanelGroups;
 
     if( m_poPanelGroups )

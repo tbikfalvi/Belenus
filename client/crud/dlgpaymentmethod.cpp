@@ -47,8 +47,7 @@ void cDlgPaymentMethod::setupTableView()
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Sort order" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
 
@@ -66,7 +65,7 @@ void cDlgPaymentMethod::refreshTable()
     }
     else
     {
-        m_qsQuery = "SELECT paymentMethodId AS id, paymentMethodId AS sortorder, name FROM paymentmethods WHERE active=1";
+        m_qsQuery = "SELECT paymentMethodId AS id, name FROM paymentmethods WHERE active=1";
     }
 
     cDlgCrud::refreshTable();

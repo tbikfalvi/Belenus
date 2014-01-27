@@ -152,6 +152,9 @@
      <addaction name="action_Panelgroups"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
+     <addaction name="action_DeviceSettings"/>
+     <addaction name="separator"/>
+     <addaction name="action_CardTypes"/>
      <addaction name="separator"/>
      <addaction name="action_ProductTypes"/>
      <addaction name="action_ProductActionType"/>
@@ -164,10 +167,14 @@
      <addaction name="separator"/>
      <addaction name="action_EmptyDemoDB"/>
     </widget>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string/>
+     </property>
+    </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Guests"/>
     <addaction name="separator"/>
-    <addaction name="action_CardTypes"/>
     <addaction name="action_Cards"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
@@ -432,7 +439,7 @@
   </action>
   <action name="action_DeviceSettings">
    <property name="text">
-    <string>DeviceSettings</string>
+    <string>Device settings</string>
    </property>
    <property name="toolTip">
     <string>Current Device Settings</string>

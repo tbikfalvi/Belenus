@@ -31,25 +31,14 @@ void cDlgUsers::setupTableView()
 
     cDlgCrud::setupTableView();
 
-    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
-    {
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Real Name" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Privilege" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Comment" ) );
+    m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Active" ) );
+    m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Name" ) );
+    m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Real Name" ) );
+    m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Privilege" ) );
+    m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Comment" ) );
 
-        tbvCrud->sortByColumn( 4, Qt::AscendingOrder );
-    }
-    else
-    {
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Real Name" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Privilege" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Comment" ) );
+    tbvCrud->sortByColumn( 4, Qt::AscendingOrder );
 
-        tbvCrud->sortByColumn( 3, Qt::AscendingOrder );
-    }
     tbvCrud->resizeColumnToContents( 2 );
     tbvCrud->resizeColumnToContents( 3 );
     tbvCrud->resizeColumnToContents( 4 );
@@ -61,14 +50,7 @@ void cDlgUsers::refreshTable()
 {
     cTracer obTracer( "cDlgUsers::refreshTable" );
 
-    if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
-    {
-        m_qsQuery = "SELECT userId AS id, accgroup, active, name, realName, accGroup, comment FROM users";
-    }
-    else
-    {
-        m_qsQuery = "SELECT userId AS id, accgroup, name, realName, accGroup, comment FROM users WHERE active = 1";
-    }
+    m_qsQuery = "SELECT userId AS id, accgroup, active, name, realName, accGroup, comment FROM users";
 
     cDlgCrud::refreshTable();
 }

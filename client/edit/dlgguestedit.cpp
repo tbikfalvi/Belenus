@@ -195,19 +195,30 @@ cDlgGuestEdit::~cDlgGuestEdit()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbSaveExit_clicked()
 {
-    bool  boCanBeSaved = true;
+    bool    boCanBeSaved    = true;
+    QString qsErrorMessage  = "";
 
     if( ledName->text() == "" )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "Guest name cannot be empty." ) );
-        ledName->setFocus();
-        return;
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Guest name cannot be empty." ) );
+    }
+    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
     }
 
     if( boCanBeSaved )
     {
         if( _saveGuestData() )
             QDialog::accept();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
     }
 }
 //===========================================================================================================
@@ -222,18 +233,29 @@ void cDlgGuestEdit::on_pbCancel_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbSave_clicked()
 {
-    bool  boCanBeSaved = true;
+    bool    boCanBeSaved    = true;
+    QString qsErrorMessage  = "";
 
     if( ledName->text() == "" )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "Guest name cannot be empty." ) );
-        ledName->setFocus();
-        return;
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Guest name cannot be empty." ) );
+    }
+    if( !rbGenderMale->isChecked() && !rbGenderFemale->isChecked() )
+    {
+        boCanBeSaved = false;
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Gender of the guest must be set." ) );
     }
 
     if( boCanBeSaved )
     {
         _saveGuestData();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
     }
     slotEnableButtons();
 }

@@ -9,6 +9,8 @@
 cDlgProductEdit::cDlgProductEdit( QWidget *p_poParent, cDBProduct *p_poProduct )
     : QDialog( p_poParent )
 {
+    m_bIsOnlySave = false;
+
     setupUi( this );
 
     setWindowTitle( tr( "Product" ) );
@@ -106,29 +108,47 @@ void cDlgProductEdit::on_pbSave_clicked()
 {
     bool  boCanBeSaved = true;
 
+    QString qsErrorMessage = "";
+
     if( ledName->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Name of product must be set." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Name of product must be set." ) );
     }
     else
     {
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM products WHERE productId<>%1 AND name=\"%2\" AND active=1 AND archive<>\"DEL\"" ).arg(m_poProduct->id()).arg(ledName->text()) );
+        QSqlQuery *poQuery;
+
+        poQuery= g_poDB->executeQTQuery( QString( "SELECT * FROM products WHERE productId<>%1 AND name=\"%2\" AND active=1 AND archive<>\"DEL\"" ).arg(m_poProduct->id()).arg(ledName->text()) );
         if( poQuery->first() )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Product with this name already exists.\nPlease set another one." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Product with this name already exists.\nPlease set another one." ) );
         }
+
+        poQuery= g_poDB->executeQTQuery( QString( "SELECT * FROM products WHERE productId<>%1 AND barcode=\"%2\" AND active=1 AND archive<>\"DEL\"" ).arg(m_poProduct->id()).arg(ledBarcode->text()) );
+        if( poQuery->first() )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Product with this barcode already exists.\nPlease set another one." ) );
+        }
+
         if( poQuery ) delete poQuery;
     }
+
     if( ledPriceBuy->text() == "" )
         ledPriceBuy->setText( "0" );
     if( ledVatpercentBuy->text() == "" )
         ledVatpercentBuy->setText( "0" );
+
     if( ledPriceSell->text() == "" )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Sell price of product must be set." ) );
+        if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+        qsErrorMessage.append( tr( "Sell price of product must be set." ) );
     }
     if( ledVatpercentSell->text() == "" )
         ledVatpercentSell->setText( "0" );
@@ -179,6 +199,10 @@ void cDlgProductEdit::on_pbSave_clicked()
         {
             QDialog::accept();
         }
+    }
+    else
+    {
+        QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
     }
 }
 

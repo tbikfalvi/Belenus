@@ -8,10 +8,17 @@
 //-----------------------------------------------------------------------------------------------------------
 cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscount ) : QDialog( p_poParent )
 {
+    m_bLoading  = true;
+
     setupUi( this );
 
     setWindowTitle( tr( "Discount" ) );
     setWindowIcon( QIcon("./resources/40x40_discount.png") );
+
+    cmbHCDList->setEnabled( false );
+    gbDiscountCategory->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
+    gbValue->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
+    lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
 
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
@@ -113,9 +120,14 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
     connect( rbPaymentMethod, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbProduct, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
     connect( rbCoupon, SIGNAL(clicked()), this, SLOT(slotFillHCDComboList()) );
+    connect( ledDiscount, SIGNAL(textEdited(QString)), this, SLOT(slotCheckValue()) );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditDiscount", QPoint(517,269) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
+
+    m_bLoading = false;
+
+    slotCheckValue();
 }
 //===========================================================================================================
 //
@@ -330,6 +342,9 @@ void cDlgDiscountEdit::accept ()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgDiscountEdit::slotFillHCDComboList()
 {
+    lblName->setStyleSheet( "QLabel {font: normal;}" );
+    gbDiscountCategory->setStyleSheet( "QGroupBox {font: normal;}" );
+
     QSqlQuery *poQuery = NULL;
 
     ledName->setEnabled( false );
@@ -339,6 +354,11 @@ void cDlgDiscountEdit::slotFillHCDComboList()
     if( rbCoupon->isChecked() )
     {
         ledName->setEnabled( true );
+        if( !m_bLoading )
+        {
+            ledName->setText( "" );
+            lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        }
     }
 
     if( rbRegularCustomer->isChecked() ||
@@ -415,3 +435,19 @@ void cDlgDiscountEdit::slotFillHCDComboList()
     }
 }
 
+
+void cDlgDiscountEdit::slotCheckValue()
+{
+    gbValue->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
+
+    if( ledDiscount->text().length() > 0 && ledDiscount->text().toInt() > 0 )
+        gbValue->setStyleSheet( "QGroupBox {font: normal;}" );
+}
+
+void cDlgDiscountEdit::on_ledName_textChanged(const QString &arg1)
+{
+    if( ledName->text().length() > 0 )
+        lblName->setStyleSheet( "QLabel {font: normal;}" );
+    else
+        lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
+}

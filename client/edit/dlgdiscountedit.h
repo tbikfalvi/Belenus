@@ -14,6 +14,7 @@ public:
     virtual ~cDlgDiscountEdit();
 
 private:
+    bool    m_bLoading;
 
 public slots:
     virtual void accept ();
@@ -24,6 +25,8 @@ protected:
 private slots:
     void slotRefreshWarningColors();
     void slotFillHCDComboList();
+    void slotCheckValue();
+    void on_ledName_textChanged(const QString &arg1);
 };
 
 #endif

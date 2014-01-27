@@ -96,11 +96,24 @@ void cDlgUserEdit::accept ()
 {
     if( ledPwd->text() == ledRePwd->text() )
     {
-        bool  boCanBeSaved = true;
+        bool    boCanBeSaved    = true;
+        QString qsErrorMessage  = "";
+
+        QSqlQuery *poQuery;
+
+        poQuery= g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE userId<>%1 AND name=\"%2\" " ).arg(m_poUser->id()).arg(ledName->text()) );
+        if( poQuery->first() )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "User with this login name already exists.\nPlease set another one." ) );
+        }
+
         if( (ledPwd->text() == "") && !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Password cannot be empty." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Password cannot be empty." ) );
         }
         if( boCanBeSaved && ledPwd->text() != m_qsDefaultPwd )
         {
@@ -138,6 +151,10 @@ void cDlgUserEdit::accept ()
             }
 
             QDialog::accept();
+        }
+        else
+        {
+            QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
         }
     }
     else
