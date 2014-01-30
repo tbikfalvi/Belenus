@@ -75,7 +75,7 @@ public:
     void            activate();
     void            reload();
     void            refreshDisplay();
-    void            setTextInformation( QString p_qsInfoText );
+    void            setTextInformation( QString p_qsInfoText, bool p_bCallDisplayStatus = false );
 
     unsigned int    panelId();
     bool            isMainProcess();

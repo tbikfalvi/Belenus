@@ -354,7 +354,7 @@ void cFrmPanel::clean()
     m_bIsNeedToBeCleaned = false;
     if( m_qsInfo.compare( tr("NOT STERILE") ) == 0 )
     {
-        setTextInformation( "" );
+        setTextInformation( "", true );
     }
 }
 //====================================================================================
@@ -650,7 +650,7 @@ void cFrmPanel::displayStatus()
     {
         cCurrency   cPrice( m_inCashToPay );
 
-        m_qsInfo = tr("Cash to pay: ") + cPrice.currencyFullStringShort();
+        setTextInformation( tr("Cash to pay: ") + cPrice.currencyFullStringShort() );
     }
 
     QString     qsBackgroundColor = m_obStatusSettings.at(m_uiStatus)->backgroundColor();
@@ -664,7 +664,9 @@ void cFrmPanel::displayStatus()
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString( m_qsInfo );
 
-    emit signalSetInfoText( m_uiId-1, m_qsInfo );
+    if( m_inCashToPay < 1 )
+        emit signalSetInfoText( m_uiId-1, m_qsInfo );
+
     emit signalStatusChanged( m_uiId-1, m_obStatuses.at(m_uiStatus)->id(), m_qsStatus );
 
     if( m_uiStatus == 0 && m_inMainProcessLength == 0 )
@@ -777,14 +779,14 @@ void cFrmPanel::activateNextStatus()
     if( m_uiStatus == 0 )
     {
         // Gep hasznalat inditas
-        m_qsInfo = "";
+        setTextInformation( "" );
     }
 
     if( isMainProcess() )
     {
         // Kezeles vege
         closeAttendance();
-        m_qsInfo = tr( "NOT STERILE" );
+        setTextInformation( tr( "NOT STERILE" ) );
         m_bIsNeedToBeCleaned = true;
     }
 
@@ -825,8 +827,8 @@ void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
     m_inCashDiscountToPay   = 0;
     m_uiPatientToPay        = 0;
     m_uiLedgerId            = p_uiLedgerId;
-    m_qsInfo                = "";
 
+    setTextInformation( "" );
     displayStatus();
 }
 //====================================================================================
@@ -1122,12 +1124,14 @@ unsigned int cFrmPanel::_calculateWaitTime()
     return uiWaitTime;
 }
 //====================================================================================
-void cFrmPanel::setTextInformation(QString p_qsInfoText)
+void cFrmPanel::setTextInformation(QString p_qsInfoText, bool p_bCallDisplayStatus)
 //====================================================================================
 {
     cTracer obTrace( "cFrmPanel::setTextInformation" );
 
     m_qsInfo = p_qsInfoText;
-    displayStatus();
+
+    if( p_bCallDisplayStatus )
+        displayStatus();
 }
 //====================================================================================

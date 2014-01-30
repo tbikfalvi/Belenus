@@ -982,7 +982,7 @@ void cWndMain::updateToolbar()
             action_UseDeviceLater->setEnabled( bIsUserLoggedIn );
             action_DeviceClear->setEnabled( bIsUserLoggedIn && mdiPanels->isNeedToBeCleaned() );
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
-            action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup( cAccessGroup::ADMIN ) && mdiPanels->isStatusCanBeSkipped( mdiPanels->activePanel()) );
+            action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
