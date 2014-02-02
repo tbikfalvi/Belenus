@@ -147,7 +147,7 @@ void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected, co
 
     enableButtons();
 }
-
+/*
 QString cDlgCassaEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
@@ -167,7 +167,7 @@ QString cDlgCassaEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurren
 
     return qsRet;
 }
-
+*/
 void cDlgCassaEdit::enableButtons()
 {
 
