@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>431</width>
-    <height>350</height>
+    <height>353</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,7 +81,14 @@
           <item>
            <widget class="QComboBox" name="cmbPatient">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pbSelectPatient">
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -306,7 +313,7 @@
      <item>
       <widget class="QPushButton" name="pbSell">
        <property name="text">
-        <string>Sell</string>
+        <string>Refill</string>
        </property>
        <property name="iconSize">
         <size>

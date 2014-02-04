@@ -234,7 +234,7 @@ void cMdiPanels::refreshDisplay()
 
 void cMdiPanels::setTextInformation(QString p_qsInfoText)
 {
-    m_obPanels.at( m_uiActivePanel )->setTextInformation( p_qsInfoText );
+    m_obPanels.at( m_uiActivePanel )->setTextInformation( p_qsInfoText, true );
 }
 
 bool cMdiPanels::isPanelWorking( const unsigned int p_uiPanel )

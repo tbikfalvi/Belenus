@@ -82,6 +82,13 @@
            <widget class="QComboBox" name="cmbPatient"/>
           </item>
           <item>
+           <widget class="QPushButton" name="pbSelectPatient">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>

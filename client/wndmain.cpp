@@ -1381,8 +1381,18 @@ void cWndMain::on_action_PatientSelect_triggered()
 
     m_dlgProgress->hideProgress();
 
-    obDlgPatientSelect.exec();
-    updateTitle();
+    if( obDlgPatientSelect.exec() == QDialog::Accepted )
+    {
+        try
+        {
+            g_obGuest.load( obDlgPatientSelect.selectedPatientId() );
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+        updateTitle();
+    }
 }
 //====================================================================================
 void cWndMain::on_action_PatientEmpty_triggered()
@@ -1853,7 +1863,7 @@ void cWndMain::on_action_PatientCardSell_triggered()
                 }
             }
         }
-        if( obDBPatientCard.active() && obDBPatientCard.patientId() > 0 )
+        if( obDBPatientCard.active() )
         {
             if( obDBPatientCard.units() < 1 || obDBPatientCard.timeLeft() < 1 )
             {

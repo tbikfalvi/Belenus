@@ -26,6 +26,7 @@
 #include "../db/dbshoppingcart.h"
 #include "../db/dbpatientcardunits.h"
 #include "../db/dbdiscount.h"
+#include "../crud/dlgpatientselect.h"
 
 //===========================================================================================================
 //
@@ -42,6 +43,7 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
 
     if( m_poPatientCard )
     {
@@ -50,7 +52,7 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
         ledBarcode->setText( m_poPatientCard->barcode() );
 
         cmbCardType->addItem( tr("<Not selected>"), 0 );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\"" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardTypeId, name FROM patientCardTypes WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
         {
             if( poQuery->value(0) == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
@@ -62,7 +64,7 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
         }
 
         cmbPatient->addItem( tr("<Not selected>"), 0 );
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\"" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
         while( poQuery->next() )
         {
             cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
@@ -457,4 +459,17 @@ void cDlgPatientCardSell::on_pbSell_clicked()
 void cDlgPatientCardSell::on_pbCancel_clicked()
 {
     QDialog::reject();
+}
+
+void cDlgPatientCardSell::on_pbSelectPatient_clicked()
+{
+    cDlgPatientSelect  obDlgPatientSelect( this );
+
+    if( obDlgPatientSelect.exec() == QDialog::Accepted )
+    {
+        if( obDlgPatientSelect.selectedPatientId() > 0 )
+        {
+            cmbPatient->setCurrentIndex( cmbPatient->findData( obDlgPatientSelect.selectedPatientId() ) );
+        }
+    }
 }

@@ -29,6 +29,7 @@ private slots:
     void on_cmbPatient_currentIndexChanged(int index);
     void on_pbSell_clicked();
     void on_pbCancel_clicked();
+    void on_pbSelectPatient_clicked();
 };
 
 #endif

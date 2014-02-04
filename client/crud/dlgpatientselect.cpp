@@ -168,7 +168,8 @@ void cDlgPatientSelect::editClicked( bool ) {}
 
 void cDlgPatientSelect::on_pbSelect_clicked()
 {
-    try
+    QDialog::accept();
+/*    try
     {
         g_obGuest.load( m_uiSelectedId );
 
@@ -177,5 +178,5 @@ void cDlgPatientSelect::on_pbSelect_clicked()
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
-    }
+    }*/
 }

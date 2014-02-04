@@ -25,6 +25,7 @@ public:
     cDlgPatientSelect( QWidget *p_poParent = 0 );
     ~cDlgPatientSelect();
     void setSearchPatientName( QString p_stName );
+    unsigned int selectedPatientId() { return m_uiSelectedId; }
 
 protected:
     virtual void setupTableView();

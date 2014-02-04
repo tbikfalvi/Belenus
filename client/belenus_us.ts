@@ -4678,7 +4678,7 @@ Do you want to save the defined region and city anyway?</source>
     <message>
         <location filename="frmpanel.cpp" line="334"/>
         <location filename="frmpanel.cpp" line="355"/>
-        <location filename="frmpanel.cpp" line="787"/>
+        <location filename="frmpanel.cpp" line="789"/>
         <source>NOT STERILE</source>
         <translation></translation>
     </message>
@@ -4710,17 +4710,17 @@ Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="846"/>
+        <location filename="frmpanel.cpp" line="848"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1032"/>
+        <location filename="frmpanel.cpp" line="1034"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1033"/>
+        <location filename="frmpanel.cpp" line="1035"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>
@@ -6811,7 +6811,7 @@ Do you want to save them as new into the database?</source>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="309"/>
-        <source>Sell</source>
+        <source>Refill</source>
         <translation></translation>
     </message>
     <message>

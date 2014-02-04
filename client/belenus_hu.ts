@@ -7001,7 +7001,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
         <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1032"/>
+        <location filename="frmpanel.cpp" line="1034"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -7034,7 +7034,7 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     <message>
         <location filename="frmpanel.cpp" line="334"/>
         <location filename="frmpanel.cpp" line="355"/>
-        <location filename="frmpanel.cpp" line="787"/>
+        <location filename="frmpanel.cpp" line="789"/>
         <source>NOT STERILE</source>
         <translation>NEM STERIL</translation>
     </message>
@@ -7054,12 +7054,12 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="846"/>
+        <location filename="frmpanel.cpp" line="848"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1033"/>
+        <location filename="frmpanel.cpp" line="1035"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
@@ -10198,8 +10198,12 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="309"/>
+        <source>Refill</source>
+        <translation>Feltöltés</translation>
+    </message>
+    <message>
         <source>Sell</source>
-        <translation>Eladás</translation>
+        <translation type="obsolete">Eladás</translation>
     </message>
     <message>
         <location filename="dlgpatientcardrefill.ui" line="322"/>
