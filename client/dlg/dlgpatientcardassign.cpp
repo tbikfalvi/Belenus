@@ -172,29 +172,32 @@ void cDlgPatientCardAssign::on_pbAssignVerify_clicked()
 
         QString qsReason = "";
 
-        if( obDBPatientCard.parentId() > 0 )
+        if( obDBPatientCard.active() )
         {
-            cDBPatientCard  obParent;
+            if( obDBPatientCard.parentId() > 0 )
+            {
+                cDBPatientCard  obParent;
 
-            obParent.load( obDBPatientCard.parentId() );
-            qsReason = tr( "This patientcard has been already assigned to another card.\n"
-                          "The main card barcode is: %1\n" ).arg( obParent.barcode() );
-        }
-        else if( obDBPatientCard.isAssignedCardExists() )
-        {
-            qsReason = tr( "This patientcard is already a main card." );
-        }
-        else if( obDBPatientCard.patientCardTypeId() == 1 )
-        {
-            qsReason = tr( "Service cards can not be assigned card." );
-        }
-        else if( obDBPatientCard.pincode().compare("LOST") == 0 )
-        {
-            qsReason = tr( "This patientcard has been lost and replaced\nand can not be used or sold again." );
-        }
-        else if( QDate::fromString( obDBPatientCard.validDateTo(), "yyyy-MM-dd" ) < QDate::currentDate() )
-        {
-            qsReason = tr( "The validity of this patientcard has been expired on %1" ).arg( obDBPatientCard.validDateTo() );
+                obParent.load( obDBPatientCard.parentId() );
+                qsReason = tr( "This patientcard has been already assigned to another card.\n"
+                              "The main card barcode is: %1\n" ).arg( obParent.barcode() );
+            }
+            else if( obDBPatientCard.isAssignedCardExists() )
+            {
+                qsReason = tr( "This patientcard is already a main card." );
+            }
+            else if( obDBPatientCard.patientCardTypeId() == 1 )
+            {
+                qsReason = tr( "Service cards can not be assigned card." );
+            }
+            else if( obDBPatientCard.pincode().compare("LOST") == 0 )
+            {
+                qsReason = tr( "This patientcard has been lost and replaced\nand can not be used or sold again." );
+            }
+            else if( QDate::fromString( obDBPatientCard.validDateTo(), "yyyy-MM-dd" ) < QDate::currentDate() )
+            {
+                qsReason = tr( "The validity of this patientcard has been expired on %1" ).arg( obDBPatientCard.validDateTo() );
+            }
         }
 
         if( qsReason.length() == 0 )

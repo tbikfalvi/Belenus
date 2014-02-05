@@ -503,6 +503,7 @@ void cDlgProductSell::on_pbRefresh_clicked()
 
     qvProducts.clear();
     cmbProduct->clear();
+    cmbProduct->setEnabled( true );
 
     if( poQuery->size() > 1 )
     {
@@ -519,6 +520,23 @@ void cDlgProductSell::on_pbRefresh_clicked()
 
         cmbProduct->addItem( tr("<Select product to sell>"), 0 );
     }
+    else if( poQuery->size() < 1 )
+    {
+        tsTemp = new tsProducts;
+
+        tsTemp->uiId            = 0;
+        tsTemp->qsName          = "";
+        tsTemp->qsBarcode       = "";
+        tsTemp->inNetPrice      = 0;
+        tsTemp->inVatPercent    = 0;
+        tsTemp->inProductCount  = 0;
+
+        qvProducts.append( tsTemp );
+
+        cmbProduct->addItem( tr("<No product found for selected filter conditions>"), 0 );
+        cmbProduct->setEnabled( false );
+    }
+
     while( poQuery->next() )
     {
         tsTemp = new tsProducts;
