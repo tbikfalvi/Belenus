@@ -21,7 +21,7 @@ public:
     QLabel          *lblBarcode;
     QLineEdit       *ledBarcode;
     QSpacerItem     *horizontalSpacer1;
-    QPushButton     *pbPatientCardType;
+//    QPushButton     *pbPatientCardType;
     QPushButton     *pbPatientCardReplace;
     QPushButton     *pbPartnerCardAssign;
 
@@ -40,11 +40,11 @@ private:
     bool             _isPatientCardNotForService();
 
 protected slots:
-    virtual void     refreshTable( QString p_qsCondition = "");
+    virtual void     refreshTable( QString p_qsCondition = "" );
     virtual void     newClicked( bool );
     virtual void     deleteClicked( bool );
     virtual void     editClicked( bool );
-    virtual void     _slotPatientCardTypes();
+//    virtual void     _slotPatientCardTypes();
     virtual void     _slotPatientCardReplace();
     virtual void     _slotPartnerCardAssign();
 };

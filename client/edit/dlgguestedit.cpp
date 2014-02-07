@@ -313,7 +313,14 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
             if( obDBPatientCard.pincode().compare("LOST") == 0 )
             {
                 QMessageBox::warning( this, tr("Attention"),
-                                      tr("This patientcard has been lost and replaced\nand can not be used or sold again.") );
+                                      tr("This patientcard has been lost and replaced\n"
+                                         "and can not be used or sold again.") );
+                return;
+            }
+            if( obDBPatientCard.active() )
+            {
+                QMessageBox::warning( this, tr("Attention"),
+                                      tr("This patientcard is in use. Active patientcard can not be sold again.") );
                 return;
             }
         }
@@ -381,22 +388,32 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbDislink_clicked()
 {
-    if( m_poPatientCard->id() < 1 ) return;
+    cDlgPatientCardSelect   obDlgSelect( this, m_poGuest->id() );
+    unsigned int uiPCardId = 0;
 
-    if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to disjoin this card from patient?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    if( obDlgSelect.exec() == QDialog::Accepted )
     {
-        if( m_poPatientCard->patientId() == m_poGuest->id() )
+        uiPCardId = obDlgSelect.selected();
+
+        if( m_poPatientCard->id() < 1 ) return;
+
+        if( QMessageBox::question( this, tr( "Question" ),
+                                   tr( "Are you sure you want to disjoin the selected card from patient?" ),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            m_poPatientCard->setPatientId( 0 );
-            m_poPatientCard->save();
-        }
-        else
-        {
-            g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2 AND licenceId = %3" ).arg(m_poPatientCard->id()).arg(m_poGuest->id()).arg(g_poPrefs->getLicenceId()) );
+            if( m_poPatientCard->id() == uiPCardId )
+            {
+                m_poPatientCard->setPatientId( 0 );
+                m_poPatientCard->save();
+            }
+            else
+            {
+                g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2" ).arg(uiPCardId).arg(m_poGuest->id()) );
+            }
         }
     }
+    ledBarcode->setText( "" );
+    ledPatientcardType->setText( "" );
     _fillPatientCardData();
     slotEnableButtons();
 }

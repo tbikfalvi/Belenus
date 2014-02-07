@@ -86,7 +86,7 @@ cDlgPatientCardEdit::cDlgPatientCardEdit( QWidget *p_poParent, cDBPatientCard *p
             }
         }
 
-        ledBalance->setText( QString( "%1 unit(s) including %2 minutes" ).arg(m_poPatientCard->units()).arg(m_poPatientCard->timeLeft()/60) );
+        ledBalance->setText( tr( "%1 unit(s) including %2 minutes" ).arg(m_poPatientCard->units()).arg(m_poPatientCard->timeLeft()/60) );
         deValidDateFrom->setDate( QDate::fromString(m_poPatientCard->validDateFrom(),"yyyy-MM-dd") );
         deValidDateTo->setDate( QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") );
         pteComment->setPlainText( m_poPatientCard->comment() );

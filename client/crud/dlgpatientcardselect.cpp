@@ -4,23 +4,52 @@
 #include "dlgpatientcardselect.h"
 #include "dlg/dlgprogress.h"
 
-cDlgPatientCardSelect::cDlgPatientCardSelect( QWidget *p_poParent )
-    : cDlgPatientCard( p_poParent )
+cDlgPatientCardSelect::cDlgPatientCardSelect( QWidget *p_poParent, unsigned int p_uiPatientId ) : cDlgPatientCard( p_poParent )
 {
+    m_qsCondPatient = "";
+
+    if( p_uiPatientId > 0 )
+    {
+        m_qsCondPatient.append( " (patientCards.patientId=" );
+        m_qsCondPatient.append( QString::number(p_uiPatientId) );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM connectpatientwithcard WHERE patientId=%1" ).arg( p_uiPatientId ) );
+
+        if( poQuery->size() > 0 )
+        {
+            QStringList qslIds;
+
+            while( poQuery->next() )
+            {
+                qslIds << poQuery->value(0).toString();
+            }
+            m_qsCondPatient.append( " OR patientCards.patientCardId IN (" );
+            m_qsCondPatient.append( qslIds.join(",") );
+            m_qsCondPatient.append( ") " );
+        }
+        m_qsCondPatient.append( ") AND patientCards.active=1 " );
+    }
+
     setWindowTitle( tr( "PatientCard List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );
 
+    m_poBtnSave->setEnabled(false);
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);
     m_poBtnEdit->setEnabled(false);
     m_poBtnNew->setEnabled(false);
-    pbPatientCardType->setEnabled(false);
+//    pbPatientCardType->setEnabled(false);
+    pbPatientCardReplace->setEnabled(false);
+    pbPartnerCardAssign->setEnabled(false);
 
+    m_poBtnSave->setVisible(false);
     m_poBtnClose->setVisible(false);
     m_poBtnDelete->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnNew->setVisible(false);
-    pbPatientCardType->setVisible(false);
+//    pbPatientCardType->setVisible(false);
+    pbPatientCardReplace->setVisible(false);
+    pbPartnerCardAssign->setVisible(false);
 
     pbSelect = new QPushButton( tr( "Select" ), this );
     pbSelect->setObjectName( QString::fromUtf8( "pbSelect" ) );
@@ -61,12 +90,14 @@ void cDlgPatientCardSelect::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Barcode" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Owner" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid from" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid to" ) );
-        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Amount" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Patientcard type" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "All units" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 11, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 12, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -79,6 +110,8 @@ void cDlgPatientCardSelect::setupTableView()
         tbvCrud->resizeColumnToContents( 8 );
         tbvCrud->resizeColumnToContents( 9 );
         tbvCrud->resizeColumnToContents( 10 );
+        tbvCrud->resizeColumnToContents( 11 );
+        tbvCrud->resizeColumnToContents( 12 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -87,11 +120,13 @@ void cDlgPatientCardSelect::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Barcode" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Owner" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Patientcard type" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "All units" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Valid from" ) );
-        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid to" ) );
-        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Amount" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Patientcard type" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "All units" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Active" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
@@ -101,6 +136,8 @@ void cDlgPatientCardSelect::setupTableView()
         tbvCrud->resizeColumnToContents( 6 );
         tbvCrud->resizeColumnToContents( 7 );
         tbvCrud->resizeColumnToContents( 8 );
+        tbvCrud->resizeColumnToContents( 9 );
+        tbvCrud->resizeColumnToContents( 10 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -108,7 +145,7 @@ void cDlgPatientCardSelect::setupTableView()
 
 void cDlgPatientCardSelect::refreshTable()
 {
-    cDlgPatientCard::refreshTable( QString("patientCards.active=1") );
+    cDlgPatientCard::refreshTable( m_qsCondPatient );
 }
 
 void cDlgPatientCardSelect::enableButtons()

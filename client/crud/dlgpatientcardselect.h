@@ -15,13 +15,14 @@ public:
     QPushButton *pbSelect;
     QPushButton *pbCancel;
 
-    cDlgPatientCardSelect( QWidget *p_poParent = 0 );
+    cDlgPatientCardSelect( QWidget *p_poParent = 0, unsigned int p_uiPatientId = 0 );
     virtual ~cDlgPatientCardSelect();
 
     unsigned int selected();
 
 private:
-    QString m_qsCity;
+    QString         m_qsCity;
+    QString         m_qsCondPatient;
 
 protected:
     virtual void setupTableView();

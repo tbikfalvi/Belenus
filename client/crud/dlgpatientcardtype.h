@@ -19,7 +19,7 @@ public:
     QLineEdit   *ledFilterName;
     QLabel      *lblFilterUnits;
     QLineEdit   *ledFilterUnits;
-    QPushButton *pbPatientCard;
+//    QPushButton *pbPatientCard;
 
 protected:
     virtual void setupTableView();
@@ -33,7 +33,7 @@ protected slots:
     virtual void newClicked( bool );
     virtual void deleteClicked( bool );
     virtual void editClicked( bool );
-    virtual void _slotPatientCards();
+//    virtual void _slotPatientCards();
 };
 
 #endif // DLGPATIENTCARDTYPE_H

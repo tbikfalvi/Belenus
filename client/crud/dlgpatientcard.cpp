@@ -55,14 +55,14 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     {
         cmbPatientCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
     }
-
+/*
     pbPatientCardType = new QPushButton( tr( "Patientcard types" ), this );
     pbPatientCardType->setObjectName( QString::fromUtf8( "pbPatientCardType" ) );
     pbPatientCardType->setIconSize( QSize(20, 20) );
     pbPatientCardType->setIcon( QIcon("./resources/40x40_patientcardtype.png") );
     btbButtonsSide->addButton( pbPatientCardType, QDialogButtonBox::RejectRole );
     connect( pbPatientCardType, SIGNAL(clicked()), this, SLOT(_slotPatientCardTypes()) );
-
+*/
     pbPatientCardReplace = new QPushButton( tr( "Replace lost" ), this );
     pbPatientCardReplace->setObjectName( QString::fromUtf8( "pbPatientCardReplace" ) );
     pbPatientCardReplace->setIconSize( QSize(20, 20) );
@@ -333,7 +333,7 @@ bool cDlgPatientCard::_isPatientCardNotForService()
 
     return bRet;
 }
-
+/*
 void cDlgPatientCard::_slotPatientCardTypes()
 {
     cDlgPatientCardType   obDlgPatientCardType( m_poParent );
@@ -341,7 +341,7 @@ void cDlgPatientCard::_slotPatientCardTypes()
     QDialog::accept();
     obDlgPatientCardType.exec();
 }
-
+*/
 void cDlgPatientCard::_slotPatientCardReplace()
 {
     cDBPatientCard  *poPatientCard = new cDBPatientCard;
