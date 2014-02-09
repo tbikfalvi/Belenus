@@ -8316,9 +8316,8 @@ allergia :</translation>
         <translation>&amp;3. Egyéb</translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="187"/>
         <source> Action </source>
-        <translation> Beavatkozás </translation>
+        <translation type="obsolete"> Beavatkozás </translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="490"/>
@@ -8329,6 +8328,11 @@ allergia :</translation>
         <location filename="dlgcassaaction.ui" line="246"/>
         <source>Cash given :</source>
         <translation>Készpénzzel fizetve :</translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="187"/>
+        <source> Payment details </source>
+        <translation> Fizetés részletezés </translation>
     </message>
     <message>
         <location filename="dlgcassaaction.ui" line="329"/>

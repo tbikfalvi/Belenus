@@ -216,6 +216,7 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Cassa history id not found" );
 
+    // Ha sztornó tétel
     poQuery->first();
     if( poQuery->value(2).toUInt() > 0 )
     {
@@ -224,6 +225,7 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM cassaHistory WHERE parentId = %1" ).arg( p_uiId ) );
 
+    // Ha sztornózott tétel
     if( poQuery->size() > 0 )
     {
         return false;
@@ -232,7 +234,8 @@ bool cDBCassaHistory::isRevokeEnabled( const unsigned int p_uiId ) const throw()
     poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM ledger, cassaHistory WHERE cassaHistoryId = %1 AND ledger.ledgerId=cassaHistory.ledgerId" ).arg( p_uiId ) );
     poQuery->first();
 
-    if( poQuery->size() > 0 && poQuery->value(4).toUInt() > 0 )
+    // Ha géphasználat, vagy kassza nyitás, zárás
+    if( poQuery->size() > 0 && poQuery->value(3).toUInt() < 2 )
     {
         return false;
     }

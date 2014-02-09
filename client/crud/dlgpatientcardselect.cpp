@@ -27,8 +27,13 @@ cDlgPatientCardSelect::cDlgPatientCardSelect( QWidget *p_poParent, unsigned int 
             m_qsCondPatient.append( qslIds.join(",") );
             m_qsCondPatient.append( ") " );
         }
-        m_qsCondPatient.append( ") AND patientCards.active=1 " );
+        m_qsCondPatient.append( ") " );
     }
+
+    if( m_qsCondPatient.length() > 0 )
+        m_qsCondPatient.append( " AND ");
+
+    m_qsCondPatient.append( " patientCards.active=1 ");
 
     setWindowTitle( tr( "PatientCard List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcard.png") );

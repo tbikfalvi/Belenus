@@ -401,7 +401,7 @@ void cDlgGuestEdit::on_pbDislink_clicked()
                                    tr( "Are you sure you want to disjoin the selected card from patient?" ),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            if( m_poPatientCard->id() == uiPCardId )
+            if( m_poPatientCard->id() == uiPCardId && m_poPatientCard->patientId() == m_poGuest->id() )
             {
                 m_poPatientCard->setPatientId( 0 );
                 m_poPatientCard->save();
@@ -410,6 +410,7 @@ void cDlgGuestEdit::on_pbDislink_clicked()
             {
                 g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2" ).arg(uiPCardId).arg(m_poGuest->id()) );
             }
+            m_poPatientCard->createNew();
         }
     }
     ledBarcode->setText( "" );

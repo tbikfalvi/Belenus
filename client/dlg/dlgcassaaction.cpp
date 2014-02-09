@@ -6,6 +6,8 @@
 
 cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShoppingCart ) : QDialog( p_poParent )
 {
+    m_bActionPayment = false;
+
     setupUi( this );
 
     setWindowTitle( tr("Cassa action") );
@@ -14,6 +16,10 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     pbPayCash->setIcon( QIcon("./resources/40x40_paywithcash.png") );
     pbPayCard->setIcon( QIcon("./resources/40x40_paywithcard.png") );
     pbPayOther->setIcon( QIcon("./resources/40x40_question.png") );
+
+    pbCalculateCash->setIcon( QIcon("./resources/40x40_refresh.png") );
+    pbCalculateCard->setIcon( QIcon("./resources/40x40_refresh.png") );
+    pbCalculateVoucher->setIcon( QIcon("./resources/40x40_refresh.png") );
 
     pbComment->setIcon( QIcon("./resources/40x40_edit.png") );
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
@@ -88,6 +94,7 @@ void cDlgCassaAction::setPayWithCreditcard()
 
 void cDlgCassaAction::actionPayment()
 {
+    m_bActionPayment = true;
     pbShoppingCart->setEnabled( false );
     frmCoupon->setVisible( false );
     frmCoupon->setEnabled( false );
@@ -139,15 +146,9 @@ void cDlgCassaAction::on_pbPayCash_clicked()
 
     cmbPaymentType->setEnabled( false );
 
-    if( pbPayCash->isChecked() )
-    {
-        pbPayCard->setChecked( false );
-        pbPayOther->setChecked( false );
-    }
-    else
-    {
-        pbPayCash->setChecked( true );
-    }
+    pbPayCard->setChecked( false );
+    pbPayOther->setChecked( false );
+    pbPayCash->setChecked( true );
 
     cCurrency   cToPay( ledAmountToPay->text() );
 
@@ -157,6 +158,8 @@ void cDlgCassaAction::on_pbPayCash_clicked()
 
     ledCashGiven->setFocus();
     ledCashGiven->selectAll();
+
+    _updateButtons();
 }
 
 void cDlgCassaAction::on_pbPayCard_clicked()
@@ -167,15 +170,9 @@ void cDlgCassaAction::on_pbPayCard_clicked()
 
     cmbPaymentType->setEnabled( false );
 
-    if( pbPayCard->isChecked() )
-    {
-        pbPayCash->setChecked( false );
-        pbPayOther->setChecked( false );
-    }
-    else
-    {
-        pbPayCard->setChecked( true );
-    }
+    pbPayCash->setChecked( false );
+    pbPayOther->setChecked( false );
+    pbPayCard->setChecked( true );
 
     cCurrency   cToPay( ledAmountToPay->text() );
 
@@ -185,6 +182,8 @@ void cDlgCassaAction::on_pbPayCard_clicked()
 
     ledCardGiven->setFocus();
     ledCardGiven->selectAll();
+
+    _updateButtons();
 }
 
 void cDlgCassaAction::on_pbPayOther_clicked()
@@ -195,15 +194,9 @@ void cDlgCassaAction::on_pbPayOther_clicked()
 
     cmbPaymentType->setEnabled( true );
 
-    if( pbPayOther->isChecked() )
-    {
-        pbPayCash->setChecked( false );
-        pbPayCard->setChecked( false );
-    }
-    else
-    {
-        pbPayOther->setChecked( true );
-    }
+    pbPayCash->setChecked( false );
+    pbPayCard->setChecked( false );
+    pbPayOther->setChecked( true );
 
     cCurrency   cToPay( ledAmountToPay->text() );
 
@@ -212,6 +205,8 @@ void cDlgCassaAction::on_pbPayOther_clicked()
     ledVoucherGiven->setText( "0" );
 
     cmbPaymentType->setFocus();
+
+    _updateButtons();
 }
 
 void cDlgCassaAction::on_ledCashGiven_textChanged(const QString&)
@@ -292,12 +287,14 @@ void cDlgCassaAction::checkGivenValues()
         ledCashGiven->setStyleSheet( "QLineEdit {border: 0; background: transparent; color: rgb(255, 0, 0);}" );
         ledCardGiven->setStyleSheet( "QLineEdit {border: 0; background: transparent; color: rgb(255, 0, 0);}" );
         ledVoucherGiven->setStyleSheet( "QLineEdit {border: 0; background: transparent; color: rgb(255, 0, 0);}" );
+        _updateButtons( false );
     }
     else
     {
         ledCashGiven->setStyleSheet( "QLineEdit {border: 0; background: transparent; color: rgb(0, 85, 0);}" );
         ledCardGiven->setStyleSheet( "QLineEdit {border: 0; background: transparent; color: rgb(0, 85, 0);}" );
         ledVoucherGiven->setStyleSheet( "QLineEdit {border: 0; background: transparent; color: rgb(0, 85, 0);}" );
+        _updateButtons();
     }
 }
 
@@ -387,4 +384,69 @@ void cDlgCassaAction::on_pbCancel_clicked()
     m_bShoppingCart = false;
 
     QDialog::reject();
+}
+
+void cDlgCassaAction::_updateButtons( bool p_bEnabled )
+{
+    bool    bEnablePayment = p_bEnabled;
+
+    if( pbPayOther->isChecked() && cmbPaymentType->currentIndex() == 0 )
+    {
+        bEnablePayment = false;
+    }
+
+    pbOk->setEnabled( bEnablePayment );
+    if( !m_bActionPayment )
+    {
+        pbShoppingCart->setEnabled( bEnablePayment );
+    }
+}
+
+void cDlgCassaAction::on_cmbPaymentType_currentIndexChanged(int)
+{
+    _updateButtons();
+}
+
+void cDlgCassaAction::on_pbCalculateCash_clicked()
+{
+    cCurrency   cToPay( ledAmountToPay->text() );
+    cCurrency   cCard( ledCardGiven->text() );
+    cCurrency   cVoucher( ledVoucherGiven->text() );
+
+    int inSum = cToPay.currencyValue().toInt() - cCard.currencyValue().toInt() - cVoucher.currencyValue().toInt();
+
+    cCurrency   cCash( inSum );
+
+    ledCashGiven->setText( cCash.currencyStringSeparator() );
+
+    checkGivenValues();
+}
+
+void cDlgCassaAction::on_pbCalculateCard_clicked()
+{
+    cCurrency   cToPay( ledAmountToPay->text() );
+    cCurrency   cCash( ledCashGiven->text() );
+    cCurrency   cVoucher( ledVoucherGiven->text() );
+
+    int inSum = cToPay.currencyValue().toInt() - cCash.currencyValue().toInt() - cVoucher.currencyValue().toInt();
+
+    cCurrency   cCard( inSum );
+
+    ledCardGiven->setText( cCard.currencyStringSeparator() );
+
+    checkGivenValues();}
+
+void cDlgCassaAction::on_pbCalculateVoucher_clicked()
+{
+    cCurrency   cToPay( ledAmountToPay->text() );
+    cCurrency   cCash( ledCashGiven->text() );
+    cCurrency   cCard( ledCardGiven->text() );
+
+    int inSum = cToPay.currencyValue().toInt() - cCash.currencyValue().toInt() - cCard.currencyValue().toInt();
+
+    cCurrency   cVoucher( inSum );
+
+    ledVoucherGiven->setText( cVoucher.currencyStringSeparator() );
+
+    checkGivenValues();
 }

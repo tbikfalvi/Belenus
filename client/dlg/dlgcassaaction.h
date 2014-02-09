@@ -32,6 +32,9 @@ private:
     int                  m_nHeightSmall;
     int                  m_nHeightBig;
     bool                 m_bShoppingCart;
+    bool                 m_bActionPayment;
+
+    void                _updateButtons( bool p_bEnabled = true );
 
 private slots:
     void checkGivenValues();
@@ -47,6 +50,10 @@ private slots:
     void on_cmbCoupon_currentIndexChanged(int index);
     void on_ledCashGiven_textChanged(const QString &arg1);
     void on_ledCardGiven_textChanged(const QString &arg1);
+    void on_cmbPaymentType_currentIndexChanged(int index);
+    void on_pbCalculateCash_clicked();
+    void on_pbCalculateCard_clicked();
+    void on_pbCalculateVoucher_clicked();
 };
 
 #endif

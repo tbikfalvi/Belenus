@@ -5376,11 +5376,6 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="187"/>
-        <source> Action </source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="dlgcassaaction.ui" line="490"/>
         <source>Amount to pay :</source>
         <translation></translation>
@@ -5428,6 +5423,11 @@ Do you want to register it for a new patientcard?</source>
     <message>
         <location filename="dlgcassaaction.ui" line="167"/>
         <source>Cancel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgcassaaction.ui" line="187"/>
+        <source> Payment details </source>
         <translation></translation>
     </message>
     <message>
