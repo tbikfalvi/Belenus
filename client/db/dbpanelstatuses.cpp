@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbpanelstatuses.h"
+#include "dbpanelstatussettings.h"
 
 cDBPanelStatuses::cDBPanelStatuses()
 {
@@ -162,17 +163,39 @@ void cDBPanelStatuses::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_qsArchive != "NEW" )
-        {
+//        if( m_qsArchive != "NEW" )
+//        {
             qsQuery = "DELETE FROM panelStatuses ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelStatuses SET active=0, archive=\"MOD\" ";
-        }
+//        }
+//        else
+//        {
+//            qsQuery = "UPDATE panelStatuses SET active=0, archive=\"MOD\" ";
+//        }
         qsQuery += QString( " WHERE panelStatusId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
+void cDBPanelStatuses::remove(const unsigned int p_uiPanelTypeId) throw( cSevException )
+{
+    cTracer obTrace( "cDBPanelStatuses::remove" );
+
+    if( p_uiPanelTypeId )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE panelTypeId = %1" ).arg( p_uiPanelTypeId ) );
+
+        while( poQuery->next() )
+        {
+            cDBPanelStatusSettings obDBPanelStatusSettings;
+
+            obDBPanelStatusSettings.remove( poQuery->value(0).toUInt() );
+
+            load( poQuery->value(0).toUInt() );
+            remove();
+        }
+
         if( poQuery ) delete poQuery;
     }
 }

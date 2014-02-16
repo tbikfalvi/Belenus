@@ -129,6 +129,15 @@ void cDlgPanelTypes::deleteClicked( bool )
     {
         try
         {
+            QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE panelTypeId=%1" ).arg( m_uiSelectedId ) );
+            if( poQuery->first() )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("You are not allowed to delete panel type\n"
+                                         "linked to one or more panels."));
+                return;
+            }
+
             poPanelTypes = new cDBPanelTypes;
             poPanelTypes->load( m_uiSelectedId );
             if( poPanelTypes->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )

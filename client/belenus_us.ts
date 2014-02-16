@@ -526,29 +526,29 @@ Do you want to save them as new into the database?</source>
 <context>
     <name>cDlgCassaAction</name>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="11"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="13"/>
         <source>Cassa action</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="48"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="57"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="54"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="63"/>
         <source>&lt;Not selected&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="356"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="353"/>
         <source>Coupon used: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="115"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="128"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="122"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="135"/>
         <source>Comment &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="119"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="126"/>
         <source>Comment &lt;&lt;</source>
         <translation></translation>
     </message>
@@ -1074,17 +1074,17 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="425"/>
+        <location filename="edit/dlgguestedit.cpp" line="426"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="425"/>
+        <location filename="edit/dlgguestedit.cpp" line="426"/>
         <source>Not implemented yet.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="579"/>
+        <location filename="edit/dlgguestedit.cpp" line="580"/>
         <source>%1 $</source>
         <translation></translation>
     </message>
@@ -1686,12 +1686,19 @@ Number of skipped items (due to avoid duplication): %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpaneltypes.cpp" line="136"/>
+        <location filename="crud/dlgpaneltypes.cpp" line="135"/>
+        <location filename="crud/dlgpaneltypes.cpp" line="145"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpaneltypes.cpp" line="137"/>
+        <location filename="crud/dlgpaneltypes.cpp" line="136"/>
+        <source>You are not allowed to delete panel type
+linked to one or more panels.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpaneltypes.cpp" line="146"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation></translation>
     </message>
@@ -2347,92 +2354,92 @@ Please relogin to enable cassa.</source>
 <context>
     <name>cDlgPatientCardSelect</name>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="33"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="38"/>
         <source>PatientCard List</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="54"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="59"/>
         <source>Select</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="59"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="64"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="88"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="93"/>
         <source>Id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="89"/>
-        <source>LicenceId</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="90"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="120"/>
-        <source>Barcode</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="91"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="121"/>
-        <source>Owner</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="92"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="122"/>
-        <source>Units</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="crud/dlgpatientcardselect.cpp" line="93"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="123"/>
-        <source>Amount</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="94"/>
-        <location filename="crud/dlgpatientcardselect.cpp" line="124"/>
-        <source>Patientcard type</source>
+        <source>LicenceId</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="95"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="125"/>
-        <source>All units</source>
+        <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="96"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="126"/>
-        <source>Valid from</source>
+        <source>Owner</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="97"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="127"/>
-        <source>Valid to</source>
+        <source>Units</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="98"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="128"/>
-        <source>Comment</source>
+        <source>Amount</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="99"/>
         <location filename="crud/dlgpatientcardselect.cpp" line="129"/>
-        <source>Active</source>
+        <source>Patientcard type</source>
         <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcardselect.cpp" line="100"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="130"/>
+        <source>All units</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="101"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="131"/>
+        <source>Valid from</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="102"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="132"/>
+        <source>Valid to</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="103"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="133"/>
+        <source>Comment</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="104"/>
+        <location filename="crud/dlgpatientcardselect.cpp" line="134"/>
+        <source>Active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpatientcardselect.cpp" line="105"/>
         <source>Archive</source>
         <translation></translation>
     </message>
@@ -5376,7 +5383,7 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="490"/>
+        <location filename="dlgcassaaction.ui" line="526"/>
         <source>Amount to pay :</source>
         <translation></translation>
     </message>
@@ -5386,12 +5393,12 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="329"/>
+        <location filename="dlgcassaaction.ui" line="339"/>
         <source>Card given :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="412"/>
+        <location filename="dlgcassaaction.ui" line="435"/>
         <source>Voucher given :</source>
         <translation></translation>
     </message>
@@ -5401,12 +5408,12 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="567"/>
+        <location filename="dlgcassaaction.ui" line="603"/>
         <source>Comment &gt;&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="597"/>
+        <location filename="dlgcassaaction.ui" line="633"/>
         <source> Action comment </source>
         <translation></translation>
     </message>
@@ -5431,10 +5438,10 @@ Do you want to register it for a new patientcard?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgcassaaction.ui" line="296"/>
-        <location filename="dlgcassaaction.ui" line="379"/>
-        <location filename="dlgcassaaction.ui" line="462"/>
-        <location filename="dlgcassaaction.ui" line="540"/>
+        <location filename="dlgcassaaction.ui" line="293"/>
+        <location filename="dlgcassaaction.ui" line="389"/>
+        <location filename="dlgcassaaction.ui" line="485"/>
+        <location filename="dlgcassaaction.ui" line="576"/>
         <source>$</source>
         <translation></translation>
     </message>

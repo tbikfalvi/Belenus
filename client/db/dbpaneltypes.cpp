@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbpaneltypes.h"
+#include "dbpanelstatuses.h"
 
 cDBPanelTypes::cDBPanelTypes()
 {
@@ -129,16 +130,20 @@ void cDBPanelTypes::remove() throw( cSevException )
 
     if( m_uiId )
     {
+        cDBPanelStatuses    obDBPanelStatuses;
+
+        obDBPanelStatuses.remove( m_uiId );
+
         QString  qsQuery;
 
-        if( m_qsArchive != "NEW" )
-        {
+//        if( m_qsArchive != "NEW" )
+//        {
             qsQuery = "DELETE FROM panelTypes ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelTypes SET active=0, archive=\"MOD\" ";
-        }
+//        }
+//        else
+//        {
+//            qsQuery = "UPDATE panelTypes SET active=0, archive=\"MOD\" ";
+//        }
         qsQuery += QString( " WHERE panelTypeId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );

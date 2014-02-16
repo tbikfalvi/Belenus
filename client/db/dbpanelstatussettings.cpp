@@ -195,19 +195,31 @@ void cDBPanelStatusSettings::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_qsArchive.compare( "NEW" ) == 0 )
-        {
+//        if( m_qsArchive.compare( "NEW" ) == 0 )
+//        {
             qsQuery = "DELETE FROM panelStatusSettings ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelStatusSettings SET active=0, archive=\"MOD\" ";
-        }
+//        }
+//        else
+//        {
+//            qsQuery = "UPDATE panelStatusSettings SET active=0, archive=\"MOD\" ";
+//        }
         qsQuery += QString( " WHERE panelStatusSettingId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+void cDBPanelStatusSettings::remove( const unsigned int p_uiPanelStatusId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBPanelStatusSettings::remove" );
+
+    QString  qsQuery = "DELETE FROM panelStatusSettings ";
+
+    qsQuery += QString( " WHERE panelStatusId = %1" ).arg( p_uiPanelStatusId );
+
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+    if( poQuery ) delete poQuery;
 }
 
 void cDBPanelStatusSettings::createNew() throw()

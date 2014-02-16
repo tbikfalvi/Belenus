@@ -16,6 +16,7 @@ public:
     void            load( const QString &p_qsName )                                 throw( cSevException );
     void            save()                                                          throw( cSevException );
     void            remove()                                                        throw( cSevException );
+    void            remove( const unsigned int p_uiPanelTypeId )                    throw( cSevException );
     void            createNew()                                                     throw();
     unsigned int    id() const                                                      throw();
     unsigned int    licenceId() const                                               throw();
