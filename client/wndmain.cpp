@@ -2492,6 +2492,9 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
             obDBPatientCardMain.load( qsBarcodeMain );
             obDBPatientCardAssign.load( qsBarcodeAssign );
 
+            unsigned int uiTimeLeft = obDBPatientCardMain.timeLeft() + obDBPatientCardAssign.timeLeft();
+            unsigned int uiUnits    = obDBPatientCardMain.units() + obDBPatientCardAssign.units();
+
             if( obDBPatientCardAssign.active() )
             {
                 if( QMessageBox::question( this, tr("Question"),
@@ -2500,11 +2503,13 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
                                               "Assigned card: %2").arg( obDBPatientCardMain.barcode() ).arg( obDBPatientCardAssign.barcode() ),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::Yes )
                 {
-                    obDBPatientCardMain.setUnits( obDBPatientCardMain.units()+obDBPatientCardAssign.units() );
+                    obDBPatientCardMain.setUnits( uiUnits );
+                    obDBPatientCardMain.setTimeLeft( uiTimeLeft );
                     obDBPatientCardMain.save();
 
                     obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
-                    obDBPatientCardAssign.setUnits( obDBPatientCardMain.units() );
+                    obDBPatientCardAssign.setUnits( uiUnits );
+                    obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
                     obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
                     obDBPatientCardAssign.save();
 
@@ -2520,8 +2525,8 @@ void cWndMain::slotAssignPartnerCard( const QString &p_qsBarcode )
                 obDBPatientCardAssign.setPatientCardTypeId( obDBPatientCardMain.patientCardTypeId() );
                 obDBPatientCardAssign.setParentId( obDBPatientCardMain.id() );
                 obDBPatientCardAssign.setPatientId( 0 );
-                obDBPatientCardAssign.setUnits( obDBPatientCardMain.units() );
-                obDBPatientCardAssign.setTimeLeftStr( obDBPatientCardMain.timeLeftStr() );
+                obDBPatientCardAssign.setUnits( uiUnits );
+                obDBPatientCardAssign.setTimeLeft( uiTimeLeft );
                 obDBPatientCardAssign.setValidDateFrom( obDBPatientCardMain.validDateFrom() );
                 obDBPatientCardAssign.setValidDateTo( obDBPatientCardMain.validDateTo() );
                 obDBPatientCardAssign.setComment( tr("Partner card of \"%1\"").arg(obDBPatientCardMain.barcode()) );
