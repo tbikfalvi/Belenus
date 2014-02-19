@@ -313,31 +313,31 @@ Please start WampServer application then restart Belenus application.</oldsource
     </message>
     <message>
         <location filename="general.cpp" line="71"/>
-        <location filename="wndmain.cpp" line="2690"/>
+        <location filename="wndmain.cpp" line="2695"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="75"/>
-        <location filename="wndmain.cpp" line="2694"/>
+        <location filename="wndmain.cpp" line="2699"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="79"/>
-        <location filename="wndmain.cpp" line="2698"/>
+        <location filename="wndmain.cpp" line="2703"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="83"/>
-        <location filename="wndmain.cpp" line="2702"/>
+        <location filename="wndmain.cpp" line="2707"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
         <location filename="general.cpp" line="87"/>
-        <location filename="wndmain.cpp" line="2706"/>
+        <location filename="wndmain.cpp" line="2711"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -4824,7 +4824,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1876"/>
         <location filename="wndmain.cpp" line="1898"/>
         <location filename="wndmain.cpp" line="2370"/>
-        <location filename="wndmain.cpp" line="2497"/>
+        <location filename="wndmain.cpp" line="2500"/>
         <source>Question</source>
         <translation></translation>
     </message>
@@ -4833,7 +4833,7 @@ Only %1 panels will be displayed.</source>
         <location filename="wndmain.cpp" line="1354"/>
         <location filename="wndmain.cpp" line="1808"/>
         <location filename="wndmain.cpp" line="2385"/>
-        <location filename="wndmain.cpp" line="2625"/>
+        <location filename="wndmain.cpp" line="2630"/>
         <source>Warning</source>
         <translation></translation>
     </message>
@@ -5078,7 +5078,7 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2667"/>
+        <location filename="wndmain.cpp" line="2672"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation></translation>
     </message>
@@ -5235,25 +5235,25 @@ Please select a non-active patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2498"/>
+        <location filename="wndmain.cpp" line="2501"/>
         <source>Are you sure about to merge these patientcards?
 Main card: %1
 Assigned card: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2508"/>
-        <location filename="wndmain.cpp" line="2527"/>
+        <location filename="wndmain.cpp" line="2513"/>
+        <location filename="wndmain.cpp" line="2532"/>
         <source>Partner card of &quot;%1&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2553"/>
+        <location filename="wndmain.cpp" line="2558"/>
         <source>Assign patientcard [%1]&lt;-[%2]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2626"/>
+        <location filename="wndmain.cpp" line="2631"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -5266,7 +5266,7 @@ Error code: %1
         <translation></translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2666"/>
+        <location filename="wndmain.cpp" line="2671"/>
         <source>About</source>
         <translation></translation>
     </message>
@@ -7186,8 +7186,8 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgpreferences.ui" line="93"/>
         <location filename="dlgpreferences.ui" line="169"/>
-        <location filename="dlgpreferences.ui" line="242"/>
-        <location filename="dlgpreferences.ui" line="315"/>
+        <location filename="dlgpreferences.ui" line="245"/>
+        <location filename="dlgpreferences.ui" line="321"/>
         <source>NONE</source>
         <translation></translation>
     </message>
@@ -7197,218 +7197,218 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="217"/>
+        <location filename="dlgpreferences.ui" line="220"/>
         <source>&amp;GUI Log Level:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="398"/>
+        <location filename="dlgpreferences.ui" line="404"/>
         <source>Default country : </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="821"/>
+        <location filename="dlgpreferences.ui" line="827"/>
         <source>Patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="827"/>
+        <location filename="dlgpreferences.ui" line="833"/>
         <source> Barcode </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="833"/>
+        <location filename="dlgpreferences.ui" line="839"/>
         <source>Barcode length:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="876"/>
+        <location filename="dlgpreferences.ui" line="882"/>
         <source>Barcode prefix:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="761"/>
+        <location filename="dlgpreferences.ui" line="767"/>
         <source>Device</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="290"/>
+        <location filename="dlgpreferences.ui" line="296"/>
         <source>&amp;File Log Level:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="432"/>
+        <location filename="dlgpreferences.ui" line="438"/>
         <source>Kiwisun web address :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="465"/>
+        <location filename="dlgpreferences.ui" line="471"/>
         <source> Main window </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="473"/>
-        <location filename="dlgpreferences.ui" line="585"/>
+        <location filename="dlgpreferences.ui" line="479"/>
+        <location filename="dlgpreferences.ui" line="591"/>
         <source>Background color: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="526"/>
+        <location filename="dlgpreferences.ui" line="532"/>
         <source> Secondary window  </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="553"/>
+        <location filename="dlgpreferences.ui" line="559"/>
         <source>Visible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="653"/>
+        <location filename="dlgpreferences.ui" line="659"/>
         <source> Panels </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="716"/>
+        <location filename="dlgpreferences.ui" line="722"/>
         <source>Panel settings ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="769"/>
+        <location filename="dlgpreferences.ui" line="775"/>
         <source>VAT percent for device usage :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="903"/>
+        <location filename="dlgpreferences.ui" line="909"/>
         <source>Product barcode length
 is different :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="921"/>
+        <location filename="dlgpreferences.ui" line="927"/>
         <source> In case of loss </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="929"/>
+        <location filename="dlgpreferences.ui" line="935"/>
         <source>Price of replace lost patientcard :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="969"/>
-        <location filename="dlgpreferences.ui" line="1072"/>
+        <location filename="dlgpreferences.ui" line="975"/>
+        <location filename="dlgpreferences.ui" line="1078"/>
         <source>including</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="992"/>
-        <location filename="dlgpreferences.ui" line="1095"/>
+        <location filename="dlgpreferences.ui" line="998"/>
+        <location filename="dlgpreferences.ui" line="1101"/>
         <source>VAT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1012"/>
-        <location filename="dlgpreferences.ui" line="1115"/>
+        <location filename="dlgpreferences.ui" line="1018"/>
+        <location filename="dlgpreferences.ui" line="1121"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1024"/>
+        <location filename="dlgpreferences.ui" line="1030"/>
         <source> Partner patientcard </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1032"/>
+        <location filename="dlgpreferences.ui" line="1038"/>
         <source>Price of assigning partner card to activated card :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1141"/>
+        <location filename="dlgpreferences.ui" line="1147"/>
         <source>Cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1147"/>
+        <location filename="dlgpreferences.ui" line="1153"/>
         <source>Automatically close cassa when user log out</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1150"/>
+        <location filename="dlgpreferences.ui" line="1156"/>
         <source>Auto close cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1169"/>
+        <location filename="dlgpreferences.ui" line="1175"/>
         <source>Automatically add cash withdrawal</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1192"/>
+        <location filename="dlgpreferences.ui" line="1198"/>
         <source>Server</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1200"/>
+        <location filename="dlgpreferences.ui" line="1206"/>
         <source>Server Host:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1214"/>
+        <location filename="dlgpreferences.ui" line="1220"/>
         <source>Server Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1230"/>
+        <location filename="dlgpreferences.ui" line="1236"/>
         <source> Automatically synchronize ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1239"/>
+        <location filename="dlgpreferences.ui" line="1245"/>
         <source>database when exiting from application</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1249"/>
+        <location filename="dlgpreferences.ui" line="1255"/>
         <source>studio independent data when application started.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1273"/>
+        <location filename="dlgpreferences.ui" line="1279"/>
         <source>Hardware</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1281"/>
+        <location filename="dlgpreferences.ui" line="1287"/>
         <source>COM Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1288"/>
+        <location filename="dlgpreferences.ui" line="1294"/>
         <source>COM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="459"/>
+        <location filename="dlgpreferences.ui" line="465"/>
         <source>Appearance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="667"/>
+        <location filename="dlgpreferences.ui" line="673"/>
         <source>Number of &amp;panels in a row:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="492"/>
-        <location filename="dlgpreferences.ui" line="604"/>
+        <location filename="dlgpreferences.ui" line="498"/>
+        <location filename="dlgpreferences.ui" line="610"/>
         <source>Choose ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="352"/>
+        <location filename="dlgpreferences.ui" line="358"/>
         <source>Application Settings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="364"/>
+        <location filename="dlgpreferences.ui" line="370"/>
         <source>&amp;Language :</source>
         <oldsource>&amp;Language:</oldsource>
         <translation></translation>

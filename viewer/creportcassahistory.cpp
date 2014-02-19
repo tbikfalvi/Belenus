@@ -7,7 +7,7 @@ cReportCassaHistory::cReportCassaHistory(QWidget *parent, QString p_qsReportName
 {
     cTracer obTrace( "cReportCassaHistory::cReportCassaHistory" );
 
-    m_qsReportName          = tr(" Cassa history ");
+    m_qsReportName          = tr(" Cassa history (list of actions)");
     m_qsReportDescription   = tr( "This report shows all of the events and action for the selected owner and date intervall. "
                                   "Please select the first and last day of the date intervall and the cassa owner you interested in." );
 
@@ -63,7 +63,7 @@ void cReportCassaHistory::refreshReport()
     bool         bIsStornoEntriesHidden = filterIsVisible();
     QStringList  qslEntriesToHide = QStringList();
 
-    QString      qsQuery = QString( "SELECT users.realName, actionTime, actionValue, cassahistory.comment, cassaHistoryId, parentId "
+    QString      qsQuery = QString( "SELECT users.realName, actionTime, actionCash, actionCard, actionValue, cassahistory.comment, cassaHistoryId, parentId "
                                     "FROM cassahistory, users WHERE "
                                     "cassahistory.userId=users.userId AND "
                                     "cassaId>0 AND "
@@ -97,43 +97,50 @@ void cReportCassaHistory::refreshReport()
     addTableRow();
     addTableCell( tr( "Cassa owner" ), "bold" );
     addTableCell( tr( "Date/time" ), "center bold" );
-    addTableCell( tr( "Amount" ), "center bold" );
+    addTableCell( tr( "Cash" ), "right bold" );
+    addTableCell( tr( "Card" ), "right bold" );
+    addTableCell( tr( "Action amount" ), "center bold" );
     addTableCell( tr( "Description" ), "bold" );
 
-    int nTotalAmount = 0;
+//    int nTotalAmount = 0;
 
     while( poQueryResult->next() )
     {
-        if( bIsStornoEntriesHidden && poQueryResult->value(5).toInt() > 0 )
+        if( bIsStornoEntriesHidden && poQueryResult->value(7).toInt() > 0 )
         {
-            qslEntriesToHide << poQueryResult->value(5).toString();
+            qslEntriesToHide << poQueryResult->value(7).toString();
         }
-        else if( bIsStornoEntriesHidden && qslEntriesToHide.contains( poQueryResult->value(4).toString() ) )
+        else if( bIsStornoEntriesHidden && qslEntriesToHide.contains( poQueryResult->value(6).toString() ) )
         {
             // this is the parent of a storno entry
         }
         else
         {
-            cCurrency   obCassaActionValue( poQueryResult->value(2).toInt() );
+            cCurrency   obCassaActionCash( poQueryResult->value(2).toInt() );
+            cCurrency   obCassaActionCard( poQueryResult->value(3).toInt() );
+            cCurrency   obCassaActionValue( poQueryResult->value(4).toInt() );
 
-            nTotalAmount += poQueryResult->value(2).toInt();
+//            nTotalAmount += poQueryResult->value(2).toInt();
 
             addTableRow();
             addTableCell( poQueryResult->value(0).toString() );
             addTableCell( poQueryResult->value(1).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+            addTableCell( obCassaActionCash.currencyFullStringShort(), "right" );
+            addTableCell( obCassaActionCard.currencyFullStringShort(), "right" );
             addTableCell( obCassaActionValue.currencyFullStringShort(), "right" );
-            addTableCell( poQueryResult->value(3).toString() );
+            addTableCell( poQueryResult->value(5).toString() );
         }
     }
 
-    cCurrency   obTotalAmount( nTotalAmount );
+/*    cCurrency   obTotalAmount( nTotalAmount );
 
     addTableRow();
     addTableCell( tr( "Sum total" ), "bold" );
     addTableCell();
+    addTableCell();
     addTableCell( obTotalAmount.currencyFullStringShort(), "right bold" );
     addTableCell();
-
+*/
     finishReport();
 
     m_dlgProgress.hide();

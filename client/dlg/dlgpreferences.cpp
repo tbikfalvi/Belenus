@@ -36,8 +36,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
     g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
-    sliConsoleLogLevel->setValue( uiConLevel );
-    sliDBLogLevel->setValue( uiDBLevel );
+    sliConsoleLogLevel->setValue( 1/*uiConLevel*/ );
+    sliDBLogLevel->setValue( 1/*uiDBLevel*/ );
     sliGUILogLevel->setValue( uiGUILevel );
     sliFileLogLevel->setValue( uiFileLevel );
 

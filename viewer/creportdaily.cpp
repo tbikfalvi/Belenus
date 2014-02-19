@@ -43,7 +43,7 @@ void cReportDaily::refreshReport()
 
     // Main data about cassa entries of the selected date
     addSeparator();
-    addSubTitle( tr( "Cassa list" ) );
+    addSubTitle( tr( "Shift list" ) );
     _reportPartGeneral();
 
     // Product sold
@@ -58,7 +58,7 @@ void cReportDaily::refreshReport()
 
     // Panel related data of the selected date
     addSeparator();
-    addSubTitle( tr( "Device usages income" ) );
+    addSubTitle( tr( "Occasionally usage of devices" ) );
     unsigned int uiDeviceUsagesTotal = _reportPartPanelUse();
 
     // Income based on payment methods
@@ -143,11 +143,11 @@ void cReportDaily::_reportPartGeneral()
 
     addTableRow();
     addTableCell( tr( "Owner" ), "bold" );
-    addTableCell( tr( "Balance" ), "center bold" );
-    addTableCell( tr( "Income" ), "center bold" );
     addTableCell( tr( "Cassa started" ), "center bold" );
     addTableCell( tr( "Cassa closed" ), "center bold" );
     addTableCell( tr( "Last entry" ), "center bold" );
+    addTableCell( tr( "Balance" ), "center bold" );
+    addTableCell( tr( "Income" ), "center bold" );
     m_dlgProgress.increaseProgressValue();
 
     int nSumTotal = 0;
@@ -166,11 +166,11 @@ void cReportDaily::_reportPartGeneral()
 
         addTableRow();
         addTableCell( poQueryResult->value(5).toString() );
-        addTableCell( cBalance.currencyFullStringShort(), "right" );
-        addTableCell( obIncome.currencyFullStringShort(), "right" );
         addTableCell( poQueryResult->value(2).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
         addTableCell( poQueryResult->value(3).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
         addTableCell( poQueryResult->value(4).toDateTime().toString("yyyy-MM-dd hh:mm"), "center" );
+        addTableCell( cBalance.currencyFullStringShort(), "right" );
+        addTableCell( obIncome.currencyFullStringShort(), "right" );
         m_dlgProgress.increaseProgressValue();
     }
 
@@ -179,10 +179,10 @@ void cReportDaily::_reportPartGeneral()
     addTableRow();
     addTableCell( tr( "Sum total" ), "bold" );
     addTableCell();
+    addTableCell();
+    addTableCell();
+    addTableCell();
     addTableCell( obSumTotal.currencyFullStringShort(), "right bold" );
-    addTableCell();
-    addTableCell();
-    addTableCell();
 
     finishTable();
     finishSection();
@@ -546,10 +546,11 @@ int cReportDaily::_reportPartPaymentMethods()
     addTable();
     addTableRow();
     addTableCell();
-    addTableCell( tr("Payed by card"), "center bold" );
     addTableCell( tr("Payed by cash"), "center bold" );
+    addTableCell( tr("Payed by card"), "center bold" );
+//    addTableCell( tr("Payed by cash"), "center bold" );
     addTableCell( tr("Payed by voucher"), "center bold" );
-    addTableCell( tr("Cash and voucher"), "center bold" );
+//    addTableCell( tr("Cash and voucher"), "center bold" );
     addTableCell( tr("Amount"), "center bold" );
 
     int inTotalCard     = 0;
@@ -568,7 +569,7 @@ int cReportDaily::_reportPartPaymentMethods()
         addTableCell();
         addTableCell();
         addTableCell();
-        addTableCell();
+//        addTableCell();
         addTableCell();
 
         QSqlQuery  *poQueryResults = g_poDB->executeQTQuery( QString( "SELECT ledgertypes.name, "
@@ -586,7 +587,7 @@ int cReportDaily::_reportPartPaymentMethods()
         int inSumCard       = 0;
         int inSumCash       = 0;
         int inSumVoucher    = 0;
-        int inSumCassa      = 0;
+//        int inSumCassa      = 0;
         int inSumTotal      = 0;
 
         while( poQueryResults->next() )
@@ -594,58 +595,58 @@ int cReportDaily::_reportPartPaymentMethods()
             cCurrency   obCard( poQueryResults->value(1).toInt() );
             cCurrency   obCash( poQueryResults->value(2).toInt() );
             cCurrency   obVoucher( poQueryResults->value(3).toInt() );
-            cCurrency   obCassa( poQueryResults->value(2).toInt()+poQueryResults->value(3).toInt() );
+//            cCurrency   obCassa( poQueryResults->value(2).toInt()+poQueryResults->value(3).toInt() );
             cCurrency   obTotal( poQueryResults->value(4).toInt() );
 
             inSumCard       += poQueryResults->value(1).toInt();
             inSumCash       += poQueryResults->value(2).toInt();
             inSumVoucher    += poQueryResults->value(3).toInt();
-            inSumCassa      += poQueryResults->value(2).toInt()+poQueryResults->value(3).toInt();
+//            inSumCassa      += poQueryResults->value(2).toInt()+poQueryResults->value(3).toInt();
             inSumTotal      += poQueryResults->value(4).toInt();
 
             addTableRow();
             addTableCell( poQueryResults->value(0).toString() );
-            addTableCell( obCard.currencyFullStringShort(), "right" );
             addTableCell( obCash.currencyFullStringShort(), "right italic" );
+            addTableCell( obCard.currencyFullStringShort(), "right" );
             addTableCell( obVoucher.currencyFullStringShort(), "right italic" );
-            addTableCell( obCassa.currencyFullStringShort(), "right" );
+//            addTableCell( obCassa.currencyFullStringShort(), "right" );
             addTableCell( obTotal.currencyFullStringShort(), "right bold" );
         }
         addTableRow();
         addTableCell( tr("Sum"), "bold" );
 
-        cCurrency   obCard( inSumCard );
         cCurrency   obCash( inSumCash );
+        cCurrency   obCard( inSumCard );
         cCurrency   obVoucher( inSumVoucher );
-        cCurrency   obCassa( inSumCassa );
+//        cCurrency   obCassa( inSumCassa );
         cCurrency   obTotal( inSumTotal );
 
-        addTableCell( obCard.currencyFullStringShort(), "right bold" );
         addTableCell( obCash.currencyFullStringShort(), "right bold italic" );
+        addTableCell( obCard.currencyFullStringShort(), "right bold" );
         addTableCell( obVoucher.currencyFullStringShort(), "right bold italic" );
-        addTableCell( obCassa.currencyFullStringShort(), "right bold" );
+//        addTableCell( obCassa.currencyFullStringShort(), "right bold" );
         addTableCell( obTotal.currencyFullStringShort(), "right bold" );
 
-        inTotalCard     += inSumCard;
         inTotalCash     += inSumCash;
+        inTotalCard     += inSumCard;
         inTotalVoucher  += inSumVoucher;
-        inTotalCassa    += inSumCassa;
+//        inTotalCassa    += inSumCassa;
         inTotal         += inSumTotal;
     }
 
     addTableRow();
     addTableCell( tr("Sum total"), "bold" );
 
-    cCurrency   obCard( inTotalCard );
     cCurrency   obCash( inTotalCash );
+    cCurrency   obCard( inTotalCard );
     cCurrency   obVoucher( inTotalVoucher );
-    cCurrency   obCassa( inTotalCassa );
+//    cCurrency   obCassa( inTotalCassa );
     cCurrency   obTotal( inTotal );
 
-    addTableCell( obCard.currencyFullStringShort(), "right bold" );
     addTableCell( obCash.currencyFullStringShort(), "right bold italic" );
+    addTableCell( obCard.currencyFullStringShort(), "right bold" );
     addTableCell( obVoucher.currencyFullStringShort(), "right bold italic" );
-    addTableCell( obCassa.currencyFullStringShort(), "right bold" );
+//    addTableCell( obCassa.currencyFullStringShort(), "right bold" );
     addTableCell( obTotal.currencyFullStringShort(), "right bold" );
 
     finishTable();

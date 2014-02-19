@@ -244,7 +244,7 @@ void cReport::addTable()
     {
         m_qsReportHtml.append( "</table>" );
     }
-    m_qsReportHtml.append( "<table>" );
+    m_qsReportHtml.append( "<table border=1>" );
     m_bIsTableStarted = true;
 }
 //------------------------------------------------------------------------------------

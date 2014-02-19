@@ -455,31 +455,31 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
     </message>
     <message>
         <location filename="general.cpp" line="71"/>
-        <location filename="wndmain.cpp" line="2690"/>
+        <location filename="wndmain.cpp" line="2695"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
         <location filename="general.cpp" line="75"/>
-        <location filename="wndmain.cpp" line="2694"/>
+        <location filename="wndmain.cpp" line="2699"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="general.cpp" line="79"/>
-        <location filename="wndmain.cpp" line="2698"/>
+        <location filename="wndmain.cpp" line="2703"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="general.cpp" line="83"/>
-        <location filename="wndmain.cpp" line="2702"/>
+        <location filename="wndmain.cpp" line="2707"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
         <location filename="general.cpp" line="87"/>
-        <location filename="wndmain.cpp" line="2706"/>
+        <location filename="wndmain.cpp" line="2711"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -7218,7 +7218,7 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="1876"/>
         <location filename="wndmain.cpp" line="1898"/>
         <location filename="wndmain.cpp" line="2370"/>
-        <location filename="wndmain.cpp" line="2497"/>
+        <location filename="wndmain.cpp" line="2500"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -7231,7 +7231,7 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="1354"/>
         <location filename="wndmain.cpp" line="1808"/>
         <location filename="wndmain.cpp" line="2385"/>
-        <location filename="wndmain.cpp" line="2625"/>
+        <location filename="wndmain.cpp" line="2630"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -7507,7 +7507,7 @@ Do you want to refill anyway?</source>
 Biztos, hogy fel akarja tölteni?</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2667"/>
+        <location filename="wndmain.cpp" line="2672"/>
         <source>&lt;h2&gt;Belenus Software Application System&lt;/h2&gt;&lt;p&gt;Application version : %1&lt;br&gt;Database version : %2&lt;p&gt;Copyright 2013 Tamas Bikfalvi. All rights reserved.&lt;p&gt;Application Licence : %3&lt;p&gt;The application and all of its related products&lt;br&gt;is the property of KiwiSun Franchise.&lt;br&gt;For more information visit the &lt;a href=&quot;%4&quot;&gt;KiwiSun website&lt;/a&gt;</source>
         <translation>&lt;h2&gt;Belenus Szoftver Rendszer&lt;/h2&gt;&lt;p&gt;Alkalmazás verzió : %1&lt;br&gt;Adatbázis verzió : %2&lt;p&gt;Copyright 2013 Bikfalvi Tamás. Minden jog fenntartva.&lt;p&gt;Alkalmazás liszenszkulcs : %3&lt;p&gt;Az alkalmazás és minden hozzá kapcsolódó eszköz&lt;br&gt;a KiwiSun Franchise kizárólagos tulajdona.&lt;br&gt;További információkért látogasson el a &lt;a href=&quot;%4&quot;&gt;KiwiSun honlapjára&lt;/a&gt;</translation>
     </message>
@@ -7721,7 +7721,7 @@ Kérem válasszon egy másik, inaktív bérletet.</translation>
         <translation>Elveszett és lecserélték erre: %1</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2498"/>
+        <location filename="wndmain.cpp" line="2501"/>
         <source>Are you sure about to merge these patientcards?
 Main card: %1
 Assigned card: %2</source>
@@ -7734,18 +7734,18 @@ Társkártya: %2</translation>
         <translation type="obsolete">Kérem adja meg a társkártya vonalkódját.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2508"/>
-        <location filename="wndmain.cpp" line="2527"/>
+        <location filename="wndmain.cpp" line="2513"/>
+        <location filename="wndmain.cpp" line="2532"/>
         <source>Partner card of &quot;%1&quot;</source>
         <translation>&quot;%1&quot; bérlet társkártyája</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2553"/>
+        <location filename="wndmain.cpp" line="2558"/>
         <source>Assign patientcard [%1]&lt;-[%2]</source>
         <translation>Társkártya kapcsolás [%1]&lt;-[%2]</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2626"/>
+        <location filename="wndmain.cpp" line="2631"/>
         <source>Error occured when starting process:ReportViewer.exe
 
 Error code: %1
@@ -7766,7 +7766,7 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="2666"/>
+        <location filename="wndmain.cpp" line="2671"/>
         <source>About</source>
         <translation>Névjegy</translation>
     </message>
@@ -10955,8 +10955,8 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     <message>
         <location filename="dlgpreferences.ui" line="93"/>
         <location filename="dlgpreferences.ui" line="169"/>
-        <location filename="dlgpreferences.ui" line="242"/>
-        <location filename="dlgpreferences.ui" line="315"/>
+        <location filename="dlgpreferences.ui" line="245"/>
+        <location filename="dlgpreferences.ui" line="321"/>
         <source>NONE</source>
         <translation>NONE</translation>
     </message>
@@ -10966,203 +10966,203 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>&amp;Adatbázis log szint :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="217"/>
+        <location filename="dlgpreferences.ui" line="220"/>
         <source>&amp;GUI Log Level:</source>
         <translation>Program log szint :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="398"/>
+        <location filename="dlgpreferences.ui" line="404"/>
         <source>Default country : </source>
         <translation>Alapértelmezett ország :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="821"/>
+        <location filename="dlgpreferences.ui" line="827"/>
         <source>Patientcard</source>
         <translation>Bérlet</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="827"/>
+        <location filename="dlgpreferences.ui" line="833"/>
         <source> Barcode </source>
         <translation> Vonalkód </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="833"/>
+        <location filename="dlgpreferences.ui" line="839"/>
         <source>Barcode length:</source>
         <translation>Vonalkód hossza :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="876"/>
+        <location filename="dlgpreferences.ui" line="882"/>
         <source>Barcode prefix:</source>
         <translation>Vonalkód automatikus előtag :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="761"/>
+        <location filename="dlgpreferences.ui" line="767"/>
         <source>Device</source>
         <translation>Gép</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="290"/>
+        <location filename="dlgpreferences.ui" line="296"/>
         <source>&amp;File Log Level:</source>
         <translation>Állomány log szint:</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="432"/>
+        <location filename="dlgpreferences.ui" line="438"/>
         <source>Kiwisun web address :</source>
         <translation>KiwiSun webcím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="465"/>
+        <location filename="dlgpreferences.ui" line="471"/>
         <source> Main window </source>
         <translation> Fő ablak </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="473"/>
-        <location filename="dlgpreferences.ui" line="585"/>
+        <location filename="dlgpreferences.ui" line="479"/>
+        <location filename="dlgpreferences.ui" line="591"/>
         <source>Background color: </source>
         <translation>Háttér szín : </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="526"/>
+        <location filename="dlgpreferences.ui" line="532"/>
         <source> Secondary window  </source>
         <translation> Másodlagos megjelenítő ablak </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="553"/>
+        <location filename="dlgpreferences.ui" line="559"/>
         <source>Visible</source>
         <translation>Látható</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="653"/>
+        <location filename="dlgpreferences.ui" line="659"/>
         <source> Panels </source>
         <translation> Panelok </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="716"/>
+        <location filename="dlgpreferences.ui" line="722"/>
         <source>Panel settings ...</source>
         <translation>Panel beállítások ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="769"/>
+        <location filename="dlgpreferences.ui" line="775"/>
         <source>VAT percent for device usage :</source>
         <translation>Géphasználat ÁFA kulcs (%):</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="903"/>
+        <location filename="dlgpreferences.ui" line="909"/>
         <source>Product barcode length
 is different :</source>
         <translation>A termék vonalkódja
 eltérő hosszúságú :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="921"/>
+        <location filename="dlgpreferences.ui" line="927"/>
         <source> In case of loss </source>
         <translation> Elvesztés esetén </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="929"/>
+        <location filename="dlgpreferences.ui" line="935"/>
         <source>Price of replace lost patientcard :</source>
         <translation>Az elvesztett kártya cseréjének ára :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="969"/>
-        <location filename="dlgpreferences.ui" line="1072"/>
+        <location filename="dlgpreferences.ui" line="975"/>
+        <location filename="dlgpreferences.ui" line="1078"/>
         <source>including</source>
         <translation>beleértve</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="992"/>
-        <location filename="dlgpreferences.ui" line="1095"/>
+        <location filename="dlgpreferences.ui" line="998"/>
+        <location filename="dlgpreferences.ui" line="1101"/>
         <source>VAT</source>
         <translation>ÁFA-t</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1012"/>
-        <location filename="dlgpreferences.ui" line="1115"/>
+        <location filename="dlgpreferences.ui" line="1018"/>
+        <location filename="dlgpreferences.ui" line="1121"/>
         <source>TextLabel</source>
         <translation>mintaszöveg</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1024"/>
+        <location filename="dlgpreferences.ui" line="1030"/>
         <source> Partner patientcard </source>
         <translation> Társkártya </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1032"/>
+        <location filename="dlgpreferences.ui" line="1038"/>
         <source>Price of assigning partner card to activated card :</source>
         <translation>Társkártya eladási ára :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1141"/>
+        <location filename="dlgpreferences.ui" line="1147"/>
         <source>Cassa</source>
         <translation>Pénztár</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1147"/>
+        <location filename="dlgpreferences.ui" line="1153"/>
         <source>Automatically close cassa when user log out</source>
         <translation>A pénztár automatikusan legyen lezárva a felhasználó kilépésekor</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1150"/>
+        <location filename="dlgpreferences.ui" line="1156"/>
         <source>Auto close cassa</source>
         <translation>Pénztár zárás automatikusan</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1169"/>
+        <location filename="dlgpreferences.ui" line="1175"/>
         <source>Automatically add cash withdrawal</source>
         <translation>Automatikus készpénz kivét</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1192"/>
+        <location filename="dlgpreferences.ui" line="1198"/>
         <source>Server</source>
         <translation>Szerver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1200"/>
+        <location filename="dlgpreferences.ui" line="1206"/>
         <source>Server Host:</source>
         <translation>IP cím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1214"/>
+        <location filename="dlgpreferences.ui" line="1220"/>
         <source>Server Port:</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1230"/>
+        <location filename="dlgpreferences.ui" line="1236"/>
         <source> Automatically synchronize ...</source>
         <translation> Az alkalmazás automatikusan szinkronizálja ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1239"/>
+        <location filename="dlgpreferences.ui" line="1245"/>
         <source>database when exiting from application</source>
         <translation>az adatbázist kilépéskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1249"/>
+        <location filename="dlgpreferences.ui" line="1255"/>
         <source>studio independent data when application started.</source>
         <translation>a stúdió független adatokat induláskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1273"/>
+        <location filename="dlgpreferences.ui" line="1279"/>
         <source>Hardware</source>
         <translation>Hardver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1281"/>
+        <location filename="dlgpreferences.ui" line="1287"/>
         <source>COM Port:</source>
         <translation>COM Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1288"/>
+        <location filename="dlgpreferences.ui" line="1294"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="459"/>
+        <location filename="dlgpreferences.ui" line="465"/>
         <source>Appearance</source>
         <translation>Megjelenés</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="667"/>
+        <location filename="dlgpreferences.ui" line="673"/>
         <source>Number of &amp;panels in a row:</source>
         <translation>Egy sorban megjelenő &amp;panelok száma :</translation>
     </message>
@@ -11171,18 +11171,18 @@ eltérő hosszúságú :</translation>
         <translation type="obsolete">Fő ablak hátterének színe :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="492"/>
-        <location filename="dlgpreferences.ui" line="604"/>
+        <location filename="dlgpreferences.ui" line="498"/>
+        <location filename="dlgpreferences.ui" line="610"/>
         <source>Choose ...</source>
         <translation>Válasszon ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="352"/>
+        <location filename="dlgpreferences.ui" line="358"/>
         <source>Application Settings</source>
         <translation> Alkalmazás beállítások </translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="364"/>
+        <location filename="dlgpreferences.ui" line="370"/>
         <source>&amp;Language :</source>
         <oldsource>&amp;Language:</oldsource>
         <translation>&amp;Nyelv :</translation>

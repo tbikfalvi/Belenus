@@ -172,6 +172,9 @@
             </item>
             <item>
              <widget class="QSlider" name="sliDBLogLevel">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="minimum">
                <number>1</number>
               </property>
@@ -245,6 +248,9 @@
             </item>
             <item>
              <widget class="QSlider" name="sliGUILogLevel">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="minimum">
                <number>1</number>
               </property>
