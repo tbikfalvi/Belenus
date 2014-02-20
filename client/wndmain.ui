@@ -166,11 +166,7 @@
      <addaction name="action_EditLicenceInformation"/>
      <addaction name="separator"/>
      <addaction name="action_EmptyDemoDB"/>
-    </widget>
-    <widget class="QMenu" name="menu">
-     <property name="title">
-      <string/>
-     </property>
+     <addaction name="action_ManageDatabase"/>
     </widget>
     <addaction name="action_Patients"/>
     <addaction name="action_Guests"/>
@@ -750,6 +746,14 @@
    </property>
    <property name="toolTip">
     <string>Groups for devices</string>
+   </property>
+  </action>
+  <action name="action_ManageDatabase">
+   <property name="text">
+    <string>Manage database</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage database</string>
    </property>
   </action>
  </widget>

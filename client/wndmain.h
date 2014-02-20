@@ -153,6 +153,7 @@ private slots:
     void on_ledPassword_returnPressed();
     void on_action_ReportViewer_triggered();
     void on_action_About_triggered();
+    void on_action_ManageDatabase_triggered();
 };
 
 #endif

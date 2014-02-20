@@ -79,6 +79,7 @@
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgpaneluse.h"
 #include "dlg/dlgpatientcardassign.h"
+#include "dlg/dlgmanagedatabase.h"
 
 //====================================================================================
 
@@ -192,6 +193,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_Paneltypes->setIcon( QIcon("./resources/40x40_panel.png") );
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
+        action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
     menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
@@ -254,6 +256,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_CassaHistory->setVisible( false );
 
     action_EmptyDemoDB->setEnabled( (g_poPrefs->getLicenceId()>1?true:false) );
+
+    action_ManageDatabase->setVisible( false );
+    action_ManageDatabase->setEnabled( false );
 
     showElementsForComponents();
 
@@ -984,6 +989,7 @@ void cWndMain::updateToolbar()
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
+            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
@@ -1014,6 +1020,7 @@ void cWndMain::updateToolbar()
 
     action_PatientSelect->setVisible( !(g_obGuest.id()>0) );
     action_PatientEmpty->setVisible( g_obGuest.id()>0 );
+    action_ManageDatabase->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
 
     showElementsForComponents();
 }
@@ -2739,4 +2746,11 @@ int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
     }
 
     return nRet;
+}
+
+void cWndMain::on_action_ManageDatabase_triggered()
+{
+    cDlgManageDatabase  obDlgManageDatabase(this);
+
+    obDlgManageDatabase.exec();
 }

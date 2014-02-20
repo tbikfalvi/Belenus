@@ -43,7 +43,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgCassaInOut.ui \
     dlgpatientcardassign.ui \
     dlgproductsell.ui \
-    dlgchangepcvalidity.ui
+    dlgchangepcvalidity.ui \
+    dlgmanagedatabase.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -129,6 +130,7 @@ HEADERS = belenus.h \
     dlg/dlgcassainout.h \
     dlg/dlgpatientcardassign.h \
     dlg/dlgchangepcvalidity.h \
+    dlg/dlgmanagedatabase.h \
     edit/dlgpaneltypeedit.h \
     edit/dlgpanelgroupedit.h \
     edit/dlguseredit.h \
@@ -256,6 +258,7 @@ SOURCES = main.cpp \
     dlg/dlgcassainout.cpp \
     dlg/dlgpatientcardassign.cpp \
     dlg/dlgchangepcvalidity.cpp \
+    dlg/dlgmanagedatabase.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \
     edit/dlguseredit.cpp \
@@ -317,6 +320,7 @@ win32:DEFINES -= UNICODE
 
 RESOURCES += \
     belenus.qrc
+
 
 
 
