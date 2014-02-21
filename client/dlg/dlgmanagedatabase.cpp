@@ -1,6 +1,7 @@
 
 #include <QMessageBox>
 #include <QDate>
+#include <QStringList>
 
 #include "dlgmanagedatabase.h"
 
@@ -27,6 +28,8 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     deFilterDate->setDate( QDate::currentDate() );
 
     slotUpdateExecuteButton();
+
+    m_dlgProgress = new cDlgProgress( this );
 }
 
 cDlgManageDatabase::~cDlgManageDatabase()
@@ -122,7 +125,7 @@ void cDlgManageDatabase::_actionDeleteNotUsedPCT()
             qsQuery.append( ", " );
             qsQuery.append( poQuery->value(0).toString() );
         }
-        qsQuery.append( " ) AND patientCardTypeId>1 AND active=0 " );
+        qsQuery.append( " ) AND patientCardTypeId>1 " );
 
         poQuery = g_poDB->executeQTQuery( qsQuery );
         QMessageBox::information( this, tr("Information"),
@@ -133,5 +136,43 @@ void cDlgManageDatabase::_actionDeleteNotUsedPCT()
 
 void cDlgManageDatabase::_actionDeleteLedgerEntries()
 {
+    m_dlgProgress->showProgress();
+
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+    QStringList  qslIds;
+
+    while( poQuery->next() )
+    {
+        qslIds << poQuery->value(0).toString();
+    }
+
+    int inNumRowPCUs = 0;
+    int inNumRowProd = 0;
+    int inNumRowCass = 0;
+
+    for( int i=0; i<qslIds.count(); i++ )
+    {
+        poQuery       = g_poDB->executeQTQuery( QString("UPDATE patientCardUnits SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+        inNumRowPCUs += poQuery->numRowsAffected();
+
+        poQuery       = g_poDB->executeQTQuery( QString("UPDATE productHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+        inNumRowProd += poQuery->numRowsAffected();
+
+        poQuery       = g_poDB->executeQTQuery( QString("UPDATE cassaHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+        inNumRowCass += poQuery->numRowsAffected();
+    }
+
+    poQuery = g_poDB->executeQTQuery( QString("DELETE FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+
+    m_dlgProgress->hideProgress();
+
+    QMessageBox::information( this, tr("Information"),
+                              tr("The action successfully finished.\n"
+                                 "Number of affected records:\n"
+                                 "PatientCardUnits -> %1 records\n"
+                                 "ProductHistory -> %2 records\n"
+                                 "CassaHistory -> %3 records\n"
+                                 "Ledger -> %4 records").arg(inNumRowPCUs).arg(inNumRowProd).arg(inNumRowCass).arg(poQuery->numRowsAffected()) );
 }
+
 

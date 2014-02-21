@@ -3,6 +3,7 @@
 
 #include "belenus.h"
 #include "ui_dlgmanagedatabase.h"
+#include "dlgprogress.h"
 
 class cDlgManageDatabase : public QDialog, private Ui::dlgManageDatabase
 {
@@ -13,6 +14,7 @@ public:
     ~cDlgManageDatabase();
 
 private:
+    cDlgProgress            *m_dlgProgress;
 
 private slots:
     void slotUpdateExecuteButton();

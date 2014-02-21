@@ -1239,32 +1239,43 @@ Time value can not be greater than %1 minutes.</source>
 <context>
     <name>cDlgManageDatabase</name>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="17"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="18"/>
         <source>Manage database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="64"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="67"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="65"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="68"/>
         <source>Are you sure you want to execute the action?
 Please note the action can not be revoked.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="107"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="128"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="110"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="131"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="169"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="108"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="129"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="111"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="132"/>
         <source>The action successfully finished.
 Number of affected records: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="170"/>
+        <source>The action successfully finished.
+Number of affected records:
+PatientCardUnits -&gt; %1 records
+ProductHistory -&gt; %2 records
+CassaHistory -&gt; %3 records
+Ledger -&gt; %4 records</source>
         <translation></translation>
     </message>
 </context>
