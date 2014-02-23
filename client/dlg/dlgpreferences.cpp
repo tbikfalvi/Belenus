@@ -105,6 +105,10 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         chkCassaAutoWithdrawal->setChecked( false );
         chkCassaAutoWithdrawal->setEnabled( false );
     }
+    ledCurrencyFullName->setText( g_poPrefs->getCurrencyLong() );
+    ledCurrencyShortName->setText( g_poPrefs->getCurrencyShort() );
+    ledSeparatorDecimal->setText( g_poPrefs->getCurrencyDecimalSeparator() );
+    ledSeparatorThousand->setText( g_poPrefs->getCurrencySeparator() );
 
     ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
 
@@ -181,6 +185,13 @@ void cDlgPreferences::on_spbBarcodeLen_valueChanged( int p_inValue )
 
 void cDlgPreferences::accept()
 {
+    if( ledSeparatorDecimal->text().compare( ledSeparatorThousand->text() ) == 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Decimal symbol and Digit grouping symbol can not be the same.") );
+        return;
+    }
+
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
                              sliGUILogLevel->value(),
@@ -210,6 +221,10 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
+    g_poPrefs->setCurrencyLong( ledCurrencyFullName->text() );
+    g_poPrefs->setCurrencyShort( ledCurrencyShortName->text() );
+    g_poPrefs->setCurrencyDecimalSeparator( ledSeparatorDecimal->text() );
+    g_poPrefs->setCurrencySeparator( ledSeparatorThousand->text() );
 
     g_poPrefs->setDefaultCountry( ledDefaultCountry->text() );
 

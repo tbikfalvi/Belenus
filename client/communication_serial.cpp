@@ -111,12 +111,20 @@ void CS_Communication_Serial::init( int p_nPort )
 //------------------------------------------------------------------------------------
 bool CS_Communication_Serial::isHardwareConnected( void )
 {
+    g_obLogger(cSeverity::DEBUG) << QString("Check HW connections") << EOM;
+
+    g_obLogger(cSeverity::DEBUG) << QString("Com port:") << (m_bPortOpened?QString("OK"):QString("NOK")) << EOM;
+
+    if( !m_bPortOpened )
+    {
+        // Com port possibly not functioning
+        g_obLogger(cSeverity::DEBUG) << QString("Com port possibly not functioning") << EOM;
+        return false;
+    }
+
     char  chMessage[512];
     char  chSerialIn[512];
     int   nRecHossz = 0;
-    bool  bRes = false;
-
-    g_obLogger(cSeverity::DEBUG) << QString("Check HW connections") << EOM;
 
     memset( chMessage, 0, sizeof(chMessage) );
     memset( chSerialIn, 0, sizeof(chSerialIn) );
@@ -144,13 +152,15 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     bySerial_Error++;
     Sleep( 100 ); //var, hogy a PIC tudjon valaszolni
 
+    bool bRet = false;
+
     g_obLogger(cSeverity::DEBUG) << QString("HW_ReadMessage") << EOM;
     if( HW_ReadMessage( chSerialIn, &nRecHossz, 5  ) )
     {
         g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
        if( (chSerialIn[ nRecHossz-2 ] == 'Y') && ((unsigned char) chSerialIn[ nRecHossz-1 ] == HW_SUCCESS) )
        {
-          bRes = true;
+          bRet = true;
        }
        byHwWdtCounter = WDT_TIME;
     }
@@ -159,7 +169,7 @@ bool CS_Communication_Serial::isHardwareConnected( void )
         g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
     }
 
-    return bRes;
+    return bRet;
 }
 bool CS_Communication_Serial::isCommunicationStopped()
 {

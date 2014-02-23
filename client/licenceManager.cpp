@@ -165,6 +165,8 @@ int cLicenceManager::daysRemain()
 
     int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
 
+    g_obLogger(cSeverity::INFO) << "nDays: " << nDays << EOM;
+
     nDays = EXPIRE_IN_DAYS - nDays;
     if ( nDays < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
         nDays = 0;

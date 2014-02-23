@@ -2,8 +2,7 @@
 #define DLGPREFERENCES_H
 
 #include "../belenus.h"
-//#include "../../build/belenus/ui_dlgpreferences.h"
-#include "../../build/Belenus/ui_dlgpreferences.h"
+#include "ui_dlgpreferences.h"
 
 class cDlgPreferences : public QDialog, private Ui::dlgPreferences
 {
