@@ -477,7 +477,8 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
     if( ledPatientCardBarcode->text().length() == 0 )
         return;
 
-    if( ledPatientCardBarcode->text().length() != g_poPrefs->getBarcodeLength() )
+    if( ledPatientCardBarcode->text().compare( "000000" ) &&
+        ledPatientCardBarcode->text().length() != g_poPrefs->getBarcodeLength() )
     {
         QMessageBox::warning( m_poMsg, tr("Warning"),
                               tr( "Invalid barcode length.\n"
