@@ -339,47 +339,47 @@
         <translation>Termékek exportálása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="424"/>
+        <location filename="mainwindow.cpp" line="432"/>
         <source>Exporting Products FINISHED</source>
         <translation>Termékek exportálása BEFEJEZVE</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="425"/>
+        <location filename="mainwindow.cpp" line="433"/>
         <source>Exporting Product types / Product connections</source>
         <translation>Terméktípusok / Termékek kapcsolatainak exportálása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="445"/>
+        <location filename="mainwindow.cpp" line="453"/>
         <source>Exporting Product types / Product connections FINISHED</source>
         <translation>Terméktípusok / Termékek kapcsolatainak exportálása BEFEJEZVE</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="454"/>
+        <location filename="mainwindow.cpp" line="462"/>
         <source>Exporting Application users</source>
         <translation>Alkalmazás felhasználóinak exportálása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="487"/>
+        <location filename="mainwindow.cpp" line="495"/>
         <source>Exporting Application users FINISHED</source>
         <translation>Alkalmazás felhasználóinak exportálása BEFEJEZVE</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="630"/>
+        <location filename="mainwindow.cpp" line="638"/>
         <source>Password verification succeeded</source>
         <translation>Jelszó ellenőrzése sikerült</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="641"/>
+        <location filename="mainwindow.cpp" line="649"/>
         <source>Password verification failed</source>
         <translation>Jelszó ellenőrzés sikertelen</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="646"/>
+        <location filename="mainwindow.cpp" line="654"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="647"/>
+        <location filename="mainwindow.cpp" line="655"/>
         <source>The password you entered is not match with the
 requested System Administrator password.
 Please contact your System Administrator.</source>
@@ -388,140 +388,160 @@ a kért Rendszer Adminisztrátori jelszóval.
 Kérem lépjen kapcsolatba a Rendszer Adminisztrátorral.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="669"/>
-        <location filename="mainwindow.cpp" line="674"/>
-        <location filename="mainwindow.cpp" line="679"/>
-        <location filename="mainwindow.cpp" line="684"/>
-        <location filename="mainwindow.cpp" line="689"/>
-        <location filename="mainwindow.cpp" line="694"/>
+        <location filename="mainwindow.cpp" line="677"/>
+        <location filename="mainwindow.cpp" line="682"/>
+        <location filename="mainwindow.cpp" line="687"/>
+        <location filename="mainwindow.cpp" line="692"/>
+        <location filename="mainwindow.cpp" line="697"/>
+        <location filename="mainwindow.cpp" line="702"/>
         <source>%1 file does not exists
 </source>
         <translation>A %1 állomány nem létezik</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="699"/>
+        <location filename="mainwindow.cpp" line="707"/>
         <source>Database files are exists and checked successfully.</source>
         <translation>Az adatbázis állományok sikeresen ellenőrizve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="707"/>
+        <location filename="mainwindow.cpp" line="715"/>
         <source>Database files are missing or corrupt.</source>
         <translation>Az adatbázis állományok hiányoznak, vagy sérültek.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="735"/>
+        <location filename="mainwindow.cpp" line="743"/>
         <source>Connection with Belenus database established</source>
         <translation>A kapcsolat a Belenus adatbázishoz létrejött</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="749"/>
+        <location filename="mainwindow.cpp" line="757"/>
         <source>Unable to connect to Belenus database</source>
         <translation>Nem sikerült kapcsolódni a Belenus adatbázishoz</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="768"/>
+        <location filename="mainwindow.cpp" line="776"/>
         <source>Filenames of patientcard and patientcard types data:</source>
         <translation>Bérlet és bérlettípus adatállományok nevei:</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="817"/>
-        <location filename="mainwindow.cpp" line="818"/>
+        <location filename="mainwindow.cpp" line="822"/>
+        <source>Load device file: %1</source>
+        <translation>Szolárium állomány betöltése: %1</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="827"/>
+        <source>Read device data</source>
+        <translation>Gép adatok beolvasása</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="854"/>
+        <source>File not found, exiting ...</source>
+        <translation>File nem található, kilépés ...</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="858"/>
+        <source>Information</source>
+        <translation>Információ</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="881"/>
+        <location filename="mainwindow.cpp" line="882"/>
         <source>Count of patientcard types to be imported: %1</source>
         <translation>%1 bérlettípus lesz importálva</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="853"/>
-        <location filename="mainwindow.cpp" line="854"/>
+        <location filename="mainwindow.cpp" line="917"/>
+        <location filename="mainwindow.cpp" line="918"/>
         <source>Importing %1 patientcard types finished.</source>
         <translation>%1 bérlettípus importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="859"/>
+        <location filename="mainwindow.cpp" line="923"/>
         <source>Error occured during opening brlttpsfsv.dat file.</source>
         <translation>Hiba történt a brlttpsfsv.dat állomány megnyitásakor.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="893"/>
-        <location filename="mainwindow.cpp" line="894"/>
+        <location filename="mainwindow.cpp" line="957"/>
+        <location filename="mainwindow.cpp" line="958"/>
         <source>Count of patientcards to be imported: %1</source>
         <translation>%1 bérlet lesz importálva</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="948"/>
-        <location filename="mainwindow.cpp" line="949"/>
+        <location filename="mainwindow.cpp" line="1012"/>
+        <location filename="mainwindow.cpp" line="1013"/>
         <source>Importing %1 patientcards finished.</source>
         <translation>%1 bérlet importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="954"/>
+        <location filename="mainwindow.cpp" line="1018"/>
         <source>Error occured during opening brltfsv.dat file.</source>
         <translation>Hiba történt a brltfsv.dat állomány megnyitásakor.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="980"/>
-        <location filename="mainwindow.cpp" line="981"/>
+        <location filename="mainwindow.cpp" line="1044"/>
+        <location filename="mainwindow.cpp" line="1045"/>
         <source>Count of product types to be imported: %1</source>
         <translation>Importálandó terméktípusok száma: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1000"/>
-        <location filename="mainwindow.cpp" line="1001"/>
+        <location filename="mainwindow.cpp" line="1064"/>
+        <location filename="mainwindow.cpp" line="1065"/>
         <source>Importing %1 product types finished.</source>
         <translation>%1 terméktípus importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1006"/>
+        <location filename="mainwindow.cpp" line="1070"/>
         <source>Error occured during opening trmktpsfsv.dat file.</source>
         <translation>Hiba történt a trmktpsfsv.dat állomány megnyitása közben.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1032"/>
-        <location filename="mainwindow.cpp" line="1033"/>
+        <location filename="mainwindow.cpp" line="1096"/>
+        <location filename="mainwindow.cpp" line="1097"/>
         <source>Count of products to be imported: %1</source>
         <translation>Importálandó termékek száma: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1058"/>
-        <location filename="mainwindow.cpp" line="1059"/>
+        <location filename="mainwindow.cpp" line="1122"/>
+        <location filename="mainwindow.cpp" line="1123"/>
         <source>Importing %1 products finished.</source>
         <translation>%1 termék importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1064"/>
+        <location filename="mainwindow.cpp" line="1128"/>
         <source>Error occured during opening trmkfsv.dat file.</source>
         <translation>Hiba történt a trmkfsv.dat állomány megnyitása közben.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1090"/>
-        <location filename="mainwindow.cpp" line="1091"/>
+        <location filename="mainwindow.cpp" line="1154"/>
+        <location filename="mainwindow.cpp" line="1155"/>
         <source>Count of product assigns to be imported: %1</source>
         <translation>Importálandó terméktípus / termék kapcsolatok száma: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1108"/>
-        <location filename="mainwindow.cpp" line="1109"/>
+        <location filename="mainwindow.cpp" line="1172"/>
+        <location filename="mainwindow.cpp" line="1173"/>
         <source>Importing %1 product assigns finished.</source>
         <translation>%1 ťerméktípus / termék kapcsolat importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1113"/>
+        <location filename="mainwindow.cpp" line="1177"/>
         <source>Error occured during opening trmktpssgfsv.dat file.</source>
         <translation>Hiba történt a trmktpssgfsv.dat állomány megnyitása közben.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1139"/>
-        <location filename="mainwindow.cpp" line="1140"/>
+        <location filename="mainwindow.cpp" line="1203"/>
+        <location filename="mainwindow.cpp" line="1204"/>
         <source>Count of users to be imported: %1</source>
         <translation>Importálandó felhasználók száma: %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1168"/>
-        <location filename="mainwindow.cpp" line="1169"/>
+        <location filename="mainwindow.cpp" line="1232"/>
+        <location filename="mainwindow.cpp" line="1233"/>
         <source>Importing %1 users finished.</source>
         <translation>%1 felhasználó importálása befejezve.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1174"/>
+        <location filename="mainwindow.cpp" line="1238"/>
         <source>Error occured during opening srfsv.dat file.</source>
         <translation>Hiba történt a srfsv.dat állomány megnyitásakor.</translation>
     </message>
@@ -560,28 +580,28 @@ Kérem válasszon ki egy megfelelő állományt és kezdje újra a folyamatot.</
         <translation type="obsolete">A kapcsolódás a Belenus adatbázishoz sikerült</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="745"/>
+        <location filename="mainwindow.cpp" line="753"/>
         <source>License code: %1 [%2]</source>
         <translation>Liszensz kulcs: %1 [%2]</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1208"/>
-        <location filename="mainwindow.cpp" line="1252"/>
+        <location filename="mainwindow.cpp" line="1272"/>
+        <location filename="mainwindow.cpp" line="1316"/>
         <source>%1	%2 eur	%3 minutes</source>
         <translation>%1	%2 huf	%3 perc</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1237"/>
+        <location filename="mainwindow.cpp" line="1301"/>
         <source> minutes</source>
         <translation> perc</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1386"/>
+        <location filename="mainwindow.cpp" line="1450"/>
         <source>Export process finished</source>
         <translation>Export folyamat befejezve</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1387"/>
+        <location filename="mainwindow.cpp" line="1451"/>
         <source>Connection to Belenus database closed</source>
         <translation>Az Belenus adatbázis kapcsolat lezárult</translation>
     </message>

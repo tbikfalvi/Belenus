@@ -630,7 +630,7 @@ void MainWindow::on_pbLogin_clicked()
 {
     QByteArray  obPwdHash = QCryptographicHash::hash( ui->ledSystemPassword->text().toAscii(), QCryptographicHash::Sha1 );
 
-    if( QString( obPwdHash.toHex() ).compare( "2f8a0b522dff9ac531fe7a76d1393261c094c573" ) == 0 )
+    if( QString( obPwdHash.toHex() ).compare( "a382329cfe97ae74677649d1f7fc03986b27cf3f" ) == 0 )
     {
         ui->pbExpSelectDir->setEnabled( true );
         ui->pbCheckSVDatFiles->setEnabled( true );
@@ -792,6 +792,7 @@ void MainWindow::on_pbImportDB_clicked()
     _loadProducts();
     _loadProductAssign();
     _loadUsers();
+    _loadDevices();
 
     if( m_bIsPatientCardTypesLoaded &&
         m_bIsPatientCardsLoaded &&
@@ -803,6 +804,61 @@ void MainWindow::on_pbImportDB_clicked()
     }
 }
 //====================================================================================
+void MainWindow::_loadDevices()
+//====================================================================================
+{
+    FILE           *file = NULL;
+    QString         qsSolInfo = "";
+
+    setCursor( Qt::WaitCursor);
+
+    for( int i=0; i<20; i++ )
+    {
+        QString         qsFileName = "";
+        typ_szoliadat   stTemp;
+
+        qsFileName = QString( "%1/sdfsv%2.dat" ).arg( ui->ledPathDB->text() ).arg(i).replace( "/", "\\" );
+
+        _logAction( tr("Load device file: %1").arg(qsFileName) );
+
+        file = fopen( qsFileName.toStdString().c_str(), "rb" );
+        if( file != NULL )
+        {
+            _logAction( tr("Read device data") );
+            memset( m_strPatiencardTypeVersion, 0, 10 );
+            fread( m_strPatiencardTypeVersion, 10, 1, file );
+            fread( stTemp.strNev, 50, 1, file );
+            fread( &stTemp.bInfraSzolarium, 1, 1, file );
+            fread( &stTemp.nIdoVetkozes, 4, 1, file );
+            fread( &stTemp.nIdoUtohutes, 4, 1, file );
+            fread( &stTemp.nIdoSzauna, 4, 1, file );
+            fread( &stTemp.nKedvezmenyIdoStart, 4, 1, file );
+            fread( &stTemp.nKedvezmenyIdoStop, 4, 1, file );
+            fread( &stTemp.nCsoUzemora, 4, 1, file );
+            fclose( file );
+
+            _DeCode( stTemp.strNev, 50 );
+
+            QString qsUseTime = "";
+
+            qsUseTime.append( QString::number(stTemp.nCsoUzemora/3600) );
+            qsUseTime.append( ":" );
+            qsUseTime.append( QString::number((stTemp.nCsoUzemora%3600)/60) );
+            qsUseTime.append( ":" );
+            qsUseTime.append( QString::number((stTemp.nCsoUzemora%3600)%60) );
+
+            qsSolInfo.append( QString( "%1\t%2\n" ).arg( qsUseTime ).arg( stTemp.strNev ) );
+        }
+        else
+        {
+            _logAction( tr("File not found, exiting ...") );
+            break;
+        }
+    }
+    QMessageBox::information( this, tr("Information"), qsSolInfo );
+
+    setCursor( Qt::ArrowCursor);
+}
 //====================================================================================
 void MainWindow::_loadPatientCardTypes()
 //====================================================================================

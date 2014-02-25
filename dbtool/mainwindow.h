@@ -109,6 +109,18 @@ typedef struct _typ_user
    int      nUserLevel;
 } typ_user;
 //====================================================================================
+typedef struct _typ_szoliadat
+{
+   char           strNev[50];
+   bool           bInfraSzolarium;
+   int            nIdoVetkozes;
+   int            nIdoUtohutes;
+   int            nIdoSzauna;
+   int            nKedvezmenyIdoStart;
+   int            nKedvezmenyIdoStop;
+   int            nCsoUzemora;         // Cso üzemóra másodpercben
+} typ_szoliadat;
+//====================================================================================
 
 const int   CONST_PAGE_START        = 0;
 const int   CONST_PAGE_VERIFICATION = 1;
@@ -149,6 +161,7 @@ private:
     void                            _initializePage();
     bool                            _isSystemVerificationOk();
 
+    void                            _loadDevices();
     void                            _loadPatientCardTypes();
     void                            _loadPatientCards();
     void                            _loadProductTypes();
