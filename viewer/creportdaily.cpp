@@ -291,14 +291,11 @@ unsigned int cReportDaily::_reportPartPatientCardSell()
         {
             unsigned int uiPricePCSell = 0;
             QString      qsCountPCSell = _countsumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt(), &uiPricePCSell );
-//            unsigned int    uiPricePCSell = _sumPatientCardTypeSell( m_qslCassaIds.at(i), poQueryResult->value(0).toUInt() );
-//            QString         qsPricePCSell = "";
 
             if( uiPricePCSell > 0 )
             {
                 cCurrency   obPricePCSell( uiPricePCSell );
 
-//                qsPricePCSell = obPricePCSell.currencyFullStringShort();
                 qslCells << QString( "%1 / %2" ).arg( qsCountPCSell ).arg( obPricePCSell.currencyFullStringShort() );
             }
             else

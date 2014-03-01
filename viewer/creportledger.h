@@ -24,6 +24,12 @@ private:
     void            _reportPartPanelUseType( tePanelUse p_tePanelUse );
 //    void            _reportPartPanelUseUnits();
     void            _reportPartPaymentMethods();
+    unsigned int    _reportPartExpenses();
+    void            _reportPartIncomeSummary( unsigned int p_uiTotalPrice,
+                                              unsigned int p_uiPatientCardTotal,
+                                              unsigned int p_uiDeviceUsagesTotal,
+                                              int p_nExpenses,
+                                              int p_nCassaTotal );
     int             _sumPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
     QString         _countPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
     int             _sumPanelUse( unsigned int p_uiPanelTypeId );
@@ -31,6 +37,9 @@ private:
     int             _countPanelUse( unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse );
     int             _sumPaymentMethod( unsigned int p_uiPaymentMethodId );
     int             _sumCassaIncome( unsigned int p_uiCassaId );
+
+    QStringList      m_qslCassaIds;
+    QStringList      m_qslCassaOwners;
 };
 
 #endif // CREPORTLEDGER_H
