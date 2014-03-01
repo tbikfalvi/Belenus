@@ -1767,8 +1767,8 @@ linked to one or more panels.</source>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="360"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="482"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="545"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="483"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="546"/>
         <source>Warning</source>
         <translation></translation>
     </message>
@@ -1780,45 +1780,45 @@ Please select valid value from the list.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="483"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="484"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="494"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="501"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="495"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="502"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="495"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="496"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="502"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="503"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="517"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="518"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="519"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="554"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="573"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="520"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="555"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="574"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="520"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="521"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -1828,7 +1828,7 @@ Do you want to refill the patientcard now?%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="546"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="547"/>
         <source>This patientcard currently can not be used.
 Please check it&apos;s validity time period.
 
@@ -1836,13 +1836,13 @@ Please check it&apos;s validity time period.
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="555"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="556"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="574"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="575"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation></translation>

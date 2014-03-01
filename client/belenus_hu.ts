@@ -2962,8 +2962,8 @@ amihez egy vagy több gép van hozzárendelve.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpaneluse.cpp" line="360"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="482"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="545"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="483"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="546"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -2977,34 +2977,34 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="483"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="484"/>
         <source>Invalid barcode length.
 The length of the barcode should be %1.</source>
         <translation>Nem megfelelő vonalkód hosszúság.
 A vonalkódnak %1 karakter hosszúnak kell lennie.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="494"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="501"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="495"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="502"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="495"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="496"/>
         <source>You are not allowed to use system administrator card.
 Please log in as a system administrator if you want to use this card.</source>
         <translation>Nincs jogosultsága szervízkártya használatára.
 Ha használni akarja a kártyát, jelentkezzen be rendszer adminisztrátorként.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="502"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="503"/>
         <source>This patientcard has been lost and replaced
 and can not be used or sold again.</source>
         <translation>Ez a bérlet elveszett és lecserélték másik bérletre
 ezért nem lehet használni vagy eladni újra.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="517"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="518"/>
         <source>
 
 Due to there is no time left, the patientcard will be reseted and deactivated.</source>
@@ -3013,14 +3013,14 @@ Due to there is no time left, the patientcard will be reseted and deactivated.</
 A bérleten nincs felhasználható idő, ezért a bérlet deaktiválásra kerül.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="519"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="554"/>
-        <location filename="dlg/dlgpaneluse.cpp" line="573"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="520"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="555"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="574"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="520"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="521"/>
         <source>This patientcard can not be used with these settings:
 
 Available units: %1
@@ -3035,7 +3035,7 @@ Felhasználható idő: %2 (óó:pp:mm)
 Fel akarja most tölteni a bérletet?%3</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="546"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="547"/>
         <source>This patientcard currently can not be used.
 Please check it&apos;s validity time period.
 
@@ -3046,14 +3046,14 @@ Kérem ellenőrizze a bérlet érvényességi időintervallumát.
 %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="555"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="556"/>
         <source>This barcode has not been activated yet.
 Do you want to activate and sell it now?</source>
         <translation>Ilyen vonalkóddal bérlet még nincs aktiválva.
 Akarja aktiválni és eladni most?</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneluse.cpp" line="574"/>
+        <location filename="dlg/dlgpaneluse.cpp" line="575"/>
         <source>This barcode has not found in the database.
 Do you want to save it and sell it now?</source>
         <translation>Ez a vonalkód nincs elmentve az adatbázisban.

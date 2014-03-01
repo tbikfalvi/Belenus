@@ -23,7 +23,7 @@ private:
     unsigned int    _reportPartPanelUse();
     void            _reportPartPanelUseType( tePanelUse p_tePanelUse );
 //    void            _reportPartPanelUseUnits();
-    void            _reportPartPaymentMethods();
+    int             _reportPartPaymentMethods();
     unsigned int    _reportPartExpenses();
     void            _reportPartIncomeSummary( unsigned int p_uiTotalPrice,
                                               unsigned int p_uiPatientCardTotal,
@@ -37,6 +37,8 @@ private:
     int             _countPanelUse( unsigned int p_uiPanelTypeId, tePanelUse p_tePanelUse );
     int             _sumPaymentMethod( unsigned int p_uiPaymentMethodId );
     int             _sumCassaIncome( unsigned int p_uiCassaId );
+    QString         _countsumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId, unsigned int *p_uiPricePCSell );
+    int             _sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelTypeId );
 
     QStringList      m_qslCassaIds;
     QStringList      m_qslCassaOwners;

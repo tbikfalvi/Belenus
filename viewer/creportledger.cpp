@@ -478,7 +478,7 @@ void cReportLedger::_reportPartPanelUseType(tePanelUse p_tePanelUse)
     finishSection();
 }
 //------------------------------------------------------------------------------------
-void cReportLedger::_reportPartPaymentMethods()
+int cReportLedger::_reportPartPaymentMethods()
 //------------------------------------------------------------------------------------
 {
     startSection();
@@ -791,6 +791,57 @@ int cReportLedger::_sumCassaIncome( unsigned int p_uiCassaId )
                       "cassaId>0 AND "
                       "ledgerId>0 AND "
                       "cassaId=%1 ").arg(p_uiCassaId);
+    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+    poQueryResult->first();
+
+    return poQueryResult->value(0).toInt();
+}
+//------------------------------------------------------------------------------------
+QString cReportLedger::_countsumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId, unsigned int *p_uiPricePCSell )
+//------------------------------------------------------------------------------------
+{
+    QString         qsQuery;
+    QSqlQuery      *poQueryResult;
+    QString         qsRet = "";
+    QString         qsPCCondition = QString( "(ledgerTypeId=%1 OR ledgerTypeId=%2 OR ledgerTypeId=%3 OR ledgerTypeId=%4)" ).arg(LT_PC_SELL).arg(LT_PC_REFILL).arg(LT_PC_LOST_REPLACE).arg(LT_PC_ASSIGN_PARTNER);
+
+    qsQuery = QString("SELECT COUNT(totalPrice), SUM(totalPrice) "
+                      "FROM cassahistory, ledger, patientCardTypes WHERE "
+                      "cassahistory.ledgerId=ledger.ledgerId AND "
+                      "ledger.patientCardTypeId=patientCardTypes.patientCardTypeId AND "
+                      "cassahistory.cassaId=%1 AND "
+                      "%2 AND "
+                      "ledger.patientCardTypeId=%3 AND "
+                      "ledger.active=1 " ).arg(p_qsCassaId).arg(qsPCCondition).arg(p_uiPatientCardTypeId);
+    poQueryResult = g_poDB->executeQTQuery( qsQuery );
+
+    if( poQueryResult->size() > 0 )
+    {
+        poQueryResult->first();
+        if( poQueryResult->value(0).toInt() > 0 )
+        {
+            qsRet = QString::number( poQueryResult->value(0).toInt() );
+            *p_uiPricePCSell = poQueryResult->value(1).toUInt();
+        }
+    }
+
+    return qsRet;
+}
+//------------------------------------------------------------------------------------
+int cReportLedger::_sumPanelUse( QString p_qsCassaId, unsigned int p_uiPanelGroupId )
+//------------------------------------------------------------------------------------
+{
+    QString         qsQuery;
+    QSqlQuery      *poQueryResult;
+
+    qsQuery = QString("SELECT SUM(totalPrice) "
+                      "FROM cassahistory, ledger, panels WHERE "
+                      "cassahistory.ledgerId=ledger.ledgerId AND "
+                      "ledger.panelId=panels.panelId AND "
+                      "cassahistory.cassaId=%1 AND "
+                      "ledgerTypeId=%2 AND "
+                      "panelGroupId=%3 AND "
+                      "ledger.active=1 " ).arg( p_qsCassaId ).arg( LT_DEVICE_USAGE ).arg( p_uiPanelGroupId );
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
     poQueryResult->first();
 
