@@ -1995,6 +1995,8 @@ bool dlgMain::_processBelenusTablesCreate()
 bool dlgMain::_processBelenusTablesFill()
 //=======================================================================================
 {
+    _logProcess( QString("_processBelenusTablesFill()") );
+
     bool        bRet = true;
 
     m_poDB->setHostName( "localhost" );
@@ -2005,6 +2007,7 @@ bool dlgMain::_processBelenusTablesFill()
     if( m_poDB->open() )
     {
         QFile file( QString("%1/sql/db_fill_%2.sql").arg(g_qsCurrentPath).arg(m_qsLanguage) );
+        _logProcess( QString("%1/sql/db_fill_%2.sql").arg(g_qsCurrentPath).arg(m_qsLanguage) );
 
         if( !file.open(QIODevice::ReadOnly | QIODevice::Text) )
             return false;
@@ -2024,6 +2027,7 @@ bool dlgMain::_processBelenusTablesFill()
 
                 if( !sqlQuery.exec( qsSQLCommand ) )
                 {
+                    _logProcess( QString("Unable to execute command: %1").arg( qsSQLCommand ) );
                     _logProcess( sqlQuery.lastError().text() );
                     bRet = false;
                 }
@@ -2040,6 +2044,7 @@ bool dlgMain::_processBelenusTablesFill()
     else
     {
         bRet = false;
+        _logProcess( QString("Unable to connect to belenus database") );
     }
 
     return bRet;
@@ -2111,9 +2116,10 @@ bool dlgMain::_processClientInstall()
 
     _logProcess( QString("Creating directories (target, lang, resource) ..."), false );
     if( !_createTargetDirectory( m_qsClientInstallDir ) ||
+        !_createTargetDirectory( QString("%1\\docs").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
-        !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ) ||
-        !_createTargetDirectory( QString("%1\\tools").arg(m_qsClientInstallDir) ))
+        !_createTargetDirectory( QString("%1\\sql").arg(m_qsClientInstallDir) ) ||
+        !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ))
     {
         _logProcess( QString(" FAIL") );
         m_qsProcessErrorMsg = QString( "CreateClientDirFailed" );
@@ -2580,7 +2586,7 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
         }
         if( p_qsFileName.right(10).compare("install.li") == 0 )
         {
-            m_qslFiles.append( QString( "%1%2" ).arg(m_qsClientInstallDir).arg(qslFiles.at(i)) );
+            m_qslFiles.append( QString( "%1\\%2" ).arg(m_qsClientInstallDir).arg(qslFiles.at(i)).replace( '/', '\\' ) );
         }
     }
 
@@ -2708,6 +2714,11 @@ bool dlgMain::_removeInstalledFilesFolders()
         }
 
         _emptyTargetDirectory( QString("%1\\Temp\\BelenusInstall\\").arg(m_qsPathWindows) );
+
+        QDir    qdWinTemp( QString("%1\\Temp\\").arg(m_qsPathWindows) );
+
+//        qdTarget.remove( qslFiles.at(i) );
+        qdWinTemp.rmpath( "BelenusInstall" );
     }
     else
     {

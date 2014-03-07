@@ -237,6 +237,7 @@ private:
     QString                          m_qsLogFileName;
 
 private slots:
+    void slotProgramTypeClicked();
     void on_pbExportProcess_clicked();
     void on_pbPExportConnect_clicked();
     void on_pbImportDB_clicked();

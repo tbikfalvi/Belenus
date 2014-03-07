@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->imgLogo->setPixmap( QPixmap(":/imgLogo/KiwiSun.png") );
 
+    connect( ui->rbTypeSolarium, SIGNAL(clicked()), this, SLOT(slotProgramTypeClicked()) );
+    connect( ui->rbTypeSensolite, SIGNAL(clicked()), this, SLOT(slotProgramTypeClicked()) );
+
     _initializePage();
 }
 
@@ -621,7 +624,17 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int index)
 
     ui->retranslateUi( this );
 }
-
+void MainWindow::slotProgramTypeClicked()
+{
+    if( ui->rbTypeSolarium->isChecked() )
+    {
+        m_nProgramType = DBTool::KiwiSun;
+    }
+    else if( ui->rbTypeSensolite->isChecked() )
+    {
+        m_nProgramType = DBTool::Sensolite;
+    }
+}
 //====================================================================================
 // SYSTEM VERIFICATION
 //====================================================================================
