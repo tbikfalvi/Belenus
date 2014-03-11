@@ -341,7 +341,7 @@ namespace voidrealms
                 QString mRet =  VQTConvert::WCHAR_to_QString(mItems);
 //                QString mRet =  VQTConvert::Char_To_QString(mItems);
                 mList.append(mRet);
-                mItems = mItems + lstrlen(mItems); // pStr now points to null at end of string
+                mItems = mItems + lstrlen((const CHAR*)mItems); // pStr now points to null at end of string
                 mItems++; // pStr now points to the next string, or the second null to terminate
             }
 
@@ -420,7 +420,7 @@ namespace voidrealms
                 WCHAR* pBuffer = new WCHAR[dwSize];
 //                CHAR* pBuffer = new CHAR[dwSize];
 
-                lResult = RegEnumKeyEx(this->mKey,lNumber, pBuffer, &dwSize,NULL,NULL,NULL,NULL);
+                lResult = RegEnumKeyEx(this->mKey,lNumber, (CHAR*)pBuffer, &dwSize,NULL,NULL,NULL,NULL);
                 if(lResult == ERROR_SUCCESS)
                 {
                     QString mRet =  VQTConvert::WCHAR_to_QString(pBuffer);
@@ -453,7 +453,7 @@ namespace voidrealms
                 DWORD dwSize = 16383;
                 WCHAR* pBuffer = new WCHAR[dwSize];
 //                CHAR* pBuffer = new CHAR[dwSize];
-                lResult = RegEnumValue(this->mKey,lNumber, pBuffer, &dwSize,NULL,NULL,NULL,NULL);
+                lResult = RegEnumValue(this->mKey,lNumber, (CHAR*)pBuffer, &dwSize,NULL,NULL,NULL,NULL);
                 if(lResult == ERROR_SUCCESS)
                 {
                     QString mRet =  VQTConvert::WCHAR_to_QString(pBuffer);

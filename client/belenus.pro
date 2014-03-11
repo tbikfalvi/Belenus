@@ -5,14 +5,12 @@ FORMS = ../framework/dlgcrud.ui \
     dlglogin.ui \
     dlglogs.ui \
     dlgpaneltypeedit.ui \
+    dlgpanelgroupedit.ui \
     dlgpreferences.ui \
     dlgpwdconfirm.ui \
     dlguseredit.ui \
-    dlgpatientoriginedit.ui \
     dlgreasontovisitedit.ui \
     wndmain.ui \
-    dlgpatientedit.ui \
-    dlgattendanceedit.ui \
     dlginputstart.ui \
     dlgpanelstatusesedit.ui \
     dlgpatientcardtypeedit.ui \
@@ -22,19 +20,31 @@ FORMS = ../framework/dlgcrud.ui \
     dlgcassa.ui \
     dlgcassaaction.ui \
     dlgpaneluseedit.ui \
-    dlgillnessgroupedit.ui \
     dlgpatientcarduse.ui \
     dlgaddressedit.ui \
-    dlghealthinsuranceedit.ui \
-    dlgcompanyedit.ui \
-    dlgdoctoredit.ui \
     dlgzipregioncityedit.ui \
     dlglicenceedit.ui \
-    dlgdiscountedit.ui \
     dlgprogress.ui \
-    dlgsynchronization.ui \
     dlgpanelappereance.ui \
-    dlgdbglobals.ui
+    dlgproducttypeedit.ui \
+    dlgproductactiontypeedit.ui \
+    dlgproductedit.ui \
+    dlgguestedit.ui \
+    dlgvalidtimeperiodedit.ui \
+    dlgproductstorage.ui \
+    dlgsecondarywindow.ui \
+    dlgpatientcardsell.ui \
+    dlgpatientcardrefill.ui \
+    dlgdiscountedit.ui \
+    dlgpaymentmethodedit.ui \
+    dlgpaneltypecopy.ui \
+    cdlgtest.ui \
+    dlgpaneluse.ui \
+    dlgCassaInOut.ui \
+    dlgpatientcardassign.ui \
+    dlgproductsell.ui \
+    dlgchangepcvalidity.ui \
+    dlgmanagedatabase.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -53,37 +63,34 @@ HEADERS = belenus.h \
     ../framework/network/packet.h \
     ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
+    crud/dlgpanelgroups.h \
     crud/dlgusers.h \
-    crud/dlgpatientorigin.h \
     crud/dlgreasontovisit.h \
-    crud/dlgpatient.h \
-    crud/dlgattendance.h \
-    crud/dlgpatientselect.h \
     crud/dlgpanelstatuses.h \
     crud/dlgpatientcardtype.h \
     crud/dlgpatientcard.h \
-    crud/dlgpostponedpatientselect.h \
     crud/dlgpanelsettings.h \
-    crud/dlgpostponedattendanceselect.h \
-    crud/dlgattendanceselect.h \
-    crud/dlgillnessgroup.h \
     crud/dlgaddress.h \
-    crud/dlgdoctor.h \
-    crud/dlgcompany.h \
-    crud/dlghealthinsurance.h \
     crud/dlgzipregioncity.h \
     crud/dlgzipregioncityselect.h \
+    crud/dlgguest.h \
+    crud/dlgproduct.h \
+    crud/dlgproductsell.h \
+    crud/dlgproducttype.h \
+    crud/dlgproductactiontype.h \
+    crud/dlgpatientcardselect.h \
+    crud/dlgpatientselect.h \
+    crud/dlgshoppingcart.h \
     crud/dlgdiscount.h \
-    db/dbpatientorigin.h \
+    crud/dlgstorno.h \
+    crud/dlgpaymentmethod.h \
     db/dbreasontovisit.h \
-    db/dbpatient.h \
-    db/dbattendance.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
     db/dbpanelstatuses.h \
     db/dbuser.h \
-    db/dbpostponed.h \
     db/dbpaneltypes.h \
+    db/dbpanelgroups.h \
     db/dbpaneluses.h \
     db/dbcassa.h \
     db/dbdenomination.h \
@@ -93,15 +100,21 @@ HEADERS = belenus.h \
     db/dbledgerdevice.h \
     db/dbpatientcardhistory.h \
     db/dbzipregioncity.h \
-    db/dbillnessgroup.h \
     db/dbaddress.h \
-    db/dbdoctor.h \
-    db/dbcompany.h \
-    db/dbhealthinsurance.h \
     db/dbpublicplace.h \
     db/dbpanels.h \
-    db/dbdiscount.h \
     db/dbpanelstatussettings.h \
+    db/dbguest.h \
+    db/dbproduct.h \
+    db/dbproducttype.h \
+    db/dbproductactiontype.h \
+    db/dbshoppingcart.h \
+    db/dbproducthistory.h \
+    db/dbvalidtimeperiods.h \
+    db/dbdiscount.h \
+    db/dbpaymentmethod.h \
+    db/dbpatientcardunits.h \
+    db/dbapplicationaction.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -112,30 +125,37 @@ HEADERS = belenus.h \
     dlg/dlgserialreg.h \
     dlg/dlgcassaaction.h \
     dlg/dlgpanelappereance.h \
+    dlg/dlgpaneltimecopy.h \
+    dlg/dlgpaneluse.h \
+    dlg/dlgcassainout.h \
+    dlg/dlgpatientcardassign.h \
+    dlg/dlgchangepcvalidity.h \
+    dlg/dlgmanagedatabase.h \
     edit/dlgpaneltypeedit.h \
+    edit/dlgpanelgroupedit.h \
     edit/dlguseredit.h \
-    edit/dlgpatientedit.h \
-    edit/dlgpatientoriginedit.h \
     edit/dlgreasontovisitedit.h \
-    edit/dlgattendanceedit.h \
     edit/dlgpanelstatusesedit.h \
     edit/dlgpatientcardtypeedit.h \
     edit/dlgpatientcardedit.h \
     edit/dlgcassaedit.h \
     edit/dlgpaneluseedit.h \
     edit/dlgpatientcarduse.h \
-    edit/dlgillnessgroupedit.h \
     edit/dlgaddressedit.h \
-    edit/dlghealthinsuranceedit.h \
-    edit/dlgcompanyedit.h \
-    edit/dlgdoctoredit.h \
     edit/dlgzipregioncityedit.h \
+    edit/dlgguestedit.h \
+    edit/dlgproducttypeedit.h \
+    edit/dlgproductactiontypeedit.h \
+    edit/dlgproductedit.h \
+    edit/dlgvalidtimeperiodedit.h \
+    edit/dlgpatientcardsell.h \
+    edit/dlgpatientcardrefill.h \
     edit/dlgdiscountedit.h \
+    edit/dlgpaymentmethodedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
     bs_connection.h \
-    licenceManager.h \
     communication.h \
     communication_demo.h \
     frmpanel.h \
@@ -143,20 +163,19 @@ HEADERS = belenus.h \
     preferences.h \
     wndmain.h \
     cassa.h \
-    ledger.h \
     crud/dlgpaneluseselect.h \
     report/repledgermain.h \
-    report/reppatients.h \
     report/repcassalist.h \
     report/rep_sample_.h \
-    report/repattendance.h \
     report/repcarduses.h \
     edit/dlglicenceedit.h \
     general.h \
     dlg/dlgprogress.h \
-    db/dbmirror.h \
-    dlg/dlgsynchronization.h \
-    dlg/dlgglobals.h
+    dlg/dlgproductstorage.h \
+    dlg/dlgsecondarywindow.h \
+    dsppanel.h \
+    licenceManager.h \
+    cdlgtest.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -172,37 +191,34 @@ SOURCES = main.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
+    crud/dlgpanelgroups.cpp \
     crud/dlgusers.cpp \
-    crud/dlgpatientorigin.cpp \
     crud/dlgreasontovisit.cpp \
-    crud/dlgpatient.cpp \
-    crud/dlgattendance.cpp \
-    crud/dlgpatientselect.cpp \
     crud/dlgpanelstatuses.cpp \
     crud/dlgpatientcardtype.cpp \
     crud/dlgpatientcard.cpp \
-    crud/dlgpostponedpatientselect.cpp \
     crud/dlgpanelsettings.cpp \
-    crud/dlgpostponedattendanceselect.cpp \
-    crud/dlgattendanceselect.cpp \
-    crud/dlgillnessgroup.cpp \
     crud/dlgaddress.cpp \
-    crud/dlgdoctor.cpp \
-    crud/dlgcompany.cpp \
-    crud/dlghealthinsurance.cpp \
     crud/dlgzipregioncity.cpp \
     crud/dlgzipregioncityselect.cpp \
+    crud/dlgguest.cpp \
+    crud/dlgproduct.cpp \
+    crud/dlgproductsell.cpp \
+    crud/dlgproducttype.cpp \
+    crud/dlgproductactiontype.cpp \
+    crud/dlgpatientcardselect.cpp \
+    crud/dlgpatientselect.cpp \
+    crud/dlgshoppingcart.cpp \
     crud/dlgdiscount.cpp \
-    db/dbpatientorigin.cpp \
+    crud/dlgstorno.cpp \
+    crud/dlgpaymentmethod.cpp \
     db/dbreasontovisit.cpp \
-    db/dbpatient.cpp \
-    db/dbattendance.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
     db/dbpanelstatuses.cpp \
     db/dbuser.cpp \
-    db/dbpostponed.cpp \
     db/dbpaneltypes.cpp \
+    db/dbpanelgroups.cpp \
     db/dbpaneluses.cpp \
     db/dbcassa.cpp \
     db/dbdenomination.cpp \
@@ -212,15 +228,21 @@ SOURCES = main.cpp \
     db/dbledgerdevice.cpp \
     db/dbpatientcardhistory.cpp \
     db/dbzipregioncity.cpp \
-    db/dbillnessgroup.cpp \
     db/dbaddress.cpp \
-    db/dbdoctor.cpp \
-    db/dbcompany.cpp \
-    db/dbhealthinsurance.cpp \
     db/dbpublicplace.cpp \
     db/dbpanels.cpp \
-    db/dbdiscount.cpp \
     db/dbpanelstatussettings.cpp \
+    db/dbguest.cpp \
+    db/dbproduct.cpp \
+    db/dbproducttype.cpp \
+    db/dbproductactiontype.cpp \
+    db/dbshoppingcart.cpp \
+    db/dbproducthistory.cpp \
+    db/dbvalidtimeperiods.cpp \
+    db/dbdiscount.cpp \
+    db/dbpaymentmethod.cpp \
+    db/dbpatientcardunits.cpp \
+    db/dbapplicationaction.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -231,50 +253,56 @@ SOURCES = main.cpp \
     dlg/dlgserialreg.cpp \
     dlg/dlgcassaaction.cpp \
     dlg/dlgpanelappereance.cpp \
+    dlg/dlgpaneltimecopy.cpp \
+    dlg/dlgpaneluse.cpp \
+    dlg/dlgcassainout.cpp \
+    dlg/dlgpatientcardassign.cpp \
+    dlg/dlgchangepcvalidity.cpp \
+    dlg/dlgmanagedatabase.cpp \
     edit/dlgpaneltypeedit.cpp \
+    edit/dlgpanelgroupedit.cpp \
     edit/dlguseredit.cpp \
-    edit/dlgpatientedit.cpp \
-    edit/dlgpatientoriginedit.cpp \
     edit/dlgreasontovisitedit.cpp \
-    edit/dlgattendanceedit.cpp \
     edit/dlgpanelstatusesedit.cpp \
     edit/dlgpatientcardtypeedit.cpp \
     edit/dlgpatientcardedit.cpp \
     edit/dlgcassaedit.cpp \
     edit/dlgpaneluseedit.cpp \
     edit/dlgpatientcarduse.cpp \
-    edit/dlgillnessgroupedit.cpp \
     edit/dlgaddressedit.cpp \
-    edit/dlghealthinsuranceedit.cpp \
-    edit/dlgcompanyedit.cpp \
-    edit/dlgdoctoredit.cpp \
     edit/dlgzipregioncityedit.cpp \
     edit/dlglicenceedit.cpp \
+    edit/dlgguestedit.cpp \
+    edit/dlgproducttypeedit.cpp \
+    edit/dlgproductactiontypeedit.cpp \
+    edit/dlgproductedit.cpp \
+    edit/dlgvalidtimeperiodedit.cpp \
+    edit/dlgpatientcardsell.cpp \
+    edit/dlgpatientcardrefill.cpp \
     edit/dlgdiscountedit.cpp \
+    edit/dlgpaymentmethodedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
     bs_connection.cpp \
-    licenceManager.cpp \
     communication_demo.cpp \
     frmpanel.cpp \
     mdipanels.cpp \
     preferences.cpp \
     wndmain.cpp \
     cassa.cpp \
-    ledger.cpp \
     crud/dlgpaneluseselect.cpp \
     report/repledgermain.cpp \
-    report/reppatients.cpp \
     report/repcassalist.cpp \
     report/rep_sample_.cpp \
-    report/repattendance.cpp \
     report/repcarduses.cpp \
     general.cpp \
     dlg/dlgprogress.cpp \
-    db/dbmirror.cpp \
-    dlg/dlgsynchronization.cpp \
-    dlg/dlgglobals.cpp
+    dlg/dlgproductstorage.cpp \
+    dlg/dlgsecondarywindow.cpp \
+    dsppanel.cpp \
+    licenceManager.cpp \
+    cdlgtest.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
@@ -292,3 +320,9 @@ win32:DEFINES -= UNICODE
 
 RESOURCES += \
     belenus.qrc
+
+
+
+
+
+

@@ -7,12 +7,13 @@ using namespace std;
 
 class CS_Communication
 {
+
 //-------------------------------------------------------------------
 public:
     CS_Communication() { m_stCustomCaption = "";
                          m_inPanelCount = 0;
-                       };
-    ~CS_Communication() {};
+                       }
+    ~CS_Communication() {}
 
     virtual int getCountAvailablePorts() = 0;
     virtual int getComPort( int p_inIndex ) = 0;
@@ -41,8 +42,14 @@ public:
     virtual bool isHardwareMovedNextStatus( const int p_nIndex ) = 0;
     virtual void setHardwareMovedNextStatus( const int p_nIndex ) = 0;
     virtual bool isHardwareStopped( const int p_nIndex ) = 0;
+    virtual void continueStoppedDevice( const int p_nIndex ) = 0;
+
+    virtual bool HW_SetModuleAddress() = 0;
 
     virtual void HW_Kezel( void ) = 0;
+
+    virtual bool isCommunicationStopped( void ) = 0;
+
 //-------------------------------------------------------------------
 protected:
     string m_stCustomCaption;

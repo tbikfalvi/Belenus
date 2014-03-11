@@ -40,9 +40,19 @@ cDlgProgress::~cDlgProgress()
 void cDlgProgress::showProgress()
 //====================================================================================
 {
-    cTracer obTrace( "cDlgProgress::showProgress" );
+//    cTracer obTrace( "cDlgProgress::showProgress" );
 
+    lblCaption->setStyleSheet( "QLabel {font: normal;}" );
     m_poParent->setCursor( Qt::WaitCursor);
+    show();
+    QApplication::processEvents();
+}
+//====================================================================================
+void cDlgProgress::showError(QString p_qsMessage)
+//====================================================================================
+{
+    lblCaption->setStyleSheet( "QLabel {font: bold; color: red;}" );
+    lblCaption->setText( p_qsMessage );
     show();
     QApplication::processEvents();
 }

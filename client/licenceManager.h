@@ -1,61 +1,70 @@
-#ifndef _licencemanager_h
-#define _licencemanager_h
 
+#ifndef CLICENCEMANAGER_H
+#define CLICENCEMANAGER_H
 
+#include <QObject>
 #include <QDate>
-#include "../framework/network/CommunicationProtocol.h"
+#include <QStringList>
 
-
-
-
-class LicenceManager : public QObject
+class cLicenceManager : public QObject
 {
     Q_OBJECT
 
 public:
-    static const int EXPIRE_IN_DAYS = 7;
+
+    static const int EXPIRE_IN_DAYS = 0;
+    static const int EXPIRE_MAX_DAYS = 31;
     static const int DEMO_LICENCE_KEY_ID = 1;
+    static const int LICENCE_MAX_NUMBER = 30;
 
-
-    enum Type {
-        DEMO,                   // licence not entered
-        VALID,                  // valid and server validated it.
-        VALID_SERVER_ERROR,     // valid. but server not validated it as connection fails. not EXPIREd
-        VALID_EXPIRED,          // was valid but expired as no connection to server. so its demo
-        VALID_CODE_2_ERROR,     // valid. but server said CODE2 mismatch. not expired yet.
-        VALID_CODE_2_EXPIRED,   // was valid but code2 error was reported and was not validated since EXPIRE days
-        NOT_VALID               // server does not accept
+    enum licenceType {
+        LTYPE_DEMO,
+        LTYPE_REGISTERED,
+        LTYPE_ACTIVATED,
+        LTYPE_EXPIRED,
+        LTYPE_INVALID
     };
 
+    enum licenceError {
+        ERR_NO_ERROR = 0,
+        ERR_KEY_FORMAT_MISMATCH,    // Licence key format is not BLNSxx_ZZZZZZ where 'x' is a digit and 'ZZZZZZ' is a stored string
+        ERR_KEY_NUMBER_INCORRECT,   // Licence key format is ok, but number after 'BLNS' is not ok
+        ERR_KEY_NOT_EXISTS,         // Licence key format is ok, but licence key is not official
+        ERR_ACT_KEY_INCORRECT
+    };
 
-public:
-    LicenceManager();
+    cLicenceManager();
+    ~cLicenceManager();
 
-    void initialize();          // loads lic and serial from db, sets licenceId to preferences
+    void            initialize();
+    bool            isDemo();
+    int             daysRemain();
+    int             validateLicence( const QString &p_qsLicenceString );
+    int             activateLicence( const QString &p_qsValidationString );
+    void            validateApplication( QString p_qsDate );
+    QString         licenceKey() const;
+    QString         validationKey() const;
+    QString         activationKey();
+    QString         lastValidated();
 
-    void validateLicence();
-    void validateLicence(const QString serial);                  // calls server connect if not connected. sends serial to server. extracts and use code2
+private:
 
-    int getDaysRemaining();                                      // if licence cannot be validated
-    bool isDemo();
-    void checkValidity();                                        // change types according 'remaining days'
-    Type getType() { return _type; }
-    QString getClientSerial() { return _licenceKey; }
+    QStringList     m_qslLicenceKeys;
+    QStringList     m_qslLicenceCodes;
+    QStringList     m_qslCode;
+    QStringList     m_qslCodeString;
 
-public slots:
-    void handleServerResponse(Result::ResultCode, int clientId);
-                                                                 // if result is ok, sets the clientid and inserts the new record to db if neccessery
-                                                                 // if res is UNKNOWN or CODE2_ERR, checks validity date
-                                                                 // if res is INV_SERIAL, activate demo mode
-                                                                 // finally sets the clientId based on result
+    licenceType     m_LicenceType;
+    QString         m_qsLicenceString;
+    QString         m_qsCode;
+    QString         m_qsAct;
+    QDate           m_qdLastValidated;
+    int             m_nLicenceOrderNumber;
 
-
-protected:
-    Type _type;
-    QString _licenceKey;
-    QDate _lastValidated;
+    void            _checkCode();
+    void            _checkValidity();
+    void            _EnCode( char *str, int size );
+    void            _DeCode( char *str, int size );
 };
-
-
 
 #endif

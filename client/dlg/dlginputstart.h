@@ -2,7 +2,7 @@
 #define DLGINPUTSTART_H
 
 #include "../belenus.h"
-#include "../ui_dlginputstart.h"
+#include "../../build/belenus/ui_dlginputstart.h"
 
 class cDlgInputStart : public QDialog, protected Ui::dlgInputStart
 {
@@ -13,17 +13,21 @@ public:
     virtual ~cDlgInputStart();
 
     void setInitialText( const QString &p_stText );
-    void init();
+    void init( const QString &p_qsText = "" );
     QString getEditText();
 
     bool m_bTime;
     bool m_bCard;
     bool m_bPat;
+    bool m_bProd;
 
 private:
     bool     m_bInitCalled;
 
+    bool    _IsServiceCard();
+
 private slots:
+    void on_pbProduct_clicked();
     void on_ledInputStart_returnPressed();
     void on_pbCancel_clicked();
     void on_pbPatient_clicked();

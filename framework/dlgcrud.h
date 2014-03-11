@@ -26,6 +26,7 @@ protected:
     QPushButton            *m_poBtnSave;
     unsigned int            m_uiSelectedId;
     int                     m_inSelectedRow;
+    int                     m_inSelectedCount;
 
     virtual void setupTableView();
     virtual void enableButtons() {};

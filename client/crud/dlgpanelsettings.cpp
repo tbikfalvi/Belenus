@@ -4,6 +4,7 @@
 #include "dlgpanelsettings.h"
 #include "../edit/dlgpaneluseedit.h"
 #include "../db/dbpanels.h"
+#include "../dlg/dlgpaneltimecopy.h"
 
 cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId )
     : cDlgCrud( p_poParent )
@@ -13,7 +14,8 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     m_poBtnClose->setIcon( QIcon("./resources/40x40_exit.png") );
 
-    m_uiPanelId = p_uiPanelId;
+    m_uiPanelId         = p_uiPanelId;
+    m_bIsSettingChanged = false;
 
     horizontalLayout1 = new QHBoxLayout();
     horizontalLayout1->setObjectName( QString::fromUtf8( "horizontalLayout1" ) );
@@ -34,6 +36,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     cmbPanelType = new QComboBox( this );
     cmbPanelType->setObjectName( QString::fromUtf8( "cmbPanelType" ) );
+    cmbPanelType->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout1->addWidget( cmbPanelType );
 
     horizontalLayout2 = new QHBoxLayout();
@@ -44,11 +47,29 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     lblWorkTime->setText( tr("Work time (hh:mm:ss): ") );
     horizontalLayout2->addWidget( lblWorkTime );
 
-    ledWorkTime = new QLineEdit( this );
-    ledWorkTime->setObjectName( QString::fromUtf8( "ledWorkTime" ) );
-    ledWorkTime->setMinimumWidth( 70 );
-    ledWorkTime->setMaximumWidth( 70 );
-    horizontalLayout2->addWidget( ledWorkTime );
+    ledWorkTimeHour = new QLineEdit( this );
+    ledWorkTimeHour->setObjectName( QString::fromUtf8( "ledWorkTimeHour" ) );
+    ledWorkTimeHour->setMinimumWidth( 35 );
+    ledWorkTimeHour->setMaximumWidth( 35 );
+    ledWorkTimeHour->setAlignment( Qt::AlignRight );
+    ledWorkTimeHour->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout2->addWidget( ledWorkTimeHour );
+
+    ledWorkTimeMin = new QLineEdit( this );
+    ledWorkTimeMin->setObjectName( QString::fromUtf8( "ledWorkTimeMin" ) );
+    ledWorkTimeMin->setMinimumWidth( 20 );
+    ledWorkTimeMin->setMaximumWidth( 20 );
+    ledWorkTimeMin->setAlignment( Qt::AlignCenter );
+    ledWorkTimeMin->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout2->addWidget( ledWorkTimeMin );
+
+    ledWorkTimeSec = new QLineEdit( this );
+    ledWorkTimeSec->setObjectName( QString::fromUtf8( "ledWorkTimeSec" ) );
+    ledWorkTimeSec->setMinimumWidth( 20 );
+    ledWorkTimeSec->setMaximumWidth( 20 );
+    ledWorkTimeSec->setAlignment( Qt::AlignCenter );
+    ledWorkTimeSec->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    horizontalLayout2->addWidget( ledWorkTimeSec );
 
     pbWTReset = new QPushButton( this );
     pbWTReset->setObjectName( QString::fromUtf8( "pbWTReset" ) );
@@ -58,7 +79,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbWTReset->setToolTip( tr("Reset the worktime of the device.") );
     pbWTReset->setIconSize( QSize(20,20) );
     pbWTReset->setIcon( QIcon("./resources/40x40_hourglass.png") );
-    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( pbWTReset );
 
     lblMaxWorkTime = new QLabel( this );
@@ -70,10 +91,20 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledMaxWorkTime->setObjectName( QString::fromUtf8( "ledMaxWorkTime" ) );
     ledMaxWorkTime->setMinimumWidth( 50 );
     ledMaxWorkTime->setMaximumWidth( 50 );
-    ledMaxWorkTime->setInputMask( "0000" );
+    ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledMaxWorkTime );
 
-    horizontalSpacer2 = new QSpacerItem( 400, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    lblGroup = new QLabel( this );
+    lblGroup->setObjectName( QString::fromUtf8( "lblGroup" ) );
+    lblGroup->setText( tr("Group: ") );
+    horizontalLayout1->addWidget( lblGroup );
+
+    cmbPanelGroup = new QComboBox( this );
+    cmbPanelGroup->setObjectName( QString::fromUtf8( "cmbPanelGroup" ) );
+    cmbPanelGroup->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
+    horizontalLayout1->addWidget( cmbPanelGroup );
+
+    horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
 
     horizontalLayout3 = new QHBoxLayout();
@@ -86,7 +117,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbCopyToAll->setObjectName( QString::fromUtf8( "pbCopyToAll" ) );
     pbCopyToAll->setMinimumHeight( 30 );
     pbCopyToAll->setMaximumHeight( 30 );
-    pbCopyToAll->setText( tr("Copy to all") );
+    pbCopyToAll->setText( tr(" Copy to all ") );
     pbCopyToAll->setToolTip( tr("Copy and assign all device usages to all other devices.") );
     pbCopyToAll->setIconSize( QSize(20,20) );
     pbCopyToAll->setIcon( QIcon("./resources/40x40_save.png") );
@@ -96,9 +127,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     verticalLayout->insertLayout( 0, horizontalLayout1 );
     verticalLayout->insertLayout( 1, horizontalLayout2 );
     verticalLayout->insertLayout( 3, horizontalLayout3 );
-
-    cmbPanelType->setEnabled( false );
-    ledWorkTime->setEnabled( false );
 
     m_poBtnSave->setEnabled( true );
     m_poBtnSave->setVisible( true );
@@ -117,13 +145,14 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
         unsigned int minute     = (obDBPanel.workTime()-(hour*3600))/60;
         unsigned int second     = (obDBPanel.workTime()-(hour*3600))%60;
 
-        QTime   workTime = QTime( hour, minute, second, 0 );
-
         ledTitle->setText( obDBPanel.title() );
-        ledWorkTime->setText( workTime.toString("hh:mm:ss") );
+        ledWorkTimeHour->setText( QString::number(hour) );
+        ledWorkTimeMin->setText( QString::number(minute) );
+        ledWorkTimeSec->setText( QString::number(second) );
         ledMaxWorkTime->setText( QString::number(obDBPanel.maxWorkTime()) );
 
         QSqlQuery *poQueryType;
+
         poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, name FROM panelTypes WHERE active=1" ) );
         while( poQueryType->next() )
         {
@@ -131,16 +160,26 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
             if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelTypeId() )
                 cmbPanelType->setCurrentIndex( cmbPanelType->count()-1 );
         }
+
+        poQueryType = g_poDB->executeQTQuery( QString( "SELECT panelGroupId, name FROM panelGroups WHERE active=1" ) );
+        while( poQueryType->next() )
+        {
+            cmbPanelGroup->addItem( poQueryType->value( 1 ).toString(), poQueryType->value( 0 ) );
+            if( poQueryType->value( 0 ).toUInt() == obDBPanel.panelGroupId() )
+                cmbPanelGroup->setCurrentIndex( cmbPanelGroup->count()-1 );
+        }
         if( poQueryType ) delete poQueryType;
     }
 
-    setupTableView();
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelSettings", QPoint(600,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 
+    setupTableView();
 }
 
 cDlgPanelSettings::~cDlgPanelSettings()
 {
-
+    g_poPrefs->setDialogSize( "ListPanelSettings", QPoint( width(), height() ) );
 }
 
 void cDlgPanelSettings::setupTableView()
@@ -189,11 +228,11 @@ void cDlgPanelSettings::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, (usePrice/100) as usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
     else
     {
-        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, (usePrice/100) as usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
 
     cDlgCrud::refreshTable();
@@ -234,7 +273,7 @@ void cDlgPanelSettings::editClicked( bool )
         poPanelUse->load( m_uiSelectedId );
 
         cDlgPanelUseEdit  obDlgEdit( this, poPanelUse, m_uiPanelId );
-        obDlgEdit.setWindowTitle( "Edit paneluse" );
+        obDlgEdit.setWindowTitle( tr("Edit paneluse") );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
             refreshTable();
@@ -283,27 +322,42 @@ void cDlgPanelSettings::saveClicked( bool )
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Title of panel can not be empty." ), QMessageBox::Ok );
     }
-    if( ledMaxWorkTime->text() == "" )
+    if( ledMaxWorkTime->isEnabled() )
     {
-        boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime of panel can not be empty." ), QMessageBox::Ok );
-    }
-    else if( ledMaxWorkTime->text().toUInt() < 1 )
-    {
-        boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime has to be greater than zero." ), QMessageBox::Ok );
+        if( ledMaxWorkTime->text() == "" )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime of panel can not be empty." ), QMessageBox::Ok );
+        }
+        else if( ledMaxWorkTime->text().toUInt() < 1 )
+        {
+            boCanBeSaved = false;
+            QMessageBox::critical( this, tr( "Error" ), tr( "Maximum worktime has to be greater than zero." ), QMessageBox::Ok );
+        }
     }
 
     if( boCanBeSaved )
     {
-        QTime   workTime = QTime::fromString(ledWorkTime->text(),"hh:mm:ss");
-
         cDBPanel    obDBPanel;
 
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
-        obDBPanel.setWorkTime( workTime.hour()*3600 + workTime.minute()*60 + workTime.second() );
-        obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+
+        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        {
+            obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
+        }
+
+        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        {
+            int hour    = ledWorkTimeHour->text().toInt();
+            int minute  = ledWorkTimeMin->text().toInt();
+            int second  = ledWorkTimeSec->text().toInt();
+
+            obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+            obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+            obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+        }
         obDBPanel.save();
 
         QDialog::accept();
@@ -312,23 +366,15 @@ void cDlgPanelSettings::saveClicked( bool )
 
 void cDlgPanelSettings::on_pbWTReset_clicked( bool )
 {
-    ledWorkTime->setText( "00:00:00" );
+    ledWorkTimeHour->setText( "0" );
+    ledWorkTimeMin->setText( "0" );
+    ledWorkTimeSec->setText( "0" );
+    m_bIsSettingChanged = true;
 }
 
 void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
 {
-    for( unsigned int i=1; i<g_poPrefs->getPanelCount()+1; i++ )
-    {
-        if( i != m_uiPanelId )
-        {
-            QString qsQuery = QString( "INSERT INTO panelUses (licenceId, panelId, name, useTime, usePrice, active, archive) "
-                                       "SELECT panelUses.licenceId, %1, panelUses.name, panelUses.useTime, panelUses.usePrice, 1, \"NEW\" "
-                                       "FROM panelUses, panels WHERE panelUses.panelId=panels.panelId AND panels.panelId=%2" ).arg(i).arg(m_uiPanelId);
+    cDlgPanelTypeCopy   obDlgPanelTypeCopy( this, m_uiPanelId );
 
-            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
-            if( poQuery ) delete poQuery;
-        }
-    }
-    QMessageBox::information( this, tr("Information"),
-                              tr("Device usage copy process finished.") );
+    obDlgPanelTypeCopy.exec();
 }

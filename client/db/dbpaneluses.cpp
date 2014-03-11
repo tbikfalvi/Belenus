@@ -120,11 +120,12 @@ void cDBPanelUses::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_PANEL_USE );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_PANEL_USE );
+*/
 }
 
 void cDBPanelUses::remove() throw( cSevException )
@@ -148,6 +149,18 @@ void cDBPanelUses::remove() throw( cSevException )
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+bool cDBPanelUses::isPanelUseExists() throw()
+{
+    bool bRet = false;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelId=%1 AND useTime=%2 AND usePrice=%3" ).arg( m_uiPanelId ).arg(m_uiUseTime).arg(m_uiUsePrice) );
+
+    if( poQuery->size() > 0 )
+        bRet = true;
+
+    return bRet;
 }
 
 void cDBPanelUses::createNew() throw()

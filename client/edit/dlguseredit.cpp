@@ -4,6 +4,8 @@
 #include "dlguseredit.h"
 #include "../dlg/dlgpwdconfirm.h"
 
+// KiwiSun rendszer adminisztrátor jelszó: KW13sun
+
 cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     : QDialog( p_poParent )
 {
@@ -18,6 +20,9 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     btbButtons->addButton( poBtnCancel, QDialogButtonBox::RejectRole );
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
+    checkIndependent->setVisible( false );
+    checkIndependent->setEnabled( false );
 
     m_qsDefaultPwd = "pppppppp";
 
@@ -72,21 +77,43 @@ cDlgUserEdit::cDlgUserEdit( QWidget *p_poParent, cDBUser *p_poUser )
     {
         chbActive->setEnabled( false );
     }
+    if( !(g_obUser.isInGroup( cAccessGroup::ROOT )) )
+    {
+        lblUserId->setVisible( false );
+        lblUserIdValue->setVisible( false );
+    }
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditUsers", QPoint(370,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 
 cDlgUserEdit::~cDlgUserEdit()
 {
+    g_poPrefs->setDialogSize( "EditUsers", QPoint( width(), height() ) );
 }
 
 void cDlgUserEdit::accept ()
 {
     if( ledPwd->text() == ledRePwd->text() )
     {
-        bool  boCanBeSaved = true;
+        bool    boCanBeSaved    = true;
+        QString qsErrorMessage  = "";
+
+        QSqlQuery *poQuery;
+
+        poQuery= g_poDB->executeQTQuery( QString( "SELECT * FROM users WHERE userId<>%1 AND name=\"%2\" " ).arg(m_poUser->id()).arg(ledName->text()) );
+        if( poQuery->first() )
+        {
+            boCanBeSaved = false;
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "User with this login name already exists.\nPlease set another one." ) );
+        }
+
         if( (ledPwd->text() == "") && !(g_obUser.isInGroup( cAccessGroup::ADMIN )) )
         {
             boCanBeSaved = false;
-            QMessageBox::critical( this, tr( "Error" ), tr( "Password cannot be empty." ) );
+            if( qsErrorMessage.length() ) qsErrorMessage.append( "\n\n" );
+            qsErrorMessage.append( tr( "Password cannot be empty." ) );
         }
         if( boCanBeSaved && ledPwd->text() != m_qsDefaultPwd )
         {
@@ -124,6 +151,10 @@ void cDlgUserEdit::accept ()
             }
 
             QDialog::accept();
+        }
+        else
+        {
+            QMessageBox::warning( this, tr( "Warning" ), qsErrorMessage );
         }
     }
     else

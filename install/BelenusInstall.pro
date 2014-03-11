@@ -12,27 +12,38 @@ RC_FILE      = setup.rc
 CONFIG      += qt
 QT          += core gui sql
 TRANSLATIONS = setup_us.ts \
-               setup_hu.ts
+               setup_hu.ts \
+               qt_hu.ts
 
-#win32:DEFINES -= UNICODE
+win32:DEFINES -= UNICODE
 
 FORMS       += dlgMain.ui
 
-SOURCES     += main.cpp \
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               main.cpp \
                dlgMain.cpp \
-               vregistry.cpp \
-               vqtconvert.cpp \
-    ../client/communication_serial.cpp \
-    ../client/ClassSerialComm.cpp \
-    ../client/ClassHardware.cpp
+               ../client/communication_serial.cpp \
+               ../client/ClassSerialComm.cpp \
+               ../client/ClassHardware.cpp \
+               cregistry.cpp
 
-HEADERS     += dlgMain.h \
-               vqtconvert.h \
-               vregistry.h \
-    ../client/ClassSerialComm.h \
-    ../client/ClassHardware.h \
-    ../client/communication_serial.h \
-    ../client/communication_defines.h \
-    ../client/communication.h
+HEADERS     += ../framework/dbconnection.h \
+               ../framework/qtmysqlconnection.h \
+               ../framework/qtmysqlquerymodel.h \
+               ../framework/qtlogger.h \
+               ../framework/logger/FileWriter.h \
+               ../framework/tracer.h \
+               dlgMain.h \
+               ../client/ClassSerialComm.h \
+               ../client/ClassHardware.h \
+               ../client/communication_serial.h \
+               ../client/communication_defines.h \
+               ../client/communication.h \
+               cregistry.h
 
 RESOURCES   += install.qrc

@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbpaneltypes.h"
+#include "dbpanelstatuses.h"
 
 cDBPanelTypes::cDBPanelTypes()
 {
@@ -35,14 +36,14 @@ void cDBPanelTypes::init( const unsigned int p_uiId,
     m_uiId          = p_uiId;
     m_uiLicenceId   = p_uiLicenceId;
     m_qsName        = p_qsName;
-    m_qsModified        = p_qsModified;
+    m_qsModified    = p_qsModified;
     m_bActive       = p_bActive;
     m_qsArchive     = p_qsArchive;
 }
 
 void cDBPanelTypes::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx         = p_obRecord.indexOf( "panelTypesId" );
+    int inIdIdx         = p_obRecord.indexOf( "panelTypeId" );
     int inLicenceIdIdx  = p_obRecord.indexOf( "licenceId" );
     int inNameIdx       = p_obRecord.indexOf( "name" );
     int inModifiedIdx   = p_obRecord.indexOf( "modified" );
@@ -61,7 +62,7 @@ void cDBPanelTypes::load( const unsigned int p_uiId ) throw( cSevException )
 {
     cTracer obTrace( "cDBPanelTypes::load", QString( "id: %1" ).arg( p_uiId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE panelTypesId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelTypes WHERE panelTypeId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Paneltype id not found" );
@@ -115,11 +116,12 @@ void cDBPanelTypes::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_PATIENT_ORIGIN );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_PATIENT_ORIGIN );
+*/
 }
 
 void cDBPanelTypes::remove() throw( cSevException )
@@ -128,16 +130,20 @@ void cDBPanelTypes::remove() throw( cSevException )
 
     if( m_uiId )
     {
+        cDBPanelStatuses    obDBPanelStatuses;
+
+        obDBPanelStatuses.remove( m_uiId );
+
         QString  qsQuery;
 
-        if( m_qsArchive != "NEW" )
-        {
+//        if( m_qsArchive != "NEW" )
+//        {
             qsQuery = "DELETE FROM panelTypes ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelTypes SET active=0, archive=\"MOD\" ";
-        }
+//        }
+//        else
+//        {
+//            qsQuery = "UPDATE panelTypes SET active=0, archive=\"MOD\" ";
+//        }
         qsQuery += QString( " WHERE panelTypeId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );

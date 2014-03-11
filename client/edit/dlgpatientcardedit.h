@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlgpatientcardedit.h"
+#include "ui_dlgpatientcardedit.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
 
@@ -13,28 +13,37 @@ class cDlgPatientCardEdit : public QDialog, protected Ui::dlgPatientCardEdit
 public:
     cDlgPatientCardEdit( QWidget *p_poParent = 0, cDBPatientCard *p_poPatientCard = NULL );
     virtual ~cDlgPatientCardEdit();
-    void activatePatientCard();
-    void refillPatientCard();
-    void setPatientCardOwner( const unsigned int p_uiPatientId );
+//    void setPatientCardOwner( const unsigned int p_uiPatientId );
 
 protected:
-    cDBPatientCard      *m_poPatientCard;
-    cDBPatientCardType  *m_poPatientCardType;
-
-private:
-    bool                 m_bDlgLoaded;
-    bool                 m_bNewCard;
-    bool                 m_bRefillCard;
-    bool                 m_bIsCardActivated;
-
-    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+//    cDBPatientCardType  *m_poPatientCardType;
 
 private slots:
-    void on_cmbPatient_currentIndexChanged(int index);
-    void on_cmbCardType_currentIndexChanged(int index);
-    void on_cbActive_toggled(bool checked);
-    void on_pbCancel_clicked();
+    void slotRefreshWarningColors();
+    void on_ledBarcode_textChanged(const QString &arg1);
+    void on_pbCheckBarcode_clicked();
+    void on_pbChangeValidity_clicked();
     void on_pbSave_clicked();
+    void on_pbDeactivate_clicked();
+    void on_pbSell_clicked();
+    void on_pbRefill_clicked();
+    void on_pbCancel_clicked()              { QDialog::reject(); }
+//    void slotEnableButtons();
+//    void on_ledBarcode_lostFocus();
+//    void on_cmbPatient_currentIndexChanged(int index);
+//    void on_cmbCardType_currentIndexChanged(int index);
+
+private:
+//    bool                 m_bDlgLoaded;
+//    bool                 m_bNewCard;
+//    bool                 m_bRefillCard;
+//    bool                 m_bIsCardActivated;
+    cDBPatientCard      *m_poPatientCard;
+    bool                 m_bIsCardDeactivated;
+    bool                 m_bIsValidationChanged;
+
+    bool                _checkCardJustForSave( QString *p_qsErrorMessage );
+
 };
 
 #endif

@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/images" lang="hu">
-        <file>Logo.png</file>
         <file>WampServer.png</file>
+        <file>Logo.png</file>
     </qresource>
     <qresource prefix="/icons" lang="hu">
         <file>belenus.ico</file>
@@ -15,5 +15,6 @@
         <file>40x40_ok.png</file>
         <file>40x40_fail.png</file>
         <file>40x40_report.png</file>
+        <file>40x40_belenus.png</file>
     </qresource>
 </RCC>

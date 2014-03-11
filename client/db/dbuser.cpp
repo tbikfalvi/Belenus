@@ -123,7 +123,7 @@ void cDBUser::save() throw( cSevException )
     qsQuery += QString( "password = \"%1\", " ).arg( m_qsPassword );
     qsQuery += QString( "realName = \"%1\", " ).arg( m_qsRealName );
     qsQuery += QString( "accgroup = %1, " ).arg( (int)m_enGroup );
-    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment );
+    qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_boActive );
     qsQuery += QString( "archive = \"%1\"" ).arg( m_qsArchive );
@@ -135,11 +135,12 @@ void cDBUser::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_USER );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_USER );
+*/
 }
 
 void cDBUser::remove() throw( cSevException )
@@ -278,7 +279,6 @@ QString cDBUser::comment() const throw ()
 void cDBUser::setComment( const QString &p_qsComment ) throw ()
 {
     m_qsComment = p_qsComment;
-    m_qsComment = m_qsComment.replace( QString("\""), QString("\\\"") );
 }
 
 QString cDBUser::archive() const throw()

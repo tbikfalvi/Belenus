@@ -47,6 +47,6 @@ void FileWriter::_writeLog(const cSeverity::teSeverity sev, const QDateTime ts, 
 
 void FileWriter::setFilename(const QString file)
 {
-    _filename = file.arg( QDate::currentDate().toString("yyyyMMdd") ).arg( QTime::currentTime().toString("hhmm") );
+    _filename = file.arg( QDate::currentDate().toString("yyyyMMdd") );//.arg( QTime::currentTime().toString("hhmm") );
     _enabled = true;
 }

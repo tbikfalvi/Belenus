@@ -15,6 +15,7 @@ public:
     void            save()                                                          throw( cSevException );
     void            remove()                                                        throw( cSevException );
     void            createNew()                                                     throw();
+    bool            isPanelUseExists()                                              throw();
     unsigned int    id() const                                                      throw();
     unsigned int    licenceId() const                                               throw();
     void            setLicenceId( const unsigned int p_nLicenceId )                 throw();

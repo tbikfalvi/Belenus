@@ -17,6 +17,8 @@
 #define PREFERENCES_H
 
 #include <QString>
+#include <QPoint>
+#include <QSize>
 #include "../framework/sevexception.h"
 
 class cPreferences
@@ -72,12 +74,16 @@ public:
     int             getBarcodeLength() const;
     void            setBarcodePrefix( const QString &p_qsPrefix, bool p_boSaveNow = false );
     QString         getBarcodePrefix() const;
+    void            setBarcodeLengthDifferent( const bool p_bBarcodeLengthDifferent, bool p_boSaveNow = false );
+    bool            isBarcodeLengthDifferent() const;
     void            setCurrencyShort( const QString &p_qsCurrencyShort, bool p_boSaveNow = false );
     QString         getCurrencyShort() const;
     void            setCurrencyLong( const QString &p_qsCurrencyLong, bool p_boSaveNow = false );
     QString         getCurrencyLong() const;
     void            setCurrencySeparator( const QString &p_qsCurrencySeparator, bool p_boSaveNow = false );
     QString         getCurrencySeparator() const;
+    void            setCurrencyDecimalSeparator( const QString &p_qsCurrencyDecimalSeparator, bool p_boSaveNow = false );
+    QString         getCurrencyDecimalSeparator() const;
     void            setMaxTreatLength( const unsigned int p_uiMaxTreatLength, bool p_boSaveNow = false );
     unsigned int    getMaxTreatLength() const;
     void            setDeviceUseVAT( const int p_inVAT, bool p_boSaveNow = false );
@@ -94,13 +100,32 @@ public:
     bool            getDBAutoArchive() const;
     void            setDBGlobalAutoSynchronize( const bool p_bDBGlobalAutoSynchronize, bool p_boSaveNow = false );
     bool            getDBGlobalAutoSynchronize() const;
+    void            setSecondaryWindowVisibility( const bool p_bIsSecondaryWindowVisible, bool p_boSaveNow = false );
+    bool            isSecondaryWindowVisible() const;
+    void            setSecondaryWindowPosition( const QPoint &p_qpPosition, bool p_boSaveNow = false );
+    QPoint          secondaryWindowPosition() const;
+    void            setSecondaryWindowSize( const QSize &p_qsSize, bool p_boSaveNow = false );
+    QSize           secondaryWindowSize() const;
+    void            setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryBackground() const;
+    void            setPatientCardLostPrice( const int p_inPrice );
+    int             getPatientCardLostPrice() const;
+    void            setPatientCardLostPriceVat(const int p_inVat );
+    int             getPatientCardLostPriceVat() const;
+    void            setPatientCardPartnerPrice( const int p_inPrice );
+    int             getPatientCardPartnerPrice() const;
+    void            setPatientCardPartnerPriceVat(const int p_inVat );
+    int             getPatientCardPartnerPriceVat() const;
+
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
+                                  const unsigned int p_uiFileLevel,
                                   bool p_boSaveNow = false );
     void            getLogLevels( unsigned int *p_poConLevel = NULL,
                                   unsigned int *p_poDBLevel = NULL,
-                                  unsigned int *p_poGUILevel = NULL ) const;
+                                  unsigned int *p_poGUILevel = NULL,
+                                  unsigned int *p_uiFileLevel = NULL ) const;
     void            setDBAccess( const QString &p_qsHost, const QString &p_qsDB,
                                  const QString &p_qsUser, const QString &p_qsPwd );
     void            getDBAccess( QString *p_poHost = NULL, QString *p_poDB = NULL,
@@ -115,6 +140,8 @@ public:
     void            setPostponedPatients( const unsigned int p_uiPostponedPatients );
     unsigned int    postponedAttendances() const;
     void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
+    void            setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize );
+    QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const;
 
 private:
     QString         m_qsFileName;
@@ -148,6 +175,7 @@ private:
     QString         m_qsCurrencyShort;
     QString         m_qsCurrencyLong;
     QString         m_qsCurrencySeparator;
+    QString         m_qsCurrencyDecimalSeparator;
     unsigned int    m_uiMaxTreatLength;
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;
@@ -156,6 +184,15 @@ private:
     int             m_inZipLength;
     bool            m_bDBAutoArchive;
     bool            m_bDBGlobalAutoSynchronize;
+    bool            m_bIsSecondaryWindowVisible;
+    QPoint          m_qpSecondaryPosition;
+    QSize           m_qsSecondarySize;
+    QString         m_qsSecondaryBackground;
+    bool            m_bBarcodeLengthDifferent;
+    int             m_nPatientCardLostPrice;
+    int             m_nPatientCardLostPriceVat;
+    int             m_nPatientCardPartnerPrice;
+    int             m_nPatientCardPartnerPriceVat;
 
     void init();
 };

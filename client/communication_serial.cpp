@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 
+#include "belenus.h"
 #include "communication_serial.h"
 #include "communication_defines.h"
 #include "windows.h"
@@ -55,6 +56,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     bSendToModulPower_OFF       = false;
     PortNumber                  = 0;
     nHWModuleCount              = 0;
+    m_bCommunicationStopped     = false;
 
     GetAvailableCommPorts();
 }
@@ -99,6 +101,7 @@ void CS_Communication_Serial::init( int p_nPort )
     else
         SP_InitCommunication();
 
+    m_bCommunicationStopped = false;
     SP_Open();
 }
 //====================================================================================
@@ -108,40 +111,69 @@ void CS_Communication_Serial::init( int p_nPort )
 //------------------------------------------------------------------------------------
 bool CS_Communication_Serial::isHardwareConnected( void )
 {
+    g_obLogger(cSeverity::DEBUG) << QString("Check HW connections") << EOM;
+
+    g_obLogger(cSeverity::DEBUG) << QString("Com port:") << (m_bPortOpened?QString("OK"):QString("NOK")) << EOM;
+
+    if( !m_bPortOpened )
+    {
+        // Com port possibly not functioning
+        g_obLogger(cSeverity::DEBUG) << QString("Com port possibly not functioning") << EOM;
+        return false;
+    }
+
     char  chMessage[512];
     char  chSerialIn[512];
     int   nRecHossz = 0;
-    bool  bRes = false;
 
     memset( chMessage, 0, sizeof(chMessage) );
     memset( chSerialIn, 0, sizeof(chSerialIn) );
 
+    g_obLogger(cSeverity::DEBUG) << QString("SPReadMessage") << EOM;
     if( SP_ReadMessage( chSerialIn, &nRecHossz ) )
     {
+       g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
        if( chSerialIn[ nRecHossz-1 ] == MODUL_IRQ )
        {
           chModulMessage = MODUL_IRQ;
        }
     }
+    else
+    {
+        g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
+    }
 
     chMessage[ 0 ]= SEARCH_HW;
     chMessage[ 1 ]= 'H';
 
+    g_obLogger(cSeverity::DEBUG) << QString("SP_SendMessage") << EOM;
     SP_SendMessage( chMessage, 2 );
 
     bySerial_Error++;
-    Sleep( 100 ); //var, hogy a PIC tudjon válaszolni
+    Sleep( 100 ); //var, hogy a PIC tudjon valaszolni
 
+    bool bRet = false;
+
+    g_obLogger(cSeverity::DEBUG) << QString("HW_ReadMessage") << EOM;
     if( HW_ReadMessage( chSerialIn, &nRecHossz, 5  ) )
     {
+        g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
        if( (chSerialIn[ nRecHossz-2 ] == 'Y') && ((unsigned char) chSerialIn[ nRecHossz-1 ] == HW_SUCCESS) )
        {
-          bRes = true;
+          bRet = true;
        }
        byHwWdtCounter = WDT_TIME;
     }
+    else
+    {
+        g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
+    }
 
-    return bRes;
+    return bRet;
+}
+bool CS_Communication_Serial::isCommunicationStopped()
+{
+    return m_bCommunicationStopped;
 }
 //====================================================================================
 // CS_Communication_Serial::
@@ -351,6 +383,10 @@ bool CS_Communication_Serial::isHardwareStopped( const int p_nIndex )
 {
     return pModul[p_nIndex].bStop;
 }
+void CS_Communication_Serial::continueStoppedDevice(const int p_nIndex)
+{
+    pModul[p_nIndex].bStop = false;
+}
 
 //---------------------------------------------------------------------------
 // HW_Kezel
@@ -381,7 +417,7 @@ void CS_Communication_Serial::HW_Kezel()
    WORD wRelay = 0;
 
    //---------------------------------------------------
-   // Relay állapotok beállítása
+   // Relay allapotok beallítasa
    //---------------------------------------------------
     if( !bTest )
     {
@@ -401,6 +437,7 @@ void CS_Communication_Serial::HW_Kezel()
             }
             else if( pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
             {
+                pPanel[i].bInfraModul = true;
                 wRelay |= rel_vent[(nHWModuleCount-1)*12+i];
             }
             else if( pPanel[i].cCurrStatus == STATUS_UTOHUTES )
@@ -420,8 +457,8 @@ void CS_Communication_Serial::HW_Kezel()
     if( wRelay_mem != wRelay )
     {
         chSerialOut[0] = SET_RELAY;
-                chSerialOut[1] = (unsigned char) wRelay;
-                chSerialOut[2] = (unsigned char) (wRelay>>8);
+        chSerialOut[1] = (unsigned char) wRelay;
+        chSerialOut[2] = (unsigned char) (wRelay>>8);
         chSerialOut[3] = 0x5a;
         if( HW_SendRelayMessage( chSerialOut, 4, NULL ) )
         {
@@ -448,10 +485,10 @@ void CS_Communication_Serial::HW_Kezel()
    //--------------------------------------------------------------------------------------
    // Szoli LED Modul vezérlés
    //--------------------------------------------------------------------------------------
-   //Ha jó a soros komunikáció
+   //Ha jó a soros komunikació
    if( bySerial_Error == 0 )
    {
-      //és fel van kapcsolva a LED táp
+      //és fel van kapcsolva a LED tap
       if( (byLedModulKikapcsTimer == 0) && !bTest )
       {
          //Szoli LED Modul IRQ figyelés
@@ -484,12 +521,12 @@ void CS_Communication_Serial::HW_Kezel()
                              {
                                  if( pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
                                  {
-                                     // Szauna megszakítása, következő ciklus indítása
+                                     // Szauna megszakítasa, következő ciklus indítasa
                                      pPanel[i].bJumpNextStatus = true;
                                  }
                                  else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
                                  {
-                                     pModul[ i ].bStop = true; //Relay kikapcsolás
+                                     pModul[ i ].bStop = true; //Relay kikapcsolas
                                  }
                              }
                              ///////////////////////////////////////////
@@ -497,12 +534,12 @@ void CS_Communication_Serial::HW_Kezel()
                              {
                                  if( pPanel[i].cCurrStatus == STATUS_VETKOZES )
                                  {
-                                     // Vetkőzés megszakítása, következő ciklus indítása
+                                     // Vetkőzés megszakítasa, következő ciklus indítasa
                                      pPanel[i].bJumpNextStatus = true;
                                  }
                                  else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
                                  {
-                                     pModul[ i ].bStop = false; //Relay bekapcsolás
+                                     pModul[ i ].bStop = false; //Relay bekapcsolas
                                  }
                              }
 
@@ -519,7 +556,7 @@ void CS_Communication_Serial::HW_Kezel()
                           }
                           else//if( pHardware->bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
                           {
-                              //nincs válasz
+                              //nincs valasz
                               byLedModulOlvasasiHiba++;
                           }//if( bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
                       }//if( pModul[ i ].bVan )
@@ -593,7 +630,7 @@ void CS_Communication_Serial::HW_Kezel()
          //Adatok kiküldése a moduloknak
          if( bVanKuldeniValoAdat )
          {
-             // Letiltlja az IRQ-t, hogy ne zavarja meg a komunikációt
+             // Letiltlja az IRQ-t, hogy ne zavarja meg a komunikaciót
              DisableModulIRQ();
 
              bool bHiba = false;
@@ -664,7 +701,7 @@ void CS_Communication_Serial::HW_Kezel()
       }//if( byLedModulKikapcsTimer == 0 )
 
 
-      // LED tápegység lekapcsolás/felkapcsolás hiba esetén próbálkozik úraindítással
+      // LED tapegység lekapcsolas/felkapcsolas hiba esetén próbalkozik úraindítassal
       if( byLedModulOlvasasiHiba > LED_MODUL_OLVASASI_HIBA )
       {
           // LED modul tap lekapcsolas
@@ -677,13 +714,13 @@ void CS_Communication_Serial::HW_Kezel()
           {
               byLedModulKikapcsTimer--;
 
-              // 0.9s-al korábban felkapcsolja, hogy magukhoz térjenek
+              // 0.9s-al korabban felkapcsolja, hogy magukhoz térjenek
               if( byLedModulKikapcsTimer == 3 )
                   bSendToModulPower_ON = true;
 
               if( byLedModulKikapcsTimer == 0 )
               {
-                  // LED modul tap visszakapcsolás ha még nem érte el a max.számot
+                  // LED modul tap visszakapcsolas ha még nem érte el a max.szamot
                   if( byLedModulUjraindulas > 0 )
                   {
                       byLedModulOlvasasiHiba = 0;
@@ -692,12 +729,13 @@ void CS_Communication_Serial::HW_Kezel()
                   }
                   else
                   {
+                      m_bCommunicationStopped = true;
 /*------------------------------------------------------------------------------------/
 
     __TO_BE_SOLVED__
 
-                      //Tamás felugrik egy figyelmeztető ablak
-                      //LED Modul komunikációs HIBA!
+                      //Tamas felugrik egy figyelmeztető ablak
+                      //LED Modul komunikaciós HIBA!
                       if( !bErrorMessageDisplayed )
                       {
                          bErrorMessageDisplayed = true;
@@ -769,7 +807,7 @@ void CS_Communication_Serial::GetAvailableCommPorts()
    }
 }
 //====================================================================================
-// CS_Communication_Serial::
+// CS_Communication_Serial::SP_InitCommunication
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
@@ -796,17 +834,20 @@ bool CS_Communication_Serial::SP_InitCommunication( int p_inPort, DWORD p_dwBaud
    return true;
 }
 //====================================================================================
-// CS_Communication_Serial::
+// CS_Communication_Serial::SP_Open
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
 bool CS_Communication_Serial::SP_Open( bool bSync )
 {
+   cTracer obTrace( "CS_Communication_Serial::SP_Open" );
+
    char portName[20];
 
    memset( portName, 0, sizeof(portName) );
    sprintf( portName, "COM%d", PortNumber );
 
+   g_obLogger(cSeverity::DEBUG) << QString("Open serial connection with CreateFile") << EOM;
    if( bSync )
    {
       m_hPort = CreateFile( /*(WCHAR*)*/portName,              // port name
@@ -828,19 +869,24 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
                             NULL );                        // no file model
    }
 
-        if ( m_hPort == INVALID_HANDLE_VALUE )
-   {
-      m_hPort = NULL;
-      return false;
-   }
+    if ( m_hPort == INVALID_HANDLE_VALUE )
+    {
+        g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
+        m_hPort = NULL;
+        return false;
+    }
+    g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
 
    DCB dcb;
 
+   g_obLogger(cSeverity::DEBUG) << QString("GetCommState") << EOM;
    if ( !GetCommState( m_hPort, &dcb ) )
    {
+       g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
       ::CloseHandle(m_hPort);
       return false;
    }
+   g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
 
 // dcb.DCBlength;                         // sizeof(DCB)
    dcb.BaudRate = BaudRate;               // current baud rate
@@ -871,17 +917,22 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
 // dcb.EvtChar;                           // received event character
 // dcb.wReserved1;                        // reserved; do not use
 
+   g_obLogger(cSeverity::DEBUG) << QString("SetCommState") << EOM;
    if ( !SetCommState( m_hPort, &dcb ) )
    {
+       g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
       //throw ( EXCEPTION_SET_COM_PORT_CONFIG );
       ::CloseHandle(m_hPort);
       return false;
    }
+   g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
 
+   g_obLogger(cSeverity::DEBUG) << QString("SetupComm") << EOM;
    SetupComm( m_hPort, 512, 512 );
 
    COMMTIMEOUTS   timeout;
 
+   g_obLogger(cSeverity::DEBUG) << QString("SetCommTimeouts") << EOM;
    memset( (char*)&timeout, 0, sizeof(COMMTIMEOUTS) );
    timeout.ReadIntervalTimeout = MAXDWORD;
    SetCommTimeouts( m_hPort, &timeout );
@@ -891,7 +942,7 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
    return true;
 }
 //====================================================================================
-// CS_Communication_Serial::
+// CS_Communication_Serial::SP_Close
 //------------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------------
@@ -1015,8 +1066,8 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
    SP_SendMessage( chMessage, nSendHossz );
    *byStatus = 0;
 
-   //2 byte-os parancsnál 35 ms szukseges (60)
-   //4  byte-os parancsnál 70 ms szukseges (105)
+   //2 byte-os parancsnal 35 ms szukseges (60)
+   //4  byte-os parancsnal 70 ms szukseges (105)
    if( nSendHossz > 2 )
    {
       byTimeOut = 11;
@@ -1030,8 +1081,8 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
    {
       *byStatus = (unsigned char) chSerialIn[ nRecHossz-1 ];
       byHwWdtCounter = WDT_TIME;
-      bySerial_Error = 0; // sikeres válasz
-      if( (*byStatus>>4) == byCim )  //válasz ellenörzés
+      bySerial_Error = 0; // sikeres valasz
+      if( (*byStatus>>4) == byCim )  //valasz ellenörzés
       {
          *byStatus &= 0x0b; //irq 0 stop start
          bRet = true;
@@ -1046,7 +1097,7 @@ bool CS_Communication_Serial::HW_SendModulMessage( char *chMessage, int nSendHos
       bRet = false;
    }
 
-   //Hibás válasz
+   //Hibas valasz
    if( chSerialIn[ nRecHossz-1 ] == START_MESSAGE )
    {
       //ujraindult a Relay panel, mindent ki kell küldeni
@@ -1081,7 +1132,7 @@ bool CS_Communication_Serial::HW_SendRelayMessage( char *chMessage, int nSendHos
    if( HW_ReadMessage( chSerialIn, &nRecHossz, 5 ) )
    {
       byHwWdtCounter = WDT_TIME;
-      bySerial_Error = 0; // sikeres válasz
+      bySerial_Error = 0; // sikeres valasz
       if( byData != NULL )
       {
          byData[0] = chSerialIn[ nRecHossz-1 ];
@@ -1214,6 +1265,38 @@ unsigned char CS_Communication_Serial::GetHWModuleStatus( unsigned char byCim )
    {
       return 0xff;
    }
+}
+//---------------------------------------------------------------------------
+// HW_SetModuleAddress
+//---------------------------------------------------------------------------
+//
+//---------------------------------------------------------------------------
+// Parameterek:
+//    nincs
+//---------------------------------------------------------------------------
+// Visszateresi ertek:
+//    nincs
+//---------------------------------------------------------------------------
+// BitBtnLedModulCimSetClick
+bool CS_Communication_Serial::HW_SetModuleAddress()
+{
+    bool            bRet = true;
+    unsigned char   byStatus;
+    char            chMessage[2048];
+
+    for( int i=0; i<nHWModuleCount; i++ )
+    {
+        chMessage[0] = SEND_3BYTE_TO_MODUL;
+        chMessage[1] = SEND_SET_ADDR;
+        chMessage[2] = 0xa5;
+        chMessage[3] = 0x99;
+
+        if( !HW_SendModulMessage( chMessage, 4, i, &byStatus ) )
+        {
+            bRet = false;
+        }
+    }
+    return bRet;
 }
 //---------------------------------------------------------------------------
 // EnableModulIRQ

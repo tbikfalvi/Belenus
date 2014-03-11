@@ -13,7 +13,7 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.0.3"
+#define APPLICATION_VERSION_NUMBER  "1.0"
 
 //====================================================================================
 
@@ -31,8 +31,7 @@
 #include "../framework/logger/FileWriter.h"
 #include "../framework/qtmysqlconnection.h"
 #include "db/dbuser.h"
-#include "db/dbpatient.h"
-#include "db/dbmirror.h"
+#include "db/dbguest.h"
 #include "preferences.h"
 #include "communication.h"
 #include "communication_demo.h"
@@ -47,36 +46,43 @@
 
 //====================================================================================
 
+QApplication            *apMainApp;
 cQTLogger                g_obLogger;
 DatabaseWriter           g_obLogDBWriter;
 GUIWriter                g_obLogGUIWriter;
 ConsoleWriter            g_obLogConsoleWriter;
-FileWriter               g_obLogFileWriter("client_%1_%2.log");
+//FileWriter               g_obLogFileWriter("client_%1_%2.log");
+FileWriter               g_obLogFileWriter("belenus_%1.log");
 cQTMySQLConnection      *g_poDB;
 cDBUser                  g_obUser;
 cPreferences            *g_poPrefs;
 CS_Communication        *g_poHardware;
 BelenusServerConnection *g_poServer;
-cDBPatient               g_obPatient;
-unsigned int             g_uiPatientAttendanceId;
 cCassa                   g_obCassa;
-LicenceManager           g_obLicenceManager;
-cDBMirror                g_obDBMirror;
 cGeneral                 g_obGen;
+cDBGuest                 g_obGuest;
+cLicenceManager          g_obLicenceManager;
+
+// 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
+// g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
+// cTracer obTrace( "" );
 
 //====================================================================================
 int main( int argc, char *argv[] )
 {
-    QApplication     apMainApp( argc, argv );
+    apMainApp = new QApplication(argc, argv);
 
-    apMainApp.setWindowIcon( QIcon(":/icons/Belenus.ico") );
+    g_obGen.setApplication( apMainApp );
+
+    apMainApp->setWindowIcon( QIcon(":/icons/Belenus.ico") );
 
     g_obLogger.attachWriter("gui", &g_obLogGUIWriter);
     g_obLogger.attachWriter("db", &g_obLogDBWriter);
-    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
+//    g_obLogger.attachWriter("console", &g_obLogConsoleWriter);
     g_obLogger.attachWriter("file", &g_obLogFileWriter);
-    g_obLogger.setMinimumSeverity("console", cSeverity::DEBUG);
+
     g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
+
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
@@ -84,13 +90,7 @@ int main( int argc, char *argv[] )
     g_poPrefs->setLangFilePrefix( "belenus_" );
     g_poPrefs->setDBAccess( "localhost", "belenus", "belenus", "belenus" );
 
-    if( g_poPrefs->getLang() != "uk" )
-    {
-        QTranslator *poTrans = new QTranslator();
-        QString     qsTransFile = "lang/" + g_poPrefs->getLangFilePrefix() + g_poPrefs->getLang() + ".qm";
-        poTrans->load( qsTransFile );
-        apMainApp.installTranslator( poTrans );
-    }
+    g_obGen.setApplicationLanguage( g_poPrefs->getLang() );
 
     QPixmap          obPixmap("resources/splash.png");
     QSplashScreen    obSplash( obPixmap );
@@ -101,7 +101,7 @@ int main( int argc, char *argv[] )
     obFont.setBold(true);
     obSplash.setFont(obFont);
     obSplash.show();
-    apMainApp.processEvents();
+    apMainApp->processEvents();
 
     QString qsSystemID = QObject::tr( "SystemID: " );
 
@@ -120,133 +120,75 @@ int main( int argc, char *argv[] )
     int r = 1;
     try
     {
+        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
+
         qsSpalsh += QObject::tr("Connecting to database ...");
+        g_obLogger(cSeverity::INFO) << "Connecting to database ..." << EOM;
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         g_poDB->open();
         g_obLogDBWriter.setDBConnection(g_poDB);
         g_poPrefs->loadDBSettings();
 
+        g_obLogger(cSeverity::INFO) << "SUCCEEDED" << EOM;
         qsSpalsh += QObject::tr(" SUCCEEDED.\n");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        g_obLogger(cSeverity::INFO) << "Belenus Version " << g_poPrefs->getVersion() << " started." << EOM;
+        qsSpalsh += "\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
-        //-------------------------------------------------------------------------------
-        // If Internet component active, process connection initialization
-        if( g_poPrefs->isComponentInternetInstalled() )
+        qsSpalsh += QObject::tr("License is ... ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        int         nId = 0;
+        QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+        if( poQuery->last() )
         {
-            qsSpalsh += "-----------------------------------------------------\n";
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            qsSpalsh += QObject::tr("Connecting to Belenus server ...");
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            g_poServer = new BelenusServerConnection();
-            g_poServer->moveToThread(g_poServer);
-            g_poServer->start();
-
-            g_obLicenceManager.initialize();
-
-            if( g_obLicenceManager.getType() != LicenceManager::DEMO )
-            {  // start server connection only if licence key is provided. Do not try to validate demo licence
-
-                g_obLicenceManager.validateLicence();     // begins connection
-
-                int nCount = 0;
-                while( g_poServer->getStatus()==BelenusServerConnection::NOT_CONNECTED || g_poServer->getStatus()==BelenusServerConnection::CONNECTING )
-                {
-                    QString qsTemp;
-                    qsTemp.fill('.', nCount%5+1);
-                    obSplash.showMessage(qsSpalsh+qsTemp, Qt::AlignLeft, QColor(59,44, 75));
-                    if( ++nCount > 20 ) // timeout handling: 20*500 = 10 sec
-                        break;
-                    QMutex dummy;
-                    dummy.lock();
-                    QWaitCondition waitCondition;
-                    waitCondition.wait(&dummy, 500);
-                }
-            }
-
-            qsSpalsh += "  ";
-            if( g_poServer->isConnected() )
-            {
-                qsSpalsh += QObject::tr("SUCCEEDED");
-            }
-            else
-            {
-                qsSpalsh += QObject::tr("FAILED");
-            }
-            qsSpalsh += "\n";
-            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-            qsSpalsh += QObject::tr("License is ... ");
-            if( g_obLicenceManager.isDemo() )
-                qsSpalsh += QObject::tr("DEMO");
-            else
-                qsSpalsh += QObject::tr("OK");
-
-            if( g_obLicenceManager.getType()==LicenceManager::VALID_SERVER_ERROR ||
-                g_obLicenceManager.getType()==LicenceManager::VALID_CODE_2_ERROR )
-            {
-                qsSpalsh += QObject::tr(" (needs server validation in %1 days)").arg(g_obLicenceManager.getDaysRemaining());
-            }
-            else if( g_obLicenceManager.getType() == LicenceManager::VALID_EXPIRED ||
-                     g_obLicenceManager.getType() == LicenceManager::VALID_CODE_2_EXPIRED )
-            {
-                qsSpalsh += QObject::tr(" (licence validation limit expired)");
-            }
-            else if( g_obLicenceManager.getType()==LicenceManager::NOT_VALID )
-            {
-                qsSpalsh += QObject::tr(" (licence not accepted by server)");
-            }
-            qsSpalsh += "\n";
-
-            if( g_poServer->isConnected() )
-            {
-                qsSpalsh += "-----------------------------------------------------\n";
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                qsSpalsh += QObject::tr("Initialize database synchronization ...");
-                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                g_obDBMirror.initialize(); // enough to call once at the begining
-                if( g_obDBMirror.start() )
-                {
-                    qsSpalsh += QObject::tr("SUCCEEDED\n");
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                    if( g_obDBMirror.checkIsSynchronizationNeeded() )
-                    {
-                        qsSpalsh += QObject::tr("Local database has to synchronized with server.\n");
-                    }
-                    else
-                    {
-                        qsSpalsh += QObject::tr("Local database synchronized with server.\n");
-                    }
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                    /*qsSpalsh += "-----------------------------------------------------\n";
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-
-                    qsSpalsh += QObject::tr("Checking studio independent data on server ...\n");
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
-                    if( g_obDBMirror.checkIsGlobalDataDownloadInProgress() )
-                    {
-                        qsSpalsh += QObject::tr("There are new studio independent data on server.\n");
-                    }
-                    else
-                    {
-                        qsSpalsh += QObject::tr("Studio independent data match with server.\n");
-                    }
-                    obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));*/
-                }
-                else
-                {
-                    qsSpalsh += QObject::tr("FAILED\n");
-                }
-            }
+            nId = poQuery->value( 0 ).toInt();
+            qsSerial = poQuery->value( 1 ).toString();
         }
+        if( poQuery ) delete poQuery;
+
+        g_obLogger(cSeverity::INFO) << "Licence is: " << qsSerial << EOM;
+        g_poPrefs->setLicenceId( nId );
+
+        if( nId < 2 )
+            qsSpalsh += QObject::tr("DEMO");
+        else
+            qsSpalsh += QObject::tr("OK");
+        qsSpalsh += "\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        qsSpalsh += QObject::tr("Serial: %1\n").arg(qsSerial);
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        g_obLicenceManager.initialize();
+
+        int     nDaysRemain = g_obLicenceManager.daysRemain();
+
+        qsSpalsh += QObject::tr("Days remains: %1\n").arg( nDaysRemain );
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+        if( nDaysRemain < cLicenceManager::EXPIRE_MAX_DAYS )
+        {
+            qsSpalsh += QObject::tr("\nVALIDATE YOUR APPLICATION\nWITH YOUR FRANCHISE PROVIDER\n\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+
+            if( nDaysRemain < 1 )
+            {
+                qsSpalsh += QObject::tr("The application validity has been expired.\n"
+                                        "The application can be used only in DEMO mode.\n\n");
+                obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
+            }
+#ifdef __WIN32__
+            Sleep(3000);
+#else
+            sleep( 3 );
+#endif
+        }
+
         //-------------------------------------------------------------------------------
         // End of process connection initialization
         //-------------------------------------------------------------------------------
@@ -258,14 +200,17 @@ int main( int argc, char *argv[] )
 
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
-        if( g_poPrefs->isComponentHardwareInstalled() )
+        g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg(nId).arg(g_poPrefs->isComponentHardwareInstalled()) << EOM;
+        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ && nDaysRemain > 0 )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
             g_poHardware = new CS_Communication_Serial();
+            g_obLogger(cSeverity::DEBUG) << QString("COM: %1").arg(g_poPrefs->getCommunicationPort()) << EOM;
             g_poHardware->init( g_poPrefs->getCommunicationPort() );
-            if( !g_poHardware->isHardwareConnected() || g_obLicenceManager.isDemo() )
+            g_obLogger(cSeverity::DEBUG) << QString("Hardware connected: %1").arg(g_poHardware->isHardwareConnected()) << EOM;
+            if( !g_poHardware->isHardwareConnected() /*|| g_obLicenceManager.isDemo()*/ )
             {
                 qsSpalsh += QObject::tr("FAILED\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
@@ -336,28 +281,22 @@ int main( int argc, char *argv[] )
         obMainWindow.resize( g_poPrefs->getMainWindowWidth(), g_poPrefs->getMainWindowHeight() );
 
 #ifdef __WIN32__
-        Sleep(5000);
+        Sleep(2000);
 #else
-        sleep( 5 );
+        sleep( 2 );
 #endif
 
         obSplash.finish( &obMainWindow );
 
+        obMainWindow.showProgress();
+
         obMainWindow.show();
+        obMainWindow.initPanels();
 
         if( obMainWindow.showLogIn() )
         {
-            obMainWindow.initPanels();
             obMainWindow.startMainTimer();
-            if( g_poPrefs->isComponentInternetInstalled() )
-            {
-                if( g_obDBMirror.isAvailable() && g_poPrefs->getDBGlobalAutoSynchronize() )
-                {
-                    g_obDBMirror.requestGlobalDataTimestamp();
-                    obMainWindow.autoSynchronizeGlobalData();
-                }
-            }
-            r = apMainApp.exec();
+            r = apMainApp->exec();
         }
         else
         {
@@ -373,7 +312,18 @@ int main( int argc, char *argv[] )
     }
     catch( cSevException &e )
     {
-        g_obLogger(e.severity()) << e.what() << EOM;
+        qsSpalsh += QObject::tr(" FAILED\n");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        QString qsError = QString( e.what() );
+
+        if( qsError.contains( "Can't connect to MySQL server on 'localhost' (10061)" ) )
+        {
+            qsError = QObject::tr( "Database server application is not running.\n"
+                                   "Belenus application can not be started without active database server.\n"
+                                   "Please start WampServer application then restart Belenus application." );
+        }
+        g_obLogger(e.severity()) << qsError << EOM;
     }
 
 //    g_poServer->quit();

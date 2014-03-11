@@ -3,8 +3,7 @@
 
 #include "dlgpatientcardadd.h"
 
-cDlgPatientCardAdd::cDlgPatientCardAdd( QWidget *p_poParent )
-    : QDialog( p_poParent )
+cDlgPatientCardAdd::cDlgPatientCardAdd( QWidget *p_poParent ) : QDialog( p_poParent )
 {
     setupUi( this );
 
@@ -47,7 +46,7 @@ void cDlgPatientCardAdd::on_pbSave_clicked()
     bool         boCanBeSaved = true;
     QSqlQuery   *poQuery;
 
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE barcode=\"%1\" AND patientCardId<>%2" ).arg(ledBarcode->text()).arg(m_poPatientCard->id()) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM patientCards WHERE barcode=\"%1\"" ).arg(ledBarcode->text()) );
     if( poQuery->numRowsAffected() > 0 )
     {
         boCanBeSaved = false;

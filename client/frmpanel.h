@@ -22,21 +22,36 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QPushButton>
+#include <QProgressBar>
+
 #include <vector>
 
 //====================================================================================
 
 #include "db/dbpanelstatuses.h"
 #include "db/dbledgerdevice.h"
+#include "db/dbpanelstatussettings.h"
 
 //====================================================================================
 
 typedef struct _used_patientcard
 {
     unsigned int    uiPatientCardId;
-    int             inCountUnits;
+    QStringList     qslUnitIds;
     int             inUnitTime;
 } stUsedPatientCard;
+
+typedef struct _waiting_queue
+{
+    int             inLengthCash;
+    int             inPrice;
+    unsigned int    uiPatientCardId;
+    QString         qsUnitIds;
+    int             inLengthCard;
+    unsigned int    uiLedgerId;
+    int             inPayType;
+} stWaitingQueue;
 
 //====================================================================================
 
@@ -55,15 +70,19 @@ public:
     void            reset();
     void            clear();
     void            next();
+    void            clean();
     void            inactivate();
     void            activate();
     void            reload();
+    void            refreshDisplay();
+    void            setTextInformation( QString p_qsInfoText, bool p_bCallDisplayStatus = false );
 
+    unsigned int    panelId();
     bool            isMainProcess();
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
-    void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
+    void            setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
     void            cashPayed( const unsigned int p_uiLedgerId );
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount );
@@ -72,6 +91,15 @@ public:
     bool            isCanBeStartedByTime();
     bool            isCanBeStartedByCard();
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
+    bool            isItemInShoppingCart();
+    void            itemAddedToShoppingCart();
+    void            itemRemovedFromShoppingCart();
+    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    bool            isPatientWaiting();
+    void            setUsageFromWaitingQueue();
+    bool            isNeedToBeCleaned()     { return m_bIsNeedToBeCleaned;  }
+    bool            isDeviceStopped()       { return m_bIsDeviceStopped;    }
+    void            continueStoppedDevice();
 
 signals:
     void panelClicked( unsigned int p_uiPanelId ) const;
@@ -98,9 +126,15 @@ private:
     int                          m_inCashNetToPay;
     int                          m_inCashDiscountToPay;
     unsigned int                 m_uiPatientToPay;
-    unsigned int                 m_uiAttendanceId;
+    unsigned int                 m_uiCurrentPatient;
+//    unsigned int                 m_uiAttendanceId;
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;
+    bool                         m_bIsItemInShoppingCart;
+    bool                         m_bIsPatientWaiting;
+    unsigned int                 m_uiProcessWaitTime;
+    bool                         m_bIsNeedToBeCleaned;
+    bool                         m_bIsDeviceStopped;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -112,13 +146,24 @@ private:
     QSpacerItem                 *spacer2;
     QSpacerItem                 *spacer3;
     QSpacerItem                 *spacer4;
+    QHBoxLayout                 *layoutIcons;
+    QPushButton                 *icoShoppingCart;
+    QSpacerItem                 *spacerIcons;
+    QPushButton                 *icoPanelStart;
+    QPushButton                 *icoPanelNext;
+    QPushButton                 *icoPanelStop;
+    QPushButton                 *icoPanelCassa;
+    QPushButton                 *icoScheduledGuest;
+    QProgressBar                *prgUsageMonitor;
 
-    QString                      m_qsStatus;
-    QString                      m_qsTimer;
-    QString                      m_qsTimerNextStatus;
-    QString                      m_qsInfo;
+    QString                         m_qsStatus;
+    QString                         m_qsTimer;
+    QString                         m_qsTimerNextStatus;
+    QString                         m_qsInfo;
 
-    vector<cDBPanelStatuses*>    m_obStatuses;
+    vector<cDBPanelStatuses*>       m_obStatuses;
+    vector<cDBPanelStatusSettings*> m_obStatusSettings;
+    vector<stWaitingQueue*>         m_vrWaitingQueue;
 
     void            load( const unsigned int p_uiPanelId );
     void            displayStatus();
@@ -129,7 +174,25 @@ private:
     void            activateNextStatus();
     void            closeAttendance();
 
-    QString convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+//    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    unsigned int    _calculateWaitTime();
+
+signals:
+    void            signalPaymentActivated( unsigned int p_uiPanelId );
+    void            signalOpenShoppingCart( unsigned int p_uiPanelId );
+    void            signalOpenScheduleTable( unsigned int p_uiPanelId );
+    void            signalStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
+    void            signalSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
+    void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
+    void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
+
+private slots:
+    void            slotPanelStartClicked();
+    void            slotPanelNextClicked();
+    void            slotPanelStopClicked();
+    void            slotPanelCassaClicked();
+    void            slotShoppingCartClicked();
+    void            slotScheduledGuestClicked();
 };
 
 #endif // FRMPANEL_H

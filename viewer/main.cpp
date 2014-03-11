@@ -7,15 +7,21 @@
 #include <QApplication>
 #include <QTranslator>
 #include <iostream>
+#include <QSettings>
 
 #include "wndmain.h"
 //====================================================================================
 
+#include "../framework/qtlogger.h"
 #include "../framework/qtframework.h"
+#include "../framework/logger/FileWriter.h"
 
 //====================================================================================
 
 cQTLogger            g_obLogger;
+//FileWriter           g_obLogFileWriter("client_%1_%2.log");
+FileWriter           g_obLogFileWriter("reportviewer_%1.log");
+
 cQTMySQLConnection  *g_poDB;
 
 using namespace std;
@@ -26,6 +32,9 @@ int main( int argc, char *argv[] )
     QApplication  apMainApp( argc, argv );
 
     int nRet = 1;
+
+    g_obLogger.attachWriter("file", &g_obLogFileWriter);
+    g_obLogger.setMinimumSeverity("file", cSeverity::DEBUG);
 
     g_obLogger(cSeverity::INFO) << "Belenus Report Viewer started." << EOM;
 
@@ -38,8 +47,28 @@ int main( int argc, char *argv[] )
         g_poDB->setPassword( "belenus" );
         g_poDB->open();
 
+        QSettings       iniFile( "belenus.ini", QSettings::IniFormat );
+        QTranslator     obBlTr;
+        QTranslator     obQtTr;
+        QString         qsLang = iniFile.value( "General/Lang", "hu" ).toString();
+        QString         qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
+        QString         qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
+
+        obBlTr.load( qsLangBl );
+        obQtTr.load( qsLangQT );
+
+        apMainApp.installTranslator( &obBlTr );
+        apMainApp.installTranslator( &obQtTr );
+
         cWndMain  obMainWindow;
         obMainWindow.show();
+        if( argc > 2 )
+        {
+            QString qsName = QString( argv[1] );
+            QString qsPass = QString( argv[2] );
+
+            obMainWindow.setLoginData( qsName, qsPass );
+        }
         nRet = apMainApp.exec();
     }
     catch( cSevException &e )

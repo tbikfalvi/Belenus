@@ -15,6 +15,7 @@
 
 #include "belenus.h"
 #include "dbpanelstatuses.h"
+#include "dbpanelstatussettings.h"
 
 cDBPanelStatuses::cDBPanelStatuses()
 {
@@ -32,6 +33,8 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
                              const QString &p_qsName,
                              const unsigned int p_uiLength,
                              const unsigned int p_uiActivateCommand,
+                             const int p_nSkipLevel,
+                             const bool p_bAllowedToSkip,
                              const QString &p_qsModified,
                              const bool p_bActive,
                              const QString &p_qsArchive ) throw()
@@ -43,6 +46,8 @@ void cDBPanelStatuses::init( const unsigned int p_uiId,
     m_qsName            = p_qsName;
     m_uiLength          = p_uiLength;
     m_uiActivateCommand = p_uiActivateCommand;
+    m_nSkipLevel        = p_nSkipLevel;
+    m_bAllowedToSkip    = p_bAllowedToSkip;
     m_qsModified        = p_qsModified;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
@@ -57,7 +62,9 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inLengthIdx             = p_obRecord.indexOf( "length" );
     int inActivateCommandIdx    = p_obRecord.indexOf( "activateCmd" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inSkipLevelIdx          = p_obRecord.indexOf( "skipLevel" );
+    int inAllowedToSkipIdx      = p_obRecord.indexOf( "allowedToSkip" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -68,6 +75,8 @@ void cDBPanelStatuses::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inNameIdx ).toString(),
           p_obRecord.value( inLengthIdx ).toInt(),
           p_obRecord.value( inActivateCommandIdx ).toInt(),
+          p_obRecord.value( inSkipLevelIdx ).toInt(),
+          p_obRecord.value( inAllowedToSkipIdx ).toBool(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
@@ -125,6 +134,8 @@ void cDBPanelStatuses::save() throw( cSevException )
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "length = %1, " ).arg( m_uiLength );
     qsQuery += QString( "activateCmd = %1, " ).arg( m_uiActivateCommand );
+    qsQuery += QString( "skipLevel = %1, " ).arg( m_nSkipLevel );
+    qsQuery += QString( "allowedToSkip = %1, " ).arg( m_bAllowedToSkip );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
@@ -136,11 +147,12 @@ void cDBPanelStatuses::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_PANEL_STATUS );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_PANEL_STATUS );
+*/
 }
 
 void cDBPanelStatuses::remove() throw( cSevException )
@@ -151,17 +163,39 @@ void cDBPanelStatuses::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_qsArchive != "NEW" )
-        {
+//        if( m_qsArchive != "NEW" )
+//        {
             qsQuery = "DELETE FROM panelStatuses ";
-        }
-        else
-        {
-            qsQuery = "UPDATE panelStatuses SET active=0, archive=\"MOD\" ";
-        }
+//        }
+//        else
+//        {
+//            qsQuery = "UPDATE panelStatuses SET active=0, archive=\"MOD\" ";
+//        }
         qsQuery += QString( " WHERE panelStatusId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+        if( poQuery ) delete poQuery;
+    }
+}
+
+void cDBPanelStatuses::remove(const unsigned int p_uiPanelTypeId) throw( cSevException )
+{
+    cTracer obTrace( "cDBPanelStatuses::remove" );
+
+    if( p_uiPanelTypeId )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelStatuses WHERE panelTypeId = %1" ).arg( p_uiPanelTypeId ) );
+
+        while( poQuery->next() )
+        {
+            cDBPanelStatusSettings obDBPanelStatusSettings;
+
+            obDBPanelStatusSettings.remove( poQuery->value(0).toUInt() );
+
+            load( poQuery->value(0).toUInt() );
+            remove();
+        }
+
         if( poQuery ) delete poQuery;
     }
 }
@@ -235,6 +269,26 @@ unsigned int cDBPanelStatuses::activateCommand() const throw()
 void cDBPanelStatuses::setActivateCommand( const unsigned int p_uiActivateCommand ) throw()
 {
     m_uiActivateCommand = p_uiActivateCommand;
+}
+
+int cDBPanelStatuses::skipLevel() const throw()
+{
+    return m_nSkipLevel;
+}
+
+void cDBPanelStatuses::setSkipLevel( const int p_nSkipLevel ) throw()
+{
+    m_nSkipLevel = p_nSkipLevel;
+}
+
+bool cDBPanelStatuses::allowedToSkip() const throw()
+{
+    return m_bAllowedToSkip;
+}
+
+void cDBPanelStatuses::setAllowedToSkip( const bool p_bAllowedToSkip ) throw()
+{
+    m_bAllowedToSkip = p_bAllowedToSkip;
 }
 
 QString cDBPanelStatuses::modified() const throw()

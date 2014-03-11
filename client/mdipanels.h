@@ -20,36 +20,61 @@ public:
     ~cMdiPanels();
 
     void            initPanels();
+    void            activatePanelId( unsigned int p_uiPanelId );
     void            placeSubWindows();
 
     void            start();
     void            reset();
     void            clear();
     void            next();
+    void            clean();
+    bool            isNeedToBeCleaned();
     int             activePanel();
+    unsigned int    activePanelId();
     bool            isPanelWorking();
     bool            isPanelWorking( const unsigned int p_uiPanel );
     bool            isStatusCanBeSkipped( const unsigned int p_uiPanel );
     bool            isStatusCanBeReseted();
     void            reload();
+    void            refreshDisplay();
+    void            setTextInformation( QString p_qsInfoText );
 
     bool            isMainProcess();
     int             mainProcessTime();
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
-    void            setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength );
+    void            setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength );
     bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
     void            cashPayed( const unsigned int p_uiLedgerId );
+    void            cashPayed( const unsigned int p_uiPanelId, const unsigned int p_uiLedgerId );
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount );
     bool            isHasToPay();
     QString         getActivePanelCaption();
+    QString         getPanelCaption( const unsigned int p_uiPanelId );
     bool            isCanBeStartedByTime();
     bool            isCanBeStartedByCard();
     void            setPaymentMethod( const unsigned int p_uiPaymentMethodId );
+    void            setPaymentMethod( const unsigned int p_uiPanelId, const unsigned int p_uiPaymentMethodId );
+    bool            isItemInShoppingCart();
+    void            itemAddedToShoppingCart();
+    void            itemRemovedFromShoppingCart();
+    void            itemRemovedFromShoppingCart( const unsigned int p_uiPanelId );
+    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    bool            isPatientWaiting();
+    void            setUsageFromWaitingQueue();
+    bool            isDeviceStopped();
+    void            continueStoppedDevice();
 
 signals:
 //    void activePanelChanged( bool p_boActiveWorking ) const;
-    void activePanelChanged() const;
+    void            activePanelChanged() const;
+    void            signalOpenShoppingCart( unsigned int p_uiPanelId );
+    void            signalPaymentActivated();
+    void            signalOpenScheduleTable( unsigned int p_uiPanelId );
+    void            signalStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
+    void            signalSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
+    void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
+    void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
 
 private:
     vector<cFrmPanel*>  m_obPanels;
@@ -59,6 +84,13 @@ private:
 
 private slots:
     void activatePanel( unsigned int p_uiPanel );
+    void slotPaymentActivated( unsigned int p_uiPanelId );
+    void openShoppingCart( unsigned int p_uiPanelId );
+    void slotOpenScheduleTable( unsigned int p_uiPanelId );
+    void slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
+    void slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
+    void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
+    void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );

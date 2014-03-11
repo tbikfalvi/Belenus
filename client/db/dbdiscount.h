@@ -13,27 +13,32 @@ public:
 
     void            load( const unsigned int p_uiId )                                   throw( cSevException );
     void            load( const QString &p_qsName )                                     throw( cSevException );
-    void            loadHealthInsurance( const unsigned int p_uiId )                    throw( cSevException );
+    void            loadGuest( const unsigned int p_uiId )                              throw( cSevException );
     void            loadCompany( const unsigned int p_uiId )                            throw( cSevException );
-    void            loadDoctor( const unsigned int p_uiId )                             throw( cSevException );
+    void            loadPaymentMethod( const unsigned int p_uiId )                      throw( cSevException );
+    void            loadProduct( const unsigned int p_uiId )                            throw( cSevException );
     bool            isRegularCustomerExists()                                           throw( cSevException );
     bool            isEmployeeExists()                                                  throw( cSevException );
     bool            isServiceExists()                                                   throw( cSevException );
-    bool            isHealthInsuranceExists( const unsigned int p_uiId )                throw( cSevException );
+    bool            isGuestExists( const unsigned int p_uiId )                          throw( cSevException );
     bool            isCompanyExists( const unsigned int p_uiId )                        throw( cSevException );
-    bool            isDoctorExists( const unsigned int p_uiId )                         throw( cSevException );
+    bool            isPaymentMethodExists( const unsigned int p_uiId )                  throw( cSevException );
+    bool            isProductExists( const unsigned int p_uiId )                        throw( cSevException );
+    bool            isCouponExists( const QString &p_qsName )                           throw( cSevException );
     void            save()                                                              throw( cSevException );
     void            remove()                                                            throw( cSevException );
     void            createNew()                                                         throw();
     unsigned int    id() const                                                          throw();
     unsigned int    licenceId() const                                                   throw();
     void            setLicenceId( const unsigned int p_nLicenceId )                     throw();
-    unsigned int    healthInsuranceId() const                                           throw();
-    void            setHealthInsuranceId( const unsigned int p_uiHealthInsuranceId )    throw();
+    unsigned int    guestId() const                                                     throw();
+    void            setGuestId( const unsigned int p_uiGuestId )                        throw();
     unsigned int    companyId() const                                                   throw();
     void            setCompanyId( const unsigned int p_uiCompanyId )                    throw();
-    unsigned int    doctorId() const                                                    throw();
-    void            setDoctorId( const unsigned int p_uiDoctorId )                      throw();
+    unsigned int    paymentMethodId() const                                             throw();
+    void            setPaymentMethodId( const unsigned int p_uiPaymentMethodId )        throw();
+    unsigned int    productId() const                                                   throw();
+    void            setProductId( const unsigned int p_uiPaymentMethodId )              throw();
     bool            regularCustomer() const                                             throw();
     void            setRegularCustomer( const bool p_bRegularCustomer )                 throw();
     bool            employee() const                                                    throw();
@@ -46,18 +51,22 @@ public:
     void            setDiscountValue( const int p_nDiscountValue )                      throw();
     int             discountPercent() const                                             throw();
     void            setDiscountPercent( const int p_nDiscountPercent )                  throw();
-    QString         modified() const                                                throw();
+    QString         modified() const                                                    throw();
     bool            active() const                                                      throw();
     void            setActive( const bool p_bActive )                                   throw();
     QString         archive() const                                                     throw();
     void            setArchive( const QString &p_qsArchive )                            throw();
 
+    int             discountedValue( int p_inValue );
+    int             discount( int p_inValue );
+
 private:
     unsigned int    m_uiId;
     unsigned int    m_uiLicenceId;
-    unsigned int    m_uiHealthInsuranceId;
+    unsigned int    m_uiGuestId;
     unsigned int    m_uiCompanyId;
-    unsigned int    m_uiDoctorId;
+    unsigned int    m_uiPaymentMethodId;
+    unsigned int    m_uiProductId;
     bool            m_bRegularCustomer;
     bool            m_bEmployee;
     bool            m_bService;
@@ -70,9 +79,10 @@ private:
 
     void init( const unsigned int p_uiId = 0,
                const unsigned int p_uiLicenceId = 0,
-               const unsigned int p_uiHealthInsuranceId = 0,
+               const unsigned int p_uiGuestId = 0,
                const unsigned int p_uiCompanyId = 0,
-               const unsigned int p_uiDoctorId = 0,
+               const unsigned int p_uiPaymentMethodId = 0,
+               const unsigned int p_uiProductId = 0,
                const bool p_bRegularCustomer = false,
                const bool p_bEmployee = false,
                const bool p_bService = false,

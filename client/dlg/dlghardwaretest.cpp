@@ -16,6 +16,20 @@ cDlgHardwareTest::cDlgHardwareTest( QWidget *p_poParent )
 
     pbTestHardwareConnection->setIcon( QIcon("./resources/40x40_hardware_test.png") );
     pbReconnect->setIcon( QIcon("./resources/40x40_hadware_reconnect.png") );
+
+    pbSwitchRelay01->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay02->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay03->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay04->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay05->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay06->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay07->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay08->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay09->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay10->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay11->setIcon( QIcon("./resources/77x40_off.png") );
+    pbSwitchRelay12->setIcon( QIcon("./resources/77x40_off.png") );
+
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
     on_pbTestHardwareConnection_clicked();
@@ -46,146 +60,122 @@ void cDlgHardwareTest::updateHWStatus()
     if( g_poHardware->getRelayStatus( 1 ) )
     {
         rbRelay01_On->setChecked(true);
-        rbRelay01_On->setText( "ON" );
-        pbSwitchRelay01->setText( "OFF" );
+        pbSwitchRelay01->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay01_On->setChecked(false);
-        rbRelay01_On->setText( "OFF" );
-        pbSwitchRelay01->setText( "ON" );
+        pbSwitchRelay01->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 2 ) )
     {
         rbRelay02_On->setChecked(true);
-        rbRelay02_On->setText( "ON" );
-        pbSwitchRelay02->setText( "OFF" );
+        pbSwitchRelay02->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay02_On->setChecked(false);
-        rbRelay02_On->setText( "OFF" );
-        pbSwitchRelay02->setText( "ON" );
+        pbSwitchRelay02->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 3 ) )
     {
         rbRelay03_On->setChecked(true);
-        rbRelay03_On->setText( "ON" );
-        pbSwitchRelay03->setText( "OFF" );
+        pbSwitchRelay03->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay03_On->setChecked(false);
-        rbRelay03_On->setText( "OFF" );
-        pbSwitchRelay03->setText( "ON" );
+        pbSwitchRelay03->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 4 ) )
     {
         rbRelay04_On->setChecked(true);
-        rbRelay04_On->setText( "ON" );
-        pbSwitchRelay04->setText( "OFF" );
+        pbSwitchRelay04->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay04_On->setChecked(false);
-        rbRelay04_On->setText( "OFF" );
-        pbSwitchRelay04->setText( "ON" );
+        pbSwitchRelay04->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 5 ) )
     {
         rbRelay05_On->setChecked(true);
-        rbRelay05_On->setText( "ON" );
-        pbSwitchRelay05->setText( "OFF" );
+        pbSwitchRelay05->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay05_On->setChecked(false);
-        rbRelay05_On->setText( "OFF" );
-        pbSwitchRelay05->setText( "ON" );
+        pbSwitchRelay05->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 6 ) )
     {
         rbRelay06_On->setChecked(true);
-        rbRelay06_On->setText( "ON" );
-        pbSwitchRelay06->setText( "OFF" );
+        pbSwitchRelay06->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay06_On->setChecked(false);
-        rbRelay06_On->setText( "OFF" );
-        pbSwitchRelay06->setText( "ON" );
+        pbSwitchRelay06->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 7 ) )
     {
         rbRelay07_On->setChecked(true);
-        rbRelay07_On->setText( "ON" );
-        pbSwitchRelay07->setText( "OFF" );
+        pbSwitchRelay07->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay07_On->setChecked(false);
-        rbRelay07_On->setText( "OFF" );
-        pbSwitchRelay07->setText( "ON" );
+        pbSwitchRelay07->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 8 ) )
     {
         rbRelay08_On->setChecked(true);
-        rbRelay08_On->setText( "ON" );
-        pbSwitchRelay08->setText( "OFF" );
+        pbSwitchRelay08->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay08_On->setChecked(false);
-        rbRelay08_On->setText( "OFF" );
-        pbSwitchRelay08->setText( "ON" );
+        pbSwitchRelay08->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 9 ) )
     {
         rbRelay09_On->setChecked(true);
-        rbRelay09_On->setText( "ON" );
-        pbSwitchRelay09->setText( "OFF" );
+        pbSwitchRelay09->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay09_On->setChecked(false);
-        rbRelay09_On->setText( "OFF" );
-        pbSwitchRelay09->setText( "ON" );
+        pbSwitchRelay09->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 10 ) )
     {
         rbRelay10_On->setChecked(true);
-        rbRelay10_On->setText( "ON" );
-        pbSwitchRelay10->setText( "OFF" );
+        pbSwitchRelay10->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay10_On->setChecked(false);
-        rbRelay10_On->setText( "OFF" );
-        pbSwitchRelay10->setText( "ON" );
+        pbSwitchRelay10->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 11 ) )
     {
         rbRelay11_On->setChecked(true);
-        rbRelay11_On->setText( "ON" );
-        pbSwitchRelay11->setText( "OFF" );
+        pbSwitchRelay11->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay11_On->setChecked(false);
-        rbRelay11_On->setText( "OFF" );
-        pbSwitchRelay11->setText( "ON" );
+        pbSwitchRelay11->setIcon( QIcon("./resources/77x40_off.png") );
     }
     if( g_poHardware->getRelayStatus( 12 ) )
     {
         rbRelay12_On->setChecked(true);
-        rbRelay12_On->setText( "ON" );
-        pbSwitchRelay12->setText( "OFF" );
+        pbSwitchRelay12->setIcon( QIcon("./resources/77x40_on.png") );
     }
     else
     {
         rbRelay12_On->setChecked(false);
-        rbRelay12_On->setText( "OFF" );
-        pbSwitchRelay12->setText( "ON" );
+        pbSwitchRelay12->setIcon( QIcon("./resources/77x40_off.png") );
     }
 }
 
@@ -207,19 +197,25 @@ void cDlgHardwareTest::on_pbTestHardwareConnection_clicked()
 {
     cTracer obTrace( "cDlgHardwareTest::on_pbtTestHardwareConnection_clicked" );
 
+    lblHWConnectionResult->setStyleSheet( "QLabel {font: normal;}" );
+
     if( g_poHardware->isHardwareConnected() )
     {
+        lblHWConnectionResult->setStyleSheet( "QLabel {font: bold; color: green;}" );
         lblHWConnectionResult->setText( tr("Hardware available") );
     }
     else
     {
+        lblHWConnectionResult->setStyleSheet( "QLabel {font: bold; color: red;}" );
         lblHWConnectionResult->setText( tr("Hardware unavailable") );
     }
 }
 
 void cDlgHardwareTest::on_pbReconnect_clicked()
 {
-
+    g_poHardware->closeCommunication();
+    g_poHardware->init( g_poPrefs->getCommunicationPort() );
+    on_pbTestHardwareConnection_clicked();
 }
 
 void cDlgHardwareTest::on_pbExit_clicked()
@@ -235,7 +231,7 @@ void cDlgHardwareTest::on_pbRelayRunTest_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay01_clicked()
 {
-    if( pbSwitchRelay01->text() == "ON" )
+    if( !rbRelay01_On->isChecked() )
         g_poHardware->setRelayOn( 1 );
     else
         g_poHardware->setRelayOff( 1 );
@@ -245,7 +241,7 @@ void cDlgHardwareTest::on_pbSwitchRelay01_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay02_clicked()
 {
-    if( pbSwitchRelay02->text() == "ON" )
+    if( !rbRelay02_On->isChecked() )
         g_poHardware->setRelayOn( 2 );
     else
         g_poHardware->setRelayOff( 2 );
@@ -255,7 +251,7 @@ void cDlgHardwareTest::on_pbSwitchRelay02_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay03_clicked()
 {
-    if( pbSwitchRelay03->text() == "ON" )
+    if( !rbRelay03_On->isChecked() )
         g_poHardware->setRelayOn( 3 );
     else
         g_poHardware->setRelayOff( 3 );
@@ -265,7 +261,7 @@ void cDlgHardwareTest::on_pbSwitchRelay03_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay04_clicked()
 {
-    if( pbSwitchRelay04->text() == "ON" )
+    if( !rbRelay04_On->isChecked() )
         g_poHardware->setRelayOn( 4 );
     else
         g_poHardware->setRelayOff( 4 );
@@ -275,7 +271,7 @@ void cDlgHardwareTest::on_pbSwitchRelay04_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay05_clicked()
 {
-    if( pbSwitchRelay05->text() == "ON" )
+    if( !rbRelay05_On->isChecked() )
         g_poHardware->setRelayOn( 5 );
     else
         g_poHardware->setRelayOff( 5 );
@@ -285,7 +281,7 @@ void cDlgHardwareTest::on_pbSwitchRelay05_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay06_clicked()
 {
-    if( pbSwitchRelay06->text() == "ON" )
+    if( !rbRelay06_On->isChecked() )
         g_poHardware->setRelayOn( 6 );
     else
         g_poHardware->setRelayOff( 6 );
@@ -295,7 +291,7 @@ void cDlgHardwareTest::on_pbSwitchRelay06_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay07_clicked()
 {
-    if( pbSwitchRelay07->text() == "ON" )
+    if( !rbRelay07_On->isChecked() )
         g_poHardware->setRelayOn( 7 );
     else
         g_poHardware->setRelayOff( 7 );
@@ -305,7 +301,7 @@ void cDlgHardwareTest::on_pbSwitchRelay07_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay08_clicked()
 {
-    if( pbSwitchRelay08->text() == "ON" )
+    if( !rbRelay08_On->isChecked() )
         g_poHardware->setRelayOn( 8 );
     else
         g_poHardware->setRelayOff( 8 );
@@ -315,7 +311,7 @@ void cDlgHardwareTest::on_pbSwitchRelay08_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay09_clicked()
 {
-    if( pbSwitchRelay09->text() == "ON" )
+    if( !rbRelay09_On->isChecked() )
         g_poHardware->setRelayOn( 9 );
     else
         g_poHardware->setRelayOff( 9 );
@@ -325,7 +321,7 @@ void cDlgHardwareTest::on_pbSwitchRelay09_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay10_clicked()
 {
-    if( pbSwitchRelay10->text() == "ON" )
+    if( !rbRelay10_On->isChecked() )
         g_poHardware->setRelayOn( 10 );
     else
         g_poHardware->setRelayOff( 10 );
@@ -335,7 +331,7 @@ void cDlgHardwareTest::on_pbSwitchRelay10_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay11_clicked()
 {
-    if( pbSwitchRelay11->text() == "ON" )
+    if( !rbRelay11_On->isChecked() )
         g_poHardware->setRelayOn( 11 );
     else
         g_poHardware->setRelayOff( 11 );
@@ -345,10 +341,15 @@ void cDlgHardwareTest::on_pbSwitchRelay11_clicked()
 
 void cDlgHardwareTest::on_pbSwitchRelay12_clicked()
 {
-    if( pbSwitchRelay12->text() == "ON" )
+    if( !rbRelay12_On->isChecked() )
         g_poHardware->setRelayOn( 12 );
     else
         g_poHardware->setRelayOff( 12 );
 
     g_poHardware->HW_Kezel();
+}
+
+void cDlgHardwareTest::on_pbAddressModules_clicked()
+{
+    g_poHardware->HW_SetModuleAddress();
 }

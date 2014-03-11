@@ -26,18 +26,18 @@ cDBPatientCardType::~cDBPatientCardType()
 }
 
 void cDBPatientCardType::init( const unsigned int p_uiId,
-                             const unsigned int p_uiLicenceId,
-                             const QString &p_qsName,
-                             const float p_fPrice,
-                             const int p_nVatpercent,
-                             const int p_nUnits,
-                             const QString &p_qsValidDateFrom,
-                             const QString &p_qsValidDateTo,
-                             const int p_nValidDays,
-                             const int p_nUnitTime,
-                             const QString &p_qsModified,
-                             const bool p_bActive,
-                             const QString &p_qsArchive ) throw()
+                               const unsigned int p_uiLicenceId,
+                               const QString &p_qsName,
+                               const float p_fPrice,
+                               const int p_nVatpercent,
+                               const int p_nUnits,
+                               const QString &p_qsValidDateFrom,
+                               const QString &p_qsValidDateTo,
+                               const int p_nValidDays,
+                               const int p_nUnitTime,
+                               const QString &p_qsModified,
+                               const bool p_bActive,
+                               const QString &p_qsArchive ) throw()
 {
     m_uiId              = p_uiId;
     m_uiLicenceId       = p_uiLicenceId;
@@ -151,11 +151,12 @@ void cDBPatientCardType::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_PATIENTCARD_TYPE );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_PATIENTCARD_TYPE );
+*/
 }
 
 void cDBPatientCardType::remove() throw( cSevException )

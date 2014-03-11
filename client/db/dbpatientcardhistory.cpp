@@ -30,6 +30,7 @@ void cDBPatientCardHistory::init( const unsigned int p_uiId,
                                   const unsigned int p_uiPatientCardId,
                                   const QString p_qsDateTime,
                                   const int p_nUnits,
+                                  const QString p_qsUnitIds,
                                   const QString p_qsTime,
                                   const QString &p_qsModified,
                                   const bool p_bActive,
@@ -40,8 +41,9 @@ void cDBPatientCardHistory::init( const unsigned int p_uiId,
     m_uiPatientCardId       = p_uiPatientCardId;
     m_qsDateTime            = p_qsDateTime;
     m_nUnits                = p_nUnits;
+    m_qsUnitIds             = p_qsUnitIds;
     m_qsTime                = p_qsTime;
-    m_qsModified        = p_qsModified;
+    m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -53,8 +55,9 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
     int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
     int inDateTimeIdx           = p_obRecord.indexOf( "dateTimeUsed" );
     int inUnitsIdx              = p_obRecord.indexOf( "units" );
+    int inUnitIdsIdx            = p_obRecord.indexOf( "unitIds" );
     int inTimeIdx               = p_obRecord.indexOf( "time" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
@@ -63,6 +66,7 @@ void cDBPatientCardHistory::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inPatientCardIdIdx ).toUInt(),
           p_obRecord.value( inDateTimeIdx ).toString(),
           p_obRecord.value( inUnitsIdx ).toInt(),
+          p_obRecord.value( inUnitIdsIdx ).toString(),
           p_obRecord.value( inTimeIdx ).toString(),
           p_obRecord.value( inModifiedIdx ).toString(),
           p_obRecord.value( inActiveIdx ).toBool(),
@@ -105,6 +109,7 @@ void cDBPatientCardHistory::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "units = \"%1\", " ).arg( m_nUnits );
+    qsQuery += QString( "unitIds = \"%1\", " ).arg( m_qsUnitIds );
     qsQuery += QString( "time = \"%1\", " ).arg( m_qsTime );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
@@ -117,11 +122,6 @@ void cDBPatientCardHistory::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
-    if( m_uiId > 0 && m_uiLicenceId != 1 )
-        g_obDBMirror.updateSynchronizationLevel( DB_PATIENTCARD_HISTORY );
-    if( m_uiId > 0 && m_uiLicenceId == 0 )
-        g_obDBMirror.updateGlobalSyncLevel( DB_PATIENTCARD_HISTORY );
 }
 
 void cDBPatientCardHistory::remove() throw( cSevException )
@@ -195,6 +195,16 @@ int cDBPatientCardHistory::units() const throw()
 void cDBPatientCardHistory::setUnits( const int p_nUnits ) throw()
 {
     m_nUnits = p_nUnits;
+}
+
+QString cDBPatientCardHistory::unitIds() const throw()
+{
+    return m_qsUnitIds;
+}
+
+void cDBPatientCardHistory::setUnitIds(const QString &p_qsUnitIds) throw()
+{
+    m_qsUnitIds = p_qsUnitIds;
 }
 
 QString cDBPatientCardHistory::time() const throw()
