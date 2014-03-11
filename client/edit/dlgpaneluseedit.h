@@ -20,6 +20,7 @@ protected:
 private slots:
     void on_pbSave_clicked();
     void on_pbCancel_clicked();
+    void on_ledUsePrice_textEdited(const QString &arg1);
 };
 
 #endif // DLGPANELTYPEEDIT_H

@@ -121,3 +121,12 @@ void cQTLogger::setMinimumSeverity(const QString name, const cSeverity::teSeveri
         (*it)->setMinimumSeverity(sev);
 }
 
+cSeverity::teSeverity cQTLogger::getMinimumSeverity( const QString name )
+{
+    cSeverity::teSeverity sev = cSeverity::DEBUG;
+
+    Writers::iterator it = m_writers.find(name);
+    if ( it!=m_writers.end() )
+        sev = (*it)->getMinimumSeverity();
+    return sev;
+}

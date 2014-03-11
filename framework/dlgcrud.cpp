@@ -8,11 +8,12 @@ cDlgCrud::cDlgCrud( QWidget *p_poParent )
 
     setupUi( this );
 
-    m_qsQuery       = "";
-    m_poModel       = new cQTMySQLQueryModel( this );
-    m_poSortedModel = new QSortFilterProxyModel();
-    m_uiSelectedId  = 0;
-    m_inSelectedRow = -1;
+    m_qsQuery           = "";
+    m_poModel           = new cQTMySQLQueryModel( this );
+    m_poSortedModel     = new QSortFilterProxyModel();
+    m_uiSelectedId      = 0;
+    m_inSelectedRow     = -1;
+    m_inSelectedCount   = 0;
 
     m_poSortedModel->setSourceModel( m_poModel );
     tbvCrud->setModel( m_poSortedModel );
@@ -98,17 +99,23 @@ void cDlgCrud::refreshTable()
         {
             m_uiSelectedId = 0;
             m_inSelectedRow = -1;
+            m_inSelectedCount = 0;
         }
         else
         {
             m_inSelectedRow = obResults.at( 0 ).row();
+            m_inSelectedCount = 1;
             tbvCrud->selectRow( m_inSelectedRow );
         }
     }
     else
     {
         m_inSelectedRow = -1;
+        m_inSelectedCount = 0;
     }
+
+    tbvCrud->resizeColumnsToContents();
+
     enableButtons();
 
     tbvCrud->selectionModel()->blockSignals( false );
@@ -119,10 +126,20 @@ void cDlgCrud::itemSelectionChanged( const QItemSelection &p_obSelected,
 {
     m_inSelectedRow = -1;
     m_uiSelectedId  = 0;
-    if( tbvCrud->selectionModel()->hasSelection() )
+    m_inSelectedCount = 0;
+
+    if( tbvCrud->selectionMode() == QAbstractItemView::SingleSelection )
     {
-        m_inSelectedRow = p_obSelected.indexes().at( 0 ).row();
-        m_uiSelectedId = m_poSortedModel->index( m_inSelectedRow, 0 ).data().toUInt();
+        if( tbvCrud->selectionModel()->hasSelection() )
+        {
+            m_inSelectedRow = p_obSelected.indexes().at( 0 ).row();
+            m_inSelectedCount = 1;
+            m_uiSelectedId = m_poSortedModel->index( m_inSelectedRow, 0 ).data().toUInt();
+        }
+    }
+    else
+    {
+        m_inSelectedCount = tbvCrud->selectionModel()->selectedRows().count();
     }
 
     enableButtons();

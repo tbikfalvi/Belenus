@@ -1,3 +1,0 @@
-Gabor => cDBMirror külön szálon kell, hogy fusson
-Peter => report framework "tab-ositasa"
-Tamas => minden más ;-)

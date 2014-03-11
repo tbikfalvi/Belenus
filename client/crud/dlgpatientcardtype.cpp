@@ -1,21 +1,62 @@
 #include <QMessageBox>
 
 #include "belenus.h"
+#include "dlgpatientcard.h"
 #include "dlgpatientcardtype.h"
 #include "../edit/dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcard.h"
+#include "../db/dbvalidtimeperiods.h"
 
-cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent )
-    : cDlgCrud( p_poParent )
+cDlgPatientCardType::cDlgPatientCardType( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Patient Cardtype List" ) );
     setWindowIcon( QIcon("./resources/40x40_patientcardtype.png") );
 
+    m_poParent = p_poParent;
+
+    horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setObjectName( QString::fromUtf8( "horizontalLayout" ) );
+    lblFilterName = new QLabel( this );
+    lblFilterName->setObjectName( QString::fromUtf8( "lblFilterName" ) );
+    lblFilterName->setText( tr("Patient card type name: ") );
+    horizontalLayout->addWidget( lblFilterName );
+    ledFilterName = new QLineEdit( this );
+    ledFilterName->setObjectName( QString::fromUtf8( "ledFilterName" ) );
+    ledFilterName->setMaximumWidth( 150 );
+    horizontalLayout->addWidget( ledFilterName );
+    lblFilterUnits = new QLabel( this );
+    lblFilterUnits->setObjectName( QString::fromUtf8( "lblFilterUnits" ) );
+    lblFilterUnits->setText( tr("Number of units: ") );
+    horizontalLayout->addWidget( lblFilterUnits );
+    ledFilterUnits = new QLineEdit( this );
+    ledFilterUnits->setObjectName( QString::fromUtf8( "ledFilterUnits" ) );
+    ledFilterUnits->setMaximumWidth( 30 );
+    horizontalLayout->addWidget( ledFilterUnits );
+
+    horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout->addItem( horizontalSpacer1 );
+
+    verticalLayout->insertLayout( 0, horizontalLayout );
+/*
+    pbPatientCard = new QPushButton( tr( "Patientcards" ), this );
+    pbPatientCard->setObjectName( QString::fromUtf8( "pbPatientCard" ) );
+    pbPatientCard->setIconSize( QSize(20, 20) );
+    pbPatientCard->setIcon( QIcon("./resources/40x40_patientcard.png") );
+    btbButtonsSide->addButton( pbPatientCard, QDialogButtonBox::ActionRole );
+    connect( pbPatientCard, SIGNAL(clicked()), this, SLOT(_slotPatientCards()) );
+*/
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPatientCardTypes", QPoint(520,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
+
+    connect( ledFilterName, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledFilterUnits, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 }
 
 cDlgPatientCardType::~cDlgPatientCardType()
 {
+    g_poPrefs->setDialogSize( "ListPatientCardTypes", QPoint( width(), height() ) );
 }
 
 void cDlgPatientCardType::setupTableView()
@@ -33,8 +74,12 @@ void cDlgPatientCardType::setupTableView()
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Price" ) );
         m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Units" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Active" ) );
-        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Unit time" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "Valid days" ) );
+        m_poModel->setHeaderData( 9, Qt::Horizontal, tr( "Active" ) );
+        m_poModel->setHeaderData( 10, Qt::Horizontal, tr( "Archive" ) );
 
         tbvCrud->resizeColumnToContents( 0 );
         tbvCrud->resizeColumnToContents( 1 );
@@ -43,6 +88,10 @@ void cDlgPatientCardType::setupTableView()
         tbvCrud->resizeColumnToContents( 4 );
         tbvCrud->resizeColumnToContents( 5 );
         tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
+        tbvCrud->resizeColumnToContents( 8 );
+        tbvCrud->resizeColumnToContents( 9 );
+        tbvCrud->resizeColumnToContents( 10 );
 
         tbvCrud->sortByColumn( 2, Qt::AscendingOrder );
     }
@@ -51,10 +100,18 @@ void cDlgPatientCardType::setupTableView()
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Name" ) );
         m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Price" ) );
         m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Units" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Unit time" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Valid from" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Valid to" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Valid days" ) );
 
         tbvCrud->resizeColumnToContents( 1 );
         tbvCrud->resizeColumnToContents( 2 );
         tbvCrud->resizeColumnToContents( 3 );
+        tbvCrud->resizeColumnToContents( 4 );
+        tbvCrud->resizeColumnToContents( 5 );
+        tbvCrud->resizeColumnToContents( 6 );
+        tbvCrud->resizeColumnToContents( 7 );
 
         tbvCrud->sortByColumn( 1, Qt::AscendingOrder );
     }
@@ -66,11 +123,27 @@ void cDlgPatientCardType::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, price, units, active, archive FROM patientCardTypes";
+        m_qsQuery = "SELECT patientCardTypeId, licenceId, name, (price/100) as price, units, unitTime, validDateFrom, validDateTo, validDays, active, archive FROM patientCardTypes";
     }
     else
     {
-        m_qsQuery = "SELECT patientCardTypeId AS id, name, price, units FROM patientCardTypes WHERE active=1";
+        m_qsQuery = "SELECT patientCardTypeId AS id, name, (price/100) as price, units, unitTime, validDateFrom, validDateTo, validDays FROM patientCardTypes WHERE licenceId>0 AND active=1";
+    }
+
+    QString stTemp;
+
+    stTemp = ledFilterName->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "name LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
+    stTemp = ledFilterUnits->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "units=%1" ).arg( stTemp.toInt() );
     }
 
     cDlgCrud::refreshTable();
@@ -153,6 +226,9 @@ void cDlgPatientCardType::deleteClicked( bool )
                                       tr("You are not allowed to delete studio independent data."));
                 return;
             }
+            cDBValidTimePeriod  obDBValidTimePeriod;
+
+            obDBValidTimePeriod.removePatienCardTypes( m_uiSelectedId );
             poPatientCardType->remove();
             m_uiSelectedId = 0;
             refreshTable();
@@ -165,3 +241,12 @@ void cDlgPatientCardType::deleteClicked( bool )
         }
     }
 }
+/*
+void cDlgPatientCardType::_slotPatientCards()
+{
+    cDlgPatientCard   obDlgPatientCard( m_poParent );
+
+    QDialog::accept();
+    obDlgPatientCard.exec();
+}
+*/

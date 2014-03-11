@@ -28,6 +28,7 @@
 
 #include "ui_dlgMain.h"
 #include "../client/communication.h"
+#include "cregistry.h"
 
 //====================================================================================
 
@@ -35,13 +36,21 @@
 #define CONST_PAGE_INSTALL_SELECTION     1
 #define CONST_PAGE_COMPONENT_SELECTION   2
 #define CONST_PAGE_WAMP_INSTALL          3
-#define CONST_PAGE_HARDWARE_INSTALL      4
-#define CONST_PAGE_INTERNET_INSTALL      5
+#define CONST_PAGE_INIT_SQL              4
+#define CONST_PAGE_HARDWARE_INSTALL      5
 #define CONST_PAGE_CLIENT_INSTALL        6
 #define CONST_PAGE_PROCESS               7
 #define CONST_PAGE_FINISH                8
 
 #define CONST_INSTALL_APP_VERSION       "1.0"
+
+//====================================================================================
+
+extern cRegistry     g_obReg;
+extern QTranslator  *poTransSetup;
+extern QTranslator  *poTransQT;
+extern QApplication *apMainApp;
+extern QString       g_qsCurrentPath;
 
 //====================================================================================
 class dlgMain : public QDialog, protected Ui::dlgMain
@@ -73,8 +82,6 @@ private:
 
     QStringList              m_qslComponents;
 
-
-
     QFile                   *m_obFile;
     int                      m_nTimer;
 
@@ -82,6 +89,7 @@ private:
     int                      m_nCurrentPage;
     QRadioButton            *m_pInstallType;
     QString                  m_qsRootPassword;
+    QString                  m_qsRootPasswordNew;
     int                      m_nComPort;
     int                      m_nCountDevices;
 
@@ -90,7 +98,6 @@ private:
     bool                     m_bProcessWamp;
     bool                     m_bProcessDatabase;
     bool                     m_bProcessHWConnection;
-    bool                     m_bProcessInternet;
     bool                     m_bProcessBelenusClient;
     bool                     m_bProcessViewer;
     bool                     m_bRestartRequired;
@@ -105,6 +112,7 @@ private:
     QString                  m_qsClientInstallDir;
     QString                  m_qsIPAddress;
     int                      m_nPort;
+    bool                     m_bIsWindows32Bit;
 
     bool                     m_bUninstallCalled;
     QString                  m_qsProcessErrorMsg;
@@ -113,6 +121,9 @@ private:
     QStringList              m_qslFiles;
     QString                  m_qsLanguage;
     QString                  m_qsUninstallWampExec;
+
+    QString                  m_qsAppVersion;
+    QString                  m_qsDBVersion;
 
     void                    _initializeInstall();
     void                    _uninstallBelenus();
@@ -123,10 +134,10 @@ private:
     void                    _initializeSelectionPage();
     void                    _initializeComponentSelectionPage();
     void                    _initializeWampInstallPage();
+    void                    _initializeSQLPage();
     void                    _installWampServer();
     void                    _installSQLServer();
     void                    _initializeHardwareInstallPage();
-    void                    _initializeInternetInstallPage();
     void                    _initializeClientInstallPage();
     void                    _initializeInstallProcessPage();
     void                    _initializeFinishPage();
@@ -135,13 +146,15 @@ private:
     bool                    _processSelectionPage();
     bool                    _processComponentSelectionPage();
     bool                    _processWampInstallPage();
+    bool                    _processSQLPage();
     bool                    _processHardwareInstallPage();
-    bool                    _processInternetInstallPage();
     bool                    _processClientInstallPage();
 
-    bool                    _processWampServerInstall();
+    bool                    _processWampServerInstall( QString *p_qsMessage );
+    int                     _checkWampServer();
     bool                    _initializeMySQL();
     bool                    _processRootCreate();
+    bool                    _processRootModify();
     bool                    _processDatabaseCreate();
     bool                    _processBelenusUserCreate();
     bool                    _processBelenusUserRights();
@@ -155,7 +168,6 @@ private:
     bool                    _copyUninstallFiles();
     bool                    _processClientInstall();
     bool                    _processHWSettings();
-    bool                    _processInternetSettings();
 
     bool                    _processDatabaseUpdate();
 
@@ -171,13 +183,16 @@ private:
     bool                    _createFolderShortcut();
     void                    _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
     bool                    _removeInstalledFilesFolders();
+    void                    _getApplicationVersions();
 
     void                    _exitInstaller( bool m_bRestartPC = false );
 
 private slots:
+    void on_chkShowSQLPassword_clicked();
+    void on_cmbLanguage_currentIndexChanged(int index);
+    void on_pbStartWampInstall_clicked();
     void on_pbTestHWConnection_clicked();
     void on_cmbCOMPorts_currentIndexChanged(int index);
-    void on_chkInternet_clicked();
     void on_chkBelenus_clicked();
     void on_chkHardware_clicked();
     void on_chkDatabase_clicked();

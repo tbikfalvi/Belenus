@@ -3,7 +3,7 @@
 
 #include "dlgcassaedit.h"
 #include "../db/dbuser.h"
-#include "../dlg/dlgcassaaction.h"
+#include "../dlg/dlgcassainout.h"
 
 cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     : QDialog( p_poParent )
@@ -12,9 +12,6 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
 
     setWindowTitle( tr("Cassa") );
     setWindowIcon( QIcon("./resources/40x40_cassa.png") );
-
-    resize( width(), 148 );
-    tbvCassa->setEnabled( false );
 
     m_qsQuery       = "";
     m_poModel       = new cQTMySQLQueryModel( this );
@@ -31,41 +28,26 @@ cDlgCassaEdit::cDlgCassaEdit( QWidget *p_poParent )
     obCassa.load( g_obCassa.cassaId() );
     obUser.load( obCassa.userId() );
 
-    QString m_qsStart = "";
-    QString m_qsStop = "";
+    cCurrency   cBalance( obCassa.currentBalance() );
 
-    if( obCassa.startDateTime().length() > 0 )
-    {
-        m_qsStart = obCassa.startDateTime();
-        m_qsStart.truncate( m_qsStart.length()-3 );
-        m_qsStart.replace( 10, 1, " " );
-    }
-    if( obCassa.stopDateTime().length() > 0 )
-    {
-        m_qsStop = obCassa.stopDateTime();
-        m_qsStop.truncate( m_qsStop.length()-3 );
-        m_qsStop.replace( 10, 1, " " );
-    }
-
-    dtStartDate->setText( m_qsStart );
-    dtStopDate->setText( m_qsStop );
-    lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+    lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     lblUser->setText( obUser.realName() );
 
     pbClose->setIcon( QIcon("./resources/40x40_exit.png") );
     pbCashAdd->setIcon( QIcon("./resources/40x40_cassa_add.png") );
     pbCashGet->setIcon( QIcon("./resources/40x40_cassa_get.png") );
+    pbExpense->setIcon( QIcon("./resources/40x40_paywithcash.png") );
 
-    pbMore->setEnabled( false );
-
-    dtStartDate->setEnabled( false );
-    dtStopDate->setEnabled( false );
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "CassaHistory", QPoint(800,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 
     setupTableView();
 }
 
 cDlgCassaEdit::~cDlgCassaEdit()
 {
+    g_poPrefs->setDialogSize( "CassaHistory", QPoint( width(), height() ) );
+
     if( m_poSortedModel ) delete m_poSortedModel;
     if( m_poModel ) delete m_poModel;
 }
@@ -86,28 +68,43 @@ void cDlgCassaEdit::setupTableView()
     {
         m_poModel->setHeaderData( 0, Qt::Horizontal, tr( "Id" ) );
         m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "LicenceId" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Denomination" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Value" ) );
-        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Comment" ) );
-        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Archive" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Date/Time" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Amount of money" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Card usage" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Cash/Voucher" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "Actual balance" ) );
+        m_poModel->setHeaderData( 8, Qt::Horizontal, tr( "User" ) );
     }
     else
     {
-        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Denomination" ) );
-        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Value" ) );
-        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 1, Qt::Horizontal, tr( "Comment" ) );
+        m_poModel->setHeaderData( 2, Qt::Horizontal, tr( "Date/Time" ) );
+        m_poModel->setHeaderData( 3, Qt::Horizontal, tr( "Amount of money" ) );
+        m_poModel->setHeaderData( 4, Qt::Horizontal, tr( "Card usage" ) );
+        m_poModel->setHeaderData( 5, Qt::Horizontal, tr( "Cash/Voucher" ) );
+        m_poModel->setHeaderData( 6, Qt::Horizontal, tr( "Actual balance" ) );
+        m_poModel->setHeaderData( 7, Qt::Horizontal, tr( "User" ) );
     }
+
+    tbvCassa->resizeColumnToContents( 1 );
+    tbvCassa->resizeColumnToContents( 2 );
+    tbvCassa->resizeColumnToContents( 3 );
+    tbvCassa->resizeColumnToContents( 4 );
+    tbvCassa->resizeColumnToContents( 5 );
+    tbvCassa->resizeColumnToContents( 6 );
+    tbvCassa->resizeColumnToContents( 7 );
 }
 
 void cDlgCassaEdit::refreshTable()
 {
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString( "SELECT cassaDenominations.denominationId, cassaDenominations.licenceId, denominations.denomination, cassaDenominations.value, denominations.comment, cassaDenominations.archive FROM cassaDenominations, denominations WHERE denominations.denominationId=cassaDenominations.denominationId AND cassaDenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaHistoryId, cassahistory.licenceId, cassahistory.comment, actionTime, (actionValue/100) as actionValue, (actionCard/100) as actionCard, (actionCash/100) as actionCash, (actionBalance/100) as actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
     }
     else
     {
-        m_qsQuery = QString( "SELECT cassaDenominations.denominationId as id, denominations.denomination, cassaDenominations.value, denominations.comment FROM cassaDenominations, denominations WHERE denominations.denominationId=cassaDenominations.denominationId AND cassaDenominations.cassaId=%1 GROUP BY denominations.denominationId" ).arg(g_obCassa.cassaId());
+        m_qsQuery = QString( "SELECT cassaHistoryId as id, cassahistory.comment, actionTime, (actionValue/100) as actionValue, (actionCard/100) as actionCard, (actionCash/100) as actionCash, (actionBalance/100) as actionBalance, realName FROM cassaHistory, users WHERE cassaHistory.cassaId=%1 AND cassaHistory.userId=users.userId ORDER BY cassaHistoryId DESC" ).arg(g_obCassa.cassaId());
     }
 
     tbvCassa->selectionModel()->blockSignals( true );
@@ -138,8 +135,7 @@ void cDlgCassaEdit::refreshTable()
     tbvCassa->selectionModel()->blockSignals( false );
 }
 
-void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected,
-                                     const QItemSelection &)
+void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected, const QItemSelection &)
 {
     m_inSelectedRow = -1;
     m_uiSelectedId  = 0;
@@ -151,7 +147,7 @@ void cDlgCassaEdit::itemSelectionChanged( const QItemSelection &p_obSelected,
 
     enableButtons();
 }
-
+/*
 QString cDlgCassaEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
 {
     QString qsValue = QString::number( p_nCurrencyValue );
@@ -171,7 +167,7 @@ QString cDlgCassaEdit::convertCurrency( int p_nCurrencyValue, QString p_qsCurren
 
     return qsRet;
 }
-
+*/
 void cDlgCassaEdit::enableButtons()
 {
 
@@ -192,20 +188,20 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
         return;
     }
 
-    cDlgCassaAction     obDlgCassaAction( this );
+    cDlgCassaInOut     obDlgCassaInOut( this, tr("Cash payment") );
 
-    obDlgCassaAction.setCassaAction();
-    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    if( obDlgCassaInOut.exec() == QDialog::Accepted )
     {
-        cDBCassa    obCassa;
-        QString     qsComment;
-        int         nTemp = 0;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment );
+        cDBCassa        obCassa;
 
-        g_obCassa.cassaIncreaseMoney( stRet.toInt(), qsComment );
+        g_obCassa.cassaIncreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
-        lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+
+        cCurrency   cBalance( obCassa.currentBalance() );
+
+        lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     }
+    refreshTable();
 }
 
 void cDlgCassaEdit::on_pbCashGet_clicked()
@@ -218,32 +214,44 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
         return;
     }
 
-    cDlgCassaAction     obDlgCassaAction( this );
+    cDlgCassaInOut     obDlgCassaInOut( this, tr("Cash withdrawal") );
 
-    obDlgCassaAction.setCassaAction();
-    if( obDlgCassaAction.exec() == QDialog::Accepted )
+    if( obDlgCassaInOut.exec() == QDialog::Accepted )
     {
-        cDBCassa    obCassa;
-        QString     qsComment;
-        int         nTemp = 0;
-        QString     stRet = obDlgCassaAction.cassaResult( &nTemp, &qsComment );
+        cDBCassa        obCassa;
 
-        g_obCassa.cassaDecreaseMoney( stRet.toInt(), qsComment );
+        g_obCassa.cassaDecreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
-        lblBalanceValue->setText( convertCurrency( obCassa.currentBalance(), g_poPrefs->getCurrencyShort() ) );
+
+        cCurrency   cBalance( obCassa.currentBalance() );
+
+        lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     }
+    refreshTable();
 }
 
-void cDlgCassaEdit::on_pbMore_clicked()
+void cDlgCassaEdit::on_pbExpense_clicked()
 {
-    if( height() == 421 )
+    if( !g_obCassa.isCassaEnabled() )
     {
-        resize( width(), 148 );
-        tbvCassa->setEnabled( false );
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Cassa is disabled!\n\n"
+                                 "Please relogin to enable cassa.") );
+        return;
     }
-    else if( height() == 148 )
+
+    cDlgCassaInOut     obDlgCassaInOut( this, tr("Cash withdrawal") );
+
+    if( obDlgCassaInOut.exec() == QDialog::Accepted )
     {
-        resize( width(), 421 );
-        tbvCassa->setEnabled( true );
+        cDBCassa        obCassa;
+
+        g_obCassa.cassaProcessCashExpense( (obDlgCassaInOut.resultAmount()*100)*(-1), obDlgCassaInOut.resultComment() );
+        obCassa.load( g_obCassa.cassaId() );
+
+        cCurrency   cBalance( obCassa.currentBalance() );
+
+        lblBalanceValue->setText( cBalance.currencyFullStringShort() );
     }
+    refreshTable();
 }

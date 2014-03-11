@@ -36,6 +36,7 @@ private slots:
     void on_pbTestHardwareConnection_clicked();
     void updateHWStatus();
     void updateRelayStatus();
+    void on_pbAddressModules_clicked();
 };
 
 #endif // CDLGHARDWARETEST_H

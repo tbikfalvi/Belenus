@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>541</width>
-    <height>506</height>
+    <width>450</width>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -212,7 +212,7 @@
          <widget class="QComboBox" name="cmbTimeUse">
           <property name="maximumSize">
            <size>
-            <width>100</width>
+            <width>60</width>
             <height>16777215</height>
            </size>
           </property>

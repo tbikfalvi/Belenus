@@ -6,6 +6,10 @@
 #include "ui_wndmain.h"
 #include "mdipanels.h"
 #include "dlg/dlgprogress.h"
+#include "db/dbshoppingcart.h"
+#include "dlg/dlgcassaaction.h"
+#include "dlg/dlgsecondarywindow.h"
+#include "db/dbapplicationaction.h"
 
 using namespace std;
 
@@ -14,6 +18,16 @@ class cWndMain : public QMainWindow, private Ui::wndMain
     Q_OBJECT
 
 public:
+
+    enum msgBoxType
+    {
+        MSG_INFORMATION = 0,
+        MSG_WARNING,
+        MSG_ATTENTION,
+        MSG_ERROR,
+        MSG_QUESTION
+    };
+
     cWndMain( QWidget *parent = 0 );
     ~cWndMain();
 
@@ -23,9 +37,11 @@ public:
     void loginUser();
     void logoutUser();
 
-    void checkDemoLicenceKey();
     void startMainTimer();
     void autoSynchronizeGlobalData();
+    void showProgress();
+
+    int customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
@@ -34,81 +50,110 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
-    cMdiPanels         *mdiPanels;
-    cDlgProgress       *m_dlgProgress;
-    int                 m_nTimer;
-
-    unsigned int        m_uiPatientId;
-    unsigned int        m_uiAttendanceId;
-
-    bool                m_bCtrlPressed;
-
-    bool                m_bSerialRegistration;
-    int                 m_inRegistrationTimeout;
-
-    bool                m_bGlobalDataRequested;
-    int                 m_inGlobalDataRequestTimeout;
+    QLabel                   m_lblStatusLeft;
+    QLabel                   m_lblStatusRight;
+    cMdiPanels              *mdiPanels;
+    cDlgProgress            *m_dlgProgress;
+    int                      m_nTimer;
+    cDlgSecondaryWindow     *m_dlgSecondaryWindow;
+    unsigned int             m_uiPatientId;
+    bool                     m_bCtrlPressed;
+    bool                     m_bSerialRegistration;
+    int                      m_inRegistrationTimeout;
+    bool                     m_bGlobalDataRequested;
+    int                      m_inGlobalDataRequestTimeout;
+    QString                  m_qsStatusText;
+    cDBApplicationAction     m_obApplicationAction;
+    int                      m_nEnterAction;
+    int                      m_inPanelStartMinute;
+    QString                  m_qsPanelStartBarcode;
+    int                      m_inCommunicationCounter;
+    bool                     m_bActionProcessing;
 
     void showElementsForComponents();
+    void enableElementsByLogin( bool p_bEnable );
     void updateTitle();
-    void processInputPatient( QString p_stPatientName );
+    void updateStatusText( QString p_qsStatusText="" );
     void processInputPatientCard( QString p_stBarcode );
-    void processInputTimePeriod( int p_inSecond );
+    void processInputProduct( QString p_stBarcode );
+    void processInputTimePeriod( int p_inMinute );
+
+public slots:
+    void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
+    void processProductSellPayment( const cDBShoppingCart &p_obDBShoppingCart );
 
 private slots:
+    void on_action_SellProduct_triggered();
     void updateToolbar();
+    void slotOpenShoppingCart( unsigned int p_uiPanelId );
+    void slotOpenScheduleTable( unsigned int p_uiPanelId );
+    void slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus );
+    void slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
+    void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
+    void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
+    void slotReplacePatientCard( const QString &p_qsBarcode );
+    void slotAssignPartnerCard( const QString &p_qsBarcode );
+    void on_action_CassaActionStorno_triggered();
+    void on_action_ShoppingCart_triggered();
+    void on_action_SellProduct_triggered( QString p_qsBarcode );
+    void on_action_ProductActionType_triggered();
+    void on_action_Guests_triggered();
     void on_action_Preferences_triggered();
     void on_action_Users_triggered();
     void on_action_Logs_triggered();
     void on_action_Hardwaretest_triggered();
     void on_action_LogOut_triggered();
     void on_action_Paneltypes_triggered();
-    void on_action_Patientorigin_triggered();
-    void on_action_ReasonToVisit_triggered();
-    void on_action_Patients_triggered();
+    void on_action_Panelgroups_triggered();
+    void on_action_Patientorigin_triggered()        {}
+    void on_action_ReasonToVisit_triggered()        {}
+    void on_action_Patients_triggered()             {}
     void on_action_PatientNew_triggered();
-    void on_action_Attendances_triggered();
+    void on_action_DeviceClear_triggered();
     void on_action_DeviceStart_triggered();
     void on_action_DeviceReset_triggered();
     void on_action_PatientSelect_triggered();
     void on_action_PatientEmpty_triggered();
-    void on_action_AttendanceNew_triggered();
     void on_action_PanelStatuses_triggered();
-    void on_action_UseWithCard_triggered();
-    void on_action_UseByTime_triggered();
+    void on_action_UseDevice_triggered();
+    void on_action_UseDeviceLater_triggered();
     void on_action_Cards_triggered();
     void on_action_CardTypes_triggered();
+    void on_action_ProductTypes_triggered();
+    void on_action_Products_triggered();
     void on_action_PCSaveToDatabase_triggered();
     void on_action_Cassa_triggered();
     void on_action_Accounting_triggered();
     void on_action_DeviceSkipStatus_triggered();
-    void on_action_PostponedPatient_triggered();
-    void on_action_PostponedAttendance_triggered();
     void on_action_ValidateSerialKey_triggered();
     void on_action_PatientCardSell_triggered();
+    void on_action_PatientCardAssign_triggered();
     void on_action_EditActualPatient_triggered();
     void on_action_DeviceSettings_triggered();
-    void on_action_SelectActualAttendance_triggered();
-    void on_action_DeselectActualAttendance_triggered();
-    void on_action_EditActualAttendance_triggered();
     void on_action_PayCash_triggered();
-    void on_action_IllnessGroup_triggered();
-    void on_action_Company_triggered();
-    void on_action_Doctor_triggered();
-    void on_action_HealthInsurance_triggered();
-    void on_action_RegionZipCity_triggered();
-    void on_action_ReportPatients_triggered();
+    void on_action_IllnessGroup_triggered()             {}
+    void on_action_Company_triggered()                  {}
+    void on_action_Doctor_triggered()                   {}
+    void on_action_HealthInsurance_triggered()          {}
+    void on_action_RegionZipCity_triggered()            {}
+    void on_action_ReportPatients_triggered()           {}
     void on_action_CassaHistory_triggered();
-    void on_action_ReportAttendances_triggered();
     void on_action_ReportPatientcardUses_triggered();
     void on_action_EditLicenceInformation_triggered();
     void on_action_ReportPatientcards_triggered();
     void on_action_Discounts_triggered();
     void on_action_PatientcardsObsolete_triggered();
-    void on_action_SynchronizeDatabase_triggered();
-    void on_action_AcquireGlobalData_triggered();
-    void on_action_EstablishConnection_triggered();
+    void on_action_SynchronizeDatabase_triggered()      {}
+    void on_action_AcquireGlobalData_triggered()        {}
+    void on_action_EstablishConnection_triggered()      {}
     void on_action_EmptyDemoDB_triggered();
+    void on_action_PaymentMethods_triggered();
+    void on_action_TestDlgStarted();
+    void on_pbLogin_clicked();
+    void on_ledPassword_returnPressed();
+    void on_action_ReportViewer_triggered();
+    void on_action_About_triggered();
+    void on_action_ManageDatabase_triggered();
 };
 
 #endif

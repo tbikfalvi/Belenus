@@ -27,9 +27,10 @@ cDBDiscount::~cDBDiscount()
 
 void cDBDiscount::init( const unsigned int p_uiId,
                         const unsigned int p_uiLicenceId,
-                        const unsigned int p_uiHealthInsuranceId,
+                        const unsigned int p_uiGuestId,
                         const unsigned int p_uiCompanyId,
-                        const unsigned int p_uiDoctorId,
+                        const unsigned int p_uiPaymentMethodId,
+                        const unsigned int p_uiProductId,
                         const bool p_bRegularCustomer,
                         const bool p_bEmployee,
                         const bool p_bService,
@@ -42,16 +43,17 @@ void cDBDiscount::init( const unsigned int p_uiId,
 {
     m_uiId                  = p_uiId;
     m_uiLicenceId           = p_uiLicenceId;
-    m_uiHealthInsuranceId   = p_uiHealthInsuranceId;
+    m_uiGuestId             = p_uiGuestId;
     m_uiCompanyId           = p_uiCompanyId;
-    m_uiDoctorId            = p_uiDoctorId;
+    m_uiPaymentMethodId       = p_uiPaymentMethodId;
+    m_uiProductId           = p_uiProductId;
     m_bRegularCustomer      = p_bRegularCustomer;
     m_bEmployee             = p_bEmployee;
     m_bService              = p_bService;
     m_qsName                = p_qsName;
     m_inDiscountValue       = p_inDiscountValue;
     m_inDiscountPercent     = p_inDiscountPercent;
-    m_qsModified        = p_qsModified;
+    m_qsModified            = p_qsModified;
     m_bActive               = p_bActive;
     m_qsArchive             = p_qsArchive;
 }
@@ -60,24 +62,26 @@ void cDBDiscount::init( const QSqlRecord &p_obRecord ) throw()
 {
     int inIdIdx                 = p_obRecord.indexOf( "discountId" );
     int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
-    int inHealthInsuranceIdIdx  = p_obRecord.indexOf( "healthInsuranceId" );
+    int inGuestIdIdx            = p_obRecord.indexOf( "patientId" );
     int inCompanyIdIdx          = p_obRecord.indexOf( "companyId" );
-    int inDoctorIdIdx           = p_obRecord.indexOf( "doctorId" );
+    int inPaymentMethodIdIdx      = p_obRecord.indexOf( "paymentMethodId" );
+    int inProductIdIdx          = p_obRecord.indexOf( "productId" );
     int inRegularCustomerIdx    = p_obRecord.indexOf( "regularCustomer" );
     int inEmpoyeeIdx            = p_obRecord.indexOf( "employee" );
     int inServiceIdx            = p_obRecord.indexOf( "service" );
     int inNameIdx               = p_obRecord.indexOf( "name" );
     int inDiscountValueIdx      = p_obRecord.indexOf( "discountValue" );
     int inDiscountPercentIdx    = p_obRecord.indexOf( "discountPercent" );
-    int inModifiedIdx       = p_obRecord.indexOf( "modified" );
+    int inModifiedIdx           = p_obRecord.indexOf( "modified" );
     int inActiveIdx             = p_obRecord.indexOf( "active" );
     int inArchiveIdx            = p_obRecord.indexOf( "archive" );
 
     init( p_obRecord.value( inIdIdx ).toInt(),
           p_obRecord.value( inLicenceIdIdx ).toInt(),
-          p_obRecord.value( inHealthInsuranceIdIdx ).toUInt(),
+          p_obRecord.value( inGuestIdIdx ).toUInt(),
           p_obRecord.value( inCompanyIdIdx ).toUInt(),
-          p_obRecord.value( inDoctorIdIdx ).toUInt(),
+          p_obRecord.value( inPaymentMethodIdIdx ).toUInt(),
+          p_obRecord.value( inProductIdIdx ).toUInt(),
           p_obRecord.value( inRegularCustomerIdx ).toBool(),
           p_obRecord.value( inEmpoyeeIdx ).toBool(),
           p_obRecord.value( inServiceIdx ).toBool(),
@@ -115,11 +119,11 @@ void cDBDiscount::load( const QString &p_qsName ) throw( cSevException )
     init( poQuery->record() );
 }
 
-void cDBDiscount::loadHealthInsurance( const unsigned int p_uiId ) throw( cSevException )
+void cDBDiscount::loadGuest( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBDiscount::loadHealthInsurance", QString( "id: %1" ).arg( p_uiId ) );
+    cTracer obTrace( "cDBDiscount::loadGuest", QString( "id: %1" ).arg( p_uiId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE healthInsuranceId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE patientId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Discount id not found" );
@@ -141,11 +145,24 @@ void cDBDiscount::loadCompany( const unsigned int p_uiId ) throw( cSevException 
     init( poQuery->record() );
 }
 
-void cDBDiscount::loadDoctor( const unsigned int p_uiId ) throw( cSevException )
+void cDBDiscount::loadPaymentMethod( const unsigned int p_uiId ) throw( cSevException )
 {
-    cTracer obTrace( "cDBDiscount::loadDoctor", QString( "id: %1" ).arg( p_uiId ) );
+    cTracer obTrace( "cDBDiscount::loadPaymentMethod", QString( "id: %1" ).arg( p_uiId ) );
 
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE doctorId = %1" ).arg( p_uiId ) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE paymentMethodId = %1" ).arg( p_uiId ) );
+
+    if( poQuery->size() != 1 )
+        throw cSevException( cSeverity::ERROR, "Discount id not found" );
+
+    poQuery->first();
+    init( poQuery->record() );
+}
+
+void cDBDiscount::loadProduct( const unsigned int p_uiId ) throw( cSevException )
+{
+    cTracer obTrace( "cDBDiscount::loadProduct", QString( "id: %1" ).arg( p_uiId ) );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE productId = %1" ).arg( p_uiId ) );
 
     if( poQuery->size() != 1 )
         throw cSevException( cSeverity::ERROR, "Discount id not found" );
@@ -184,9 +201,9 @@ bool cDBDiscount::isServiceExists() throw( cSevException )
         return false;
 }
 
-bool cDBDiscount::isHealthInsuranceExists( const unsigned int p_uiId ) throw( cSevException )
+bool cDBDiscount::isGuestExists( const unsigned int p_uiId ) throw( cSevException )
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE healthInsuranceId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE patientId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
 
     if( poQuery->size() > 0 )
         return true;
@@ -204,9 +221,29 @@ bool cDBDiscount::isCompanyExists( const unsigned int p_uiId ) throw( cSevExcept
         return false;
 }
 
-bool cDBDiscount::isDoctorExists( const unsigned int p_uiId ) throw( cSevException )
+bool cDBDiscount::isPaymentMethodExists( const unsigned int p_uiId ) throw( cSevException )
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE doctorId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE paymentMethodId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isProductExists( const unsigned int p_uiId ) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE productId=%1 AND discountId<>%2" ).arg(p_uiId).arg(m_uiId) );
+
+    if( poQuery->size() > 0 )
+        return true;
+    else
+        return false;
+}
+
+bool cDBDiscount::isCouponExists(const QString &p_qsName) throw( cSevException )
+{
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM discounts WHERE patientId=0 AND companyId=0 AND paymentMethodId=0 AND productId=0 AND regularCustomer=0 AND employee=0 AND service=0 AND name=\"%1\" AND discountId<>%2" ).arg(p_qsName).arg(m_uiId) );
 
     if( poQuery->size() > 0 )
         return true;
@@ -235,9 +272,10 @@ void cDBDiscount::save() throw( cSevException )
     }
     qsQuery += " discounts SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
-    qsQuery += QString( "healthInsuranceId = \"%1\", " ).arg( m_uiHealthInsuranceId );
+    qsQuery += QString( "patientId = \"%1\", " ).arg( m_uiGuestId );
     qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );
-    qsQuery += QString( "doctorId = \"%1\", " ).arg( m_uiDoctorId );
+    qsQuery += QString( "paymentMethodId = \"%1\", " ).arg( m_uiPaymentMethodId );
+    qsQuery += QString( "productId = \"%1\", " ).arg( m_uiProductId );
     qsQuery += QString( "regularCustomer = \"%1\", " ).arg( m_bRegularCustomer );
     qsQuery += QString( "employee = \"%1\", " ).arg( m_bEmployee );
     qsQuery += QString( "service = \"%1\", " ).arg( m_bService );
@@ -255,11 +293,12 @@ void cDBDiscount::save() throw( cSevException )
     QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
     if( !m_uiId && poQuery ) m_uiId = poQuery->lastInsertId().toUInt();
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_DISCOUNT );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_DISCOUNT );
+*/
 }
 
 void cDBDiscount::remove() throw( cSevException )
@@ -305,14 +344,14 @@ void cDBDiscount::setLicenceId( const unsigned int p_uiLicenceId ) throw()
     m_uiLicenceId = p_uiLicenceId;
 }
 
-unsigned int cDBDiscount::healthInsuranceId() const throw()
+unsigned int cDBDiscount::guestId() const throw()
 {
-    return m_uiHealthInsuranceId;
+    return m_uiGuestId;
 }
 
-void cDBDiscount::setHealthInsuranceId( const unsigned int p_uiHealthInsuranceId ) throw()
+void cDBDiscount::setGuestId( const unsigned int p_uiGuestId ) throw()
 {
-    m_uiHealthInsuranceId = p_uiHealthInsuranceId;
+    m_uiGuestId = p_uiGuestId;
 }
 
 unsigned int cDBDiscount::companyId() const throw()
@@ -325,14 +364,24 @@ void cDBDiscount::setCompanyId( const unsigned int p_uiCompanyId ) throw()
     m_uiCompanyId = p_uiCompanyId;
 }
 
-unsigned int cDBDiscount::doctorId() const throw()
+unsigned int cDBDiscount::paymentMethodId() const throw()
 {
-    return m_uiDoctorId;
+    return m_uiPaymentMethodId;
 }
 
-void cDBDiscount::setDoctorId( const unsigned int p_uiDoctorId ) throw()
+void cDBDiscount::setPaymentMethodId( const unsigned int p_uiPaymentMethodId ) throw()
 {
-    m_uiDoctorId = p_uiDoctorId;
+    m_uiPaymentMethodId = p_uiPaymentMethodId;
+}
+
+unsigned int cDBDiscount::productId() const throw()
+{
+    return m_uiProductId;
+}
+
+void cDBDiscount::setProductId( const unsigned int p_uiProductId ) throw()
+{
+    m_uiProductId = p_uiProductId;
 }
 
 bool cDBDiscount::regularCustomer() const throw()
@@ -419,5 +468,28 @@ QString cDBDiscount::archive() const throw()
 void cDBDiscount::setArchive( const QString &p_qsArchive ) throw()
 {
     m_qsArchive = p_qsArchive;
+}
+
+int cDBDiscount::discountedValue( int p_inValue )
+{
+    int nRet = p_inValue;
+
+    if( m_inDiscountValue > 0 )
+    {
+        nRet -= m_inDiscountValue;
+    }
+    else
+    {
+        nRet -= (p_inValue / 100 * m_inDiscountPercent);
+    }
+
+    g_obLogger(cSeverity::DEBUG) << "Value [" << p_inValue << "] discount [" << p_inValue-nRet  << "] discounted[" << nRet << "]" << EOM;
+
+    return nRet;
+}
+
+int cDBDiscount::discount(int p_inValue)
+{
+    return p_inValue - discountedValue( p_inValue );
 }
 

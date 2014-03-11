@@ -1,7 +1,7 @@
 #ifndef DLGPROGRESS_H
 #define DLGPROGRESS_H
 
-#include "../ui_dlgprogress.h"
+#include "ui_dlgprogress.h"
 
 class cDlgProgress : public QDialog, protected Ui::dlgProgress
 {
@@ -12,6 +12,7 @@ public:
     virtual ~cDlgProgress();
 
     void    showProgress();
+    void    showError( QString p_qsMessage );
     void    hideProgress();
 
 protected:

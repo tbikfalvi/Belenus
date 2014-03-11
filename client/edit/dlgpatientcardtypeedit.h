@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDTYPEEDIT_H
 
 #include "belenus.h"
-#include "../ui_dlgpatientcardtypeedit.h"
+#include "../../build/Belenus/ui_dlgpatientcardtypeedit.h"
 #include "../db/dbpatientcardtype.h"
 
 class cDlgPatientCardTypeEdit : public QDialog, protected Ui::dlgPatientCardTypeEdit
@@ -17,9 +17,14 @@ protected:
     cDBPatientCardType *m_poPatientCardType;
 
 private slots:
+    void on_listValidInterval_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
+    void on_pbDelete_clicked();
+    void on_pbEdit_clicked();
+    void on_pbAdd_clicked();
     void on_pbCancel_clicked();
     void on_pbSave_clicked();
     void on_rbInterval_toggled(bool checked);
+    void on_ledPrice_textChanged(const QString &arg1);
 };
 
 #endif

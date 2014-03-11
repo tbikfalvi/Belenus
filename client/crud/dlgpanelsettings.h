@@ -22,10 +22,14 @@ public:
     QComboBox       *cmbPanelType;
     QHBoxLayout     *horizontalLayout2;
     QLabel          *lblWorkTime;
-    QLineEdit       *ledWorkTime;
+    QLineEdit       *ledWorkTimeHour;
+    QLineEdit       *ledWorkTimeMin;
+    QLineEdit       *ledWorkTimeSec;
     QPushButton     *pbWTReset;
     QLabel          *lblMaxWorkTime;
     QLineEdit       *ledMaxWorkTime;
+    QLabel          *lblGroup;
+    QComboBox       *cmbPanelGroup;
     QSpacerItem     *horizontalSpacer2;
     QSpacerItem     *horizontalSpacer3;
     QPushButton     *pbCopyToAll;
@@ -35,9 +39,10 @@ public:
     virtual ~cDlgPanelSettings();
 
 private:
+    bool             m_bIsSettingChanged;
 
 protected:
-    unsigned int    m_uiPanelId;
+    unsigned int     m_uiPanelId;
 
     virtual void setupTableView();
     virtual void enableButtons();

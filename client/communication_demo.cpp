@@ -3,7 +3,7 @@
 CS_Communication_Demo::CS_Communication_Demo() : CS_Communication()
 {
     m_stCustomCaption = "DEMO";
-    m_inPanelCount    = 9;
+    m_inPanelCount    = 12;
 }
 
 CS_Communication_Demo::~CS_Communication_Demo()
@@ -12,12 +12,12 @@ CS_Communication_Demo::~CS_Communication_Demo()
 
 int CS_Communication_Demo::getCountAvailablePorts()
 {
-   return 0;
+    return 0;
 }
 
 int CS_Communication_Demo::getComPort( int )
 {
-      return -1;
+    return -1;
 }
 
 void CS_Communication_Demo::init( int )
@@ -92,6 +92,19 @@ bool CS_Communication_Demo::isHardwareStopped( const int )
 {
     return false;
 }
+void CS_Communication_Demo::continueStoppedDevice( const int )
+{
+}
+
+bool CS_Communication_Demo::HW_SetModuleAddress()
+{
+    return false;
+}
 void CS_Communication_Demo::HW_Kezel()
 {
+}
+
+bool CS_Communication_Demo::isCommunicationStopped()
+{
+    return false;
 }

@@ -2,29 +2,58 @@
 #define DLGCASSAACTION_H
 
 #include "../belenus.h"
-#include "../ui_dlgcassaaction.h"
+#include "../db/dbshoppingcart.h"
+#include "ui_dlgcassaaction.h"
 
 class cDlgCassaAction : public QDialog, protected Ui::dlgCassaAction
 {
     Q_OBJECT
 
 public:
-    cDlgCassaAction( QWidget *p_poParent = 0 );
+
+    enum tePayType
+    {
+        PAY_CASH = 1,
+        PAY_CREDITCARD,
+        PAY_OTHER
+    };
+
+    cDlgCassaAction( QWidget *p_poParent = 0, cDBShoppingCart *p_poShoppingCart = NULL );
     virtual ~cDlgCassaAction();
 
-    void setInitialMoney( int p_nMoney );
     void setPayWithCash();
     void setPayWithVoucher();
     void setPayWithCreditcard();
-    void setCassaAction();
-    QString cassaResult( int *p_nPayType, QString *p_qsComment );
+    void actionPayment();
+    QString cassaResult( int *p_nPayType, bool *p_bShoppingCart, unsigned int *p_uiCouponId );
 
 private:
+    cDBShoppingCart     *m_poShoppingCart;
+    int                  m_nHeightSmall;
+    int                  m_nHeightBig;
+    bool                 m_bShoppingCart;
+    bool                 m_bActionPayment;
+
+    void                _updateButtons( bool p_bEnabled = true );
 
 private slots:
-    void on_ledMoney_textEdited(QString text);
+    void checkGivenValues();
+    void on_pbShoppingCart_clicked();
+    void on_pbComment_clicked();
     void on_pbCancel_clicked();
     void on_pbOk_clicked();
+    void updateShoppingCartItem();
+    void on_pbPayCash_clicked();
+    void on_pbPayCard_clicked();
+    void on_pbPayOther_clicked();
+    void on_ledVoucherGiven_textChanged(const QString &arg1);
+    void on_cmbCoupon_currentIndexChanged(int index);
+    void on_ledCashGiven_textChanged(const QString &arg1);
+    void on_ledCardGiven_textChanged(const QString &arg1);
+    void on_cmbPaymentType_currentIndexChanged(int index);
+    void on_pbCalculateCash_clicked();
+    void on_pbCalculateCard_clicked();
+    void on_pbCalculateVoucher_clicked();
 };
 
 #endif

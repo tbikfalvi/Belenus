@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>DBTool.ico</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>imgButton/open.png</file>
+        <file>imgButton/import.png</file>
+        <file>imgButton/export.png</file>
+        <file>imgButton/exit.png</file>
+        <file>imgLogo/KiwiSun.png</file>
+        <file>imgLogo/Sensolite.png</file>
+        <file>imgButton/connectdb.png</file>
+        <file>imgButton/checkdb.png</file>
+        <file>imgButton/ok.png</file>
+        <file>imgButton/fail.png</file>
+    </qresource>
+</RCC>

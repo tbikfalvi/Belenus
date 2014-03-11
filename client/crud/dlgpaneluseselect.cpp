@@ -32,8 +32,12 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
     cmbPanelType->setEnabled( false );
     cmbPanelType->setVisible(false);
     lblWorkTime->setVisible(false);
-    ledWorkTime->setEnabled( false );
-    ledWorkTime->setVisible(false);
+    ledWorkTimeHour->setEnabled( false );
+    ledWorkTimeMin->setEnabled( false );
+    ledWorkTimeSec->setEnabled( false );
+    ledWorkTimeHour->setVisible(false);
+    ledWorkTimeMin->setVisible(false);
+    ledWorkTimeSec->setVisible(false);
     lblMaxWorkTime->setEnabled(false);
     lblMaxWorkTime->setVisible(false);
     ledMaxWorkTime->setEnabled(false);
@@ -66,6 +70,9 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     btbButtonsSide->addButton( pbCancel, QDialogButtonBox::RejectRole );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "ListPanelUseSelect", QPoint(450,300) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     setupTableView();
 
     connect( pbSelect, SIGNAL(clicked(bool)), this, SLOT(on_pbSelect_clicked()) );
@@ -73,7 +80,7 @@ cDlgPanelUseSelect::cDlgPanelUseSelect( QWidget *p_poParent, unsigned int p_uiPa
 
 cDlgPanelUseSelect::~cDlgPanelUseSelect()
 {
-
+    g_poPrefs->setDialogSize( "ListPanelUseSelect", QPoint( width(), height() ) );
 }
 
 int cDlgPanelUseSelect::getPanelUsePrice()
@@ -87,11 +94,11 @@ void cDlgPanelUseSelect::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId, licenceId, name, useTime, (usePrice/100) as usePrice, archive FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
     else
     {
-        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
+        m_qsQuery = QString("SELECT panelUseId AS id, name, useTime, (usePrice/100) as usePrice FROM panelUses WHERE panelId=%1").arg( m_uiPanelId );
     }
 
     if( m_inPanelUseTime > 0 )

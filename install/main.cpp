@@ -16,44 +16,45 @@
 #include <QtGui/QApplication>
 #include <QTranslator>
 #include <QMessageBox>
+#include <QSettings>
 
 //====================================================================================
 
+#include "../framework/qtlogger.h"
 #include "dlgMain.h"
 
-#include "vregistry.h"
-#include "vqtconvert.h"
+//====================================================================================
 
-//=======================================================================================
-
-using namespace voidrealms::win32;
+cRegistry        g_obReg;
+QTranslator     *poTransSetup;
+QTranslator     *poTransQT;
+QApplication    *apMainApp;
+QString          g_qsCurrentPath;
+cQTLogger                g_obLogger;
 
 //====================================================================================
 int main(int argc, char *argv[])
 //====================================================================================
 {
-    QApplication apMainApp(argc, argv);
+    apMainApp = new QApplication(argc, argv);
 
-    QString     qsCurrentPath = QDir::currentPath();
-
-    if( !QFile::exists( QString("%1\\setup.qm").arg(qsCurrentPath) ) )
+    if( !QFile::exists( QString("%1\\lang\\setup_hu.qm").arg(QDir::currentPath()) ) )
     {
-        VRegistry   obReg;
-        QString     qsPathWindows;
+        QString     qsPathWindows = g_obReg.keyValueS( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"), QString("SystemRoot"), "" );
 
-        if( obReg.OpenKey( HKEY_LOCAL_MACHINE, QString("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion") ) )
-        {
-            qsPathWindows = obReg.get_REG_SZ( "SystemRoot" );
-            obReg.CloseKey();
-
-            QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
-        }
+        QDir::setCurrent( QString("%1\\Temp\\BelenusInstall").arg(qsPathWindows) );
     }
 
-    QTranslator *poTrans = new QTranslator();
+    g_qsCurrentPath = QDir::currentPath();
 
-    poTrans->load( QString("setup.qm") );
-    apMainApp.installTranslator( poTrans );
+    poTransSetup = new QTranslator();
+    poTransQT = new QTranslator();
+
+    poTransSetup->load( QString("%1\\lang\\setup_hu.qm").arg(QDir::currentPath()) );
+    poTransQT->load( QString("%1\\lang\\qt_hu.qm").arg(QDir::currentPath()) );
+
+    apMainApp->installTranslator( poTransSetup );
+    apMainApp->installTranslator( poTransQT );
 
     bool bUninstall = false;
 
@@ -66,6 +67,6 @@ int main(int argc, char *argv[])
 
     w.show();
 
-    return apMainApp.exec();
+    return apMainApp->exec();
 }
 //====================================================================================

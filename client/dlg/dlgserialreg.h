@@ -2,7 +2,7 @@
 #define DLGSERIALREG_H
 
 #include "../belenus.h"
-#include "../ui_dlgserialreg.h"
+#include "ui_dlgserialreg.h"
 
 class cDlgSerialReg : public QDialog, protected Ui::dlgSerialReg
 {
@@ -13,8 +13,11 @@ public:
     virtual ~cDlgSerialReg();
 
 private slots:
+    void on_pbActivateKey_clicked();
+    void on_pbValidateCode_clicked();
+    void on_pbValidateApplication_clicked();
+    void on_pbOk_clicked();
     void on_pbCancel_clicked();
-    void on_pbValidate_clicked();
 };
 
 #endif

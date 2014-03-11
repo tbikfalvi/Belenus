@@ -44,7 +44,14 @@ void cMdiPanels::initPanels()
         poFrame->setFrameShadow( QFrame::Sunken );
         poFrame->setLineWidth( 3 );
 
-        connect( poFrame, SIGNAL( panelClicked( unsigned int ) ), this, SLOT( activatePanel( unsigned int ) ) );
+        connect( poFrame, SIGNAL( panelClicked( unsigned int ) ),           this, SLOT( activatePanel( unsigned int ) ) );
+        connect( poFrame, SIGNAL( signalOpenShoppingCart( uint ) ),         this, SLOT( openShoppingCart( uint ) ) );
+        connect( poFrame, SIGNAL( signalPaymentActivated(uint) ),           this, SLOT( slotPaymentActivated(uint) ) );
+        connect( poFrame, SIGNAL( signalOpenScheduleTable(uint) ),          this, SLOT( slotOpenScheduleTable(uint) ) );
+        connect( poFrame, SIGNAL( signalStatusChanged(uint,uint,QString)),  this, SLOT( slotStatusChanged(uint,uint,QString) ) );
+        connect( poFrame, SIGNAL( signalSetCounterText(uint,QString)),      this, SLOT( slotSetCounterText(uint,QString) ) );
+        connect( poFrame, SIGNAL( signalSetWaitTime(uint,uint) ),           this, SLOT( slotSetWaitTime(uint,uint) ) );
+        connect( poFrame, SIGNAL( signalSetInfoText(uint,QString) ),        this, SLOT( slotSetInfoText(uint,QString) ) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -111,6 +118,11 @@ void cMdiPanels::start()
     m_obPanels.at( m_uiActivePanel )->start();
 }
 
+void cMdiPanels::continueStoppedDevice()
+{
+    m_obPanels.at( m_uiActivePanel )->continueStoppedDevice();
+}
+
 void cMdiPanels::reset()
 {
     m_obPanels.at( m_uiActivePanel )->reset();
@@ -124,6 +136,21 @@ void cMdiPanels::clear()
 void cMdiPanels::next()
 {
     m_obPanels.at( m_uiActivePanel )->next();
+}
+
+void cMdiPanels::clean()
+{
+    m_obPanels.at( m_uiActivePanel )->clean();
+}
+
+bool cMdiPanels::isNeedToBeCleaned()
+{
+    return m_obPanels.at( m_uiActivePanel )->isNeedToBeCleaned();
+}
+
+bool cMdiPanels::isDeviceStopped()
+{
+    return m_obPanels.at( m_uiActivePanel )->isDeviceStopped();
 }
 
 void cMdiPanels::reload()
@@ -156,9 +183,9 @@ bool cMdiPanels::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int
     return m_obPanels.at( m_uiActivePanel )->isTimeIntervallValid( p_inLength, p_inPrice, p_inCount );
 }
 
-void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const int p_inCountUnits, const int p_inLength )
+void cMdiPanels::setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength )
 {
-    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_inCountUnits, p_inLength );
+    m_obPanels.at( m_uiActivePanel )->setMainProcessTime( p_uiPatientCardId, p_qslUnitIds, p_inLength );
 }
 
 void cMdiPanels::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )
@@ -176,6 +203,11 @@ int cMdiPanels::activePanel()
     return m_uiActivePanel;
 }
 
+unsigned int cMdiPanels::activePanelId()
+{
+    return m_obPanels.at( m_uiActivePanel )->panelId();
+}
+
 bool cMdiPanels::isPanelWorking()
 {
     bool    bRet = false;
@@ -190,6 +222,19 @@ bool cMdiPanels::isPanelWorking()
     }
 
     return bRet;
+}
+
+void cMdiPanels::refreshDisplay()
+{
+    for( int i=0; i<(int)m_obPanels.size(); i++ )
+    {
+        m_obPanels.at(i)->refreshDisplay();
+    }
+}
+
+void cMdiPanels::setTextInformation(QString p_qsInfoText)
+{
+    m_obPanels.at( m_uiActivePanel )->setTextInformation( p_qsInfoText, true );
 }
 
 bool cMdiPanels::isPanelWorking( const unsigned int p_uiPanel )
@@ -260,9 +305,36 @@ void cMdiPanels::cashPayed( const unsigned int p_uiLedgerId )
     m_obPanels.at( m_uiActivePanel )->cashPayed( p_uiLedgerId );
 }
 
+void cMdiPanels::cashPayed( const unsigned int p_uiPanelId, const unsigned int p_uiLedgerId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            m_obPanels.at(i)->cashPayed( p_uiLedgerId );
+            break;
+        }
+    }
+}
+
 QString cMdiPanels::getActivePanelCaption()
 {
     return m_obPanels.at( m_uiActivePanel )->getPanelName();
+}
+
+QString cMdiPanels::getPanelCaption( const unsigned int p_uiPanelId )
+{
+    QString qsCaption = "";
+
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            qsCaption = m_obPanels.at(i)->getPanelName();
+            break;
+        }
+    }
+    return qsCaption;
 }
 
 bool cMdiPanels::isCanBeStartedByTime()
@@ -280,3 +352,113 @@ void cMdiPanels::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
     m_obPanels.at( m_uiActivePanel )->setPaymentMethod( p_uiPaymentMethodId );
 }
 
+void cMdiPanels::setPaymentMethod( const unsigned int p_uiPanelId, const unsigned int p_uiPaymentMethodId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            m_obPanels.at(i)->setPaymentMethod( p_uiPaymentMethodId );
+            break;
+        }
+    }
+}
+
+//====================================================================================
+bool cMdiPanels::isItemInShoppingCart()
+{
+    return m_obPanels.at( m_uiActivePanel )->isItemInShoppingCart();
+}
+//====================================================================================
+void cMdiPanels::itemAddedToShoppingCart()
+{
+    m_obPanels.at( m_uiActivePanel )->itemAddedToShoppingCart();
+}
+//====================================================================================
+void cMdiPanels::itemRemovedFromShoppingCart()
+{
+    m_obPanels.at( m_uiActivePanel )->itemRemovedFromShoppingCart();
+}
+//====================================================================================
+void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            m_obPanels.at(i)->itemRemovedFromShoppingCart();
+            break;
+        }
+    }
+}
+//====================================================================================
+void cMdiPanels::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
+{
+    m_obPanels.at( m_uiActivePanel )->addPatientToWaitingQueue( p_inLengthCash, p_inPrice, p_uiPatientCardId, p_qsUnitIds, p_inLenghtCard, p_uiLedgerId, p_inPayType );
+}
+//====================================================================================
+bool cMdiPanels::isPatientWaiting()
+{
+    return m_obPanels.at( m_uiActivePanel )->isPatientWaiting();
+}
+//====================================================================================
+void cMdiPanels::setUsageFromWaitingQueue()
+{
+    m_obPanels.at( m_uiActivePanel )->setUsageFromWaitingQueue();
+}
+//====================================================================================
+void cMdiPanels::openShoppingCart( unsigned int p_uiPanelId )
+{
+    emit signalOpenShoppingCart( p_uiPanelId );
+}
+//====================================================================================
+void cMdiPanels::slotPaymentActivated( unsigned int p_uiPanelId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            activatePanel( i );
+            break;
+        }
+    }
+
+    emit signalPaymentActivated();
+}
+//====================================================================================
+void cMdiPanels::slotOpenScheduleTable( unsigned int p_uiPanelId )
+{
+    emit signalOpenScheduleTable( p_uiPanelId );
+}
+//====================================================================================
+void cMdiPanels::activatePanelId( unsigned int p_uiPanelId )
+{
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        if( m_obPanels.at(i)->panelId() == p_uiPanelId )
+        {
+            activatePanel( i );
+            break;
+        }
+    }
+}
+//====================================================================================
+void cMdiPanels::slotStatusChanged( unsigned int p_uiPanelId, const unsigned int p_uiPanelStatusId, const QString p_qsStatus )
+{
+    emit signalStatusChanged( p_uiPanelId, p_uiPanelStatusId, p_qsStatus );
+}
+void cMdiPanels::slotSetCounterText(unsigned int p_uiPanelId, const QString &p_qsCounter)
+{
+    emit signalSetCounterText( p_uiPanelId, p_qsCounter );
+}
+//====================================================================================
+void cMdiPanels::slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime )
+{
+    emit signalSetWaitTime( p_uiPanelId, p_uiWaitTime );
+}
+//====================================================================================
+void cMdiPanels::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo )
+{
+    emit signalSetInfoText( p_uiPanelId, p_qsInfo );
+}
+//====================================================================================

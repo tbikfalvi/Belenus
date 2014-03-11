@@ -52,6 +52,7 @@ class LogWriter {
 public:
     LogWriter(const cSeverity::teSeverity minSeverity) : _minSeverity(minSeverity) {}
     virtual void setMinimumSeverity(const cSeverity::teSeverity minSeverity) { _minSeverity = minSeverity; }
+    cSeverity::teSeverity getMinimumSeverity() { return _minSeverity; }
 
 protected:
     virtual void _write(const cSeverity::teSeverity sev, const QDateTime ts, const QString &msg, const void * threadId)    { if (sev<=_minSeverity) _writeLog(sev,ts,msg,threadId); }
@@ -75,6 +76,7 @@ public:
     void attachWriter( const QString name, LogWriter* );
     void detachWriter( const QString name );
     void setMinimumSeverity( const QString name, const cSeverity::teSeverity sev );
+    cSeverity::teSeverity getMinimumSeverity( const QString name );
 
     inline LogMessage operator () ( const cSeverity::teSeverity p_enLevel ) {
         return LogMessage(p_enLevel, this);

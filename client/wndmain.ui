@@ -6,29 +6,128 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>899</width>
-    <height>579</height>
+    <width>694</width>
+    <height>345</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Belenus</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout"/>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QFrame" name="frmLogin">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="lblName">
+         <property name="text">
+          <string>&amp;User Name:</string>
+         </property>
+         <property name="buddy">
+          <cstring>cmbName</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cmbName">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblPassword">
+         <property name="text">
+          <string>&amp;Password:</string>
+         </property>
+         <property name="buddy">
+          <cstring>ledPassword</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="ledPassword">
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>180</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbLogin">
+         <property name="text">
+          <string>&amp;Log In</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>400</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>899</width>
-     <height>20</height>
+     <width>694</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
     <property name="title">
      <string>&amp;System</string>
     </property>
+    <addaction name="action_About"/>
+    <addaction name="separator"/>
     <addaction name="action_LogOut"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
@@ -43,32 +142,35 @@
      </property>
      <addaction name="action_Users"/>
      <addaction name="separator"/>
-     <addaction name="action_Doctor"/>
-     <addaction name="separator"/>
      <addaction name="action_Company"/>
      <addaction name="action_HealthInsurance"/>
      <addaction name="separator"/>
      <addaction name="action_Discounts"/>
      <addaction name="separator"/>
-     <addaction name="action_Patientorigin"/>
-     <addaction name="action_ReasonToVisit"/>
-     <addaction name="separator"/>
-     <addaction name="action_IllnessGroup"/>
-     <addaction name="separator"/>
      <addaction name="action_RegionZipCity"/>
      <addaction name="separator"/>
+     <addaction name="action_Panelgroups"/>
      <addaction name="action_Paneltypes"/>
      <addaction name="action_PanelStatuses"/>
+     <addaction name="action_DeviceSettings"/>
+     <addaction name="separator"/>
+     <addaction name="action_CardTypes"/>
+     <addaction name="separator"/>
+     <addaction name="action_ProductTypes"/>
+     <addaction name="action_ProductActionType"/>
+     <addaction name="action_Products"/>
+     <addaction name="separator"/>
+     <addaction name="action_PaymentMethods"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
      <addaction name="separator"/>
      <addaction name="action_EmptyDemoDB"/>
+     <addaction name="action_ManageDatabase"/>
     </widget>
     <addaction name="action_Patients"/>
-    <addaction name="action_Attendances"/>
+    <addaction name="action_Guests"/>
     <addaction name="separator"/>
-    <addaction name="action_CardTypes"/>
     <addaction name="action_Cards"/>
     <addaction name="separator"/>
     <addaction name="menuAdministrator"/>
@@ -81,67 +183,64 @@
     </property>
     <addaction name="action_Cassa"/>
     <addaction name="separator"/>
-    <addaction name="action_SynchronizeDatabase"/>
-    <addaction name="action_AcquireGlobalData"/>
     <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
    </widget>
-   <widget class="QMenu" name="menuAction">
+   <widget class="QMenu" name="menu_Action">
     <property name="title">
      <string>&amp;Action</string>
     </property>
-    <widget class="QMenu" name="menuPatient">
-     <property name="title">
-      <string>Patient</string>
-     </property>
-     <addaction name="action_PatientNew"/>
-     <addaction name="separator"/>
-     <addaction name="action_PatientSelect"/>
-     <addaction name="action_PatientEmpty"/>
-    </widget>
     <widget class="QMenu" name="menuDevice">
      <property name="title">
       <string>Device</string>
      </property>
-     <addaction name="action_UseWithCard"/>
-     <addaction name="action_UseByTime"/>
+     <addaction name="action_UseDeviceLater"/>
+     <addaction name="action_UseDevice"/>
      <addaction name="separator"/>
      <addaction name="action_DeviceStart"/>
      <addaction name="action_DeviceSkipStatus"/>
      <addaction name="action_DeviceReset"/>
-    </widget>
-    <widget class="QMenu" name="menuAttendance">
-     <property name="title">
-      <string>Attendance</string>
-     </property>
-     <addaction name="action_AttendanceNew"/>
      <addaction name="separator"/>
-     <addaction name="action_SelectActualAttendance"/>
-     <addaction name="action_DeselectActualAttendance"/>
+     <addaction name="action_DeviceClear"/>
     </widget>
     <widget class="QMenu" name="menuPatientCard">
      <property name="title">
       <string>PatientCard</string>
      </property>
+     <addaction name="action_PatientCardSell"/>
+     <addaction name="action_PatientCardAssign"/>
+     <addaction name="separator"/>
      <addaction name="action_PCSaveToDatabase"/>
     </widget>
-    <addaction name="menuPatient"/>
-    <addaction name="separator"/>
-    <addaction name="menuAttendance"/>
+    <widget class="QMenu" name="menuProduct">
+     <property name="title">
+      <string>Product</string>
+     </property>
+     <addaction name="action_SellProduct"/>
+    </widget>
+    <widget class="QMenu" name="menuCassa">
+     <property name="title">
+      <string>Cassa</string>
+     </property>
+     <addaction name="action_CassaActionStorno"/>
+    </widget>
+    <addaction name="menuDevice"/>
     <addaction name="separator"/>
     <addaction name="menuPatientCard"/>
     <addaction name="separator"/>
-    <addaction name="menuDevice"/>
+    <addaction name="menuProduct"/>
+    <addaction name="separator"/>
+    <addaction name="menuCassa"/>
    </widget>
-   <widget class="QMenu" name="menu_View_2">
+   <widget class="QMenu" name="menu_Reports">
     <property name="title">
      <string>&amp;Reports</string>
     </property>
+    <addaction name="action_ReportViewer"/>
     <addaction name="action_Accounting"/>
     <addaction name="separator"/>
     <addaction name="action_ReportPatients"/>
-    <addaction name="action_ReportAttendances"/>
     <addaction name="separator"/>
     <addaction name="action_ReportPatientcards"/>
     <addaction name="action_PatientcardsObsolete"/>
@@ -151,14 +250,17 @@
    </widget>
    <addaction name="menu_System"/>
    <addaction name="menu_Edit"/>
-   <addaction name="menuAction"/>
-   <addaction name="menu_View_2"/>
+   <addaction name="menu_Action"/>
+   <addaction name="menu_Reports"/>
    <addaction name="menu_View"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBarMain">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
    </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
@@ -173,7 +275,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="action_Exit"/>
    <addaction name="action_LogOut"/>
@@ -181,6 +283,9 @@
   <widget class="QToolBar" name="toolBarPatient">
    <property name="windowTitle">
     <string>toolBar_2</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
    </property>
    <property name="iconSize">
     <size>
@@ -198,34 +303,14 @@
    <addaction name="action_PatientSelect"/>
    <addaction name="action_PatientEmpty"/>
    <addaction name="action_EditActualPatient"/>
-   <addaction name="action_PostponedPatient"/>
-  </widget>
-  <widget class="QToolBar" name="toolBarAttendance">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>40</width>
-     <height>40</height>
-    </size>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="action_AttendanceNew"/>
-   <addaction name="action_SelectActualAttendance"/>
-   <addaction name="action_DeselectActualAttendance"/>
-   <addaction name="action_EditActualAttendance"/>
-   <addaction name="action_PostponedAttendance"/>
   </widget>
   <widget class="QToolBar" name="toolBarDeviceUse">
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <property name="iconSize">
     <size>
      <width>40</width>
@@ -238,8 +323,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_UseWithCard"/>
-   <addaction name="action_UseByTime"/>
+   <addaction name="action_UseDevice"/>
+   <addaction name="action_UseDeviceLater"/>
+   <addaction name="separator"/>
+   <addaction name="action_DeviceClear"/>
    <addaction name="separator"/>
    <addaction name="action_DeviceStart"/>
    <addaction name="action_DeviceSkipStatus"/>
@@ -250,6 +337,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <property name="iconSize">
     <size>
      <width>40</width>
@@ -262,13 +352,28 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_PatientCardSell"/>
    <addaction name="action_PayCash"/>
+   <addaction name="action_PatientCardSell"/>
+   <addaction name="action_PatientCardAssign"/>
+   <addaction name="action_SellProduct"/>
+   <addaction name="separator"/>
+   <addaction name="action_CassaActionStorno"/>
+   <addaction name="separator"/>
+   <addaction name="action_ShoppingCart"/>
    <addaction name="action_Cassa"/>
   </widget>
   <widget class="QToolBar" name="toolBarSchedule">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -276,8 +381,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_DoctorSchedule"/>
-   <addaction name="action_DeviceSchedule"/>
   </widget>
   <action name="action_Exit">
    <property name="text">
@@ -314,16 +417,6 @@
     <string>P&amp;anel types ...</string>
    </property>
   </action>
-  <action name="action_Patientorigin">
-   <property name="text">
-    <string>Patient origin ...</string>
-   </property>
-  </action>
-  <action name="action_ReasonToVisit">
-   <property name="text">
-    <string>Reason to visit ...</string>
-   </property>
-  </action>
   <action name="action_DeviceStart">
    <property name="text">
     <string>Start Device</string>
@@ -342,7 +435,7 @@
   </action>
   <action name="action_DeviceSettings">
    <property name="text">
-    <string>DeviceSettings</string>
+    <string>Device settings</string>
    </property>
    <property name="toolTip">
     <string>Current Device Settings</string>
@@ -352,18 +445,19 @@
    <property name="text">
     <string>Patients ...</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="action_PatientNew">
    <property name="text">
     <string>Create new patient ...</string>
    </property>
+   <property name="iconText">
+    <string>PatNew</string>
+   </property>
    <property name="toolTip">
     <string>Create new patient</string>
-   </property>
-  </action>
-  <action name="action_Attendances">
-   <property name="text">
-    <string>Attendances ...</string>
    </property>
   </action>
   <action name="action_PatientSelect">
@@ -382,14 +476,6 @@
     <string>Deselect actual patient</string>
    </property>
   </action>
-  <action name="action_AttendanceNew">
-   <property name="text">
-    <string>Create new attendance ...</string>
-   </property>
-   <property name="toolTip">
-    <string>Add new attendance for actual patient</string>
-   </property>
-  </action>
   <action name="action_Cards">
    <property name="text">
     <string>Cards ...</string>
@@ -398,20 +484,26 @@
     <string>Patient cards</string>
    </property>
   </action>
-  <action name="action_UseWithCard">
+  <action name="action_UseDeviceLater">
    <property name="text">
-    <string>Use with card ...</string>
+    <string>Use device later ...</string>
+   </property>
+   <property name="iconText">
+    <string>Use later</string>
    </property>
    <property name="toolTip">
-    <string>Use device with patient card</string>
+    <string>Use device later with defined time period or with patient card</string>
    </property>
   </action>
-  <action name="action_UseByTime">
+  <action name="action_UseDevice">
    <property name="text">
-    <string>Use by time ...</string>
+    <string>Use by time or patientcard ...</string>
+   </property>
+   <property name="iconText">
+    <string>Use device</string>
    </property>
    <property name="toolTip">
-    <string>Use device with defined time period</string>
+    <string>Use device with defined time period or with patientcard</string>
    </property>
   </action>
   <action name="action_PanelStatuses">
@@ -469,38 +561,6 @@
     <string>Sell inactive or refill active patientcard</string>
    </property>
   </action>
-  <action name="action_DoctorSchedule">
-   <property name="text">
-    <string>Doctor schedule</string>
-   </property>
-   <property name="toolTip">
-    <string>Schedule of doctor's consulting hours</string>
-   </property>
-  </action>
-  <action name="action_DeviceSchedule">
-   <property name="text">
-    <string>Device schedule</string>
-   </property>
-   <property name="toolTip">
-    <string>Schedule of device useability</string>
-   </property>
-  </action>
-  <action name="action_PostponedPatient">
-   <property name="text">
-    <string>Fullfill postponed patient</string>
-   </property>
-   <property name="toolTip">
-    <string>Fullfill data for postponed patients</string>
-   </property>
-  </action>
-  <action name="action_PostponedAttendance">
-   <property name="text">
-    <string>Fullfill postponed attendance</string>
-   </property>
-   <property name="toolTip">
-    <string>Fullfill data for postponed attendances</string>
-   </property>
-  </action>
   <action name="action_ValidateSerialKey">
    <property name="text">
     <string>Validate Serial key ...</string>
@@ -514,30 +574,6 @@
     <string>Edit actual patient</string>
    </property>
   </action>
-  <action name="action_SelectActualAttendance">
-   <property name="text">
-    <string>Select actual attendance...</string>
-   </property>
-   <property name="toolTip">
-    <string>Select actual attendance for actual patient.</string>
-   </property>
-  </action>
-  <action name="action_DeselectActualAttendance">
-   <property name="text">
-    <string>Deselect actual attendance...</string>
-   </property>
-   <property name="toolTip">
-    <string>Deselect actual attendance of actual patient.</string>
-   </property>
-  </action>
-  <action name="action_EditActualAttendance">
-   <property name="text">
-    <string>Edit actual attendance...</string>
-   </property>
-   <property name="toolTip">
-    <string>Edit actual attendance of actual patient.</string>
-   </property>
-  </action>
   <action name="action_PayCash">
    <property name="text">
     <string>PayCash</string>
@@ -546,19 +582,9 @@
     <string>Pay cash usage of panel</string>
    </property>
   </action>
-  <action name="action_IllnessGroup">
-   <property name="text">
-    <string>Illness group ...</string>
-   </property>
-  </action>
   <action name="action_Company">
    <property name="text">
     <string>Companies ...</string>
-   </property>
-  </action>
-  <action name="action_Doctor">
-   <property name="text">
-    <string>Doctors ...</string>
    </property>
   </action>
   <action name="action_HealthInsurance">
@@ -585,14 +611,6 @@
    </property>
    <property name="toolTip">
     <string>History of cassa actions</string>
-   </property>
-  </action>
-  <action name="action_ReportAttendances">
-   <property name="text">
-    <string>Attendances</string>
-   </property>
-   <property name="toolTip">
-    <string>Report of attendances</string>
    </property>
   </action>
   <action name="action_ReportPatientcardUses">
@@ -635,30 +653,6 @@
     <string>List of patientcards will be obsolete in the near future.</string>
    </property>
   </action>
-  <action name="action_SynchronizeDatabase">
-   <property name="text">
-    <string>Synchronize database ...</string>
-   </property>
-   <property name="toolTip">
-    <string>Synchronize database with server database</string>
-   </property>
-  </action>
-  <action name="action_AcquireGlobalData">
-   <property name="text">
-    <string>Get global data ...</string>
-   </property>
-   <property name="toolTip">
-    <string>Get global data from server</string>
-   </property>
-  </action>
-  <action name="action_EstablishConnection">
-   <property name="text">
-    <string>Establish connection</string>
-   </property>
-   <property name="toolTip">
-    <string>Establish connection with server</string>
-   </property>
-  </action>
   <action name="action_EmptyDemoDB">
    <property name="text">
     <string>Empty demo database ...</string>
@@ -667,8 +661,109 @@
     <string>Delete all data attached to demo licence key.</string>
    </property>
   </action>
+  <action name="action_Guests">
+   <property name="text">
+    <string>Guests ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Guests</string>
+   </property>
+  </action>
+  <action name="action_ProductTypes">
+   <property name="text">
+    <string>Product Types ...</string>
+   </property>
+  </action>
+  <action name="action_Products">
+   <property name="text">
+    <string>Products ...</string>
+   </property>
+  </action>
+  <action name="action_ProductActionType">
+   <property name="text">
+    <string>Product Action Types ...</string>
+   </property>
+  </action>
+  <action name="action_SellProduct">
+   <property name="text">
+    <string>Sell Product</string>
+   </property>
+  </action>
+  <action name="action_ShoppingCart">
+   <property name="text">
+    <string>Shopping cart</string>
+   </property>
+  </action>
+  <action name="action_CassaActionStorno">
+   <property name="text">
+    <string>Cassa action storno</string>
+   </property>
+  </action>
+  <action name="action_PaymentMethods">
+   <property name="text">
+    <string>Payment methods</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage payment methods</string>
+   </property>
+  </action>
+  <action name="action_ReportViewer">
+   <property name="text">
+    <string>Report viewer</string>
+   </property>
+   <property name="toolTip">
+    <string>Start independent Report Viewer application</string>
+   </property>
+  </action>
+  <action name="action_DeviceClear">
+   <property name="text">
+    <string>Clear device</string>
+   </property>
+   <property name="toolTip">
+    <string>The device has been cleaned and ready to use</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset resource="belenus.qrc">
+     <normaloff>:/icons/belenus.ico</normaloff>:/icons/belenus.ico</iconset>
+   </property>
+   <property name="text">
+    <string>About ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Application information</string>
+   </property>
+  </action>
+  <action name="action_PatientCardAssign">
+   <property name="text">
+    <string>Assign patientcards</string>
+   </property>
+  </action>
+  <action name="action_Panelgroups">
+   <property name="text">
+    <string>Device groups</string>
+   </property>
+   <property name="toolTip">
+    <string>Groups for devices</string>
+   </property>
+  </action>
+  <action name="action_ManageDatabase">
+   <property name="text">
+    <string>Manage database</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage database</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <tabstops>
+  <tabstop>cmbName</tabstop>
+  <tabstop>ledPassword</tabstop>
+ </tabstops>
+ <resources>
+  <include location="belenus.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_Exit</sender>

@@ -24,8 +24,9 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
     {
         ledUseName->setText( m_poPanelUses->name() );
         ledUseTime->setText( QString::number(m_poPanelUses->useTime()) );
-        ledUsePrice->setText( QString::number(m_poPanelUses->usePrice()) );
+        ledUsePrice->setText( QString::number(m_poPanelUses->usePrice()/100) );
     }
+    on_ledUsePrice_textEdited("");
 }
 
 cDlgPanelUseEdit::~cDlgPanelUseEdit()
@@ -60,7 +61,9 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         QMessageBox::critical( this, tr( "Error" ), tr( "Use time must be greater than zero." ), QMessageBox::Ok );
     }
 
-    ledUsePrice->text().toInt( &bIsNumber );
+    cCurrency   cPrice( ledUsePrice->text() );
+
+    cPrice.currencyValue().toInt( &bIsNumber );
     if( ledUsePrice->text() == "" )
     {
         boCanBeSaved = false;
@@ -71,10 +74,10 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         boCanBeSaved = false;
         QMessageBox::critical( this, tr( "Error" ), tr( "Use price value is invalid." ), QMessageBox::Ok );
     }
-    else if( ledUsePrice->text().toInt() < 1 )
+    else if( cPrice.currencyValue().toInt() <= 0 )
     {
         boCanBeSaved = false;
-        QMessageBox::critical( this, tr( "Error" ), tr( "Use price must be greater than zero." ), QMessageBox::Ok );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Price of usage must be greater than zero." ), QMessageBox::Ok );
     }
 
     if( boCanBeSaved )
@@ -83,7 +86,7 @@ void cDlgPanelUseEdit::on_pbSave_clicked()
         m_poPanelUses->setPanelId( m_inPanelId );
         m_poPanelUses->setName( ledUseName->text() );
         m_poPanelUses->setUseTime( ledUseTime->text().toInt() );
-        m_poPanelUses->setUsePrice( ledUsePrice->text().toInt() );
+        m_poPanelUses->setUsePrice( cPrice.currencyValue().toInt() );
         m_poPanelUses->save();
         QDialog::accept();
     }
@@ -94,3 +97,10 @@ void cDlgPanelUseEdit::on_pbCancel_clicked()
     QDialog::reject();
 }
 
+
+void cDlgPanelUseEdit::on_ledUsePrice_textEdited(const QString &arg1)
+{
+    cCurrency currPrice( ledUsePrice->text(), cCurrency::CURR_GROSS, g_poPrefs->getDeviceUseVAT() );
+
+    lblPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(g_poPrefs->getDeviceUseVAT()) );
+}

@@ -8,6 +8,12 @@
 class cDBLedgerDevice
 {
 public:
+    enum tePayType
+    {
+        PAY_CASH = 1,
+        PAY_CREDITCARD
+    };
+
     cDBLedgerDevice();
     ~cDBLedgerDevice();
 

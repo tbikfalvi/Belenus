@@ -22,6 +22,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+
     tbwPreferences->setCurrentIndex( 0 );
 
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
@@ -31,11 +34,12 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     poBtnSave->setIcon( QIcon("./resources/40x40_ok.png") );
     poBtnCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel;
-    g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel );
-    sliConsoleLogLevel->setValue( uiConLevel );
-    sliDBLogLevel->setValue( uiDBLevel );
+    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
+    g_poPrefs->getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
+    sliConsoleLogLevel->setValue( 1/*uiConLevel*/ );
+    sliDBLogLevel->setValue( 1/*uiDBLevel*/ );
     sliGUILogLevel->setValue( uiGUILevel );
+    sliFileLogLevel->setValue( uiFileLevel );
 
     QStringList obFilters( g_poPrefs->getLangFilePrefix() + "*.qm" );
     QDir        obLangDir( "lang" );
@@ -47,19 +51,36 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         int inPos = obLangCodeRegExp.indexIn( obLangFiles[i] );
         if( inPos != -1 ) obLangCodes << obLangCodeRegExp.cap( 1 );
     }
-    obLangCodes << "uk";
+    //obLangCodes << "uk";
     obLangCodes.sort();
     cmbAppLang->addItems( obLangCodes );
     m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
-    if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
+    //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\" " ) );
+    poQuery->first();
+    ledAboutLink->setText( poQuery->value(0).toString() );
+    ledAboutLink->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
 
     ledBarcodePrefix->setValidator( new QIntValidator( ledBarcodePrefix ) );
     spbBarcodeLen->setValue( g_poPrefs->getBarcodeLength() );
     ledBarcodePrefix->setText( g_poPrefs->getBarcodePrefix() );
+    chkCardProductBarcodeLength->setChecked( g_poPrefs->isBarcodeLengthDifferent() );
 
     spbPanels->setMaximum( g_poPrefs->getPanelCount() );
     spbPanels->setValue( g_poPrefs->getPanelsPerRow() );
+    pbSecondaryWindow->setChecked( g_poPrefs->isSecondaryWindowVisible() );
+    if( g_poPrefs->isSecondaryWindowVisible() )
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_on.png") );
+        lblSecondaryWindow->setText( tr("Visible") );
+    }
+    else
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
+        lblSecondaryWindow->setText( tr("Hidden") );
+    }
 
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
@@ -72,6 +93,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
+    btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
+
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
@@ -81,10 +105,34 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         chkCassaAutoWithdrawal->setChecked( false );
         chkCassaAutoWithdrawal->setEnabled( false );
     }
+    ledCurrencyFullName->setText( g_poPrefs->getCurrencyLong() );
+    ledCurrencyShortName->setText( g_poPrefs->getCurrencyShort() );
+    ledSeparatorDecimal->setText( g_poPrefs->getCurrencyDecimalSeparator() );
+    ledSeparatorThousand->setText( g_poPrefs->getCurrencySeparator() );
 
     ledDefaultCountry->setText( g_poPrefs->getDefaultCountry() );
 
+    connect( ledPCLostVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCLostPrice_textChanged(QString)) );
+    connect( ledPCPartnerVatpercent, SIGNAL(textChanged(QString)), this, SLOT(on_ledPCPartnerPrice_textChanged(QString)) );
+
+    cCurrency   cPrice( g_poPrefs->getPatientCardLostPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardLostPriceVat() );
+
+    ledPCLostPrice->setText( cPrice.currencyString() );
+    ledPCLostVatpercent->setText( QString::number(g_poPrefs->getPatientCardLostPriceVat()) );
+
+    cCurrency   cPricePartner( g_poPrefs->getPatientCardPartnerPrice(), cCurrency::CURR_GROSS, g_poPrefs->getPatientCardPartnerPriceVat() );
+
+    ledPCPartnerPrice->setText( cPricePartner.currencyString() );
+    ledPCPartnerVatpercent->setText( QString::number(g_poPrefs->getPatientCardPartnerPriceVat()) );
+
+    pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
+
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
+}
+
+cDlgPreferences::~cDlgPreferences()
+{
+    g_poPrefs->setDialogSize( "EditPreferences", QPoint( width(), height() ) );
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -100,6 +148,11 @@ void cDlgPreferences::on_sliDBLogLevel_valueChanged( int p_inValue )
 void cDlgPreferences::on_sliGUILogLevel_valueChanged( int p_inValue )
 {
     lblGUILogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
+}
+
+void cDlgPreferences::on_sliFileLogLevel_valueChanged( int p_inValue )
+{
+    lblFileLogLevelValue->setText( cSeverity::toStr( (cSeverity::teSeverity)p_inValue ) );
 }
 
 void cDlgPreferences::on_btnMainBackground_clicked( bool )
@@ -132,17 +185,30 @@ void cDlgPreferences::on_spbBarcodeLen_valueChanged( int p_inValue )
 
 void cDlgPreferences::accept()
 {
+    if( ledSeparatorDecimal->text().compare( ledSeparatorThousand->text() ) == 0 )
+    {
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("Decimal symbol and Digit grouping symbol can not be the same.") );
+        return;
+    }
+
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
-                             sliGUILogLevel->value() );
+                             sliGUILogLevel->value(),
+                             sliFileLogLevel->value() );
+
     g_poPrefs->setLang( cmbAppLang->currentText() );
     if( m_inLangIdx != cmbAppLang->currentIndex() )
-        QMessageBox::information( this, tr( "Information" ),
-                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    {
+        g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+//        QMessageBox::information( this, tr( "Information" ),
+//                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    }
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
+    g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
 
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );
@@ -155,10 +221,31 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
+    g_poPrefs->setCurrencyLong( ledCurrencyFullName->text() );
+    g_poPrefs->setCurrencyShort( ledCurrencyShortName->text() );
+    g_poPrefs->setCurrencyDecimalSeparator( ledSeparatorDecimal->text() );
+    g_poPrefs->setCurrencySeparator( ledSeparatorThousand->text() );
 
     g_poPrefs->setDefaultCountry( ledDefaultCountry->text() );
 
+    g_poPrefs->setSecondaryWindowVisibility( pbSecondaryWindow->isChecked() );
+
+    cCurrency   cPrice( ledPCLostPrice->text(), cCurrency::CURR_GROSS, ledPCLostVatpercent->text().toInt() );
+
+    g_poPrefs->setPatientCardLostPrice( cPrice.currencyValue().toInt() );
+    g_poPrefs->setPatientCardLostPriceVat( ledPCLostVatpercent->text().toInt() );
+
+    cCurrency   cPricePartner( ledPCPartnerPrice->text(), cCurrency::CURR_GROSS, ledPCPartnerVatpercent->text().toInt() );
+
+    g_poPrefs->setPatientCardPartnerPrice( cPricePartner.currencyValue().toInt() );
+    g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
+
     g_poPrefs->save();
+
+    if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"ABOUT_INFO_LINK\" " ).arg( ledAboutLink->text() ) );
+    }
 
     QDialog::accept();
 }
@@ -168,5 +255,48 @@ void cDlgPreferences::on_pbPanelSettings_clicked()
 {
     cDlgPanelAppereance     obDlgPanelAppereance( this );
 
-    obDlgPanelAppereance.exec();
+    if( obDlgPanelAppereance.exec() == QDialog::Accepted )
+    {
+        QMessageBox::information( this, tr( "Information" ),
+                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
+    }
 }
+
+void cDlgPreferences::on_pbSecondaryWindow_toggled(bool checked)
+{
+    if( checked )
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_on.png") );
+        lblSecondaryWindow->setText( tr("Visible") );
+    }
+    else
+    {
+        pbSecondaryWindow->setIcon( QIcon("./resources/40x40_secondary_off.png") );
+        lblSecondaryWindow->setText( tr("Hidden") );
+    }
+}
+
+void cDlgPreferences::on_btnSecondaryBackground_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryBackground() ), this );
+    if( obNewColor.isValid() ) g_poPrefs->setSecondaryBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
+    btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_ledPCLostPrice_textChanged(const QString &arg1)
+{
+    cCurrency currPrice( ledPCLostPrice->text(), cCurrency::CURR_GROSS, ledPCLostVatpercent->text().toInt() );
+
+    lblPCLostPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCLostVatpercent->text()) );
+}
+
+void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &arg1)
+{
+    cCurrency currPrice( ledPCPartnerPrice->text(), cCurrency::CURR_GROSS, ledPCPartnerVatpercent->text().toInt() );
+
+    lblPCPartnerPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCPartnerVatpercent->text()) );
+}
+

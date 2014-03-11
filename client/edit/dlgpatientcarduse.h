@@ -2,7 +2,7 @@
 #define DLGPATIENTCARDUSE_H
 
 #include "belenus.h"
-#include "../ui_dlgpatientcarduse.h"
+#include "../../build/belenus/ui_dlgpatientcarduse.h"
 #include "../db/dbpatientcard.h"
 #include "../db/dbpatientcardtype.h"
 

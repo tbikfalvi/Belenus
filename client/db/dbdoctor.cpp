@@ -204,11 +204,12 @@ void cDBDoctor::save() throw( cSevException )
         }
     }
     if( poQuery ) delete poQuery;
-
+/*
     if( m_uiId > 0 && m_uiLicenceId != 1 )
         g_obDBMirror.updateSynchronizationLevel( DB_DOCTOR );
     if( m_uiId > 0 && m_uiLicenceId == 0 )
         g_obDBMirror.updateGlobalSyncLevel( DB_DOCTOR );
+*/
 }
 
 void cDBDoctor::remove() throw( cSevException )

@@ -90,7 +90,7 @@ void dlgLicenceEdit::accept ()
             QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
             if( poQuery ) delete poQuery;
 
-            g_obDBMirror.updateLicenceData();
+//            g_obDBMirror.updateLicenceData();
         }
         catch( cSevException &e )
         {
