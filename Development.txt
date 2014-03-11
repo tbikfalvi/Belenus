@@ -1,5 +1,1 @@
 Development branch
-
-Branch-ek magyarázata:
-
-KiwiSun_Alap	- KiwiSun szolárium stúdiókban mûködõ programváltozat alapja, azaz a Sensolite program, mínusz páciensek, kezelések, internetkapcsolat, szerverkapcsolat.
