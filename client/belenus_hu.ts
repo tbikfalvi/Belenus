@@ -869,8 +869,8 @@ and fill mandatory data later?</source>
         <translation>Pénztár művelet</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="54"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="63"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="59"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="68"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -883,18 +883,18 @@ and fill mandatory data later?</source>
         <translation type="obsolete">Rendben</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="353"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="362"/>
         <source>Coupon used: %1</source>
         <translation>Kupon használat: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="122"/>
-        <location filename="dlg/dlgcassaaction.cpp" line="135"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="127"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="140"/>
         <source>Comment &gt;&gt;</source>
         <translation>Megjegyzés &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgcassaaction.cpp" line="126"/>
+        <location filename="dlg/dlgcassaaction.cpp" line="131"/>
         <source>Comment &lt;&lt;</source>
         <translation>Megjegyzés &lt;&lt;</translation>
     </message>
@@ -1375,19 +1375,19 @@ Please modify the existing discount.</source>
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="234"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="235"/>
         <source>Discount for selected product already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott termékhez már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="295"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="305"/>
         <source>Guest discount - %1</source>
         <translation>Vendég kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="300"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="310"/>
         <source>Company discount - %1</source>
         <translation>Céges kedvezmény - %1</translation>
     </message>
@@ -1396,107 +1396,107 @@ Kérem módosítsa a korábban elmentett kedvezményt.</translation>
         <translation type="obsolete">Termék típus kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="224"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="225"/>
         <source>Discount for selected payment method already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott fizetési módhoz már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="244"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="245"/>
         <source>Discount with the name defined already exists!
 Please modify the existing discount.</source>
         <translation>A megadott névvel már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="305"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="315"/>
         <source>Payment method discount - %1</source>
         <translation>Fizetési mód kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="310"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="320"/>
         <source>Product discount - %1</source>
         <translation>Termék kedvezmény - %1</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="337"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="348"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="370"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="381"/>
         <source>Regular customer discount</source>
         <translation>Törzsvendég kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="372"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="383"/>
         <source>Employee discount</source>
         <translation>Alkalmazotti kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="374"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="385"/>
         <source>Service discount</source>
         <translation>Szerviz kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="380"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="391"/>
         <source>Guest discount</source>
         <translation>Vendég kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="392"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="403"/>
         <source>Company discount</source>
         <translation>Céges kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="404"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="415"/>
         <source>Payment method discount</source>
         <oldsource>Product type discount</oldsource>
         <translation>Fizetéstípus kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="416"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="427"/>
         <source>Product discount</source>
         <translation>Termék kedvezmény</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="174"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="175"/>
         <source>Discount for regular customer already exists!
 Please modify the existing discount.</source>
         <translation>A törzsvásárlói kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="164"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="165"/>
         <source>Name of the discount can not be empty!
 Please add a name to the discount.</source>
         <translation>A kedvezmény megnevezése nem lehet üres!
 Kérem adjon meg nevezze el a kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="184"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="185"/>
         <source>Discount for employee already exists!
 Please modify the existing discount.</source>
         <translation>Az alkalmazotti kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="194"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="195"/>
         <source>Discount for service person already exists!
 Please modify the existing discount.</source>
         <translation>A szerviz kedvezmény már létezik.
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="204"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="205"/>
         <source>Discount for selected guest already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott vendéghez már létezik kedvezmény!
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="214"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="215"/>
         <source>Discount for selected company already exists!
 Please modify the existing discount.</source>
         <translation>A kiválasztott céghez már létezik kedvezmény.
@@ -1515,12 +1515,12 @@ Please modify the existing discount.</source>
 Kérem módosítsa a korábban elmentett kedvezményt.</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="257"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="258"/>
         <source>One of the item from the list must be selected!</source>
         <translation>A lista valamelyik elemét ki kell választani!</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="267"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="277"/>
         <source>Value of discount is invalid.
 Please use only numbers.</source>
         <translation>A kedvezmény értéke nem megfelelő.
@@ -1539,11 +1539,11 @@ Kérem csak számokat használjon.</translation>
         <translation type="obsolete">Szerviz szakember</translation>
     </message>
     <message>
-        <location filename="edit/dlgdiscountedit.cpp" line="376"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="382"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="394"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="406"/>
-        <location filename="edit/dlgdiscountedit.cpp" line="418"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="387"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="393"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="405"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="417"/>
+        <location filename="edit/dlgdiscountedit.cpp" line="429"/>
         <source>&lt;Not selected&gt;</source>
         <translation>&lt;Nincs kiválasztva&gt;</translation>
     </message>
@@ -1827,9 +1827,8 @@ Regisztrálni akarja a vonalkódot egy új bérlethez?</translation>
         <translation>Nincs kész</translation>
     </message>
     <message>
-        <location filename="edit/dlgguestedit.cpp" line="580"/>
         <source>%1 $</source>
-        <translation>%1 Ft.</translation>
+        <translation type="obsolete">%1 Ft.</translation>
     </message>
     <message>
         <location filename="edit/dlgguestedit.cpp" line="335"/>
@@ -3084,53 +3083,53 @@ Do you want to save it and sell it now?</source>
         <translation>Gép használat</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
-        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="48"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="65"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="44"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="48"/>
         <source>Name can not be empty.</source>
         <translation>A név nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="51"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="55"/>
         <source>Use time can not be empty.</source>
         <translation>Az időintervallum nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="56"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="60"/>
         <source>Use time value is invalid.</source>
         <translation>A megadott időintervallum érték nem megfelelő.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="61"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="65"/>
         <source>Use time must be greater than zero.</source>
         <translation>Az időintervallum értéke nem lehet nulla.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="70"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="74"/>
         <source>Use price can not be empty.</source>
         <translation>A fizetendő összeg nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="75"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="79"/>
         <source>Use price value is invalid.</source>
         <translation>A megadott fizetendő összeg értéke nem megfelelő.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="80"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="84"/>
         <source>Price of usage must be greater than zero.</source>
         <translation>A géphasználat ára nem lehet nulla.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpaneluseedit.cpp" line="105"/>
+        <location filename="edit/dlgpaneluseedit.cpp" line="109"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % ÁFA)</translation>
     </message>
@@ -5128,43 +5127,43 @@ csökkentheti az adott termék darabszámát egyszerre.</translation>
         <translation type="obsolete">Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="117"/>
+        <location filename="edit/dlgproductedit.cpp" line="119"/>
         <source>Name of product must be set.</source>
         <translation>A Termék neve nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="128"/>
+        <location filename="edit/dlgproductedit.cpp" line="130"/>
         <source>Product with this name already exists.
 Please set another one.</source>
         <translation>Ilyen nevü Termék már létezik.
 Kérem válasszon egy másik nevet.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="136"/>
+        <location filename="edit/dlgproductedit.cpp" line="138"/>
         <source>Product with this barcode already exists.
 Please set another one.</source>
         <translation>Ilyen vonalkóddal már létezik termék.
 Kérem válasszon egy másikat.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="151"/>
+        <location filename="edit/dlgproductedit.cpp" line="153"/>
         <source>Sell price of product must be set.</source>
         <translation>A Termék eladási ára nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="205"/>
+        <location filename="edit/dlgproductedit.cpp" line="207"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="257"/>
-        <location filename="edit/dlgproductedit.cpp" line="289"/>
+        <location filename="edit/dlgproductedit.cpp" line="259"/>
+        <location filename="edit/dlgproductedit.cpp" line="291"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="258"/>
-        <location filename="edit/dlgproductedit.cpp" line="290"/>
+        <location filename="edit/dlgproductedit.cpp" line="260"/>
+        <location filename="edit/dlgproductedit.cpp" line="292"/>
         <source>This product has not been saved yet.
 Changing the product storage data is not allowed
 for newly created products.Do you want to save the product data now?</source>
@@ -5173,7 +5172,7 @@ A termék darabszámának megváltoztatása nem engedélyezett az újonnan létr
 El akarja menteni most a termék adatait?</translation>
     </message>
     <message>
-        <location filename="edit/dlgproductedit.cpp" line="320"/>
+        <location filename="edit/dlgproductedit.cpp" line="322"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % ÁFA)</translation>
     </message>
@@ -5190,12 +5189,12 @@ El akarja menteni most a termék adatait?</translation>
         <translation>Termék eladás</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="521"/>
+        <location filename="crud/dlgproductsell.cpp" line="523"/>
         <source>&lt;Select product to sell&gt;</source>
         <translation>&lt;Válassza ki az eladni kívánt terméket&gt;</translation>
     </message>
     <message>
-        <location filename="crud/dlgproductsell.cpp" line="536"/>
+        <location filename="crud/dlgproductsell.cpp" line="538"/>
         <source>&lt;No product found for selected filter conditions&gt;</source>
         <translation>&lt;Nincs a szűrőfeltételeknek megfelelő termék&gt;</translation>
     </message>
@@ -11748,27 +11747,27 @@ egyik esemény sem változtat a napi, aktuális pénztár egyenlegén.
 az események kihatással vannak a pénztár egyenlegére.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="129"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="131"/>
         <source>Product name: %1</source>
         <translation>Termék neve: %1</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="206"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="208"/>
         <source>not modify</source>
         <translation>nem változtatja</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="209"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="211"/>
         <source>increase</source>
         <translation>növeli</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="213"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="215"/>
         <source>decrease</source>
         <translation>csökkenti</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="215"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="217"/>
         <source>The action &lt;%1&gt; will %2
 the count of the selected product.
 Based on the selected cassa type, the given price will be
@@ -11778,12 +11777,12 @@ A kiválasztott &apos;Kapcsolódó pénztár&apos; függvényében a megadott ö
 módosítja az aktuális, illetve a stúdió általános pénztárának egyenlegét.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="225"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="227"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="226"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="228"/>
         <source>There is no product action type in the database.
 Without any action type modification of product count is not possible.
 Please create at least one product action type.</source>
@@ -11792,24 +11791,24 @@ Termék-esemény nélkül nem lehet módosítani a raktárkészletet.
 Kérem hozzon létre legalább egy termék-eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="230"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="232"/>
         <source>&lt;Product action type not found&gt;</source>
         <translation>&lt;Nincs termék-esemény&gt;</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="255"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="257"/>
         <source>(%1+%2%VAT)</source>
         <oldsource>(%1 + %2 % VAT)</oldsource>
         <translation>(%1+%2%ÁFA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="89"/>
-        <location filename="dlg/dlgproductstorage.cpp" line="97"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="91"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="99"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="90"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="92"/>
         <source>You have selected a product action that modifies the
 count of the selected product but the value has not defined.
 
@@ -11820,7 +11819,7 @@ a kiválasztott termék darabszámát, de darabszámot nem adott meg.
 Kérem adjon meg egy valós darabszámot, vagy válasszon másik eseményt.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="98"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="100"/>
         <source>You have defined price for the selected action
 but the count of product not defined.
 
@@ -11831,7 +11830,7 @@ de a termék darabszámát nem adta meg.
 Kérem adjon meg egy valós darabszámot, vagy törölje az árat.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgproductstorage.cpp" line="110"/>
+        <location filename="dlg/dlgproductstorage.cpp" line="112"/>
         <source>Negative</source>
         <translation>Negatív</translation>
     </message>
