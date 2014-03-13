@@ -577,7 +577,7 @@ void cDlgGuestEdit::slotUpdateDiscountSample()
     m_poGuest->setEmployee( chkEmployee->isChecked() );
     m_poGuest->setService( chkService->isChecked() );
 
-    lblDiscountedPrice->setText( tr("%1 $").arg( _convertCurrency( QString::number(m_poGuest->getDiscountedPrice( 10000 )) ) ) );
+    lblDiscountedPrice->setText( QString("%1 %2").arg( _convertCurrency( QString::number(m_poGuest->getDiscountedPrice( 10000 )) ) ).arg( g_poPrefs->getCurrencyShort() ) );
 }
 
 

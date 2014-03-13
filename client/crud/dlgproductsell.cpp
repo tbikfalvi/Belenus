@@ -36,6 +36,8 @@ cDlgProductSell::cDlgProductSell( QWidget *p_poParent, QString p_qsBarcode ) : Q
     connect( ledFilterName, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
     connect( ledBarcode, SIGNAL(returnPressed()), this, SLOT(on_pbRefresh_clicked()) );
 
+    lblCurrencyToPay->setText( g_poPrefs->getCurrencyShort() );
+
 /*
     m_poBtnClose->setEnabled(false);
     m_poBtnDelete->setEnabled(false);

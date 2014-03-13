@@ -13,6 +13,8 @@ cDlgCassaInOut::cDlgCassaInOut( QWidget *p_poParent, QString p_qsTitle ) : QDial
 
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
+
+    lblCurrencyAmount->setText( g_poPrefs->getCurrencyShort() );
 }
 
 cDlgCassaInOut::~cDlgCassaInOut()

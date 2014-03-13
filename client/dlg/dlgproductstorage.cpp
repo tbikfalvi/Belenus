@@ -38,6 +38,8 @@ dlgProductStorage::dlgProductStorage( QWidget *parent, cDBProduct *p_poProduct, 
                              "<Daily, user related cassa> is the currently used cassa\n"
                              "any action will increase or decrease the balance of the cassa.") );
 
+    lblNetPriceCurrency->setText( g_poPrefs->getCurrencyShort() );
+
     _fillProductActionList();
 
     m_poProduct = p_poProduct;

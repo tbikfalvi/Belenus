@@ -26,6 +26,11 @@ cDlgCassaAction::cDlgCassaAction( QWidget *p_poParent, cDBShoppingCart *p_poShop
     pbShoppingCart->setIcon( QIcon("./resources/40x40_shoppingcart.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    lblCashCurrency->setText( g_poPrefs->getCurrencyShort() );
+    lblCardCurrency->setText( g_poPrefs->getCurrencyShort() );
+    lblVoucherCurrency->setText( g_poPrefs->getCurrencyShort() );
+    lblCurrencyToPay->setText( g_poPrefs->getCurrencyShort() );
+
     gbComment->setVisible( false );
     teComment->setEnabled( false );
 
