@@ -6,8 +6,7 @@
 #include "../db/dbpanels.h"
 #include "../dlg/dlgpaneltimecopy.h"
 
-cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId )
-    : cDlgCrud( p_poParent )
+cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPanelId ) : cDlgCrud( p_poParent )
 {
     setWindowTitle( tr( "Panel settings" ) );
     setWindowIcon( QIcon("./resources/40x40_device.png") );
@@ -343,7 +342,7 @@ void cDlgPanelSettings::saveClicked( bool )
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
         {
             obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
         }
