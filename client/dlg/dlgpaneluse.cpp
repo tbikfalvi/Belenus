@@ -181,6 +181,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_uiPanelUsePrice           = 0;
     m_bIsEnterAccepted          = true;
     m_qslPanelUseTimes          = QStringList();
+    m_uiIndexOfTime             = 0;
 
     m_obDBPatientCard.createNew();
 
@@ -346,13 +347,16 @@ void cDlgPanelUse::setPanelUseTime()
 {
     if( m_uiPanelUseTimeCash > 0 )
     {
-        for( int i=0; i<m_qslPanelUseTimes.count(); i++ )
+        if( m_uiIndexOfTime == 0 )
         {
-            QStringList qslTemp = m_qslPanelUseTimes.at(i).split('|');
-            if( qslTemp.at(0).compare( QString::number(m_uiPanelUseTimeCash) ) == 0 )
+            for( int i=0; i<m_qslPanelUseTimes.count(); i++ )
             {
-                cmbTimeIntervall->setCurrentIndex( i );
-                break;
+                QStringList qslTemp = m_qslPanelUseTimes.at(i).split('|');
+                if( qslTemp.at(0).compare( QString::number(m_uiPanelUseTimeCash) ) == 0 )
+                {
+                    cmbTimeIntervall->setCurrentIndex( i );
+                    break;
+                }
             }
         }
         if( cmbTimeIntervall->currentIndex() == 0 )
@@ -452,6 +456,8 @@ void cDlgPanelUse::on_pbCancel_clicked()
 void cDlgPanelUse::on_cmbTimeIntervall_currentIndexChanged(int index)
 {
     if( m_bInit ) return;
+
+    m_uiIndexOfTime = index;
 
     QStringList qslTimePrice = m_qslPanelUseTimes.at( index ).split('|');
 

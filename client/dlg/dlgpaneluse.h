@@ -88,6 +88,7 @@ private:
     bool                         m_bIsCardCanBeUsed;
     bool                         m_bIsCashCanBeUsed;
     QStringList                  m_qslPanelUseTimes;
+    unsigned int                 m_uiIndexOfTime;
 
     void                        _enablePanelUseTypes();
 
