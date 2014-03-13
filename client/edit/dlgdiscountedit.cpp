@@ -75,8 +75,9 @@ cDlgDiscountEdit::cDlgDiscountEdit( QWidget *p_poParent, cDBDiscount *p_poDiscou
 
         if( m_poDiscount->discountValue() > 0 )
         {
+            cCurrency   cValue( m_poDiscount->discountValue() );
             rbDiscountValue->setChecked(true);
-            ledDiscount->setText( QString::number(m_poDiscount->discountValue()/100) );
+            ledDiscount->setText( cValue.currencyString() );
         }
         else
         {
@@ -259,7 +260,16 @@ void cDlgDiscountEdit::accept ()
     }
 
     bool    boConversion = true;
-    ledDiscount->text().toInt( &boConversion );
+
+    if( rbDiscountValue->isChecked() )
+    {
+        cCurrency   cDiscount( ledDiscount->text() );
+        cDiscount.currencyValue().toInt( &boConversion );
+    }
+    else
+    {
+        ledDiscount->text().toInt( &boConversion );
+    }
     if( !boConversion )
     {
         boCanBeSaved = false;
@@ -313,7 +323,8 @@ void cDlgDiscountEdit::accept ()
             }
             if( rbDiscountValue->isChecked() )
             {
-                m_poDiscount->setDiscountValue( ledDiscount->text().toInt()*100 );
+                cCurrency   cValue( ledDiscount->text() );
+                m_poDiscount->setDiscountValue( cValue.currencyValue().toInt() );
                 m_poDiscount->setDiscountPercent( 0 );
             }
             else
@@ -440,7 +451,12 @@ void cDlgDiscountEdit::slotCheckValue()
 {
     gbValue->setStyleSheet( "QGroupBox {font: bold; color: red;}" );
 
-    if( ledDiscount->text().length() > 0 && ledDiscount->text().toInt() > 0 )
+    bool    boConversion = false;
+
+    cCurrency   cDiscount( ledDiscount->text() );
+    cDiscount.currencyValue().toInt( &boConversion );
+
+    if( ledDiscount->text().length() > 0 && boConversion )
         gbValue->setStyleSheet( "QGroupBox {font: normal;}" );
 }
 

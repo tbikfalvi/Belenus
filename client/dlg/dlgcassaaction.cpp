@@ -337,9 +337,13 @@ void cDlgCassaAction::updateShoppingCartItem()
 {
     unsigned int uiCouponId = cmbCoupon->itemData( cmbCoupon->currentIndex() ).toUInt();
 
-    m_poShoppingCart->setCash( ledCashGiven->text().remove( QChar(',') ).toInt() * 100 );
-    m_poShoppingCart->setCard( ledCardGiven->text().remove( QChar(',') ).toInt() * 100 );
-    m_poShoppingCart->setVoucher( ledVoucherGiven->text().remove( QChar(',') ).toInt() * 100 );
+    cCurrency   cCash( ledCashGiven->text() );
+    cCurrency   cCard( ledCardGiven->text() );
+    cCurrency   cVoucher( ledVoucherGiven->text() );
+
+    m_poShoppingCart->setCash( cCash.currencyValue().toInt() );
+    m_poShoppingCart->setCard( cCard.currencyValue().toInt() );
+    m_poShoppingCart->setVoucher( cVoucher.currencyValue().toInt() );
 
     if( uiCouponId > 0 )
     {

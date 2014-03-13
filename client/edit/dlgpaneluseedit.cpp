@@ -17,6 +17,8 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
     pbSave->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    lblCurrency->setText( g_poPrefs->getCurrencyShort() );
+
     m_poPanelUses   = p_poPanelUses;
     m_inPanelId     = p_inPanelId;
 
@@ -24,7 +26,9 @@ cDlgPanelUseEdit::cDlgPanelUseEdit( QWidget *p_poParent, cDBPanelUses *p_poPanel
     {
         ledUseName->setText( m_poPanelUses->name() );
         ledUseTime->setText( QString::number(m_poPanelUses->useTime()) );
-        ledUsePrice->setText( QString::number(m_poPanelUses->usePrice()/100) );
+
+        cCurrency   cPrice( m_poPanelUses->usePrice() );
+        ledUsePrice->setText( cPrice.currencyString() );
     }
     on_ledUsePrice_textEdited("");
 }

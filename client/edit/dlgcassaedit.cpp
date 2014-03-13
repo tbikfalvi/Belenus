@@ -194,7 +194,7 @@ void cDlgCassaEdit::on_pbCashAdd_clicked()
     {
         cDBCassa        obCassa;
 
-        g_obCassa.cassaIncreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
+        g_obCassa.cassaIncreaseMoney( obDlgCassaInOut.resultAmount(), obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
 
         cCurrency   cBalance( obCassa.currentBalance() );
@@ -220,7 +220,7 @@ void cDlgCassaEdit::on_pbCashGet_clicked()
     {
         cDBCassa        obCassa;
 
-        g_obCassa.cassaDecreaseMoney( obDlgCassaInOut.resultAmount()*100, obDlgCassaInOut.resultComment() );
+        g_obCassa.cassaDecreaseMoney( obDlgCassaInOut.resultAmount(), obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
 
         cCurrency   cBalance( obCassa.currentBalance() );
@@ -246,7 +246,7 @@ void cDlgCassaEdit::on_pbExpense_clicked()
     {
         cDBCassa        obCassa;
 
-        g_obCassa.cassaProcessCashExpense( (obDlgCassaInOut.resultAmount()*100)*(-1), obDlgCassaInOut.resultComment() );
+        g_obCassa.cassaProcessCashExpense( (obDlgCassaInOut.resultAmount())*(-1), obDlgCassaInOut.resultComment() );
         obCassa.load( g_obCassa.cassaId() );
 
         cCurrency   cBalance( obCassa.currentBalance() );

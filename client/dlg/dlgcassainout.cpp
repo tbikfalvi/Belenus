@@ -21,7 +21,9 @@ cDlgCassaInOut::~cDlgCassaInOut()
 
 int cDlgCassaInOut::resultAmount()
 {
-    return ledAmount->text().toInt();
+    cCurrency   cAmount( ledAmount->text() );
+
+    return cAmount.currencyValue().toInt();
 }
 
 QString cDlgCassaInOut::resultComment()
