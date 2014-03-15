@@ -229,7 +229,8 @@ void MainWindow::_exportToBelenusPatientCardTypes()
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nID+1 );
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvPatientCardTypes.at(i).strNev );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr * 100 );
+//        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr * 100 );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nAr );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "%1, " ).arg( m_qvPatientCardTypes.at(i).nEgyseg );
         qsSQLCommand += QString( "'%1-%2-%3', " ).arg( m_qvPatientCardTypes.at(i).nErvTolEv ).arg( m_qvPatientCardTypes.at(i).nErvTolHo ).arg( m_qvPatientCardTypes.at(i).nErvTolNap );
@@ -416,9 +417,11 @@ void MainWindow::_exportToBelenusProducts()
         qsSQLCommand += QString( "%1, " ).arg( m_nLicenceId );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strNev );
         qsSQLCommand += QString( "'%1', " ).arg( m_qvProducts.at(i).strVonalkod );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes * 100 );
+//        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes * 100 );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nArBeszerzes );
         qsSQLCommand += QString( "0, " );
-        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr * 100 );
+//        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr * 100 );
+        qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nAr );
         qsSQLCommand += QString( "0, " );
         qsSQLCommand += QString( "%1, " ).arg( m_qvProducts.at(i).nDarab );
         qsSQLCommand += QString( "0, 1, 'ARC');" );
@@ -525,7 +528,8 @@ int MainWindow::_getPatientCardTypeUnitPrice( int p_nID )
     {
         if( m_qvPatientCardTypes.at(i).nID == p_nID )
         {
-            nRet = ( m_qvPatientCardTypes.at(i).nAr * 100 ) / m_qvPatientCardTypes.at(i).nEgyseg;
+//            nRet = ( m_qvPatientCardTypes.at(i).nAr * 100 ) / m_qvPatientCardTypes.at(i).nEgyseg;
+            nRet = ( m_qvPatientCardTypes.at(i).nAr ) / m_qvPatientCardTypes.at(i).nEgyseg;
             break;
         }
     }
@@ -923,6 +927,9 @@ void MainWindow::_loadPatientCardTypes()
 
                 _DeCode( stTemp.strNev, 50 );
 
+                if( m_nProgramType == DBTool::KiwiSun )
+                    stTemp.nAr = stTemp.nAr * 100;
+
                 m_qvPatientCardTypes.append( stTemp );
             }
         }
@@ -1124,6 +1131,12 @@ void MainWindow::_loadProducts()
 
                 _DeCode( stTemp.strVonalkod, 20 );
                 _DeCode( stTemp.strNev, 100 );
+
+                if( m_nProgramType == DBTool::KiwiSun )
+                {
+                    stTemp.nAr          = stTemp.nAr * 100;
+                    stTemp.nArBeszerzes = stTemp.nArBeszerzes * 100;
+                }
 
                 ////ui->listLog->addItem( QString( "[%1] \'%2\' \'%3\' [%4] [%5] [%6]" ).arg(stTemp.nID).arg(stTemp.strVonalkod).arg(stTemp.strNev).arg(stTemp.nAr).arg(stTemp.nDarab).arg(stTemp.nArBeszerzes) );
 
