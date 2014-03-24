@@ -257,6 +257,8 @@ bool cMdiPanels::isStatusCanBeReseted()
 
 void cMdiPanels::activatePanel( unsigned int p_uiPanel )
 {
+    cTracer obTrace( QString("cMdiPanels::activatePanel %1 -> %2").arg(m_uiActivePanel).arg(p_uiPanel) );
+
     m_obPanels.at( m_uiActivePanel )->inactivate();
     m_obPanels.at( p_uiPanel )->activate();
 

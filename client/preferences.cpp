@@ -215,6 +215,14 @@ unsigned int cPreferences::getPanelCount() const
     return m_uiPanelCount;
 }
 
+unsigned int cPreferences::getPanelId(int p_nPanelIterator)
+{
+    if( p_nPanelIterator > -1 && p_nPanelIterator < m_qslPanelIds.count() )
+        return m_qslPanelIds.at( p_nPanelIterator ).toInt();
+    else
+        return 0;
+}
+
 void cPreferences::setMainWindowSizePos( const unsigned int p_uiMainWindowLeft,
                                          const unsigned int p_uiMainWindowTop,
                                          const unsigned int p_uiMainWindowWidth,
@@ -836,6 +844,14 @@ void cPreferences::loadDBSettings() throw (cSevException)
         poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels WHERE active=1" ) );
         poQuery->first();
         m_uiPanelCount = poQuery->value( 0 ).toInt();
+
+        m_qslPanelIds.clear();
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE active=1" ) );
+        while( poQuery->next() )
+        {
+            m_qslPanelIds << poQuery->value(0).toString();
+        }
 
         delete poQuery;
     }

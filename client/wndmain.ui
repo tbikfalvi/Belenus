@@ -186,6 +186,7 @@
     <addaction name="separator"/>
     <addaction name="action_Logs"/>
     <addaction name="action_Hardwaretest"/>
+    <addaction name="action_ManageDevicePanels"/>
    </widget>
    <widget class="QMenu" name="menu_Action">
     <property name="title">
@@ -754,6 +755,11 @@
    </property>
    <property name="toolTip">
     <string>Manage database</string>
+   </property>
+  </action>
+  <action name="action_ManageDevicePanels">
+   <property name="text">
+    <string>Manage device panels</string>
    </property>
   </action>
  </widget>

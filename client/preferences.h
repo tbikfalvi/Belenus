@@ -17,6 +17,7 @@
 #define PREFERENCES_H
 
 #include <QString>
+#include <QStringList>
 #include <QPoint>
 #include <QSize>
 #include "../framework/sevexception.h"
@@ -117,6 +118,8 @@ public:
     void            setPatientCardPartnerPriceVat(const int p_inVat );
     int             getPatientCardPartnerPriceVat() const;
 
+    unsigned int    getPanelId( int p_nPanelIterator );
+
     void            setLogLevels( const unsigned int p_uiConLevel,
                                   const unsigned int p_uiDBLevel,
                                   const unsigned int p_uiGUILevel,
@@ -193,6 +196,7 @@ private:
     int             m_nPatientCardLostPriceVat;
     int             m_nPatientCardPartnerPrice;
     int             m_nPatientCardPartnerPriceVat;
+    QStringList     m_qslPanelIds;
 
     void init();
 };

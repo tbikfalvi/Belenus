@@ -469,6 +469,8 @@ bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int 
 //====================================================================================
 void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 {
+    cTracer obTrace( QString("cFrmPanel::mousePressEvent m_uiId-1 [%1]").arg(m_uiId-1) );
+
     emit panelClicked( m_uiId - 1 );
     p_poEvent->ignore();
 }

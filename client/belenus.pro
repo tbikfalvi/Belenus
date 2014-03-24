@@ -6,6 +6,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlglogs.ui \
     dlgpaneltypeedit.ui \
     dlgpanelgroupedit.ui \
+    dlgpaneledit.ui \
     dlgpreferences.ui \
     dlgpwdconfirm.ui \
     dlguseredit.ui \
@@ -64,6 +65,7 @@ HEADERS = belenus.h \
     ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
     crud/dlgpanelgroups.h \
+    crud/dlgpanels.h \
     crud/dlgusers.h \
     crud/dlgreasontovisit.h \
     crud/dlgpanelstatuses.h \
@@ -133,6 +135,7 @@ HEADERS = belenus.h \
     dlg/dlgmanagedatabase.h \
     edit/dlgpaneltypeedit.h \
     edit/dlgpanelgroupedit.h \
+    edit/dlgpaneledit.h \
     edit/dlguseredit.h \
     edit/dlgreasontovisitedit.h \
     edit/dlgpanelstatusesedit.h \
@@ -192,6 +195,7 @@ SOURCES = main.cpp \
     ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
     crud/dlgpanelgroups.cpp \
+    crud/dlgpanels.cpp \
     crud/dlgusers.cpp \
     crud/dlgreasontovisit.cpp \
     crud/dlgpanelstatuses.cpp \
@@ -261,6 +265,7 @@ SOURCES = main.cpp \
     dlg/dlgmanagedatabase.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \
+    edit/dlgpaneledit.cpp \
     edit/dlguseredit.cpp \
     edit/dlgreasontovisitedit.cpp \
     edit/dlgpanelstatusesedit.cpp \

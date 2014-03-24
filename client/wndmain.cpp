@@ -55,6 +55,7 @@
 #include "crud/dlgstorno.h"
 #include "crud/dlgpaymentmethod.h"
 #include "crud/dlgpanelgroups.h"
+#include "crud/dlgpanels.h"
 
 //====================================================================================
 
@@ -217,6 +218,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_EmptyDemoDB->setIcon( QIcon("./resources/40x40_database_sync.png") );
     action_PaymentMethods->setIcon( QIcon("./resources/40x40_paymentmethod.png") );
 
+    action_ManageDevicePanels->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
+
     //--------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------
 
@@ -259,6 +262,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_ManageDatabase->setVisible( false );
     action_ManageDatabase->setEnabled( false );
+
+    action_ManageDevicePanels->setVisible( false );
+    action_ManageDevicePanels->setEnabled( false );
 
     showElementsForComponents();
 
@@ -990,6 +996,7 @@ void cWndMain::updateToolbar()
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
             action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+            action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
@@ -1021,6 +1028,7 @@ void cWndMain::updateToolbar()
     action_PatientSelect->setVisible( !(g_obGuest.id()>0) );
     action_PatientEmpty->setVisible( g_obGuest.id()>0 );
     action_ManageDatabase->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+    action_ManageDevicePanels->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
 
     showElementsForComponents();
 }
@@ -2754,3 +2762,11 @@ void cWndMain::on_action_ManageDatabase_triggered()
 
     obDlgManageDatabase.exec();
 }
+
+void cWndMain::on_action_ManageDevicePanels_triggered()
+{
+    cDlgPanels  obDlgPanels( this );
+
+    obDlgPanels.exec();
+}
+
