@@ -1035,6 +1035,14 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
+    QFile   fileCheck( "belenus.chk" );
+
+    if( fileCheck.size() > 0 )
+    {
+        fileCheck.open( QIODevice::WriteOnly );
+        fileCheck.write( "" );
+        fileCheck.close();
+    }
     updateStatusText();
     updateToolbar();
 

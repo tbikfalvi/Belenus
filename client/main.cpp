@@ -137,13 +137,49 @@ int main( int argc, char *argv[] )
         qsSpalsh += "\n";
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
+        qsSpalsh += QObject::tr("Another instance of application ... ");
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
+        QFile   fileCheck( "belenus.chk" );
+
+        fileCheck.open( QIODevice::WriteOnly );
+        fileCheck.write( "CURRENTLY NOT RUNNING" );
+        fileCheck.close();
+#ifdef __WIN32__
+            Sleep(3000);
+#else
+            sleep( 3 );
+#endif
+        if( fileCheck.size() > 0 )
+        {
+            qsSpalsh += QObject::tr(" NOT RUNNING.\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+        }
+        else
+        {
+            qsSpalsh += QObject::tr(" ALREADY RUNNING.\n");
+            qsSpalsh += QObject::tr("\n\nPlease use the currently running application.\n");
+            obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+#ifdef __WIN32__
+            Sleep(5000);
+#else
+            sleep( 3 );
+#endif
+            return 0;
+        }
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+
+        qsSpalsh += "\n";
+        obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
+
         qsSpalsh += QObject::tr("License is ... ");
         obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));
 
         int         nId = 0;
         QString     qsSerial = QObject::tr("NO_SERIAL_DETECTED");
 
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM licences" ) );
         if( poQuery->last() )
         {
             nId = poQuery->value( 0 ).toInt();
