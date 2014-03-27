@@ -17,6 +17,7 @@ public:
     void            loadPatient( const unsigned int p_uiId )                    throw( cSevException );
     void            save()                                                      throw( cSevException );
     void            remove()                                                    throw( cSevException );
+    void            deactivate()                                                throw( cSevException );
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();
     bool            isPatientCardCanBeReplaced()                                throw();
     bool            isPatientCardCanBeParent()                                  throw();

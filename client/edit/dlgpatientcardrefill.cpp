@@ -156,6 +156,31 @@ void cDlgPatientCardRefill::slotRefreshWarningColors()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgPatientCardRefill::slotEnableButtons()
 {
+    if( m_poPatientCard->parentId() > 0 )
+    {
+        pbSell->setEnabled( false );
+
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( m_poPatientCard->parentId() );
+
+        QMessageBox::warning( this, tr("Attention"),
+                              tr("This patientcard attached to another card therefore it can not be refilled.\n\n"
+                                 "Please refill the main patientcard with barcode: %1").arg(obDBPatientCard.barcode()) );
+    }
+    else
+    {
+        if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("You are not allowed to create System Service Patientcard.") );
+            pbSell->setEnabled( false );
+        }
+        else
+        {
+            pbSell->setEnabled( true );
+        }
+    }
 }
 //===========================================================================================================
 //
@@ -208,18 +233,8 @@ void cDlgPatientCardRefill::on_cmbCardType_currentIndexChanged(int index)
     else
         ledPrice->setText( cPrice.currencyFullStringShort() );
 
-    if( m_poPatientCardType->id() == 1 && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
-    {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("You are not allowed to create System Service Patientcard.") );
-        pbSell->setEnabled( false );
-    }
-    else
-    {
-        pbSell->setEnabled( true );
-    }
-
     slotRefreshWarningColors();
+    slotEnableButtons();
 }
 //===========================================================================================================
 //

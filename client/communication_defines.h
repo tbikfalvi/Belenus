@@ -35,13 +35,6 @@
 #define EXCEPTION_INVALID_COM_HANDLE	7
 #define EXCEPTION_GET_COM_PROP		8
 
-#define STATUS_ALAP                     0
-#define STATUS_VETKOZES                 1
-#define STATUS_SZAUNAZAS                2
-#define STATUS_BARNULAS                 3
-#define STATUS_UTOHUTES                 4
-#define STATUS_VARAKOZAS                9
-
 //---------------------------------------------------------------------------
 //Relay mask define
 #define R0   0x0000

@@ -307,26 +307,13 @@ void cDlgPatientCardEdit::on_pbDeactivate_clicked()
     {
         m_bIsCardDeactivated = true;
 
-        m_poPatientCard->setPatientCardTypeId( 0 );
-        m_poPatientCard->setParentId( 0 );
-        m_poPatientCard->setPatientId( 0 );
-        m_poPatientCard->setUnits( 0 );
-        m_poPatientCard->setAmount( 0 );
-        m_poPatientCard->setTimeLeft( 0 );
-        m_poPatientCard->setValidDateFrom( "0000-00-00" );
-        m_poPatientCard->setValidDateTo( "0000-00-00" );
-        m_poPatientCard->setActive( false );
-        m_poPatientCard->save();
+        m_poPatientCard->deactivate();
 
         cmbCardType->setCurrentIndex( 0 );
         cmbPatient->setCurrentIndex( 0 );
         ledBalance->setText( "" );
         deValidDateFrom->setDate( QDate(0,0,0) );
         deValidDateTo->setDate( QDate(0,0,0) );
-
-        cDBPatientcardUnit  obDBPatientcardUnit;
-
-        obDBPatientcardUnit.deactivateUnits( m_poPatientCard->id() );
 
         cmbCardType->setEnabled( m_poPatientCard->active() );
         cmbPatient->setEnabled( m_poPatientCard->active() );

@@ -270,8 +270,7 @@ void cFrmPanel::clear()
 {
     cTracer obTrace( "cFrmPanel::clear" );
 
-    if( m_obStatuses.at(m_uiStatus)->activateCommand() == 1 ||
-        m_obStatuses.at(m_uiStatus)->activateCommand() == 4 )
+    if( !isMainProcess() )
     {
         m_uiStatus  = 0;
         m_uiCounter = 0;
@@ -836,7 +835,9 @@ void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
 //====================================================================================
 bool cFrmPanel::isMainProcess()
 {
-    return ( m_obStatuses.at(m_uiStatus)->activateCommand()==3 ? true : false );
+    int nCommand = m_obStatuses.at(m_uiStatus)->activateCommand();
+
+    return ( nCommand==STATUS_BARNULAS||nCommand==STATUS_SZAUNAZAS ? true : false );
 }
 //====================================================================================
 void cFrmPanel::closeAttendance()

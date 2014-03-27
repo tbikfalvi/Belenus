@@ -290,49 +290,49 @@ Please start WampServer application then restart Belenus application.</oldsource
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <source>Mon</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <source>Tue</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <source>Wed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="171"/>
         <source>Thu</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="172"/>
         <source>Fri</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="173"/>
         <source>Sat</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="320"/>
+        <location filename="db/dbpatientcard.cpp" line="339"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="174"/>
         <source>Sun</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="333"/>
+        <location filename="db/dbpatientcard.cpp" line="352"/>
         <source>Patientcard can be used:</source>
         <translation></translation>
     </message>
@@ -2343,17 +2343,17 @@ from:  %1  to:  %2  ?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="398"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="385"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="405"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="392"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardedit.cpp" line="417"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="404"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
@@ -2378,7 +2378,7 @@ deactivate the card with unchecking the Active checkbox.</oldsource>
     </message>
     <message>
         <location filename="edit/dlgpatientcardedit.cpp" line="296"/>
-        <location filename="edit/dlgpatientcardedit.cpp" line="365"/>
+        <location filename="edit/dlgpatientcardedit.cpp" line="352"/>
         <source>Warning</source>
         <translation></translation>
     </message>
@@ -2403,32 +2403,42 @@ deactivate the card with unchecking the Active checkbox.</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="213"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="168"/>
+        <source>This patientcard attached to another card therefore it can not be refilled.
+
+Please refill the main patientcard with barcode: %1</source>
+        <oldsource>This patientcard attached to another card therefore
+it can not be refilled.
+Please refill the main patientcard with barcode: %1</oldsource>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="175"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="214"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="176"/>
         <source>You are not allowed to create System Service Patientcard.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="258"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="273"/>
         <source>Barcode cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="266"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="281"/>
         <source>Invalid barcode. Barcode should be %1 character length.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="279"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="294"/>
         <source>Invalid barcode. This barcode already saved into database.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="289"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="304"/>
         <source>Invalid Patientcard type.
 For active patientcard other type should be selected.
 If you want to connect the card to this type,
@@ -2436,42 +2446,43 @@ deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="300"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="315"/>
         <source>Available units cannot be empty.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="307"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="322"/>
         <source>Number of available units can not be less then 1.
 If you want to reset the number of available units
 deactivate the card.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="314"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="329"/>
         <source>Incorrect validation date.
 The patientcard with the selected units would not be used.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="349"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="167"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="364"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="350"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="365"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="394"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="409"/>
         <source>Refill patientcard [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardrefill.cpp" line="456"/>
+        <location filename="edit/dlgpatientcardrefill.cpp" line="471"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -4838,51 +4849,51 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="334"/>
-        <location filename="frmpanel.cpp" line="355"/>
-        <location filename="frmpanel.cpp" line="791"/>
+        <location filename="frmpanel.cpp" line="333"/>
+        <location filename="frmpanel.cpp" line="354"/>
+        <location filename="frmpanel.cpp" line="790"/>
         <source>NOT STERILE</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="405"/>
+        <location filename="frmpanel.cpp" line="404"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="406"/>
+        <location filename="frmpanel.cpp" line="405"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="487"/>
+        <location filename="frmpanel.cpp" line="486"/>
         <source>PAUSED</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="555"/>
+        <location filename="frmpanel.cpp" line="554"/>
         <source>Panel Not Found in Database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="655"/>
+        <location filename="frmpanel.cpp" line="654"/>
         <source>Cash to pay: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="850"/>
+        <location filename="frmpanel.cpp" line="851"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1036"/>
+        <location filename="frmpanel.cpp" line="1037"/>
         <source>Question</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1037"/>
+        <location filename="frmpanel.cpp" line="1038"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation></translation>
     </message>

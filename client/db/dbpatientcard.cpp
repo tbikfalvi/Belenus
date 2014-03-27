@@ -16,6 +16,7 @@
 #include "belenus.h"
 #include "dbpatientcard.h"
 #include "dbvalidtimeperiods.h"
+#include "dbpatientcardunits.h"
 
 cDBPatientCard::cDBPatientCard()
 {
@@ -230,6 +231,24 @@ void cDBPatientCard::remove() throw( cSevException )
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
         if( poQuery ) delete poQuery;
     }
+}
+
+void cDBPatientCard::deactivate() throw( cSevException )
+{
+    setPatientCardTypeId( 0 );
+    setParentId( 0 );
+    setPatientId( 0 );
+    setUnits( 0 );
+    setAmount( 0 );
+    setTimeLeft( 0 );
+    setValidDateFrom( "0000-00-00" );
+    setValidDateTo( "0000-00-00" );
+    setActive( false );
+    save();
+
+    cDBPatientcardUnit  obDBPatientcardUnit;
+
+    obDBPatientcardUnit.deactivateUnits( m_uiId );
 }
 
 bool cDBPatientCard::isPatientCardTypeLinked( const unsigned int p_PCTId ) throw()

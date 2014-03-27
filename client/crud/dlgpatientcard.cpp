@@ -295,8 +295,7 @@ void cDlgPatientCard::deleteClicked( bool )
                                       tr("You are not allowed to delete studio independent data."));
                 return;
             }
-            poPatientCard->remove();
-            m_uiSelectedId = 0;
+            poPatientCard->deactivate();
             refreshTable();
             if( poPatientCard ) delete poPatientCard;
         }
