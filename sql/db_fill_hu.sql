@@ -26,9 +26,9 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 -- -----------------------------------------------------------------------------------
 
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2013-10-01 00:00:00'),
+ (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_1_0'),
+ (NULL, 'APPLICATION_VERSION', '1_1_1'),
  (NULL, 'DATABASE_VERSION', '1_2');
 
 -- -----------------------------------------------------------------------------------

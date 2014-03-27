@@ -62,7 +62,7 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
 
     // Initialize GUI components
     cmbLanguage->addItem( "Magyar (hu)" );
-    cmbLanguage->addItem( "English (en)" );
+    cmbLanguage->addItem( "English (us)" );
 
     // If application called with uninstall flag, start uninstall process
     if( bUninstall )
