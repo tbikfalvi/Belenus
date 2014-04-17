@@ -1,9 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>BelenusUpdater.ico</file>
-        <file>resources/splash.png</file>
         <file>resources/fail.png</file>
         <file>resources/ok.png</file>
-        <file>resources/KiwiSun.png</file>
+        <file>resources/updater.png</file>
     </qresource>
 </RCC>

@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     _logProcess( "" );
 
     setupUi(this);
-
+/*
     lblCheckEnvironment->setText( tr("Checking Belenus Application System's environment ... ") );
     lblCheckOk_1->setVisible( false );
     lblCheckFail_1->setVisible( false );
@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     lblCheckUpdateDir->setText("Checking local update directory ... ");
     lblCheckOk_3->setVisible( false );
     lblCheckFail_3->setVisible( false );
-
+*/
     m_nTimer = startTimer( 1000 );
 }
 //===========================================================================================================
@@ -107,8 +107,8 @@ void MainWindow::executeUpdateProcess()
 void MainWindow::checkEnvironment(bool p_bVisible)
 //-----------------------------------------------------------------------------------------------------------
 {
-    lblCheckOk_1->setVisible( p_bVisible );
-    lblCheckFail_1->setVisible( !p_bVisible );
+//    lblCheckOk_1->setVisible( p_bVisible );
+//    lblCheckFail_1->setVisible( !p_bVisible );
 }
 //===========================================================================================================
 bool MainWindow::isEnvironmentOk()
