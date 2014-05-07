@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1336,7 +1336,46 @@ is different :</string>
         </layout>
        </item>
        <item>
+        <widget class="QGroupBox" name="gbUserSettings">
+         <property name="title">
+          <string> Gibbig user settings </string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="lblGibbigName">
+            <property name="text">
+             <string>User name :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="ledGibbigName"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lblGibbigPassword">
+            <property name="text">
+             <string>Password :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="ledGibbigPassword">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="gbDBSynchron">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string> Automatically synchronize ...</string>
          </property>

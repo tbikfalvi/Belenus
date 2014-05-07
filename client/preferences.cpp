@@ -685,6 +685,38 @@ int cPreferences::getPatientCardPartnerPriceVat() const
     return m_nPatientCardPartnerPriceVat;
 }
 
+void cPreferences::setGibbigName( const QString &p_qsGibbigName, bool p_boSaveNow = false )
+{
+    m_qsGibbigName = p_qsGibbigName;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
+    }
+}
+
+QString cPreferences::getGibbigName() const
+{
+    return m_qsGibbigName;
+}
+
+void cPreferences::setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow = false )
+{
+    m_qsGibbigPassword = p_qsGibbigPassword;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
+    }
+}
+
+QString cPreferences::getGibbigPassword() const
+{
+    return m_qsGibbigPassword;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -833,6 +865,9 @@ void cPreferences::loadConfFileSettings()
         }
 
         setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
+
+        m_qsGibbigName      = obPrefFile.value( QString::fromAscii( "Gibbig/User" ), "" ).toString();
+        m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
     }
 }
 
@@ -913,6 +948,9 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
     obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
+
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
 }
 
 unsigned int cPreferences::postponedPatients() const

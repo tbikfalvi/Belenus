@@ -127,6 +127,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
+    ledGibbigName->setText( g_poPrefs->getGibbigName() );
+    ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
+
+    gbDBSynchron->setVisible( false );
+
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
 }
 
@@ -239,6 +244,9 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setPatientCardPartnerPrice( cPricePartner.currencyValue().toInt() );
     g_poPrefs->setPatientCardPartnerPriceVat( ledPCPartnerVatpercent->text().toInt() );
+
+    g_poPrefs->setGibbigName( ledGibbigName->text() );
+    g_poPrefs->setGibbigPassword( ledGibbigPassword->text() );
 
     g_poPrefs->save();
 
