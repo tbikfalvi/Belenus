@@ -685,7 +685,7 @@ int cPreferences::getPatientCardPartnerPriceVat() const
     return m_nPatientCardPartnerPriceVat;
 }
 
-void cPreferences::setGibbigName( const QString &p_qsGibbigName, bool p_boSaveNow = false )
+void cPreferences::setGibbigName( const QString &p_qsGibbigName, bool p_boSaveNow )
 {
     m_qsGibbigName = p_qsGibbigName;
 
@@ -701,7 +701,7 @@ QString cPreferences::getGibbigName() const
     return m_qsGibbigName;
 }
 
-void cPreferences::setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow = false )
+void cPreferences::setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow )
 {
     m_qsGibbigPassword = p_qsGibbigPassword;
 

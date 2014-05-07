@@ -3076,39 +3076,39 @@ refill the patientcard before use.</source>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="77"/>
-        <location filename="dlg/dlgpreferences.cpp" line="270"/>
+        <location filename="dlg/dlgpreferences.cpp" line="278"/>
         <source>Visible</source>
         <translation></translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="82"/>
-        <location filename="dlg/dlgpreferences.cpp" line="275"/>
+        <location filename="dlg/dlgpreferences.cpp" line="283"/>
         <source>Hidden</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="190"/>
+        <location filename="dlg/dlgpreferences.cpp" line="195"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="191"/>
+        <location filename="dlg/dlgpreferences.cpp" line="196"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="260"/>
+        <location filename="dlg/dlgpreferences.cpp" line="268"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="261"/>
+        <location filename="dlg/dlgpreferences.cpp" line="269"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="293"/>
-        <location filename="dlg/dlgpreferences.cpp" line="300"/>
+        <location filename="dlg/dlgpreferences.cpp" line="301"/>
+        <location filename="dlg/dlgpreferences.cpp" line="308"/>
         <source>(%1 + %2 % VAT)</source>
         <translation></translation>
     </message>
@@ -7580,42 +7580,62 @@ is different :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1311"/>
+        <location filename="dlgpreferences.ui" line="1309"/>
+        <source> Gibbig server settings </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1315"/>
         <source>Server Host:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1325"/>
+        <location filename="dlgpreferences.ui" line="1329"/>
         <source>Server Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1341"/>
+        <location filename="dlgpreferences.ui" line="1352"/>
+        <source> Gibbig user settings </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1358"/>
+        <source>User name :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1368"/>
+        <source>Password :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1391"/>
         <source> Automatically synchronize ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1350"/>
+        <location filename="dlgpreferences.ui" line="1400"/>
         <source>database when exiting from application</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1360"/>
+        <location filename="dlgpreferences.ui" line="1410"/>
         <source>studio independent data when application started.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1384"/>
+        <location filename="dlgpreferences.ui" line="1434"/>
         <source>Hardware</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1392"/>
+        <location filename="dlgpreferences.ui" line="1442"/>
         <source>COM Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1399"/>
+        <location filename="dlgpreferences.ui" line="1449"/>
         <source>COM</source>
         <translation></translation>
     </message>

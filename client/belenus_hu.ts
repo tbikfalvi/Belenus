@@ -4878,40 +4878,40 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <translation>&amp;Mégsem</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="190"/>
+        <location filename="dlg/dlgpreferences.cpp" line="195"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="191"/>
+        <location filename="dlg/dlgpreferences.cpp" line="196"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation>A Tizedes jel és az Ezres elválasztó nem egyezhet meg.</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="293"/>
-        <location filename="dlg/dlgpreferences.cpp" line="300"/>
+        <location filename="dlg/dlgpreferences.cpp" line="301"/>
+        <location filename="dlg/dlgpreferences.cpp" line="308"/>
         <source>(%1 + %2 % VAT)</source>
         <translation>(%1 + %2 % ÁFA)</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="260"/>
+        <location filename="dlg/dlgpreferences.cpp" line="268"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="261"/>
+        <location filename="dlg/dlgpreferences.cpp" line="269"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation>A változtatások életbe léptetéséhez az alkalmazást újra kell indítani.</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="77"/>
-        <location filename="dlg/dlgpreferences.cpp" line="270"/>
+        <location filename="dlg/dlgpreferences.cpp" line="278"/>
         <source>Visible</source>
         <translation>Látható</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="82"/>
-        <location filename="dlg/dlgpreferences.cpp" line="275"/>
+        <location filename="dlg/dlgpreferences.cpp" line="283"/>
         <source>Hidden</source>
         <translation>Kikapcsolva</translation>
     </message>
@@ -11365,42 +11365,62 @@ eltérő hosszúságú :</translation>
         <translation>Szerver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1311"/>
+        <location filename="dlgpreferences.ui" line="1309"/>
+        <source> Gibbig server settings </source>
+        <translation> Gibbig szerver beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1315"/>
         <source>Server Host:</source>
         <translation>IP cím :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1325"/>
+        <location filename="dlgpreferences.ui" line="1329"/>
         <source>Server Port:</source>
         <translation>Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1341"/>
+        <location filename="dlgpreferences.ui" line="1352"/>
+        <source> Gibbig user settings </source>
+        <translation> Gibbig felhasználói beállítások </translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1358"/>
+        <source>User name :</source>
+        <translation>Felhasználónév :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1368"/>
+        <source>Password :</source>
+        <translation>Jelszó :</translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="1391"/>
         <source> Automatically synchronize ...</source>
         <translation> Az alkalmazás automatikusan szinkronizálja ...</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1350"/>
+        <location filename="dlgpreferences.ui" line="1400"/>
         <source>database when exiting from application</source>
         <translation>az adatbázist kilépéskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1360"/>
+        <location filename="dlgpreferences.ui" line="1410"/>
         <source>studio independent data when application started.</source>
         <translation>a stúdió független adatokat induláskor.</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1384"/>
+        <location filename="dlgpreferences.ui" line="1434"/>
         <source>Hardware</source>
         <translation>Hardver</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1392"/>
+        <location filename="dlgpreferences.ui" line="1442"/>
         <source>COM Port:</source>
         <translation>COM Port :</translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1399"/>
+        <location filename="dlgpreferences.ui" line="1449"/>
         <source>COM</source>
         <translation>COM</translation>
     </message>
