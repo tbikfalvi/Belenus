@@ -178,7 +178,8 @@ HEADERS = belenus.h \
     dlg/dlgsecondarywindow.h \
     dsppanel.h \
     licenceManager.h \
-    cdlgtest.h
+    cdlgtest.h \
+    gibbig.h
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -307,7 +308,8 @@ SOURCES = main.cpp \
     dlg/dlgsecondarywindow.cpp \
     dsppanel.cpp \
     licenceManager.cpp \
-    cdlgtest.cpp
+    cdlgtest.cpp \
+    gibbig.cpp
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
