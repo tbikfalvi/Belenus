@@ -18,25 +18,58 @@
 
 //====================================================================================
 
+#include <QObject>
 #include <QNetworkAccessManager>
-#include <QString>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 //====================================================================================
-class cGibbig
+class cGibbig : public QObject
 {
-    //Q_OBJECT
+    Q_OBJECT
 
 public:
 
     cGibbig();
     ~cGibbig();
 
+    void    setHost( const QString p_qsHost );
+    void    setPort( const QString p_qsPort );
+    void    setUserName( const QString p_qsUserName );
+    void    setPassword( const QString p_qsPassword );
+    void    setTimeout( const int p_inTimeout );
+
+    void    gibbigAuthenticate();
+    void    gibbigSendPatientCard( QString p_qsBarcode );
+
+    void    gibbigClearError()          {   m_bErrorOccured = false;    }
+    bool    gibbigIsErrorOccured()      {   return m_bErrorOccured;     }
+
+protected:
+
+    void    timerEvent( QTimerEvent *p_poEvent );
+
 protected slots:
-    void slotRestRequestFinished(QNetworkReply *);
+
+    void    slotRestRequestFinished(QNetworkReply *p_gbReply);
 
 private:
 
-    QNetworkAccessManager *restManager;
+    QNetworkAccessManager   *m_gbRestManager;
+    QNetworkRequest          m_gbRequest;
+
+    QString                  m_qsHost;
+    QString                  m_qsPort;
+    QString                  m_qsGbUserName;
+    QString                  m_qsGbPassword;
+    int                      m_inTimeout;
+
+    QString                  m_qsMessage;
+    QString                  m_qsError;
+    int                      m_inTimer;
+
+    bool                     m_bErrorOccured;
+    bool                     m_bAuthenticationInProgress;
 
 };
 //====================================================================================
