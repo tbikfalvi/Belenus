@@ -39,6 +39,7 @@
 #include "cassa.h"
 #include "licenceManager.h"
 #include "general.h"
+#include "gibbig.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -62,6 +63,7 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
+cGibbig                 *g_poGibbig;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;

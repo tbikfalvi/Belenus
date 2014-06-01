@@ -68,8 +68,12 @@ private:
     QString                  m_qsError;
     int                      m_inTimer;
 
+    QString                  m_qsToken;
+
     bool                     m_bErrorOccured;
     bool                     m_bAuthenticationInProgress;
+
+    void                    _processMessage();
 
 };
 //====================================================================================
