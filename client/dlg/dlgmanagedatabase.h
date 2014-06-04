@@ -23,6 +23,8 @@ private slots:
     void _actionDeactivatePC();
     void _actionDeleteNotUsedPCT();
     void _actionDeleteLedgerEntries();
+    void on_pbDbBackup_clicked();
+    void on_pbChangeDir_clicked();
 };
 
 #endif // CDLGMANAGEDATABASE_H

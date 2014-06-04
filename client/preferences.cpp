@@ -717,6 +717,22 @@ QString cPreferences::getGibbigPassword() const
     return m_qsGibbigPassword;
 }
 
+void cPreferences::setGibbigEnabled( bool p_bEnable, bool p_boSaveNow )
+{
+    m_bGibbigEnabled = p_bEnable;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
+    }
+}
+
+bool cPreferences::isGibbigEnabled()
+{
+    return m_bGibbigEnabled;
+}
+
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,
                                  const unsigned int p_uiDBLevel,
                                  const unsigned int p_uiGUILevel,
@@ -868,6 +884,7 @@ void cPreferences::loadConfFileSettings()
 
         m_qsGibbigName      = obPrefFile.value( QString::fromAscii( "Gibbig/User" ), "" ).toString();
         m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
+        m_bGibbigEnabled    = obPrefFile.value( QString::fromAscii( "Gibbig/Enabled" ) ).toBool();
     }
 }
 
@@ -951,6 +968,7 @@ void cPreferences::save() const throw (cSevException)
 
     obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
     obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
 }
 
 unsigned int cPreferences::postponedPatients() const

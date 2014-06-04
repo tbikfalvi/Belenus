@@ -1,6 +1,7 @@
 #ifndef WNDMAIN_H
 #define WNDMAIN_H
 
+#include <QNetworkAccessManager>
 #include <QString>
 
 #include "ui_wndmain.h"

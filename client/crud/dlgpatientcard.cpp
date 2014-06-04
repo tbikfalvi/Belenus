@@ -33,6 +33,16 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     ledBarcode->setMaximumWidth( 100 );
     horizontalLayout->addWidget( ledBarcode );
 
+    lblOwner = new QLabel( this );
+    lblOwner->setObjectName( QString::fromUtf8( "lblOwner" ) );
+    lblOwner->setText( tr("Owner: ") );
+    horizontalLayout->addWidget( lblOwner );
+    ledOwner = new QLineEdit( this );
+    ledOwner->setObjectName( QString::fromUtf8( "ledOwner" ) );
+    ledOwner->setMinimumWidth( 100 );
+    ledOwner->setMaximumWidth( 100 );
+    horizontalLayout->addWidget( ledOwner );
+
     horizontalSpacer1 = new QSpacerItem( 10, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer1 );
     verticalLayout->insertLayout( 0, horizontalLayout );
@@ -84,6 +94,7 @@ cDlgPatientCard::cDlgPatientCard( QWidget *p_poParent ) : cDlgCrud( p_poParent )
 
     connect( cmbPatientCardType, SIGNAL(currentIndexChanged(int)), this, SLOT(refreshTable()) );
     connect( ledBarcode, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
+    connect( ledOwner, SIGNAL(textChanged(QString)), this, SLOT(refreshTable()) );
 
     m_qsCondition = "";
 }
@@ -187,6 +198,13 @@ void cDlgPatientCard::refreshTable( QString p_qsCondition )
     {
         m_qsQuery += " AND ";
         m_qsQuery += QString( "barcode LIKE '\%%1\%'" ).arg( stTemp );
+    }
+
+    stTemp = ledOwner->text();
+    if( stTemp != "" )
+    {
+        m_qsQuery += " AND ";
+        m_qsQuery += QString( "patients.name LIKE '\%%1\%'" ).arg( stTemp );
     }
 
     if( p_qsCondition != "" )

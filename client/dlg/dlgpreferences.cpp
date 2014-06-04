@@ -130,6 +130,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledGibbigName->setText( g_poPrefs->getGibbigName() );
     ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
 
+    chkEnableGibbig->setEnabled( false );
+    chkEnableGibbig->setChecked( g_poPrefs->isGibbigEnabled() );
+
     gbDBSynchron->setVisible( false );
 
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
@@ -247,6 +250,7 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setGibbigName( ledGibbigName->text() );
     g_poPrefs->setGibbigPassword( ledGibbigPassword->text() );
+    g_poPrefs->setGibbigEnabled( chkEnableGibbig->isChecked() );
 
     g_poPrefs->save();
 

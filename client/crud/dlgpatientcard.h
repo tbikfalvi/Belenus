@@ -20,8 +20,9 @@ public:
     QComboBox       *cmbPatientCardType;
     QLabel          *lblBarcode;
     QLineEdit       *ledBarcode;
+    QLabel          *lblOwner;
+    QLineEdit       *ledOwner;
     QSpacerItem     *horizontalSpacer1;
-//    QPushButton     *pbPatientCardType;
     QPushButton     *pbPatientCardReplace;
     QPushButton     *pbPartnerCardAssign;
 

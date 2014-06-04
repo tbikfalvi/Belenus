@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include <QDate>
 #include <QStringList>
+#include <QFileDialog>
 
 #include "dlgmanagedatabase.h"
 
@@ -19,6 +20,7 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     setWindowIcon( QIcon("./resources/40x40_connect_db.png") );
 
     pbExecute->setIcon( QIcon("./resources/40x40_database_sync.png") );
+    pbDbBackup->setIcon( QIcon("./resources/40x40_connect_db.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
     connect( rbDeactivatePCs,           SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
@@ -26,6 +28,8 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     connect( rbDeleteLedgerBeforeDate,  SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
 
     deFilterDate->setDate( QDate::currentDate() );
+
+    lblBackupDir->setText( QDir::currentPath() );
 
     slotUpdateExecuteButton();
 
@@ -176,3 +180,18 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 }
 
 
+
+void cDlgManageDatabase::on_pbDbBackup_clicked()
+{
+
+}
+
+void cDlgManageDatabase::on_pbChangeDir_clicked()
+{
+    QString qsDir = QFileDialog::getExistingDirectory( this,
+                                                       tr("Select Directory"),
+                                                       QDir::currentPath(),
+                                                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    qsDir.replace( '/', '\\' );
+    lblBackupDir->setText( qsDir );
+}

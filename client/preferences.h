@@ -121,6 +121,8 @@ public:
     QString         getGibbigName() const;
     void            setGibbigPassword( const QString &p_qsGibbigPassword, bool p_boSaveNow = false );
     QString         getGibbigPassword() const;
+    void            setGibbigEnabled( bool p_bEnable, bool p_boSaveNow = false );
+    bool            isGibbigEnabled();
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -203,6 +205,7 @@ private:
     QStringList     m_qslPanelIds;
     QString         m_qsGibbigName;
     QString         m_qsGibbigPassword;
+    bool            m_bGibbigEnabled;
 
     void init();
 };

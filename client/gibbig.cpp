@@ -48,7 +48,7 @@ cGibbig::cGibbig()
 
     m_gbRestManager = new QNetworkAccessManager( this );
 
-//    connect( m_gbRestManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotRestRequestFinished(QNetworkReply*)) );
+    connect( m_gbRestManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotRestRequestFinished(QNetworkReply*)) );
 
     g_obLogger(cSeverity::DEBUG) << "Set header information" << EOM;
 
@@ -68,7 +68,7 @@ cGibbig::~cGibbig()
     if( m_inTimer > 0 );
         killTimer( m_inTimer );
 
-    if( m_gbRestManager )   delete m_gbRestManager;    
+    if( m_gbRestManager )   delete m_gbRestManager;
 }
 //=================================================================================================
 void cGibbig::setHost( const QString p_qsHost )
