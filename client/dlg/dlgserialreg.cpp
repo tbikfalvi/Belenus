@@ -42,6 +42,12 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
         lblValidDays->setText( QString::number( g_obLicenceManager.daysRemain() ) );
         ledCodeValidation->setFocus();
     }
+
+    if( g_obLicenceManager.ltLicenceType() == cLicenceManager::LTYPE_REGISTERED )
+    {
+        deLastValidated->setEnabled( false );
+        pbValidateApplication->setEnabled( false );
+    }
 }
 
 cDlgSerialReg::~cDlgSerialReg()
@@ -110,6 +116,8 @@ void cDlgSerialReg::on_pbValidateCode_clicked()
                                          "regulary by your franchise partner.\n"
                                          "Without validation the application can run in DEMO mode.\n\n"
                                          "You have %1 days until the next validation.").arg( g_obLicenceManager.daysRemain() ) );
+            deLastValidated->setEnabled( true );
+            pbValidateApplication->setEnabled( true );
             break;
 
         case cLicenceManager::ERR_ACT_KEY_INCORRECT:

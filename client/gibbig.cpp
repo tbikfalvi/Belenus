@@ -48,6 +48,8 @@ cGibbig::cGibbig()
 
     m_gbRestManager = new QNetworkAccessManager( this );
 
+    g_obLogger(cSeverity::DEBUG) << "Connect QNetworkAccessManager" << EOM;
+
     connect( m_gbRestManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotRestRequestFinished(QNetworkReply*)) );
 
     g_obLogger(cSeverity::DEBUG) << "Set header information" << EOM;

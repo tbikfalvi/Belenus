@@ -1,7 +1,6 @@
 #ifndef WNDMAIN_H
 #define WNDMAIN_H
 
-#include <QNetworkAccessManager>
 #include <QString>
 
 #include "ui_wndmain.h"
@@ -51,6 +50,7 @@ protected:
     void closeEvent( QCloseEvent *p_poEvent );
 
 private:
+
     QLabel                   m_lblStatusLeft;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;

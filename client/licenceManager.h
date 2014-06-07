@@ -46,6 +46,7 @@ public:
     QString         validationKey() const;
     QString         activationKey();
     QString         lastValidated();
+    licenceType     ltLicenceType();
 
 private:
 

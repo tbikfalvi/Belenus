@@ -103,6 +103,9 @@ cLicenceManager::cLicenceManager()
                                      << "904968"
                                      << "684016"
                                      << "766099";
+
+    m_qsCode = "";
+    m_qsAct  = "";
 }
 
 cLicenceManager::~cLicenceManager()
@@ -158,6 +161,11 @@ QString cLicenceManager::lastValidated()
     return m_qdLastValidated.toString( "yyyy-MM-dd" );
 }
 
+cLicenceManager::licenceType cLicenceManager::ltLicenceType()
+{
+    return m_LicenceType;
+}
+
 int cLicenceManager::daysRemain()
 {
     if ( !m_qdLastValidated.isValid() )
@@ -165,7 +173,7 @@ int cLicenceManager::daysRemain()
 
     int nDays = m_qdLastValidated.daysTo( QDate::currentDate() );
 
-    g_obLogger(cSeverity::INFO) << "nDays: " << nDays << EOM;
+    g_obLogger(cSeverity::INFO) << "nDays: " << nDays*(-1) << EOM;
 
     nDays = EXPIRE_IN_DAYS - nDays;
     if ( nDays < 0 ) // ha ez mar tobb mint EXP_IN_DAYS akkor nincs tobb nap hatra
@@ -327,10 +335,14 @@ QString cLicenceManager::activationKey()
 {
     QString qsAct = "";
 
-    for( int i=0; i<6; i++ )
+    if( m_qsAct.length() == 6 )
     {
-        qsAct.append( m_qslCode.at( i*10 + m_qsAct.at(i).digitValue() ) );
+        for( int i=0; i<6; i++ )
+        {
+            qsAct.append( m_qslCode.at( i*10 + m_qsAct.at(i).digitValue() ) );
+        }
     }
+
     return qsAct;
 }
 
@@ -436,6 +448,10 @@ void cLicenceManager::_checkValidity()
         else
         {
             g_obLogger(cSeverity::INFO) << "Licence is not activated yet." << EOM;
+            if( daysRemain() > 7 )
+            {
+                validateApplication( QDate::currentDate().addDays(7).toString("yyyy-MM-dd") );
+            }
         }
     }
 }

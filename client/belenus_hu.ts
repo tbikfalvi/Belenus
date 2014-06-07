@@ -9861,23 +9861,23 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     <message>
         <location filename="dlgmanagedatabase.ui" line="129"/>
         <source> Backup </source>
-        <translation type="unfinished"></translation>
+        <translation> Mentés </translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="137"/>
         <source>Backup database</source>
-        <translation type="unfinished"></translation>
+        <translation>Adatbázis mentése</translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="144"/>
         <source>to the defined directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>a megadott könyvtárba:</translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="155"/>
         <location filename="dlgmanagedatabase.ui" line="174"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="190"/>
@@ -11454,12 +11454,12 @@ eltérő hosszúságú :</translation>
     <message>
         <location filename="dlgpreferences.ui" line="1388"/>
         <source> Actions </source>
-        <translation type="unfinished"></translation>
+        <translation> Beavatkozások </translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="1394"/>
         <source>Enable synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Szinkronizálás engedélyezése</translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="1407"/>

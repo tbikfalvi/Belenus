@@ -134,7 +134,7 @@
           <item>
            <widget class="QPushButton" name="pbDbBackup">
             <property name="text">
-             <string>Backup database</string>
+             <string>Manually backup database</string>
             </property>
            </widget>
           </item>

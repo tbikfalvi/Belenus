@@ -1,4 +1,15 @@
-TEMPLATE = app
+
+QT          += core gui network sql
+CONFIG      += qt
+RESOURCES   += belenus.qrc
+RC_FILE      = Belenus.rc
+TEMPLATE     = app
+DESTDIR      = ..
+TRANSLATIONS = belenus_us.ts \
+               belenus_hu.ts
+
+win32:DEFINES -= UNICODE
+
 FORMS = ../framework/dlgcrud.ui \
     report/dlgpreview.ui \
     dlghardwaretest.ui \
@@ -310,23 +321,11 @@ SOURCES = main.cpp \
     licenceManager.cpp \
     cdlgtest.cpp \
     gibbig.cpp
+
 win32 { 
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }
-TRANSLATIONS = belenus_us.ts \
-    belenus_hu.ts
-DESTDIR = ..
-QT += sql
-QT += network
-CONFIG += qt
-RC_FILE = Belenus.rc
-
-# CONFIG += console
-win32:DEFINES -= UNICODE
-
-RESOURCES += \
-    belenus.qrc
 
 
 

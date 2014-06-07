@@ -1301,7 +1301,7 @@ Ledger -&gt; %4 records</source>
     <message>
         <location filename="dlg/dlgmanagedatabase.cpp" line="192"/>
         <source>Select Directory</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2048,7 +2048,7 @@ Do you want to save it and sell it now?</source>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="38"/>
         <source>Owner: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="crud/dlgpatientcard.cpp" line="53"/>
@@ -4914,24 +4914,24 @@ Please relogin to enable cassa.</source>
         <location filename="gibbig.cpp" line="142"/>
         <source>Timeout error occured during Gibbig communication after %1 milliseconds.
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="gibbig.cpp" line="143"/>
         <source>%1 FAILED due to timeout error.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="gibbig.cpp" line="157"/>
         <source>Rest error: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="gibbig.cpp" line="189"/>
         <source>Invalid format, token string not received. &apos;%1&apos;
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6488,23 +6488,23 @@ Do you want to save them as new into the database?</source>
     <message>
         <location filename="dlgmanagedatabase.ui" line="129"/>
         <source> Backup </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="137"/>
         <source>Backup database</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="144"/>
         <source>to the defined directory:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="155"/>
         <location filename="dlgmanagedatabase.ui" line="174"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="190"/>
@@ -7669,12 +7669,12 @@ is different :</source>
     <message>
         <location filename="dlgpreferences.ui" line="1388"/>
         <source> Actions </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="1394"/>
         <source>Enable synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="dlgpreferences.ui" line="1407"/>
