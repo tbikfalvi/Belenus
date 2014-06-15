@@ -5,8 +5,7 @@
 #include "dlgpatientcarduse.h"
 #include "../db/dbpatientcardtype.h"
 
-cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_poPatientCard, unsigned int p_uiPanelId )
-    : QDialog( p_poParent )
+cDlgPatientCardUse::cDlgPatientCardUse( QWidget *p_poParent, cDBPatientCard *p_poPatientCard, unsigned int p_uiPanelId ) : QDialog( p_poParent )
 {
     setupUi( this );
 

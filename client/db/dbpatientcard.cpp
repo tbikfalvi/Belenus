@@ -323,6 +323,28 @@ void cDBPatientCard::synchronizeUnits() throw()
         setUnits( 0 );
 }
 
+void cDBPatientCard::synchronizeTime() throw()
+{
+    QString qsQuery = "";
+
+    qsQuery += QString( "SELECT SUM(unitTime) FROM patientcardunits WHERE " );
+    qsQuery += QString( "( patientCardId=%1 " ).arg( m_uiId );
+    if( parentId() > 0 )
+    {
+        qsQuery += QString( "OR patientCardId=%2 " ).arg( parentId() );
+    }
+    qsQuery += QString( " ) AND active=1 " );
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    poQuery->first();
+
+    if( poQuery->size() > 0 )
+        setTimeLeft( poQuery->value(0).toInt()*60 );
+    else
+        setUnits( 0 );
+}
+
 void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
 {
     QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" ).arg( p_qdNew.toString("yyyy-MM-dd") ).arg( m_uiId );

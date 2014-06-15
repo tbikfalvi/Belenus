@@ -513,6 +513,7 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
         if( m_obDBPatientCard.active() )
         {
             m_obDBPatientCard.synchronizeUnits();
+            m_obDBPatientCard.synchronizeTime();
             m_obDBPatientCard.save();
             // resolved conflict
             if( m_obDBPatientCard.units() < 1 || m_obDBPatientCard.timeLeft() < 1 )
