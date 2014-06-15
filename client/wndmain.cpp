@@ -1176,6 +1176,8 @@ void cWndMain::closeEvent( QCloseEvent *p_poEvent )
             }
 */
             p_poEvent->accept();
+
+            g_obGen.backupDatabase( this );
         }
         else
         {

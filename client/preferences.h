@@ -152,6 +152,26 @@ public:
     void            setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize );
     QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const;
 
+    void            setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow = false );
+    QString         getDirDbBinaries() const;
+    void            setDirDbBackup( const QString &p_qsDirDbBackup, bool p_boSaveNow = false );
+    QString         getDirDbBackup() const;
+    void            setForceBackupDatabase( bool p_bForceBackupDatabase );
+    bool            isForceBackupDatabase();
+    void            setBackupDatabase( bool p_bBackupDatabase, bool p_boSaveNow = false );
+    bool            isBackupDatabase();
+    void            setBackupDatabaseType( const int p_nBackupDatabaseType, bool p_boSaveNow = false );
+    int             getBackupDatabaseType() const;
+    void            setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow = false );
+    QString         getBackupDatabaseDays() const;
+
+    //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
+    //    QString         getXXX() const;
+    //    void            setXXX( const int p_nXXX );
+    //    int             getXXX() const;
+    //    void            setXXX( bool p_bXXX, bool p_boSaveNow = false );
+    //    bool            isXXX();
+
 private:
     QString         m_qsFileName;
     QString         m_qsVersion;
@@ -206,6 +226,12 @@ private:
     QString         m_qsGibbigName;
     QString         m_qsGibbigPassword;
     bool            m_bGibbigEnabled;
+    QString         m_qsDirDbBinaries;
+    QString         m_qsDirDbBackup;
+    bool            m_bForceBackupDatabase;
+    bool            m_bBackupDatabase;
+    int             m_nBackupDatabaseType;
+    QString         m_qsBackupDatabaseDays;
 
     void init();
 };

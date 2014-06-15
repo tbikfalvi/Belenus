@@ -61,6 +61,213 @@ void cPreferences::init()
     m_nPatientCardLostPriceVat      = 0;
     m_nPatientCardPartnerPrice      = 0;
     m_nPatientCardPartnerPriceVat   = 0;
+
+    m_qsDirDbBinaries       = "";
+    m_qsDirDbBackup         = "";
+    m_bForceBackupDatabase  = false;
+    m_bBackupDatabase       = false;
+    m_nBackupDatabaseType   = 0;
+    m_qsBackupDatabaseDays  = "";
+}
+
+void cPreferences::loadConfFileSettings()
+{
+    QSettings obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    if( obPrefFile.status() != QSettings::NoError )
+    {
+        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << EOM;
+    }
+    else
+    {
+        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
+        m_qsLastUser                = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
+        m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
+        m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
+        m_qsBarcodePrefix           = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        m_bBarcodeLengthDifferent = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
+        m_bCassaAutoClose           = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
+        m_bCassaAutoWithdrawal      = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
+        m_qsDefaultCountry          = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
+        m_inZipLength               = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
+        m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
+        m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
+        m_uiComponent               = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
+        m_bIsSecondaryWindowVisible = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
+        int nLeft                   = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
+        int nTop                    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
+        int nWidth                  = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
+        int nHeight                 = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
+        m_qsSecondaryBackground     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
+
+        m_qpSecondaryPosition = QPoint( nLeft, nTop );
+        m_qsSecondarySize = QSize( nWidth, nHeight );
+
+        bool boIsANumber = false;
+        m_qsBarcodePrefix.toInt( &boIsANumber );
+        if( !boIsANumber ) m_qsBarcodePrefix = "";
+        m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );  //Make sure there is at least one free character to be filled in a Barcode
+
+        m_uiMainWindowLeft    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
+        m_uiMainWindowTop     = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
+        m_uiMainWindowWidth   = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
+        m_uiMainWindowHeight  = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
+        m_qsMainBackground    = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
+
+        m_qsServerAddress     = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
+        m_qsServerPort        = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
+
+        m_inCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
+
+        m_qsCurrencyShort     = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
+        m_qsCurrencyLong      = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
+        m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
+        m_qsCurrencyDecimalSeparator   = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
+
+        m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
+        m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
+
+        m_nPatientCardLostPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
+        m_nPatientCardLostPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
+        m_nPatientCardPartnerPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
+        m_nPatientCardPartnerPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
+
+        unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
+        if( (uiConsoleLevel >= cSeverity::MAX) ||
+            (uiConsoleLevel <= cSeverity::MIN) )
+        {
+            uiConsoleLevel = cSeverity::DEBUG;
+            g_obLogger(cSeverity::WARNING) << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName << EOM;
+        }
+
+        unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::INFO ).toUInt();
+        if( (uiDBLevel >= cSeverity::MAX) &&
+            (uiDBLevel <= cSeverity::MIN) )
+        {
+            uiDBLevel = cSeverity::DEBUG;
+
+            g_obLogger(cSeverity::WARNING) << "Invalid DBLogLevel in preferences file: " << m_qsFileName << EOM;
+        }
+
+        unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::WARNING ).toUInt();
+        if( (uiGUILevel >= cSeverity::MAX) &&
+            (uiGUILevel <= cSeverity::MIN) )
+        {
+            uiGUILevel = cSeverity::DEBUG;
+
+            g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << EOM;
+        }
+
+        unsigned int uiFileLevel = obPrefFile.value( QString::fromAscii( "LogLevels/FileLogLevel" ), cSeverity::WARNING ).toUInt();
+        if( (uiFileLevel >= cSeverity::MAX) &&
+            (uiFileLevel <= cSeverity::MIN) )
+        {
+            uiFileLevel = cSeverity::DEBUG;
+
+            g_obLogger(cSeverity::WARNING) << "Invalid FileLogLevel in preferences file: " << m_qsFileName << EOM;
+        }
+
+        setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
+
+        m_qsGibbigName      = obPrefFile.value( QString::fromAscii( "Gibbig/User" ), "" ).toString();
+        m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
+        m_bGibbigEnabled    = obPrefFile.value( QString::fromAscii( "Gibbig/Enabled" ) ).toBool();
+    }
+
+    m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
+    m_qsDirDbBackup         = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
+    m_bBackupDatabase       = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
+    m_nBackupDatabaseType   = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
+    m_qsBackupDatabaseDays  = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
+}
+
+void cPreferences::loadDBSettings() throw (cSevException)
+{
+    QSqlQuery *poQuery = NULL;
+    try
+    {
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels WHERE active=1" ) );
+        poQuery->first();
+        m_uiPanelCount = poQuery->value( 0 ).toInt();
+
+        m_qslPanelIds.clear();
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE active=1" ) );
+        while( poQuery->next() )
+        {
+            m_qslPanelIds << poQuery->value(0).toString();
+        }
+
+        delete poQuery;
+    }
+    catch( cSevException &e )
+    {
+        if( poQuery ) delete poQuery;
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+}
+
+void cPreferences::save() const throw (cSevException)
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    if( m_qsLang != "" )     obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLang );
+    if( m_qsLastUser != "" ) obPrefFile.setValue( QString::fromAscii( "LastUser" ), m_qsLastUser );
+    obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
+    obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
+    obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
+    obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
+    obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
+    obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
+    obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
+    obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
+    obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
+    obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
+    obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
+
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLost" ), m_nPatientCardLostPrice );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartner" ), m_nPatientCardPartnerPrice );
+    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartnerVat" ), m_nPatientCardPartnerPriceVat );
+
+    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
+    getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), uiConLevel );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), uiDBLevel );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), uiGUILevel );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), uiFileLevel );
+
+    obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
+    obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
+
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
+
+    obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
+
+    obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
+    obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
+    obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
+    obPrefFile.setValue( QString::fromAscii( "Currency/Decimal" ), m_qsCurrencyDecimalSeparator );
+
+    obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
+    obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
+
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
+
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/BackupDb" ), m_bBackupDatabase );
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupType" ), m_nBackupDatabaseType );
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupDays" ), m_qsBackupDatabaseDays );
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -783,194 +990,6 @@ void cPreferences::getDBAccess( QString *p_poHost, QString *p_poDB,
     if( p_poPwd )  *p_poPwd  = g_poDB->getPassword();
 }
 
-void cPreferences::loadConfFileSettings()
-{
-    QSettings obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    if( obPrefFile.status() != QSettings::NoError )
-    {
-        g_obLogger(cSeverity::WARNING) << "Failed to load preferences from file: " << m_qsFileName << EOM;
-    }
-    else
-    {
-        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
-        m_qsLastUser                = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
-        m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
-        m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
-        m_qsBarcodePrefix           = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
-        m_bBarcodeLengthDifferent = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
-        m_bCassaAutoClose           = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
-        m_bCassaAutoWithdrawal      = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
-        m_qsDefaultCountry          = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
-        m_inZipLength               = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
-        m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
-        m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
-        m_uiComponent               = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
-        m_bIsSecondaryWindowVisible = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
-        int nLeft                   = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
-        int nTop                    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
-        int nWidth                  = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
-        int nHeight                 = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
-        m_qsSecondaryBackground     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
-
-        m_qpSecondaryPosition = QPoint( nLeft, nTop );
-        m_qsSecondarySize = QSize( nWidth, nHeight );
-
-        bool boIsANumber = false;
-        m_qsBarcodePrefix.toInt( &boIsANumber );
-        if( !boIsANumber ) m_qsBarcodePrefix = "";
-        m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );  //Make sure there is at least one free character to be filled in a Barcode
-
-        m_uiMainWindowLeft    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
-        m_uiMainWindowTop     = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
-        m_uiMainWindowWidth   = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
-        m_uiMainWindowHeight  = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
-        m_qsMainBackground    = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
-
-        m_qsServerAddress     = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
-        m_qsServerPort        = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
-
-        m_inCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
-
-        m_qsCurrencyShort     = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
-        m_qsCurrencyLong      = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
-        m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
-        m_qsCurrencyDecimalSeparator   = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
-
-        m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
-        m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
-
-        m_nPatientCardLostPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
-        m_nPatientCardLostPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
-        m_nPatientCardPartnerPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
-        m_nPatientCardPartnerPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
-
-        unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
-        if( (uiConsoleLevel >= cSeverity::MAX) ||
-            (uiConsoleLevel <= cSeverity::MIN) )
-        {
-            uiConsoleLevel = cSeverity::DEBUG;
-            g_obLogger(cSeverity::WARNING) << "Invalid ConsoleLogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        unsigned int uiDBLevel = obPrefFile.value( QString::fromAscii( "LogLevels/DBLogLevel" ), cSeverity::INFO ).toUInt();
-        if( (uiDBLevel >= cSeverity::MAX) &&
-            (uiDBLevel <= cSeverity::MIN) )
-        {
-            uiDBLevel = cSeverity::DEBUG;
-
-            g_obLogger(cSeverity::WARNING) << "Invalid DBLogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        unsigned int uiGUILevel = obPrefFile.value( QString::fromAscii( "LogLevels/GUILogLevel" ), cSeverity::WARNING ).toUInt();
-        if( (uiGUILevel >= cSeverity::MAX) &&
-            (uiGUILevel <= cSeverity::MIN) )
-        {
-            uiGUILevel = cSeverity::DEBUG;
-
-            g_obLogger(cSeverity::WARNING) << "Invalid GUILogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        unsigned int uiFileLevel = obPrefFile.value( QString::fromAscii( "LogLevels/FileLogLevel" ), cSeverity::WARNING ).toUInt();
-        if( (uiFileLevel >= cSeverity::MAX) &&
-            (uiFileLevel <= cSeverity::MIN) )
-        {
-            uiFileLevel = cSeverity::DEBUG;
-
-            g_obLogger(cSeverity::WARNING) << "Invalid FileLogLevel in preferences file: " << m_qsFileName << EOM;
-        }
-
-        setLogLevels( uiConsoleLevel, uiDBLevel, uiGUILevel, uiFileLevel );
-
-        m_qsGibbigName      = obPrefFile.value( QString::fromAscii( "Gibbig/User" ), "" ).toString();
-        m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
-        m_bGibbigEnabled    = obPrefFile.value( QString::fromAscii( "Gibbig/Enabled" ) ).toBool();
-    }
-}
-
-void cPreferences::loadDBSettings() throw (cSevException)
-{
-    QSqlQuery *poQuery = NULL;
-    try
-    {
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT COUNT(*) AS panelCount FROM panels WHERE active=1" ) );
-        poQuery->first();
-        m_uiPanelCount = poQuery->value( 0 ).toInt();
-
-        m_qslPanelIds.clear();
-
-        poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panels WHERE active=1" ) );
-        while( poQuery->next() )
-        {
-            m_qslPanelIds << poQuery->value(0).toString();
-        }
-
-        delete poQuery;
-    }
-    catch( cSevException &e )
-    {
-        if( poQuery ) delete poQuery;
-        g_obLogger(e.severity()) << e.what() << EOM;
-    }
-
-}
-
-void cPreferences::save() const throw (cSevException)
-{
-    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
-
-    if( m_qsLang != "" )     obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLang );
-    if( m_qsLastUser != "" ) obPrefFile.setValue( QString::fromAscii( "LastUser" ), m_qsLastUser );
-    obPrefFile.setValue( QString::fromAscii( "PanelsPerRow" ), m_uiPanelsPerRow );
-    obPrefFile.setValue( QString::fromAscii( "BarcodeLength" ), m_inBarcodeLength );
-    obPrefFile.setValue( QString::fromAscii( "BarcodePrefix" ), m_qsBarcodePrefix );
-    obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
-    obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
-    obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
-    obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
-    obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
-    obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
-    obPrefFile.setValue( QString::fromAscii( "DBGlobalAutoSynchronization" ), m_bDBGlobalAutoSynchronize );
-    obPrefFile.setValue( QString::fromAscii( "IsSecondaryWindowVisible" ), m_bIsSecondaryWindowVisible );
-
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Left" ), m_qpSecondaryPosition.x() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Top" ), m_qpSecondaryPosition.y() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
-    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
-
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLost" ), m_nPatientCardLostPrice );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartner" ), m_nPatientCardPartnerPrice );
-    obPrefFile.setValue( QString::fromAscii( "PatientCard/PricePartnerVat" ), m_nPatientCardPartnerPriceVat );
-
-    unsigned int  uiConLevel, uiDBLevel, uiGUILevel, uiFileLevel;
-    getLogLevels( &uiConLevel, &uiDBLevel, &uiGUILevel, &uiFileLevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), uiConLevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), uiDBLevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), uiGUILevel );
-    obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), uiFileLevel );
-
-    obPrefFile.setValue( QString::fromAscii( "Server/Address" ), m_qsServerAddress );
-    obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
-
-    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
-
-    obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
-
-    obPrefFile.setValue( QString::fromAscii( "Currency/Short" ), m_qsCurrencyShort );
-    obPrefFile.setValue( QString::fromAscii( "Currency/Long" ), m_qsCurrencyLong );
-    obPrefFile.setValue( QString::fromAscii( "Currency/Separator" ), m_qsCurrencySeparator );
-    obPrefFile.setValue( QString::fromAscii( "Currency/Decimal" ), m_qsCurrencyDecimalSeparator );
-
-    obPrefFile.setValue( QString::fromAscii( "Device/MaxTreatLength" ), m_uiMaxTreatLength );
-    obPrefFile.setValue( QString::fromAscii( "Device/VAT" ), m_inDeviceUseVAT );
-
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
-    obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
-}
-
 unsigned int cPreferences::postponedPatients() const
 {
     return m_uiPostponedPatients;
@@ -1017,3 +1036,92 @@ QPoint cPreferences::getDialogSize( const QString &p_qsDialogName, const QPoint 
     return qpDlgSize;
 }
 
+void cPreferences::setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow )
+{
+    m_qsDirDbBinaries = p_qsDirDbBinaries;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
+    }
+}
+
+QString cPreferences::getDirDbBinaries() const
+{
+    return m_qsDirDbBinaries;
+}
+
+void cPreferences::setDirDbBackup( const QString &p_qsDirDbBackup, bool p_boSaveNow )
+{
+    m_qsDirDbBackup = p_qsDirDbBackup;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
+    }
+}
+
+QString cPreferences::getDirDbBackup() const
+{
+    return m_qsDirDbBackup;
+}
+
+void cPreferences::setForceBackupDatabase( bool p_bForceBackupDatabase )
+{
+    m_bForceBackupDatabase = p_bForceBackupDatabase;
+}
+
+bool cPreferences::isForceBackupDatabase()
+{
+    return m_bForceBackupDatabase;
+}
+
+void cPreferences::setBackupDatabase( bool p_bBackupDatabase, bool p_boSaveNow )
+{
+    m_bBackupDatabase = p_bBackupDatabase;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DbBackup/BackupDb" ), m_bBackupDatabase );
+    }
+}
+
+bool cPreferences::isBackupDatabase()
+{
+    return m_bBackupDatabase;
+}
+
+void cPreferences::setBackupDatabaseType( const int p_nBackupDatabaseType, bool p_boSaveNow )
+{
+    m_nBackupDatabaseType = p_nBackupDatabaseType;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupType" ), m_nBackupDatabaseType );
+    }
+}
+
+int cPreferences::getBackupDatabaseType() const
+{
+    return m_nBackupDatabaseType;
+}
+
+void cPreferences::setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow )
+{
+    m_qsBackupDatabaseDays = p_qsBackupDatabaseDays;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupDays" ), m_qsBackupDatabaseDays );
+    }
+}
+
+QString cPreferences::getBackupDatabaseDays() const
+{
+    return m_qsBackupDatabaseDays;
+}

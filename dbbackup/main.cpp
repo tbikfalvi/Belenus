@@ -15,8 +15,6 @@ int main(int argc, char *argv[])
 {
     apMainApp = new QApplication(argc, argv);
 
-    MainWindow wndMain;
-
     QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
     QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "hu" ).toString();
 
@@ -28,6 +26,8 @@ int main(int argc, char *argv[])
 
     apMainApp->installTranslator( poTransBackup );
     apMainApp->installTranslator( poTransQT );
+
+    MainWindow wndMain;
 
     wndMain.show();
 

@@ -18,6 +18,9 @@ public:
 protected:
     void timerEvent( QTimerEvent *p_poEvent );
 
+private slots:
+    void on_pbExit_clicked();
+
 private:
 
     Ui::MainWindow *ui;

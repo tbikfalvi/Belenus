@@ -8,6 +8,7 @@
 #include <QColor>
 #include <QIcon>
 #include <QColorDialog>
+#include <QFileDialog>
 #include "dlgpreferences.h"
 #include "../framework/sevexception.h"
 #include "dlgpanelappereance.h"
@@ -136,6 +137,56 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     gbDBSynchron->setVisible( false );
 
 //    btbButtons->standardButton( QDialogButtonBox::Ok ).setIcon( QIcon("./resources/40x40_ok.png") );
+
+    ledBinaryLocation->setText( g_poPrefs->getDirDbBinaries() );
+    ledBackupLocation->setText( g_poPrefs->getDirDbBackup() );
+    chkBackupDatabase->setChecked( g_poPrefs->isForceBackupDatabase() );
+    chkEnableDatabaseBackup->setChecked( g_poPrefs->isBackupDatabase() );
+
+    chkMonday->setEnabled( false );
+    chkTuesday->setEnabled( false );
+    chkWednesday->setEnabled( false );
+    chkThursday->setEnabled( false );
+    chkFriday->setEnabled( false );
+    chkSaturday->setEnabled( false );
+    chkSunday->setEnabled( false );
+
+    switch( g_poPrefs->getBackupDatabaseType() )
+    {
+        case 1:
+            rbBackupOnExitIfConfirmed->setChecked( true );
+            break;
+        case 2:
+            rbBackupOnExitCassaClose->setChecked( true );
+            break;
+        case 3:
+            rbBackupOnEveryWeek->setChecked( true );
+            break;
+        case 4:
+            rbBackupOnEveryMonth->setChecked( true );
+            break;
+        case 5:
+            rbBackupOnExitDays->setChecked( true );
+            break;
+    }
+
+    chkMonday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkTuesday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkWednesday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkThursday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkFriday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkSaturday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkSunday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+
+    QString qsBackupDays = g_poPrefs->getBackupDatabaseDays();
+
+    chkMonday->setChecked( qsBackupDays.contains(tr("Mon"), Qt::CaseInsensitive) );
+    chkTuesday->setChecked( qsBackupDays.contains(tr("Tue"), Qt::CaseInsensitive) );
+    chkWednesday->setChecked( qsBackupDays.contains(tr("Wed"), Qt::CaseInsensitive) );
+    chkThursday->setChecked( qsBackupDays.contains(tr("Thu"), Qt::CaseInsensitive) );
+    chkFriday->setChecked( qsBackupDays.contains(tr("Fri"), Qt::CaseInsensitive) );
+    chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
+    chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -252,12 +303,35 @@ void cDlgPreferences::accept()
     g_poPrefs->setGibbigPassword( ledGibbigPassword->text() );
     g_poPrefs->setGibbigEnabled( chkEnableGibbig->isChecked() );
 
-    g_poPrefs->save();
-
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
         g_poDB->executeQTQuery( QString( "UPDATE settings SET value=\"%1\" WHERE identifier=\"ABOUT_INFO_LINK\" " ).arg( ledAboutLink->text() ) );
     }
+
+    g_poPrefs->setDirDbBinaries( ledBinaryLocation->text() );
+    g_poPrefs->setDirDbBackup( ledBackupLocation->text() );
+    g_poPrefs->setForceBackupDatabase( chkBackupDatabase->isChecked() );
+    g_poPrefs->setBackupDatabase( chkEnableDatabaseBackup->isChecked() );
+
+    if( rbBackupOnExitIfConfirmed->isChecked() )    g_poPrefs->setBackupDatabaseType( 1 );
+    if( rbBackupOnExitCassaClose->isChecked() )     g_poPrefs->setBackupDatabaseType( 2 );
+    if( rbBackupOnEveryWeek->isChecked() )          g_poPrefs->setBackupDatabaseType( 3 );
+    if( rbBackupOnEveryMonth->isChecked() )         g_poPrefs->setBackupDatabaseType( 4 );
+    if( rbBackupOnExitDays->isChecked() )           g_poPrefs->setBackupDatabaseType( 5 );
+
+    QString qsBackupDays = "";
+
+    if( chkMonday->isChecked() )    qsBackupDays.append( tr(" Mon") );
+    if( chkTuesday->isChecked() )   qsBackupDays.append( tr(" Tue") );
+    if( chkWednesday->isChecked() ) qsBackupDays.append( tr(" Wed") );
+    if( chkThursday->isChecked() )  qsBackupDays.append( tr(" Thu") );
+    if( chkFriday->isChecked() )    qsBackupDays.append( tr(" Fri") );
+    if( chkSaturday->isChecked() )  qsBackupDays.append( tr(" Sat") );
+    if( chkSunday->isChecked() )    qsBackupDays.append( tr(" Sun") );
+
+    g_poPrefs->setBackupDatabaseDays( qsBackupDays );
+
+    g_poPrefs->save();
 
     QDialog::accept();
 }
@@ -312,3 +386,53 @@ void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &arg1)
     lblPCPartnerPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCPartnerVatpercent->text()) );
 }
 
+
+void cDlgPreferences::on_chkAutoOpenNewCassa_clicked()
+{
+    rbCassaContinueWithBalance->setEnabled( chkAutoOpenNewCassa->isChecked() );
+    rbCassaContinueWithoutBalance->setEnabled( chkAutoOpenNewCassa->isChecked() );
+}
+
+void cDlgPreferences::on_chkEnableDatabaseBackup_clicked()
+{
+    rbBackupOnExitIfConfirmed->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    rbBackupOnExitCassaClose->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    rbBackupOnEveryWeek->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    rbBackupOnEveryMonth->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    rbBackupOnExitDays->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkMonday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkTuesday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkWednesday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkThursday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkFriday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkSaturday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+    chkSunday->setEnabled( chkEnableDatabaseBackup->isChecked() );
+}
+
+void cDlgPreferences::on_pbChangeBinaryLocation_clicked()
+{
+    QString qsDir = QFileDialog::getExistingDirectory( this,
+                                                       tr("Select Directory"),
+                                                       ledBinaryLocation->text(),
+                                                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    qsDir.replace( '/', '\\' );
+
+    if( qsDir.length() > 0 )
+    {
+        ledBinaryLocation->setText( qsDir );
+    }
+}
+
+void cDlgPreferences::on_pbBackupLocation_clicked()
+{
+    QString qsDir = QFileDialog::getExistingDirectory( this,
+                                                       tr("Select Directory"),
+                                                       ledBackupLocation->text(),
+                                                       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    qsDir.replace( '/', '\\' );
+
+    if( qsDir.length() > 0 )
+    {
+        ledBackupLocation->setText( qsDir );
+    }
+}

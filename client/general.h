@@ -45,6 +45,7 @@ public:
     void             setApplicationLanguage( const QString &p_qsLang );
     int              customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 //    QString          convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
+    void             backupDatabase( QWidget *parent );
 
 private:
     QApplication    *m_poMainApplication;

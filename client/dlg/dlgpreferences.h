@@ -33,6 +33,10 @@ private slots:
     void on_spbBarcodeLen_valueChanged( int p_inValue );
     void on_ledPCLostPrice_textChanged(const QString &arg1);
     void on_ledPCPartnerPrice_textChanged(const QString &arg1);
+    void on_chkAutoOpenNewCassa_clicked();
+    void on_chkEnableDatabaseBackup_clicked();
+    void on_pbChangeBinaryLocation_clicked();
+    void on_pbBackupLocation_clicked();
 };
 
 #endif

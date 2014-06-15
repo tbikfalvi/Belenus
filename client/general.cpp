@@ -15,6 +15,7 @@
 
 #include <QMessageBox>
 #include <QList>
+#include <QProcess>
 
 #include "general.h"
 #include "belenus.h"
@@ -115,6 +116,76 @@ int cGeneral::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
     }
 
     return nRet;
+}
+//====================================================================================
+void cGeneral::backupDatabase(QWidget *parent)
+{
+    bool    bBackupDatabase = false;
+
+    if( g_poPrefs->isBackupDatabase() )
+    {
+        g_obLogger(cSeverity::INFO) << "Backup database process enabled";
+
+        QStringList     qslDays;
+        QString         qsBackupDays = g_poPrefs->getBackupDatabaseDays();
+        int             nDaysInMonth = QDate::currentDate().daysInMonth();
+
+        qslDays << QObject::tr("Mon")
+                << QObject::tr("Tue")
+                << QObject::tr("Wed")
+                << QObject::tr("Thu")
+                << QObject::tr("Fri")
+                << QObject::tr("Sat")
+                << QObject::tr("Sun");
+
+        if( g_poPrefs->getBackupDatabaseType() == 1 )
+        {
+            g_obLogger(cSeverity::INFO) << " on every exit" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 2 && g_obCassa.isCassaClosed() )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit if cassa is closed" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 3 && QDate::currentDate().dayOfWeek() == 7 )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit on the last day of week" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 4 && QDate::currentDate().day() == nDaysInMonth )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit on the last day of month" << EOM;
+            bBackupDatabase = true;
+        }
+        else if( g_poPrefs->getBackupDatabaseType() == 5 && qsBackupDays.contains(qslDays.at( QDate::currentDate().dayOfWeek()-1 ), Qt::CaseInsensitive) )
+        {
+            g_obLogger(cSeverity::INFO) << " on exit on the selected day: " << qslDays.at( QDate::currentDate().dayOfWeek()-1 ) << EOM;
+            bBackupDatabase = true;
+        }
+    }
+
+    if( g_poPrefs->isForceBackupDatabase() )
+    {
+        g_obLogger(cSeverity::INFO) << "User selected to force database backup process" << EOM;
+        bBackupDatabase = true;
+    }
+
+    if( bBackupDatabase )
+    {
+        if( QMessageBox::question( parent, QObject::tr("Question"),
+                                   QObject::tr("Do you want to backup database now?"),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
+        {
+            bBackupDatabase = false;
+        }
+    }
+
+    if( bBackupDatabase )
+    {
+        g_obLogger(cSeverity::INFO) << "Database backup process initiated" << EOM;
+        QProcess::startDetached( "dbbackup.exe" );
+    }
 }
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

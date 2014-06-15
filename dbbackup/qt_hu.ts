@@ -6,41 +6,39 @@
     <message>
         <location filename="mainwindow.ui" line="14"/>
         <source>Backup database</source>
-        <translation>Adatbázis archiválás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="75"/>
         <source>Backup database ...</source>
-        <translation>Adatbázis archiválás ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="82"/>
         <source>Please wait until the process finish.</source>
-        <translation>Kérem várjon amíg a folyamat befejeződik.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="64"/>
         <source>Error</source>
-        <translation>Hiba</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="65"/>
         <source>Unable to execute the following command:
 %1</source>
-        <translation>Nem sikerült végrehajtani a következő folyamatot:
-%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="73"/>
         <source>Warning</source>
-        <translation>Figyelmeztetés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="74"/>
         <source>Location of the MySQL archive application is not set.
 Please check your settings.</source>
-        <translation>A MySQL archiváló alkalmazás elérési útvonala nincs megadva.
-Kérem ellenőrizze a beállításokat.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -48,7 +46,7 @@ Kérem ellenőrizze a beállításokat.</translation>
     <message>
         <location filename="main.cpp" line="29"/>
         <source>Test message:</source>
-        <translation type="unfinished">Teszt szöveg:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

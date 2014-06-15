@@ -50,6 +50,7 @@ public:
     void                    setEnabled();
     void                    setDisabled();
     bool                    isCassaEnabled();
+    bool                    isCassaClosed();
 
     QString                 cassaOwnerStr();
     unsigned int            cassaOwnerId();

@@ -50,7 +50,7 @@ void MainWindow::processMain()
 //-------------------------------------------------------------------------------------------------
 {
     QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
-    QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/MySQLPath" ), "" ).toString();
+    QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsProcess       = QString("%1/mysqldump.exe").arg(qsMysqlPath);
     QString     qsParameters    = QString( "-u belenus -pbelenus belenus > backup/belenus_backup_%1.sql").arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsParameters );
@@ -77,4 +77,9 @@ void MainWindow::processMain()
 
     m_bProcessFinished = true;
     m_nTimer = startTimer( 500 );
+}
+
+void MainWindow::on_pbExit_clicked()
+{
+    close();
 }
