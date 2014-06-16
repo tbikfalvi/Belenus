@@ -79,11 +79,7 @@ void cDBCassaDenomination::save() throw( cSevException )
     {
         qsQuery = "UPDATE";
         qsQuery += " cassaDenominations SET ";
-
-        if( m_stArchive.compare("NEW") != 0 )
-        {
-            m_stArchive = "MOD";
-        }
+        m_stArchive = "MOD";
     }
     else
     {
