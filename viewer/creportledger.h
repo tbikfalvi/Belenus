@@ -25,11 +25,11 @@ private:
 //    void            _reportPartPanelUseUnits();
     int             _reportPartPaymentMethods();
     unsigned int    _reportPartExpenses();
-    void            _reportPartIncomeSummary( unsigned int p_uiTotalPrice,
+    void            _reportPartIncomeSummary( unsigned int p_uiProductSellTotal,
                                               unsigned int p_uiPatientCardTotal,
                                               unsigned int p_uiDeviceUsagesTotal,
                                               int p_nExpenses,
-                                              int p_nCassaTotal );
+                                              int p_nIncomeCard );
     int             _sumPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
     QString         _countPatientCardTypeSell( unsigned int p_uiPatientCardTypeId );
     int             _sumPanelUse( unsigned int p_uiPanelTypeId );

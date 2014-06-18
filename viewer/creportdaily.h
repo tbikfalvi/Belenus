@@ -29,11 +29,11 @@ private:
     int             _reportPartPaymentMethods();
     unsigned int    _reportPartExpenses();
     void            _reportPartStorno();
-    void            _reportPartIncomeSummary( unsigned int p_uiTotalPrice,
+    void            _reportPartIncomeSummary( unsigned int p_uiProductSoldTotal,
                                               unsigned int p_uiPatientCardTotal,
                                               unsigned int p_uiDeviceUsagesTotal,
                                               int p_nExpenses,
-                                              int p_nCassaTotal );
+                                              int p_nIncomeCard );
     QString         _countsumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId, unsigned int *p_uiPricePCSell );
     int             _sumPatientCardTypeSell( QString p_qsCassaId, unsigned int p_uiPatientCardTypeId );
     int             _sumUserIncome( unsigned int p_uiUserId, QString p_qsStart, QString p_qsStop );
