@@ -56,6 +56,8 @@ void cPreferences::init()
 
     m_bCassaAutoClose       = false;
     m_bCassaAutoWithdrawal  = false;
+    m_bCassaAutoCreateNew   = false;
+    m_inCassaCreateType     = 0;
 
     m_nPatientCardLostPrice         = 0;
     m_nPatientCardLostPriceVat      = 0;
@@ -88,6 +90,8 @@ void cPreferences::loadConfFileSettings()
         m_bBarcodeLengthDifferent = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
         m_bCassaAutoClose           = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
         m_bCassaAutoWithdrawal      = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
+        m_bCassaAutoCreateNew       = obPrefFile.value( QString::fromAscii( "CassaAutoCreate" ), false ).toBool();
+        m_inCassaCreateType         = obPrefFile.value( QString::fromAscii( "CassaCreateType" ), 4 ).toInt();
         m_qsDefaultCountry          = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
         m_inZipLength               = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
         m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
@@ -220,6 +224,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), m_bBarcodeLengthDifferent );
     obPrefFile.setValue( QString::fromAscii( "CassaAutoClose" ), m_bCassaAutoClose );
     obPrefFile.setValue( QString::fromAscii( "CassaAutoWithdrawal" ), m_bCassaAutoWithdrawal );
+    obPrefFile.setValue( QString::fromAscii( "CassaAutoCreate" ), m_bCassaAutoCreateNew );
+    obPrefFile.setValue( QString::fromAscii( "CassaCreateType" ), m_inCassaCreateType );
     obPrefFile.setValue( QString::fromAscii( "DefaultCountry" ), m_qsDefaultCountry );
     obPrefFile.setValue( QString::fromAscii( "ZipLength" ), m_inZipLength );
     obPrefFile.setValue( QString::fromAscii( "DBAutoSynchronization" ), m_bDBAutoArchive );
@@ -706,7 +712,6 @@ int cPreferences::getZipLength() const
     return m_inZipLength;
 }
 
-
 void cPreferences::setCassaAutoClose( const bool p_bCassaAutoClose, bool p_boSaveNow )
 {
     m_bCassaAutoClose = p_bCassaAutoClose;
@@ -737,6 +742,38 @@ void cPreferences::setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal, bo
 bool cPreferences::getCassaAutoWithdrawal() const
 {
     return m_bCassaAutoWithdrawal;
+}
+
+void cPreferences::setCassaAutoCreate( const bool p_bCassaAutoCreate, bool p_boSaveNow )
+{
+    m_bCassaAutoCreateNew = p_bCassaAutoCreate;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "CassaAutoCreate" ), m_bCassaAutoCreateNew );
+    }
+}
+
+bool cPreferences::getCassaAutoCreate() const
+{
+    return m_bCassaAutoCreateNew;
+}
+
+void cPreferences::setCassaCreateType( const int p_inCassaCreateType, bool p_boSaveNow )
+{
+    m_inCassaCreateType = p_inCassaCreateType;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "CassaCreateType" ), m_inCassaCreateType );
+    }
+}
+
+int cPreferences::getCassaCreateType() const
+{
+    return m_inCassaCreateType;
 }
 
 void cPreferences::setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow )

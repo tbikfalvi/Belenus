@@ -106,6 +106,19 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         chkCassaAutoWithdrawal->setChecked( false );
         chkCassaAutoWithdrawal->setEnabled( false );
     }
+    chkAutoOpenNewCassa->setChecked( g_poPrefs->getCassaAutoCreate() );
+    rbCassaContinueWithBalance->setEnabled( g_poPrefs->getCassaAutoCreate() );
+    rbCassaContinueWithoutBalance->setEnabled( g_poPrefs->getCassaAutoCreate() );
+    switch( g_poPrefs->getCassaCreateType() )
+    {
+        case 1:
+            rbCassaContinueWithBalance->setChecked( true );
+            break;
+        case 2:
+            rbCassaContinueWithoutBalance->setChecked( true );
+            break;
+    }
+
     ledCurrencyFullName->setText( g_poPrefs->getCurrencyLong() );
     ledCurrencyShortName->setText( g_poPrefs->getCurrencyShort() );
     ledSeparatorDecimal->setText( g_poPrefs->getCurrencyDecimalSeparator() );
@@ -280,6 +293,11 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
+    g_poPrefs->setCassaAutoCreate( chkAutoOpenNewCassa->isChecked() );
+    if( rbCassaContinueWithBalance->isChecked() )
+        g_poPrefs->setCassaCreateType( 1 );
+    else if( rbCassaContinueWithoutBalance->isChecked() )
+        g_poPrefs->setCassaCreateType( 2 );
     g_poPrefs->setCurrencyLong( ledCurrencyFullName->text() );
     g_poPrefs->setCurrencyShort( ledCurrencyShortName->text() );
     g_poPrefs->setCurrencyDecimalSeparator( ledSeparatorDecimal->text() );

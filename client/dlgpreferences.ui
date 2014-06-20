@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>7</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1213,6 +1213,9 @@ is different :</string>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
             <widget class="QRadioButton" name="rbCassaContinueWithBalance">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>With the previous cassa balance</string>
              </property>
@@ -1220,6 +1223,9 @@ is different :</string>
            </item>
            <item>
             <widget class="QRadioButton" name="rbCassaContinueWithoutBalance">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>with empty cassa</string>
              </property>

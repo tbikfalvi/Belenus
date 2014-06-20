@@ -274,7 +274,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="51"/>
-        <location filename="creportdaily.cpp" line="784"/>
+        <location filename="creportdaily.cpp" line="799"/>
         <source>Products sold</source>
         <translation></translation>
     </message>
@@ -290,35 +290,35 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="202"/>
-        <location filename="creportdaily.cpp" line="367"/>
-        <location filename="creportdaily.cpp" line="551"/>
-        <location filename="creportdaily.cpp" line="665"/>
-        <location filename="creportdaily.cpp" line="727"/>
+        <location filename="creportdaily.cpp" line="374"/>
+        <location filename="creportdaily.cpp" line="556"/>
+        <location filename="creportdaily.cpp" line="666"/>
+        <location filename="creportdaily.cpp" line="735"/>
         <source>Amount</source>
         <translation></translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="180"/>
-        <location filename="creportdaily.cpp" line="249"/>
-        <location filename="creportdaily.cpp" line="335"/>
-        <location filename="creportdaily.cpp" line="412"/>
-        <location filename="creportdaily.cpp" line="472"/>
-        <location filename="creportdaily.cpp" line="528"/>
-        <location filename="creportdaily.cpp" line="635"/>
-        <location filename="creportdaily.cpp" line="707"/>
-        <location filename="creportdaily.cpp" line="767"/>
-        <location filename="creportdaily.cpp" line="811"/>
+        <location filename="creportdaily.cpp" line="256"/>
+        <location filename="creportdaily.cpp" line="342"/>
+        <location filename="creportdaily.cpp" line="419"/>
+        <location filename="creportdaily.cpp" line="479"/>
+        <location filename="creportdaily.cpp" line="535"/>
+        <location filename="creportdaily.cpp" line="638"/>
+        <location filename="creportdaily.cpp" line="715"/>
+        <location filename="creportdaily.cpp" line="782"/>
+        <location filename="creportdaily.cpp" line="826"/>
         <source>Sum total</source>
         <translation></translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="56"/>
-        <location filename="creportdaily.cpp" line="791"/>
+        <location filename="creportdaily.cpp" line="806"/>
         <source>Patientcards sold</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="798"/>
+        <location filename="creportdaily.cpp" line="813"/>
         <source>Device usages</source>
         <translation></translation>
     </message>
@@ -329,7 +329,8 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="22"/>
-        <source>Show only cassa started on selected day</source>
+        <source>Calculate only with the selected day&apos;s entries</source>
+        <oldsource>Show only cassa started on selected day</oldsource>
         <translation></translation>
     </message>
     <message>
@@ -360,7 +361,7 @@
     </message>
     <message>
         <location filename="creportdaily.cpp" line="71"/>
-        <location filename="creportdaily.cpp" line="805"/>
+        <location filename="creportdaily.cpp" line="820"/>
         <source>Expenses</source>
         <translation></translation>
     </message>
@@ -410,44 +411,44 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="547"/>
+        <location filename="creportdaily.cpp" line="554"/>
         <source>Payed by card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="546"/>
+        <location filename="creportdaily.cpp" line="553"/>
         <source>Payed by cash</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="549"/>
+        <location filename="creportdaily.cpp" line="555"/>
         <source>Payed by voucher</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="664"/>
-        <location filename="creportdaily.cpp" line="726"/>
+        <location filename="creportdaily.cpp" line="665"/>
+        <location filename="creportdaily.cpp" line="734"/>
         <source>Description</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="818"/>
+        <location filename="creportdaily.cpp" line="833"/>
         <source>Cash/voucher</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="825"/>
+        <location filename="creportdaily.cpp" line="840"/>
         <source>Card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="239"/>
-        <location filename="creportdaily.cpp" line="279"/>
-        <location filename="creportdaily.cpp" line="444"/>
-        <location filename="creportdaily.cpp" line="500"/>
-        <location filename="creportdaily.cpp" line="613"/>
-        <location filename="creportdaily.cpp" line="698"/>
-        <location filename="creportdaily.cpp" line="758"/>
+        <location filename="creportdaily.cpp" line="246"/>
+        <location filename="creportdaily.cpp" line="286"/>
+        <location filename="creportdaily.cpp" line="451"/>
+        <location filename="creportdaily.cpp" line="507"/>
+        <location filename="creportdaily.cpp" line="619"/>
+        <location filename="creportdaily.cpp" line="706"/>
+        <location filename="creportdaily.cpp" line="773"/>
         <source>Sum</source>
         <translation></translation>
     </message>
@@ -486,38 +487,36 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="46"/>
-        <location filename="creportledger.cpp" line="606"/>
+        <location filename="creportledger.cpp" line="589"/>
         <source>Products sold</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="156"/>
+        <location filename="creportledger.cpp" line="155"/>
         <source>Product name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="157"/>
-        <location filename="creportledger.cpp" line="457"/>
+        <location filename="creportledger.cpp" line="156"/>
+        <location filename="creportledger.cpp" line="453"/>
         <source>Count</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="158"/>
-        <location filename="creportledger.cpp" line="323"/>
-        <location filename="creportledger.cpp" line="393"/>
-        <location filename="creportledger.cpp" line="493"/>
+        <location filename="creportledger.cpp" line="157"/>
+        <location filename="creportledger.cpp" line="321"/>
+        <location filename="creportledger.cpp" line="390"/>
+        <location filename="creportledger.cpp" line="487"/>
         <source>Amount</source>
         <translation></translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="136"/>
-        <location filename="creportledger.cpp" line="205"/>
-        <location filename="creportledger.cpp" line="291"/>
-        <location filename="creportledger.cpp" line="368"/>
-        <location filename="creportledger.cpp" line="435"/>
-        <location filename="creportledger.cpp" line="474"/>
-        <location filename="creportledger.cpp" line="577"/>
-        <location filename="creportledger.cpp" line="633"/>
+        <location filename="creportledger.cpp" line="289"/>
+        <location filename="creportledger.cpp" line="366"/>
+        <location filename="creportledger.cpp" line="470"/>
+        <location filename="creportledger.cpp" line="562"/>
+        <location filename="creportledger.cpp" line="616"/>
         <source>Sum total</source>
         <translation></translation>
     </message>
@@ -528,7 +527,7 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="51"/>
-        <location filename="creportledger.cpp" line="613"/>
+        <location filename="creportledger.cpp" line="596"/>
         <source>Patientcards sold</source>
         <translation></translation>
     </message>
@@ -539,50 +538,49 @@
     </message>
     <message>
         <location filename="creportledger.cpp" line="66"/>
-        <location filename="creportledger.cpp" line="627"/>
+        <location filename="creportledger.cpp" line="610"/>
         <source>Expenses</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="195"/>
-        <location filename="creportledger.cpp" line="235"/>
-        <location filename="creportledger.cpp" line="426"/>
-        <location filename="creportledger.cpp" line="555"/>
+        <location filename="creportledger.cpp" line="192"/>
+        <location filename="creportledger.cpp" line="422"/>
+        <location filename="creportledger.cpp" line="543"/>
         <source>Sum</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="392"/>
+        <location filename="creportledger.cpp" line="389"/>
         <source>Description</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="488"/>
+        <location filename="creportledger.cpp" line="484"/>
         <source>Payed by cash</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="489"/>
+        <location filename="creportledger.cpp" line="485"/>
         <source>Payed by card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="491"/>
+        <location filename="creportledger.cpp" line="486"/>
         <source>Payed by voucher</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="620"/>
+        <location filename="creportledger.cpp" line="603"/>
         <source>Device usages</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="640"/>
+        <location filename="creportledger.cpp" line="623"/>
         <source>Cash/voucher</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="647"/>
+        <location filename="creportledger.cpp" line="630"/>
         <source>Card</source>
         <translation></translation>
     </message>

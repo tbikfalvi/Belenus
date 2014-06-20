@@ -152,7 +152,6 @@ unsigned int cReportLedger::_reportPartProductSell()
     startSection();
     addTable();
     addTableRow();
-    addTableCell();
     addTableCell( tr("Product name"), "bold" );
     addTableCell( tr("Count"), "center bold" );
     addTableCell( tr("Amount"), "right bold" );
@@ -183,7 +182,6 @@ unsigned int cReportLedger::_reportPartProductSell()
             uiTotalCassa += poQueryProducts->value(2).toInt();
 
             addTableRow();
-            addTableCell();
             addTableCell( poQueryProducts->value(0).toString() );
             addTableCell( poQueryProducts->value(1).toString(), "center" );
             addTableCell( obPrice.currencyFullStringShort(), "right" );
@@ -191,7 +189,6 @@ unsigned int cReportLedger::_reportPartProductSell()
         cCurrency   obTotalPriceAm( uiTotalCassa );
 
         addTableRow();
-        addTableCell();
         addTableCell( tr("Sum"), "bold" );
         addTableCell();
         addTableCell( obTotalPriceAm.currencyFullStringShort(), "right bold" );

@@ -93,6 +93,10 @@ public:
     bool            getCassaAutoClose() const;
     void            setCassaAutoWithdrawal( const bool p_bCassaAutoWithdrawal, bool p_boSaveNow = false );
     bool            getCassaAutoWithdrawal() const;
+    void            setCassaAutoCreate( const bool p_bCassaAutoCreate, bool p_boSaveNow = false );
+    bool            getCassaAutoCreate() const;
+    void            setCassaCreateType( const int p_inCassaCreateType, bool p_boSaveNow = false );
+    int             getCassaCreateType() const;
     void            setDefaultCountry( const QString &p_qsDefaultCountry, bool p_boSaveNow = false );
     QString         getDefaultCountry() const;
     void            setZipLength( const int p_inZip, bool p_boSaveNow = false );
@@ -209,6 +213,8 @@ private:
     int             m_inDeviceUseVAT;
     bool            m_bCassaAutoClose;
     bool            m_bCassaAutoWithdrawal;
+    bool            m_bCassaAutoCreateNew;
+    int             m_inCassaCreateType;
     QString         m_qsDefaultCountry;
     int             m_inZipLength;
     bool            m_bDBAutoArchive;

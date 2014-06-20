@@ -428,45 +428,75 @@ void cWndMain::loginUser()
                                         << " "
                                         << QDate::currentDate().toString( "yyyy-MM-dd" )
                                         << EOM;
-            switch( customMsgBox( this, MSG_QUESTION,
-                                  tr(" Use opened cassa | Start new cassa with balance | Start new cassa "),
-                                  tr("The latest cassa opened on a different date.\n"
-                                     "What would you like to do?"),
-                                  tr("The previously created and not closed cassa started to be used on "
-                                     "a different date. If you continue to use that cassa, your daily "
-                                     "report will include summary of more than one day.\n"
-                                     "Click the 'Use opened cassa' button if you want to use the opened cassa. "
-                                     "In this case the start and the end date will be different of the cassa and the "
-                                     "cassa daily report could be misleading.\n"
-                                     "Click the 'Start new cassa with balance' button if you want to use a new cassa "
-                                     "but you want to use the balance of the old cassa as a starting balance. In this "
-                                     "case the previous cassa balance will be reseted and a new cassa will be opened for you "
-                                     "with balance of the previous cassa\n"
-                                     "Click the 'Start new cassa' button if you want to use a new cassa. In this case the "
-                                     "previous cassa balance will be reseted and a new cassa will be opened for you."
-                                     )))
+            if( g_poPrefs->getCassaAutoCreate() )
             {
-                case 1:
-                    g_obCassa.cassaContinue();
-                    g_obLogger(cSeverity::INFO) << "User selected to continue to use cassa" << EOM;
-                    break;
-                case 2:
+                switch( g_poPrefs->getCassaCreateType() )
                 {
-                    int inBalance = g_obCassa.cassaBalance();
-                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
-                    g_obCassa.cassaClose();
-                    g_obCassa.createNew( g_obUser.id() );
-                    g_obCassa.cassaIncreaseMoney( inBalance, tr("Cassa continue with balance") );
-                    g_obLogger(cSeverity::INFO) << "User selected to start new cassa with balance" << EOM;
-                    break;
+                    case 2:
+                    {
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                        g_obLogger(cSeverity::INFO) << "Settings forced to close cassa with money withdraw and create new cassa" << EOM;
+                        break;
+                    }
+                    case 1:
+                    default:
+                    {
+                        int inBalance = g_obCassa.cassaBalance();
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                        g_obCassa.cassaIncreaseMoney( inBalance, tr("Cassa continue with balance") );
+                        g_obLogger(cSeverity::INFO) << "Settings forced to start new cassa with balance" << EOM;
+                        break;
+                    }
                 }
-                case 3:
-                default:
-                    g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
-                    g_obCassa.cassaClose();
-                    g_obCassa.createNew( g_obUser.id() );
-                    g_obLogger(cSeverity::INFO) << "User selected to close cassa with money withdraw and create new cassa" << EOM;
-                    break;
+            }
+            else
+            {
+                switch( customMsgBox( this, MSG_QUESTION,
+                                      tr(" Use opened cassa | Start new cassa with balance | Start new cassa "),
+                                      tr("The latest cassa opened on a different date.\n"
+                                         "What would you like to do?"),
+                                      tr("The previously created and not closed cassa started to be used on "
+                                         "a different date. If you continue to use that cassa, your daily "
+                                         "report will include summary of more than one day.\n"
+                                         "Click the 'Use opened cassa' button if you want to use the opened cassa. "
+                                         "In this case the start and the end date will be different of the cassa and the "
+                                         "cassa daily report could be misleading.\n"
+                                         "Click the 'Start new cassa with balance' button if you want to use a new cassa "
+                                         "but you want to use the balance of the old cassa as a starting balance. In this "
+                                         "case the previous cassa balance will be reseted and a new cassa will be opened for you "
+                                         "with balance of the previous cassa\n"
+                                         "Click the 'Start new cassa' button if you want to use a new cassa. In this case the "
+                                         "previous cassa balance will be reseted and a new cassa will be opened for you."
+                                         )))
+                {
+                    case 1:
+                        g_obCassa.cassaContinue();
+                        g_obLogger(cSeverity::INFO) << "User selected to continue to use cassa" << EOM;
+                        break;
+                    case 2:
+                    {
+                        int inBalance = g_obCassa.cassaBalance();
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                        g_obCassa.cassaIncreaseMoney( inBalance, tr("Cassa continue with balance") );
+                        g_obLogger(cSeverity::INFO) << "User selected to start new cassa with balance" << EOM;
+                        break;
+                    }
+                    case 3:
+                    default:
+                    {
+                        g_obCassa.cassaDecreaseMoney( g_obCassa.cassaBalance(), tr("Cash left in cassa.") );
+                        g_obCassa.cassaClose();
+                        g_obCassa.createNew( g_obUser.id() );
+                        g_obLogger(cSeverity::INFO) << "User selected to close cassa with money withdraw and create new cassa" << EOM;
+                        break;
+                    }
+                }
             }
         }
         else
