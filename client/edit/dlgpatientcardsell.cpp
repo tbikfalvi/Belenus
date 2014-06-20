@@ -27,6 +27,7 @@
 #include "../db/dbpatientcardunits.h"
 #include "../db/dbdiscount.h"
 #include "../crud/dlgpatientselect.h"
+#include "../edit/dlgguestedit.h"
 
 //===========================================================================================================
 //
@@ -44,6 +45,7 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
+    pbCreatePatient->setIcon( QIcon("./resources/40x40_patient_new.png") );
 
     if( m_poPatientCard )
     {
@@ -472,4 +474,34 @@ void cDlgPatientCardSell::on_pbSelectPatient_clicked()
             cmbPatient->setCurrentIndex( cmbPatient->findData( obDlgPatientSelect.selectedPatientId() ) );
         }
     }
+}
+
+void cDlgPatientCardSell::on_pbCreatePatient_clicked()
+{
+    QSqlQuery *poQuery;
+
+    cDBGuest *poGuest = new cDBGuest;
+    poGuest->createNew();
+
+    cDlgGuestEdit  obDlgEdit( this, poGuest );
+    obDlgEdit.setWindowTitle( tr( "New Patient" ) );
+
+    unsigned int    uiGuestId = 0;
+
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        uiGuestId = obDlgEdit.guestId();
+    }
+
+    cmbPatient->clear();
+    cmbPatient->addItem( tr("<Not selected>"), 0 );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT patientId, name FROM patients WHERE active=1 AND archive<>\"DEL\" ORDER BY name " ) );
+    while( poQuery->next() )
+    {
+        cmbPatient->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+        if( uiGuestId == poQuery->value( 0 ) )
+            cmbPatient->setCurrentIndex( cmbPatient->count()-1 );
+    }
+
+    delete poGuest;
 }

@@ -16,6 +16,8 @@ public:
     cDlgGuestEdit( QWidget *p_poParent = 0, cDBGuest *p_poGuest = NULL, cDBPostponed *p_poPostponed = NULL );
     ~cDlgGuestEdit();
 
+    unsigned int     guestId();
+
 protected:
     cDBGuest        *m_poGuest;
     cDBPostponed    *m_poPostponed;

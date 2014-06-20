@@ -59,6 +59,7 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     pbDislink->setIcon( QIcon("./resources/40x40_patientcard_disjoin.png") );
     pbSellCard->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     pbEditDiscount->setIcon( QIcon("./resources/40x40_edit.png") );
+    lblAssignCardInfo->setPixmap( QPixmap("./resources/40x40_information.png") );
 
     chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
@@ -414,7 +415,6 @@ void cDlgGuestEdit::on_pbDislink_clicked()
         }
     }
     ledBarcode->setText( "" );
-    ledPatientcardType->setText( "" );
     _fillPatientCardData();
     slotEnableButtons();
 }
@@ -464,6 +464,45 @@ void cDlgGuestEdit::slotEnableButtons()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::_fillPatientCardData()
 {
+    QSqlQuery  *poQuery;
+    QString     qsBarcodes      = "";
+    QString     qsPatientCards  = tr("Assigned patientcards:\nBarcode\tPatientcard type");
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode, patientcardtypes.name FROM "
+                                               "patientcards, patientcardtypes WHERE "
+                                               "patientcards.patientcardtypeid=patientcardtypes.patientcardtypeid AND "
+                                               "patientcards.patientId=%1 " ).arg( m_poGuest->id() ) );
+
+    while( poQuery->next() )
+    {
+        qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
+        qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+    }
+
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode, patientcardtypes.name FROM "
+                                               "patientcards, connectpatientwithcard, patientcardtypes WHERE "
+                                               "patientcards.patientcardid=connectpatientwithcard.patientcardid AND "
+                                               "patientcards.patientcardtypeid=patientcardtypes.patientcardtypeid AND "
+                                               "connectpatientwithcard.patientId=%1 " ).arg( m_poGuest->id() ) );
+    while( poQuery->next() )
+    {
+        qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
+        qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+    }
+
+    if( qsBarcodes.length() > 0 )
+    {
+        ledBarcode->setText( qsBarcodes.left( qsBarcodes.length()-2 ) );
+        ledBarcode->setToolTip( qsPatientCards );
+        lblAssignCardInfo->setToolTip( qsPatientCards );
+    }
+    else
+    {
+        ledBarcode->setText( "" );
+        ledBarcode->setToolTip( "" );
+        lblAssignCardInfo->setToolTip( "" );
+    }
+/*
     try
     {
         m_poPatientCard->loadPatient( m_poGuest->id() );
@@ -473,7 +512,7 @@ void cDlgGuestEdit::_fillPatientCardData()
         cDBPatientCardType  obDBPatientCardType;
 
         obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
-        ledPatientcardType->setText( obDBPatientCardType.name() );
+//        ledPatientcardType->setText( obDBPatientCardType.name() );
     }
     catch( cSevException &e )
     {
@@ -497,7 +536,7 @@ void cDlgGuestEdit::_fillPatientCardData()
                 cDBPatientCardType  obDBPatientCardType;
 
                 obDBPatientCardType.load( m_poPatientCard->patientCardTypeId() );
-                ledPatientcardType->setText( obDBPatientCardType.name() );
+//                ledPatientcardType->setText( obDBPatientCardType.name() );
             }
             catch( cSevException &e )
             {
@@ -508,6 +547,7 @@ void cDlgGuestEdit::_fillPatientCardData()
             }
         }
     }
+*/
 }
 //===========================================================================================================
 //
@@ -593,3 +633,9 @@ void cDlgGuestEdit::on_pbEditDiscount_clicked()
 
     slotUpdateDiscountSample();
 }
+
+unsigned int cDlgGuestEdit::guestId()
+{
+    return m_poGuest->id();
+}
+
