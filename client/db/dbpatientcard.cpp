@@ -307,7 +307,7 @@ void cDBPatientCard::synchronizeUnits() throw()
     {
         qsQuery += QString( "OR patientCardId=%2 " ).arg( parentId() );
     }
-    qsQuery += QString( " ) AND active=1 " );
+    qsQuery += QString( " ) AND prepared=0 AND active=1 " );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
 

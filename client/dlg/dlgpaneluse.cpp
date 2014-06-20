@@ -78,6 +78,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
                                    "patientCardId=%1 AND "
                                    "unitTime=%2 AND "
                                    "validDateTo=\"%3\" AND "
+                                   "prepared=0 AND "
                                    "active=1" ).arg( obDBPatientcardUnit.patientCardId() ).arg( obDBPatientcardUnit.unitTime() ).arg( obDBPatientcardUnit.validDateTo() );
         QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
 
@@ -270,6 +271,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                                        "FROM patientcardunits "
                                        "WHERE patientCardId=%1 "
                                        "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                       "AND prepared=0 "
                                        "AND active=1 "
                                        "GROUP BY unitTime, validDateTo ORDER BY validDateTo, patientCardUnitId" ).arg( m_obDBPatientCard.id() );
             QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );

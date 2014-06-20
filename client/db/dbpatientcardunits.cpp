@@ -35,6 +35,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
                                const QString &p_qsValidDateFrom,
                                const QString &p_qsValidDateTo,
                                const QString &p_qsDateTime,
+                               const bool p_bPrepared,
                                const bool p_bActive,
                                const QString &p_qsArchive) throw()
 {
@@ -48,6 +49,7 @@ void cDBPatientcardUnit::init( const unsigned int p_uiId,
     m_qsValidDateFrom   = p_qsValidDateFrom;
     m_qsValidDateTo     = p_qsValidDateTo;
     m_qsDateTime        = p_qsDateTime;
+    m_bPrepared         = p_bPrepared;
     m_bActive           = p_bActive;
     m_qsArchive         = p_qsArchive;
 }
@@ -64,6 +66,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
     int inValidDateFromIdx  = p_obRecord.indexOf( "validDateFrom" );
     int inValidDateToIdx    = p_obRecord.indexOf( "validDateTo" );
     int inDateTimeUsedIdx   = p_obRecord.indexOf( "dateTimeUsed" );
+    int inPreparedIdx       = p_obRecord.indexOf( "prepared" );
     int inActiveIdx         = p_obRecord.indexOf( "active" );
     int inArchiveIdx        = p_obRecord.indexOf( "archive" );
 
@@ -77,6 +80,7 @@ void cDBPatientcardUnit::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inValidDateFromIdx ).toString(),
           p_obRecord.value( inValidDateToIdx ).toString(),
           p_obRecord.value( inDateTimeUsedIdx ).toString(),
+          p_obRecord.value( inPreparedIdx ).toBool(),
           p_obRecord.value( inActiveIdx ).toBool(),
           p_obRecord.value( inArchiveIdx ).toString() );
 }
@@ -131,6 +135,8 @@ QStringList cDBPatientcardUnit::loadPCId( const unsigned int p_uiId ) throw( cSe
         qsPCUnit.append( poQuery->value(10).toString() );
         qsPCUnit.append( "\t" );
         qsPCUnit.append( poQuery->value(11).toString() );
+        qsPCUnit.append( "\t" );
+        qsPCUnit.append( poQuery->value(12).toString() );
         qslRet.append( qsPCUnit );
     }
 
@@ -175,6 +181,7 @@ void cDBPatientcardUnit::save() throw( cSevException )
     qsQuery += QString( "validDateFrom = \"%1\", " ).arg( m_qsValidDateFrom );
     qsQuery += QString( "validDateTo = \"%1\", " ).arg( m_qsValidDateTo );
     qsQuery += QString( "dateTimeUsed = \"%1\", " ).arg( m_qsDateTime );
+    qsQuery += QString( "prepared = %1, " ).arg( m_bPrepared );
     qsQuery += QString( "active = %1, " ).arg( m_bActive );
     qsQuery += QString( "archive = \"%1\" " ).arg( m_qsArchive );
     if( m_uiId )
@@ -348,6 +355,16 @@ QString cDBPatientcardUnit::dateTime() const throw()
 void cDBPatientcardUnit::setDateTime(const QString &p_qsDateTime) throw()
 {
     m_qsDateTime = p_qsDateTime;
+}
+
+bool cDBPatientcardUnit::prepared() const throw()
+{
+    return m_bPrepared;
+}
+
+void cDBPatientcardUnit::setPrepared( const bool p_bPrepared ) throw()
+{
+    m_bPrepared = p_bPrepared;
 }
 
 bool cDBPatientcardUnit::active() const throw()

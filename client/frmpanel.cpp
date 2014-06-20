@@ -279,6 +279,15 @@ void cFrmPanel::clear()
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
 
+    for( int i=0; i<m_vrPatientCard.qslUnitIds.count(); i++ )
+    {
+        cDBPatientcardUnit obDBPatientcardUnit;
+
+        obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+        obDBPatientcardUnit.setPrepared( false );
+        obDBPatientcardUnit.save();
+    }
+
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.qslUnitIds       = QStringList();
     m_vrPatientCard.inUnitTime       = 0;
@@ -432,6 +441,16 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     m_vrPatientCard.qslUnitIds       = p_qslUnitIds;
     m_vrPatientCard.inUnitTime       = p_inLength;
     m_inCardTimeRemains              = p_inLength;
+
+    for( int i=0; i<m_vrPatientCard.qslUnitIds.count(); i++ )
+    {
+        cDBPatientcardUnit obDBPatientcardUnit;
+
+        obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+        obDBPatientcardUnit.setPanelId( m_uiId );
+        obDBPatientcardUnit.setPrepared( true );
+        obDBPatientcardUnit.save();
+    }
 
     m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
     m_pDBLedgerDevice->setTimeCard( p_inLength );
@@ -901,6 +920,7 @@ void cFrmPanel::closeAttendance()
                 obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
                 obDBPatientcardUnit.setPanelId( m_uiId );
                 obDBPatientcardUnit.setDateTime( QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") );
+                obDBPatientcardUnit.setPrepared( false );
                 obDBPatientcardUnit.setActive( false );
                 obDBPatientcardUnit.save();
             }
