@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT          += core gui
-TARGET       = dbbackup
+TARGET       = DBBackup
 TEMPLATE     = app
 RC_FILE      = dbbackup.rc
 RESOURCES   += dbbackup.qrc
