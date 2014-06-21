@@ -48,6 +48,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 
     m_bInit = true;
 
+    m_dlgProgress = new cDlgProgress( this );
+
     setWindowTitle( tr( "Attendance List" ) );
     setWindowIcon( QIcon("./resources/40x40_patient.png") );
 
@@ -190,6 +192,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
 cDlgGuestEdit::~cDlgGuestEdit()
 {
     cTracer obTrace( "cDlgGuestEdit::~cDlgGuestEdit" );
+
+    delete m_dlgProgress;
 }
 //===========================================================================================================
 //
@@ -265,7 +269,11 @@ void cDlgGuestEdit::on_pbSave_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbAssignCard_clicked()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCardSelect   obDlgSelect( this );
+
+    m_dlgProgress->hideProgress();
 
     if( obDlgSelect.exec() == QDialog::Accepted )
     {
@@ -389,28 +397,29 @@ void cDlgGuestEdit::on_pbSellCard_clicked()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::on_pbDislink_clicked()
 {
+    m_dlgProgress->showProgress();
+
     cDlgPatientCardSelect   obDlgSelect( this, m_poGuest->id() );
+
     unsigned int uiPCardId = 0;
+
+    m_dlgProgress->hideProgress();
 
     if( obDlgSelect.exec() == QDialog::Accepted )
     {
         uiPCardId = obDlgSelect.selected();
 
-        if( m_poPatientCard->id() < 1 ) return;
-
         if( QMessageBox::question( this, tr( "Question" ),
                                    tr( "Are you sure you want to disjoin the selected card from patient?" ),
                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
         {
-            if( m_poPatientCard->id() == uiPCardId && m_poPatientCard->patientId() == m_poGuest->id() )
+            m_poPatientCard->load( uiPCardId );
+            if( m_poPatientCard->patientId() == m_poGuest->id() )
             {
                 m_poPatientCard->setPatientId( 0 );
                 m_poPatientCard->save();
             }
-            else
-            {
-                g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2" ).arg(uiPCardId).arg(m_poGuest->id()) );
-            }
+            g_poDB->executeQTQuery( QString( "DELETE FROM connectPatientWithCard WHERE patientCardId = %1 AND patientId = %2" ).arg(uiPCardId).arg(m_poGuest->id()) );
             m_poPatientCard->createNew();
         }
     }
@@ -464,6 +473,12 @@ void cDlgGuestEdit::slotEnableButtons()
 //-----------------------------------------------------------------------------------------------------------
 void cDlgGuestEdit::_fillPatientCardData()
 {
+    ledBarcode->setText( "" );
+    ledBarcode->setToolTip( "" );
+    lblAssignCardInfo->setToolTip( "" );
+
+    if( m_poGuest->id() == 0 )  return;
+
     QSqlQuery  *poQuery;
     QString     qsBarcodes      = "";
     QString     qsPatientCards  = tr("Assigned patientcards:\nBarcode\tPatientcard type");
@@ -471,23 +486,31 @@ void cDlgGuestEdit::_fillPatientCardData()
     poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode, patientcardtypes.name FROM "
                                                "patientcards, patientcardtypes WHERE "
                                                "patientcards.patientcardtypeid=patientcardtypes.patientcardtypeid AND "
-                                               "patientcards.patientId=%1 " ).arg( m_poGuest->id() ) );
+                                               "patientcards.patientId=%1 AND "
+                                               "patientcards.licenceId=%2 " ).arg( m_poGuest->id() ).arg( g_poPrefs->getLicenceId() ) );
 
     while( poQuery->next() )
     {
-        qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
-        qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+        if( !qsBarcodes.contains( poQuery->value(0).toString() ) )
+        {
+            qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
+            qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+        }
     }
 
     poQuery = g_poDB->executeQTQuery( QString( "SELECT barcode, patientcardtypes.name FROM "
                                                "patientcards, connectpatientwithcard, patientcardtypes WHERE "
                                                "patientcards.patientcardid=connectpatientwithcard.patientcardid AND "
                                                "patientcards.patientcardtypeid=patientcardtypes.patientcardtypeid AND "
-                                               "connectpatientwithcard.patientId=%1 " ).arg( m_poGuest->id() ) );
+                                               "connectpatientwithcard.patientId=%1 AND "
+                                               "patientcards.licenceId=%2 " ).arg( m_poGuest->id() ).arg( g_poPrefs->getLicenceId() ) );
     while( poQuery->next() )
     {
-        qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
-        qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+        if( !qsBarcodes.contains( poQuery->value(0).toString() ) )
+        {
+            qsBarcodes.append( QString("%1, ").arg( poQuery->value(0).toString() ) );
+            qsPatientCards.append( QString("\n%1\t%2").arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ) );
+        }
     }
 
     if( qsBarcodes.length() > 0 )
@@ -495,12 +518,6 @@ void cDlgGuestEdit::_fillPatientCardData()
         ledBarcode->setText( qsBarcodes.left( qsBarcodes.length()-2 ) );
         ledBarcode->setToolTip( qsPatientCards );
         lblAssignCardInfo->setToolTip( qsPatientCards );
-    }
-    else
-    {
-        ledBarcode->setText( "" );
-        ledBarcode->setToolTip( "" );
-        lblAssignCardInfo->setToolTip( "" );
     }
 /*
     try
