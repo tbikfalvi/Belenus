@@ -74,36 +74,58 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     if( m_poGuest )
     {
         ledName->setText( m_poGuest->name() );
-        if( m_poGuest->gender() == 1 ) rbGenderMale->setChecked(true);
-        else if( m_poGuest->gender() == 2 ) rbGenderFemale->setChecked(true);
-        ledEmail->setText( m_poGuest->email() );
-        switch( m_poGuest->ageType() )
+        if( m_poGuest->gender() == 1 )              rbGenderMale->setChecked(true);
+        else if( m_poGuest->gender() == 2 )         rbGenderFemale->setChecked(true);
+        if( m_poGuest->dateBirth().length() > 0 )
         {
-            case 1:
-                rbAge1->setChecked( true );
-                break;
-            case 2:
-                rbAge2->setChecked( true );
-                break;
-            case 3:
-                rbAge3->setChecked( true );
-                break;
-            case 4:
-                rbAge4->setChecked( true );
-                break;
-            case 5:
-                rbAge5->setChecked( true );
-                break;
-            case 6:
-                rbAge6->setChecked( true );
-                break;
-            case 7:
-                rbAge7->setChecked( true );
-                break;
-            default:
-                rbAge0->setChecked( true );
+            deBirthDate->setDate( QDate::fromString(m_poGuest->dateBirth(),"yyyy-MM-dd") );
+            int nYear = QDate::fromString(m_poGuest->dateBirth(),"yyyy-MM-dd").daysTo( QDate::currentDate() ) / 365.25;
+
+            if( nYear < 18 )                    rbAge1->setChecked( true );
+            else if( 17 < nYear && nYear < 21 ) rbAge2->setChecked( true );
+            else if( 20 < nYear && nYear < 31 ) rbAge3->setChecked( true );
+            else if( 30 < nYear && nYear < 41 ) rbAge4->setChecked( true );
+            else if( 40 < nYear && nYear < 51 ) rbAge5->setChecked( true );
+            else if( 50 < nYear && nYear < 61 ) rbAge6->setChecked( true );
+            else if( 60 < nYear )               rbAge7->setChecked( true );
         }
+        else
+        {
+            deBirthDate->setDate( QDate(2000,1,1) );
+            switch( m_poGuest->ageType() )
+            {
+                case 1:
+                    rbAge1->setChecked( true );
+                    break;
+                case 2:
+                    rbAge2->setChecked( true );
+                    break;
+                case 3:
+                    rbAge3->setChecked( true );
+                    break;
+                case 4:
+                    rbAge4->setChecked( true );
+                    break;
+                case 5:
+                    rbAge5->setChecked( true );
+                    break;
+                case 6:
+                    rbAge6->setChecked( true );
+                    break;
+                case 7:
+                    rbAge7->setChecked( true );
+                    break;
+                default:
+                    rbAge0->setChecked( true );
+            }
+        }
+        ledMembership->setText( m_poGuest->membership() );
+        ledEmail->setText( m_poGuest->email() );
+        ledPhone->setText( m_poGuest->mobile() );
+        teAddress->setText( m_poGuest->address() );
+        teComment->setText( m_poGuest->comment() );
         chkReturning->setChecked( m_poGuest->isReturning() );
+        ledDateOfRegistration->setText( m_poGuest->dateCreated() );
         chkService->setChecked( m_poGuest->service() );
         chkEmployee->setChecked( m_poGuest->employee() );
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
@@ -581,7 +603,12 @@ bool cDlgGuestEdit::_saveGuestData()
             m_poGuest->setGender( 1 );
         else if( rbGenderFemale->isChecked() )
             m_poGuest->setGender( 2 );
+        m_poGuest->setDateBirth( deBirthDate->date().toString("yyyy-MM-dd") );
         m_poGuest->setEmail( ledEmail->text() );
+        m_poGuest->setMobile( ledPhone->text() );
+        m_poGuest->setAddress( teAddress->toPlainText() );
+        m_poGuest->setComment( teComment->toPlainText() );
+        m_poGuest->setIsReturning( chkReturning->isChecked() );
         if( rbAge0->isChecked() ) m_poGuest->setAgeType( 0 );
         else if( rbAge1->isChecked() ) m_poGuest->setAgeType( 1 );
         else if( rbAge2->isChecked() ) m_poGuest->setAgeType( 2 );
@@ -590,7 +617,6 @@ bool cDlgGuestEdit::_saveGuestData()
         else if( rbAge5->isChecked() ) m_poGuest->setAgeType( 5 );
         else if( rbAge6->isChecked() ) m_poGuest->setAgeType( 6 );
         else if( rbAge7->isChecked() ) m_poGuest->setAgeType( 7 );
-        m_poGuest->setIsReturning( chkReturning->isChecked() );
         m_poGuest->setService( chkService->isChecked() );
         m_poGuest->setEmployee( chkEmployee->isChecked() );
         m_poGuest->setRegularCustomer( chkRegularCustomer->isChecked() );

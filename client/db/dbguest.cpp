@@ -30,25 +30,30 @@ cDBGuest::~cDBGuest()
 }
 //====================================================================================
 void cDBGuest::init( const unsigned int p_uiId,
-                       const unsigned int p_uiLicenceId,
-                       const unsigned int p_uiCompanyId,
-                       const QString &p_qsDateCreated,
-                       const QString &p_qsName,
-                       const int p_nGender,
-                       const int p_nAgeType,
-                       const bool p_bIsReturning,
-                       const QString &p_qsUniqueId,
-                       const QString &p_qsEmail,
-                       const bool p_bRegularCustomer,
-                       const bool p_bEmployee,
-                       const bool p_bService,
-                       const bool p_bCompany,
-                       const int p_inDiscountType,
-                       const QString &p_qsComment,
-                       const int p_inLoyaltyPoints,
-                       const QString &p_qsModified,
-                       const bool p_bActive,
-                       const QString &p_qsArchive ) throw()
+                     const unsigned int p_uiLicenceId,
+                     const unsigned int p_uiCompanyId,
+                     const QString &p_qsDateCreated,
+                     const QString &p_qsName,
+                     const int p_nGender,
+                     const int p_nAgeType,
+                     const bool p_bIsReturning,
+                     const QString &p_qsUniqueId,
+                     const QString &p_qsEmail,
+                     const bool p_bRegularCustomer,
+                     const bool p_bEmployee,
+                     const bool p_bService,
+                     const bool p_bCompany,
+                     const int p_inDiscountType,
+                     const QString p_qsMembership,
+                     const QString p_qsDateBirth,
+                     const QString p_qsAddress,
+                     const unsigned int p_uiSkinTypeId,
+                     const QString p_qsMobile,
+                     const QString &p_qsComment,
+                     const int p_inLoyaltyPoints,
+                     const QString &p_qsModified,
+                     const bool p_bActive,
+                     const QString &p_qsArchive ) throw()
 //====================================================================================
 {
     m_uiId                  = p_uiId;
@@ -66,6 +71,11 @@ void cDBGuest::init( const unsigned int p_uiId,
     m_bService              = p_bService;
     m_bCompany              = p_bCompany;
     m_inDiscountType        = p_inDiscountType;
+    m_qsMembership          = p_qsMembership;
+    m_qsDateBirth           = p_qsDateBirth;
+    m_qsAddress             = p_qsAddress;
+    m_uiSkinTypeId          = p_uiSkinTypeId;
+    m_qsMobile              = p_qsMobile;
     m_qsComment             = p_qsComment;
     m_inLoyaltyPoints       = p_inLoyaltyPoints;
     m_qsModified            = p_qsModified;
@@ -91,6 +101,11 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
     int inServiceIdx            = p_obRecord.indexOf( "service" );
     int inCompanyIdx            = p_obRecord.indexOf( "company" );
     int inDiscountTypeIdx       = p_obRecord.indexOf( "discountType" );
+    int inMembershipIdx         = p_obRecord.indexOf( "membership" );
+    int inDateBirthIdx          = p_obRecord.indexOf( "dateBirth" );
+    int inAddressIdx            = p_obRecord.indexOf( "address" );
+    int inSkinTypeIdIdx         = p_obRecord.indexOf( "skinTypeId" );
+    int inMobileIdx             = p_obRecord.indexOf( "mobile" );
     int inCommentIdx            = p_obRecord.indexOf( "comment" );
     int inLoyaltyPoints         = p_obRecord.indexOf( "loyaltyPoints" );
     int inModifiedIdx           = p_obRecord.indexOf( "modified" );
@@ -112,6 +127,11 @@ void cDBGuest::init( const QSqlRecord &p_obRecord ) throw()
           p_obRecord.value( inServiceIdx ).toBool(),
           p_obRecord.value( inCompanyIdx ).toBool(),
           p_obRecord.value( inDiscountTypeIdx ).toInt(),
+          p_obRecord.value( inMembershipIdx ).toString(),
+          p_obRecord.value( inDateBirthIdx ).toString(),
+          p_obRecord.value( inAddressIdx ).toString(),
+          p_obRecord.value( inSkinTypeIdIdx ).toUInt(),
+          p_obRecord.value( inMobileIdx ).toString(),
           p_obRecord.value( inCommentIdx ).toString(),
           p_obRecord.value( inLoyaltyPoints ).toInt(),
           p_obRecord.value( inModifiedIdx ).toString(),
@@ -216,24 +236,27 @@ void cDBGuest::save() throw( cSevException )
 {
     cTracer obTrace( "cDBGuest::save" );
     QString  qsQuery;
-    QString qsDateCreated = "";
+
+    g_obLogger(cSeverity::DEBUG) << "Created " << m_qsDateCreated << EOM;
+    if( m_qsDateCreated.compare( "0000-00-00 00:00:00" ) == 0 || m_qsDateCreated.length() < 1 )
+    {
+        m_qsDateCreated = QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") );
+    }
 
     if( m_uiId )
     {
         qsQuery = "UPDATE";
         m_qsArchive = "MOD";
-        qsDateCreated = m_qsDateCreated;
     }
     else
     {
         qsQuery = "INSERT INTO";
         m_qsArchive = "NEW";
-        qsDateCreated = QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") );
     }
     qsQuery += " patients SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "companyId = \"%1\", " ).arg( m_uiCompanyId );
-    qsQuery += QString( "created = \"%1\", " ).arg( qsDateCreated );
+    qsQuery += QString( "created = \"%1\", " ).arg( m_qsDateCreated );
     qsQuery += QString( "name = \"%1\", " ).arg( m_qsName );
     qsQuery += QString( "gender = \"%1\", " ).arg( m_nGender );
     qsQuery += QString( "ageType = \"%1\", " ).arg( m_nAgeType );
@@ -245,6 +268,11 @@ void cDBGuest::save() throw( cSevException )
     qsQuery += QString( "service = %1, " ).arg( m_bService );
     qsQuery += QString( "company = %1, " ).arg( m_bCompany );
     qsQuery += QString( "discountType = %1, " ).arg( m_inDiscountType );
+    qsQuery += QString( "membership = \"%1\", " ).arg( m_qsMembership );
+    qsQuery += QString( "dateBirth = \"%1\", " ).arg( m_qsDateBirth );
+    qsQuery += QString( "address = \"%1\", " ).arg( m_qsAddress );
+    qsQuery += QString( "skinTypeId = %1, " ).arg( m_uiSkinTypeId );
+    qsQuery += QString( "mobile = \"%1\", " ).arg( m_qsMobile );
     qsQuery += QString( "comment = \"%1\", " ).arg( m_qsComment.replace( QString("\""), QString("\\\"") ) );
     qsQuery += QString( "loyaltyPoints = %1, " ).arg( m_inLoyaltyPoints );
     qsQuery += QString( "modified = \"%1\", " ).arg( QDateTime::currentDateTime().toString( QString("yyyy-MM-dd hh:mm:ss") ) );
@@ -430,6 +458,56 @@ int cDBGuest::discountType() const throw()
 void cDBGuest::setDiscountType( const int p_inDiscountType ) throw()
 {
     m_inDiscountType = p_inDiscountType;
+}
+
+QString cDBGuest::membership() const throw()
+{
+    return m_qsMembership;
+}
+
+void cDBGuest::setMembership( const QString p_qsMembership ) throw()
+{
+    m_qsMembership = p_qsMembership;
+}
+
+QString cDBGuest::dateBirth() const throw()
+{
+    return m_qsDateBirth;
+}
+
+void cDBGuest::setDateBirth( const QString p_qsDateBirth ) throw()
+{
+    m_qsDateBirth = p_qsDateBirth;
+}
+
+QString cDBGuest::address() const throw()
+{
+    return m_qsAddress;
+}
+
+void cDBGuest::setAddress( const QString p_qsAddress ) throw()
+{
+    m_qsAddress = p_qsAddress;
+}
+
+unsigned int cDBGuest::skinTypeId() const throw()
+{
+    return m_uiSkinTypeId;
+}
+
+void cDBGuest::setSkinTypeId( const unsigned int p_nSkinTypeId ) throw()
+{
+    m_uiSkinTypeId = p_nSkinTypeId;
+}
+
+QString cDBGuest::mobile() const throw()
+{
+    return m_qsMobile;
+}
+
+void cDBGuest::setMobile( const QString p_qsMobile ) throw()
+{
+    m_qsMobile = p_qsMobile;
 }
 
 QString cDBGuest::comment() const throw()

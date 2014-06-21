@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>508</width>
-    <height>439</height>
+    <width>774</width>
+    <height>566</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_5">
+  <layout class="QHBoxLayout" name="horizontalLayout_10">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
@@ -27,33 +27,49 @@
        <property name="title">
         <string> Identification </string>
        </property>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="lblName">
-          <property name="text">
-           <string>Name :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="ledName">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lblGender">
-          <property name="text">
-           <string>Gender :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="lblName">
+            <property name="text">
+             <string>Name :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledName">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblGender">
+            <property name="text">
+             <string>Gender :</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QRadioButton" name="rbGenderMale">
             <property name="text">
@@ -69,7 +85,89 @@
            </widget>
           </item>
           <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblDateBirth">
+            <property name="text">
+             <string>Date of birth :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDateEdit" name="deBirthDate">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>13</width>
+              <height>17</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QLabel" name="lblMembership">
+            <property name="text">
+             <string>Membership Id :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ledMembership">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -83,117 +181,96 @@
           </item>
          </layout>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="lblEmail">
-          <property name="text">
-           <string>E-Mail :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="ledEmail">
-          <property name="minimumSize">
-           <size>
-            <width>211</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maxLength">
-           <number>100</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="lblAge">
-          <property name="text">
-           <string>Age :</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <layout class="QGridLayout" name="gridLayout">
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbAdditional">
+       <property name="title">
+        <string> Additional data </string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <layout class="QFormLayout" name="formLayout">
           <item row="0" column="0">
-           <widget class="QRadioButton" name="rbAge0">
+           <widget class="QLabel" name="lblEmail">
             <property name="text">
-             <string>Not defined</string>
+             <string>E-Mail :</string>
             </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="rbAge1">
-            <property name="text">
-             <string>Under 18</string>
+           <widget class="QLineEdit" name="ledEmail">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QRadioButton" name="rbAge2">
-            <property name="text">
-             <string>18 - 20</string>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QRadioButton" name="rbAge3">
-            <property name="text">
-             <string>21 - 30</string>
+            <property name="maxLength">
+             <number>100</number>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="rbAge4">
+           <widget class="QLabel" name="lblMobile">
             <property name="text">
-             <string>31 - 40</string>
+             <string>Phone :</string>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QRadioButton" name="rbAge5">
-            <property name="text">
-             <string>41 - 50</string>
+           <widget class="QLineEdit" name="ledPhone">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QRadioButton" name="rbAge6">
+          <item row="2" column="0">
+           <widget class="QLabel" name="lblAddress">
             <property name="text">
-             <string>51 - 60</string>
+             <string>Address :</string>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
            </widget>
           </item>
-          <item row="1" column="3">
-           <widget class="QRadioButton" name="rbAge7">
-            <property name="text">
-             <string>Above 60</string>
+          <item row="2" column="1">
+           <widget class="QTextEdit" name="teAddress">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>80</height>
+             </size>
             </property>
-            <attribute name="buttonGroup">
-             <string>buttonGroup</string>
-            </attribute>
            </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="lblNotes">
+            <property name="text">
+             <string>Notes :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="teComment"/>
           </item>
          </layout>
         </item>
@@ -268,6 +345,176 @@
       </widget>
      </item>
      <item>
+      <widget class="QGroupBox" name="gbStatistics">
+       <property name="title">
+        <string> Statistical data </string>
+       </property>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblReturningGuest">
+          <property name="text">
+           <string>Returning guest :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QCheckBox" name="chkReturning">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblDateOfRegistration">
+          <property name="text">
+           <string>Date of registration :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="ledDateOfRegistration">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblAge">
+          <property name="text">
+           <string>Age :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QRadioButton" name="rbAge0">
+            <property name="text">
+             <string>Not defined</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge1">
+            <property name="text">
+             <string>Under 18</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge2">
+            <property name="text">
+             <string>18 - 20</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge3">
+            <property name="text">
+             <string>21 - 30</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge4">
+            <property name="text">
+             <string>31 - 40</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge5">
+            <property name="text">
+             <string>41 - 50</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge6">
+            <property name="text">
+             <string>51 - 60</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbAge7">
+            <property name="text">
+             <string>Above 60</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string>buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lblSkinType">
+          <property name="text">
+           <string>Type of skin :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QComboBox" name="cmbSkinType"/>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
       <widget class="QGroupBox" name="gbDiscount">
        <property name="minimumSize">
         <size>
@@ -278,7 +525,7 @@
        <property name="title">
         <string> Discount </string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
@@ -308,23 +555,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QLabel" name="lblPrivateDiscount">
             <property name="minimumSize">
@@ -383,36 +613,10 @@
             </property>
            </widget>
           </item>
-          <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pbEditDiscount">
-            <property name="text">
-             <string>Edit</string>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
            <widget class="QLabel" name="lblDiscountSample">
             <property name="minimumSize">
@@ -459,10 +663,29 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QPushButton" name="pbEditDiscount">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Edit</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QLabel" name="lblLoyaltyPoints">
             <property name="minimumSize">
@@ -503,22 +726,6 @@
            </spacer>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="gbStatistics">
-          <property name="title">
-           <string> Statistical data </string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <widget class="QCheckBox" name="chkReturning">
-             <property name="text">
-              <string>Returning guest</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
         </item>
        </layout>
       </widget>
@@ -706,7 +913,6 @@
   <tabstop>rbAge5</tabstop>
   <tabstop>rbAge6</tabstop>
   <tabstop>rbAge7</tabstop>
-  <tabstop>ledEmail</tabstop>
   <tabstop>ledBarcode</tabstop>
   <tabstop>pbDislink</tabstop>
   <tabstop>chkRegularCustomer</tabstop>
@@ -717,7 +923,6 @@
   <tabstop>ledDiscount</tabstop>
   <tabstop>pbEditDiscount</tabstop>
   <tabstop>ledLoyaltyPoints</tabstop>
-  <tabstop>chkReturning</tabstop>
   <tabstop>pbSaveExit</tabstop>
   <tabstop>pbCancel</tabstop>
   <tabstop>pbSave</tabstop>
