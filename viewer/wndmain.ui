@@ -10,6 +10,12 @@
     <height>536</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>30</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Belenus Report Viewer</string>
   </property>
@@ -382,7 +388,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>30</height>
+        <height>101</height>
        </size>
       </property>
       <property name="frameShape">
@@ -587,6 +593,47 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>100</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="lblPrintPaperOrientation">
+           <property name="text">
+            <string>Report will be printed with the selected paper orientation :</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="rbOrientationPortrait">
+           <property name="text">
+            <string>Portrait</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="rbOrientationLandscape">
+           <property name="text">
+            <string>Landscape</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
              <height>20</height>
             </size>
            </property>

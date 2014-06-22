@@ -41,6 +41,8 @@ cReport::cReport(QWidget *parent, QString p_qsReportName) : QWidget(parent)
     mainLayout->addWidget( m_teReport );
     setLayout( mainLayout );
 
+    m_tePageOrientation = QPrinter::Portrait;
+
     //-----------------------------------------------------
     // Report elemek beallitasa
     //-----------------------------------------------------
@@ -100,6 +102,8 @@ QString cReport::filterSubType() const          { return m_qsSubType;           
 bool    cReport::filterIsVisible() const        { return m_bIsVisible;          }
 QString cReport::filterTypeList() const         { return m_qsTypeList;          }
 QString cReport::filterSubTypeList() const      { return m_qsSubTypeList;       }
+//=================================================================================================
+QPrinter::Orientation cReport::pageOrientation()   { return m_tePageOrientation;   }
 //=================================================================================================
 //=================================================================================================
 // Adatokat beallito fuggvenyek
@@ -168,6 +172,12 @@ void cReport::setFilterDataSubTypeList( const QString &p_qsSubTypeList )
 //------------------------------------------------------------------------------------
 {
     m_qsSubTypeList = p_qsSubTypeList;
+}
+//------------------------------------------------------------------------------------
+void cReport::setPageOrientation(QPrinter::Orientation p_tePageOrientation)
+//------------------------------------------------------------------------------------
+{
+    m_tePageOrientation = p_tePageOrientation;
 }
 //=================================================================================================
 //=================================================================================================

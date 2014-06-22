@@ -959,6 +959,12 @@ void cWndMain::_setFiltersEnabled(bool p_bEnable)
 
     pbRefresh->setEnabled( p_bEnable );
     pbRefresh->setVisible( p_bEnable );
+
+    lblPrintPaperOrientation->setVisible( p_bEnable );
+    rbOrientationPortrait->setEnabled( p_bEnable );
+    rbOrientationPortrait->setVisible( p_bEnable );
+    rbOrientationLandscape->setEnabled( p_bEnable );
+    rbOrientationLandscape->setVisible( p_bEnable );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_setFiltersEnabledReport(cReport *obReport)
@@ -1058,6 +1064,16 @@ void cWndMain::_setFiltersEnabledReport(cReport *obReport)
 
     pbRefresh->setEnabled( true );
     pbRefresh->setVisible( true );
+
+    lblPrintPaperOrientation->setVisible( true );
+    rbOrientationPortrait->setEnabled( true );
+    rbOrientationPortrait->setVisible( true );
+    rbOrientationLandscape->setEnabled( true );
+    rbOrientationLandscape->setVisible( true );
+    if( obReport->pageOrientation() == QPrinter::Portrait )
+        rbOrientationPortrait->setChecked( true );
+    else
+        rbOrientationLandscape->setChecked( true );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_updateReportIndexes()
@@ -1150,6 +1166,30 @@ void cWndMain::on_cmbFilterDataSubTypes_currentIndexChanged(int index)
         on_pbRefresh_clicked();
 }
 //------------------------------------------------------------------------------------
+void cWndMain::on_rbOrientationPortrait_clicked()
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::on_rbOrientationPortrait_clicked" );
+
+    if( m_bReportTabSwitching ) return;
+
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->setPageOrientation( QPrinter::Portrait );
+}
+//------------------------------------------------------------------------------------
+void cWndMain::on_rbOrientationLandscape_clicked()
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::on_rbOrientationLandscape_clicked" );
+
+    if( m_bReportTabSwitching ) return;
+
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->setPageOrientation( QPrinter::Landscape );
+}
+//------------------------------------------------------------------------------------
 void cWndMain::on_chkFilterIsVisible_clicked()
 //------------------------------------------------------------------------------------
 {
@@ -1180,11 +1220,12 @@ void cWndMain::on_pbPrint_clicked()
 {
     QPrinter        obQPrinter;
     QPrintDialog    obDlgPrinter( &obQPrinter, this );
+    cReport        *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obQPrinter.setOrientation( obReport->pageOrientation() );
 
     if( obDlgPrinter.exec() == QDialog::Accepted )
     {
-        cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
-
         obReport->printReport( &obQPrinter );
     }
 }
@@ -1195,3 +1236,4 @@ bool cWndMain::_isInGroup(groupUser p_enGroup)
     return ( p_enGroup <= m_enGroup );
 }
 //------------------------------------------------------------------------------------
+

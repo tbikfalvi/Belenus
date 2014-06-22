@@ -47,6 +47,12 @@ public:
         PU_COUNT_PCUNITS
     };
 
+    enum tePageOrientation
+    {
+        PO_PORTRAIT = QPrinter::Portrait,
+        PO_LANDSCAPE = QPrinter::Landscape
+    };
+
     explicit cReport(QWidget *parent = 0, QString p_qsReportName = "" );
     ~cReport();
 
@@ -60,6 +66,8 @@ public:
     void                 setDescription( const QString &p_qsDescription );
 
     void                 printReport( QPrinter *p_obPrinter );
+    QPrinter::Orientation   pageOrientation();
+    void                 setPageOrientation( QPrinter::Orientation p_tePageOrientation );
 
     bool                 isDateStartEnabled();
     bool                 isDateStopEnabled();
@@ -118,6 +126,8 @@ protected:
     QTextCursor         *m_tcReport;
     QVBoxLayout         *mainLayout;
     QString              m_qsReportHtml;
+
+    QPrinter::Orientation    m_tePageOrientation;
 
     QString              m_qsReportName;
     QString              m_qsReportDescription;

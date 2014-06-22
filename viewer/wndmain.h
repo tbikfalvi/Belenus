@@ -136,6 +136,8 @@ private slots:
     void on_pbRefresh_clicked();
     void on_chkFilterIsVisible_clicked();
     void on_pbPrint_clicked();
+    void on_rbOrientationPortrait_clicked();
+    void on_rbOrientationLandscape_clicked();
 };
 
 #endif // WNDMAIN_H
