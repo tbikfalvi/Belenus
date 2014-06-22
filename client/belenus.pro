@@ -16,6 +16,7 @@ FORMS = ../framework/dlgcrud.ui \
     dlglogin.ui \
     dlglogs.ui \
     dlgpaneltypeedit.ui \
+    dlgskintypeedit.ui \
     dlgpanelgroupedit.ui \
     dlgpaneledit.ui \
     dlgpreferences.ui \
@@ -75,6 +76,7 @@ HEADERS = belenus.h \
     ../framework/network/packet.h \
     ../framework/network/CommunicationProtocol.h \
     crud/dlgpaneltypes.h \
+    crud/dlgskintypes.h \
     crud/dlgpanelgroups.h \
     crud/dlgpanels.h \
     crud/dlgusers.h \
@@ -103,6 +105,7 @@ HEADERS = belenus.h \
     db/dbpanelstatuses.h \
     db/dbuser.h \
     db/dbpaneltypes.h \
+    db/dbskintypes.h \
     db/dbpanelgroups.h \
     db/dbpaneluses.h \
     db/dbcassa.h \
@@ -145,6 +148,7 @@ HEADERS = belenus.h \
     dlg/dlgchangepcvalidity.h \
     dlg/dlgmanagedatabase.h \
     edit/dlgpaneltypeedit.h \
+    edit/dlgskintypeedit.h \
     edit/dlgpanelgroupedit.h \
     edit/dlgpaneledit.h \
     edit/dlguseredit.h \
@@ -206,6 +210,7 @@ SOURCES = main.cpp \
     ../framework/network/packet.cpp \
     ../framework/network/CommunicationProtocol.cpp \
     crud/dlgpaneltypes.cpp \
+    crud/dlgskintypes.cpp \
     crud/dlgpanelgroups.cpp \
     crud/dlgpanels.cpp \
     crud/dlgusers.cpp \
@@ -234,6 +239,7 @@ SOURCES = main.cpp \
     db/dbpanelstatuses.cpp \
     db/dbuser.cpp \
     db/dbpaneltypes.cpp \
+    db/dbskintypes.cpp \
     db/dbpanelgroups.cpp \
     db/dbpaneluses.cpp \
     db/dbcassa.cpp \
@@ -276,6 +282,7 @@ SOURCES = main.cpp \
     dlg/dlgchangepcvalidity.cpp \
     dlg/dlgmanagedatabase.cpp \
     edit/dlgpaneltypeedit.cpp \
+    edit/dlgskintypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \
     edit/dlgpaneledit.cpp \
     edit/dlguseredit.cpp \

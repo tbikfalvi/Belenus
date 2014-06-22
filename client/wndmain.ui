@@ -160,6 +160,8 @@
      <addaction name="action_ProductActionType"/>
      <addaction name="action_Products"/>
      <addaction name="separator"/>
+     <addaction name="action_ManageSkinTypes"/>
+     <addaction name="separator"/>
      <addaction name="action_PaymentMethods"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
@@ -760,6 +762,14 @@
   <action name="action_ManageDevicePanels">
    <property name="text">
     <string>Manage device panels</string>
+   </property>
+  </action>
+  <action name="action_ManageSkinTypes">
+   <property name="text">
+    <string>Manage skin types</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage skin types</string>
    </property>
   </action>
  </widget>

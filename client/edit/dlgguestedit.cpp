@@ -125,10 +125,18 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
         teAddress->setText( m_poGuest->address() );
         teComment->setText( m_poGuest->comment() );
         chkReturning->setChecked( m_poGuest->isReturning() );
-        ledDateOfRegistration->setText( m_poGuest->dateCreated() );
+        ledDateOfRegistration->setText( m_poGuest->dateCreated().left(10).replace("-",".") );
         chkService->setChecked( m_poGuest->service() );
         chkEmployee->setChecked( m_poGuest->employee() );
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );
+
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT skinTypeId, skinTypeName FROM skintypes WHERE active=1 AND archive<>\"DEL\" ORDER BY skinTypeName " ) );
+        while( poQuery->next() )
+        {
+            cmbSkinType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
+            if( m_poGuest->skinTypeId() == poQuery->value( 0 ) )
+                cmbSkinType->setCurrentIndex( cmbSkinType->count()-1 );
+        }
 
         cDBDiscount obDBDiscount;
 
@@ -620,6 +628,7 @@ bool cDlgGuestEdit::_saveGuestData()
         m_poGuest->setService( chkService->isChecked() );
         m_poGuest->setEmployee( chkEmployee->isChecked() );
         m_poGuest->setRegularCustomer( chkRegularCustomer->isChecked() );
+        m_poGuest->setSkinTypeId( cmbSkinType->itemData( cmbSkinType->currentIndex() ).toUInt() );
 
         m_poGuest->save();
 

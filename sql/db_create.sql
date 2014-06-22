@@ -132,6 +132,19 @@ CREATE TABLE `genders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- Bortipusok leirasat tartalmazza. Vendegekhez.
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `skinTypes` (
+  `skinTypeId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `skinTypeName`            varchar(50)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`skinTypeId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- A studio vendegeinek adatait tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `patients` (
@@ -150,6 +163,11 @@ CREATE TABLE `patients` (
   `service`                 tinyint(1)              DEFAULT 0,
   `company`                 tinyint(1)              DEFAULT 0,
   `discountType`            int(11)                 NOT NULL,
+  `membership`				varchar( 30 ) 			NOT NULL,
+  `dateBirth` 				date 					NOT NULL,
+  `address` 				varchar( 200 ) 			NOT NULL,
+  `skinTypeId` 				int(10) unsigned		DEFAULT 0,
+  `mobile` 					varchar( 50 ) 			NOT NULL,
   `comment`                 text                    DEFAULT NULL,
   `loyaltyPoints`           int(11)                 DEFAULT 0,
   `modified`                datetime                NOT NULL,
@@ -157,7 +175,8 @@ CREATE TABLE `patients` (
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT
+  FOREIGN KEY (`companyId`) REFERENCES `companies` (`companyId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`skinTypeId`) REFERENCES `skinTypes` (`skinTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -370,6 +389,7 @@ CREATE TABLE `patientCardUnits` (
   `validDateFrom`           date                    DEFAULT NULL,
   `validDateTo`             date                    DEFAULT NULL,
   `dateTimeUsed`            timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `prepared` 				tinyint(1) 				NOT NULL DEFAULT '0',
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardUnitId`,`licenceId`),
