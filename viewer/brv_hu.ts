@@ -514,6 +514,148 @@
     </message>
 </context>
 <context>
+    <name>cReportDeviceUsages</name>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="7"/>
+        <source> Device usages </source>
+        <translation> Gép használatok </translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="8"/>
+        <source>This report shows the usage of the devices on the selected date intervall.</source>
+        <translation>Ez a kimutatás a géphasználatokat mutatja meg az adott időintervallumban.</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="11"/>
+        <source>Panel type :</source>
+        <translation>Géptípus :</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="14"/>
+        <source>First date of intervall :</source>
+        <translation>Az időintervallum első napja :</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="18"/>
+        <source>Last date of intervall :</source>
+        <translation>Az időintervallum utolsó napja :</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="26"/>
+        <location filename="creportdeviceusages.cpp" line="33"/>
+        <source>All paneltypes</source>
+        <translation>Összes géptípus</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="39"/>
+        <source>Create selected report ...</source>
+        <translation>Kimutatás összeállítása ...</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="78"/>
+        <source>Device</source>
+        <translation>Gép</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="79"/>
+        <source>Planned time</source>
+        <translation>Tervezett idő</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="80"/>
+        <source>Real time</source>
+        <translation>Tényleges idő</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="81"/>
+        <source>Aborted time</source>
+        <translation>Megszakított idő</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="82"/>
+        <source>Payed by cash</source>
+        <translation>Készpénzzel fizetve</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="83"/>
+        <source>Used by card</source>
+        <translation>Bérlettel használva</translation>
+    </message>
+    <message>
+        <location filename="creportdeviceusages.cpp" line="84"/>
+        <source>No. units used</source>
+        <translation>Egységek száma</translation>
+    </message>
+</context>
+<context>
+    <name>cReportGuests</name>
+    <message>
+        <location filename="creportguests.cpp" line="7"/>
+        <source> Guest list </source>
+        <translation> Vendégek listája </translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="8"/>
+        <source>This report shows the summarized list of data of the registered guests.</source>
+        <translation>Ez a kimutatás a regisztrált vendégek összesített adatait mutatja meg.</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="11"/>
+        <source>Name contains :</source>
+        <translation>A név tartalmazza :</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="14"/>
+        <source>Gender :</source>
+        <translation>Neme :</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="31"/>
+        <source>Age :</source>
+        <translation>Korcsoport :</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="49"/>
+        <source>Create selected report ...</source>
+        <translation>Kimutatás összeállítása ...</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="96"/>
+        <source>Membership Id</source>
+        <translation>Egyedi azonosító</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="97"/>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="99"/>
+        <source>Gender</source>
+        <translation>Neme</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="101"/>
+        <source>Age</source>
+        <translation>Korcsoport</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="102"/>
+        <source>E-Mail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="103"/>
+        <source>Phone</source>
+        <translation>Telefonszám</translation>
+    </message>
+    <message>
+        <location filename="creportguests.cpp" line="104"/>
+        <source>Address</source>
+        <translation>Cím</translation>
+    </message>
+</context>
+<context>
     <name>cReportLedger</name>
     <message>
         <location filename="creportledger.cpp" line="8"/>
@@ -830,43 +972,43 @@
 <context>
     <name>cReportPatientCardType</name>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="12"/>
+        <location filename="creportpatientcardtype.cpp" line="10"/>
         <source> Active patientcardtypes </source>
         <translation> Aktív bérlettípusok </translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="13"/>
+        <location filename="creportpatientcardtype.cpp" line="11"/>
         <source>This report shows the active patientcard types.  Please select type of expiration from the list box below.</source>
         <translation>Ez a kimutatás az aktív, érvényes bérlettípusokat mutatja meg.  Kérem válassza ki az Önt érdeklő bérlettípus csoportot.</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="16"/>
+        <location filename="creportpatientcardtype.cpp" line="14"/>
         <source>Expiration ... :</source>
         <translation>Lejárat ... :</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="20"/>
-        <location filename="creportpatientcardtype.cpp" line="24"/>
+        <location filename="creportpatientcardtype.cpp" line="18"/>
+        <location filename="creportpatientcardtype.cpp" line="22"/>
         <source>All type</source>
         <translation>Összes típus</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="21"/>
+        <location filename="creportpatientcardtype.cpp" line="19"/>
         <source>set by No. of days</source>
         <translation>napok számával meghatározva</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="22"/>
+        <location filename="creportpatientcardtype.cpp" line="20"/>
         <source>set by date intervall</source>
         <translation>időintervallum megadásával</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="30"/>
+        <location filename="creportpatientcardtype.cpp" line="28"/>
         <source>Create selected report ...</source>
         <translation>Kimutatás összeállítása ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="120"/>
+        <location filename="creportpatientcardtype.cpp" line="118"/>
         <source>%1 minute(s)</source>
         <translation>%1 perc</translation>
     </message>
@@ -875,17 +1017,17 @@
         <translation type="obsolete">Adatok lekérdezése az adatbázisból ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="76"/>
+        <location filename="creportpatientcardtype.cpp" line="74"/>
         <source>%1 -&gt; %2 | %3 days</source>
         <translation>%1 -&gt; %2 | %3 nap</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="81"/>
+        <location filename="creportpatientcardtype.cpp" line="79"/>
         <source>%1 days</source>
         <translation>%1 nap</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="86"/>
+        <location filename="creportpatientcardtype.cpp" line="84"/>
         <source>%1 -&gt; %2</source>
         <translation>%1 -&gt; %2</translation>
     </message>
@@ -894,27 +1036,27 @@
         <translation type="obsolete">Adatok megjelenítése ...</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="103"/>
+        <location filename="creportpatientcardtype.cpp" line="101"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="104"/>
+        <location filename="creportpatientcardtype.cpp" line="102"/>
         <source>Price</source>
         <translation>Ár</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="105"/>
+        <location filename="creportpatientcardtype.cpp" line="103"/>
         <source>Units</source>
         <translation>Egységek</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="106"/>
+        <location filename="creportpatientcardtype.cpp" line="104"/>
         <source>Valid</source>
         <translation>Érvényes</translation>
     </message>
     <message>
-        <location filename="creportpatientcardtype.cpp" line="107"/>
+        <location filename="creportpatientcardtype.cpp" line="105"/>
         <source>Unit time</source>
         <translation>Egység idő</translation>
     </message>
@@ -1344,48 +1486,48 @@
 <context>
     <name>cWndMain</name>
     <message>
-        <location filename="wndmain.cpp" line="280"/>
-        <location filename="wndmain.cpp" line="376"/>
+        <location filename="wndmain.cpp" line="306"/>
+        <location filename="wndmain.cpp" line="406"/>
         <source>Login</source>
         <translation>Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="285"/>
+        <location filename="wndmain.cpp" line="311"/>
         <source>Need authentication ...</source>
         <translation>Szükség van azonosításra ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="290"/>
+        <location filename="wndmain.cpp" line="316"/>
         <source>User successfully authenticated.</source>
         <translation>A felhasználó sikeresen azonosítva.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="295"/>
+        <location filename="wndmain.cpp" line="321"/>
         <source>Logout</source>
         <translation>Kijelentkezés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="301"/>
+        <location filename="wndmain.cpp" line="327"/>
         <source>The username entered not found in the Belenus database</source>
         <translation>A megadott felhasználónév nem található meg a Belenus adatbázisában.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="303"/>
+        <location filename="wndmain.cpp" line="329"/>
         <source>The password entered is incorrect</source>
         <translation>A megadott jelszó helytelen</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="305"/>
+        <location filename="wndmain.cpp" line="331"/>
         <source>Connection to Belenus database failed</source>
         <translation>A kapcsolódás a Belenus adatbázishoz nem sikerült</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="307"/>
+        <location filename="wndmain.cpp" line="333"/>
         <source>Authentication failed. Please retry later ...</source>
         <translation>Az azonosítás sikertelen volt. Kérem próbálja meg később ...</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="907"/>
+        <location filename="wndmain.cpp" line="1005"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
         <translation>&lt;i&gt;Kérem válasszon ki egy kimutatást a szűrőfeltételek megjelenítéséhez ...&lt;/i&gt;</translation>
     </message>
@@ -1422,26 +1564,26 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="121"/>
-        <location filename="wndmain.ui" line="1039"/>
+        <location filename="wndmain.ui" line="1104"/>
         <source>Additional information for monthly closure</source>
         <translation>Kiegészítő információk havi záráshoz</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="140"/>
-        <location filename="wndmain.ui" line="968"/>
+        <location filename="wndmain.ui" line="1027"/>
         <source>History of cassa events and actions</source>
         <translation>Pénztár események és beavatkozások története</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="166"/>
-        <location filename="wndmain.ui" line="938"/>
+        <location filename="wndmain.ui" line="997"/>
         <source>Active patientcard types</source>
         <translation>Aktív bérlettípusok</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="185"/>
-        <location filename="wndmain.ui" line="954"/>
-        <location filename="wndmain.ui" line="957"/>
+        <location filename="wndmain.ui" line="1013"/>
+        <location filename="wndmain.ui" line="1016"/>
         <source>Patientcard details</source>
         <translation>Bérlet adatok</translation>
     </message>
@@ -1457,260 +1599,288 @@
     </message>
     <message>
         <location filename="wndmain.ui" line="242"/>
-        <location filename="wndmain.ui" line="979"/>
+        <location filename="wndmain.ui" line="1038"/>
         <source>History of patientcard cassa actions</source>
         <translation>Bérletekkel kapcsolatos pénztár események</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="261"/>
-        <location filename="wndmain.ui" line="1001"/>
+        <location filename="wndmain.ui" line="1060"/>
         <source>Summary of valid patientcards and the price of its units available</source>
         <translation>Érvényes bérletek és a hozzá tartozó egységek értékének összesítése</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="287"/>
-        <location filename="wndmain.ui" line="990"/>
+        <location filename="wndmain.ui" line="1049"/>
         <source>Products registered in database</source>
         <translation>Adatbázisban szereplő termékek</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="306"/>
-        <location filename="wndmain.ui" line="1012"/>
+        <location filename="wndmain.ui" line="1071"/>
         <source>Product status on the selected date</source>
         <translation>Termék készlet egy kiválasztott napon</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="325"/>
-        <location filename="wndmain.ui" line="1023"/>
+        <location filename="wndmain.ui" line="1082"/>
         <source>History of the selected product</source>
         <translation>A kiválasztott termék története</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="357"/>
+        <location filename="wndmain.ui" line="351"/>
+        <location filename="wndmain.ui" line="1115"/>
+        <source>Summarized information about registered guests</source>
+        <translation>Regisztrált vendégek összesített adatai</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="377"/>
+        <location filename="wndmain.ui" line="1126"/>
+        <source>Summary of device usages</source>
+        <translation>Géphasználatok összesítése</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="409"/>
         <source> Print report </source>
         <translation> Kimutatás kinyomtatása </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="406"/>
+        <location filename="wndmain.ui" line="458"/>
         <source>Report description ... </source>
         <translation>Kimutatás leírása ... </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="422"/>
+        <location filename="wndmain.ui" line="474"/>
         <source> Refresh </source>
         <translation> Frissítés </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="455"/>
+        <location filename="wndmain.ui" line="507"/>
         <source>Date start :</source>
         <translation>Kezdő dátum :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="472"/>
+        <location filename="wndmain.ui" line="524"/>
         <source>Date stop :</source>
         <translation>Vég dátum :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="505"/>
+        <location filename="wndmain.ui" line="557"/>
         <source>Data name :</source>
         <translation>Adat megnevezés :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="538"/>
+        <location filename="wndmain.ui" line="590"/>
         <source>Data types :</source>
         <translation>Adattípus :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="555"/>
+        <location filename="wndmain.ui" line="600"/>
         <source>Data subtypes :</source>
         <translation>Adat altípus :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="581"/>
+        <location filename="wndmain.ui" line="626"/>
         <source>Is visible</source>
         <translation>Látható</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="608"/>
+        <location filename="wndmain.ui" line="653"/>
         <source>Report will be printed with the selected paper orientation :</source>
         <oldsource>Print report with the selected paper orientation :</oldsource>
         <translation>A kimutatás a kiválasztott tájolással lesz kinyomtatva :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="615"/>
+        <location filename="wndmain.ui" line="660"/>
         <source>Portrait</source>
         <translation>Álló</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="625"/>
+        <location filename="wndmain.ui" line="670"/>
         <source>Landscape</source>
         <translation>Fekvő</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="657"/>
+        <location filename="wndmain.ui" line="702"/>
         <source> Information </source>
         <translation> Információ </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="672"/>
+        <location filename="wndmain.ui" line="717"/>
         <source>How to use report viewer ...</source>
         <translation>Hogyan használja a Statisztika Megjelenítőt ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="694"/>
+        <location filename="wndmain.ui" line="739"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Üdvözöljük a Belenus Statisztika Megjelenítő alkalmazásában.&lt;br/&gt;Az alkalmazás használatához be kell jelentkeznie. Kérem adja meg a Belenus alkalmazás beli felhasználónevét és jelszavát.&lt;br/&gt;Sikeres beazonosítás után különböző szűrőfeltételek megadásával képes lesz kimutatások lekérésére..&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="704"/>
+        <location filename="wndmain.ui" line="749"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A kívánt kimutatás megnyitásához kattintson a kapcsolódó gombra. A megjelenő szűrőfeltételek beállítása után lekérheti az adott kimutatást.&lt;br/&gt;Kattintson a nyomtató ikont tartalmazó gombra, ha ki akarja nyomtatni az aktuális kimutatást.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="711"/>
+        <location filename="wndmain.ui" line="756"/>
         <source> Authentication </source>
         <translation> Azonosítás </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="717"/>
+        <location filename="wndmain.ui" line="762"/>
         <source>Need authentication ...</source>
         <translation>Szükség van azonosításra ...</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="726"/>
+        <location filename="wndmain.ui" line="771"/>
         <source>User name :</source>
         <translation>Felhasználónév :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="736"/>
+        <location filename="wndmain.ui" line="781"/>
         <source>Password :</source>
         <translation>Jelszó :</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="756"/>
+        <location filename="wndmain.ui" line="801"/>
         <source> Login </source>
         <translation> Bejelentkezés </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="787"/>
+        <location filename="wndmain.ui" line="832"/>
         <source> Filter settings </source>
         <translation> Szűrő beállítások </translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="793"/>
+        <location filename="wndmain.ui" line="838"/>
         <source>Refresh the report automatically after one of the filter has been changed</source>
         <translation>A kimutatás automatikusan frissüljön a szűrőfeltételek megváltoztatása után</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="830"/>
+        <location filename="wndmain.ui" line="875"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="837"/>
+        <location filename="wndmain.ui" line="882"/>
         <source>&amp;View</source>
         <translation>&amp;Nézet</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="844"/>
+        <location filename="wndmain.ui" line="889"/>
         <source>&amp;Reports</source>
         <translation>&amp;Kimutatások</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="848"/>
+        <location filename="wndmain.ui" line="893"/>
         <source>&amp;Bookkeeping</source>
         <translation>&amp;Főkönyv</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="858"/>
+        <location filename="wndmain.ui" line="903"/>
         <source>Patientcards</source>
         <translation>Bérletek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="869"/>
-        <location filename="wndmain.ui" line="987"/>
+        <location filename="wndmain.ui" line="914"/>
+        <location filename="wndmain.ui" line="1046"/>
         <source>Products</source>
         <translation>Termékek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="886"/>
+        <location filename="wndmain.ui" line="922"/>
+        <location filename="wndmain.ui" line="1112"/>
+        <source>Guests</source>
+        <translation>Vendégek</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="928"/>
+        <source>Devices</source>
+        <translation>Gépek</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="945"/>
         <source>E&amp;xit</source>
         <translation>&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="897"/>
+        <location filename="wndmain.ui" line="956"/>
         <source>&amp;Toolbar</source>
         <translation>&amp;Eszköztár</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="908"/>
+        <location filename="wndmain.ui" line="967"/>
         <source>&amp;Filter bar</source>
         <translation>&amp;Szűrő panel</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="916"/>
+        <location filename="wndmain.ui" line="975"/>
         <source>&amp;Daily</source>
         <translation>&amp;Napi</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="919"/>
+        <location filename="wndmain.ui" line="978"/>
         <source>Daily bookkeeping</source>
         <translation>Napi könyv</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="927"/>
+        <location filename="wndmain.ui" line="986"/>
         <source>&amp;Ledger</source>
         <translation>&amp;Könyvelés</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="935"/>
+        <location filename="wndmain.ui" line="994"/>
         <source>&amp;Active patientcard types</source>
         <translation>&amp;Aktív bérlettípusok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="946"/>
+        <location filename="wndmain.ui" line="1005"/>
         <source>Inactive patientcards</source>
         <translation>Érvénytelen bérletek</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="965"/>
+        <location filename="wndmain.ui" line="1024"/>
         <source>&amp;Cassa history</source>
         <translation>&amp;Pénztárkönyv</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="976"/>
+        <location filename="wndmain.ui" line="1035"/>
         <source>Patientcard sells</source>
         <translation>Bérlet eladások</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="998"/>
+        <location filename="wndmain.ui" line="1057"/>
         <source>Patientcard debts</source>
         <translation>Bérlet érték</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1009"/>
+        <location filename="wndmain.ui" line="1068"/>
         <source>Product status</source>
         <translation>Termék készlet</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1020"/>
+        <location filename="wndmain.ui" line="1079"/>
         <source>Product history</source>
         <translation>Termék történet</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1028"/>
+        <location filename="wndmain.ui" line="1090"/>
         <source>Patient card usages</source>
         <translation>Bérlet használatok</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1031"/>
+        <location filename="wndmain.ui" line="1093"/>
         <source>Patientcard usages on a defined date intervall</source>
         <translation>Megadott időintervallum bérlethasználatai</translation>
     </message>
     <message>
-        <location filename="wndmain.ui" line="1036"/>
+        <location filename="wndmain.ui" line="1101"/>
         <source>Monthly</source>
         <translation>Havi zárás</translation>
+    </message>
+    <message>
+        <location filename="wndmain.ui" line="1123"/>
+        <source>Device usages</source>
+        <translation>Géphasználatok</translation>
     </message>
 </context>
 </TS>

@@ -58,6 +58,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( this, SIGNAL(setCheckedReportProductHistory(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardUsages(bool)), this, SLOT(slotCheckReportPatientcardUsages(bool)) );
     connect( this, SIGNAL(setCheckedReportMonthClose(bool)), this, SLOT(slotCheckReportMonthClose(bool)) );
+    connect( this, SIGNAL(setCheckedReportGuests(bool)), this, SLOT(slotCheckReportGuests(bool)) );
+    connect( this, SIGNAL(setCheckedReportDeviceUsages(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -135,6 +137,10 @@ void cWndMain::_initActions()
     connect( action_Product_Status, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
     connect( action_Product_History, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
 
+    connect( action_Guests, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportGuests(bool)) );
+
+    connect( action_DeviceUsages, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
+
     // ICONS
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
 
@@ -155,6 +161,10 @@ void cWndMain::_initActions()
     action_Product_Status->setIcon( QIcon("./resources/40x40_report_product_status.png") );
     action_Product_History->setIcon( QIcon("./resources/40x40_report_product_history.png") );
 
+    action_Guests->setIcon( QIcon("./resources/40x40_patient.png") );
+
+    action_DeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
+
     // BEHAVIOUR
     action_FilterBar->setEnabled( false );
 
@@ -174,6 +184,10 @@ void cWndMain::_initActions()
     action_Products->setEnabled( false );
     action_Product_Status->setEnabled( false );
     action_Product_History->setEnabled( false );
+
+    action_Guests->setEnabled( false );
+
+    action_DeviceUsages->setEnabled( false );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::_initToolbar()
@@ -201,6 +215,10 @@ void cWndMain::_initToolbar()
     connect( pbProductStatus, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
     connect( pbProductHistory, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
 
+    connect( pbGuests, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportGuests(bool)) );
+
+    connect( pbDeviceUsages, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDeviceUsages(bool)) );
+
     // ICONS
     pbExit->setIcon( QIcon("./resources/40x40_shutdown.png") );
 
@@ -221,6 +239,10 @@ void cWndMain::_initToolbar()
     pbProductStatus->setIcon( QIcon("./resources/40x40_report_product_status.png") );
     pbProductHistory->setIcon( QIcon("./resources/40x40_report_product_history.png") );
 
+    pbGuests->setIcon( QIcon("./resources/40x40_patient.png") );
+
+    pbDeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
+
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
 
     // BEHAVIOUR
@@ -240,6 +262,10 @@ void cWndMain::_initToolbar()
     pbProducts->setEnabled( false );
     pbProductStatus->setEnabled( false );
     pbProductHistory->setEnabled( false );
+
+    pbGuests->setEnabled( false );
+
+    pbDeviceUsages->setEnabled( false );
 
     pbPrint->setEnabled( false );
 }
@@ -345,6 +371,10 @@ return;
             emit setCheckedReportProductStatus( false );
         else if( m_repProdHistory && m_repProdHistory->index() == index )
             emit setCheckedReportProductHistory( false );
+        else if( m_repGuests && m_repGuests->index() == index )
+            emit setCheckedReportGuests( false );
+        else if( m_repDeviceUsages && m_repDeviceUsages->index() == index )
+            emit setCheckedReportDeviceUsages( false );
     }
 }
 //------------------------------------------------------------------------------------
@@ -476,6 +506,10 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     action_Product_Status->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Product_History->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
+    action_Guests->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+
+    action_DeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
     pbBookkeepingDaily->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbBookkeepingLedger->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
@@ -492,6 +526,10 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     pbProducts->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbProductStatus->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbProductHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+
+    pbGuests->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
+
+    pbDeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     pbPrint->setEnabled( p_bEnable );
 }
@@ -885,6 +923,66 @@ void cWndMain::slotCheckReportProductHistory(bool p_bChecked)
         tabReports->removeTab( m_repProdHistory->index() );
         delete m_repProdHistory;
         m_repProdHistory = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportGuests(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportGuests" );
+
+    m_bReportTabSwitching = true;
+
+    action_Guests->setChecked( p_bChecked );
+    pbGuests->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repGuests = new cReportGuests();
+
+        m_qvReports.append( m_repGuests );
+        m_repGuests->setIndex( tabReports->addTab( m_repGuests, QIcon("./resources/40x40_patient.png"), m_repGuests->name() ) );
+        tabReports->setCurrentIndex( m_repGuests->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repGuests->index()-1 );
+        tabReports->removeTab( m_repGuests->index() );
+        delete m_repGuests;
+        m_repGuests = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportDeviceUsages(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportDeviceUsages" );
+
+    m_bReportTabSwitching = true;
+
+    action_DeviceUsages->setChecked( p_bChecked );
+    pbDeviceUsages->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repDeviceUsages = new cReportDeviceUsages();
+
+        m_qvReports.append( m_repDeviceUsages );
+        m_repDeviceUsages->setIndex( tabReports->addTab( m_repDeviceUsages, QIcon("./resources/40x40_device.png"), m_repDeviceUsages->name() ) );
+        tabReports->setCurrentIndex( m_repDeviceUsages->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repDeviceUsages->index()-1 );
+        tabReports->removeTab( m_repDeviceUsages->index() );
+        delete m_repDeviceUsages;
+        m_repDeviceUsages = NULL;
         _updateReportIndexes();
     }
 

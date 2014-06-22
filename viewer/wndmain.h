@@ -19,6 +19,8 @@
 #include "creportproducthistory.h"
 #include "creportpatientcardusages.h"
 #include "creportmonthclose.h"
+#include "creportguests.h"
+#include "creportdeviceusages.h"
 
 extern cQTMySQLConnection  *g_poDB;
 
@@ -66,6 +68,8 @@ signals: // <_NEW_REPORT_>  report signal-ja
     void                    setCheckedReportProductStatus( bool p_bChecked );
     void                    setCheckedReportProductHistory( bool p_bChecked );
     void                    setCheckedReportMonthClose( bool p_bChecked );
+    void                    setCheckedReportGuests( bool p_bChecked );
+    void                    setCheckedReportDeviceUsages( bool p_bChecked );
 
 public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportDaily( bool p_bChecked );
@@ -81,6 +85,8 @@ public slots: // <_NEW_REPORT_> report slot-ja
     void                    slotCheckReportProductStatus( bool p_bChecked );
     void                    slotCheckReportProductHistory( bool p_bChecked );
     void                    slotCheckReportMonthClose( bool p_bChecked );
+    void                    slotCheckReportGuests( bool p_bChecked );
+    void                    slotCheckReportDeviceUsages( bool p_bChecked );
 
 private:
 
@@ -100,6 +106,8 @@ private:
     cReportProductStatus    *m_repProdStatus;
     cReportProductHistory   *m_repProdHistory;
     cReportMonthClose       *m_repMonthClose;
+    cReportGuests           *m_repGuests;
+    cReportDeviceUsages     *m_repDeviceUsages;
 
     QVector<cReport*>        m_qvReports;
 

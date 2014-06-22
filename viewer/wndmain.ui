@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>937</width>
-    <height>536</height>
+    <width>1024</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -339,6 +339,58 @@
         </widget>
        </item>
        <item>
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbGuests">
+         <property name="toolTip">
+          <string>Summarized information about registered guests</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbDeviceUsages">
+         <property name="toolTip">
+          <string>Summary of device usages</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -540,14 +592,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="cmbFilterDataTypes">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
+          <widget class="QComboBox" name="cmbFilterDataTypes"/>
          </item>
          <item>
           <widget class="QLabel" name="lblFilterDataSubType">
@@ -821,7 +866,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>937</width>
+     <width>1024</width>
      <height>21</height>
     </rect>
    </property>
@@ -872,9 +917,23 @@
      <addaction name="action_Product_Status"/>
      <addaction name="action_Product_History"/>
     </widget>
+    <widget class="QMenu" name="menuGuests_2">
+     <property name="title">
+      <string>Guests</string>
+     </property>
+     <addaction name="action_Guests"/>
+    </widget>
+    <widget class="QMenu" name="menuDevices_2">
+     <property name="title">
+      <string>Devices</string>
+     </property>
+     <addaction name="action_DeviceUsages"/>
+    </widget>
     <addaction name="menu_Bookkeeping"/>
     <addaction name="menuPatientcards"/>
     <addaction name="menuProducts_2"/>
+    <addaction name="menuGuests_2"/>
+    <addaction name="menuDevices_2"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_View"/>
@@ -1024,6 +1083,9 @@
    </property>
   </action>
   <action name="action_Patientcard_Usages">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Patient card usages</string>
    </property>
@@ -1032,11 +1094,36 @@
    </property>
   </action>
   <action name="action_MonthlyClosure">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Monthly</string>
    </property>
    <property name="toolTip">
     <string>Additional information for monthly closure</string>
+   </property>
+  </action>
+  <action name="action_Guests">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Guests</string>
+   </property>
+   <property name="toolTip">
+    <string>Summarized information about registered guests</string>
+   </property>
+  </action>
+  <action name="action_DeviceUsages">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Device usages</string>
+   </property>
+   <property name="toolTip">
+    <string>Summary of device usages</string>
    </property>
   </action>
  </widget>
