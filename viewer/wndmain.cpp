@@ -57,6 +57,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( this, SIGNAL(setCheckedReportProductStatus(bool)), this, SLOT(slotCheckReportProductStatus(bool)) );
     connect( this, SIGNAL(setCheckedReportProductHistory(bool)), this, SLOT(slotCheckReportProductHistory(bool)) );
     connect( this, SIGNAL(setCheckedReportPatientcardUsages(bool)), this, SLOT(slotCheckReportPatientcardUsages(bool)) );
+    connect( this, SIGNAL(setCheckedReportMonthClose(bool)), this, SLOT(slotCheckReportMonthClose(bool)) );
 
     connect( cmbName, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
     connect( ledPassword, SIGNAL(returnPressed()), this, SLOT(on_pbAuthenticate_clicked()) );
@@ -120,6 +121,7 @@ void cWndMain::_initActions()
     // <_NEW_REPORT_> az action es a slot osszekapcsolasa
     connect( action_Bookkeeping_Daily, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( action_Bookkeeping_Ledger, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportLedger(bool)) );
+    connect( action_MonthlyClosure, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportMonthClose(bool)) );
     connect( action_Bookkeeping_CassaHistory, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportCassaHistory(bool)) );
 
     connect( action_PatientcardTypes, SIGNAL(triggered(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
@@ -139,6 +141,7 @@ void cWndMain::_initActions()
     // <_NEW_REPORT_> az action es az ikonjanak osszekapcsolasa
     action_Bookkeeping_Daily->setIcon( QIcon("./resources/40x40_book_daily.png") );
     action_Bookkeeping_Ledger->setIcon( QIcon("./resources/40x40_book_ledger.png") );
+    action_MonthlyClosure->setIcon( QIcon("./resources/40x40_book.png") );
     action_Bookkeeping_CassaHistory->setIcon( QIcon("./resources/40x40_cassa.png") );
 
     action_PatientcardTypes->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
@@ -158,6 +161,7 @@ void cWndMain::_initActions()
     // <_NEW_REPORT_> az action alapertelmezett letiltasa
     action_Bookkeeping_Daily->setEnabled( false );
     action_Bookkeeping_Ledger->setEnabled( false );
+    action_MonthlyClosure->setEnabled( false );
     action_Bookkeeping_CassaHistory->setEnabled( false );
 
     action_PatientcardTypes->setEnabled( false );
@@ -183,6 +187,7 @@ void cWndMain::_initToolbar()
     // <_NEW_REPORT_> a toolbar gomb es a slot osszekapcsolasa
     connect( pbBookkeepingDaily, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportDaily(bool)) );
     connect( pbBookkeepingLedger, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportLedger(bool)) );
+    connect( pbBookkeepingMonth, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportMonthClose(bool)) );
     connect( pbBookkeepingCassaHistory, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportCassaHistory(bool)) );
 
     connect( pbPatientcardType, SIGNAL(clicked(bool)), this, SLOT(slotCheckReportPatientcardType(bool)) );
@@ -202,6 +207,7 @@ void cWndMain::_initToolbar()
     // <_NEW_REPORT_> a toolbar gomb es az ikon osszekapcsolasa
     pbBookkeepingDaily->setIcon( QIcon("./resources/40x40_book_daily.png") );
     pbBookkeepingLedger->setIcon( QIcon("./resources/40x40_book_ledger.png") );
+    pbBookkeepingMonth->setIcon( QIcon("./resources/40x40_book.png") );
     pbBookkeepingCassaHistory->setIcon( QIcon("./resources/40x40_cassa.png") );
 
     pbPatientcardType->setIcon( QIcon("./resources/40x40_report_patientcardtypes.png") );
@@ -221,6 +227,7 @@ void cWndMain::_initToolbar()
     // <_NEW_REPORT_> a toolbar gomb alapertelmezett letiltasa
     pbBookkeepingDaily->setEnabled( false );
     pbBookkeepingLedger->setEnabled( false );
+    pbBookkeepingMonth->setEnabled( false );
     pbBookkeepingCassaHistory->setEnabled( false );
 
     pbPatientcardType->setEnabled( false );
@@ -316,6 +323,8 @@ return;
             emit setCheckedReportDaily( false );
         else if( m_repLedger && m_repLedger->index() == index )
             emit setCheckedReportLedger( false );
+        else if( m_repMonthClose && m_repMonthClose->index() == index )
+            emit setCheckedReportMonthClose( false );
         else if( m_repCassaHistory && m_repCassaHistory->index() == index )
             emit setCheckedReportCassaHistory( false );
         else if( m_repCardType && m_repCardType->index() == index )
@@ -453,6 +462,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     // <_NEW_REPORT_> az action engedelyezese/tiltasa
     action_Bookkeeping_Daily->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Bookkeeping_Ledger->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
+    action_MonthlyClosure->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     action_Bookkeeping_CassaHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     action_PatientcardTypes->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
@@ -469,6 +479,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
     // <_NEW_REPORT_> a toolbar gomb engedelyezese/tiltasa
     pbBookkeepingDaily->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbBookkeepingLedger->setEnabled( p_bEnable && _isInGroup( GROUP_ADMIN ) );
+    pbBookkeepingMonth->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
     pbBookkeepingCassaHistory->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
     pbPatientcardType->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
@@ -544,6 +555,36 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
         tabReports->removeTab( m_repLedger->index() );
         delete m_repLedger;
         m_repLedger = NULL;
+        _updateReportIndexes();
+    }
+
+    m_bReportTabSwitching = false;
+}
+//------------------------------------------------------------------------------------
+void cWndMain::slotCheckReportMonthClose(bool p_bChecked)
+//------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cWndMain::slotCheckReportMonthClose" );
+
+    m_bReportTabSwitching = true;
+
+    action_MonthlyClosure->setChecked( p_bChecked );
+    pbBookkeepingMonth->setChecked( p_bChecked );
+
+    if( p_bChecked )
+    {
+        m_repMonthClose = new cReportMonthClose();
+
+        m_qvReports.append( m_repMonthClose );
+        m_repMonthClose->setIndex( tabReports->addTab( m_repMonthClose, QIcon("./resources/40x40_book.png"), m_repMonthClose->name() ) );
+        tabReports->setCurrentIndex( m_repMonthClose->index() );
+    }
+    else
+    {
+        m_qvReports.remove( m_repMonthClose->index()-1 );
+        tabReports->removeTab( m_repMonthClose->index() );
+        delete m_repMonthClose;
+        m_repMonthClose = NULL;
         _updateReportIndexes();
     }
 
