@@ -126,10 +126,18 @@
     <property name="title">
      <string>&amp;System</string>
     </property>
+    <widget class="QMenu" name="menu_ExportImport">
+     <property name="title">
+      <string>Import / Export </string>
+     </property>
+     <addaction name="action_Import"/>
+     <addaction name="action_Export"/>
+    </widget>
     <addaction name="action_About"/>
     <addaction name="separator"/>
-    <addaction name="action_LogOut"/>
+    <addaction name="menu_ExportImport"/>
     <addaction name="separator"/>
+    <addaction name="action_LogOut"/>
     <addaction name="action_Exit"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -185,8 +193,8 @@
     </property>
     <addaction name="action_Cassa"/>
     <addaction name="separator"/>
-    <addaction name="separator"/>
     <addaction name="action_Logs"/>
+    <addaction name="separator"/>
     <addaction name="action_Hardwaretest"/>
     <addaction name="action_ManageDevicePanels"/>
    </widget>
@@ -770,6 +778,22 @@
    </property>
    <property name="toolTip">
     <string>Manage skin types</string>
+   </property>
+  </action>
+  <action name="action_Import">
+   <property name="text">
+    <string>Import ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import data from text files</string>
+   </property>
+  </action>
+  <action name="action_Export">
+   <property name="text">
+    <string>Export ...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export data to tab separated text file</string>
    </property>
   </action>
  </widget>

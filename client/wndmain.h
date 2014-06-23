@@ -157,6 +157,8 @@ private slots:
     void on_action_ManageDatabase_triggered();
     void on_action_ManageDevicePanels_triggered();
     void on_action_ManageSkinTypes_triggered();
+    void on_action_Import_triggered();
+    void on_action_Export_triggered();
 };
 
 #endif

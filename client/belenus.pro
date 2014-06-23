@@ -57,7 +57,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgpatientcardassign.ui \
     dlgproductsell.ui \
     dlgchangepcvalidity.ui \
-    dlgmanagedatabase.ui
+    dlgmanagedatabase.ui \
+    dlgExportImport.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -147,6 +148,7 @@ HEADERS = belenus.h \
     dlg/dlgpatientcardassign.h \
     dlg/dlgchangepcvalidity.h \
     dlg/dlgmanagedatabase.h \
+    dlg/dlgexportimport.h \
     edit/dlgpaneltypeedit.h \
     edit/dlgskintypeedit.h \
     edit/dlgpanelgroupedit.h \
@@ -281,6 +283,7 @@ SOURCES = main.cpp \
     dlg/dlgpatientcardassign.cpp \
     dlg/dlgchangepcvalidity.cpp \
     dlg/dlgmanagedatabase.cpp \
+    dlg/dlgexportimport.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlgskintypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \
@@ -333,9 +336,4 @@ win32 {
     HEADERS += communication_serial.h
     SOURCES += communication_serial.cpp
 }
-
-
-
-
-
 

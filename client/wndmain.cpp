@@ -82,6 +82,7 @@
 #include "dlg/dlgpaneluse.h"
 #include "dlg/dlgpatientcardassign.h"
 #include "dlg/dlgmanagedatabase.h"
+#include "dlg/dlgexportimport.h"
 
 //====================================================================================
 
@@ -146,6 +147,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     //--------------------------------------------------------------------------------
     action_Exit->setIcon( QIcon("./resources/40x40_shutdown.png") );
     action_LogOut->setIcon( QIcon("./resources/40x40_lock.png") );
+
+    menu_ExportImport->setIcon( QIcon("./resources/40x40_database_sync.png") );
+    action_Export->setIcon( QIcon("./resources/35x35_export.png") );
+    action_Import->setIcon( QIcon("./resources/35x35_import.png") );
 
     action_PatientSelect->setIcon( QIcon("./resources/40x40_patient_select.png") );
     action_PatientEmpty->setIcon( QIcon("./resources/40x40_patient_deselect.png") );
@@ -228,6 +233,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_LogOut->setEnabled( false );
     action_Exit->setEnabled( false );
+
+    menu_ExportImport->setEnabled( false );
+    action_Export->setEnabled( false );
+    action_Import->setEnabled( false );
 
     action_PatientSelect->setEnabled( false );
     action_PatientEmpty->setEnabled( false );
@@ -1072,6 +1081,10 @@ void cWndMain::updateStatusText( QString p_qsStatusText )
 void cWndMain::updateToolbar()
 {
     bool    bIsUserLoggedIn = g_obUser.isLoggedIn();
+
+    action_Export->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+    action_Import->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+    menu_ExportImport->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
 
     action_LogOut->setEnabled( bIsUserLoggedIn );
     action_Exit->setEnabled( !mdiPanels->isPanelWorking() );
@@ -2898,4 +2911,22 @@ void cWndMain::on_action_ManageSkinTypes_triggered()
     cDlgSkinTypes obDlgSkinTypes( this );
 
     obDlgSkinTypes.exec();
+}
+
+void cWndMain::on_action_Import_triggered()
+{
+    QMessageBox::warning( this, tr("Attention"), tr("Currently not allowed to use. Please contact your franchise provider.") );
+
+//    cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_IMPORT );
+
+//    obDlgExportImport.exec();
+}
+
+void cWndMain::on_action_Export_triggered()
+{
+    QMessageBox::warning( this, tr("Attention"), tr("Use report viewer application to display and export program related data.") );
+
+//    cDlgExportImport    obDlgExportImport( this, cDlgExportImport::PT_EXPORT );
+
+//    obDlgExportImport.exec();
 }
