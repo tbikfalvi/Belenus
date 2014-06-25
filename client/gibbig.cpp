@@ -13,10 +13,11 @@
 // Gibbig rendszerrel kapcsolatos reszek implementalasa
 //=================================================================================================
 
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
 #include <QTimer>
+#include <QStringList>
 
 #include "gibbig.h"
 #include "belenus.h"
@@ -25,7 +26,7 @@
 cGibbig::cGibbig()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::cGibbig" );
+//    cTracer obTrace( "cGibbig::cGibbig" );
 
     m_gbRestManager             = NULL;
 
@@ -36,13 +37,15 @@ cGibbig::cGibbig()
     m_inTimeout                 = 0;
 
     m_qsMessage                 = "";
+    m_qsInfo                    = "";
     m_qsError                   = "";
     m_inTimer                   = 0;
 
     m_qsToken                   = "";
+    m_qsPatientCard             = "";
 
     m_bErrorOccured             = false;
-    m_bAuthenticationInProgress = false;
+    m_teGibbigAction            = cGibbigAction::GA_DEFAULT;
 
     g_obLogger(cSeverity::DEBUG) << "Create QNetworkAccessManager" << EOM;
 
@@ -65,9 +68,9 @@ cGibbig::cGibbig()
 cGibbig::~cGibbig()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::cGibbig" );
+//    cTracer obTrace( "cGibbig::cGibbig" );
 
-    if( m_inTimer > 0 );
+    if( m_inTimer > 0 )
         killTimer( m_inTimer );
 
     if( m_gbRestManager )   delete m_gbRestManager;
@@ -76,7 +79,7 @@ cGibbig::~cGibbig()
 void cGibbig::setHost( const QString p_qsHost )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setHost" );
+//    cTracer obTrace( "cGibbig::setHost" );
 
     m_qsHost = p_qsHost;
 
@@ -86,7 +89,7 @@ void cGibbig::setHost( const QString p_qsHost )
 void cGibbig::setPort( const QString p_qsPort )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setPort" );
+//    cTracer obTrace( "cGibbig::setPort" );
 
     m_qsPort = p_qsPort;
 }
@@ -94,7 +97,7 @@ void cGibbig::setPort( const QString p_qsPort )
 void cGibbig::setUserName( const QString p_qsUserName )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setUserName" );
+//    cTracer obTrace( "cGibbig::setUserName" );
 
     m_qsGbUserName = p_qsUserName;
 }
@@ -102,7 +105,7 @@ void cGibbig::setUserName( const QString p_qsUserName )
 void cGibbig::setPassword( const QString p_qsPassword )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setPassword" );
+//    cTracer obTrace( "cGibbig::setPassword" );
 
     m_qsGbPassword = p_qsPassword;
 }
@@ -110,46 +113,54 @@ void cGibbig::setPassword( const QString p_qsPassword )
 void cGibbig::setTimeout(const int p_inTimeout)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setTimeout" );
+//    cTracer obTrace( "cGibbig::setTimeout" );
 
     m_inTimeout = p_inTimeout;
 }
 //=================================================================================================
-void cGibbig::gibbigAuthenticate()
+void cGibbig::gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::gibbigAuthenticate" );
+//    cTracer obTrace( "cGibbig::gibbigAuthenticate" );
+    QNetworkReply *gbReply;
 
-    m_bAuthenticationInProgress = true;
+    QByteArray  qbMessage( QString( "{\"username\":\"%1\",\"password\":\"%2\"}" ).arg(m_qsGbUserName).arg(m_qsGbPassword).toStdString().c_str() );
+
+    m_teGibbigAction = p_teGibbigAction;
     m_gbRequest.setUrl( QUrl( QString("https://%1/unifiedid/rest/user/authenticate").arg(m_qsHost) ) );
+    gbReply = m_gbRestManager->post( m_gbRequest, qbMessage );
+    gbReply->ignoreSslErrors();
     m_inTimer = startTimer( m_inTimeout );
 }
 //=================================================================================================
-void cGibbig::gibbigSendPatientCard(QString p_qsBarcode)
+void cGibbig::gibbigSendPatientCard(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::gibbigSendPatientCard" );
+//    cTracer obTrace( "cGibbig::gibbigSendPatientCard" );
 
-
+    m_qsPatientCard = p_qsPatientCard;
+    gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE2 );
 }
 //=================================================================================================
 void cGibbig::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::timerEvent" );
+//    cTracer obTrace( "cGibbig::timerEvent" );
 
     killTimer( m_inTimer );
     m_inTimer = 0;
+    m_teGibbigAction = cGibbigAction::GA_DEFAULT;
 
     m_qsError.append( tr("Timeout error occured during Gibbig communication after %1 milliseconds.\n").arg(m_inTimeout) );
-    m_qsError.append( tr("%1 FAILED due to timeout error.") );
+    m_qsError.append( tr("%1 FAILED due to timeout error.").arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
     m_bErrorOccured = true;
+    emit signalErrorOccured();
 }
 //=================================================================================================
 void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::slotRestRequestFinished" );
+//    cTracer obTrace( "cGibbig::slotRestRequestFinished" );
 
     killTimer( m_inTimer );
     m_inTimer = 0;
@@ -158,6 +169,7 @@ void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
     {
         m_qsError.append( tr("Rest error: %1\n").arg( p_gbReply->errorString() ) );
         m_bErrorOccured = true;
+        emit signalErrorOccured();
     }
     else
     {
@@ -170,27 +182,75 @@ void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
 void cGibbig::_processMessage()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processMessage" );
+//    cTracer obTrace( "cGibbig::_processMessage" );
 
-    if( m_bAuthenticationInProgress )
+    switch( m_teGibbigAction )
     {
-        // {"token":"2c6a7f24-6862-4cf6-8ff2-2931fd7e253e","expiration":1401644234657}
-        QStringList qslTemp = m_qsMessage.split( ',' );
-        QString     qsTemp  = qslTemp.at(0);
-
-        if( qsTemp.left(10).compare( "{\"token\":\"" ) == 0 )
+        case cGibbigAction::GA_AUTHENTICATE1:
+        case cGibbigAction::GA_AUTHENTICATE2:
         {
-            qslTemp     = qsTemp.split( ':' );
-            qsTemp      = qslTemp.at(0);
-            m_qsToken   = qsTemp.remove( '"' );
+            if( m_qsMessage.left(10).compare( "{\"token\":\"" ) == 0 )
+            {
+                _getTokenExpFromMessage();
 
-            g_obLogger(cSeverity::DEBUG) << "Gibbig token: " << m_qsToken << EOM;
+                if( m_teGibbigAction == cGibbigAction::GA_AUTHENTICATE1 )
+                {
+                    m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+                    emit signalActionProcessed( QString("Authentication succeeded (%1)\n%2 %3").arg(m_qsMessage).arg(m_qsToken).arg(m_qdtExpiration.toString("yyyy-MM-dd hh:mm:ss")) );
+                }
+                else if( cGibbigAction::GA_AUTHENTICATE2 )
+                {
+                    _sendPatientCardData();
+                }
+            }
+            else
+            {
+                m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+                m_qsError.append( tr("Invalid format, token string not received. '%1'\n").arg(m_qsMessage) );
+                m_bErrorOccured = true;
+                emit signalErrorOccured();
+            }
+            break;
         }
-        else
+
+        case cGibbigAction::GA_PCSENDDATA:
         {
-            m_qsError.append( tr("Invalid format, token string not received. '%1'\n").arg(m_qsMessage) );
+            break;
+        }
+
+        default:
+        {
+            m_qsError.append( tr("Unexpected message received.\n'%1'\n").arg(m_qsMessage) );
             m_bErrorOccured = true;
         }
     }
+}
+//=================================================================================================
+void cGibbig::_sendPatientCardData()
+//-------------------------------------------------------------------------------------------------
+{
+    m_teGibbigAction = cGibbigAction::GA_PCSENDDATA;
+}
+//=================================================================================================
+void cGibbig::_getTokenExpFromMessage()
+//-------------------------------------------------------------------------------------------------
+{
+    // {"token":"2c6a7f24-6862-4cf6-8ff2-2931fd7e253e","expiration":1401644234657}
+    QStringList     qslTemp;
+    QString         qsTemp;
+    QString         qsExpiration;
+
+    qslTemp         = m_qsMessage.split( ',' );
+    qsTemp          = qslTemp.at(0);
+    qslTemp         = qsTemp.split( ':' );
+    qsTemp          = qslTemp.at(1);
+    m_qsToken       = qsTemp.remove( '"' );
+
+    qslTemp         = m_qsMessage.split( ',' );
+    qsTemp          = qslTemp.at(1);
+    qslTemp         = qsTemp.split( ':' );
+    qsExpiration    = qslTemp.at(1);
+    qsExpiration.remove('}');
+    m_qdtExpiration.setTime_t( qsExpiration.toInt() );
 }
 //=================================================================================================
