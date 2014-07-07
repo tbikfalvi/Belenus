@@ -612,6 +612,7 @@ bool cDlgGuestEdit::_saveGuestData()
         else if( rbGenderFemale->isChecked() )
             m_poGuest->setGender( 2 );
         m_poGuest->setDateBirth( deBirthDate->date().toString("yyyy-MM-dd") );
+        m_poGuest->setMembership( ledMembership->text() );
         m_poGuest->setEmail( ledEmail->text() );
         m_poGuest->setMobile( ledPhone->text() );
         m_poGuest->setAddress( teAddress->toPlainText() );
