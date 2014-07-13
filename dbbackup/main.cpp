@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     apMainApp = new QApplication(argc, argv);
 
     QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
-    QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "hu" ).toString();
+    QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "us" ).toString();
 
     poTransBackup = new QTranslator();
     poTransQT = new QTranslator();
@@ -27,9 +27,16 @@ int main(int argc, char *argv[])
     apMainApp->installTranslator( poTransBackup );
     apMainApp->installTranslator( poTransQT );
 
-    MainWindow wndMain;
+    bool    bDbRestore = false;
 
-    wndMain.show();
+    if( argc > 1 && strcmp(argv[1],"-restore") == 0 )
+    {
+        bDbRestore = true;
+    }
+
+    MainWindow *wndMain = new MainWindow( 0, bDbRestore );
+
+    wndMain->show();
 
     return apMainApp->exec();
 }
