@@ -13,9 +13,11 @@
 // Gibbig rendszerrel kapcsolatos reszek implementalasa
 //=================================================================================================
 
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
+#include <QtNetwork>
+
+//#include <QNetworkAccessManager>
+//#include <QNetworkRequest>
+//#include <QNetworkReply>
 #include <QTimer>
 #include <QStringList>
 
@@ -47,15 +49,17 @@ cGibbig::cGibbig()
     m_bErrorOccured             = false;
     m_teGibbigAction            = cGibbigAction::GA_DEFAULT;
 
-    g_obLogger(cSeverity::DEBUG) << "Create QNetworkAccessManager" << EOM;
+    m_qdtExpiration.setTime_t(0);
+
+//    g_obLogger(cSeverity::DEBUG) << "Create QNetworkAccessManager" << EOM;
 
     m_gbRestManager = new QNetworkAccessManager( this );
 
-    g_obLogger(cSeverity::DEBUG) << "Connect QNetworkAccessManager" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "Connect QNetworkAccessManager" << EOM;
 
     connect( m_gbRestManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotRestRequestFinished(QNetworkReply*)) );
 
-    g_obLogger(cSeverity::DEBUG) << "Set header information" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "Set header information" << EOM;
 
     m_gbRequest.setRawHeader( "Authorization", "Basic" );
     m_gbRequest.setRawHeader( "Accept-Encoding", "gzip,deflate" );
@@ -122,6 +126,8 @@ void cGibbig::gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction
 //-------------------------------------------------------------------------------------------------
 {
 //    cTracer obTrace( "cGibbig::gibbigAuthenticate" );
+    gibbigClearError();
+
     QNetworkReply *gbReply;
 
     QByteArray  qbMessage( QString( "{\"username\":\"%1\",\"password\":\"%2\"}" ).arg(m_qsGbUserName).arg(m_qsGbPassword).toStdString().c_str() );
@@ -133,13 +139,58 @@ void cGibbig::gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction
     m_inTimer = startTimer( m_inTimeout );
 }
 //=================================================================================================
-void cGibbig::gibbigSendPatientCard(QString p_qsPatientCard)
+void cGibbig::gibbigPCRegister(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-//    cTracer obTrace( "cGibbig::gibbigSendPatientCard" );
+    gibbigClearError();
 
     m_qsPatientCard = p_qsPatientCard;
-    gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE2 );
+
+    if( QDateTime::currentDateTime() < m_qdtExpiration )
+    {
+        m_teGibbigAction = cGibbigAction::GA_PCREGISTER;
+        _sendPatientCardData();
+    }
+    else
+    {
+        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE2 );
+    }
+}
+//=================================================================================================
+void cGibbig::gibbigPCRefill(QString p_qsPatientCard)
+//-------------------------------------------------------------------------------------------------
+{
+    gibbigClearError();
+
+    m_qsPatientCard = p_qsPatientCard;
+
+    if( QDateTime::currentDateTime() < m_qdtExpiration )
+    {
+        m_teGibbigAction = cGibbigAction::GA_PCREFILL;
+        _sendPatientCardData();
+    }
+    else
+    {
+        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE3 );
+    }
+}
+//=================================================================================================
+void cGibbig::gibbigPCUse(QString p_qsPatientCard)
+//-------------------------------------------------------------------------------------------------
+{
+    gibbigClearError();
+
+    m_qsPatientCard = p_qsPatientCard;
+
+    if( QDateTime::currentDateTime() < m_qdtExpiration )
+    {
+        m_teGibbigAction = cGibbigAction::GA_PCUSE;
+        _sendPatientCardData();
+    }
+    else
+    {
+        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE4 );
+    }
 }
 //=================================================================================================
 void cGibbig::timerEvent(QTimerEvent *)
@@ -149,10 +200,10 @@ void cGibbig::timerEvent(QTimerEvent *)
 
     killTimer( m_inTimer );
     m_inTimer = 0;
-    m_teGibbigAction = cGibbigAction::GA_DEFAULT;
 
     m_qsError.append( tr("Timeout error occured during Gibbig communication after %1 milliseconds.\n").arg(m_inTimeout) );
     m_qsError.append( tr("%1 FAILED due to timeout error.").arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
+    m_teGibbigAction = cGibbigAction::GA_DEFAULT;
     m_bErrorOccured = true;
     emit signalErrorOccured();
 }
@@ -188,6 +239,8 @@ void cGibbig::_processMessage()
     {
         case cGibbigAction::GA_AUTHENTICATE1:
         case cGibbigAction::GA_AUTHENTICATE2:
+        case cGibbigAction::GA_AUTHENTICATE3:
+        case cGibbigAction::GA_AUTHENTICATE4:
         {
             if( m_qsMessage.left(10).compare( "{\"token\":\"" ) == 0 )
             {
@@ -200,6 +253,17 @@ void cGibbig::_processMessage()
                 }
                 else if( cGibbigAction::GA_AUTHENTICATE2 )
                 {
+                    m_teGibbigAction = cGibbigAction::GA_PCREGISTER;
+                    _sendPatientCardData();
+                }
+                else if( cGibbigAction::GA_AUTHENTICATE3 )
+                {
+                    m_teGibbigAction = cGibbigAction::GA_PCREFILL;
+                    _sendPatientCardData();
+                }
+                else if( cGibbigAction::GA_AUTHENTICATE4 )
+                {
+                    m_teGibbigAction = cGibbigAction::GA_PCUSE;
                     _sendPatientCardData();
                 }
             }
@@ -213,8 +277,24 @@ void cGibbig::_processMessage()
             break;
         }
 
-        case cGibbigAction::GA_PCSENDDATA:
+        case cGibbigAction::GA_PCREGISTER:
         {
+            m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+            emit signalActionProcessed( QString("Patientcard register succeeded\n%1").arg(m_qsMessage) );
+            break;
+        }
+
+        case cGibbigAction::GA_PCREFILL:
+        {
+            m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+            emit signalActionProcessed( QString("Patientcard refill succeeded\n%1").arg(m_qsMessage) );
+            break;
+        }
+
+        case cGibbigAction::GA_PCUSE:
+        {
+            m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+            emit signalActionProcessed( QString("Patientcard use succeeded\n%1").arg(m_qsMessage) );
             break;
         }
 
@@ -229,7 +309,58 @@ void cGibbig::_processMessage()
 void cGibbig::_sendPatientCardData()
 //-------------------------------------------------------------------------------------------------
 {
-    m_teGibbigAction = cGibbigAction::GA_PCSENDDATA;
+    QString qsBarcode = _getBarcode();
+    QString qsMessage = "";
+
+    switch( m_teGibbigAction )
+    {
+        case cGibbigAction::GA_PCREGISTER:
+            qsMessage.append( "{\"transaction\":\"grant\",\"masterCoupons\":" );
+            break;
+
+        case cGibbigAction::GA_PCREFILL:
+            qsMessage.append( "{\"transaction\":\"grant\",\"masterCoupons\":" );
+            break;
+
+        case cGibbigAction::GA_PCUSE:
+            qsMessage.append( "{\"transaction\":\"use\",\"masterCoupons\":" );
+            break;
+
+        default:
+            // Do nothing
+            return;
+    }
+
+//    SELECT unitTime, validDateTo, COUNT(active) FROM `patientcardunits` WHERE patientcardid=2874 and active=1 GROUP BY unitTime, validDateTo
+
+    QStringList qslUnits = _getUnits().split('|');
+
+    qsMessage.append( "[" );
+
+    for( int i=0; i<qslUnits.count(); i++ )
+    {
+        QStringList qslUnitData = qslUnits.at(i).split('/');
+
+        qsMessage.append( QString( "{\"amount\":%1,\"couponParameters\":["
+                                   "{\"name\":\"UNIT_VALUE\",\"value\":\"%2\"},"
+                                   "{\"name\":\"VALID\",\"value\":\"%3\"}]}" ).arg(qslUnitData.at(0)).arg(qslUnitData.at(1)).arg(qslUnitData.at(2)) );
+        if( i<qslUnits.count()-1 )
+        {
+            qsMessage.append( "," );
+        }
+    }
+    qsMessage.append( "]}" );
+
+    emit signalDebugMessage( qsMessage );
+
+    QNetworkReply  *gbReply;
+    QByteArray      qbMessage( qsMessage.toStdString().c_str() );
+
+    m_gbRequest.setUrl( QUrl( QString("https://%1/unifiedid/rest/vendor/coupons/sync/%2?token=%3").arg(m_qsHost).arg(qsBarcode).arg(m_qsToken) ) );
+    gbReply = m_gbRestManager->post( m_gbRequest, qbMessage );
+    gbReply->ignoreSslErrors();
+    m_inTimer = startTimer( m_inTimeout );
+
 }
 //=================================================================================================
 void cGibbig::_getTokenExpFromMessage()
@@ -250,7 +381,22 @@ void cGibbig::_getTokenExpFromMessage()
     qsTemp          = qslTemp.at(1);
     qslTemp         = qsTemp.split( ':' );
     qsExpiration    = qslTemp.at(1);
-    qsExpiration.remove('}');
-    m_qdtExpiration.setTime_t( qsExpiration.toInt() );
+    m_qdtExpiration.setTime_t( qsExpiration.left(qsExpiration.length()-4).toInt() );
+}
+//=================================================================================================
+QString cGibbig::_getBarcode()
+//-------------------------------------------------------------------------------------------------
+{
+    QStringList qslPatientCard  = m_qsPatientCard.split( '#' );
+
+    return qslPatientCard.at(0);
+}
+//=================================================================================================
+QString cGibbig::_getUnits()
+//-------------------------------------------------------------------------------------------------
+{
+    QStringList qslPatientCard  = m_qsPatientCard.split( '#' );
+
+    return qslPatientCard.at(2);
 }
 //=================================================================================================

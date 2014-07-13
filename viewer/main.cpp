@@ -50,7 +50,7 @@ int main( int argc, char *argv[] )
         QSettings       iniFile( "belenus.ini", QSettings::IniFormat );
         QTranslator     obBlTr;
         QTranslator     obQtTr;
-        QString         qsLang = iniFile.value( "General/Lang", "hu" ).toString();
+        QString         qsLang = iniFile.value( "General/Lang", "us" ).toString();
         QString         qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
         QString         qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
 

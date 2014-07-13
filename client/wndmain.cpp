@@ -297,7 +297,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
-/*
+
     g_poGibbig = new cGibbig();
 
     g_poGibbig->setHost( g_poPrefs->getServerAddress() );
@@ -306,7 +306,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setTimeout( 10000 );
 
     g_poGibbig->gibbigAuthenticate();
-*/
+
 }
 //====================================================================================
 cWndMain::~cWndMain()
