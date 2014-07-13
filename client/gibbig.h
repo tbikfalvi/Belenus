@@ -33,17 +33,25 @@ public:
         GA_DEFAULT = 0,
         GA_AUTHENTICATE1,
         GA_AUTHENTICATE2,
-        GA_PCSENDDATA
+        GA_AUTHENTICATE3,
+        GA_AUTHENTICATE4,
+        GA_PCREGISTER,
+        GA_PCREFILL,
+        GA_PCUSE
     };
 
     static const char *toStr( teGibbigAction p_enGA )
     {
         switch( p_enGA )
         {
-            case GA_DEFAULT:        return "Unidentified";  break;
-            case GA_AUTHENTICATE1:  return "Authenticate";  break;
-            case GA_AUTHENTICATE2:  return "Authenticate";  break;
-            case GA_PCSENDDATA:     return "PatientCard";  break;
+            case GA_DEFAULT:        return "Unidentified";              break;
+            case GA_AUTHENTICATE1:  return "Authenticate";              break;
+            case GA_AUTHENTICATE2:  return "Authenticate";              break;
+            case GA_AUTHENTICATE3:  return "Authenticate";              break;
+            case GA_AUTHENTICATE4:  return "Authenticate";              break;
+            case GA_PCREGISTER:     return "PatientCardRegistration";   break;
+            case GA_PCREFILL:       return "PatientCardRefill";         break;
+            case GA_PCUSE:          return "PatientCardUsage";          break;
             default:                return "INVALID";
         }
     }
@@ -66,11 +74,13 @@ public:
     void    setTimeout( const int p_inTimeout );
 
     void    gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction = cGibbigAction::GA_AUTHENTICATE1 );
-    void    gibbigSendPatientCard( QString p_qsPatientCard );
+    void    gibbigPCRegister( QString p_qsPatientCard );
+    void    gibbigPCRefill( QString p_qsPatientCard );
+    void    gibbigPCUse( QString p_qsPatientCard );
 
-    void    gibbigClearError()          {   m_bErrorOccured = false;    }
-    bool    gibbigIsErrorOccured()      {   return m_bErrorOccured;     }
-    QString gibbigErrorStr()            {   return m_qsError;           }
+    void    gibbigClearError()          {   m_bErrorOccured = false; m_qsError = "";    }
+    bool    gibbigIsErrorOccured()      {   return m_bErrorOccured;                     }
+    QString gibbigErrorStr()            {   return m_qsError;                           }
 
 protected:
 
@@ -84,6 +94,7 @@ signals:
 
     void    signalErrorOccured();
     void    signalActionProcessed( QString p_qsInfo );
+    void    signalDebugMessage(QString p_qsMessage);
 
 private:
 
@@ -112,8 +123,9 @@ private:
 
     void                            _processMessage();
     void                            _getTokenExpFromMessage();
-
     void                            _sendPatientCardData();
+    QString                         _getBarcode();
+    QString                         _getUnits();
 
 };
 //====================================================================================
