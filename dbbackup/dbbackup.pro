@@ -6,6 +6,7 @@
 
 QT          += core gui
 TARGET       = DBBackup
+DESTDIR      = ..
 TEMPLATE     = app
 RC_FILE      = dbbackup.rc
 RESOURCES   += dbbackup.qrc
