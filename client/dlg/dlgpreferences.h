@@ -16,9 +16,10 @@ public slots:
     virtual void accept();
 
 private:
-    int            m_inLangIdx;
+    int              m_inLangIdx;
+    QPushButton     *m_poBtnSystem;
 
-    QPushButton   *m_poBtnSystem;
+    void            _updateDatabaseLanguage();
 
 private slots:
     void on_btnSecondaryBackground_clicked();
