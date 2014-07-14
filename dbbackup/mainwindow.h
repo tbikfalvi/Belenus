@@ -10,26 +10,36 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0, bool p_bDbRestore = true);
-    ~MainWindow();
 
-    void    processMain();
+    enum teAction
+    {
+        ACT_BACKUP = 0,
+        ACT_RESTORE,
+        ACT_EXECUTE,
+        ACT_FINISHED
+    };
+
+    explicit MainWindow(QWidget *parent = 0, teAction p_teAction = ACT_BACKUP, QString p_qsFileName = "" );
+    ~MainWindow();
 
 protected:
     void    timerEvent( QTimerEvent *p_poEvent );
 
 private slots:
     void    on_pbExit_clicked();
-
-    void on_pbSelect_clicked();
-
-    void on_pbStart_clicked();
+    void    on_pbSelect_clicked();
+    void    on_pbStart_clicked();
+    void    setControlsEnabled( bool p_bEnable );
+    void    processBackup();
+    void    processRestore();
+    void    processExecute();
 
 private:
 
-    Ui::MainWindow *ui;
-    bool    m_bProcessFinished;
-    int     m_nTimer;
+    Ui::MainWindow  *ui;
+    int              m_nTimer;
+    teAction         m_teAction;
+    QString          m_qsFileName;
 };
 
 #endif // MAINWINDOW_H
