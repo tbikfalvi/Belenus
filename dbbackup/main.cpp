@@ -27,14 +27,20 @@ int main(int argc, char *argv[])
     apMainApp->installTranslator( poTransBackup );
     apMainApp->installTranslator( poTransQT );
 
-    bool    bDbRestore = false;
+    MainWindow::teAction    teAction    = MainWindow::ACT_BACKUP;
+    QString                 qsFileName  = "";
 
     if( argc > 1 && strcmp(argv[1],"-restore") == 0 )
     {
-        bDbRestore = true;
+        teAction = MainWindow::ACT_RESTORE;
+    }
+    else if( argc > 2 && strcmp(argv[1],"-execute") == 0 )
+    {
+        teAction = MainWindow::ACT_EXECUTE;
+        qsFileName = QString( argv[2] );
     }
 
-    MainWindow *wndMain = new MainWindow( 0, bDbRestore );
+    MainWindow *wndMain = new MainWindow( 0, teAction, qsFileName );
 
     wndMain->show();
 

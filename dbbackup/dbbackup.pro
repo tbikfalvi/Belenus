@@ -10,8 +10,7 @@ DESTDIR      = ..
 TEMPLATE     = app
 RC_FILE      = dbbackup.rc
 RESOURCES   += dbbackup.qrc
-TRANSLATIONS = dbbackup_us.ts \
-               dbbackup_hu.ts \
+TRANSLATIONS = dbbackup_hu.ts \
                qt_hu.ts
 
 SOURCES     += main.cpp\

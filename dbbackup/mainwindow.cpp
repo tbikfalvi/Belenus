@@ -9,7 +9,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent, bool p_bDbRestore) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent, teAction p_teAction, QString p_qsFileName) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     //---------------------------------------------------------------
     // Initialize the GUI
@@ -17,35 +17,31 @@ MainWindow::MainWindow(QWidget *parent, bool p_bDbRestore) : QMainWindow(parent)
 
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
-    ui->ledDatabase->setVisible( false );
-    ui->ledDatabase->setEnabled( false );
-    ui->pbSelect->setVisible( false );
-    ui->pbSelect->setEnabled( false );
-    ui->pbStart->setVisible( false );
-    ui->pbStart->setEnabled( false );
+    setControlsEnabled( false );
 
     //---------------------------------------------------------------
     // Initialize the variables
-    m_nTimer            = 0;
-    m_bProcessFinished  = false;
+    m_nTimer        = 0;
+    m_teAction      = p_teAction;
+    m_qsFileName    = p_qsFileName;
 
-    if( p_bDbRestore )
+    switch( m_teAction )
     {
-        ui->lblCaption->setText( tr("Restore database") );
-        ui->lblInfo->setText( tr("Please select desired database and click on Start") );
-
-        ui->ledDatabase->setVisible( true );
-        ui->ledDatabase->setEnabled( true );
-        ui->pbSelect->setVisible( true );
-        ui->pbSelect->setEnabled( true );
-        ui->pbStart->setVisible( true );
-        ui->pbStart->setEnabled( true );
-    }
-    else
-    {
-        //---------------------------------------------------------------
-        // Start the application process with the timer
-        m_nTimer = startTimer( 1000 );
+        case ACT_RESTORE:
+        {
+            ui->lblCaption->setText( tr("Restore database") );
+            ui->lblInfo->setText( tr("Please select desired database and click on Start") );
+            setControlsEnabled( true );
+            break;
+        }
+        case ACT_EXECUTE:
+        {
+            ui->lblCaption->setText( tr("Update database") );
+            m_nTimer = startTimer( 1000 );
+            break;
+        }
+        default:
+            m_nTimer = startTimer( 1000 );
     }
 }
 
@@ -59,24 +55,40 @@ void MainWindow::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
 {
     killTimer( m_nTimer );
+    m_nTimer = 0;
 
-    if( m_bProcessFinished )
+    switch( m_teAction )
     {
-        close();
-    }
-    else
-    {
-        processMain();
+        case ACT_BACKUP:
+        {
+            processBackup();
+            break;
+        }
+
+        case ACT_RESTORE:
+        {
+            processRestore();
+            break;
+        }
+
+        case ACT_EXECUTE:
+        {
+            processExecute();
+            break;
+        }
+
+        default:
+            close();
     }
 }
 //-------------------------------------------------------------------------------------------------
-void MainWindow::processMain()
+void MainWindow::processBackup()
 //-------------------------------------------------------------------------------------------------
 {
     QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
     QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
     QString     qsBackupPath    = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ), "" ).toString();
-    QString     qsProcess       = QString("%1/mysqldump.exe").arg(qsMysqlPath);
+    QString     qsProcess       = QString( "\"%1/mysqldump.exe\"" ).arg(qsMysqlPath);
     QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1\\belenus_backup_%2.sql\" ").arg(qsBackupPath).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsParameters );
 
@@ -100,7 +112,92 @@ void MainWindow::processMain()
                                  "Please check your settings.") );
     }
 
-    m_bProcessFinished = true;
+    m_teAction = ACT_FINISHED;
+    m_nTimer = startTimer( 500 );
+}
+//-------------------------------------------------------------------------------------------------
+void MainWindow::processRestore()
+//-------------------------------------------------------------------------------------------------
+{
+    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
+    QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
+    QString     qsCommand;
+    QString     qsDBRecreate    = QString( "dbrecreate.sql" );
+    QString     qsImport        = QString( " \"%1\" ").arg(ui->ledDatabase->toolTip());
+
+    QFile qfRecreate(qsDBRecreate );
+
+    if( qfRecreate.open( QIODevice::WriteOnly ) )
+    {
+        qfRecreate.write( "DROP DATABASE belenus;\nCREATE DATABASE belenus;\n" );
+        qfRecreate.close();
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to create temporary file: dbrecreate.sql") );
+        setControlsEnabled( true );
+        return;
+    }
+
+    QProcess *qpRestore = new QProcess();
+
+    qsCommand = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsDBRecreate );
+
+    if( qpRestore->execute( qsCommand ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to execute the following command:\n"
+                                 "%1").arg(qsCommand) );
+        delete qpRestore;
+        setControlsEnabled( true );
+        return;
+    }
+    qfRecreate.remove();
+
+    qsCommand = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsImport );
+
+    if( qpRestore->execute( qsCommand ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to execute the following command:\n"
+                                 "%1").arg(qsCommand) );
+        delete qpRestore;
+        setControlsEnabled( true );
+        return;
+    }
+
+    delete qpRestore;
+
+    m_teAction = ACT_FINISHED;
+    m_nTimer = startTimer( 500 );
+}
+//-------------------------------------------------------------------------------------------------
+void MainWindow::processExecute()
+//-------------------------------------------------------------------------------------------------
+{
+    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+    QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
+    QString     qsProcess       = QString( "\"%1/mysql.exe\" -u belenus -pbelenus belenus < " ).arg(qsMysqlPath);
+    QString     qsExecute       = QString( " \"%1\" ").arg(m_qsFileName);
+    QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsExecute );
+
+    QProcess *qpExecute = new QProcess();
+
+    if( qpExecute->execute( qsCommand ) )
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("Unable to execute the following command:\n"
+                                 "%1").arg(qsCommand) );
+        delete qpExecute;
+        setControlsEnabled( true );
+        return;
+    }
+
+    delete qpExecute;
+
+    m_teAction = ACT_FINISHED;
     m_nTimer = startTimer( 500 );
 }
 
@@ -141,14 +238,29 @@ void MainWindow::on_pbSelect_clicked()
 
 void MainWindow::on_pbStart_clicked()
 {
-    QFile   fileDb( ui->ledDatabase->text() );
+    QFile   fileDb( ui->ledDatabase->toolTip() );
 
     if( fileDb.exists() )
     {
-        QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
-        QString     qsMysqlPath     = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ), "" ).toString();
-        QString     qsProcess       = QString("%1/mysql.exe").arg(qsMysqlPath);
-        QString     qsParameters    = QString( "-u belenus -pbelenus belenus < \"%1\" ").arg(ui->ledDatabase->toolTip());
-
+        setControlsEnabled( false );
+        ui->lblInfo->setText( tr("Please wait until the process finish.") );
+        m_nTimer = startTimer( 1000 );
     }
+    else
+    {
+        QMessageBox::warning( this, tr("Error"),
+                              tr("The selected file not exists or not readable\n\n%1").arg( ui->ledDatabase->toolTip() ) );
+        setControlsEnabled( true );
+        return;
+    }
+}
+
+void MainWindow::setControlsEnabled(bool p_bEnable)
+{
+    ui->ledDatabase->setVisible( p_bEnable );
+    ui->ledDatabase->setEnabled( p_bEnable );
+    ui->pbSelect->setVisible( p_bEnable );
+    ui->pbSelect->setEnabled( p_bEnable );
+    ui->pbStart->setVisible( p_bEnable );
+    ui->pbStart->setEnabled( p_bEnable );
 }
