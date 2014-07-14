@@ -273,6 +273,7 @@ void cDlgPreferences::accept()
     if( m_inLangIdx != cmbAppLang->currentIndex() )
     {
         g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+        _updateDatabaseLanguage();
 //        QMessageBox::information( this, tr( "Information" ),
 //                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
     }
@@ -453,4 +454,12 @@ void cDlgPreferences::on_pbBackupLocation_clicked()
     {
         ledBackupLocation->setText( qsDir );
     }
+}
+
+void cDlgPreferences::_updateDatabaseLanguage()
+{
+    g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=0 ").arg( tr("Not defined") ) );
+    g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=1 ").arg( tr("Younger than 18") ) );
+    g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=7 ").arg( tr("Above 60") ) );
+
 }

@@ -47,12 +47,15 @@ int main( int argc, char *argv[] )
         g_poDB->setPassword( "belenus" );
         g_poDB->open();
 
-        QSettings       iniFile( "belenus.ini", QSettings::IniFormat );
+        QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+        QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "us" ).toString();
+        QString     qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
+        QString     qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
+
+        g_obLogger(cSeverity::INFO) << "Language file: " << qsLangBl << EOM;
+
         QTranslator     obBlTr;
         QTranslator     obQtTr;
-        QString         qsLang = iniFile.value( "General/Lang", "us" ).toString();
-        QString         qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
-        QString         qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
 
         obBlTr.load( qsLangBl );
         obQtTr.load( qsLangQT );
