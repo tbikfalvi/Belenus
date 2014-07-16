@@ -66,7 +66,7 @@ void cDlgChangePCValidity::on_pbOk_clicked()
     {
         QMessageBox::warning( this, tr( "Warning" ),
                               tr( "Incorrect validation date (%1).\n"
-                                  "Validation of an active patientcard could not end in the past." ).arg( deCustom->date().toString("yyyy-MM-dd") ) );
+                                  "Validation of an active patientcard could not end in the past." ).arg( deCustom->date().toString(g_poPrefs->getDateFormat()) ) );
         return;
     }
 

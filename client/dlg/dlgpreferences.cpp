@@ -59,6 +59,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
 
+    cmbDateFormat->setCurrentIndex(-1);
+    int nDateFormatIndex = cmbDateFormat->findText( g_poPrefs->getDateFormat() );
+    if( nDateFormatIndex < 1 ) nDateFormatIndex = 0;
+    cmbDateFormat->setCurrentIndex( nDateFormatIndex );
+
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\" " ) );
     poQuery->first();
     ledAboutLink->setText( poQuery->value(0).toString() );
@@ -350,6 +355,8 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setBackupDatabaseDays( qsBackupDays );
 
+    g_poPrefs->setDateFormat( cmbDateFormat->currentText() );
+
     g_poPrefs->save();
 
     QDialog::accept();
@@ -498,4 +505,9 @@ void cDlgPreferences::_updateDatabaseLanguage()
     g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=4 ").arg( tr("Purchase product") ) );
     g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=5 ").arg( tr("Using device with card") ) );
     g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=6 ").arg( tr("Using device with cash") ) );
+}
+
+void cDlgPreferences::on_cmbDateFormat_currentIndexChanged(const QString &arg1)
+{
+    lblDateFormatExample->setText( tr( "(example %1)" ).arg( QDate::currentDate().toString(arg1) ) );
 }
