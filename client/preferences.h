@@ -168,6 +168,8 @@ public:
     int             getBackupDatabaseType() const;
     void            setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow = false );
     QString         getBackupDatabaseDays() const;
+    void            setDateFormat( const QString &p_qsDateFormat, bool p_boSaveNow = false );
+    QString         getDateFormat() const;
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -238,6 +240,7 @@ private:
     bool            m_bBackupDatabase;
     int             m_nBackupDatabaseType;
     QString         m_qsBackupDatabaseDays;
+    QString         m_qsDateFormat;
 
     void init();
 };

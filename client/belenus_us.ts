@@ -3196,260 +3196,265 @@ refill the patientcard before use.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="78"/>
-        <location filename="dlg/dlgpreferences.cpp" line="375"/>
+        <location filename="dlg/dlgpreferences.cpp" line="82"/>
+        <location filename="dlg/dlgpreferences.cpp" line="381"/>
         <source>Visible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="83"/>
-        <location filename="dlg/dlgpreferences.cpp" line="380"/>
+        <location filename="dlg/dlgpreferences.cpp" line="87"/>
+        <location filename="dlg/dlgpreferences.cpp" line="386"/>
         <source>Hidden</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="196"/>
+        <location filename="dlg/dlgpreferences.cpp" line="200"/>
         <source>Mon</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="197"/>
+        <location filename="dlg/dlgpreferences.cpp" line="201"/>
         <source>Tue</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="198"/>
+        <location filename="dlg/dlgpreferences.cpp" line="202"/>
         <source>Wed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="199"/>
+        <location filename="dlg/dlgpreferences.cpp" line="203"/>
         <source>Thu</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="200"/>
+        <location filename="dlg/dlgpreferences.cpp" line="204"/>
         <source>Fri</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="201"/>
+        <location filename="dlg/dlgpreferences.cpp" line="205"/>
         <source>Sat</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="202"/>
+        <location filename="dlg/dlgpreferences.cpp" line="206"/>
         <source>Sun</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="262"/>
+        <location filename="dlg/dlgpreferences.cpp" line="266"/>
         <source>Attention</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="263"/>
+        <location filename="dlg/dlgpreferences.cpp" line="267"/>
         <source>Decimal symbol and Digit grouping symbol can not be the same.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="343"/>
+        <location filename="dlg/dlgpreferences.cpp" line="347"/>
         <source> Mon</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="344"/>
+        <location filename="dlg/dlgpreferences.cpp" line="348"/>
         <source> Tue</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="345"/>
+        <location filename="dlg/dlgpreferences.cpp" line="349"/>
         <source> Wed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="346"/>
+        <location filename="dlg/dlgpreferences.cpp" line="350"/>
         <source> Thu</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="347"/>
+        <location filename="dlg/dlgpreferences.cpp" line="351"/>
         <source> Fri</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="348"/>
+        <location filename="dlg/dlgpreferences.cpp" line="352"/>
         <source> Sat</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="349"/>
+        <location filename="dlg/dlgpreferences.cpp" line="353"/>
         <source> Sun</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="365"/>
+        <location filename="dlg/dlgpreferences.cpp" line="371"/>
         <source>Information</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="366"/>
+        <location filename="dlg/dlgpreferences.cpp" line="372"/>
         <source>Some of the changes you made will only be applied after the application is restarted.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="398"/>
-        <location filename="dlg/dlgpreferences.cpp" line="405"/>
+        <location filename="dlg/dlgpreferences.cpp" line="404"/>
+        <location filename="dlg/dlgpreferences.cpp" line="411"/>
         <source>(%1 + %2 % VAT)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="434"/>
-        <location filename="dlg/dlgpreferences.cpp" line="448"/>
+        <location filename="dlg/dlgpreferences.cpp" line="440"/>
+        <location filename="dlg/dlgpreferences.cpp" line="454"/>
         <source>Select Directory</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="461"/>
-        <location filename="dlg/dlgpreferences.cpp" line="465"/>
-        <location filename="dlg/dlgpreferences.cpp" line="469"/>
+        <location filename="dlg/dlgpreferences.cpp" line="467"/>
+        <location filename="dlg/dlgpreferences.cpp" line="471"/>
+        <location filename="dlg/dlgpreferences.cpp" line="475"/>
         <source>Not defined</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="462"/>
+        <location filename="dlg/dlgpreferences.cpp" line="468"/>
         <source>Younger than 18</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="463"/>
+        <location filename="dlg/dlgpreferences.cpp" line="469"/>
         <source>Above 60</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="466"/>
+        <location filename="dlg/dlgpreferences.cpp" line="472"/>
         <source>Male</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="467"/>
+        <location filename="dlg/dlgpreferences.cpp" line="473"/>
         <source>Female</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="471"/>
+        <location filename="dlg/dlgpreferences.cpp" line="477"/>
         <source>Service cards</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="473"/>
+        <location filename="dlg/dlgpreferences.cpp" line="479"/>
         <source>Service card, only for service usage.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="475"/>
+        <location filename="dlg/dlgpreferences.cpp" line="481"/>
         <source>&lt;No group associated&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="477"/>
+        <location filename="dlg/dlgpreferences.cpp" line="483"/>
         <source>Using solarium</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="478"/>
+        <location filename="dlg/dlgpreferences.cpp" line="484"/>
         <source>Selling patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="479"/>
+        <location filename="dlg/dlgpreferences.cpp" line="485"/>
         <source>Filling patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="480"/>
+        <location filename="dlg/dlgpreferences.cpp" line="486"/>
         <source>Selling product</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="481"/>
+        <location filename="dlg/dlgpreferences.cpp" line="487"/>
         <source>Replacing lost patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="482"/>
+        <location filename="dlg/dlgpreferences.cpp" line="488"/>
         <source>Assign patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="483"/>
-        <location filename="dlg/dlgpreferences.cpp" line="484"/>
+        <location filename="dlg/dlgpreferences.cpp" line="489"/>
+        <location filename="dlg/dlgpreferences.cpp" line="490"/>
         <source>Other</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="485"/>
+        <location filename="dlg/dlgpreferences.cpp" line="491"/>
         <source>Storage action</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="486"/>
+        <location filename="dlg/dlgpreferences.cpp" line="492"/>
         <source>Casssa expense</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="488"/>
+        <location filename="dlg/dlgpreferences.cpp" line="494"/>
         <source>Add product to storage</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="489"/>
+        <location filename="dlg/dlgpreferences.cpp" line="495"/>
         <source>Product disposal</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="490"/>
+        <location filename="dlg/dlgpreferences.cpp" line="496"/>
         <source>Product donate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="492"/>
+        <location filename="dlg/dlgpreferences.cpp" line="498"/>
         <source>Cash</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="493"/>
+        <location filename="dlg/dlgpreferences.cpp" line="499"/>
         <source>Credit card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="495"/>
+        <location filename="dlg/dlgpreferences.cpp" line="501"/>
         <source>Guest entered into database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="496"/>
+        <location filename="dlg/dlgpreferences.cpp" line="502"/>
         <source>Purchase patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="497"/>
+        <location filename="dlg/dlgpreferences.cpp" line="503"/>
         <source>Refill patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="498"/>
+        <location filename="dlg/dlgpreferences.cpp" line="504"/>
         <source>Purchase product</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="499"/>
+        <location filename="dlg/dlgpreferences.cpp" line="505"/>
         <source>Using device with card</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpreferences.cpp" line="500"/>
+        <location filename="dlg/dlgpreferences.cpp" line="506"/>
         <source>Using device with cash</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="511"/>
+        <source>(example %1)</source>
         <translation></translation>
     </message>
 </context>
@@ -7972,32 +7977,32 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="404"/>
+        <location filename="dlgpreferences.ui" line="454"/>
         <source>Default country : </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="827"/>
+        <location filename="dlgpreferences.ui" line="877"/>
         <source>Patientcard</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="833"/>
+        <location filename="dlgpreferences.ui" line="883"/>
         <source> Barcode </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="839"/>
+        <location filename="dlgpreferences.ui" line="889"/>
         <source>Barcode length:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="882"/>
+        <location filename="dlgpreferences.ui" line="932"/>
         <source>Barcode prefix:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="767"/>
+        <location filename="dlgpreferences.ui" line="817"/>
         <source>Device</source>
         <translation></translation>
     </message>
@@ -8007,343 +8012,368 @@ Do you want to save them as new into the database?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="438"/>
+        <location filename="dlgpreferences.ui" line="404"/>
+        <source>Date format :</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="414"/>
+        <source>yyyy-MM-dd</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="419"/>
+        <source>MM-dd-yyyy</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="424"/>
+        <source>dd-MM-yyyy</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="432"/>
+        <source>(example: %1)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlgpreferences.ui" line="488"/>
         <source>Kiwisun web address :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="471"/>
+        <location filename="dlgpreferences.ui" line="521"/>
         <source> Main window </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="479"/>
-        <location filename="dlgpreferences.ui" line="591"/>
+        <location filename="dlgpreferences.ui" line="529"/>
+        <location filename="dlgpreferences.ui" line="641"/>
         <source>Background color: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="532"/>
+        <location filename="dlgpreferences.ui" line="582"/>
         <source> Secondary window  </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="559"/>
+        <location filename="dlgpreferences.ui" line="609"/>
         <source>Visible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="659"/>
+        <location filename="dlgpreferences.ui" line="709"/>
         <source> Panels </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="722"/>
+        <location filename="dlgpreferences.ui" line="772"/>
         <source>Panel settings ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="775"/>
+        <location filename="dlgpreferences.ui" line="825"/>
         <source>VAT percent for device usage :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="909"/>
+        <location filename="dlgpreferences.ui" line="959"/>
         <source>Product barcode length
 is different :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="927"/>
+        <location filename="dlgpreferences.ui" line="977"/>
         <source> In case of loss </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="935"/>
+        <location filename="dlgpreferences.ui" line="985"/>
         <source>Price of replace lost patientcard :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="975"/>
-        <location filename="dlgpreferences.ui" line="1078"/>
+        <location filename="dlgpreferences.ui" line="1025"/>
+        <location filename="dlgpreferences.ui" line="1128"/>
         <source>including</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="998"/>
-        <location filename="dlgpreferences.ui" line="1101"/>
+        <location filename="dlgpreferences.ui" line="1048"/>
+        <location filename="dlgpreferences.ui" line="1151"/>
         <source>VAT</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1018"/>
-        <location filename="dlgpreferences.ui" line="1121"/>
+        <location filename="dlgpreferences.ui" line="1068"/>
+        <location filename="dlgpreferences.ui" line="1171"/>
         <source>TextLabel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1030"/>
+        <location filename="dlgpreferences.ui" line="1080"/>
         <source> Partner patientcard </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1038"/>
+        <location filename="dlgpreferences.ui" line="1088"/>
         <source>Price of assigning partner card to activated card :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1147"/>
+        <location filename="dlgpreferences.ui" line="1197"/>
         <source>Cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1153"/>
+        <location filename="dlgpreferences.ui" line="1203"/>
         <source>Automatically close cassa when user log out</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1156"/>
+        <location filename="dlgpreferences.ui" line="1206"/>
         <source>Auto close cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1181"/>
+        <location filename="dlgpreferences.ui" line="1231"/>
         <source>Automatically add cash withdrawal</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1190"/>
+        <location filename="dlgpreferences.ui" line="1240"/>
         <source>Automatically create new cassa when date has been changed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1220"/>
+        <location filename="dlgpreferences.ui" line="1270"/>
         <source>With the previous cassa balance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1230"/>
+        <location filename="dlgpreferences.ui" line="1280"/>
         <source>with empty cassa</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1241"/>
+        <location filename="dlgpreferences.ui" line="1291"/>
         <source> Currency settings </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1247"/>
+        <location filename="dlgpreferences.ui" line="1297"/>
         <source>Full name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1274"/>
+        <location filename="dlgpreferences.ui" line="1324"/>
         <source>Short name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1297"/>
+        <location filename="dlgpreferences.ui" line="1347"/>
         <source>Decimal symbol :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1320"/>
+        <location filename="dlgpreferences.ui" line="1370"/>
         <source>Digit grouping symbol :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1360"/>
+        <location filename="dlgpreferences.ui" line="1410"/>
         <source>Server</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1366"/>
+        <location filename="dlgpreferences.ui" line="1416"/>
         <source> Gibbig server settings </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1372"/>
+        <location filename="dlgpreferences.ui" line="1422"/>
         <source>Server Host:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1392"/>
+        <location filename="dlgpreferences.ui" line="1442"/>
         <source>Server Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1415"/>
+        <location filename="dlgpreferences.ui" line="1465"/>
         <source> Gibbig user settings </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1421"/>
+        <location filename="dlgpreferences.ui" line="1471"/>
         <source>User name :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1438"/>
+        <location filename="dlgpreferences.ui" line="1488"/>
         <source>Password :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1458"/>
+        <location filename="dlgpreferences.ui" line="1508"/>
         <source> Actions </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1464"/>
+        <location filename="dlgpreferences.ui" line="1514"/>
         <source>Enable synchronization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1477"/>
+        <location filename="dlgpreferences.ui" line="1527"/>
         <source> Automatically synchronize ...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1486"/>
+        <location filename="dlgpreferences.ui" line="1536"/>
         <source>database when exiting from application</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1496"/>
+        <location filename="dlgpreferences.ui" line="1546"/>
         <source>studio independent data when application started.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1520"/>
+        <location filename="dlgpreferences.ui" line="1570"/>
         <source>Hardware</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1528"/>
+        <location filename="dlgpreferences.ui" line="1578"/>
         <source>COM Port:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1535"/>
+        <location filename="dlgpreferences.ui" line="1585"/>
         <source>COM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1577"/>
+        <location filename="dlgpreferences.ui" line="1627"/>
         <source>Database</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1583"/>
+        <location filename="dlgpreferences.ui" line="1633"/>
         <source> Database server </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1591"/>
+        <location filename="dlgpreferences.ui" line="1641"/>
         <source>Location of binaries :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1611"/>
-        <location filename="dlgpreferences.ui" line="1647"/>
+        <location filename="dlgpreferences.ui" line="1661"/>
+        <location filename="dlgpreferences.ui" line="1697"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1623"/>
+        <location filename="dlgpreferences.ui" line="1673"/>
         <source> Database backup </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1631"/>
+        <location filename="dlgpreferences.ui" line="1681"/>
         <source>Backup location :</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1656"/>
+        <location filename="dlgpreferences.ui" line="1706"/>
         <source>Force to backup database on exit (activated only once)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1663"/>
+        <location filename="dlgpreferences.ui" line="1713"/>
         <source>Enable automatic database backup if confirmed</source>
         <oldsource>Enable automatic database backup</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1690"/>
+        <location filename="dlgpreferences.ui" line="1740"/>
         <source>after every exit</source>
         <oldsource>after every exit if confirmed</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1697"/>
+        <location filename="dlgpreferences.ui" line="1747"/>
         <source>after exit if cassa is closed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1704"/>
+        <location filename="dlgpreferences.ui" line="1754"/>
         <source>after exit on the last day of the week</source>
         <oldsource>after exit on the last day of the week if confirmed</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1711"/>
+        <location filename="dlgpreferences.ui" line="1761"/>
         <source>after exit on the last day of the month</source>
         <oldsource>after exit on the last day of the month if confirmed</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1718"/>
+        <location filename="dlgpreferences.ui" line="1768"/>
         <source>after exit on the selected day(s)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1727"/>
+        <location filename="dlgpreferences.ui" line="1777"/>
         <source>Monday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1737"/>
+        <location filename="dlgpreferences.ui" line="1787"/>
         <source>Tuesday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1744"/>
+        <location filename="dlgpreferences.ui" line="1794"/>
         <source>Wednesday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1751"/>
+        <location filename="dlgpreferences.ui" line="1801"/>
         <source>Thursday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1758"/>
+        <location filename="dlgpreferences.ui" line="1808"/>
         <source>Friday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1782"/>
+        <location filename="dlgpreferences.ui" line="1832"/>
         <source>Saturday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="1789"/>
+        <location filename="dlgpreferences.ui" line="1839"/>
         <source>Sunday</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="465"/>
+        <location filename="dlgpreferences.ui" line="515"/>
         <source>Appearance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="673"/>
+        <location filename="dlgpreferences.ui" line="723"/>
         <source>Number of &amp;panels in a row:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dlgpreferences.ui" line="498"/>
-        <location filename="dlgpreferences.ui" line="610"/>
+        <location filename="dlgpreferences.ui" line="548"/>
+        <location filename="dlgpreferences.ui" line="660"/>
         <source>Choose ...</source>
         <translation></translation>
     </message>

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>546</width>
-    <height>439</height>
+    <height>453</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -399,13 +399,63 @@
            </layout>
           </item>
           <item row="1" column="0">
+           <widget class="QLabel" name="lblDateFormat">
+            <property name="text">
+             <string>Date format :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_28">
+            <item>
+             <widget class="QComboBox" name="cmbDateFormat">
+              <item>
+               <property name="text">
+                <string>yyyy-MM-dd</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>MM-dd-yyyy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>dd-MM-yyyy</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblDateFormatExample">
+              <property name="text">
+               <string>(example: %1)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_22">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
            <widget class="QLabel" name="lblDefaultCountry">
             <property name="text">
              <string>Default country : </string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <item>
              <widget class="QLineEdit" name="ledDefaultCountry">
@@ -432,14 +482,14 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="lblAboutLink">
             <property name="text">
              <string>Kiwisun web address :</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QLineEdit" name="ledAboutLink"/>
           </item>
          </layout>

@@ -70,6 +70,8 @@ void cPreferences::init()
     m_bBackupDatabase       = false;
     m_nBackupDatabaseType   = 0;
     m_qsBackupDatabaseDays  = "";
+
+    m_qsDateFormat          = "yyyy-MM-dd";
 }
 
 void cPreferences::loadConfFileSettings()
@@ -183,6 +185,8 @@ void cPreferences::loadConfFileSettings()
     m_bBackupDatabase       = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
     m_nBackupDatabaseType   = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
     m_qsBackupDatabaseDays  = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
+
+    m_qsDateFormat          = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
 }
 
 void cPreferences::loadDBSettings() throw (cSevException)
@@ -274,6 +278,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "DbBackup/BackupDb" ), m_bBackupDatabase );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupType" ), m_nBackupDatabaseType );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupDays" ), m_qsBackupDatabaseDays );
+
+    obPrefFile.setValue( QString::fromAscii( "DateFormat" ), m_qsDateFormat );
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -1161,4 +1167,20 @@ void cPreferences::setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays,
 QString cPreferences::getBackupDatabaseDays() const
 {
     return m_qsBackupDatabaseDays;
+}
+
+void cPreferences::setDateFormat( const QString &p_qsDateFormat, bool p_boSaveNow )
+{
+    m_qsDateFormat = p_qsDateFormat;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "DateFormat" ), m_qsDateFormat );
+    }
+}
+
+QString cPreferences::getDateFormat() const
+{
+    return m_qsDateFormat;
 }
