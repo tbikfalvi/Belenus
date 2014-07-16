@@ -2602,7 +2602,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientcardUnit.setPatientCardId( obDBPatientCardOld.id() );
             obDBPatientcardUnit.replacePatientCard( obDBPatientCardNew.id() );
 
-            // Nem kell törölni a kártyát, csak jelezni, hogy elveszett
+            // Nem kell tÃ¶rÃ¶lni a kÃ¡rtyÃ¡t, csak jelezni, hogy elveszett
             /*
             obDBPatientCardOld.setPatientCardTypeId( 0 );
             obDBPatientCardOld.setParentId( 0 );
