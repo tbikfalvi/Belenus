@@ -3311,6 +3311,8 @@ refill the patientcard before use.</source>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="461"/>
+        <location filename="dlg/dlgpreferences.cpp" line="465"/>
+        <location filename="dlg/dlgpreferences.cpp" line="469"/>
         <source>Not defined</source>
         <translation></translation>
     </message>
@@ -3322,6 +3324,132 @@ refill the patientcard before use.</source>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="463"/>
         <source>Above 60</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="466"/>
+        <source>Male</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="467"/>
+        <source>Female</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="471"/>
+        <source>Service cards</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="473"/>
+        <source>Service card, only for service usage.</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="475"/>
+        <source>&lt;No group associated&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="477"/>
+        <source>Using solarium</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="478"/>
+        <source>Selling patientcard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="479"/>
+        <source>Filling patientcard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="480"/>
+        <source>Selling product</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="481"/>
+        <source>Replacing lost patientcard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="482"/>
+        <source>Assign patientcard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="483"/>
+        <location filename="dlg/dlgpreferences.cpp" line="484"/>
+        <source>Other</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="485"/>
+        <source>Storage action</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="486"/>
+        <source>Casssa expense</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="488"/>
+        <source>Add product to storage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="489"/>
+        <source>Product disposal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="490"/>
+        <source>Product donate</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="492"/>
+        <source>Cash</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="493"/>
+        <source>Credit card</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="495"/>
+        <source>Guest entered into database</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="496"/>
+        <source>Purchase patientcard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="497"/>
+        <source>Refill patientcard</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="498"/>
+        <source>Purchase product</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="499"/>
+        <source>Using device with card</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="500"/>
+        <source>Using device with cash</source>
         <translation></translation>
     </message>
 </context>
@@ -8759,12 +8887,14 @@ Please define a valid product count or reset the price.</source>
     <name>dlgProgress</name>
     <message>
         <location filename="dlgprogress.ui" line="17"/>
-        <source>Please wait ...</source>
+        <source>Please wait</source>
+        <oldsource>Please wait ...</oldsource>
         <translation></translation>
     </message>
     <message>
         <location filename="dlgprogress.ui" line="48"/>
-        <source>Please wait while the requested process ends.</source>
+        <source>Please wait while the requested process ends ...</source>
+        <oldsource>Please wait while the requested process ends.</oldsource>
         <translation></translation>
     </message>
 </context>

@@ -5116,6 +5116,8 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="461"/>
+        <location filename="dlg/dlgpreferences.cpp" line="465"/>
+        <location filename="dlg/dlgpreferences.cpp" line="469"/>
         <source>Not defined</source>
         <translation>Nincs megadva</translation>
     </message>
@@ -5128,6 +5130,132 @@ El akarja menteni ezt a hármast az adatbázisba?</translation>
         <location filename="dlg/dlgpreferences.cpp" line="463"/>
         <source>Above 60</source>
         <translation>60 fölött</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="466"/>
+        <source>Male</source>
+        <translation>Férfi</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="467"/>
+        <source>Female</source>
+        <translation>Nő</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="471"/>
+        <source>Service cards</source>
+        <translation>Szervíz kártyák</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="473"/>
+        <source>Service card, only for service usage.</source>
+        <translation>Szervíz kártya, csak szerviz használatra</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="475"/>
+        <source>&lt;No group associated&gt;</source>
+        <translation>&lt;Nincs csoporthoz rendelve&gt;</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="477"/>
+        <source>Using solarium</source>
+        <translation>Géphasználat</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="478"/>
+        <source>Selling patientcard</source>
+        <translation>Bérlet eladás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="479"/>
+        <source>Filling patientcard</source>
+        <translation>Bérlet feltöltés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="480"/>
+        <source>Selling product</source>
+        <translation>Termék eladás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="481"/>
+        <source>Replacing lost patientcard</source>
+        <translation>Elveszett bérlet csere</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="482"/>
+        <source>Assign patientcard</source>
+        <translation>Kártya összekapcsolás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="483"/>
+        <location filename="dlg/dlgpreferences.cpp" line="484"/>
+        <source>Other</source>
+        <translation>Egyéb</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="485"/>
+        <source>Storage action</source>
+        <translation>Raktár esemény</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="486"/>
+        <source>Casssa expense</source>
+        <translation>Pénztár kiadás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="488"/>
+        <source>Add product to storage</source>
+        <translation>Termék felvétele raktárba</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="489"/>
+        <source>Product disposal</source>
+        <translation>Termék leselejtezése</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="490"/>
+        <source>Product donate</source>
+        <translation>Termék ajándékozása</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="492"/>
+        <source>Cash</source>
+        <translation>Készpénz</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="493"/>
+        <source>Credit card</source>
+        <translation>Bankkártya</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="495"/>
+        <source>Guest entered into database</source>
+        <translation>Vendég felvétele az adatbázisba</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="496"/>
+        <source>Purchase patientcard</source>
+        <translation>Bérlet vásárlás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="497"/>
+        <source>Refill patientcard</source>
+        <translation>Bérlet feltöltés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="498"/>
+        <source>Purchase product</source>
+        <translation>Termék vásárlás</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="499"/>
+        <source>Using device with card</source>
+        <translation>Gép használat kártyával</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgpreferences.cpp" line="500"/>
+        <source>Using device with cash</source>
+        <translation>Gép használat készpénzzel</translation>
     </message>
     <message>
         <location filename="dlg/dlgpreferences.cpp" line="365"/>
@@ -12683,13 +12811,15 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
     <name>dlgProgress</name>
     <message>
         <location filename="dlgprogress.ui" line="17"/>
-        <source>Please wait ...</source>
-        <translation>Kérem várjon ...</translation>
+        <source>Please wait</source>
+        <oldsource>Please wait ...</oldsource>
+        <translation>Kérem várjon</translation>
     </message>
     <message>
         <location filename="dlgprogress.ui" line="48"/>
-        <source>Please wait while the requested process ends.</source>
-        <translation>Kérem várjon amíg az elindított folyamat befejeződik.</translation>
+        <source>Please wait while the requested process ends ...</source>
+        <oldsource>Please wait while the requested process ends.</oldsource>
+        <translation>Kérem várjon amíg az elindított folyamat befejeződik ...</translation>
     </message>
 </context>
 <context>

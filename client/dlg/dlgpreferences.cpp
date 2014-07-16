@@ -462,4 +462,40 @@ void cDlgPreferences::_updateDatabaseLanguage()
     g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=1 ").arg( tr("Younger than 18") ) );
     g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=7 ").arg( tr("Above 60") ) );
 
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=0 ").arg( tr("Not defined") ) );
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=1 ").arg( tr("Male") ) );
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=2 ").arg( tr("Female") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE skinTypes SET skinTypeName=\"%1\" WHERE skinTypeId=0 ").arg( tr("Not defined") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE patientCardTypes SET name=\"%1\" WHERE patientCardTypeId=1 ").arg( tr("Service cards") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE patientCards SET comment=\"%1\" WHERE patientCardId=1 ").arg( tr("Service card, only for service usage.") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE panelgroups SET name=\"%1\" WHERE panelGroupId=0 ").arg( tr("<No group associated>") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=1 ").arg( tr("Using solarium") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=2 ").arg( tr("Selling patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=3 ").arg( tr("Filling patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=4 ").arg( tr("Selling product") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=5 ").arg( tr("Replacing lost patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=6 ").arg( tr("Assign patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=7 ").arg( tr("Other") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=8 ").arg( tr("Other") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=9 ").arg( tr("Storage action") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=10 ").arg( tr("Casssa expense") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE productactiontype SET name=\"%1\" WHERE productActionTypeId=1 ").arg( tr("Add product to storage") ) );
+    g_poDB->executeQTQuery( QString("UPDATE productactiontype SET name=\"%1\" WHERE productActionTypeId=2 ").arg( tr("Product disposal") ) );
+    g_poDB->executeQTQuery( QString("UPDATE productactiontype SET name=\"%1\" WHERE productActionTypeId=3 ").arg( tr("Product donate") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE paymentMethods SET name=\"%1\" WHERE paymentMethodId=1 ").arg( tr("Cash") ) );
+    g_poDB->executeQTQuery( QString("UPDATE paymentMethods SET name=\"%1\" WHERE paymentMethodId=2 ").arg( tr("Credit card") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=1 ").arg( tr("Guest entered into database") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=2 ").arg( tr("Purchase patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=3 ").arg( tr("Refill patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=4 ").arg( tr("Purchase product") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=5 ").arg( tr("Using device with card") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=6 ").arg( tr("Using device with cash") ) );
 }

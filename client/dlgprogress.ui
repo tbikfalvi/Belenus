@@ -14,7 +14,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Please wait ...</string>
+   <string>Please wait</string>
   </property>
   <property name="modal">
    <bool>false</bool>
@@ -45,7 +45,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Please wait while the requested process ends.</string>
+         <string>Please wait while the requested process ends ...</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
