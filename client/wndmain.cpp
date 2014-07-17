@@ -2840,6 +2840,8 @@ int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
 {
     QMessageBox msgBox;
 
+    msgBox.setParent( parent );
+
     switch(msgtype)
     {
         case MSG_INFORMATION:

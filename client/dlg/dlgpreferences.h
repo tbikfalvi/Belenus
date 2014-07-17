@@ -3,6 +3,7 @@
 
 #include "../belenus.h"
 #include "ui_dlgpreferences.h"
+#include "dlgprogress.h"
 
 class cDlgPreferences : public QDialog, private Ui::dlgPreferences
 {
@@ -18,8 +19,11 @@ public slots:
 private:
     int              m_inLangIdx;
     QPushButton     *m_poBtnSystem;
+    cDlgProgress    *m_dlgProgress;
 
     void            _updateDatabaseLanguage();
+    void            _increasePatientCardBarcodes();
+    void            _decreasePatientCardBarcodes( bool p_bCutBegin );
 
 private slots:
     void on_btnSecondaryBackground_clicked();
