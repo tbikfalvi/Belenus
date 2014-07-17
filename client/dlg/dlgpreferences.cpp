@@ -20,6 +20,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     setupUi( this );
 
+    m_dlgProgress = new cDlgProgress( this );
+
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
 
@@ -209,6 +211,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
 cDlgPreferences::~cDlgPreferences()
 {
+    delete m_dlgProgress;
+
     g_poPrefs->setDialogSize( "EditPreferences", QPoint( width(), height() ) );
 }
 
@@ -268,6 +272,50 @@ void cDlgPreferences::accept()
                               tr("Decimal symbol and Digit grouping symbol can not be the same.") );
         return;
     }
+    if( spbBarcodeLen->value() != g_poPrefs->getBarcodeLength() )
+    {
+        if( spbBarcodeLen->value() > g_poPrefs->getBarcodeLength() &&
+            QMessageBox::question( this, tr("Question"),
+                                   tr("Are you sure want to increase the length of the barcode of the patientcard?\n\n"
+                                      "Please note that the barcodes will be supplemented with additional "
+                                      "'0' characters at the beginning of the barcode for every patientcards, "
+                                      "where the barcode is shorter than %1 characters.").arg( spbBarcodeLen->value() ),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+            _increasePatientCardBarcodes();
+        }
+        else if( spbBarcodeLen->value() < g_poPrefs->getBarcodeLength() )
+        {
+            int nRet = g_obGen.customMsgBox( this, cGeneral::MSG_WARNING,
+                                          tr(" Cut the beginning | Cut the end | Abort  "),
+                                          tr("Are you sure you want to decrease the length of the barcode "
+                                             "of the patientcard?\n\n"
+                                             "Please note that all of the patientcards will be affected"
+                                             "where the length of the barcode is longer than %1 characters").arg( spbBarcodeLen->value() ),
+                                          tr("If you select 'Cut the beginning' the first %1 characters will "
+                                             "be removed from the beginning of the barcode\n"
+                                             "If you select 'Cut the end' the last %1 characters will"
+                                             "be removed at the end of the barcode").arg( g_poPrefs->getBarcodeLength()-spbBarcodeLen->value() ) );
+            switch( nRet )
+            {
+                case 1:
+                {
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    _decreasePatientCardBarcodes( true );
+                    break;
+                }
+                case 2:
+                {
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    _decreasePatientCardBarcodes( false );
+                    break;
+                }
+                default:
+                    return;
+            }
+        }
+    }
 
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
@@ -282,6 +330,7 @@ void cDlgPreferences::accept()
 //        QMessageBox::information( this, tr( "Information" ),
 //                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
     }
+
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
@@ -510,4 +559,68 @@ void cDlgPreferences::_updateDatabaseLanguage()
 void cDlgPreferences::on_cmbDateFormat_currentIndexChanged(const QString &arg1)
 {
     lblDateFormatExample->setText( tr( "(example %1)" ).arg( QDate::currentDate().toString(arg1) ) );
+}
+
+void cDlgPreferences::_increasePatientCardBarcodes()
+{
+    m_dlgProgress->showProgressBar( 10000 );
+    m_dlgProgress->showProgress();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>1 AND LENGTH(barcode)<%1" ).arg( g_poPrefs->getBarcodeLength() ) );
+
+    m_dlgProgress->setMax( poQuery->size() );
+
+    while( poQuery->next() )
+    {
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( poQuery->value(0).toUInt() );
+
+        QString qsBarcode = obDBPatientCard.barcode();
+
+        while( qsBarcode.length() < g_poPrefs->getBarcodeLength() )
+        {
+            qsBarcode = QString( "0%1" ).arg(qsBarcode);
+        }
+
+        obDBPatientCard.setBarcode( qsBarcode );
+        obDBPatientCard.save();
+
+        m_dlgProgress->stepProgressBar();
+    }
+    m_dlgProgress->hideProgress();
+}
+
+void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
+{
+    m_dlgProgress->showProgressBar( 10000 );
+    m_dlgProgress->showProgress();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>1 AND LENGTH(barcode)>%1" ).arg( g_poPrefs->getBarcodeLength() ) );
+
+    m_dlgProgress->setMax( poQuery->size() );
+
+    while( poQuery->next() )
+    {
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( poQuery->value(0).toUInt() );
+
+        QString qsBarcode;
+
+        if( p_bCutBegin )
+        {
+            qsBarcode = obDBPatientCard.barcode().right( g_poPrefs->getBarcodeLength() );
+        }
+        else
+        {
+            qsBarcode = obDBPatientCard.barcode().left( g_poPrefs->getBarcodeLength() );
+        }
+
+        obDBPatientCard.setBarcode( qsBarcode );
+        obDBPatientCard.save();
+
+        m_dlgProgress->stepProgressBar();
+    }
+    m_dlgProgress->hideProgress();
 }

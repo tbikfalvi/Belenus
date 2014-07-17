@@ -28,6 +28,8 @@ cDlgProgress::cDlgProgress( QWidget *p_poParent ) : QDialog( p_poParent )
     setupUi( this );
 
     setWindowIcon( QIcon("./resources/belenus.ico") );
+    setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
+    progressBar->setVisible( false );
 
     m_poParent = p_poParent;
 }
@@ -55,6 +57,28 @@ void cDlgProgress::showError(QString p_qsMessage)
     lblCaption->setText( p_qsMessage );
     show();
     QApplication::processEvents();
+}
+void cDlgProgress::showProgressBar( int p_nMax )
+{
+    progressBar->setVisible( true );
+    progressBar->setMaximum( p_nMax );
+    progressBar->setValue( 0 );
+}
+void cDlgProgress::stepProgressBar()
+{
+    progressBar->setValue( progressBar->value()+1 );
+}
+void cDlgProgress::setValue( int p_nValue )
+{
+    progressBar->setValue( 0 );
+}
+void cDlgProgress::setMax( int p_nMax )
+{
+    progressBar->setMaximum( p_nMax );
+}
+void cDlgProgress::hideProgressBar()
+{
+    progressBar->setVisible( false );
 }
 //====================================================================================
 void cDlgProgress::hideProgress()
