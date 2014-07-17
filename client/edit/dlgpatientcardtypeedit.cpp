@@ -23,6 +23,9 @@ cDlgPatientCardTypeEdit::cDlgPatientCardTypeEdit( QWidget *p_poParent, cDBPatien
     deValidDateFrom->setDate( QDate(2000,1,1) );
     deValidDateTo->setDate( QDate(2000,1,1) );
 
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+
     checkIndependent->setVisible( false );
     checkIndependent->setEnabled( false );
 

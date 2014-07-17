@@ -31,6 +31,7 @@ cDlgSerialReg::cDlgSerialReg( QWidget *p_poParent ) : QDialog( p_poParent )
     deLastValidated->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbValidateApplication->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     pbOk->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    deLastValidated->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     if( /*g_poPrefs->getLicenceId() > 1 &&*/ g_obLicenceManager.activateLicence( ledSerialKey->text() ) == cLicenceManager::ERR_NO_ERROR )
     {
