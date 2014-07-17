@@ -63,6 +63,8 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
     pbEditDiscount->setIcon( QIcon("./resources/40x40_edit.png") );
     lblAssignCardInfo->setPixmap( QPixmap("./resources/40x40_information.png") );
 
+    deBirthDate->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+
     chkService->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkEmployee->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     chkRegularCustomer->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
@@ -119,13 +121,14 @@ cDlgGuestEdit::cDlgGuestEdit( QWidget *p_poParent, cDBGuest *p_poGuest, cDBPostp
                     rbAge0->setChecked( true );
             }
         }
+        QDate   qdRegistration( QDate::fromString(m_poGuest->dateCreated().left(10),"yyyy-MM-dd") );
         ledMembership->setText( m_poGuest->membership() );
         ledEmail->setText( m_poGuest->email() );
         ledPhone->setText( m_poGuest->mobile() );
         teAddress->setText( m_poGuest->address() );
         teComment->setText( m_poGuest->comment() );
         chkReturning->setChecked( m_poGuest->isReturning() );
-        ledDateOfRegistration->setText( m_poGuest->dateCreated().left(10).replace("-",".") );
+        ledDateOfRegistration->setText( qdRegistration.toString(g_poPrefs->getDateFormat()) );
         chkService->setChecked( m_poGuest->service() );
         chkEmployee->setChecked( m_poGuest->employee() );
         chkRegularCustomer->setChecked( m_poGuest->regularCustomer() );

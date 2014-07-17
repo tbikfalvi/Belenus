@@ -44,6 +44,8 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
     pbSell->setIcon( QIcon("./resources/40x40_cassa.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
 
     if( m_poPatientCard )
     {
@@ -345,7 +347,6 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
             m_poPatientCard->setPatientId( cmbPatient->itemData( cmbPatient->currentIndex() ).toUInt() );
             m_poPatientCard->setUnits( uiUnits );
             m_poPatientCard->setTimeLeft( uiUnitTime );
-//            m_poPatientCard->setValidDateFrom( deValidDateFrom->date().toString("yyyy-MM-dd") );
             if( deValidDateTo->date() > QDate::fromString(m_poPatientCard->validDateTo(),"yyyy-MM-dd") )
             {
                 m_poPatientCard->setValidDateTo( deValidDateTo->date().toString("yyyy-MM-dd") );
