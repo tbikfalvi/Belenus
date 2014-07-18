@@ -2,7 +2,7 @@
 #define DLG_PANELAPPEREANCE_H
 
 #include "../belenus.h"
-#include "../../build/belenus/ui_dlgpanelappereance.h"
+#include "ui_dlgpanelappereance.h"
 #include "../db/dbpanelstatussettings.h"
 
 class cDlgPanelAppereance : public QDialog, protected Ui::dlgPanelAppereance

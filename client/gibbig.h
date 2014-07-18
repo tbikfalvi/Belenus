@@ -45,15 +45,15 @@ public:
     {
         switch( p_enGA )
         {
-            case GA_DEFAULT:        return "Unidentified";              break;
-            case GA_AUTHENTICATE:   return "Authenticate";              break;
-            case GA_PCTCREATE:      return "PatientCardTypeCreate";     break;
-            case GA_PCTMODIFY:      return "PatientCardTypeModify";     break;
-            case GA_PCTDELETE:      return "PatientCardTypeDelete";     break;
-            case GA_PCREGISTER:     return "PatientCardRegistration";   break;
-            case GA_PCREFILL:       return "PatientCardRefill";         break;
-            case GA_PCUSE:          return "PatientCardUsage";          break;
-            case GA_PCDELETE:       return "PatientCardDelete";         break;
+            case GA_DEFAULT:        return "GBMSG_01 Unidentified ";              break;
+            case GA_AUTHENTICATE:   return "GBMSG_02 Authenticate ";              break;
+            case GA_PCTCREATE:      return "GBMSG_03 PatientCardTypeCreate ";     break;
+            case GA_PCTMODIFY:      return "GBMSG_04 PatientCardTypeModify ";     break;
+            case GA_PCTDELETE:      return "GBMSG_05 PatientCardTypeDelete ";     break;
+            case GA_PCREGISTER:     return "GBMSG_06 PatientCardRegistration ";   break;
+            case GA_PCREFILL:       return "GBMSG_07 PatientCardRefill ";         break;
+            case GA_PCUSE:          return "GBMSG_08 PatientCardUsage ";          break;
+            case GA_PCDELETE:       return "GBMSG_09 PatientCardDelete ";         break;
             default:                return "INVALID";
         }
     }
@@ -75,7 +75,7 @@ public:
     void    setPassword( const QString p_qsPassword );
     void    setTimeout( const int p_inTimeout );
 
-    void    gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction = cGibbigAction::GA_AUTHENTICATE1 );
+    void    gibbigAuthenticate();
     void    gibbigPCTCreate( QString p_qsPatientCardType );
     void    gibbigPCTModify( QString p_qsPatientCardType );
     void    gibbigPCTDelete( QString p_qsPatientCardType );
@@ -121,6 +121,7 @@ private:
     QString                          m_qsToken;
     QDateTime                        m_qdtExpiration;
     QString                          m_qsPatientCard;
+    QString                          m_qsPatientCardType;
 
     bool                             m_bErrorOccured;
     bool                             m_bAuthenticationInProgress;
@@ -139,6 +140,7 @@ private:
     void                            _processMessage();
     void                            _getTokenExpFromMessage();
     void                            _sendPatientCardData();
+    void                            _sendPatientCardTypeData();
     QString                         _getBarcode();
     QString                         _getUnits();
     void                            _activateProcess();

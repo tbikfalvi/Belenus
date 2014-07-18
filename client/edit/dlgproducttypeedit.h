@@ -2,7 +2,7 @@
 #define DLGPRODUCTTYPEEDIT_H
 
 #include "belenus.h"
-#include "../../build/belenus/ui_dlgproducttypeedit.h"
+#include "ui_dlgproducttypeedit.h"
 #include "../db/dbproducttype.h"
 
 class cDlgProductTypeEdit : public QDialog, protected Ui::dlgProductTypeEdit
