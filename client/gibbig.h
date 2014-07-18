@@ -31,13 +31,14 @@ public:
     enum teGibbigAction
     {
         GA_DEFAULT = 0,
-        GA_AUTHENTICATE1,
-        GA_AUTHENTICATE2,
-        GA_AUTHENTICATE3,
-        GA_AUTHENTICATE4,
+        GA_AUTHENTICATE,
+        GA_PCTCREATE,
+        GA_PCTMODIFY,
+        GA_PCTDELETE,
         GA_PCREGISTER,
         GA_PCREFILL,
-        GA_PCUSE
+        GA_PCUSE,
+        GA_PCDELETE
     };
 
     static const char *toStr( teGibbigAction p_enGA )
@@ -45,13 +46,14 @@ public:
         switch( p_enGA )
         {
             case GA_DEFAULT:        return "Unidentified";              break;
-            case GA_AUTHENTICATE1:  return "Authenticate";              break;
-            case GA_AUTHENTICATE2:  return "Authenticate";              break;
-            case GA_AUTHENTICATE3:  return "Authenticate";              break;
-            case GA_AUTHENTICATE4:  return "Authenticate";              break;
+            case GA_AUTHENTICATE:   return "Authenticate";              break;
+            case GA_PCTCREATE:      return "PatientCardTypeCreate";     break;
+            case GA_PCTMODIFY:      return "PatientCardTypeModify";     break;
+            case GA_PCTDELETE:      return "PatientCardTypeDelete";     break;
             case GA_PCREGISTER:     return "PatientCardRegistration";   break;
             case GA_PCREFILL:       return "PatientCardRefill";         break;
             case GA_PCUSE:          return "PatientCardUsage";          break;
+            case GA_PCDELETE:       return "PatientCardDelete";         break;
             default:                return "INVALID";
         }
     }
@@ -125,11 +127,22 @@ private:
 
     cGibbigAction::teGibbigAction    m_teGibbigAction;
 
+    unsigned int                     m_uiMessageId;
+
+    void                            _processPCTCreate( QString p_qsPatientCardType );
+    void                            _processPCTModify( QString p_qsPatientCardType );
+    void                            _processPCTDelete( QString p_qsPatientCardType );
+    void                            _processPCRegister( QString p_qsPatientCard );
+    void                            _processPCRefill( QString p_qsPatientCard );
+    void                            _processPCUse( QString p_qsPatientCard );
+    void                            _processPCDelete( QString p_qsPatientCard );
     void                            _processMessage();
     void                            _getTokenExpFromMessage();
     void                            _sendPatientCardData();
     QString                         _getBarcode();
     QString                         _getUnits();
+    void                            _activateProcess();
+    void                            _prepareProcess();
 
 };
 //====================================================================================
