@@ -45,6 +45,8 @@ cGibbig::cGibbig()
     m_bErrorOccured             = false;
     m_teGibbigAction            = cGibbigAction::GA_DEFAULT;
 
+    m_uiMessageId               = 0;
+
     m_qdtExpiration.setTime_t(0);
 
     g_obLogger(cSeverity::DEBUG) << "Create QNetworkAccessManager" << EOM;
@@ -139,85 +141,106 @@ void cGibbig::gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction
 void cGibbig::gibbigPCTCreate( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    QString  qsQuery;
 
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PCT_CREATE" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCardType );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
+
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::gibbigPCTModify( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    QString  qsQuery;
 
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PCT_MODIFY" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCardType );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
+
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::gibbigPCTDelete( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    QString  qsQuery;
 
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PCT_DELETE" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCardType );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
+
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::gibbigPCRegister(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::gibbigPCRegister" );
+    QString  qsQuery;
 
-    gibbigClearError();
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_SELL" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
 
-    m_qsPatientCard = p_qsPatientCard;
-
-    if( QDateTime::currentDateTime() < m_qdtExpiration )
-    {
-        m_teGibbigAction = cGibbigAction::GA_PCREGISTER;
-        _sendPatientCardData();
-    }
-    else
-    {
-        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE2 );
-    }
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::gibbigPCRefill(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::" );
+    QString  qsQuery;
 
-    gibbigClearError();
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_REFILL" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
 
-    m_qsPatientCard = p_qsPatientCard;
-
-    if( QDateTime::currentDateTime() < m_qdtExpiration )
-    {
-        m_teGibbigAction = cGibbigAction::GA_PCREFILL;
-        _sendPatientCardData();
-    }
-    else
-    {
-        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE3 );
-    }
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::gibbigPCUse(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::gibbigPCUse" );
+    QString  qsQuery;
 
-    gibbigClearError();
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_USE" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
 
-    m_qsPatientCard = p_qsPatientCard;
-
-    if( QDateTime::currentDateTime() < m_qdtExpiration )
-    {
-        m_teGibbigAction = cGibbigAction::GA_PCUSE;
-        _sendPatientCardData();
-    }
-    else
-    {
-        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE4 );
-    }
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::gibbigPCDelete(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
+    QString  qsQuery;
 
+    qsQuery = "INSERT INTO gibbigmessages SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_DELETE" );
+    qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
+    qsQuery += QString( "active = 1, " ).arg( m_bActive );
+    qsQuery += QString( "archive = \"NEW\" " );
+
+    g_poDB->executeQTQuery( qsQuery );
 }
 //=================================================================================================
 void cGibbig::timerEvent(QTimerEvent *)
@@ -257,6 +280,84 @@ void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
     }
 }
 //=================================================================================================
+void cGibbig::_processPCTCreate( QString p_qsPatientCardType )
+//-------------------------------------------------------------------------------------------------
+{
+
+}
+//=================================================================================================
+void cGibbig::_processPCTModify( QString p_qsPatientCardType )
+//-------------------------------------------------------------------------------------------------
+{
+
+}
+//=================================================================================================
+void cGibbig::_processPCTDelete( QString p_qsPatientCardType )
+//-------------------------------------------------------------------------------------------------
+{
+
+}
+//=================================================================================================
+void cGibbig::_processPCRegister( QString p_qsPatientCard )
+//-------------------------------------------------------------------------------------------------
+{
+    gibbigClearError();
+
+    m_qsPatientCard = p_qsPatientCard;
+
+    if( QDateTime::currentDateTime() < m_qdtExpiration )
+    {
+        m_teGibbigAction = cGibbigAction::GA_PCREGISTER;
+        _sendPatientCardData();
+    }
+    else
+    {
+        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE2 );
+    }
+}
+//=================================================================================================
+void cGibbig::_processPCRefill( QString p_qsPatientCard )
+//-------------------------------------------------------------------------------------------------
+{
+    gibbigClearError();
+
+    m_qsPatientCard = p_qsPatientCard;
+
+    if( QDateTime::currentDateTime() < m_qdtExpiration )
+    {
+        m_teGibbigAction = cGibbigAction::GA_PCREFILL;
+        _sendPatientCardData();
+    }
+    else
+    {
+        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE3 );
+    }
+}
+//=================================================================================================
+void cGibbig::_processPCUse( QString p_qsPatientCard )
+//-------------------------------------------------------------------------------------------------
+{
+    gibbigClearError();
+
+    m_qsPatientCard = p_qsPatientCard;
+
+    if( QDateTime::currentDateTime() < m_qdtExpiration )
+    {
+        m_teGibbigAction = cGibbigAction::GA_PCUSE;
+        _sendPatientCardData();
+    }
+    else
+    {
+        gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE4 );
+    }
+}
+//=================================================================================================
+void cGibbig::_processPCDelete( QString p_qsPatientCard )
+//-------------------------------------------------------------------------------------------------
+{
+
+}
+//=================================================================================================
 void cGibbig::_processMessage()
 //-------------------------------------------------------------------------------------------------
 {
@@ -273,7 +374,7 @@ void cGibbig::_processMessage()
             {
                 _getTokenExpFromMessage();
 
-                if( m_teGibbigAction == cGibbigAction::GA_AUTHENTICATE1 )
+                if( m_teGibbigAction == cGibbigAction::GA_AUTHENTICATE )
                 {
                     m_teGibbigAction = cGibbigAction::GA_DEFAULT;
                     emit signalActionProcessed( QString("GBMSG_01 Authentication succeeded (%1)\n%2 %3").arg(m_qsMessage).arg(m_qsToken).arg(m_qdtExpiration.toString("yyyy-MM-dd hh:mm:ss")) );
@@ -425,5 +526,72 @@ QString cGibbig::_getUnits()
     QStringList qslPatientCard  = m_qsPatientCard.split( '#' );
 
     return qslPatientCard.at(2);
+}
+//=================================================================================================
+void cGibbig::_activateProcess()
+//-------------------------------------------------------------------------------------------------
+{
+    if( m_teGibbigAction == cGibbigAction::GA_DEFAULT )
+    {
+        if( QDateTime::currentDateTime() >= m_qdtExpiration )
+        {
+            gibbigAuthenticate( cGibbigAction::GA_AUTHENTICATE );
+        }
+        _prepareProcess();
+    }
+}
+//=================================================================================================
+void cGibbig::_prepareProcess()
+//-------------------------------------------------------------------------------------------------
+{
+    if( m_teGibbigAction != cGibbigAction::GA_DEFAULT )
+        return;
+
+    QString      qsQuery    = "SELECT gibbigMessageId, gibbigMessageType, gibbigMessage FROM "
+                              "gibbigMessages, gibbigMessageTypes WHERE "
+                              "gibbigMessages.gibbigMessageTypeId=gibbigMessageTypes.gibbigMessageTypeId AND "
+                              "active=1 AND "
+                              "ARCHIVE='ARC' "
+                              "LIMIT 1 ";
+    QSqlQuery   *poQuery    = g_poDB->executeQTQuery( qsQuery );
+    QString      qsType;
+    QString      qsMessage;
+
+    if( poQuery->size() < 1 )
+    {
+        m_teGibbigAction == cGibbigAction::GA_DEFAULT;
+        return;
+    }
+
+    m_uiMessageId   = poQuery->value( 0 ).toUInt();
+    qsType          = poQuery->value( 1 ).toString();
+    qsMessage       = poQuery->value( 2 ).toString();
+
+    if( qsType.compare( "PCT_CREATE" ) == 0 )
+    {
+    }
+    else if( qsType.compare( "PCT_MODIFY" ) == 0 )
+    {
+    }
+    else if( qsType.compare( "PCT_DELETE" ) == 0 )
+    {
+    }
+    else if( qsType.compare( "PC_SELL" ) == 0 )
+    {
+    }
+    else if( qsType.compare( "PC_REFILL" ) == 0 )
+    {
+    }
+    else if( qsType.compare( "PC_USE" ) == 0 )
+    {
+    }
+    else if( qsType.compare( "PC_DELETE" ) == 0 )
+    {
+    }
+    else
+    {
+        m_teGibbigAction == cGibbigAction::GA_DEFAULT;
+        return;
+    }
 }
 //=================================================================================================
