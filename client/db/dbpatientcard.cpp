@@ -569,3 +569,45 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
 {
     m_qsArchive = p_qsArchive;
 }
+
+void cDBPatientCard::sendDataToGibbig(cGibbigAction p_teActionType)
+{
+    QString      qsQuery = QString( "SELECT unitTime, validDateTo, COUNT(active) "
+                                    "FROM `patientcardunits` WHERE "
+                                    "patientcardid=%1 AND "
+                                    "active=1 "
+                                    "GROUP BY unitTime, validDateTo " ).arg( id() );
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+    QStringList  qslUnits;
+
+    while( poQuery->next() )
+    {
+        qslUnits << QString( "%1/%2" ).arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() );
+    }
+
+    QString qsPatientCard = "";
+
+    qsPatientCard.append( m_poPatientCard->barcode() );
+    qsPatientCard.append( "#" );
+    qsPatientCard.append( m_poPatientCard->validDateTo() );
+    qsPatientCard.append( "#" );
+    qsPatientCard.append( qslUnits.join("|") );
+
+    switch( p_teActionType )
+    {
+        case cGibbigAction::GA_PCREGISTER:
+            g_poGibbig->gibbigPCRegister( qsPatientCard );
+            break;
+        case cGibbigAction::GA_PCREFILL:
+            g_poGibbig->gibbigPCRefill( qsPatientCard );
+            break;
+        case cGibbigAction::GA_PCUSE:
+            g_poGibbig->gibbigPCUse( qsPatientCard );
+            break;
+        case cGibbigAction::GA_PCDELETE:
+            g_poGibbig->gibbigPCDelete( qsPatientCard );
+            break;
+        default:
+            break;
+    }
+}

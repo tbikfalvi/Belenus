@@ -459,6 +459,8 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBShoppingCart.save();
             }
 
+            m_poPatientCard->sendDataToGibbig( cGibbigAction::GA_PCREFILL );
+
             QDialog::accept();
 
         }
