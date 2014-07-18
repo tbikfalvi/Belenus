@@ -52,6 +52,7 @@ protected:
 private:
 
     QLabel                   m_lblStatusLeft;
+    QLabel                   m_lblStatusGibbig;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
     cDlgProgress            *m_dlgProgress;
@@ -70,6 +71,8 @@ private:
     QString                  m_qsPanelStartBarcode;
     int                      m_inCommunicationCounter;
     bool                     m_bActionProcessing;
+    bool                     m_bProgressErrorVisible;
+    int                      m_nProgressCounter;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );
@@ -159,6 +162,9 @@ private slots:
     void on_action_ManageSkinTypes_triggered();
     void on_action_Import_triggered();
     void on_action_Export_triggered();
+    void on_GibbigErrorOccured();
+    void on_GibbigActionFinished( QString p_qsInfo );
+    void on_GibbigMessageArrived(QString p_qsMessage);
 };
 
 #endif

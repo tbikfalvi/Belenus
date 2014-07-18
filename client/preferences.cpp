@@ -84,7 +84,7 @@ void cPreferences::loadConfFileSettings()
     }
     else
     {
-        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "uk" ).toString();
+        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "us" ).toString();
         m_qsLastUser                = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
         m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
         m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
@@ -178,6 +178,7 @@ void cPreferences::loadConfFileSettings()
         m_qsGibbigName      = obPrefFile.value( QString::fromAscii( "Gibbig/User" ), "" ).toString();
         m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
         m_bGibbigEnabled    = obPrefFile.value( QString::fromAscii( "Gibbig/Enabled" ) ).toBool();
+        m_nGibbiWaitTime    = obPrefFile.value( QString::fromAscii( "Gibbig/MessageWaitTime" ), 12 ).toInt();
     }
 
     m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
@@ -272,6 +273,7 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Gibbig/User" ), m_qsGibbigName );
     obPrefFile.setValue( QString::fromAscii( "Gibbig/Password" ), m_qsGibbigPassword );
     obPrefFile.setValue( QString::fromAscii( "Gibbig/Enabled" ), m_bGibbigEnabled );
+    obPrefFile.setValue( QString::fromAscii( "Gibbig/MessageWaitTime" ), m_nGibbiWaitTime );
 
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), m_qsDirDbBinaries );
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), m_qsDirDbBackup );
@@ -981,6 +983,22 @@ void cPreferences::setGibbigEnabled( bool p_bEnable, bool p_boSaveNow )
 bool cPreferences::isGibbigEnabled()
 {
     return m_bGibbigEnabled;
+}
+
+void cPreferences::setGibbigMessageWaitTime(const int p_inWaitTime)
+{
+    m_nGibbiWaitTime = p_inWaitTime;
+/*
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Gibbig/MessageWaitTime" ), m_nGibbiWaitTime );
+    }*/
+}
+
+int cPreferences::getGibbigMessageWaitTime() const
+{
+    return m_nGibbiWaitTime;
 }
 
 void cPreferences::setLogLevels( const unsigned int p_uiConLevel,

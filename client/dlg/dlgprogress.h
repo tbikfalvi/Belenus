@@ -13,6 +13,8 @@ public:
 
     void    showProgress();
     void    showError( QString p_qsMessage );
+    void    showWarning( QString p_qsMessage );
+    void    showInformation( QString p_qsMessage );
     void    showProgressBar( int p_nMax );
     void    stepProgressBar();
     void    setValue( int p_nValue );

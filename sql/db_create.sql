@@ -36,6 +36,31 @@ CREATE TABLE `licences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
+-- A Gibbig rendszernek kuldendo uzeneteket tartalmazza
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `gibbigMessageTypes` (
+  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `gibbigMessageType`       varchar(20)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`gibbigMessageTypeId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `gibbigMessages` (
+  `gibbigMessageId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL,
+  `gibbigMessage`           text                    NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`gibbigMessageId`,`licenceId`),
+  FOREIGN KEY (`gibbigMessageTypeId`) REFERENCES `gibbigMessageTypes` (`gibbigMessageTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
 -- Log tabla. A program mukodese soran keletkezo log-okat tartalmazza.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `logs` (
@@ -480,7 +505,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A studioban forgalmazott termekeket és csoportokat köti össze.
+-- A studioban forgalmazott termekeket Ã©s csoportokat kÃ¶ti Ã¶ssze.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `connectProductWithType` (
   `productTypeId`           int(10) unsigned        NOT NULL,
