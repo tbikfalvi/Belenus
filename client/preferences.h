@@ -127,6 +127,8 @@ public:
     QString         getGibbigPassword() const;
     void            setGibbigEnabled( bool p_bEnable, bool p_boSaveNow = false );
     bool            isGibbigEnabled();
+    int             getGibbigMessageWaitTime() const;
+    void            setGibbigMessageWaitTime(const int p_inWaitTime );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -234,6 +236,7 @@ private:
     QString         m_qsGibbigName;
     QString         m_qsGibbigPassword;
     bool            m_bGibbigEnabled;
+    int             m_nGibbiWaitTime;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;

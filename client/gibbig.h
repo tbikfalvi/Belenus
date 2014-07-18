@@ -74,9 +74,13 @@ public:
     void    setTimeout( const int p_inTimeout );
 
     void    gibbigAuthenticate( cGibbigAction::teGibbigAction p_teGibbigAction = cGibbigAction::GA_AUTHENTICATE1 );
+    void    gibbigPCTCreate( QString p_qsPatientCardType );
+    void    gibbigPCTModify( QString p_qsPatientCardType );
+    void    gibbigPCTDelete( QString p_qsPatientCardType );
     void    gibbigPCRegister( QString p_qsPatientCard );
     void    gibbigPCRefill( QString p_qsPatientCard );
     void    gibbigPCUse( QString p_qsPatientCard );
+    void    gibbigPCDelete( QString p_qsPatientCard );
 
     void    gibbigClearError()          {   m_bErrorOccured = false; m_qsError = "";    }
     bool    gibbigIsErrorOccured()      {   return m_bErrorOccured;                     }

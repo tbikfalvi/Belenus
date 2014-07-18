@@ -151,8 +151,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledGibbigName->setText( g_poPrefs->getGibbigName() );
     ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
 
-    chkEnableGibbig->setEnabled( false );
     chkEnableGibbig->setChecked( g_poPrefs->isGibbigEnabled() );
+
+    sbGibbigWaitTime->setValue( g_poPrefs->getGibbigMessageWaitTime() );
 
     gbDBSynchron->setVisible( false );
 
@@ -375,6 +376,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setGibbigName( ledGibbigName->text() );
     g_poPrefs->setGibbigPassword( ledGibbigPassword->text() );
     g_poPrefs->setGibbigEnabled( chkEnableGibbig->isChecked() );
+    g_poPrefs->setGibbigMessageWaitTime( sbGibbigWaitTime->value() );
 
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {

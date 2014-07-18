@@ -25,6 +25,17 @@ INSERT INTO `licences` (`licenceId`, `serial`, `country`, `region`, `city`, `zip
 
 -- -----------------------------------------------------------------------------------
 
+INSERT INTO `gibbigmessagetypes` ( `licenceId`, `gibbigMessageType`, `active`, `archive` ) VALUES
+ ( '0', 'PCT_CREATE', '1', 'ARC' ),
+ ( '0', 'PCT_MODIFY', '1', 'ARC' ),
+ ( '0', 'PCT_DELETE', '1', 'ARC' ),
+ ( '0', 'PC_SELL', '1', 'ARC' ),
+ ( '0', 'PC_REFILL', '1', 'ARC' ),
+ ( '0', 'PC_USE', '1', 'ARC' ),
+ ( '0', 'PC_DELETE', '1', 'ARC' );
+
+-- -----------------------------------------------------------------------------------
+
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
@@ -130,7 +141,7 @@ UPDATE `patientCards` SET `patientCardId`=0 WHERE `patientCardId`=1;
 ALTER TABLE `patientCards` auto_increment=1;
 
 INSERT INTO `patientCards` (`patientCardId`, `licenceId`, `patientCardTypeId`, `patientId`, `barcode`, `comment`, `units`, `timeLeft`, `validDateFrom`, `validDateTo`, `pincode`, `active`, `archive`) VALUES
- (1, 0, 1, 0, '000000', 'Szerviz k·rtya. Csak szerviz haszn·latra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
+ (1, 0, 1, 0, '000000', 'Szerviz k√°rtya. Csak szerviz haszn√°latra', 999, 43200, '2012-01-01', '2100-12-31', NULL, 1, 'ARC');
 
 -- -----------------------------------------------------------------------------------
 
