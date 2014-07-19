@@ -60,7 +60,7 @@ public:
     void            setActive( const bool p_bActive )                           throw();
     QString         archive() const                                             throw();
     void            setArchive( const QString &p_qsArchive )                    throw();
-    void            sendDataToGibbig( cGibbigAction p_teActionType )            throw();
+    void            sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionType )            throw();
 
 private:
     unsigned int    m_uiId;
