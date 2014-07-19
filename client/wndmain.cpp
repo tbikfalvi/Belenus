@@ -16,6 +16,7 @@
 #include <QMessageBox>
 #include <QCryptographicHash>
 #include <QProcess>
+#include <QMenu>
 
 #include "wndmain.h"
 #include "licenceManager.h"
@@ -100,8 +101,6 @@ extern DatabaseWriter g_obLogDBWriter;
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 {
-    cTracer obTrace( "cWndMain::cWndMain" );
-
     setupUi( this );
 
     m_qsStatusText                  = "";
@@ -118,6 +117,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
+    m_bGibbigConnected              = false;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -297,10 +297,16 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_lblStatusRight.setAlignment( Qt::AlignRight );
     m_lblStatusRight.setStyleSheet( "QLabel {font: bold; font-size:14px;}" );
 
-    m_lblStatusGibbig.setPixmap( QPixmap( "./resources/20x20_gibbig_off.png" ) );
+    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+    m_pbStatusGibbig.setFlat( true );
+    m_pbStatusGibbig.setText( "" );
+    m_pbStatusGibbig.setIconSize( QSize(20,20) );
+    m_pbStatusGibbig.setFixedSize( 22, 22 );
+
+    connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
-    statusbar->addPermanentWidget( &m_lblStatusGibbig, 0 );
+    statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
     g_poGibbig = new cGibbig();
@@ -317,8 +323,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 //====================================================================================
 cWndMain::~cWndMain()
 {
-    cTracer obTrace( "cWndMain::~cWndMain" );
-
     delete m_dlgProgress;
     delete m_dlgSecondaryWindow;
 
@@ -327,8 +331,6 @@ cWndMain::~cWndMain()
 //====================================================================================
 void cWndMain::startMainTimer()
 {
-    cTracer obTrace( "cWndMain::startMainTimer" );
-
     mdiPanels->refreshDisplay();
     m_nTimer = startTimer( 250 );
 }
@@ -842,8 +844,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() || m_bActionProcessing )
         return;
 
-    cTracer obTrace( "cWndMain::keyPressEvent" );
-
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
@@ -990,8 +990,6 @@ void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() )
         return;
 
-    cTracer obTrace( "cWndMain::keyReleaseEvent" );
-
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = false;
@@ -1053,7 +1051,7 @@ void cWndMain::updateTitle()
     setWindowTitle( qsTitle );
 }
 //====================================================================================
-void cWndMain::updateStatusText( QString p_qsStatusText )
+void cWndMain::updateStatusText( QString /*p_qsStatusText*/ )
 //====================================================================================
 {
     if( m_bCtrlPressed )
@@ -2960,7 +2958,8 @@ void cWndMain::on_action_Export_triggered()
 
 void cWndMain::on_GibbigErrorOccured()
 {
-    m_lblStatusGibbig.setPixmap( QPixmap( "./resources/20x20_gibbig_off.png" ) );
+    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+    m_bGibbigConnected = false;
     m_bProgressErrorVisible = true;
     m_nProgressCounter = g_poPrefs->getGibbigMessageWaitTime()*4;
     m_dlgProgress->showError( g_poGibbig->gibbigErrorStr() );
@@ -2971,7 +2970,8 @@ void cWndMain::on_GibbigActionFinished(QString p_qsInfo)
     // GBMSG_XX
     if( p_qsInfo.left(8).compare( "GBMSG_01" ) == 0 )
     {
-        m_lblStatusGibbig.setPixmap( QPixmap( "./resources/20x20_gibbig_on.png" ) );
+        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_on.png" ) );
+        m_bGibbigConnected = true;
     }
     g_obLogger(cSeverity::INFO) << "GIBBIG: " << p_qsInfo.right(p_qsInfo.length()-9) << EOM;
 }
@@ -2979,6 +2979,45 @@ void cWndMain::on_GibbigActionFinished(QString p_qsInfo)
 // ez csak debug uzenetre kell, ha valamit ki akarunk irni pl log-ba
 void cWndMain::on_GibbigMessageArrived(QString p_qsMessage)
 {
-    g_obLogger(cSeverity::DEBUG) << "GIBBIG: " << p_qsMessage << EOM;
+    g_obLogger(cSeverity::WARNING) << "GIBBIG: " << p_qsMessage << EOM;
+}
+
+void cWndMain::on_GibbigIconClicked()
+{
+    QMenu   qmMenu;
+
+    if( g_poPrefs->isGibbigEnabled() )
+    {
+        if( m_bGibbigConnected )
+            qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Process actions") );
+        else
+            qmMenu.addAction( QIcon( "./resources/40x40_check_connection.png" ), tr("Test connection") );
+        qmMenu.addSeparator();
+        qmMenu.addAction( QIcon( "./resources/40x40_cancel.png" ), tr("Disable communication") );
+    }
+    else
+    {
+        qmMenu.addAction( QIcon( "./resources/40x40_ok.png" ), tr("Enable communication") );
+    }
+
+    QAction *qaRet = qmMenu.exec( QCursor::pos() );
+
+    if( qaRet )
+    {
+        if( qaRet->text().compare( tr("Test connection") ) == 0 ||
+            qaRet->text().compare( tr("Process actions") ) == 0 )
+        {
+            g_poGibbig->gibbigAuthenticate();
+        }
+        else if( qaRet->text().compare( tr("Disable communication") ) == 0 )
+        {
+            g_poPrefs->setGibbigEnabled( false, true );
+        }
+        else if( qaRet->text().compare( tr("Enable communication") ) == 0 )
+        {
+            g_poPrefs->setGibbigEnabled( true, true );
+            g_poGibbig->gibbigAuthenticate();
+        }
+    }
 }
 

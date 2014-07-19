@@ -20,10 +20,13 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     setupUi( this );
 
-    m_dlgProgress = new cDlgProgress( this );
+    m_nTimer        = 0;
+    m_dlgProgress   = new cDlgProgress( this );
 
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
+
+    pbTestGibbig->setIcon( QIcon("./resources/40x40_check_connection.png") );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -152,7 +155,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
 
     chkEnableGibbig->setChecked( g_poPrefs->isGibbigEnabled() );
-
+    pbTestGibbig->setEnabled( g_poPrefs->isGibbigEnabled() );
+    sbGibbigWaitTime->setEnabled( g_poPrefs->isGibbigEnabled() );
     sbGibbigWaitTime->setValue( g_poPrefs->getGibbigMessageWaitTime() );
 
     gbDBSynchron->setVisible( false );
@@ -215,6 +219,21 @@ cDlgPreferences::~cDlgPreferences()
     delete m_dlgProgress;
 
     g_poPrefs->setDialogSize( "EditPreferences", QPoint( width(), height() ) );
+}
+
+void cDlgPreferences::timerEvent(QTimerEvent *)
+{
+    killTimer( m_nTimer );
+    m_nTimer = 0;
+
+    setCursor( Qt::ArrowCursor);
+
+    if( g_poGibbig->gibbigIsErrorOccured() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Authentication with server failed.\n"
+                                 "Please check your server and user settings.") );
+    }
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -449,14 +468,14 @@ void cDlgPreferences::on_btnSecondaryBackground_clicked()
     btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
 }
 
-void cDlgPreferences::on_ledPCLostPrice_textChanged(const QString &arg1)
+void cDlgPreferences::on_ledPCLostPrice_textChanged(const QString& /*arg1*/)
 {
     cCurrency currPrice( ledPCLostPrice->text(), cCurrency::CURR_GROSS, ledPCLostVatpercent->text().toInt() );
 
     lblPCLostPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCLostVatpercent->text()) );
 }
 
-void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &arg1)
+void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &/*arg1*/)
 {
     cCurrency currPrice( ledPCPartnerPrice->text(), cCurrency::CURR_GROSS, ledPCPartnerVatpercent->text().toInt() );
 
@@ -630,4 +649,13 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
 void cDlgPreferences::on_pbTestGibbig_clicked()
 {
     g_poGibbig->gibbigAuthenticate();
+    setCursor( Qt::WaitCursor);
+
+    m_nTimer = startTimer( 5000 );
+}
+
+void cDlgPreferences::on_chkEnableGibbig_clicked(bool checked)
+{
+    pbTestGibbig->setEnabled( checked );
+    sbGibbigWaitTime->setEnabled( checked );
 }

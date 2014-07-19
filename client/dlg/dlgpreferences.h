@@ -20,10 +20,14 @@ private:
     int              m_inLangIdx;
     QPushButton     *m_poBtnSystem;
     cDlgProgress    *m_dlgProgress;
+    int              m_nTimer;
 
     void            _updateDatabaseLanguage();
     void            _increasePatientCardBarcodes();
     void            _decreasePatientCardBarcodes( bool p_bCutBegin );
+
+protected:
+    void timerEvent( QTimerEvent *p_poEvent );
 
 private slots:
     void on_btnSecondaryBackground_clicked();
@@ -44,6 +48,7 @@ private slots:
     void on_pbBackupLocation_clicked();
     void on_cmbDateFormat_currentIndexChanged(const QString &arg1);
     void on_pbTestGibbig_clicked();
+    void on_chkEnableGibbig_clicked(bool checked);
 };
 
 #endif
