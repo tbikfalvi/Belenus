@@ -71,8 +71,6 @@ cGibbig::cGibbig()
 cGibbig::~cGibbig()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::cGibbig" );
-
     if( m_inTimer > 0 )
         killTimer( m_inTimer );
 
@@ -261,8 +259,6 @@ void cGibbig::gibbigPCDelete(QString p_qsPatientCard)
 void cGibbig::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::timerEvent" );
-
     killTimer( m_inTimer );
     m_inTimer = 0;
 
@@ -270,6 +266,7 @@ void cGibbig::timerEvent(QTimerEvent *)
     m_qsError.append( tr("%1 FAILED due to timeout error.").arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
     m_teGibbigAction = cGibbigAction::GA_DEFAULT;
     m_bErrorOccured = true;
+    emit signalDebugMessage( m_qsError );
     emit signalErrorOccured();
 }
 //=================================================================================================
@@ -285,6 +282,7 @@ void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
     {
         m_qsError.append( tr("Rest error: %1\n").arg( p_gbReply->errorString() ) );
         m_bErrorOccured = true;
+        emit signalDebugMessage( m_qsError );
         emit signalErrorOccured();
     }
     else
@@ -375,6 +373,7 @@ void cGibbig::_processPCDelete( QString p_qsPatientCard )
 void cGibbig::_processMessage()
 //-------------------------------------------------------------------------------------------------
 {
+    emit signalDebugMessage( m_qsMessage );
     switch( m_teGibbigAction )
     {
         case cGibbigAction::GA_AUTHENTICATE:
