@@ -570,7 +570,7 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
-void cDBPatientCard::sendDataToGibbig(cGibbigAction p_teActionType)
+void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionType) throw()
 {
     QString      qsQuery = QString( "SELECT unitTime, validDateTo, COUNT(active) "
                                     "FROM `patientcardunits` WHERE "
@@ -587,9 +587,9 @@ void cDBPatientCard::sendDataToGibbig(cGibbigAction p_teActionType)
 
     QString qsPatientCard = "";
 
-    qsPatientCard.append( m_poPatientCard->barcode() );
+    qsPatientCard.append( barcode() );
     qsPatientCard.append( "#" );
-    qsPatientCard.append( m_poPatientCard->validDateTo() );
+    qsPatientCard.append( validDateTo() );
     qsPatientCard.append( "#" );
     qsPatientCard.append( qslUnits.join("|") );
 

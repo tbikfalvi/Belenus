@@ -626,3 +626,8 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
     }
     m_dlgProgress->hideProgress();
 }
+
+void cDlgPreferences::on_pbTestGibbig_clicked()
+{
+    g_poGibbig->gibbigAuthenticate();
+}
