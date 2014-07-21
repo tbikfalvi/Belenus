@@ -140,11 +140,13 @@ void cGibbig::gibbigAuthenticate()
 void cGibbig::gibbigPCTCreate( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCTCreate" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PCT_CREATE" );
+    qsQuery += QString( "gibbigMessageTypeId = 1, " );//.arg( "PCT_CREATE" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCardType );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -157,11 +159,13 @@ void cGibbig::gibbigPCTCreate( QString p_qsPatientCardType )
 void cGibbig::gibbigPCTModify( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCTModify" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PCT_MODIFY" );
+    qsQuery += QString( "gibbigMessageTypeId = 2, " );//.arg( "PCT_MODIFY" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCardType );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -174,11 +178,13 @@ void cGibbig::gibbigPCTModify( QString p_qsPatientCardType )
 void cGibbig::gibbigPCTDelete( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCTDelete" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PCT_DELETE" );
+    qsQuery += QString( "gibbigMessageTypeId = 3, " );//.arg( "PCT_DELETE" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCardType );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -191,11 +197,13 @@ void cGibbig::gibbigPCTDelete( QString p_qsPatientCardType )
 void cGibbig::gibbigPCRegister(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCRegister" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_SELL" );
+    qsQuery += QString( "gibbigMessageTypeId = 4, " );//.arg( "PC_SELL" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -208,11 +216,13 @@ void cGibbig::gibbigPCRegister(QString p_qsPatientCard)
 void cGibbig::gibbigPCRefill(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCRefill" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_REFILL" );
+    qsQuery += QString( "gibbigMessageTypeId = 5, " );//.arg( "PC_REFILL" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -225,11 +235,13 @@ void cGibbig::gibbigPCRefill(QString p_qsPatientCard)
 void cGibbig::gibbigPCUse(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCUse" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_USE" );
+    qsQuery += QString( "gibbigMessageTypeId = 6, " );//.arg( "PC_USE" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -242,11 +254,13 @@ void cGibbig::gibbigPCUse(QString p_qsPatientCard)
 void cGibbig::gibbigPCDelete(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::gibbigPCDelete" );
+
     QString  qsQuery;
 
     qsQuery = "INSERT INTO gibbigmessages SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
-    qsQuery += QString( "gibbigMessageType = \"%1\", " ).arg( "PC_DELETE" );
+    qsQuery += QString( "gibbigMessageTypeId = 7, " );//.arg( "PC_DELETE" );
     qsQuery += QString( "gibbigMessage = \"%1\", " ).arg( p_qsPatientCard );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );
@@ -259,6 +273,8 @@ void cGibbig::gibbigPCDelete(QString p_qsPatientCard)
 void cGibbig::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::timerEvent" );
+
     killTimer( m_inTimer );
     m_inTimer = 0;
 
@@ -296,6 +312,8 @@ void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
 void cGibbig::_processPCTCreate( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCTCreate" );
+
     gibbigClearError();
 
     m_qsPatientCardType = p_qsPatientCardType;
@@ -307,6 +325,8 @@ void cGibbig::_processPCTCreate( QString p_qsPatientCardType )
 void cGibbig::_processPCTModify( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCTModify" );
+
     gibbigClearError();
 
     m_qsPatientCardType = p_qsPatientCardType;
@@ -318,6 +338,8 @@ void cGibbig::_processPCTModify( QString p_qsPatientCardType )
 void cGibbig::_processPCTDelete( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCTDelete" );
+
     gibbigClearError();
 
     m_qsPatientCardType = p_qsPatientCardType;
@@ -329,6 +351,8 @@ void cGibbig::_processPCTDelete( QString p_qsPatientCardType )
 void cGibbig::_processPCRegister( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCRegister" );
+
     gibbigClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
@@ -340,6 +364,8 @@ void cGibbig::_processPCRegister( QString p_qsPatientCard )
 void cGibbig::_processPCRefill( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCRefill" );
+
     gibbigClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
@@ -351,6 +377,8 @@ void cGibbig::_processPCRefill( QString p_qsPatientCard )
 void cGibbig::_processPCUse( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCUse" );
+
     gibbigClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
@@ -362,6 +390,8 @@ void cGibbig::_processPCUse( QString p_qsPatientCard )
 void cGibbig::_processPCDelete( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processPCDelete" );
+
     gibbigClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
@@ -373,6 +403,8 @@ void cGibbig::_processPCDelete( QString p_qsPatientCard )
 void cGibbig::_processMessage()
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_processMessage" );
+
     emit signalDebugMessage( m_qsMessage );
     switch( m_teGibbigAction )
     {
@@ -403,6 +435,12 @@ void cGibbig::_processMessage()
         case cGibbigAction::GA_PCUSE:
         case cGibbigAction::GA_PCDELETE:
         {
+            if( m_uiMessageId > 0 )
+            {
+                g_poDB->executeQTQuery( QString("UPDATE gibbigmessages SET archive='MOD' "
+                                                "WHERE gibbigMessageId=1 AND " ).arg( m_uiMessageId ) );
+                m_uiMessageId = 0;
+            }
             emit signalActionProcessed( QString( "%1 %2" ).arg( m_teGibbigAction/*.toStr()*/ ).arg( m_qsMessage ) );
             m_teGibbigAction = cGibbigAction::GA_DEFAULT;
             break;
@@ -410,6 +448,7 @@ void cGibbig::_processMessage()
 
         default:
         {
+            m_uiMessageId = 0;
             m_qsError.append( tr("Unexpected message received.\n'%1'\n").arg(m_qsMessage) );
             m_bErrorOccured = true;
             emit signalErrorOccured();
@@ -422,11 +461,15 @@ void cGibbig::_processMessage()
 void cGibbig::_sendPatientCardTypeData()
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_sendPatientCardTypeData" );
+
 }
 //=================================================================================================
 void cGibbig::_sendPatientCardData()
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_sendPatientCardData" );
+
     QString qsBarcode = _getBarcode();
     QString qsMessage = "";
 
@@ -519,6 +562,8 @@ QString cGibbig::_getUnits()
 void cGibbig::_activateProcess()
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_activateProcess" );
+
     if( m_teGibbigAction == cGibbigAction::GA_DEFAULT )
     {
         if( QDateTime::currentDateTime() >= m_qdtExpiration )
@@ -532,28 +577,42 @@ void cGibbig::_activateProcess()
 void cGibbig::_prepareProcess()
 //-------------------------------------------------------------------------------------------------
 {
+    cTracer obTrace( "cGibbig::_prepareProcess" );
+
     if( m_teGibbigAction != cGibbigAction::GA_DEFAULT )
         return;
 
     QString      qsQuery    = "SELECT gibbigMessageId, gibbigMessageType, gibbigMessage FROM "
                               "gibbigMessages, gibbigMessageTypes WHERE "
                               "gibbigMessages.gibbigMessageTypeId=gibbigMessageTypes.gibbigMessageTypeId AND "
-                              "active=1 AND "
-                              "ARCHIVE='ARC' "
+                              "gibbigMessages.active=1 AND "
+                              "gibbigMessages.archive='NEW' "
                               "LIMIT 1 ";
     QSqlQuery   *poQuery    = g_poDB->executeQTQuery( qsQuery );
     QString      qsType;
     QString      qsMessage;
 
+    g_obLogger(cSeverity::DEBUG) << "GIBBIG Number of records: " << poQuery->size() << EOM;
+
     if( poQuery->size() < 1 )
     {
-        m_teGibbigAction == cGibbigAction::GA_DEFAULT;
+        m_teGibbigAction = cGibbigAction::GA_DEFAULT;
         return;
     }
+
+    poQuery->first();
 
     m_uiMessageId   = poQuery->value( 0 ).toUInt();
     qsType          = poQuery->value( 1 ).toString();
     qsMessage       = poQuery->value( 2 ).toString();
+
+    g_obLogger(cSeverity::DEBUG) << "GIBBIG message record: "
+                                 << m_uiMessageId
+                                 << " "
+                                 << qsType
+                                 << " "
+                                 << qsMessage
+                                 << EOM;
 
     if( qsType.compare( "PCT_CREATE" ) == 0 )
     {
@@ -585,7 +644,7 @@ void cGibbig::_prepareProcess()
     }
     else
     {
-        m_teGibbigAction == cGibbigAction::GA_DEFAULT;
+        m_teGibbigAction = cGibbigAction::GA_DEFAULT;
         return;
     }
 }
