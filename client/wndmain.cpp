@@ -3011,6 +3011,7 @@ void cWndMain::on_GibbigIconClicked()
         }
         else if( qaRet->text().compare( tr("Disable communication") ) == 0 )
         {
+            m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
             g_poPrefs->setGibbigEnabled( false, true );
         }
         else if( qaRet->text().compare( tr("Enable communication") ) == 0 )

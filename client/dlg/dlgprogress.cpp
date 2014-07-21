@@ -44,6 +44,7 @@ void cDlgProgress::showProgress()
 {
     lblCaption->setStyleSheet( "QLabel {font: normal;}" );
     lblCaption->setStyleSheet( "QLabel {font: bold;}" );
+    lblCaption->setText( tr("Please wait while the requested process ends ...") );
     m_poParent->setCursor( Qt::WaitCursor);
     show();
     QApplication::processEvents();
@@ -94,7 +95,7 @@ void cDlgProgress::stepProgressBar()
 void cDlgProgress::setValue( int p_nValue )
 //------------------------------------------------------------------------------------
 {
-    progressBar->setValue( 0 );
+    progressBar->setValue( p_nValue );
 }
 //====================================================================================
 void cDlgProgress::setMax( int p_nMax )
