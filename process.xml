@@ -7,6 +7,15 @@
         </download>
 
         <backup>
+            <file path="c:/Program Files/belenus" directory="lang" name="belenus_hu.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="belenus_us.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="brv_hu.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="brv_us.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="dbbackup_hu.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="dbtool_hu.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="qt_hu.qm" />
+            <file path="c:/Program Files/belenus" directory="lang" name="setup_hu.qm" />
+
             <file path="c:/Program Files/belenus" directory="" name="belenus.exe" />
             <file path="c:/Program Files/belenus" directory="" name="ReportViewer.exe" />
         </backup>
