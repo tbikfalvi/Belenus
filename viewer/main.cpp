@@ -48,7 +48,7 @@ int main( int argc, char *argv[] )
         g_poDB->open();
 
         QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
-        QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "us" ).toString();
+        QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
         QString     qsLangBl = QString("lang/brv_%1.qm").arg( qsLang );
         QString     qsLangQT = QString("lang/qt_%1.qm").arg( qsLang );
 

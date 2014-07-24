@@ -13,8 +13,7 @@ TARGET       = ReportViewer
 TEMPLATE     = app
 DESTDIR      = ..
 RESOURCES   += reportviewer.qrc
-TRANSLATIONS = brv_us.ts \
-               brv_hu.ts
+TRANSLATIONS = brv_hu.ts
 RC_FILE      = reportviewer.rc
 
 SOURCES      = ../framework/dbconnection.cpp \

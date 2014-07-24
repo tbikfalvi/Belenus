@@ -62,7 +62,7 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
 
     // Initialize GUI components
     cmbLanguage->addItem( "Magyar (hu)" );
-    cmbLanguage->addItem( "English (us)" );
+    cmbLanguage->addItem( "English (en)" );
 
     // If application called with uninstall flag, start uninstall process
     if( bUninstall )
@@ -605,7 +605,7 @@ void dlgMain::_initializeWelcomePage()
     }
 }
 //=======================================================================================
-void dlgMain::on_cmbLanguage_currentIndexChanged(int index)
+void dlgMain::on_cmbLanguage_currentIndexChanged(int /*index*/)
 //=======================================================================================
 {
     if( !m_bUninstallCalled )
@@ -2267,7 +2267,7 @@ void dlgMain::_initializeFinishPage()
     }
 }
 //=======================================================================================
-void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
+void dlgMain::on_cmbCOMPorts_currentIndexChanged(int /*index*/)
 //=======================================================================================
 {
     if( cmbCOMPorts->currentIndex() )
@@ -2397,7 +2397,7 @@ void dlgMain::_refreshPages()
     m_vPages.append( CONST_PAGE_FINISH );
 }
 //=======================================================================================
-bool dlgMain::_isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue )
+bool dlgMain::_isRegStringMatch( QString /*p_qsPath*/, QString /*p_qsKey*/, QString /*p_qsValue*/ )
 //=======================================================================================
 {
     bool        bRet = false;
@@ -2634,7 +2634,7 @@ bool dlgMain::_createFolderShortcut()
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayName"), tr("Belenus Application System") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayVersion"), QString("1.0.0.0") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("InstallLocation"), m_qsClientInstallDir );
-    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony MultimÃ©dia StÃºdiÃ³ Bt.") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
 

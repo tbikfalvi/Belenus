@@ -5,9 +5,9 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_fill_us.sql
--- AppVersion  : 1.1.0
--- DbVersion   : 1.2
--- FileVersion : 1.0
+-- AppVersion  : 1.3.0
+-- DbVersion   : 1.4
+-- FileVersion : 2.0
 -- Author      : Bikfalvi Tamas
 --
 -- -----------------------------------------------------------------------------------
@@ -39,8 +39,8 @@ INSERT INTO `gibbigmessagetypes` ( `licenceId`, `gibbigMessageType`, `active`, `
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_1_1'),
- (NULL, 'DATABASE_VERSION', '1_2');
+ (NULL, 'APPLICATION_VERSION', '1_3_0'),
+ (NULL, 'DATABASE_VERSION', '1_4');
 
 -- -----------------------------------------------------------------------------------
 

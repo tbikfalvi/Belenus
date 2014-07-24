@@ -27,6 +27,8 @@ protected:
 private:
     QWidget *m_poParent;
 
+    void    _centerWindow();
+
 private slots:
 
 };

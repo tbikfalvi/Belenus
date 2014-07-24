@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     apMainApp = new QApplication(argc, argv);
 
     QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
-    QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "us" ).toString();
+    QString     qsLang = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
 
     poTransBackup = new QTranslator();
     poTransQT = new QTranslator();
