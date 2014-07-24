@@ -15,6 +15,7 @@
 
 #include <QPushButton>
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 //====================================================================================
 
@@ -46,6 +47,7 @@ void cDlgProgress::showProgress()
     lblCaption->setStyleSheet( "QLabel {font: bold;}" );
     lblCaption->setText( tr("Please wait while the requested process ends ...") );
     m_poParent->setCursor( Qt::WaitCursor);
+    _centerWindow();
     show();
     QApplication::processEvents();
 }
@@ -55,6 +57,7 @@ void cDlgProgress::showError(QString p_qsMessage)
 {
     lblCaption->setStyleSheet( "QLabel {font: bold; color: red;}" );
     lblCaption->setText( p_qsMessage );
+    _centerWindow();
     show();
     QApplication::processEvents();
 }
@@ -64,6 +67,7 @@ void cDlgProgress::showWarning(QString p_qsMessage)
 {
     lblCaption->setStyleSheet( "QLabel {font: bold; color: blue;}" );
     lblCaption->setText( p_qsMessage );
+    _centerWindow();
     show();
     QApplication::processEvents();
 }
@@ -74,6 +78,7 @@ void cDlgProgress::showInformation(QString p_qsMessage)
     lblCaption->setStyleSheet( "QLabel {font: normal;}" );
     lblCaption->setStyleSheet( "QLabel {font: bold;}" );
     lblCaption->setText( p_qsMessage );
+    _centerWindow();
     show();
     QApplication::processEvents();
 }
@@ -114,6 +119,21 @@ void cDlgProgress::hideProgress()
 //------------------------------------------------------------------------------------
 {
     hide();
+    resize( 450, 80 );
+    lblCaption->setText( "" );
     m_poParent->setCursor( Qt::ArrowCursor);
+}
+//====================================================================================
+void cDlgProgress::_centerWindow()
+//------------------------------------------------------------------------------------
+{
+    QDesktopWidget *desktop = QApplication::desktop();
+
+    int screenWidth  = desktop->width();
+    int screenHeight = desktop->height();
+    int x = ( screenWidth - width() ) / 2;
+    int y = ( screenHeight - height() ) / 2;
+
+    move( x, y );
 }
 //====================================================================================

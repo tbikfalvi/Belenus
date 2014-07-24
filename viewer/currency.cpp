@@ -49,7 +49,7 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
     _init( qsCurrency, p_ctCurrencyType, p_nVat );
 }
 //====================================================================================
-void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
+void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int /*p_nVat*/)
 {
     QString qsPureCurrency = p_qsCurrencyString;
 

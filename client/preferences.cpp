@@ -84,7 +84,7 @@ void cPreferences::loadConfFileSettings()
     }
     else
     {
-        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "us" ).toString();
+        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
         m_qsLastUser                = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
         m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
         m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();

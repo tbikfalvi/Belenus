@@ -5,9 +5,9 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_create.sql
--- AppVersion  : 1.0.0
--- DbVersion   : 1.0
--- FileVersion : 1.0
+-- AppVersion  : 1.3.0
+-- DbVersion   : 1.4
+-- FileVersion : 2.0
 -- Author      : Ballok Peter, Bikfalvi Tamas
 --
 -- -----------------------------------------------------------------------------------

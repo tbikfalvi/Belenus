@@ -13,8 +13,7 @@ TARGET       = DBTool
 TEMPLATE     = app
 DESTDIR      = ..
 RESOURCES   += DBTool.qrc
-TRANSLATIONS = dbtool_us.ts \
-               dbtool_hu.ts
+TRANSLATIONS = dbtool_hu.ts
 RC_FILE      = DBTool.rc
 
 SOURCES     += main.cpp \

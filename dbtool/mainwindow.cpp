@@ -606,7 +606,7 @@ void MainWindow::on_pbStartExit_clicked()
 //====================================================================================
 // START
 //====================================================================================
-void MainWindow::on_cmbLanguage_currentIndexChanged(int index)
+void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 //====================================================================================
 {
     m_qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
@@ -1344,7 +1344,7 @@ void MainWindow::on_pbSaveUnitTime_clicked()
 //====================================================================================
 // PREPROCESS PATIENTCARDS
 //====================================================================================
-void MainWindow::on_ledBarcodeLength_textEdited(const QString &arg1)
+void MainWindow::on_ledBarcodeLength_textEdited(const QString &/*arg1*/)
 //====================================================================================
 {
     ui->pbNext->setEnabled( ui->ledBarcodeLength->text().toInt() > 0 );
@@ -1380,7 +1380,7 @@ void MainWindow::on_chkPExportP_toggled(bool checked)
     _checkExportSelection();
 }
 //====================================================================================
-void MainWindow::on_chkPExportUser_toggled(bool checked)
+void MainWindow::on_chkPExportUser_toggled(bool /*checked*/)
 //====================================================================================
 {
     _checkExportSelection();
