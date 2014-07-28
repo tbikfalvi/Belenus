@@ -3,30 +3,80 @@
     <version current="1.0.0" next="1.3.0">
 
         <download>
+
             <file path="http://download.bikfalvi.hu/belenus/BelenusApps_v_1_3_0.zip" uncompress="yes" />
+
         </download>
 
         <backup>
-            <file path="c:/Program Files/belenus" directory="lang" name="belenus_hu.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="belenus_us.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="brv_hu.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="brv_us.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="dbbackup_hu.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="dbtool_hu.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="qt_hu.qm" />
-            <file path="c:/Program Files/belenus" directory="lang" name="setup_hu.qm" />
 
-            <file path="c:/Program Files/belenus" directory="" name="belenus.exe" />
-            <file path="c:/Program Files/belenus" directory="" name="ReportViewer.exe" />
+            <file path="%INSTALL_DIR%" directory="lang" name="belenus_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="belenus_us.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="brv_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="brv_us.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="dbbackup_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="dbtool_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="qt_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="setup_hu.qm" move="yes" />
+
+            <file path="%INSTALL_DIR%" directory="" name="libgcc_s_dw2-1.dll" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="libmySQL.dll" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="mingwm10.dll" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="QtCore4.dll" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="QtGui4.dll" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="QtNetwork4.dll" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="QtSql4.dll" move="yes" />
+
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="DBBackup.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="DBTool.exe" move="yes" />
+            <file path="%INSTALL_DIR%" directory="" name="ReportViewer.exe" move="yes" />
+
         </backup>
 
         <update>
-            <file src="belenus.exe" dst="c:/Program Files/belenus/belenus.exe" />
-            <file src="ReportViewer.exe" dst="c:/Program Files/belenus/ReportViewer.exe" />
+
+            <file src="docs/FelhasznaloiUtmutato.pdf" dst="%INSTALL_DIR%/docs/FelhasznaloiUtmutato.pdf" />
+
+            <file src="lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+            <file src="lang/dbbackup_hu.qm" dst="%INSTALL_DIR%/lang/dbbackup_hu.qm" />
+            <file src="lang/dbtool_hu.qm" dst="%INSTALL_DIR%/lang/dbtool_hu.qm" />
+            <file src="lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
+            <file src="lang/setup_hu.qm" dst="%INSTALL_DIR%/lang/setup_hu.qm" />
+            <file src="lang/starter_hu.qm" dst="%INSTALL_DIR%/lang/starter_hu.qm" />
+
+            <file src="resources/20x20_gibbig_off.png" dst="%INSTALL_DIR%/resources/20x20_gibbig_off.png" />
+            <file src="resources/20x20_gibbig_on.png" dst="%INSTALL_DIR%/resources/20x20_gibbig_on.png" />
+            <file src="resources/40x40_check_connection.png" dst="%INSTALL_DIR%/resources/40x40_check_connection.png" />
+            <file src="resources/starter.png" dst="%INSTALL_DIR%/resources/starter.png" />
+
+            <file src="sql/db_update_1_3.sql" dst="%INSTALL_DIR%/sql/db_update_1_3.sql" />
+
+            <file src="libeay32.dll" dst="%INSTALL_DIR%/libeay32.dll" />
+            <file src="libgcc_s_dw2-1.dll" dst="%INSTALL_DIR%/libgcc_s_dw2-1.dll" />
+            <file src="libmysql.dll" dst="%INSTALL_DIR%/libmysql.dll" />
+            <file src="libstdc++-6.dll" dst="%INSTALL_DIR%/libstdc++-6.dll" />
+            <file src="libwinpthread-1.dll" dst="%INSTALL_DIR%/libwinpthread-1.dll" />
+            <file src="QtCore4.dll" dst="%INSTALL_DIR%/QtCore4.dll" />
+            <file src="QtGui4.dll" dst="%INSTALL_DIR%/QtGui4.dll" />
+            <file src="QtNetwork4.dll" dst="%INSTALL_DIR%/QtNetwork4.dll" />
+            <file src="QtSql4.dll" dst="%INSTALL_DIR%/QtSql4.dll" />
+            <file src="QtXml4.dll" dst="%INSTALL_DIR%/QtXml4.dll" />
+            <file src="ssleay32.dll" dst="%INSTALL_DIR%/ssleay32.dll" />
+            <file src="belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+            <file src="DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+            <file src="DBTool.exe" dst="%INSTALL_DIR%/DBTool.exe" />
+            <file src="pkzip.exe" dst="%INSTALL_DIR%/pkzip.exe" />
+            <file src="ReportViewer.exe" dst="%INSTALL_DIR%/ReportViewer.exe" />
+            <file src="Starter.exe" dst="%INSTALL_DIR%/Starter.exe" />
+
         </update>
 
         <execute>
-            <application home="c:/Program Files/belenus/" name="DBBackup.exe" params="-execute db_update_1_2_1.sql" />
+
+            <application home="%INSTALL_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_3.sql"' />
+
         </execute>
 
     </version>
