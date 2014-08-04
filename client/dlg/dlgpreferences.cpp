@@ -57,7 +57,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         int inPos = obLangCodeRegExp.indexIn( obLangFiles[i] );
         if( inPos != -1 ) obLangCodes << obLangCodeRegExp.cap( 1 );
     }
-    //obLangCodes << "uk";
+    obLangCodes << "en";
     obLangCodes.sort();
     cmbAppLang->addItems( obLangCodes );
     m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );

@@ -8,7 +8,7 @@ QT       += core gui
 
 TARGET = CreateInstallList
 TEMPLATE = app
-
+DESTDIR      = ..
 
 SOURCES += main.cpp\
         mainwindow.cpp

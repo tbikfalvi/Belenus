@@ -1120,6 +1120,7 @@ void cWndMain::updateToolbar()
             action_ValidateSerialKey->setEnabled( bIsUserLoggedIn );
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
+            action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
         action_Preferences->setEnabled( bIsUserLoggedIn );
 
     menu_Action->setEnabled( bIsUserLoggedIn );
@@ -2864,7 +2865,7 @@ int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
 {
     QMessageBox msgBox;
 
-    msgBox.setParent( parent );
+    //msgBox.setParent( parent );
 
     switch(msgtype)
     {

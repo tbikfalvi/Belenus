@@ -58,7 +58,7 @@ class dlgMain : public QDialog, protected Ui::dlgMain
     Q_OBJECT
 
 public:
-    explicit dlgMain(QWidget *parent = 0, bool bUninstall = false);
+    explicit dlgMain(QWidget *parent = 0, bool bUninstall = false, bool bSilent = false);
     ~dlgMain();
 
 protected:
@@ -115,6 +115,7 @@ private:
     bool                     m_bIsWindows32Bit;
 
     bool                     m_bUninstallCalled;
+    bool                     m_bSilentIstallCalled;
     QString                  m_qsProcessErrorMsg;
     QString                  m_qsIniFileName;
 
@@ -143,6 +144,7 @@ private:
     void                    _initializeFinishPage();
 
     bool                    _processPage( int p_nPage );
+    bool                    _processWelcomePage();
     bool                    _processSelectionPage();
     bool                    _processComponentSelectionPage();
     bool                    _processWampInstallPage();
