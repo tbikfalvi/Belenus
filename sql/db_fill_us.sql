@@ -1,4 +1,4 @@
--- -----------------------------------------------------------------------------------
+﻿-- -----------------------------------------------------------------------------------
 --
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2013
 --
@@ -205,8 +205,8 @@ ALTER TABLE `panelUses` auto_increment=1;
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
- ('0',  '0', '1', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
+INSERT INTO `patientcardunits` (`patientCardUnitId` ,`licenceId` ,`patientCardId` ,`ledgerId` ,`panelId` ,`gibbigId` ,`unitTime` ,`unitPrice` ,`validDateFrom` ,`validDateTo` ,`dateTimeUsed` ,`active` ,`archive` ) VALUES
+ ('0',  '0', '1', '0', '0', '0', '5', '0', '2013-01-01', '2100-12-31', CURRENT_TIMESTAMP , '1', 'ARC');
 UPDATE `patientcardunits` SET `patientCardUnitId`='0' WHERE `patientCardUnitId`=1;
 
 -- -----------------------------------------------------------------------------------

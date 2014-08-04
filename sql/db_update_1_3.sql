@@ -18,6 +18,10 @@ USE `belenus`;
 
 -- -----------------------------------------------------------------------------------
 
+ALTER TABLE `patientcardunits` ADD `gibbigId` INT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `panelId`;
+
+-- -----------------------------------------------------------------------------------
+
 CREATE TABLE `gibbigMessageTypes` (
   `gibbigMessageTypeId`     int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,

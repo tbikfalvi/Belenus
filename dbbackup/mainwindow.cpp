@@ -92,6 +92,13 @@ void MainWindow::processBackup()
     QString     qsParameters    = QString( "-u belenus -pbelenus belenus > \"%1\\belenus_backup_%2.sql\" ").arg(qsBackupPath).arg( QDateTime::currentDateTime().toString("yyyyMMddhhmmss") );
     QString     qsCommand       = QString( "cmd /c %1 %2" ).arg( qsProcess ).arg( qsParameters );
 
+    QDir    qdBackup( qsBackupPath );
+
+    if( !qdBackup.exists() )
+    {
+        qdBackup.mkpath( qsBackupPath );
+    }
+
     if( qsMysqlPath.length() > 0 )
     {
         QProcess *qpBackup = new QProcess();

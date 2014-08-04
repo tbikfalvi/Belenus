@@ -409,6 +409,7 @@ CREATE TABLE `patientCardUnits` (
   `patientCardId`           int(10) unsigned        NOT NULL,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
+  `gibbigId`           		int(10) unsigned        NOT NULL DEFAULT 0,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
   `unitPrice`               int(11)                 NOT NULL DEFAULT 0,
   `validDateFrom`           date                    DEFAULT NULL,
