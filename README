@@ -4,3 +4,5 @@ client - Kliens alkalmazás
 server - Szerver alkalmazás
 install - Telepítõ alkalmazás
 dbtool - Szolarium/Sensolite DAT file-ok manipulalasa
+
+Version_1_4_0	Gibbig integráció, csak bérletek és egységek kezelése
