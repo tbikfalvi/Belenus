@@ -544,7 +544,7 @@ dbtool_hu.qm
 CreateInstallList-build-desktop/
 CreateInstallList.exe
 build/
-CreateInstallList\CreateInstallList.pro.user
+CreateInstallList/*.pro.*
 dbbackup/dbbackup.pro.user
 client/*.pro.user.*
 dbtool/*.pro.user.*
