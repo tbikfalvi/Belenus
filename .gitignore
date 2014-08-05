@@ -1,0 +1,9 @@
+client/*.pro.*
+client/*.qm
+CreateInstallList/*.pro.*
+dbbackup/*.pro.*
+dbtool/*.pro.*
+install/*.pro.*
+install/*.qm
+serveradmin/*.pro.*
+viewer/*.pro.*
