@@ -1,4 +1,4 @@
--- -----------------------------------------------------------------------------------
+﻿-- -----------------------------------------------------------------------------------
 --
 -- Belenus Szoftver Rendszer (c) Pagony Multimedia Studio Bt - 2014
 --
@@ -34,7 +34,7 @@ CREATE TABLE `skinTypes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `skinTypes` (`skinTypeId`, `licenceId`, `skinTypeName`, `active`, `archive` ) VALUES
- ('0', '0', 'Nincs meghat�rozva', 1, 'ARC');
+ ('0', '0', 'Nincs meghatározva', 1, 'ARC');
 UPDATE `skinTypes` SET `skinTypeId`=0 WHERE `skinTypeId`=1;
 ALTER TABLE `skinTypes` auto_increment=1;
 

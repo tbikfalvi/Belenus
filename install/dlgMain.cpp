@@ -2209,6 +2209,7 @@ bool dlgMain::_processClientInstall()
         !_createTargetDirectory( QString("%1\\docs").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\sql").arg(m_qsClientInstallDir) ) ||
+        !_createTargetDirectory( QString("%1\\sqldrivers").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ))
     {
         _logProcess( QString(" FAIL") );
