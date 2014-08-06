@@ -1011,8 +1011,14 @@ void dlgMain::_installWampServer()
         _logProcess( QString(" SUCCEEDED") );
         m_bInitializeWamp = true;
         int nTimerLength = 1000;
-        if( m_bSilentIstallCalled )
-            nTimerLength = 5000;
+
+        QMessageBox::information( this, tr("Attention"),
+                                  tr("Please make sure the WampServer icon appeared on taskbar\n"
+                                     "and it's color is green.\n"
+                                     "This grants that the database server is up and running\n"
+                                     "and the installer is ready to continue it's process\n\n"
+                                     "Click OK button to continue.") );
+
         m_nTimer = startTimer( nTimerLength );
     }
     else
