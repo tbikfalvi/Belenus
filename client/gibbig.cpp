@@ -48,6 +48,8 @@ cGibbig::cGibbig()
 
     m_uiMessageId               = 0;
 
+    m_qslResponseIds.clear();
+
     m_qdtExpiration.setTime_t(0);
 
     g_obLogger(cSeverity::DEBUG) << "Create QNetworkAccessManager" << EOM;
@@ -278,8 +280,8 @@ void cGibbig::timerEvent(QTimerEvent *)
     killTimer( m_inTimer );
     m_inTimer = 0;
 
-    m_qsError.append( tr("Timeout error occured during Gibbig communication after %1 milliseconds.\n").arg(m_inTimeout) );
-    m_qsError.append( tr("%1 FAILED due to timeout error.").arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
+    m_qsError.append( tr("Gibbig timeout.\n") );
+    m_qsError.append( tr("%1 FAILED.").arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
     m_teGibbigAction = cGibbigAction::GA_DEFAULT;
     m_bErrorOccured = true;
     emit signalDebugMessage( m_qsError );
@@ -413,15 +415,19 @@ void cGibbig::_processMessage()
             if( m_qsMessage.left(10).compare( "{\"token\":\"" ) == 0 )
             {
                 _getTokenExpFromMessage();
+                emit signalActionProcessed( QString("%1 Authentication succeeded (%2)\n%3 %4")
+                                                    .arg( cGibbigAction::toStr( m_teGibbigAction ) )
+                                                    .arg(m_qsMessage)
+                                                    .arg(m_qsToken)
+                                                    .arg(m_qdtExpiration.toString("yyyy-MM-dd hh:mm:ss")) );
                 m_teGibbigAction = cGibbigAction::GA_DEFAULT;
-                emit signalActionProcessed( QString("GBMSG_01 Authentication succeeded (%1)\n%2 %3").arg(m_qsMessage).arg(m_qsToken).arg(m_qdtExpiration.toString("yyyy-MM-dd hh:mm:ss")) );
             }
             else
             {
-                m_teGibbigAction = cGibbigAction::GA_DEFAULT;
                 m_qsError.append( tr("Invalid format, token string not received. '%1'\n").arg(m_qsMessage) );
                 m_bErrorOccured = true;
                 emit signalErrorOccured();
+                m_teGibbigAction = cGibbigAction::GA_DEFAULT;
                 return;
             }
             break;
@@ -435,13 +441,21 @@ void cGibbig::_processMessage()
         case cGibbigAction::GA_PCUSE:
         case cGibbigAction::GA_PCDELETE:
         {
-            if( m_uiMessageId > 0 )
+            m_qslResponseIds.clear();
+            if( _getResult() && m_uiMessageId > 0 )
             {
                 g_poDB->executeQTQuery( QString("UPDATE gibbigmessages SET archive='MOD' "
-                                                "WHERE gibbigMessageId=1 AND " ).arg( m_uiMessageId ) );
-                m_uiMessageId = 0;
+                                                "WHERE gibbigMessageId=%1 " )
+                                                .arg( m_uiMessageId ) );
+                emit signalActionProcessed( QString( "%1 SUCCEEDED" ).arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
             }
-            emit signalActionProcessed( QString( "%1 %2" ).arg( m_teGibbigAction/*.toStr()*/ ).arg( m_qsMessage ) );
+            else
+            {
+                m_qsError.append( QString( "%1 FAILED" ).arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
+                m_bErrorOccured = true;
+                emit signalErrorOccured();
+            }
+            m_uiMessageId = 0;
             m_teGibbigAction = cGibbigAction::GA_DEFAULT;
             break;
         }
@@ -500,22 +514,31 @@ void cGibbig::_sendPatientCardData()
     {
         QStringList qslUnitData = qslUnits.at(i).split('/');
 
-        qsMessage.append( QString( "{\"amount\":%1,\"couponParameters\":["
-                                   "{\"name\":\"UNIT_VALUE\",\"value\":\"%2\"},"
-                                   "{\"name\":\"VALID\",\"value\":\"%3\"}]}" ).arg(qslUnitData.at(0)).arg(qslUnitData.at(1)).arg(qslUnitData.at(2)) );
+        qsMessage.append( QString( "{\"amount\":%1,\"id\":%2,\"couponParameters\":"
+                                   "[{\"name\":\"UNIT_VALUE\",\"value\":\"%3\"},"
+                                   "{\"name\":\"VALID\",\"value\":\"%4\"}]}" ).arg(qslUnitData.at(0))
+                                                                              .arg(qslUnitData.at(1))
+                                                                              .arg(qslUnitData.at(2))
+                                                                              .arg(qslUnitData.at(3)) );
         if( i<qslUnits.count()-1 )
         {
             qsMessage.append( "," );
         }
     }
-    qsMessage.append( "]}" );
 
-    emit signalDebugMessage( qsMessage );
+    qsMessage.append( "]}" );
 
     QNetworkReply  *gbReply;
     QByteArray      qbMessage( qsMessage.toStdString().c_str() );
+    QString         qsUrl = QString("https://%1/unifiedid/rest/vendor/coupons/sync/%2?token=%3")
+                                    .arg(m_qsHost)
+                                    .arg(qsBarcode)
+                                    .arg(m_qsToken);
 
-    m_gbRequest.setUrl( QUrl( QString("https://%1/unifiedid/rest/vendor/coupons/sync/%2?token=%3").arg(m_qsHost).arg(qsBarcode).arg(m_qsToken) ) );
+    emit signalDebugMessage( qsUrl );
+    emit signalDebugMessage( qsMessage );
+
+    m_gbRequest.setUrl( QUrl( qsUrl ) );
     gbReply = m_gbRestManager->post( m_gbRequest, qbMessage );
     gbReply->ignoreSslErrors();
     m_inTimer = startTimer( m_inTimeout );
@@ -579,8 +602,17 @@ void cGibbig::_prepareProcess()
 {
     cTracer obTrace( "cGibbig::_prepareProcess" );
 
-    if( m_teGibbigAction != cGibbigAction::GA_DEFAULT )
+    if( !g_poPrefs->isGibbigEnabled() )
+    {
+        g_obLogger(cSeverity::DEBUG) << "GIBBIG DISABLED" << EOM;
         return;
+    }
+
+    if( m_teGibbigAction != cGibbigAction::GA_DEFAULT )
+    {
+        g_obLogger(cSeverity::DEBUG) << "GIBBIG ACTION IN PROGRESS" << EOM;
+        return;
+    }
 
     QString      qsQuery    = "SELECT gibbigMessageId, gibbigMessageType, gibbigMessage FROM "
                               "gibbigMessages, gibbigMessageTypes WHERE "
@@ -647,5 +679,83 @@ void cGibbig::_prepareProcess()
         m_teGibbigAction = cGibbigAction::GA_DEFAULT;
         return;
     }
+}
+//=================================================================================================
+bool cGibbig::_getResult()
+//-------------------------------------------------------------------------------------------------
+{
+    bool    bRet        = false;
+    QString qsResults   = m_qsMessage.mid( 13, m_qsMessage.length()-16 );
+
+/*    g_obLogger(cSeverity::DEBUG) << "GIBBIG result: "
+                                 << qsResults
+                                 << EOM;*/
+
+    QStringList qslResults = qsResults.split( "},{" );
+
+/*    g_obLogger(cSeverity::DEBUG) << "GIBBIG results count: "
+                                 << qslResults.count()
+                                 << EOM;*/
+
+    for( int i=0; i<qslResults.count(); i++ )
+    {
+/*        g_obLogger(cSeverity::DEBUG) << "GIBBIG response: "
+                                     << qslResults.at(i)
+                                     << EOM;*/
+        if( _getResponseStatus( qslResults.at(i) ) )
+        {
+            bRet = true;
+            m_qslResponseIds << _getResponseId( qslResults.at(i) );
+        }
+    }
+
+    return bRet;
+}
+//=================================================================================================
+bool cGibbig::_getResponseStatus( QString p_qsResponse )
+//-------------------------------------------------------------------------------------------------
+{
+    bool        bRet    = false;
+    QStringList qslTags = p_qsResponse.split( "," );
+
+    for( int i=0; i<qslTags.count(); i++ )
+    {
+        QString qsName  = qslTags.at(i).split(":").at(0);
+        QString qsValue = qslTags.at(i).split(":").at(1);
+
+        if( qsName.compare("\"result\"") == 0 )
+        {
+            g_obLogger(cSeverity::DEBUG) << "GIBBIG status: "
+                                         << qsValue
+                                         << EOM;
+            if( qsValue.compare("\"SUCCESS\"") == 0 )
+                bRet = true;
+            break;
+        }
+    }
+    return bRet;
+}
+//=================================================================================================
+QString cGibbig::_getResponseId( QString p_qsResponse )
+//-------------------------------------------------------------------------------------------------
+{
+    QString     qsRet   = "";
+    QStringList qslTags = p_qsResponse.split( "," );
+
+    for( int i=0; i<qslTags.count(); i++ )
+    {
+        QString qsName  = qslTags.at(i).split(":").at(0);
+        QString qsValue = qslTags.at(i).split(":").at(1);
+
+        if( qsName.compare("\"id\"") == 0 )
+        {
+            g_obLogger(cSeverity::DEBUG) << "GIBBIG value: "
+                                         << qsValue
+                                         << EOM;
+            qsRet = qsValue;
+            break;
+        }
+    }
+    return qsRet;
 }
 //=================================================================================================

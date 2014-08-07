@@ -320,7 +320,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
     g_poGibbig->setTimeout( 10000 );
 
-m_pbStatusGibbig.setEnabled( false );
+//m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -2966,12 +2966,14 @@ void cWndMain::on_GibbigErrorOccured()
     m_bProgressErrorVisible = true;
     m_nProgressCounter = g_poPrefs->getGibbigMessageWaitTime()*4;
     m_dlgProgress->showError( g_poGibbig->gibbigErrorStr() );
+    g_poGibbig->gibbigClearError();
+    g_poPrefs->setGibbigEnabled( false, true );
 }
 
 void cWndMain::on_GibbigActionFinished(QString p_qsInfo)
 {
     // GBMSG_XX
-    if( p_qsInfo.left(8).compare( "GBMSG_01" ) == 0 )
+    if( p_qsInfo.left(8).compare( "GBMSG_02" ) == 0 )
     {
         m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_on.png" ) );
         m_bGibbigConnected = true;

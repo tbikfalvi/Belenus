@@ -572,7 +572,7 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
 
 void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionType) throw()
 {
-    QString      qsQuery = QString( "SELECT unitTime, validDateTo, COUNT(active) "
+    QString      qsQuery = QString( "SELECT COUNT(active), gibbigId, unitTime, validDateTo  "
                                     "FROM `patientcardunits` WHERE "
                                     "patientcardid=%1 AND "
                                     "active=1 "
@@ -582,7 +582,10 @@ void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionTy
 
     while( poQuery->next() )
     {
-        qslUnits << QString( "%1/%2" ).arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() );
+        qslUnits << QString( "%1/%2/%3/%4" ).arg( poQuery->value(0).toString() )
+                                            .arg( poQuery->value(1).toString() )
+                                            .arg( poQuery->value(2).toString() )
+                                            .arg( poQuery->value(3).toString() );
     }
 
     QString qsPatientCard = "";

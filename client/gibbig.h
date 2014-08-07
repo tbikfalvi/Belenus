@@ -23,6 +23,7 @@
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QNetworkReply>
 #include <QDateTime>
+#include <QStringList>
 
 //====================================================================================
 class cGibbigAction
@@ -54,7 +55,7 @@ public:
             case GA_PCREFILL:       return "GBMSG_07 PatientCardRefill ";         break;
             case GA_PCUSE:          return "GBMSG_08 PatientCardUsage ";          break;
             case GA_PCDELETE:       return "GBMSG_09 PatientCardDelete ";         break;
-            default:                return "INVALID";
+            default:                return "INVALID_IDENTIFIER";
         }
     }
 };
@@ -130,6 +131,8 @@ private:
 
     unsigned int                     m_uiMessageId;
 
+    QStringList                      m_qslResponseIds;
+
     void                            _processPCTCreate( QString p_qsPatientCardType );
     void                            _processPCTModify( QString p_qsPatientCardType );
     void                            _processPCTDelete( QString p_qsPatientCardType );
@@ -145,6 +148,9 @@ private:
     QString                         _getUnits();
     void                            _activateProcess();
     void                            _prepareProcess();
+    bool                            _getResult();
+    bool                            _getResponseStatus( QString p_qsResponse );
+    QString                         _getResponseId( QString p_qsResponse );
 
 };
 //====================================================================================
