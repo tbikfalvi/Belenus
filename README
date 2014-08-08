@@ -1,8 +1,4 @@
 Belenus Szoftver Rendszer - KiwiSun
 
-client - Kliens alkalmazás
-server - Szerver alkalmazás
-install - Telepítõ alkalmazás
-dbtool - Szolarium/Sensolite DAT file-ok manipulalasa
-
+Version_1_3_0	Új dll-ek, 1.2.0 és 1.2.1 javitások, Updater
 Version_1_4_0	Gibbig integráció, csak bérletek és egységek kezelése
