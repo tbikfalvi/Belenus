@@ -16,6 +16,7 @@
 #include <QMessageBox>
 #include <QCryptographicHash>
 #include <QProcess>
+#include <QMenu>
 
 #include "wndmain.h"
 #include "licenceManager.h"
@@ -100,8 +101,6 @@ extern DatabaseWriter g_obLogDBWriter;
 //====================================================================================
 cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 {
-    cTracer obTrace( "cWndMain::cWndMain" );
-
     setupUi( this );
 
     m_qsStatusText                  = "";
@@ -116,6 +115,9 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_qsPanelStartBarcode           = "";
     m_inCommunicationCounter        = 0;
     m_bActionProcessing             = false;
+    m_bProgressErrorVisible         = false;
+    m_nProgressCounter              = 0;
+    m_bGibbigConnected              = false;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -295,24 +297,34 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_lblStatusRight.setAlignment( Qt::AlignRight );
     m_lblStatusRight.setStyleSheet( "QLabel {font: bold; font-size:14px;}" );
 
+    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+    m_pbStatusGibbig.setFlat( true );
+    m_pbStatusGibbig.setText( "" );
+    m_pbStatusGibbig.setIconSize( QSize(20,20) );
+    m_pbStatusGibbig.setFixedSize( 22, 22 );
+
+    connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
+
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
+    statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
-/*
+
     g_poGibbig = new cGibbig();
+
+    connect( g_poGibbig, SIGNAL(signalErrorOccured()), this, SLOT(on_GibbigErrorOccured()) );
+    connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)), this, SLOT(on_GibbigActionFinished(QString)) );
+    connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)), this, SLOT(on_GibbigMessageArrived(QString)) );
 
     g_poGibbig->setHost( g_poPrefs->getServerAddress() );
     g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
     g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
-    g_poGibbig->setTimeout( 5000 );
+    g_poGibbig->setTimeout( 10000 );
 
-    g_poGibbig->gibbigAuthenticate();
-*/
+m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
 {
-    cTracer obTrace( "cWndMain::~cWndMain" );
-
     delete m_dlgProgress;
     delete m_dlgSecondaryWindow;
 
@@ -321,8 +333,6 @@ cWndMain::~cWndMain()
 //====================================================================================
 void cWndMain::startMainTimer()
 {
-    cTracer obTrace( "cWndMain::startMainTimer" );
-
     mdiPanels->refreshDisplay();
     m_nTimer = startTimer( 250 );
 }
@@ -386,6 +396,10 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
+        if( g_poPrefs->isGibbigEnabled() )
+        {
+            g_poGibbig->gibbigAuthenticate();
+        }
     }
     catch( cSevException &e )
     {
@@ -832,8 +846,6 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() || m_bActionProcessing )
         return;
 
-    cTracer obTrace( "cWndMain::keyPressEvent" );
-
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
@@ -980,8 +992,6 @@ void cWndMain::keyReleaseEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() )
         return;
 
-    cTracer obTrace( "cWndMain::keyReleaseEvent" );
-
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = false;
@@ -1043,7 +1053,7 @@ void cWndMain::updateTitle()
     setWindowTitle( qsTitle );
 }
 //====================================================================================
-void cWndMain::updateStatusText( QString p_qsStatusText )
+void cWndMain::updateStatusText( QString /*p_qsStatusText*/ )
 //====================================================================================
 {
     if( m_bCtrlPressed )
@@ -1110,6 +1120,7 @@ void cWndMain::updateToolbar()
             action_ValidateSerialKey->setEnabled( bIsUserLoggedIn );
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
+            action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
         action_Preferences->setEnabled( bIsUserLoggedIn );
 
     menu_Action->setEnabled( bIsUserLoggedIn );
@@ -1170,6 +1181,16 @@ void cWndMain::timerEvent(QTimerEvent *)
     }
     updateStatusText();
     updateToolbar();
+
+    if( m_bProgressErrorVisible )
+    {
+        m_nProgressCounter--;
+    }
+    if( m_nProgressCounter < 1 )
+    {
+        m_bProgressErrorVisible = false;
+        m_dlgProgress->hide();
+    }
 
     m_inCommunicationCounter++;
 
@@ -1341,6 +1362,10 @@ void cWndMain::on_action_Preferences_triggered()
             g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
             m_dlgSecondaryWindow->hide();
         }
+        if( g_poPrefs->isGibbigEnabled() )
+        {
+            g_poGibbig->gibbigAuthenticate();
+        }
     }
 }
 //====================================================================================
@@ -1384,6 +1409,7 @@ void cWndMain::on_action_Hardwaretest_triggered()
                               tr( "This area is restricted for system administrators only!" ) );
     }
 }
+
 //====================================================================================
 void cWndMain::on_action_LogOut_triggered()
 {
@@ -2601,7 +2627,7 @@ void cWndMain::slotReplacePatientCard(const QString &p_qsBarcode)
             obDBPatientcardUnit.setPatientCardId( obDBPatientCardOld.id() );
             obDBPatientcardUnit.replacePatientCard( obDBPatientCardNew.id() );
 
-            // Nem kell törölni a kártyát, csak jelezni, hogy elveszett
+            // Nem kell tÃ¶rÃ¶lni a kÃ¡rtyÃ¡t, csak jelezni, hogy elveszett
             /*
             obDBPatientCardOld.setPatientCardTypeId( 0 );
             obDBPatientCardOld.setParentId( 0 );
@@ -2839,6 +2865,8 @@ int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonst
 {
     QMessageBox msgBox;
 
+    //msgBox.setParent( parent );
+
     switch(msgtype)
     {
         case MSG_INFORMATION:
@@ -2930,3 +2958,70 @@ void cWndMain::on_action_Export_triggered()
 
 //    obDlgExportImport.exec();
 }
+
+void cWndMain::on_GibbigErrorOccured()
+{
+    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+    m_bGibbigConnected = false;
+    m_bProgressErrorVisible = true;
+    m_nProgressCounter = g_poPrefs->getGibbigMessageWaitTime()*4;
+    m_dlgProgress->showError( g_poGibbig->gibbigErrorStr() );
+}
+
+void cWndMain::on_GibbigActionFinished(QString p_qsInfo)
+{
+    // GBMSG_XX
+    if( p_qsInfo.left(8).compare( "GBMSG_01" ) == 0 )
+    {
+        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_on.png" ) );
+        m_bGibbigConnected = true;
+    }
+    g_obLogger(cSeverity::INFO) << "GIBBIG: " << p_qsInfo.right(p_qsInfo.length()-9) << EOM;
+}
+
+// ez csak debug uzenetre kell, ha valamit ki akarunk irni pl log-ba
+void cWndMain::on_GibbigMessageArrived(QString p_qsMessage)
+{
+    g_obLogger(cSeverity::WARNING) << "GIBBIG: " << p_qsMessage << EOM;
+}
+
+void cWndMain::on_GibbigIconClicked()
+{
+    QMenu   qmMenu;
+
+    if( g_poPrefs->isGibbigEnabled() )
+    {
+        if( m_bGibbigConnected )
+            qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Process actions") );
+        else
+            qmMenu.addAction( QIcon( "./resources/40x40_check_connection.png" ), tr("Test connection") );
+        qmMenu.addSeparator();
+        qmMenu.addAction( QIcon( "./resources/40x40_cancel.png" ), tr("Disable communication") );
+    }
+    else
+    {
+        qmMenu.addAction( QIcon( "./resources/40x40_ok.png" ), tr("Enable communication") );
+    }
+
+    QAction *qaRet = qmMenu.exec( QCursor::pos() );
+
+    if( qaRet )
+    {
+        if( qaRet->text().compare( tr("Test connection") ) == 0 ||
+            qaRet->text().compare( tr("Process actions") ) == 0 )
+        {
+            g_poGibbig->gibbigAuthenticate();
+        }
+        else if( qaRet->text().compare( tr("Disable communication") ) == 0 )
+        {
+            m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+            g_poPrefs->setGibbigEnabled( false, true );
+        }
+        else if( qaRet->text().compare( tr("Enable communication") ) == 0 )
+        {
+            g_poPrefs->setGibbigEnabled( true, true );
+            g_poGibbig->gibbigAuthenticate();
+        }
+    }
+}
+

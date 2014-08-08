@@ -5,9 +5,9 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_create.sql
--- AppVersion  : 1.0.0
--- DbVersion   : 1.0
--- FileVersion : 1.0
+-- AppVersion  : 1.3.0
+-- DbVersion   : 1.4
+-- FileVersion : 2.0
 -- Author      : Ballok Peter, Bikfalvi Tamas
 --
 -- -----------------------------------------------------------------------------------
@@ -33,6 +33,31 @@ CREATE TABLE `licences` (
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`licenceId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- A Gibbig rendszernek kuldendo uzeneteket tartalmazza
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `gibbigMessageTypes` (
+  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `gibbigMessageType`       varchar(20)             NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`gibbigMessageTypeId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `gibbigMessages` (
+  `gibbigMessageId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL,
+  `gibbigMessage`           text                    NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`gibbigMessageId`,`licenceId`),
+  FOREIGN KEY (`gibbigMessageTypeId`) REFERENCES `gibbigMessageTypes` (`gibbigMessageTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
@@ -384,6 +409,7 @@ CREATE TABLE `patientCardUnits` (
   `patientCardId`           int(10) unsigned        NOT NULL,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
+  `gibbigId`           		int(10) unsigned        NOT NULL DEFAULT 0,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
   `unitPrice`               int(11)                 NOT NULL DEFAULT 0,
   `validDateFrom`           date                    DEFAULT NULL,
@@ -480,7 +506,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A studioban forgalmazott termekeket és csoportokat köti össze.
+-- A studioban forgalmazott termekeket Ã©s csoportokat kÃ¶ti Ã¶ssze.
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `connectProductWithType` (
   `productTypeId`           int(10) unsigned        NOT NULL,

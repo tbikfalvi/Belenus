@@ -57,13 +57,18 @@ int main(int argc, char *argv[])
     apMainApp->installTranslator( poTransQT );
 
     bool bUninstall = false;
+    bool bSilent    = false;
 
     if( argc > 1 && strcmp(argv[1],"-uninstall") == 0 )
     {
         bUninstall = true;
     }
+    else if( argc > 1 && strcmp(argv[1],"-silent") == 0 )
+    {
+        bSilent = true;
+    }
 
-    dlgMain w( 0, bUninstall );
+    dlgMain w( 0, bUninstall, bSilent );
 
     w.show();
 

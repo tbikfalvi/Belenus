@@ -127,6 +127,8 @@ public:
     QString         getGibbigPassword() const;
     void            setGibbigEnabled( bool p_bEnable, bool p_boSaveNow = false );
     bool            isGibbigEnabled();
+    int             getGibbigMessageWaitTime() const;
+    void            setGibbigMessageWaitTime(const int p_inWaitTime );
 
     unsigned int    getPanelId( int p_nPanelIterator );
 
@@ -168,6 +170,8 @@ public:
     int             getBackupDatabaseType() const;
     void            setBackupDatabaseDays( const QString &p_qsBackupDatabaseDays, bool p_boSaveNow = false );
     QString         getBackupDatabaseDays() const;
+    void            setDateFormat( const QString &p_qsDateFormat, bool p_boSaveNow = false );
+    QString         getDateFormat() const;
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -232,12 +236,14 @@ private:
     QString         m_qsGibbigName;
     QString         m_qsGibbigPassword;
     bool            m_bGibbigEnabled;
+    int             m_nGibbiWaitTime;
     QString         m_qsDirDbBinaries;
     QString         m_qsDirDbBackup;
     bool            m_bForceBackupDatabase;
     bool            m_bBackupDatabase;
     int             m_nBackupDatabaseType;
     QString         m_qsBackupDatabaseDays;
+    QString         m_qsDateFormat;
 
     void init();
 };

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>546</width>
-    <height>439</height>
+    <height>486</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -399,13 +399,63 @@
            </layout>
           </item>
           <item row="1" column="0">
+           <widget class="QLabel" name="lblDateFormat">
+            <property name="text">
+             <string>Date format :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_28">
+            <item>
+             <widget class="QComboBox" name="cmbDateFormat">
+              <item>
+               <property name="text">
+                <string>yyyy-MM-dd</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>MM-dd-yyyy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>dd-MM-yyyy</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblDateFormatExample">
+              <property name="text">
+               <string>(example: %1)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_22">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0">
            <widget class="QLabel" name="lblDefaultCountry">
             <property name="text">
              <string>Default country : </string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <item>
              <widget class="QLineEdit" name="ledDefaultCountry">
@@ -432,14 +482,14 @@
             </item>
            </layout>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="lblAboutLink">
             <property name="text">
              <string>Kiwisun web address :</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QLineEdit" name="ledAboutLink"/>
           </item>
          </layout>
@@ -499,8 +549,8 @@
               </property>
               <property name="iconSize">
                <size>
-                <width>15</width>
-                <height>15</height>
+                <width>20</width>
+                <height>20</height>
                </size>
               </property>
               <property name="toolButtonStyle">
@@ -611,8 +661,8 @@
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>15</width>
-                  <height>15</height>
+                  <width>20</width>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="toolButtonStyle">
@@ -1459,11 +1509,75 @@ is different :</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_17">
           <item>
-           <widget class="QCheckBox" name="chkEnableGibbig">
-            <property name="text">
-             <string>Enable synchronization</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_30">
+            <item>
+             <widget class="QCheckBox" name="chkEnableGibbig">
+              <property name="text">
+               <string>Enable synchronization</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_24">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pbTestGibbig">
+              <property name="text">
+               <string>Test connection</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_29">
+            <item>
+             <widget class="QLabel" name="lblGibbigWaitTime">
+              <property name="text">
+               <string>Length of Gibbig message is visible in seconds :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="sbGibbigWaitTime">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_23">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

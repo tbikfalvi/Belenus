@@ -4,19 +4,24 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-DESTDIR         = ..
-TARGET          = DBTool
-TEMPLATE        = app
-RC_FILE         = DBTool.rc
-SOURCES        += main.cpp \
-                  mainwindow.cpp \
-                  dlgprogress.cpp
-HEADERS        += mainwindow.h \
-                  dlgprogress.h
-FORMS          += mainwindow.ui \
-                  dlgprogress.ui
-TRANSLATIONS    = dbtool_us.ts \
-                  dbtool_hu.ts
-RESOURCES      += DBTool.qrc
+
+QT          += core gui sql
+CONFIG      += qt
+TARGET       = DBTool
+TEMPLATE     = app
+DESTDIR      = ..
+RESOURCES   += DBTool.qrc
+TRANSLATIONS = dbtool_hu.ts
+RC_FILE      = DBTool.rc
+
+SOURCES     += main.cpp \
+               mainwindow.cpp \
+               dlgprogress.cpp
+
+HEADERS     += mainwindow.h \
+               dlgprogress.h
+
+FORMS       += mainwindow.ui \
+               dlgprogress.ui

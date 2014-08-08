@@ -34,8 +34,6 @@
 //====================================================================================
 cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 {
-    cTracer obTrace( "cFrmPanel::cFrmPanel" );
-
     verticalLayout      = new QVBoxLayout( this );
     lblTitle            = new QLabel( this );
     lblCurrStatus       = new QLabel( this );
@@ -168,8 +166,6 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 //====================================================================================
 cFrmPanel::~cFrmPanel()
 {
-    cTracer obTrace( "cFrmPanel::~cFrmPanel" );
-
     if( m_pDBLedgerDevice ) delete m_pDBLedgerDevice;
 
     for( unsigned int i = 0; i < m_obStatuses.size(); i ++ ) if( m_obStatuses.at( i ) ) delete m_obStatuses.at( i );
@@ -210,8 +206,6 @@ bool cFrmPanel::isStatusCanBeReseted()
 //====================================================================================
 void cFrmPanel::start()
 {
-    cTracer obTrace( "cFrmPanel::start" );
-
     if( m_inTimerId != 0 )
     {
         g_obLogger(cSeverity::INFO) << "Device ID[" << m_uiId-1 << "] already started." << EOM;
@@ -246,15 +240,11 @@ void cFrmPanel::start()
 //====================================================================================
 void cFrmPanel::continueStoppedDevice()
 {
-    cTracer obTrace( QString("cFrmPanel::continueStoppedDevice - %1").arg(m_uiId-1) );
-
     g_poHardware->continueStoppedDevice( m_uiId-1 );
 }
 //====================================================================================
 void cFrmPanel::reset()
 {
-    cTracer obTrace( "cFrmPanel::reset" );
-
     if( !isMainProcess() )
     {
         clear();
@@ -268,8 +258,6 @@ void cFrmPanel::reset()
 //====================================================================================
 void cFrmPanel::clear()
 {
-    cTracer obTrace( "cFrmPanel::clear" );
-
     if( !isMainProcess() )
     {
         m_uiStatus  = 0;
@@ -349,16 +337,12 @@ void cFrmPanel::clear()
 //====================================================================================
 void cFrmPanel::next()
 {
-    cTracer obTrace( "cFrmPanel::next" );
-
     activateNextStatus();
 }
 //====================================================================================
 void cFrmPanel::clean()
 //====================================================================================
 {
-    cTracer obTrace( "cFrmPanel::clean" );
-
     m_bIsNeedToBeCleaned = false;
     if( m_qsInfo.compare( tr("NOT STERILE") ) == 0 )
     {
@@ -368,8 +352,6 @@ void cFrmPanel::clean()
 //====================================================================================
 void cFrmPanel::inactivate()
 {
-    cTracer obTrace( "cFrmPanel::inactivate" );
-
     setFrameShadow( QFrame::Sunken );
 
     QPalette  obNewPalette = lblTitle->palette();
@@ -379,8 +361,6 @@ void cFrmPanel::inactivate()
 //====================================================================================
 void cFrmPanel::activate()
 {
-    cTracer obTrace( "cFrmPanel::activate" );
-
     setFrameShadow( QFrame::Raised );
 
     QPalette  obNewPalette = lblTitle->palette();
@@ -395,8 +375,6 @@ int cFrmPanel::mainProcessTime()
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength )
 {
-    cTracer obTrace( "cFrmPanel::setMainProcessTime(int)" );
-
     g_obLogger(cSeverity::INFO) << "Main process time set from [" << m_inMainProcessLength << "] to [" << m_inMainProcessLength + p_inLength << "]" << EOM;
     m_inMainProcessLength += p_inLength;
     m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
@@ -406,8 +384,6 @@ void cFrmPanel::setMainProcessTime( const int p_inLength )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
-    cTracer obTrace( "cFrmPanel::setMainProcessTime(int, int)" );
-
     if( !g_obCassa.isCassaEnabled() )
     {
         QMessageBox::warning( NULL, tr("Attention"),
@@ -435,8 +411,6 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength )
 {
-    cTracer obTrace( "cFrmPanel::setMainProcessTime(uint,stringlist,int)" );
-
     m_vrPatientCard.uiPatientCardId  = p_uiPatientCardId;
     m_vrPatientCard.qslUnitIds       = p_qslUnitIds;
     m_vrPatientCard.inUnitTime       = p_inLength;
@@ -487,8 +461,6 @@ bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int 
 //====================================================================================
 void cFrmPanel::mousePressEvent ( QMouseEvent * p_poEvent )
 {
-    cTracer obTrace( QString("cFrmPanel::mousePressEvent m_uiId-1 [%1]").arg(m_uiId-1) );
-
     emit panelClicked( m_uiId - 1 );
     p_poEvent->ignore();
 }
@@ -554,8 +526,6 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
 //====================================================================================
 void cFrmPanel::load( const unsigned int p_uiPanelId )
 {
-    cTracer obTrace( "cFrmPanel::load" );
-
     m_uiId = p_uiPanelId;
 
     QSqlQuery  *poQuery = NULL;
@@ -609,8 +579,6 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
 //====================================================================================
 void cFrmPanel::reload()
 {
-    cTracer obTrace( "cFrmPanel::reload" );
-
     QSqlQuery  *poQuery = NULL;
     try
     {
@@ -794,8 +762,6 @@ void cFrmPanel::formatInfoString( QString p_qsInfoText )
 //====================================================================================
 void cFrmPanel::activateNextStatus()
 {
-    cTracer obTrace( "cFrmPanel::activateNextStatus" );
-
     if( m_uiStatus == 0 )
     {
         // Gep hasznalat inditas
@@ -840,8 +806,6 @@ void cFrmPanel::activateNextStatus()
 //====================================================================================
 void cFrmPanel::cashPayed( const unsigned int p_uiLedgerId )
 {
-    cTracer obTrace( "cFrmPanel::cashPayed" );
-
     m_inCashToPay           = 0;
     m_inCashNetToPay        = 0;
     m_inCashDiscountToPay   = 0;
@@ -861,8 +825,6 @@ bool cFrmPanel::isMainProcess()
 //====================================================================================
 void cFrmPanel::closeAttendance()
 {
-    cTracer obTrace( "cFrmPanel::closeAttendance" );
-
     m_pDBLedgerDevice->setTimeLeft( m_inMainProcessLength );
     m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()-m_inMainProcessLength );
     if( m_inMainProcessLength > 0 )
@@ -1004,8 +966,6 @@ bool cFrmPanel::isCanBeStartedByCard()
 //====================================================================================
 void cFrmPanel::setPaymentMethod( const unsigned int p_uiPaymentMethodId )
 {
-    cTracer obTrace( "cFrmPanel::setPaymentMethod" );
-
     m_uiPaymentMethodId = p_uiPaymentMethodId;
     m_pDBLedgerDevice->setPaymentMethod( m_uiPaymentMethodId );
 }
@@ -1017,16 +977,12 @@ bool cFrmPanel::isItemInShoppingCart()
 //====================================================================================
 void cFrmPanel::itemAddedToShoppingCart()
 {
-    cTracer obTrace( "cFrmPanel::itemAddedToShoppingCart" );
-
     m_bIsItemInShoppingCart = true;
     icoShoppingCart->setVisible( true );
 }
 //====================================================================================
 void cFrmPanel::itemRemovedFromShoppingCart()
 {
-    cTracer obTrace( "cFrmPanel::itemRemovedFromShoppingCart" );
-
     m_bIsItemInShoppingCart = false;
     icoShoppingCart->setVisible( false );
 }

@@ -13,7 +13,7 @@
 // Alkalmazas fo allomanya.
 //====================================================================================
 
-#define APPLICATION_VERSION_NUMBER  "1.0"
+#define APPLICATION_VERSION_NUMBER  "1.3.0"
 
 //====================================================================================
 
@@ -65,7 +65,7 @@ cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
 cGibbig                 *g_poGibbig;
 
-// 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
+// 'TO BE SOLVED' felirat, ahol mÃ©g valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
 // cTracer obTrace( "" );
 

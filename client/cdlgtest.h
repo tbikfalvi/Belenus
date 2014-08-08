@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pbCalculate_clicked();
 
+    void on_pbImageClick_clicked();
+
 private:
     Ui::cDlgTest *ui;
 };

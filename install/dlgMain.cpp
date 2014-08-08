@@ -21,6 +21,7 @@
 #include <QCloseEvent>
 #include <QProcess>
 #include <QDir>
+#include <QCryptographicHash>
 
 //=======================================================================================
 
@@ -29,7 +30,7 @@
 #include "../client/communication_serial.h"
 
 //=======================================================================================
-dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
+dlgMain::dlgMain(QWidget *parent, bool bUninstall, bool bSilent) : QDialog(parent)
 //=======================================================================================
 {
     setupUi(this);
@@ -62,11 +63,20 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall) : QDialog(parent)
 
     // Initialize GUI components
     cmbLanguage->addItem( "Magyar (hu)" );
-    cmbLanguage->addItem( "English (us)" );
+    cmbLanguage->addItem( "English (en)" );
+
+    m_bSilentIstallCalled = bSilent;
+
+    if( m_bSilentIstallCalled )
+    {
+        _logProcess( "Silent install called" );
+    }
 
     // If application called with uninstall flag, start uninstall process
     if( bUninstall )
         _uninstallBelenus();
+    else if( m_bSilentIstallCalled )
+        m_nTimer = startTimer( 500 );
 }
 //=======================================================================================
 dlgMain::~dlgMain()
@@ -513,6 +523,10 @@ bool dlgMain::_processPage( int p_nPage )
 
     switch( p_nPage )
     {
+        case CONST_PAGE_WELCOME:
+            bRet = _processWelcomePage();
+            break;
+
         case CONST_PAGE_INSTALL_SELECTION:
             bRet = _processSelectionPage();
             break;
@@ -583,6 +597,9 @@ void dlgMain::_initializeWelcomePage()
 {
     if( m_bUninstallCalled )
     {
+        lblSetup1->setVisible( false );
+        ledSetupSystemPass->setVisible( false );
+        ledSetupSystemPass->setEnabled( false );
         //on_cmbLanguage_currentIndexChanged( cmbLanguage->findText( QString("(%1)").arg(m_qsLanguage) ) );
         pbCancel->setEnabled( false );
         pbNext->setEnabled( false );
@@ -603,9 +620,23 @@ void dlgMain::_initializeWelcomePage()
             QDialog::accept();
         }
     }
+    if( m_bSilentIstallCalled )
+    {
+        _logProcess( "Restructure pages for silent install" );
+        lblSetup1->setVisible( false );
+        ledSetupSystemPass->setVisible( false );
+        ledSetupSystemPass->setEnabled( false );
+        m_vPages.clear();
+        m_vPages.append( CONST_PAGE_WELCOME );
+        m_vPages.append( CONST_PAGE_WAMP_INSTALL );
+        m_vPages.append( CONST_PAGE_PROCESS );
+        m_vPages.append( CONST_PAGE_FINISH );
+        m_nCountDevices = 3;
+        m_bDemoMode = true;
+    }
 }
 //=======================================================================================
-void dlgMain::on_cmbLanguage_currentIndexChanged(int index)
+void dlgMain::on_cmbLanguage_currentIndexChanged(int /*index*/)
 //=======================================================================================
 {
     if( !m_bUninstallCalled )
@@ -631,6 +662,30 @@ void dlgMain::on_cmbLanguage_currentIndexChanged(int index)
     }
 
     retranslateUi( this );
+}
+//=======================================================================================
+bool dlgMain::_processWelcomePage()
+//=======================================================================================
+{
+    if( m_bSilentIstallCalled || m_bUninstallCalled )
+        return true;
+
+    bool bRet = false;
+    QByteArray  obPwdHash = QCryptographicHash::hash( ledSetupSystemPass->text().toAscii(), QCryptographicHash::Sha1 );
+
+    if( QString( obPwdHash.toHex() ).compare( "a382329cfe97ae74677649d1f7fc03986b27cf3f" ) == 0 )
+    {
+        bRet = true;
+    }
+    else
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("The password you entered is not correct.\n"
+                                 "Please retype the password or contact \n"
+                                 "your KiwiSun franchise provider.") );
+    }
+
+    return bRet;
 }
 //=======================================================================================
 //
@@ -930,6 +985,11 @@ void dlgMain::_initializeWampInstallPage()
 
         rbWin32->setChecked( m_bIsWindows32Bit );
         pbStartWampInstall->setEnabled( true );
+
+        if( m_bSilentIstallCalled )
+        {
+            on_pbStartWampInstall_clicked();
+        }
     }
 }
 //=======================================================================================
@@ -950,7 +1010,16 @@ void dlgMain::_installWampServer()
     {
         _logProcess( QString(" SUCCEEDED") );
         m_bInitializeWamp = true;
-        m_nTimer = startTimer( 1000 );
+        int nTimerLength = 1000;
+
+        QMessageBox::information( this, tr("Attention"),
+                                  tr("Please make sure the WampServer icon appeared on taskbar\n"
+                                     "and it's color is green.\n"
+                                     "This grants that the database server is up and running\n"
+                                     "and the installer is ready to continue it's process\n\n"
+                                     "Click OK button to continue.") );
+
+        m_nTimer = startTimer( nTimerLength );
     }
     else
     {
@@ -997,6 +1066,13 @@ bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
 
         hide();
 
+        QString qsSilent = "";
+
+        if( m_bSilentIstallCalled )
+        {
+            qsSilent = "/SILENT";
+        }
+
         QProcess *qpRedist = new QProcess();
         if( qpRedist->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsRedistPack) ) )
             nRet = 3;
@@ -1005,9 +1081,23 @@ bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
         _logProcess( QString("Execute %1\\%2").arg(qsProcessPath).arg(qsWampServer) );
 
         QProcess *qpWamp = new QProcess();
-        if( qpWamp->execute( QString("%1\\%2").arg(qsProcessPath).arg(qsWampServer) ) )
+        if( qpWamp->execute( QString("%1\\%2 %3").arg(qsProcessPath).arg(qsWampServer).arg(qsSilent) ) )
             nRet = 4;
         delete qpWamp;
+
+        if( m_bSilentIstallCalled )
+        {
+            _logProcess( QString("Execute C:\\wamp\\wampmanager.exe") );
+
+            QProcess *qpWampServer = new QProcess();
+            if( qpWampServer->startDetached( "C:\\wamp\\wampmanager.exe" ) )
+                nRet = 5;
+            delete qpWampServer;
+
+            _logProcess( QString("C:\\wamp\\wampmanager.exe started") );
+        }
+
+        _logProcess( QString("Continue ...") );
 
         show();
         QApplication::processEvents();
@@ -1051,6 +1141,12 @@ bool dlgMain::_processWampServerInstall( QString *p_qsMessage )
         {
             _logProcess( "Installing Wamp Server application failed.\n" );
             *p_qsMessage = QString( "Installing Wamp Server application failed." );
+            break;
+        }
+        case 5:
+        {
+            _logProcess( "Starting Wamp Server application failed.\n" );
+            *p_qsMessage = QString( "Starting Wamp Server application failed." );
             break;
         }
         default:
@@ -2093,7 +2189,7 @@ bool dlgMain::_processClientInstall()
     _logProcess( QString("Start Client install") );
     if( qdInstallDir.exists() )
     {
-        if( QMessageBox::warning( this, tr("Attention"),
+        /*if( QMessageBox::warning( this, tr("Attention"),
                                   tr("The Belenus Application systems target directory already exits.\n"
                                      "%1\n"
                                      "All the files will be deleted or overwritten.\n\n"
@@ -2103,7 +2199,7 @@ bool dlgMain::_processClientInstall()
             _logProcess( QString("Belenus target directory exists. User cancelled client install.") );
             pbCancel->setEnabled( true );
             return true;
-        }
+        }*/
         if( !_emptyTargetDirectory( m_qsClientInstallDir ) )
         {
             _logProcess( QString("Belenus target directory exists. Empty directory failed.") );
@@ -2119,6 +2215,7 @@ bool dlgMain::_processClientInstall()
         !_createTargetDirectory( QString("%1\\docs").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\lang").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\sql").arg(m_qsClientInstallDir) ) ||
+        !_createTargetDirectory( QString("%1\\sqldrivers").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\resources").arg(m_qsClientInstallDir) ))
     {
         _logProcess( QString(" FAIL") );
@@ -2267,7 +2364,7 @@ void dlgMain::_initializeFinishPage()
     }
 }
 //=======================================================================================
-void dlgMain::on_cmbCOMPorts_currentIndexChanged(int index)
+void dlgMain::on_cmbCOMPorts_currentIndexChanged(int /*index*/)
 //=======================================================================================
 {
     if( cmbCOMPorts->currentIndex() )
@@ -2375,8 +2472,8 @@ void dlgMain::_refreshPages()
         m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
         if( m_bProcessWamp)
             m_vPages.append( CONST_PAGE_WAMP_INSTALL );
-        if( m_bProcessDatabase )
-            m_vPages.append( CONST_PAGE_INIT_SQL );
+//        if( m_bProcessDatabase )
+//            m_vPages.append( CONST_PAGE_INIT_SQL );
         if( m_bProcessHWConnection )
             m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
         if( m_bProcessBelenusClient )
@@ -2385,8 +2482,8 @@ void dlgMain::_refreshPages()
     else if( m_pInstallType == rbUpdate )
     {
 //        m_vPages.append( CONST_PAGE_COMPONENT_SELECTION );
-        if( m_bProcessDatabase )
-            m_vPages.append( CONST_PAGE_INIT_SQL );
+//        if( m_bProcessDatabase )
+//            m_vPages.append( CONST_PAGE_INIT_SQL );
         if( m_bProcessHWConnection )
             m_vPages.append( CONST_PAGE_HARDWARE_INSTALL );
         if( m_bProcessBelenusClient )
@@ -2397,7 +2494,7 @@ void dlgMain::_refreshPages()
     m_vPages.append( CONST_PAGE_FINISH );
 }
 //=======================================================================================
-bool dlgMain::_isRegStringMatch( QString p_qsPath, QString p_qsKey, QString p_qsValue )
+bool dlgMain::_isRegStringMatch( QString /*p_qsPath*/, QString /*p_qsKey*/, QString /*p_qsValue*/ )
 //=======================================================================================
 {
     bool        bRet = false;
@@ -2634,7 +2731,7 @@ bool dlgMain::_createFolderShortcut()
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayName"), tr("Belenus Application System") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayVersion"), QString("1.0.0.0") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("InstallLocation"), m_qsClientInstallDir );
-    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
+    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony MultimÃ©dia StÃºdiÃ³ Bt.") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
 

@@ -47,6 +47,9 @@ cDlgPatientCardSell::cDlgPatientCardSell( QWidget *p_poParent, cDBPatientCard *p
     pbSelectPatient->setIcon( QIcon("./resources/40x40_search.png") );
     pbCreatePatient->setIcon( QIcon("./resources/40x40_patient_new.png") );
 
+    deValidDateFrom->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+    deValidDateTo->setDisplayFormat( g_poPrefs->getDateFormat().replace("-",".") );
+
     if( m_poPatientCard )
     {
         QSqlQuery *poQuery;
@@ -441,6 +444,8 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBShoppingCart.setComment( qslUnitIds.join("#") );
                 obDBShoppingCart.save();
             }
+
+            m_poPatientCard->sendDataToGibbig( cGibbigAction::GA_PCREGISTER );
 
             QDialog::accept();
 

@@ -1,6 +1,6 @@
 #ifndef CREPORT_H
 #define CREPORT_H
-
+/*
 #include <QWidget>
 #include <QTextEdit>
 #include <QVBoxLayout>
@@ -10,6 +10,9 @@
 #include <QDate>
 #include <QSqlQuery>
 #include <QPrinter>
+*/
+
+#include <QtGui>
 
 #include "dlgprogress.h"
 

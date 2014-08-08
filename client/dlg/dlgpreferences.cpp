@@ -20,8 +20,13 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     setupUi( this );
 
+    m_nTimer        = 0;
+    m_dlgProgress   = new cDlgProgress( this );
+
     setWindowTitle( tr( "Preferences" ) );
     setWindowIcon( QIcon("./resources/40x40_settings.png") );
+
+    pbTestGibbig->setIcon( QIcon("./resources/40x40_check_connection.png") );
 
     QPoint  qpDlgSize = g_poPrefs->getDialogSize( "EditPreferences", QPoint(460,410) );
     resize( qpDlgSize.x(), qpDlgSize.y() );
@@ -52,12 +57,17 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         int inPos = obLangCodeRegExp.indexIn( obLangFiles[i] );
         if( inPos != -1 ) obLangCodes << obLangCodeRegExp.cap( 1 );
     }
-    //obLangCodes << "uk";
+    obLangCodes << "en";
     obLangCodes.sort();
     cmbAppLang->addItems( obLangCodes );
     m_inLangIdx = cmbAppLang->findText( g_poPrefs->getLang() );
     //if( m_inLangIdx == -1 ) m_inLangIdx = cmbAppLang->findText( "uk" );
     cmbAppLang->setCurrentIndex( m_inLangIdx );
+
+    cmbDateFormat->setCurrentIndex(-1);
+    int nDateFormatIndex = cmbDateFormat->findText( g_poPrefs->getDateFormat() );
+    if( nDateFormatIndex < 1 ) nDateFormatIndex = 0;
+    cmbDateFormat->setCurrentIndex( nDateFormatIndex );
 
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"ABOUT_INFO_LINK\" " ) );
     poQuery->first();
@@ -144,8 +154,10 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     ledGibbigName->setText( g_poPrefs->getGibbigName() );
     ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
 
-    chkEnableGibbig->setEnabled( false );
     chkEnableGibbig->setChecked( g_poPrefs->isGibbigEnabled() );
+    pbTestGibbig->setEnabled( g_poPrefs->isGibbigEnabled() );
+    sbGibbigWaitTime->setEnabled( g_poPrefs->isGibbigEnabled() );
+    sbGibbigWaitTime->setValue( g_poPrefs->getGibbigMessageWaitTime() );
 
     gbDBSynchron->setVisible( false );
 
@@ -200,11 +212,32 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkFriday->setChecked( qsBackupDays.contains(tr("Fri"), Qt::CaseInsensitive) );
     chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
+
+chkEnableGibbig->setEnabled( false );
+pbTestGibbig->setEnabled( false );
+sbGibbigWaitTime->setEnabled( false );
 }
 
 cDlgPreferences::~cDlgPreferences()
 {
+    delete m_dlgProgress;
+
     g_poPrefs->setDialogSize( "EditPreferences", QPoint( width(), height() ) );
+}
+
+void cDlgPreferences::timerEvent(QTimerEvent *)
+{
+    killTimer( m_nTimer );
+    m_nTimer = 0;
+
+    setCursor( Qt::ArrowCursor);
+
+    if( g_poGibbig->gibbigIsErrorOccured() )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Authentication with server failed.\n"
+                                 "Please check your server and user settings.") );
+    }
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -263,6 +296,50 @@ void cDlgPreferences::accept()
                               tr("Decimal symbol and Digit grouping symbol can not be the same.") );
         return;
     }
+    if( spbBarcodeLen->value() != g_poPrefs->getBarcodeLength() )
+    {
+        if( spbBarcodeLen->value() > g_poPrefs->getBarcodeLength() &&
+            QMessageBox::question( this, tr("Question"),
+                                   tr("Are you sure want to increase the length of the barcode of the patientcard?\n\n"
+                                      "Please note that the barcodes will be supplemented with additional "
+                                      "'0' characters at the beginning of the barcode for every patientcards, "
+                                      "where the barcode is shorter than %1 characters.").arg( spbBarcodeLen->value() ),
+                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+        {
+            g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+            _increasePatientCardBarcodes();
+        }
+        else if( spbBarcodeLen->value() < g_poPrefs->getBarcodeLength() )
+        {
+            int nRet = g_obGen.customMsgBox( this, cGeneral::MSG_WARNING,
+                                          tr(" Cut the beginning | Cut the end | Abort  "),
+                                          tr("Are you sure you want to decrease the length of the barcode "
+                                             "of the patientcard?\n\n"
+                                             "Please note that all of the patientcards will be affected"
+                                             "where the length of the barcode is longer than %1 characters").arg( spbBarcodeLen->value() ),
+                                          tr("If you select 'Cut the beginning' the first %1 characters will "
+                                             "be removed from the beginning of the barcode\n"
+                                             "If you select 'Cut the end' the last %1 characters will"
+                                             "be removed at the end of the barcode").arg( g_poPrefs->getBarcodeLength()-spbBarcodeLen->value() ) );
+            switch( nRet )
+            {
+                case 1:
+                {
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    _decreasePatientCardBarcodes( true );
+                    break;
+                }
+                case 2:
+                {
+                    g_poPrefs->setBarcodeLength( spbBarcodeLen->value(), true );
+                    _decreasePatientCardBarcodes( false );
+                    break;
+                }
+                default:
+                    return;
+            }
+        }
+    }
 
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
@@ -273,9 +350,11 @@ void cDlgPreferences::accept()
     if( m_inLangIdx != cmbAppLang->currentIndex() )
     {
         g_obGen.setApplicationLanguage( cmbAppLang->currentText() );
+        _updateDatabaseLanguage();
 //        QMessageBox::information( this, tr( "Information" ),
 //                                  tr( "Some of the changes you made will only be applied after the application is restarted." ) );
     }
+
 
     g_poPrefs->setPanelsPerRow( spbPanels->value() );
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
@@ -320,6 +399,7 @@ void cDlgPreferences::accept()
     g_poPrefs->setGibbigName( ledGibbigName->text() );
     g_poPrefs->setGibbigPassword( ledGibbigPassword->text() );
     g_poPrefs->setGibbigEnabled( chkEnableGibbig->isChecked() );
+    g_poPrefs->setGibbigMessageWaitTime( sbGibbigWaitTime->value() );
 
     if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
     {
@@ -348,6 +428,8 @@ void cDlgPreferences::accept()
     if( chkSunday->isChecked() )    qsBackupDays.append( tr(" Sun") );
 
     g_poPrefs->setBackupDatabaseDays( qsBackupDays );
+
+    g_poPrefs->setDateFormat( cmbDateFormat->currentText() );
 
     g_poPrefs->save();
 
@@ -390,14 +472,14 @@ void cDlgPreferences::on_btnSecondaryBackground_clicked()
     btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
 }
 
-void cDlgPreferences::on_ledPCLostPrice_textChanged(const QString &arg1)
+void cDlgPreferences::on_ledPCLostPrice_textChanged(const QString& /*arg1*/)
 {
     cCurrency currPrice( ledPCLostPrice->text(), cCurrency::CURR_GROSS, ledPCLostVatpercent->text().toInt() );
 
     lblPCLostPriceFull->setText( tr("(%1 + %2 \% VAT)").arg(currPrice.currencyStringSeparator( cCurrency::CURR_NET)).arg(ledPCLostVatpercent->text()) );
 }
 
-void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &arg1)
+void cDlgPreferences::on_ledPCPartnerPrice_textChanged(const QString &/*arg1*/)
 {
     cCurrency currPrice( ledPCPartnerPrice->text(), cCurrency::CURR_GROSS, ledPCPartnerVatpercent->text().toInt() );
 
@@ -453,4 +535,131 @@ void cDlgPreferences::on_pbBackupLocation_clicked()
     {
         ledBackupLocation->setText( qsDir );
     }
+}
+
+void cDlgPreferences::_updateDatabaseLanguage()
+{
+    g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=0 ").arg( tr("Not defined") ) );
+    g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=1 ").arg( tr("Younger than 18") ) );
+    g_poDB->executeQTQuery( QString("UPDATE agetypes SET ageTypeName=\"%1\" WHERE ageTypeId=7 ").arg( tr("Above 60") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=0 ").arg( tr("Not defined") ) );
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=1 ").arg( tr("Male") ) );
+    g_poDB->executeQTQuery( QString("UPDATE genders SET genderName=\"%1\" WHERE genderId=2 ").arg( tr("Female") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE skinTypes SET skinTypeName=\"%1\" WHERE skinTypeId=0 ").arg( tr("Not defined") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE patientCardTypes SET name=\"%1\" WHERE patientCardTypeId=1 ").arg( tr("Service cards") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE patientCards SET comment=\"%1\" WHERE patientCardId=1 ").arg( tr("Service card, only for service usage.") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE panelgroups SET name=\"%1\" WHERE panelGroupId=0 ").arg( tr("<No group associated>") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=1 ").arg( tr("Using solarium") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=2 ").arg( tr("Selling patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=3 ").arg( tr("Filling patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=4 ").arg( tr("Selling product") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=5 ").arg( tr("Replacing lost patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=6 ").arg( tr("Assign patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=7 ").arg( tr("Other") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=8 ").arg( tr("Other") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=9 ").arg( tr("Storage action") ) );
+    g_poDB->executeQTQuery( QString("UPDATE ledgerTypes SET name=\"%1\" WHERE ledgerTypeId=10 ").arg( tr("Casssa expense") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE productactiontype SET name=\"%1\" WHERE productActionTypeId=1 ").arg( tr("Add product to storage") ) );
+    g_poDB->executeQTQuery( QString("UPDATE productactiontype SET name=\"%1\" WHERE productActionTypeId=2 ").arg( tr("Product disposal") ) );
+    g_poDB->executeQTQuery( QString("UPDATE productactiontype SET name=\"%1\" WHERE productActionTypeId=3 ").arg( tr("Product donate") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE paymentMethods SET name=\"%1\" WHERE paymentMethodId=1 ").arg( tr("Cash") ) );
+    g_poDB->executeQTQuery( QString("UPDATE paymentMethods SET name=\"%1\" WHERE paymentMethodId=2 ").arg( tr("Credit card") ) );
+
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=1 ").arg( tr("Guest entered into database") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=2 ").arg( tr("Purchase patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=3 ").arg( tr("Refill patientcard") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=4 ").arg( tr("Purchase product") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=5 ").arg( tr("Using device with card") ) );
+    g_poDB->executeQTQuery( QString("UPDATE patienthistorytype SET name=\"%1\" WHERE patientHistoryTypeId=6 ").arg( tr("Using device with cash") ) );
+}
+
+void cDlgPreferences::on_cmbDateFormat_currentIndexChanged(const QString &arg1)
+{
+    lblDateFormatExample->setText( tr( "(example %1)" ).arg( QDate::currentDate().toString(arg1) ) );
+}
+
+void cDlgPreferences::_increasePatientCardBarcodes()
+{
+    m_dlgProgress->showProgressBar( 10000 );
+    m_dlgProgress->showProgress();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>1 AND LENGTH(barcode)<%1" ).arg( g_poPrefs->getBarcodeLength() ) );
+
+    m_dlgProgress->setMax( poQuery->size() );
+
+    while( poQuery->next() )
+    {
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( poQuery->value(0).toUInt() );
+
+        QString qsBarcode = obDBPatientCard.barcode();
+
+        while( qsBarcode.length() < g_poPrefs->getBarcodeLength() )
+        {
+            qsBarcode = QString( "0%1" ).arg(qsBarcode);
+        }
+
+        obDBPatientCard.setBarcode( qsBarcode );
+        obDBPatientCard.save();
+
+        m_dlgProgress->stepProgressBar();
+    }
+    m_dlgProgress->hideProgress();
+}
+
+void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
+{
+    m_dlgProgress->showProgressBar( 10000 );
+    m_dlgProgress->showProgress();
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>1 AND LENGTH(barcode)>%1" ).arg( g_poPrefs->getBarcodeLength() ) );
+
+    m_dlgProgress->setMax( poQuery->size() );
+
+    while( poQuery->next() )
+    {
+        cDBPatientCard  obDBPatientCard;
+
+        obDBPatientCard.load( poQuery->value(0).toUInt() );
+
+        QString qsBarcode;
+
+        if( p_bCutBegin )
+        {
+            qsBarcode = obDBPatientCard.barcode().right( g_poPrefs->getBarcodeLength() );
+        }
+        else
+        {
+            qsBarcode = obDBPatientCard.barcode().left( g_poPrefs->getBarcodeLength() );
+        }
+
+        obDBPatientCard.setBarcode( qsBarcode );
+        obDBPatientCard.save();
+
+        m_dlgProgress->stepProgressBar();
+    }
+    m_dlgProgress->hideProgress();
+}
+
+void cDlgPreferences::on_pbTestGibbig_clicked()
+{
+    g_poGibbig->gibbigAuthenticate();
+    setCursor( Qt::WaitCursor);
+
+    m_nTimer = startTimer( 5000 );
+}
+
+void cDlgPreferences::on_chkEnableGibbig_clicked(bool checked)
+{
+    pbTestGibbig->setEnabled( checked );
+    sbGibbigWaitTime->setEnabled( checked );
 }
