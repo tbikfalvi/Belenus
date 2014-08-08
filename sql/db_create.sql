@@ -860,3 +860,23 @@ CREATE TABLE `cassaHistory` (
   FOREIGN KEY (`patientId`) REFERENCES `patients` (`patientId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- -----------------------------------------------------------------------------------
+-- Masodlagos monitoron megjeleno, reklamokat - slide show - es fix kepeket tartalmazo
+-- nem modal ablakok tartalmat meghatarozo tabla
+-- Minden egyes bejegyzes egy ablakot ir le
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `advertisements` (
+  `advertisementId`     	int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `name`                	varchar(100)            NOT NULL,
+  `caption`					varchar(100)			NOT NULL,
+  `path`					text					NOT NULL,
+  `fileNames`				text					NOT NULL,
+  `timer`					int(10) unsigned		NOT NULL DEFAULT 0,
+  `modified`                datetime                NOT NULL,
+  `active`                  tinyint(1)              DEFAULT 0,
+  `archive`                 varchar(10)             NOT NULL,
+  PRIMARY KEY (`advertisementId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
