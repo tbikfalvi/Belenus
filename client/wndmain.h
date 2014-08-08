@@ -167,6 +167,7 @@ private slots:
     void on_GibbigActionFinished( QString p_qsInfo );
     void on_GibbigMessageArrived(QString p_qsMessage);
     void on_GibbigIconClicked();
+    void on_GibbigPatientCardUpdate(QString p_qsMessage,QString p_qsId);
 };
 
 #endif
