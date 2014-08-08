@@ -320,7 +320,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
     g_poGibbig->setTimeout( 10000 );
 
-//m_pbStatusGibbig.setEnabled( false );
+m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
