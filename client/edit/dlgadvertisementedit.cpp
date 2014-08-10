@@ -12,7 +12,7 @@ cDlgAdvertisementEdit::cDlgAdvertisementEdit(QWidget *p_poParent,
 {
     setupUi( this );
 
-    setWindowTitle( tr( "Adwertisement" ) );
+    setWindowTitle( tr( "Advertisement" ) );
     setWindowIcon( QIcon("./resources/40x40_advertisement.png") );
 
     QPushButton  *poBtnSave = new QPushButton( tr( "&Save" ) );
