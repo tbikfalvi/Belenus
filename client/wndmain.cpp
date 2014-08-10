@@ -326,6 +326,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setTimeout( 10000 );
 
     showAdWindows();
+
+m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
