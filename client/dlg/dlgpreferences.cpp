@@ -212,10 +212,6 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkFriday->setChecked( qsBackupDays.contains(tr("Fri"), Qt::CaseInsensitive) );
     chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
-
-chkEnableGibbig->setEnabled( false );
-pbTestGibbig->setEnabled( false );
-sbGibbigWaitTime->setEnabled( false );
 }
 
 cDlgPreferences::~cDlgPreferences()
