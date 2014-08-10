@@ -2,6 +2,7 @@
 #define WNDMAIN_H
 
 #include <QString>
+#include <vector>
 
 #include "ui_wndmain.h"
 #include "mdipanels.h"
@@ -76,7 +77,7 @@ private:
     int                      m_nProgressCounter;
     bool                     m_bGibbigConnected;
 
-    cDlgAdvertisementWindow *m_dlgAdWnd;
+    vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );

@@ -3036,10 +3036,15 @@ void cWndMain::on_GibbigIconClicked()
 
 void cWndMain::showAdWindows()
 {
-    m_dlgAdWnd = new cDlgAdvertisementWindow( this, 1 );
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT advertisementId FROM advertisements WHERE active=1" ) );
 
-    m_dlgAdWnd->show();
+    while( poQuery->next() )
+    {
+        cDlgAdvertisementWindow *poAdWnd = new cDlgAdvertisementWindow( this, poQuery->value(0).toUInt() );
 
+        m_obAdWnd.push_back( poAdWnd );
+        poAdWnd->show();
+    }
     this->setFocus();
 }
 
@@ -3048,4 +3053,7 @@ void cWndMain::on_action_Advertisements_triggered()
     cDlgAdvertisements  obDlgAdvertisements(this);
 
     obDlgAdvertisements.exec();
+
+    QMessageBox::warning( this, tr("Attention"),
+                          tr("Please note that you should restart the application for the modifications to take effect."));
 }

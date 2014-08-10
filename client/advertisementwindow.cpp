@@ -1,5 +1,7 @@
 
 #include "advertisementwindow.h"
+#include "edit/dlgadvertisementedit.h"
+#include "db/dbadvertisements.h"
 
 cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int id) : QDialog(parent)
 {
@@ -121,23 +123,41 @@ void cDlgAdvertisementWindow::on_pbStop_clicked()
 
 void cDlgAdvertisementWindow::on_pbRefresh_clicked()
 {
+    unsigned int id = m_obAdvertisement.id();
 
+    m_obAdvertisement.createNew();
+    m_obAdvertisement.load( id );
+
+    setWindowTitle( m_obAdvertisement.caption() );
+    refreshBackground();
+
+    m_qslImages = m_obAdvertisement.filenames().split("#");
+
+    _loadImage();
 }
 
 void cDlgAdvertisementWindow::on_pbSettings_clicked()
 {
+    cDlgAdvertisementEdit  obDlgEdit( this, &m_obAdvertisement, false );
 
+    if( obDlgEdit.exec() == QDialog::Accepted )
+    {
+        on_pbRefresh_clicked();
+    }
 }
 
 void cDlgAdvertisementWindow::_showButtonPanel()
 {
-    if( m_bPanelVisible )
+    if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
     {
-        m_bPanelVisible = false;
+        if( m_bPanelVisible )
+        {
+            m_bPanelVisible = false;
+        }
+        else
+        {
+            m_bPanelVisible = true;
+        }
+        frmButtons->setVisible( m_bPanelVisible );
     }
-    else
-    {
-        m_bPanelVisible = true;
-    }
-    frmButtons->setVisible( m_bPanelVisible );
 }
