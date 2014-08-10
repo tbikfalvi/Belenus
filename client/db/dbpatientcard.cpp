@@ -572,11 +572,18 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
 
 void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionType) throw()
 {
-    QString      qsQuery = QString( "SELECT COUNT(active), gibbigId, unitTime, validDateTo  "
-                                    "FROM `patientcardunits` WHERE "
-                                    "patientcardid=%1 AND "
-                                    "active=1 "
-                                    "GROUP BY unitTime, validDateTo " ).arg( id() );
+    QString      qsQuery = "";
+
+    qsQuery.append( "SELECT COUNT(active), gibbigId, unitTime, validDateTo " );
+    qsQuery.append( "FROM patientcardunits WHERE " );
+    qsQuery.append( QString("patientcardid=%1 AND ").arg(id()) );
+    if( p_teActionType == cGibbigAction::GA_PCREGISTER ||
+        p_teActionType == cGibbigAction::GA_PCREFILL )
+    {
+        qsQuery.append( "gibbigId=0 AND " );
+    }
+    qsQuery.append( "active=1 " );
+    qsQuery.append( "GROUP BY unitTime, validDateTo " );
     QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
     QStringList  qslUnits;
 
@@ -613,4 +620,14 @@ void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionTy
         default:
             break;
     }
+}
+
+void cDBPatientCard::updateGibbigId(const QString &p_qsId) throw()
+{
+    QString      qsQuery = "";
+
+    qsQuery.append( QString("UPDATE patientcardunits SET gibbigId=%1 WHERE ").arg( p_qsId ) );
+    qsQuery.append( QString("gibbigId=0 AND patientcardid=%1 AND active=1 ").arg(id()) );
+
+    g_poDB->executeQTQuery( qsQuery );
 }

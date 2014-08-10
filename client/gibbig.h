@@ -102,6 +102,7 @@ signals:
     void    signalErrorOccured();
     void    signalActionProcessed( QString p_qsInfo );
     void    signalDebugMessage(QString p_qsMessage);
+    void    signalUpdatePatientCard(QString p_qsPatientCard,QString p_qsGibbigId);
 
 private:
 

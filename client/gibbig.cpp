@@ -444,7 +444,16 @@ void cGibbig::_processMessage()
             m_qslResponseIds.clear();
             if( _getResult() && m_uiMessageId > 0 )
             {
-                g_poDB->executeQTQuery( QString("UPDATE gibbigmessages SET archive='MOD' "
+                if( m_teGibbigAction == cGibbigAction::GA_PCREGISTER ||
+                    m_teGibbigAction == cGibbigAction::GA_PCREFILL )
+                {
+                    QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT gibbigMessage FROM gibbigmessages "
+                                                                         "WHERE gibbigMessageId=%1 " )
+                                                                         .arg( m_uiMessageId ) );
+                    poQuery->first();
+                    emit signalUpdatePatientCard( poQuery->value(0).toString(), m_qslResponseIds.at(0) );
+                }
+                g_poDB->executeQTQuery( QString("UPDATE gibbigmessages SET archive='ARC' "
                                                 "WHERE gibbigMessageId=%1 " )
                                                 .arg( m_uiMessageId ) );
                 emit signalActionProcessed( QString( "%1 SUCCEEDED" ).arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
@@ -706,6 +715,11 @@ bool cGibbig::_getResult()
         {
             bRet = true;
             m_qslResponseIds << _getResponseId( qslResults.at(i) );
+        }
+        else
+        {
+            bRet = false;
+            break;
         }
     }
 

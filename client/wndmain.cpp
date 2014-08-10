@@ -315,9 +315,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     g_poGibbig = new cGibbig();
 
-    connect( g_poGibbig, SIGNAL(signalErrorOccured()), this, SLOT(on_GibbigErrorOccured()) );
-    connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)), this, SLOT(on_GibbigActionFinished(QString)) );
-    connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)), this, SLOT(on_GibbigMessageArrived(QString)) );
+    connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
+    connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
+    connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
+    connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
 
     g_poGibbig->setHost( g_poPrefs->getServerAddress() );
     g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
@@ -3056,4 +3057,14 @@ void cWndMain::on_action_Advertisements_triggered()
 
     QMessageBox::warning( this, tr("Attention"),
                           tr("Please note that you should restart the application for the modifications to take effect."));
+}
+
+void cWndMain::on_GibbigPatientCardUpdate(QString p_qsMessage, QString p_qsId)
+{
+    QString qsBarcode = p_qsMessage.split("#").at(0);
+
+    cDBPatientCard  obDBPatientCard;
+
+    obDBPatientCard.load( qsBarcode );
+    obDBPatientCard.updateGibbigId( p_qsId );
 }
