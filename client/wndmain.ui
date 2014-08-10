@@ -119,7 +119,7 @@
      <x>0</x>
      <y>0</y>
      <width>694</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_System">
@@ -171,6 +171,8 @@
      <addaction name="action_ManageSkinTypes"/>
      <addaction name="separator"/>
      <addaction name="action_PaymentMethods"/>
+     <addaction name="separator"/>
+     <addaction name="action_Advertisements"/>
      <addaction name="separator"/>
      <addaction name="action_ValidateSerialKey"/>
      <addaction name="action_EditLicenceInformation"/>
@@ -794,6 +796,14 @@
    </property>
    <property name="toolTip">
     <string>Export data to tab separated text file</string>
+   </property>
+  </action>
+  <action name="action_Advertisements">
+   <property name="text">
+    <string>Advertisement windows</string>
+   </property>
+   <property name="toolTip">
+    <string>Manage advertisement windows</string>
    </property>
   </action>
  </widget>

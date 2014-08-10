@@ -57,7 +57,9 @@ FORMS = ../framework/dlgcrud.ui \
     dlgproductsell.ui \
     dlgchangepcvalidity.ui \
     dlgmanagedatabase.ui \
-    dlgExportImport.ui
+    dlgExportImport.ui \
+    dlgAdvertisement.ui \
+    dlgAdvertisementedit.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -99,6 +101,7 @@ HEADERS = belenus.h \
     crud/dlgdiscount.h \
     crud/dlgstorno.h \
     crud/dlgpaymentmethod.h \
+    crud/dlgadvertisements.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -131,6 +134,7 @@ HEADERS = belenus.h \
     db/dbpaymentmethod.h \
     db/dbpatientcardunits.h \
     db/dbapplicationaction.h \
+    db/dbadvertisements.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -171,6 +175,7 @@ HEADERS = belenus.h \
     edit/dlgpatientcardrefill.h \
     edit/dlgdiscountedit.h \
     edit/dlgpaymentmethodedit.h \
+    edit/dlgadvertisementedit.h \
     report/dlgpreview.h \
     report/reppatientcards.h \
     report/reppatientcardsobs.h \
@@ -195,7 +200,9 @@ HEADERS = belenus.h \
     dsppanel.h \
     licenceManager.h \
     cdlgtest.h \
-    gibbig.h
+    gibbig.h \
+    advertisementwindow.h
+
 SOURCES = main.cpp \
     ../framework/dbconnection.cpp \
     ../framework/dlgcrud.cpp \
@@ -234,6 +241,7 @@ SOURCES = main.cpp \
     crud/dlgdiscount.cpp \
     crud/dlgstorno.cpp \
     crud/dlgpaymentmethod.cpp \
+    crud/dlgadvertisements.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -266,6 +274,7 @@ SOURCES = main.cpp \
     db/dbpaymentmethod.cpp \
     db/dbpatientcardunits.cpp \
     db/dbapplicationaction.cpp \
+    db/dbadvertisements.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -307,6 +316,7 @@ SOURCES = main.cpp \
     edit/dlgpatientcardrefill.cpp \
     edit/dlgdiscountedit.cpp \
     edit/dlgpaymentmethodedit.cpp \
+    edit/dlgadvertisementedit.cpp \
     report/reppatientcards.cpp \
     report/reppatientcardsobs.cpp \
     report/dlgpreview.cpp \
@@ -329,7 +339,8 @@ SOURCES = main.cpp \
     dsppanel.cpp \
     licenceManager.cpp \
     cdlgtest.cpp \
-    gibbig.cpp
+    gibbig.cpp \
+    advertisementwindow.cpp
 
 win32 { 
     HEADERS += communication_serial.h

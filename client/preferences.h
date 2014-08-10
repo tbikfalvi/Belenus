@@ -157,6 +157,8 @@ public:
     void            setPostponedAttendances( const unsigned int p_uiPostponedAttendances );
     void            setDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSize );
     QPoint          getDialogSize( const QString &p_qsDialogName, const QPoint &p_qpDlgSizeDefault ) const;
+    void            setDialogPosition(const QString &p_qsDialogName, const QPoint &p_qpPosition );
+    QPoint          dialogPosition(const QString &p_qsDialogName) const;
 
     void            setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow = false );
     QString         getDirDbBinaries() const;

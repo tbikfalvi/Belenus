@@ -866,13 +866,15 @@ CREATE TABLE `cassaHistory` (
 -- Minden egyes bejegyzes egy ablakot ir le
 -- -----------------------------------------------------------------------------------
 CREATE TABLE `advertisements` (
-  `advertisementId`     	int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `advertisementId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  `name`                	varchar(100)            NOT NULL,
-  `caption`					varchar(100)			NOT NULL,
-  `path`					text					NOT NULL,
-  `fileNames`				text					NOT NULL,
-  `timer`					int(10) unsigned		NOT NULL DEFAULT 0,
+  `name`                    varchar(100)            NOT NULL,
+  `caption`                 varchar(100)            NOT NULL,
+  `backgroundColor`         varchar(10)             NOT NULL,
+  `path`                    text                    NOT NULL,
+  `fileNames`               text                    NOT NULL,
+  `timer`                   int(10) unsigned        NOT NULL DEFAULT 0,
+  `transparent`             tinyint(1)              DEFAULT 0,
   `modified`                datetime                NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,

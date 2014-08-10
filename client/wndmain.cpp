@@ -58,6 +58,7 @@
 #include "crud/dlgpanelgroups.h"
 #include "crud/dlgpanels.h"
 #include "crud/dlgskintypes.h"
+#include "crud/dlgadvertisements.h"
 
 //====================================================================================
 
@@ -203,6 +204,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
         action_PanelStatuses->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
         action_ValidateSerialKey->setIcon( QIcon( "./resources/40x40_key.png" ) );
         action_ManageDatabase->setIcon( QIcon( "./resources/40x40_connect_db.png" ) );
+        action_Advertisements->setIcon( QIcon( "./resources/40x40_advertisement.png" ) );
     action_Preferences->setIcon( QIcon("./resources/40x40_settings.png") );
 
     menuProduct->setIcon( QIcon("./resources/40x40_product.png") );
@@ -280,6 +282,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_ManageDevicePanels->setVisible( false );
     action_ManageDevicePanels->setEnabled( false );
 
+    action_Advertisements->setEnabled( false );
+
     showElementsForComponents();
 
     m_dlgSecondaryWindow = new cDlgSecondaryWindow( this );
@@ -321,6 +325,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setTimeout( 10000 );
 
 m_pbStatusGibbig.setEnabled( false );
+
+    showAdWindows();
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -1121,6 +1127,7 @@ void cWndMain::updateToolbar()
             action_EditLicenceInformation->setEnabled( bIsUserLoggedIn );
             action_EmptyDemoDB->setEnabled( bIsUserLoggedIn );
             action_ManageDevicePanels->setEnabled( !mdiPanels->isPanelWorking() );
+            action_Advertisements->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
         action_Preferences->setEnabled( bIsUserLoggedIn );
 
     menu_Action->setEnabled( bIsUserLoggedIn );
@@ -3027,3 +3034,18 @@ void cWndMain::on_GibbigIconClicked()
     }
 }
 
+void cWndMain::showAdWindows()
+{
+    m_dlgAdWnd = new cDlgAdvertisementWindow( this, 1 );
+
+    m_dlgAdWnd->show();
+
+    this->setFocus();
+}
+
+void cWndMain::on_action_Advertisements_triggered()
+{
+    cDlgAdvertisements  obDlgAdvertisements(this);
+
+    obDlgAdvertisements.exec();
+}

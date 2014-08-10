@@ -1097,6 +1097,25 @@ QPoint cPreferences::getDialogSize( const QString &p_qsDialogName, const QPoint 
     return qpDlgSize;
 }
 
+void cPreferences::setDialogPosition(const QString &p_qsDialogName, const QPoint &p_qpPosition)
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_left" ).arg(p_qsDialogName), p_qpPosition.x() );
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/%1_top" ).arg(p_qsDialogName), p_qpPosition.y() );
+}
+
+QPoint cPreferences::dialogPosition(const QString &p_qsDialogName) const
+{
+    QSettings   obPrefFile( m_qsFileName, QSettings::IniFormat );
+    QPoint      qpDlgPos = QPoint(0,0);
+
+    qpDlgPos.setX( obPrefFile.value( QString::fromAscii( "Dialogs/%1_left" ).arg(p_qsDialogName), 0 ).toInt() );
+    qpDlgPos.setY( obPrefFile.value( QString::fromAscii( "Dialogs/%1_top" ).arg(p_qsDialogName), 0 ).toInt() );
+
+    return qpDlgPos;
+}
+
 void cPreferences::setDirDbBinaries( const QString &p_qsDirDbBinaries, bool p_boSaveNow )
 {
     m_qsDirDbBinaries = p_qsDirDbBinaries;

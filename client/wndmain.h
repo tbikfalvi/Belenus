@@ -10,6 +10,7 @@
 #include "dlg/dlgcassaaction.h"
 #include "dlg/dlgsecondarywindow.h"
 #include "db/dbapplicationaction.h"
+#include "advertisementwindow.h"
 
 using namespace std;
 
@@ -75,6 +76,8 @@ private:
     int                      m_nProgressCounter;
     bool                     m_bGibbigConnected;
 
+    cDlgAdvertisementWindow *m_dlgAdWnd;
+
     void showElementsForComponents();
     void enableElementsByLogin( bool p_bEnable );
     void updateTitle();
@@ -82,6 +85,7 @@ private:
     void processInputPatientCard( QString p_stBarcode );
     void processInputProduct( QString p_stBarcode );
     void processInputTimePeriod( int p_inMinute );
+    void showAdWindows();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );
@@ -167,6 +171,7 @@ private slots:
     void on_GibbigActionFinished( QString p_qsInfo );
     void on_GibbigMessageArrived(QString p_qsMessage);
     void on_GibbigIconClicked();
+    void on_action_Advertisements_triggered();
 };
 
 #endif
