@@ -111,7 +111,6 @@
             <file src="%DOWNLOAD_DIR%/lang/dbbackup_hu.qm" dst="%INSTALL_DIR%/lang/dbbackup_hu.qm" />
             <file src="%DOWNLOAD_DIR%/lang/dbtool_hu.qm" dst="%INSTALL_DIR%/lang/dbtool_hu.qm" />
             <file src="%DOWNLOAD_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
-            <file src="%DOWNLOAD_DIR%/lang/setup_hu.qm" dst="%INSTALL_DIR%/lang/setup_hu.qm" />
             <file src="%DOWNLOAD_DIR%/lang/starter_hu.qm" dst="%INSTALL_DIR%/lang/starter_hu.qm" />
 
             <file src="%DOWNLOAD_DIR%/resources/20x20_gibbig_off.png" dst="%INSTALL_DIR%/resources/20x20_gibbig_off.png" />
@@ -142,6 +141,54 @@
         <execute>
 
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_3.sql"' />
+
+        </execute>
+
+    </version>
+
+    <version current="1.3.0" next="1.4.0">
+	
+        <download>
+
+            <file path="http://download.bikfalvi.hu/belenus/official/BelenusUpdate_v_1_4_0.zip" />
+
+        </download>
+
+        <uncompress>
+
+            <file path="%DOWNLOAD_DIR%" name="BelenusUpdate_v_1_4_0.zip" />
+
+        </uncompress>
+
+        <backup>
+
+            <file path="%INSTALL_DIR%" directory="lang" name="belenus_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="brv_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="dbbackup_hu.qm" move="yes" />
+            <file path="%INSTALL_DIR%" directory="lang" name="starter_hu.qm" move="yes" />
+	
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+			
+        </backup>
+
+        <update>
+
+            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/brv_hu.qm" dst="%INSTALL_DIR%/lang/brv_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/dbbackup_hu.qm" dst="%INSTALL_DIR%/lang/dbbackup_hu.qm" />
+            <file src="%DOWNLOAD_DIR%/lang/starter_hu.qm" dst="%INSTALL_DIR%/lang/starter_hu.qm" />
+
+            <file src="%DOWNLOAD_DIR%/resources/40x40_down.png" dst="%INSTALL_DIR%/resources/40x40_down.png" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_pause.png" dst="%INSTALL_DIR%/resources/40x40_pause.png" />
+            <file src="%DOWNLOAD_DIR%/resources/40x40_up.png" dst="%INSTALL_DIR%/resources/40x40_up.png" />
+			
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+			
+        </update>
+
+        <execute>
+
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4.sql"' />
 
         </execute>
 
