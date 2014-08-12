@@ -20,8 +20,12 @@ public:
 
 protected:
     void keyPressEvent ( QKeyEvent *p_poEvent );
+    void keyReleaseEvent( QKeyEvent *p_poEvent );
     void timerEvent( QTimerEvent *p_poEvent );
     void mousePressEvent ( QMouseEvent *p_poEvent );
+    void mouseReleaseEvent ( QMouseEvent *p_poEvent );
+    void mouseMoveEvent ( QMouseEvent *p_poEvent );
+    void mouseDoubleClickEvent ( QMouseEvent *p_poEvent );
 
 private slots:
     void on_pbStart_clicked();
@@ -36,6 +40,13 @@ private:
     QStringList         m_qslImages;
     int                 m_nImageCounter;
     bool                m_bPanelVisible;
+    Qt::WindowFlags     m_wndFlags;
+    bool                m_bWindowCustomizeable;
+    bool                m_bShiftPressed;
+    bool                m_bCtrlPressed;
+    bool                m_bMousePressed;
+    int                 m_nMouseX;
+    int                 m_nMouseY;
 
     void                _loadImage();
     void                _showButtonPanel();

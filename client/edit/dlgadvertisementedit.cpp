@@ -86,11 +86,11 @@ void cDlgAdvertisementEdit::accept ()
             QMessageBox::critical( this, tr( "Error" ), tr( "Advertisement name cannot be empty." ) );
         }
 
-        if( (ledCaption->text() == "") )
+/*        if( (ledCaption->text() == "") )
         {
             boCanBeSaved = false;
             QMessageBox::critical( this, tr( "Error" ), tr( "Advertisement caption cannot be empty." ) );
-        }
+        }*/
 
         ledTimerLength->setText( QString::number(ledTimerLength->text().toInt()) );
 
@@ -127,6 +127,7 @@ void cDlgAdvertisementEdit::accept ()
             m_poAdvertisement->setLicenceId( g_poPrefs->getLicenceId() );
             m_poAdvertisement->setName( ledName->text() );
             m_poAdvertisement->setCaption( ledCaption->text() );
+            m_poAdvertisement->setTimerLength( ledTimerLength->text().toUInt() );
             m_poAdvertisement->setPath( qsDir );
             m_poAdvertisement->setFilenames( qslItems.join( "#" ) );
             m_poAdvertisement->setActive( chkActive->isChecked() );
@@ -260,7 +261,7 @@ void cDlgAdvertisementEdit::slotRefreshWarningColors()
         lblName->setStyleSheet( "QLabel {font: bold; color: red;}" );
 
     if( ledCaption->text().length() == 0 )
-        lblCaption->setStyleSheet( "QLabel {font: bold; color: red;}" );
+        lblCaption->setStyleSheet( "QLabel {font: bold; color: blue;}" );
 
     if( ledTimerLength->text().length() == 0 )
         lblTimerLength->setStyleSheet( "QLabel {font: bold; color: red;}" );
