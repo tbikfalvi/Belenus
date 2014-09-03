@@ -32,6 +32,7 @@ private slots:
     void on_pbStop_clicked();
     void on_pbRefresh_clicked();
     void on_pbSettings_clicked();
+    void on_pbSave_clicked();
 
 private:
 

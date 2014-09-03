@@ -19,6 +19,7 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
     pbStart->setIcon( QIcon( "./resources/40x40_start.png" ) );
     pbStop->setIcon( QIcon( "./resources/40x40_pause.png" ) );
     pbSettings->setIcon( QIcon( "./resources/40x40_settings.png" ) );
+    pbSave->setIcon( QIcon( "./resources/40x40_save.png" ) );
     pbRefresh->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
 
     m_obAdvertisement.createNew();
@@ -69,9 +70,6 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
 cDlgAdvertisementWindow::~cDlgAdvertisementWindow()
 {
     cTracer obTrace( "cDlgAdvertisementWindow::~cDlgAdvertisementWindow" );
-
-    g_poPrefs->setDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( width(), height() ) );
-    g_poPrefs->setDialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( x(), y() ) );
 }
 
 void cDlgAdvertisementWindow::refreshBackground()
@@ -159,6 +157,9 @@ void cDlgAdvertisementWindow::keyReleaseEvent( QKeyEvent *p_poEvent )
 
 void cDlgAdvertisementWindow::timerEvent(QTimerEvent *)
 {
+    if( m_obAdvertisement.timerLength() < 1 )
+        return;
+
     if( m_nImageCounter == m_qslImages.size()-1 )
     {
         m_nImageCounter = 0;
@@ -296,4 +297,10 @@ void cDlgAdvertisementWindow::_showButtonPanel()
     {
         frmButtons->setVisible( m_bPanelVisible );
     }
+}
+
+void cDlgAdvertisementWindow::on_pbSave_clicked()
+{
+    g_poPrefs->setDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( width(), height() ) );
+    g_poPrefs->setDialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( x(), y() ) );
 }
