@@ -157,8 +157,8 @@ void cDlgAdvertisementWindow::keyReleaseEvent( QKeyEvent *p_poEvent )
 
 void cDlgAdvertisementWindow::timerEvent(QTimerEvent *)
 {
-    if( m_obAdvertisement.timerLength() < 1 )
-        return;
+    killTimer( m_nTimer );
+    m_nTimer = 0;
 
     if( m_nImageCounter == m_qslImages.size()-1 )
     {
@@ -168,7 +168,13 @@ void cDlgAdvertisementWindow::timerEvent(QTimerEvent *)
     {
         m_nImageCounter++;
     }
+
+    QCoreApplication::processEvents();
+
     _loadImage();
+
+    if( m_obAdvertisement.timerLength() > 0 )
+        m_nTimer = startTimer( m_obAdvertisement.timerLength() * 1000 );
 }
 
 void cDlgAdvertisementWindow::mousePressEvent ( QMouseEvent *p_poEvent )

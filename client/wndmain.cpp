@@ -1202,8 +1202,6 @@ void cWndMain::timerEvent(QTimerEvent *)
 
     m_inCommunicationCounter++;
 
-    QCoreApplication::processEvents();
-
     if( m_inCommunicationCounter > 3 )
     {
         m_inCommunicationCounter = 0;
@@ -1270,12 +1268,12 @@ void cWndMain::timerEvent(QTimerEvent *)
         }
     }
 
-    if( m_uiPatientId != g_obGuest.id() )
-    {
+//    if( m_uiPatientId != g_obGuest.id() )
+//    {
         updateTitle();
 
-        m_uiPatientId = g_obGuest.id();
-    }
+//        m_uiPatientId = g_obGuest.id();
+//    }
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
