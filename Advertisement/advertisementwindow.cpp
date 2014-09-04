@@ -1,7 +1,7 @@
 
 #include "advertisementwindow.h"
-#include "edit/dlgadvertisementedit.h"
-#include "db/dbadvertisements.h"
+#include "dlgadvertisementedit.h"
+#include "dbadvertisements.h"
 
 cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int id) : QDialog(parent)
 {
