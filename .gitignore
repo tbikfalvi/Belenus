@@ -7,3 +7,4 @@ install/*.pro.*
 install/*.qm
 serveradmin/*.pro.*
 viewer/*.pro.*
+advertisement/*.pro.*
