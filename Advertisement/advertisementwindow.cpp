@@ -5,11 +5,9 @@
 
 cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int id) : QDialog(parent)
 {
-    cTracer obTrace( "cDlgAdvertisementWindow::cDlgAdvertisementWindow" );
-
     setupUi(this);
 
-    setWindowIcon( QIcon("./resources/belenus.ico") );
+    setWindowIcon( QIcon(":/advertisement.ico") );
 
     pbStart->setIcon( QIcon( "./resources/40x40_start.png" ) );
     pbStop->setIcon( QIcon( "./resources/40x40_pause.png" ) );
@@ -29,8 +27,10 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
         {
             m_obAdvertisement.load( id );
 
-            QPoint  qpDlgSize   = g_poPrefs->getDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint(400,400) );
-            QPoint  qpDlgPos    = g_poPrefs->dialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()) );
+//            QPoint  qpDlgSize   = g_poPrefs->getDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint(400,400) );
+//            QPoint  qpDlgPos    = g_poPrefs->dialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()) );
+QPoint  qpDlgSize = QPoint( 100, 100 );
+QPoint  qpDlgPos = QPoint( 100, 100 );
 
             resize( qpDlgSize.x(), qpDlgSize.y() );
             move( qpDlgPos );
@@ -56,16 +56,12 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
 
 cDlgAdvertisementWindow::~cDlgAdvertisementWindow()
 {
-    cTracer obTrace( "cDlgAdvertisementWindow::~cDlgAdvertisementWindow" );
-
     g_poPrefs->setDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( width(), height() ) );
     g_poPrefs->setDialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( x(), y() ) );
 }
 
 void cDlgAdvertisementWindow::refreshBackground()
 {
-    cTracer obTrace( "cDlgAdvertisementWindow::refreshBackground" );
-
     QPalette  obFramePalette = palette();
     obFramePalette.setBrush( QPalette::Window, QBrush( QColor( m_obAdvertisement.backgroundColor() ) ) );
     setPalette( obFramePalette );
@@ -97,8 +93,6 @@ void cDlgAdvertisementWindow::mousePressEvent ( QMouseEvent *p_poEvent )
 
 void cDlgAdvertisementWindow::_loadImage()
 {
-    cTracer obTrace( "cDlgAdvertisementWindow::_loadImage" );
-
     QString qsFile      = m_qslImages.at( m_nImageCounter );
     QString qsFileName  = QString( "%1/%2" ).arg( m_obAdvertisement.path() )
                                             .arg( qsFile );

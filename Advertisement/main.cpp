@@ -5,9 +5,7 @@
 
 #include "advertisementwindow.h"
 
-cQTLogger                g_obLogger;
-cPreferences            *g_poPrefs;
-cQTMySQLConnection      *g_poDB;
+cQTLogger g_obLogger;
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +18,7 @@ int main(int argc, char *argv[])
     }
 
     QApplication appMain(argc, argv);
-
+/*
     g_poDB     = new cQTMySQLConnection;
 
     g_poPrefs  = new cPreferences( QString::fromAscii( "./belenus.ini" ) );
@@ -40,7 +38,7 @@ int main(int argc, char *argv[])
 
     g_poDB->open();
     g_poPrefs->loadDBSettings();
-
+*/
     cDlgAdvertisementWindow wndAdv;
     wndAdv.show();
 
