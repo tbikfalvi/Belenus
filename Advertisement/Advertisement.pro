@@ -3,8 +3,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QT          += core gui sql
 CONFIG      += qt
-RESOURCES   += belenus.qrc
-RC_FILE      = Belenus.rc
+RESOURCES   += advertisement.qrc
+RC_FILE      = advertisement.rc
 TEMPLATE     = app
 TARGET       = Advertisement
 DESTDIR      = ..
@@ -21,6 +21,7 @@ HEADERS     += ../framework/dbconnection.h \
                ../framework/qtmysqlquerymodel.h \
                ../framework/sevexception.h \
                ../framework/tracer.h \
+               ../client/preferences.h \
                mainwindow.h \
                advertisementwindow.h \
                dbadvertisements.h \
@@ -35,6 +36,7 @@ SOURCES     += ../framework/dbconnection.cpp \
                ../framework/qtmysqlconnection.cpp \
                ../framework/qtmysqlquerymodel.cpp \
                ../framework/tracer.cpp \
+               ../client/preferences.cpp \
                main.cpp\
                mainwindow.cpp \
                advertisementwindow.cpp \

@@ -148,7 +148,7 @@ void cDlgAdvertisementWindow::on_pbSettings_clicked()
 
 void cDlgAdvertisementWindow::_showButtonPanel()
 {
-    if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
+//    if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
     {
         if( m_bPanelVisible )
         {

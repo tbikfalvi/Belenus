@@ -15,7 +15,7 @@
 
 #include <QDateTime>
 
-#include "belenus.h"
+#include "../client/belenus.h"
 #include "dbadvertisements.h"
 
 cDBAdvertisements::cDBAdvertisements()

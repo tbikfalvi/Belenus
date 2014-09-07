@@ -4,7 +4,7 @@
 #include <QSqlRecord>
 #include <QString>
 
-#include "../../framework/sevexception.h"
+#include "../framework/sevexception.h"
 
 class cDBAdvertisements
 {

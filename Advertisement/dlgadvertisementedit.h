@@ -1,9 +1,9 @@
 #ifndef DLGADVERTISEMENTEDIT_H
 #define DLGADVERTISEMENTEDIT_H
 
-#include "belenus.h"
+#include "../client/belenus.h"
 #include "ui_dlgAdvertisementedit.h"
-#include "db/dbadvertisements.h"
+#include "dbadvertisements.h"
 
 class cDlgAdvertisementEdit : public QDialog, protected Ui::dlgAdvertisementEdit
 {

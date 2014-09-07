@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QMouseEvent>
 
-//#include "belenus.h"
+#include "../client/belenus.h"
 #include "ui_dlgAdvertisement.h"
 #include "dbadvertisements.h"
 
