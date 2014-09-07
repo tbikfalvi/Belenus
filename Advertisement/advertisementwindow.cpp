@@ -161,6 +161,8 @@ void advertisementwindow::timerEvent(QTimerEvent *)
         switch( m_qslCommands.indexOf( m_qsCMDAction ) )
         {
             case 1:
+                m_qsCMDAction = "_";
+                _updateCommand();
                 on_pbRefresh_clicked();
                 break;
             case 2:
@@ -263,6 +265,7 @@ void advertisementwindow::on_pbRefresh_clicked()
     if( m_nTimer > 0 )
         killTimer( m_nTimer );
 
+    _refreshSettings();
     _updateGui();
 
     m_nTimer = startTimer( 1000 );

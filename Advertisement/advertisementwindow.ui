@@ -121,6 +121,9 @@ color: rgb(255, 255, 255);</string>
           <height>30</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Start slideshow</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -142,6 +145,9 @@ color: rgb(255, 255, 255);</string>
           <width>30</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Pause slideshow</string>
         </property>
         <property name="text">
          <string/>
@@ -178,6 +184,9 @@ color: rgb(255, 255, 255);</string>
           <height>30</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Save window position and size</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -199,6 +208,9 @@ color: rgb(255, 255, 255);</string>
           <width>30</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Reload advertisement settings</string>
         </property>
         <property name="text">
          <string/>
