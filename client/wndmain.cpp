@@ -1202,7 +1202,7 @@ void cWndMain::timerEvent(QTimerEvent *)
 
     m_inCommunicationCounter++;
 
-    if( m_inCommunicationCounter > 4 )
+    if( m_inCommunicationCounter > 3 )
     {
         m_inCommunicationCounter = 0;
 
@@ -1211,6 +1211,8 @@ void cWndMain::timerEvent(QTimerEvent *)
             g_obLogger(cSeverity::ERROR) << "Communication stopped with hardware controller" << EOM;
             m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
         }
+
+        m_lblStatusRight.setText( QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss  " ) );
     }
 
     if( m_bSerialRegistration )
@@ -1266,14 +1268,12 @@ void cWndMain::timerEvent(QTimerEvent *)
         }
     }
 
-    if( m_uiPatientId != g_obGuest.id() )
-    {
+//    if( m_uiPatientId != g_obGuest.id() )
+//    {
         updateTitle();
 
-        m_uiPatientId = g_obGuest.id();
-    }
-
-    m_lblStatusRight.setText( QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss  " ) );
+//        m_uiPatientId = g_obGuest.id();
+//    }
 }
 //====================================================================================
 void cWndMain::closeEvent( QCloseEvent *p_poEvent )
