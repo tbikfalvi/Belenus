@@ -324,6 +324,8 @@ int main( int argc, char *argv[] )
         sleep( 2 );
 #endif
 
+        obMainWindow.setCommunicationEnabled( g_poHardware->isHardwareConnected() );
+
         obSplash.finish( &obMainWindow );
 
         obMainWindow.showProgress();

@@ -125,6 +125,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     frmLogin->setVisible( false );
     frmLogin->setEnabled( false );
 
+    showAdWindows();
+
     m_dlgProgress = new cDlgProgress( this );
 
     mdiPanels = new cMdiPanels( centralwidget );
@@ -301,6 +303,16 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_lblStatusRight.setAlignment( Qt::AlignRight );
     m_lblStatusRight.setStyleSheet( "QLabel {font: bold; font-size:14px;}" );
 
+    m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
+    m_pbStatusCommunication.setFlat( true );
+    m_pbStatusCommunication.setText( "" );
+    m_pbStatusCommunication.setIconSize( QSize(40,20) );
+    m_pbStatusCommunication.setFixedSize( 42, 22 );
+
+    connect( &m_pbStatusCommunication, SIGNAL(clicked()), this, SLOT(on_CommunicationButtonClicked()) );
+
+    m_pbStatusCommunication.setEnabled( false );
+
     m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
     m_pbStatusGibbig.setFlat( true );
     m_pbStatusGibbig.setText( "" );
@@ -310,6 +322,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
+    statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
@@ -325,13 +338,20 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
     g_poGibbig->setTimeout( 10000 );
 
-    showAdWindows();
-
+    this->setFocus();
 m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
 {
+    QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+    QSqlQuery  *poQuery = g_poDB->executeQTQuery( QString( "SELECT advertisementId FROM advertisements" ) );
+
+    while( poQuery->next() )
+    {
+        obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( poQuery->value(0).toInt() ), "EXIT" );
+    }
+
     delete m_dlgProgress;
     delete m_dlgSecondaryWindow;
 
@@ -1208,8 +1228,13 @@ void cWndMain::timerEvent(QTimerEvent *)
 
         if( g_poHardware->isCommunicationStopped() )
         {
-            g_obLogger(cSeverity::ERROR) << "Communication stopped with hardware controller" << EOM;
+            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
+            g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
             m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+        }
+        else
+        {
+            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_on.png" ) );
         }
 
         m_lblStatusRight.setText( QDateTime::currentDateTime().toString( "yyyy-MM-dd hh:mm:ss  " ) );
@@ -3041,10 +3066,26 @@ void cWndMain::showAdWindows()
 
     while( poQuery->next() )
     {
+        QProcess *qpAdv = new QProcess(this);
+
+        if( !qpAdv->startDetached( QString("Advertisement.exe %1").arg( poQuery->value(0).toUInt() ) ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Error occured when starting process:Advertisement.exe\n\nError code: %1\n"
+                                     "0 > The process failed to start.\n"
+                                     "1 > The process crashed some time after starting successfully.\n"
+                                     "2 > The last waitFor...() function timed out.\n"
+                                     "4 > An error occurred when attempting to write to the process.\n"
+                                     "3 > An error occurred when attempting to read from the process.\n"
+                                     "5 > An unknown error occurred.").arg(qpAdv->error()) );
+        }
+        delete qpAdv;
+/*
         cDlgAdvertisementWindow *poAdWnd = new cDlgAdvertisementWindow( this, poQuery->value(0).toUInt() );
 
         m_obAdWnd.push_back( poAdWnd );
         poAdWnd->show();
+*/
     }
     this->setFocus();
 }
@@ -3067,4 +3108,27 @@ void cWndMain::on_GibbigPatientCardUpdate(QString p_qsMessage, QString p_qsId)
 
     obDBPatientCard.load( qsBarcode );
     obDBPatientCard.updateGibbigId( p_qsId );
+}
+
+void cWndMain::on_CommunicationButtonClicked()
+{
+    QMenu   qmMenu;
+
+    qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Reset communication") );
+
+    QAction *qaRet = qmMenu.exec( QCursor::pos() );
+
+    if( qaRet )
+    {
+        if( qaRet->text().compare( tr("Reset communication") ) == 0 )
+        {
+            g_poHardware->closeCommunication();
+            g_poHardware->init( g_poPrefs->getCommunicationPort() );
+        }
+    }
+}
+
+void cWndMain::setCommunicationEnabled(bool p_bEnabled)
+{
+    m_pbStatusCommunication.setEnabled( p_bEnabled );
 }

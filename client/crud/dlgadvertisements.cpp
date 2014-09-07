@@ -113,6 +113,9 @@ void cDlgAdvertisements::editClicked( bool )
         obDlgEdit.setWindowTitle( poAdvertisements->name() );
         if( obDlgEdit.exec() == QDialog::Accepted )
         {
+            QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+
+            obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( m_uiSelectedId ), "REFRESH" );
             refreshTable();
         }
 
@@ -143,6 +146,9 @@ void cDlgAdvertisements::deleteClicked( bool )
                                       tr("You are not allowed to delete studio independent data."));
                 return;
             }
+            QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+
+            obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( m_uiSelectedId ), "EXIT" );
             poAdvertisements->remove();
             m_uiSelectedId = 0;
             refreshTable();
