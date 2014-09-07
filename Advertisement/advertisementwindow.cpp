@@ -1,157 +1,405 @@
-
 #include "advertisementwindow.h"
-#include "dlgadvertisementedit.h"
-#include "dbadvertisements.h"
+#include "ui_advertisementwindow.h"
 
-cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int id) : QDialog(parent)
+advertisementwindow::advertisementwindow(QWidget *parent, unsigned int id) : QDialog(parent), ui(new Ui::advertisementwindow)
 {
-    setupUi(this);
+    ui->setupUi(this);
+
+    m_uiDBId        = id;
+    m_nTimerCounter = 0;
+    m_wndFlags      = windowFlags();
+    m_qsCMDAction   = "";
+    m_qsCMDStatus   = "STARTING";
+
+    _updateStatus();
+
+    m_qslCommands = QStringList() << ""
+                                  << "REFRESH"
+                                  << "EXIT";
 
     setWindowIcon( QIcon(":/advertisement.ico") );
+    setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
 
-    pbStart->setIcon( QIcon( "./resources/40x40_start.png" ) );
-    pbStop->setIcon( QIcon( "./resources/40x40_pause.png" ) );
-    pbSettings->setIcon( QIcon( "./resources/40x40_settings.png" ) );
-    pbRefresh->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
+    ui->lblCaption->setText( "" );
 
-    m_obAdvertisement.createNew();
+    ui->pbStart->setIcon( QIcon( "./resources/40x40_start.png" ) );
+    ui->pbStop->setIcon( QIcon( "./resources/40x40_pause.png" ) );
+    ui->pbSave->setIcon( QIcon( "./resources/40x40_save.png" ) );
+    ui->pbRefresh->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
 
-    m_nTimer            = 0;
-    m_nImageCounter     = 0;
+    m_nTimer                = 0;
+    m_nImageCounter         = 0;
+    m_bWindowCustomizeable  = false;
+    m_bPanelVisible         = false;
+    m_bCtrlPressed          = false;
+    m_bShiftPressed         = false;
+    m_bMousePressed         = false;
+    m_bImageChangeEnabled   = false;
 
-    m_bPanelVisible     = false;
+    m_poDB = new QSqlDatabase( QSqlDatabase::addDatabase( "QMYSQL" ) );
 
-    if( id > 0 )
-    {
-        try
-        {
-            m_obAdvertisement.load( id );
+    m_poDB->setHostName( "localhost" );
+    m_poDB->setDatabaseName( "belenus" );
+    m_poDB->setUserName( "belenus" );
+    m_poDB->setPassword( "belenus" );
 
-//            QPoint  qpDlgSize   = g_poPrefs->getDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint(400,400) );
-//            QPoint  qpDlgPos    = g_poPrefs->dialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()) );
-QPoint  qpDlgSize = QPoint( 100, 100 );
-QPoint  qpDlgPos = QPoint( 100, 100 );
+    _loadPosition();
+    _refreshSettings();
+    _updateGui();
+    if( m_nDBTimerLength > 0 )
+        m_bImageChangeEnabled = true;
+    _loadImage();
 
-            resize( qpDlgSize.x(), qpDlgSize.y() );
-            move( qpDlgPos );
+    ui->frmButtons->setVisible( m_bPanelVisible );
 
-            setWindowTitle( m_obAdvertisement.caption() );
-            refreshBackground();
-
-            m_qslImages = m_obAdvertisement.filenames().split("#");
-
-            _loadImage();
-        }
-        catch( cSevException &e )
-        {
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-    }
-
-    frmButtons->setVisible( m_bPanelVisible );
-
-    if( m_obAdvertisement.timerLength() > 0 )
-        m_nTimer = startTimer( m_obAdvertisement.timerLength() * 1000 );
+    m_nTimer = startTimer( 1000 );
 }
 
-cDlgAdvertisementWindow::~cDlgAdvertisementWindow()
+advertisementwindow::~advertisementwindow()
 {
-    g_poPrefs->setDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( width(), height() ) );
-    g_poPrefs->setDialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( x(), y() ) );
+    m_qsCMDAction   = "_";
+    m_qsCMDStatus   = "EXITING";
+
+    _updateCommand();
+    _updateStatus();
+
+    delete ui;
 }
 
-void cDlgAdvertisementWindow::refreshBackground()
+void advertisementwindow::refreshBackground()
 {
     QPalette  obFramePalette = palette();
-    obFramePalette.setBrush( QPalette::Window, QBrush( QColor( m_obAdvertisement.backgroundColor() ) ) );
+    obFramePalette.setBrush( QPalette::Window, QBrush( QColor( m_qsDBBackground ) ) );
     setPalette( obFramePalette );
 }
 
-void cDlgAdvertisementWindow::keyPressEvent ( QKeyEvent */*p_poEvent*/ )
+void advertisementwindow::keyPressEvent ( QKeyEvent *p_poEvent )
 {
-    return;
-}
-
-void cDlgAdvertisementWindow::timerEvent(QTimerEvent *)
-{
-    if( m_nImageCounter == m_qslImages.size()-1 )
+    if( p_poEvent->key() == Qt::Key_Control )
     {
-        m_nImageCounter = 0;
+        m_bCtrlPressed = true;
     }
-    else
+    if( p_poEvent->key() == Qt::Key_Shift )
     {
-        m_nImageCounter++;
+        m_bShiftPressed = true;
     }
-    _loadImage();
-}
 
-void cDlgAdvertisementWindow::mousePressEvent ( QMouseEvent *p_poEvent )
-{
-    _showButtonPanel();
-    p_poEvent->ignore();
-}
-
-void cDlgAdvertisementWindow::_loadImage()
-{
-    QString qsFile      = m_qslImages.at( m_nImageCounter );
-    QString qsFileName  = QString( "%1/%2" ).arg( m_obAdvertisement.path() )
-                                            .arg( qsFile );
-
-    qsFileName.replace( "\\", "/" );
-    qsFileName.replace( "//", "/" );
-
-    lblImage->setPixmap( QPixmap( qsFileName ) );
-}
-
-void cDlgAdvertisementWindow::on_pbStart_clicked()
-{
-    if( m_obAdvertisement.timerLength() > 0 )
-        m_nTimer = startTimer( m_obAdvertisement.timerLength() * 1000 );
-}
-
-void cDlgAdvertisementWindow::on_pbStop_clicked()
-{
-    killTimer( m_nTimer );
-    m_nTimer = 0;
-}
-
-void cDlgAdvertisementWindow::on_pbRefresh_clicked()
-{
-    unsigned int id = m_obAdvertisement.id();
-
-    m_obAdvertisement.createNew();
-    m_obAdvertisement.load( id );
-
-    setWindowTitle( m_obAdvertisement.caption() );
-    refreshBackground();
-
-    m_qslImages = m_obAdvertisement.filenames().split("#");
-
-    _loadImage();
-}
-
-void cDlgAdvertisementWindow::on_pbSettings_clicked()
-{
-    cDlgAdvertisementEdit  obDlgEdit( this, &m_obAdvertisement, false );
-
-    if( obDlgEdit.exec() == QDialog::Accepted )
+    if( m_bCtrlPressed )
     {
-        on_pbRefresh_clicked();
-    }
-}
-
-void cDlgAdvertisementWindow::_showButtonPanel()
-{
-//    if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
-    {
-        if( m_bPanelVisible )
+        if( m_bShiftPressed )
         {
-            m_bPanelVisible = false;
+            switch( p_poEvent->key() )
+            {
+                case Qt::Key_Up:
+                    resize( width(), height()-1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Down:
+                    resize( width(), height()+1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Left:
+                    resize( width()-1, height() );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Right:
+                    resize( width()+1, height() );
+                    p_poEvent->accept();
+                    break;
+                default: p_poEvent->ignore();
+            }
         }
         else
         {
-            m_bPanelVisible = true;
+            switch( p_poEvent->key() )
+            {
+                case Qt::Key_Up:
+                    move( x(), y()-1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Down:
+                    move( x(), y()+1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Left:
+                    move( x()-1, y() );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Right:
+                    move( x()+1, y() );
+                    p_poEvent->accept();
+                    break;
+                default: p_poEvent->ignore();
+            }
         }
-        frmButtons->setVisible( m_bPanelVisible );
     }
+}
+
+void advertisementwindow::keyReleaseEvent( QKeyEvent *p_poEvent )
+{
+    if( p_poEvent->key() == Qt::Key_Control )
+    {
+        m_bCtrlPressed = false;
+    }
+    if( p_poEvent->key() == Qt::Key_Shift )
+    {
+        m_bShiftPressed = false;
+    }
+}
+
+void advertisementwindow::timerEvent(QTimerEvent *)
+{
+    m_qsCMDStatus = "RUNNING";
+    _updateStatus();
+
+    _readCommandFile();
+
+    QCoreApplication::processEvents();
+
+    if( m_qsCMDAction.length() > 0 )
+    {
+        switch( m_qslCommands.indexOf( m_qsCMDAction ) )
+        {
+            case 1:
+                on_pbRefresh_clicked();
+                break;
+            case 2:
+                close();
+                break;
+            default:
+                break;
+        }
+    }
+
+    QCoreApplication::processEvents();
+
+    if( m_nDBTimerLength == 0 || m_bImageChangeEnabled == false )
+        return;
+
+    m_nTimerCounter++;
+
+    if( m_nTimerCounter == m_nDBTimerLength )
+    {
+        m_nTimerCounter = 0;
+
+        if( m_nImageCounter > m_qslImages.size()-1 )
+        {
+            m_nImageCounter = 0;
+        }
+        else
+        {
+            m_nImageCounter++;
+        }
+
+        _loadImage();
+    }
+}
+
+void advertisementwindow::mousePressEvent ( QMouseEvent *p_poEvent )
+{
+    m_bMousePressed = true;
+
+    m_nMouseX = p_poEvent->pos().x();
+    m_nMouseY = p_poEvent->pos().y();
+
+    if( p_poEvent->pos().x() > width()-7 &&
+        p_poEvent->pos().x() < width()+13 )
+    {
+        setCursor( Qt::SizeHorCursor );
+    }
+    else if( p_poEvent->pos().y() > height()-7 &&
+             p_poEvent->pos().y() < height()+13 )
+    {
+        setCursor( Qt::SizeVerCursor );
+    }
+    p_poEvent->accept();
+}
+void advertisementwindow::mouseReleaseEvent ( QMouseEvent *p_poEvent )
+{
+    m_bMousePressed = false;
+    setCursor( Qt::ArrowCursor );
+    p_poEvent->accept();
+}
+
+void advertisementwindow::mouseMoveEvent ( QMouseEvent *p_poEvent )
+{
+    if( m_bMousePressed )
+    {
+        if( cursor().shape() == Qt::SizeHorCursor )
+        {
+            resize( p_poEvent->pos().x(), height() );
+        }
+        else if( cursor().shape() == Qt::SizeVerCursor )
+        {
+            resize( width(), p_poEvent->pos().y() );
+        }
+        else
+        {
+            move( x() + p_poEvent->pos().x() - m_nMouseX,
+                  y() + p_poEvent->pos().y() - m_nMouseY );
+        }
+    }
+    p_poEvent->accept();
+}
+
+void advertisementwindow::mouseDoubleClickEvent ( QMouseEvent *p_poEvent )
+{
+    _showButtonPanel();
+    p_poEvent->accept();
+}
+
+void advertisementwindow::on_pbStart_clicked()
+{
+    m_bImageChangeEnabled = true;
+}
+
+void advertisementwindow::on_pbStop_clicked()
+{
+    m_bImageChangeEnabled = false;
+}
+
+void advertisementwindow::on_pbRefresh_clicked()
+{
+    if( m_nTimer > 0 )
+        killTimer( m_nTimer );
+
+    _updateGui();
+
+    m_nTimer = startTimer( 1000 );
+}
+
+void advertisementwindow::_showButtonPanel()
+{
+    if( m_bPanelVisible )
+    {
+        m_bPanelVisible = false;
+    }
+    else
+    {
+        m_bPanelVisible = true;
+    }
+//    if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
+    {
+        ui->frmButtons->setVisible( m_bPanelVisible );
+    }
+}
+
+void advertisementwindow::on_pbSave_clicked()
+{
+    _savePosition();
+}
+
+void advertisementwindow::_refreshSettings()
+{
+    m_qslImages.clear();
+
+    m_poDB->open();
+
+    QSqlQuery poQuery = m_poDB->exec( QString( "SELECT * FROM advertisements WHERE advertisementId=%1 " ).arg( m_uiDBId ) );
+
+    if( poQuery.first() )
+    {
+        m_qsDBCaption       = poQuery.value( 3 ).toString();
+        m_qsDBBackground    = poQuery.value( 4 ).toString();
+        m_qsDBPath          = poQuery.value( 5 ).toString();
+        m_nDBTimerLength    = poQuery.value( 7 ).toInt();
+        m_qslImages         = poQuery.value( 6 ).toString().split("#");
+    }
+
+    m_poDB->close();
+}
+
+void advertisementwindow::_loadPosition()
+{
+    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+
+    QPoint  qpDlgPos;
+    QPoint  qpDlgSize;
+
+    qpDlgPos.setX( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_left" ).arg(m_uiDBId), 0 ).toInt() );
+    qpDlgPos.setY( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_top" ).arg(m_uiDBId), 0 ).toInt() );
+    qpDlgSize.setX( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_width" ).arg(m_uiDBId), 400 ).toInt() );
+    qpDlgSize.setY( obPrefFile.value( QString::fromAscii( "Dialogs/Ad%1_height" ).arg(m_uiDBId), 400 ).toInt() );
+
+    resize( qpDlgSize.x(), qpDlgSize.y() );
+    move( qpDlgPos );
+}
+
+void advertisementwindow::_savePosition()
+{
+    QSettings   obPrefFile( "belenus.ini", QSettings::IniFormat );
+
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_left" ).arg(m_uiDBId), x() );
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_top" ).arg(m_uiDBId), y() );
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_width" ).arg(m_uiDBId), width() );
+    obPrefFile.setValue( QString::fromAscii( "Dialogs/Ad%1_height" ).arg(m_uiDBId), height() );
+}
+
+void advertisementwindow::_loadImages()
+{
+    m_obAdImages.clear();
+
+    for( int i=0; i<m_qslImages.size(); i++ )
+    {
+        QString qsFile      = m_qslImages.at( i );
+        QString qsFileName  = QString( "%1/%2" ).arg( m_qsDBPath ).arg( qsFile );
+
+        qsFileName.replace( "\\", "/" );
+        qsFileName.replace( "//", "/" );
+
+        QPixmap *qpAd = new QPixmap( qsFileName );
+
+        m_obAdImages.push_back( qpAd );
+    }
+    m_nImageCounter = 0;
+}
+
+void advertisementwindow::_loadImage()
+{
+    if( m_nImageCounter > (int)m_obAdImages.size()-1 )
+        m_nImageCounter = 0;
+
+    ui->lblImage->setPixmap( *m_obAdImages.at( m_nImageCounter ) );
+}
+
+void advertisementwindow::_updateGui()
+{
+    if( m_qsDBCaption.length() > 0 )
+    {
+        ui->lblCaption->setVisible( true );
+        ui->lblCaption->setText( QString("   ")+m_qsDBCaption );
+    }
+    else
+    {
+        ui->lblCaption->setVisible( false );
+    }
+    refreshBackground();
+
+    _loadImages();
+}
+
+void advertisementwindow::_readCommandFile()
+{
+    QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+
+    QString qsCommand = obPrefFile.value( QString::fromAscii( "Advertisement%1/Command" ).arg(m_uiDBId), "" ).toString();
+
+    if( qsCommand.length() > 0 )
+    {
+        m_qsCMDAction = qsCommand;
+    }
+}
+
+void advertisementwindow::_updateCommand()
+{
+    QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+
+    obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg(m_uiDBId), m_qsCMDAction );
+}
+
+void advertisementwindow::_updateStatus()
+{
+    QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+
+    obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Status" ).arg(m_uiDBId), m_qsCMDStatus );
 }
