@@ -5,7 +5,7 @@
     <name>dlgMain</name>
     <message>
         <location filename="dlgMain.ui" line="14"/>
-        <location filename="dlgMain.cpp" line="2731"/>
+        <location filename="dlgMain.cpp" line="2732"/>
         <source>Belenus Application System</source>
         <translation type="unfinished"></translation>
     </message>
@@ -264,7 +264,7 @@
     </message>
     <message>
         <location filename="dlgMain.ui" line="1690"/>
-        <location filename="dlgMain.cpp" line="2333"/>
+        <location filename="dlgMain.cpp" line="2334"/>
         <source>Installation finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -525,92 +525,92 @@ Please manually delete the directory if copying new files fails.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2252"/>
+        <location filename="dlgMain.cpp" line="2253"/>
         <source>Processing hardware settings ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2334"/>
+        <location filename="dlgMain.cpp" line="2335"/>
         <source>Installing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2338"/>
+        <location filename="dlgMain.cpp" line="2339"/>
         <source>Update finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2339"/>
+        <location filename="dlgMain.cpp" line="2340"/>
         <source>Updating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2343"/>
+        <location filename="dlgMain.cpp" line="2344"/>
         <source>Uninstall finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2344"/>
+        <location filename="dlgMain.cpp" line="2345"/>
         <source>Removing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2351"/>
+        <location filename="dlgMain.cpp" line="2352"/>
         <source>%1 Belenus Application System has been finished.To use the system correcty you need to restart your computer after exiting the installer.
 
 Press Exit to close the installer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2360"/>
+        <location filename="dlgMain.cpp" line="2361"/>
         <source>%1 Belenus Application System has been finished.
 
 Press Exit to close the installer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2429"/>
+        <location filename="dlgMain.cpp" line="2430"/>
         <source>Select Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2528"/>
+        <location filename="dlgMain.cpp" line="2529"/>
         <source>&lt;Not selected&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2585"/>
-        <location filename="dlgMain.cpp" line="2673"/>
-        <location filename="dlgMain.cpp" line="2676"/>
+        <location filename="dlgMain.cpp" line="2586"/>
+        <location filename="dlgMain.cpp" line="2674"/>
+        <location filename="dlgMain.cpp" line="2677"/>
         <source>System error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2586"/>
+        <location filename="dlgMain.cpp" line="2587"/>
         <source>Unable to create directory:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2664"/>
+        <location filename="dlgMain.cpp" line="2665"/>
         <source>Copying file: ../%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2668"/>
+        <location filename="dlgMain.cpp" line="2669"/>
         <source>Updating file: ../%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2674"/>
+        <location filename="dlgMain.cpp" line="2675"/>
         <source>Unable to copy file:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgMain.cpp" line="2677"/>
+        <location filename="dlgMain.cpp" line="2678"/>
         <source>Unable to update file:
 
 %1</source>

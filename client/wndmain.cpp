@@ -3066,6 +3066,15 @@ void cWndMain::showAdWindows()
 
     while( poQuery->next() )
     {
+        QSettings   obPrefFile( "advertisement.cmd", QSettings::IniFormat );
+
+        QString qsStatus = obPrefFile.value( QString::fromAscii( "Advertisement%1/Status" ).arg( poQuery->value(0).toUInt() ), "" ).toString();
+
+        if( qsStatus.compare( "RUNNING" ) == 0 )
+        {
+            continue;
+        }
+
         QProcess *qpAdv = new QProcess(this);
 
         if( !qpAdv->startDetached( QString("Advertisement.exe %1").arg( poQuery->value(0).toUInt() ) ) )
