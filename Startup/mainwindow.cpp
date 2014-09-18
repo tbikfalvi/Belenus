@@ -211,7 +211,13 @@ bool MainWindow::_createPath(QString p_qsPath)
 
 bool MainWindow::_createSettingsFile()
 {
-    QString qsSettings = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
+    QSettings obMasterCD( "system.inf", QSettings::IniFormat );
+
+    QString qsVersion   = obMasterCD.value( "Version", "1.0.0" ).toString();
+    QString qsSettings  = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
+    QString qsAddress   = "";
+    QString qsInfoFile  = "";
+    QString qsLocation  = "";
 
     qsSettings.replace( "\\", "/" );
     qsSettings.replace( "//", "/" );
@@ -220,8 +226,34 @@ bool MainWindow::_createSettingsFile()
 
     QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
 
+    if( ui->rbLocationWeb->isChecked() )
+    {
+        qsAddress = "http://download.bikfalvi.hu/belenus/official";
+        qsLocation = "web";
+    }
+    else
+    {
+        qsLocation = "loc";
+    }
+
+    qsInfoFile = QString( "belenus_%1_%2.xml" ).arg( qsLocation ).arg( qsLanguage );
+
     obPrefFile.setValue( QString::fromAscii( "Language/Path" ), "lang" );
     obPrefFile.setValue( QString::fromAscii( "Language/Extension" ), qsLanguage );
+
+    obPrefFile.setValue( QString::fromAscii( "Settings/WindowWidth" ), "640" );
+    obPrefFile.setValue( QString::fromAscii( "Settings/WindowHeight" ), "400" );
+    obPrefFile.setValue( QString::fromAscii( "Settings/Background" ), "resources/starter.png" );
+    obPrefFile.setValue( QString::fromAscii( "Settings/Textcolor" ), "DDDDDD" );
+    obPrefFile.setValue( QString::fromAscii( "Settings/Timer" ), "250" );
+
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/Version" ), qsVersion );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/Address" ), qsAddress );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), qsInfoFile );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/InstallDir" ), ui->ledDirectoryTarget->text() );
+
+    obPrefFile.setValue( QString::fromAscii( "PostProcess/HomeDir" ), "" );
+    obPrefFile.setValue( QString::fromAscii( "PostProcess/File" ), "" );
 
     return true;
 }
