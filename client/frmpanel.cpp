@@ -820,7 +820,7 @@ bool cFrmPanel::isMainProcess()
 {
     int nCommand = m_obStatuses.at(m_uiStatus)->activateCommand();
 
-    return ( nCommand==STATUS_BARNULAS||nCommand==STATUS_SZAUNAZAS ? true : false );
+    return ( nCommand==STATUS_BARNULAS ? true : false );
 }
 //====================================================================================
 void cFrmPanel::closeAttendance()

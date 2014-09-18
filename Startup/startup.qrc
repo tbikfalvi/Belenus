@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>startup.ico</file>
+        <file>Logo.png</file>
+        <file>Directory.png</file>
+        <file>Refresh.png</file>
+        <file>Start.png</file>
+    </qresource>
+</RCC>

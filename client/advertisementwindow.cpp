@@ -9,19 +9,28 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
 
     setupUi(this);
 
+    m_wndFlags = windowFlags();
+
     setWindowIcon( QIcon("./resources/belenus.ico") );
+    setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
+
+    lblCaption->setText( "" );
 
     pbStart->setIcon( QIcon( "./resources/40x40_start.png" ) );
     pbStop->setIcon( QIcon( "./resources/40x40_pause.png" ) );
     pbSettings->setIcon( QIcon( "./resources/40x40_settings.png" ) );
+    pbSave->setIcon( QIcon( "./resources/40x40_save.png" ) );
     pbRefresh->setIcon( QIcon( "./resources/40x40_refresh.png" ) );
 
     m_obAdvertisement.createNew();
 
-    m_nTimer            = 0;
-    m_nImageCounter     = 0;
-
-    m_bPanelVisible     = false;
+    m_nTimer                = 0;
+    m_nImageCounter         = 0;
+    m_bWindowCustomizeable  = false;
+    m_bPanelVisible         = false;
+    m_bCtrlPressed          = false;
+    m_bShiftPressed         = false;
+    m_bMousePressed         = false;
 
     if( id > 0 )
     {
@@ -36,6 +45,7 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
             move( qpDlgPos );
 
             setWindowTitle( m_obAdvertisement.caption() );
+            lblCaption->setText( QString("   ")+m_obAdvertisement.caption() );
             refreshBackground();
 
             m_qslImages = m_obAdvertisement.filenames().split("#");
@@ -48,6 +58,9 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
         }
     }
 
+    if( m_obAdvertisement.caption().length() == 0 )
+        lblCaption->setVisible( false );
+
     frmButtons->setVisible( m_bPanelVisible );
 
     if( m_obAdvertisement.timerLength() > 0 )
@@ -57,9 +70,6 @@ cDlgAdvertisementWindow::cDlgAdvertisementWindow(QWidget *parent, unsigned int i
 cDlgAdvertisementWindow::~cDlgAdvertisementWindow()
 {
     cTracer obTrace( "cDlgAdvertisementWindow::~cDlgAdvertisementWindow" );
-
-    g_poPrefs->setDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( width(), height() ) );
-    g_poPrefs->setDialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( x(), y() ) );
 }
 
 void cDlgAdvertisementWindow::refreshBackground()
@@ -71,13 +81,85 @@ void cDlgAdvertisementWindow::refreshBackground()
     setPalette( obFramePalette );
 }
 
-void cDlgAdvertisementWindow::keyPressEvent ( QKeyEvent */*p_poEvent*/ )
+void cDlgAdvertisementWindow::keyPressEvent ( QKeyEvent *p_poEvent )
 {
-    return;
+    if( p_poEvent->key() == Qt::Key_Control )
+    {
+        m_bCtrlPressed = true;
+    }
+    if( p_poEvent->key() == Qt::Key_Shift )
+    {
+        m_bShiftPressed = true;
+    }
+
+    if( m_bCtrlPressed )
+    {
+        if( m_bShiftPressed )
+        {
+            switch( p_poEvent->key() )
+            {
+                case Qt::Key_Up:
+                    resize( width(), height()-1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Down:
+                    resize( width(), height()+1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Left:
+                    resize( width()-1, height() );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Right:
+                    resize( width()+1, height() );
+                    p_poEvent->accept();
+                    break;
+                default: p_poEvent->ignore();
+            }
+        }
+        else
+        {
+            switch( p_poEvent->key() )
+            {
+                case Qt::Key_Up:
+                    move( x(), y()-1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Down:
+                    move( x(), y()+1 );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Left:
+                    move( x()-1, y() );
+                    p_poEvent->accept();
+                    break;
+                case Qt::Key_Right:
+                    move( x()+1, y() );
+                    p_poEvent->accept();
+                    break;
+                default: p_poEvent->ignore();
+            }
+        }
+    }
+}
+
+void cDlgAdvertisementWindow::keyReleaseEvent( QKeyEvent *p_poEvent )
+{
+    if( p_poEvent->key() == Qt::Key_Control )
+    {
+        m_bCtrlPressed = false;
+    }
+    if( p_poEvent->key() == Qt::Key_Shift )
+    {
+        m_bShiftPressed = false;
+    }
 }
 
 void cDlgAdvertisementWindow::timerEvent(QTimerEvent *)
 {
+    killTimer( m_nTimer );
+    m_nTimer = 0;
+
     if( m_nImageCounter == m_qslImages.size()-1 )
     {
         m_nImageCounter = 0;
@@ -86,13 +168,66 @@ void cDlgAdvertisementWindow::timerEvent(QTimerEvent *)
     {
         m_nImageCounter++;
     }
+
+    QCoreApplication::processEvents();
+
     _loadImage();
+
+    if( m_obAdvertisement.timerLength() > 0 )
+        m_nTimer = startTimer( m_obAdvertisement.timerLength() * 1000 );
 }
 
 void cDlgAdvertisementWindow::mousePressEvent ( QMouseEvent *p_poEvent )
 {
+    m_bMousePressed = true;
+
+    m_nMouseX = p_poEvent->pos().x();
+    m_nMouseY = p_poEvent->pos().y();
+
+    if( p_poEvent->pos().x() > width()-7 &&
+        p_poEvent->pos().x() < width()+13 )
+    {
+        setCursor( Qt::SizeHorCursor );
+    }
+    else if( p_poEvent->pos().y() > height()-7 &&
+             p_poEvent->pos().y() < height()+13 )
+    {
+        setCursor( Qt::SizeVerCursor );
+    }
+    p_poEvent->accept();
+}
+void cDlgAdvertisementWindow::mouseReleaseEvent ( QMouseEvent *p_poEvent )
+{
+    m_bMousePressed = false;
+    setCursor( Qt::ArrowCursor );
+    p_poEvent->accept();
+}
+
+void cDlgAdvertisementWindow::mouseMoveEvent ( QMouseEvent *p_poEvent )
+{
+    if( m_bMousePressed )
+    {
+        if( cursor().shape() == Qt::SizeHorCursor )
+        {
+            resize( p_poEvent->pos().x(), height() );
+        }
+        else if( cursor().shape() == Qt::SizeVerCursor )
+        {
+            resize( width(), p_poEvent->pos().y() );
+        }
+        else
+        {
+            move( x() + p_poEvent->pos().x() - m_nMouseX,
+                  y() + p_poEvent->pos().y() - m_nMouseY );
+        }
+    }
+    p_poEvent->accept();
+}
+
+void cDlgAdvertisementWindow::mouseDoubleClickEvent ( QMouseEvent *p_poEvent )
+{
     _showButtonPanel();
-    p_poEvent->ignore();
+    p_poEvent->accept();
 }
 
 void cDlgAdvertisementWindow::_loadImage()
@@ -129,7 +264,11 @@ void cDlgAdvertisementWindow::on_pbRefresh_clicked()
     m_obAdvertisement.load( id );
 
     setWindowTitle( m_obAdvertisement.caption() );
+    lblCaption->setText( QString("   ")+m_obAdvertisement.caption() );
     refreshBackground();
+
+    if( m_obAdvertisement.caption().length() == 0 )
+        lblCaption->setVisible( false );
 
     m_qslImages = m_obAdvertisement.filenames().split("#");
 
@@ -148,16 +287,26 @@ void cDlgAdvertisementWindow::on_pbSettings_clicked()
 
 void cDlgAdvertisementWindow::_showButtonPanel()
 {
+    if( m_bPanelVisible )
+    {
+        m_bPanelVisible = false;
+//        setWindowFlags( Qt::Dialog | Qt::FramelessWindowHint );
+//        show();
+    }
+    else
+    {
+        m_bPanelVisible = true;
+//        setWindowFlags( m_wndFlags );
+//        show();
+    }
     if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
     {
-        if( m_bPanelVisible )
-        {
-            m_bPanelVisible = false;
-        }
-        else
-        {
-            m_bPanelVisible = true;
-        }
         frmButtons->setVisible( m_bPanelVisible );
     }
+}
+
+void cDlgAdvertisementWindow::on_pbSave_clicked()
+{
+    g_poPrefs->setDialogSize( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( width(), height() ) );
+    g_poPrefs->setDialogPosition( QString("Ad%1").arg(m_obAdvertisement.id()), QPoint( x(), y() ) );
 }

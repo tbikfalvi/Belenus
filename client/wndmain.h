@@ -42,6 +42,7 @@ public:
     void startMainTimer();
     void autoSynchronizeGlobalData();
     void showProgress();
+    void setCommunicationEnabled( bool p_bEnabled = false );
 
     int customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 
@@ -55,6 +56,7 @@ private:
 
     QLabel                   m_lblStatusLeft;
     QPushButton              m_pbStatusGibbig;
+    QPushButton              m_pbStatusCommunication;
     QLabel                   m_lblStatusRight;
     cMdiPanels              *mdiPanels;
     cDlgProgress            *m_dlgProgress;
@@ -174,6 +176,7 @@ private slots:
     void on_GibbigIconClicked();
     void on_action_Advertisements_triggered();
     void on_GibbigPatientCardUpdate(QString p_qsMessage,QString p_qsId);
+    void on_CommunicationButtonClicked();
 };
 
 #endif

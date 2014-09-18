@@ -26,7 +26,7 @@ void CS_Communication_Demo::init( int )
 
 bool CS_Communication_Demo::isHardwareConnected( void )
 {
-    return true;
+    return false;
 }
 
 bool CS_Communication_Demo::checkHardwarePanel( int )

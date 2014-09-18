@@ -20,19 +20,6 @@ win32:DEFINES -= UNICODE
 
 FORMS       += dlgMain.ui
 
-SOURCES     += ../framework/dbconnection.cpp \
-               ../framework/qtmysqlconnection.cpp \
-               ../framework/qtmysqlquerymodel.cpp \
-               ../framework/qtlogger.cpp \
-               ../framework/logger/FileWriter.cpp \
-               ../framework/tracer.cpp \
-               main.cpp \
-               dlgMain.cpp \
-               ../client/communication_serial.cpp \
-               ../client/ClassSerialComm.cpp \
-               ../client/ClassHardware.cpp \
-               cregistry.cpp
-
 HEADERS     += ../framework/dbconnection.h \
                ../framework/qtmysqlconnection.h \
                ../framework/qtmysqlquerymodel.h \
@@ -46,4 +33,17 @@ HEADERS     += ../framework/dbconnection.h \
                ../client/communication_defines.h \
                ../client/communication.h \
                cregistry.h
+
+SOURCES     += ../framework/dbconnection.cpp \
+               ../framework/qtmysqlconnection.cpp \
+               ../framework/qtmysqlquerymodel.cpp \
+               ../framework/qtlogger.cpp \
+               ../framework/logger/FileWriter.cpp \
+               ../framework/tracer.cpp \
+               main.cpp \
+               dlgMain.cpp \
+               ../client/communication_serial.cpp \
+               ../client/ClassSerialComm.cpp \
+               ../client/ClassHardware.cpp \
+               cregistry.cpp
 
