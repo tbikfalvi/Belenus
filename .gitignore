@@ -8,3 +8,4 @@ install/*.qm
 serveradmin/*.pro.*
 viewer/*.pro.*
 advertisement/*.pro.*
+startup/*.pro.*
