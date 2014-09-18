@@ -1,7 +1,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui
+QT          += core gui xml
 CONFIG      += qt
 RESOURCES   += startup.qrc
 RC_FILE      = startup.rc

@@ -1,4 +1,5 @@
 
+#include <QDomDocument>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QSettings>
@@ -6,6 +7,10 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
+#define PROCESS_INSTALL 1
+#define PROCESS_REMOVE  2
+#define PROCESS_UPDATE  3
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cmbLanguage->addItem( "Magyar (hu)" );
     ui->cmbLanguage->addItem( "English (en)" );
     ui->cmbLanguage->addItem( "Deutsch (de)" );
-    ui->cmbLanguage->addItem( "Slovensky (sk)" );
+//    ui->cmbLanguage->addItem( "Slovensky (sk)" );
 
     ui->ledDirectoryResource->setToolTip( "c:/BelenusUpdate/Download" );
     ui->ledDirectoryBackup->setToolTip( "c:/BelenusUpdate/Backup" );
@@ -172,6 +177,23 @@ void MainWindow::on_pbDirectoryBackup_clicked()
 
 void MainWindow::on_process_selected()
 {
+    if( ui->rbProcessInstall->isChecked() )
+    {
+        m_nProcessType = PROCESS_INSTALL;
+    }
+    else if( ui->rbProcessRemove->isChecked() )
+    {
+        m_nProcessType = PROCESS_REMOVE;
+    }
+    else if( ui->rbProcessUpdate->isChecked() )
+    {
+        m_nProcessType = PROCESS_UPDATE;
+    }
+    else
+    {
+        return;
+    }
+
     ui->pbStart->setEnabled( true );
 }
 
@@ -180,16 +202,42 @@ void MainWindow::on_pbStart_clicked()
     ui->pbStart->setVisible( false );
     ui->progressBar->setVisible( true );
 
-    if( _createPath( ui->ledDirectoryStartup->text() ) &&
-        _createPath( ui->ledDirectoryTarget->text() ) &&
-        _createPath( ui->ledDirectoryResource->toolTip() ) &&
-        _createPath( ui->ledDirectoryBackup->toolTip() ) )
+    switch( m_nProcessType )
     {
-        ui->progressBar->setValue( 4 );
-        _createSettingsFile();
-        ui->progressBar->setValue( 5 );
-        //close();
+        case PROCESS_INSTALL:
+        {
+            if( _createPath( ui->ledDirectoryStartup->text() ) &&
+                _createPath( QString("%1/lang").arg(ui->ledDirectoryStartup->text()) ) &&
+                _createPath( QString("%1/resources").arg(ui->ledDirectoryStartup->text()) ) &&
+                _createPath( QString("%1/sqldrivers").arg(ui->ledDirectoryStartup->text()) ) &&
+                _createPath( ui->ledDirectoryTarget->text() ) &&
+                _createPath( ui->ledDirectoryResource->toolTip() ) &&
+                _createPath( ui->ledDirectoryBackup->toolTip() ) )
+            {
+                ui->progressBar->setValue( 1 );
+                _createSettingsFile();
+                ui->progressBar->setValue( 2 );
+                _copyUpdateFiles();
+            }
+            else
+            {
+                return;
+            }
+            break;
+        }
+        case PROCESS_REMOVE:
+        {
+            break;
+        }
+        case PROCESS_UPDATE:
+        {
+            break;
+        }
+        default:
+            return;
     }
+
+    close();
 }
 
 bool MainWindow::_createPath(QString p_qsPath)
@@ -251,9 +299,99 @@ bool MainWindow::_createSettingsFile()
     obPrefFile.setValue( QString::fromAscii( "PreProcess/Address" ), qsAddress );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), qsInfoFile );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/InstallDir" ), ui->ledDirectoryTarget->text() );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/DownloadDir" ), ui->ledDirectoryResource->toolTip() );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/BackupDir" ), ui->ledDirectoryBackup->toolTip() );
 
     obPrefFile.setValue( QString::fromAscii( "PostProcess/HomeDir" ), "" );
     obPrefFile.setValue( QString::fromAscii( "PostProcess/File" ), "" );
+
+    return true;
+}
+
+//=================================================================================================
+// _progressStep
+//-------------------------------------------------------------------------------------------------
+//
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_progressStep()
+//-------------------------------------------------------------------------------------------------
+{
+    if( ui->progressBar->value() == ui->progressBar->maximum() )
+        return;
+
+    ui->progressBar->setValue( ui->progressBar->value()+1 );
+}
+//=================================================================================================
+// _copyUpdateFiles
+//-------------------------------------------------------------------------------------------------
+bool MainWindow::_copyUpdateFiles()
+//-------------------------------------------------------------------------------------------------
+{
+    QDomDocument    *obProcessDoc   = new QDomDocument( "StartupProcess" );
+    QString          qsFileName     = QString( "%1/settings/updater.xml" ).arg( QDir::currentPath() );
+
+    qsFileName.replace("\\","/");
+    qsFileName.replace("//","/");
+
+    QFile        qfFile( qsFileName );
+    QString      qsErrorMsg  = "";
+    int          inErrorLine = 0;
+
+    qfFile.seek( 0 );
+    if( !obProcessDoc->setContent( &qfFile, &qsErrorMsg, &inErrorLine ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr( "Error occured during parsing file:\n'%1'\n\nError in line %2: %3" ).arg( qsFileName ).arg( inErrorLine ).arg( qsErrorMsg ) );
+        qfFile.close();
+        return false;
+    }
+    qfFile.close();
+
+    QDomElement      docRoot    = obProcessDoc->documentElement();
+    QDomNodeList     obFiles    = docRoot.elementsByTagName( "files" )
+                                         .at( 0 ).toElement().elementsByTagName( "file" );
+
+    for( int i=0; i<obFiles.count(); i++ )
+    {
+        QString qsSrc   = obFiles.at(i).toElement().attribute("src");
+        QString qsDst   = obFiles.at(i).toElement().attribute("dst");
+
+        qsSrc.replace( "%INSTALL_DIR%", ui->ledDirectoryStartup->text() );
+        qsSrc.replace( "%DOWNLOAD_DIR%", ui->ledDirectoryResource->toolTip() );
+        qsSrc.replace( "%BACKUP_DIR%", ui->ledDirectoryBackup->toolTip() );
+        qsSrc.replace( "%CURRENT_DIR%", QDir::currentPath() );
+        qsSrc.replace("\\","/");
+        qsSrc.replace("//","/");
+
+        qsDst.replace( "%INSTALL_DIR%", ui->ledDirectoryStartup->text() );
+        qsDst.replace( "%DOWNLOAD_DIR%", ui->ledDirectoryResource->toolTip() );
+        qsDst.replace( "%BACKUP_DIR%", ui->ledDirectoryBackup->toolTip() );
+        qsDst.replace( "%CURRENT_DIR%", QDir::currentPath() );
+        qsDst.replace("\\","/");
+        qsDst.replace("//","/");
+
+        if( QFile::exists(qsDst) )
+        {
+            QFile::remove(qsDst);
+        }
+
+        QDir        qdDst;
+        QFileInfo   qfiDst( qsDst );
+
+        qdDst.setPath( qfiDst.absolutePath() );
+        if( !qdDst.exists() )
+        {
+            qdDst.mkpath( qfiDst.absolutePath() );
+        }
+
+        if( !QFile::copy( qsSrc, qsDst ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( qsSrc ).arg( qsDst ) );
+            return false;
+        }
+        _progressStep();
+    }
 
     return true;
 }

@@ -35,8 +35,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    int m_nProcessType;
+
     bool _createPath( QString p_qsPath );
     bool _createSettingsFile();
+    void _progressStep();
+    bool _copyUpdateFiles();
 };
 
 #endif // MAINWINDOW_H
