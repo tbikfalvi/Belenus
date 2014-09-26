@@ -40,7 +40,8 @@ private:
     bool _createPath( QString p_qsPath );
     bool _createSettingsFile();
     void _progressStep();
-    bool _copyUpdateFiles();
+    bool _copyUpdaterFiles();
+    bool _copyFile( QString p_qsSrc, QString p_qsDst );
 };
 
 #endif // MAINWINDOW_H

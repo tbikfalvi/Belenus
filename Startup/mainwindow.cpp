@@ -217,7 +217,7 @@ void MainWindow::on_pbStart_clicked()
                 ui->progressBar->setValue( 1 );
                 _createSettingsFile();
                 ui->progressBar->setValue( 2 );
-                _copyUpdateFiles();
+                _copyUpdaterFiles();
             }
             else
             {
@@ -322,9 +322,9 @@ void MainWindow::_progressStep()
     ui->progressBar->setValue( ui->progressBar->value()+1 );
 }
 //=================================================================================================
-// _copyUpdateFiles
+// _copyUpdaterFiles
 //-------------------------------------------------------------------------------------------------
-bool MainWindow::_copyUpdateFiles()
+bool MainWindow::_copyUpdaterFiles()
 //-------------------------------------------------------------------------------------------------
 {
     QDomDocument    *obProcessDoc   = new QDomDocument( "StartupProcess" );
@@ -370,27 +370,34 @@ bool MainWindow::_copyUpdateFiles()
         qsDst.replace("\\","/");
         qsDst.replace("//","/");
 
-        if( QFile::exists(qsDst) )
-        {
-            QFile::remove(qsDst);
-        }
-
-        QDir        qdDst;
-        QFileInfo   qfiDst( qsDst );
-
-        qdDst.setPath( qfiDst.absolutePath() );
-        if( !qdDst.exists() )
-        {
-            qdDst.mkpath( qfiDst.absolutePath() );
-        }
-
-        if( !QFile::copy( qsSrc, qsDst ) )
-        {
-            QMessageBox::warning( this, tr("Warning"),
-                                  tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( qsSrc ).arg( qsDst ) );
-            return false;
-        }
+        _copyFile( qsSrc, qsDst );
         _progressStep();
+    }
+
+    return true;
+}
+
+bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
+{
+    if( QFile::exists(p_qsDst) )
+    {
+        QFile::remove(p_qsDst);
+    }
+
+    QDir        qdDst;
+    QFileInfo   qfiDst( p_qsDst );
+
+    qdDst.setPath( qfiDst.absolutePath() );
+    if( !qdDst.exists() )
+    {
+        qdDst.mkpath( qfiDst.absolutePath() );
+    }
+
+    if( !QFile::copy( p_qsSrc, p_qsDst ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( p_qsSrc ).arg( p_qsDst ) );
+        return false;
     }
 
     return true;

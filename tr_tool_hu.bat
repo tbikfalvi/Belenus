@@ -1,7 +1,5 @@
 cd dbtool
 C:\DevEnv\Qt\4.8.6\bin\lupdate DBTool.pro
-cd ..
-C:\DevEnv\Qt\4.8.6\bin\linguist dbtool/dbtool_hu.ts
-cd dbtool
-copy dbtool_hu.qm "c:\Program Files\Belenus\lang\dbtool_hu.qm"
+C:\DevEnv\Qt\4.8.6\bin\linguist dbtool_hu.ts
+copy dbtool_hu.qm "c:\Install\Belenus\Desktop\MasterCD\lang\dbtool_hu.qm"
 pause

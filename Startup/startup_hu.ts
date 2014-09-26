@@ -120,20 +120,22 @@
         <translation>Folyamat indítása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="74"/>
-        <location filename="mainwindow.cpp" line="87"/>
-        <location filename="mainwindow.cpp" line="124"/>
-        <location filename="mainwindow.cpp" line="162"/>
+        <location filename="mainwindow.cpp" line="79"/>
+        <location filename="mainwindow.cpp" line="92"/>
+        <location filename="mainwindow.cpp" line="129"/>
+        <location filename="mainwindow.cpp" line="167"/>
         <source>Select Directory</source>
         <translation>Válasszon könyvtárat</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="203"/>
+        <location filename="mainwindow.cpp" line="251"/>
+        <location filename="mainwindow.cpp" line="343"/>
+        <location filename="mainwindow.cpp" line="398"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="204"/>
+        <location filename="mainwindow.cpp" line="252"/>
         <source>The following directory can not be created:
 
 %1
@@ -144,6 +146,28 @@ Please create the directory manually and restart process.</source>
 %1
 
 Kérem hozza létre kézzel és indítsa újra a folyamatot.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="344"/>
+        <source>Error occured during parsing file:
+&apos;%1&apos;
+
+Error in line %2: %3</source>
+        <translation>Hiba következett be az állomány értelmezésekor:
+&apos;%1&apos;
+
+Hiba a sorban %2: %3</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="399"/>
+        <source>Unable to copy file ...
+
+Source: %1
+Destination: %2</source>
+        <translation>Nem sikerült másolni az állományt ...
+
+Forrás: %1
+Cél: %2</translation>
     </message>
 </context>
 </TS>
