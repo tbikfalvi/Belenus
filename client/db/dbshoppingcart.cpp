@@ -185,14 +185,14 @@ void cDBShoppingCart::remove() throw( cSevException )
     {
         QString  qsQuery;
 
-        if( m_qsArchive == "NEW" )
-        {
+/*        if( m_qsArchive == "NEW" )
+        {*/
             qsQuery = "DELETE FROM shoppingcartitems ";
-        }
+/*        }
         else
         {
-            qsQuery = "UPDATE shoppingcartitems SET active=0, archive=\"MOD\" ";
-        }
+            qsQuery = "UPDATE shoppingcartitems SET archive=\"MOD\" ";
+        }*/
         qsQuery += QString( " WHERE shoppingCartItemId = %1" ).arg( m_uiId );
 
         QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );

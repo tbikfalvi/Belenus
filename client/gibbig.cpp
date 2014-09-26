@@ -596,6 +596,12 @@ void cGibbig::_activateProcess()
 {
     cTracer obTrace( "cGibbig::_activateProcess" );
 
+    if( !g_poPrefs->isGibbigEnabled() )
+    {
+        g_obLogger(cSeverity::DEBUG) << "GIBBIG DISABLED" << EOM;
+        return;
+    }
+
     if( m_teGibbigAction == cGibbigAction::GA_DEFAULT )
     {
         if( QDateTime::currentDateTime() >= m_qdtExpiration )
