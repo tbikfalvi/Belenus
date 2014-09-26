@@ -11,6 +11,8 @@ cDlgHardwareTest::cDlgHardwareTest( QWidget *p_poParent )
 
     setupUi( this );
 
+    m_nRelayCount = 0;
+
     setWindowTitle( tr( "Hardware Test" ) );
     setWindowIcon( QIcon("./resources/40x40_device_settings.png") );
 
@@ -32,8 +34,6 @@ cDlgHardwareTest::cDlgHardwareTest( QWidget *p_poParent )
 
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
-    on_pbTestHardwareConnection_clicked();
-
     timerHWTest = new QTimer(this);
     connect(timerHWTest, SIGNAL(timeout()), this, SLOT(updateHWStatus()));
     timerRelayTest = new QTimer(this);
@@ -42,6 +42,8 @@ cDlgHardwareTest::cDlgHardwareTest( QWidget *p_poParent )
     m_nRelayCount = 0;
 
     g_poHardware->setTestMode( true );
+
+    on_pbTestHardwareConnection_clicked();
 
     timerHWTest->start(200);
 }

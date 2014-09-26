@@ -436,49 +436,49 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
-        <location filename="general.cpp" line="135"/>
+        <location filename="general.cpp" line="136"/>
         <source>Mon</source>
         <translation>Hé</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
-        <location filename="general.cpp" line="136"/>
+        <location filename="general.cpp" line="137"/>
         <source>Tue</source>
         <translation>Ke</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
-        <location filename="general.cpp" line="137"/>
+        <location filename="general.cpp" line="138"/>
         <source>Wed</source>
         <translation>Sze</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
-        <location filename="general.cpp" line="138"/>
+        <location filename="general.cpp" line="139"/>
         <source>Thu</source>
         <translation>Csü</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
-        <location filename="general.cpp" line="139"/>
+        <location filename="general.cpp" line="140"/>
         <source>Fri</source>
         <translation>Pé</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
-        <location filename="general.cpp" line="140"/>
+        <location filename="general.cpp" line="141"/>
         <source>Sat</source>
         <translation>Szo</translation>
     </message>
     <message>
         <location filename="db/dbpatientcard.cpp" line="357"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
-        <location filename="general.cpp" line="141"/>
+        <location filename="general.cpp" line="142"/>
         <source>Sun</source>
         <translation>Vas</translation>
     </message>
@@ -488,38 +488,38 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation>A bérlet használható:</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="74"/>
+        <location filename="general.cpp" line="75"/>
         <location filename="wndmain.cpp" line="2905"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="78"/>
+        <location filename="general.cpp" line="79"/>
         <location filename="wndmain.cpp" line="2909"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="82"/>
+        <location filename="general.cpp" line="83"/>
         <location filename="wndmain.cpp" line="2913"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="86"/>
+        <location filename="general.cpp" line="87"/>
         <location filename="wndmain.cpp" line="2917"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="90"/>
-        <location filename="general.cpp" line="178"/>
+        <location filename="general.cpp" line="91"/>
+        <location filename="general.cpp" line="179"/>
         <location filename="wndmain.cpp" line="2921"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="general.cpp" line="179"/>
+        <location filename="general.cpp" line="180"/>
         <source>Do you want to backup database now?</source>
         <translation>Archiválni akarja most az adatbázist?</translation>
     </message>
@@ -2129,17 +2129,17 @@ Vonalkód	Bérlettípus</translation>
 <context>
     <name>cDlgHardwareTest</name>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="14"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="16"/>
         <source>Hardware Test</source>
         <translation>Hardver teszt</translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="205"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="207"/>
         <source>Hardware available</source>
         <translation>A hardver rendelkezésre áll</translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="210"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="212"/>
         <source>Hardware unavailable</source>
         <translation>A hardver nem elérhető</translation>
     </message>
@@ -2608,30 +2608,40 @@ discounts</source>
 <context>
     <name>cDlgLogIn</name>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="13"/>
         <source>Log In</source>
-        <translation>Bejelentkezés</translation>
+        <translation type="obsolete">Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="16"/>
         <source>&amp;Log In</source>
-        <translation>&amp;Bejelentkezés</translation>
+        <translation type="obsolete">&amp;Bejelentkezés</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="20"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Kilépés</translation>
+        <translation type="obsolete">&amp;Kilépés</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="60"/>
         <source>Login failed</source>
-        <translation>A bejelentkezés sikertelen</translation>
+        <translation type="obsolete">A bejelentkezés sikertelen</translation>
     </message>
     <message>
-        <location filename="dlg/dlglogin.cpp" line="61"/>
         <source>Incorrect User Name and/or Password. Please try again.</source>
-        <translation>Nem megfelelő felhasználó név és/vagy jelszó.
+        <translation type="obsolete">Nem megfelelő felhasználó név és/vagy jelszó.
 Kérem próbálkozzon újra.</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlglogin.cpp" line="15"/>
+        <source>Enter password</source>
+        <translation>Adja meg a jelszót</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlglogin.cpp" line="18"/>
+        <source>&amp;Ok</source>
+        <translation>&amp;Ok</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlglogin.cpp" line="22"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Mégsem</translation>
     </message>
 </context>
 <context>
@@ -2910,76 +2920,81 @@ Könyvelés: %4 bejegyzés</translation>
         <translation>Maximum üzemóra (óra) : </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="98"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="106"/>
+        <source>Enable temporary controls can be used by System Administrator.</source>
+        <translation>Rendszer Adminisztrátori hozzáférés ideiglenes engedélyezése</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgpanelsettings.cpp" line="114"/>
         <source>Group: </source>
         <translation>Csoport: </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="119"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="132"/>
         <source> Copy to all </source>
         <oldsource>Copy to all</oldsource>
         <translation> Másolás a többihez </translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="120"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="133"/>
         <source>Copy and assign all device usages to all other devices.</source>
         <translation>A géphasználatok másolása az összes többi géphez.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="194"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="208"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="195"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="209"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="196"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="212"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="210"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="226"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="197"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="213"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="211"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="227"/>
         <source>Time length</source>
         <translation>Idő intervallum</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="198"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="214"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="212"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="228"/>
         <source>Price</source>
         <translation>Fizetendő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="199"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="213"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="255"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="269"/>
         <source>New paneluse</source>
         <translation>Új kezelési idő</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="275"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="289"/>
         <source>Edit paneluse</source>
         <translation>Kezelési idő szerkesztése</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="294"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="308"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="329"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="343"/>
         <source>Maximum worktime of panel can not be empty.</source>
         <translation>A maximum üzemóra nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="334"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="348"/>
         <source>Maximum worktime has to be greater than zero.</source>
         <translation>A maximum üzemórának nagyobbnak kell lennie nullánál.</translation>
     </message>
@@ -2996,19 +3011,19 @@ Könyvelés: %4 bejegyzés</translation>
         <translation type="obsolete">Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="295"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="309"/>
         <source>Are you sure you want to delete this paneluse?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a kezelési időt?</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="322"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="329"/>
-        <location filename="crud/dlgpanelsettings.cpp" line="334"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="336"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="343"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="348"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="crud/dlgpanelsettings.cpp" line="322"/>
+        <location filename="crud/dlgpanelsettings.cpp" line="336"/>
         <source>Title of panel can not be empty.</source>
         <translation>A gépet azonosító fejléc szövege nem lehet üres.</translation>
     </message>
@@ -7106,22 +7121,22 @@ Kérem ellenőrizze a liszensz kulcsot és írja be mégegyszer ha szükséges.<
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="385"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="380"/>
         <source>Using device: %1</source>
         <translation>Géphasználat: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="393"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="388"/>
         <source>Selling product: %1</source>
         <translation>Termék eladás: %1</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="404"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="399"/>
         <source>Sell patientcard [%1]</source>
         <translation>Bérlet eladás [%1]</translation>
     </message>
     <message>
-        <location filename="crud/dlgshoppingcart.cpp" line="408"/>
+        <location filename="crud/dlgshoppingcart.cpp" line="403"/>
         <source>Refill patientcard [%1]</source>
         <translation>Bérlet feltöltés [%1]</translation>
     </message>
