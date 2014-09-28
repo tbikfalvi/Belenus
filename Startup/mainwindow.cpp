@@ -1,4 +1,5 @@
 
+#include <QProcessEnvironment>
 #include <QDomDocument>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -12,9 +13,7 @@
 #define PROCESS_REMOVE  2
 #define PROCESS_UPDATE  3
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
@@ -24,15 +23,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cmbLanguage->addItem( "Deutsch (de)" );
 //    ui->cmbLanguage->addItem( "Slovensky (sk)" );
 
-    ui->ledDirectoryResource->setToolTip( "c:/BelenusUpdate/Download" );
-    ui->ledDirectoryBackup->setToolTip( "c:/BelenusUpdate/Backup" );
-
     connect( ui->rbProcessInstall, SIGNAL(clicked()), this, SLOT(on_process_selected()) );
     connect( ui->rbProcessUpdate, SIGNAL(clicked()), this, SLOT(on_process_selected()) );
     connect( ui->rbProcessRemove, SIGNAL(clicked()), this, SLOT(on_process_selected()) );
 
     ui->pbStart->setEnabled( false );
     ui->progressBar->setVisible( false );
+
+    QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
+
+    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/BelenusUpdate" ) );
+    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    ui->ledDirectoryResource->setText( qpeInfo.value( "BelenusResource", "Download" ) );
+    ui->ledDirectoryBackup->setText( qpeInfo.value( "BelenusBackup", "Backup" ) );
+
+    on_ledDirectoryResource_editingFinished();
+    on_ledDirectoryBackup_editingFinished();
 }
 
 MainWindow::~MainWindow()
@@ -64,13 +70,15 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 
 void MainWindow::on_pbDefault_clicked()
 {
-    ui->ledDirectoryStartup->setText( "c:/BelenusUpdate" );
-    ui->ledDirectoryTarget->setText( "c:/Program Files/Belenus" );
+    QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
+
+    ui->ledDirectoryStartup->setText( "C:/BelenusUpdate" );
+    ui->ledDirectoryTarget->setText( "C:/Program Files/Belenus" );
     ui->ledDirectoryResource->setText( "Download" );
     ui->ledDirectoryBackup->setText( "Backup" );
 
-    ui->ledDirectoryResource->setToolTip( "c:/BelenusUpdate/Download" );
-    ui->ledDirectoryBackup->setToolTip( "c:/BelenusUpdate/Backup" );
+    on_ledDirectoryResource_editingFinished();
+    on_ledDirectoryBackup_editingFinished();
 }
 
 void MainWindow::on_pbDirectoryStartup_clicked()
@@ -83,6 +91,8 @@ void MainWindow::on_pbDirectoryStartup_clicked()
     {
         qsDir.replace( '\\', '/' );
         ui->ledDirectoryStartup->setText( qsDir );
+        on_ledDirectoryResource_editingFinished();
+        on_ledDirectoryBackup_editingFinished();
     }
 }
 
@@ -145,7 +155,7 @@ void MainWindow::on_ledDirectoryBackup_editingFinished()
     }
     else
     {
-        QString qsTemp = QString( "%1/%2" ).arg( ui->ledDirectoryBackup->text() )
+        QString qsTemp = QString( "%1/%2" ).arg( ui->ledDirectoryStartup->text() )
                                            .arg( ui->ledDirectoryBackup->text() );
         qsTemp.replace( "\\", "/" );
         qsTemp.replace( "//", "/" );
