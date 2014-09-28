@@ -356,20 +356,23 @@ void cDlgPanelSettings::saveClicked( bool )
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
 
-        if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
+        if( g_obUser.isInGroup(cAccessGroup::ADMIN) || cmbPanelGroup->isEnabled() )
         {
             obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
         }
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) || cmbPanelType->isEnabled() )
         {
             int hour    = ledWorkTimeHour->text().toInt();
             int minute  = ledWorkTimeMin->text().toInt();
             int second  = ledWorkTimeSec->text().toInt();
 
-            obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
-            obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
-            obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+            if( cmbPanelType->isEnabled() )
+                obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+            if( ledWorkTimeHour->isEnabled() )
+                obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+            if( ledMaxWorkTime->isEnabled() )
+                obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
         }
         obDBPanel.save();
 

@@ -82,20 +82,6 @@ void cDlgPanelAppereance::on_cmbPanelStatus_currentIndexChanged(int)
     updatePanelSettings();
 }
 //====================================================================================
-void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
-//====================================================================================
-{
-    QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() ), this );
-    if( obNewColor.isValid() )
-        m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setBackgroundColor( obNewColor.name() );
-
-    QPixmap  obColorIcon( 24, 24 );
-    QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
-    obColorIcon.fill( colorFill );
-    pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
-    frmPanelBody->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
-}
-//====================================================================================
 void cDlgPanelAppereance::on_cmbPanelText_currentIndexChanged(int)
 //====================================================================================
 {
@@ -206,14 +192,64 @@ void cDlgPanelAppereance::on_pbFont_clicked()
     updatePanelSettings();
 }
 //====================================================================================
+void cDlgPanelAppereance::on_pbBackgroundColor_clicked()
+//====================================================================================
+{
+    if( m_bInit ) return;
+
+    QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() ), this );
+    if( obNewColor.isValid() )
+        m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setBackgroundColor( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->backgroundColor() );
+    obColorIcon.fill( colorFill );
+    pbBackgroundColor->setIcon( QIcon( obColorIcon ) );
+    frmPanelBody->setStyleSheet( QString("QFrame { background-color: %1 }").arg( colorFill.name() ) );
+}
+//====================================================================================
 void cDlgPanelAppereance::on_pbTextColor_clicked()
 //====================================================================================
 {
     if( m_bInit ) return;
 
-    QColor obNewColor = QColorDialog::getColor( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ), this );
+    QString qsColor = "";
+
+    switch( cmbPanelText->currentIndex() )
+    {
+        case 0:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor();
+            break;
+        case 1:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->timerFontColor();
+            break;
+        case 2:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->nextFontColor();
+            break;
+        case 3:
+            qsColor = m_obStatusSettings.at(cmbPanelStatus->currentIndex())->infoFontColor();
+            break;
+    }
+
+    QColor obNewColor = QColorDialog::getColor( QColor( qsColor ), this );
     if( obNewColor.isValid() )
-        m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontColor( obNewColor.name() );
+    {
+        switch( cmbPanelText->currentIndex() )
+        {
+            case 0:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setStatusFontColor( obNewColor.name() );
+                break;
+            case 1:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setTimerFontColor( obNewColor.name() );
+                break;
+            case 2:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setNextFontColor( obNewColor.name() );
+                break;
+            case 3:
+                m_obStatusSettings.at(cmbPanelStatus->currentIndex())->setInfoFontColor( obNewColor.name() );
+                break;
+        }
+    }
 
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( m_obStatusSettings.at(cmbPanelStatus->currentIndex())->statusFontColor() ) );
