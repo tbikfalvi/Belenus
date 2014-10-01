@@ -102,7 +102,7 @@ cDlgShoppingCart::cDlgShoppingCart( QWidget *p_poParent ) : cDlgCrud( p_poParent
     m_poBtnNew->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnSave->setVisible(false);
-    m_poBtnDelete->setVisible( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnDelete->setVisible( g_obUser.isInGroup( cAccessGroup::USER ) );
 }
 
 cDlgShoppingCart::~cDlgShoppingCart()
@@ -232,7 +232,7 @@ void cDlgShoppingCart::enableButtons()
 {
     cTracer obTracer( "cDlgShoppingCart::enableButtons" );
 
-    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 && g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    m_poBtnDelete->setEnabled( m_inSelectedCount > 0 && g_obUser.isInGroup( cAccessGroup::USER ) );
     pbPayment->setEnabled( m_inSelectedCount > 0 );
 }
 
@@ -281,12 +281,6 @@ void cDlgShoppingCart::deleteClicked( bool )
                     obDBPatientCard.load( obDBShoppingCart.patientCardId() );
                     obDBPatientCardType.load( obDBPatientCard.patientCardTypeId() );
 
-                    obDBPatientCard.setUnits( obDBPatientCard.units() - obDBPatientCardType.units() );
-                    if( obDBPatientCard.units() < 0 ) obDBPatientCard.setUnits( 0 );
-
-                    obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft() - obDBPatientCardType.units() * obDBPatientCardType.unitTime() * 60 );
-                    if( obDBPatientCard.timeLeft() < 0 ) obDBPatientCard.setTimeLeft( 0 );
-
                     obDBPatientCard.save();
 
                     QStringList qslUnitIds = obDBShoppingCart.comment().split("#");
@@ -299,6 +293,7 @@ void cDlgShoppingCart::deleteClicked( bool )
                         obDBPatientcardUnit.remove();
                     }
                     obDBPatientCard.synchronizeUnits();
+                    obDBPatientCard.synchronizeTime();
                 }
                 catch( cSevException &e )
                 {

@@ -46,6 +46,7 @@ public:
     int              customMsgBox( QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details = "" );
 //    QString          convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
     void             backupDatabase( QWidget *parent );
+    bool             isSystemAdmin();
 
 private:
     QApplication    *m_poMainApplication;

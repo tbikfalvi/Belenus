@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="hu_HU">
+<TS version="2.0" language="de_DE">
 <context>
     <name>QObject</name>
     <message>
         <location filename="main.cpp" line="56"/>
         <source>Warning</source>
-        <translation>Figyelmeztetés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="main.cpp" line="57"/>
@@ -19,15 +19,7 @@ Error code: %1
 4 &gt; An error occurred when attempting to write to the process.
 3 &gt; An error occurred when attempting to read from the process.
 5 &gt; An unknown error occurred.</source>
-        <translation>Hiba következett be az következő program indításakor: Advertisement.exe
-
-Hiba kód: %1</translation>
-    </message>
-    <message>
-        <source>Unable to start advertisement window.
-The identification number is not defined.</source>
-        <translation type="obsolete">Nem lehet elindítani a reklám ablakot.
-Az azonosító szám nincs megadva.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -35,32 +27,32 @@ Az azonosító szám nincs megadva.</translation>
     <message>
         <location filename="advertisementwindow.ui" line="14"/>
         <source>Advertisement</source>
-        <translation>Reklám</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="advertisementwindow.ui" line="57"/>
         <source>TextLabel</source>
-        <translation>Fejléc</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="advertisementwindow.ui" line="125"/>
         <source>Start slideshow</source>
-        <translation>Képváltó elindítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="advertisementwindow.ui" line="150"/>
         <source>Pause slideshow</source>
-        <translation>Képváltó leállítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="advertisementwindow.ui" line="188"/>
         <source>Save window position and size</source>
-        <translation>Ablak pozíciójának és méretének elmentése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="advertisementwindow.ui" line="213"/>
         <source>Reload advertisement settings</source>
-        <translation>A reklám beállítások frissítése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

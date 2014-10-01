@@ -34,6 +34,7 @@ public:
     QSpacerItem     *horizontalSpacer3;
     QPushButton     *pbCopyToAll;
     QHBoxLayout     *horizontalLayout3;
+    QPushButton     *pbEnableSystemAdmin;
 
     cDlgPanelSettings( QWidget *p_poParent = 0, unsigned int p_uiPanelId = 0 );
     virtual ~cDlgPanelSettings();
@@ -55,6 +56,7 @@ protected slots:
     virtual void saveClicked( bool );
     virtual void on_pbWTReset_clicked( bool );
     virtual void on_pbCopyToAll_clicked( bool );
+    virtual void on_pbEnableSystemAdmin_clicked();
 };
 
 #endif // DLGPANELSETTINGS_H

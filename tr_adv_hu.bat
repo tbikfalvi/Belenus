@@ -1,7 +1,5 @@
 cd advertisement
 C:\DevEnv\Qt\4.8.6\bin\lupdate advertisement.pro
-cd ..
-C:\DevEnv\Qt\4.8.6\bin\linguist advertisement/advertisement_hu.ts
-cd advertisement
-copy advertisement_hu.qm "c:\Program Files\Belenus\lang\advertisement_hu.qm"
+C:\DevEnv\Qt\4.8.6\bin\linguist advertisement_hu.ts
+copy advertisement_hu.qm "c:\Install\Belenus\Desktop\MasterCD\lang\advertisement_hu.qm"
 pause

@@ -339,7 +339,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setTimeout( 10000 );
 
     this->setFocus();
-m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -873,6 +872,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() || m_bActionProcessing )
         return;
 
+    m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
@@ -1159,7 +1159,7 @@ void cWndMain::updateToolbar()
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
-            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
@@ -1230,7 +1230,9 @@ void cWndMain::timerEvent(QTimerEvent *)
         {
             m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
             g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
-            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+//            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+            m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
+            m_lblStatusLeft.setText( tr("Communication stopped with hardware controller") );
         }
         else
         {

@@ -19,6 +19,7 @@
 
 #include "general.h"
 #include "belenus.h"
+#include "dlg/dlglogin.h"
 
 //====================================================================================
 cGeneral::cGeneral()
@@ -188,6 +189,27 @@ void cGeneral::backupDatabase(QWidget *parent)
         g_obLogger(cSeverity::INFO) << "Database backup process initiated" << EOM;
         QProcess::startDetached( "dbbackup.exe" );
     }
+}
+//====================================================================================
+bool cGeneral::isSystemAdmin()
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT password FROM users WHERE userId=1" );
+        poQuery->first();
+        QString qsPsw = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
 }
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

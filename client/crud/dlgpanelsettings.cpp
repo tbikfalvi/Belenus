@@ -93,6 +93,22 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     ledMaxWorkTime->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( ledMaxWorkTime );
 
+    horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    horizontalLayout2->addItem( horizontalSpacer2 );
+
+    pbEnableSystemAdmin = new QPushButton( this );
+    pbEnableSystemAdmin->setObjectName( QString::fromUtf8( "pbEnableSystemAdmin" ) );
+    pbEnableSystemAdmin->setMinimumWidth( 30 );
+    pbEnableSystemAdmin->setMaximumWidth( 30 );
+    pbEnableSystemAdmin->setMinimumHeight( 30 );
+    pbEnableSystemAdmin->setMaximumHeight( 30 );
+    pbEnableSystemAdmin->setText( "" );
+    pbEnableSystemAdmin->setToolTip( tr("Enable temporary controls can be used by System Administrator.") );
+    pbEnableSystemAdmin->setIconSize( QSize(20,20) );
+    pbEnableSystemAdmin->setIcon( QIcon("./resources/40x40_key.png") );
+    pbEnableSystemAdmin->setEnabled( true );
+    horizontalLayout2->addWidget( pbEnableSystemAdmin );
+
     lblGroup = new QLabel( this );
     lblGroup->setObjectName( QString::fromUtf8( "lblGroup" ) );
     lblGroup->setText( tr("Group: ") );
@@ -102,9 +118,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     cmbPanelGroup->setObjectName( QString::fromUtf8( "cmbPanelGroup" ) );
     cmbPanelGroup->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     horizontalLayout1->addWidget( cmbPanelGroup );
-
-    horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
-    horizontalLayout2->addItem( horizontalSpacer2 );
 
     horizontalLayout3 = new QHBoxLayout();
     horizontalLayout3->setObjectName( QString::fromUtf8( "horizontalLayout3" ) );
@@ -133,6 +146,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     connect( m_poBtnSave, SIGNAL( clicked( bool ) ), this, SLOT( saveClicked( bool ) ) );
     connect( pbWTReset, SIGNAL( clicked( bool ) ), this, SLOT( on_pbWTReset_clicked( bool ) ) );
     connect( pbCopyToAll, SIGNAL( clicked( bool ) ), this, SLOT( on_pbCopyToAll_clicked( bool ) ) );
+    connect( pbEnableSystemAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableSystemAdmin_clicked()) );
 
     if( p_uiPanelId > 0 )
     {
@@ -342,20 +356,23 @@ void cDlgPanelSettings::saveClicked( bool )
         obDBPanel.load( m_uiPanelId );
         obDBPanel.setTitle( ledTitle->text() );
 
-        if( g_obUser.isInGroup(cAccessGroup::ADMIN) )
+        if( g_obUser.isInGroup(cAccessGroup::ADMIN) || cmbPanelGroup->isEnabled() )
         {
             obDBPanel.setPanelGroupId( cmbPanelGroup->itemData( cmbPanelGroup->currentIndex() ).toUInt() );
         }
 
-        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) )
+        if( g_obUser.isInGroup(cAccessGroup::SYSTEM) || cmbPanelType->isEnabled() )
         {
             int hour    = ledWorkTimeHour->text().toInt();
             int minute  = ledWorkTimeMin->text().toInt();
             int second  = ledWorkTimeSec->text().toInt();
 
-            obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
-            obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
-            obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
+            if( cmbPanelType->isEnabled() )
+                obDBPanel.setPanelTypeId( cmbPanelType->itemData( cmbPanelType->currentIndex() ).toUInt() );
+            if( ledWorkTimeHour->isEnabled() )
+                obDBPanel.setWorkTime( hour*3600 + minute*60 + second );
+            if( ledMaxWorkTime->isEnabled() )
+                obDBPanel.setMaxWorkTime( ledMaxWorkTime->text().toUInt() );
         }
         obDBPanel.save();
 
@@ -376,4 +393,19 @@ void cDlgPanelSettings::on_pbCopyToAll_clicked( bool )
     cDlgPanelTypeCopy   obDlgPanelTypeCopy( this, m_uiPanelId );
 
     obDlgPanelTypeCopy.exec();
+}
+
+void cDlgPanelSettings::on_pbEnableSystemAdmin_clicked()
+{
+    if( g_obGen.isSystemAdmin() )
+    {
+        cmbPanelType->setEnabled( true );
+        ledWorkTimeHour->setEnabled( true );
+        ledWorkTimeMin->setEnabled( true );
+        ledWorkTimeSec->setEnabled( true );
+        pbWTReset->setEnabled( true );
+        ledMaxWorkTime->setEnabled( true );
+        cmbPanelGroup->setEnabled( true );
+        pbCopyToAll->setEnabled( true );
+    }
 }
