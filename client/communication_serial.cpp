@@ -630,7 +630,7 @@ void CS_Communication_Serial::HW_Kezel()
          //Adatok kiküldése a moduloknak
          if( bVanKuldeniValoAdat )
          {
-             // Letiltlja az IRQ-t, hogy ne zavarja meg a komunikaciót
+             // Letiltja az IRQ-t, hogy ne zavarja meg a komunikaciót
              DisableModulIRQ();
 
              bool bHiba = false;
@@ -691,6 +691,10 @@ void CS_Communication_Serial::HW_Kezel()
                             bHiba = true;
                      }
                  }
+                 if( bHiba )
+                 {
+                     g_obLogger(cSeverity::DEBUG) << QString("pModul[%1] error").arg(i) << EOM;
+                 }
              }
              if( bHiba )
                  byLedModulOlvasasiHiba++;
@@ -730,31 +734,14 @@ void CS_Communication_Serial::HW_Kezel()
                   else
                   {
                       m_bCommunicationStopped = true;
-/*------------------------------------------------------------------------------------/
-
-    __TO_BE_SOLVED__
-
-                      //Tamas felugrik egy figyelmeztető ablak
-                      //LED Modul komunikaciós HIBA!
-                      if( !bErrorMessageDisplayed )
-                      {
-                         bErrorMessageDisplayed = true;
-                         if( Application->MessageBox( FormLanguage->LangStr(STR_MSG_LEDMODUL_COMMERR).c_str(),
-                                                      FormLanguage->LangStr(STR_MSGBOX_EXCALMATION).c_str(),
-                                                      MB_ICONEXCLAMATION ) == IDOK )
-                         {
-                            bErrorMessageDisplayed = false;
-                         }
-                      }
-/------------------------------------------------------------------------------------*/
                   }
               }
           }
       }
 
-
       if( bSendToModulPower_ON )
       {
+          g_obLogger(cSeverity::DEBUG) << QString("Modul power on") << EOM;
           chSerialOut[0] = MODUL_POWER_ON;
           if( HW_SendRelayMessage( chSerialOut, 1  ) )
           {
@@ -766,6 +753,7 @@ void CS_Communication_Serial::HW_Kezel()
 
       if( bSendToModulPower_OFF )
       {
+          g_obLogger(cSeverity::DEBUG) << QString("Modul power off") << EOM;
           chSerialOut[0] = MODUL_POWER_OFF;
           if( HW_SendRelayMessage( chSerialOut, 1  ) )
               bSendToModulPower_OFF = false;

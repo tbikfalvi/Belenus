@@ -1,6 +1,6 @@
 //====================================================================================
 //
-// Belenus Kliens alkalmazas � Pagony Multimedia Studio Bt - 2010
+// Belenus Kliens alkalmazas © Pagony Multimedia Studio Bt - 2010
 //
 //====================================================================================
 //
@@ -104,14 +104,14 @@
 
 #define SEARCH_HW         'S'//'H'                                 2    'Y'
 
-#define  INIT_REQUEST  'R' // 2 |    'R'         |  4 db 'I' v� laszra v� r 100ms-os szunetekel
+#define  INIT_REQUEST  'R' // 2 |    'R'         |  4 db 'I' vÂ laszra vÂ r 100ms-os szunetekel
 
   // Ezt kovetoen a PIC -kuld 4 byte-ot (Random szamok), majd a PC visszakuldi a
-  // "kisz� molt rtket" 1Byte.
-  // Pic v� lasz SUCCESS / ERROR
-  // Ha sikertelen volt a PC megvarja az 'RR' parancsot es lehet ismet prob� lkozni.
+  // "kiszÂ molt Â‚rtÂ‚ket" 1Byte.
+  // Pic vÂ lasz SUCCESS / ERROR
+  // Ha sikertelen volt a PC megvarja az 'RR' parancsot es lehet ismet probÂ lkozni.
   //
-  // A "Kisz� molt rtket" a kvetkezkpen kell kisz� molni:
+  // A "KiszÂ molt Â‚rtÂ‚ket" a kÂ”vetkezÂ‹kÂ‚pen kell kiszÂ molni:
   //   Ezeket a szamokat irja ki a PIC 4db 'I' utan:
   //   Szam1, Szam2, Szam3, Szam4
   //
@@ -151,7 +151,7 @@
 #define WDT_TIME  6  //6*300ms
 #define LED_MODUL_OLVASASI_HIBA       10
 #define LED_MODUL_MAX_UJRAINDULAS     5
-#define LED_MODUL_KIKAPCS_IDO_x300ms  10
+#define LED_MODUL_KIKAPCS_IDO_x300ms  16
 
 //---------------------------------------------------------------------------
 //12 Relay-os hardware
