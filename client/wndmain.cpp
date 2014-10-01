@@ -3135,6 +3135,7 @@ void cWndMain::on_CommunicationButtonClicked()
         {
             g_poHardware->closeCommunication();
             g_poHardware->init( g_poPrefs->getCommunicationPort() );
+            m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
         }
     }
 }
