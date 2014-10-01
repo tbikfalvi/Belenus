@@ -3079,6 +3079,8 @@ void cWndMain::showAdWindows()
 
         QProcess *qpAdv = new QProcess(this);
 
+        obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( poQuery->value(0).toInt() ), "START" );
+
         if( !qpAdv->startDetached( QString("Advertisement.exe %1").arg( poQuery->value(0).toUInt() ) ) )
         {
             QMessageBox::warning( this, tr("Warning"),
@@ -3106,6 +3108,22 @@ void cWndMain::on_action_Advertisements_triggered()
     cDlgAdvertisements  obDlgAdvertisements(this);
 
     obDlgAdvertisements.exec();
+
+    QProcess *qpAdv = new QProcess(this);
+
+    if( !qpAdv->startDetached( QString("Advertisement.exe") ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:Advertisement.exe\n\nError code: %1\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.").arg(qpAdv->error()) );
+    }
+
+    delete qpAdv;
 
     QMessageBox::warning( this, tr("Attention"),
                           tr("Please note that you should restart the application for the modifications to take effect."));
