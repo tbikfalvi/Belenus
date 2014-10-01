@@ -72,10 +72,10 @@ void MainWindow::on_pbDefault_clicked()
 {
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
 
-    ui->ledDirectoryStartup->setText( "C:/BelenusUpdate" );
-    ui->ledDirectoryTarget->setText( "C:/Program Files/Belenus" );
-    ui->ledDirectoryResource->setText( "Download" );
-    ui->ledDirectoryBackup->setText( "Backup" );
+    ui->ledDirectoryStartup->setText( qpeInfo.value( "BelenusStartup", "C:/BelenusUpdate" ) );
+    ui->ledDirectoryTarget->setText( qpeInfo.value( "BelenusTarget", "C:/Program Files/Belenus" ) );
+    ui->ledDirectoryResource->setText( qpeInfo.value( "BelenusResource", "Download" ) );
+    ui->ledDirectoryBackup->setText( qpeInfo.value( "BelenusBackup", "Backup" ) );
 
     on_ledDirectoryResource_editingFinished();
     on_ledDirectoryBackup_editingFinished();
@@ -209,6 +209,14 @@ void MainWindow::on_process_selected()
 
 void MainWindow::on_pbStart_clicked()
 {
+    QSettings obPref( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
+                      QSettings::NativeFormat );
+
+    obPref.setValue( "BelenusStartup", ui->ledDirectoryStartup->text() );
+    obPref.setValue( "BelenusTarget", ui->ledDirectoryTarget->text() );
+    obPref.setValue( "BelenusResource", ui->ledDirectoryResource->toolTip() );
+    obPref.setValue( "BelenusBackup", ui->ledDirectoryBackup->toolTip() );
+
     ui->pbStart->setVisible( false );
     ui->progressBar->setVisible( true );
 

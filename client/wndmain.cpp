@@ -872,6 +872,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() || m_bActionProcessing )
         return;
 
+    m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
@@ -1229,7 +1230,9 @@ void cWndMain::timerEvent(QTimerEvent *)
         {
             m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
             g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
-            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+//            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+            m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
+            m_lblStatusLeft.setText( tr("Communication stopped with hardware controller") );
         }
         else
         {

@@ -5,7 +5,8 @@ RESOURCES   += belenus.qrc
 RC_FILE      = Belenus.rc
 TEMPLATE     = app
 DESTDIR      = ..
-TRANSLATIONS = belenus_hu.ts
+TRANSLATIONS = belenus_hu.ts \
+               belenus_de.ts
 
 win32:DEFINES -= UNICODE
 
