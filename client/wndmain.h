@@ -78,6 +78,7 @@ private:
     bool                     m_bProgressErrorVisible;
     int                      m_nProgressCounter;
     bool                     m_bGibbigConnected;
+    int                      m_nCommunicationErrorCounter;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 
@@ -89,6 +90,7 @@ private:
     void processInputProduct( QString p_stBarcode );
     void processInputTimePeriod( int p_inMinute );
     void showAdWindows();
+    void _resetCommunication();
 
 public slots:
     void processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType );

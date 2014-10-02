@@ -119,6 +119,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
     m_bGibbigConnected              = false;
+    m_nCommunicationErrorCounter    = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -1222,17 +1223,26 @@ void cWndMain::timerEvent(QTimerEvent *)
 
     m_inCommunicationCounter++;
 
-    if( m_inCommunicationCounter > 3 )
+    if( m_inCommunicationCounter > 4 )
     {
         m_inCommunicationCounter = 0;
 
         if( g_poHardware->isCommunicationStopped() )
         {
-            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
-            g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
-//            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
-            m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
-            m_lblStatusLeft.setText( tr("Communication stopped with hardware controller") );
+            m_nCommunicationErrorCounter++;
+
+            if( m_nCommunicationErrorCounter > 2 )
+            {
+                _resetCommunication();
+            }
+            else if( m_nCommunicationErrorCounter > 4 )
+            {
+                m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
+                g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
+    //            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+                m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
+                m_lblStatusLeft.setText( tr("Communication stopped with hardware controller") );
+            }
         }
         else
         {
@@ -3151,9 +3161,8 @@ void cWndMain::on_CommunicationButtonClicked()
     {
         if( qaRet->text().compare( tr("Reset communication") ) == 0 )
         {
-            g_poHardware->closeCommunication();
-            g_poHardware->init( g_poPrefs->getCommunicationPort() );
-            m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
+            _resetCommunication();
+            m_nCommunicationErrorCounter = 0;
         }
     }
 }
@@ -3161,4 +3170,11 @@ void cWndMain::on_CommunicationButtonClicked()
 void cWndMain::setCommunicationEnabled(bool p_bEnabled)
 {
     m_pbStatusCommunication.setEnabled( p_bEnabled );
+}
+
+void cWndMain::_resetCommunication()
+{
+    g_poHardware->closeCommunication();
+    g_poHardware->init( g_poPrefs->getCommunicationPort() );
+    m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
 }
