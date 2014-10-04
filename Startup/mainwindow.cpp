@@ -3,6 +3,7 @@
 #include <QDomDocument>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QTextStream>
 #include <QSettings>
 #include <QDir>
 
@@ -15,6 +16,9 @@
 #define PROCESS_REMOVE  2
 #define PROCESS_UPDATE  3
 
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -42,12 +46,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     on_ledDirectoryResource_editingFinished();
     on_ledDirectoryBackup_editingFinished();
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 {
     QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
@@ -69,7 +77,9 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 
     ui->retranslateUi( this );
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbDefault_clicked()
 {
     QProcessEnvironment qpeInfo = QProcessEnvironment::systemEnvironment();
@@ -82,7 +92,9 @@ void MainWindow::on_pbDefault_clicked()
     on_ledDirectoryResource_editingFinished();
     on_ledDirectoryBackup_editingFinished();
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbDirectoryStartup_clicked()
 {
     QString qsDir = QFileDialog::getExistingDirectory( this,
@@ -97,7 +109,9 @@ void MainWindow::on_pbDirectoryStartup_clicked()
         on_ledDirectoryBackup_editingFinished();
     }
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbDirectoryTarget_clicked()
 {
     QString qsDir = QFileDialog::getExistingDirectory( this,
@@ -110,7 +124,9 @@ void MainWindow::on_pbDirectoryTarget_clicked()
         ui->ledDirectoryTarget->setText( qsDir );
     }
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_ledDirectoryResource_editingFinished()
 {
     if( ui->ledDirectoryResource->text().mid(1,1).compare(":") == 0 )
@@ -127,7 +143,9 @@ void MainWindow::on_ledDirectoryResource_editingFinished()
         ui->ledDirectoryResource->setToolTip( qsTemp );
     }
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbDirectoryResource_clicked()
 {
     QString qsDefault = ui->ledDirectoryResource->toolTip();
@@ -148,7 +166,9 @@ void MainWindow::on_pbDirectoryResource_clicked()
         ui->ledDirectoryResource->setToolTip( qsDir );
     }
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_ledDirectoryBackup_editingFinished()
 {
     if( ui->ledDirectoryBackup->text().mid(1,1).compare(":") == 0 )
@@ -165,7 +185,9 @@ void MainWindow::on_ledDirectoryBackup_editingFinished()
         ui->ledDirectoryBackup->setToolTip( qsTemp );
     }
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbDirectoryBackup_clicked()
 {
     QString qsDefault = ui->ledDirectoryBackup->toolTip();
@@ -186,7 +208,9 @@ void MainWindow::on_pbDirectoryBackup_clicked()
         ui->ledDirectoryBackup->setToolTip( qsDir );
     }
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_process_selected()
 {
     if( ui->rbProcessInstall->isChecked() )
@@ -222,17 +246,20 @@ void MainWindow::on_pbStart_clicked()
     {
         case PROCESS_INSTALL:
         {
-            if( _createPaths() )
+            if( !_createPaths() ) { return; }
+            ui->progressBar->setValue( 1 );
+
+            if( !_createSettingsFile() ) { return; }
+            ui->progressBar->setValue( 2 );
+
+            if( !_copyUpdaterFiles() ) { return; }
+
+            if( ui->rbLocationLocal->isChecked() )
             {
-                ui->progressBar->setValue( 1 );
-                _createSettingsFile();
-                ui->progressBar->setValue( 2 );
-                _copyUpdaterFiles();
+                if( !_copyXmlFile() ) { return; }
             }
-            else
-            {
-                return;
-            }
+
+            _executeUpdater();
             break;
         }
         case PROCESS_REMOVE:
@@ -241,17 +268,20 @@ void MainWindow::on_pbStart_clicked()
         }
         case PROCESS_UPDATE:
         {
-            if( _createPaths() )
+            if( !_createPaths() ) { return; }
+            ui->progressBar->setValue( 1 );
+
+            if( !_updateSettingsFile() ) { return; }
+            ui->progressBar->setValue( 2 );
+
+            if( !_copyUpdaterFiles() ) { return; }
+
+            if( ui->rbLocationLocal->isChecked() )
             {
-                ui->progressBar->setValue( 1 );
-                _updateSettingsFile();
-                ui->progressBar->setValue( 2 );
-                _copyUpdaterFiles();
+                if( !_copyXmlFile() ) { return; }
             }
-            else
-            {
-                return;
-            }
+
+            _executeUpdater();
             break;
         }
         default:
@@ -274,6 +304,22 @@ void MainWindow::_updateEnvironmentVariables()
     obPref.setValue( "BelenusBackup", ui->ledDirectoryBackup->toolTip() );
 
     SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
+
+    m_qsErrorReportFile = QString( "%1/error.log" ).arg( ui->ledDirectoryStartup->text() );
+
+    m_qsErrorReportFile.replace( "\\", "/" );
+    m_qsErrorReportFile.replace( "//", "/" );
+
+    m_obLog = new QFile( m_qsErrorReportFile );
+    if( m_obLog == NULL )
+    {
+        QMessageBox::critical( this, tr("Error"),
+                               tr("Error occured during initialization.\n"
+                                  "Please contact system administrator.\n"
+                                  "Error code: ErrLogCreateFail\n"
+                                  "[%1]").arg( m_qsErrorReportFile ) );
+        return;
+    }
 }
 //=================================================================================================
 // _createPaths
@@ -374,7 +420,12 @@ bool MainWindow::_createSettingsFile()
 
     obPrefFile.setValue( QString::fromAscii( "PostProcess/HomeDir" ), "" );
     obPrefFile.setValue( QString::fromAscii( "PostProcess/File" ), "" );
-
+/*
+    QMessageBox::warning( this, tr("Warning"),
+                          tr("Unable to create settings.ini on the following directory:\n\n%1\n\n"
+                             "Please check your user rights on the directory and file.")
+                          .arg( ui->ledDirectoryStartup->text() ) );
+*/
     return true;
 }
 //=================================================================================================
@@ -384,7 +435,6 @@ bool MainWindow::_updateSettingsFile()
 {
     QString qsSettings  = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
     QString qsAddress   = "";
-    QString qsInfoFile  = "";
     QString qsLocation  = "";
     QString qsAppType   = "";
 
@@ -414,16 +464,21 @@ bool MainWindow::_updateSettingsFile()
         qsLocation = "loc";
     }
 
-    qsInfoFile = QString( "belenus_%1_%2.xml" ).arg( qsLocation ).arg( qsLanguage );
+    m_qsInfoFile = QString( "belenus_%1_%2.xml" ).arg( qsLocation ).arg( qsLanguage );
 
     obPrefFile.setValue( QString::fromAscii( "Language/Extension" ), qsLanguage );
 
     obPrefFile.setValue( QString::fromAscii( "PreProcess/Address" ), qsAddress );
-    obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), qsInfoFile );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), m_qsInfoFile );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/InstallDir" ), ui->ledDirectoryTarget->text() );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/DownloadDir" ), ui->ledDirectoryResource->toolTip() );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/BackupDir" ), ui->ledDirectoryBackup->toolTip() );
-
+/*
+    QMessageBox::warning( this, tr("Warning"),
+                          tr("Unable to update settings.ini on the following directory:\n\n%1\n\n"
+                             "Please check your user rights on the directory and file.")
+                          .arg( ui->ledDirectoryStartup->text() ) );
+*/
     return true;
 }
 //=================================================================================================
@@ -445,9 +500,16 @@ bool MainWindow::_copyUpdaterFiles()
     qfFile.seek( 0 );
     if( !obProcessDoc->setContent( &qfFile, &qsErrorMsg, &inErrorLine ) )
     {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr( "Error occured during parsing file:\n'%1'\n\nError in line %2: %3" ).arg( qsFileName ).arg( inErrorLine ).arg( qsErrorMsg ) );
+        _logProcess( tr( "Error occured during parsing file:\n'%1'\n\nError in line %2: %3" )
+                     .arg( qsFileName )
+                     .arg( inErrorLine )
+                     .arg( qsErrorMsg ) );
         qfFile.close();
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Unable to copy updater files.\n"
+                                 "Please check the error report file:\n\n"
+                                 "%1")
+                              .arg( m_qsErrorReportFile ) );
         return false;
     }
     qfFile.close();
@@ -475,14 +537,74 @@ bool MainWindow::_copyUpdaterFiles()
         qsDst.replace("\\","/");
         qsDst.replace("//","/");
 
-        _copyFile( qsSrc, qsDst );
+        if( !_copyFile( qsSrc, qsDst ) )
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Unable to copy updater files.\n"
+                                     "Please check the error report file:\n\n"
+                                     "%1")
+                                  .arg( m_qsErrorReportFile ) );
+            return false;
+        }
         _progressStep();
     }
 
     return true;
 }
 //=================================================================================================
-//
+// _copyXmlFile
+//-------------------------------------------------------------------------------------------------
+bool MainWindow::_copyXmlFile()
+{
+    QString qsSrc   = QString( "%1/%2" ).arg( QDir::currentPath() ).arg( m_qsInfoFile );
+    QString qsDst   = QString( "%1/%2" ).arg( ui->ledDirectoryResource->toolTip() ).arg( m_qsInfoFile );
+
+    qsSrc.replace("\\","/");
+    qsSrc.replace("//","/");
+    qsDst.replace("\\","/");
+    qsDst.replace("//","/");
+
+    if( !_copyFile( qsSrc, qsDst ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Unable to copy updater file.\n"
+                                 "Please check the error report file:\n\n"
+                                 "%1")
+                              .arg( m_qsErrorReportFile ) );
+        return false;
+    }
+    _progressStep();
+
+    return true;
+}
+//=================================================================================================
+// _executeUpdater
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_executeUpdater()
+{
+    QProcess *qpProcess = new QProcess(this);
+    QString   qsUpdater = QString( "%1/BelenusUpdate.exe" ).arg( ui->ledDirectoryTarget->text() );
+
+    qsUpdater.replace("\\","/");
+    qsUpdater.replace("//","/");
+
+    if( !qpProcess->startDetached( qsUpdater ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsUpdater )
+                              .arg( qpProcess->error() ) );
+    }
+    delete qpProcess;
+}
+//=================================================================================================
+// _copyFile
 //-------------------------------------------------------------------------------------------------
 bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
 {
@@ -502,8 +624,7 @@ bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
 
     if( !QFile::copy( p_qsSrc, p_qsDst ) )
     {
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( p_qsSrc ).arg( p_qsDst ) );
+        _logProcess( tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( p_qsSrc ).arg( p_qsDst ) );
         return false;
     }
 
@@ -519,6 +640,21 @@ void MainWindow::_progressStep()
         return;
 
     ui->progressBar->setValue( ui->progressBar->value()+1 );
+}
+//=================================================================================================
+// _logProcess
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_logProcess( QString p_qsLog, bool p_bInsertNewLine )
+//-------------------------------------------------------------------------------------------------
+{
+    if( m_obLog->open( QIODevice::Append | QIODevice::Text ) )
+    {
+        QTextStream out( m_obLog );
+        out << p_qsLog;
+        if( p_bInsertNewLine )
+            out << "\n";
+        m_obLog->close();
+    }
 }
 //=================================================================================================
 //

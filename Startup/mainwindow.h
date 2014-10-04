@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTranslator>
+#include <QFile>
 
 extern QTranslator     *poTransStartup;
 extern QTranslator     *poTransQT;
@@ -33,9 +34,11 @@ private slots:
     void on_process_selected();
 
 private:
-    Ui::MainWindow *ui;
-
-    int m_nProcessType;
+    Ui::MainWindow          *ui;
+    QFile                   *m_obLog;
+    int                      m_nProcessType;
+    QString                  m_qsErrorReportFile;
+    QString                  m_qsInfoFile;
 
     void _updateEnvironmentVariables();
     bool _createPaths();
@@ -44,7 +47,10 @@ private:
     bool _updateSettingsFile();
     void _progressStep();
     bool _copyUpdaterFiles();
+    bool _copyXmlFile();
+    void _executeUpdater();
     bool _copyFile( QString p_qsSrc, QString p_qsDst );
+    void _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
 };
 
 #endif // MAINWINDOW_H
