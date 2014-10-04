@@ -37,8 +37,11 @@ private:
 
     int m_nProcessType;
 
+    void _updateEnvironmentVariables();
+    bool _createPaths();
     bool _createPath( QString p_qsPath );
     bool _createSettingsFile();
+    bool _updateSettingsFile();
     void _progressStep();
     bool _copyUpdaterFiles();
     bool _copyFile( QString p_qsSrc, QString p_qsDst );

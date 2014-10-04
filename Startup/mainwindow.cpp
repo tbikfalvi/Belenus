@@ -6,6 +6,8 @@
 #include <QSettings>
 #include <QDir>
 
+#include "windows.h"
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -206,16 +208,12 @@ void MainWindow::on_process_selected()
 
     ui->pbStart->setEnabled( true );
 }
-
+//=================================================================================================
+// on_pbStart_clicked
+//-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbStart_clicked()
 {
-    QSettings obPref( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
-                      QSettings::NativeFormat );
-
-    obPref.setValue( "BelenusStartup", ui->ledDirectoryStartup->text() );
-    obPref.setValue( "BelenusTarget", ui->ledDirectoryTarget->text() );
-    obPref.setValue( "BelenusResource", ui->ledDirectoryResource->toolTip() );
-    obPref.setValue( "BelenusBackup", ui->ledDirectoryBackup->toolTip() );
+    _updateEnvironmentVariables();
 
     ui->pbStart->setVisible( false );
     ui->progressBar->setVisible( true );
@@ -224,13 +222,7 @@ void MainWindow::on_pbStart_clicked()
     {
         case PROCESS_INSTALL:
         {
-            if( _createPath( ui->ledDirectoryStartup->text() ) &&
-                _createPath( QString("%1/lang").arg(ui->ledDirectoryStartup->text()) ) &&
-                _createPath( QString("%1/resources").arg(ui->ledDirectoryStartup->text()) ) &&
-                _createPath( QString("%1/sqldrivers").arg(ui->ledDirectoryStartup->text()) ) &&
-                _createPath( ui->ledDirectoryTarget->text() ) &&
-                _createPath( ui->ledDirectoryResource->toolTip() ) &&
-                _createPath( ui->ledDirectoryBackup->toolTip() ) )
+            if( _createPaths() )
             {
                 ui->progressBar->setValue( 1 );
                 _createSettingsFile();
@@ -249,6 +241,17 @@ void MainWindow::on_pbStart_clicked()
         }
         case PROCESS_UPDATE:
         {
+            if( _createPaths() )
+            {
+                ui->progressBar->setValue( 1 );
+                _updateSettingsFile();
+                ui->progressBar->setValue( 2 );
+                _copyUpdaterFiles();
+            }
+            else
+            {
+                return;
+            }
             break;
         }
         default:
@@ -257,7 +260,44 @@ void MainWindow::on_pbStart_clicked()
 
     close();
 }
+//=================================================================================================
+// _updateEnvironmentVariables
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_updateEnvironmentVariables()
+{
+    QSettings obPref( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
+                      QSettings::NativeFormat );
 
+    obPref.setValue( "BelenusStartup", ui->ledDirectoryStartup->text() );
+    obPref.setValue( "BelenusTarget", ui->ledDirectoryTarget->text() );
+    obPref.setValue( "BelenusResource", ui->ledDirectoryResource->toolTip() );
+    obPref.setValue( "BelenusBackup", ui->ledDirectoryBackup->toolTip() );
+
+    SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
+}
+//=================================================================================================
+// _createPaths
+//-------------------------------------------------------------------------------------------------
+bool MainWindow::_createPaths()
+{
+    bool bRet = false;
+
+    if( _createPath( ui->ledDirectoryStartup->text() ) &&
+        _createPath( QString("%1/lang").arg(ui->ledDirectoryStartup->text()) ) &&
+        _createPath( QString("%1/resources").arg(ui->ledDirectoryStartup->text()) ) &&
+        _createPath( QString("%1/sqldrivers").arg(ui->ledDirectoryStartup->text()) ) &&
+        _createPath( ui->ledDirectoryTarget->text() ) &&
+        _createPath( ui->ledDirectoryResource->toolTip() ) &&
+        _createPath( ui->ledDirectoryBackup->toolTip() ) )
+    {
+        bRet = true;
+    }
+
+    return bRet;
+}
+//=================================================================================================
+// _createPath
+//-------------------------------------------------------------------------------------------------
 bool MainWindow::_createPath(QString p_qsPath)
 {
     QDir    qdBackup( p_qsPath );
@@ -274,7 +314,9 @@ bool MainWindow::_createPath(QString p_qsPath)
     }
     return true;
 }
-
+//=================================================================================================
+// _createSettingsFile
+//-------------------------------------------------------------------------------------------------
 bool MainWindow::_createSettingsFile()
 {
     QSettings obMasterCD( "system.inf", QSettings::IniFormat );
@@ -284,6 +326,7 @@ bool MainWindow::_createSettingsFile()
     QString qsAddress   = "";
     QString qsInfoFile  = "";
     QString qsLocation  = "";
+    QString qsAppType   = "";
 
     qsSettings.replace( "\\", "/" );
     qsSettings.replace( "//", "/" );
@@ -292,9 +335,18 @@ bool MainWindow::_createSettingsFile()
 
     QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
 
+    if( ui->rbAppDemo->isChecked() )
+    {
+        qsAppType = "demo";
+    }
+    else if( ui->rbAppOfficial->isChecked() )
+    {
+        qsAppType = "official";
+    }
+
     if( ui->rbLocationWeb->isChecked() )
     {
-        qsAddress = "http://download.bikfalvi.hu/belenus/official";
+        qsAddress = QString( "http://download.bikfalvi.hu/belenus/%1" ).arg( qsAppType );
         qsLocation = "web";
     }
     else
@@ -309,7 +361,7 @@ bool MainWindow::_createSettingsFile()
 
     obPrefFile.setValue( QString::fromAscii( "Settings/WindowWidth" ), "640" );
     obPrefFile.setValue( QString::fromAscii( "Settings/WindowHeight" ), "400" );
-    obPrefFile.setValue( QString::fromAscii( "Settings/Background" ), "resources/starter.png" );
+    obPrefFile.setValue( QString::fromAscii( "Settings/Background" ), "resources/updater.png" );
     obPrefFile.setValue( QString::fromAscii( "Settings/Textcolor" ), "DDDDDD" );
     obPrefFile.setValue( QString::fromAscii( "Settings/Timer" ), "250" );
 
@@ -325,19 +377,54 @@ bool MainWindow::_createSettingsFile()
 
     return true;
 }
-
 //=================================================================================================
-// _progressStep
+// _updateSettingsFile
 //-------------------------------------------------------------------------------------------------
-//
-//-------------------------------------------------------------------------------------------------
-void MainWindow::_progressStep()
-//-------------------------------------------------------------------------------------------------
+bool MainWindow::_updateSettingsFile()
 {
-    if( ui->progressBar->value() == ui->progressBar->maximum() )
-        return;
+    QString qsSettings  = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
+    QString qsAddress   = "";
+    QString qsInfoFile  = "";
+    QString qsLocation  = "";
+    QString qsAppType   = "";
 
-    ui->progressBar->setValue( ui->progressBar->value()+1 );
+    qsSettings.replace( "\\", "/" );
+    qsSettings.replace( "//", "/" );
+
+    QSettings obPrefFile( qsSettings, QSettings::IniFormat );
+
+    QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
+
+    if( ui->rbAppDemo->isChecked() )
+    {
+        qsAppType = "demo";
+    }
+    else if( ui->rbAppOfficial->isChecked() )
+    {
+        qsAppType = "official";
+    }
+
+    if( ui->rbLocationWeb->isChecked() )
+    {
+        qsAddress = QString( "http://download.bikfalvi.hu/belenus/%1" ).arg( qsAppType );
+        qsLocation = "web";
+    }
+    else
+    {
+        qsLocation = "loc";
+    }
+
+    qsInfoFile = QString( "belenus_%1_%2.xml" ).arg( qsLocation ).arg( qsLanguage );
+
+    obPrefFile.setValue( QString::fromAscii( "Language/Extension" ), qsLanguage );
+
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/Address" ), qsAddress );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), qsInfoFile );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/InstallDir" ), ui->ledDirectoryTarget->text() );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/DownloadDir" ), ui->ledDirectoryResource->toolTip() );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/BackupDir" ), ui->ledDirectoryBackup->toolTip() );
+
+    return true;
 }
 //=================================================================================================
 // _copyUpdaterFiles
@@ -394,7 +481,9 @@ bool MainWindow::_copyUpdaterFiles()
 
     return true;
 }
-
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
 bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
 {
     if( QFile::exists(p_qsDst) )
@@ -420,3 +509,18 @@ bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
 
     return true;
 }
+//=================================================================================================
+// _progressStep
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_progressStep()
+//-------------------------------------------------------------------------------------------------
+{
+    if( ui->progressBar->value() == ui->progressBar->maximum() )
+        return;
+
+    ui->progressBar->setValue( ui->progressBar->value()+1 );
+}
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
+
