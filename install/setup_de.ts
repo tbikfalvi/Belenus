@@ -7,297 +7,297 @@
         <location filename="dlgMain.ui" line="14"/>
         <location filename="dlgMain.cpp" line="2732"/>
         <source>Belenus Application System</source>
-        <translation type="unfinished"></translation>
+        <translation>Belenus Software System</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="86"/>
         <source>Welcome to the installer of the Belenus Application System</source>
-        <translation type="unfinished"></translation>
+        <translation>Willkommen bei der Belenus Software System Installation</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="117"/>
         <source>The installer will allow you to setup, modify, update or remove the Belenus Application System.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit Hilfe des Programms können Sie Belenus Software System Installieren, Modifizieren, Updaten oder Deinstallieren.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="143"/>
         <source>Select language for the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie die Sprache aus.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="189"/>
         <source>Please enter System Administrator password to continue:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte geben Sie Ihr Admininstrations Passwort ein.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="220"/>
         <source>To continue press the Next button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um Fortzufahren bitte klicken Sie auf Weiter.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="235"/>
         <source>To abort the installation press the Cancel button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um die Installation abzubrechen klicken Sie auf Abbruch.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="281"/>
         <location filename="dlgMain.ui" line="1587"/>
         <source>Installation process</source>
-        <translation type="unfinished"></translation>
+        <translation>Installtions-Verlauf</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="288"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="348"/>
         <source>Setup system components, initialize and start services. This option guides you through the steps of the installation process allowing to customize the application system.</source>
-        <translation type="unfinished"></translation>
+        <translation>System Elemente werden installiert, initialisiert und gestartet. Das Programm begleitet Sie bei allen Schritten der Installation, damit Sie das System entsprechend einstellen.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="363"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Update</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="426"/>
         <source>Update system components, reinitialize and restart services. This option guides you through the steps of the update process allowing to reset and modify the application system&apos;s settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>System Elemente werden upgedatet, erneut initialisiert, neu gestartet. Das Programm begleitet Sie bei allen Schritten, damit das System entprechend upgedatet und eingestellt wird.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="441"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>De-Installieren</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="498"/>
         <source>Uninstall and remove application system components.</source>
-        <translation type="unfinished"></translation>
+        <translation>System Installation und De-Installation.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="537"/>
         <source>Component install</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand Installation</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="544"/>
         <source>Wamp database server application</source>
-        <translation type="unfinished"></translation>
+        <translation>Wamp Datenbank Server Einstellung</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="604"/>
         <source>Setup database server application system. This component is required to be installed with Belenus application system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank Server Einstellung Installation. Dieser Teil ist unvermeidbar für das Belenus Software System.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="619"/>
         <source>Belenus client database</source>
-        <translation type="unfinished"></translation>
+        <translation>Belenus Kunden Datenbank</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="679"/>
         <source>Create and initialize client database. This component is required to be installed with Belenus application system. Wamp database server is required for this component.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Datenbank Herstellung und Initialisierung. Dieser Teil ist unvermeidbar für das Belenus Software System. Die Wamp Datenbank Server Einstellung ist unvermeidlich für diesen Verlauf.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="694"/>
         <source>Hardware connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Hardware-Verbindung</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="754"/>
         <source>Initialize and check hardware connection. This component is not required for DEMO version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Initialisierung und Start von der Hardware-Verbindung. Dieser bestandteil ist nicht notwendig für die DEMO Version.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="769"/>
         <source>Client application</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Einstellung</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="829"/>
         <source>Setup Belenus client application. Wamp database server and Belenus client database is required for this component.</source>
-        <translation type="unfinished"></translation>
+        <translation>Belenus Kunden Datenbank Einstellungen Installation. Die Wamp Datenbank und das Belenus Kunden Datenbank sind unvermeidlich für diesen Verlauf.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="847"/>
         <source>Report viewer application</source>
-        <translation type="unfinished"></translation>
+        <translation>Statisik anzeigen</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="913"/>
         <source>Setup Belenus report viewer application. Wamp database server and Belenus client database is required for this component. This component can be installed independently from Client application with Internet connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Belenus Statistik Einstellungen Installation.  Die Wamp Datenbank und das Belenus Kunden Datenbank sind unvermeidlich für diesen Verlauf.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="993"/>
         <source>Installing Wamp server</source>
-        <translation type="unfinished"></translation>
+        <translation>Wamp Datenbank Server Einstellung Installation.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1000"/>
         <source> Select appropriate Windows system type </source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie das entsprechenden Windows Betriebssystem aus.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1006"/>
         <source>Windows 32 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>32 Bytes Windows</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1016"/>
         <source>Windows 64 bit</source>
-        <translation type="unfinished"></translation>
+        <translation>64Bytes Windows</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1044"/>
         <source>Start Wamp server installation</source>
-        <translation type="unfinished"></translation>
+        <translation>Wamp Datenbank Server Installation.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1082"/>
         <source>Please wait while the Wamp server installation finishes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte warten Sie bis die Wamp Datenbank Server Installation fertiggestellt ist.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1118"/>
         <location filename="dlgMain.cpp" line="1243"/>
         <source>Initialize SQL connection</source>
-        <translation type="unfinished"></translation>
+        <translation>SQL Verbindung Initialisierung.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1125"/>
         <source>If you are not sure about what to do, do not change the root password (recommended). Please note that if you forget the root password it can not be reseted or modified later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie sich nicht sicher sind, was einzustellen ist, verändern Sie nicht das Admin-Kennwort ( Empfohlen). Bitte beachten Sie, wenn Sie das Kennwort fergessen, können Sie es weder ändern noch löschen.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1153"/>
         <location filename="dlgMain.cpp" line="1244"/>
         <source>Enter the root password :</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte Admin-Kennwort eingeben.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1167"/>
         <source>Show password</source>
-        <translation type="unfinished"></translation>
+        <translation>Kennwort anzeigen</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1205"/>
         <source>Enter the new root password below, if you want to modify it. Leave blank the fields below if you don&apos;t want to change the root password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte schreiben Sie das neue  Admin-Kennwort in das leere Feld, wenn Sie das Kennwort ändern wollen. Lassen Sie das Feld leer, wenn Sie das Kennwort nicht änder wollen.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1235"/>
         <source>Enter new root password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte geben Sie Ihr Admininstrations Passwort ein.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1249"/>
         <source>Retype new root password :</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte geben Sie erneut Ihr Admininstrations Passwort ein.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1304"/>
         <source>Hardware connection installation</source>
-        <translation type="unfinished"></translation>
+        <translation>hardware-Verbindung Installation</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1311"/>
         <source>Please select the desired COM port from the list below:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie den gewünschten COM-Port aus der Liste aus.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1320"/>
         <source>Available COM ports :</source>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbare COM ports:</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1333"/>
         <source>Test hardware connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Hardware Verbindung kontrollieren</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1357"/>
         <source>Hardware unit available on the selected COM port ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Hardware Einheit ist erreichbar auf der COM port ...</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1419"/>
         <source>Number of available panels on hardware unit : </source>
-        <translation type="unfinished"></translation>
+        <translation>Erreichbare Einheiten der Hardware-Einheit : </translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1457"/>
         <source>Enter the field below the number of panels installed on place.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schreiben Sie die Anzahl der Geräte in das Fenster.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1466"/>
         <source>Number of panels : </source>
-        <translation type="unfinished"></translation>
+        <translation>Zahl der Einheiten : </translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1525"/>
         <source>Client application installation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Einstellung Installation</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1532"/>
         <source>Select the destination directory for Belenus client application</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie den Ordner für das Belenus Kunden Einstellung Installation</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1554"/>
         <source> ... </source>
-        <translation type="unfinished"></translation>
+        <translation> ... </translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1594"/>
         <source>Please wait while the installation process finish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte warten Sie bis Installation fertiggestellt ist.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1617"/>
         <source>Overall process</source>
-        <translation type="unfinished"></translation>
+        <translation>Totaler Verlauf</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1690"/>
         <location filename="dlgMain.cpp" line="2334"/>
         <source>Installation finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation beendet</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1697"/>
         <source>Installing Belenus Application System has been finished. To use the system correcty you need to restart your computer after exiting the installer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Belenus Software Installation ist beendet. Um mit dem Programm fortzufahren, starten Sie bitte Ihren Computer neu.</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1744"/>
         <source>Restart computer now</source>
-        <translation type="unfinished"></translation>
+        <translation>Computer Neustart jetzt</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1793"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbruch</translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1825"/>
         <source>  &lt;&lt; Previous  </source>
-        <translation type="unfinished"></translation>
+        <translation>  &lt;&lt; Vorher </translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1841"/>
         <source>  Next &gt;&gt;  </source>
-        <translation type="unfinished"></translation>
+        <translation>  Nächste &gt;&gt; </translation>
     </message>
     <message>
         <location filename="dlgMain.ui" line="1873"/>
         <location filename="dlgMain.cpp" line="401"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="dlgMain.cpp" line="115"/>
@@ -306,7 +306,7 @@
         <location filename="dlgMain.cpp" line="157"/>
         <location filename="dlgMain.cpp" line="1331"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="dlgMain.cpp" line="116"/>

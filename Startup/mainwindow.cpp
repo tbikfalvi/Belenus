@@ -400,7 +400,7 @@ bool MainWindow::_createSettingsFile()
         qsLocation = "loc";
     }
 
-    qsInfoFile = QString( "belenus_%1_%2.xml" ).arg( qsLocation ).arg( qsLanguage );
+    qsInfoFile = QString( "belenus_%1.xml" ).arg( qsLocation );
 
     obPrefFile.setValue( QString::fromAscii( "Language/Path" ), "lang" );
     obPrefFile.setValue( QString::fromAscii( "Language/Extension" ), qsLanguage );

@@ -1,136 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en">
+<TS version="2.0" language="de_DE">
 <context>
     <name>cReportCardDetails</name>
     <message>
         <location filename="creportcarddetails.cpp" line="9"/>
         <source> Patientcards details </source>
-        <translation></translation>
+        <translation> Daten aller Club Karten </translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="10"/>
         <source>This report shows the details of the selected patient card. Please enter the barcode of the patient card you interested in.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die Daten der ausgewählten Club Karte.Bitte geben Sie den Strichcode der Club Karte an.</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="14"/>
         <source>Barcode contains :</source>
-        <oldsource>Barcode :</oldsource>
-        <translation></translation>
+        <translation>Strichcode enthällt : </translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="17"/>
         <source>Patientcard types :</source>
-        <translation></translation>
+        <translation>Club Karten Typ : </translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="21"/>
         <location filename="creportcarddetails.cpp" line="30"/>
         <source>All type</source>
-        <translation></translation>
+        <translation>Alle Typarten</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="36"/>
+        <source>Create selected report ...</source>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="48"/>
         <source>Patientcard type: &apos;%1&apos;</source>
-        <translation></translation>
+        <translation>Club Karten Typ: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="53"/>
         <source>%1Patientcard barcode contains: &apos;%2&apos;</source>
-        <translation></translation>
+        <translation>%1 Club Karte Strichcode enthällt: &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="88"/>
         <source>No valid patientcard found for the selected filters</source>
-        <translation></translation>
+        <translation>Kein Treffer in der Club Karten Datenbank</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="105"/>
         <location filename="creportcarddetails.cpp" line="251"/>
         <source>Barcode</source>
-        <translation></translation>
+        <translation>Strichcode</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="111"/>
         <location filename="creportcarddetails.cpp" line="255"/>
         <source>Patientcard type</source>
-        <translation></translation>
+        <translation>Club Karten Typ</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="117"/>
         <source>Owner</source>
-        <translation></translation>
+        <translation>Besitzer</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="123"/>
         <location filename="creportcarddetails.cpp" line="175"/>
         <location filename="creportcarddetails.cpp" line="252"/>
         <source>No. units</source>
-        <translation></translation>
+        <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="132"/>
         <source>Time left</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="153"/>
-        <source>Valid and active units</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="172"/>
-        <source>Unit time</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="174"/>
-        <source>Valid till ...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="184"/>
-        <source>%1 day(s)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="192"/>
-        <source>Patientcard unit usages</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="210"/>
-        <source>Date of usage</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="211"/>
-        <source>Unit count</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="253"/>
-        <source>Time</source>
-        <translation></translation>
+        <translation>Zeit</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="138"/>
         <location filename="creportcarddetails.cpp" line="173"/>
         <location filename="creportcarddetails.cpp" line="254"/>
         <source>Valid</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportcarddetails.cpp" line="36"/>
-        <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Gültig</translation>
     </message>
     <message>
         <location filename="creportcarddetails.cpp" line="144"/>
         <location filename="creportcarddetails.cpp" line="256"/>
         <source>Comment</source>
-        <translation></translation>
+        <translation>Bemerkung</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="153"/>
+        <source>Valid and active units</source>
+        <translation>gültige Einheiten</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="172"/>
+        <source>Unit time</source>
+        <translation>Zeit pro Einheit</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="174"/>
+        <source>Valid till ...</source>
+        <translation>Gültigkeit …</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="184"/>
+        <source>%1 day(s)</source>
+        <translation>%1 Tage</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="192"/>
+        <source>Patientcard unit usages</source>
+        <translation>Benutzung der Club Karten Einheit</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="210"/>
+        <source>Date of usage</source>
+        <translation>Datum der Benutzung</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="211"/>
+        <source>Unit count</source>
+        <translation>Anzahl der Einheiten</translation>
+    </message>
+    <message>
+        <location filename="creportcarddetails.cpp" line="253"/>
+        <source>Time</source>
+        <translation>Zeit</translation>
     </message>
 </context>
 <context>
@@ -138,23 +137,22 @@
     <message>
         <location filename="creportcardinactive.cpp" line="7"/>
         <source> Inactive patientcards </source>
-        <translation></translation>
+        <translation> Ungültige Club Karten </translation>
     </message>
     <message>
         <location filename="creportcardinactive.cpp" line="8"/>
         <source>This report shows the currently inactive patient cards that registered into database.</source>
-        <oldsource>This report shows the inactive patient cards.</oldsource>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die ungültigen, aber in der Datenbank registrierten Club Karten an.</translation>
     </message>
     <message>
         <location filename="creportcardinactive.cpp" line="13"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportcardinactive.cpp" line="45"/>
         <source>Barcode</source>
-        <translation></translation>
+        <translation>Strichcode</translation>
     </message>
 </context>
 <context>
@@ -162,85 +160,83 @@
     <message>
         <location filename="creportcassahistory.cpp" line="10"/>
         <source> Cassa history (list of actions)</source>
-        <oldsource> Cassa history </oldsource>
-        <translation></translation>
+        <translation> Kassenbuch ( Liste der Eingriffe ) </translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="11"/>
         <source>This report shows all of the events and action for the selected owner and date intervall. Please select the first and last day of the date intervall and the cassa owner you interested in.</source>
-        <oldsource>This report shows all of the events and action for the selected owner and date intervall.</oldsource>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt Ihnen gefilterte Daten zu jedem Benutzer an, in dem von Ihnen angegebenen Zeitraum (Ereignisse und Eingriffe in das Kassensystem). Bitte wählen Sie den Zeitraum und den Benutzer aus.</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="15"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="19"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="23"/>
         <source>Cassa owner :</source>
-        <translation></translation>
+        <translation>Besitzer der Kasse :</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="27"/>
         <location filename="creportcassahistory.cpp" line="36"/>
         <source>All users</source>
-        <translation></translation>
+        <translation>Alle Benutzer</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="41"/>
         <source>Hide storno entries</source>
-        <translation></translation>
+        <translation>Verbergen der stornierten Einträge</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="46"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="80"/>
         <source>Date intervall:</source>
-        <translation></translation>
+        <translation>Zeitraum :</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="84"/>
         <source>  -  Related to user: %1</source>
-        <translation></translation>
+        <translation>  - Benutzer: %1</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="98"/>
         <source>Cassa owner</source>
-        <translation></translation>
+        <translation>Besitzer der Kasse</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="99"/>
         <source>Date/time</source>
-        <translation></translation>
+        <translation>Datum/Zeit</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="100"/>
         <source>Cash</source>
-        <translation></translation>
+        <translation>Bargeld</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="101"/>
         <source>Card</source>
-        <translation></translation>
+        <translation>Bankkarte</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="102"/>
         <source>Action amount</source>
-        <translation></translation>
+        <translation>Eingriff Summe</translation>
     </message>
     <message>
         <location filename="creportcassahistory.cpp" line="103"/>
         <source>Description</source>
-        <translation></translation>
+        <translation>Abbuchung</translation>
     </message>
 </context>
 <context>
@@ -248,54 +244,126 @@
     <message>
         <location filename="creportdaily.cpp" line="12"/>
         <source> Daily ledger </source>
-        <translation></translation>
+        <translation> Tägliche Buchung </translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="13"/>
         <source>This report shows the daily bookkeepings the cash book and every accounting data for the selected day. Please select the day you interested in.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt Ihnen, am von Ihnen ausgewählten Tag, die Buchhaltung, Kassenstand Ereignisse an. Bitte wählen Sie den von Ihnen gewünschten Tag aus. </translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="17"/>
         <location filename="creportdaily.cpp" line="41"/>
         <source>Date :</source>
-        <translation></translation>
+        <translation>Date :</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="22"/>
+        <source>Calculate only with the selected day&apos;s entries</source>
+        <translation>Rechnen Sie nur mit Ereignissen a jenem Tag</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="32"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="46"/>
         <source>Shift list</source>
-        <oldsource>Cassa list</oldsource>
-        <translation></translation>
+        <translation>Liste der Arbeitsschichten</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="51"/>
         <location filename="creportdaily.cpp" line="799"/>
         <source>Products sold</source>
-        <translation></translation>
+        <translation>Verkaufte Produkte</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="200"/>
-        <source>Product name</source>
-        <translation></translation>
+        <location filename="creportdaily.cpp" line="56"/>
+        <location filename="creportdaily.cpp" line="806"/>
+        <source>Patientcards sold</source>
+        <translation>Verkaufte Club Karten</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="201"/>
-        <source>Count</source>
-        <translation></translation>
+        <location filename="creportdaily.cpp" line="61"/>
+        <source>Occasionally usage of devices</source>
+        <translation>gelegentliche Einnahme durch Gerätebenutzung</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="202"/>
-        <location filename="creportdaily.cpp" line="374"/>
-        <location filename="creportdaily.cpp" line="556"/>
-        <location filename="creportdaily.cpp" line="666"/>
-        <location filename="creportdaily.cpp" line="735"/>
-        <source>Amount</source>
-        <translation></translation>
+        <location filename="creportdaily.cpp" line="66"/>
+        <source>Income by payment methods</source>
+        <translation>Einnahmen laut Zahlungen</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="71"/>
+        <location filename="creportdaily.cpp" line="820"/>
+        <source>Expenses</source>
+        <translation>Ausgaben</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="76"/>
+        <source>Income summary</source>
+        <translation>Einnahmen laut Gesamtbetrachtung</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="83"/>
+        <source>Storno items</source>
+        <translation>Storno-Einträge</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="84"/>
+        <source>The items in the storno list are automatically handled, the related values automatically processed by the application. No further calculation or process is needed related to these items.</source>
+        <translation>Die Applikation verwaltet,bewertet und kalkuliert automatisch die Elemente der Storno-Liste. Es werden keine neuen Kalkulationen benötigt.</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="91"/>
+        <source>Device usages by patientcard units</source>
+        <translation>Benutzung der Geräte mit Club Karte</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="96"/>
+        <source>Device usages by cash</source>
+        <translation>Gerätebenutzung mit Bargeld </translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="101"/>
+        <source>Device usages by patientcard units and cash</source>
+        <translation>Gerätebenutzung mit Club Karte und Bargeld</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="106"/>
+        <source>Number of patientcard units used</source>
+        <translation>Anzahl der verbrauchten Club Karten Einheiten</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="145"/>
+        <source>Owner</source>
+        <translation>Besitzer</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="146"/>
+        <source>Cassa started</source>
+        <translation>Kassen-Öffnung</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="147"/>
+        <source>Cassa closed</source>
+        <translation>Kassen-Schluss</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="148"/>
+        <source>Last entry</source>
+        <translation>letzter Eintrag</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="149"/>
+        <source>Balance</source>
+        <translation>Kontostand</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="150"/>
+        <source>Income</source>
+        <translation>Einnahme</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="180"/>
@@ -309,137 +377,26 @@
         <location filename="creportdaily.cpp" line="782"/>
         <location filename="creportdaily.cpp" line="826"/>
         <source>Sum total</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="56"/>
-        <location filename="creportdaily.cpp" line="806"/>
-        <source>Patientcards sold</source>
-        <translation></translation>
+        <location filename="creportdaily.cpp" line="200"/>
+        <source>Product name</source>
+        <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="813"/>
-        <source>Device usages</source>
-        <translation></translation>
+        <location filename="creportdaily.cpp" line="201"/>
+        <source>Count</source>
+        <translation>Stückzahl</translation>
     </message>
     <message>
-        <location filename="creportdaily.cpp" line="91"/>
-        <source>Device usages by patientcard units</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="22"/>
-        <source>Calculate only with the selected day&apos;s entries</source>
-        <oldsource>Show only cassa started on selected day</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="61"/>
-        <source>Occasionally usage of devices</source>
-        <oldsource>Device usages income</oldsource>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="96"/>
-        <source>Device usages by cash</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="101"/>
-        <source>Device usages by patientcard units and cash</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="106"/>
-        <source>Number of patientcard units used</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="66"/>
-        <source>Income by payment methods</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="71"/>
-        <location filename="creportdaily.cpp" line="820"/>
-        <source>Expenses</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="83"/>
-        <source>Storno items</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="76"/>
-        <source>Income summary</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="84"/>
-        <source>The items in the storno list are automatically handled, the related values automatically processed by the application. No further calculation or process is needed related to these items.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="145"/>
-        <source>Owner</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="149"/>
-        <source>Balance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="150"/>
-        <source>Income</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="146"/>
-        <source>Cassa started</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="147"/>
-        <source>Cassa closed</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="148"/>
-        <source>Last entry</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="554"/>
-        <source>Payed by card</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="553"/>
-        <source>Payed by cash</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="555"/>
-        <source>Payed by voucher</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="665"/>
-        <location filename="creportdaily.cpp" line="734"/>
-        <source>Description</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="833"/>
-        <source>Cash/voucher</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportdaily.cpp" line="840"/>
-        <source>Card</source>
-        <translation></translation>
+        <location filename="creportdaily.cpp" line="202"/>
+        <location filename="creportdaily.cpp" line="374"/>
+        <location filename="creportdaily.cpp" line="556"/>
+        <location filename="creportdaily.cpp" line="666"/>
+        <location filename="creportdaily.cpp" line="735"/>
+        <source>Amount</source>
+        <translation>Preis</translation>
     </message>
     <message>
         <location filename="creportdaily.cpp" line="246"/>
@@ -450,7 +407,43 @@
         <location filename="creportdaily.cpp" line="706"/>
         <location filename="creportdaily.cpp" line="773"/>
         <source>Sum</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="553"/>
+        <source>Payed by cash</source>
+        <translation>Bargeld Zahlung</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="554"/>
+        <source>Payed by card</source>
+        <translation>Bankkarten Zahlung</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="555"/>
+        <source>Payed by voucher</source>
+        <translation>Gutschein Zahlung</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="665"/>
+        <location filename="creportdaily.cpp" line="734"/>
+        <source>Description</source>
+        <translation>Abbuchung</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="813"/>
+        <source>Device usages</source>
+        <translation>Geräte-Benutzungen</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="833"/>
+        <source>Cash/voucher</source>
+        <translation>Bargeld Gutschein</translation>
+    </message>
+    <message>
+        <location filename="creportdaily.cpp" line="840"/>
+        <source>Card</source>
+        <translation>Bankkarte</translation>
     </message>
 </context>
 <context>
@@ -458,73 +451,73 @@
     <message>
         <location filename="creportdeviceusages.cpp" line="7"/>
         <source> Device usages </source>
-        <translation></translation>
+        <translation> Geräte-Benutzungen </translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="8"/>
         <source>This report shows the usage of the devices on the selected date intervall.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die Geräte-Benutzung in jenem bestimmen Zeitraum an.</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="11"/>
         <source>Panel type :</source>
-        <translation></translation>
+        <translation>Art des Geräts :</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="14"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="18"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="26"/>
         <location filename="creportdeviceusages.cpp" line="33"/>
         <source>All paneltypes</source>
-        <translation></translation>
+        <translation>Alle Geräte-Arten</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="39"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="78"/>
         <source>Device</source>
-        <translation></translation>
+        <translation>Gerät</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="79"/>
         <source>Planned time</source>
-        <translation></translation>
+        <translation>Geplante Zeit</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="80"/>
         <source>Real time</source>
-        <translation></translation>
+        <translation>Tatsächliche Zeit</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="81"/>
         <source>Aborted time</source>
-        <translation></translation>
+        <translation>Unterbrochene Zeit</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="82"/>
         <source>Payed by cash</source>
-        <translation></translation>
+        <translation>Bargeld Zahlung</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="83"/>
         <source>Used by card</source>
-        <translation></translation>
+        <translation>Club Karten Benutzung</translation>
     </message>
     <message>
         <location filename="creportdeviceusages.cpp" line="84"/>
         <source>No. units used</source>
-        <translation></translation>
+        <translation>Anzahl der Einheiten</translation>
     </message>
 </context>
 <context>
@@ -532,67 +525,67 @@
     <message>
         <location filename="creportguests.cpp" line="7"/>
         <source> Guest list </source>
-        <translation></translation>
+        <translation> Liste der Gäste </translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="8"/>
         <source>This report shows the summarized list of data of the registered guests.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die summierten Daten aller registrierten Gäste an.</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="11"/>
         <source>Name contains :</source>
-        <translation></translation>
+        <translation>Der Name enthällt :</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="14"/>
         <source>Gender :</source>
-        <translation></translation>
+        <translation>Geschlecht :</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="31"/>
         <source>Age :</source>
-        <translation></translation>
+        <translation>Altersgruppe :</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="49"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="96"/>
         <source>Membership Id</source>
-        <translation></translation>
+        <translation>individuelle Identifikationsnummer</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="97"/>
         <source>Name</source>
-        <translation></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="99"/>
         <source>Gender</source>
-        <translation></translation>
+        <translation>Geschlecht</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="101"/>
         <source>Age</source>
-        <translation></translation>
+        <translation>Altersgruppe</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="102"/>
         <source>E-Mail</source>
-        <translation></translation>
+        <translation>E-Mail</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="103"/>
         <source>Phone</source>
-        <translation></translation>
+        <translation>Tel.:</translation>
     </message>
     <message>
         <location filename="creportguests.cpp" line="104"/>
         <source>Address</source>
-        <translation></translation>
+        <translation>Adresse</translation>
     </message>
 </context>
 <context>
@@ -600,57 +593,100 @@
     <message>
         <location filename="creportledger.cpp" line="8"/>
         <source> Main ledger </source>
-        <translation></translation>
+        <translation> Hauptbuch </translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="9"/>
         <source>This report shows the bookkeepings, the cash book and every accounting data for the selected date intervall. Please select the first and last day of the date intervall you interested in.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt Ihnen, in dem von Ihnen ausgewählten Zeitraum, die Buchhaltung, Kassenstand Ereignisse an. Bitte wählen Sie den von Ihnen gewünschten Zeitraum aus.</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="13"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="17"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="28"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="37"/>
         <source>Date intervall:</source>
-        <translation></translation>
+        <translation>Zeitraum :</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="41"/>
+        <source>Shift list</source>
+        <translation>Liste der Arbeitsschichten</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="46"/>
         <location filename="creportledger.cpp" line="589"/>
         <source>Products sold</source>
-        <translation></translation>
+        <translation>Verkaufte Produkte</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="155"/>
-        <source>Product name</source>
-        <translation></translation>
+        <location filename="creportledger.cpp" line="51"/>
+        <location filename="creportledger.cpp" line="596"/>
+        <source>Patientcards sold</source>
+        <translation>Verkaufte Club Karten</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="156"/>
-        <location filename="creportledger.cpp" line="453"/>
-        <source>Count</source>
-        <translation></translation>
+        <location filename="creportledger.cpp" line="56"/>
+        <source>Occasionally usage of devices</source>
+        <translation>gelegentliche Einnahme durch Gerätebenutzung</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="157"/>
-        <location filename="creportledger.cpp" line="321"/>
-        <location filename="creportledger.cpp" line="390"/>
-        <location filename="creportledger.cpp" line="487"/>
-        <source>Amount</source>
-        <translation></translation>
+        <location filename="creportledger.cpp" line="61"/>
+        <source>Income by payment methods</source>
+        <translation>Einnahmen laut Zahlungen</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="66"/>
+        <location filename="creportledger.cpp" line="610"/>
+        <source>Expenses</source>
+        <translation>Ausgaben</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="71"/>
+        <source>Income summary</source>
+        <translation>Einnahmen laut Gesamtbetrachtung</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="101"/>
+        <source>Owner</source>
+        <translation>Besitzer</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="102"/>
+        <source>Cassa started</source>
+        <translation>Kassen-Öffnung</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="103"/>
+        <source>Cassa closed</source>
+        <translation>Kassen-Schluss</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="104"/>
+        <source>Last entry</source>
+        <translation>letzter Eintrag</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="105"/>
+        <source>Balance</source>
+        <translation>Kontostand</translation>
+    </message>
+    <message>
+        <location filename="creportledger.cpp" line="106"/>
+        <source>Income</source>
+        <translation>Einnahme</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="136"/>
@@ -660,111 +696,68 @@
         <location filename="creportledger.cpp" line="562"/>
         <location filename="creportledger.cpp" line="616"/>
         <source>Sum total</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="41"/>
-        <source>Shift list</source>
-        <translation></translation>
+        <location filename="creportledger.cpp" line="155"/>
+        <source>Product name</source>
+        <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="51"/>
-        <location filename="creportledger.cpp" line="596"/>
-        <source>Patientcards sold</source>
-        <translation></translation>
+        <location filename="creportledger.cpp" line="156"/>
+        <location filename="creportledger.cpp" line="453"/>
+        <source>Count</source>
+        <translation>Stückzahl</translation>
     </message>
     <message>
-        <location filename="creportledger.cpp" line="56"/>
-        <source>Occasionally usage of devices</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="66"/>
-        <location filename="creportledger.cpp" line="610"/>
-        <source>Expenses</source>
-        <translation></translation>
+        <location filename="creportledger.cpp" line="157"/>
+        <location filename="creportledger.cpp" line="321"/>
+        <location filename="creportledger.cpp" line="390"/>
+        <location filename="creportledger.cpp" line="487"/>
+        <source>Amount</source>
+        <translation>Preis</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="192"/>
         <location filename="creportledger.cpp" line="422"/>
         <location filename="creportledger.cpp" line="543"/>
         <source>Sum</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="389"/>
         <source>Description</source>
-        <translation></translation>
+        <translation>Abbuchung</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="484"/>
         <source>Payed by cash</source>
-        <translation></translation>
+        <translation>Bargeld Zahlung</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="485"/>
         <source>Payed by card</source>
-        <translation></translation>
+        <translation>Bankkarten Zahlung</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="486"/>
         <source>Payed by voucher</source>
-        <translation></translation>
+        <translation>Gutschein Zahlung</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="603"/>
         <source>Device usages</source>
-        <translation></translation>
+        <translation>Geräte-Benutzungen</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="623"/>
         <source>Cash/voucher</source>
-        <translation></translation>
+        <translation>Bargeld Gutschein</translation>
     </message>
     <message>
         <location filename="creportledger.cpp" line="630"/>
         <source>Card</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="61"/>
-        <source>Income by payment methods</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="71"/>
-        <source>Income summary</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="101"/>
-        <source>Owner</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="105"/>
-        <source>Balance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="106"/>
-        <source>Income</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="102"/>
-        <source>Cassa started</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="103"/>
-        <source>Cassa closed</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="creportledger.cpp" line="104"/>
-        <source>Last entry</source>
-        <translation></translation>
+        <translation>Bankkarte</translation>
     </message>
 </context>
 <context>
@@ -772,52 +765,52 @@
     <message>
         <location filename="creportmonthclose.cpp" line="8"/>
         <source> Monthly close </source>
-        <translation></translation>
+        <translation> Monats-Abschluss </translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="9"/>
         <source>This report shows the product and patientcard related summaries for the selected date intervall. Please select the first and last day of the date intervall you interested in.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt Ihnen, im ausgewählten Zeitraum, alle verkauften Club-Karten und Produkte an. Bitte wählen Sie den von Ihnen gewünschten Zeitraum aus.</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="13"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="17"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="27"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="36"/>
         <source>Date intervall:</source>
-        <translation></translation>
+        <translation>Zeitraum :</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="43"/>
         <source>Products sold</source>
-        <translation></translation>
+        <translation>Verkaufte Produkte</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="48"/>
         <source>Patientcards sold</source>
-        <translation></translation>
+        <translation>Verkaufte Club Karten</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="91"/>
         <source>Product name</source>
-        <translation></translation>
+        <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
         <location filename="creportmonthclose.cpp" line="92"/>
         <source>Count</source>
-        <translation></translation>
+        <translation>Stückzahl</translation>
     </message>
 </context>
 <context>
@@ -825,52 +818,52 @@
     <message>
         <location filename="creportpatientcardusages.cpp" line="8"/>
         <source> Patientcard usages </source>
-        <translation></translation>
+        <translation> Club Karten Benutzung </translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="9"/>
         <source>This report shows the patientcard usages for the selected date intervall. Please select the first and last day of the date intervall you interested in.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt Ihnen, in dem von Ihnen ausgewählten Zeitraum, die Benutzung aller Club-Karten  an. Bitte wählen Sie den von Ihnen gewünschten Zeitraum aus.</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="13"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="17"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="25"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="34"/>
         <source>Date intervall:</source>
-        <translation></translation>
+        <translation>Zeitraum :</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="55"/>
         <source>Date of usage</source>
-        <translation></translation>
+        <translation>Datum der Benutzung</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="56"/>
         <source>Patientcard barcode</source>
-        <translation></translation>
+        <translation>Strichcode der Club-Karte</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="57"/>
         <source>Unit count</source>
-        <translation></translation>
+        <translation>Anzahl der Einheiten</translation>
     </message>
     <message>
         <location filename="creportpatientcardusages.cpp" line="75"/>
         <source>Sum</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
 </context>
 <context>
@@ -878,83 +871,83 @@
     <message>
         <location filename="creportpatientcardtype.cpp" line="10"/>
         <source> Active patientcardtypes </source>
-        <translation></translation>
+        <translation> Aktive Club-Karten </translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="11"/>
         <source>This report shows the active patientcard types.  Please select type of expiration from the list box below.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt alle gültigen, aktiven Club-Karten an. Bitte wählen Sie die von Ihnen gewünschten Club-Karten Gruppen aus.</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="14"/>
         <source>Expiration ... :</source>
-        <translation></translation>
+        <translation>Abgelaufen … :</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="18"/>
         <location filename="creportpatientcardtype.cpp" line="22"/>
         <source>All type</source>
-        <translation></translation>
+        <translation>Alle Typarten</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="19"/>
         <source>set by No. of days</source>
-        <translation></translation>
+        <translation>Anzahl der Tage eingeschränkt</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="20"/>
         <source>set by date intervall</source>
-        <translation></translation>
+        <translation>Zeitraum Angabe</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="28"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="74"/>
         <source>%1 -&gt; %2 | %3 days</source>
-        <translation></translation>
+        <translation>%1 -&gt; %2 | %3 Tag</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="79"/>
         <source>%1 days</source>
-        <translation></translation>
+        <translation>%1 Tag</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="84"/>
         <source>%1 -&gt; %2</source>
-        <translation></translation>
+        <translation>%1 -&gt; %2</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="101"/>
         <source>Name</source>
-        <translation></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="102"/>
         <source>Price</source>
-        <translation></translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="103"/>
         <source>Units</source>
-        <translation></translation>
+        <translation>Einheiten</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="104"/>
         <source>Valid</source>
-        <translation></translation>
+        <translation>Gültig</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="105"/>
         <source>Unit time</source>
-        <translation></translation>
+        <translation>Zeit pro Einheit</translation>
     </message>
     <message>
         <location filename="creportpatientcardtype.cpp" line="118"/>
         <source>%1 minute(s)</source>
-        <translation></translation>
+        <translation>%1 Minuten</translation>
     </message>
 </context>
 <context>
@@ -962,68 +955,67 @@
     <message>
         <location filename="creportpatientcarddebts.cpp" line="10"/>
         <source> Value of active patientcards </source>
-        <translation></translation>
+        <translation> Aktive Club-Karten Einheiten </translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="11"/>
         <source>This report shows the summary price of valid patientcards on the selected date. Please select the day you interested in.</source>
-        <oldsource>This report shows the summary of valid patientcards and the price of its units available.</oldsource>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt an einem bestimmten Tag die aktiven und gültigen Club Karten an, mit den dazugehörigen gültigen Einheiten. Bitte wählen Sie den gewünschten Tag aus.</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="15"/>
         <source>Date :</source>
-        <translation></translation>
+        <translation>Date :</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="22"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="51"/>
         <source>On date: %1</source>
-        <translation></translation>
+        <translation>Der angegebene Tag: %1</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="61"/>
         <source>Barcode</source>
-        <translation></translation>
+        <translation>Strichcode</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="62"/>
         <source>Patientcard type</source>
-        <translation></translation>
+        <translation>Club Karten Typ</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="63"/>
         <source>Unit time</source>
-        <translation></translation>
+        <translation>Zeit pro Einheit</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="64"/>
         <source>Units</source>
-        <translation></translation>
+        <translation>Einheiten</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="65"/>
         <source>Unit price</source>
-        <translation></translation>
+        <translation>Einheitspreis</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="66"/>
         <source>Sum</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="85"/>
         <source>%1 minute(s)</source>
-        <translation></translation>
+        <translation>%1 Minuten</translation>
     </message>
     <message>
         <location filename="creportpatientcarddebts.cpp" line="94"/>
         <source>Sum total</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
 </context>
 <context>
@@ -1031,87 +1023,87 @@
     <message>
         <location filename="creportpatientcardsell.cpp" line="10"/>
         <source> Patientcard sells </source>
-        <translation></translation>
+        <translation> verkaufte Club Karten </translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="11"/>
         <source>This report shows the patientcard related actions on the selected date interval.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die verkauften Club-Karten in einem bestimmten Zeitraum an.</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="14"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="18"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="25"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="36"/>
         <source>Date intervall:</source>
-        <translation></translation>
+        <translation>Zeitraum :</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="41"/>
         <location filename="creportpatientcardsell.cpp" line="95"/>
         <source>Patientcard sells</source>
-        <translation></translation>
+        <translation> verkaufte Club Karten </translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="53"/>
         <location filename="creportpatientcardsell.cpp" line="100"/>
         <source>Patientcard refills</source>
-        <translation></translation>
+        <translation>Club-Karten Aufladungen</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="65"/>
         <location filename="creportpatientcardsell.cpp" line="105"/>
         <source>Lost patientcard replaces</source>
-        <translation></translation>
+        <translation>Tausch bei Clubkarten Verlust</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="77"/>
         <location filename="creportpatientcardsell.cpp" line="110"/>
         <source>Patientcard shares</source>
-        <translation></translation>
+        <translation>Partnerkarten Bestellungen zur Club-Karte</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="89"/>
         <source>Income summary</source>
-        <translation></translation>
+        <translation>Einnahmen laut Gesamtbetrachtung</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="119"/>
         <location filename="creportpatientcardsell.cpp" line="173"/>
         <source>Sum total</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="152"/>
         <source>Date</source>
-        <translation></translation>
+        <translation>Date</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="153"/>
         <source>Patientcard barcode</source>
-        <translation></translation>
+        <translation>Strichcode der Club-Karte</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="154"/>
         <source>Patientcard type</source>
-        <translation></translation>
+        <translation>Club Karten Typ</translation>
     </message>
     <message>
         <location filename="creportpatientcardsell.cpp" line="155"/>
         <source>Amount</source>
-        <translation></translation>
+        <translation>Preis</translation>
     </message>
 </context>
 <context>
@@ -1119,110 +1111,109 @@
     <message>
         <location filename="creportproducthistory.cpp" line="8"/>
         <source> Product history </source>
-        <translation></translation>
+        <translation> Artikel Historie </translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="9"/>
         <source>This report shows the product history. Please select the product you are interested in from the list or enter the product barcode. If you want to display defined actions, select it from the &apos;storage actions&apos; list.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die Historie eines von Ihnen bestimmten Artikels an. Bitte wählen Sie den Artikel Ihrer Wahl.</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="13"/>
         <source>First date of intervall :</source>
-        <translation></translation>
+        <translation>Erster Tag des Zetraums :</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="17"/>
         <source>Last date of intervall :</source>
-        <translation></translation>
+        <translation>letzter Tag des Zeitraums :</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="21"/>
         <source>Product barcode :</source>
-        <translation></translation>
+        <translation>Artikel Strichcode :</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="24"/>
         <source>Products :</source>
-        <translation></translation>
+        <translation>Artikel :</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="28"/>
         <location filename="creportproducthistory.cpp" line="38"/>
         <source>&lt;No product selected&gt;</source>
-        <translation></translation>
+        <translation>&lt;Kein Artikel ausgewählt&gt;</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="29"/>
         <source>&lt;All products&gt;</source>
-        <translation></translation>
+        <translation>&lt;alle Artikel&gt;</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="42"/>
         <source>Storage actions :</source>
-        <translation></translation>
+        <translation>Lager Ereignisse :</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="46"/>
         <location filename="creportproducthistory.cpp" line="56"/>
         <source>&lt;All storage actions&gt;</source>
-        <oldsource>&lt;All product actions&gt;</oldsource>
-        <translation></translation>
+        <translation>&lt;alle Lager Ereignisse&gt;</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="47"/>
         <source>Product sell</source>
-        <translation></translation>
+        <translation>Artikel Verkauf</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="62"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="107"/>
         <source>No product selected</source>
-        <translation></translation>
+        <translation>Kein Artikel ausgewählt</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="144"/>
         <source>Action description</source>
-        <translation></translation>
+        <translation>Abschreibung</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="145"/>
         <source>Product name</source>
-        <translation></translation>
+        <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="146"/>
         <source>Count</source>
-        <translation></translation>
+        <translation>Stückzahl</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="147"/>
         <source>Action amount</source>
-        <translation></translation>
+        <translation>Eingriff Summe</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="148"/>
         <source>Date</source>
-        <translation></translation>
+        <translation>Date</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="157"/>
         <source>Negative</source>
-        <translation></translation>
+        <translation>Negativ</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="184"/>
         <source>Product sold</source>
-        <translation></translation>
+        <translation>Verkaufte Produkte</translation>
     </message>
     <message>
         <location filename="creportproducthistory.cpp" line="202"/>
         <source>Sum</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
 </context>
 <context>
@@ -1230,57 +1221,57 @@
     <message>
         <location filename="creportproductstatus.cpp" line="7"/>
         <source> Product status </source>
-        <translation></translation>
+        <translation> Lagerbestand des Artikels </translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="8"/>
         <source>This report shows the product status on the selected date. Please select the date you are interested in.</source>
-        <translation></translation>
+        <translation>Diese Demonstration den Lagerbestand an bestimmten Datum an. Bitte geben Sie Ihr gewünschten Datum ein.</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="12"/>
         <source>Date :</source>
-        <translation></translation>
+        <translation>Date :</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="18"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="34"/>
         <source>On date: %1</source>
-        <translation></translation>
+        <translation>Der angegebene Tag: %1</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="40"/>
         <source>Products with no type</source>
-        <translation></translation>
+        <translation>Nicht eingerechnete Artikel</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="89"/>
         <source>Product name</source>
-        <translation></translation>
+        <translation>Bezeichnung des Produkts</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="90"/>
         <source>Barcode</source>
-        <translation></translation>
+        <translation>Strichcode</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="91"/>
         <source>Count</source>
-        <translation></translation>
+        <translation>Stückzahl</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="92"/>
         <source>Actual count</source>
-        <translation></translation>
+        <translation>Eingriff Summe</translation>
     </message>
     <message>
         <location filename="creportproductstatus.cpp" line="112"/>
         <source>Sum</source>
-        <translation></translation>
+        <translation>Insgesammt</translation>
     </message>
 </context>
 <context>
@@ -1288,73 +1279,73 @@
     <message>
         <location filename="creportproducts.cpp" line="8"/>
         <source> Products </source>
-        <translation></translation>
+        <translation> Artikel </translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="9"/>
         <source>This report shows the products registered in database.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die  Liste der Artikel an, welche in der Datenbank aufgelistet sind.</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="12"/>
         <source>Name contains :</source>
-        <translation></translation>
+        <translation>Der Name enthällt :</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="15"/>
         <source>Product types :</source>
-        <translation></translation>
+        <translation>Artikeltyp :</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="19"/>
         <location filename="creportproducts.cpp" line="29"/>
         <source>All type</source>
-        <translation></translation>
+        <translation>Alle Typarten</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="20"/>
         <source>Products with no type</source>
-        <translation></translation>
+        <translation>Nicht eingerechnete Artikel</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="34"/>
         <source>Show producst with zero item count</source>
-        <translation></translation>
+        <translation>Stückzahl Null eines Artikel</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="39"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="54"/>
         <source>Product type: &apos;%1&apos;</source>
-        <translation></translation>
+        <translation>Artikeltyp: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="58"/>
         <source>%1Product name contains: &apos;%2&apos;</source>
-        <translation></translation>
+        <translation>%1 Name des Artikels enthällt: &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="123"/>
         <source>Name</source>
-        <translation></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="124"/>
         <source>Barcode</source>
-        <translation></translation>
+        <translation>Strichcode</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="125"/>
         <source>Price</source>
-        <translation></translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location filename="creportproducts.cpp" line="126"/>
         <source>Count</source>
-        <translation></translation>
+        <translation>Stückzahl</translation>
     </message>
 </context>
 <context>
@@ -1362,17 +1353,17 @@
     <message>
         <location filename="creporttemplate.cpp" line="7"/>
         <source> Inactive patientcards </source>
-        <translation></translation>
+        <translation> Ungültige Club Karten </translation>
     </message>
     <message>
         <location filename="creporttemplate.cpp" line="8"/>
         <source>This report shows the __template_description__.</source>
-        <translation></translation>
+        <translation>Diese Demonstration zeigt die __template_description__.</translation>
     </message>
     <message>
         <location filename="creporttemplate.cpp" line="13"/>
         <source>Create selected report ...</source>
-        <translation></translation>
+        <translation>Demonstration anzeigen…</translation>
     </message>
 </context>
 <context>
@@ -1381,47 +1372,47 @@
         <location filename="wndmain.cpp" line="306"/>
         <location filename="wndmain.cpp" line="406"/>
         <source>Login</source>
-        <translation></translation>
+        <translation>Identifikation</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="311"/>
         <source>Need authentication ...</source>
-        <translation></translation>
+        <translation>Identifikation Notwendig ...</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="316"/>
         <source>User successfully authenticated.</source>
-        <translation></translation>
+        <translation>Der Benutzer wurde erfolgreich erkannt.</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="321"/>
         <source>Logout</source>
-        <translation></translation>
+        <translation>Abmelden</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="327"/>
         <source>The username entered not found in the Belenus database</source>
-        <translation></translation>
+        <translation>Der angebene Benutzer ist in der Belenus Datenbank nicht erreichbar.</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="329"/>
         <source>The password entered is incorrect</source>
-        <translation></translation>
+        <translation>Das Kennwort is falsch.</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="331"/>
         <source>Connection to Belenus database failed</source>
-        <translation></translation>
+        <translation>Die Verbindung zur Belenus Datenbank ist erfolglos.</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="333"/>
         <source>Authentication failed. Please retry later ...</source>
-        <translation></translation>
+        <translation>Die Verbindung ist fehlgeschlagen. Bitte versuchen Sie es später.</translation>
     </message>
     <message>
         <location filename="wndmain.cpp" line="1005"/>
         <source>&lt;i&gt;Please select a report to show the related filters ...&lt;/i&gt;</source>
-        <translation></translation>
+        <translation>&lt;i&gt;Bitte wählen Sie eine Demonstration mit den dazugehörigen Filter-Eigenschaften…&lt;/i&gt;</translation>
     </message>
 </context>
 <context>
@@ -1429,7 +1420,7 @@
     <message>
         <location filename="dlgprogress.ui" line="35"/>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation>TextLabel</translation>
     </message>
 </context>
 <context>
@@ -1437,342 +1428,341 @@
     <message>
         <location filename="wndmain.ui" line="20"/>
         <source>Belenus Report Viewer</source>
-        <translation></translation>
+        <translation>Belenus Statistik anzeigen</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="60"/>
         <source>Exit application</source>
-        <translation></translation>
+        <translation>Anwendung Schließen</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="83"/>
         <source>Daily ledger</source>
-        <translation></translation>
+        <translation>Tägliche Buchung</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="102"/>
         <source>Bookkeeping ledger</source>
-        <translation></translation>
+        <translation>Hauptbuch</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="121"/>
         <location filename="wndmain.ui" line="1104"/>
         <source>Additional information for monthly closure</source>
-        <translation></translation>
+        <translation>Informationen zum Monats Abschluss</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="140"/>
         <location filename="wndmain.ui" line="1027"/>
         <source>History of cassa events and actions</source>
-        <translation></translation>
+        <translation>Kassen Ereignisse und Eingriffe</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="166"/>
         <location filename="wndmain.ui" line="997"/>
         <source>Active patientcard types</source>
-        <translation></translation>
+        <translation>Aktive Club-Karten</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="185"/>
         <location filename="wndmain.ui" line="1013"/>
         <location filename="wndmain.ui" line="1016"/>
         <source>Patientcard details</source>
-        <translation></translation>
+        <translation>Daten aller Club Karten</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="204"/>
         <source>Patientcard usages</source>
-        <translation></translation>
+        <translation>Club Karten Benutzung</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="223"/>
         <source>Inactive or expiring patientcards</source>
-        <translation></translation>
+        <translation>Ungültige Club Karten</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="242"/>
         <location filename="wndmain.ui" line="1038"/>
         <source>History of patientcard cassa actions</source>
-        <translation></translation>
+        <translation>Kassen Ereignisse und Eingriffe</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="261"/>
         <location filename="wndmain.ui" line="1060"/>
         <source>Summary of valid patientcards and the price of its units available</source>
-        <translation></translation>
+        <translation>Gültige Club-Karten und die dazugehörige Anzahl der Einheiten.</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="287"/>
         <location filename="wndmain.ui" line="1049"/>
         <source>Products registered in database</source>
-        <translation></translation>
+        <translation>Artikel in der Datenbank</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="306"/>
         <location filename="wndmain.ui" line="1071"/>
         <source>Product status on the selected date</source>
-        <translation></translation>
+        <translation>Artikel Bestand an einem ausgewählten Tag</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="325"/>
         <location filename="wndmain.ui" line="1082"/>
         <source>History of the selected product</source>
-        <translation></translation>
+        <translation>Die Historie des ausgewählten Artikels</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="351"/>
         <location filename="wndmain.ui" line="1115"/>
         <source>Summarized information about registered guests</source>
-        <translation></translation>
+        <translation>Daten aller registrierten Kunden</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="377"/>
         <location filename="wndmain.ui" line="1126"/>
         <source>Summary of device usages</source>
-        <translation></translation>
+        <translation>Geräte Benutzung Zusammenfassung</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="409"/>
         <source> Print report </source>
-        <translation></translation>
+        <translation> Demonstration Drucken </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="458"/>
         <source>Report description ... </source>
-        <translation></translation>
+        <translation>Demonstration abschreiben … </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="474"/>
         <source> Refresh </source>
-        <translation></translation>
+        <translation> Update </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="507"/>
         <source>Date start :</source>
-        <translation></translation>
+        <translation>Anfangs-Datum :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="524"/>
         <source>Date stop :</source>
-        <translation></translation>
+        <translation>End-Datum :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="557"/>
         <source>Data name :</source>
-        <translation></translation>
+        <translation>Datei Benennung :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="590"/>
         <source>Data types :</source>
-        <translation></translation>
+        <translation>Datentyp :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="600"/>
         <source>Data subtypes :</source>
-        <translation></translation>
+        <translation>Dateityp :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="626"/>
         <source>Is visible</source>
-        <translation></translation>
+        <translation>Sichtbar</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="653"/>
         <source>Report will be printed with the selected paper orientation :</source>
-        <oldsource>Print report with the selected paper orientation :</oldsource>
-        <translation></translation>
+        <translation>Die Demonstration wird in der ausgewählten Lage gedruckt :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="660"/>
         <source>Portrait</source>
-        <translation></translation>
+        <translation>Stehend</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="670"/>
         <source>Landscape</source>
-        <translation></translation>
+        <translation>Liegend</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="702"/>
         <source> Information </source>
-        <translation></translation>
+        <translation> Information </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="717"/>
         <source>How to use report viewer ...</source>
-        <translation></translation>
+        <translation>Wie verwenden Sie die Statistik-Anwendung …</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="739"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Welcome to Belenus Report Viewer application.&lt;br/&gt;To use the application you need to authenticate yourself. Please enter your Belenus user name and password below.&lt;br/&gt;After successfull authentication you will be able to query different filtered reports.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Willkommen in der Belenus Statistik Anwendung.&lt;br/&gt;Bitte geben Sie Ihre Belenus Benutzernamen und Kennwort ein.&lt;br/&gt;Bei erfolgreicher Anmeldung haben Sie die Möglichkeit verschiedene Demonstrationen abzurufen...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="749"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click on the appropriate button above to open the related report. Use the related filters to display filtered data in the actual report.&lt;br/&gt;Click the Export button on the top right to export the actual report to a formatted text file or click the Print button to send it to a printer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bitte Klicken Sie auf den Verbinden um die gewünschte Demonstration zu sehen. Nach der Eingabe der Filter-Einstellungen, kann die Demonstration angezeigt werden..&lt;br/&gt;Bitte Klicken Sie auf Drucken, wenn Sie die aktuelle Demonstration drucken wollen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="756"/>
         <source> Authentication </source>
-        <translation></translation>
+        <translation> Identifikation  </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="762"/>
         <source>Need authentication ...</source>
-        <translation></translation>
+        <translation>Identifikation Notwendig ...</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="771"/>
         <source>User name :</source>
-        <translation></translation>
+        <translation>Benutzer :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="781"/>
         <source>Password :</source>
-        <translation></translation>
+        <translation>Kennwort :</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="801"/>
         <source> Login </source>
-        <translation></translation>
+        <translation> Identifikation </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="832"/>
         <source> Filter settings </source>
-        <translation></translation>
+        <translation> Filter-Einstellungen </translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="838"/>
         <source>Refresh the report automatically after one of the filter has been changed</source>
-        <translation></translation>
+        <translation>Die Demonstration wird automatisch upgedatet, nach der Änderung der Filter-Einstellungen</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="875"/>
         <source>&amp;File</source>
-        <translation></translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="882"/>
         <source>&amp;View</source>
-        <translation></translation>
+        <translation>&amp;Vorschau</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="889"/>
         <source>&amp;Reports</source>
-        <translation></translation>
+        <translation>&amp;Demonstration</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="893"/>
         <source>&amp;Bookkeeping</source>
-        <translation></translation>
+        <translation>&amp;Haputbuch</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="903"/>
         <source>Patientcards</source>
-        <translation></translation>
+        <translation>Club-Karten</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="914"/>
         <location filename="wndmain.ui" line="1046"/>
         <source>Products</source>
-        <translation></translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="922"/>
         <location filename="wndmain.ui" line="1112"/>
         <source>Guests</source>
-        <translation></translation>
+        <translation>Gäste</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="928"/>
         <source>Devices</source>
-        <translation></translation>
+        <translation>Geräte</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="945"/>
         <source>E&amp;xit</source>
-        <translation></translation>
+        <translation>&amp;Abmelden</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="956"/>
         <source>&amp;Toolbar</source>
-        <translation></translation>
+        <translation>&amp;Werkzeug</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="967"/>
         <source>&amp;Filter bar</source>
-        <translation></translation>
+        <translation>&amp; Filter Panel</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="975"/>
         <source>&amp;Daily</source>
-        <translation></translation>
+        <translation>&amp; Tages</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="978"/>
         <source>Daily bookkeeping</source>
-        <translation></translation>
+        <translation>Tagbuch</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="986"/>
         <source>&amp;Ledger</source>
-        <translation></translation>
+        <translation>&amp;Buchhaltung</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="994"/>
         <source>&amp;Active patientcard types</source>
-        <translation></translation>
+        <translation>&amp;Aktive Club-Kartentypen</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1005"/>
         <source>Inactive patientcards</source>
-        <translation></translation>
+        <translation>Ungültige Club Karten</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1024"/>
         <source>&amp;Cassa history</source>
-        <translation></translation>
+        <translation>&amp;Kassenbuch</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1035"/>
         <source>Patientcard sells</source>
-        <translation></translation>
+        <translation>Club-Karten Verkauf</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1057"/>
         <source>Patientcard debts</source>
-        <translation></translation>
+        <translation>Club-Karten Wert</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1068"/>
         <source>Product status</source>
-        <translation></translation>
+        <translation>Artikel Bestand</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1079"/>
         <source>Product history</source>
-        <translation></translation>
+        <translation>Historie des Artikels</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1090"/>
         <source>Patient card usages</source>
-        <translation></translation>
+        <translation>Club-Karten Benutzung</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1093"/>
         <source>Patientcard usages on a defined date intervall</source>
-        <translation></translation>
+        <translation>Club-Karten Benutzung in angegebenem Zeitraum</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1101"/>
         <source>Monthly</source>
-        <translation></translation>
+        <translation>Monats-Abschluss</translation>
     </message>
     <message>
         <location filename="wndmain.ui" line="1123"/>
         <source>Device usages</source>
-        <translation></translation>
+        <translation>Geräte-Benutzungen</translation>
     </message>
 </context>
 </TS>
