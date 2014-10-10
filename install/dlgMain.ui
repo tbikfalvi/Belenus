@@ -140,7 +140,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Select language for the application</string>
+            <string>Select language for the installer</string>
            </property>
           </widget>
          </item>
@@ -154,6 +154,36 @@
            </item>
            <item>
             <spacer name="horizontalSpacer_29">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Select language for the application</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_23">
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QComboBox" name="cmbLanguageApp"/>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_30">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -257,7 +287,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>40</height>
+             <height>17</height>
             </size>
            </property>
           </spacer>
@@ -1889,17 +1919,28 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>cmbCOMPorts</tabstop>
-  <tabstop>pbTestHWConnection</tabstop>
+  <tabstop>cmbLanguage</tabstop>
+  <tabstop>cmbLanguageApp</tabstop>
+  <tabstop>ledSetupSystemPass</tabstop>
+  <tabstop>rbInstall</tabstop>
+  <tabstop>rbUpdate</tabstop>
   <tabstop>rbRemove</tabstop>
   <tabstop>chkWamp</tabstop>
   <tabstop>chkDatabase</tabstop>
   <tabstop>chkHardware</tabstop>
   <tabstop>chkBelenus</tabstop>
   <tabstop>chkViewer</tabstop>
+  <tabstop>rbWin32</tabstop>
+  <tabstop>rbWin64</tabstop>
+  <tabstop>pbStartWampInstall</tabstop>
+  <tabstop>ledSQLRootPsw</tabstop>
+  <tabstop>chkShowSQLPassword</tabstop>
+  <tabstop>ledSQLRootPsw1</tabstop>
+  <tabstop>ledSQLRootPsw2</tabstop>
+  <tabstop>cmbCOMPorts</tabstop>
+  <tabstop>pbTestHWConnection</tabstop>
+  <tabstop>ledPanelsAvailable</tabstop>
   <tabstop>ledPanelsInstalled</tabstop>
-  <tabstop>rbInstall</tabstop>
-  <tabstop>rbUpdate</tabstop>
   <tabstop>ledClientInstallDir</tabstop>
   <tabstop>pbSelectDir</tabstop>
   <tabstop>pbExitRestart</tabstop>

@@ -58,7 +58,7 @@ class dlgMain : public QDialog, protected Ui::dlgMain
     Q_OBJECT
 
 public:
-    explicit dlgMain(QWidget *parent = 0, bool bUninstall = false, bool bSilent = false);
+    explicit dlgMain(QWidget *parent = 0, bool bUninstall = false, bool bSilent = false, int nDeviceNum = 3);
     ~dlgMain();
 
 protected:
@@ -209,6 +209,7 @@ private slots:
     void on_pbCancel_clicked();
     void on_pbPrev_clicked();
     void on_pbNext_clicked();
+    void on_cmbLanguageApp_currentIndexChanged(int);
 };
 //====================================================================================
 #endif // DLGMAIN_H

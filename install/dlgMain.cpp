@@ -30,7 +30,7 @@
 #include "../client/communication_serial.h"
 
 //=======================================================================================
-dlgMain::dlgMain(QWidget *parent, bool bUninstall, bool bSilent) : QDialog(parent)
+dlgMain::dlgMain(QWidget *parent, bool bUninstall, bool bSilent, int nDeviceNum) : QDialog(parent)
 //=======================================================================================
 {
     setupUi(this);
@@ -55,7 +55,7 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall, bool bSilent) : QDialog(paren
     // Initialize pages has to show on start
     m_vPages.clear();
     m_vPages.append( CONST_PAGE_WELCOME );
-    m_vPages.append( CONST_PAGE_INSTALL_SELECTION );
+//    m_vPages.append( CONST_PAGE_INSTALL_SELECTION );  // nem kell a selection
     m_vPages.append( CONST_PAGE_FINISH );
 
     // Set current page index to welcome page
@@ -64,6 +64,11 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall, bool bSilent) : QDialog(paren
     // Initialize GUI components
     cmbLanguage->addItem( "Magyar (hu)" );
     cmbLanguage->addItem( "English (en)" );
+//    cmbLanguage->addItem( "Deutsch (de)" ); // nem kell a telepites nemetul
+
+    cmbLanguageApp->addItem( "Magyar (hu)" );
+    cmbLanguageApp->addItem( "English (en)" );
+    cmbLanguageApp->addItem( "Deutsch (de)" );
 
     m_bSilentIstallCalled = bSilent;
 
@@ -71,6 +76,8 @@ dlgMain::dlgMain(QWidget *parent, bool bUninstall, bool bSilent) : QDialog(paren
     {
         _logProcess( "Silent install called" );
     }
+
+    m_nCountDevices = nDeviceNum;
 
     // If application called with uninstall flag, start uninstall process
     if( bUninstall )
@@ -225,7 +232,7 @@ void dlgMain::_initializeInstall()
     // Default settings for hardware
     m_poHardware                = NULL;
     m_nComPort                  = 0;
-    m_nCountDevices             = 0;
+//    m_nCountDevices             = 0;  konstruktorban megadva
 
     // Default settings for internet connection
     m_qsIPAddress               = QString( "127.0.0.1" );
@@ -631,26 +638,28 @@ void dlgMain::_initializeWelcomePage()
         m_vPages.append( CONST_PAGE_WAMP_INSTALL );
         m_vPages.append( CONST_PAGE_PROCESS );
         m_vPages.append( CONST_PAGE_FINISH );
-        m_nCountDevices = 3;
-        m_bDemoMode = true;
+//        m_nCountDevices = 3;  ez be van allitva a konstruktorban
+//        m_bDemoMode = true; ezt majd eldonti, hogy van-e COM port, ha nincs, vagy nincs kapcsolat, akkor lesz demo
     }
 }
 //=======================================================================================
 void dlgMain::on_cmbLanguage_currentIndexChanged(int /*index*/)
 //=======================================================================================
 {
+    QString qsLanguage = "hu";
+
     if( !m_bUninstallCalled )
-        m_qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
+        qsLanguage = cmbLanguage->itemText( cmbLanguage->currentIndex() ).right(3).left(2);
 
     _logProcess( QString("Language selected: %1").arg(m_qsLanguage) );
 
     apMainApp->removeTranslator( poTransSetup );
     apMainApp->removeTranslator( poTransQT );
 
-    if( m_qsLanguage.compare("en") )
+    if( qsLanguage.compare("en") )
     {
-        QString qsLangSetup = QString("%1\\lang\\setup_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
-        QString qsLangQT = QString("%1\\lang\\qt_%2.qm").arg(g_qsCurrentPath).arg( m_qsLanguage );
+        QString qsLangSetup = QString("%1\\lang\\setup_%2.qm").arg(g_qsCurrentPath).arg( qsLanguage );
+        QString qsLangQT = QString("%1\\lang\\qt_%2.qm").arg(g_qsCurrentPath).arg( qsLanguage );
 
         _logProcess( QString("Load language file: %1").arg( qsLangSetup ) );
         _logProcess( QString("Load language file: %1").arg( qsLangQT ) );
@@ -662,6 +671,12 @@ void dlgMain::on_cmbLanguage_currentIndexChanged(int /*index*/)
     }
 
     retranslateUi( this );
+}
+//=======================================================================================
+void dlgMain::on_cmbLanguageApp_currentIndexChanged(int /*index*/)
+//---------------------------------------------------------------------------------------
+{
+    m_qsLanguage = cmbLanguageApp->itemText( cmbLanguageApp->currentIndex() ).right(3).left(2);
 }
 //=======================================================================================
 bool dlgMain::_processWelcomePage()

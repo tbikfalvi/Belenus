@@ -30,7 +30,7 @@ QTranslator     *poTransSetup;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 QString          g_qsCurrentPath;
-cQTLogger                g_obLogger;
+cQTLogger        g_obLogger;
 
 //====================================================================================
 int main(int argc, char *argv[])
@@ -56,19 +56,27 @@ int main(int argc, char *argv[])
     apMainApp->installTranslator( poTransSetup );
     apMainApp->installTranslator( poTransQT );
 
-    bool bUninstall = false;
-    bool bSilent    = false;
+    bool    bUninstall  = false;
+    bool    bSilent     = false;
+    QString qsDevice    = "3";
 
-    if( argc > 1 && strcmp(argv[1],"-uninstall") == 0 )
+    for( int i=1; i<argc; i++ )
     {
-        bUninstall = true;
-    }
-    else if( argc > 1 && strcmp(argv[1],"-silent") == 0 )
-    {
-        bSilent = true;
+        if( strcmp(argv[i],"-uninstall") == 0 )
+        {
+            bUninstall = true;
+        }
+        else if( strcmp(argv[i],"-silent") == 0 )
+        {
+            bSilent = true;
+        }
+        else if( strncmp(argv[i],"-device:",7) == 0 )
+        {
+            qsDevice = QString( argv[i] ).replace("-device:","");
+        }
     }
 
-    dlgMain w( 0, bUninstall, bSilent );
+    dlgMain w( 0, bUninstall, bSilent, qsDevice.toInt() );
 
     w.show();
 
