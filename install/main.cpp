@@ -59,6 +59,9 @@ int main(int argc, char *argv[])
     bool    bUninstall  = false;
     bool    bSilent     = false;
     QString qsDevice    = "3";
+    QString qsLangInst  = "hu";
+    QString qsLangApp   = "hu";
+    QString qsComPort   = "";
 
     for( int i=1; i<argc; i++ )
     {
@@ -70,13 +73,25 @@ int main(int argc, char *argv[])
         {
             bSilent = true;
         }
-        else if( strncmp(argv[i],"-device:",7) == 0 )
+        else if( strncmp(argv[i],"-device:",8) == 0 )
         {
             qsDevice = QString( argv[i] ).replace("-device:","");
         }
+        else if( strncmp(argv[i],"-com:",5) == 0 )
+        {
+            qsComPort = QString( argv[i] ).replace("-com:","");
+        }
+        else if( strncmp(argv[i],"-langi:",7) == 0 )
+        {
+            qsLangInst = QString( argv[i] ).replace("-langi:","");
+        }
+        else if( strncmp(argv[i],"-langa:",7) == 0 )
+        {
+            qsLangApp = QString( argv[i] ).replace("-langa:","");
+        }
     }
 
-    dlgMain w( 0, bUninstall, bSilent, qsDevice.toInt() );
+    dlgMain w( 0, bUninstall, bSilent, qsDevice.toInt(), qsComPort.toInt(), qsLangInst, qsLangApp );
 
     w.show();
 

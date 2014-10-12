@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
 
+    on_pbLangEn_clicked();
+
     // Initialize GUI components
     ui->cmbLanguage->addItem( "Magyar (hu)" );
     ui->cmbLanguage->addItem( "English (en)" );
@@ -56,10 +58,54 @@ MainWindow::~MainWindow()
 //=================================================================================================
 //
 //-------------------------------------------------------------------------------------------------
+void MainWindow::on_pbLangEn_clicked()
+{
+    ui->pbLangEn->setChecked( true );
+    ui->pbLangDe->setChecked( false );
+    ui->pbLangHu->setChecked( false );
+    apMainApp->removeTranslator( poTransStartup );
+    apMainApp->removeTranslator( poTransQT );
+    ui->retranslateUi( this );
+    m_qsLangInstaller = "en";
+}
+
+void MainWindow::on_pbLangDe_clicked()
+{
+    ui->pbLangEn->setChecked( false );
+    ui->pbLangDe->setChecked( true );
+    ui->pbLangHu->setChecked( false );
+    apMainApp->removeTranslator( poTransStartup );
+    apMainApp->removeTranslator( poTransQT );
+    QString qsLangSetup = QString("%1\\lang\\startup_de.qm").arg(QDir::currentPath());
+    QString qsLangQT = QString("%1\\lang\\qt_de.qm").arg(QDir::currentPath());
+    poTransStartup->load( qsLangSetup );
+    poTransQT->load( qsLangQT );
+    apMainApp->installTranslator( poTransStartup );
+    apMainApp->installTranslator( poTransQT );
+    ui->retranslateUi( this );
+    m_qsLangInstaller = "de";
+}
+
+void MainWindow::on_pbLangHu_clicked()
+{
+    ui->pbLangEn->setChecked( false );
+    ui->pbLangDe->setChecked( false );
+    ui->pbLangHu->setChecked( true );
+    apMainApp->removeTranslator( poTransStartup );
+    apMainApp->removeTranslator( poTransQT );
+    QString qsLangSetup = QString("%1\\lang\\startup_hu.qm").arg(QDir::currentPath());
+    QString qsLangQT = QString("%1\\lang\\qt_hu.qm").arg(QDir::currentPath());
+    poTransStartup->load( qsLangSetup );
+    poTransQT->load( qsLangQT );
+    apMainApp->installTranslator( poTransStartup );
+    apMainApp->installTranslator( poTransQT );
+    ui->retranslateUi( this );
+    m_qsLangInstaller = "hu";
+}
 void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
 {
-    QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
-
+//    QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
+/*
     apMainApp->removeTranslator( poTransStartup );
     apMainApp->removeTranslator( poTransQT );
 
@@ -75,7 +121,37 @@ void MainWindow::on_cmbLanguage_currentIndexChanged(int /*index*/)
         apMainApp->installTranslator( poTransQT );
     }
 
-    ui->retranslateUi( this );
+    ui->retranslateUi( this );*/
+}
+//=================================================================================================
+//
+//-------------------------------------------------------------------------------------------------
+void MainWindow::on_process_selected()
+{
+    if( ui->rbProcessInstall->isChecked() )
+    {
+        m_nProcessType = PROCESS_INSTALL;
+        ui->ledPanelCount->setEnabled( true );
+        ui->spinCombo->setEnabled( true );
+    }
+    else if( ui->rbProcessRemove->isChecked() )
+    {
+        m_nProcessType = PROCESS_REMOVE;
+        ui->ledPanelCount->setEnabled( false );
+        ui->spinCombo->setEnabled( false );
+    }
+    else if( ui->rbProcessUpdate->isChecked() )
+    {
+        m_nProcessType = PROCESS_UPDATE;
+        ui->ledPanelCount->setEnabled( false );
+        ui->spinCombo->setEnabled( false );
+    }
+    else
+    {
+        return;
+    }
+
+    ui->pbStart->setEnabled( true );
 }
 //=================================================================================================
 //
@@ -209,30 +285,6 @@ void MainWindow::on_pbDirectoryBackup_clicked()
     }
 }
 //=================================================================================================
-//
-//-------------------------------------------------------------------------------------------------
-void MainWindow::on_process_selected()
-{
-    if( ui->rbProcessInstall->isChecked() )
-    {
-        m_nProcessType = PROCESS_INSTALL;
-    }
-    else if( ui->rbProcessRemove->isChecked() )
-    {
-        m_nProcessType = PROCESS_REMOVE;
-    }
-    else if( ui->rbProcessUpdate->isChecked() )
-    {
-        m_nProcessType = PROCESS_UPDATE;
-    }
-    else
-    {
-        return;
-    }
-
-    ui->pbStart->setEnabled( true );
-}
-//=================================================================================================
 // on_pbStart_clicked
 //-------------------------------------------------------------------------------------------------
 void MainWindow::on_pbStart_clicked()
@@ -259,11 +311,12 @@ void MainWindow::on_pbStart_clicked()
                 if( !_copyXmlFile() ) { return; }
             }
 
-            _executeUpdater();
+            _executeInstaller();
             break;
         }
         case PROCESS_REMOVE:
         {
+            // "c:\wamp\unins000.exe /SILENT"
             break;
         }
         case PROCESS_UPDATE:
@@ -370,7 +423,6 @@ bool MainWindow::_createSettingsFile()
     QString qsVersion   = obMasterCD.value( "Version", "1.0.0" ).toString();
     QString qsSettings  = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
     QString qsAddress   = "";
-    QString qsInfoFile  = "";
     QString qsLocation  = "";
     QString qsAppType   = "";
 
@@ -400,7 +452,7 @@ bool MainWindow::_createSettingsFile()
         qsLocation = "loc";
     }
 
-    qsInfoFile = QString( "belenus_%1.xml" ).arg( qsLocation );
+    m_qsInfoFile = QString( "belenus_%1.xml" ).arg( qsLocation );
 
     obPrefFile.setValue( QString::fromAscii( "Language/Path" ), "lang" );
     obPrefFile.setValue( QString::fromAscii( "Language/Extension" ), qsLanguage );
@@ -413,7 +465,7 @@ bool MainWindow::_createSettingsFile()
 
     obPrefFile.setValue( QString::fromAscii( "PreProcess/Version" ), qsVersion );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/Address" ), qsAddress );
-    obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), qsInfoFile );
+    obPrefFile.setValue( QString::fromAscii( "PreProcess/InfoFile" ), m_qsInfoFile );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/InstallDir" ), ui->ledDirectoryTarget->text() );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/DownloadDir" ), ui->ledDirectoryResource->toolTip() );
     obPrefFile.setValue( QString::fromAscii( "PreProcess/BackupDir" ), ui->ledDirectoryBackup->toolTip() );
@@ -464,7 +516,7 @@ bool MainWindow::_updateSettingsFile()
         qsLocation = "loc";
     }
 
-    m_qsInfoFile = QString( "belenus_%1_%2.xml" ).arg( qsLocation ).arg( qsLanguage );
+    m_qsInfoFile = QString( "belenus_%1.xml" ).arg( qsLocation );
 
     obPrefFile.setValue( QString::fromAscii( "Language/Extension" ), qsLanguage );
 
@@ -556,7 +608,7 @@ bool MainWindow::_copyUpdaterFiles()
 //-------------------------------------------------------------------------------------------------
 bool MainWindow::_copyXmlFile()
 {
-    QString qsSrc   = QString( "%1/%2" ).arg( QDir::currentPath() ).arg( m_qsInfoFile );
+    QString qsSrc   = QString( "%1/settings/%2" ).arg( QDir::currentPath() ).arg( m_qsInfoFile );
     QString qsDst   = QString( "%1/%2" ).arg( ui->ledDirectoryResource->toolTip() ).arg( m_qsInfoFile );
 
     qsSrc.replace("\\","/");
@@ -576,6 +628,39 @@ bool MainWindow::_copyXmlFile()
     _progressStep();
 
     return true;
+}
+//=================================================================================================
+// _executeUpdater
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_executeInstaller()
+{
+    QProcess *qpProcess  = new QProcess(this);
+    QString   qsProcess  = QString( "%1/Setup.exe" ).arg( QDir::currentPath() );
+    QString   qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
+
+    qsProcess.replace("\\","/");
+    qsProcess.replace("//","/");
+
+    qsProcess.append( " -silent" );
+    qsProcess.append( QString( " -device:%1" ).arg( ui->ledPanelCount->text().toInt() ) );
+    qsProcess.append( QString( " -com:%1" ).arg( ui->spinCombo->text().replace("COM","") ) );
+    qsProcess.append( QString( " -langi:%1" ).arg( m_qsLangInstaller ) );
+    qsProcess.append( QString( " -langa:%1" ).arg( qsLanguage ) );
+
+    if( !qpProcess->startDetached( qsProcess ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsProcess )
+                              .arg( qpProcess->error() ) );
+    }
+    delete qpProcess;
 }
 //=================================================================================================
 // _executeUpdater
@@ -624,7 +709,7 @@ bool MainWindow::_copyFile( QString p_qsSrc, QString p_qsDst )
 
     if( !QFile::copy( p_qsSrc, p_qsDst ) )
     {
-        _logProcess( tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( p_qsSrc ).arg( p_qsDst ) );
+        _logProcess( QString("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( p_qsSrc ).arg( p_qsDst ) );
         return false;
     }
 
@@ -659,4 +744,5 @@ void MainWindow::_logProcess( QString p_qsLog, bool p_bInsertNewLine )
 //=================================================================================================
 //
 //-------------------------------------------------------------------------------------------------
+
 

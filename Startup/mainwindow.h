@@ -32,6 +32,9 @@ private slots:
     void on_ledDirectoryResource_editingFinished();
     void on_ledDirectoryBackup_editingFinished();
     void on_process_selected();
+    void on_pbLangEn_clicked();
+    void on_pbLangDe_clicked();
+    void on_pbLangHu_clicked();
 
 private:
     Ui::MainWindow          *ui;
@@ -39,6 +42,7 @@ private:
     int                      m_nProcessType;
     QString                  m_qsErrorReportFile;
     QString                  m_qsInfoFile;
+    QString                  m_qsLangInstaller;
 
     void _updateEnvironmentVariables();
     bool _createPaths();
@@ -48,6 +52,7 @@ private:
     void _progressStep();
     bool _copyUpdaterFiles();
     bool _copyXmlFile();
+    void _executeInstaller();
     void _executeUpdater();
     bool _copyFile( QString p_qsSrc, QString p_qsDst );
     void _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
