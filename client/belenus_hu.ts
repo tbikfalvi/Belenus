@@ -2129,19 +2129,25 @@ Vonalkód	Bérlettípus</translation>
 <context>
     <name>cDlgHardwareTest</name>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="16"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="18"/>
         <source>Hardware Test</source>
         <translation>Hardver teszt</translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="207"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="280"/>
         <source>Hardware available</source>
         <translation>A hardver rendelkezésre áll</translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="212"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="285"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="293"/>
         <source>Hardware unavailable</source>
         <translation>A hardver nem elérhető</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlghardwaretest.cpp" line="544"/>
+        <source>Not implemented yet</source>
+        <translation>Nincs kész</translation>
     </message>
 </context>
 <context>
@@ -10287,16 +10293,17 @@ allergia :</translation>
     </message>
     <message>
         <location filename="dlghardwaretest.ui" line="22"/>
-        <source> Hardware connection </source>
+        <source> Hardware </source>
+        <oldsource> Hardware connection </oldsource>
         <translation> Hardver kapcsolat </translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="54"/>
+        <location filename="dlghardwaretest.ui" line="67"/>
         <source>Test connection</source>
         <translation>Kapcsolat tesztelés</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="43"/>
+        <location filename="dlghardwaretest.ui" line="56"/>
         <source>Unknown status</source>
         <translation>Újracsatlakozás</translation>
     </message>
@@ -10306,22 +10313,26 @@ allergia :</translation>
         <translation>Státusz :</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="67"/>
+        <location filename="dlghardwaretest.ui" line="80"/>
         <source>Reconnect</source>
         <translation>Újracsatlakozás</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="535"/>
+        <location filename="dlghardwaretest.ui" line="98"/>
+        <source> Modules </source>
+        <translation> Modulok </translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1549"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="101"/>
         <source> Relay test </source>
-        <translation> Relé teszt </translation>
+        <translation type="obsolete"> Relé teszt </translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="500"/>
+        <location filename="dlghardwaretest.ui" line="1111"/>
         <source>Run relay test</source>
         <translation>Relé teszt futtatása</translation>
     </message>
@@ -10330,73 +10341,173 @@ allergia :</translation>
         <translation type="obsolete">BE</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="115"/>
+        <location filename="dlghardwaretest.ui" line="1132"/>
         <source>Relay 1</source>
         <translation>Relé 1</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="184"/>
+        <location filename="dlghardwaretest.ui" line="1201"/>
         <source>Relay 2</source>
         <translation>Relé 2</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="253"/>
+        <location filename="dlghardwaretest.ui" line="1270"/>
         <source>Relay 3</source>
         <translation>Relé 3</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="322"/>
+        <location filename="dlghardwaretest.ui" line="1339"/>
         <source>Relay 4</source>
         <translation>Relé 4</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="382"/>
+        <location filename="dlghardwaretest.ui" line="1399"/>
         <source>Relay 5</source>
         <translation>Relé 5</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="442"/>
+        <location filename="dlghardwaretest.ui" line="1459"/>
         <source>Relay 6</source>
         <translation>Relé 6</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="151"/>
+        <location filename="dlghardwaretest.ui" line="1168"/>
         <source>Relay 7</source>
         <translation>Relé 7</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="85"/>
         <source> Module test </source>
-        <translation> Modul tesztelés </translation>
+        <translation type="obsolete"> Modul tesztelés </translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="91"/>
+        <location filename="dlghardwaretest.ui" line="106"/>
         <source>Set address of modules (reorder modules)</source>
         <oldsource>Set address of modules</oldsource>
         <translation>Modul címzés beállítása (modulok sorbarendezése)</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="220"/>
+        <location filename="dlghardwaretest.ui" line="140"/>
+        <source>Init hardware modules</source>
+        <translation>Modulok inicializálása</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="149"/>
+        <source>Test hardware modules</source>
+        <translation>Modulok tesztelése</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="179"/>
+        <location filename="dlghardwaretest.ui" line="192"/>
+        <source>Status</source>
+        <translation>Státusz</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="199"/>
+        <source>Modul 01</source>
+        <translation>Modul 01</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="258"/>
+        <source>Modul 08</source>
+        <translation>Modul 08</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="317"/>
+        <source>Modul 02</source>
+        <translation>Modul 02</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="376"/>
+        <source>Modul 09</source>
+        <translation>Modul 09</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="435"/>
+        <source>Modul 03</source>
+        <translation>Modul 03</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="494"/>
+        <source>Modul 10</source>
+        <translation>Modul 10</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="553"/>
+        <source>Modul 04</source>
+        <translation>Modul 04</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="612"/>
+        <source>Modul 11</source>
+        <translation>Modul 11</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="671"/>
+        <source>Modul 05</source>
+        <translation>Modul 05</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="730"/>
+        <source>Modul 12</source>
+        <translation>Modul 12</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="789"/>
+        <source>Modul 06</source>
+        <translation>Modul 06</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="848"/>
+        <source>Modul 13</source>
+        <translation>Modul 13</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="907"/>
+        <source>Modul 07</source>
+        <translation>Modul 07</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="966"/>
+        <source>Modul 14</source>
+        <translation>Modul 14</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1047"/>
+        <source> Module buttons </source>
+        <translation> Modul gombok </translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1053"/>
+        <source>Test module buttons</source>
+        <translation>Modul gombok tesztelése</translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1105"/>
+        <source> Relays </source>
+        <translation> Relék </translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1237"/>
         <source>Relay 8</source>
         <translation>Relé 8</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="289"/>
+        <location filename="dlghardwaretest.ui" line="1306"/>
         <source>Relay 9</source>
         <translation>Relé 9</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="349"/>
+        <location filename="dlghardwaretest.ui" line="1366"/>
         <source>Relay 10</source>
         <translation>Relé 10</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="409"/>
+        <location filename="dlghardwaretest.ui" line="1426"/>
         <source>Relay 11</source>
         <translation>Relé 11</translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="469"/>
+        <location filename="dlghardwaretest.ui" line="1486"/>
         <source>Relay 12</source>
         <translation>Relé 12</translation>
     </message>

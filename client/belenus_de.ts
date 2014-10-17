@@ -1343,18 +1343,24 @@ Barcode	Patientcard type</source>
 <context>
     <name>cDlgHardwareTest</name>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="16"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="18"/>
         <source>Hardware Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="207"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="280"/>
         <source>Hardware available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlghardwaretest.cpp" line="212"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="285"/>
+        <location filename="dlg/dlghardwaretest.cpp" line="293"/>
         <source>Hardware unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlg/dlghardwaretest.cpp" line="544"/>
+        <source>Not implemented yet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6904,7 +6910,8 @@ Error code: %1
     </message>
     <message>
         <location filename="dlghardwaretest.ui" line="22"/>
-        <source> Hardware connection </source>
+        <source> Hardware </source>
+        <oldsource> Hardware connection </oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6913,102 +6920,198 @@ Error code: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="43"/>
+        <location filename="dlghardwaretest.ui" line="56"/>
         <source>Unknown status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="54"/>
+        <location filename="dlghardwaretest.ui" line="67"/>
         <source>Test connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="67"/>
+        <location filename="dlghardwaretest.ui" line="80"/>
         <source>Reconnect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="85"/>
-        <source> Module test </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlghardwaretest.ui" line="91"/>
+        <location filename="dlghardwaretest.ui" line="106"/>
         <source>Set address of modules (reorder modules)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="101"/>
-        <source> Relay test </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dlghardwaretest.ui" line="115"/>
+        <location filename="dlghardwaretest.ui" line="1132"/>
         <source>Relay 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="151"/>
+        <location filename="dlghardwaretest.ui" line="1168"/>
         <source>Relay 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="184"/>
+        <location filename="dlghardwaretest.ui" line="1201"/>
         <source>Relay 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="220"/>
+        <location filename="dlghardwaretest.ui" line="1237"/>
         <source>Relay 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="253"/>
+        <location filename="dlghardwaretest.ui" line="1270"/>
         <source>Relay 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="289"/>
+        <location filename="dlghardwaretest.ui" line="1306"/>
         <source>Relay 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="322"/>
+        <location filename="dlghardwaretest.ui" line="1339"/>
         <source>Relay 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="349"/>
+        <location filename="dlghardwaretest.ui" line="1366"/>
         <source>Relay 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="382"/>
+        <location filename="dlghardwaretest.ui" line="1399"/>
         <source>Relay 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="409"/>
+        <location filename="dlghardwaretest.ui" line="1426"/>
         <source>Relay 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="442"/>
+        <location filename="dlghardwaretest.ui" line="1459"/>
         <source>Relay 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="469"/>
+        <location filename="dlghardwaretest.ui" line="1486"/>
         <source>Relay 12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="500"/>
+        <location filename="dlghardwaretest.ui" line="1111"/>
         <source>Run relay test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlghardwaretest.ui" line="535"/>
+        <location filename="dlghardwaretest.ui" line="98"/>
+        <source> Modules </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="140"/>
+        <source>Init hardware modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="149"/>
+        <source>Test hardware modules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="179"/>
+        <location filename="dlghardwaretest.ui" line="192"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="199"/>
+        <source>Modul 01</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="258"/>
+        <source>Modul 08</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="317"/>
+        <source>Modul 02</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="376"/>
+        <source>Modul 09</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="435"/>
+        <source>Modul 03</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="494"/>
+        <source>Modul 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="553"/>
+        <source>Modul 04</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="612"/>
+        <source>Modul 11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="671"/>
+        <source>Modul 05</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="730"/>
+        <source>Modul 12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="789"/>
+        <source>Modul 06</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="848"/>
+        <source>Modul 13</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="907"/>
+        <source>Modul 07</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="966"/>
+        <source>Modul 14</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1047"/>
+        <source> Module buttons </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1053"/>
+        <source>Test module buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1105"/>
+        <source> Relays </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlghardwaretest.ui" line="1549"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>

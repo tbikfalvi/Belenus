@@ -57,6 +57,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     PortNumber                  = 0;
     nHWModuleCount              = 0;
     m_bCommunicationStopped     = false;
+    m_wRelay                    = 0;
 
     GetAvailableCommPorts();
 }
@@ -367,9 +368,28 @@ void CS_Communication_Serial::setCounter( const int p_nIndex, const int p_nCount
 {
     pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
 }
-void CS_Communication_Serial::setMainActionTime( const int p_nIndex, const int p_nTime )
+bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_nTime , bool p_bSend)
 {
+    bool bRet = true;
+
     pPanel[p_nIndex].nTimeStatusMain = p_nTime;
+
+    if( p_bSend )
+    {
+        char chSerialOut[2048];
+        unsigned char byStatus;
+        int nIdo = pPanel[p_nIndex].nTimeStatusMain;
+
+        chSerialOut[0] = SEND_3BYTE_TO_MODUL;
+        chSerialOut[1] = SEND_TIME;
+        chSerialOut[2] = (char)(nIdo/60);
+        chSerialOut[3] = (char)(nIdo%60);
+        if( !HW_SendModulMessage( chSerialOut, 4, p_nIndex, &byStatus ) )
+        {
+            bRet = false;
+        }
+    }
+    return bRet;
 }
 bool CS_Communication_Serial::isHardwareMovedNextStatus( const int p_nIndex )
 {
@@ -573,7 +593,6 @@ void CS_Communication_Serial::HW_Kezel()
          //Szoli LED Modul vezérlés
 
          //Elenörzi van-e küldenivaló adat
-         bool bVanKuldeniValoAdat = false;
          for( i=0; i<nHWModuleCount; i++ )
          {
              if( pModul[ i ].bVan )
@@ -614,7 +633,8 @@ void CS_Communication_Serial::HW_Kezel()
              }
          }
 
-         bVanKuldeniValoAdat = false;
+         bool bVanKuldeniValoAdat = false;
+
          for( i=0; i<nHWModuleCount; i++ )
          {
              if( pModul[ i ].bVan &&
@@ -623,6 +643,11 @@ void CS_Communication_Serial::HW_Kezel()
                    pModul[ i ].bSendEnd    ) )
              {
                  bVanKuldeniValoAdat = true;
+                 g_obLogger(cSeverity::DEBUG) << QString("pModul[%1] Iras: %2 Start: %3 End: %4").arg( i )
+                                                 .arg( pModul[ i ].bSendIras )
+                                                 .arg( pModul[ i ].bSendStart )
+                                                 .arg( pModul[ i ].bSendEnd )
+                                              << EOM;
                  break;
              }
          }
@@ -664,7 +689,10 @@ void CS_Communication_Serial::HW_Kezel()
                              pModul[ i ].bSendIras = false;
                          }
                          else
+                         {
                             bHiba = true;
+                            g_obLogger(cSeverity::WARNING) << QString("pModul[%1] SEND_TIME error").arg(i) << EOM;
+                         }
                      }
                      /////////////////////////////////////////
                      if( pModul[ i ].bSendStart )
@@ -676,7 +704,10 @@ void CS_Communication_Serial::HW_Kezel()
                              pModul[ i ].bSendStart = false;
                          }
                          else
+                         {
                             bHiba = true;
+                            g_obLogger(cSeverity::WARNING) << QString("pModul[%1] SEND_START error").arg(i) << EOM;
+                         }
                      }
                      /////////////////////////////////////////
                      if( pModul[ i ].bSendEnd )
@@ -688,16 +719,17 @@ void CS_Communication_Serial::HW_Kezel()
                              pModul[ i ].bSendEnd = false;
                          }
                          else
+                         {
                             bHiba = true;
+                            g_obLogger(cSeverity::WARNING) << QString("pModul[%1] SEND_END error").arg(i) << EOM;
+                         }
                      }
-                 }
-                 if( bHiba )
-                 {
-                     g_obLogger(cSeverity::DEBUG) << QString("pModul[%1] error").arg(i) << EOM;
                  }
              }
              if( bHiba )
+             {
                  byLedModulOlvasasiHiba++;
+             }
          }
 
          // Engedélyezi az IRQ-t, ha le volt tiltva
@@ -741,7 +773,7 @@ void CS_Communication_Serial::HW_Kezel()
 
       if( bSendToModulPower_ON )
       {
-          g_obLogger(cSeverity::DEBUG) << QString("Modul power on") << EOM;
+          g_obLogger(cSeverity::WARNING) << QString("Modul power on") << EOM;
           chSerialOut[0] = MODUL_POWER_ON;
           if( HW_SendRelayMessage( chSerialOut, 1  ) )
           {
@@ -753,7 +785,7 @@ void CS_Communication_Serial::HW_Kezel()
 
       if( bSendToModulPower_OFF )
       {
-          g_obLogger(cSeverity::DEBUG) << QString("Modul power off") << EOM;
+          g_obLogger(cSeverity::WARNING) << QString("Modul power off") << EOM;
           chSerialOut[0] = MODUL_POWER_OFF;
           if( HW_SendRelayMessage( chSerialOut, 1  ) )
               bSendToModulPower_OFF = false;
@@ -1272,7 +1304,8 @@ bool CS_Communication_Serial::HW_SetModuleAddress()
     unsigned char   byStatus;
     char            chMessage[2048];
 
-    for( int i=0; i<nHWModuleCount; i++ )
+//    for( int i=0; i<nHWModuleCount; i++ )
+    for( int i=0; i<15; i++ )
     {
         chMessage[0] = SEND_3BYTE_TO_MODUL;
         chMessage[1] = SEND_SET_ADDR;
@@ -1283,6 +1316,7 @@ bool CS_Communication_Serial::HW_SetModuleAddress()
         {
             bRet = false;
         }
+        g_obLogger(cSeverity::DEBUG) << QString("Send SET_ADDR to Modul[%1]").arg(i) << " " << (bRet?"OK":"FAILED") << EOM;
     }
     return bRet;
 }
@@ -1541,4 +1575,28 @@ bool CS_Communication_Serial::ShowLastWindowsError(void)
         if (lpMsgBuf) LocalFree( lpMsgBuf );
 
         return true;
+}
+
+void CS_Communication_Serial::ModuleTurnOn()
+{
+    char chSerialOut[2048];
+
+    g_obLogger(cSeverity::DEBUG) << QString("Modul power on") << EOM;
+    chSerialOut[0] = MODUL_POWER_ON;
+    if( HW_SendRelayMessage( chSerialOut, 1  ) )
+    {
+        bSendToModulPower_ON = false;
+        HW_ModulInit();
+        EnableModulIRQ();
+    }
+}
+
+void CS_Communication_Serial::ModuleTurnOff()
+{
+    char chSerialOut[2048];
+
+    g_obLogger(cSeverity::DEBUG) << QString("Modul power off") << EOM;
+    chSerialOut[0] = MODUL_POWER_OFF;
+    if( HW_SendRelayMessage( chSerialOut, 1  ) )
+        bSendToModulPower_OFF = false;
 }

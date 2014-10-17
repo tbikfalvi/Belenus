@@ -82,7 +82,7 @@ public:
 
     void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
     void setCounter( const int p_nIndex, const int p_nCounter );
-    void setMainActionTime( const int p_nIndex, const int p_nTime );
+    bool setMainActionTime( const int p_nIndex, const int p_nTime, bool p_bSend = false );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
@@ -93,6 +93,12 @@ public:
     void HW_Kezel();
 
     bool isCommunicationStopped();
+
+    void ModuleTurnOn();
+    void ModuleTurnOff();
+
+    void EnableModulIRQ();
+    void DisableModulIRQ();
 
 private:
     vector<typ_panel_data>   pPanel;
@@ -136,8 +142,6 @@ private:
     BOOL HW_WriteEEProm( unsigned char byStartAddress, char *chMessage );
 
     unsigned char GetHWModuleStatus( unsigned char byCim );
-    void EnableModulIRQ();
-    void DisableModulIRQ();
 
     bool SP_ReadMessage( char *Message, int *nLength );
     bool SP_SendMessage( char *Message, int nLength );

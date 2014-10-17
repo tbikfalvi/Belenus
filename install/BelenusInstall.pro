@@ -6,7 +6,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui sql
+QT          += core gui sql xml
 TARGET       = Setup
 TEMPLATE     = app
 DESTDIR      = ..

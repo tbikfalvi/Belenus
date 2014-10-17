@@ -15,13 +15,15 @@
 
 #include <windows.h>
 #include <winuser.h>
+#include <QCryptographicHash>
+#include <QDomDocument>
+#include <QTextStream>
 #include <QMessageBox>
-#include <QSqlError>
 #include <QFileDialog>
 #include <QCloseEvent>
+#include <QSqlError>
 #include <QProcess>
 #include <QDir>
-#include <QCryptographicHash>
 
 //=======================================================================================
 
@@ -1570,12 +1572,12 @@ void dlgMain::_processInstall()
                 m_qslComponents.append( "Viewer" );
             }
         }
-        if( bProcessSucceeded )
+/*        if( bProcessSucceeded )
         {
-            bProcessSucceeded = _copyUninstallFiles();
-        }
+            bProcessSucceeded = _copyUninstallFiles();  erre nincs szukseg mar
+        }*/
     }
-    else if( m_pInstallType == rbUpdate )
+/*    else if( m_pInstallType == rbUpdate )    nem lesz update vagy remove
     {
         if( bProcessSucceeded && m_bProcessDatabase && m_qsRootPasswordNew.length() )
         {
@@ -1604,7 +1606,7 @@ void dlgMain::_processInstall()
                                          "%1\n"
                                          "Some of the files or subdirectories can not be removed." ).arg(m_qsClientInstallDir) );
         }
-    }
+    } */
 
     if( bProcessSucceeded )
     {
@@ -1705,19 +1707,34 @@ int dlgMain::_getProcessActionCount()
         if( m_pInstallType == rbInstall )
         {
             nCount += 3;
-            QFile fileCreate( QString("%1/install.li").arg(g_qsCurrentPath) );
 
-            if( fileCreate.open(QIODevice::ReadOnly | QIODevice::Text) )
+            QDomDocument    *obProcessDoc   = new QDomDocument( "StartupProcess" );
+            QString          qsFileName     = QString("%1/settings/install.xml").arg(g_qsCurrentPath);
+
+            qsFileName.replace("\\","/");
+            qsFileName.replace("//","/");
+
+            QFile        qfFile( qsFileName );
+            QString      qsErrorMsg  = "";
+            int          inErrorLine = 0;
+
+            qfFile.seek( 0 );
+            if( !obProcessDoc->setContent( &qfFile, &qsErrorMsg, &inErrorLine ) )
             {
-                QTextStream in(&fileCreate);
-                while( !in.atEnd() )
-                {
-                    QString line = in.readLine();
-
-                    nCount += line.count( QChar('#') );
-                }
-                fileCreate.close();
+                _logProcess( tr( "Error occured during parsing file:\n'%1'\n\nError in line %2: %3" )
+                             .arg( qsFileName )
+                             .arg( inErrorLine )
+                             .arg( qsErrorMsg ) );
+                qfFile.close();
+                return false;
             }
+            qfFile.close();
+
+            QDomElement      docRoot    = obProcessDoc->documentElement();
+            QDomNodeList     obFiles    = docRoot.elementsByTagName( "files" )
+                                                 .at( 0 ).toElement().elementsByTagName( "file" );
+
+            nCount += obFiles.count();
         }
         else if( m_pInstallType == rbUpdate )
         {
@@ -2293,7 +2310,9 @@ bool dlgMain::_processClientInstall()
         }
     }
 
-    _logProcess( QString("Creating directories (target, lang, resource) ..."), false );
+/*  file masolasnal jonnek letre a szukseges konyvtarak
+ *
+ *     _logProcess( QString("Creating directories (target, lang, resource) ..."), false );
     if( !_createTargetDirectory( m_qsClientInstallDir ) ||
         !_createTargetDirectory( QString("%1\\docs").arg(m_qsClientInstallDir) ) ||
         !_createTargetDirectory( QString("%1\\imageformats").arg(m_qsClientInstallDir) ) ||
@@ -2306,23 +2325,37 @@ bool dlgMain::_processClientInstall()
         m_qsProcessErrorMsg = QString( "CreateClientDirFailed" );
         return false;
     }
-    _logProcess( QString("OK") );
+    _logProcess( QString("OK") );*/
 
-    _logProcess( QString("Copying files from install.li ..."), false );
-    if( (bRet = _copyInstallFiles( QString("%1/install.li").arg(g_qsCurrentPath) )) )
-        _logProcess( QString("OK") );
-
-    if( bRet )
+    _logProcess( QString("Copying files from install.xml ..."), false );
+    if( (bRet = _copyInstallFiles( QString("%1/settings/install.xml").arg(g_qsCurrentPath) )) )
     {
-        _logProcess( QString("Creating folders, shortcuts ..."), false );
-        if( (bRet = _createFolderShortcut()) )
-            _logProcess( QString("OK") );
-        else
-            _logProcess( QString("FAIL") );
+        _logProcess( QString("OK") );
+    }
+    else
+    {
+        _logProcess( QString("FAILED") );
     }
 
+    _logProcess( QString("Creating folders, shortcuts ..."), false );
+    if( (bRet = _createFolderShortcut()) )
+        _logProcess( QString("OK") );
+    else
+        _logProcess( QString("FAIL") );
+
     QSettings  obPrefFile( m_qsIniFileName, QSettings::IniFormat );
+
+    QString     qsBackup = "C:\\BelenusUpdate\\Backup";
+
+    obPrefFile.setValue( QString::fromAscii( "LastUser" ), "System" );
     obPrefFile.setValue( QString::fromAscii( "Lang" ), m_qsLanguage );
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBinaries" ), "C:\\wamp\\bin\\mysql\\mysql5.5.24\\bin" );
+    obPrefFile.setValue( QString::fromAscii( "DbBackup/DirDbBackup" ), qsBackup );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_nComPort );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), "5" );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/DBLogLevel" ), "1" );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/GUILogLevel" ), "2" );
+    obPrefFile.setValue( QString::fromAscii( "LogLevels/FileLogLevel" ), "5" );
 
     _logProcess( QString("Client install successfully finished") );
 
@@ -2346,7 +2379,7 @@ bool dlgMain::_processHWSettings()
 bool dlgMain::_copyUninstallFiles()
 //=======================================================================================
 {
-    QSettings   obReg( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus"), QSettings::NativeFormat );
+/*    QSettings   obReg( QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus"), QSettings::NativeFormat );
 
     if( obReg.contains( QString("Components") ) )
     {
@@ -2399,7 +2432,7 @@ bool dlgMain::_copyUninstallFiles()
         out << m_qslFiles.join("#");
         obUnistall->close();
     }
-
+*/
     return true;
 }
 //=======================================================================================
@@ -2713,10 +2746,92 @@ bool dlgMain::_copyClientFile( QString p_qsFileName, bool p_bInstall )
     return QFile::copy( qsFrom, qsTo );
 }
 //=======================================================================================
-bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
+bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool /*p_bInstall*/ )
 //=======================================================================================
 {
-    bool    bRet = true;
+    bool             bRet           = true;
+    QDomDocument    *obProcessDoc   = new QDomDocument( "StartupProcess" );
+    QString          qsFileName     = p_qsFileName;
+
+    qsFileName.replace("\\","/");
+    qsFileName.replace("//","/");
+
+    QFile        qfFile( qsFileName );
+    QString      qsErrorMsg  = "";
+    int          inErrorLine = 0;
+
+    qfFile.seek( 0 );
+    if( !obProcessDoc->setContent( &qfFile, &qsErrorMsg, &inErrorLine ) )
+    {
+        _logProcess( tr( "Error occured during parsing file:\n'%1'\n\nError in line %2: %3" )
+                     .arg( qsFileName )
+                     .arg( inErrorLine )
+                     .arg( qsErrorMsg ) );
+        qfFile.close();
+        return false;
+    }
+    qfFile.close();
+
+    QDomElement      docRoot    = obProcessDoc->documentElement();
+    QDomNodeList     obFiles    = docRoot.elementsByTagName( "files" )
+                                         .at( 0 ).toElement().elementsByTagName( "file" );
+
+    for( int i=0; i<obFiles.count(); i++ )
+    {
+        QString qsSrc   = obFiles.at(i).toElement().attribute("src");
+        QString qsDst   = obFiles.at(i).toElement().attribute("dst");
+
+        qsSrc.replace( "%INSTALL_DIR%", m_qsClientInstallDir );
+        qsSrc.replace( "%CURRENT_DIR%", QDir::currentPath() );
+        qsSrc.replace("\\","/");
+        qsSrc.replace("//","/");
+
+        qsDst.replace( "%INSTALL_DIR%", m_qsClientInstallDir );
+        qsDst.replace( "%CURRENT_DIR%", QDir::currentPath() );
+        qsDst.replace("\\","/");
+        qsDst.replace("//","/");
+
+        if( !_copyFile( qsSrc, qsDst ) )
+        {
+            bRet = false;
+        }
+        prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );
+        prbDBInstallClient->update();
+    }
+
+    return bRet;
+}
+//=================================================================================================
+// _copyFile
+//-------------------------------------------------------------------------------------------------
+bool dlgMain::_copyFile( QString p_qsSrc, QString p_qsDst )
+{
+    if( QFile::exists(p_qsDst) )
+    {
+        QFile::remove(p_qsDst);
+    }
+
+    QDir        qdDst;
+    QFileInfo   qfiDst( p_qsDst );
+
+    qdDst.setPath( qfiDst.absolutePath() );
+    if( !qdDst.exists() )
+    {
+        qdDst.mkpath( qfiDst.absolutePath() );
+    }
+
+    if( !QFile::copy( p_qsSrc, p_qsDst ) )
+    {
+        _logProcess( QString("Unable to copy file %1").arg( p_qsSrc ) );
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Unable to copy file ...\n\nSource: %1\nDestination: %2").arg( p_qsSrc ).arg( p_qsDst ) );
+        return false;
+    }
+
+    return true;
+}
+
+/*    bool    bRet = true;
     QFile   file( p_qsFileName );
 
     _logProcess( QString( "Process file: %1" ).arg( p_qsFileName ) );
@@ -2770,8 +2885,7 @@ bool dlgMain::_copyInstallFiles( QString p_qsFileName, bool p_bInstall )
         }
     }
 
-    return bRet;
-}
+    return bRet;*/
 //=======================================================================================
 bool dlgMain::_createFolderShortcut()
 //=======================================================================================
@@ -2794,9 +2908,17 @@ bool dlgMain::_createFolderShortcut()
         m_obFile->remove( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
         m_obFile->link( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
         delete m_obFile;
-        m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
-        m_qslFiles.append( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
-        m_qslFiles.append( QString("%1\\Belenus\\").arg(m_qsPathPrograms) );
+        m_obFile = new QFile( QString("%1\\Advertisement.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\Belenus\\Advertisement.lnk").arg(m_qsPathPrograms) );
+        m_obFile->link( QString("%1\\Belenus\\Advertisement.lnk").arg(m_qsPathPrograms) );
+        delete m_obFile;
+        m_obFile = new QFile( QString("%1\\DBBackup.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\Belenus\\DBBackup.lnk").arg(m_qsPathPrograms) );
+        m_obFile->link( QString("%1\\Belenus\\DBBackup.lnk").arg(m_qsPathPrograms) );
+        delete m_obFile;
+//        m_qslFiles.append( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
+//        m_qslFiles.append( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
+//        m_qslFiles.append( QString("%1\\Belenus\\").arg(m_qsPathPrograms) );
     }
 
     if( m_qsPathDesktop.contains( ":\\" ) )
@@ -2806,16 +2928,31 @@ bool dlgMain::_createFolderShortcut()
         m_obFile->link( QString("%1\\belenus.lnk").arg(m_qsPathDesktop) );
         m_qslFiles.append( QString("%1\\belenus.lnk").arg(m_qsPathDesktop) );
         delete m_obFile;
+        m_obFile = new QFile( QString("%1\\ReportViewer.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\ReportViewer.lnk").arg(m_qsPathDesktop) );
+        m_obFile->link( QString("%1\\ReportViewer.lnk").arg(m_qsPathDesktop) );
+        m_qslFiles.append( QString("%1\\ReportViewer.lnk").arg(m_qsPathDesktop) );
+        delete m_obFile;
+        m_obFile = new QFile( QString("%1\\Advertisement.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\Advertisement.lnk").arg(m_qsPathDesktop) );
+        m_obFile->link( QString("%1\\Advertisement.lnk").arg(m_qsPathDesktop) );
+        m_qslFiles.append( QString("%1\\Advertisement.lnk").arg(m_qsPathDesktop) );
+        delete m_obFile;
+        m_obFile = new QFile( QString("%1\\DBBackup.exe").arg(m_qsClientInstallDir) );
+        m_obFile->remove( QString("%1\\DBBackup.lnk").arg(m_qsPathDesktop) );
+        m_obFile->link( QString("%1\\DBBackup.lnk").arg(m_qsPathDesktop) );
+        m_qslFiles.append( QString("%1\\DBBackup.lnk").arg(m_qsPathDesktop) );
+        delete m_obFile;
     }
 
-    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Language"), m_qsLanguage );
-    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Components"), m_qslComponents.join("#") );
+//    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Language"), m_qsLanguage );
+//    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Components"), m_qslComponents.join("#") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayIcon"), QString("%1\\resources\\belenus.ico").arg(m_qsClientInstallDir) );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayName"), tr("Belenus Application System") );
-    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayVersion"), QString("1.0.0.0") );
+//    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("DisplayVersion"), QString("1.0.0.0") );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("InstallLocation"), m_qsClientInstallDir );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("Publisher"), QString("Pagony Multimédia Stúdió Bt.") );
-    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
+//    g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("UninstallString"), QString("%1\\Temp\\BelenusInstall\\setup.exe -uninstall").arg(m_qsPathWindows) );
     g_obReg.setKeyValueS( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus", QString("URLInfoAbout"), QString("http://belenus.pagonymedia.hu") );
 
     prbDBInstallClient->setValue( prbDBInstallClient->value()+1 );

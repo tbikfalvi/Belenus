@@ -273,7 +273,7 @@ cCurrency::cCurrency(int p_nCurrencyValue, currType p_ctCurrencyType, int p_nVat
 //====================================================================================
 void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyType, int p_nVat)
 {
-    g_obLogger(cSeverity::DEBUG) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "fullstr: [" << p_qsCurrencyString << "]" << EOM;
 
     QString qsPureCurrency = p_qsCurrencyString;
 
@@ -296,7 +296,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
 
-    g_obLogger(cSeverity::DEBUG) << "purestr: [" << qsPureCurrency << "]" << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "purestr: [" << qsPureCurrency << "]" << EOM;
     // Get value before and after decimal separator
     if( qsPureCurrency.contains( g_poPrefs->getCurrencyDecimalSeparator() ) )
     {
@@ -334,7 +334,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
         m_nValueGross = m_nValue;
     }
 
-    g_obLogger(cSeverity::DEBUG) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
+//    g_obLogger(cSeverity::DEBUG) << "net/gross " << QString("%1/%2").arg(m_nValueNet).arg(m_nValueGross) << EOM;
 }
 //====================================================================================
 cCurrency::~cCurrency()

@@ -56,6 +56,11 @@ private:
     void _executeUpdater();
     bool _copyFile( QString p_qsSrc, QString p_qsDst );
     void _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
+    bool _emptyTargetDirectory( QString p_qsPath );
+    void _executeWampUninstall();
+    void _deleteRegistryKey( QString p_qsRegPath, QString p_qsKey = "" );
+    void _removeShortcuts();
+    void _removeDirectory( QString p_qsPath );
 };
 
 #endif // MAINWINDOW_H

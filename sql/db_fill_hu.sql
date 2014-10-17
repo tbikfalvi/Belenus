@@ -36,14 +36,6 @@ INSERT INTO `gibbigmessagetypes` ( `licenceId`, `gibbigMessageType`, `active`, `
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
- (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_4_0'),
- (NULL, 'DATABASE_VERSION', '1_5');
-
--- -----------------------------------------------------------------------------------
-
 INSERT INTO `users` (`licenceId`, `name`, `realName`, `password`, `accgroup`, `active`, `comment`, `archive`) VALUES
  ( 0, 'guest', 'guest', '', 1, 0, '', 'ARC' );
 UPDATE `users` SET `userId`=0 WHERE `userId`=1;
@@ -3659,5 +3651,13 @@ INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `
  (4, 0, 'Termék vásárlás', '0000-00-00 00:00:00', 1, 'ARC'),
  (5, 0, 'Gép használat kártyával', '0000-00-00 00:00:00', 1, 'ARC'),
  (6, 0, 'Gép használat készpénzzel', '0000-00-00 00:00:00', 1, 'ARC');
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
+ (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
+ (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
+ (NULL, 'APPLICATION_VERSION', '1_4_5'),
+ (NULL, 'DATABASE_VERSION', '1_6_0');
 
 -- -----------------------------------------------------------------------------------

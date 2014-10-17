@@ -47,6 +47,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     on_ledDirectoryResource_editingFinished();
     on_ledDirectoryBackup_editingFinished();
+
+    QSettings   belenus( QString("%1/belenus.ini").arg(ui->ledDirectoryTarget->text()), QSettings::IniFormat );
+
+    QString qsLangApp = belenus.value( "Lang", "" ).toString();
+
+    ui->cmbLanguage->setCurrentIndex( ui->cmbLanguage->findText( QString(" (%1)").arg(qsLangApp), Qt::MatchContains ) );
+
+    QSettings   updater( QString("%1/settings.ini").arg(ui->ledDirectoryStartup->text()), QSettings::IniFormat );
+
+    if( updater.value( "PreProcess/Address", "" ).toString().compare("") == 0 )
+    {
+        ui->rbLocationLocal->setChecked( true );
+    }
+    else
+    {
+        ui->rbLocationWeb->setChecked( true );
+    }
+
+    on_pbLangHu_clicked();
+
+    ui->cmbLanguage->setEnabled( false );
+    ui->rbAppOfficial->setEnabled( false );
+    ui->rbAppDemo->setEnabled( false );
+    ui->rbLocationLocal->setEnabled( false );
+    ui->rbLocationWeb->setEnabled( false );
+    ui->ledPanelCount->setEnabled( false );
+    ui->spinCombo->setEnabled( false );
+    ui->pbDirectoryStartup->setEnabled( false );
+    ui->pbDirectoryTarget->setEnabled( false );
+    ui->ledDirectoryResource->setEnabled( false );
+    ui->pbDirectoryResource->setEnabled( false );
+    ui->ledDirectoryBackup->setEnabled( false );
+    ui->pbDirectoryBackup->setEnabled( false );
+    ui->pbDefault->setEnabled( false );
 }
 //=================================================================================================
 //
@@ -131,20 +165,56 @@ void MainWindow::on_process_selected()
     if( ui->rbProcessInstall->isChecked() )
     {
         m_nProcessType = PROCESS_INSTALL;
+        ui->cmbLanguage->setEnabled( true );
+        ui->rbAppOfficial->setEnabled( true );
+        ui->rbAppDemo->setEnabled( true );
+        ui->rbLocationLocal->setEnabled( true );
+        ui->rbLocationWeb->setEnabled( true );
         ui->ledPanelCount->setEnabled( true );
         ui->spinCombo->setEnabled( true );
+        ui->pbDirectoryStartup->setEnabled( true );
+        ui->pbDirectoryTarget->setEnabled( true );
+        ui->ledDirectoryResource->setEnabled( true );
+        ui->pbDirectoryResource->setEnabled( true );
+        ui->ledDirectoryBackup->setEnabled( true );
+        ui->pbDirectoryBackup->setEnabled( true );
+        ui->pbDefault->setEnabled( true );
     }
     else if( ui->rbProcessRemove->isChecked() )
     {
         m_nProcessType = PROCESS_REMOVE;
+        ui->cmbLanguage->setEnabled( false );
+        ui->rbAppOfficial->setEnabled( false );
+        ui->rbAppDemo->setEnabled( false );
+        ui->rbLocationLocal->setEnabled( false );
+        ui->rbLocationWeb->setEnabled( false );
         ui->ledPanelCount->setEnabled( false );
         ui->spinCombo->setEnabled( false );
+        ui->pbDirectoryStartup->setEnabled( false );
+        ui->pbDirectoryTarget->setEnabled( false );
+        ui->ledDirectoryResource->setEnabled( false );
+        ui->pbDirectoryResource->setEnabled( false );
+        ui->ledDirectoryBackup->setEnabled( false );
+        ui->pbDirectoryBackup->setEnabled( false );
+        ui->pbDefault->setEnabled( false );
     }
     else if( ui->rbProcessUpdate->isChecked() )
     {
         m_nProcessType = PROCESS_UPDATE;
+        ui->cmbLanguage->setEnabled( true );
+        ui->rbAppOfficial->setEnabled( false );
+        ui->rbAppDemo->setEnabled( false );
+        ui->rbLocationLocal->setEnabled( true );
+        ui->rbLocationWeb->setEnabled( true );
         ui->ledPanelCount->setEnabled( false );
         ui->spinCombo->setEnabled( false );
+        ui->pbDirectoryStartup->setEnabled( true );
+        ui->pbDirectoryTarget->setEnabled( true );
+        ui->ledDirectoryResource->setEnabled( true );
+        ui->pbDirectoryResource->setEnabled( true );
+        ui->ledDirectoryBackup->setEnabled( true );
+        ui->pbDirectoryBackup->setEnabled( true );
+        ui->pbDefault->setEnabled( true );
     }
     else
     {
@@ -298,42 +368,95 @@ void MainWindow::on_pbStart_clicked()
     {
         case PROCESS_INSTALL:
         {
+            // Create directories for updater and for Belenus if not exists
             if( !_createPaths() ) { return; }
             ui->progressBar->setValue( 1 );
 
+            // Create the settings file for the updater
             if( !_createSettingsFile() ) { return; }
             ui->progressBar->setValue( 2 );
 
+            // Copy the updater files
             if( !_copyUpdaterFiles() ) { return; }
 
+            // Copy the belenus_loc.xml file if needed
             if( ui->rbLocationLocal->isChecked() )
             {
                 if( !_copyXmlFile() ) { return; }
             }
 
+            ui->progressBar->setValue( ui->progressBar->maximum() );
+            // Start Belenus installer
             _executeInstaller();
             break;
         }
         case PROCESS_REMOVE:
         {
-            // "c:\wamp\unins000.exe /SILENT"
+            if( QMessageBox::question( this, tr("Question"),
+                                       tr("Are you sure you want to uninstall Belenus Application System and all of it's components?\n"
+                                          "All of the data will be deleted from the computer."),
+                                       QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
+            {
+                ui->progressBar->setMaximum( 100 );
+                ui->progressBar->setValue( 1 );
+                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Belenus" );
+                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
+                                    "BelenusStartup" );
+                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
+                                    "BelenusTarget" );
+                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
+                                    "BelenusResource" );
+                _deleteRegistryKey( "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Environment",
+                                    "BelenusBackup" );
+                _progressStep();
+
+                SendMessage( HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment" );
+                _progressStep();
+
+                _removeShortcuts();
+                _progressStep();
+
+                _emptyTargetDirectory( ui->ledDirectoryTarget->text() );
+                _removeDirectory( ui->ledDirectoryTarget->text() );
+                _progressStep();
+                _emptyTargetDirectory( ui->ledDirectoryResource->toolTip() );
+                _removeDirectory( ui->ledDirectoryResource->toolTip() );
+                _progressStep();
+                _emptyTargetDirectory( ui->ledDirectoryBackup->toolTip() );
+                _removeDirectory( ui->ledDirectoryBackup->toolTip() );
+                _progressStep();
+                _emptyTargetDirectory( ui->ledDirectoryStartup->text() );
+                _removeDirectory( ui->ledDirectoryStartup->text() );
+                _progressStep();
+
+                _executeWampUninstall();
+
+                ui->progressBar->setValue( ui->progressBar->maximum() );
+            }
             break;
         }
         case PROCESS_UPDATE:
         {
+            // Create directories for updater and for Belenus if not exists
             if( !_createPaths() ) { return; }
             ui->progressBar->setValue( 1 );
 
+            // Refresh the settings file for the updater based on the modifications
             if( !_updateSettingsFile() ) { return; }
             ui->progressBar->setValue( 2 );
 
+            // Copy the updater files to get the latest versions
             if( !_copyUpdaterFiles() ) { return; }
 
+            // Copy the belenus_loc.xml file if needed
             if( ui->rbLocationLocal->isChecked() )
             {
                 if( !_copyXmlFile() ) { return; }
             }
 
+            ui->progressBar->setValue( ui->progressBar->maximum() );
+
+            // Start the updater
             _executeUpdater();
             break;
         }
@@ -668,12 +791,12 @@ void MainWindow::_executeInstaller()
 void MainWindow::_executeUpdater()
 {
     QProcess *qpProcess = new QProcess(this);
-    QString   qsUpdater = QString( "%1/BelenusUpdate.exe" ).arg( ui->ledDirectoryTarget->text() );
+    QString   qsProcess = QString( "%1/BelenusUpdate.exe" ).arg( ui->ledDirectoryTarget->text() );
 
-    qsUpdater.replace("\\","/");
-    qsUpdater.replace("//","/");
+    qsProcess.replace("\\","/");
+    qsProcess.replace("//","/");
 
-    if( !qpProcess->startDetached( qsUpdater ) )
+    if( !qpProcess->startDetached( qsProcess ) )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
@@ -683,7 +806,33 @@ void MainWindow::_executeUpdater()
                                  "4 > An error occurred when attempting to write to the process.\n"
                                  "3 > An error occurred when attempting to read from the process.\n"
                                  "5 > An unknown error occurred.")
-                              .arg( qsUpdater )
+                              .arg( qsProcess )
+                              .arg( qpProcess->error() ) );
+    }
+    delete qpProcess;
+}
+//=================================================================================================
+// _executeWampUninstall
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_executeWampUninstall()
+{
+    QProcess *qpProcess = new QProcess(this);
+    QString   qsProcess = QString( "c:\\wamp\\unins000.exe /SILENT" );
+
+    qsProcess.replace("\\","/");
+    qsProcess.replace("//","/");
+
+    if( !qpProcess->startDetached( qsProcess ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:\n\n%1\n\nError code: %2\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.")
+                              .arg( qsProcess )
                               .arg( qpProcess->error() ) );
     }
     delete qpProcess;
@@ -744,5 +893,88 @@ void MainWindow::_logProcess( QString p_qsLog, bool p_bInsertNewLine )
 //=================================================================================================
 //
 //-------------------------------------------------------------------------------------------------
+bool MainWindow::_emptyTargetDirectory( QString p_qsPath )
+//-------------------------------------------------------------------------------------------------
+{
+    bool            bRet = true;
+    QDir            qdTarget( p_qsPath );
 
+    if( qdTarget.exists() )
+    {
+        QStringList qstFiles = qdTarget.entryList();
 
+        for( int nCount=0; nCount<qstFiles.size(); nCount++ )
+        {
+            if( qstFiles.at(nCount).compare(".") == 0 || qstFiles.at(nCount).compare("..") == 0 )
+                continue;
+
+            if( qstFiles.at(nCount).indexOf('.') == -1 )
+            {
+                if( !_emptyTargetDirectory( QString("%1\\%2").arg(p_qsPath).arg(qstFiles.at(nCount)) ) )
+                {
+                    bRet = false;
+                }
+                else
+                {
+                    qdTarget.rmpath( QString("%1\\%2").arg(p_qsPath).arg(qstFiles.at(nCount)) );
+                    _progressStep();
+                }
+            }
+            else
+            {
+                qdTarget.remove( QString("%1\\%2").arg(p_qsPath).arg(qstFiles.at(nCount)) );
+                _progressStep();
+            }
+        }
+    }
+    else
+    {
+        bRet = false;
+    }
+
+    return bRet;
+}
+//=================================================================================================
+// _deleteRegistryKey
+//-------------------------------------------------------------------------------------------------
+void MainWindow::_deleteRegistryKey(QString p_qsRegPath, QString p_qsKey)
+{
+    QSettings   obReg( p_qsRegPath, QSettings::NativeFormat );
+
+    if( p_qsKey.length() > 0 )
+    {
+        obReg.remove( p_qsKey );
+    }
+    else
+    {
+        obReg.clear();
+    }
+}
+void MainWindow::_removeShortcuts()
+{
+    QSettings   obRegShell( "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", QSettings::NativeFormat );
+
+    QString m_qsPathPrograms    = obRegShell.value( "Common Programs", "" ).toString();;
+    QString m_qsPathDesktop     = obRegShell.value( "Common Desktop", "" ).toString();
+
+    QFile obFile;
+
+    _emptyTargetDirectory( QString("%1\\Belenus").arg(m_qsPathPrograms) );
+    _removeDirectory( QString("%1\\Belenus").arg(m_qsPathPrograms) );
+
+/*    obFile.remove( QString("%1\\Belenus\\belenus.lnk").arg(m_qsPathPrograms) );
+    obFile.remove( QString("%1\\Belenus\\ReportViewer.lnk").arg(m_qsPathPrograms) );
+    obFile.remove( QString("%1\\Belenus\\Advertisement.lnk").arg(m_qsPathPrograms) );
+    obFile.remove( QString("%1\\Belenus\\DBBackup.lnk").arg(m_qsPathPrograms) );*/
+
+    obFile.remove( QString("%1\\belenus.lnk").arg(m_qsPathDesktop) );
+    obFile.remove( QString("%1\\ReportViewer.lnk").arg(m_qsPathDesktop) );
+    obFile.remove( QString("%1\\Advertisement.lnk").arg(m_qsPathDesktop) );
+    obFile.remove( QString("%1\\DBBackup.lnk").arg(m_qsPathDesktop) );
+}
+void MainWindow::_removeDirectory( QString p_qsPath )
+{
+    QDir qdTarget( p_qsPath );
+
+    qdTarget.rmpath( p_qsPath );
+}

@@ -190,6 +190,7 @@ private:
     bool                    _emptyTargetDirectory( QString p_qsPath );
     bool                    _createTargetDirectory( QString p_qsPath );
     bool                    _copyClientFile( QString p_qsFileName, bool p_bInstall = true );
+    bool                    _copyFile( QString p_qsSrc, QString p_qsDst );
     bool                    _copyInstallFiles( QString p_qsFileName, bool p_bInstall = true );
     bool                    _createFolderShortcut();
     void                    _logProcess( QString p_qsLog, bool p_bInsertNewLine = true );
