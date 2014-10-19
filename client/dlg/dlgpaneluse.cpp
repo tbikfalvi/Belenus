@@ -183,17 +183,19 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_bIsEnterAccepted          = true;
     m_qslPanelUseTimes          = QStringList();
     m_uiIndexOfTime             = 0;
+    m_uiPanelTypeId             = 0;
 
     m_obDBPatientCard.createNew();
 
     QString qsQuery = "";
     QSqlQuery *poQuery = NULL;
 
-    qsQuery = QString( "SELECT title FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
+    qsQuery = QString( "SELECT title, panelTypeId FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
     poQuery = g_poDB->executeQTQuery( qsQuery );
     poQuery->first();
 
     lblPanelTitle->setText( poQuery->value(0).toString() );
+    m_uiPanelTypeId = poQuery->value(1).toUInt();
 
     cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
     m_qslPanelUseTimes.append( QString("0|0") );
@@ -413,6 +415,14 @@ unsigned int cDlgPanelUse::panelUsePrice()
 unsigned int cDlgPanelUse::panelUsePatientCardId()
 {
     return m_obDBPatientCard.id();
+}
+QString cDlgPanelUse::panelUsePatientCardBarcode()
+{
+    return m_obDBPatientCard.barcode();
+}
+unsigned int cDlgPanelUse::panelTypeId()
+{
+    return m_uiPanelTypeId;
 }
 //----------------------------------------------------------------------------------------------
 int cDlgPanelUse::countPatientCardUnitsLeft()

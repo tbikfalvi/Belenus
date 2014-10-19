@@ -59,7 +59,8 @@ public:
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
     void            itemRemovedFromShoppingCart( const unsigned int p_uiPanelId );
-    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+//    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    void            addPatientToWaitingQueue( bool p_bIsPatientWaiting );
     bool            isPatientWaiting();
     void            setUsageFromWaitingQueue();
     bool            isDeviceStopped();
@@ -91,6 +92,7 @@ private slots:
     void slotSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void slotSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
+    void slotSelectedFromWaitingQueue();
 
 protected:
     void resizeEvent ( QResizeEvent *p_poEvent );

@@ -31,6 +31,7 @@
 #include "db/dbshoppingcart.h"
 #include "db/dbpatientcardunits.h"
 #include "db/dbdiscount.h"
+#include "db/dbwaitlist.h"
 
 //====================================================================================
 
@@ -85,6 +86,7 @@
 #include "dlg/dlgpatientcardassign.h"
 #include "dlg/dlgmanagedatabase.h"
 #include "dlg/dlgexportimport.h"
+#include "dlg/dlgcomment.h"
 
 //====================================================================================
 
@@ -120,6 +122,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_nProgressCounter              = 0;
     m_bGibbigConnected              = false;
     m_nCommunicationErrorCounter    = 0;
+    m_nCommResetStep                = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -1200,6 +1203,29 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
+    switch( m_nCommResetStep )
+    {
+        case 1:
+            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
+            g_poHardware->closeCommunication();
+            g_poHardware->ModuleTurnOff();
+            m_nCommResetStep++;
+            break;
+        case 2:
+            m_nCommResetStep++;
+            break;
+        case 3:
+            g_poHardware->ModuleTurnOn();
+            g_poHardware->init( g_poPrefs->getCommunicationPort() );
+            m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
+            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_on.png" ) );
+            m_nCommResetStep++;
+            break;
+        default:
+            m_nCommResetStep = 0;
+            break;
+    }
+
     QFile   fileCheck( "belenus.chk" );
 
     if( fileCheck.size() > 0 )
@@ -1742,14 +1768,17 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         int             inLengthCash    = 0;
         int             inPrice         = 0;
         unsigned int    uiPatientCardId = 0;
+        QString         qsBarcode       = "";
         QString         qsUnitIds       = "";
         int             inLengthCard    = 0;
         unsigned int    uiLedgerId      = 0;
         int             inPayType       = 0;
+        unsigned int    uiPanelTypeId   = obDlgPanelUse.panelTypeId();
 
         if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
         {
             uiPatientCardId = obDlgPanelUse.panelUsePatientCardId();
+            qsBarcode = obDlgPanelUse.panelUsePatientCardBarcode();
             qsUnitIds = obDlgPanelUse.panelUnitIds().join( "|" );
             inLengthCard = obDlgPanelUse.panelUseSecondsCard();
         }
@@ -1797,10 +1826,10 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             obDlgCassaAction.setPayWithCash();
 
             int             inCassaAction   = obDlgCassaAction.exec();
-            QString         qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
+            QString         qsComment       = tr("Using device later");
             bool            bShoppingCart   = false;
             unsigned int    uiCouponId = 0;
-            cDBDiscount     obDBDiscount;
+//            cDBDiscount     obDBDiscount;
 
             obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
@@ -1822,7 +1851,31 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             }
         }
 
-        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
+        dlgComment  obDlgComment( this, tr("Enter comment") );
+        QString     qsComment = "";
+
+        if( obDlgComment.exec() == QDialog::Accepted )
+        {
+            qsComment = obDlgComment.resultComment();
+        }
+
+        cDBWaitlist obDBWaitlist;
+
+        obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBWaitlist.setPatientCardId( uiPatientCardId );
+        obDBWaitlist.setLedgerId( uiLedgerId );
+        obDBWaitlist.setPanelTypeId( uiPanelTypeId );
+        obDBWaitlist.setBarcode( qsBarcode );
+        obDBWaitlist.setUnitIds( qsUnitIds );
+        obDBWaitlist.setLengthCash( inLengthCash );
+        obDBWaitlist.setLengthCard( inLengthCard );
+        obDBWaitlist.setUseTime( inLengthCash );
+        obDBWaitlist.setUsePrice( inPrice );
+        obDBWaitlist.setComment( qsComment );
+        obDBWaitlist.save();
+
+        mdiPanels->addPatientToWaitingQueue( true );
+//        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
     }
 }
 //====================================================================================
@@ -3174,7 +3227,5 @@ void cWndMain::setCommunicationEnabled(bool p_bEnabled)
 
 void cWndMain::_resetCommunication()
 {
-    g_poHardware->closeCommunication();
-    g_poHardware->init( g_poPrefs->getCommunicationPort() );
-    m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
+    m_nCommResetStep = 1;
 }

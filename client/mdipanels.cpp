@@ -52,6 +52,7 @@ void cMdiPanels::initPanels()
         connect( poFrame, SIGNAL( signalSetCounterText(uint,QString)),      this, SLOT( slotSetCounterText(uint,QString) ) );
         connect( poFrame, SIGNAL( signalSetWaitTime(uint,uint) ),           this, SLOT( slotSetWaitTime(uint,uint) ) );
         connect( poFrame, SIGNAL( signalSetInfoText(uint,QString) ),        this, SLOT( slotSetInfoText(uint,QString) ) );
+        connect( poFrame, SIGNAL( signalSelectedFromWaitingQueue()),        this, SLOT( slotSelectedFromWaitingQueue()) );
 
         poPanel = new QMdiSubWindow( 0, Qt::FramelessWindowHint );
         poPanel->setWidget( poFrame );
@@ -392,9 +393,14 @@ void cMdiPanels::itemRemovedFromShoppingCart( const unsigned int p_uiPanelId )
     }
 }
 //====================================================================================
-void cMdiPanels::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
+//void cMdiPanels::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
+void cMdiPanels::addPatientToWaitingQueue( bool p_bIsPatientWaiting )
 {
-    m_obPanels.at( m_uiActivePanel )->addPatientToWaitingQueue( p_inLengthCash, p_inPrice, p_uiPatientCardId, p_qsUnitIds, p_inLenghtCard, p_uiLedgerId, p_inPayType );
+//    m_obPanels.at( m_uiActivePanel )->addPatientToWaitingQueue( p_inLengthCash, p_inPrice, p_uiPatientCardId, p_qsUnitIds, p_inLenghtCard, p_uiLedgerId, p_inPayType );
+    for( unsigned int i=0; i<m_obPanels.size(); i++ )
+    {
+        m_obPanels.at(i)->addPatientToWaitingQueue( p_bIsPatientWaiting );
+    }
 }
 //====================================================================================
 bool cMdiPanels::isPatientWaiting()
@@ -462,3 +468,15 @@ void cMdiPanels::slotSetInfoText( unsigned int p_uiPanelId, const QString &p_qsI
     emit signalSetInfoText( p_uiPanelId, p_qsInfo );
 }
 //====================================================================================
+void cMdiPanels::slotSelectedFromWaitingQueue()
+{
+    QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString( "SELECT * from waitlist" ) );
+
+    if( poQuery->size() == 0 )
+    {
+        for( unsigned int i=0; i<m_obPanels.size(); i++ )
+        {
+            m_obPanels.at(i)->addPatientToWaitingQueue( false );
+        }
+    }
+}

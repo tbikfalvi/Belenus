@@ -79,6 +79,7 @@ private:
     int                      m_nProgressCounter;
     bool                     m_bGibbigConnected;
     int                      m_nCommunicationErrorCounter;
+    int                      m_nCommResetStep;
 
     vector<cDlgAdvertisementWindow *>   m_obAdWnd;
 

@@ -28,6 +28,7 @@ CREATE TABLE `waitlist` (
   `lengthCard`              decimal(10,0)           NOT NULL,
   `useTime`                 int(11)                 NOT NULL,
   `usePrice`                decimal(10,0)           NOT NULL,
+  `comment`                 text                    DEFAULT NULL,
   PRIMARY KEY (`waitlistId`,`licenceId`),
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
