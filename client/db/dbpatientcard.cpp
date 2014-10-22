@@ -348,7 +348,7 @@ void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
     g_poDB->executeQTQuery( qsQuery );
 }
 
-bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
+bool cDBPatientCard::isPatientCardCanBeUsed( unsigned int p_uiPatientCardTypeId, QString *p_qsValid ) throw()
 {
     QStringList         qslDays;
     QDateTime           currDateTime( QDateTime::currentDateTime() );
@@ -360,14 +360,14 @@ bool cDBPatientCard::isPatientCardCanBeUsed( QString *p_qsValid ) throw()
 
     try
     {
-        qslValidTimes = obDBValidTimePeriod.loadPeriods( m_uiPatientCardTypeId );
+        qslValidTimes = obDBValidTimePeriod.loadPeriods( p_uiPatientCardTypeId );
     }
     catch( cSevException &e )
     {
         g_obLogger(e.severity()) << e.what() << EOM;
     }
 
-    *p_qsValid = QObject::tr( "Patientcard can be used:" );
+    *p_qsValid = ""; //QObject::tr( "Patientcard can be used:" );
     for( int i=0; i<qslValidTimes.count(); i++ )
     {
         QString qsValidTimeStr  = qslValidTimes.at(i);

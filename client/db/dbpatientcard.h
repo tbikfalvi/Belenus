@@ -22,7 +22,7 @@ public:
     bool            isPatientCardTypeLinked( const unsigned int p_PCTId )       throw();
     bool            isPatientCardCanBeReplaced()                                throw();
     bool            isPatientCardCanBeParent()                                  throw();
-    bool            isPatientCardCanBeUsed(QString *p_qsValid)                  throw();
+    bool            isPatientCardCanBeUsed(unsigned int p_uiPatientCardTypeId, QString *p_qsValid)                  throw();
     bool            isAssignedCardExists()                                      throw();
     void            synchronizeUnits()                                          throw();
     void            synchronizeTime()                                           throw();
