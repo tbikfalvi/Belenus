@@ -1569,6 +1569,9 @@ void cWndMain::on_action_DeviceClear_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_DeviceClear_triggered" );
 
+    if( mdiPanels->isPanelWorking( mdiPanels->activePanel() ) )
+        return;
+
     mdiPanels->clean();
 
     if( mdiPanels->isPatientWaiting() )
@@ -1842,12 +1845,10 @@ void cWndMain::on_action_UseDeviceLater_triggered()
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
                 }*/
                 uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
-                inPrice = 0;
             }
             else if( inCassaAction == QDialog::Accepted && bShoppingCart )
             {
                 mdiPanels->itemAddedToShoppingCart();
-                inPrice = 0;
             }
         }
 
@@ -1873,6 +1874,17 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         obDBWaitlist.setUsePrice( inPrice );
         obDBWaitlist.setComment( qsComment );
         obDBWaitlist.save();
+
+        QStringList qslUnitIds = qsUnitIds.split( '|' );
+
+        for( int i=0; i<qslUnitIds.count(); i++ )
+        {
+            cDBPatientcardUnit obDBPatientcardUnit;
+
+            obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
+            obDBPatientcardUnit.setPrepared( true );
+            obDBPatientcardUnit.save();
+        }
 
         mdiPanels->addPatientToWaitingQueue( true );
 //        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );

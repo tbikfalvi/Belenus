@@ -2,6 +2,8 @@
 
 #include "belenus.h"
 #include "dlgwaitlist.h"
+#include "../db/dbwaitlist.h"
+#include "../db/dbpatientcardunits.h"
 
 cDlgWaitlist::cDlgWaitlist( QWidget *p_poParent )
     : cDlgCrud( p_poParent )
@@ -118,6 +120,36 @@ void cDlgWaitlist::editClicked( bool )
 
 void cDlgWaitlist::deleteClicked( bool )
 {
+    cDBWaitlist *poDBWaitlist = NULL;
+
+    if( QMessageBox::question( this, tr( "Question" ),
+                               tr( "Are you sure you want to delete this device usage from the waiting queue?" ),
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
+    {
+        try
+        {
+            poDBWaitlist = new cDBWaitlist;
+
+            poDBWaitlist->load( m_uiSelectedId );
+
+            QStringList qslUnitIds = poDBWaitlist->UnitIds().split( '|' );
+
+            for( int i=0; i<qslUnitIds.count(); i++ )
+            {
+                cDBPatientcardUnit obDBPatientcardUnit;
+
+                obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
+                obDBPatientcardUnit.setPrepared( false );
+                obDBPatientcardUnit.save();
+            }
+        }
+        catch( cSevException &e )
+        {
+            if( poDBWaitlist ) delete poDBWaitlist;
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+
 /*    cDBCompany  *poCompany = NULL;
 
     if( QMessageBox::question( this, tr( "Question" ),

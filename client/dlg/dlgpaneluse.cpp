@@ -567,7 +567,6 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
                                          "Please check it's validity time period.\n\n%1").arg(qsValid) );
                 return;
             }
-
         }
         else
         {

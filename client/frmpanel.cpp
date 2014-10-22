@@ -30,6 +30,7 @@
 #include "db/dbpatientcardunits.h"
 #include "crud/dlgwaitlist.h"
 #include "db/dbwaitlist.h"
+#include "db/dbpaneluses.h"
 
 #include <iostream>
 
@@ -434,26 +435,14 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     setMainProcessTime( p_inLength );
 }
 //====================================================================================
-bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount )
+bool cFrmPanel::isTimeIntervallValid(const int p_inLength)
 {
     QSqlQuery   *poQuery;
     bool         bRet = false;
 
-    *p_inPrice = 0;
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT usePrice, COUNT(usePrice) FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
     if( poQuery->first() )
     {
-        *p_inCount  = poQuery->value( 1 ).toInt();
-        if( *p_inCount > 0 )
-        {
-            *p_inPrice  = poQuery->value( 0 ).toInt();
-        }
-        else
-        {
-            *p_inPrice  = 0;
-        }
-
         bRet = true;
     }
     if( poQuery ) delete poQuery;
@@ -1081,10 +1070,30 @@ void cFrmPanel::setUsageFromWaitingQueue()
 
             obDBWaitlist.load( obDlgWaitlist.selectedId() );
 
+            if( obDBWaitlist.LengthCash() > 0 && !isTimeIntervallValid( obDBWaitlist.LengthCash()/60 ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("This time period did not saved in the database\n"
+                                         "for the actually selected device.\n"
+                                         "Please select valid value from the list.") );
+                return;
+            }
+            if( obDBWaitlist.PanelTypeId() != m_uiType )
+            {
+                if( QMessageBox::question( this, tr("Warning"),
+                                           tr( "The selected device usage has been scheduled\n"
+                                               "for a different device type.\n\n"
+                                               "Are you sure you want to start the device with the selected usage?"),
+                                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+            }
+
             setMainProcessTime( obDBWaitlist.LengthCash(), obDBWaitlist.UsePrice() );
             setMainProcessTime( obDBWaitlist.PatientCardId(), obDBWaitlist.UnitIds().split('|'), obDBWaitlist.LengthCard() );
 
-            if( obDBWaitlist.UsePrice() == 0 )
+            if( obDBWaitlist.LedgerId() > 0 )
             {
                 setPaymentMethod( obDBWaitlist.PayType() );
                 cashPayed( obDBWaitlist.LedgerId() );

@@ -83,7 +83,7 @@ public:
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength );
-    bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
+    bool            isTimeIntervallValid( const int p_inLength );
     void            cashPayed( const unsigned int p_uiLedgerId );
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount );
     bool            isHasToPay();
