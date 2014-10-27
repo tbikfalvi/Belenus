@@ -22,6 +22,7 @@ CREATE TABLE `waitlist` (
   `patientCardId`           int(10) unsigned        NOT NULL,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelTypeId`             int(10) unsigned        NOT NULL,
+  `payType`                 int(10) unsigned        NOT NULL,
   `barcode`                 varchar(20)             NOT NULL,
   `unitIds`                 varchar(100)            NOT NULL,
   `lengthCash`              decimal(10,0)           NOT NULL,

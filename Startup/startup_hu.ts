@@ -98,12 +98,12 @@
         <translation>Telepítés</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="246"/>
+        <location filename="mainwindow.ui" line="256"/>
         <source>Uninstall</source>
         <translation>Eltávolítás</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="256"/>
+        <location filename="mainwindow.ui" line="246"/>
         <source>Update</source>
         <translation>Frissítés</translation>
     </message>
@@ -128,25 +128,37 @@
         <translation> Adja meg a telepítéshez / frissítéshez használt könyvtárakat </translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="712"/>
+        <location filename="mainwindow.ui" line="723"/>
         <source>Start process</source>
         <translation>Folyamat indítása</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="177"/>
-        <location filename="mainwindow.cpp" line="194"/>
-        <location filename="mainwindow.cpp" line="235"/>
-        <location filename="mainwindow.cpp" line="277"/>
+        <location filename="mainwindow.cpp" line="247"/>
+        <location filename="mainwindow.cpp" line="264"/>
+        <location filename="mainwindow.cpp" line="305"/>
+        <location filename="mainwindow.cpp" line="347"/>
         <source>Select Directory</source>
         <translation>Válasszon könyvtárat</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="379"/>
+        <location filename="mainwindow.cpp" line="395"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="396"/>
+        <source>Are you sure you want to uninstall Belenus Application System and all of it&apos;s components?
+All of the data will be deleted from the computer.</source>
+        <translation>Biztos benne, hogy el akarja távolítani a Belenus Szoftver Rendszert és annak összes kiegészítőjét?
+Az összes adat törlődni fog a számítógépről.</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="492"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="380"/>
+        <location filename="mainwindow.cpp" line="493"/>
         <source>Error occured during initialization.
 Please contact system administrator.
 Error code: ErrLogCreateFail
@@ -157,17 +169,18 @@ Hibakód: ErrLogCreateFail
 [%1]</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="418"/>
-        <location filename="mainwindow.cpp" line="570"/>
-        <location filename="mainwindow.cpp" line="604"/>
-        <location filename="mainwindow.cpp" line="631"/>
-        <location filename="mainwindow.cpp" line="662"/>
-        <location filename="mainwindow.cpp" line="688"/>
+        <location filename="mainwindow.cpp" line="531"/>
+        <location filename="mainwindow.cpp" line="683"/>
+        <location filename="mainwindow.cpp" line="717"/>
+        <location filename="mainwindow.cpp" line="744"/>
+        <location filename="mainwindow.cpp" line="775"/>
+        <location filename="mainwindow.cpp" line="801"/>
+        <location filename="mainwindow.cpp" line="827"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="419"/>
+        <location filename="mainwindow.cpp" line="532"/>
         <source>The following directory can not be created:
 
 %1
@@ -180,7 +193,7 @@ Please create the directory manually and restart process.</source>
 Kérem hozza létre kézzel és indítsa újra a folyamatot.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="565"/>
+        <location filename="mainwindow.cpp" line="678"/>
         <source>Error occured during parsing file:
 &apos;%1&apos;
 
@@ -191,8 +204,8 @@ Error in line %2: %3</source>
 Hiba a sorban %2: %3</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="571"/>
-        <location filename="mainwindow.cpp" line="605"/>
+        <location filename="mainwindow.cpp" line="684"/>
+        <location filename="mainwindow.cpp" line="718"/>
         <source>Unable to copy updater files.
 Please check the error report file:
 
@@ -203,7 +216,7 @@ Kérem ellenőrizze a hiba jelentő állományt:
 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="632"/>
+        <location filename="mainwindow.cpp" line="745"/>
         <source>Unable to copy updater file.
 Please check the error report file:
 
@@ -214,8 +227,9 @@ Kérem ellenőrizze a hiba jelentő állományt:
 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="663"/>
-        <location filename="mainwindow.cpp" line="689"/>
+        <location filename="mainwindow.cpp" line="776"/>
+        <location filename="mainwindow.cpp" line="802"/>
+        <location filename="mainwindow.cpp" line="828"/>
         <source>Error occured when starting process:
 
 %1
