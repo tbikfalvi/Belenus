@@ -45,5 +45,17 @@
             <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_5.sql"' />
         </execute>
     </version>
+
+    <version current="1.4.5" next="1.4.6">
+        <uncompress>
+            <file path="%DOWNLOAD_DIR%" name="Update_1_4_6.zip" />
+        </uncompress>
+        <backup>
+            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
+        </backup>
+        <update>
+            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
+        </update>
+    </version>
     
 </Process>
