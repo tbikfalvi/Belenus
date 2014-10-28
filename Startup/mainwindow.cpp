@@ -543,7 +543,7 @@ bool MainWindow::_createSettingsFile()
 {
     QSettings obMasterCD( "system.inf", QSettings::IniFormat );
 
-    QString qsVersion   = obMasterCD.value( "Version", "1.0.0" ).toString();
+    QString qsVersion   = obMasterCD.value( "Version", "1.4.0" ).toString();
     QString qsSettings  = QString( "%1/settings.ini" ).arg( ui->ledDirectoryStartup->text() );
     QString qsAddress   = "";
     QString qsLocation  = "";
@@ -617,6 +617,11 @@ bool MainWindow::_updateSettingsFile()
     qsSettings.replace( "//", "/" );
 
     QSettings obPrefFile( qsSettings, QSettings::IniFormat );
+
+    if( obPrefFile.value( "Version", "" ).toString().length() == 0 )
+    {
+        return _createSettingsFile();
+    }
 
     QString qsLanguage = ui->cmbLanguage->itemText( ui->cmbLanguage->currentIndex() ).right(3).left(2);
 
@@ -791,10 +796,12 @@ void MainWindow::_executeInstaller()
 void MainWindow::_executeUpdater()
 {
     QProcess *qpProcess = new QProcess(this);
-    QString   qsProcess = QString( "%1/BelenusUpdate.exe" ).arg( ui->ledDirectoryTarget->text() );
+    QString   qsProcess = QString( "%1/BelenusUpdate.exe" ).arg( ui->ledDirectoryStartup->text() );
 
     qsProcess.replace("\\","/");
     qsProcess.replace("//","/");
+
+    QDir::setCurrent( ui->ledDirectoryStartup->text() );
 
     if( !qpProcess->startDetached( qsProcess ) )
     {
