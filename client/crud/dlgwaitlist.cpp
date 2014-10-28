@@ -14,10 +14,12 @@ cDlgWaitlist::cDlgWaitlist( QWidget *p_poParent )
     m_poBtnClose->setEnabled(false);
     m_poBtnEdit->setEnabled(false);
     m_poBtnNew->setEnabled(false);
+    m_poBtnDelete->setEnabled(false);
 
     m_poBtnClose->setVisible(false);
     m_poBtnEdit->setVisible(false);
     m_poBtnNew->setVisible(false);
+    m_poBtnDelete->setVisible(false);
 
     pbSelect = new QPushButton( tr( "Select" ), this );
     pbSelect->setObjectName( QString::fromUtf8( "pbSelect" ) );
@@ -107,7 +109,7 @@ void cDlgWaitlist::enableButtons()
 
 //    m_poBtnNew->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 //    m_poBtnEdit->setEnabled( m_uiSelectedId > 0 && g_obUser.isInGroup( cAccessGroup::ADMIN ) );
-    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 /*&& g_obUser.isInGroup( cAccessGroup::ADMIN )*/ );
+//    m_poBtnDelete->setEnabled( m_uiSelectedId > 0 /*&& g_obUser.isInGroup( cAccessGroup::ADMIN )*/ );
 }
 
 void cDlgWaitlist::newClicked( bool )
@@ -120,63 +122,6 @@ void cDlgWaitlist::editClicked( bool )
 
 void cDlgWaitlist::deleteClicked( bool )
 {
-    cDBWaitlist *poDBWaitlist = NULL;
-
-    if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to delete this device usage from the waiting queue?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            poDBWaitlist = new cDBWaitlist;
-
-            poDBWaitlist->load( m_uiSelectedId );
-
-            QStringList qslUnitIds = poDBWaitlist->UnitIds().split( '|' );
-
-            for( int i=0; i<qslUnitIds.count(); i++ )
-            {
-                cDBPatientcardUnit obDBPatientcardUnit;
-
-                obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
-                obDBPatientcardUnit.setPrepared( false );
-                obDBPatientcardUnit.save();
-            }
-        }
-        catch( cSevException &e )
-        {
-            if( poDBWaitlist ) delete poDBWaitlist;
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-    }
-
-/*    cDBCompany  *poCompany = NULL;
-
-    if( QMessageBox::question( this, tr( "Question" ),
-                               tr( "Are you sure you want to delete this Company?" ),
-                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::Yes )
-    {
-        try
-        {
-            poCompany = new cDBCompany;
-            poCompany->load( m_uiSelectedId );
-            if( poCompany->licenceId() == 0 && !g_obUser.isInGroup( cAccessGroup::ROOT ) && !g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
-            {
-                QMessageBox::warning( this, tr("Warning"),
-                                      tr("You are not allowed to delete studio independent data."));
-                return;
-            }
-            poCompany->remove();
-            m_uiSelectedId = 0;
-            refreshTable();
-            if( poCompany ) delete poCompany;
-        }
-        catch( cSevException &e )
-        {
-            if( poCompany ) delete poCompany;
-            g_obLogger(e.severity()) << e.what() << EOM;
-        }
-    }*/
 }
 
 void cDlgWaitlist::on_pbSelect_clicked()

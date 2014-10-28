@@ -1,0 +1,28 @@
+<updater version="1.4.4">
+
+    <files>
+        <file src="%CURRENT_DIR%/package/Update_1_4_5.zip" dst="%DOWNLOAD_DIR%/Update_1_4_5.zip" />
+        <file src="%CURRENT_DIR%/lang/updater_hu.qm" dst="%INSTALL_DIR%/lang/updater_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/updater_de.qm" dst="%INSTALL_DIR%/lang/updater_de.qm" />
+        <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
+        <file src="%CURRENT_DIR%/lang/qt_de.qm" dst="%INSTALL_DIR%/lang/qt_de.qm" />
+        <file src="%CURRENT_DIR%/resources/updater.png" dst="%INSTALL_DIR%/resources/updater.png" />
+        <file src="%CURRENT_DIR%/sqldrivers/qsqlmysql4.dll" dst="%INSTALL_DIR%/sqldrivers/qsqlmysql4.dll" />
+        <file src="%CURRENT_DIR%/libeay32.dll" dst="%INSTALL_DIR%/libeay32.dll" />
+        <file src="%CURRENT_DIR%/libgcc_s_dw2-1.dll" dst="%INSTALL_DIR%/libgcc_s_dw2-1.dll" />
+        <file src="%CURRENT_DIR%/libmysql.dll" dst="%INSTALL_DIR%/libmysql.dll" />
+        <file src="%CURRENT_DIR%/libstdc++-6.dll" dst="%INSTALL_DIR%/libstdc++-6.dll" />
+        <file src="%CURRENT_DIR%/libwinpthread-1.dll" dst="%INSTALL_DIR%/libwinpthread-1.dll" />
+        <file src="%CURRENT_DIR%/QtCore4.dll" dst="%INSTALL_DIR%/QtCore4.dll" />
+        <file src="%CURRENT_DIR%/QtGui4.dll" dst="%INSTALL_DIR%/QtGui4.dll" />
+        <file src="%CURRENT_DIR%/QtNetwork4.dll" dst="%INSTALL_DIR%/QtNetwork4.dll" />
+        <file src="%CURRENT_DIR%/QtSql4.dll" dst="%INSTALL_DIR%/QtSql4.dll" />
+        <file src="%CURRENT_DIR%/QtXml4.dll" dst="%INSTALL_DIR%/QtXml4.dll" />
+        <file src="%CURRENT_DIR%/ssleay32.dll" dst="%INSTALL_DIR%/ssleay32.dll" />
+        <file src="%CURRENT_DIR%/BelenusUpdate.exe" dst="%INSTALL_DIR%/BelenusUpdate.exe" />
+        <file src="%CURRENT_DIR%/DBBackup.exe" dst="%INSTALL_DIR%/DBBackup.exe" />
+        <file src="%CURRENT_DIR%/pkzip.exe" dst="%INSTALL_DIR%/pkzip.exe" />
+        <file src="%CURRENT_DIR%/belenus.ini" dst="%INSTALL_DIR%/belenus.ini" />
+    </files>
+
+</updater>
