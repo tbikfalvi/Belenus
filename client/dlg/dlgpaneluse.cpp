@@ -78,10 +78,14 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
         obDBPatientcardUnit.load( p_qslParameters->at(0).toInt() );
         QString qsQuery = QString( "SELECT * FROM patientcardunits WHERE "
                                    "patientCardId=%1 AND "
-                                   "unitTime=%2 AND "
-                                   "validDateTo=\"%3\" AND "
+                                   "patientCardTypeId=%2 AND "
+                                   "unitTime=%3 AND "
+                                   "validDateTo=\"%4\" AND "
                                    "prepared=0 AND "
-                                   "active=1" ).arg( obDBPatientcardUnit.patientCardId() ).arg( obDBPatientcardUnit.unitTime() ).arg( obDBPatientcardUnit.validDateTo() );
+                                   "active=1" ).arg( obDBPatientcardUnit.patientCardId() )
+                                               .arg( p_qslParameters->at(1).toInt() )
+                                               .arg( obDBPatientcardUnit.unitTime() )
+                                               .arg( obDBPatientcardUnit.validDateTo() );
         QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         while( poQuery->next() )
@@ -122,6 +126,13 @@ QStringList cPanelPCUnitUse::usedUnitIds()
 {
     QStringList qslUnitIds;
 
+    g_obLogger(cSeverity::DEBUG) << "cmbUseUnitCount->count() ["
+                                 << cmbUseUnitCount->count()
+                                 << "] m_qslUnitIds.count() ["
+                                 << m_qslUnitIds.count()
+                                 << "]"
+                                 << EOM;
+
     if( pbUseUnitType->isChecked() && cmbUseUnitCount->count() == m_qslUnitIds.count() )
     {
         for( int i=0; i<cmbUseUnitCount->currentIndex()+1; i++ )
@@ -130,6 +141,10 @@ QStringList cPanelPCUnitUse::usedUnitIds()
         }
     }
 
+    g_obLogger(cSeverity::DEBUG) << "qslUnitIds ["
+                                 << qslUnitIds.join("|")
+                                 << "]"
+                                 << EOM;
     return qslUnitIds;
 }
 //----------------------------------------------------------------------------------------------
@@ -479,6 +494,8 @@ void cDlgPanelUse::slotPatientCardUseUpdated()
         m_qslUnitIds << qvPanelUseUnits.at(i)->usedUnitIds();
     }
     setPanelUseTime();
+
+    g_obLogger(cSeverity::DEBUG) << "Units to use: " << m_qslUnitIds.join("|") << EOM;
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbOk_clicked()

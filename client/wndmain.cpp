@@ -1745,6 +1745,12 @@ void cWndMain::on_action_UseDevice_triggered()
                 }
             }
 
+            g_obLogger(cSeverity::DEBUG) << "Device prepare with card Id:"
+                                         << obDlgPanelUse.panelUsePatientCardId()
+                                         << " Units:"
+                                         << obDlgPanelUse.panelUnitIds().join("|")
+                                         << EOM;
+
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
             int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
