@@ -28,6 +28,9 @@
 #include "db/dbshoppingcart.h"
 #include "crud/dlgshoppingcart.h"
 #include "db/dbpatientcardunits.h"
+#include "crud/dlgwaitlist.h"
+#include "db/dbwaitlist.h"
+#include "db/dbpaneluses.h"
 
 #include <iostream>
 
@@ -432,26 +435,14 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     setMainProcessTime( p_inLength );
 }
 //====================================================================================
-bool cFrmPanel::isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount )
+bool cFrmPanel::isTimeIntervallValid(const int p_inLength)
 {
     QSqlQuery   *poQuery;
     bool         bRet = false;
 
-    *p_inPrice = 0;
-
-    poQuery = g_poDB->executeQTQuery( QString( "SELECT usePrice, COUNT(usePrice) FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
+    poQuery = g_poDB->executeQTQuery( QString( "SELECT * FROM panelUses WHERE panelId=%1 AND useTime=%2" ).arg(m_uiId).arg(p_inLength) );
     if( poQuery->first() )
     {
-        *p_inCount  = poQuery->value( 1 ).toInt();
-        if( *p_inCount > 0 )
-        {
-            *p_inPrice  = poQuery->value( 0 ).toInt();
-        }
-        else
-        {
-            *p_inPrice  = 0;
-        }
-
         bRet = true;
     }
     if( poQuery ) delete poQuery;
@@ -1039,10 +1030,11 @@ void cFrmPanel::slotScheduledGuestClicked()
     emit signalOpenScheduleTable( m_uiId );
 }
 //====================================================================================
-void cFrmPanel::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
+//void cFrmPanel::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType )
+void cFrmPanel::addPatientToWaitingQueue( bool p_bIsPatientWaiting )
 {
     cTracer obTrace( "cFrmPanel::addPatientToWaitingQueue" );
-
+/*
     stWaitingQueue  *poTemp = new stWaitingQueue;
 
     poTemp->inLengthCash    = p_inLengthCash;
@@ -1054,8 +1046,8 @@ void cFrmPanel::addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, uns
     poTemp->inPayType       = p_inPayType;
 
     m_vrWaitingQueue.push_back( poTemp );
-
-    m_bIsPatientWaiting = true;
+*/
+    m_bIsPatientWaiting = p_bIsPatientWaiting;
     displayStatus();
 }
 //====================================================================================
@@ -1068,7 +1060,55 @@ void cFrmPanel::setUsageFromWaitingQueue()
 {
     cTracer obTrace( "cFrmPanel::setUsageFromWaitingQueue" );
 
-    if( m_vrWaitingQueue.size() > 0 )
+    cDlgWaitlist    obDlgWaitlist( this );
+
+    if( obDlgWaitlist.exec() == QDialog::Accepted )
+    {
+        try
+        {
+            cDBWaitlist obDBWaitlist;
+
+            obDBWaitlist.load( obDlgWaitlist.selectedId() );
+
+            if( obDBWaitlist.LengthCash() > 0 && !isTimeIntervallValid( obDBWaitlist.LengthCash()/60 ) )
+            {
+                QMessageBox::warning( this, tr("Warning"),
+                                      tr("This time period did not saved in the database\n"
+                                         "for the actually selected device.\n"
+                                         "Please select valid value from the list.") );
+                return;
+            }
+            if( obDBWaitlist.PanelTypeId() != m_uiType )
+            {
+                if( QMessageBox::question( this, tr("Warning"),
+                                           tr( "The selected device usage has been scheduled\n"
+                                               "for a different device type.\n\n"
+                                               "Are you sure you want to start the device with the selected usage?"),
+                                           QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
+                {
+                    return;
+                }
+            }
+
+            setMainProcessTime( obDBWaitlist.LengthCash(), obDBWaitlist.UsePrice() );
+            setMainProcessTime( obDBWaitlist.PatientCardId(), obDBWaitlist.UnitIds().split('|'), obDBWaitlist.LengthCard() );
+
+            if( obDBWaitlist.LedgerId() > 0 )
+            {
+                setPaymentMethod( obDBWaitlist.PayType() );
+                cashPayed( obDBWaitlist.LedgerId() );
+            }
+            obDBWaitlist.remove();
+
+            emit signalSelectedFromWaitingQueue();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
+
+/*    if( m_vrWaitingQueue.size() > 0 )
     {
         stWaitingQueue  *poTemp = m_vrWaitingQueue.at(m_vrWaitingQueue.size()-1);
         setMainProcessTime( poTemp->inLengthCash, poTemp->inPrice );
@@ -1085,7 +1125,7 @@ void cFrmPanel::setUsageFromWaitingQueue()
     if( m_vrWaitingQueue.size() < 1 )
     {
         m_bIsPatientWaiting = false;
-    }
+    }*/
 
     displayStatus();
 }

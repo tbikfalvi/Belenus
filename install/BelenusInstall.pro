@@ -6,7 +6,7 @@
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QT          += core gui sql
+QT          += core gui sql xml
 TARGET       = Setup
 TEMPLATE     = app
 DESTDIR      = ..
@@ -14,6 +14,7 @@ RC_FILE      = setup.rc
 RESOURCES   += install.qrc
 CONFIG      += qt
 TRANSLATIONS = setup_hu.ts \
+               setup_de.ts \
                qt_hu.ts
 
 win32:DEFINES -= UNICODE

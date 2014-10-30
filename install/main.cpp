@@ -30,7 +30,7 @@ QTranslator     *poTransSetup;
 QTranslator     *poTransQT;
 QApplication    *apMainApp;
 QString          g_qsCurrentPath;
-cQTLogger                g_obLogger;
+cQTLogger        g_obLogger;
 
 //====================================================================================
 int main(int argc, char *argv[])
@@ -56,19 +56,42 @@ int main(int argc, char *argv[])
     apMainApp->installTranslator( poTransSetup );
     apMainApp->installTranslator( poTransQT );
 
-    bool bUninstall = false;
-    bool bSilent    = false;
+    bool    bUninstall  = false;
+    bool    bSilent     = false;
+    QString qsDevice    = "3";
+    QString qsLangInst  = "hu";
+    QString qsLangApp   = "hu";
+    QString qsComPort   = "";
 
-    if( argc > 1 && strcmp(argv[1],"-uninstall") == 0 )
+    for( int i=1; i<argc; i++ )
     {
-        bUninstall = true;
-    }
-    else if( argc > 1 && strcmp(argv[1],"-silent") == 0 )
-    {
-        bSilent = true;
+        if( strcmp(argv[i],"-uninstall") == 0 )
+        {
+            bUninstall = true;
+        }
+        else if( strcmp(argv[i],"-silent") == 0 )
+        {
+            bSilent = true;
+        }
+        else if( strncmp(argv[i],"-device:",8) == 0 )
+        {
+            qsDevice = QString( argv[i] ).replace("-device:","");
+        }
+        else if( strncmp(argv[i],"-com:",5) == 0 )
+        {
+            qsComPort = QString( argv[i] ).replace("-com:","");
+        }
+        else if( strncmp(argv[i],"-langi:",7) == 0 )
+        {
+            qsLangInst = QString( argv[i] ).replace("-langi:","");
+        }
+        else if( strncmp(argv[i],"-langa:",7) == 0 )
+        {
+            qsLangApp = QString( argv[i] ).replace("-langa:","");
+        }
     }
 
-    dlgMain w( 0, bUninstall, bSilent );
+    dlgMain w( 0, bUninstall, bSilent, qsDevice.toInt(), qsComPort.toInt(), qsLangInst, qsLangApp );
 
     w.show();
 

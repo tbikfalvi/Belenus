@@ -8,7 +8,8 @@ RC_FILE      = advertisement.rc
 TEMPLATE     = app
 TARGET       = Advertisement
 DESTDIR      = ..
-TRANSLATIONS = advertisement_hu.ts
+TRANSLATIONS = advertisement_hu.ts \
+               advertisement_de.ts
 
 HEADERS     += advertisementwindow.h
 

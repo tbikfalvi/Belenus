@@ -1,1 +1,0 @@
-copy "C:\Development\Qt\build\ReportViewer.exe" "C:\Program Files\Belenus\ReportViewer.exe"

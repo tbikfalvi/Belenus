@@ -1,7 +1,7 @@
 cd client
 C:\DevEnv\Qt\4.8.6\bin\lupdate belenus.pro
-cd ..
-C:\DevEnv\Qt\4.8.6\bin\linguist client/belenus_hu.ts
-cd client
-copy belenus_hu.qm "c:\Program Files\Belenus\lang\belenus_hu.qm"
+C:\DevEnv\Qt\4.8.6\bin\linguist belenus_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist belenus_de.ts
+copy belenus_hu.qm "c:\Install\Belenus\Desktop\MasterCD\lang\belenus_hu.qm"
+copy belenus_de.qm "c:\Install\Belenus\Desktop\MasterCD\lang\belenus_de.qm"
 pause

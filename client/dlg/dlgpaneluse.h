@@ -66,8 +66,10 @@ public:
     unsigned int                 panelUseSecondsCash();
     unsigned int                 panelUsePrice();
     unsigned int                 panelUsePatientCardId();
+    QString                      panelUsePatientCardBarcode();
     int                          countPatientCardUnitsLeft();
     QStringList                  panelUnitIds();
+    unsigned int                 panelTypeId();
 
 private:
 
@@ -89,6 +91,7 @@ private:
     bool                         m_bIsCashCanBeUsed;
     QStringList                  m_qslPanelUseTimes;
     unsigned int                 m_uiIndexOfTime;
+    unsigned int                 m_uiPanelTypeId;
 
     void                        _enablePanelUseTypes();
 

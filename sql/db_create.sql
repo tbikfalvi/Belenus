@@ -407,15 +407,16 @@ CREATE TABLE `patientCardUnits` (
   `patientCardUnitId`       int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
+  `patientCardTypeId`       int(10) unsigned        NOT NULL DEFAULT 0,
   `ledgerId`                int(10) unsigned        NOT NULL,
   `panelId`                 int(10) unsigned        NOT NULL,
-  `gibbigId`           		int(10) unsigned        NOT NULL DEFAULT 0,
+  `gibbigId`                int(10) unsigned        NOT NULL DEFAULT 0,
   `unitTime`                int(11)                 NOT NULL DEFAULT 0,
   `unitPrice`               int(11)                 NOT NULL DEFAULT 0,
   `validDateFrom`           date                    DEFAULT NULL,
   `validDateTo`             date                    DEFAULT NULL,
   `dateTimeUsed`            timestamp               NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `prepared` 				tinyint(1) 				NOT NULL DEFAULT '0',
+  `prepared`                tinyint(1)              NOT NULL DEFAULT '0',
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`patientCardUnitId`,`licenceId`),
@@ -879,6 +880,30 @@ CREATE TABLE `advertisements` (
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,
   PRIMARY KEY (`advertisementId`,`licenceId`),
+  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- -----------------------------------------------------------------------------------
+-- Varakozo lista
+-- -----------------------------------------------------------------------------------
+CREATE TABLE `waitlist` (
+  `waitlistId`              int(10) unsigned        NOT NULL AUTO_INCREMENT,
+  `licenceId`               int(10) unsigned        NOT NULL,
+  `patientCardId`           int(10) unsigned        NOT NULL,
+  `ledgerId`                int(10) unsigned        NOT NULL,
+  `panelTypeId`             int(10) unsigned        NOT NULL,
+  `payType`                 int(10) unsigned        NOT NULL,
+  `barcode`                 varchar(20)             NOT NULL,
+  `unitIds`                 varchar(100)            NOT NULL,
+  `lengthCash`              decimal(10,0)           NOT NULL,
+  `lengthCard`              decimal(10,0)           NOT NULL,
+  `useTime`                 int(11)                 NOT NULL,
+  `usePrice`                decimal(10,0)           NOT NULL,
+  `comment`                 text                    DEFAULT NULL,
+  PRIMARY KEY (`waitlistId`,`licenceId`),
+  FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

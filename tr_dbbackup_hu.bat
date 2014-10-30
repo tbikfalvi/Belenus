@@ -1,7 +1,7 @@
 cd dbbackup
 C:\DevEnv\Qt\4.8.6\bin\lupdate dbbackup.pro
-cd ..
-C:\DevEnv\Qt\4.8.6\bin\linguist dbbackup/dbbackup_hu.ts
-cd dbbackup
-copy dbbackup_hu.qm "c:\Program Files\Belenus\lang\dbbackup_hu.qm"
+C:\DevEnv\Qt\4.8.6\bin\linguist dbbackup_hu.ts
+C:\DevEnv\Qt\4.8.6\bin\linguist dbbackup_de.ts
+copy dbbackup_hu.qm "c:\Install\Belenus\Desktop\MasterCD\lang\dbbackup_hu.qm"
+copy dbbackup_de.qm "c:\Install\Belenus\Desktop\MasterCD\lang\dbbackup_de.qm"
 pause

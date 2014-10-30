@@ -11,6 +11,7 @@ TEMPLATE     = app
 RC_FILE      = dbbackup.rc
 RESOURCES   += dbbackup.qrc
 TRANSLATIONS = dbbackup_hu.ts \
+               dbbackup_de.ts \
                qt_hu.ts
 
 SOURCES     += main.cpp\

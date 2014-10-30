@@ -83,7 +83,7 @@ public:
     void            setMainProcessTime( const int p_inLength );
     void            setMainProcessTime( const int p_inLength, const int p_inPrice );
     void            setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength );
-    bool            isTimeIntervallValid( const int p_inLength, int *p_inPrice, int *p_inCount );
+    bool            isTimeIntervallValid( const int p_inLength );
     void            cashPayed( const unsigned int p_uiLedgerId );
     void            getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount );
     bool            isHasToPay();
@@ -94,7 +94,8 @@ public:
     bool            isItemInShoppingCart();
     void            itemAddedToShoppingCart();
     void            itemRemovedFromShoppingCart();
-    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+//    void            addPatientToWaitingQueue( int p_inLengthCash, int p_inPrice, unsigned int p_uiPatientCardId, QString p_qsUnitIds, int p_inLenghtCard, unsigned int p_uiLedgerId, int p_inPayType );
+    void            addPatientToWaitingQueue( bool p_bIsPatientWaiting );
     bool            isPatientWaiting();
     void            setUsageFromWaitingQueue();
     bool            isNeedToBeCleaned()     { return m_bIsNeedToBeCleaned;  }
@@ -185,6 +186,7 @@ signals:
     void            signalSetCounterText( unsigned int p_uiPanelId, const QString &p_qsCounter );
     void            signalSetWaitTime( unsigned int p_uiPanelId, const unsigned int p_uiWaitTime );
     void            signalSetInfoText( unsigned int p_uiPanelId, const QString &p_qsInfo );
+    void            signalSelectedFromWaitingQueue();
 
 private slots:
     void            slotPanelStartClicked();

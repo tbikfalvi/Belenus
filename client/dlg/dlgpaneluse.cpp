@@ -14,6 +14,8 @@
 //==============================================================================================
 cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParameters)
 {
+    setParent( p_poParent );
+
     m_uiOrderNum    = 0;
 
     horizontalLayout = new QHBoxLayout( this );
@@ -27,8 +29,8 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     pbUseUnitType->setMinimumWidth( 200 );
     pbUseUnitType->setMinimumHeight( 30 );
     pbUseUnitType->setMaximumHeight( 30 );
-    pbUseUnitType->setText( tr("%1 minute(s) unit").arg( p_qslParameters->at(1) ) );
-    pbUseUnitType->setToolTip( tr("Using this patient card unit type gives %1 minute(s) device usage.").arg( p_qslParameters->at(1) ) );
+    pbUseUnitType->setText( tr("%1 minute(s) unit").arg( p_qslParameters->at(2) ) );
+    pbUseUnitType->setToolTip( tr("Using this patient card unit type gives %1 minute(s) device usage.").arg( p_qslParameters->at(2) ) );
     pbUseUnitType->setIconSize( QSize(20,20) );
     pbUseUnitType->setIcon( QIcon("./resources/40x40_device_withcard.png") );
     pbUseUnitType->setCheckable( true );
@@ -44,7 +46,7 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     cmbUseUnitCount->setEnabled( false );
     horizontalLayout->addWidget( cmbUseUnitCount );
     connect( cmbUseUnitCount, SIGNAL(currentIndexChanged(int)), this, SLOT(slotComboUnitUpdated()) );
-    int nCountUnits = p_qslParameters->at( 4 ).toInt();
+    int nCountUnits = p_qslParameters->at( 5 ).toInt();
     for( int i=0; i<nCountUnits; i++ )
     {
         cmbUseUnitCount->addItem( QString::number(i+1) );
@@ -60,14 +62,14 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
 
     lblValidData = new QLabel( this );
     lblValidData->setObjectName( QString::fromUtf8( "lblValidData" ) );
-    lblValidData->setText( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(p_qslParameters->at( 3 ), "yyyy-MM-dd") ) ) );
+    lblValidData->setText( tr("%1 day(s)").arg( QDate::currentDate().daysTo( QDate::fromString(p_qslParameters->at( 4 ), "yyyy-MM-dd") ) ) );
     lblValidData->setStyleSheet( "font: 75 12pt;\ncolor: rgb(0, 125, 0);" );
     horizontalLayout->addWidget( lblValidData );
 
     horizontalSpacer3 = new QSpacerItem( 500, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout->addItem( horizontalSpacer3 );
 
-    m_nUnitTime = p_qslParameters->at(1).toInt();
+    m_nUnitTime = p_qslParameters->at(2).toInt();
 
     cDBPatientcardUnit  obDBPatientcardUnit;
 
@@ -76,10 +78,14 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
         obDBPatientcardUnit.load( p_qslParameters->at(0).toInt() );
         QString qsQuery = QString( "SELECT * FROM patientcardunits WHERE "
                                    "patientCardId=%1 AND "
-                                   "unitTime=%2 AND "
-                                   "validDateTo=\"%3\" AND "
+                                   "patientCardTypeId=%2 AND "
+                                   "unitTime=%3 AND "
+                                   "validDateTo=\"%4\" AND "
                                    "prepared=0 AND "
-                                   "active=1" ).arg( obDBPatientcardUnit.patientCardId() ).arg( obDBPatientcardUnit.unitTime() ).arg( obDBPatientcardUnit.validDateTo() );
+                                   "active=1" ).arg( obDBPatientcardUnit.patientCardId() )
+                                               .arg( p_qslParameters->at(1).toInt() )
+                                               .arg( obDBPatientcardUnit.unitTime() )
+                                               .arg( obDBPatientcardUnit.validDateTo() );
         QSqlQuery      *poQuery = g_poDB->executeQTQuery( qsQuery );
 
         while( poQuery->next() )
@@ -120,6 +126,13 @@ QStringList cPanelPCUnitUse::usedUnitIds()
 {
     QStringList qslUnitIds;
 
+    g_obLogger(cSeverity::DEBUG) << "cmbUseUnitCount->count() ["
+                                 << cmbUseUnitCount->count()
+                                 << "] m_qslUnitIds.count() ["
+                                 << m_qslUnitIds.count()
+                                 << "]"
+                                 << EOM;
+
     if( pbUseUnitType->isChecked() && cmbUseUnitCount->count() == m_qslUnitIds.count() )
     {
         for( int i=0; i<cmbUseUnitCount->currentIndex()+1; i++ )
@@ -128,6 +141,10 @@ QStringList cPanelPCUnitUse::usedUnitIds()
         }
     }
 
+    g_obLogger(cSeverity::DEBUG) << "qslUnitIds ["
+                                 << qslUnitIds.join("|")
+                                 << "]"
+                                 << EOM;
     return qslUnitIds;
 }
 //----------------------------------------------------------------------------------------------
@@ -183,17 +200,19 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     m_bIsEnterAccepted          = true;
     m_qslPanelUseTimes          = QStringList();
     m_uiIndexOfTime             = 0;
+    m_uiPanelTypeId             = 0;
 
     m_obDBPatientCard.createNew();
 
     QString qsQuery = "";
     QSqlQuery *poQuery = NULL;
 
-    qsQuery = QString( "SELECT title FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
+    qsQuery = QString( "SELECT title, panelTypeId FROM panels WHERE panelId=%1 " ).arg( m_uiPanelId );
     poQuery = g_poDB->executeQTQuery( qsQuery );
     poQuery->first();
 
     lblPanelTitle->setText( poQuery->value(0).toString() );
+    m_uiPanelTypeId = poQuery->value(1).toUInt();
 
     cmbTimeIntervall->addItem( tr("<No time intervall selected>"), 0 );
     m_qslPanelUseTimes.append( QString("0|0") );
@@ -244,6 +263,8 @@ void cDlgPanelUse::setPanelUsePatientCard(QString p_qsPatientCardBarcode)
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 {
+    QString     qsValidPeriods = "";
+
     try
     {
         if( m_uiPanelUsePatientCardId != p_uiPatientCardId && p_uiPatientCardId > 0)
@@ -267,19 +288,35 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                 m_obDBPatientCard.load( m_obDBPatientCard.parentId() );
             }
 
-            QString qsQuery = QString( "SELECT patientCardUnitId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+            QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
                                        "FROM patientcardunits "
                                        "WHERE patientCardId=%1 "
                                        "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
                                        "AND prepared=0 "
                                        "AND active=1 "
-                                       "GROUP BY unitTime, validDateTo ORDER BY validDateTo, patientCardUnitId" ).arg( m_obDBPatientCard.id() );
-            QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+                                       "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( m_obDBPatientCard.id() );
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
             while( poQuery->next() )
             {
+                if( poQuery->value( 1 ).toUInt() > 0 )
+                {
+                    QString qsValid;
+                    bool    isValid = m_obDBPatientCard.isPatientCardCanBeUsed( poQuery->value( 1 ).toUInt(), &qsValid );
+                    qsValidPeriods.append( tr("\n<b>%1 units valid on</b>%2").arg( poQuery->value( 5 ).toString() )
+                                                               .arg( qsValid ) );
+                    if( !isValid )
+                    {
+                        continue;
+                    }
+                }
                 QStringList     qslUnits;
-                qslUnits << poQuery->value( 0 ).toString() << poQuery->value( 1 ).toString() << poQuery->value( 2 ).toString() << poQuery->value( 3 ).toString() << poQuery->value( 4 ).toString();
+                qslUnits << poQuery->value( 0 ).toString()
+                         << poQuery->value( 1 ).toString()
+                         << poQuery->value( 2 ).toString()
+                         << poQuery->value( 3 ).toString()
+                         << poQuery->value( 4 ).toString()
+                         << poQuery->value( 5 ).toString();
                 cPanelPCUnitUse *pPanelUseFrame = new cPanelPCUnitUse( this, &qslUnits );
                 vlUnits->insertWidget( qvPanelUseUnits.count(), pPanelUseFrame );
                 connect( pPanelUseFrame, SIGNAL(signalButtonClicked()), this, SLOT(slotPatientCardUseUpdated()) );
@@ -288,7 +325,15 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                 pPanelUseFrame->setOrderNum( qvPanelUseUnits.count() );
             }
             if( qvPanelUseUnits.count() > 0 )
+            {
                 qvPanelUseUnits.at(0)->setFocus();
+            }
+/*            else
+            {
+                QMessageBox::warning( m_poMsg, tr("Warning"),
+                                      tr("This patientcard currently can not be used.\n"
+                                         "Please check it's validity time period.\n%1").arg(qsValidPeriods) );
+            }*/
         }
     }
     catch( cSevException &e )
@@ -312,11 +357,16 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                                                              "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
         poQuery->first();
 
+        qsValidPeriods.replace("\n","<br>");
         lblCardInfo->setPixmap( QPixmap("resources/40x40_information.png") );
         lblCardInfo->setToolTip( tr("<h3>%1</h3>"
-                                    "<b>Type:</b> %2<br>"
-                                    "<b>Owner:</b> %3<br>"
-                                    "<b>Valid until:</b> %4").arg( m_obDBPatientCard.barcode() ).arg( poQuery->value(0).toString() ).arg( poQuery->value(1).toString() ).arg(m_obDBPatientCard.validDateTo()) );
+                                    "<b>Owner:</b> %2<br>"
+                                    "<b>Valid until:</b> %3<br>"
+                                    "<b>Valid time periods:</b>"
+                                    "%4").arg( m_obDBPatientCard.barcode() )
+                                         .arg( poQuery->value(1).toString() )
+                                         .arg(m_obDBPatientCard.validDateTo())
+                                         .arg(qsValidPeriods) );
         lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
         lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
     }
@@ -414,6 +464,14 @@ unsigned int cDlgPanelUse::panelUsePatientCardId()
 {
     return m_obDBPatientCard.id();
 }
+QString cDlgPanelUse::panelUsePatientCardBarcode()
+{
+    return m_obDBPatientCard.barcode();
+}
+unsigned int cDlgPanelUse::panelTypeId()
+{
+    return m_uiPanelTypeId;
+}
 //----------------------------------------------------------------------------------------------
 int cDlgPanelUse::countPatientCardUnitsLeft()
 {
@@ -436,6 +494,8 @@ void cDlgPanelUse::slotPatientCardUseUpdated()
         m_qslUnitIds << qvPanelUseUnits.at(i)->usedUnitIds();
     }
     setPanelUseTime();
+
+    g_obLogger(cSeverity::DEBUG) << "Units to use: " << m_qslUnitIds.join("|") << EOM;
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbOk_clicked()
@@ -549,15 +609,14 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
                 }
             }
 
-            QString qsValid;
+/*            QString qsValid;
             if( !m_obDBPatientCard.isPatientCardCanBeUsed( &qsValid ) )
             {
                 QMessageBox::warning( m_poMsg, tr("Warning"),
                                       tr("This patientcard currently can not be used.\n"
                                          "Please check it's validity time period.\n\n%1").arg(qsValid) );
                 return;
-            }
-
+            }*/
         }
         else
         {

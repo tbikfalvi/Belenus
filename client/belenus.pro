@@ -5,7 +5,8 @@ RESOURCES   += belenus.qrc
 RC_FILE      = Belenus.rc
 TEMPLATE     = app
 DESTDIR      = ..
-TRANSLATIONS = belenus_hu.ts
+TRANSLATIONS = belenus_hu.ts \
+               belenus_de.ts
 
 win32:DEFINES -= UNICODE
 
@@ -59,7 +60,8 @@ FORMS = ../framework/dlgcrud.ui \
     dlgmanagedatabase.ui \
     dlgExportImport.ui \
     dlgAdvertisement.ui \
-    dlgAdvertisementedit.ui
+    dlgAdvertisementedit.ui \
+    dlgcomment.ui
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -102,6 +104,7 @@ HEADERS = belenus.h \
     crud/dlgstorno.h \
     crud/dlgpaymentmethod.h \
     crud/dlgadvertisements.h \
+    crud/dlgwaitlist.h \
     db/dbreasontovisit.h \
     db/dbpatientcard.h \
     db/dbpatientcardtype.h \
@@ -135,6 +138,7 @@ HEADERS = belenus.h \
     db/dbpatientcardunits.h \
     db/dbapplicationaction.h \
     db/dbadvertisements.h \
+    db/dbwaitlist.h \
     dlg/dlghardwaretest.h \
     dlg/dlglogin.h \
     dlg/dlglogs.h \
@@ -152,6 +156,7 @@ HEADERS = belenus.h \
     dlg/dlgchangepcvalidity.h \
     dlg/dlgmanagedatabase.h \
     dlg/dlgexportimport.h \
+    dlg/dlgcomment.h \
     edit/dlgpaneltypeedit.h \
     edit/dlgskintypeedit.h \
     edit/dlgpanelgroupedit.h \
@@ -242,6 +247,7 @@ SOURCES = main.cpp \
     crud/dlgstorno.cpp \
     crud/dlgpaymentmethod.cpp \
     crud/dlgadvertisements.cpp \
+    crud/dlgwaitlist.cpp \
     db/dbreasontovisit.cpp \
     db/dbpatientcard.cpp \
     db/dbpatientcardtype.cpp \
@@ -275,6 +281,7 @@ SOURCES = main.cpp \
     db/dbpatientcardunits.cpp \
     db/dbapplicationaction.cpp \
     db/dbadvertisements.cpp \
+    db/dbwaitlist.cpp \
     dlg/dlghardwaretest.cpp \
     dlg/dlglogin.cpp \
     dlg/dlglogs.cpp \
@@ -292,6 +299,7 @@ SOURCES = main.cpp \
     dlg/dlgchangepcvalidity.cpp \
     dlg/dlgmanagedatabase.cpp \
     dlg/dlgexportimport.cpp \
+    dlg/dlgcomment.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlgskintypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \

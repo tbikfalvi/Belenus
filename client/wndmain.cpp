@@ -31,6 +31,7 @@
 #include "db/dbshoppingcart.h"
 #include "db/dbpatientcardunits.h"
 #include "db/dbdiscount.h"
+#include "db/dbwaitlist.h"
 
 //====================================================================================
 
@@ -85,6 +86,7 @@
 #include "dlg/dlgpatientcardassign.h"
 #include "dlg/dlgmanagedatabase.h"
 #include "dlg/dlgexportimport.h"
+#include "dlg/dlgcomment.h"
 
 //====================================================================================
 
@@ -119,6 +121,8 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
     m_bGibbigConnected              = false;
+    m_nCommunicationErrorCounter    = 0;
+    m_nCommResetStep                = 0;
 
     pbLogin->setIcon( QIcon("./resources/40x40_ok.png") );
 
@@ -339,7 +343,6 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     g_poGibbig->setTimeout( 10000 );
 
     this->setFocus();
-m_pbStatusGibbig.setEnabled( false );
 }
 //====================================================================================
 cWndMain::~cWndMain()
@@ -873,6 +876,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
     if( !g_obUser.isLoggedIn() || m_bActionProcessing )
         return;
 
+    m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
     if( p_poEvent->key() == Qt::Key_Control )
     {
         m_bCtrlPressed = true;
@@ -1159,7 +1163,7 @@ void cWndMain::updateToolbar()
             action_DeviceStart->setEnabled( bIsUserLoggedIn && ((!mdiPanels->isPanelWorking(mdiPanels->activePanel()) && mdiPanels->mainProcessTime() > 0) || mdiPanels->isDeviceStopped() ) );
             action_DeviceSkipStatus->setEnabled( bIsUserLoggedIn && mdiPanels->isStatusCanBeSkipped(mdiPanels->activePanel()) );
             action_DeviceReset->setEnabled( bIsUserLoggedIn /*&& mdiPanels->isMainProcess()*/ );
-            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
+            action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
@@ -1199,6 +1203,29 @@ void cWndMain::updateToolbar()
 //====================================================================================
 void cWndMain::timerEvent(QTimerEvent *)
 {
+    switch( m_nCommResetStep )
+    {
+        case 1:
+            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
+            g_poHardware->closeCommunication();
+            g_poHardware->ModuleTurnOff();
+            m_nCommResetStep++;
+            break;
+        case 2:
+            m_nCommResetStep++;
+            break;
+        case 3:
+            g_poHardware->ModuleTurnOn();
+            g_poHardware->init( g_poPrefs->getCommunicationPort() );
+            m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
+            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_on.png" ) );
+            m_nCommResetStep++;
+            break;
+        default:
+            m_nCommResetStep = 0;
+            break;
+    }
+
     QFile   fileCheck( "belenus.chk" );
 
     if( fileCheck.size() > 0 )
@@ -1222,15 +1249,26 @@ void cWndMain::timerEvent(QTimerEvent *)
 
     m_inCommunicationCounter++;
 
-    if( m_inCommunicationCounter > 3 )
+    if( m_inCommunicationCounter > 4 )
     {
         m_inCommunicationCounter = 0;
 
         if( g_poHardware->isCommunicationStopped() )
         {
-            m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
-            g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
-            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+            m_nCommunicationErrorCounter++;
+
+            if( m_nCommunicationErrorCounter > 2 )
+            {
+                _resetCommunication();
+            }
+            else if( m_nCommunicationErrorCounter > 4 )
+            {
+                m_pbStatusCommunication.setIcon( QIcon( "./resources/77x40_off.png" ) );
+                g_obLogger(cSeverity::WARNING) << "Communication stopped with hardware controller" << EOM;
+    //            m_dlgProgress->showError( tr("Communication stopped with hardware controller") );
+                m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
+                m_lblStatusLeft.setText( tr("Communication stopped with hardware controller") );
+            }
         }
         else
         {
@@ -1531,6 +1569,9 @@ void cWndMain::on_action_DeviceClear_triggered()
 {
     cTracer obTrace( "cWndMain::on_action_DeviceClear_triggered" );
 
+    if( mdiPanels->isPanelWorking( mdiPanels->activePanel() ) )
+        return;
+
     mdiPanels->clean();
 
     if( mdiPanels->isPatientWaiting() )
@@ -1704,6 +1745,12 @@ void cWndMain::on_action_UseDevice_triggered()
                 }
             }
 
+            g_obLogger(cSeverity::DEBUG) << "Device prepare with card Id:"
+                                         << obDlgPanelUse.panelUsePatientCardId()
+                                         << " Units:"
+                                         << obDlgPanelUse.panelUnitIds().join("|")
+                                         << EOM;
+
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUsePatientCardId(), obDlgPanelUse.panelUnitIds(), obDlgPanelUse.panelUseSecondsCard() );
 
             int nCount = obDlgPanelUse.countPatientCardUnitsLeft();
@@ -1730,14 +1777,17 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         int             inLengthCash    = 0;
         int             inPrice         = 0;
         unsigned int    uiPatientCardId = 0;
+        QString         qsBarcode       = "";
         QString         qsUnitIds       = "";
         int             inLengthCard    = 0;
         unsigned int    uiLedgerId      = 0;
         int             inPayType       = 0;
+        unsigned int    uiPanelTypeId   = obDlgPanelUse.panelTypeId();
 
         if( obDlgPanelUse.panelUsePatientCardId() > 0 && obDlgPanelUse.panelUseSecondsCard() > 0 )
         {
             uiPatientCardId = obDlgPanelUse.panelUsePatientCardId();
+            qsBarcode = obDlgPanelUse.panelUsePatientCardBarcode();
             qsUnitIds = obDlgPanelUse.panelUnitIds().join( "|" );
             inLengthCard = obDlgPanelUse.panelUseSecondsCard();
         }
@@ -1785,10 +1835,10 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             obDlgCassaAction.setPayWithCash();
 
             int             inCassaAction   = obDlgCassaAction.exec();
-            QString         qsComment       = tr("Using device: %1").arg( mdiPanels->getActivePanelCaption() );
+            QString         qsComment       = tr("Using device later");
             bool            bShoppingCart   = false;
             unsigned int    uiCouponId = 0;
-            cDBDiscount     obDBDiscount;
+//            cDBDiscount     obDBDiscount;
 
             obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
 
@@ -1801,16 +1851,49 @@ void cWndMain::on_action_UseDeviceLater_triggered()
                     obDBShoppingCart.setItemDiscount( obDBShoppingCart.itemDiscount()+obDBDiscount.discount(obDBShoppingCart.itemSumPrice()) );
                 }*/
                 uiLedgerId = g_obCassa.cassaProcessDeviceUse( obDBShoppingCart, qsComment, inPayType, mdiPanels->getPanelCaption(obDBShoppingCart.panelId()) );
-                inPrice = 0;
             }
             else if( inCassaAction == QDialog::Accepted && bShoppingCart )
             {
                 mdiPanels->itemAddedToShoppingCart();
-                inPrice = 0;
             }
         }
 
-        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
+        dlgComment  obDlgComment( this, tr("Enter comment") );
+        QString     qsComment = "";
+
+        if( obDlgComment.exec() == QDialog::Accepted )
+        {
+            qsComment = obDlgComment.resultComment();
+        }
+
+        cDBWaitlist obDBWaitlist;
+
+        obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
+        obDBWaitlist.setPatientCardId( uiPatientCardId );
+        obDBWaitlist.setLedgerId( uiLedgerId );
+        obDBWaitlist.setPanelTypeId( uiPanelTypeId );
+        obDBWaitlist.setBarcode( qsBarcode );
+        obDBWaitlist.setUnitIds( qsUnitIds );
+        obDBWaitlist.setLengthCash( inLengthCash );
+        obDBWaitlist.setLengthCard( inLengthCard );
+        obDBWaitlist.setUseTime( inLengthCash );
+        obDBWaitlist.setUsePrice( inPrice );
+        obDBWaitlist.setComment( qsComment );
+        obDBWaitlist.save();
+
+        QStringList qslUnitIds = qsUnitIds.split( '|' );
+
+        for( int i=0; i<qslUnitIds.count(); i++ )
+        {
+            cDBPatientcardUnit obDBPatientcardUnit;
+
+            obDBPatientcardUnit.load( qslUnitIds.at(i).toInt() );
+            obDBPatientcardUnit.setPrepared( true );
+            obDBPatientcardUnit.save();
+        }
+
+        mdiPanels->addPatientToWaitingQueue( true );
+//        mdiPanels->addPatientToWaitingQueue( inLengthCash, inPrice, uiPatientCardId, qsUnitIds, inLengthCard, uiLedgerId, inPayType );
     }
 }
 //====================================================================================
@@ -3077,6 +3160,8 @@ void cWndMain::showAdWindows()
 
         QProcess *qpAdv = new QProcess(this);
 
+        obPrefFile.setValue( QString::fromAscii( "Advertisement%1/Command" ).arg( poQuery->value(0).toInt() ), "START" );
+
         if( !qpAdv->startDetached( QString("Advertisement.exe %1").arg( poQuery->value(0).toUInt() ) ) )
         {
             QMessageBox::warning( this, tr("Warning"),
@@ -3105,6 +3190,22 @@ void cWndMain::on_action_Advertisements_triggered()
 
     obDlgAdvertisements.exec();
 
+    QProcess *qpAdv = new QProcess(this);
+
+    if( !qpAdv->startDetached( QString("Advertisement.exe") ) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured when starting process:Advertisement.exe\n\nError code: %1\n"
+                                 "0 > The process failed to start.\n"
+                                 "1 > The process crashed some time after starting successfully.\n"
+                                 "2 > The last waitFor...() function timed out.\n"
+                                 "4 > An error occurred when attempting to write to the process.\n"
+                                 "3 > An error occurred when attempting to read from the process.\n"
+                                 "5 > An unknown error occurred.").arg(qpAdv->error()) );
+    }
+
+    delete qpAdv;
+
     QMessageBox::warning( this, tr("Attention"),
                           tr("Please note that you should restart the application for the modifications to take effect."));
 }
@@ -3131,8 +3232,8 @@ void cWndMain::on_CommunicationButtonClicked()
     {
         if( qaRet->text().compare( tr("Reset communication") ) == 0 )
         {
-            g_poHardware->closeCommunication();
-            g_poHardware->init( g_poPrefs->getCommunicationPort() );
+            _resetCommunication();
+            m_nCommunicationErrorCounter = 0;
         }
     }
 }
@@ -3140,4 +3241,9 @@ void cWndMain::on_CommunicationButtonClicked()
 void cWndMain::setCommunicationEnabled(bool p_bEnabled)
 {
     m_pbStatusCommunication.setEnabled( p_bEnabled );
+}
+
+void cWndMain::_resetCommunication()
+{
+    m_nCommResetStep = 1;
 }
