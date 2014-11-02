@@ -1,5 +1,0 @@
-
-DROP DATABASE belenus;
-
-CREATE DATABASE belenus;
-
