@@ -20,6 +20,8 @@ private slots:
 
     void on_pbImageClick_clicked();
 
+    void on_pbCreateLicenceCodes_clicked();
+
 private:
     Ui::cDlgTest *ui;
 };

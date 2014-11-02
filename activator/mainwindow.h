@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
 
 public:
 
-    static const int LICENCE_MAX_NUMBER = 30;
+    static const int LICENCE_MAX_NUMBER = 60;
 
     enum licenceType {
         LTYPE_DEMO,

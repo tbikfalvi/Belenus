@@ -15,8 +15,7 @@ public:
     static const int EXPIRE_IN_DAYS = 0;
     static const int EXPIRE_MAX_DAYS = 31;
     static const int DEMO_LICENCE_KEY_ID = 1;
-    static const int LICENCE_MAX_NUMBER = 30;
-
+    static const int LICENCE_MAX_NUMBER = 60;
     enum licenceType {
         LTYPE_DEMO,
         LTYPE_REGISTERED,
@@ -47,6 +46,7 @@ public:
     QString         activationKey();
     QString         lastValidated();
     licenceType     ltLicenceType();
+    QString         createLicenceKey( QString qsNumber );
 
 private:
 

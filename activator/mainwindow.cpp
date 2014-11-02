@@ -68,7 +68,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "MX^JDA"  // BLNS27_FSUAOJ <- BLNS27_580046
                                      << "A@RAZ@"  // BLNS28_JKYJQK <- BLNS28_904968
                                      << "LXRJGA"  // BLNS29_GSYALJ <- BLNS29_684016
-                                     << "CZAJ_J"; // BLNS30_HQJATA <- BLNS30_766099
+                                     << "CZAJ_J"  // BLNS30_HQJATA <- BLNS30_766099
+                                     << "N_@OF_"  // BLNS31_ETKDMT <- BLNS31_498327
+                                     << "BYSHE]"  // BLNS32_IRXCNV <- BLNS32_873231
+                                     << "HERIXR"  // BLNS33_CNYBSY <- BLNS33_234184
+                                     << "H_@OYR"  // BLNS34_CTKDRY <- BLNS34_298374
+                                     << "IEQC_A"  // BLNS35_BNZHTJ <- BLNS35_135796
+                                     << "HDABYS"  // BLNS36_COJIRX <- BLNS36_246873
+                                     << "M_JC_^"  // BLNS37_FTAHTU <- BLNS37_599790
+                                     << "N[QBYD"  // BLNS38_EPZIRO <- BLNS38_455872
+                                     << "LFAJX^"  // BLNS39_GMJASU <- BLNS39_626080
+                                     << "IYJLDS"  // BLNS40_BRAGOX <- BLNS40_179643
+                                     << "L[AC[R"  // BLNS41_GPJHPY <- BLNS41_656754
+                                     << "LYAIDR"  // BLNS42_GRJBOY <- BLNS42_676144
+                                     << "CY_C[^"  // BLNS43_HRTHPU <- BLNS43_777750
+                                     << "O@RH@_"  // BLNS44_DKYCKT <- BLNS44_304207
+                                     << "OG_I[R"  // BLNS45_DLTBPY <- BLNS45_317154
+                                     << "IEAMD@"  // BLNS46_BNJFOK <- BLNS46_136548
+                                     << "L@]HGA"  // BLNS47_GKVCLJ <- BLNS47_601216
+                                     << "H_SOFR"  // BLNS48_CTXDMY <- BLNS48_293324
+                                     << "OZSMX^"  // BLNS49_DQXFSU <- BLNS49_363580
+                                     << "H__OEA"  // BLNS50_CTTDNJ <- BLNS50_297336
+                                     << "CZQNGQ"  // BLNS51_HQZELZ <- BLNS51_765415
+                                     << "HXDH[@"  // BLNS52_CSOCPK <- BLNS52_282258
+                                     << "AD^ID^"  // BLNS53_JOUBOU <- BLNS53_940140
+                                     << "CFSCEA"  // BLNS54_HMXHNJ <- BLNS54_723736
+                                     << "H[SJ@Q"  // BLNS55_CPXAKZ <- BLNS55_253005
+                                     << "A@^BF_"  // BLNS56_JKUIMT <- BLNS56_900827
+                                     << "NZ_N@]"  // BLNS57_EQTEKV <- BLNS57_467401
+                                     << "OX@M[_"  // BLNS58_DSKFPT <- BLNS58_388557
+                                     << "M@AHE]"  // BLNS59_FKJCNV <- BLNS59_506231
+                                     << "C_RCX^";  // BLNS60_HTYHSU <- BLNS60_794780
 
     // These are the random values
     m_qslLicenceCodes = QStringList()<< "358194"
@@ -100,7 +130,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                      << "580046"
                                      << "904968"
                                      << "684016"
-                                     << "766099";
+                                     << "766099"
+                                     << "498327"
+                                     << "873231"
+                                     << "234184"
+                                     << "298374"
+                                     << "135796"
+                                     << "246873"
+                                     << "599790"
+                                     << "455872"
+                                     << "626080"
+                                     << "179643"
+                                     << "656754"
+                                     << "676144"
+                                     << "777750"
+                                     << "304207"
+                                     << "317154"
+                                     << "136548"
+                                     << "601216"
+                                     << "293324"
+                                     << "363580"
+                                     << "297336"
+                                     << "765415"
+                                     << "282258"
+                                     << "940140"
+                                     << "723736"
+                                     << "253005"
+                                     << "900827"
+                                     << "467401"
+                                     << "388557"
+                                     << "506231"
+                                     << "794780";
 
     _fillLicenceTree();
 
@@ -173,7 +233,7 @@ void MainWindow::on_pbNewLicenceKey_clicked()
 
     int nOrder = n1*10+n2;
 
-    if( nOrder > 0 && nOrder < LICENCE_MAX_NUMBER )
+    if( nOrder > 0 && nOrder < LICENCE_MAX_NUMBER+1 )
     {
         char    strLicenceRandomCode[7];
 
