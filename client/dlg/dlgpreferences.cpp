@@ -212,6 +212,16 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkFriday->setChecked( qsBackupDays.contains(tr("Fri"), Qt::CaseInsensitive) );
     chkSaturday->setChecked( qsBackupDays.contains(tr("Sat"), Qt::CaseInsensitive) );
     chkSunday->setChecked( qsBackupDays.contains(tr("Sun"), Qt::CaseInsensitive) );
+
+    chkFapad->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    chkFapad->setChecked( g_poPrefs->isFapados() );
+
+    if( g_poPrefs->isFapados() )
+    {
+        pbPanelSettings->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+
+        tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
+    }
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -426,6 +436,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setBackupDatabaseDays( qsBackupDays );
 
     g_poPrefs->setDateFormat( cmbDateFormat->currentText() );
+
+    g_poPrefs->setFapados( chkFapad->isChecked() );
 
     g_poPrefs->save();
 

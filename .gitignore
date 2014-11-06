@@ -9,3 +9,4 @@ serveradmin/*.pro.*
 viewer/*.pro.*
 advertisement/*.pro.*
 startup/*.pro.*
+activator/*.pro.*

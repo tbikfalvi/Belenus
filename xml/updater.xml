@@ -1,4 +1,4 @@
-<updater version="1.4.6">
+<updater version="1.4.7">
 
     <files>
         <file src="%CURRENT_DIR%/package/Update_1_4_5.zip" dst="%DOWNLOAD_DIR%/Update_1_4_5.zip" />

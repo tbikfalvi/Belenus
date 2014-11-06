@@ -317,30 +317,39 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusCommunication.setEnabled( false );
 
-    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-    m_pbStatusGibbig.setFlat( true );
-    m_pbStatusGibbig.setText( "" );
-    m_pbStatusGibbig.setIconSize( QSize(20,20) );
-    m_pbStatusGibbig.setFixedSize( 22, 22 );
+    if( !g_poPrefs->isFapados() )
+    {
+        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+        m_pbStatusGibbig.setFlat( true );
+        m_pbStatusGibbig.setText( "" );
+        m_pbStatusGibbig.setIconSize( QSize(20,20) );
+        m_pbStatusGibbig.setFixedSize( 22, 22 );
 
-    connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
+        connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
+    }
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
     statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
-    statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
+    if( !g_poPrefs->isFapados() )
+    {
+        statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
+    }
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
     g_poGibbig = new cGibbig();
 
-    connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
-    connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
-    connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
-    connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
+    if( !g_poPrefs->isFapados() )
+    {
+        connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
+        connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
+        connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
+        connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
 
-    g_poGibbig->setHost( g_poPrefs->getServerAddress() );
-    g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
-    g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
-    g_poGibbig->setTimeout( 10000 );
+        g_poGibbig->setHost( g_poPrefs->getServerAddress() );
+        g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
+        g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
+        g_poGibbig->setTimeout( 10000 );
+    }
 
     this->setFocus();
 }
@@ -1042,6 +1051,21 @@ void cWndMain::showElementsForComponents()
     action_HealthInsurance->setVisible( false );
     action_RegionZipCity->setVisible( false );
     action_ReportPatients->setVisible( false );
+
+    if( g_poPrefs->isFapados() )
+    {
+        action_Export->setEnabled( false );
+        action_Import->setEnabled( false );
+        menu_ExportImport->setEnabled( false );
+
+        action_Company->setEnabled( false );
+        action_HealthInsurance->setEnabled( false );
+        action_RegionZipCity->setEnabled( false );
+        action_ManageSkinTypes->setEnabled( false );
+        action_Advertisements->setEnabled( false );
+
+        action_UseDeviceLater->setEnabled( false );
+    }
 }
 //====================================================================================
 void cWndMain::updateTitle()

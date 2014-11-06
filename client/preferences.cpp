@@ -72,6 +72,9 @@ void cPreferences::init()
     m_qsBackupDatabaseDays  = "";
 
     m_qsDateFormat          = "yyyy-MM-dd";
+
+    m_bFapados              = false;
+    m_nFapados              = 0;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -179,15 +182,17 @@ void cPreferences::loadConfFileSettings()
         m_qsGibbigPassword  = obPrefFile.value( QString::fromAscii( "Gibbig/Password" ), "" ).toString();
         m_bGibbigEnabled    = obPrefFile.value( QString::fromAscii( "Gibbig/Enabled" ) ).toBool();
         m_nGibbiWaitTime    = obPrefFile.value( QString::fromAscii( "Gibbig/MessageWaitTime" ), 12 ).toInt();
+
+        m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
+        m_qsDirDbBackup         = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
+        m_bBackupDatabase       = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
+        m_nBackupDatabaseType   = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
+        m_qsBackupDatabaseDays  = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
+
+        m_qsDateFormat          = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
+
+        m_bFapados              = obPrefFile.value( QString::fromAscii( "Component" ), false ).toBool();
     }
-
-    m_qsDirDbBinaries       = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBinaries" ) ).toString();
-    m_qsDirDbBackup         = obPrefFile.value( QString::fromAscii( "DbBackup/DirDbBackup" ) ).toString();
-    m_bBackupDatabase       = obPrefFile.value( QString::fromAscii( "DbBackup/BackupDb" ) ).toBool();
-    m_nBackupDatabaseType   = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupType" ) ).toInt();
-    m_qsBackupDatabaseDays  = obPrefFile.value( QString::fromAscii( "DbBackup/DbBackupDays" ) ).toString();
-
-    m_qsDateFormat          = obPrefFile.value( QString::fromAscii( "DateFormat" ), "yyyy-MM-dd" ).toString();
 }
 
 void cPreferences::loadDBSettings() throw (cSevException)
@@ -205,6 +210,24 @@ void cPreferences::loadDBSettings() throw (cSevException)
         while( poQuery->next() )
         {
             m_qslPanelIds << poQuery->value(0).toString();
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString( "SELECT value FROM settings WHERE identifier=\"COMPONENT_ID\" " ) );
+        if( poQuery->first() )
+        {
+            m_nFapados = poQuery->value( 0 ).toInt();
+        }
+
+        if( m_nFapados == 0 )
+        {
+            g_poDB->executeQTQuery( QString( "INSERT INTO settings ( settingId, identifier, value ) VALUES ( NULL , 'COMPONENT_ID', '13' ) " ) );
+        }
+        else
+        {
+            if( (m_bFapados && m_nFapados != 66) || (!m_bFapados && m_nFapados != 42 && m_nFapados != 13) )
+            {
+                g_poDB->executeQTQuery( QString( "UPDATE settings SET value='66' WHERE identifier=\"COMPONENT_ID\" " ) );
+            }
         }
 
         delete poQuery;
@@ -282,6 +305,17 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "DbBackup/DbBackupDays" ), m_qsBackupDatabaseDays );
 
     obPrefFile.setValue( QString::fromAscii( "DateFormat" ), m_qsDateFormat );
+
+    obPrefFile.setValue( QString::fromAscii( "Component" ), m_bFapados );
+
+    if( m_bFapados )
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='66' WHERE identifier=\"COMPONENT_ID\" " ) );
+    }
+    else
+    {
+        g_poDB->executeQTQuery( QString( "UPDATE settings SET value='42' WHERE identifier=\"COMPONENT_ID\" " ) );
+    }
 }
 
 void cPreferences::setFileName( const QString &p_qsFileName )
@@ -1221,3 +1255,29 @@ QString cPreferences::getDateFormat() const
 {
     return m_qsDateFormat;
 }
+
+void cPreferences::setFapados( bool p_bFapados, bool p_boSaveNow )
+{
+    m_bFapados = p_bFapados;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Component" ), m_bFapados );
+
+        if( m_bFapados )
+        {
+            g_poDB->executeQTQuery( QString( "UPDATE settings SET value='66' WHERE identifier=\"COMPONENT_ID\" " ) );
+        }
+        else
+        {
+            g_poDB->executeQTQuery( QString( "UPDATE settings SET value='42' WHERE identifier=\"COMPONENT_ID\" " ) );
+        }
+    }
+}
+
+bool cPreferences::isFapados()
+{
+    return m_bFapados;
+}
+
