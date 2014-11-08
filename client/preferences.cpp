@@ -108,6 +108,8 @@ void cPreferences::loadConfFileSettings()
         int nWidth                  = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
         int nHeight                 = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
         m_qsSecondaryBackground     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
+        m_qsSecondaryFrame          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/FrameColor" ), "#555555" ).toString();
+        m_bIsSecondaryCaptionVisible= obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -265,6 +267,9 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
+    obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
 
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLost" ), m_nPatientCardLostPrice );
     obPrefFile.setValue( QString::fromAscii( "PatientCard/PriceLostVat" ), m_nPatientCardLostPriceVat );
@@ -929,6 +934,38 @@ void cPreferences::setSecondaryBackground( const QString &p_qsColor, bool p_boSa
 QString cPreferences::getSecondaryBackground() const
 {
     return m_qsSecondaryBackground;
+}
+
+void cPreferences::setSecondaryFrame( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsSecondaryFrame = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
+    }
+}
+
+QString cPreferences::getSecondaryFrame() const
+{
+    return m_qsSecondaryFrame;
+}
+
+void cPreferences::setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible, bool p_boSaveNow )
+{
+    m_bIsSecondaryCaptionVisible = p_bIsSecondaryCaptionVisible;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
+    }
+}
+
+bool cPreferences::isSecondaryCaptionVisible() const
+{
+    return m_bIsSecondaryCaptionVisible;
 }
 
 void cPreferences::setPatientCardLostPrice( const int p_inPrice )

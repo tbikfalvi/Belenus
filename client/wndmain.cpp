@@ -295,6 +295,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_dlgSecondaryWindow = new cDlgSecondaryWindow( this );
 
     m_dlgSecondaryWindow->initPanels();
+    m_dlgSecondaryWindow->setCaption( tr("Belenus Software System - %1 - (c) Pagony Multimedia Studio Bt.").arg( g_poPrefs->getVersion() ) );
 
     if( g_poPrefs->isSecondaryWindowVisible() )
     {

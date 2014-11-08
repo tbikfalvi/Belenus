@@ -113,6 +113,10 @@ public:
     QSize           secondaryWindowSize() const;
     void            setSecondaryBackground( const QString &p_qsColor, bool p_boSaveNow = false );
     QString         getSecondaryBackground() const;
+    void            setSecondaryFrame( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryFrame() const;
+    void            setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible, bool p_boSaveNow = false );
+    bool            isSecondaryCaptionVisible() const;
     void            setPatientCardLostPrice( const int p_inPrice );
     int             getPatientCardLostPrice() const;
     void            setPatientCardLostPriceVat(const int p_inVat );
@@ -231,6 +235,8 @@ private:
     QPoint          m_qpSecondaryPosition;
     QSize           m_qsSecondarySize;
     QString         m_qsSecondaryBackground;
+    QString         m_qsSecondaryFrame;
+    bool            m_bIsSecondaryCaptionVisible;
     bool            m_bBarcodeLengthDifferent;
     int             m_nPatientCardLostPrice;
     int             m_nPatientCardLostPriceVat;

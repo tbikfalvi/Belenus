@@ -107,6 +107,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     obColorIcon.fill( QColor( g_poPrefs->getSecondaryBackground() ) );
     btnSecondaryBackground->setIcon( QIcon( obColorIcon ) );
 
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryFrame() ) );
+    btnSecondaryFrame->setIcon( QIcon( obColorIcon ) );
+
+    chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
+
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
@@ -392,6 +397,8 @@ void cDlgPreferences::accept()
 
     g_poPrefs->setSecondaryWindowVisibility( pbSecondaryWindow->isChecked() );
 
+    g_poPrefs->setSecondaryCaptionVisibility( chkSecondaryCaption->isChecked() );
+
     cCurrency   cPrice( ledPCLostPrice->text(), cCurrency::CURR_GROSS, ledPCLostVatpercent->text().toInt() );
 
     g_poPrefs->setPatientCardLostPrice( cPrice.currencyValue().toInt() );
@@ -670,4 +677,14 @@ void cDlgPreferences::on_chkEnableGibbig_clicked(bool checked)
 {
     pbTestGibbig->setEnabled( checked );
     sbGibbigWaitTime->setEnabled( checked );
+}
+
+void cDlgPreferences::on_btnSecondaryFrame_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryFrame() ), this );
+    if( obNewColor.isValid() ) g_poPrefs->setSecondaryFrame( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    obColorIcon.fill( QColor( g_poPrefs->getSecondaryFrame() ) );
+    btnSecondaryFrame->setIcon( QIcon( obColorIcon ) );
 }
