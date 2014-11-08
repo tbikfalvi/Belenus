@@ -5,3 +5,5 @@ Version_1_4_0	Hirdetoablak alkalmazas + Gibbig adatbazis kiegeszitesek
 Version_1_4_6   Hibajavitas, Startup, HW teszt, Waitlist, Berlet egyseg w/ pctype
                 Liszensz kodok kiterjesztve 60-ig
 Version_1_4_7   Fapados Belenus	Ez a Belenus alap funkcionalitasat tartalmazza
+Version_1_4_8   Masodlagos ablaknak nincs normal kerete, keret szine es a fejlec 
+                lathatosaga beallithato
