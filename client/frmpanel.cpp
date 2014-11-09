@@ -88,7 +88,9 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblTitle->setAutoFillBackground( true );
     lblTitle->setContentsMargins( 0, 5, 0, 5 );
     lblTitle->setAlignment( Qt::AlignCenter );
-    lblTitle->setStyleSheet( "QLabel {font: bold; color: white; font-size:14px;}" );
+    lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
+                                    .arg( g_poPrefs->getActiveCaptionBackground() )
+                                    .arg( g_poPrefs->getActiveCaptionColor() ) );
 
     icoPanelStart->setIconSize( QSize(20,20) );
     icoPanelStart->setIcon( QIcon(QString("./resources/40x40_start.png")) );
@@ -357,19 +359,35 @@ void cFrmPanel::inactivate()
 {
     setFrameShadow( QFrame::Sunken );
 
-    QPalette  obNewPalette = lblTitle->palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#00003C") ) );
-    lblTitle->setPalette( obNewPalette );
-}
+    lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
+                                    .arg( g_poPrefs->getInactiveCaptionBackground() )
+                                    .arg( g_poPrefs->getInactiveCaptionColor() ) );
+/*
+    g_obLogger( cSeverity::DEBUG ) << "Inactivate panel ["
+                                   << m_uiId
+                                   << "] "
+                                   << g_poPrefs->getInactiveCaptionBackground()
+                                   << " - "
+                                   << g_poPrefs->getInactiveCaptionColor()
+                                   << EOM;
+*/}
 //====================================================================================
 void cFrmPanel::activate()
 {
     setFrameShadow( QFrame::Raised );
 
-    QPalette  obNewPalette = lblTitle->palette();
-    obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#0000FF" ) ) );
-    lblTitle->setPalette( obNewPalette );
-}
+    lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
+                                    .arg( g_poPrefs->getActiveCaptionBackground() )
+                                    .arg( g_poPrefs->getActiveCaptionColor() ) );
+/*
+    g_obLogger( cSeverity::DEBUG ) << "Activate panel ["
+                                   << m_uiId
+                                   << "] "
+                                   << g_poPrefs->getActiveCaptionBackground()
+                                   << " - "
+                                   << g_poPrefs->getActiveCaptionColor()
+                                   << EOM;
+*/}
 //====================================================================================
 int cFrmPanel::mainProcessTime()
 {

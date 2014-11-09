@@ -117,6 +117,14 @@ public:
     QString         getSecondaryFrame() const;
     void            setSecondaryCaptionVisibility( const bool p_bIsSecondaryCaptionVisible, bool p_boSaveNow = false );
     bool            isSecondaryCaptionVisible() const;
+    void            setActiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getActiveCaptionBackground() const;
+    void            setActiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getActiveCaptionColor() const;
+    void            setInactiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getInactiveCaptionBackground() const;
+    void            setInactiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getInactiveCaptionColor() const;
     void            setPatientCardLostPrice( const int p_inPrice );
     int             getPatientCardLostPrice() const;
     void            setPatientCardLostPriceVat(const int p_inVat );
@@ -256,6 +264,10 @@ private:
     QString         m_qsDateFormat;
     bool            m_bFapados;
     int             m_nFapados;
+    QString         m_qsActiveCaptionBackground;
+    QString         m_qsActiveCaptionColor;
+    QString         m_qsInactiveCaptionBackground;
+    QString         m_qsInactiveCaptionColor;
 
     void init();
 };

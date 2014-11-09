@@ -57,9 +57,11 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     QPalette  obNewPalette = lblTitle->palette();
     obNewPalette.setBrush( QPalette::Window, QBrush( QColor( "#0000FF" ) ) );
     lblTitle->setPalette( obNewPalette );
-    lblTitle->setStyleSheet( "QLabel {font: bold; color: white; font-size:14px;}" );
     lblTitle->setMinimumHeight( 30 );
     lblTitle->setMaximumHeight( 30 );
+    lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
+                                    .arg( g_poPrefs->getActiveCaptionBackground() )
+                                    .arg( g_poPrefs->getActiveCaptionColor() ) );
 
     lblCurrStatus->setWordWrap( true );
     lblInfo->setWordWrap( true );

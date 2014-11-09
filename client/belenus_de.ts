@@ -1537,22 +1537,22 @@ Ledger -&gt; %4 records</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="284"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="305"/>
         <source>status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="293"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="314"/>
         <source>current length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="302"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="323"/>
         <source>next length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgpanelappereance.cpp" line="311"/>
+        <location filename="dlg/dlgpanelappereance.cpp" line="332"/>
         <source>information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5456,7 +5456,7 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cDspPanel</name>
     <message>
-        <location filename="dsppanel.cpp" line="185"/>
+        <location filename="dsppanel.cpp" line="187"/>
         <source>Panel Not Found in Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5464,69 +5464,69 @@ Do you want to save the defined region and city anyway?</source>
 <context>
     <name>cFrmPanel</name>
     <message>
-        <location filename="frmpanel.cpp" line="333"/>
-        <location filename="frmpanel.cpp" line="350"/>
-        <location filename="frmpanel.cpp" line="766"/>
+        <location filename="frmpanel.cpp" line="335"/>
+        <location filename="frmpanel.cpp" line="352"/>
+        <location filename="frmpanel.cpp" line="784"/>
         <source>NOT STERILE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="392"/>
+        <location filename="frmpanel.cpp" line="410"/>
         <source>Attention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="393"/>
+        <location filename="frmpanel.cpp" line="411"/>
         <source>Cassa is disabled!
 
 Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="468"/>
+        <location filename="frmpanel.cpp" line="486"/>
         <source>PAUSED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="534"/>
+        <location filename="frmpanel.cpp" line="552"/>
         <source>Panel Not Found in Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="632"/>
+        <location filename="frmpanel.cpp" line="650"/>
         <source>Cash to pay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="823"/>
+        <location filename="frmpanel.cpp" line="841"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1004"/>
+        <location filename="frmpanel.cpp" line="1022"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1005"/>
+        <location filename="frmpanel.cpp" line="1023"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1075"/>
-        <location filename="frmpanel.cpp" line="1083"/>
+        <location filename="frmpanel.cpp" line="1093"/>
+        <location filename="frmpanel.cpp" line="1101"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1076"/>
+        <location filename="frmpanel.cpp" line="1094"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1084"/>
+        <location filename="frmpanel.cpp" line="1102"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
@@ -7486,64 +7486,91 @@ Do you want to save them as new into the database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="28"/>
+        <location filename="dlgpanelappereance.ui" line="22"/>
+        <source> Panel caption </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="37"/>
+        <location filename="dlgpanelappereance.ui" line="100"/>
+        <source>Caption ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="68"/>
+        <location filename="dlgpanelappereance.ui" line="131"/>
+        <source>Background ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="84"/>
+        <source>Inactive state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="147"/>
+        <source>Active state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgpanelappereance.ui" line="192"/>
         <source> Panel status </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="36"/>
+        <location filename="dlgpanelappereance.ui" line="200"/>
         <source>Panel status name : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="70"/>
+        <location filename="dlgpanelappereance.ui" line="228"/>
         <source> Settings </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="78"/>
+        <location filename="dlgpanelappereance.ui" line="236"/>
         <source>Background color : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="103"/>
-        <location filename="dlgpanelappereance.ui" line="195"/>
-        <location filename="dlgpanelappereance.ui" line="229"/>
+        <location filename="dlgpanelappereance.ui" line="261"/>
+        <location filename="dlgpanelappereance.ui" line="353"/>
+        <location filename="dlgpanelappereance.ui" line="387"/>
         <source>Choose ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="136"/>
+        <location filename="dlgpanelappereance.ui" line="294"/>
         <source>Panel text name : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="163"/>
+        <location filename="dlgpanelappereance.ui" line="321"/>
         <source>Font : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="269"/>
+        <location filename="dlgpanelappereance.ui" line="442"/>
         <source> Preview </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="351"/>
+        <location filename="dlgpanelappereance.ui" line="533"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="407"/>
+        <location filename="dlgpanelappereance.ui" line="598"/>
         <source>sampletext</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="442"/>
+        <location filename="dlgpanelappereance.ui" line="631"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgpanelappereance.ui" line="455"/>
+        <location filename="dlgpanelappereance.ui" line="644"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

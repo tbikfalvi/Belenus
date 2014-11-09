@@ -87,29 +87,34 @@ void cPreferences::loadConfFileSettings()
     }
     else
     {
-        m_qsLang                    = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
-        m_qsLastUser                = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
-        m_uiPanelsPerRow            = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
-        m_inBarcodeLength           = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
-        m_qsBarcodePrefix           = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
-        m_bBarcodeLengthDifferent = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
-        m_bCassaAutoClose           = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
-        m_bCassaAutoWithdrawal      = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
-        m_bCassaAutoCreateNew       = obPrefFile.value( QString::fromAscii( "CassaAutoCreate" ), false ).toBool();
-        m_inCassaCreateType         = obPrefFile.value( QString::fromAscii( "CassaCreateType" ), 4 ).toInt();
-        m_qsDefaultCountry          = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
-        m_inZipLength               = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
-        m_bDBAutoArchive            = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
-        m_bDBGlobalAutoSynchronize  = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
-        m_uiComponent               = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
-        m_bIsSecondaryWindowVisible = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
-        int nLeft                   = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
-        int nTop                    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
-        int nWidth                  = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
-        int nHeight                 = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
-        m_qsSecondaryBackground     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
-        m_qsSecondaryFrame          = obPrefFile.value( QString::fromAscii( "SecondaryWindow/FrameColor" ), "#555555" ).toString();
-        m_bIsSecondaryCaptionVisible= obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
+        m_qsLang                        = obPrefFile.value( QString::fromAscii( "Lang" ), "en" ).toString();
+        m_qsLastUser                    = obPrefFile.value( QString::fromAscii( "LastUser" ), "" ).toString();
+        m_uiPanelsPerRow                = obPrefFile.value( QString::fromAscii( "PanelsPerRow" ), 1 ).toUInt();
+        m_inBarcodeLength               = obPrefFile.value( QString::fromAscii( "BarcodeLength" ), "1" ).toInt();
+        m_qsBarcodePrefix               = obPrefFile.value( QString::fromAscii( "BarcodePrefix" ), "" ).toString();
+        m_bBarcodeLengthDifferent       = obPrefFile.value( QString::fromAscii( "CardProductBarcodeLengthDifferent" ), true ).toBool();
+        m_bCassaAutoClose               = obPrefFile.value( QString::fromAscii( "CassaAutoClose" ), false ).toBool();
+        m_bCassaAutoWithdrawal          = obPrefFile.value( QString::fromAscii( "CassaAutoWithdrawal" ), false ).toBool();
+        m_bCassaAutoCreateNew           = obPrefFile.value( QString::fromAscii( "CassaAutoCreate" ), false ).toBool();
+        m_inCassaCreateType             = obPrefFile.value( QString::fromAscii( "CassaCreateType" ), 4 ).toInt();
+        m_qsDefaultCountry              = obPrefFile.value( QString::fromAscii( "DefaultCountry" ), "" ).toString();
+        m_inZipLength                   = obPrefFile.value( QString::fromAscii( "ZipLength" ), 4 ).toInt();
+        m_bDBAutoArchive                = obPrefFile.value( QString::fromAscii( "DBAutoSynchronization" ), false ).toBool();
+        m_bDBGlobalAutoSynchronize      = obPrefFile.value( QString::fromAscii( "DBGlobalAutoSynchronization" ), false ).toBool();
+        m_uiComponent                   = obPrefFile.value( QString::fromAscii( "PanelSystemID" ), 0 ).toUInt();
+        m_bIsSecondaryWindowVisible     = obPrefFile.value( QString::fromAscii( "IsSecondaryWindowVisible" ), false ).toBool();
+        int nLeft                       = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Left" ), "10" ).toInt();
+        int nTop                        = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Top" ), "10" ).toInt();
+        int nWidth                      = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Width" ), "600" ).toInt();
+        int nHeight                     = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Height" ), "400" ).toInt();
+        m_qsSecondaryBackground         = obPrefFile.value( QString::fromAscii( "SecondaryWindow/Background" ), "#000000"  ).toString();
+        m_qsSecondaryFrame              = obPrefFile.value( QString::fromAscii( "SecondaryWindow/FrameColor" ), "#555555" ).toString();
+        m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
+
+        m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
+        m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#000000" ).toString();
+        m_qsInactiveCaptionBackground   = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionBackground" ), "#000022" ).toString();
+        m_qsInactiveCaptionColor        = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionColor" ), "#000000" ).toString();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -267,6 +272,11 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Width" ), m_qsSecondarySize.width() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Height" ), m_qsSecondarySize.height() );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/Background" ), m_qsSecondaryBackground );
+
+    obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
+    obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
+    obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionBackground" ), m_qsInactiveCaptionBackground );
+    obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionColor" ), m_qsInactiveCaptionColor );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
@@ -966,6 +976,70 @@ void cPreferences::setSecondaryCaptionVisibility( const bool p_bIsSecondaryCapti
 bool cPreferences::isSecondaryCaptionVisible() const
 {
     return m_bIsSecondaryCaptionVisible;
+}
+
+void cPreferences::setActiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsActiveCaptionBackground = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionBackground" ), m_qsActiveCaptionBackground );
+    }
+}
+
+QString cPreferences::getActiveCaptionBackground() const
+{
+    return m_qsActiveCaptionBackground;
+}
+
+void cPreferences::setActiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsActiveCaptionColor = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
+    }
+}
+
+QString cPreferences::getActiveCaptionColor() const
+{
+    return m_qsActiveCaptionColor;
+}
+
+void cPreferences::setInactiveCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsInactiveCaptionBackground = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionBackground" ), m_qsInactiveCaptionBackground );
+    }
+}
+
+QString cPreferences::getInactiveCaptionBackground() const
+{
+    return m_qsInactiveCaptionBackground;
+}
+
+void cPreferences::setInactiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsInactiveCaptionColor = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionColor" ), m_qsInactiveCaptionColor );
+    }
+}
+
+QString cPreferences::getInactiveCaptionColor() const
+{
+    return m_qsInactiveCaptionColor;
 }
 
 void cPreferences::setPatientCardLostPrice( const int p_inPrice )

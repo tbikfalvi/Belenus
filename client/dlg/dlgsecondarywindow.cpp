@@ -32,6 +32,9 @@ cDlgSecondaryWindow::cDlgSecondaryWindow(QWidget *parent) : QDialog(parent)
     mdiArea->setBackground( QBrush( QColor( g_poPrefs->getSecondaryBackground() ) ) );
 
     frmCaption->setVisible( g_poPrefs->isSecondaryCaptionVisible() );
+
+    frmCaption->setStyleSheet( QString("QFrame { background-color: %1 }").arg( g_poPrefs->getActiveCaptionBackground() ) );
+    lblCaption->setStyleSheet( QString("QLabel { color: %1 }").arg( g_poPrefs->getActiveCaptionColor() ) );
 }
 
 cDlgSecondaryWindow::~cDlgSecondaryWindow()
