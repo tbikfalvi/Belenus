@@ -3001,7 +3001,7 @@ void cWndMain::on_action_About_triggered()
                                  ).arg( qsAppVersion ).arg( qsDbVersion ).arg( qsLicenceString ).arg( qsInfoLink ) );
 }
 //====================================================================================
-int cWndMain::customMsgBox(QWidget *parent, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
+int cWndMain::customMsgBox(QWidget */*parent*/, msgBoxType msgtype, QString buttonstext, QString msg, QString details)
 //====================================================================================
 {
     QMessageBox msgBox;
@@ -3107,6 +3107,8 @@ void cWndMain::on_GibbigErrorOccured()
     m_bProgressErrorVisible = true;
     m_nProgressCounter = g_poPrefs->getGibbigMessageWaitTime()*4;
     m_dlgProgress->showError( g_poGibbig->gibbigErrorStr() );
+//    m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
+//    m_lblStatusLeft.setText( g_poGibbig->gibbigErrorStr() );
     g_poGibbig->gibbigClearError();
     g_poPrefs->setGibbigEnabled( false, true );
 }
