@@ -375,7 +375,7 @@ void cDlgProduct::_slotStockDecrease()
 
 void cDlgProduct::_slotStockProcess()
 {
-    dlgStockProcess *obDlgStockProcess = new dlgStockProcess( this, "Stock process" );
+    dlgStockProcess *obDlgStockProcess = new dlgStockProcess( this, tr("Stock process") );
 
     obDlgStockProcess->exec();
     refreshTable();

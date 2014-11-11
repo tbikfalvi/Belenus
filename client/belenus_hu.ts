@@ -5571,6 +5571,7 @@ Az állomány neve: %1</translation>
     </message>
     <message>
         <location filename="crud/dlgproduct.cpp" line="90"/>
+        <location filename="crud/dlgproduct.cpp" line="378"/>
         <source>Stock process</source>
         <translation>Készlet módosítás</translation>
     </message>
