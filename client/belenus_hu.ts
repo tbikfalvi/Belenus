@@ -3154,12 +3154,12 @@ Kérem adjon meg egy másik sorszámot.</translation>
         <translation>Panelhasználatok másolása</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="103"/>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="104"/>
         <source>Information</source>
         <translation>Információ</translation>
     </message>
     <message>
-        <location filename="dlg/dlgpaneltimecopy.cpp" line="104"/>
+        <location filename="dlg/dlgpaneltimecopy.cpp" line="105"/>
         <source>Copy of the selected panel uses has been finished.
 Number of copied items: %1
 Number of skipped items (due to avoid duplication): %2</source>
@@ -5521,12 +5521,12 @@ Az állomány neve: %1</translation>
 <context>
     <name>cDlgProduct</name>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="12"/>
+        <location filename="crud/dlgproduct.cpp" line="13"/>
         <source>Product List</source>
         <translation>Termékek listája</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="21"/>
+        <location filename="crud/dlgproduct.cpp" line="22"/>
         <source>Product type: </source>
         <translation>Termék típus: </translation>
     </message>
@@ -5535,82 +5535,87 @@ Az állomány neve: %1</translation>
         <translation type="obsolete">Termék neve: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="28"/>
+        <location filename="crud/dlgproduct.cpp" line="29"/>
         <source>Name: </source>
         <translation>Név: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="36"/>
+        <location filename="crud/dlgproduct.cpp" line="37"/>
         <source>Barcode: </source>
         <translation>Vonalkód: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="44"/>
+        <location filename="crud/dlgproduct.cpp" line="45"/>
         <source>Product count minimum: </source>
         <translation>Termék darabszám minimum: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="52"/>
+        <location filename="crud/dlgproduct.cpp" line="53"/>
         <source>maximum: </source>
         <translation>maximum: </translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="67"/>
+        <location filename="crud/dlgproduct.cpp" line="68"/>
         <source>&lt;All product types&gt;</source>
         <translation>&lt;Összes termék típus&gt;</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="74"/>
+        <location filename="crud/dlgproduct.cpp" line="75"/>
         <source>Product types</source>
         <translation>Termék típusok</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="81"/>
+        <location filename="crud/dlgproduct.cpp" line="82"/>
         <source>Product action types</source>
         <translation>Termék-események</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="89"/>
+        <location filename="crud/dlgproduct.cpp" line="90"/>
+        <source>Stock process</source>
+        <translation>Készlet módosítás</translation>
+    </message>
+    <message>
+        <location filename="crud/dlgproduct.cpp" line="98"/>
         <source>Increase stock</source>
         <translation>Készlet növelés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="96"/>
+        <location filename="crud/dlgproduct.cpp" line="105"/>
         <source>Decrease stock</source>
         <translation>Készlet csökkentés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="134"/>
+        <location filename="crud/dlgproduct.cpp" line="143"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="135"/>
+        <location filename="crud/dlgproduct.cpp" line="144"/>
         <source>LicenceId</source>
         <translation>LiszenszId</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="136"/>
-        <location filename="crud/dlgproduct.cpp" line="158"/>
+        <location filename="crud/dlgproduct.cpp" line="145"/>
+        <location filename="crud/dlgproduct.cpp" line="167"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="137"/>
-        <location filename="crud/dlgproduct.cpp" line="159"/>
+        <location filename="crud/dlgproduct.cpp" line="146"/>
+        <location filename="crud/dlgproduct.cpp" line="168"/>
         <source>Barcode</source>
         <translation>Vonalkód</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="138"/>
-        <location filename="crud/dlgproduct.cpp" line="160"/>
+        <location filename="crud/dlgproduct.cpp" line="147"/>
+        <location filename="crud/dlgproduct.cpp" line="169"/>
         <source>Price</source>
         <oldsource>Net price</oldsource>
         <translation>Ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="139"/>
-        <location filename="crud/dlgproduct.cpp" line="161"/>
+        <location filename="crud/dlgproduct.cpp" line="148"/>
+        <location filename="crud/dlgproduct.cpp" line="170"/>
         <source>VAT percent</source>
         <translation>ÁFA</translation>
     </message>
@@ -5619,33 +5624,33 @@ Az állomány neve: %1</translation>
         <translation type="obsolete">Bruttó ár</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="140"/>
-        <location filename="crud/dlgproduct.cpp" line="162"/>
+        <location filename="crud/dlgproduct.cpp" line="149"/>
+        <location filename="crud/dlgproduct.cpp" line="171"/>
         <source>Product count</source>
         <translation>Darabszám</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="141"/>
+        <location filename="crud/dlgproduct.cpp" line="150"/>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="142"/>
+        <location filename="crud/dlgproduct.cpp" line="151"/>
         <source>Archive</source>
         <translation>Státusz</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="245"/>
+        <location filename="crud/dlgproduct.cpp" line="254"/>
         <source>New Product</source>
         <translation>Új Termék</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="285"/>
+        <location filename="crud/dlgproduct.cpp" line="294"/>
         <source>Are you sure you want to delete this Product?</source>
         <translation>Biztos benne, hogy törölni akarja ezt a terméket?</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="288"/>
+        <location filename="crud/dlgproduct.cpp" line="297"/>
         <source>This product is linked to one or more product type.
 Are you sure you want to delete this product?
 
@@ -5656,17 +5661,17 @@ Biztos benne, hogy törölni akarja a terméket?
 A termék törlésével nem törli a kapcsolt terméktípust/terméktípusokat.</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="293"/>
+        <location filename="crud/dlgproduct.cpp" line="302"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="301"/>
+        <location filename="crud/dlgproduct.cpp" line="310"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="crud/dlgproduct.cpp" line="302"/>
+        <location filename="crud/dlgproduct.cpp" line="311"/>
         <source>You are not allowed to delete studio independent data.</source>
         <translation>Nincs jogosultsága törölni stúdió független adatot.</translation>
     </message>
@@ -8153,7 +8158,7 @@ Megjegyzés: Ha a NEM gombra kattint, új kassza nyílik az Ön nevére és ehhe
         <location filename="wndmain.cpp" line="2674"/>
         <location filename="wndmain.cpp" line="3087"/>
         <location filename="wndmain.cpp" line="3096"/>
-        <location filename="wndmain.cpp" line="3234"/>
+        <location filename="wndmain.cpp" line="3236"/>
         <source>Attention</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -8196,8 +8201,8 @@ Figyelem: a regisztrációhoz élő internet kapcsolatra van szükség.</transla
         <location filename="wndmain.cpp" line="2125"/>
         <location filename="wndmain.cpp" line="2702"/>
         <location filename="wndmain.cpp" line="2947"/>
-        <location filename="wndmain.cpp" line="3192"/>
-        <location filename="wndmain.cpp" line="3222"/>
+        <location filename="wndmain.cpp" line="3194"/>
+        <location filename="wndmain.cpp" line="3224"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
@@ -8504,32 +8509,32 @@ Biztos, hogy fel akarja tölteni?</translation>
         <translation>Kérem használja a Kimutatás kezelő alkalmazást az adatok megjelenítéséhez és exportálásához.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3138"/>
-        <location filename="wndmain.cpp" line="3154"/>
+        <location filename="wndmain.cpp" line="3140"/>
+        <location filename="wndmain.cpp" line="3156"/>
         <source>Process actions</source>
         <translation>Feladatok végrehajtása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3140"/>
-        <location filename="wndmain.cpp" line="3153"/>
+        <location filename="wndmain.cpp" line="3142"/>
+        <location filename="wndmain.cpp" line="3155"/>
         <source>Test connection</source>
         <translation>Kapcsolat tesztelés</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3142"/>
-        <location filename="wndmain.cpp" line="3158"/>
+        <location filename="wndmain.cpp" line="3144"/>
+        <location filename="wndmain.cpp" line="3160"/>
         <source>Disable communication</source>
         <translation>Kommunikáció letiltása</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3146"/>
-        <location filename="wndmain.cpp" line="3163"/>
+        <location filename="wndmain.cpp" line="3148"/>
+        <location filename="wndmain.cpp" line="3165"/>
         <source>Enable communication</source>
         <translation>Kommunikáció engedélyezése</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3193"/>
-        <location filename="wndmain.cpp" line="3223"/>
+        <location filename="wndmain.cpp" line="3195"/>
+        <location filename="wndmain.cpp" line="3225"/>
         <source>Error occured when starting process:Advertisement.exe
 
 Error code: %1
@@ -8550,13 +8555,13 @@ Hibakód: %1
 5 &gt; Ismeretlen hiba következett be.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3235"/>
+        <location filename="wndmain.cpp" line="3237"/>
         <source>Please note that you should restart the application for the modifications to take effect.</source>
         <translation>Kérem vegye figyelembe, hogy újra kell indítani az alkalmazást a változások életbelépéséhez.</translation>
     </message>
     <message>
-        <location filename="wndmain.cpp" line="3252"/>
-        <location filename="wndmain.cpp" line="3258"/>
+        <location filename="wndmain.cpp" line="3254"/>
+        <location filename="wndmain.cpp" line="3260"/>
         <source>Reset communication</source>
         <translation>Kommunikáció újraindítása</translation>
     </message>
@@ -13661,6 +13666,69 @@ módosítja az aktuális, illetve a stúdió általános pénztárának egyenleg
         <location filename="dlgskintypeedit.ui" line="22"/>
         <source>Name:</source>
         <translation>Név :</translation>
+    </message>
+</context>
+<context>
+    <name>dlgStockProcess</name>
+    <message>
+        <location filename="dlgStockProcess.ui" line="14"/>
+        <source>Dialog</source>
+        <translation>Dialog</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="22"/>
+        <source> Select product ... </source>
+        <translation> Termék kiválasztása ... </translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="28"/>
+        <source>using product barcode :</source>
+        <oldsource>using product &amp;barcode :</oldsource>
+        <translation>vonalkód megadásával :</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="41"/>
+        <source>using product name :</source>
+        <oldsource>using product &amp;name :</oldsource>
+        <translation>név megadásával :</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="58"/>
+        <source> Selected product ... </source>
+        <translation> Kiválasztott termék ... </translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="70"/>
+        <source> Execute ... </source>
+        <translation> Végrehajtás </translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="76"/>
+        <source>Increase stock</source>
+        <oldsource>&amp;Increase stock</oldsource>
+        <translation>Készlet növelés</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="92"/>
+        <source>Decrease stock</source>
+        <oldsource>&amp;Decrease stock</oldsource>
+        <translation>Készlet csökkentés</translation>
+    </message>
+    <message>
+        <location filename="dlgStockProcess.ui" line="128"/>
+        <source>Exit</source>
+        <oldsource>E&amp;xit</oldsource>
+        <translation>Kilépés</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgstockprocess.cpp" line="97"/>
+        <source>&lt;Product not found&gt;</source>
+        <translation>&lt;Nincs megfelelő termék&gt;</translation>
+    </message>
+    <message>
+        <location filename="dlg/dlgstockprocess.cpp" line="109"/>
+        <source>&lt;More than one product found&gt;</source>
+        <translation>&lt;Több mint egy termék található&gt;</translation>
     </message>
 </context>
 <context>
