@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
     QString qsLangInst  = "hu";
     QString qsLangApp   = "hu";
     QString qsComPort   = "";
+    QString qsDir       = "c:/Program Files/belenus";
 
     for( int i=1; i<argc; i++ )
     {
@@ -89,9 +90,13 @@ int main(int argc, char *argv[])
         {
             qsLangApp = QString( argv[i] ).replace("-langa:","");
         }
+        else if( strncmp(argv[i],"-dir:",5) == 0 )
+        {
+            qsDir = QString( argv[i] ).replace("-dir:","");
+        }
     }
 
-    dlgMain w( 0, bUninstall, bSilent, qsDevice.toInt(), qsComPort.toInt(), qsLangInst, qsLangApp );
+    dlgMain w( 0, bUninstall, bSilent, qsDevice.toInt(), qsComPort.toInt(), qsLangInst, qsLangApp, qsDir );
 
     w.show();
 

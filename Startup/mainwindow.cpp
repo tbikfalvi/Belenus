@@ -774,6 +774,7 @@ void MainWindow::_executeInstaller()
     qsProcess.append( QString( " -com:%1" ).arg( ui->spinCombo->text().replace("COM","") ) );
     qsProcess.append( QString( " -langi:%1" ).arg( m_qsLangInstaller ) );
     qsProcess.append( QString( " -langa:%1" ).arg( qsLanguage ) );
+    qsProcess.append( QString( " -dir:\"%1\"" ).arg( ui->ledDirectoryTarget->text() ) );
 
     if( !qpProcess->startDetached( qsProcess ) )
     {

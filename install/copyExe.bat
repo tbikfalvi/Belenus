@@ -1,2 +1,2 @@
 @echo off
-copy c:\Development\Build\setup.exe "c:\Install\Belenus\Desktop\MasterCD\setup.exe"
+copy c:\Development\Build\setup.exe "c:\Install\Belenus\MasterCD\setup.exe"

@@ -15,6 +15,7 @@
 
 #include <windows.h>
 #include <winuser.h>
+#include <QProcessEnvironment>
 #include <QCryptographicHash>
 #include <QDomDocument>
 #include <QTextStream>
@@ -38,7 +39,8 @@ dlgMain::dlgMain(QWidget *parent,
                  int nDeviceNum,
                  int nComPort,
                  QString qsLangInstall,
-                 QString qsLangApp) : QDialog(parent)
+                 QString qsLangApp,
+                 QString qsDir) : QDialog(parent)
 //=======================================================================================
 {
     setupUi(this);
@@ -48,6 +50,9 @@ dlgMain::dlgMain(QWidget *parent,
 
     // Load the images, icons etc.
     setWindowIcon( QIcon( QString(":/icons/belenus.ico") ) );
+
+    // Default settings for client
+    m_qsClientInstallDir = qsDir.replace("\"","");
 
     // Initialize variables
     // Get common settings from registry
@@ -260,8 +265,6 @@ void dlgMain::_initializeInstall()
 
     m_qsIniFileName             = "";
 
-    // Default settings for client
-    m_qsClientInstallDir        = QString( "C:\\Program Files\\Belenus" );
     // If computer restart required, set this flag
     m_bRestartRequired          = false;
     // Language of the client application

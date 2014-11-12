@@ -64,7 +64,8 @@ public:
                      int nDeviceNum = 3,
                      int nComPort = 0,
                      QString qsLangInstall = "hu",
-                     QString qsLangApp = "hu");
+                     QString qsLangApp = "hu",
+                     QString qsDir = "\"c:/Program Files/belenus\"");
     ~dlgMain();
 
 protected:
