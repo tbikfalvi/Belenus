@@ -5,7 +5,7 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_fill_us.sql
--- AppVersion  : 1.4.9
+-- AppVersion  : 1.4.10
 -- DbVersion   : 1.6.0
 -- FileVersion : 2.0
 -- Author      : Bikfalvi Tamas
@@ -328,7 +328,7 @@ INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `
 INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
  (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
  (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_4_9'),
+ (NULL, 'APPLICATION_VERSION', '1_4_10'),
  (NULL, 'DATABASE_VERSION', '1_6_0');
 
 -- -----------------------------------------------------------------------------------
