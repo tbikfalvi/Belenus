@@ -434,49 +434,49 @@ Kérem indítsa el a WampServer alkalmazást, majd indítsa újra a Belenus alka
         <translation> Vas</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="164"/>
         <location filename="general.cpp" line="136"/>
         <source>Mon</source>
         <translation>Hé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="165"/>
         <location filename="general.cpp" line="137"/>
         <source>Tue</source>
         <translation>Ke</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="166"/>
         <location filename="general.cpp" line="138"/>
         <source>Wed</source>
         <translation>Sze</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="167"/>
         <location filename="general.cpp" line="139"/>
         <source>Thu</source>
         <translation>Csü</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="168"/>
         <location filename="general.cpp" line="140"/>
         <source>Fri</source>
         <translation>Pé</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="169"/>
         <location filename="general.cpp" line="141"/>
         <source>Sat</source>
         <translation>Szo</translation>
     </message>
     <message>
-        <location filename="db/dbpatientcard.cpp" line="357"/>
+        <location filename="db/dbpatientcard.cpp" line="378"/>
         <location filename="db/dbvalidtimeperiods.cpp" line="170"/>
         <location filename="general.cpp" line="142"/>
         <source>Sun</source>
@@ -4565,17 +4565,17 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
         <translation type="obsolete">A hét napjaiból legalább az egyiket ki kell választani.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="196"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="199"/>
         <source>One time period must be set.</source>
         <translation>Legalább egy idő intervallumot meg kell adnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="249"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="270"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="144"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="147"/>
         <source>Name of patientcard type must be set.</source>
         <translation>A bérlet típus neve nem lehet üres.</translation>
     </message>
@@ -4585,49 +4585,69 @@ A bérlet típushoz bérletek vannak hozzárendelve.</translation>
         <translation>00:00 =&gt; 23 59 Hé Ke Sze Csü Pé Szo Vas</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="151"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="154"/>
         <source>Price of patientcard type must be set.</source>
         <translation>A bérlet típus ára nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="160"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="163"/>
         <source>Number of units of patientcard type must be set.</source>
         <translation>A felhasználható egységek száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="167"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="170"/>
         <source>Unittime of patientcard type must be set.</source>
         <translation>Az egységhez tartozó kezelési idő nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="174"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="177"/>
         <source>Number of validation days of patientcard type must be set.</source>
         <translation>A bérlettípus érvényességét meghatározó napok száma nem lehet üres.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="181"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="184"/>
         <source>Invalid end date. End date must be in the future.</source>
         <translation>Nem megfelelő az érvényesség lejártát jelző dátum. A dátumnak a jövőbe kell mutatnia.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="188"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="191"/>
         <source>FROM date must be before TO date.</source>
         <translation>Az érvényesség kezdeti dátumának meg kell előznie a lejárati dátumot.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="266"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="210"/>
+        <source>Question</source>
+        <translation>Kérdés</translation>
+    </message>
+    <message>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="211"/>
+        <source>The unit time of this patientcard was different.
+Old unit time: %1
+New unit time: %2
+
+Do you want to update all of the units of all patientcard
+assigned to this patientcard type?</source>
+        <translation>A bérlettípus egységideje megváltozott.
+Régi egységidő: %1
+Új egységidő: %2
+
+Át akarja állítani az összes olyan bérlet egységeinek egységidejét
+amelyek ehhez a bérlettípushoz tartoznak?</translation>
+    </message>
+    <message>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="287"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="308"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="267"/>
         <location filename="edit/dlgpatientcardtypeedit.cpp" line="288"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="309"/>
         <source>The selected time period already present in the list.</source>
         <translation>A kiválasztott időintervallum már szerepel a listában.</translation>
     </message>
     <message>
-        <location filename="edit/dlgpatientcardtypeedit.cpp" line="314"/>
+        <location filename="edit/dlgpatientcardtypeedit.cpp" line="335"/>
         <source>(%1 + %2 % VAT)</source>
         <oldsource>(%1 + %2 VAT)</oldsource>
         <translation>(%1 + %2 % ÁFA)</translation>

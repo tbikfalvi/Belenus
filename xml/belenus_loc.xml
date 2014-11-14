@@ -47,55 +47,20 @@
     </version>
 
     <version current="1.4.5" next="1.4.6">
-        <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_4_6.zip" />
-        </uncompress>
-        <backup>
-            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
-        </backup>
-        <update>
-            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
-        </update>
-        <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_6.sql"' />
-        </execute>
     </version>
     
     <version current="1.4.6" next="1.4.7">
-        <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_4_7.zip" />
-        </uncompress>
-        <backup>
-            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
-        </backup>
-        <update>
-            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
-            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
-        </update>
-        <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_7.sql"' />
-        </execute>
     </version>
     
     <version current="1.4.7" next="1.4.8">
-        <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_4_8.zip" />
-        </uncompress>
-        <backup>
-            <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
-        </backup>
-        <update>
-            <file src="%DOWNLOAD_DIR%/belenus.exe" dst="%INSTALL_DIR%/belenus.exe" />
-            <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
-        </update>
-        <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_8.sql"' />
-        </execute>
     </version>
     
     <version current="1.4.8" next="1.4.9">
+    </version>
+    
+    <version current="1.4.9" next="1.4.10">
         <uncompress>
-            <file path="%DOWNLOAD_DIR%" name="Update_1_4_9.zip" />
+            <file path="%DOWNLOAD_DIR%" name="Update_1_4_10.zip" />
         </uncompress>
         <backup>
             <file path="%INSTALL_DIR%" directory="" name="belenus.exe" move="yes" />
@@ -105,7 +70,7 @@
             <file src="%DOWNLOAD_DIR%/lang/belenus_hu.qm" dst="%INSTALL_DIR%/lang/belenus_hu.qm" />
         </update>
         <execute>
-            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_9.sql"' />
+            <application home="%CURRENT_DIR%" name="DBBackup.exe" params='-execute "%DOWNLOAD_DIR%/sql/db_update_1_4_10.sql"' />
         </execute>
     </version>
     

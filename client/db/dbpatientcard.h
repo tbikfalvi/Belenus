@@ -26,6 +26,7 @@ public:
     bool            isAssignedCardExists()                                      throw();
     void            synchronizeUnits()                                          throw();
     void            synchronizeTime()                                           throw();
+    void            synchronizeUnitTime( int p_nUnitTime )                      throw();
     void            updateActiveUnits( QDate p_qdNew )                          throw();
     void            createNew()                                                 throw();
     unsigned int    id() const                                                  throw();

@@ -40,6 +40,7 @@ public:
     void            setActive( const bool p_bActive )                   throw();
     QString         archive() const                                     throw();
     void            setArchive( const QString &p_qsArchive )            throw();
+    void            updatePatientCardUnits(int p_nUnitTime)             throw();
 
 private:
     unsigned int    m_uiId;

@@ -341,6 +341,27 @@ void cDBPatientCard::synchronizeTime() throw()
         setUnits( 0 );
 }
 
+void cDBPatientCard::synchronizeUnitTime(int p_nUnitTime) throw()
+{
+    QString     qsQuery = "";
+    QSqlQuery  *poQuery;
+
+    qsQuery += QString( "UPDATE patientcardunits SET patientCardTypeId=%1 " ).arg( patientCardTypeId() );
+    qsQuery += QString( "WHERE patientCardId=%1 " ).arg( m_uiId );
+    qsQuery += QString( "AND patientCardTypeId=0 " );
+    qsQuery += QString( "AND active=1 " );
+
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+
+    qsQuery  = "";
+    qsQuery += QString( "UPDATE patientcardunits SET unitTime=%1 " ).arg( p_nUnitTime );
+    qsQuery += QString( "WHERE patientCardId=%1 " ).arg( m_uiId );
+    qsQuery += QString( "AND patientCardTypeId=%1 " ).arg( patientCardTypeId() );
+    qsQuery += QString( "AND active=1 " );
+
+    poQuery = g_poDB->executeQTQuery( qsQuery );
+}
+
 void cDBPatientCard::updateActiveUnits(QDate p_qdNew) throw()
 {
     QString qsQuery = QString( "UPDATE patientcardunits SET validDateTo='%1' WHERE patientCardId=%2 AND active=1" ).arg( p_qdNew.toString("yyyy-MM-dd") ).arg( m_uiId );
