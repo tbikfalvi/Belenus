@@ -237,6 +237,7 @@ void cReportCardDetails::refreshReport()
             qslRecord << poQueryResultCards->value(10).toString();
             qslRecord << poQueryResultCards->value(11).toString();
             qslRecord << poQueryResultCards->value(18).toString();
+            qslRecord << poQueryResultCards->value(33).toString();
             qslRecord << poQueryResultCards->value(6).toString();
 
             qslQueryResult << qslRecord.join("#");
@@ -253,6 +254,7 @@ void cReportCardDetails::refreshReport()
         addTableCell( tr( "Time" ), "center bold" );
         addTableCell( tr( "Valid" ), "center bold" );
         addTableCell( tr( "Patientcard type" ), "bold" );
+        addTableCell( tr( "Owner" ), "bold" );
         addTableCell( tr( "Comment" ), "bold" );
 
         for( int i=0; i<qslQueryResult.size(); i++ )
@@ -260,14 +262,19 @@ void cReportCardDetails::refreshReport()
             QStringList     qslRecord = qslQueryResult.at(i).split('#');
             unsigned int    uiTimeLeft = qslRecord.at(2).toInt();
             QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
+            int             nUnits = qslRecord.at(1).toInt();
+
+            if( nUnits < 0 )
+                nUnits = 0;
 
             addTableRow();
             addTableCell( qslRecord.at(0), "center" );
-            addTableCell( qslRecord.at(1), "center" );
+            addTableCell( QString::number(nUnits), "center" );
             addTableCell( qtTemp.toString( "hh:mm:ss" ), "center" );
             addTableCell( QString("%1 -> %2").arg( qslRecord.at(3) ).arg( qslRecord.at(4) ), "center" );
             addTableCell( qslRecord.at(5) );
             addTableCell( qslRecord.at(6) );
+            addTableCell( qslRecord.at(7) );
 
             m_dlgProgress.increaseProgressValue();
         }
