@@ -119,8 +119,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Adding cash to cassa does not modify the ledger.</string>
+       </property>
        <property name="text">
-        <string>Put cash into cassa</string>
+        <string>Start cassa with
+adding cash</string>
        </property>
        <property name="iconSize">
         <size>
@@ -141,8 +145,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Removing cash from cassa does not modify the ledger.</string>
+       </property>
        <property name="text">
-        <string>Remove cash from cassa</string>
+        <string>End cassa with
+removing cash</string>
        </property>
        <property name="iconSize">
         <size>

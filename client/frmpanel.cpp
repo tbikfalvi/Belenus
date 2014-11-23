@@ -447,7 +447,10 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
         obDBPatientcardUnit.save();
     }
 
-    m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
+    if( p_uiPatientCardId > 1 )
+    {
+       m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
+    }
     m_pDBLedgerDevice->setTimeCard( p_inLength );
 
     setMainProcessTime( p_inLength );
