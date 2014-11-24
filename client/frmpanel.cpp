@@ -146,6 +146,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_inCardTimeRemains     = 0;
 
     m_uiPaymentMethodId     = 0;
+    m_uiShoppingCartItemId  = 0;
 
     m_bIsItemInShoppingCart = false;
     m_bIsPatientWaiting     = false;
@@ -298,30 +299,32 @@ void cFrmPanel::clear()
     emit signalSetCounterText( m_uiId-1, "" );
     emit signalSetWaitTime( m_uiId-1, 0 );
 
+    if( m_uiShoppingCartItemId > 0 )
+    {
+        g_obLogger(cSeverity::INFO) << "Remove payment from shopping cart" << EOM;
+        QString qsQuery = QString( "SELECT shoppingCartItemId FROM shoppingcartitems WHERE shoppingCartItemId=%1" ).arg(m_uiShoppingCartItemId);
+
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->first() )
+        {
+            cDBShoppingCart obDBShoppingCart;
+
+            obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
+            obDBShoppingCart.remove();
+            itemRemovedFromShoppingCart();
+        }
+        m_uiShoppingCartItemId = 0;
+    }
+
     if( m_inCashToPay == 0 )
     {
         if( m_pDBLedgerDevice->cash() > 0 )
         {
             g_obLogger(cSeverity::INFO) << "Device usage already payed, revoke payment" << EOM;
-            int inPriceTotal = m_pDBLedgerDevice->cash();
+//            int inPriceTotal = m_pDBLedgerDevice->cash();
 
-            if( isItemInShoppingCart() )
-            {
-                g_obLogger(cSeverity::INFO) << "Payment removed from shopping cart" << EOM;
-                QString qsQuery = QString( "SELECT shoppingCartItemId FROM shoppingcartitems WHERE panelId =%1 AND itemSumPrice=%2" ).arg(m_uiId).arg(inPriceTotal);
-
-                QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
-
-                if( poQuery->first() )
-                {
-                    cDBShoppingCart obDBShoppingCart;
-
-                    obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
-                    obDBShoppingCart.remove();
-                    itemRemovedFromShoppingCart();
-                }
-            }
-            else if( m_uiLedgerId > 0 )
+            if( m_uiLedgerId > 0 )
             {
                 g_obLogger(cSeverity::INFO) << "Payment revoked by ledgerId: " << m_uiLedgerId << EOM;
                 g_obCassa.cassaProcessRevokeDeviceUse( m_uiLedgerId );
@@ -335,6 +338,7 @@ void cFrmPanel::clear()
     m_uiCurrentPatient      = 0;
     m_uiLedgerId            = 0;
     m_uiPaymentMethodId     = 0;
+    m_uiShoppingCartItemId  = 0;
     m_pDBLedgerDevice->createNew();
 
     if( m_qsInfo.compare( tr("NOT STERILE") ) )
@@ -1128,6 +1132,8 @@ void cFrmPanel::setUsageFromWaitingQueue()
                     return;
                 }
             }
+
+            m_uiShoppingCartItemId = obDBWaitlist.ShoppingCartItemId();
 
             setMainProcessTime( obDBWaitlist.LengthCash(), obDBWaitlist.UsePrice() );
             if( obDBWaitlist.UnitIds().length() > 0 )

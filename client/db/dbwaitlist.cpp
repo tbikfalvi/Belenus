@@ -29,6 +29,7 @@ void cDBWaitlist::init(const unsigned int p_uiId,
                        const unsigned int p_uiLicenceId,
                        const unsigned int p_uiPatientCardId,
                        const unsigned int p_uiLedgerId,
+                       const unsigned int p_uiShoppingCartItemId,
                        const unsigned int p_uiPanelTypeId,
                        const unsigned int p_uiPayType,
                        const QString &p_qsBarcode,
@@ -39,41 +40,44 @@ void cDBWaitlist::init(const unsigned int p_uiId,
                        const unsigned int p_uiUsePrice,
                        const QString &p_qsComment ) throw()
 {
-    m_uiId              = p_uiId;
-    m_uiLicenceId       = p_uiLicenceId;
-    m_uiPatientCardId   = p_uiPatientCardId;
-    m_uiLedgerId        = p_uiLedgerId;
-    m_uiPanelTypeId     = p_uiPanelTypeId;
-    m_uiPayType         = p_uiPayType;
-    m_qsBarcode         = p_qsBarcode;
-    m_qsUnitIds         = p_qsUnitIds;
-    m_nLengthCash       = p_nLengthCash;
-    m_nLengthCard       = p_nLengthCard;
-    m_uiUseTime         = p_uiUseTime;
-    m_uiUsePrice        = p_uiUsePrice;
-    m_qsComment         = p_qsComment;
+    m_uiId                  = p_uiId;
+    m_uiLicenceId           = p_uiLicenceId;
+    m_uiPatientCardId       = p_uiPatientCardId;
+    m_uiLedgerId            = p_uiLedgerId;
+    m_uiShoppingCartItemId  = p_uiShoppingCartItemId;
+    m_uiPanelTypeId         = p_uiPanelTypeId;
+    m_uiPayType             = p_uiPayType;
+    m_qsBarcode             = p_qsBarcode;
+    m_qsUnitIds             = p_qsUnitIds;
+    m_nLengthCash           = p_nLengthCash;
+    m_nLengthCard           = p_nLengthCard;
+    m_uiUseTime             = p_uiUseTime;
+    m_uiUsePrice            = p_uiUsePrice;
+    m_qsComment             = p_qsComment;
 }
 
 void cDBWaitlist::init( const QSqlRecord &p_obRecord ) throw()
 {
-    int inIdIdx             = p_obRecord.indexOf( "waitlistId" );
-    int inLicenceIdIdx      = p_obRecord.indexOf( "licenceId" );
-    int inPatientCardIdIdx  = p_obRecord.indexOf( "patientCardId" );
-    int inLedgerIdIdx       = p_obRecord.indexOf( "ledgerId" );
-    int inPanelTypeIdIdx    = p_obRecord.indexOf( "panelTypeId" );
-    int inPayTypeIdx= p_obRecord.indexOf( "paymentMethodId" );
-    int inBarcodeIdx        = p_obRecord.indexOf( "barcode" );
-    int inUnitIdsIdx        = p_obRecord.indexOf( "unitIds" );
-    int inLengthCashIdx     = p_obRecord.indexOf( "lengthCash" );
-    int inLengthCardIdx     = p_obRecord.indexOf( "lengthCard" );
-    int inUseTimeIdx        = p_obRecord.indexOf( "useTime" );
-    int inUsePriceIdx       = p_obRecord.indexOf( "usePrice" );
-    int inCommentIdx        = p_obRecord.indexOf( "comment" );
+    int inIdIdx                 = p_obRecord.indexOf( "waitlistId" );
+    int inLicenceIdIdx          = p_obRecord.indexOf( "licenceId" );
+    int inPatientCardIdIdx      = p_obRecord.indexOf( "patientCardId" );
+    int inLedgerIdIdx           = p_obRecord.indexOf( "ledgerId" );
+    int inShoppingCartItemIdIdx = p_obRecord.indexOf( "shoppingCartItemId" );
+    int inPanelTypeIdIdx        = p_obRecord.indexOf( "panelTypeId" );
+    int inPayTypeIdx            = p_obRecord.indexOf( "paymentMethodId" );
+    int inBarcodeIdx            = p_obRecord.indexOf( "barcode" );
+    int inUnitIdsIdx            = p_obRecord.indexOf( "unitIds" );
+    int inLengthCashIdx         = p_obRecord.indexOf( "lengthCash" );
+    int inLengthCardIdx         = p_obRecord.indexOf( "lengthCard" );
+    int inUseTimeIdx            = p_obRecord.indexOf( "useTime" );
+    int inUsePriceIdx           = p_obRecord.indexOf( "usePrice" );
+    int inCommentIdx            = p_obRecord.indexOf( "comment" );
 
     init( p_obRecord.value( inIdIdx ).toUInt(),
           p_obRecord.value( inLicenceIdIdx ).toUInt(),
           p_obRecord.value( inPatientCardIdIdx ).toUInt(),
           p_obRecord.value( inLedgerIdIdx ).toUInt(),
+          p_obRecord.value( inShoppingCartItemIdIdx ).toUInt(),
           p_obRecord.value( inPanelTypeIdIdx ).toUInt(),
           p_obRecord.value( inPayTypeIdx ).toUInt(),
           p_obRecord.value( inBarcodeIdx ).toString(),
@@ -116,6 +120,7 @@ void cDBWaitlist::save() throw( cSevException )
     qsQuery += QString( "licenceId = \"%1\", " ).arg( m_uiLicenceId );
     qsQuery += QString( "patientCardId = \"%1\", " ).arg( m_uiPatientCardId );
     qsQuery += QString( "ledgerId = \"%1\", " ).arg( m_uiLedgerId );
+    qsQuery += QString( "shoppingCartItemId = \"%1\", " ).arg( m_uiShoppingCartItemId );
     qsQuery += QString( "panelTypeId = \"%1\", " ).arg( m_uiPanelTypeId );
     qsQuery += QString( "payType = \"%1\", " ).arg( m_uiPayType );
     qsQuery += QString( "barcode = \"%1\", " ).arg( m_qsBarcode );
@@ -190,6 +195,16 @@ unsigned int cDBWaitlist::LedgerId() const throw()
 void cDBWaitlist::setLedgerId( const unsigned int p_uiLedgerId ) throw()
 {
     m_uiLedgerId = p_uiLedgerId;
+}
+
+unsigned int cDBWaitlist::ShoppingCartItemId() const throw()
+{
+    return m_uiShoppingCartItemId;
+}
+
+void cDBWaitlist::setShoppingCartItemId(const unsigned int p_uiShoppingCartItemId) throw()
+{
+    m_uiShoppingCartItemId = p_uiShoppingCartItemId;
 }
 
 unsigned int cDBWaitlist::PanelTypeId() const throw()

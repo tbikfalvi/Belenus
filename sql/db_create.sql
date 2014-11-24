@@ -891,6 +891,7 @@ CREATE TABLE `waitlist` (
   `licenceId`               int(10) unsigned        NOT NULL,
   `patientCardId`           int(10) unsigned        NOT NULL,
   `ledgerId`                int(10) unsigned        NOT NULL,
+  `shoppingCartItemId`      int(10) unsigned        NOT NULL,
   `panelTypeId`             int(10) unsigned        NOT NULL,
   `payType`                 int(10) unsigned        NOT NULL,
   `barcode`                 varchar(20)             NOT NULL,
@@ -903,6 +904,7 @@ CREATE TABLE `waitlist` (
   PRIMARY KEY (`waitlistId`,`licenceId`),
   FOREIGN KEY (`patientCardId`) REFERENCES `patientCards` (`patientCardId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`ledgerId`) REFERENCES `ledger` (`ledgerId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  FOREIGN KEY (`shoppingCartItemId`) REFERENCES `shoppingCartItems` (`shoppingCartItemId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`panelTypeId`) REFERENCES `panelTypes` (`panelTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

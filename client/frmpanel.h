@@ -132,6 +132,7 @@ private:
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;
     bool                         m_bIsItemInShoppingCart;
+    unsigned int                 m_uiShoppingCartItemId;
     bool                         m_bIsPatientWaiting;
     unsigned int                 m_uiProcessWaitTime;
     bool                         m_bIsNeedToBeCleaned;

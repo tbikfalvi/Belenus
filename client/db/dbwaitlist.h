@@ -22,11 +22,13 @@ public:
     unsigned int    PatientCardId() const                                       throw();
     void            setPatientCardId( const unsigned int p_uiPatientCardId )    throw();
     unsigned int    LedgerId() const                                            throw();
-    void            setLedgerId( const unsigned int p_uiLedgerId )              throw();
-    unsigned int    PanelTypeId() const                                         throw();
-    void            setPanelTypeId( const unsigned int p_uiPanelTypeId )        throw();
-    unsigned int    PayType() const                                         throw();
-    void            setPayType( const unsigned int p_uiPayType )        throw();
+    void            setLedgerId( const unsigned int p_uiLedgerId )                      throw();
+    unsigned int    ShoppingCartItemId() const                                          throw();
+    void            setShoppingCartItemId( const unsigned int p_uiShoppingCartItemId )  throw();
+    unsigned int    PanelTypeId() const                                                 throw();
+    void            setPanelTypeId( const unsigned int p_uiPanelTypeId )                throw();
+    unsigned int    PayType() const                                                     throw();
+    void            setPayType( const unsigned int p_uiPayType )                        throw();
     QString         Barcode() const                                             throw();
     void            setBarcode( const QString &p_qsBarcode )                    throw();
     QString         UnitIds() const                                             throw();
@@ -47,6 +49,7 @@ private:
     unsigned int    m_uiLicenceId;
     unsigned int    m_uiPatientCardId;
     unsigned int    m_uiLedgerId;
+    unsigned int    m_uiShoppingCartItemId;
     unsigned int    m_uiPanelTypeId;
     unsigned int    m_uiPayType;
     QString         m_qsBarcode;
@@ -61,6 +64,7 @@ private:
                const unsigned int p_uiLicenceId = 0,
                const unsigned int p_uiPatientCardId = 0,
                const unsigned int p_uiLedgerId = 0,
+               const unsigned int p_uiShoppingCartItemId = 0,
                const unsigned int p_uiPanelTypeId = 0,
                const unsigned int p_uiPayType = 0,
                const QString &p_qsBarcode = "",

@@ -1825,6 +1825,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             inPrice = obDlgPanelUse.panelUsePrice();
         }
 
+        unsigned int uiShoppingCartItemId = 0;
+
         if( inPrice > 0 )
         {
             if( !g_obCassa.isCassaEnabled() )
@@ -1865,7 +1867,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             int             inCassaAction   = obDlgCassaAction.exec();
             QString         qsComment       = tr("Using device later");
             bool            bShoppingCart   = false;
-            unsigned int    uiCouponId = 0;
+            unsigned int    uiCouponId      = 0;
 //            cDBDiscount     obDBDiscount;
 
             obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
@@ -1883,6 +1885,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             else if( inCassaAction == QDialog::Accepted && bShoppingCart )
             {
                 //mdiPanels->itemAddedToShoppingCart();
+                uiShoppingCartItemId = obDBShoppingCart.id();
             }
         }
 
@@ -1899,6 +1902,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
         obDBWaitlist.setPatientCardId( uiPatientCardId );
         obDBWaitlist.setLedgerId( uiLedgerId );
+        obDBWaitlist.setShoppingCartItemId( uiShoppingCartItemId );
         obDBWaitlist.setPanelTypeId( uiPanelTypeId );
         obDBWaitlist.setBarcode( qsBarcode );
         obDBWaitlist.setUnitIds( qsUnitIds );
