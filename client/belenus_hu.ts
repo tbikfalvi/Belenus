@@ -7958,7 +7958,7 @@ Biztos benne, hogy el akarja menteni ezt a megyét és várost együtt?</transla
         <translation type="obsolete">Géphasználat (%1) visszavonása.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1022"/>
+        <location filename="frmpanel.cpp" line="1025"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -7991,43 +7991,43 @@ Kérem jelentkezzen ki és vissza a pénztárműveletek engedélyezéséhez.</tr
     <message>
         <location filename="frmpanel.cpp" line="335"/>
         <location filename="frmpanel.cpp" line="352"/>
-        <location filename="frmpanel.cpp" line="784"/>
+        <location filename="frmpanel.cpp" line="787"/>
         <source>NOT STERILE</source>
         <translation>NEM STERIL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="486"/>
+        <location filename="frmpanel.cpp" line="489"/>
         <source>PAUSED</source>
         <translation>SZÜNETEL</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="552"/>
+        <location filename="frmpanel.cpp" line="555"/>
         <source>Panel Not Found in Database</source>
         <translation>A gép nem található az adatbázisban</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="650"/>
+        <location filename="frmpanel.cpp" line="653"/>
         <source>Cash to pay: </source>
         <translation>Fizetendő : </translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="841"/>
+        <location filename="frmpanel.cpp" line="844"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation>A kezelés %1 másodperc után meg lett szakítva. Fel nem használt idő: %2 másodperc.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1023"/>
+        <location filename="frmpanel.cpp" line="1026"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation>Biztos benne, hogy át akar ugrani a gép következő státuszára?</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1093"/>
-        <location filename="frmpanel.cpp" line="1101"/>
+        <location filename="frmpanel.cpp" line="1096"/>
+        <location filename="frmpanel.cpp" line="1104"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1094"/>
+        <location filename="frmpanel.cpp" line="1097"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
@@ -8036,7 +8036,7 @@ az aktuálisan kiválasztott géphez.
 Kérem válasszon egy helyes értéket a listából.</translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1102"/>
+        <location filename="frmpanel.cpp" line="1105"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
@@ -9642,6 +9642,34 @@ allergia :</translation>
         <translation>1,000,000</translation>
     </message>
     <message>
+        <location filename="dlgcassa.ui" line="123"/>
+        <source>Adding cash to cassa does not modify the ledger.</source>
+        <translation>A váltópénz hozzáadása a pénztárhoz nem befolyásolja a könyvelési adatokat.</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="126"/>
+        <source>Increase balance
+with adding cash</source>
+        <oldsource>Start cassa with
+adding cash</oldsource>
+        <translation>Pénztáregyenleg növelése
+váltópénz hozzáadással</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="149"/>
+        <source>Removing cash from cassa does not modify the ledger.</source>
+        <translation>A váltópénz kivétele a pénztárból nem befolyásolja a könyvelési adatokat.</translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="152"/>
+        <source>Decrease balance
+with removing cash</source>
+        <oldsource>End cassa with
+removing cash</oldsource>
+        <translation>Pénztáregyenleg csökkentése
+váltópénz kivételével</translation>
+    </message>
+    <message>
         <source>Responsible :</source>
         <translation type="obsolete">Felelős felhasználó :</translation>
     </message>
@@ -9650,7 +9678,7 @@ allergia :</translation>
         <translation type="obsolete">Részletek &gt;&gt;</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="209"/>
+        <location filename="dlgcassa.ui" line="217"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
@@ -9669,18 +9697,16 @@ allergia :</translation>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="123"/>
         <source>Put cash into cassa</source>
-        <translation>Készpénz berakás kasszába</translation>
+        <translation type="obsolete">Készpénz berakás kasszába</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="145"/>
         <source>Remove cash from cassa</source>
         <oldsource>Remove cash</oldsource>
-        <translation>Készpénz kivétel kasszából</translation>
+        <translation type="obsolete">Készpénz kivétel kasszából</translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="177"/>
+        <location filename="dlgcassa.ui" line="185"/>
         <source>Expense</source>
         <translation>Kiadás</translation>
     </message>

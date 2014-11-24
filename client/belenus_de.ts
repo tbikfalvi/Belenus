@@ -5487,7 +5487,7 @@ Do you want to save the defined region and city anyway?</source>
     <message>
         <location filename="frmpanel.cpp" line="335"/>
         <location filename="frmpanel.cpp" line="352"/>
-        <location filename="frmpanel.cpp" line="784"/>
+        <location filename="frmpanel.cpp" line="787"/>
         <source>NOT STERILE</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5504,50 +5504,50 @@ Please relogin to enable cassa.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="486"/>
+        <location filename="frmpanel.cpp" line="489"/>
         <source>PAUSED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="552"/>
+        <location filename="frmpanel.cpp" line="555"/>
         <source>Panel Not Found in Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="650"/>
+        <location filename="frmpanel.cpp" line="653"/>
         <source>Cash to pay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="841"/>
+        <location filename="frmpanel.cpp" line="844"/>
         <source>Device usage stopped after %1 minutes. Unused time: %2 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1022"/>
+        <location filename="frmpanel.cpp" line="1025"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1023"/>
+        <location filename="frmpanel.cpp" line="1026"/>
         <source>Do you want to jump to the next status of the device?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1093"/>
-        <location filename="frmpanel.cpp" line="1101"/>
+        <location filename="frmpanel.cpp" line="1096"/>
+        <location filename="frmpanel.cpp" line="1104"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1094"/>
+        <location filename="frmpanel.cpp" line="1097"/>
         <source>This time period did not saved in the database
 for the actually selected device.
 Please select valid value from the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="frmpanel.cpp" line="1102"/>
+        <location filename="frmpanel.cpp" line="1105"/>
         <source>The selected device usage has been scheduled
 for a different device type.
 
@@ -6478,21 +6478,37 @@ Error code: %1
     </message>
     <message>
         <location filename="dlgcassa.ui" line="123"/>
-        <source>Put cash into cassa</source>
+        <source>Adding cash to cassa does not modify the ledger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="145"/>
-        <source>Remove cash from cassa</source>
+        <location filename="dlgcassa.ui" line="126"/>
+        <source>Increase balance
+with adding cash</source>
+        <oldsource>Start cassa with
+adding cash</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="177"/>
+        <location filename="dlgcassa.ui" line="149"/>
+        <source>Removing cash from cassa does not modify the ledger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="152"/>
+        <source>Decrease balance
+with removing cash</source>
+        <oldsource>End cassa with
+removing cash</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgcassa.ui" line="185"/>
         <source>Expense</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgcassa.ui" line="209"/>
+        <location filename="dlgcassa.ui" line="217"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

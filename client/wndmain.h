@@ -180,6 +180,7 @@ private slots:
     void on_action_Advertisements_triggered();
     void on_GibbigPatientCardUpdate(QString p_qsMessage,QString p_qsId);
     void on_CommunicationButtonClicked();
+    void on_action_PatientcardInformation_triggered();
 };
 
 #endif

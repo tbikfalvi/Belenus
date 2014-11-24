@@ -48,7 +48,6 @@
 //====================================================================================
 
 QApplication            *apMainApp;
-//QtSingleApplication     *apMainApp;
 cQTLogger                g_obLogger;
 DatabaseWriter           g_obLogDBWriter;
 GUIWriter                g_obLogGUIWriter;

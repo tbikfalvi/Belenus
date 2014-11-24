@@ -177,9 +177,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
 
-    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    action_PatientcardInformation->setIcon( QIcon("./resources/40x40_patientcard_info.png") );
     action_PatientCardAssign->setIcon( QIcon("./resources/40x40_patientcard_assign.png") );
 
+    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
     action_ProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
     action_Products->setIcon( QIcon("./resources/40x40_product.png") );
@@ -261,9 +262,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceReset->setEnabled( false );
     action_DeviceSettings->setEnabled( false );
 
-    action_PatientCardSell->setEnabled( false );
+    action_PatientcardInformation->setEnabled( false );
     action_PatientCardAssign->setEnabled( false );
 
+    action_PatientCardSell->setEnabled( false );
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 
@@ -1191,6 +1193,7 @@ void cWndMain::updateToolbar()
             action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
+//            action_PatientcardInformation->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
             action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
@@ -1879,7 +1882,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             }
             else if( inCassaAction == QDialog::Accepted && bShoppingCart )
             {
-                mdiPanels->itemAddedToShoppingCart();
+                //mdiPanels->itemAddedToShoppingCart();
             }
         }
 
@@ -2434,7 +2437,7 @@ void cWndMain::on_action_PayCash_triggered()
     }
     else if( inCassaAction == QDialog::Accepted && bShoppingCart )
     {
-        mdiPanels->itemAddedToShoppingCart();
+        //mdiPanels->itemAddedToShoppingCart();
         mdiPanels->cashPayed( 0 );
     }
     m_bActionProcessing = false;
@@ -3273,4 +3276,9 @@ void cWndMain::setCommunicationEnabled(bool p_bEnabled)
 void cWndMain::_resetCommunication()
 {
     m_nCommResetStep = 1;
+}
+
+void cWndMain::on_action_PatientcardInformation_triggered()
+{
+
 }
