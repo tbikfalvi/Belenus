@@ -166,6 +166,12 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     load( p_uiPanelId );
 
+    if( !g_poPrefs->isPanelSterile( m_uiId ) )
+    {
+        m_bIsNeedToBeCleaned = true;
+        setTextInformation( tr( "NOT STERILE" ) );
+    }
+
     inactivate();
     displayStatus();
 }
@@ -362,6 +368,7 @@ void cFrmPanel::clean()
     {
         setTextInformation( "", true );
     }
+    g_poPrefs->setPanelSterile( m_uiId, true );
 }
 //====================================================================================
 void cFrmPanel::inactivate()
@@ -808,6 +815,7 @@ void cFrmPanel::activateNextStatus()
         closeAttendance();
         setTextInformation( tr( "NOT STERILE" ) );
         m_bIsNeedToBeCleaned = true;
+        g_poPrefs->setPanelSterile( m_uiId, false );
     }
 
     m_uiStatus++;

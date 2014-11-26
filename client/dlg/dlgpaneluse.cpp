@@ -24,13 +24,19 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     horizontalLayout->setMargin( 1 );
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
+    QString qsToolTip = tr("<b>Number of units:</b> %1<br>"
+                           "<b>Unit time:</b> %2 minute(s)<br>"
+                           "<b>Valid:</b> %3").arg( p_qslParameters->at(5) )
+                                       .arg( p_qslParameters->at(2) )
+                                       .arg( p_qslParameters->at(6) );
+
     pbUseUnitType = new QPushButton( this );
     pbUseUnitType->setObjectName( QString::fromUtf8( "pbUseUnitType" ) );
     pbUseUnitType->setMinimumWidth( 200 );
     pbUseUnitType->setMinimumHeight( 30 );
     pbUseUnitType->setMaximumHeight( 30 );
     pbUseUnitType->setText( tr("%1 minute(s) unit").arg( p_qslParameters->at(2) ) );
-    pbUseUnitType->setToolTip( tr("Using this patient card unit type gives %1 minute(s) device usage.").arg( p_qslParameters->at(2) ) );
+    pbUseUnitType->setToolTip( qsToolTip );
     pbUseUnitType->setIconSize( QSize(20,20) );
     pbUseUnitType->setIcon( QIcon("./resources/40x40_device_withcard.png") );
     pbUseUnitType->setCheckable( true );
@@ -183,6 +189,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     pbOk->setIcon( QIcon("./resources/40x40_ok.png") );
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
+    pbOk->setText( tr("Start") );
     lblCardInfo->setPixmap( QPixmap("resources/40x40_search.png") );
 
     lblCardType->setText( tr("Card type : ") );
@@ -299,10 +306,16 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
             while( poQuery->next() )
             {
-                if( poQuery->value( 1 ).toUInt() > 0 )
+                QString qsValid;
+                unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                if( uiPCTId == 0 )
                 {
-                    QString qsValid;
-                    bool    isValid = m_obDBPatientCard.isPatientCardCanBeUsed( poQuery->value( 1 ).toUInt(), &qsValid );
+                    uiPCTId = m_obDBPatientCard.patientCardTypeId();
+                }
+                if( uiPCTId > 0 )
+                {
+                    bool    isValid = m_obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
                     qsValidPeriods.append( tr("\n<b>%1 units valid on</b>%2").arg( poQuery->value( 5 ).toString() )
                                                                .arg( qsValid ) );
                     if( !isValid )
@@ -316,7 +329,8 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                          << poQuery->value( 2 ).toString()
                          << poQuery->value( 3 ).toString()
                          << poQuery->value( 4 ).toString()
-                         << poQuery->value( 5 ).toString();
+                         << poQuery->value( 5 ).toString()
+                         << qsValid;
                 cPanelPCUnitUse *pPanelUseFrame = new cPanelPCUnitUse( this, &qslUnits );
                 vlUnits->insertWidget( qvPanelUseUnits.count(), pPanelUseFrame );
                 connect( pPanelUseFrame, SIGNAL(signalButtonClicked()), this, SLOT(slotPatientCardUseUpdated()) );
@@ -500,9 +514,9 @@ void cDlgPanelUse::slotPatientCardUseUpdated()
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbOk_clicked()
 {
-    cTracer obTracer( "cDlgPanelUse::on_pbOk_clicked" );
     if( !m_bIsEnterAccepted )
     {
+        pbOk->setText( tr("Ok") );
         m_bIsEnterAccepted = true;
         return;
     }

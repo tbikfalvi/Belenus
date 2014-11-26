@@ -1392,3 +1392,16 @@ bool cPreferences::isFapados()
     return m_bFapados;
 }
 
+void cPreferences::setPanelSterile(int p_nPanelId, bool p_bSterile)
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    obPrefFile.setValue( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), p_bSterile );
+}
+
+bool cPreferences::isPanelSterile(int p_nPanelId)
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    return obPrefFile.value( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), true ).toBool();
+}

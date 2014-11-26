@@ -188,6 +188,8 @@ public:
     QString         getDateFormat() const;
     void            setFapados( bool p_bFapados, bool p_boSaveNow = false );
     bool            isFapados();
+    void            setPanelSterile( int p_nPanelId, bool p_bSterile );
+    bool            isPanelSterile( int p_nPanelId );
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
