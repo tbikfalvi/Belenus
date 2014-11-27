@@ -87,6 +87,7 @@
 #include "dlg/dlgmanagedatabase.h"
 #include "dlg/dlgexportimport.h"
 #include "dlg/dlgcomment.h"
+#include "dlg/dlginformation.h"
 
 //====================================================================================
 
@@ -1193,7 +1194,7 @@ void cWndMain::updateToolbar()
             action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
-//            action_PatientcardInformation->setEnabled( bIsUserLoggedIn );
+            action_PatientcardInformation->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
             action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
@@ -3284,5 +3285,72 @@ void cWndMain::_resetCommunication()
 
 void cWndMain::on_action_PatientcardInformation_triggered()
 {
+    cDlgInputStart  obDlgInputStart( this );
 
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
+
+    m_dlgProgress->hideProgress();
+
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+        try
+        {
+            cDlgInformation obDlgInformation( this );
+            cDBPatientCard  obDBPatientCard;
+            cDBGuest        obDBGuest;
+            QString         qsText = "";
+
+            obDBPatientCard.load( obDlgInputStart.getEditText() );
+            obDBPatientCard.synchronizeUnits();
+            obDBGuest.load( obDBPatientCard.patientId() );
+
+            qsText.append( QString("<table>") );
+            qsText.append( tr("<tr><td width=\"100\"><b>Owner:</b></td><td>%1</td></tr>").arg( obDBGuest.name() ) );
+            qsText.append( tr("<tr><td><b>Valid:</b></td><td>%1 -> %2</td></tr>").arg( obDBPatientCard.validDateFrom() )
+                                                                                 .arg( obDBPatientCard.validDateTo() ) );
+            qsText.append( tr("<tr><td><b>Units:</b></td><td>%1</td></tr>").arg( obDBPatientCard.units() ) );
+            qsText.append( QString("</table>") );
+
+            QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                                       "FROM patientcardunits "
+                                       "WHERE patientCardId=%1 "
+                                       "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                       "AND prepared=0 "
+                                       "AND active=1 "
+                                       "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+            QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+            qsText.append( tr("<p><b>Valid time periods:</b><br>") );
+
+            while( poQuery->next() )
+            {
+                QString qsValid;
+                unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+                if( uiPCTId == 0 )
+                {
+                    uiPCTId = obDBPatientCard.patientCardTypeId();
+                }
+                if( uiPCTId > 0 )
+                {
+                    cDBPatientCardType obDBPatientCardType;
+
+                    obDBPatientCardType.load( uiPCTId );
+                    obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
+                    qsText.append( tr("<br><b>%1 units (%2) valid on</b>%3").arg( poQuery->value( 5 ).toString() )
+                                                                            .arg( obDBPatientCardType.name() )
+                                                                            .arg( qsValid ) );
+                }
+            }
+
+            obDlgInformation.setInformationTitle( obDBPatientCard.barcode() );
+            obDlgInformation.setInformationText( qsText );
+            obDlgInformation.exec();
+        }
+        catch( cSevException &e )
+        {
+            g_obLogger(e.severity()) << e.what() << EOM;
+        }
+    }
 }
