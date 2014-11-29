@@ -41,7 +41,8 @@ cDlgManageDatabase::~cDlgManageDatabase()
 
 void cDlgManageDatabase::slotUpdateExecuteButton()
 {
-    if( rbDeactivatePCs->isChecked() ||
+    if( rbUpdatePCUnitType->isChecked() ||
+        rbDeactivatePCs->isChecked() ||
         rbDeleteNotUsedPCTs->isChecked() ||
         rbDeleteLedgerBeforeDate->isChecked() )
     {
@@ -69,7 +70,11 @@ void cDlgManageDatabase::on_pbExecute_clicked()
                                   "Please note the action can not be revoked."),
                                QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
     {
-        if( rbDeactivatePCs->isChecked() )
+        if( rbUpdatePCUnitType->isChecked() )
+        {
+            _actionUpdatePatientCardUnits();
+        }
+        else if( rbDeactivatePCs->isChecked() )
         {
             _actionDeactivatePC();
         }
@@ -89,48 +94,90 @@ void cDlgManageDatabase::on_pbExit_clicked()
     QDialog::accept();
 }
 
+void cDlgManageDatabase::_actionUpdatePatientCardUnits()
+{
+    m_dlgProgress->showProgress();
+
+    try
+    {
+        QString      qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE patientCardId>0 AND active=1" );
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        m_dlgProgress->showProgressBar( poQuery->size() );
+
+        while( poQuery->next() )
+        {
+            cDBPatientCard obDBPatientCard;
+
+            obDBPatientCard.load( poQuery->value(0).toUInt() );
+            obDBPatientCard.synchronizeUnitTime( 0 );
+            m_dlgProgress->stepProgressBar();
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+
+    m_dlgProgress->hideProgress();
+}
+
 void cDlgManageDatabase::_actionDeactivatePC()
 {
-    QString qsQuery = QString( "UPDATE patientcards SET "
-                               "patientCardTypeId=0, "
-                               "parentCardId=0, "
-                               "patientId=0, "
-                               "comment=\"\", "
-                               "units=0, "
-                               "amount=0, "
-                               "timeLeft=0, "
-                               "validDateFrom=\"0000-00-00\", "
-                               "validDateTo=\"0000-00-00\", "
-                               "pincode=NULL, "
-                               "modified=\"0000-00-00 00:00:00\", "
-                               "active=0, "
-                               "archive=\"ARC\" "
-                               "WHERE validDateTo<\"%1\" AND active=1" ).arg( QDate::currentDate().toString("yyyy-MM-dd") );
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
-    QMessageBox::information( this, tr("Information"),
-                              tr("The action successfully finished.\n"
-                                 "Number of affected records: %1").arg( poQuery->numRowsAffected() ) );
+    try
+    {
+        QString qsQuery = QString( "UPDATE patientcards SET "
+                                   "patientCardTypeId=0, "
+                                   "parentCardId=0, "
+                                   "patientId=0, "
+                                   "comment=\"\", "
+                                   "units=0, "
+                                   "amount=0, "
+                                   "timeLeft=0, "
+                                   "validDateFrom=\"0000-00-00\", "
+                                   "validDateTo=\"0000-00-00\", "
+                                   "pincode=NULL, "
+                                   "modified=\"0000-00-00 00:00:00\", "
+                                   "active=0, "
+                                   "archive=\"ARC\" "
+                                   "WHERE validDateTo<\"%1\" AND active=1" ).arg( QDate::currentDate().toString("yyyy-MM-dd") );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+        QMessageBox::information( this, tr("Information"),
+                                  tr("The action successfully finished.\n"
+                                     "Number of affected records: %1").arg( poQuery->numRowsAffected() ) );
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 
 void cDlgManageDatabase::_actionDeleteNotUsedPCT()
 {
-    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardTypeId FROM patientcards WHERE active=1 GROUP BY patientCardTypeId" );
-    QString    qsQuery = "DELETE FROM patientcardtypes WHERE patientCardTypeId NOT IN ( ";
-
-    if( poQuery->first() )
+    try
     {
-        qsQuery.append( poQuery->value(0).toString() );
-        while( poQuery->next() )
-        {
-            qsQuery.append( ", " );
-            qsQuery.append( poQuery->value(0).toString() );
-        }
-        qsQuery.append( " ) AND patientCardTypeId>1 " );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardTypeId FROM patientcards WHERE active=1 GROUP BY patientCardTypeId" );
+        QString    qsQuery = "DELETE FROM patientcardtypes WHERE patientCardTypeId NOT IN ( ";
 
-        poQuery = g_poDB->executeQTQuery( qsQuery );
-        QMessageBox::information( this, tr("Information"),
-                                  tr("The action successfully finished.\n"
-                                     "Number of affected records: %1").arg( poQuery->numRowsAffected() ) );
+        if( poQuery->first() )
+        {
+            qsQuery.append( poQuery->value(0).toString() );
+            while( poQuery->next() )
+            {
+                qsQuery.append( ", " );
+                qsQuery.append( poQuery->value(0).toString() );
+            }
+            qsQuery.append( " ) AND patientCardTypeId>1 " );
+
+            poQuery = g_poDB->executeQTQuery( qsQuery );
+            QMessageBox::information( this, tr("Information"),
+                                      tr("The action successfully finished.\n"
+                                         "Number of affected records: %1").arg( poQuery->numRowsAffected() ) );
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
 }
 
@@ -138,40 +185,47 @@ void cDlgManageDatabase::_actionDeleteLedgerEntries()
 {
     m_dlgProgress->showProgress();
 
-    QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
-    QStringList  qslIds;
-
-    while( poQuery->next() )
+    try
     {
-        qslIds << poQuery->value(0).toString();
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( QString("SELECT ledgerId FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+        QStringList  qslIds;
+
+        while( poQuery->next() )
+        {
+            qslIds << poQuery->value(0).toString();
+        }
+
+        int inNumRowPCUs = 0;
+        int inNumRowProd = 0;
+        int inNumRowCass = 0;
+
+        for( int i=0; i<qslIds.count(); i++ )
+        {
+            poQuery       = g_poDB->executeQTQuery( QString("UPDATE patientCardUnits SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+            inNumRowPCUs += poQuery->numRowsAffected();
+
+            poQuery       = g_poDB->executeQTQuery( QString("UPDATE productHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+            inNumRowProd += poQuery->numRowsAffected();
+
+            poQuery       = g_poDB->executeQTQuery( QString("UPDATE cassaHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
+            inNumRowCass += poQuery->numRowsAffected();
+        }
+
+        poQuery = g_poDB->executeQTQuery( QString("DELETE FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
+
+        QMessageBox::information( this, tr("Information"),
+                                  tr("The action successfully finished.\n"
+                                     "Number of affected records:\n"
+                                     "PatientCardUnits -> %1 records\n"
+                                     "ProductHistory -> %2 records\n"
+                                     "CassaHistory -> %3 records\n"
+                                     "Ledger -> %4 records").arg(inNumRowPCUs).arg(inNumRowProd).arg(inNumRowCass).arg(poQuery->numRowsAffected()) );
     }
-
-    int inNumRowPCUs = 0;
-    int inNumRowProd = 0;
-    int inNumRowCass = 0;
-
-    for( int i=0; i<qslIds.count(); i++ )
+    catch( cSevException &e )
     {
-        poQuery       = g_poDB->executeQTQuery( QString("UPDATE patientCardUnits SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
-        inNumRowPCUs += poQuery->numRowsAffected();
-
-        poQuery       = g_poDB->executeQTQuery( QString("UPDATE productHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
-        inNumRowProd += poQuery->numRowsAffected();
-
-        poQuery       = g_poDB->executeQTQuery( QString("UPDATE cassaHistory SET ledgerId=0 WHERE ledgerId=%1 ").arg(qslIds.at(i)) );
-        inNumRowCass += poQuery->numRowsAffected();
+        g_obLogger(e.severity()) << e.what() << EOM;
     }
-
-    poQuery = g_poDB->executeQTQuery( QString("DELETE FROM ledger WHERE ledgerTime<\"%1\" AND ledgerId>0 ").arg(deFilterDate->date().toString("yyyy-MM-dd")) );
 
     m_dlgProgress->hideProgress();
-
-    QMessageBox::information( this, tr("Information"),
-                              tr("The action successfully finished.\n"
-                                 "Number of affected records:\n"
-                                 "PatientCardUnits -> %1 records\n"
-                                 "ProductHistory -> %2 records\n"
-                                 "CassaHistory -> %3 records\n"
-                                 "Ledger -> %4 records").arg(inNumRowPCUs).arg(inNumRowProd).arg(inNumRowCass).arg(poQuery->numRowsAffected()) );
 }
 

@@ -118,13 +118,13 @@ void cReportCardDetails::refreshReport()
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(33).toString() );
         m_dlgProgress.increaseProgressValue();
-
+/*
         addTableRow();
         addTableCell( tr( "No. units" ), "bold" );
         addTableCell( " : ", "bold" );
         addTableCell( poQueryResultCards->value(7).toString() );
         m_dlgProgress.increaseProgressValue();
-
+*/
         unsigned int    uiTimeLeft = poQueryResultCards->value(9).toInt();
         QTime           qtTemp( uiTimeLeft/3600, (uiTimeLeft%3600)/60, (uiTimeLeft%3600)%60, 0 );
 

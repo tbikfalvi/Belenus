@@ -190,7 +190,8 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     pbCancel->setIcon( QIcon("./resources/40x40_cancel.png") );
 
     pbOk->setText( tr("Start") );
-    lblCardInfo->setPixmap( QPixmap("resources/40x40_search.png") );
+    pbInformation->setIcon( QIcon("resources/40x40_information.png") );
+    pbInformation->setEnabled( false );
 
     lblCardType->setText( tr("Card type : ") );
     lblCardOwner->setText( tr("Owner : ") );
@@ -316,8 +317,10 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                 if( uiPCTId > 0 )
                 {
                     bool    isValid = m_obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
-                    qsValidPeriods.append( tr("\n<b>%1 units valid on</b>%2").arg( poQuery->value( 5 ).toString() )
-                                                               .arg( qsValid ) );
+                    qsValidPeriods.append( tr("\n<b>%1 units (%2 minutes) valid on</b>%3")
+                                           .arg( poQuery->value( 5 ).toString() )
+                                           .arg( poQuery->value( 2 ).toString() )
+                                           .arg( qsValid ) );
                     if( !isValid )
                     {
                         continue;
@@ -372,15 +375,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         poQuery->first();
 
         qsValidPeriods.replace("\n","<br>");
-        lblCardInfo->setPixmap( QPixmap("resources/40x40_information.png") );
-        lblCardInfo->setToolTip( tr("<h3>%1</h3>"
-                                    "<b>Owner:</b> %2<br>"
-                                    "<b>Valid until:</b> %3<br>"
-                                    "<b>Valid time periods:</b>"
-                                    "%4").arg( m_obDBPatientCard.barcode() )
-                                         .arg( poQuery->value(1).toString() )
-                                         .arg(m_obDBPatientCard.validDateTo())
-                                         .arg(qsValidPeriods) );
+        pbInformation->setEnabled( true );
         lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
         lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
     }
@@ -689,10 +684,13 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &arg1)
         m_obDBPatientCard.createNew();
         setPanelUsePatientCard( m_obDBPatientCard.id() );
         slotPatientCardUseUpdated();
-        lblCardInfo->setPixmap( QPixmap("resources/40x40_search.png") );
-        lblCardInfo->setToolTip( "" );
+        pbInformation->setEnabled( false );
         lblCardType->setText( "" );
         lblCardOwner->setText( "" );
     }
 }
 //----------------------------------------------------------------------------------------------
+void cDlgPanelUse::on_pbInformation_clicked()
+{
+    g_obGen.showPatientCardInformation( ledPatientCardBarcode->text() );
+}
