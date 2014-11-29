@@ -127,12 +127,12 @@ void cDlgProgress::hideProgress()
 void cDlgProgress::_centerWindow()
 //------------------------------------------------------------------------------------
 {
-    QDesktopWidget *desktop = QApplication::desktop();
+//    QDesktopWidget *desktop = QApplication::desktop();
 
-    int screenWidth  = desktop->width();
-    int screenHeight = desktop->height();
-    int x = ( screenWidth - width() ) / 2;
-    int y = ( screenHeight - height() ) / 2;
+    int screenWidth  = m_poParent->width();
+    int screenHeight = m_poParent->height();
+    int x = m_poParent->x() + ( screenWidth - width() ) / 2;
+    int y = m_poParent->y() + ( screenHeight - height() ) / 2;
 
     move( x, y );
 }
