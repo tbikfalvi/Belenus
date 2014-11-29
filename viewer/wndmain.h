@@ -129,6 +129,7 @@ private:
     void                    _setFiltersEnabledReport( cReport *obReport );
 
     void                    _updateReportIndexes();
+    void                    _updateReportButtons( bool p_bEnable );
 
 private slots:
     void on_tabReports_tabCloseRequested(int index);
@@ -146,6 +147,7 @@ private slots:
     void on_pbPrint_clicked();
     void on_rbOrientationPortrait_clicked();
     void on_rbOrientationLandscape_clicked();
+    void on_pbSave_clicked();
 };
 
 #endif // WNDMAIN_H

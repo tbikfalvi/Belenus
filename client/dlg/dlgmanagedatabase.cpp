@@ -21,6 +21,7 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
     pbExecute->setIcon( QIcon("./resources/40x40_database_sync.png") );
     pbExit->setIcon( QIcon("./resources/40x40_exit.png") );
 
+    connect( rbUpdatePCUnitType,        SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
     connect( rbDeactivatePCs,           SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
     connect( rbDeleteNotUsedPCTs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
     connect( rbDeleteLedgerBeforeDate,  SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );

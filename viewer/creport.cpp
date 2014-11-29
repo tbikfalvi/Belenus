@@ -13,6 +13,8 @@
 // Report-ok szulo osztalya
 //====================================================================================
 
+#include <QDateTime>
+
 #include "../framework/qtframework.h"
 #include "creport.h"
 
@@ -124,6 +126,17 @@ void cReport::printReport(QPrinter *p_obPrinter)
 //------------------------------------------------------------------------------------
 {
     m_tdReport.print( p_obPrinter );
+}
+//------------------------------------------------------------------------------------
+void cReport::saveReport(QString p_qsFileName)
+//------------------------------------------------------------------------------------
+{
+    QFile   file( p_qsFileName );
+
+    file.open( QIODevice::WriteOnly );
+    file.write( m_qsReportHtml.toStdString().c_str() );
+    file.close();
+
 }
 //------------------------------------------------------------------------------------
 void cReport::setFilterDateStart( const QDate &p_qdDate )

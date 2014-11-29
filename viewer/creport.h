@@ -68,9 +68,10 @@ public:
     void                 setIndex( int p_nIndex );
     void                 setDescription( const QString &p_qsDescription );
 
-    void                 printReport( QPrinter *p_obPrinter );
+    void                    printReport( QPrinter *p_obPrinter );
+    void                    saveReport( QString p_qsFileName );
     QPrinter::Orientation   pageOrientation();
-    void                 setPageOrientation( QPrinter::Orientation p_tePageOrientation );
+    void                    setPageOrientation( QPrinter::Orientation p_tePageOrientation );
 
     bool                 isDateStartEnabled();
     bool                 isDateStopEnabled();

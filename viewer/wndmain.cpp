@@ -243,6 +243,7 @@ void cWndMain::_initToolbar()
 
     pbDeviceUsages->setIcon( QIcon("./resources/40x40_device.png") );
 
+    pbSave->setIcon( QIcon("./resources/40x40_save.png") );
     pbPrint->setIcon( QIcon("./resources/40x40_print.png") );
 
     // BEHAVIOUR
@@ -267,6 +268,7 @@ void cWndMain::_initToolbar()
 
     pbDeviceUsages->setEnabled( false );
 
+    pbSave->setEnabled( false );
     pbPrint->setEnabled( false );
 }
 //------------------------------------------------------------------------------------
@@ -531,7 +533,7 @@ void cWndMain::_setReportsEnabled(bool p_bEnable)
 
     pbDeviceUsages->setEnabled( p_bEnable && _isInGroup( GROUP_USER ) );
 
-    pbPrint->setEnabled( p_bEnable );
+    _updateReportButtons( p_bEnable );
 }
 
 //====================================================================================
@@ -563,9 +565,9 @@ void cWndMain::slotCheckReportDaily(bool p_bChecked)
         tabReports->removeTab( m_repDaily->index() );
         delete m_repDaily;
         m_repDaily = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -593,9 +595,9 @@ void cWndMain::slotCheckReportLedger( bool p_bChecked )
         tabReports->removeTab( m_repLedger->index() );
         delete m_repLedger;
         m_repLedger = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -623,9 +625,9 @@ void cWndMain::slotCheckReportMonthClose(bool p_bChecked)
         tabReports->removeTab( m_repMonthClose->index() );
         delete m_repMonthClose;
         m_repMonthClose = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -653,9 +655,9 @@ void cWndMain::slotCheckReportCassaHistory(bool p_bChecked)
         tabReports->removeTab( m_repCassaHistory->index() );
         delete m_repCassaHistory;
         m_repCassaHistory = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -683,9 +685,9 @@ void cWndMain::slotCheckReportPatientcardType( bool p_bChecked )
         tabReports->removeTab( m_repCardType->index() );
         delete m_repCardType;
         m_repCardType = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -713,9 +715,9 @@ void cWndMain::slotCheckReportPatientcardInactive( bool p_bChecked )
         tabReports->removeTab( m_repCardInactive->index() );
         delete m_repCardInactive;
         m_repCardInactive = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -743,9 +745,9 @@ void cWndMain::slotCheckReportPatientcardDetails( bool p_bChecked )
         tabReports->removeTab( m_repCardDetails->index() );
         delete m_repCardDetails;
         m_repCardDetails = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -773,9 +775,9 @@ void cWndMain::slotCheckReportPatientcardUsages( bool p_bChecked )
         tabReports->removeTab( m_repCardUsages->index() );
         delete m_repCardUsages;
         m_repCardUsages = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -803,9 +805,9 @@ void cWndMain::slotCheckReportPatientcardSells( bool p_bChecked )
         tabReports->removeTab( m_repCardSells->index() );
         delete m_repCardSells;
         m_repCardSells = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -833,9 +835,9 @@ void cWndMain::slotCheckReportPatientcardDebts( bool p_bChecked )
         tabReports->removeTab( m_repCardDebts->index() );
         delete m_repCardDebts;
         m_repCardDebts = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -863,9 +865,9 @@ void cWndMain::slotCheckReportProducts(bool p_bChecked)
         tabReports->removeTab( m_repProducts->index() );
         delete m_repProducts;
         m_repProducts = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -893,9 +895,9 @@ void cWndMain::slotCheckReportProductStatus(bool p_bChecked)
         tabReports->removeTab( m_repProdStatus->index() );
         delete m_repProdStatus;
         m_repProdStatus = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -923,9 +925,9 @@ void cWndMain::slotCheckReportProductHistory(bool p_bChecked)
         tabReports->removeTab( m_repProdHistory->index() );
         delete m_repProdHistory;
         m_repProdHistory = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -953,9 +955,9 @@ void cWndMain::slotCheckReportGuests(bool p_bChecked)
         tabReports->removeTab( m_repGuests->index() );
         delete m_repGuests;
         m_repGuests = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //------------------------------------------------------------------------------------
@@ -983,9 +985,9 @@ void cWndMain::slotCheckReportDeviceUsages(bool p_bChecked)
         tabReports->removeTab( m_repDeviceUsages->index() );
         delete m_repDeviceUsages;
         m_repDeviceUsages = NULL;
-        _updateReportIndexes();
     }
 
+    _updateReportIndexes();
     m_bReportTabSwitching = false;
 }
 //====================================================================================
@@ -1183,6 +1185,7 @@ void cWndMain::_updateReportIndexes()
     {
         m_qvReports.at(i)->setIndex( i+1 );
     }
+    _updateReportButtons( true );
 }
 //------------------------------------------------------------------------------------
 void cWndMain::on_dtFilterDateStart_dateChanged(const QDate &date)
@@ -1328,10 +1331,36 @@ void cWndMain::on_pbPrint_clicked()
     }
 }
 //------------------------------------------------------------------------------------
+void cWndMain::on_pbSave_clicked()
+//------------------------------------------------------------------------------------
+{
+    QString qsFileName = QFileDialog::getSaveFileName(this,
+                                                      tr("Save report to ..."),
+                                                      QDir::currentPath(),
+                                                      tr("Html files (*.html)") );
+
+    cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
+
+    obReport->saveReport( qsFileName );
+}
+//------------------------------------------------------------------------------------
 bool cWndMain::_isInGroup(groupUser p_enGroup)
 //------------------------------------------------------------------------------------
 {
     return ( p_enGroup <= m_enGroup );
 }
 //------------------------------------------------------------------------------------
+void cWndMain::_updateReportButtons(bool p_bEnable)
+//------------------------------------------------------------------------------------
+{
+    bool bReportVisible = false;
 
+    if( m_qvReports.count() > 0 )
+    {
+        bReportVisible = true;
+    }
+
+    pbSave->setEnabled( p_bEnable && bReportVisible );
+    pbPrint->setEnabled( p_bEnable && bReportVisible );
+}
+//------------------------------------------------------------------------------------
