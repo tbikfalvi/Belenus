@@ -52,6 +52,8 @@ private slots:
     void on_btnSecondaryFrame_clicked();
     void on_pbModifyDevAdminPsw_clicked();
     void on_pbCancelModifyPsw_clicked();
+    void on_pbCaptionBackgroundActive_clicked();
+    void on_pbTextColorActive_clicked();
 };
 
 #endif

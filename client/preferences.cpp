@@ -75,6 +75,8 @@ void cPreferences::init()
 
     m_bFapados              = false;
     m_nFapados              = 0;
+
+    m_bIsStopInLine         = true;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -112,9 +114,12 @@ void cPreferences::loadConfFileSettings()
         m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
 
         m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
-        m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#000000" ).toString();
+        m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
         m_qsInactiveCaptionBackground   = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionBackground" ), "#000022" ).toString();
-        m_qsInactiveCaptionColor        = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionColor" ), "#000000" ).toString();
+        m_qsInactiveCaptionColor        = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionColor" ), "#FFFFFF" ).toString();
+        m_qsSecondaryCaptionBackground  = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), "#000099" ).toString();
+        m_qsSecondaryCaptionColor       = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionColor" ), "#FFFFFF" ).toString();
+        m_bIsStopInLine                 = obPrefFile.value( QString::fromAscii( "Panels/IsStopInLine"), true ).toBool();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -277,6 +282,9 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
     obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionBackground" ), m_qsInactiveCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionColor" ), m_qsInactiveCaptionColor );
+    obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
+    obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
+    obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
@@ -1042,6 +1050,38 @@ QString cPreferences::getInactiveCaptionColor() const
     return m_qsInactiveCaptionColor;
 }
 
+void cPreferences::setSecondaryCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsSecondaryCaptionBackground = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
+    }
+}
+
+QString cPreferences::getSecondaryCaptionBackground() const
+{
+    return m_qsSecondaryCaptionBackground;
+}
+
+void cPreferences::setSecondaryCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsSecondaryCaptionColor = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
+    }
+}
+
+QString cPreferences::getSecondaryCaptionColor() const
+{
+    return m_qsSecondaryCaptionColor;
+}
+
 void cPreferences::setPatientCardLostPrice( const int p_inPrice )
 {
     m_nPatientCardLostPrice = p_inPrice;
@@ -1442,3 +1482,18 @@ bool cPreferences::checkExtendedAdminPassword(const QString &p_qsExtendedAdminPa
     return bRet;
 }
 
+void cPreferences::setStopInLine( bool p_bStopInLine, bool p_boSaveNow )
+{
+    m_bIsStopInLine = p_bStopInLine;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
+    }
+}
+
+bool cPreferences::isStopInLine()
+{
+    return m_bIsStopInLine;
+}

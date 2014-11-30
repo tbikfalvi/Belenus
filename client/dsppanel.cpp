@@ -60,8 +60,8 @@ cDspPanel::cDspPanel( const unsigned int p_uiPanelId ) : QFrame()
     lblTitle->setMinimumHeight( 30 );
     lblTitle->setMaximumHeight( 30 );
     lblTitle->setStyleSheet( QString("QLabel {background-color: %1;font: bold; color: %2; font-size:14px;}")
-                                    .arg( g_poPrefs->getActiveCaptionBackground() )
-                                    .arg( g_poPrefs->getActiveCaptionColor() ) );
+                                    .arg( g_poPrefs->getSecondaryCaptionBackground() )
+                                    .arg( g_poPrefs->getSecondaryCaptionColor() ) );
 
     lblCurrStatus->setWordWrap( true );
     lblInfo->setWordWrap( true );

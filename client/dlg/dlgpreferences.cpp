@@ -93,6 +93,26 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         lblSecondaryWindow->setText( tr("Hidden") );
     }
 
+    QPixmap obColorIcon( 24, 24 );
+    QColor  colorFill;
+
+    colorFill = QColor( g_poPrefs->getSecondaryCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundActive->setIcon( QIcon( obColorIcon ) );
+
+    colorFill = QColor( g_poPrefs->getSecondaryCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorActive->setIcon( QIcon( obColorIcon ) );
+
+    if( g_poPrefs->isStopInLine() )
+    {
+        rbStopInLine->setChecked( true );
+    }
+    else
+    {
+        rbStopInNewLine->setChecked( true );
+    }
+
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
     chkDBAutoSynchron->setChecked( g_poPrefs->getDBAutoArchive() );
@@ -100,7 +120,6 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
 
-    QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 
@@ -376,6 +395,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setBarcodeLength( spbBarcodeLen->value() );
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
     g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
+
+    g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
 
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );
@@ -769,4 +790,28 @@ void cDlgPreferences::on_pbCancelModifyPsw_clicked()
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
     pbCancelModifyPsw->setEnabled( false );
     pbCancelModifyPsw->setVisible( false );
+}
+
+void cDlgPreferences::on_pbCaptionBackgroundActive_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryCaptionBackground() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setSecondaryCaptionBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getSecondaryCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundActive->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_pbTextColorActive_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryCaptionColor() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setSecondaryCaptionColor( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getSecondaryCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorActive->setIcon( QIcon( obColorIcon ) );
 }

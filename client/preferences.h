@@ -125,6 +125,10 @@ public:
     QString         getInactiveCaptionBackground() const;
     void            setInactiveCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
     QString         getInactiveCaptionColor() const;
+    void            setSecondaryCaptionBackground( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryCaptionBackground() const;
+    void            setSecondaryCaptionColor( const QString &p_qsColor, bool p_boSaveNow = false );
+    QString         getSecondaryCaptionColor() const;
     void            setPatientCardLostPrice( const int p_inPrice );
     int             getPatientCardLostPrice() const;
     void            setPatientCardLostPriceVat(const int p_inVat );
@@ -193,6 +197,8 @@ public:
     void            createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
     void            setExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
     bool            checkExtendedAdminPassword( const QString &p_qsExtendedAdminPassword ) const;
+    void            setStopInLine( bool p_bStopInLine, bool p_boSaveNow = false );
+    bool            isStopInLine();
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -273,6 +279,9 @@ private:
     QString         m_qsActiveCaptionColor;
     QString         m_qsInactiveCaptionBackground;
     QString         m_qsInactiveCaptionColor;
+    QString         m_qsSecondaryCaptionBackground;
+    QString         m_qsSecondaryCaptionColor;
+    bool            m_bIsStopInLine;
 
     void init();
 };

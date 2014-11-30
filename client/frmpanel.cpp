@@ -225,6 +225,7 @@ void cFrmPanel::start()
     }
 
     m_bIsDeviceStopped = false;
+    icoPanelStart->setVisible( false );
     if( m_inMainProcessLength == 0 )
         return;
 
@@ -351,6 +352,9 @@ void cFrmPanel::clear()
     {
         setTextInformation( "" );
     }
+
+    m_bIsDeviceStopped = false;
+    icoPanelStart->setVisible( false );
 
     displayStatus();
 }
@@ -515,7 +519,18 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
     {
-        formatStatusString( QString( "%1<br>!! %2 !!" ).arg( m_obStatuses.at( m_uiStatus )->name() ).arg( tr("PAUSED") ) );
+        QString qsStatus = m_obStatuses.at( m_uiStatus )->name();
+
+        if( g_poPrefs->isStopInLine() )
+        {
+            qsStatus.append( " " );
+        }
+        else
+        {
+            qsStatus.append( "<br>" );
+        }
+        qsStatus.append( QString( "!! %1 !!" ).arg( tr("PAUSED") ) );
+        formatStatusString( qsStatus );
         m_bIsDeviceStopped = true;
     }
     else
@@ -556,7 +571,14 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     else
     {
-        icoPanelStart->setVisible( false );
+        if( m_bIsDeviceStopped )
+        {
+            icoPanelStart->setVisible( true );
+        }
+        else
+        {
+            icoPanelStart->setVisible( false );
+        }
     }
     icoPanelNext->setVisible( isStatusCanBeSkipped() );
     icoPanelStop->setVisible( isMainProcess() );
@@ -713,7 +735,14 @@ void cFrmPanel::displayStatus()
     }
     else
     {
-        icoPanelStart->setVisible( false );
+        if( m_bIsDeviceStopped )
+        {
+            icoPanelStart->setVisible( true );
+        }
+        else
+        {
+            icoPanelStart->setVisible( false );
+        }
     }
     icoPanelNext->setVisible( isStatusCanBeSkipped() );
     icoPanelStop->setVisible( isMainProcess() );
