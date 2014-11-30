@@ -569,9 +569,12 @@ void cDlgPanelUse::on_pbReloadPC_clicked()
 
         if( m_obDBPatientCard.patientCardTypeId() == 1 && !g_obUser.isInGroup(cAccessGroup::SYSTEM) )
         {
-            QMessageBox::warning( m_poMsg, tr("Attention"),
-                                  tr("You are not allowed to use system administrator card.\nPlease log in as a system administrator if you want to use this card.") );
-            return;
+            if( !g_obGen.isSystemAdmin() )
+            {
+                QMessageBox::warning( m_poMsg, tr("Attention"),
+                                      tr("You are not allowed to use system administrator card.\nPlease log in as a system administrator if you want to use this card.") );
+                return;
+            }
         }
 
         if( m_obDBPatientCard.pincode().compare("LOST") == 0 )

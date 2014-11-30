@@ -81,6 +81,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbWTReset->setEnabled( g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     horizontalLayout2->addWidget( pbWTReset );
 
+    pbEnableDeviceAdmin = new QPushButton( this );
+    pbEnableDeviceAdmin->setObjectName( QString::fromUtf8( "pbEnableDeviceAdmin" ) );
+    pbEnableDeviceAdmin->setMinimumWidth( 30 );
+    pbEnableDeviceAdmin->setMaximumWidth( 30 );
+    pbEnableDeviceAdmin->setMinimumHeight( 30 );
+    pbEnableDeviceAdmin->setMaximumHeight( 30 );
+    pbEnableDeviceAdmin->setText( "" );
+    pbEnableDeviceAdmin->setToolTip( tr("Enable to reset work time for Device Administrator.") );
+    pbEnableDeviceAdmin->setIconSize( QSize(20,20) );
+    pbEnableDeviceAdmin->setIcon( QIcon("./resources/40x40_key.png") );
+    pbEnableDeviceAdmin->setEnabled( true );
+    horizontalLayout2->addWidget( pbEnableDeviceAdmin );
+
     lblMaxWorkTime = new QLabel( this );
     lblMaxWorkTime->setObjectName( QString::fromUtf8( "lblMaxWorkTime" ) );
     lblMaxWorkTime->setText( tr("Maximum work time (hour): ") );
@@ -95,19 +108,6 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
 
     horizontalSpacer2 = new QSpacerItem( 300, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     horizontalLayout2->addItem( horizontalSpacer2 );
-
-    pbEnableSystemAdmin = new QPushButton( this );
-    pbEnableSystemAdmin->setObjectName( QString::fromUtf8( "pbEnableSystemAdmin" ) );
-    pbEnableSystemAdmin->setMinimumWidth( 30 );
-    pbEnableSystemAdmin->setMaximumWidth( 30 );
-    pbEnableSystemAdmin->setMinimumHeight( 30 );
-    pbEnableSystemAdmin->setMaximumHeight( 30 );
-    pbEnableSystemAdmin->setText( "" );
-    pbEnableSystemAdmin->setToolTip( tr("Enable temporary controls can be used by System Administrator.") );
-    pbEnableSystemAdmin->setIconSize( QSize(20,20) );
-    pbEnableSystemAdmin->setIcon( QIcon("./resources/40x40_key.png") );
-    pbEnableSystemAdmin->setEnabled( true );
-    horizontalLayout2->addWidget( pbEnableSystemAdmin );
 
     lblGroup = new QLabel( this );
     lblGroup->setObjectName( QString::fromUtf8( "lblGroup" ) );
@@ -136,6 +136,19 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     pbCopyToAll->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
     horizontalLayout3->addWidget( pbCopyToAll );
 
+    pbEnableSystemAdmin = new QPushButton( this );
+    pbEnableSystemAdmin->setObjectName( QString::fromUtf8( "pbEnableSystemAdmin" ) );
+    pbEnableSystemAdmin->setMinimumWidth( 30 );
+    pbEnableSystemAdmin->setMaximumWidth( 30 );
+    pbEnableSystemAdmin->setMinimumHeight( 30 );
+    pbEnableSystemAdmin->setMaximumHeight( 30 );
+    pbEnableSystemAdmin->setText( "" );
+    pbEnableSystemAdmin->setToolTip( tr("Enable temporary controls can be used by System Administrator.") );
+    pbEnableSystemAdmin->setIconSize( QSize(20,20) );
+    pbEnableSystemAdmin->setIcon( QIcon("./resources/40x40_key.png") );
+    pbEnableSystemAdmin->setEnabled( true );
+    horizontalLayout3->addWidget( pbEnableSystemAdmin );
+
     verticalLayout->insertLayout( 0, horizontalLayout1 );
     verticalLayout->insertLayout( 1, horizontalLayout2 );
     verticalLayout->insertLayout( 3, horizontalLayout3 );
@@ -147,6 +160,7 @@ cDlgPanelSettings::cDlgPanelSettings( QWidget *p_poParent, unsigned int p_uiPane
     connect( pbWTReset, SIGNAL( clicked( bool ) ), this, SLOT( on_pbWTReset_clicked( bool ) ) );
     connect( pbCopyToAll, SIGNAL( clicked( bool ) ), this, SLOT( on_pbCopyToAll_clicked( bool ) ) );
     connect( pbEnableSystemAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableSystemAdmin_clicked()) );
+    connect( pbEnableDeviceAdmin, SIGNAL(clicked()), this, SLOT(on_pbEnableDeviceAdmin_clicked()) );
 
     if( p_uiPanelId > 0 )
     {
@@ -407,5 +421,13 @@ void cDlgPanelSettings::on_pbEnableSystemAdmin_clicked()
         ledMaxWorkTime->setEnabled( true );
         cmbPanelGroup->setEnabled( true );
         pbCopyToAll->setEnabled( true );
+    }
+}
+
+void cDlgPanelSettings::on_pbEnableDeviceAdmin_clicked()
+{
+    if( g_obGen.isExtendedAdmin() )
+    {
+        pbWTReset->setEnabled( true );
     }
 }

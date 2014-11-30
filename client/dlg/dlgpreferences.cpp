@@ -113,6 +113,11 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
 
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+    ledDeviceAdminPassword->setEnabled( false );
+    ledDeviceAdminPasswordCheck->setEnabled( false );
+    pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
+    pbCancelModifyPsw->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbCancelModifyPsw->setVisible( false );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
@@ -687,4 +692,81 @@ void cDlgPreferences::on_btnSecondaryFrame_clicked()
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getSecondaryFrame() ) );
     btnSecondaryFrame->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
+{
+    if( ledDeviceAdminPassword->isEnabled() )
+    {
+        // Password modified
+        if( ledDeviceAdminPassword->text().compare( ledDeviceAdminPasswordCheck->text() ) != 0 )
+        {
+            QMessageBox::critical( this, tr( "Error" ),
+                                   tr( "Values of the Password and Retype Password fields are not the same" ) );
+            return;
+        }
+
+        QByteArray  obPwdHash = QCryptographicHash::hash( ledDeviceAdminPassword->text().toAscii(), QCryptographicHash::Sha1 );
+
+        if( g_poPrefs->checkExtendedAdminPassword("") )
+        {
+            g_poPrefs->setExtendedAdminPassword( QString( obPwdHash.toHex() ) );
+        }
+        else
+        {
+            g_poPrefs->createExtendedAdminPassword( QString( obPwdHash.toHex() ) );
+        }
+        on_pbCancelModifyPsw_clicked();
+    }
+    else
+    {
+        // Enable edit fields for modifications
+        bool    bEnableModification = false;
+
+        if( g_poPrefs->checkExtendedAdminPassword("") )
+        {
+            // Password already exists, request it to modify
+            if( g_obGen.isExtendedAdmin() )
+            {
+                bEnableModification = true;
+            }
+        }
+        else
+        {
+            // Password not exists, request SysAdmin password
+            if( g_obGen.isSystemAdmin() )
+            {
+                bEnableModification = true;
+            }
+        }
+
+        ledDeviceAdminPassword->setEnabled( bEnableModification );
+        ledDeviceAdminPasswordCheck->setEnabled( bEnableModification );
+        pbCancelModifyPsw->setEnabled( bEnableModification );
+        pbCancelModifyPsw->setVisible( bEnableModification );
+
+        if( bEnableModification )
+        {
+            ledDeviceAdminPassword->setText( "" );
+            ledDeviceAdminPasswordCheck->setText( "" );
+            pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_ok.png") );
+        }
+        else
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The password you entered is not valid\n"
+                                     "to modify device admin password.") );
+        }
+    }
+}
+
+void cDlgPreferences::on_pbCancelModifyPsw_clicked()
+{
+    ledDeviceAdminPassword->setText( "" );
+    ledDeviceAdminPasswordCheck->setText( "" );
+    ledDeviceAdminPassword->setEnabled( false );
+    ledDeviceAdminPasswordCheck->setEnabled( false );
+    pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
+    pbCancelModifyPsw->setEnabled( false );
+    pbCancelModifyPsw->setVisible( false );
 }

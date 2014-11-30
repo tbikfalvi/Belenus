@@ -190,6 +190,9 @@ public:
     bool            isFapados();
     void            setPanelSterile( int p_nPanelId, bool p_bSterile );
     bool            isPanelSterile( int p_nPanelId );
+    void            createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
+    void            setExtendedAdminPassword( const QString &p_qsExtendedAdminPassword );
+    bool            checkExtendedAdminPassword( const QString &p_qsExtendedAdminPassword ) const;
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;

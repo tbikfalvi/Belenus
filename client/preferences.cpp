@@ -1405,3 +1405,40 @@ bool cPreferences::isPanelSterile(int p_nPanelId)
 
     return obPrefFile.value( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), true ).toBool();
 }
+
+void cPreferences::createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword )
+{
+    g_poDB->executeQTQuery( QString( "INSERT INTO settings ( settingId, identifier, value ) VALUES ( NULL , 'ADMIN_EXT_PASSWORD', '%1' ) " ).arg( p_qsExtendedAdminPassword ) );
+}
+
+void cPreferences::setExtendedAdminPassword( const QString &p_qsExtendedAdminPassword )
+{
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' WHERE identifier='ADMIN_EXT_PASSWORD' " ).arg( p_qsExtendedAdminPassword ) );
+}
+
+bool cPreferences::checkExtendedAdminPassword(const QString &p_qsExtendedAdminPassword) const
+{
+    bool bRet = false;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+
+    if( p_qsExtendedAdminPassword.length() == 0 )
+    {
+        if( poQuery->size() > 0 )
+            return true;
+        else
+            return false;
+    }
+
+    poQuery->first();
+
+    QString qsPassword = poQuery->value( 0 ).toString();
+
+    if( qsPassword.compare( p_qsExtendedAdminPassword ) == 0 )
+    {
+        bRet = true;
+    }
+
+    return bRet;
+}
+

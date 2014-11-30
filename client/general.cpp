@@ -195,6 +195,7 @@ void cGeneral::backupDatabase(QWidget *parent)
 }
 //====================================================================================
 bool cGeneral::isSystemAdmin()
+//------------------------------------------------------------------------------------
 {
     bool    bRet = false;
 
@@ -203,6 +204,28 @@ bool cGeneral::isSystemAdmin()
     if( poDlgLogIn->exec() == QDialog::Accepted )
     {
         QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT password FROM users WHERE userId=1" );
+        poQuery->first();
+        QString qsPsw = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
+bool cGeneral::isExtendedAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
         poQuery->first();
         QString qsPsw = poQuery->value(0).toString();
 
