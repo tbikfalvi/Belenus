@@ -726,7 +726,7 @@ void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
         if( g_poPrefs->checkExtendedAdminPassword("") )
         {
             // Password already exists, request it to modify
-            if( g_obGen.isExtendedAdmin() )
+            if( g_obGen.isExtendedOrSystemAdmin() )
             {
                 bEnableModification = true;
             }

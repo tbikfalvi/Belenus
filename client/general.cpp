@@ -238,6 +238,35 @@ bool cGeneral::isExtendedAdmin()
     return bRet;
 }
 //====================================================================================
+bool cGeneral::isExtendedOrSystemAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery;
+
+        poQuery = g_poDB->executeQTQuery( "SELECT password FROM users WHERE userId=1" );
+        poQuery->first();
+        QString qsPsw1 = poQuery->value(0).toString();
+
+        poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+        poQuery->first();
+        QString qsPsw2 = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw1 ) == 0 ||
+            poDlgLogIn->m_qsPassword.compare( qsPsw2 ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
 void cGeneral::showPatientCardInformation(QString p_qsBarcode)
 //------------------------------------------------------------------------------------
 {

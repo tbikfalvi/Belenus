@@ -48,6 +48,7 @@ public:
     void             backupDatabase( QWidget *parent );
     bool             isSystemAdmin();
     bool             isExtendedAdmin();
+    bool             isExtendedOrSystemAdmin();
     void             showPatientCardInformation( QString p_qsBarcode );
 
 private:
