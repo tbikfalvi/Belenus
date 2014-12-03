@@ -152,6 +152,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_bIsPatientWaiting     = false;
     m_bIsNeedToBeCleaned    = false;
     m_bIsDeviceStopped      = false;
+    m_bIsTubeReplaceNeeded  = false;
 
     m_vrPatientCard.uiPatientCardId  = 0;
     m_vrPatientCard.qslUnitIds       = QStringList();
@@ -169,7 +170,6 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     if( !g_poPrefs->isPanelSterile( m_uiId ) )
     {
         m_bIsNeedToBeCleaned = true;
-        setTextInformation( tr( "NOT STERILE" ) );
     }
 
     inactivate();
@@ -368,10 +368,7 @@ void cFrmPanel::clean()
 //====================================================================================
 {
     m_bIsNeedToBeCleaned = false;
-    if( m_qsInfo.compare( tr("NOT STERILE") ) == 0 )
-    {
-        setTextInformation( "", true );
-    }
+    displayStatus();
     g_poPrefs->setPanelSterile( m_uiId, true );
 }
 //====================================================================================
@@ -606,9 +603,15 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             lblTitle->setText( tr("Panel Not Found in Database") );
         }
 
+        m_bIsTubeReplaceNeeded = false;
         prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
         prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
         g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+        if( prgUsageMonitor->value() > prgUsageMonitor->maximum() )
+        {
+            prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
+            m_bIsTubeReplaceNeeded = true;
+        }
 
         delete poQuery;
         poQuery = NULL;
@@ -648,11 +651,17 @@ void cFrmPanel::reload()
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
+            m_bIsTubeReplaceNeeded = false;
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
             prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
             prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
             g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+            if( prgUsageMonitor->value() > prgUsageMonitor->maximum() )
+            {
+                prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
+                m_bIsTubeReplaceNeeded = true;
+            }
         }
         delete poQuery;
     }
@@ -796,7 +805,7 @@ void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
     lblNextStatusLen->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->nextFontColor()).name()).arg(p_qsNextLengthText) );
 }
 //====================================================================================
-void cFrmPanel::formatInfoString( QString p_qsInfoText )
+void cFrmPanel::formatInfoString()
 {
     QFont   obFont;
 
@@ -805,9 +814,30 @@ void cFrmPanel::formatInfoString( QString p_qsInfoText )
     obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->infoFontSize() );
     obFont.setBold( true );
 
+    QString qsInfoText = "";
+
+    if( m_bIsTubeReplaceNeeded )
+    {
+        qsInfoText.append( tr("TUBE REPLACEMENT NEEDED") );
+    }
+
+    if( m_bIsNeedToBeCleaned )
+    {
+        if( qsInfoText.length() > 0 ) qsInfoText.append( "\n" );
+        qsInfoText.append( tr( "NOT STERILE" ) );
+    }
+
+    if( m_qsInfo.length() > 0 )
+    {
+        if( qsInfoText.length() > 0 ) qsInfoText.append( "\n" );
+        qsInfoText.append( m_qsInfo );
+    }
+
     lblInfo->setAlignment( Qt::AlignCenter );
     lblInfo->setFont( obFont );
-    lblInfo->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name()).arg(p_qsInfoText) );
+    lblInfo->setText( QString("<font color=%1>%2</font>")
+                      .arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name())
+                      .arg(qsInfoText) );
 }
 //====================================================================================
 /*QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
@@ -842,7 +872,6 @@ void cFrmPanel::activateNextStatus()
     {
         // Kezeles vege
         closeAttendance();
-        setTextInformation( tr( "NOT STERILE" ) );
         m_bIsNeedToBeCleaned = true;
         g_poPrefs->setPanelSterile( m_uiId, false );
     }
@@ -916,8 +945,14 @@ void cFrmPanel::closeAttendance()
 
     unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
 
+    m_bIsTubeReplaceNeeded = false;
     prgUsageMonitor->setValue( uiWorkTime/3600 );
     g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+    if( prgUsageMonitor->value() > prgUsageMonitor->maximum() )
+    {
+        prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
+        m_bIsTubeReplaceNeeded = true;
+    }
 
     QString  qsQuery;
 

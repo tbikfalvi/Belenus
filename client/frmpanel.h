@@ -137,6 +137,7 @@ private:
     unsigned int                 m_uiProcessWaitTime;
     bool                         m_bIsNeedToBeCleaned;
     bool                         m_bIsDeviceStopped;
+    bool                         m_bIsTubeReplaceNeeded;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -172,7 +173,7 @@ private:
     void            formatStatusString( QString p_qsStatusText );
     void            formatTimerString( QString p_qsTimerText );
     void            formatNextLengthString( QString p_qsNextLengthText );
-    void            formatInfoString( QString p_qsInfoText );
+    void            formatInfoString();
     void            activateNextStatus();
     void            closeAttendance();
 
