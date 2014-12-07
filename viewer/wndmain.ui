@@ -229,7 +229,7 @@
        <item>
         <widget class="QPushButton" name="pbPatientcardsInactive">
          <property name="toolTip">
-          <string>Inactive or expiring patientcards</string>
+          <string>Not used patientcards</string>
          </property>
          <property name="text">
           <string/>

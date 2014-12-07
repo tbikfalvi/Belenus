@@ -132,13 +132,6 @@ QStringList cPanelPCUnitUse::usedUnitIds()
 {
     QStringList qslUnitIds;
 
-    g_obLogger(cSeverity::DEBUG) << "cmbUseUnitCount->count() ["
-                                 << cmbUseUnitCount->count()
-                                 << "] m_qslUnitIds.count() ["
-                                 << m_qslUnitIds.count()
-                                 << "]"
-                                 << EOM;
-
     if( pbUseUnitType->isChecked() && cmbUseUnitCount->count() == m_qslUnitIds.count() )
     {
         for( int i=0; i<cmbUseUnitCount->currentIndex()+1; i++ )
@@ -542,9 +535,9 @@ void cDlgPanelUse::on_cmbTimeIntervall_currentIndexChanged(int index)
 void cDlgPanelUse::on_ledPatientCardBarcode_returnPressed()
 {
     cTracer obTracer( "cDlgPanelUse::on_ledPatientCardBarcode_returnPressed" );
-    m_bIsEnterAccepted = false;
     pbOk->setEnabled( false );
     on_pbReloadPC_clicked();
+    m_bIsEnterAccepted = false;
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::on_pbReloadPC_clicked()
@@ -679,9 +672,8 @@ void cDlgPanelUse::_enablePanelUseTypes()
     gbTime->setEnabled( m_bIsCashCanBeUsed );
 }
 //----------------------------------------------------------------------------------------------
-void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &arg1)
+void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &/*arg1*/)
 {
-    cTracer obTracer( "cDlgPanelUse::on_ledPatientCardBarcode_textEdited" );
     if( m_obDBPatientCard.id() > 0 )
     {
         m_obDBPatientCard.createNew();

@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -984,7 +984,7 @@
       <attribute name="title">
        <string>Device</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_24">
+      <layout class="QVBoxLayout" name="verticalLayout_27">
        <item>
         <widget class="QGroupBox" name="gbLedger">
          <property name="title">
@@ -1090,6 +1090,46 @@
              <string/>
             </property>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbPanelText">
+         <property name="title">
+          <string> Status text </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_24">
+          <item>
+           <widget class="QLabel" name="lblShowPanelText">
+            <property name="text">
+             <string>Display the defined text when ...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QFormLayout" name="formLayout_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lblPanelTextSterile">
+              <property name="text">
+               <string>the device is not sterile :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="ledPanelTextSterile"/>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lblPanelTextTubeReplacement">
+              <property name="text">
+               <string>tube replacement is needed :</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="ledPanelTextTubeReplacement"/>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -1649,6 +1689,9 @@ is different :</string>
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
         <widget class="QGroupBox" name="gbServerSettings">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string> Gibbig server settings </string>
          </property>
@@ -1663,7 +1706,7 @@ is different :</string>
           <item row="0" column="1">
            <widget class="QLineEdit" name="ledServerHost">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -1683,7 +1726,7 @@ is different :</string>
           <item row="1" column="1">
            <widget class="QLineEdit" name="ledServerPort">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -1698,6 +1741,9 @@ is different :</string>
        </item>
        <item>
         <widget class="QGroupBox" name="gbUserSettings">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string> Gibbig user settings </string>
          </property>
@@ -1741,6 +1787,9 @@ is different :</string>
        </item>
        <item>
         <widget class="QGroupBox" name="gbGibbigEnable">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string> Actions </string>
          </property>
@@ -1749,6 +1798,9 @@ is different :</string>
            <layout class="QHBoxLayout" name="horizontalLayout_30">
             <item>
              <widget class="QCheckBox" name="chkEnableGibbig">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Enable synchronization</string>
               </property>
@@ -1769,6 +1821,9 @@ is different :</string>
             </item>
             <item>
              <widget class="QPushButton" name="pbTestGibbig">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Test connection</string>
               </property>
@@ -1793,6 +1848,9 @@ is different :</string>
             </item>
             <item>
              <widget class="QSpinBox" name="sbGibbigWaitTime">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="minimum">
                <number>1</number>
               </property>

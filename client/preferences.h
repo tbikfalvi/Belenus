@@ -199,6 +199,10 @@ public:
     bool            checkExtendedAdminPassword( const QString &p_qsExtendedAdminPassword ) const;
     void            setStopInLine( bool p_bStopInLine, bool p_boSaveNow = false );
     bool            isStopInLine();
+    void            setPanelTextSteril( const QString &p_qsPanelTextSteril, bool p_boSaveNow = false );
+    QString         getPanelTextSteril() const;
+    void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow = false );
+    QString         getPanelTextTubeReplace() const;
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -282,6 +286,8 @@ private:
     QString         m_qsSecondaryCaptionBackground;
     QString         m_qsSecondaryCaptionColor;
     bool            m_bIsStopInLine;
+    QString         m_qsPanelTextSteril;
+    QString         m_qsPanelTextTubeReplace;
 
     void init();
 };

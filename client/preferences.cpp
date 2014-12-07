@@ -64,19 +64,22 @@ void cPreferences::init()
     m_nPatientCardPartnerPrice      = 0;
     m_nPatientCardPartnerPriceVat   = 0;
 
-    m_qsDirDbBinaries       = "";
-    m_qsDirDbBackup         = "";
-    m_bForceBackupDatabase  = false;
-    m_bBackupDatabase       = false;
-    m_nBackupDatabaseType   = 0;
-    m_qsBackupDatabaseDays  = "";
+    m_qsDirDbBinaries               = "";
+    m_qsDirDbBackup                 = "";
+    m_bForceBackupDatabase          = false;
+    m_bBackupDatabase               = false;
+    m_nBackupDatabaseType           = 0;
+    m_qsBackupDatabaseDays          = "";
 
-    m_qsDateFormat          = "yyyy-MM-dd";
+    m_qsDateFormat                  = "yyyy-MM-dd";
 
-    m_bFapados              = false;
-    m_nFapados              = 0;
+    m_bFapados                      = false;
+    m_nFapados                      = 0;
 
-    m_bIsStopInLine         = true;
+    m_bIsStopInLine                 = true;
+
+    m_qsPanelTextSteril             = "";
+    m_qsPanelTextTubeReplace        = "";
 }
 
 void cPreferences::loadConfFileSettings()
@@ -120,6 +123,8 @@ void cPreferences::loadConfFileSettings()
         m_qsSecondaryCaptionBackground  = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), "#000099" ).toString();
         m_qsSecondaryCaptionColor       = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionColor" ), "#FFFFFF" ).toString();
         m_bIsStopInLine                 = obPrefFile.value( QString::fromAscii( "Panels/IsStopInLine"), true ).toBool();
+        m_qsPanelTextSteril             = obPrefFile.value( QString::fromAscii( "Panels/TextSterile"), QObject::tr( " NOT STERILE " ) ).toString();
+        m_qsPanelTextTubeReplace        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeReplace"), QObject::tr( " TUBE REPLACEMENT NEEDED " ) ).toString();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -285,6 +290,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
     obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
+    obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
+    obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
@@ -1496,4 +1503,36 @@ void cPreferences::setStopInLine( bool p_bStopInLine, bool p_boSaveNow )
 bool cPreferences::isStopInLine()
 {
     return m_bIsStopInLine;
+}
+
+void cPreferences::setPanelTextSteril( const QString &p_qsPanelTextSteril, bool p_boSaveNow )
+{
+    m_qsPanelTextSteril = p_qsPanelTextSteril;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
+    }
+}
+
+QString cPreferences::getPanelTextSteril() const
+{
+    return m_qsPanelTextSteril;
+}
+
+void cPreferences::setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow )
+{
+    m_qsPanelTextTubeReplace = p_qsPanelTextTubeReplace;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
+    }
+}
+
+QString cPreferences::getPanelTextTubeReplace() const
+{
+    return m_qsPanelTextTubeReplace;
 }

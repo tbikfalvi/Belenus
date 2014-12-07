@@ -138,6 +138,7 @@ private:
     bool                         m_bIsNeedToBeCleaned;
     bool                         m_bIsDeviceStopped;
     bool                         m_bIsTubeReplaceNeeded;
+    QString                      m_qsTransactionId;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -179,6 +180,7 @@ private:
 
 //    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
     unsigned int    _calculateWaitTime();
+    QString         _transactionId();
 
 signals:
     void            signalPaymentActivated( unsigned int p_uiPanelId );

@@ -626,7 +626,7 @@ void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionTy
     qsPatientCard.append( validDateTo() );
     qsPatientCard.append( "#" );
     qsPatientCard.append( qslUnits.join("|") );
-
+/*
     switch( p_teActionType )
     {
         case cGibbigAction::GA_PCREGISTER:
@@ -644,6 +644,7 @@ void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionTy
         default:
             break;
     }
+*/
 }
 
 void cDBPatientCard::updateGibbigId(const QString &p_qsId) throw()

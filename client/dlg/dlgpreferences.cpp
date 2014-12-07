@@ -137,6 +137,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
     pbCancelModifyPsw->setIcon( QIcon("./resources/40x40_cancel.png") );
     pbCancelModifyPsw->setVisible( false );
+    ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
+    ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
@@ -180,6 +182,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
+gbServerSettings->setVisible( false );
+gbUserSettings->setVisible( false );
+gbGibbigEnable->setVisible( false );
     ledGibbigName->setText( g_poPrefs->getGibbigName() );
     ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
 
@@ -251,6 +256,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
+    tbwPreferences->setTabEnabled( 5, false );
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -267,12 +273,14 @@ void cDlgPreferences::timerEvent(QTimerEvent *)
 
     setCursor( Qt::ArrowCursor);
 
+/*
     if( g_poGibbig->gibbigIsErrorOccured() )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Authentication with server failed.\n"
                                  "Please check your server and user settings.") );
     }
+*/
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -376,6 +384,20 @@ void cDlgPreferences::accept()
         }
     }
 
+    if( ledPanelTextSterile->text().trimmed().length() < 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("'Not sterile' text can not be empty.") );
+        return;
+    }
+
+    if( ledPanelTextTubeReplacement->text().trimmed().length() < 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("'Tube replacement needed' text can not be empty.") );
+        return;
+    }
+
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
                              sliGUILogLevel->value(),
@@ -406,6 +428,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setCommunicationPort( spbCOM->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
+    g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
+    g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
@@ -690,7 +714,7 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
     }
     m_dlgProgress->hideProgress();
 }
-
+/*
 void cDlgPreferences::on_pbTestGibbig_clicked()
 {
     g_poGibbig->gibbigAuthenticate();
@@ -698,7 +722,7 @@ void cDlgPreferences::on_pbTestGibbig_clicked()
 
     m_nTimer = startTimer( 5000 );
 }
-
+*/
 void cDlgPreferences::on_chkEnableGibbig_clicked(bool checked)
 {
     pbTestGibbig->setEnabled( checked );

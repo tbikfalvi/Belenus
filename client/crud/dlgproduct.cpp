@@ -94,6 +94,7 @@ cDlgProduct::cDlgProduct( QWidget *p_poParent ) : cDlgCrud( p_poParent )
     pbStockProcess->setAutoDefault( false );
     btbButtonsSide->addButton( pbStockProcess, QDialogButtonBox::ActionRole );
     connect( pbStockProcess, SIGNAL(clicked()), this, SLOT(_slotStockProcess()) );
+    pbStockProcess->setEnabled( g_obUser.isInGroup( cAccessGroup::ADMIN ) );
 
     pbStockIncrease = new QPushButton( tr( "Increase stock" ), this );
     pbStockIncrease->setObjectName( QString::fromUtf8( "pbStockIncrease" ) );
