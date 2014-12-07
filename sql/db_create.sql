@@ -5,10 +5,9 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_create.sql
--- AppVersion  : 1.3.0
--- DbVersion   : 1.4
--- FileVersion : 2.0
--- Author      : Ballok Peter, Bikfalvi Tamas
+-- AppVersion  : 1.4.11
+-- DbVersion   : 1.6.1
+-- Author      : Bikfalvi Tamas
 --
 -- -----------------------------------------------------------------------------------
 -- Adatbazist letrehozo SQL script

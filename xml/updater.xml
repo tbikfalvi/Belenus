@@ -6,7 +6,8 @@
         <file src="%CURRENT_DIR%/package/Update_1_4_7.zip" dst="%DOWNLOAD_DIR%/Update_1_4_7.zip" />
         <file src="%CURRENT_DIR%/package/Update_1_4_8.zip" dst="%DOWNLOAD_DIR%/Update_1_4_8.zip" />
         <file src="%CURRENT_DIR%/package/Update_1_4_9.zip" dst="%DOWNLOAD_DIR%/Update_1_4_9.zip" />
-        <file src="%CURRENT_DIR%/package/Update_1_4_9.zip" dst="%DOWNLOAD_DIR%/Update_1_4_10.zip" />
+        <file src="%CURRENT_DIR%/package/Update_1_4_10.zip" dst="%DOWNLOAD_DIR%/Update_1_4_10.zip" />
+        <file src="%CURRENT_DIR%/package/Update_1_4_11.zip" dst="%DOWNLOAD_DIR%/Update_1_4_11.zip" />
         <file src="%CURRENT_DIR%/lang/updater_hu.qm" dst="%INSTALL_DIR%/lang/updater_hu.qm" />
         <file src="%CURRENT_DIR%/lang/updater_de.qm" dst="%INSTALL_DIR%/lang/updater_de.qm" />
         <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />

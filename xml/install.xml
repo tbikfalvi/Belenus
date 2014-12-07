@@ -126,6 +126,10 @@
         <file src="%CURRENT_DIR%/resources/77x40_on.png" dst="%INSTALL_DIR%/resources/77x40_on.png" />
         <file src="%CURRENT_DIR%/resources/belenus.ico" dst="%INSTALL_DIR%/resources/belenus.ico" />
         <file src="%CURRENT_DIR%/resources/splash.png" dst="%INSTALL_DIR%/resources/splash.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_keyboard.png" dst="%INSTALL_DIR%/resources/40x40_keyboard.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_keyboard_enabled.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_enabled.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_keyboard_locked.png" dst="%INSTALL_DIR%/resources/40x40_keyboard_locked.png" />
+        <file src="%CURRENT_DIR%/resources/40x40_patientcard_info.png" dst="%INSTALL_DIR%/resources/40x40_patientcard_info.png" />
         
         <file src="%CURRENT_DIR%/sqldrivers/qsqlmysql4.dll" dst="%INSTALL_DIR%/sqldrivers/qsqlmysql4.dll" />
 
