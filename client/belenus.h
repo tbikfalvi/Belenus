@@ -55,7 +55,7 @@ extern CS_Communication        *g_poHardware;
 extern cCassa                   g_obCassa;
 extern cGeneral                 g_obGen;
 extern cDBGuest                 g_obGuest;
-extern cGibbig                 *g_poGibbig;
+//extern cGibbig                 *g_poGibbig;
 
 //====================================================================================
 

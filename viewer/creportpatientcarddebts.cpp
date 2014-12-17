@@ -28,7 +28,7 @@ void cReportPatientcardDebts::refreshReport()
     m_dlgProgress.increaseProgressValue();
 
     QString qsQuery = QString( "SELECT patientcards.patientCardId, "
-                               "patientCardTypeId, "
+                               "patientcards.patientCardTypeId, "
                                "barcode, "
                                "SUM(patientcardunits.unitPrice) AS price, "
                                "COUNT(patientcardunits.unitPrice) AS units, "

@@ -204,11 +204,11 @@ void cDlgShoppingCart::refreshTable()
 
     if( g_obUser.isInGroup( cAccessGroup::ROOT ) )
     {
-        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId, shoppingCartItems.licenceId, title, patients.name, productId, patientCardId, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment, shoppingCartItems.archive FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId WHERE shoppingCartItemId>0";
     }
     else
     {
-        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId";
+        m_qsQuery = "SELECT shoppingCartItemId AS id, title, patients.name, itemName, itemNetPrice/100, itemVAT, itemSumPrice/100, itemCount, discountValue/100, voucher/100, (itemSumPrice*itemCount-discountValue)/100 AS totalSumPrice, shoppingCartItems.comment FROM shoppingCartItems JOIN patients ON shoppingCartItems.patientId = patients.patientId JOIN panels ON shoppingCartItems.panelId = panels.panelId WHERE shoppingCartItemId>0";
     }
 
     int nPanelId = cmbPanel->itemData( cmbPanel->currentIndex() ).toInt();

@@ -30,6 +30,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QRadioButton" name="rbUpdatePCUnitType">
+          <property name="text">
+           <string>Update unit time and type of patientcard units</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QRadioButton" name="rbDeactivatePCs">
           <property name="text">
            <string>Deactivate patientcards that are no longer valid</string>
@@ -157,6 +164,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rbUpdatePCUnitType</tabstop>
+  <tabstop>rbDeactivatePCs</tabstop>
+  <tabstop>rbDeleteNotUsedPCTs</tabstop>
+  <tabstop>rbDeleteLedgerBeforeDate</tabstop>
+  <tabstop>deFilterDate</tabstop>
+  <tabstop>pbExecute</tabstop>
+  <tabstop>pbExit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

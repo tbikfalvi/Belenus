@@ -93,6 +93,26 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
         lblSecondaryWindow->setText( tr("Hidden") );
     }
 
+    QPixmap obColorIcon( 24, 24 );
+    QColor  colorFill;
+
+    colorFill = QColor( g_poPrefs->getSecondaryCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundActive->setIcon( QIcon( obColorIcon ) );
+
+    colorFill = QColor( g_poPrefs->getSecondaryCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorActive->setIcon( QIcon( obColorIcon ) );
+
+    if( g_poPrefs->isStopInLine() )
+    {
+        rbStopInLine->setChecked( true );
+    }
+    else
+    {
+        rbStopInNewLine->setChecked( true );
+    }
+
     ledServerHost->setText( g_poPrefs->getServerAddress() );
     ledServerPort->setText( g_poPrefs->getServerPort() );
     chkDBAutoSynchron->setChecked( g_poPrefs->getDBAutoArchive() );
@@ -100,7 +120,6 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
 
-    QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
 
@@ -113,6 +132,13 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkSecondaryCaption->setChecked( g_poPrefs->isSecondaryCaptionVisible() );
 
     ledVatPercent->setText( QString::number( g_poPrefs->getDeviceUseVAT() ) );
+    ledDeviceAdminPassword->setEnabled( false );
+    ledDeviceAdminPasswordCheck->setEnabled( false );
+    pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
+    pbCancelModifyPsw->setIcon( QIcon("./resources/40x40_cancel.png") );
+    pbCancelModifyPsw->setVisible( false );
+    ledPanelTextSterile->setText( g_poPrefs->getPanelTextSteril() );
+    ledPanelTextTubeReplacement->setText( g_poPrefs->getPanelTextTubeReplace() );
 
     chkAutoCloseCassa->setChecked( g_poPrefs->getCassaAutoClose() );
     chkCassaAutoWithdrawal->setChecked( g_poPrefs->getCassaAutoWithdrawal() );
@@ -156,6 +182,9 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
     pbPanelSettings->setIcon( QIcon("./resources/40x40_settings.png") );
 
+gbServerSettings->setVisible( false );
+gbUserSettings->setVisible( false );
+gbGibbigEnable->setVisible( false );
     ledGibbigName->setText( g_poPrefs->getGibbigName() );
     ledGibbigPassword->setText( g_poPrefs->getGibbigPassword() );
 
@@ -227,6 +256,7 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
+    tbwPreferences->setTabEnabled( 5, false );
 }
 
 cDlgPreferences::~cDlgPreferences()
@@ -243,12 +273,14 @@ void cDlgPreferences::timerEvent(QTimerEvent *)
 
     setCursor( Qt::ArrowCursor);
 
+/*
     if( g_poGibbig->gibbigIsErrorOccured() )
     {
         QMessageBox::warning( this, tr("Warning"),
                               tr("Authentication with server failed.\n"
                                  "Please check your server and user settings.") );
     }
+*/
 }
 
 void cDlgPreferences::on_sliConsoleLogLevel_valueChanged( int p_inValue )
@@ -352,6 +384,20 @@ void cDlgPreferences::accept()
         }
     }
 
+    if( ledPanelTextSterile->text().trimmed().length() < 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("'Not sterile' text can not be empty.") );
+        return;
+    }
+
+    if( ledPanelTextTubeReplacement->text().trimmed().length() < 1 )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("'Tube replacement needed' text can not be empty.") );
+        return;
+    }
+
     g_poPrefs->setLogLevels( sliConsoleLogLevel->value(),
                              sliDBLogLevel->value(),
                              sliGUILogLevel->value(),
@@ -372,6 +418,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setBarcodePrefix( ledBarcodePrefix->text() );
     g_poPrefs->setBarcodeLengthDifferent( chkCardProductBarcodeLength->isChecked() );
 
+    g_poPrefs->setStopInLine( rbStopInLine->isChecked() );
+
     g_poPrefs->setServerAddress( ledServerHost->text() );
     g_poPrefs->setServerPort( ledServerPort->text() );
     g_poPrefs->setDBAutoArchive( chkDBAutoSynchron->isChecked() );
@@ -380,6 +428,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setCommunicationPort( spbCOM->value() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
+    g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );
+    g_poPrefs->setPanelTextTubeReplace( ledPanelTextTubeReplacement->text() );
 
     g_poPrefs->setCassaAutoClose( chkAutoCloseCassa->isChecked() );
     g_poPrefs->setCassaAutoWithdrawal( chkCassaAutoWithdrawal->isChecked() );
@@ -664,7 +714,7 @@ void cDlgPreferences::_decreasePatientCardBarcodes(bool p_bCutBegin)
     }
     m_dlgProgress->hideProgress();
 }
-
+/*
 void cDlgPreferences::on_pbTestGibbig_clicked()
 {
     g_poGibbig->gibbigAuthenticate();
@@ -672,7 +722,7 @@ void cDlgPreferences::on_pbTestGibbig_clicked()
 
     m_nTimer = startTimer( 5000 );
 }
-
+*/
 void cDlgPreferences::on_chkEnableGibbig_clicked(bool checked)
 {
     pbTestGibbig->setEnabled( checked );
@@ -687,4 +737,105 @@ void cDlgPreferences::on_btnSecondaryFrame_clicked()
     QPixmap  obColorIcon( 24, 24 );
     obColorIcon.fill( QColor( g_poPrefs->getSecondaryFrame() ) );
     btnSecondaryFrame->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_pbModifyDevAdminPsw_clicked()
+{
+    if( ledDeviceAdminPassword->isEnabled() )
+    {
+        // Password modified
+        if( ledDeviceAdminPassword->text().compare( ledDeviceAdminPasswordCheck->text() ) != 0 )
+        {
+            QMessageBox::critical( this, tr( "Error" ),
+                                   tr( "Values of the Password and Retype Password fields are not the same" ) );
+            return;
+        }
+
+        QByteArray  obPwdHash = QCryptographicHash::hash( ledDeviceAdminPassword->text().toAscii(), QCryptographicHash::Sha1 );
+
+        if( g_poPrefs->checkExtendedAdminPassword("") )
+        {
+            g_poPrefs->setExtendedAdminPassword( QString( obPwdHash.toHex() ) );
+        }
+        else
+        {
+            g_poPrefs->createExtendedAdminPassword( QString( obPwdHash.toHex() ) );
+        }
+        on_pbCancelModifyPsw_clicked();
+    }
+    else
+    {
+        // Enable edit fields for modifications
+        bool    bEnableModification = false;
+
+        if( g_poPrefs->checkExtendedAdminPassword("") )
+        {
+            // Password already exists, request it to modify
+            if( g_obGen.isExtendedOrSystemAdmin() )
+            {
+                bEnableModification = true;
+            }
+        }
+        else
+        {
+            // Password not exists, request SysAdmin password
+            if( g_obGen.isSystemAdmin() )
+            {
+                bEnableModification = true;
+            }
+        }
+
+        ledDeviceAdminPassword->setEnabled( bEnableModification );
+        ledDeviceAdminPasswordCheck->setEnabled( bEnableModification );
+        pbCancelModifyPsw->setEnabled( bEnableModification );
+        pbCancelModifyPsw->setVisible( bEnableModification );
+
+        if( bEnableModification )
+        {
+            ledDeviceAdminPassword->setText( "" );
+            ledDeviceAdminPasswordCheck->setText( "" );
+            pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_ok.png") );
+        }
+        else
+        {
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("The password you entered is not valid\n"
+                                     "to modify device admin password.") );
+        }
+    }
+}
+
+void cDlgPreferences::on_pbCancelModifyPsw_clicked()
+{
+    ledDeviceAdminPassword->setText( "" );
+    ledDeviceAdminPasswordCheck->setText( "" );
+    ledDeviceAdminPassword->setEnabled( false );
+    ledDeviceAdminPasswordCheck->setEnabled( false );
+    pbModifyDevAdminPsw->setIcon( QIcon("./resources/40x40_key.png") );
+    pbCancelModifyPsw->setEnabled( false );
+    pbCancelModifyPsw->setVisible( false );
+}
+
+void cDlgPreferences::on_pbCaptionBackgroundActive_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryCaptionBackground() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setSecondaryCaptionBackground( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getSecondaryCaptionBackground() );
+    obColorIcon.fill( colorFill );
+    pbCaptionBackgroundActive->setIcon( QIcon( obColorIcon ) );
+}
+
+void cDlgPreferences::on_pbTextColorActive_clicked()
+{
+    QColor obNewColor = QColorDialog::getColor( QColor( g_poPrefs->getSecondaryCaptionColor() ), this );
+    if( obNewColor.isValid() )
+        g_poPrefs->setSecondaryCaptionColor( obNewColor.name() );
+
+    QPixmap  obColorIcon( 24, 24 );
+    QColor  colorFill = QColor( g_poPrefs->getSecondaryCaptionColor() );
+    obColorIcon.fill( colorFill );
+    pbTextColorActive->setIcon( QIcon( obColorIcon ) );
 }

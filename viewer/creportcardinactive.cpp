@@ -4,8 +4,21 @@
 
 cReportCardInactive::cReportCardInactive(QWidget *parent, QString p_qsReportName) : cReport(parent,p_qsReportName)
 {
-    m_qsReportName          = tr(" Inactive patientcards ");
-    m_qsReportDescription   = tr( "This report shows the currently inactive patient cards that registered into database." );
+    m_qsReportName          = tr(" Not used patientcards ");
+    m_qsReportDescription   = tr( "This report shows the currently inactive patient cards that registered into database but currently not used." );
+
+    _setDataTypeEnabled( true );
+    _setDataTypeLabelText( tr("Patientcard group types :") );
+
+    QStringList qslDataTypes;
+
+    qslDataTypes << QString( "0|%1" ).arg( tr("All cards") );
+    qslDataTypes << QString( "1|%1" ).arg( tr("Only pre-registered cards") );
+    qslDataTypes << QString( "2|%1" ).arg( tr("Only inactivated cards") );
+    qslDataTypes << QString( "3|%1" ).arg( tr("Only lost cards") );
+
+    setFilterDataType( QString( "0|%1" ).arg( tr("All cards") ) );
+    setFilterDataTypeList( qslDataTypes.join("#") );
 }
 
 void cReportCardInactive::refreshReport()
@@ -18,11 +31,33 @@ void cReportCardInactive::refreshReport()
 
     m_dlgProgress.increaseProgressValue();
 
-    QString qsQueryCards = QString( "SELECT barcode FROM patientcards WHERE "
-                                    "patientCardId>1 AND "
-                                    "patientCardTypeId<>1 AND "
-                                    "pincode!=\"LOST\" AND "
-                                    "active=0 " );
+    QStringList qslFilterType = filterType().split("|");
+
+    QString qsQueryCards    = QString( "SELECT barcode FROM patientcards " );
+    QString qsCondition     = "";
+    QString qsFilter        = "WHERE patientcards.patientCardId>1 "
+                              "AND patientcards.patientCardTypeId<>1 "
+                              "AND patientcards.active=0 ";
+
+    switch( qslFilterType.at(0).toInt() )
+    {
+        case 1:
+            qsCondition = "LEFT JOIN ledger ON patientcards.patientCardId=ledger.patientCardId ";
+            qsFilter.append( "AND ledger.ledgerId IS NULL " );
+            break;
+        case 2:
+            qsCondition = "LEFT JOIN ledger ON patientcards.patientCardId=ledger.patientCardId ";
+            qsFilter.append( "AND ledger.ledgerId IS NOT NULL AND pincode!=\"LOST\" " );
+            break;
+        case 3:
+            qsFilter.append( " AND pincode=\"LOST\" " );
+            break;
+        default:
+            ;
+    }
+    qsQueryCards.append( qsCondition );
+    qsQueryCards.append( qsFilter );
+    qsQueryCards.append( "GROUP BY barcode" );
 
     m_dlgProgress.increaseProgressValue();
 
@@ -37,6 +72,20 @@ void cReportCardInactive::refreshReport()
 
     m_dlgProgress.setProgressMax( poQueryResultCards->size()+1 );
     m_dlgProgress.setProgressValue( 0 );
+
+    startSection();
+    addTable();
+
+    addTableRow();
+    addTableCell( tr( "Number of cards" ), "bold" );
+    addTableCell( " : ", "bold" );
+    addTableCell( QString::number( poQueryResultCards->size() ) );
+    m_dlgProgress.increaseProgressValue();
+
+    finishTable();
+    finishSection();
+
+    addSeparator();
 
     startSection();
     addTable();

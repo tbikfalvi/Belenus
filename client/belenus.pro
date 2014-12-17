@@ -62,7 +62,9 @@ FORMS = ../framework/dlgcrud.ui \
     dlgAdvertisement.ui \
     dlgAdvertisementedit.ui \
     dlgcomment.ui \
-    dlgStockProcess.ui
+    dlgStockProcess.ui \
+    dlgInformation.ui
+
 HEADERS = belenus.h \
     ../framework/dbconnection.h \
     ../framework/dlgcrud.h \
@@ -159,6 +161,7 @@ HEADERS = belenus.h \
     dlg/dlgexportimport.h \
     dlg/dlgcomment.h \
     dlg/dlgstockprocess.h \
+    dlg/dlginformation.h \
     edit/dlgpaneltypeedit.h \
     edit/dlgskintypeedit.h \
     edit/dlgpanelgroupedit.h \
@@ -303,6 +306,7 @@ SOURCES = main.cpp \
     dlg/dlgexportimport.cpp \
     dlg/dlgcomment.cpp \
     dlg/dlgstockprocess.cpp \
+    dlg/dlginformation.cpp \
     edit/dlgpaneltypeedit.cpp \
     edit/dlgskintypeedit.cpp \
     edit/dlgpanelgroupedit.cpp \

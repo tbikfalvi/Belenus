@@ -132,10 +132,13 @@ private:
     unsigned int                 m_uiLedgerId;
     unsigned int                 m_uiPaymentMethodId;
     bool                         m_bIsItemInShoppingCart;
+    unsigned int                 m_uiShoppingCartItemId;
     bool                         m_bIsPatientWaiting;
     unsigned int                 m_uiProcessWaitTime;
     bool                         m_bIsNeedToBeCleaned;
     bool                         m_bIsDeviceStopped;
+    bool                         m_bIsTubeReplaceNeeded;
+    QString                      m_qsTransactionId;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
@@ -171,12 +174,13 @@ private:
     void            formatStatusString( QString p_qsStatusText );
     void            formatTimerString( QString p_qsTimerText );
     void            formatNextLengthString( QString p_qsNextLengthText );
-    void            formatInfoString( QString p_qsInfoText );
+    void            formatInfoString();
     void            activateNextStatus();
     void            closeAttendance();
 
 //    QString         convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
     unsigned int    _calculateWaitTime();
+    QString         _transactionId();
 
 signals:
     void            signalPaymentActivated( unsigned int p_uiPanelId );

@@ -47,6 +47,9 @@ public:
 //    QString          convertCurrency( int p_nCurrencyValue, QString p_qsCurrency );
     void             backupDatabase( QWidget *parent );
     bool             isSystemAdmin();
+    bool             isExtendedAdmin();
+    bool             isExtendedOrSystemAdmin();
+    void             showPatientCardInformation( QString p_qsBarcode );
 
 private:
     QApplication    *m_poMainApplication;

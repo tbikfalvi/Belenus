@@ -20,6 +20,9 @@
 #include "general.h"
 #include "belenus.h"
 #include "dlg/dlglogin.h"
+#include "dlg/dlginformation.h"
+#include "db/dbguest.h"
+#include "db/dbpatientcardtype.h"
 
 //====================================================================================
 cGeneral::cGeneral()
@@ -192,6 +195,7 @@ void cGeneral::backupDatabase(QWidget *parent)
 }
 //====================================================================================
 bool cGeneral::isSystemAdmin()
+//------------------------------------------------------------------------------------
 {
     bool    bRet = false;
 
@@ -210,6 +214,122 @@ bool cGeneral::isSystemAdmin()
     }
 
     return bRet;
+}
+//====================================================================================
+bool cGeneral::isExtendedAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+        poQuery->first();
+        QString qsPsw = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
+bool cGeneral::isExtendedOrSystemAdmin()
+//------------------------------------------------------------------------------------
+{
+    bool    bRet = false;
+
+    cDlgLogIn   *poDlgLogIn = new cDlgLogIn();
+
+    if( poDlgLogIn->exec() == QDialog::Accepted )
+    {
+        QSqlQuery *poQuery;
+
+        poQuery = g_poDB->executeQTQuery( "SELECT password FROM users WHERE userId=1" );
+        poQuery->first();
+        QString qsPsw1 = poQuery->value(0).toString();
+
+        poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+        poQuery->first();
+        QString qsPsw2 = poQuery->value(0).toString();
+
+        if( poDlgLogIn->m_qsPassword.compare( qsPsw1 ) == 0 ||
+            poDlgLogIn->m_qsPassword.compare( qsPsw2 ) == 0 )
+        {
+            bRet = true;
+        }
+    }
+
+    return bRet;
+}
+//====================================================================================
+void cGeneral::showPatientCardInformation(QString p_qsBarcode)
+//------------------------------------------------------------------------------------
+{
+    try
+    {
+        cDlgInformation obDlgInformation;
+        cDBPatientCard  obDBPatientCard;
+        cDBGuest        obDBGuest;
+        QString         qsText = "";
+
+        obDBPatientCard.load( p_qsBarcode );
+        obDBPatientCard.synchronizeUnits();
+        obDBGuest.load( obDBPatientCard.patientId() );
+
+        qsText.append( QString("<table>") );
+        qsText.append( QObject::tr("<tr><td width=\"100\"><b>Owner:</b></td><td>%1</td></tr>").arg( obDBGuest.name() ) );
+        qsText.append( QObject::tr("<tr><td><b>Valid:</b></td><td>%1 -> %2</td></tr>").arg( obDBPatientCard.validDateFrom() )
+                                                                             .arg( obDBPatientCard.validDateTo() ) );
+        qsText.append( QObject::tr("<tr><td><b>Units:</b></td><td>%1</td></tr>").arg( obDBPatientCard.units() ) );
+        qsText.append( QString("</table>") );
+
+        QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
+                                   "FROM patientcardunits "
+                                   "WHERE patientCardId=%1 "
+                                   "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
+                                   "AND prepared=0 "
+                                   "AND active=1 "
+                                   "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( obDBPatientCard.id() );
+        QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        qsText.append( QObject::tr("<p><b>Valid time periods:</b><br>") );
+
+        while( poQuery->next() )
+        {
+            QString qsValid;
+            unsigned int uiPCTId = poQuery->value( 1 ).toUInt();
+
+            if( uiPCTId == 0 )
+            {
+                uiPCTId = obDBPatientCard.patientCardTypeId();
+            }
+            if( uiPCTId > 0 )
+            {
+                cDBPatientCardType obDBPatientCardType;
+
+                obDBPatientCardType.load( uiPCTId );
+                obDBPatientCard.isPatientCardCanBeUsed( uiPCTId, &qsValid );
+                qsText.append( QObject::tr("<br><b>%1 units (%2 minutes) (%3) valid on</b>%4")
+                               .arg( poQuery->value( 5 ).toString() )
+                               .arg( poQuery->value( 2 ).toString() )
+                               .arg( obDBPatientCardType.name() )
+                               .arg( qsValid ) );
+            }
+        }
+
+        obDlgInformation.setInformationTitle( obDBPatientCard.barcode() );
+        obDlgInformation.setInformationText( qsText );
+        obDlgInformation.exec();
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
 }
 //====================================================================================
 //QString cGeneral::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )

@@ -177,9 +177,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     action_DeviceSettings->setIcon( QIcon( "./resources/40x40_device_settings.png" ) );
 
-    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
+    action_PatientcardInformation->setIcon( QIcon("./resources/40x40_patientcard_info.png") );
     action_PatientCardAssign->setIcon( QIcon("./resources/40x40_patientcard_assign.png") );
 
+    action_PatientCardSell->setIcon( QIcon("./resources/40x40_patientcard_sell.png") );
     action_ProductTypes->setIcon( QIcon("./resources/40x40_producttype.png") );
     action_ProductActionType->setIcon( QIcon("./resources/40x40_productactiontype.png") );
     action_Products->setIcon( QIcon("./resources/40x40_product.png") );
@@ -261,9 +262,10 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     action_DeviceReset->setEnabled( false );
     action_DeviceSettings->setEnabled( false );
 
-    action_PatientCardSell->setEnabled( false );
+    action_PatientcardInformation->setEnabled( false );
     action_PatientCardAssign->setEnabled( false );
 
+    action_PatientCardSell->setEnabled( false );
     action_PayCash->setEnabled( false );
     action_Cassa->setEnabled( false );
 
@@ -318,39 +320,50 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusCommunication.setEnabled( false );
 
-    if( !g_poPrefs->isFapados() )
-    {
-        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-        m_pbStatusGibbig.setFlat( true );
-        m_pbStatusGibbig.setText( "" );
-        m_pbStatusGibbig.setIconSize( QSize(20,20) );
-        m_pbStatusGibbig.setFixedSize( 22, 22 );
+    m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard.png" ) );
+    m_pbStatusKeyboard.setFlat( true );
+    m_pbStatusKeyboard.setText( "" );
+    m_pbStatusKeyboard.setIconSize( QSize(20,20) );
+    m_pbStatusKeyboard.setFixedSize( 22, 22 );
 
-        connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
-    }
+    connect( &m_pbStatusKeyboard, SIGNAL(clicked()), this, SLOT(on_KeyboardEnabled()) );
+
+    m_pbStatusKeyboard.setEnabled( false );
+
+//    if( !g_poPrefs->isFapados() )
+//    {
+//        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
+//        m_pbStatusGibbig.setFlat( true );
+//        m_pbStatusGibbig.setText( "" );
+//        m_pbStatusGibbig.setIconSize( QSize(20,20) );
+//        m_pbStatusGibbig.setFixedSize( 22, 22 );
+//
+//        connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
+//    }
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
     statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
-    if( !g_poPrefs->isFapados() )
-    {
-        statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
-    }
+    statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
+//    if( !g_poPrefs->isFapados() )
+//    {
+//        statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
+//    }
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
-    g_poGibbig = new cGibbig();
-
-    if( !g_poPrefs->isFapados() )
-    {
-        connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
-        connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
-        connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
-        connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
-
-        g_poGibbig->setHost( g_poPrefs->getServerAddress() );
-        g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
-        g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
-        g_poGibbig->setTimeout( 10000 );
-    }
+//    g_poGibbig = new cGibbig();
+//
+//    if( !g_poPrefs->isFapados() )
+//    {
+//        connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
+//        connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
+//        connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
+//        connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
+//
+//        g_poGibbig->setHost( g_poPrefs->getServerAddress() );
+//        g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
+//        g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
+//        g_poGibbig->setTimeout( 10000 );
+//    }
 
     this->setFocus();
 }
@@ -436,10 +449,10 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
-        if( g_poPrefs->isGibbigEnabled() )
-        {
-            g_poGibbig->gibbigAuthenticate();
-        }
+//        if( g_poPrefs->isGibbigEnabled() )
+//        {
+//            g_poGibbig->gibbigAuthenticate();
+//        }
     }
     catch( cSevException &e )
     {
@@ -791,6 +804,8 @@ void cWndMain::loginUser()
 
     g_obCassa.setEnabled();
     g_obLogger(cSeverity::INFO) << "Cassa enabled" << EOM;
+
+    m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard_enabled.png" ) );
 }
 //====================================================================================
 void cWndMain::logoutUser()
@@ -883,8 +898,19 @@ void cWndMain::logoutUser()
 //====================================================================================
 void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
 {
-    if( !g_obUser.isLoggedIn() || m_bActionProcessing )
+    if( !g_obUser.isLoggedIn() )
+    {
         return;
+    }
+    else if( m_bActionProcessing && ( p_poEvent->key() == Qt::Key_Enter || p_poEvent->key() == Qt::Key_Return ) )
+    {
+        g_obLogger(cSeverity::DEBUG) << "Keypress (ENTER) rejected "
+                                     << "Action processing ["
+                                     << m_bActionProcessing
+                                     << "]"
+                                     << EOM;
+        return;
+    }
 
     m_lblStatusLeft.setStyleSheet( "QLabel {font: normal;}" );
     if( p_poEvent->key() == Qt::Key_Control )
@@ -907,7 +933,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + S" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
-            m_bActionProcessing = true;
+            on_KeyboardDisabled();
             on_action_DeviceStart_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_T && action_DeviceClear->isEnabled() )
@@ -915,7 +941,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + T" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
-            m_bActionProcessing = true;
+            on_KeyboardDisabled();
             on_action_DeviceClear_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F && action_PayCash->isEnabled() )
@@ -923,7 +949,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + F" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
-            m_bActionProcessing = true;
+            on_KeyboardDisabled();
             on_action_PayCash_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_K && action_ShoppingCart->isEnabled() )
@@ -931,7 +957,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + K" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
-            m_bActionProcessing = true;
+            on_KeyboardDisabled();
             on_action_ShoppingCart_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_N && action_DeviceSkipStatus->isEnabled() )
@@ -939,7 +965,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             g_obLogger(cSeverity::INFO) << "User pressed CTRL + N" << EOM;
             m_bCtrlPressed = false;
             m_lblStatusLeft.setText( m_qsStatusText );
-            m_bActionProcessing = true;
+            on_KeyboardDisabled();
             on_action_DeviceSkipStatus_triggered();
         }
         else if( p_poEvent->key() == Qt::Key_F12 )
@@ -959,25 +985,25 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             {
                 case cDBApplicationAction::APPACT_DEVICE_PAYCASH:
                     m_lblStatusLeft.setText( m_qsStatusText );
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     on_action_PayCash_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_START:
                     m_lblStatusLeft.setText( m_qsStatusText );
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     on_action_DeviceStart_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_SKIP:
                     m_lblStatusLeft.setText( m_qsStatusText );
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     on_action_DeviceSkipStatus_triggered();
                     break;
 
                 case cDBApplicationAction::APPACT_DEVICE_CLEAN:
                     m_lblStatusLeft.setText( m_qsStatusText );
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     on_action_DeviceClear_triggered();
                     break;
             }
@@ -994,17 +1020,17 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
             {
                 if( obDlgInputStart.m_bCard )
                 {
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     processInputPatientCard( obDlgInputStart.getEditText() );
                 }
                 else if( obDlgInputStart.m_bProd )
                 {
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     processInputProduct( obDlgInputStart.getEditText() );
                 }
                 else if( obDlgInputStart.m_bTime )
                 {
-                    m_bActionProcessing = true;
+                    on_KeyboardDisabled();
                     processInputTimePeriod( obDlgInputStart.getEditText().toInt() );
                 }
             }
@@ -1020,7 +1046,7 @@ void cWndMain::keyPressEvent( QKeyEvent *p_poEvent )
         else if( p_poEvent->key() == Qt::Key_Space )
         {
             g_obLogger(cSeverity::INFO) << "User pressed SPACE" << EOM;
-            m_bActionProcessing = true;
+            on_KeyboardDisabled();
             on_action_UseDevice_triggered();
         }
     }
@@ -1191,6 +1217,7 @@ void cWndMain::updateToolbar()
             action_ManageDatabase->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) && !mdiPanels->isPanelWorking() );
             action_ManageDevicePanels->setEnabled( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
         menuPatientCard->setEnabled( bIsUserLoggedIn );
+            action_PatientcardInformation->setEnabled( bIsUserLoggedIn );
             action_PatientCardSell->setEnabled( bIsUserLoggedIn );
             action_PatientCardAssign->setEnabled( bIsUserLoggedIn );
             action_PCSaveToDatabase->setEnabled( bIsUserLoggedIn );
@@ -1203,7 +1230,8 @@ void cWndMain::updateToolbar()
 
     menu_View->setEnabled( bIsUserLoggedIn );
         action_Cassa->setEnabled( bIsUserLoggedIn && g_obCassa.isCassaEnabled() );
-        action_Logs->setEnabled( bIsUserLoggedIn );
+action_Logs->setVisible( false );
+        action_Logs->setEnabled( false /*bIsUserLoggedIn*/ );
         action_Hardwaretest->setEnabled( bIsUserLoggedIn );
 
     toolBarPatient->setEnabled( bIsUserLoggedIn );
@@ -1222,6 +1250,12 @@ void cWndMain::updateToolbar()
     action_PatientEmpty->setVisible( g_obGuest.id()>0 );
     action_ManageDatabase->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::ADMIN) );
     action_ManageDevicePanels->setVisible( bIsUserLoggedIn && g_obUser.isInGroup(cAccessGroup::SYSTEM) );
+
+    m_pbStatusKeyboard.setEnabled( bIsUserLoggedIn );
+    if( !bIsUserLoggedIn )
+    {
+        m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard.png" ) );
+    }
 
     showElementsForComponents();
 }
@@ -1458,10 +1492,10 @@ void cWndMain::on_action_Preferences_triggered()
             g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
             m_dlgSecondaryWindow->hide();
         }
-        if( g_poPrefs->isGibbigEnabled() )
-        {
-            g_poGibbig->gibbigAuthenticate();
-        }
+//        if( g_poPrefs->isGibbigEnabled() )
+//        {
+//            g_poGibbig->gibbigAuthenticate();
+//        }
     }
 }
 //====================================================================================
@@ -1608,7 +1642,7 @@ void cWndMain::on_action_DeviceClear_triggered()
             mdiPanels->setUsageFromWaitingQueue();
         }
     }
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceStart_triggered()
@@ -1635,8 +1669,8 @@ void cWndMain::on_action_DeviceStart_triggered()
         mdiPanels->start();
 
         on_action_PatientEmpty_triggered();
-        m_bActionProcessing = false;
     }
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::on_action_DeviceReset_triggered()
@@ -1754,7 +1788,7 @@ void cWndMain::on_action_UseDevice_triggered()
                                               "Are you sure you want to use this patientcard?"),
                                            QMessageBox::Yes,QMessageBox::No ) == QMessageBox::No )
                 {
-                    m_bActionProcessing = false;
+                    on_KeyboardEnabled();
                     return;
                 }
             }
@@ -1786,7 +1820,7 @@ void cWndMain::on_action_UseDevice_triggered()
             mdiPanels->setMainProcessTime( obDlgPanelUse.panelUseSecondsCash(), obDlgPanelUse.panelUsePrice() );
         }
     }
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::on_action_UseDeviceLater_triggered()
@@ -1821,6 +1855,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             inLengthCash = obDlgPanelUse.panelUseSecondsCash();
             inPrice = obDlgPanelUse.panelUsePrice();
         }
+
+        unsigned int uiShoppingCartItemId = 0;
 
         if( inPrice > 0 )
         {
@@ -1862,7 +1898,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             int             inCassaAction   = obDlgCassaAction.exec();
             QString         qsComment       = tr("Using device later");
             bool            bShoppingCart   = false;
-            unsigned int    uiCouponId = 0;
+            unsigned int    uiCouponId      = 0;
 //            cDBDiscount     obDBDiscount;
 
             obDlgCassaAction.cassaResult( &inPayType, &bShoppingCart, &uiCouponId );
@@ -1879,7 +1915,8 @@ void cWndMain::on_action_UseDeviceLater_triggered()
             }
             else if( inCassaAction == QDialog::Accepted && bShoppingCart )
             {
-                mdiPanels->itemAddedToShoppingCart();
+                //mdiPanels->itemAddedToShoppingCart();
+                uiShoppingCartItemId = obDBShoppingCart.id();
             }
         }
 
@@ -1896,6 +1933,7 @@ void cWndMain::on_action_UseDeviceLater_triggered()
         obDBWaitlist.setLicenceId( g_poPrefs->getLicenceId() );
         obDBWaitlist.setPatientCardId( uiPatientCardId );
         obDBWaitlist.setLedgerId( uiLedgerId );
+        obDBWaitlist.setShoppingCartItemId( uiShoppingCartItemId );
         obDBWaitlist.setPanelTypeId( uiPanelTypeId );
         obDBWaitlist.setBarcode( qsBarcode );
         obDBWaitlist.setUnitIds( qsUnitIds );
@@ -2017,6 +2055,8 @@ void cWndMain::on_action_ShoppingCart_triggered()
     cTracer obTrace( "cWndMain::on_action_ShoppingCart_triggered" );
 
     slotOpenShoppingCart( 0 );
+
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
@@ -2037,7 +2077,7 @@ void cWndMain::slotOpenShoppingCart( unsigned int p_uiPanelId )
     m_dlgProgress->hideProgress();
 
     obDlgShoppingCart.exec();
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::slotOpenScheduleTable( unsigned int p_uiPanelId )
@@ -2113,7 +2153,7 @@ void cWndMain::on_action_DeviceSkipStatus_triggered()
     {
         mdiPanels->next();
     }
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::on_action_ValidateSerialKey_triggered()
@@ -2257,16 +2297,19 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
                 }
                 else
                 {
+                    on_KeyboardEnabled();
                     return;
                 }
                 break;
             case 2:
                 m_qsPanelStartBarcode = p_stBarcode;
                 on_action_UseDeviceLater_triggered();
+                on_KeyboardEnabled();
                 return;
                 break;
             case 3:
             default:
+                on_KeyboardEnabled();
                 return;
         }
     }
@@ -2280,7 +2323,7 @@ void cWndMain::processInputPatientCard( QString p_stBarcode )
     {
         on_action_UseDevice_triggered();
     }
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::processInputProduct( QString p_stBarcode )
@@ -2289,7 +2332,7 @@ void cWndMain::processInputProduct( QString p_stBarcode )
 
     on_action_SellProduct_triggered( p_stBarcode );
 
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::processInputTimePeriod( int p_inMinute )
@@ -2312,16 +2355,19 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
                 }
                 else
                 {
+                    on_KeyboardEnabled();
                     return;
                 }
                 break;
             case 2:
                 m_inPanelStartMinute = p_inMinute;
                 on_action_UseDeviceLater_triggered();
+                on_KeyboardEnabled();
                 return;
                 break;
             case 3:
             default:
+                on_KeyboardEnabled();
                 return;
         }
     }
@@ -2335,7 +2381,7 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
     {
         on_action_UseDevice_triggered();
     }
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::on_action_EditActualPatient_triggered()
@@ -2434,10 +2480,10 @@ void cWndMain::on_action_PayCash_triggered()
     }
     else if( inCassaAction == QDialog::Accepted && bShoppingCart )
     {
-        mdiPanels->itemAddedToShoppingCart();
+        //mdiPanels->itemAddedToShoppingCart();
         mdiPanels->cashPayed( 0 );
     }
-    m_bActionProcessing = false;
+    on_KeyboardEnabled();
 }
 //====================================================================================
 void cWndMain::processDeviceUsePayment( unsigned int p_uiPanelId, unsigned int p_uiLedgerId, int p_nPaymentType )
@@ -3099,7 +3145,7 @@ void cWndMain::on_action_Export_triggered()
 
 //    obDlgExportImport.exec();
 }
-
+/*
 void cWndMain::on_GibbigErrorOccured()
 {
     m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
@@ -3169,7 +3215,7 @@ void cWndMain::on_GibbigIconClicked()
         }
     }
 }
-
+*/
 void cWndMain::showAdWindows()
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT advertisementId FROM advertisements WHERE active=1" ) );
@@ -3274,3 +3320,31 @@ void cWndMain::_resetCommunication()
 {
     m_nCommResetStep = 1;
 }
+
+void cWndMain::on_action_PatientcardInformation_triggered()
+{
+    cDlgInputStart  obDlgInputStart( this );
+
+    obDlgInputStart.m_bCard = true;
+    obDlgInputStart.init();
+
+    m_dlgProgress->hideProgress();
+
+    if( obDlgInputStart.exec() == QDialog::Accepted )
+    {
+        g_obGen.showPatientCardInformation( obDlgInputStart.getEditText() );
+    }
+}
+
+void cWndMain::on_KeyboardEnabled()
+{
+    m_bActionProcessing = false;
+    m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard_enabled.png" ) );
+}
+
+void cWndMain::on_KeyboardDisabled()
+{
+    m_bActionProcessing = true;
+    m_pbStatusKeyboard.setIcon( QIcon( "./resources/40x40_keyboard_locked.png" ) );
+}
+

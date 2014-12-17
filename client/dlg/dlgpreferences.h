@@ -47,9 +47,13 @@ private slots:
     void on_pbChangeBinaryLocation_clicked();
     void on_pbBackupLocation_clicked();
     void on_cmbDateFormat_currentIndexChanged(const QString &arg1);
-    void on_pbTestGibbig_clicked();
+//    void on_pbTestGibbig_clicked();
     void on_chkEnableGibbig_clicked(bool checked);
     void on_btnSecondaryFrame_clicked();
+    void on_pbModifyDevAdminPsw_clicked();
+    void on_pbCancelModifyPsw_clicked();
+    void on_pbCaptionBackgroundActive_clicked();
+    void on_pbTextColorActive_clicked();
 };
 
 #endif

@@ -146,15 +146,19 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_inCardTimeRemains     = 0;
 
     m_uiPaymentMethodId     = 0;
+    m_uiShoppingCartItemId  = 0;
 
     m_bIsItemInShoppingCart = false;
     m_bIsPatientWaiting     = false;
     m_bIsNeedToBeCleaned    = false;
     m_bIsDeviceStopped      = false;
+    m_bIsTubeReplaceNeeded  = false;
 
-    m_vrPatientCard.uiPatientCardId  = 0;
-    m_vrPatientCard.qslUnitIds       = QStringList();
-    m_vrPatientCard.inUnitTime       = 0;
+    m_qsTransactionId               = "";
+
+    m_vrPatientCard.uiPatientCardId = 0;
+    m_vrPatientCard.qslUnitIds      = QStringList();
+    m_vrPatientCard.inUnitTime      = 0;
 
 //    m_uiAttendanceId        = 0;
     m_uiLedgerId            = 0;
@@ -164,6 +168,11 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
     m_pDBLedgerDevice->createNew();
 
     load( p_uiPanelId );
+
+    if( !g_poPrefs->isPanelSterile( m_uiId ) )
+    {
+        m_bIsNeedToBeCleaned = true;
+    }
 
     inactivate();
     displayStatus();
@@ -213,11 +222,12 @@ void cFrmPanel::start()
 {
     if( m_inTimerId != 0 )
     {
-        g_obLogger(cSeverity::INFO) << "Device ID[" << m_uiId-1 << "] already started." << EOM;
+        g_obLogger(cSeverity::INFO) << "Device Id [" << m_uiId-1 << "] already started." << EOM;
         return;
     }
 
     m_bIsDeviceStopped = false;
+    icoPanelStart->setVisible( false );
     if( m_inMainProcessLength == 0 )
         return;
 
@@ -237,7 +247,20 @@ void cFrmPanel::start()
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
 
-    g_obLogger(cSeverity::INFO) << "Start device ID[" << m_uiId-1 << "] Time[" << m_inMainProcessLength << "]" << EOM;
+    g_obLogger(cSeverity::INFO) << "Device started Id ["
+                                << m_uiId
+                                << "] TrId ["
+                                << _transactionId()
+                                << "] Time ["
+                                << m_inMainProcessLength/60
+                                << "] CardIds ["
+                                << m_vrPatientCard.qslUnitIds.join("|")
+                                << "] CashLength ["
+                                << m_inCashLength/60
+                                << "] CardLength ["
+                                << (m_inMainProcessLength-m_inCashLength)/60
+                                << "]"
+                                << EOM;
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
@@ -263,6 +286,15 @@ void cFrmPanel::reset()
 //====================================================================================
 void cFrmPanel::clear()
 {
+    cTracer obTrace( "cFrmPanel::clear" );
+
+    g_obLogger(cSeverity::INFO) << "Device stopped Id ["
+                                << m_uiId
+                                << "] TrId ["
+                                << _transactionId()
+                                << "]"
+                                << EOM;
+
     if( !isMainProcess() )
     {
         m_uiStatus  = 0;
@@ -276,9 +308,12 @@ void cFrmPanel::clear()
     {
         cDBPatientcardUnit obDBPatientcardUnit;
 
-        obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
-        obDBPatientcardUnit.setPrepared( false );
-        obDBPatientcardUnit.save();
+        if( m_vrPatientCard.qslUnitIds.at(i).toInt() > 0 )
+        {
+            obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+            obDBPatientcardUnit.setPrepared( false );
+            obDBPatientcardUnit.save();
+        }
     }
 
     m_vrPatientCard.uiPatientCardId  = 0;
@@ -293,32 +328,34 @@ void cFrmPanel::clear()
     emit signalSetCounterText( m_uiId-1, "" );
     emit signalSetWaitTime( m_uiId-1, 0 );
 
+    if( m_uiShoppingCartItemId > 0 )
+    {
+        g_obLogger(cSeverity::INFO) << "Remove payment from shopping cart" << EOM;
+        QString qsQuery = QString( "SELECT shoppingCartItemId FROM shoppingcartitems WHERE shoppingCartItemId=%1" ).arg(m_uiShoppingCartItemId);
+
+        QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        if( poQuery->first() )
+        {
+            cDBShoppingCart obDBShoppingCart;
+
+            obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
+            obDBShoppingCart.remove();
+            itemRemovedFromShoppingCart();
+        }
+        m_uiShoppingCartItemId = 0;
+    }
+
     if( m_inCashToPay == 0 )
     {
         if( m_pDBLedgerDevice->cash() > 0 )
         {
             g_obLogger(cSeverity::INFO) << "Device usage already payed, revoke payment" << EOM;
-            int inPriceTotal = m_pDBLedgerDevice->cash();
+//            int inPriceTotal = m_pDBLedgerDevice->cash();
 
-            if( isItemInShoppingCart() )
+            if( m_uiLedgerId > 0 )
             {
-                g_obLogger(cSeverity::INFO) << "Payment removed from shopping cart" << EOM;
-                QString qsQuery = QString( "SELECT shoppingCartItemId FROM shoppingcartitems WHERE panelId =%1 AND itemSumPrice=%2" ).arg(m_uiId).arg(inPriceTotal);
-
-                QSqlQuery   *poQuery = g_poDB->executeQTQuery( qsQuery );
-
-                if( poQuery->first() )
-                {
-                    cDBShoppingCart obDBShoppingCart;
-
-                    obDBShoppingCart.load( poQuery->value( 0 ).toUInt() );
-                    obDBShoppingCart.remove();
-                    itemRemovedFromShoppingCart();
-                }
-            }
-            else if( m_uiLedgerId > 0 )
-            {
-                g_obLogger(cSeverity::INFO) << "Payment revoked by ledgerId: " << m_uiLedgerId << EOM;
+                g_obLogger(cSeverity::DEBUG) << "Payment revoked by ledgerId: " << m_uiLedgerId << EOM;
                 g_obCassa.cassaProcessRevokeDeviceUse( m_uiLedgerId );
             }
         }
@@ -330,12 +367,14 @@ void cFrmPanel::clear()
     m_uiCurrentPatient      = 0;
     m_uiLedgerId            = 0;
     m_uiPaymentMethodId     = 0;
+    m_uiShoppingCartItemId  = 0;
+    m_qsTransactionId       = "";
     m_pDBLedgerDevice->createNew();
 
-    if( m_qsInfo.compare( tr("NOT STERILE") ) )
-    {
-        setTextInformation( "" );
-    }
+    setTextInformation( "" );
+
+    m_bIsDeviceStopped = false;
+    icoPanelStart->setVisible( false );
 
     displayStatus();
 }
@@ -349,10 +388,8 @@ void cFrmPanel::clean()
 //====================================================================================
 {
     m_bIsNeedToBeCleaned = false;
-    if( m_qsInfo.compare( tr("NOT STERILE") ) == 0 )
-    {
-        setTextInformation( "", true );
-    }
+    displayStatus();
+    g_poPrefs->setPanelSterile( m_uiId, true );
 }
 //====================================================================================
 void cFrmPanel::inactivate()
@@ -396,7 +433,16 @@ int cFrmPanel::mainProcessTime()
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength )
 {
-    g_obLogger(cSeverity::INFO) << "Main process time set from [" << m_inMainProcessLength << "] to [" << m_inMainProcessLength + p_inLength << "]" << EOM;
+    g_obLogger(cSeverity::INFO) << "Device set main time Id ["
+                                << m_uiId
+                                << "] TrId ["
+                                << _transactionId()
+                                << "] from ["
+                                << m_inMainProcessLength/60
+                                << "] to ["
+                                << (m_inMainProcessLength+p_inLength)/60
+                                << "]"
+                                << EOM;
     m_inMainProcessLength += p_inLength;
     m_pDBLedgerDevice->setTimeReal( m_pDBLedgerDevice->timeReal()+p_inLength );
 
@@ -413,7 +459,16 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
         return;
     }
 
-    g_obLogger(cSeverity::INFO) << "Device prepared with cash usage" << EOM;
+    g_obLogger(cSeverity::INFO) << "Device set cash time Id ["
+                                << m_uiId
+                                << "] TrId ["
+                                << _transactionId()
+                                << "] time ["
+                                << p_inLength/60
+                                << "] cash ["
+                                << p_inPrice
+                                << "]"
+                                << EOM;
 
     int inPriceTotal = p_inPrice;
 
@@ -432,6 +487,17 @@ void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const QStringList p_qslUnitIds, const int p_inLength )
 {
+    g_obLogger(cSeverity::INFO) << "Device set card time Id ["
+                                << m_uiId
+                                << "] TrId ["
+                                << _transactionId()
+                                << "] time ["
+                                << p_inLength/60
+                                << "] units ["
+                                << p_qslUnitIds.join("|")
+                                << "]"
+                                << EOM;
+
     m_vrPatientCard.uiPatientCardId  = p_uiPatientCardId;
     m_vrPatientCard.qslUnitIds       = p_qslUnitIds;
     m_vrPatientCard.inUnitTime       = p_inLength;
@@ -441,13 +507,19 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
     {
         cDBPatientcardUnit obDBPatientcardUnit;
 
-        obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
-        obDBPatientcardUnit.setPanelId( m_uiId );
-        obDBPatientcardUnit.setPrepared( true );
-        obDBPatientcardUnit.save();
+        if( m_vrPatientCard.qslUnitIds.at(i).toInt() > 0 )
+        {
+            obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+            obDBPatientcardUnit.setPanelId( m_uiId );
+            obDBPatientcardUnit.setPrepared( true );
+            obDBPatientcardUnit.save();
+        }
     }
 
-    m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
+    if( p_uiPatientCardId > 1 )
+    {
+       m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
+    }
     m_pDBLedgerDevice->setTimeCard( p_inLength );
 
     setMainProcessTime( p_inLength );
@@ -483,7 +555,18 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     if( g_poHardware->isHardwareStopped( m_uiId-1 ) )
     {
-        formatStatusString( QString( "%1<br>!! %2 !!" ).arg( m_obStatuses.at( m_uiStatus )->name() ).arg( tr("PAUSED") ) );
+        QString qsStatus = m_obStatuses.at( m_uiStatus )->name();
+
+        if( g_poPrefs->isStopInLine() )
+        {
+            qsStatus.append( " " );
+        }
+        else
+        {
+            qsStatus.append( "<br>" );
+        }
+        qsStatus.append( QString( "!! %1 !!" ).arg( tr("PAUSED") ) );
+        formatStatusString( qsStatus );
         m_bIsDeviceStopped = true;
     }
     else
@@ -524,7 +607,14 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     else
     {
-        icoPanelStart->setVisible( false );
+        if( m_bIsDeviceStopped )
+        {
+            icoPanelStart->setVisible( true );
+        }
+        else
+        {
+            icoPanelStart->setVisible( false );
+        }
     }
     icoPanelNext->setVisible( isStatusCanBeSkipped() );
     icoPanelStop->setVisible( isMainProcess() );
@@ -552,9 +642,15 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             lblTitle->setText( tr("Panel Not Found in Database") );
         }
 
+        m_bIsTubeReplaceNeeded = false;
         prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
         prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
         g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+        if( poQuery->value(2).toInt()/3600 >= prgUsageMonitor->maximum() )
+        {
+            prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
+            m_bIsTubeReplaceNeeded = true;
+        }
 
         delete poQuery;
         poQuery = NULL;
@@ -577,6 +673,8 @@ void cFrmPanel::load( const unsigned int p_uiPanelId )
             m_obStatusSettings.push_back( poStatusSettings );
         }
 
+        formatInfoString();
+
         delete poQuery;
     }
     catch( cSevException &e )
@@ -594,11 +692,18 @@ void cFrmPanel::reload()
         poQuery = g_poDB->executeQTQuery( QString( "SELECT panelTypeId, title, workTime, maxWorkTime FROM panels WHERE panelId=%1" ).arg( m_uiId ) );
         if( poQuery->size() )
         {
+            m_bIsTubeReplaceNeeded = false;
             poQuery->first();
             lblTitle->setText( poQuery->value( 1 ).toString() );
             prgUsageMonitor->setMaximum( poQuery->value(3).toInt() );
             prgUsageMonitor->setValue( poQuery->value(2).toInt()/3600 );
             g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << poQuery->value( 1 ).toString() << "] is \'" << poQuery->value(2).toInt()/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+            if( poQuery->value(2).toInt()/3600 >= prgUsageMonitor->maximum() )
+            {
+                prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
+                m_bIsTubeReplaceNeeded = true;
+            }
+            formatInfoString();
         }
         delete poQuery;
     }
@@ -659,7 +764,7 @@ void cFrmPanel::displayStatus()
     formatStatusString( m_qsStatus );
     formatTimerString( m_qsTimer );
     formatNextLengthString( m_qsTimerNextStatus );
-    formatInfoString( m_qsInfo );
+    formatInfoString();
 
     if( m_inCashToPay < 1 )
         emit signalSetInfoText( m_uiId-1, m_qsInfo );
@@ -681,7 +786,14 @@ void cFrmPanel::displayStatus()
     }
     else
     {
-        icoPanelStart->setVisible( false );
+        if( m_bIsDeviceStopped )
+        {
+            icoPanelStart->setVisible( true );
+        }
+        else
+        {
+            icoPanelStart->setVisible( false );
+        }
     }
     icoPanelNext->setVisible( isStatusCanBeSkipped() );
     icoPanelStop->setVisible( isMainProcess() );
@@ -735,8 +847,18 @@ void cFrmPanel::formatNextLengthString( QString p_qsNextLengthText )
     lblNextStatusLen->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->nextFontColor()).name()).arg(p_qsNextLengthText) );
 }
 //====================================================================================
-void cFrmPanel::formatInfoString( QString p_qsInfoText )
+void cFrmPanel::formatInfoString()
 {
+    g_obLogger(cSeverity::DEBUG) << "PanelId: "
+                                 << m_uiId
+                                 << " Tube: "
+                                 << m_bIsTubeReplaceNeeded
+                                 << " Clean: "
+                                 << m_bIsNeedToBeCleaned
+                                 << " Text: "
+                                 << m_qsInfo
+                                 << EOM;
+
     QFont   obFont;
 
     obFont = lblInfo->font();
@@ -744,9 +866,34 @@ void cFrmPanel::formatInfoString( QString p_qsInfoText )
     obFont.setPixelSize( m_obStatusSettings.at(m_uiStatus)->infoFontSize() );
     obFont.setBold( true );
 
+    QString qsInfoText = "";
+
+    if( m_bIsTubeReplaceNeeded )
+    {
+        qsInfoText.append( g_poPrefs->getPanelTextTubeReplace() );
+    }
+
+    if( m_bIsNeedToBeCleaned )
+    {
+        if( qsInfoText.length() > 0 ) qsInfoText.append( "<br>" );
+        qsInfoText.append( g_poPrefs->getPanelTextSteril() );
+    }
+
+    if( m_qsInfo.length() > 0 )
+    {
+        if( qsInfoText.length() > 0 ) qsInfoText.append( "<br>" );
+        qsInfoText.append( m_qsInfo );
+    }
+
     lblInfo->setAlignment( Qt::AlignCenter );
     lblInfo->setFont( obFont );
-    lblInfo->setText( QString("<font color=%1>%2</font>").arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name()).arg(p_qsInfoText) );
+    lblInfo->setText( QString("<font color=%1>%2</font>")
+                      .arg(QColor( m_obStatusSettings.at(m_uiStatus)->infoFontColor()).name())
+                      .arg(qsInfoText) );
+
+    g_obLogger(cSeverity::DEBUG) << "Info: "
+                                 << qsInfoText
+                                 << EOM;
 }
 //====================================================================================
 /*QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
@@ -781,8 +928,8 @@ void cFrmPanel::activateNextStatus()
     {
         // Kezeles vege
         closeAttendance();
-        setTextInformation( tr( "NOT STERILE" ) );
         m_bIsNeedToBeCleaned = true;
+        g_poPrefs->setPanelSterile( m_uiId, false );
     }
 
     m_uiStatus++;
@@ -842,20 +989,21 @@ void cFrmPanel::closeAttendance()
     }
     m_pDBLedgerDevice->save();
 
-    if( m_uiLedgerId > 0 )
-    {
-//        g_obCassa.cassaConnectLedgerWithLedgerDevice( m_uiLedgerId, m_pDBLedgerDevice->id() );
-        m_uiLedgerId = 0;
-    }
-
     QSqlQuery *poQuery;
     poQuery = g_poDB->executeQTQuery( QString( "SELECT workTime FROM panels WHERE panelId=%1" ).arg(m_uiId) );
     poQuery->first();
 
     unsigned int uiWorkTime = poQuery->value( 0 ).toUInt() + m_pDBLedgerDevice->timeReal();
 
+    m_bIsTubeReplaceNeeded = false;
     prgUsageMonitor->setValue( uiWorkTime/3600 );
     g_obLogger(cSeverity::DEBUG) << "Worktime for panel [" << lblTitle->text() << "] is \'" << uiWorkTime/3600 << "\' [" << prgUsageMonitor->minimum() << "-" << prgUsageMonitor->maximum() << "]" << EOM;
+    if( prgUsageMonitor->value() >= prgUsageMonitor->maximum() )
+    {
+        prgUsageMonitor->setValue( prgUsageMonitor->maximum() );
+        m_bIsTubeReplaceNeeded = true;
+        formatInfoString();
+    }
 
     QString  qsQuery;
 
@@ -910,20 +1058,32 @@ void cFrmPanel::closeAttendance()
         obDBPatientCardHistory.save();
     }
 
-    m_vrPatientCard.uiPatientCardId  = 0;
-    m_vrPatientCard.qslUnitIds       = QStringList();
-    m_vrPatientCard.inUnitTime       = 0;
-    m_inCashToPay                    = 0;
-    m_inCashNetToPay                 = 0;
-    m_inCashDiscountToPay            = 0;
-    m_uiPaymentMethodId              = 0;
-    m_uiCurrentPatient               = 0;
-    m_pDBLedgerDevice->createNew();
+    g_obLogger(cSeverity::INFO) << "Device action finished Id ["
+                                << m_uiId
+                                << "] TrId ["
+                                << _transactionId()
+                                << "] ledgerId ["
+                                << m_uiLedgerId
+                                << "] ledgerDeviceId ["
+                                << m_pDBLedgerDevice->id()
+                                << "]"
+                                << EOM;
 
-    m_inMainProcessLength            = 0;
-    m_inCashLength                   = 0;
-    m_inCashTimeRemains              = 0;
-    m_inCardTimeRemains              = 0;
+    m_vrPatientCard.uiPatientCardId = 0;
+    m_vrPatientCard.qslUnitIds      = QStringList();
+    m_vrPatientCard.inUnitTime      = 0;
+    m_inCashToPay                   = 0;
+    m_inCashNetToPay                = 0;
+    m_inCashDiscountToPay           = 0;
+    m_uiPaymentMethodId             = 0;
+    m_uiCurrentPatient              = 0;
+    m_uiLedgerId                    = 0;
+    m_inMainProcessLength           = 0;
+    m_inCashLength                  = 0;
+    m_inCashTimeRemains             = 0;
+    m_inCardTimeRemains             = 0;
+    m_qsTransactionId               = "";
+    m_pDBLedgerDevice->createNew();
 }
 //====================================================================================
 void cFrmPanel::getPanelCashData( unsigned int *p_uiPatientId, int *p_inPrice, int *p_inDiscount )
@@ -1108,8 +1268,13 @@ void cFrmPanel::setUsageFromWaitingQueue()
                 }
             }
 
+            m_uiShoppingCartItemId = obDBWaitlist.ShoppingCartItemId();
+
             setMainProcessTime( obDBWaitlist.LengthCash(), obDBWaitlist.UsePrice() );
-            setMainProcessTime( obDBWaitlist.PatientCardId(), obDBWaitlist.UnitIds().split('|'), obDBWaitlist.LengthCard() );
+            if( obDBWaitlist.UnitIds().length() > 0 )
+            {
+                setMainProcessTime( obDBWaitlist.PatientCardId(), obDBWaitlist.UnitIds().split('|'), obDBWaitlist.LengthCard() );
+            }
 
             if( obDBWaitlist.LedgerId() > 0 )
             {
@@ -1162,7 +1327,6 @@ unsigned int cFrmPanel::_calculateWaitTime()
 }
 //====================================================================================
 void cFrmPanel::setTextInformation(QString p_qsInfoText, bool p_bCallDisplayStatus)
-//====================================================================================
 {
     cTracer obTrace( "cFrmPanel::setTextInformation" );
 
@@ -1170,5 +1334,16 @@ void cFrmPanel::setTextInformation(QString p_qsInfoText, bool p_bCallDisplayStat
 
     if( p_bCallDisplayStatus )
         displayStatus();
+}
+//====================================================================================
+QString cFrmPanel::_transactionId()
+//------------------------------------------------------------------------------------
+{
+    if( m_qsTransactionId.length() == 0 )
+    {
+        m_qsTransactionId = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+    }
+
+    return m_qsTransactionId;
 }
 //====================================================================================

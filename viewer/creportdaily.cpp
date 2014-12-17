@@ -1064,7 +1064,6 @@ int cReportDaily::_countPanelUse(QString p_qsCassaId, unsigned int p_uiPanelgrou
         qsCond = "";
     }
 
-
     qsQuery = QString("SELECT %1 FROM "
                       "ledgerdevice, panels WHERE "
                       "ledgerdevice.panelId = panels.panelId AND "

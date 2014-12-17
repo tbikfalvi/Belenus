@@ -98,17 +98,11 @@
           </item>
           <item>
            <widget class="QComboBox" name="cmbProductCount">
-            <property name="minimumSize">
-             <size>
-              <width>41</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>41</width>
-              <height>16777215</height>
-             </size>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
            </widget>
           </item>

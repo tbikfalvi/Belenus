@@ -64,17 +64,22 @@ void cPreferences::init()
     m_nPatientCardPartnerPrice      = 0;
     m_nPatientCardPartnerPriceVat   = 0;
 
-    m_qsDirDbBinaries       = "";
-    m_qsDirDbBackup         = "";
-    m_bForceBackupDatabase  = false;
-    m_bBackupDatabase       = false;
-    m_nBackupDatabaseType   = 0;
-    m_qsBackupDatabaseDays  = "";
+    m_qsDirDbBinaries               = "";
+    m_qsDirDbBackup                 = "";
+    m_bForceBackupDatabase          = false;
+    m_bBackupDatabase               = false;
+    m_nBackupDatabaseType           = 0;
+    m_qsBackupDatabaseDays          = "";
 
-    m_qsDateFormat          = "yyyy-MM-dd";
+    m_qsDateFormat                  = "yyyy-MM-dd";
 
-    m_bFapados              = false;
-    m_nFapados              = 0;
+    m_bFapados                      = false;
+    m_nFapados                      = 0;
+
+    m_bIsStopInLine                 = true;
+
+    m_qsPanelTextSteril             = "";
+    m_qsPanelTextTubeReplace        = "";
 }
 
 void cPreferences::loadConfFileSettings()
@@ -112,9 +117,14 @@ void cPreferences::loadConfFileSettings()
         m_bIsSecondaryCaptionVisible    = obPrefFile.value( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible"), true ).toBool();
 
         m_qsActiveCaptionBackground     = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionBackground" ), "#000099" ).toString();
-        m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#000000" ).toString();
+        m_qsActiveCaptionColor          = obPrefFile.value( QString::fromAscii( "Panels/ActiveCaptionColor" ), "#FFFFFF" ).toString();
         m_qsInactiveCaptionBackground   = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionBackground" ), "#000022" ).toString();
-        m_qsInactiveCaptionColor        = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionColor" ), "#000000" ).toString();
+        m_qsInactiveCaptionColor        = obPrefFile.value( QString::fromAscii( "Panels/InactiveCaptionColor" ), "#FFFFFF" ).toString();
+        m_qsSecondaryCaptionBackground  = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), "#000099" ).toString();
+        m_qsSecondaryCaptionColor       = obPrefFile.value( QString::fromAscii( "Panels/SecondaryCaptionColor" ), "#FFFFFF" ).toString();
+        m_bIsStopInLine                 = obPrefFile.value( QString::fromAscii( "Panels/IsStopInLine"), true ).toBool();
+        m_qsPanelTextSteril             = obPrefFile.value( QString::fromAscii( "Panels/TextSterile"), QObject::tr( " NOT STERILE " ) ).toString();
+        m_qsPanelTextTubeReplace        = obPrefFile.value( QString::fromAscii( "Panels/TextTubeReplace"), QObject::tr( " TUBE REPLACEMENT NEEDED " ) ).toString();
 
         m_qpSecondaryPosition = QPoint( nLeft, nTop );
         m_qsSecondarySize = QSize( nWidth, nHeight );
@@ -277,6 +287,11 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Panels/ActiveCaptionColor" ), m_qsActiveCaptionColor );
     obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionBackground" ), m_qsInactiveCaptionBackground );
     obPrefFile.setValue( QString::fromAscii( "Panels/InactiveCaptionColor" ), m_qsInactiveCaptionColor );
+    obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
+    obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
+    obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
+    obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
+    obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
 
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/FrameColor" ), m_qsSecondaryFrame );
     obPrefFile.setValue( QString::fromAscii( "SecondaryWindow/IsSecondaryCaptionVisible" ), m_bIsSecondaryCaptionVisible );
@@ -1042,6 +1057,38 @@ QString cPreferences::getInactiveCaptionColor() const
     return m_qsInactiveCaptionColor;
 }
 
+void cPreferences::setSecondaryCaptionBackground( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsSecondaryCaptionBackground = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionBackground" ), m_qsSecondaryCaptionBackground );
+    }
+}
+
+QString cPreferences::getSecondaryCaptionBackground() const
+{
+    return m_qsSecondaryCaptionBackground;
+}
+
+void cPreferences::setSecondaryCaptionColor( const QString &p_qsColor, bool p_boSaveNow )
+{
+    m_qsSecondaryCaptionColor = p_qsColor;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/SecondaryCaptionColor" ), m_qsSecondaryCaptionColor );
+    }
+}
+
+QString cPreferences::getSecondaryCaptionColor() const
+{
+    return m_qsSecondaryCaptionColor;
+}
+
 void cPreferences::setPatientCardLostPrice( const int p_inPrice )
 {
     m_nPatientCardLostPrice = p_inPrice;
@@ -1392,3 +1439,100 @@ bool cPreferences::isFapados()
     return m_bFapados;
 }
 
+void cPreferences::setPanelSterile(int p_nPanelId, bool p_bSterile)
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    obPrefFile.setValue( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), p_bSterile );
+}
+
+bool cPreferences::isPanelSterile(int p_nPanelId)
+{
+    QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+
+    return obPrefFile.value( QString("PanelSettings/Panel%1_Sterile").arg( p_nPanelId ), true ).toBool();
+}
+
+void cPreferences::createExtendedAdminPassword( const QString &p_qsExtendedAdminPassword )
+{
+    g_poDB->executeQTQuery( QString( "INSERT INTO settings ( settingId, identifier, value ) VALUES ( NULL , 'ADMIN_EXT_PASSWORD', '%1' ) " ).arg( p_qsExtendedAdminPassword ) );
+}
+
+void cPreferences::setExtendedAdminPassword( const QString &p_qsExtendedAdminPassword )
+{
+    g_poDB->executeQTQuery( QString( "UPDATE settings SET value='%1' WHERE identifier='ADMIN_EXT_PASSWORD' " ).arg( p_qsExtendedAdminPassword ) );
+}
+
+bool cPreferences::checkExtendedAdminPassword(const QString &p_qsExtendedAdminPassword) const
+{
+    bool bRet = false;
+
+    QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT value FROM settings WHERE identifier='ADMIN_EXT_PASSWORD' " );
+
+    if( p_qsExtendedAdminPassword.length() == 0 )
+    {
+        if( poQuery->size() > 0 )
+            return true;
+        else
+            return false;
+    }
+
+    poQuery->first();
+
+    QString qsPassword = poQuery->value( 0 ).toString();
+
+    if( qsPassword.compare( p_qsExtendedAdminPassword ) == 0 )
+    {
+        bRet = true;
+    }
+
+    return bRet;
+}
+
+void cPreferences::setStopInLine( bool p_bStopInLine, bool p_boSaveNow )
+{
+    m_bIsStopInLine = p_bStopInLine;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/IsStopInLine"), m_bIsStopInLine );
+    }
+}
+
+bool cPreferences::isStopInLine()
+{
+    return m_bIsStopInLine;
+}
+
+void cPreferences::setPanelTextSteril( const QString &p_qsPanelTextSteril, bool p_boSaveNow )
+{
+    m_qsPanelTextSteril = p_qsPanelTextSteril;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/TextSterile"), m_qsPanelTextSteril );
+    }
+}
+
+QString cPreferences::getPanelTextSteril() const
+{
+    return m_qsPanelTextSteril;
+}
+
+void cPreferences::setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow )
+{
+    m_qsPanelTextTubeReplace = p_qsPanelTextTubeReplace;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Panels/TextTubeReplace"), m_qsPanelTextTubeReplace );
+    }
+}
+
+QString cPreferences::getPanelTextTubeReplace() const
+{
+    return m_qsPanelTextTubeReplace;
+}
