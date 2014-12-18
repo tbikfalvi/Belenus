@@ -1511,32 +1511,32 @@ Time value can not be greater than %1 minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="69"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="71"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="70"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="72"/>
         <source>Are you sure you want to execute the action?
 Please note the action can not be revoked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="146"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="174"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="217"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="152"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="249"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="292"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="147"/>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="175"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="153"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="250"/>
         <source>The action successfully finished.
 Number of affected records: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlg/dlgmanagedatabase.cpp" line="218"/>
+        <location filename="dlg/dlgmanagedatabase.cpp" line="293"/>
         <source>The action successfully finished.
 Number of affected records:
 PatientCardUnits -&gt; %1 records
@@ -7552,26 +7552,31 @@ Do you want to save them as new into the database?</source>
     </message>
     <message>
         <location filename="dlgmanagedatabase.ui" line="49"/>
+        <source>Delete inactive patientcards and all related history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlgmanagedatabase.ui" line="56"/>
         <source>Delete inactive patientcard types that is not assigned to any patientcard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="69"/>
+        <location filename="dlgmanagedatabase.ui" line="76"/>
         <source>Ledger related actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="76"/>
+        <location filename="dlgmanagedatabase.ui" line="83"/>
         <source>Delete ledger entries and cassa actions before date ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="121"/>
+        <location filename="dlgmanagedatabase.ui" line="128"/>
         <source>Execute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dlgmanagedatabase.ui" line="140"/>
+        <location filename="dlgmanagedatabase.ui" line="147"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>

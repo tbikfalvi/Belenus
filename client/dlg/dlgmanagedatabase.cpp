@@ -23,6 +23,7 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
 
     connect( rbUpdatePCUnitType,        SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
     connect( rbDeactivatePCs,           SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
+    connect( rbDeleteInactivePCs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
     connect( rbDeleteNotUsedPCTs,       SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
     connect( rbDeleteLedgerBeforeDate,  SIGNAL(clicked()), this, SLOT(slotUpdateExecuteButton()) );
 
@@ -44,6 +45,7 @@ void cDlgManageDatabase::slotUpdateExecuteButton()
 {
     if( rbUpdatePCUnitType->isChecked() ||
         rbDeactivatePCs->isChecked() ||
+        rbDeleteInactivePCs->isChecked() ||
         rbDeleteNotUsedPCTs->isChecked() ||
         rbDeleteLedgerBeforeDate->isChecked() )
     {
@@ -78,6 +80,10 @@ void cDlgManageDatabase::on_pbExecute_clicked()
         else if( rbDeactivatePCs->isChecked() )
         {
             _actionDeactivatePC();
+        }
+        else if( rbDeleteInactivePCs->isChecked() )
+        {
+            _actionDeleteInactivePC();
         }
         else if( rbDeleteNotUsedPCTs->isChecked() )
         {
@@ -153,11 +159,80 @@ void cDlgManageDatabase::_actionDeactivatePC()
     }
 }
 
+void cDlgManageDatabase::_actionDeleteInactivePC()
+{
+    try
+    {
+        QStringList qslCardId;
+        QString qsQuery = QString( "SELECT patientCardId FROM patientcards WHERE "
+                                   "patientCardTypeId=0 AND "
+                                   "patientId=0 AND "
+                                   "units=0 AND "
+                                   "amount=0 AND "
+                                   "timeLeft=0 AND "
+                                   "pincode!='LOST' AND "
+                                   "active=0 "
+                                  );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( qsQuery );
+
+        while( poQuery->next() )
+        {
+            qslCardId.append( poQuery->value(0).toString() );
+        }
+
+        for( int i=0; i<qslCardId.count(); i++ )
+        {
+            unsigned int uiId = qslCardId.at(i).toUInt();
+
+            qsQuery = QString( "DELETE FROM connectPatientWithCard WHERE "
+                               "patientCardId=%1 " ).arg( uiId );
+            g_poDB->executeQTQuery( qsQuery );
+
+            qsQuery = QString( "DELETE FROM patientCardHistories WHERE "
+                               "patientCardId=%1 " ).arg( uiId );
+            g_poDB->executeQTQuery( qsQuery );
+
+            qsQuery = QString( "DELETE FROM patientCardUnits WHERE "
+                               "patientCardId=%1 " ).arg( uiId );
+            g_poDB->executeQTQuery( qsQuery );
+
+            qsQuery = QString( "DELETE FROM patientHistory WHERE "
+                               "patientCardId=%1 " ).arg( uiId );
+            g_poDB->executeQTQuery( qsQuery );
+
+            qsQuery = QString( "DELETE FROM ledger WHERE "
+                               "patientCardId=%1 " ).arg( uiId );
+            g_poDB->executeQTQuery( qsQuery );
+
+            qsQuery = QString( "DELETE FROM patientCards WHERE "
+                               "patientCardId=%1 " ).arg( uiId );
+            g_poDB->executeQTQuery( qsQuery );
+        }
+    }
+    catch( cSevException &e )
+    {
+        g_obLogger(e.severity()) << e.what() << EOM;
+    }
+}
+
 void cDlgManageDatabase::_actionDeleteNotUsedPCT()
 {
     try
     {
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardTypeId FROM patientcards WHERE active=1 GROUP BY patientCardTypeId" );
+//        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientCardTypeId FROM patientcards WHERE active=1 GROUP BY patientCardTypeId" );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( "SELECT patientcardtypes.patientcardtypeid, "
+                                                     "name, "
+                                                     "patientcards.patientcardid, "
+                                                     "patientcardunits.patientcardunitid "
+                                                     "FROM patientcardtypes "
+                                                     "LEFT JOIN patientcards ON "
+                                                     "patientcardtypes.patientcardtypeid=patientcards.patientcardtypeid "
+                                                     "LEFT JOIN patientcardunits ON "
+                                                     "patientcardtypes.patientcardtypeid=patientcardunits.patientcardtypeid "
+                                                     "WHERE "
+                                                     "ISNULL(patientcards.patientcardid) AND "
+                                                     "ISNULL(patientcardunits.patientcardunitid) "
+                                                     "GROUP BY patientcardtypes.patientcardtypeid" );
         QString    qsQuery = "DELETE FROM patientcardtypes WHERE patientCardTypeId NOT IN ( ";
 
         if( poQuery->first() )
