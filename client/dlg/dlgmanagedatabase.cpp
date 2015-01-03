@@ -29,6 +29,9 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
 
     deFilterDate->setDate( QDate::currentDate() );
 
+    rbDeleteNotUsedPCTs->setEnabled( false );
+    rbDeleteNotUsedPCTs->setVisible( false );
+
     slotUpdateExecuteButton();
 
     m_dlgProgress = new cDlgProgress( this );
@@ -233,7 +236,7 @@ void cDlgManageDatabase::_actionDeleteNotUsedPCT()
                                                      "ISNULL(patientcards.patientcardid) AND "
                                                      "ISNULL(patientcardunits.patientcardunitid) "
                                                      "GROUP BY patientcardtypes.patientcardtypeid" );
-        QString    qsQuery = "DELETE FROM patientcardtypes WHERE patientCardTypeId NOT IN ( ";
+        QString    qsQuery = "DELETE FROM patientcardtypes WHERE patientCardTypeId IN ( ";
 
         if( poQuery->first() )
         {
