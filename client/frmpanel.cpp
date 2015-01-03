@@ -766,8 +766,8 @@ void cFrmPanel::displayStatus()
     formatNextLengthString( m_qsTimerNextStatus );
     formatInfoString();
 
-    if( m_inCashToPay < 1 )
-        emit signalSetInfoText( m_uiId-1, m_qsInfo );
+//    if( m_inCashToPay < 1 )
+//        emit signalSetInfoText( m_uiId-1, m_qsInfo );
 
     emit signalStatusChanged( m_uiId-1, m_obStatuses.at(m_uiStatus)->id(), m_qsStatus );
 
@@ -894,6 +894,8 @@ void cFrmPanel::formatInfoString()
     g_obLogger(cSeverity::DEBUG) << "Info: "
                                  << qsInfoText
                                  << EOM;
+
+    emit signalSetInfoText( m_uiId-1, qsInfoText );
 }
 //====================================================================================
 /*QString cFrmPanel::convertCurrency( int p_nCurrencyValue, QString p_qsCurrency )
