@@ -3653,17 +3653,17 @@ INSERT INTO `patienthistorytype` (`patientHistoryTypeId`, `licenceId`, `name`, `
 
 -- -----------------------------------------------------------------------------------
 
-INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
- (NULL, 'GLOBAL_DATA_UPDATED', '2014-03-01 12:00:00'),
- (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
- (NULL, 'APPLICATION_VERSION', '1_4_12'),
- (NULL, 'DATABASE_VERSION', '1_6_1');
-
--- -----------------------------------------------------------------------------------
-
 INSERT INTO `shoppingcartitems` ( `shoppingCartItemId`, `licenceId`, `patientId`, `productId`, `patientCardId`, `patientCardTypeId`, `panelId`, `ledgerTypeId`, `itemName`, `comment`, `itemCount`, `itemNetPrice`, `card`, `cash`, `voucher`, `itemVAT`, `discountValue`, `itemSumPrice`, `modified`, `archive` ) VALUES
 ( 0, '0', '0', '0', '0', NULL, '0', '0', '', NULL, '', '', '', '', '', '', '', '', '', 'ARC' );
 UPDATE `shoppingcartitems` SET `shoppingCartItemId`=0 WHERE `shoppingCartItemId`=1;
 ALTER TABLE `shoppingcartitems` auto_increment=1;
+
+-- -----------------------------------------------------------------------------------
+
+INSERT INTO `settings` (`settingId`, `identifier`, `value`) VALUES
+ (NULL, 'GLOBAL_DATA_UPDATED', '2015-01-01 08:00:00'),
+ (NULL, 'ABOUT_INFO_LINK', 'http://www.kiwisun.eu/elerhetosegeink.html'),
+ (NULL, 'APPLICATION_VERSION', '1_4_14'),
+ (NULL, 'DATABASE_VERSION', '1_6_1');
 
 -- -----------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-<updater version="1.4.12">
+<updater version="1.4.14">
 
     <files>
         <file src="%CURRENT_DIR%/package/Update_1_4_5.zip" dst="%DOWNLOAD_DIR%/Update_1_4_5.zip" />
@@ -9,6 +9,7 @@
         <file src="%CURRENT_DIR%/package/Update_1_4_10.zip" dst="%DOWNLOAD_DIR%/Update_1_4_10.zip" />
         <file src="%CURRENT_DIR%/package/Update_1_4_11.zip" dst="%DOWNLOAD_DIR%/Update_1_4_11.zip" />
         <file src="%CURRENT_DIR%/package/Update_1_4_12.zip" dst="%DOWNLOAD_DIR%/Update_1_4_12.zip" />
+        <file src="%CURRENT_DIR%/package/Update_1_4_14.zip" dst="%DOWNLOAD_DIR%/Update_1_4_14.zip" />
         <file src="%CURRENT_DIR%/lang/updater_hu.qm" dst="%INSTALL_DIR%/lang/updater_hu.qm" />
         <file src="%CURRENT_DIR%/lang/updater_de.qm" dst="%INSTALL_DIR%/lang/updater_de.qm" />
         <file src="%CURRENT_DIR%/lang/qt_hu.qm" dst="%INSTALL_DIR%/lang/qt_hu.qm" />
