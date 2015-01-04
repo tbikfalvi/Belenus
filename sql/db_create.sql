@@ -5,7 +5,7 @@
 -- -----------------------------------------------------------------------------------
 --
 -- Filename    : db_create.sql
--- AppVersion  : 1.4.11
+-- AppVersion  : 1.4.14
 -- DbVersion   : 1.6.1
 -- Author      : Bikfalvi Tamas
 --
