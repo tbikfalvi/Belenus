@@ -22,6 +22,7 @@ private slots:
     void on_pbExit_clicked();
     void _actionUpdatePatientCardUnits();
     void _actionDeactivatePC();
+    void _actionDeleteInactivePC();
     void _actionDeleteNotUsedPCT();
     void _actionDeleteLedgerEntries();
 };

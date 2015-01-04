@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>530</width>
-    <height>211</height>
+    <height>245</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,6 +40,13 @@
          <widget class="QRadioButton" name="rbDeactivatePCs">
           <property name="text">
            <string>Deactivate patientcards that are no longer valid</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="rbDeleteInactivePCs">
+          <property name="text">
+           <string>Delete inactive patientcards and all related history</string>
           </property>
          </widget>
         </item>
@@ -167,6 +174,7 @@
  <tabstops>
   <tabstop>rbUpdatePCUnitType</tabstop>
   <tabstop>rbDeactivatePCs</tabstop>
+  <tabstop>rbDeleteInactivePCs</tabstop>
   <tabstop>rbDeleteNotUsedPCTs</tabstop>
   <tabstop>rbDeleteLedgerBeforeDate</tabstop>
   <tabstop>deFilterDate</tabstop>
