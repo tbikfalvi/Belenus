@@ -29,6 +29,8 @@ cDlgManageDatabase::cDlgManageDatabase( QWidget *p_poParent )
 
     deFilterDate->setDate( QDate::currentDate() );
 
+    rbDeleteInactivePCs->setEnabled( false );
+    rbDeleteInactivePCs->setVisible( false );
     rbDeleteNotUsedPCTs->setEnabled( false );
     rbDeleteNotUsedPCTs->setVisible( false );
 
