@@ -35,27 +35,15 @@ CREATE TABLE `licences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------------------------------------
--- A Gibbig rendszernek kuldendo uzeneteket tartalmazza
+-- A kiwisun web oldalnak kuldendo uzeneteket tartalmazza.
 -- -----------------------------------------------------------------------------------
-CREATE TABLE `gibbigMessageTypes` (
-  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL AUTO_INCREMENT,
+CREATE TABLE `httppatientcardinfo` (
+  `httpPatientcardInfoId`   int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
-  `gibbigMessageType`       varchar(20)             NOT NULL,
+  `patientcardInfoText`     text                    NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`gibbigMessageTypeId`,`licenceId`),
-  FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `gibbigMessages` (
-  `gibbigMessageId`         int(10) unsigned        NOT NULL AUTO_INCREMENT,
-  `licenceId`               int(10) unsigned        NOT NULL,
-  `gibbigMessageTypeId`     int(10) unsigned        NOT NULL,
-  `gibbigMessage`           text                    NOT NULL,
-  `active`                  tinyint(1)              DEFAULT 0,
-  `archive`                 varchar(10)             NOT NULL,
-  PRIMARY KEY (`gibbigMessageId`,`licenceId`),
-  FOREIGN KEY (`gibbigMessageTypeId`) REFERENCES `gibbigMessageTypes` (`gibbigMessageTypeId`) ON UPDATE CASCADE ON DELETE RESTRICT,
+  `archive`                 varchar(10)             NOT NULL,  
+  PRIMARY KEY (`httpPatientcardInfoId`,`licenceId`),
   FOREIGN KEY (`licenceId`) REFERENCES `licences` (`licenceId`) ON UPDATE CASCADE ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
