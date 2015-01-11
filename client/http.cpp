@@ -10,7 +10,7 @@
 // Author      : Bikfalvi Tamas
 //
 //-------------------------------------------------------------------------------------------------
-// Gibbig rendszerrel kapcsolatos reszek implementalasa
+// Http kapcsolattal osszefuggo reszek implementalasa
 //=================================================================================================
 
 #include <QtNetwork>
@@ -21,12 +21,250 @@
 #include "belenus.h"
 
 //=================================================================================================
-cGibbig::cGibbig()
+cBlnsHttp::cBlnsHttp()
 //-------------------------------------------------------------------------------------------------
 {
-//    cTracer obTrace( "cGibbig::cGibbig" );
+    cTracer obTrace( "cBlnsHttp::cBlnsHttp" );
 
-    m_gbRestManager             = NULL;
+    obHttp                  = NULL;
+    obFile                  = NULL;
+    m_httpRequestAborted    = false;
+    m_httpGetId             = 0;
+
+    m_qsHost                = "";
+    m_qsUserName            = "";
+    m_inTimeout             = 0;
+
+    obHttp = new QHttp( this );
+
+    connect(obHttp, SIGNAL(requestFinished(int, bool)), this, SLOT(_slotHttpRequestFinished(int,bool)));
+    connect(obHttp, SIGNAL(dataReadProgress(int, int)), this, SLOT(_slotUpdateDataReadProgress(int, int)));
+    connect(obHttp, SIGNAL(responseHeaderReceived(const QHttpResponseHeader &)), this, SLOT(_slotReadResponseHeader(const QHttpResponseHeader &)));
+    connect(obHttp, SIGNAL(authenticationRequired(const QString &, quint16, QAuthenticator *)), this, SLOT(_slotAuthenticationRequired(const QString &, quint16, QAuthenticator *)));
+#ifndef QT_NO_OPENSSL
+    connect(obHttp, SIGNAL(sslErrors(const QList<QSslError> &)), this, SLOT(_slotSslErrors(const QList<QSslError> &)));
+#endif
+
+}
+//=================================================================================================
+cBlnsHttp::~cBlnsHttp()
+//-------------------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cBlnsHttp::~cBlnsHttp" );
+
+    if( m_inTimer > 0 )
+        killTimer( m_inTimer );
+
+    if( m_httpManager )   delete m_httpManager;
+}
+//=================================================================================================
+void cBlnsHttp::setHost( const QString p_qsHost )
+//-------------------------------------------------------------------------------------------------
+{
+    m_qsHost = p_qsHost;
+}
+//=================================================================================================
+void cBlnsHttp::setUserName( const QString p_qsUserName )
+//-------------------------------------------------------------------------------------------------
+{
+    m_qsUserName = p_qsUserName;
+}
+//=================================================================================================
+void cBlnsHttp::setTimeout( const int p_inTimeout )
+//-------------------------------------------------------------------------------------------------
+{
+    m_inTimeout = p_inTimeout;
+}
+//=================================================================================================
+void cBlnsHttp::checkHttpServerAvailability()
+//-------------------------------------------------------------------------------------------------
+{
+
+}
+//=================================================================================================
+// _downloadFile
+//-------------------------------------------------------------------------------------------------
+bool cBlnsHttp::_downloadFile(QString p_qsFileName)
+{
+    QUrl        url( p_qsFileName );
+    QFileInfo   fileInfo(url.path());
+
+    if( fileInfo.fileName().isEmpty() )
+        return false;
+
+    QString     fileName = QString("%1\\%2").arg(QDir::currentPath()).arg( fileInfo.fileName() );
+
+    if( QFile::exists(fileName) )
+    {
+        QFile::remove(fileName);
+    }
+
+    obFile = new QFile(fileName);
+
+    if( !obFile->open(QIODevice::WriteOnly) )
+    {
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Unable to save the file\n\n%1\n\n%2.").arg( fileName ).arg( obFile->errorString() ) );
+        delete obFile;
+        obFile = 0;
+        return false;
+    }
+
+    QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
+    obHttp->setHost(url.host(), mode, url.port() == -1 ? 0 : url.port());
+
+    // http://username:password@example.com/filename.ext
+    if (!url.userName().isEmpty())
+        obHttp->setUser(url.userName(), url.password());
+
+    m_httpRequestAborted = false;
+    QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
+    if (path.isEmpty())
+        path = "/";
+    m_httpGetId = obHttp->get(path, obFile);
+
+    return true;
+}
+//=================================================================================================
+// _progressText
+//-------------------------------------------------------------------------------------------------
+void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
+{
+    if (requestId != m_httpGetId) return;
+
+    if (m_httpRequestAborted)
+    {
+        if (obFile)
+        {
+            obFile->close();
+            obFile->remove();
+            delete obFile;
+            obFile = 0;
+        }
+        return;
+    }
+
+    if (requestId != m_httpGetId)
+        return;
+
+    obFile->close();
+
+    if (error)
+    {
+        obFile->remove();
+        QMessageBox::warning( this, tr("Warning"),
+                              tr("Error occured during downloading file:\n%1.").arg( obHttp->errorString() ) );
+        delete obFile;
+        obFile = 0;
+        return;
+    }
+
+    delete obFile;
+    obFile = 0;
+
+    if( m_teProcessStep == ST_DOWNLOAD_INFO_FILE )
+    {
+        m_teProcessStep = ST_READ_INFO_FILE;
+    }
+    else
+    {
+        m_teProcessStep = ST_DOWNLOAD_FILES;
+    }
+
+    _log( QString("Downloading file finished. Next: %1\n").arg( m_teProcessStep ) );
+
+    m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+}
+//=================================================================================================
+// _progressText
+//-------------------------------------------------------------------------------------------------
+void cBlnsHttp::_slotReadResponseHeader(const QHttpResponseHeader &responseHeader)
+{
+    switch (responseHeader.statusCode())
+    {
+        case 200:                   // Ok
+        case 301:                   // Moved Permanently
+        case 302:                   // Found
+        case 303:                   // See Other
+        case 307:                   // Temporary Redirect
+            // these are not error conditions
+            break;
+
+        default:
+            m_teProcessStep = ST_WAIT;
+            QMessageBox::warning( this, tr("Warning"),
+                                  tr("Download failed: %1.").arg( responseHeader.reasonPhrase() ) );
+            m_httpRequestAborted = true;
+            obHttp->abort();
+            m_teProcessStep = ST_EXIT;
+            m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+    }
+}
+//=================================================================================================
+// _progressText
+//-------------------------------------------------------------------------------------------------
+void cBlnsHttp::_slotUpdateDataReadProgress(int bytesRead, int totalBytes)
+{
+    if (m_httpRequestAborted)
+        return;
+
+    _progressMax( totalBytes );
+    _progressValue( bytesRead );
+}
+//=================================================================================================
+// _progressText
+//-------------------------------------------------------------------------------------------------
+void cBlnsHttp::_slotAuthenticationRequired(const QString &hostName, quint16, QAuthenticator *authenticator)
+{
+    QDialog dlg;
+    Ui::Dialog ui;
+    ui.setupUi(&dlg);
+    dlg.adjustSize();
+    ui.siteDescription->setText(tr("%1 at %2").arg(authenticator->realm()).arg(hostName));
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        authenticator->setUser(ui.userEdit->text());
+        authenticator->setPassword(ui.passwordEdit->text());
+    }
+}
+//=================================================================================================
+// _progressText
+//-------------------------------------------------------------------------------------------------
+#ifndef QT_NO_OPENSSL
+void cBlnsHttp::_slotSslErrors(const QList<QSslError> &/*errors*/)
+{
+/*
+    QString errorString;
+    foreach( const QSslError &error, errors )
+    {
+        if (!errorString.isEmpty())
+            errorString += ", ";
+        errorString += error.errorString();
+    }
+
+    if( QMessageBox::warning( this, tr("Warning"),
+                             tr("One or more SSL errors has occurred: %1").arg(errorString),
+                             QMessageBox::Ignore | QMessageBox::Abort) == QMessageBox::Ignore)
+    {
+*/
+        obHttp->ignoreSslErrors();
+//    }
+}
+#endif
+
+
+
+
+
+/*
+//=================================================================================================
+cBlnsHttp::cBlnsHttp()
+//-------------------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cBlnsHttp::cBlnsHttp" );
+
+    m_httpManager               = NULL;
 
     m_qsHost                    = "";
     m_qsPort                    = "";
@@ -44,7 +282,7 @@ cGibbig::cGibbig()
     m_qsPatientCardType         = "";
 
     m_bErrorOccured             = false;
-    m_teGibbigAction            = cGibbigAction::GA_DEFAULT;
+    m_teBlnsHttpAction          = cBlnsHttpAction::GA_DEFAULT;
 
     m_uiMessageId               = 0;
 
@@ -54,11 +292,11 @@ cGibbig::cGibbig()
 
     g_obLogger(cSeverity::DEBUG) << "Create QNetworkAccessManager" << EOM;
 
-    m_gbRestManager = new QNetworkAccessManager( this );
+    m_httpManager = new QNetworkAccessManager( this );
 
     g_obLogger(cSeverity::DEBUG) << "Connect QNetworkAccessManager" << EOM;
 
-    connect( m_gbRestManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotRestRequestFinished(QNetworkReply*)) );
+    connect( m_httpManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotRestRequestFinished(QNetworkReply*)) );
 
     g_obLogger(cSeverity::DEBUG) << "Set header information" << EOM;
 
@@ -70,61 +308,61 @@ cGibbig::cGibbig()
     m_gbRequest.setRawHeader( "Accept", "application/json" );
 }
 //=================================================================================================
-cGibbig::~cGibbig()
+cBlnsHttp::~cBlnsHttp()
 //-------------------------------------------------------------------------------------------------
 {
     if( m_inTimer > 0 )
         killTimer( m_inTimer );
 
-    if( m_gbRestManager )   delete m_gbRestManager;
+    if( m_httpManager )   delete m_httpManager;
 }
 //=================================================================================================
-void cGibbig::setHost( const QString p_qsHost )
+void cBlnsHttp::setHost( const QString p_qsHost )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setHost" );
+    cTracer obTrace( "cBlnsHttp::setHost" );
 
     m_qsHost = p_qsHost;
 
     m_gbRequest.setRawHeader( "Host", m_qsHost.toStdString().c_str() );
 }
 //=================================================================================================
-void cGibbig::setPort( const QString p_qsPort )
+void cBlnsHttp::setPort( const QString p_qsPort )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setPort" );
+    cTracer obTrace( "cBlnsHttp::setPort" );
 
     m_qsPort = p_qsPort;
 }
 //=================================================================================================
-void cGibbig::setUserName( const QString p_qsUserName )
+void cBlnsHttp::setUserName( const QString p_qsUserName )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setUserName" );
+    cTracer obTrace( "cBlnsHttp::setUserName" );
 
     m_qsGbUserName = p_qsUserName;
 }
 //=================================================================================================
-void cGibbig::setPassword( const QString p_qsPassword )
+void cBlnsHttp::setPassword( const QString p_qsPassword )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setPassword" );
+    cTracer obTrace( "cBlnsHttp::setPassword" );
 
     m_qsGbPassword = p_qsPassword;
 }
 //=================================================================================================
-void cGibbig::setTimeout(const int p_inTimeout)
+void cBlnsHttp::setTimeout(const int p_inTimeout)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::setTimeout" );
+    cTracer obTrace( "cBlnsHttp::setTimeout" );
 
     m_inTimeout = p_inTimeout;
 }
 //=================================================================================================
-void cGibbig::blnshttpAuthenticate()
+void cBlnsHttp::blnshttpAuthenticate()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpAuthenticate" );
+    cTracer obTrace( "cBlnsHttp::blnshttpAuthenticate" );
 
     blnshttpClearError();
 
@@ -132,17 +370,17 @@ void cGibbig::blnshttpAuthenticate()
 
     QByteArray  qbMessage( QString( "{\"username\":\"%1\",\"password\":\"%2\"}" ).arg(m_qsGbUserName).arg(m_qsGbPassword).toStdString().c_str() );
 
-    m_teGibbigAction = cGibbigAction::GA_AUTHENTICATE;
+    m_teGibbigAction = cBlnsHttpAction::GA_AUTHENTICATE;
     m_gbRequest.setUrl( QUrl( QString("https://%1/unifiedid/rest/user/authenticate").arg(m_qsHost) ) );
-    gbReply = m_gbRestManager->post( m_gbRequest, qbMessage );
+    gbReply = m_httpManager->post( m_gbRequest, qbMessage );
     gbReply->ignoreSslErrors();
     m_inTimer = startTimer( m_inTimeout );
 }
 //=================================================================================================
-void cGibbig::blnshttpPCTCreate( QString p_qsPatientCardType )
+void cBlnsHttp::blnshttpPCTCreate( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCTCreate" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCTCreate" );
 
     QString  qsQuery;
 
@@ -158,10 +396,10 @@ void cGibbig::blnshttpPCTCreate( QString p_qsPatientCardType )
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::blnshttpPCTModify( QString p_qsPatientCardType )
+void cBlnsHttp::blnshttpPCTModify( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCTModify" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCTModify" );
 
     QString  qsQuery;
 
@@ -177,10 +415,10 @@ void cGibbig::blnshttpPCTModify( QString p_qsPatientCardType )
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::blnshttpPCTDelete( QString p_qsPatientCardType )
+void cBlnsHttp::blnshttpPCTDelete( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCTDelete" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCTDelete" );
 
     QString  qsQuery;
 
@@ -196,10 +434,10 @@ void cGibbig::blnshttpPCTDelete( QString p_qsPatientCardType )
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::blnshttpPCRegister(QString p_qsPatientCard)
+void cBlnsHttp::blnshttpPCRegister(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCRegister" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCRegister" );
 
     QString  qsQuery;
 
@@ -215,10 +453,10 @@ void cGibbig::blnshttpPCRegister(QString p_qsPatientCard)
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::blnshttpPCRefill(QString p_qsPatientCard)
+void cBlnsHttp::blnshttpPCRefill(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCRefill" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCRefill" );
 
     QString  qsQuery;
 
@@ -234,10 +472,10 @@ void cGibbig::blnshttpPCRefill(QString p_qsPatientCard)
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::blnshttpPCUse(QString p_qsPatientCard)
+void cBlnsHttp::blnshttpPCUse(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCUse" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCUse" );
 
     QString  qsQuery;
 
@@ -253,10 +491,10 @@ void cGibbig::blnshttpPCUse(QString p_qsPatientCard)
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::blnshttpPCDelete(QString p_qsPatientCard)
+void cBlnsHttp::blnshttpPCDelete(QString p_qsPatientCard)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::blnshttpPCDelete" );
+    cTracer obTrace( "cBlnsHttp::blnshttpPCDelete" );
 
     QString  qsQuery;
 
@@ -272,26 +510,26 @@ void cGibbig::blnshttpPCDelete(QString p_qsPatientCard)
     _activateProcess();
 }
 //=================================================================================================
-void cGibbig::timerEvent(QTimerEvent *)
+void cBlnsHttp::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::timerEvent" );
+    cTracer obTrace( "cBlnsHttp::timerEvent" );
 
     killTimer( m_inTimer );
     m_inTimer = 0;
 
     m_qsError.append( tr("Gibbig timeout.\n") );
-    m_qsError.append( tr("%1 FAILED.").arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
-    m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+    m_qsError.append( tr("%1 FAILED.").arg( cBlnsHttpAction::toStr( m_teGibbigAction ) ) );
+    m_teGibbigAction = cBlnsHttpAction::GA_DEFAULT;
     m_bErrorOccured = true;
     emit signalDebugMessage( m_qsError );
     emit signalErrorOccured();
 }
 //=================================================================================================
-void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
+void cBlnsHttp::slotRestRequestFinished(QNetworkReply *p_gbReply)
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::slotRestRequestFinished" );
+    cTracer obTrace( "cBlnsHttp::slotRestRequestFinished" );
 
     killTimer( m_inTimer );
     m_inTimer = 0;
@@ -311,141 +549,141 @@ void cGibbig::slotRestRequestFinished(QNetworkReply *p_gbReply)
     }
 }
 //=================================================================================================
-void cGibbig::_processPCTCreate( QString p_qsPatientCardType )
+void cBlnsHttp::_processPCTCreate( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCTCreate" );
+    cTracer obTrace( "cBlnsHttp::_processPCTCreate" );
 
     blnshttpClearError();
 
     m_qsPatientCardType = p_qsPatientCardType;
-    m_teGibbigAction    = cGibbigAction::GA_PCTCREATE;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCTCREATE;
 
     _sendPatientCardTypeData();
 }
 //=================================================================================================
-void cGibbig::_processPCTModify( QString p_qsPatientCardType )
+void cBlnsHttp::_processPCTModify( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCTModify" );
+    cTracer obTrace( "cBlnsHttp::_processPCTModify" );
 
     blnshttpClearError();
 
     m_qsPatientCardType = p_qsPatientCardType;
-    m_teGibbigAction    = cGibbigAction::GA_PCTMODIFY;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCTMODIFY;
 
     _sendPatientCardTypeData();
 }
 //=================================================================================================
-void cGibbig::_processPCTDelete( QString p_qsPatientCardType )
+void cBlnsHttp::_processPCTDelete( QString p_qsPatientCardType )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCTDelete" );
+    cTracer obTrace( "cBlnsHttp::_processPCTDelete" );
 
     blnshttpClearError();
 
     m_qsPatientCardType = p_qsPatientCardType;
-    m_teGibbigAction    = cGibbigAction::GA_PCTDELETE;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCTDELETE;
 
     _sendPatientCardTypeData();
 }
 //=================================================================================================
-void cGibbig::_processPCRegister( QString p_qsPatientCard )
+void cBlnsHttp::_processPCRegister( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCRegister" );
+    cTracer obTrace( "cBlnsHttp::_processPCRegister" );
 
     blnshttpClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
-    m_teGibbigAction    = cGibbigAction::GA_PCREGISTER;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCREGISTER;
 
     _sendPatientCardData();
 }
 //=================================================================================================
-void cGibbig::_processPCRefill( QString p_qsPatientCard )
+void cBlnsHttp::_processPCRefill( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCRefill" );
+    cTracer obTrace( "cBlnsHttp::_processPCRefill" );
 
     blnshttpClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
-    m_teGibbigAction    = cGibbigAction::GA_PCREFILL;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCREFILL;
 
     _sendPatientCardData();
 }
 //=================================================================================================
-void cGibbig::_processPCUse( QString p_qsPatientCard )
+void cBlnsHttp::_processPCUse( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCUse" );
+    cTracer obTrace( "cBlnsHttp::_processPCUse" );
 
     blnshttpClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
-    m_teGibbigAction    = cGibbigAction::GA_PCUSE;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCUSE;
 
     _sendPatientCardData();
 }
 //=================================================================================================
-void cGibbig::_processPCDelete( QString p_qsPatientCard )
+void cBlnsHttp::_processPCDelete( QString p_qsPatientCard )
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processPCDelete" );
+    cTracer obTrace( "cBlnsHttp::_processPCDelete" );
 
     blnshttpClearError();
 
     m_qsPatientCard     = p_qsPatientCard;
-    m_teGibbigAction    = cGibbigAction::GA_PCDELETE;
+    m_teGibbigAction    = cBlnsHttpAction::GA_PCDELETE;
 
     _sendPatientCardData();
 }
 //=================================================================================================
-void cGibbig::_processMessage()
+void cBlnsHttp::_processMessage()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_processMessage" );
+    cTracer obTrace( "cBlnsHttp::_processMessage" );
 
     emit signalDebugMessage( m_qsMessage );
     switch( m_teGibbigAction )
     {
-        case cGibbigAction::GA_AUTHENTICATE:
+        case cBlnsHttpAction::GA_AUTHENTICATE:
         {
             if( m_qsMessage.left(10).compare( "{\"token\":\"" ) == 0 )
             {
                 _getTokenExpFromMessage();
                 emit signalActionProcessed( QString("%1 Authentication succeeded (%2)\n%3 %4")
-                                                    .arg( cGibbigAction::toStr( m_teGibbigAction ) )
+                                                    .arg( cBlnsHttpAction::toStr( m_teGibbigAction ) )
                                                     .arg(m_qsMessage)
                                                     .arg(m_qsToken)
                                                     .arg(m_qdtExpiration.toString("yyyy-MM-dd hh:mm:ss")) );
-                m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+                m_teGibbigAction = cBlnsHttpAction::GA_DEFAULT;
             }
             else
             {
                 m_qsError.append( tr("Invalid format, token string not received. '%1'\n").arg(m_qsMessage) );
                 m_bErrorOccured = true;
                 emit signalErrorOccured();
-                m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+                m_teGibbigAction = cBlnsHttpAction::GA_DEFAULT;
                 return;
             }
             break;
         }
 
-        case cGibbigAction::GA_PCTCREATE:
-        case cGibbigAction::GA_PCTMODIFY:
-        case cGibbigAction::GA_PCTDELETE:
-        case cGibbigAction::GA_PCREGISTER:
-        case cGibbigAction::GA_PCREFILL:
-        case cGibbigAction::GA_PCUSE:
-        case cGibbigAction::GA_PCDELETE:
+        case cBlnsHttpAction::GA_PCTCREATE:
+        case cBlnsHttpAction::GA_PCTMODIFY:
+        case cBlnsHttpAction::GA_PCTDELETE:
+        case cBlnsHttpAction::GA_PCREGISTER:
+        case cBlnsHttpAction::GA_PCREFILL:
+        case cBlnsHttpAction::GA_PCUSE:
+        case cBlnsHttpAction::GA_PCDELETE:
         {
             m_qslResponseIds.clear();
             if( _getResult() && m_uiMessageId > 0 )
             {
-                if( m_teGibbigAction == cGibbigAction::GA_PCREGISTER ||
-                    m_teGibbigAction == cGibbigAction::GA_PCREFILL )
+                if( m_teGibbigAction == cBlnsHttpAction::GA_PCREGISTER ||
+                    m_teGibbigAction == cBlnsHttpAction::GA_PCREFILL )
                 {
                     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT blnshttpMessage FROM blnshttpmessages "
                                                                          "WHERE blnshttpMessageId=%1 " )
@@ -456,16 +694,16 @@ void cGibbig::_processMessage()
                 g_poDB->executeQTQuery( QString("UPDATE blnshttpmessages SET archive='ARC' "
                                                 "WHERE blnshttpMessageId=%1 " )
                                                 .arg( m_uiMessageId ) );
-                emit signalActionProcessed( QString( "%1 SUCCEEDED" ).arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
+                emit signalActionProcessed( QString( "%1 SUCCEEDED" ).arg( cBlnsHttpAction::toStr( m_teGibbigAction ) ) );
             }
             else
             {
-                m_qsError.append( QString( "%1 FAILED" ).arg( cGibbigAction::toStr( m_teGibbigAction ) ) );
+                m_qsError.append( QString( "%1 FAILED" ).arg( cBlnsHttpAction::toStr( m_teGibbigAction ) ) );
                 m_bErrorOccured = true;
                 emit signalErrorOccured();
             }
             m_uiMessageId = 0;
-            m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+            m_teGibbigAction = cBlnsHttpAction::GA_DEFAULT;
             break;
         }
 
@@ -481,32 +719,32 @@ void cGibbig::_processMessage()
     _prepareProcess();
 }
 //=================================================================================================
-void cGibbig::_sendPatientCardTypeData()
+void cBlnsHttp::_sendPatientCardTypeData()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_sendPatientCardTypeData" );
+    cTracer obTrace( "cBlnsHttp::_sendPatientCardTypeData" );
 
 }
 //=================================================================================================
-void cGibbig::_sendPatientCardData()
+void cBlnsHttp::_sendPatientCardData()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_sendPatientCardData" );
+    cTracer obTrace( "cBlnsHttp::_sendPatientCardData" );
 
     QString qsBarcode = _getBarcode();
     QString qsMessage = "";
 
     switch( m_teGibbigAction )
     {
-        case cGibbigAction::GA_PCREGISTER:
+        case cBlnsHttpAction::GA_PCREGISTER:
             qsMessage.append( "{\"transaction\":\"grant\",\"masterCoupons\":" );
             break;
 
-        case cGibbigAction::GA_PCREFILL:
+        case cBlnsHttpAction::GA_PCREFILL:
             qsMessage.append( "{\"transaction\":\"grant\",\"masterCoupons\":" );
             break;
 
-        case cGibbigAction::GA_PCUSE:
+        case cBlnsHttpAction::GA_PCUSE:
             qsMessage.append( "{\"transaction\":\"use\",\"masterCoupons\":" );
             break;
 
@@ -548,13 +786,13 @@ void cGibbig::_sendPatientCardData()
     emit signalDebugMessage( qsMessage );
 
     m_gbRequest.setUrl( QUrl( qsUrl ) );
-    gbReply = m_gbRestManager->post( m_gbRequest, qbMessage );
+    gbReply = m_httpManager->post( m_gbRequest, qbMessage );
     gbReply->ignoreSslErrors();
     m_inTimer = startTimer( m_inTimeout );
 
 }
 //=================================================================================================
-void cGibbig::_getTokenExpFromMessage()
+void cBlnsHttp::_getTokenExpFromMessage()
 //-------------------------------------------------------------------------------------------------
 {
     // {"token":"2c6a7f24-6862-4cf6-8ff2-2931fd7e253e","expiration":1401644234657}
@@ -575,7 +813,7 @@ void cGibbig::_getTokenExpFromMessage()
     m_qdtExpiration.setTime_t( qsExpiration.left(qsExpiration.length()-4).toInt() );
 }
 //=================================================================================================
-QString cGibbig::_getBarcode()
+QString cBlnsHttp::_getBarcode()
 //-------------------------------------------------------------------------------------------------
 {
     QStringList qslPatientCard  = m_qsPatientCard.split( '#' );
@@ -583,7 +821,7 @@ QString cGibbig::_getBarcode()
     return qslPatientCard.at(0);
 }
 //=================================================================================================
-QString cGibbig::_getUnits()
+QString cBlnsHttp::_getUnits()
 //-------------------------------------------------------------------------------------------------
 {
     QStringList qslPatientCard  = m_qsPatientCard.split( '#' );
@@ -591,10 +829,10 @@ QString cGibbig::_getUnits()
     return qslPatientCard.at(2);
 }
 //=================================================================================================
-void cGibbig::_activateProcess()
+void cBlnsHttp::_activateProcess()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_activateProcess" );
+    cTracer obTrace( "cBlnsHttp::_activateProcess" );
 
     if( !g_poPrefs->isGibbigEnabled() )
     {
@@ -602,7 +840,7 @@ void cGibbig::_activateProcess()
         return;
     }
 
-    if( m_teGibbigAction == cGibbigAction::GA_DEFAULT )
+    if( m_teGibbigAction == cBlnsHttpAction::GA_DEFAULT )
     {
         if( QDateTime::currentDateTime() >= m_qdtExpiration )
         {
@@ -612,10 +850,10 @@ void cGibbig::_activateProcess()
     }
 }
 //=================================================================================================
-void cGibbig::_prepareProcess()
+void cBlnsHttp::_prepareProcess()
 //-------------------------------------------------------------------------------------------------
 {
-    cTracer obTrace( "cGibbig::_prepareProcess" );
+    cTracer obTrace( "cBlnsHttp::_prepareProcess" );
 
     if( !g_poPrefs->isGibbigEnabled() )
     {
@@ -623,7 +861,7 @@ void cGibbig::_prepareProcess()
         return;
     }
 
-    if( m_teGibbigAction != cGibbigAction::GA_DEFAULT )
+    if( m_teGibbigAction != cBlnsHttpAction::GA_DEFAULT )
     {
         g_obLogger(cSeverity::DEBUG) << "GIBBIG ACTION IN PROGRESS" << EOM;
         return;
@@ -643,7 +881,7 @@ void cGibbig::_prepareProcess()
 
     if( poQuery->size() < 1 )
     {
-        m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+        m_teGibbigAction = cBlnsHttpAction::GA_DEFAULT;
         return;
     }
 
@@ -691,32 +929,22 @@ void cGibbig::_prepareProcess()
     }
     else
     {
-        m_teGibbigAction = cGibbigAction::GA_DEFAULT;
+        m_teGibbigAction = cBlnsHttpAction::GA_DEFAULT;
         return;
     }
 }
 //=================================================================================================
-bool cGibbig::_getResult()
+bool cBlnsHttp::_getResult()
 //-------------------------------------------------------------------------------------------------
 {
     bool    bRet        = false;
     QString qsResults   = m_qsMessage.mid( 13, m_qsMessage.length()-16 );
 
-/*    g_obLogger(cSeverity::DEBUG) << "GIBBIG result: "
-                                 << qsResults
-                                 << EOM;*/
-
     QStringList qslResults = qsResults.split( "},{" );
 
-/*    g_obLogger(cSeverity::DEBUG) << "GIBBIG results count: "
-                                 << qslResults.count()
-                                 << EOM;*/
 
     for( int i=0; i<qslResults.count(); i++ )
     {
-/*        g_obLogger(cSeverity::DEBUG) << "GIBBIG response: "
-                                     << qslResults.at(i)
-                                     << EOM;*/
         if( _getResponseStatus( qslResults.at(i) ) )
         {
             bRet = true;
@@ -732,7 +960,7 @@ bool cGibbig::_getResult()
     return bRet;
 }
 //=================================================================================================
-bool cGibbig::_getResponseStatus( QString p_qsResponse )
+bool cBlnsHttp::_getResponseStatus( QString p_qsResponse )
 //-------------------------------------------------------------------------------------------------
 {
     bool        bRet    = false;
@@ -756,7 +984,7 @@ bool cGibbig::_getResponseStatus( QString p_qsResponse )
     return bRet;
 }
 //=================================================================================================
-QString cGibbig::_getResponseId( QString p_qsResponse )
+QString cBlnsHttp::_getResponseId( QString p_qsResponse )
 //-------------------------------------------------------------------------------------------------
 {
     QString     qsRet   = "";
@@ -779,3 +1007,4 @@ QString cGibbig::_getResponseId( QString p_qsResponse )
     return qsRet;
 }
 //=================================================================================================
+*/

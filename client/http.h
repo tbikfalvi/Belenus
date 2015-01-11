@@ -19,9 +19,9 @@
 //====================================================================================
 
 #include <QObject>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
+#include <QHttp>
+#include <QFile>
+#include <QAuthenticator>
 #include <QDateTime>
 #include <QStringList>
 
@@ -31,36 +31,82 @@ class cBlnsHttpAction
 public:
     enum teBlnsHttpAction
     {
-        GA_DEFAULT = 0,
-        GA_AUTHENTICATE,
-        GA_PCTCREATE,
-        GA_PCTMODIFY,
-        GA_PCTDELETE,
-        GA_PCREGISTER,
-        GA_PCREFILL,
-        GA_PCUSE,
-        GA_PCDELETE
+        HA_DEFAULT = 0,
+        HA_AUTHENTICATE,
+        HA_PCTCREATE,
+        HA_PCTMODIFY,
+        HA_PCTDELETE,
+        HA_PCREGISTER,
+        HA_PCREFILL,
+        HA_PCUSE,
+        HA_PCDELETE
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
     {
         switch( p_enGA )
         {
-            case GA_DEFAULT:        return "GBMSG_01 Unidentified ";              break;
-            case GA_AUTHENTICATE:   return "GBMSG_02 Authenticate ";              break;
-            case GA_PCTCREATE:      return "GBMSG_03 PatientCardTypeCreate ";     break;
-            case GA_PCTMODIFY:      return "GBMSG_04 PatientCardTypeModify ";     break;
-            case GA_PCTDELETE:      return "GBMSG_05 PatientCardTypeDelete ";     break;
-            case GA_PCREGISTER:     return "GBMSG_06 PatientCardRegistration ";   break;
-            case GA_PCREFILL:       return "GBMSG_07 PatientCardRefill ";         break;
-            case GA_PCUSE:          return "GBMSG_08 PatientCardUsage ";          break;
-            case GA_PCDELETE:       return "GBMSG_09 PatientCardDelete ";         break;
+            case HA_DEFAULT:        return "HTTPMSG_01 Unidentified ";              break;
+            case HA_AUTHENTICATE:   return "HTTPMSG_02 Authenticate ";              break;
+            case HA_PCTCREATE:      return "HTTPMSG_03 PatientCardTypeCreate ";     break;
+            case HA_PCTMODIFY:      return "HTTPMSG_04 PatientCardTypeModify ";     break;
+            case HA_PCTDELETE:      return "HTTPMSG_05 PatientCardTypeDelete ";     break;
+            case HA_PCREGISTER:     return "HTTPMSG_06 PatientCardRegistration ";   break;
+            case HA_PCREFILL:       return "HTTPMSG_07 PatientCardRefill ";         break;
+            case HA_PCUSE:          return "HTTPMSG_08 PatientCardUsage ";          break;
+            case HA_PCDELETE:       return "HTTPMSG_09 PatientCardDelete ";         break;
             default:                return "INVALID_IDENTIFIER";
         }
     }
 };
 
+//====================================================================================
+class cBlnsHttp : public QObject
+{
+    Q_OBJECT
 
+public:
+
+    cBlnsHttp();
+    ~cBlnsHttp();
+
+    void             setHost( const QString p_qsHost );
+    void             setUserName( const QString p_qsUserName );
+    void             setTimeout( const int p_inTimeout );
+
+    void             checkHttpServerAvailability();
+
+private:
+
+    QHttp           *obHttp;
+    QFile           *obFile;
+    bool             m_httpRequestAborted;
+    int              m_httpGetId;
+
+    QString          m_qsHost;
+    QString          m_qsUserName;
+    int              m_inTimeout;
+
+    bool            _downloadFile( QString p_qsFileName );
+
+signals:
+
+    void             signalErrorOccured();
+    void             signalActionProcessed( QString p_qsInfo );
+
+private slots:
+    void             _slotHttpRequestFinished(int requestId, bool error);
+    void             _slotUpdateDataReadProgress(int bytesRead, int totalBytes);
+    void             _slotReadResponseHeader(const QHttpResponseHeader &responseHeader);
+    void             _slotAuthenticationRequired(const QString &, quint16, QAuthenticator *);
+#ifndef QT_NO_OPENSSL
+    void             _slotSslErrors(const QList<QSslError> &errors);
+#endif
+
+};
+//====================================================================================
+
+/*
 class cBlnsHttp : public QObject
 {
     Q_OBJECT
@@ -106,7 +152,7 @@ signals:
 
 private:
 
-    QNetworkAccessManager           *m_gbRestManager;
+    QNetworkAccessManager           *m_httpManager;
     QNetworkRequest                  m_gbRequest;
 
     QString                          m_qsHost;
@@ -155,5 +201,6 @@ private:
 
 };
 //====================================================================================
+*/
 
 #endif // BLNS_HTTP_H
