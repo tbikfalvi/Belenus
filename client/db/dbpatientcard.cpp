@@ -594,8 +594,9 @@ void cDBPatientCard::setArchive( const QString &p_qsArchive ) throw()
     m_qsArchive = p_qsArchive;
 }
 
-void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionType) throw()
+void cDBPatientCard::sendDataToGibbig() throw()
 {
+/*
     QString      qsQuery = "";
 
     qsQuery.append( "SELECT COUNT(active), gibbigId, unitTime, validDateTo " );
@@ -626,7 +627,7 @@ void cDBPatientCard::sendDataToGibbig(cGibbigAction::teGibbigAction p_teActionTy
     qsPatientCard.append( validDateTo() );
     qsPatientCard.append( "#" );
     qsPatientCard.append( qslUnits.join("|") );
-/*
+//
     switch( p_teActionType )
     {
         case cGibbigAction::GA_PCREGISTER:

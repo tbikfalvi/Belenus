@@ -39,7 +39,7 @@
 #include "cassa.h"
 #include "licenceManager.h"
 #include "general.h"
-#include "gibbig.h"
+//#include "gibbig.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
