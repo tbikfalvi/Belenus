@@ -58,6 +58,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     nHWModuleCount              = 0;
     m_bCommunicationStopped     = false;
     m_wRelay                    = 0;
+    m_nModuleButtonQueryCounter = 0;
 
     GetAvailableCommPorts();
 }
@@ -364,9 +365,20 @@ void CS_Communication_Serial::setCurrentCommand( const int p_nIndex, const int p
 {
     pPanel[p_nIndex].cCurrStatus = p_nCurrentCommand;
 }
-void CS_Communication_Serial::setCounter( const int p_nIndex, const int p_nCounter )
+void CS_Communication_Serial::setCounter(const int p_nIndex, const int p_nCounter , bool p_bUpdateTimer)
 {
     pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
+    if( p_bUpdateTimer &&
+        ( pPanel[p_nIndex].cCurrStatus == STATUS_VARAKOZAS ||
+          pPanel[p_nIndex].cCurrStatus == STATUS_BARNULAS ) )
+    {
+        g_obLogger(cSeverity::DEBUG) << "[SP] Force to send time to modul" << EOM;
+        pModul[p_nIndex].bSendIras = true;
+        if( pPanel[p_nIndex].cCurrStatus != STATUS_VARAKOZAS )
+        {
+            pModul[p_nIndex].bSendStart = true;
+        }
+    }
 }
 bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_nTime , BYTE *p_byStatus, bool p_bSend)
 {
@@ -400,10 +412,10 @@ bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_
                                          << "] Time: ["
                                          << p_nTime
                                          << "] MSG: ["
-                                         << chSerialOut[0]
-                                         << chSerialOut[1]
-                                         << chSerialOut[2]
-                                         << chSerialOut[3]
+                                         << chSerialOut[0] << "|"
+                                         << chSerialOut[1] << "|"
+                                         << chSerialOut[2] << "|"
+                                         << chSerialOut[3] << "|"
                                          << chSerialOut[4]
                                          << "] Result: ["
                                          << bRet
@@ -513,10 +525,10 @@ void CS_Communication_Serial::HW_Kezel()
         if( g_poPrefs->isHWDebugEnabled() )
         {
             g_obLogger(cSeverity::DEBUG) << "[SP] Relay message: ["
-                                         << chSerialOut[0]
-                                         << chSerialOut[1]
-                                         << chSerialOut[2]
-                                         << chSerialOut[3]
+                                         << chSerialOut[0] << "|"
+                                         << chSerialOut[1] << "|"
+                                         << chSerialOut[2] << "|"
+                                         << chSerialOut[3] << "|"
                                          << chSerialOut[4]
                                          << "]"
                                          << EOM;
@@ -550,12 +562,17 @@ void CS_Communication_Serial::HW_Kezel()
       //és fel van kapcsolva a LED tap
       if( (byLedModulKikapcsTimer == 0) && !bTest )
       {
+            m_nModuleButtonQueryCounter++;
          //Szoli LED Modul IRQ figyelés
          if( SP_ReadMessage( chSerialIn, &nHossz ) )
          {
+             // Minden 3. alkalommal fuggetlenul attol, hogy jott-e IRQ uzenet
+             // vagy sem, a program lekerdezi a modulok allapotat,
               if( chSerialIn[ nHossz-1 ] == MODUL_IRQ ||
-                  chModulMessage == MODUL_IRQ )
+                  chModulMessage == MODUL_IRQ ||
+                  m_nModuleButtonQueryCounter > 2 )
               {
+                  m_nModuleButtonQueryCounter = 0;
                   chModulMessage = 0;
                   //mivel Modul IRQ akkor lekapcsolja az IRQ-üzenetet,
                   // míg le nem kérdezi a status-okat
@@ -745,10 +762,10 @@ void CS_Communication_Serial::HW_Kezel()
                              g_obLogger(cSeverity::DEBUG) << "[SP] SEND_TIME module: ["
                                                           << i
                                                           << "] message: ["
-                                                          << chSerialOut[0]
-                                                          << chSerialOut[1]
-                                                          << chSerialOut[2]
-                                                          << chSerialOut[3]
+                                                          << chSerialOut[0] << "|"
+                                                          << chSerialOut[1] << "|"
+                                                          << chSerialOut[2] << "|"
+                                                          << chSerialOut[3] << "|"
                                                           << chSerialOut[4]
                                                           << "] Status: ["
                                                           << byStatus
@@ -779,10 +796,10 @@ void CS_Communication_Serial::HW_Kezel()
                              g_obLogger(cSeverity::DEBUG) << "[SP] SEND_START module: ["
                                                           << i
                                                           << "] message: ["
-                                                          << chSerialOut[0]
-                                                          << chSerialOut[1]
-                                                          << chSerialOut[2]
-                                                          << chSerialOut[3]
+                                                          << chSerialOut[0] << "|"
+                                                          << chSerialOut[1] << "|"
+                                                          << chSerialOut[2] << "|"
+                                                          << chSerialOut[3] << "|"
                                                           << chSerialOut[4]
                                                           << "] Status: ["
                                                           << byStatus
@@ -813,10 +830,10 @@ void CS_Communication_Serial::HW_Kezel()
                              g_obLogger(cSeverity::DEBUG) << "[SP] SEND_END module: ["
                                                           << i
                                                           << "] message: ["
-                                                          << chSerialOut[0]
-                                                          << chSerialOut[1]
-                                                          << chSerialOut[2]
-                                                          << chSerialOut[3]
+                                                          << chSerialOut[0] << "|"
+                                                          << chSerialOut[1] << "|"
+                                                          << chSerialOut[2] << "|"
+                                                          << chSerialOut[3] << "|"
                                                           << chSerialOut[4]
                                                           << "] Status: ["
                                                           << byStatus

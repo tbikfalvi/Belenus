@@ -156,6 +156,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     m_qsTransactionId               = "";
 
+    m_nMinuteOfPanel                = 0;
+
     m_vrPatientCard.uiPatientCardId = 0;
     m_vrPatientCard.qslUnitIds      = QStringList();
     m_vrPatientCard.inUnitTime      = 0;
@@ -264,6 +266,8 @@ void cFrmPanel::start()
                                 << "]"
                                 << EOM;
 
+    m_nMinuteOfPanel = m_inMainProcessLength/60;
+
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
 }
@@ -371,6 +375,7 @@ void cFrmPanel::clear()
     m_uiPaymentMethodId     = 0;
     m_uiShoppingCartItemId  = 0;
     m_qsTransactionId       = "";
+    m_nMinuteOfPanel        = 0;
     m_pDBLedgerDevice->createNew();
 
     setTextInformation( "" );
@@ -601,7 +606,15 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     {
         activateNextStatus();
     }
-    g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter );
+    bool bUpdatePanelTimer = false;
+
+    if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
+    {
+        bUpdatePanelTimer = true;
+        m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
+    }
+
+    g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter, bUpdatePanelTimer );
 
     if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
     {

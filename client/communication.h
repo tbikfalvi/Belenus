@@ -37,7 +37,7 @@ public:
     virtual bool getRelayStatus( const int nRelayCount ) = 0;
 
     virtual void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand ) = 0;
-    virtual void setCounter( const int p_nIndex, const int p_nCounter ) = 0;
+    virtual void setCounter( const int p_nIndex, const int p_nCounter, bool p_bUpdateTimer = false  ) = 0;
     virtual bool setMainActionTime( const int p_nIndex, const int p_nTime, unsigned char *p_byStatus, const bool p_bSend = false ) = 0;
     virtual bool isHardwareMovedNextStatus( const int p_nIndex ) = 0;
     virtual void setHardwareMovedNextStatus( const int p_nIndex ) = 0;

@@ -139,6 +139,7 @@ private:
     bool                         m_bIsDeviceStopped;
     bool                         m_bIsTubeReplaceNeeded;
     QString                      m_qsTransactionId;
+    int                          m_nMinuteOfPanel;
 
     QVBoxLayout                 *verticalLayout;
     QLabel                      *lblTitle;
