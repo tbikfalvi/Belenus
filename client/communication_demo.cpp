@@ -23,8 +23,8 @@ void CS_Communication_Demo::setRelayOn( const int )                         {}
 void CS_Communication_Demo::setRelayOff( const int )                        {}
 bool CS_Communication_Demo::getRelayStatus( const int )                     { return true; }
 void CS_Communication_Demo::setCurrentCommand( const int, const int )       {}
-void CS_Communication_Demo::setCounter( const int, const int )              {}
-bool CS_Communication_Demo::setMainActionTime( const int, const int, bool ) { return true; }
+void CS_Communication_Demo::setCounter( const int, const int, bool )              {}
+bool CS_Communication_Demo::setMainActionTime(const int, const int, unsigned char*, bool ) { return true; }
 bool CS_Communication_Demo::isHardwareMovedNextStatus( const int )          { return false; }
 void CS_Communication_Demo::setHardwareMovedNextStatus( const int )         {}
 bool CS_Communication_Demo::isHardwareStopped( const int )                  { return false; }

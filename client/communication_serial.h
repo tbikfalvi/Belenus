@@ -81,8 +81,8 @@ public:
     bool getRelayStatus( const int nRelayCount );
 
     void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
-    void setCounter( const int p_nIndex, const int p_nCounter );
-    bool setMainActionTime( const int p_nIndex, const int p_nTime, bool p_bSend = false );
+    void setCounter( const int p_nIndex, const int p_nCounter, bool p_bUpdateTimer = false );
+    bool setMainActionTime( const int p_nIndex, const int p_nTime, BYTE *p_byStatus, bool p_bSend = false );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
@@ -125,6 +125,7 @@ private:
     int                      nHWModuleCount;         // Hardware-ben a kezelendo panel-ek szama,
     WORD                     m_wRelay;
     bool                     m_bCommunicationStopped;
+    int                      m_nModuleButtonQueryCounter;
 
     void GetAvailableCommPorts();
 

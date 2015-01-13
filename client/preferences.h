@@ -203,6 +203,8 @@ public:
     QString         getPanelTextSteril() const;
     void            setPanelTextTubeReplace( const QString &p_qsPanelTextTubeReplace, bool p_boSaveNow = false );
     QString         getPanelTextTubeReplace() const;
+    void            setHWDebug( bool p_bHWDebug );
+    bool            isHWDebugEnabled();
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -288,6 +290,7 @@ private:
     bool            m_bIsStopInLine;
     QString         m_qsPanelTextSteril;
     QString         m_qsPanelTextTubeReplace;
+    bool            m_bEnableHWDebug;
 
     void init();
 };
