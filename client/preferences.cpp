@@ -80,6 +80,8 @@ void cPreferences::init()
 
     m_qsPanelTextSteril             = "";
     m_qsPanelTextTubeReplace        = "";
+
+    m_bEnableHWDebug                = false;
 }
 
 void cPreferences::loadConfFileSettings()
@@ -1535,4 +1537,14 @@ void cPreferences::setPanelTextTubeReplace( const QString &p_qsPanelTextTubeRepl
 QString cPreferences::getPanelTextTubeReplace() const
 {
     return m_qsPanelTextTubeReplace;
+}
+
+void cPreferences::setHWDebug( bool p_bHWDebug )
+{
+    m_bEnableHWDebug = p_bHWDebug;
+}
+
+bool cPreferences::isHWDebugEnabled()
+{
+    return m_bEnableHWDebug;
 }

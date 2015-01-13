@@ -3296,8 +3296,20 @@ void cWndMain::on_GibbigPatientCardUpdate(QString p_qsMessage, QString p_qsId)
 void cWndMain::on_CommunicationButtonClicked()
 {
     QMenu   qmMenu;
+    QString qsEnableHWDebug;
+
+    if( g_poPrefs->isHWDebugEnabled() )
+    {
+        qsEnableHWDebug = tr( "Disable HW Debug" );
+    }
+    else
+    {
+        qsEnableHWDebug = tr( "Enable HW Debug" );
+    }
 
     qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Reset communication") );
+    qmMenu.addSeparator();
+    qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), qsEnableHWDebug );
 
     QAction *qaRet = qmMenu.exec( QCursor::pos() );
 
@@ -3307,6 +3319,14 @@ void cWndMain::on_CommunicationButtonClicked()
         {
             _resetCommunication();
             m_nCommunicationErrorCounter = 0;
+        }
+        else if( qaRet->text().compare( tr("Enable HW Debug") ) == 0 )
+        {
+            g_poPrefs->setHWDebug( true );
+        }
+        else if( qaRet->text().compare( tr("Disable HW Debug") ) == 0 )
+        {
+            g_poPrefs->setHWDebug( false );
         }
     }
 }

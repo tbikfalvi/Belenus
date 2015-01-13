@@ -245,7 +245,9 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setPatientId( m_uiCurrentPatient );
     m_pDBLedgerDevice->setActive( true );
 
-    g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
+    unsigned char byStatus;
+
+    g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength, &byStatus );
 
     g_obLogger(cSeverity::INFO) << "Device started Id ["
                                 << m_uiId

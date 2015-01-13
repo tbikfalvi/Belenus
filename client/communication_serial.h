@@ -82,7 +82,7 @@ public:
 
     void setCurrentCommand( const int p_nIndex, const int p_nCurrentCommand );
     void setCounter( const int p_nIndex, const int p_nCounter );
-    bool setMainActionTime( const int p_nIndex, const int p_nTime, bool p_bSend = false );
+    bool setMainActionTime( const int p_nIndex, const int p_nTime, BYTE *p_byStatus, bool p_bSend = false );
     bool isHardwareMovedNextStatus( const int p_nIndex );
     void setHardwareMovedNextStatus( const int p_nIndex );
     bool isHardwareStopped( const int p_nIndex );
