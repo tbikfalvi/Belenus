@@ -499,7 +499,7 @@ void cDlgHardwareTest::slotTestModules()
 
     for( int i=0; i<m_nModelCount; i++ )
     {
-        unsigned char   byStatus;
+        unsigned char   byStatus = 0;
 
         if( g_poHardware->setMainActionTime( i, m_nTime*60, &byStatus, true ) )
         {
