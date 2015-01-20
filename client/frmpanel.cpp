@@ -608,10 +608,13 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     }
     bool bUpdatePanelTimer = false;
 
-    if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
+    if( g_poPrefs->isForceModuleSendTime() )
     {
-        bUpdatePanelTimer = true;
-        m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
+        if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
+        {
+            bUpdatePanelTimer = true;
+            m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
+        }
     }
 
     g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter, bUpdatePanelTimer );
