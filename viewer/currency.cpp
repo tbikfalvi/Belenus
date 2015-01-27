@@ -14,6 +14,7 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     m_nValueRight   = 0;
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
+    m_bIsNegative   = false;
 
     QSettings obPrefFile( "belenus.ini", QSettings::IniFormat );
 
@@ -72,6 +73,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
 
+    m_bIsNegative = false;
     // Remove the minus sign
     if( qsPureCurrency.left(1).compare("-") == 0 )
     {

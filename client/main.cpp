@@ -220,6 +220,7 @@ int main( int argc, char *argv[] )
                                         "The application can be used only in DEMO mode.\n\n");
                 obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44,75));
             }
+
 #ifdef __WIN32__
             Sleep(3000);
 #else
@@ -239,7 +240,9 @@ int main( int argc, char *argv[] )
         //-------------------------------------------------------------------------------
         // If Hardware component active, process hardware initialization
         g_obLogger(cSeverity::DEBUG) << QString("HW check nID: %1 HWInstalled: %2").arg(nId).arg(g_poPrefs->isComponentHardwareInstalled()) << EOM;
-        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ && nDaysRemain > 0 )
+        if( nId >= 2 /*&& g_poPrefs->isComponentHardwareInstalled()*/ &&
+            nDaysRemain > 0 &&
+            g_obLicenceManager.ltLicenceType() != cLicenceManager::LTYPE_REGISTERED )
         {
             qsSpalsh += QObject::tr("Checking hardware connection ...");
             obSplash.showMessage(qsSpalsh,Qt::AlignLeft,QColor(59,44, 75));

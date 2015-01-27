@@ -1454,7 +1454,8 @@
     </message>
     <message>
         <location filename="wndmain.cpp" line="1340"/>
-        <source>Html files (*.html)</source>
+        <source>Html files (*.html);;Text files (*.txt)</source>
+        <oldsource>Html files (*.html)</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

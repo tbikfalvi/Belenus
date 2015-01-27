@@ -151,12 +151,12 @@ Probléma van az internet kapcsolattal?
         <translation type="obsolete"> (liszensz a szerver által elutasítva)</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="244"/>
+        <location filename="main.cpp" line="247"/>
         <source>Checking hardware connection ...</source>
         <translation>Hardver kapcsolat ellenőrzése ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="253"/>
+        <location filename="main.cpp" line="256"/>
         <source>FAILED
 </source>
         <translation>SIKERTELEN
@@ -278,76 +278,76 @@ Az alkalmazás csak DEMÓ módban használható.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="255"/>
-        <location filename="main.cpp" line="302"/>
-        <location filename="main.cpp" line="309"/>
+        <location filename="main.cpp" line="258"/>
+        <location filename="main.cpp" line="305"/>
+        <location filename="main.cpp" line="312"/>
         <source>Starting application in DEMO mode.
 </source>
         <translation>Alkalmazás indítása DEMÓ módban.
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="263"/>
+        <location filename="main.cpp" line="266"/>
         <source>CONNECTED
 </source>
         <translation>KAPCSOLÓDVA
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="266"/>
+        <location filename="main.cpp" line="269"/>
         <source>Initializing hardware device ... </source>
         <translation>Hardver eszköz beállítása ...</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="270"/>
+        <location filename="main.cpp" line="273"/>
         <source>FINISHED
 </source>
         <translation>BEFEJEZŐDÖTT
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="273"/>
+        <location filename="main.cpp" line="276"/>
         <source>Caption stored in hardware: %1
 </source>
         <translation>Hardver eszközben tárolt fejléc szöveg: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="276"/>
+        <location filename="main.cpp" line="279"/>
         <source>Number of hardware panels: %1
 </source>
         <translation>Hardver panelok száma: %1
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="279"/>
+        <location filename="main.cpp" line="282"/>
         <source>Checking hardware panels:
 </source>
         <translation>Hardver panelok ellenőrzése:
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="284"/>
+        <location filename="main.cpp" line="287"/>
         <source>     Checking hardware panel -%1- </source>
         <translation>     Hardver panel ellenőrzése -%1-</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="289"/>
+        <location filename="main.cpp" line="292"/>
         <source> SUCCEEDED
 </source>
         <translation>SIKERES
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="294"/>
-        <location filename="main.cpp" line="355"/>
+        <location filename="main.cpp" line="297"/>
+        <location filename="main.cpp" line="358"/>
         <source> FAILED
 </source>
         <translation>SIKERTELEN
 </translation>
     </message>
     <message>
-        <location filename="main.cpp" line="362"/>
+        <location filename="main.cpp" line="365"/>
         <source>Database server application is not running.
 Belenus application can not be started without active database server.
 Please start WampServer application then restart Belenus application.</source>

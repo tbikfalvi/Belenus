@@ -364,6 +364,7 @@ cCurrency::cCurrency(const QString &p_qsCurrencyString, currType p_ctCurrencyTyp
     m_nValueRight   = 0;
     m_ctCurrType    = p_ctCurrencyType;
     m_nVatValue     = p_nVat;
+    m_bIsNegative   = false;
 
     _init( p_qsCurrencyString, p_ctCurrencyType, p_nVat );
 }
@@ -418,6 +419,7 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
 
     g_obLogger(cSeverity::DEBUG) << "purestr: [" << qsPureCurrency << "]" << EOM;
 
+    m_bIsNegative = false;
     // Remove the minus sign
     if( qsPureCurrency.left(1).compare("-") == 0 )
     {
