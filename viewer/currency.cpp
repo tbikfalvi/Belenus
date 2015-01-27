@@ -72,6 +72,13 @@ void cCurrency::_init(const QString &p_qsCurrencyString, currType p_ctCurrencyTy
     // Remove spaces
     qsPureCurrency = qsPureCurrency.remove( " " );
 
+    // Remove the minus sign
+    if( qsPureCurrency.left(1).compare("-") == 0 )
+    {
+        m_bIsNegative = true;
+        qsPureCurrency = qsPureCurrency.remove( "-" );
+    }
+
     // Get value before and after decimal separator
     if( qsPureCurrency.contains( _currencyDecimalSeparator() ) )
     {
@@ -129,7 +136,7 @@ QString cCurrency::currencyValue(currType p_ctCurrencyType)
     m_nValueLeft  = m_nValue / 100;
     m_nValueRight = m_nValue % 100;
 
-    return QString( "%1" ).arg( m_nValue );
+    return QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg( m_nValue );
 }
 //====================================================================================
 QString cCurrency::currencyString(currType p_ctCurrencyType)
@@ -139,9 +146,9 @@ QString cCurrency::currencyString(currType p_ctCurrencyType)
     QString qsRet = "";
 
     if( m_nValueRight > 0 )
-        qsRet = QString( "%1%2%3" ).arg(m_nValueLeft).arg(_currencyDecimalSeparator()).arg(m_nValueRight);
+        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft).arg(_currencyDecimalSeparator()).arg(m_nValueRight);
     else
-        qsRet = QString( "%1" ).arg(m_nValueLeft);
+        qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(m_nValueLeft);
 
     return qsRet;
 }
@@ -153,9 +160,9 @@ QString cCurrency::currencyStringSeparator(currType p_ctCurrencyType)
     QString qsRet = "";
 
     if( m_nValueRight > 0 )
-        qsRet = QString( "%1%2%3" ).arg(_separatedValue(m_nValueLeft)).arg(_currencyDecimalSeparator()).arg(m_nValueRight);
+        qsRet = QString( "%1%2%3%4" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft)).arg(_currencyDecimalSeparator()).arg(m_nValueRight);
     else
-        qsRet = QString( "%1" ).arg(_separatedValue(m_nValueLeft));
+        qsRet = QString( "%1%2" ).arg(m_bIsNegative?"-":"").arg(_separatedValue(m_nValueLeft));
 
     return qsRet;
 }
