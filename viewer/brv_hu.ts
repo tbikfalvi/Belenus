@@ -1570,8 +1570,9 @@
     </message>
     <message>
         <location filename="wndmain.cpp" line="1340"/>
-        <source>Html files (*.html)</source>
-        <translation>Html állományok (*.html)</translation>
+        <source>Html files (*.html);;Text files (*.txt)</source>
+        <oldsource>Html files (*.html)</oldsource>
+        <translation>Html állományok (*.html);;Szöveges állományok (*.txt)</translation>
     </message>
 </context>
 <context>

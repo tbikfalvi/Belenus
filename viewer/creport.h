@@ -130,6 +130,7 @@ protected:
     QTextCursor         *m_tcReport;
     QVBoxLayout         *mainLayout;
     QString              m_qsReportHtml;
+    QString              m_qsReportText;
 
     QPrinter::Orientation    m_tePageOrientation;
 

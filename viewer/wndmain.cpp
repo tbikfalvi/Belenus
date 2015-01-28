@@ -1337,7 +1337,7 @@ void cWndMain::on_pbSave_clicked()
     QString qsFileName = QFileDialog::getSaveFileName(this,
                                                       tr("Save report to ..."),
                                                       QDir::currentPath(),
-                                                      tr("Html files (*.html)") );
+                                                      tr("Html files (*.html);;Text files (*.txt)") );
 
     cReport *obReport = m_qvReports.at( tabReports->currentIndex()-1 );
 

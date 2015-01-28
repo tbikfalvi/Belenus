@@ -136,29 +136,32 @@ void cPreferences::loadConfFileSettings()
         if( !boIsANumber ) m_qsBarcodePrefix = "";
         m_qsBarcodePrefix.truncate( m_inBarcodeLength - 1 );  //Make sure there is at least one free character to be filled in a Barcode
 
-        m_uiMainWindowLeft    = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
-        m_uiMainWindowTop     = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
-        m_uiMainWindowWidth   = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
-        m_uiMainWindowHeight  = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
-        m_qsMainBackground    = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
+        m_uiMainWindowLeft              = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowLeft" ),   0    ).toUInt();
+        m_uiMainWindowTop               = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowTop" ),    0    ).toUInt();
+        m_uiMainWindowWidth             = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowWidth" ),  1024 ).toUInt();
+        m_uiMainWindowHeight            = obPrefFile.value( QString::fromAscii( "UserInterface/MainWindowHeight" ), 768  ).toUInt();
+        m_qsMainBackground              = obPrefFile.value( QString::fromAscii( "UserInterface/MainBackground" ), "#000000"  ).toString();
 
-        m_qsServerAddress     = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
-        m_qsServerPort        = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
+        m_qsServerAddress               = obPrefFile.value( QString::fromAscii( "Server/Address" ), "0.0.0.0" ).toString();
+        m_qsServerPort                  = obPrefFile.value( QString::fromAscii( "Server/Port" ), "1000" ).toString();
 
-        m_inCommunicationPort = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
+        m_inCommunicationPort           = obPrefFile.value( QString::fromAscii( "Hardware/ComPort" ), "1" ).toInt();
+        m_bForceModuleSendTime          = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleSendTime") ).toBool();
+        m_bForceModuleCheckButton       = obPrefFile.value( QString::fromAscii( "Hardware/ForceModuleCheckButton") ).toBool();
 
-        m_qsCurrencyShort     = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
-        m_qsCurrencyLong      = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
-        m_qsCurrencySeparator = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
-        m_qsCurrencyDecimalSeparator   = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
 
-        m_uiMaxTreatLength    = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
-        m_inDeviceUseVAT      = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
+        m_qsCurrencyShort               = obPrefFile.value( QString::fromAscii( "Currency/Short" ), "Ft." ).toString();
+        m_qsCurrencyLong                = obPrefFile.value( QString::fromAscii( "Currency/Long" ), "Forint" ).toString();
+        m_qsCurrencySeparator           = obPrefFile.value( QString::fromAscii( "Currency/Separator" ), "," ).toString();
+        m_qsCurrencyDecimalSeparator    = obPrefFile.value( QString::fromAscii( "Currency/Decimal" ), "." ).toString();
 
-        m_nPatientCardLostPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
-        m_nPatientCardLostPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
-        m_nPatientCardPartnerPrice     = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
-        m_nPatientCardPartnerPriceVat  = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
+        m_uiMaxTreatLength              = obPrefFile.value( QString::fromAscii( "Device/MaxTreatLength" ), 100 ).toUInt();
+        m_inDeviceUseVAT                = obPrefFile.value( QString::fromAscii( "Device/VAT" ), 25 ).toInt();
+
+        m_nPatientCardLostPrice         = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLost" ), 0 ).toUInt();
+        m_nPatientCardLostPriceVat      = obPrefFile.value( QString::fromAscii( "PatientCard/PriceLostVat" ), 0 ).toUInt();
+        m_nPatientCardPartnerPrice      = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartner" ), 0 ).toUInt();
+        m_nPatientCardPartnerPriceVat   = obPrefFile.value( QString::fromAscii( "PatientCard/PricePartnerVat" ), 0 ).toUInt();
 
         unsigned int uiConsoleLevel = obPrefFile.value( QString::fromAscii( "LogLevels/ConsoleLogLevel" ), cSeverity::WARNING ).toUInt();
         if( (uiConsoleLevel >= cSeverity::MAX) ||
@@ -314,6 +317,8 @@ void cPreferences::save() const throw (cSevException)
     obPrefFile.setValue( QString::fromAscii( "Server/Port" ), m_qsServerPort );
 
     obPrefFile.setValue( QString::fromAscii( "Hardware/ComPort" ), m_inCommunicationPort );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleSendTime"), m_bForceModuleSendTime );
+    obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleCheckButton"), m_bForceModuleCheckButton );
 
     obPrefFile.setValue( QString::fromAscii( "UserInterface/MainBackground" ), m_qsMainBackground );
 
@@ -1548,3 +1553,36 @@ bool cPreferences::isHWDebugEnabled()
 {
     return m_bEnableHWDebug;
 }
+
+void cPreferences::setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow )
+{
+    m_bForceModuleSendTime = p_bForceModuleSendTime;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleSendTime"), m_bForceModuleSendTime );
+    }
+}
+
+bool cPreferences::isForceModuleSendTime()
+{
+    return m_bForceModuleSendTime;
+}
+
+void cPreferences::setForceModuleCheckButton( bool p_bForceModuleCheckButton, bool p_boSaveNow )
+{
+    m_bForceModuleCheckButton = p_bForceModuleCheckButton;
+
+    if( p_boSaveNow )
+    {
+        QSettings  obPrefFile( m_qsFileName, QSettings::IniFormat );
+        obPrefFile.setValue( QString::fromAscii( "Hardware/ForceModuleCheckButton"), m_bForceModuleCheckButton );
+    }
+}
+
+bool cPreferences::isForceModuleCheckButton()
+{
+    return m_bForceModuleCheckButton;
+}
+

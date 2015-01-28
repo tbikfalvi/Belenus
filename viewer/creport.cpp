@@ -76,6 +76,7 @@ void cReport::refreshReport()
     m_tdReport.clear();
     m_tdReport.setMetaInformation( QTextDocument::DocumentTitle, m_qsReportName );
     m_qsReportHtml = "";
+    m_qsReportText = "";
 }
 //=================================================================================================
 //=================================================================================================
@@ -134,7 +135,14 @@ void cReport::saveReport(QString p_qsFileName)
     QFile   file( p_qsFileName );
 
     file.open( QIODevice::WriteOnly );
-    file.write( m_qsReportHtml.toStdString().c_str() );
+    if( p_qsFileName.contains(".html") )
+    {
+        file.write( m_qsReportHtml.toStdString().c_str() );
+    }
+    else
+    {
+        file.write( m_qsReportText.toStdString().c_str() );
+    }
     file.close();
 
 }
@@ -200,6 +208,7 @@ void cReport::startReport()
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( "<html><body>" );
+    m_qsReportText.append( "" );
 }
 //------------------------------------------------------------------------------------
 void cReport::finishReport()
@@ -210,6 +219,7 @@ void cReport::finishReport()
         finishSection();
     }
     m_qsReportHtml.append( "</body></html>" );
+    m_qsReportText.append( "\n" );
 
     m_tcReport->insertHtml( m_qsReportHtml );
 }
@@ -218,6 +228,7 @@ void cReport::startSection()
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( "<div>" );
+    m_qsReportText.append( "\n" );
     m_nSectionLevel++;
 }
 //------------------------------------------------------------------------------------
@@ -225,6 +236,7 @@ void cReport::finishSection()
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( "</div>");
+    m_qsReportText.append( "" );
     m_nSectionLevel--;
 }
 //------------------------------------------------------------------------------------
@@ -232,6 +244,7 @@ void cReport::addHorizontalLine()
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( "<hr>" );
+    m_qsReportText.append( "\n--------------------------------------------------------------------------------" );
 }
 //------------------------------------------------------------------------------------
 void cReport::addSeparator()
@@ -239,6 +252,7 @@ void cReport::addSeparator()
 {
     startSection();
     m_qsReportHtml.append( "<br>" );
+    m_qsReportText.append( "\n" );
     finishSection();
 }
 //------------------------------------------------------------------------------------
@@ -246,18 +260,21 @@ void cReport::addTitle( QString p_qsTitle )
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( QString("<div style=\"font-size:24px;font-weight:bold;\">%1</div>").arg( p_qsTitle ) );
+    m_qsReportText.append( QString("\n%1\n").arg( p_qsTitle ) );
 }
 //------------------------------------------------------------------------------------
 void cReport::addSubTitle( QString p_qsSubTitle )
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( QString("<div style=\"font-size:14px;font-weight:bold;\">%1</div>").arg( p_qsSubTitle ) );
+    m_qsReportText.append( QString("%1\n").arg( p_qsSubTitle ) );
 }
 //------------------------------------------------------------------------------------
 void cReport::addDescription(QString p_qsDescription)
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( QString("<div style=\"font-size:9px;\">%1</div>").arg( p_qsDescription ) );
+    m_qsReportText.append( QString("%1\n").arg(p_qsDescription) );
 }
 //------------------------------------------------------------------------------------
 void cReport::addTable()
@@ -268,6 +285,7 @@ void cReport::addTable()
         m_qsReportHtml.append( "</table>" );
     }
     m_qsReportHtml.append( "<table border=1>" );
+    m_qsReportText.append( "\n" );
     m_bIsTableStarted = true;
 }
 //------------------------------------------------------------------------------------
@@ -279,6 +297,7 @@ void cReport::finishTable()
         finishTableRow();
     }
     m_qsReportHtml.append( "</table>" );
+    m_qsReportText.append( "\n" );
     m_bIsTableStarted = false;
 }
 //------------------------------------------------------------------------------------
@@ -290,6 +309,7 @@ void cReport::addTableRow()
         m_qsReportHtml.append( "</tr>" );
     }
     m_qsReportHtml.append( "<tr>" );
+    m_qsReportText.append( "\n" );
     m_bIsTableRowStarted = true;
 }
 //------------------------------------------------------------------------------------
@@ -297,6 +317,7 @@ void cReport::finishTableRow()
 //------------------------------------------------------------------------------------
 {
     m_qsReportHtml.append( "</tr>" );
+    m_qsReportText.append( "" );
     m_bIsTableRowStarted = false;
 }
 //------------------------------------------------------------------------------------
@@ -320,6 +341,7 @@ void cReport::addTableCell(QString p_qsCellText, QString p_qsFormat)
     if( p_qsFormat.contains("italic") )   m_qsReportHtml.append( "<i>" );
 
     m_qsReportHtml.append( p_qsCellText );
+    m_qsReportText.append( QString("%1\t").arg( p_qsCellText ) );
 
     if( p_qsFormat.contains("italic") )   m_qsReportHtml.append( "</i>" );
     if( p_qsFormat.contains("bold") )   m_qsReportHtml.append( "</b>" );

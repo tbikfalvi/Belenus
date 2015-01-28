@@ -205,6 +205,10 @@ public:
     QString         getPanelTextTubeReplace() const;
     void            setHWDebug( bool p_bHWDebug );
     bool            isHWDebugEnabled();
+    void            setForceModuleSendTime( bool p_bForceModuleSendTime, bool p_boSaveNow = false );
+    bool            isForceModuleSendTime();
+    void            setForceModuleCheckButton( bool p_bForceModuleCheckButton, bool p_boSaveNow = false );
+    bool            isForceModuleCheckButton();
 
     //    void            setXXX( const QString &p_qsXXX, bool p_boSaveNow = false );
     //    QString         getXXX() const;
@@ -291,6 +295,8 @@ private:
     QString         m_qsPanelTextSteril;
     QString         m_qsPanelTextTubeReplace;
     bool            m_bEnableHWDebug;
+    bool            m_bForceModuleSendTime;
+    bool            m_bForceModuleCheckButton;
 
     void init();
 };
