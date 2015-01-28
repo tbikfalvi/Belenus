@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tbwPreferences">
      <property name="currentIndex">
-      <number>5</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="tab_General">
       <attribute name="title">
@@ -1928,43 +1928,85 @@ is different :</string>
       <attribute name="title">
        <string>Hardware</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="verticalLayout_28">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="lblCOM">
-           <property name="text">
-            <string>COM Port:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spbCOM">
-           <property name="prefix">
-            <string>COM</string>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>16</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="gbCommunication">
+         <property name="title">
+          <string> Communication </string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_7">
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="rbCommSerial">
+            <property name="text">
+             <string>Through serial port</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="lblCOM">
+              <property name="text">
+               <string>COM Port:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spbCOM">
+              <property name="prefix">
+               <string>COM</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>16</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gbForceCommand">
+         <property name="title">
+          <string> Force application to ... </string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="chkForceSendTime">
+            <property name="text">
+             <string>send current time value to modul</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="chkForceButtonRead">
+            <property name="text">
+             <string>check modul buttons state</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_3">

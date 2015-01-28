@@ -232,10 +232,14 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
 
     setPanelUseTime();
     setPanelUsePrice();
+
+    QPoint  qpDlgSize = g_poPrefs->getDialogSize( "PanelUse", QPoint(500,360) );
+    resize( qpDlgSize.x(), qpDlgSize.y() );
 }
 //----------------------------------------------------------------------------------------------
 cDlgPanelUse::~cDlgPanelUse()
 {
+    g_poPrefs->setDialogSize( "PanelUse", QPoint( width(), height() ) );
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::enableCardUsage(bool p_bEnabled)
@@ -373,12 +377,14 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
         lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
     }
 
-    int nUnitHeight = (qvPanelUseUnits.count()-1)*40;
+    int nUnitHeight = (qvPanelUseUnits.count()-1)*50;
 
     if( nUnitHeight < 0 ) nUnitHeight = 0;
 
-    setMinimumHeight( 340 + nUnitHeight );
-    setMaximumHeight( 340 + nUnitHeight );
+//    setMinimumHeight( 340 + nUnitHeight );
+//    setMaximumHeight( 340 + nUnitHeight );
+    if( height() < 340 + nUnitHeight )
+        resize( width(), 340 + nUnitHeight );
 }
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTimeCash(unsigned int p_uiSeconds)

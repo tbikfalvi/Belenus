@@ -7,18 +7,12 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>340</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>340</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
     <height>340</height>
    </size>
   </property>
@@ -30,6 +24,12 @@
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QGroupBox" name="gbPanelData">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="title">
         <string> Panel data </string>
        </property>
@@ -66,6 +66,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="gbPatientCard">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>88</height>
+        </size>
+       </property>
        <property name="title">
         <string> Use with patientcard ... </string>
        </property>
@@ -210,6 +216,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="gbTime">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="title">
         <string> Use with time intervall ... </string>
        </property>
@@ -249,6 +261,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="gbPanelUseSummary">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="title">
         <string> Usage summary </string>
        </property>

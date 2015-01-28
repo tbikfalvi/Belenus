@@ -499,7 +499,9 @@ void cDlgHardwareTest::slotTestModules()
 
     for( int i=0; i<m_nModelCount; i++ )
     {
-        if( g_poHardware->setMainActionTime( i, m_nTime*60, true ) )
+        unsigned char   byStatus = 0;
+
+        if( g_poHardware->setMainActionTime( i, m_nTime*60, &byStatus, true ) )
         {
             nCounterOk[i]++;
         }
@@ -507,7 +509,30 @@ void cDlgHardwareTest::slotTestModules()
         {
             nCounterFail[i]++;
         }
-        qvLblStatus.at(i)->setText( QString( "%1 / %2" ).arg( nCounterOk[i] ).arg( nCounterFail[i] ) );
+
+        QString qsStatus = "";
+
+        if( (byStatus & 0x03) == 0x01 ) //Start SW
+        {
+            qsStatus = "ST";
+        }
+        else if( (byStatus & 0x03) == 0x02 ) //Stop SW
+        {
+            qsStatus = "SP";
+        }
+        else if( (byStatus & 0x03) == 0x03 ) // Restart, ujraindult
+        {
+            qsStatus = "RS";
+        }
+        else
+        {
+            qsStatus = "**";
+        }
+
+        qvLblStatus.at(i)->setText( QString( "%1 / %2 - %3" )
+                                    .arg( nCounterOk[i] )
+                                    .arg( nCounterFail[i] )
+                                    .arg( qsStatus ) );
     }
 }
 
@@ -517,7 +542,9 @@ void cDlgHardwareTest::on_pbStopModuleTest_clicked()
 
     for( int i=0; i<g_poHardware->getPanelCount(); i++ )
     {
-        g_poHardware->setMainActionTime( i, 0, true );
+        unsigned char   byStatus;
+
+        g_poHardware->setMainActionTime( i, 0, &byStatus, true );
     }
 
     pbTestModules->setEnabled( true );

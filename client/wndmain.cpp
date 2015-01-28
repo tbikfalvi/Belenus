@@ -1629,7 +1629,10 @@ void cWndMain::on_action_DeviceClear_triggered()
     cTracer obTrace( "cWndMain::on_action_DeviceClear_triggered" );
 
     if( mdiPanels->isPanelWorking( mdiPanels->activePanel() ) )
+    {
+        on_KeyboardEnabled();
         return;
+    }
 
     mdiPanels->clean();
 
@@ -3296,8 +3299,26 @@ void cWndMain::on_GibbigPatientCardUpdate(QString p_qsMessage, QString p_qsId)
 void cWndMain::on_CommunicationButtonClicked()
 {
     QMenu   qmMenu;
+    QString qsEnableHWDebug;
+    QString qsIconHWDebug = "./resources/77x40_on.png";
+
+    if( g_poPrefs->isHWDebugEnabled() )
+    {
+        qsEnableHWDebug = tr( "Disable HW Debug" );
+        qsIconHWDebug = "./resources/77x40_on.png";
+    }
+    else
+    {
+        qsEnableHWDebug = tr( "Enable HW Debug" );
+        qsIconHWDebug = "./resources/77x40_off.png";
+    }
 
     qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Reset communication") );
+    if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+    {
+        qmMenu.addSeparator();
+        qmMenu.addAction( QIcon( qsIconHWDebug ), qsEnableHWDebug );
+    }
 
     QAction *qaRet = qmMenu.exec( QCursor::pos() );
 
@@ -3307,6 +3328,14 @@ void cWndMain::on_CommunicationButtonClicked()
         {
             _resetCommunication();
             m_nCommunicationErrorCounter = 0;
+        }
+        else if( qaRet->text().compare( tr("Enable HW Debug") ) == 0 )
+        {
+            g_poPrefs->setHWDebug( true );
+        }
+        else if( qaRet->text().compare( tr("Disable HW Debug") ) == 0 )
+        {
+            g_poPrefs->setHWDebug( false );
         }
     }
 }

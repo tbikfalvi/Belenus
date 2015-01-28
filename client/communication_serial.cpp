@@ -58,6 +58,7 @@ CS_Communication_Serial::CS_Communication_Serial()
     nHWModuleCount              = 0;
     m_bCommunicationStopped     = false;
     m_wRelay                    = 0;
+    m_nModuleButtonQueryCounter = 0;
 
     GetAvailableCommPorts();
 }
@@ -112,14 +113,14 @@ void CS_Communication_Serial::init( int p_nPort )
 //------------------------------------------------------------------------------------
 bool CS_Communication_Serial::isHardwareConnected( void )
 {
-    g_obLogger(cSeverity::DEBUG) << QString("Check HW connections") << EOM;
+    g_obLogger(cSeverity::DEBUG) << QString("[SP] Check HW connections") << EOM;
 
-    g_obLogger(cSeverity::DEBUG) << QString("Com port:") << (m_bPortOpened?QString("OK"):QString("NOK")) << EOM;
+    g_obLogger(cSeverity::DEBUG) << QString("[SP] Com port:") << (m_bPortOpened?QString("OK"):QString("NOK")) << EOM;
 
     if( !m_bPortOpened )
     {
         // Com port possibly not functioning
-        g_obLogger(cSeverity::DEBUG) << QString("Com port possibly not functioning") << EOM;
+        g_obLogger(cSeverity::DEBUG) << QString("[SP] Com port possibly not functioning") << EOM;
         return false;
     }
 
@@ -130,10 +131,10 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     memset( chMessage, 0, sizeof(chMessage) );
     memset( chSerialIn, 0, sizeof(chSerialIn) );
 
-    g_obLogger(cSeverity::DEBUG) << QString("SPReadMessage") << EOM;
+//    g_obLogger(cSeverity::DEBUG) << QString("[SP] SPReadMessage") << EOM;
     if( SP_ReadMessage( chSerialIn, &nRecHossz ) )
     {
-       g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
+//       g_obLogger(cSeverity::DEBUG) << QString("[SP] returned TRUE") << EOM;
        if( chSerialIn[ nRecHossz-1 ] == MODUL_IRQ )
        {
           chModulMessage = MODUL_IRQ;
@@ -141,13 +142,13 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     }
     else
     {
-        g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
+        g_obLogger(cSeverity::DEBUG) << QString("[SP] returned FALSE") << EOM;
     }
 
     chMessage[ 0 ]= SEARCH_HW;
     chMessage[ 1 ]= 'H';
 
-    g_obLogger(cSeverity::DEBUG) << QString("SP_SendMessage") << EOM;
+//    g_obLogger(cSeverity::DEBUG) << QString("[SP] SP_SendMessage") << EOM;
     SP_SendMessage( chMessage, 2 );
 
     bySerial_Error++;
@@ -155,10 +156,10 @@ bool CS_Communication_Serial::isHardwareConnected( void )
 
     bool bRet = false;
 
-    g_obLogger(cSeverity::DEBUG) << QString("HW_ReadMessage") << EOM;
+//    g_obLogger(cSeverity::DEBUG) << QString("[SP] HW_ReadMessage") << EOM;
     if( HW_ReadMessage( chSerialIn, &nRecHossz, 5  ) )
     {
-        g_obLogger(cSeverity::DEBUG) << QString("returned TRUE") << EOM;
+//        g_obLogger(cSeverity::DEBUG) << QString("[SP] returned TRUE") << EOM;
        if( (chSerialIn[ nRecHossz-2 ] == 'Y') && ((unsigned char) chSerialIn[ nRecHossz-1 ] == HW_SUCCESS) )
        {
           bRet = true;
@@ -167,7 +168,7 @@ bool CS_Communication_Serial::isHardwareConnected( void )
     }
     else
     {
-        g_obLogger(cSeverity::DEBUG) << QString("returned FALSE") << EOM;
+        g_obLogger(cSeverity::DEBUG) << QString("[SP] returned FALSE") << EOM;
     }
 
     return bRet;
@@ -364,11 +365,23 @@ void CS_Communication_Serial::setCurrentCommand( const int p_nIndex, const int p
 {
     pPanel[p_nIndex].cCurrStatus = p_nCurrentCommand;
 }
-void CS_Communication_Serial::setCounter( const int p_nIndex, const int p_nCounter )
+void CS_Communication_Serial::setCounter(const int p_nIndex, const int p_nCounter , bool p_bUpdateTimer)
 {
     pPanel[p_nIndex].nTimeStatusCounter = p_nCounter;
+    if( p_bUpdateTimer &&
+        ( pPanel[p_nIndex].cCurrStatus == STATUS_VARAKOZAS ||
+          pPanel[p_nIndex].cCurrStatus == STATUS_SZAUNAZAS ||
+          pPanel[p_nIndex].cCurrStatus == STATUS_BARNULAS ) )
+    {
+        g_obLogger(cSeverity::DEBUG) << "[SP] Force to send time to modul" << EOM;
+        pModul[p_nIndex].bSendIras = true;
+        if( pPanel[p_nIndex].cCurrStatus != STATUS_VARAKOZAS )
+        {
+            pModul[p_nIndex].bSendStart = true;
+        }
+    }
 }
-bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_nTime , bool p_bSend)
+bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_nTime , BYTE *p_byStatus, bool p_bSend)
 {
     bool bRet = true;
 
@@ -380,6 +393,8 @@ bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_
         unsigned char byStatus;
         int nIdo = pPanel[p_nIndex].nTimeStatusMain;
 
+        memset( chSerialOut, 0, 2048 );
+
         chSerialOut[0] = SEND_3BYTE_TO_MODUL;
         chSerialOut[1] = SEND_TIME;
         chSerialOut[2] = (char)(nIdo/60);
@@ -387,6 +402,28 @@ bool CS_Communication_Serial::setMainActionTime(const int p_nIndex, const int p_
         if( !HW_SendModulMessage( chSerialOut, 4, p_nIndex, &byStatus ) )
         {
             bRet = false;
+        }
+        *p_byStatus = byStatus;
+
+        if( g_poPrefs->isHWDebugEnabled() )
+        {
+            g_obLogger(cSeverity::DEBUG) << "[SP] SetMainTime "
+                                         << "Index: ["
+                                         << p_nIndex
+                                         << "] Time: ["
+                                         << p_nTime
+                                         << "] MSG: ["
+                                         << chSerialOut[0] << "|"
+                                         << chSerialOut[1] << "|"
+                                         << chSerialOut[2] << "|"
+                                         << chSerialOut[3] << "|"
+                                         << chSerialOut[4]
+                                         << "] Result: ["
+                                         << bRet
+                                         << "] Status: ["
+                                         << byStatus
+                                         << "]"
+                                         << EOM;
         }
     }
     return bRet;
@@ -422,23 +459,23 @@ void CS_Communication_Serial::continueStoppedDevice(const int p_nIndex)
 //---------------------------------------------------------------------------
 void CS_Communication_Serial::HW_Kezel()
 {
-   //---------------------------------------------------------------------------
-   // Demo illetve helytelen parameterbeallitas esetén nem foglalkozik a
-   // hardware-al es kilep
-   //---------------------------------------------------------------------------
-   if( nHWModuleCount == 0 )
+    //---------------------------------------------------------------------------
+    // Demo illetve helytelen parameterbeallitas esetén nem foglalkozik a
+    // hardware-al es kilep
+    //---------------------------------------------------------------------------
+    if( nHWModuleCount == 0 )
         return;
 
-   int i;
-   int nHossz;
-   char chSerialOut[2048];
-   char chSerialIn[2048];
-   unsigned char byStatus;
-   WORD wRelay = 0;
+    int i;
+    int nHossz;
+    char chSerialOut[2048];
+    char chSerialIn[2048];
+    unsigned char byStatus;
+    WORD wRelay = 0;
 
-   //---------------------------------------------------
-   // Relay allapotok beallítasa
-   //---------------------------------------------------
+    //---------------------------------------------------
+    // Relay allapotok beallítasa
+    //---------------------------------------------------
     if( !bTest )
     {
         wRelay = 0;
@@ -476,6 +513,8 @@ void CS_Communication_Serial::HW_Kezel()
 
     if( wRelay_mem != wRelay )
     {
+        memset( chSerialOut, 0, 2048 );
+
         chSerialOut[0] = SET_RELAY;
         chSerialOut[1] = (unsigned char) wRelay;
         chSerialOut[2] = (unsigned char) (wRelay>>8);
@@ -484,17 +523,30 @@ void CS_Communication_Serial::HW_Kezel()
         {
             wRelay_mem = wRelay;
         }
+        if( g_poPrefs->isHWDebugEnabled() )
+        {
+            g_obLogger(cSeverity::DEBUG) << "[SP] Relay message: ["
+                                         << chSerialOut[0] << "|"
+                                         << chSerialOut[1] << "|"
+                                         << chSerialOut[2] << "|"
+                                         << chSerialOut[3] << "|"
+                                         << chSerialOut[4]
+                                         << "]"
+                                         << EOM;
+        }
     }
 
-   //-------------------------------------------------------
-   // WDT frissités, ha nem volt kikuldve semmi akkor WDT
-   //-------------------------------------------------------
-   if( byHwWdtCounter > 0 )
+    //-------------------------------------------------------
+    // WDT frissités, ha nem volt kikuldve semmi akkor WDT
+    //-------------------------------------------------------
+    if( byHwWdtCounter > 0 )
     {
         byHwWdtCounter--;
     }
     if( byHwWdtCounter == 0 )
     {
+        memset( chSerialOut, 0, 2048 );
+
         chSerialOut[0] = CLR_RELAY_TIMER;
         if( HW_SendRelayMessage( chSerialOut, 1, NULL  ) )
         {
@@ -502,295 +554,367 @@ void CS_Communication_Serial::HW_Kezel()
         }
     }
 
-   //--------------------------------------------------------------------------------------
-   // Szoli LED Modul vezérlés
-   //--------------------------------------------------------------------------------------
-   //Ha jó a soros komunikació
-   if( bySerial_Error == 0 )
-   {
-      //és fel van kapcsolva a LED tap
-      if( (byLedModulKikapcsTimer == 0) && !bTest )
-      {
-         //Szoli LED Modul IRQ figyelés
-         if( SP_ReadMessage( chSerialIn, &nHossz ) )
-         {
-              if( chSerialIn[ nHossz-1 ] == MODUL_IRQ ||
-                  chModulMessage == MODUL_IRQ )
-              {
-                  chModulMessage = 0;
-                  //mivel Modul IRQ akkor lekapcsolja az IRQ-üzenetet,
-                  // míg le nem kérdezi a status-okat
-                  DisableModulIRQ();
+    //--------------------------------------------------------------------------------------
+    // Szoli LED Modul vezérlés
+    //--------------------------------------------------------------------------------------
+    //Ha jó a soros komunikació
+    if( bySerial_Error == 0 )
+    {
+        //és fel van kapcsolva a LED tap
+        if( (byLedModulKikapcsTimer == 0) && !bTest )
+        {
+            if( g_poPrefs->isForceModuleCheckButton() )
+                m_nModuleButtonQueryCounter++;
 
-                  // Modul IRQ lekezeles
-                  for( i=0; i<nHWModuleCount; i++ )
-                  {
-                      if( pModul[ i ].bVan )
-                      {
-                          chSerialOut[0] = SEND_1BYTE_TO_MODUL;
-                          chSerialOut[1] = GET_STATUS;
-                          if( HW_SendModulMessage( chSerialOut, 2, i, &byStatus ) )
-                          {
-                             byLedModulOlvasasiHiba = 0;
+            //Szoli LED Modul IRQ figyelés
+            if( SP_ReadMessage( chSerialIn, &nHossz ) )
+            {
+                // Minden 3. alkalommal fuggetlenul attol, hogy jott-e IRQ uzenet
+                // vagy sem, a program lekerdezi a modulok allapotat,
+                if( chSerialIn[ nHossz-1 ] == MODUL_IRQ ||
+                    chModulMessage == MODUL_IRQ ||
+                    m_nModuleButtonQueryCounter > 2 )
+                {
+                    m_nModuleButtonQueryCounter = 0;
+                    chModulMessage = 0;
+                    //mivel Modul IRQ akkor lekapcsolja az IRQ-üzenetet,
+                    // míg le nem kérdezi a status-okat
+                    DisableModulIRQ();
 
-                             ///////////////////////////////////////////
-                             if( byStatus == 0 )
-                             {}//Standby
-                             ///////////////////////////////////////////
-                             else if( (byStatus & 0x03) == 0x02 ) //Stop SW
-                             {
-                                 if( pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
-                                 {
-                                     // Szauna megszakítasa, következő ciklus indítasa
-                                     pPanel[i].bJumpNextStatus = true;
-                                 }
-                                 else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
-                                 {
-                                     pModul[ i ].bStop = true; //Relay kikapcsolas
-                                 }
-                             }
-                             ///////////////////////////////////////////
-                             else if( (byStatus & 0x03) == 0x01 ) //Start SW
-                             {
-                                 if( pPanel[i].cCurrStatus == STATUS_VETKOZES )
-                                 {
-                                     // Vetkőzés megszakítasa, következő ciklus indítasa
-                                     pPanel[i].bJumpNextStatus = true;
-                                 }
-                                 else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
-                                 {
-                                     pModul[ i ].bStop = false; //Relay bekapcsolas
-                                 }
-                             }
+                    // Modul IRQ lekezeles
+                    for( i=0; i<nHWModuleCount; i++ )
+                    {
+                        if( pModul[ i ].bVan )
+                        {
+                            memset( chSerialOut, 0, 2048 );
 
-                             ///////////////////////////////////////////
-                             else if( (byStatus & 0x03) == 0x03 ) // Restart, ujraindult
-                             {
-                                 pModul[ i ].bSendIras = true;
-                                 if( (pPanel[i].cCurrStatus == STATUS_BARNULAS) ||
-                                     (pPanel[i].cCurrStatus == STATUS_SZAUNAZAS) )
-                                 {
-                                     pModul[ i ].bSendStart = true;
-                                 }
-                             }
-                          }
-                          else//if( pHardware->bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
-                          {
-                              //nincs valasz
-                              byLedModulOlvasasiHiba++;
-                          }//if( bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
-                      }//if( pModul[ i ].bVan )
-                  }//for
-              }//if( chSerialIn[ nHossz-1 ] == MODUL_IRQ )
-              else if( chSerialIn[ nHossz-1 ] == START_MESSAGE )
-              {
-                  //ujraindult a Relay panel, mindent ki kell küldeni
-                  wRelay_mem = 0;
-              }
-         }// nincs LED Modul IRQ
+                            chSerialOut[0] = SEND_1BYTE_TO_MODUL;
+                            chSerialOut[1] = GET_STATUS;
+                            if( HW_SendModulMessage( chSerialOut, 2, i, &byStatus ) )
+                            {
+                                byLedModulOlvasasiHiba = 0;
 
-         ////////////////////////////////////////////////////////////////////////
-         //Szoli LED Modul vezérlés
+                                ///////////////////////////////////////////
+                                if( byStatus == 0 )
+                                {}//Standby
+                                ///////////////////////////////////////////
+                                else if( (byStatus & 0x03) == 0x02 ) //Stop SW
+                                {
+                                    if( pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
+                                    {
+                                        // Szauna megszakítasa, következő ciklus indítasa
+                                        pPanel[i].bJumpNextStatus = true;
+                                    }
+                                    else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
+                                    {
+                                        pModul[ i ].bStop = true; //Relay kikapcsolas
+                                    }
+                                }
+                                ///////////////////////////////////////////
+                                else if( (byStatus & 0x03) == 0x01 ) //Start SW
+                                {
+                                    if( pPanel[i].cCurrStatus == STATUS_VETKOZES )
+                                    {
+                                        // Vetkőzés megszakítasa, következő ciklus indítasa
+                                        pPanel[i].bJumpNextStatus = true;
+                                    }
+                                    else if( pPanel[i].cCurrStatus == STATUS_BARNULAS )
+                                    {
+                                        pModul[ i ].bStop = false; //Relay bekapcsolas
+                                    }
+                                }
+                                ///////////////////////////////////////////
+                                else if( (byStatus & 0x03) == 0x03 ) // Restart, ujraindult
+                                {
+                                    pModul[ i ].bSendIras = true;
+                                    if( (pPanel[i].cCurrStatus == STATUS_BARNULAS) ||
+                                        (pPanel[i].cCurrStatus == STATUS_SZAUNAZAS) )
+                                    {
+                                        pModul[ i ].bSendStart = true;
+                                    }
+                                }
+                            }
+                            else//if( pHardware->bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
+                            {
+                                //nincs valasz
+                                byLedModulOlvasasiHiba++;
+                            }//if( bSendMessageLEDModul_ReceiveStatus( chSerialOut, 2, i, &byStatus ) )
+                        }//if( pModul[ i ].bVan )
+                    }//for
+                }//if( chSerialIn[ nHossz-1 ] == MODUL_IRQ )
+                else if( chSerialIn[ nHossz-1 ] == START_MESSAGE )
+                {
+                    //ujraindult a Relay panel, mindent ki kell küldeni
+                    wRelay_mem = 0;
+                }
+            }// nincs LED Modul IRQ
 
-         //Elenörzi van-e küldenivaló adat
-         for( i=0; i<nHWModuleCount; i++ )
-         {
-             if( pModul[ i ].bVan )
-             {
-                 if( pPanel[i].cPrevStatus == STATUS_ALAP && pPanel[i].cCurrStatus == STATUS_VETKOZES )  //vetkőzés
-                 {
-                    pModul[ i ].bSendIras = true;
-                 }
-                 if( pPanel[i].cPrevStatus == STATUS_VETKOZES && pPanel[i].cCurrStatus == STATUS_ALAP )  //esc
-                 {
-                    pModul[ i ].bSendIras = true;
-                 }
-                 if( pPanel[i].cPrevStatus == STATUS_VETKOZES && pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
-                 {
-                    pModul[ i ].bSendIras = true;
-                    pModul[ i ].bSendStart = true;
-                 }
-                 if( pPanel[i].cPrevStatus == STATUS_VETKOZES && pPanel[i].cCurrStatus == STATUS_BARNULAS )
-                 {
-                    pModul[ i ].bSendStart = true;
-                 }
-                 if( pPanel[i].cPrevStatus == STATUS_SZAUNAZAS && pPanel[i].cCurrStatus == STATUS_VARAKOZAS )
-                 {
-                    pModul[ i ].bSendIras = true;
-                    pModul[ i ].bSendStart = true;
-                 }
-                 if( pPanel[i].cPrevStatus == STATUS_VARAKOZAS && pPanel[i].cCurrStatus == STATUS_BARNULAS )
-                 {
-                    pModul[ i ].bSendIras = true;
-                    pModul[ i ].bSendStart = true;
-                 }
-                 if( pPanel[i].cPrevStatus == STATUS_BARNULAS  && pPanel[i].cCurrStatus == STATUS_UTOHUTES )
-                 {
-                    pModul[ i ].bSendEnd = true;
-                    pModul[ i ].bStop = false;
-                 }
-                 pPanel[i].cPrevStatus = pPanel[i].cCurrStatus;
-             }
-         }
+            ////////////////////////////////////////////////////////////////////////
+            //Szoli LED Modul vezérlés
 
-         bool bVanKuldeniValoAdat = false;
+            //Elenörzi van-e küldenivaló adat
+            for( i=0; i<nHWModuleCount; i++ )
+            {
+                if( pModul[ i ].bVan )
+                {
+                    if( pPanel[i].cPrevStatus == STATUS_ALAP && pPanel[i].cCurrStatus == STATUS_VETKOZES )  //vetkőzés
+                    {
+                        pModul[ i ].bSendIras = true;
+                    }
+                    if( pPanel[i].cPrevStatus == STATUS_VETKOZES && pPanel[i].cCurrStatus == STATUS_ALAP )  //esc
+                    {
+                        pModul[ i ].bSendIras = true;
+                    }
+                    if( pPanel[i].cPrevStatus == STATUS_VETKOZES && pPanel[i].cCurrStatus == STATUS_SZAUNAZAS )
+                    {
+                        pModul[ i ].bSendIras = true;
+                        pModul[ i ].bSendStart = true;
+                    }
+                    if( pPanel[i].cPrevStatus == STATUS_VETKOZES && pPanel[i].cCurrStatus == STATUS_BARNULAS )
+                    {
+                        pModul[ i ].bSendStart = true;
+                    }
+                    if( pPanel[i].cPrevStatus == STATUS_SZAUNAZAS && pPanel[i].cCurrStatus == STATUS_VARAKOZAS )
+                    {
+                        pModul[ i ].bSendIras = true;
+                        pModul[ i ].bSendStart = true;
+                    }
+                    if( pPanel[i].cPrevStatus == STATUS_VARAKOZAS && pPanel[i].cCurrStatus == STATUS_BARNULAS )
+                    {
+                        pModul[ i ].bSendIras = true;
+                        pModul[ i ].bSendStart = true;
+                    }
+                    if( pPanel[i].cPrevStatus == STATUS_BARNULAS  && pPanel[i].cCurrStatus == STATUS_UTOHUTES )
+                    {
+                        pModul[ i ].bSendEnd = true;
+                        pModul[ i ].bStop = false;
+                    }
+                    pPanel[i].cPrevStatus = pPanel[i].cCurrStatus;
+                }
+            }
 
-         for( i=0; i<nHWModuleCount; i++ )
-         {
-             if( pModul[ i ].bVan &&
-                 ( pModul[ i ].bSendIras  ||
-                   pModul[ i ].bSendStart ||
-                   pModul[ i ].bSendEnd    ) )
-             {
-                 bVanKuldeniValoAdat = true;
-                 g_obLogger(cSeverity::DEBUG) << QString("pModul[%1] Iras: %2 Start: %3 End: %4").arg( i )
-                                                 .arg( pModul[ i ].bSendIras )
-                                                 .arg( pModul[ i ].bSendStart )
-                                                 .arg( pModul[ i ].bSendEnd )
-                                              << EOM;
-                 break;
-             }
-         }
+            bool bVanKuldeniValoAdat = false;
 
-         //Adatok kiküldése a moduloknak
-         if( bVanKuldeniValoAdat )
-         {
-             // Letiltja az IRQ-t, hogy ne zavarja meg a komunikaciót
-             DisableModulIRQ();
+            for( i=0; i<nHWModuleCount; i++ )
+            {
+                if( pModul[ i ].bVan &&
+                    ( pModul[ i ].bSendIras  ||
+                      pModul[ i ].bSendStart ||
+                      pModul[ i ].bSendEnd ) )
+                {
+                    bVanKuldeniValoAdat = true;
+                    if( g_poPrefs->isHWDebugEnabled() )
+                    {
+                        g_obLogger(cSeverity::DEBUG) << QString("[SP] pModul[%1] Iras: %2 Start: %3 End: %4").arg( i )
+                                                                .arg( pModul[ i ].bSendIras )
+                                                                .arg( pModul[ i ].bSendStart )
+                                                                .arg( pModul[ i ].bSendEnd )
+                                                     << EOM;
+                    }
+                    break;
+                }
+            }
 
-             bool bHiba = false;
-             int nIdo;
-             //Kikuldi az adatokat
-             for( i=0; i<nHWModuleCount; i++ )
-             {
-                 if( pModul[ i ].bVan )
-                 {
-                     /////////////////////////////////////////
-                     if( pModul[ i ].bSendIras )
-                     {
-                         chSerialOut[0] = SEND_3BYTE_TO_MODUL;
-                         chSerialOut[1] = SEND_TIME;
-                         nIdo = 0;
+            //Adatok kiküldése a moduloknak
+            if( bVanKuldeniValoAdat )
+            {
+                // Letiltja az IRQ-t, hogy ne zavarja meg a komunikaciót
+                DisableModulIRQ();
 
-                         if( pPanel[i].cPrevStatus == STATUS_VETKOZES )
-                             nIdo = pPanel[i].nTimeStatusMain;
-                         else if( pPanel[i].cPrevStatus == STATUS_BARNULAS )
-                             nIdo = pPanel[i].nTimeStatusCounter;
-                         else if( pPanel[i].cPrevStatus == STATUS_SZAUNAZAS )
-                             nIdo = pPanel[i].nTimeStatusCounter;
-                         else if( pPanel[i].cPrevStatus == STATUS_VARAKOZAS )
-                             nIdo = pPanel[i].nTimeStatusCounter;
+                bool bHiba = false;
+                int nIdo;
+                //Kikuldi az adatokat
+                for( i=0; i<nHWModuleCount; i++ )
+                {
+                    if( pModul[ i ].bVan )
+                    {
+                        /////////////////////////////////////////
+                        if( pModul[ i ].bSendIras )
+                        {
+                            memset( chSerialOut, 0, 2048 );
 
-                         chSerialOut[2] = (char)(nIdo/60);
-                         chSerialOut[3] = (char)(nIdo%60);
+                            chSerialOut[0] = SEND_3BYTE_TO_MODUL;
+                            chSerialOut[1] = SEND_TIME;
+                            nIdo = 0;
 
-                         if( HW_SendModulMessage( chSerialOut, 4, i, &byStatus ) )
-                         {
-                             pModul[ i ].bSendIras = false;
-                         }
-                         else
-                         {
-                            bHiba = true;
-                            g_obLogger(cSeverity::WARNING) << QString("pModul[%1] SEND_TIME error").arg(i) << EOM;
-                         }
-                     }
-                     /////////////////////////////////////////
-                     if( pModul[ i ].bSendStart )
-                     {
-                         chSerialOut[0] = SEND_1BYTE_TO_MODUL;
-                         chSerialOut[1] = SEND_START;
-                         if( HW_SendModulMessage( chSerialOut, 2, i, &byStatus ) )
-                         {
-                             pModul[ i ].bSendStart = false;
-                         }
-                         else
-                         {
-                            bHiba = true;
-                            g_obLogger(cSeverity::WARNING) << QString("pModul[%1] SEND_START error").arg(i) << EOM;
-                         }
-                     }
-                     /////////////////////////////////////////
-                     if( pModul[ i ].bSendEnd )
-                     {
-                         chSerialOut[0] = SEND_1BYTE_TO_MODUL;
-                         chSerialOut[1] = SEND_END;
-                         if( HW_SendModulMessage( chSerialOut, 2, i, &byStatus ) )
-                         {
-                             pModul[ i ].bSendEnd = false;
-                         }
-                         else
-                         {
-                            bHiba = true;
-                            g_obLogger(cSeverity::WARNING) << QString("pModul[%1] SEND_END error").arg(i) << EOM;
-                         }
-                     }
-                 }
-             }
-             if( bHiba )
-             {
-                 byLedModulOlvasasiHiba++;
-             }
-         }
+                            if( pPanel[i].cPrevStatus == STATUS_VETKOZES )
+                            nIdo = pPanel[i].nTimeStatusMain;
+                            else if( pPanel[i].cPrevStatus == STATUS_BARNULAS )
+                            nIdo = pPanel[i].nTimeStatusCounter;
+                            else if( pPanel[i].cPrevStatus == STATUS_SZAUNAZAS )
+                            nIdo = pPanel[i].nTimeStatusCounter;
+                            else if( pPanel[i].cPrevStatus == STATUS_VARAKOZAS )
+                            nIdo = pPanel[i].nTimeStatusCounter;
 
-         // Engedélyezi az IRQ-t, ha le volt tiltva
-         EnableModulIRQ();
-      }//if( byLedModulKikapcsTimer == 0 )
+                            chSerialOut[2] = (char)(nIdo/60);
+                            chSerialOut[3] = (char)(nIdo%60);
 
+                            if( HW_SendModulMessage( chSerialOut, 4, i, &byStatus ) )
+                            {
+                                pModul[ i ].bSendIras = false;
+                            }
+                            else
+                            {
+                                bHiba = true;
+                                g_obLogger(cSeverity::WARNING) << QString("[SP] pModul[%1] SEND_TIME error").arg(i) << EOM;
+                            }
 
-      // LED tapegység lekapcsolas/felkapcsolas hiba esetén próbalkozik úraindítassal
-      if( byLedModulOlvasasiHiba > LED_MODUL_OLVASASI_HIBA )
-      {
-          // LED modul tap lekapcsolas
-          if( byLedModulKikapcsTimer == 0 )
-          {
-              byLedModulKikapcsTimer = LED_MODUL_KIKAPCS_IDO_x300ms;
-              bSendToModulPower_OFF = true;
-          }
-          else
-          {
-              byLedModulKikapcsTimer--;
+                            if( g_poPrefs->isHWDebugEnabled() )
+                            {
+                                g_obLogger(cSeverity::DEBUG) << "[SP] SEND_TIME module: ["
+                                                             << i
+                                                             << "] message: ["
+                                                             << chSerialOut[0] << "|"
+                                                             << chSerialOut[1] << "|"
+                                                             << chSerialOut[2] << "|"
+                                                             << chSerialOut[3] << "|"
+                                                             << chSerialOut[4]
+                                                             << "] Status: ["
+                                                             << byStatus
+                                                             << "]"
+                                                             << EOM;
+                            }
+                        }
+                        /////////////////////////////////////////
+                        if( pModul[ i ].bSendStart )
+                        {
+                            memset( chSerialOut, 0, 2048 );
 
-              // 0.9s-al korabban felkapcsolja, hogy magukhoz térjenek
-              if( byLedModulKikapcsTimer == 3 )
-                  bSendToModulPower_ON = true;
+                            chSerialOut[0] = SEND_1BYTE_TO_MODUL;
+                            chSerialOut[1] = SEND_START;
 
-              if( byLedModulKikapcsTimer == 0 )
-              {
-                  // LED modul tap visszakapcsolas ha még nem érte el a max.szamot
-                  if( byLedModulUjraindulas > 0 )
-                  {
-                      byLedModulOlvasasiHiba = 0;
-                      byLedModulUjraindulas --;
-                      bSendToModulPower_ON = false;
-                  }
-                  else
-                  {
-                      m_bCommunicationStopped = true;
-                  }
-              }
-          }
-      }
+                            if( HW_SendModulMessage( chSerialOut, 2, i, &byStatus ) )
+                            {
+                                pModul[ i ].bSendStart = false;
+                            }
+                            else
+                            {
+                                bHiba = true;
+                                g_obLogger(cSeverity::WARNING) << QString("[SP] pModul[%1] SEND_START error").arg(i) << EOM;
+                            }
 
-      if( bSendToModulPower_ON )
-      {
-          g_obLogger(cSeverity::WARNING) << QString("Modul power on") << EOM;
-          chSerialOut[0] = MODUL_POWER_ON;
-          if( HW_SendRelayMessage( chSerialOut, 1  ) )
-          {
-              bSendToModulPower_ON = false;
-              HW_ModulInit();
-              EnableModulIRQ();
-          }
-      }
+                            if( g_poPrefs->isHWDebugEnabled() )
+                            {
+                                g_obLogger(cSeverity::DEBUG) << "[SP] SEND_START module: ["
+                                                             << i
+                                                             << "] message: ["
+                                                             << chSerialOut[0] << "|"
+                                                             << chSerialOut[1] << "|"
+                                                             << chSerialOut[2] << "|"
+                                                             << chSerialOut[3] << "|"
+                                                             << chSerialOut[4]
+                                                             << "] Status: ["
+                                                             << byStatus
+                                                             << "]"
+                                                             << EOM;
+                            }
+                        }
+                        /////////////////////////////////////////
+                        if( pModul[ i ].bSendEnd )
+                        {
+                            memset( chSerialOut, 0, 2048 );
 
-      if( bSendToModulPower_OFF )
-      {
-          g_obLogger(cSeverity::WARNING) << QString("Modul power off") << EOM;
-          chSerialOut[0] = MODUL_POWER_OFF;
-          if( HW_SendRelayMessage( chSerialOut, 1  ) )
-              bSendToModulPower_OFF = false;
-      }
-   }// if( bySerial_Error == 0 )
+                            chSerialOut[0] = SEND_1BYTE_TO_MODUL;
+                            chSerialOut[1] = SEND_END;
+
+                            if( HW_SendModulMessage( chSerialOut, 2, i, &byStatus ) )
+                            {
+                                pModul[ i ].bSendEnd = false;
+                            }
+                            else
+                            {
+                                bHiba = true;
+                                g_obLogger(cSeverity::WARNING) << QString("[SP] pModul[%1] SEND_END error").arg(i) << EOM;
+                            }
+
+                            if( g_poPrefs->isHWDebugEnabled() )
+                            {
+                                g_obLogger(cSeverity::DEBUG) << "[SP] SEND_END module: ["
+                                                             << i
+                                                             << "] message: ["
+                                                             << chSerialOut[0] << "|"
+                                                             << chSerialOut[1] << "|"
+                                                             << chSerialOut[2] << "|"
+                                                             << chSerialOut[3] << "|"
+                                                             << chSerialOut[4]
+                                                             << "] Status: ["
+                                                             << byStatus
+                                                             << "]"
+                                                             << EOM;
+                            }
+                        }
+                    }
+                }
+                if( bHiba )
+                {
+                    byLedModulOlvasasiHiba++;
+                }
+            }
+
+            // Engedélyezi az IRQ-t, ha le volt tiltva
+            EnableModulIRQ();
+        }//if( byLedModulKikapcsTimer == 0 )
+
+        // LED tapegység lekapcsolas/felkapcsolas hiba esetén próbalkozik úraindítassal
+        if( byLedModulOlvasasiHiba > LED_MODUL_OLVASASI_HIBA )
+        {
+            // LED modul tap lekapcsolas
+            if( byLedModulKikapcsTimer == 0 )
+            {
+                byLedModulKikapcsTimer = LED_MODUL_KIKAPCS_IDO_x300ms;
+                bSendToModulPower_OFF = true;
+            }
+            else
+            {
+                byLedModulKikapcsTimer--;
+
+                // 0.9s-al korabban felkapcsolja, hogy magukhoz térjenek
+                if( byLedModulKikapcsTimer == 3 )
+                    bSendToModulPower_ON = true;
+
+                if( byLedModulKikapcsTimer == 0 )
+                {
+                    // LED modul tap visszakapcsolas ha még nem érte el a max.szamot
+                    if( byLedModulUjraindulas > 0 )
+                    {
+                        byLedModulOlvasasiHiba = 0;
+                        byLedModulUjraindulas --;
+                        bSendToModulPower_ON = false;
+                    }
+                    else
+                    {
+                        m_bCommunicationStopped = true;
+                    }
+                }
+            }
+        }
+
+        if( bSendToModulPower_ON )
+        {
+            g_obLogger(cSeverity::WARNING) << QString("[SP] Modul power on") << EOM;
+
+            memset( chSerialOut, 0, 2048 );
+
+            chSerialOut[0] = MODUL_POWER_ON;
+            if( HW_SendRelayMessage( chSerialOut, 1  ) )
+            {
+                bSendToModulPower_ON = false;
+                HW_ModulInit();
+                EnableModulIRQ();
+            }
+        }
+
+        if( bSendToModulPower_OFF )
+        {
+            g_obLogger(cSeverity::WARNING) << QString("[SP] Modul power off") << EOM;
+
+            memset( chSerialOut, 0, 2048 );
+
+            chSerialOut[0] = MODUL_POWER_OFF;
+            if( HW_SendRelayMessage( chSerialOut, 1  ) )
+                bSendToModulPower_OFF = false;
+        }
+    }// if( bySerial_Error == 0 )
 }
 
 //====================================================================================
@@ -867,7 +991,7 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
    memset( portName, 0, sizeof(portName) );
    sprintf( portName, "COM%d", PortNumber );
 
-   g_obLogger(cSeverity::DEBUG) << QString("Open serial connection with CreateFile") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] Open serial connection with CreateFile") << EOM;
    if( bSync )
    {
       m_hPort = CreateFile( /*(WCHAR*)*/portName,              // port name
@@ -891,22 +1015,22 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
 
     if ( m_hPort == INVALID_HANDLE_VALUE )
     {
-        g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
+        g_obLogger(cSeverity::DEBUG) << QString("[SP] FAILED") << EOM;
         m_hPort = NULL;
         return false;
     }
-    g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
+    g_obLogger(cSeverity::DEBUG) << QString("[SP] SUCCEEDED") << EOM;
 
    DCB dcb;
 
-   g_obLogger(cSeverity::DEBUG) << QString("GetCommState") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] GetCommState") << EOM;
    if ( !GetCommState( m_hPort, &dcb ) )
    {
-       g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
+       g_obLogger(cSeverity::DEBUG) << QString("[SP] FAILED") << EOM;
       ::CloseHandle(m_hPort);
       return false;
    }
-   g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] SUCCEEDED") << EOM;
 
 // dcb.DCBlength;                         // sizeof(DCB)
    dcb.BaudRate = BaudRate;               // current baud rate
@@ -937,22 +1061,22 @@ bool CS_Communication_Serial::SP_Open( bool bSync )
 // dcb.EvtChar;                           // received event character
 // dcb.wReserved1;                        // reserved; do not use
 
-   g_obLogger(cSeverity::DEBUG) << QString("SetCommState") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] SetCommState") << EOM;
    if ( !SetCommState( m_hPort, &dcb ) )
    {
-       g_obLogger(cSeverity::DEBUG) << QString("FAILED") << EOM;
+       g_obLogger(cSeverity::DEBUG) << QString("[SP] FAILED") << EOM;
       //throw ( EXCEPTION_SET_COM_PORT_CONFIG );
       ::CloseHandle(m_hPort);
       return false;
    }
-   g_obLogger(cSeverity::DEBUG) << QString("SUCCEEDED") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] SUCCEEDED") << EOM;
 
-   g_obLogger(cSeverity::DEBUG) << QString("SetupComm") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] SetupComm") << EOM;
    SetupComm( m_hPort, 512, 512 );
 
    COMMTIMEOUTS   timeout;
 
-   g_obLogger(cSeverity::DEBUG) << QString("SetCommTimeouts") << EOM;
+   g_obLogger(cSeverity::DEBUG) << QString("[SP] SetCommTimeouts") << EOM;
    memset( (char*)&timeout, 0, sizeof(COMMTIMEOUTS) );
    timeout.ReadIntervalTimeout = MAXDWORD;
    SetCommTimeouts( m_hPort, &timeout );
@@ -1189,6 +1313,9 @@ BOOL CS_Communication_Serial::HW_ReadEEProm( unsigned char byStartAddress, char 
    do
    {
       unsigned char byData;
+
+      memset( chSerialOut, 0, 2048 );
+
       chSerialOut[0] = READ_EEPROM;
       chSerialOut[1] = byAddress++;
       if( HW_SendRelayMessage( chSerialOut, 2, &byData ) )
@@ -1227,6 +1354,8 @@ BOOL CS_Communication_Serial::HW_WriteEEProm( unsigned char byStartAddress, char
 
    while( (chMessage[i] != 0) && (i < 100) && !bRet )
    {
+      memset( chSerialOut, 0, 2048 );
+
       chSerialOut[0] = WRITE_EEPROM;
       chSerialOut[1] = byAddress++;
       chSerialOut[2] = chMessage[ i++ ];
@@ -1238,6 +1367,8 @@ BOOL CS_Communication_Serial::HW_WriteEEProm( unsigned char byStartAddress, char
    }
 
    //0 a végére
+   memset( chSerialOut, 0, 2048 );
+
    chSerialOut[0] = WRITE_EEPROM;
    chSerialOut[1] = byAddress;
    chSerialOut[2] = 0;
@@ -1316,7 +1447,7 @@ bool CS_Communication_Serial::HW_SetModuleAddress()
         {
             bRet = false;
         }
-        g_obLogger(cSeverity::DEBUG) << QString("Send SET_ADDR to Modul[%1]").arg(i) << " " << (bRet?"OK":"FAILED") << EOM;
+        g_obLogger(cSeverity::DEBUG) << QString("[SP] Send SET_ADDR to Modul[%1]").arg(i) << " " << (bRet?"OK":"FAILED") << EOM;
     }
     return bRet;
 }
@@ -1337,6 +1468,8 @@ void CS_Communication_Serial::EnableModulIRQ()
    {
         do
         {
+            memset( chSerialOut, 0, 2048 );
+
             chSerialOut[0] = MODUL_ENABLE;
             if( HW_SendRelayMessage( chSerialOut, 1, NULL ) )
                 bEnableIRQ_Msg = true;
@@ -1361,6 +1494,8 @@ void CS_Communication_Serial::DisableModulIRQ()
    {
         do
         {
+           memset( chSerialOut, 0, 2048 );
+
             chSerialOut[0] = MODUL_DISABLE;
             if( HW_SendRelayMessage( chSerialOut, 1, NULL ) )
                 bEnableIRQ_Msg = false;
@@ -1581,7 +1716,10 @@ void CS_Communication_Serial::ModuleTurnOn()
 {
     char chSerialOut[2048];
 
-    g_obLogger(cSeverity::DEBUG) << QString("Modul power on") << EOM;
+    g_obLogger(cSeverity::DEBUG) << QString("[SP] Modul power on") << EOM;
+
+    memset( chSerialOut, 0, 2048 );
+
     chSerialOut[0] = MODUL_POWER_ON;
     if( HW_SendRelayMessage( chSerialOut, 1  ) )
     {
@@ -1595,7 +1733,10 @@ void CS_Communication_Serial::ModuleTurnOff()
 {
     char chSerialOut[2048];
 
-    g_obLogger(cSeverity::DEBUG) << QString("Modul power off") << EOM;
+    g_obLogger(cSeverity::DEBUG) << QString("[SP] Modul power off") << EOM;
+
+    memset( chSerialOut, 0, 2048 );
+
     chSerialOut[0] = MODUL_POWER_OFF;
     if( HW_SendRelayMessage( chSerialOut, 1  ) )
         bSendToModulPower_OFF = false;

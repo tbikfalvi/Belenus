@@ -119,6 +119,8 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
     chkDBGlobalAutoSynchron->setChecked( g_poPrefs->getDBGlobalAutoSynchronize() );
 
     spbCOM->setValue( g_poPrefs->getCommunicationPort() );
+    chkForceSendTime->setChecked( g_poPrefs->isForceModuleSendTime() );
+    chkForceButtonRead->setChecked( g_poPrefs->isForceModuleCheckButton() );
 
     obColorIcon.fill( QColor( g_poPrefs->getMainBackground() ) );
     btnMainBackground->setIcon( QIcon( obColorIcon ) );
@@ -426,6 +428,8 @@ void cDlgPreferences::accept()
     g_poPrefs->setDBGlobalAutoSynchronize( chkDBGlobalAutoSynchron->isChecked() );
 
     g_poPrefs->setCommunicationPort( spbCOM->value() );
+    g_poPrefs->setForceModuleSendTime( chkForceSendTime->isChecked() );
+    g_poPrefs->setForceModuleCheckButton( chkForceButtonRead->isChecked() );
 
     g_poPrefs->setDeviceUseVAT( ledVatPercent->text().toInt() );
     g_poPrefs->setPanelTextSteril( ledPanelTextSterile->text() );

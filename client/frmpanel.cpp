@@ -156,6 +156,8 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     m_qsTransactionId               = "";
 
+    m_nMinuteOfPanel                = 0;
+
     m_vrPatientCard.uiPatientCardId = 0;
     m_vrPatientCard.qslUnitIds      = QStringList();
     m_vrPatientCard.inUnitTime      = 0;
@@ -245,7 +247,9 @@ void cFrmPanel::start()
     m_pDBLedgerDevice->setPatientId( m_uiCurrentPatient );
     m_pDBLedgerDevice->setActive( true );
 
-    g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength );
+    unsigned char byStatus;
+
+    g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength, &byStatus );
 
     g_obLogger(cSeverity::INFO) << "Device started Id ["
                                 << m_uiId
@@ -261,6 +265,8 @@ void cFrmPanel::start()
                                 << (m_inMainProcessLength-m_inCashLength)/60
                                 << "]"
                                 << EOM;
+
+    m_nMinuteOfPanel = m_inMainProcessLength/60;
 
     activateNextStatus();
     m_inTimerId = startTimer( 1000 );
@@ -369,6 +375,7 @@ void cFrmPanel::clear()
     m_uiPaymentMethodId     = 0;
     m_uiShoppingCartItemId  = 0;
     m_qsTransactionId       = "";
+    m_nMinuteOfPanel        = 0;
     m_pDBLedgerDevice->createNew();
 
     setTextInformation( "" );
@@ -599,7 +606,18 @@ void cFrmPanel::timerEvent ( QTimerEvent * )
     {
         activateNextStatus();
     }
-    g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter );
+    bool bUpdatePanelTimer = false;
+
+    if( g_poPrefs->isForceModuleSendTime() )
+    {
+        if( (m_inMainProcessLength/60 + 1) != m_nMinuteOfPanel )
+        {
+            bUpdatePanelTimer = true;
+            m_nMinuteOfPanel = m_inMainProcessLength/60 + 1;
+        }
+    }
+
+    g_poHardware->setCounter( m_uiId-1, (int)m_uiCounter, bUpdatePanelTimer );
 
     if( !isWorking() && mainProcessTime() > 0 && !isHasToPay() )
     {
