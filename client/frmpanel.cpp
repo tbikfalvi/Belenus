@@ -458,7 +458,7 @@ void cFrmPanel::setMainProcessTime( const int p_inLength )
 //====================================================================================
 void cFrmPanel::setMainProcessTime( const int p_inLength, const int p_inPrice )
 {
-    if( !g_obCassa.isCassaEnabled() )
+    if( p_inPrice > 0 && !g_obCassa.isCassaEnabled() )
     {
         QMessageBox::warning( NULL, tr("Attention"),
                               tr("Cassa is disabled!\n\n"

@@ -16,6 +16,7 @@
 #include <QtNetwork>
 #include <QTimer>
 #include <QStringList>
+#include <QMessageBox>
 
 #include "http.h"
 #include "belenus.h"
@@ -52,10 +53,10 @@ cBlnsHttp::~cBlnsHttp()
 {
     cTracer obTrace( "cBlnsHttp::~cBlnsHttp" );
 
-    if( m_inTimer > 0 )
-        killTimer( m_inTimer );
+//    if( m_inTimer > 0 )
+//        killTimer( m_inTimer );
 
-    if( m_httpManager )   delete m_httpManager;
+//    if( m_httpManager )   delete m_httpManager;
 }
 //=================================================================================================
 void cBlnsHttp::setHost( const QString p_qsHost )
@@ -103,7 +104,7 @@ bool cBlnsHttp::_downloadFile(QString p_qsFileName)
 
     if( !obFile->open(QIODevice::WriteOnly) )
     {
-        QMessageBox::warning( this, tr("Warning"),
+        QMessageBox::warning( 0, tr("Warning"),
                               tr("Unable to save the file\n\n%1\n\n%2.").arg( fileName ).arg( obFile->errorString() ) );
         delete obFile;
         obFile = 0;
@@ -152,8 +153,8 @@ void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
     if (error)
     {
         obFile->remove();
-        QMessageBox::warning( this, tr("Warning"),
-                              tr("Error occured during downloading file:\n%1.").arg( obHttp->errorString() ) );
+        QMessageBox::warning( 0, tr("Warning"),
+                              QObject::tr("Error occured during downloading file:\n%1.").arg( obHttp->errorString() ) );
         delete obFile;
         obFile = 0;
         return;
@@ -162,18 +163,9 @@ void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
     delete obFile;
     obFile = 0;
 
-    if( m_teProcessStep == ST_DOWNLOAD_INFO_FILE )
-    {
-        m_teProcessStep = ST_READ_INFO_FILE;
-    }
-    else
-    {
-        m_teProcessStep = ST_DOWNLOAD_FILES;
-    }
+//    _log( QString("Downloading file finished. Next: %1\n").arg( m_teProcessStep ) );
 
-    _log( QString("Downloading file finished. Next: %1\n").arg( m_teProcessStep ) );
-
-    m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+//    m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
 }
 //=================================================================================================
 // _progressText
@@ -191,13 +183,14 @@ void cBlnsHttp::_slotReadResponseHeader(const QHttpResponseHeader &responseHeade
             break;
 
         default:
-            m_teProcessStep = ST_WAIT;
-            QMessageBox::warning( this, tr("Warning"),
-                                  tr("Download failed: %1.").arg( responseHeader.reasonPhrase() ) );
-            m_httpRequestAborted = true;
-            obHttp->abort();
-            m_teProcessStep = ST_EXIT;
-            m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+//            m_teProcessStep = ST_WAIT;
+//            QMessageBox::warning( this, tr("Warning"),
+//                                  tr("Download failed: %1.").arg( responseHeader.reasonPhrase() ) );
+//            m_httpRequestAborted = true;
+//            obHttp->abort();
+//            m_teProcessStep = ST_EXIT;
+//            m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+            ;
     }
 }
 //=================================================================================================
@@ -208,14 +201,14 @@ void cBlnsHttp::_slotUpdateDataReadProgress(int bytesRead, int totalBytes)
     if (m_httpRequestAborted)
         return;
 
-    _progressMax( totalBytes );
-    _progressValue( bytesRead );
+//    _progressMax( totalBytes );
+//    _progressValue( bytesRead );
 }
 //=================================================================================================
 // _progressText
 //-------------------------------------------------------------------------------------------------
 void cBlnsHttp::_slotAuthenticationRequired(const QString &hostName, quint16, QAuthenticator *authenticator)
-{
+{/*
     QDialog dlg;
     Ui::Dialog ui;
     ui.setupUi(&dlg);
@@ -226,7 +219,7 @@ void cBlnsHttp::_slotAuthenticationRequired(const QString &hostName, quint16, QA
     {
         authenticator->setUser(ui.userEdit->text());
         authenticator->setPassword(ui.passwordEdit->text());
-    }
+    }*/
 }
 //=================================================================================================
 // _progressText

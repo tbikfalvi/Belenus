@@ -2382,7 +2382,14 @@ void cWndMain::processInputTimePeriod( int p_inMinute )
     }
     else
     {
-        on_action_UseDevice_triggered();
+        if( g_obUser.isInGroup( cAccessGroup::SYSTEM ) )
+        {
+            mdiPanels->setMainProcessTime( p_inMinute*60, 0 );
+        }
+        else
+        {
+            on_action_UseDevice_triggered();
+        }
     }
     on_KeyboardEnabled();
 }

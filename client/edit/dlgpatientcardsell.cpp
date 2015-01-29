@@ -446,7 +446,7 @@ void cDlgPatientCardSell::on_pbSell_clicked()
                 obDBShoppingCart.save();
             }
 
-            m_poPatientCard->sendDataToGibbig( cGibbigAction::GA_PCREGISTER );
+//            m_poPatientCard->sendDataToGibbig( cGibbigAction::GA_PCREGISTER );
 
             QDialog::accept();
 
