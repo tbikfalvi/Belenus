@@ -33,13 +33,7 @@ public:
     {
         HA_DEFAULT = 0,
         HA_AUTHENTICATE,
-        HA_PCTCREATE,
-        HA_PCTMODIFY,
-        HA_PCTDELETE,
-        HA_PCREGISTER,
-        HA_PCREFILL,
-        HA_PCUSE,
-        HA_PCDELETE
+        HA_PCSENDDATA
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
@@ -48,13 +42,7 @@ public:
         {
             case HA_DEFAULT:        return "HTTPMSG_01 Unidentified ";              break;
             case HA_AUTHENTICATE:   return "HTTPMSG_02 Authenticate ";              break;
-            case HA_PCTCREATE:      return "HTTPMSG_03 PatientCardTypeCreate ";     break;
-            case HA_PCTMODIFY:      return "HTTPMSG_04 PatientCardTypeModify ";     break;
-            case HA_PCTDELETE:      return "HTTPMSG_05 PatientCardTypeDelete ";     break;
-            case HA_PCREGISTER:     return "HTTPMSG_06 PatientCardRegistration ";   break;
-            case HA_PCREFILL:       return "HTTPMSG_07 PatientCardRefill ";         break;
-            case HA_PCUSE:          return "HTTPMSG_08 PatientCardUsage ";          break;
-            case HA_PCDELETE:       return "HTTPMSG_09 PatientCardDelete ";         break;
+            case HA_PCSENDDATA:     return "HTTPMSG_03 PatientCardSendData ";       break;
             default:                return "INVALID_IDENTIFIER";
         }
     }
@@ -71,8 +59,8 @@ public:
     ~cBlnsHttp();
 
     void             setHost( const QString p_qsHost );
-    void             setUserName( const QString p_qsUserName );
     void             setTimeout( const int p_inTimeout );
+    void             sendPatientCardData( QString p_qsPatientCardData );
 
     void             checkHttpServerAvailability();
 
@@ -84,7 +72,6 @@ private:
     int              m_httpGetId;
 
     QString          m_qsHost;
-    QString          m_qsUserName;
     int              m_inTimeout;
 
     bool            _downloadFile( QString p_qsFileName );

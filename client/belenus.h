@@ -26,6 +26,7 @@
 #include "cassa.h"
 #include "general.h"
 //#include "gibbig.h"
+#include "http.h"
 
 //====================================================================================
 
@@ -56,6 +57,7 @@ extern cCassa                   g_obCassa;
 extern cGeneral                 g_obGen;
 extern cDBGuest                 g_obGuest;
 //extern cGibbig                 *g_poGibbig;
+extern cBlnsHttp               *g_poBlnsHttp;
 
 //====================================================================================
 

@@ -40,6 +40,7 @@
 #include "licenceManager.h"
 #include "general.h"
 //#include "gibbig.h"
+#include "http.h"
 #ifdef __WIN32__
     #include "communication_serial.h"
 #endif
@@ -64,6 +65,7 @@ cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
 //cGibbig                 *g_poGibbig;
+cBlnsHttp               *g_poBlnsHttp;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani
 // g_obLogger(cSeverity::DEBUG) << QString("") << EOM;
