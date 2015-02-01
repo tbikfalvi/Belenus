@@ -43,7 +43,7 @@ void cReportPCUsages::refreshReport()
                                     "WHERE dateTimeUsed>=\"%1 00:00:00\" "
                                     "AND dateTimeUsed<=\"%2 24:00:00\" "
                                     "AND patientcardunits.active=0 "
-                                    "GROUP BY dateTimeUsed" ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
+                                    "GROUP BY barcode, dateTimeUsed ORDER BY dateTimeUsed" ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
     QSqlQuery *poQueryResultCards = g_poDB->executeQTQuery( qsQueryCards );
 
     m_dlgProgress.setProgressValue( 10 );

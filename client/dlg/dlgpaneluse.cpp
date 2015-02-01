@@ -397,8 +397,8 @@ void cDlgPanelUse::setPanelUseTimeCash(unsigned int p_uiSeconds)
 //----------------------------------------------------------------------------------------------
 void cDlgPanelUse::setPanelUseTime(unsigned int p_uiSeconds)
 {
-    if( !m_bIsCardCanBeUsed )       m_uiPanelBaseTimeCard = p_uiSeconds;
-    else if( !m_bIsCashCanBeUsed )  m_uiPanelBaseTimeCash = p_uiSeconds;
+    if( !m_bIsCashCanBeUsed )  m_uiPanelBaseTimeCash = p_uiSeconds;
+    else                       m_uiPanelBaseTimeCard = p_uiSeconds;
 
     setPanelUseTime();
 }
