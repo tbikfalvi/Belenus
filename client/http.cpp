@@ -33,7 +33,6 @@ cBlnsHttp::cBlnsHttp()
     m_httpGetId             = 0;
 
     m_qsHost                = "";
-    m_qsUserName            = "";
     m_inTimeout             = 0;
 
     obHttp = new QHttp( this );
@@ -74,6 +73,23 @@ void cBlnsHttp::setTimeout( const int p_inTimeout )
 void cBlnsHttp::checkHttpServerAvailability()
 //-------------------------------------------------------------------------------------------------
 {
+
+}
+//=================================================================================================
+void cBlnsHttp::sendPatientCardData( QString p_qsPatientCardData )
+//-------------------------------------------------------------------------------------------------
+{
+    QString  qsQuery;
+
+    qsQuery = "INSERT INTO httppatientcardinfo SET ";
+    qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "patientcardInfoText = \"%1\", " ).arg( p_qsPatientCardData );
+    qsQuery += QString( "active = 1, " );
+    qsQuery += QString( "archive = \"NEW\" " );
+
+    g_poDB->executeQTQuery( qsQuery );
+
+//    _activateProcess();
 
 }
 //=================================================================================================

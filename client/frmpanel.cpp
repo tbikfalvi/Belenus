@@ -158,9 +158,7 @@ cFrmPanel::cFrmPanel( const unsigned int p_uiPanelId ) : QFrame()
 
     m_nMinuteOfPanel                = 0;
 
-    m_vrPatientCard.uiPatientCardId = 0;
-    m_vrPatientCard.qslUnitIds      = QStringList();
-    m_vrPatientCard.inUnitTime      = 0;
+    m_vrPatientCards.clear();
 
 //    m_uiAttendanceId        = 0;
     m_uiLedgerId            = 0;
@@ -251,6 +249,16 @@ void cFrmPanel::start()
 
     g_poHardware->setMainActionTime( m_uiId-1, m_inMainProcessLength, &byStatus );
 
+    QStringList qslPCUsed = QStringList();
+
+    for( int j=0;j<m_vrPatientCards.size(); j++ )
+    {
+        stUsedPatientCards *stTemp = m_vrPatientCards.at(j);
+
+        qslPCUsed.append( QString("%1#%2").arg( stTemp->uiPatientCardId )
+                                          .arg( stTemp->qslUnitIds.join("|") ) );
+    }
+
     g_obLogger(cSeverity::INFO) << "Device started Id ["
                                 << m_uiId
                                 << "] TrId ["
@@ -258,7 +266,7 @@ void cFrmPanel::start()
                                 << "] Time ["
                                 << m_inMainProcessLength/60
                                 << "] CardIds ["
-                                << m_vrPatientCard.qslUnitIds.join("|")
+                                << qslPCUsed.join(" ")
                                 << "] CashLength ["
                                 << m_inCashLength/60
                                 << "] CardLength ["
@@ -310,21 +318,24 @@ void cFrmPanel::clear()
         g_poHardware->setCurrentCommand( m_uiId-1, 0 );
     }
 
-    for( int i=0; i<m_vrPatientCard.qslUnitIds.count(); i++ )
+    for( int i=0; i<m_vrPatientCards.size(); i++ )
     {
-        cDBPatientcardUnit obDBPatientcardUnit;
+        stUsedPatientCards *stTemp = m_vrPatientCards.at(i);
 
-        if( m_vrPatientCard.qslUnitIds.at(i).toInt() > 0 )
+        for( int j=0; j<stTemp->qslUnitIds.count(); j++ )
         {
-            obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
-            obDBPatientcardUnit.setPrepared( false );
-            obDBPatientcardUnit.save();
+            cDBPatientcardUnit obDBPatientcardUnit;
+
+            if( stTemp->qslUnitIds.at(j).toInt() > 0 )
+            {
+                obDBPatientcardUnit.load( stTemp->qslUnitIds.at(j).toInt() );
+                obDBPatientcardUnit.setPrepared( false );
+                obDBPatientcardUnit.save();
+            }
         }
     }
 
-    m_vrPatientCard.uiPatientCardId  = 0;
-    m_vrPatientCard.qslUnitIds       = QStringList();
-    m_vrPatientCard.inUnitTime       = 0;
+    m_vrPatientCards.clear();
 
     m_inMainProcessLength   = 0;
     m_inCashLength          = 0;
@@ -505,18 +516,23 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
                                 << "]"
                                 << EOM;
 
-    m_vrPatientCard.uiPatientCardId  = p_uiPatientCardId;
-    m_vrPatientCard.qslUnitIds       = p_qslUnitIds;
-    m_vrPatientCard.inUnitTime       = p_inLength;
-    m_inCardTimeRemains              = p_inLength;
+    stUsedPatientCards *stTemp = new stUsedPatientCards;
 
-    for( int i=0; i<m_vrPatientCard.qslUnitIds.count(); i++ )
+    stTemp->uiPatientCardId = p_uiPatientCardId;
+    stTemp->qslUnitIds      = p_qslUnitIds;
+    stTemp->inUnitTime      = p_inLength;
+
+    m_vrPatientCards.push_back( stTemp );
+
+    m_inCardTimeRemains    += p_inLength;
+
+    for( int i=0; i<p_qslUnitIds.count(); i++ )
     {
         cDBPatientcardUnit obDBPatientcardUnit;
 
-        if( m_vrPatientCard.qslUnitIds.at(i).toInt() > 0 )
+        if( p_qslUnitIds.at(i).toInt() > 0 )
         {
-            obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
+            obDBPatientcardUnit.load( p_qslUnitIds.at(i).toInt() );
             obDBPatientcardUnit.setPanelId( m_uiId );
             obDBPatientcardUnit.setPrepared( true );
             obDBPatientcardUnit.save();
@@ -525,9 +541,9 @@ void cFrmPanel::setMainProcessTime( const unsigned int p_uiPatientCardId, const 
 
     if( p_uiPatientCardId > 1 )
     {
-       m_pDBLedgerDevice->setUnits( m_vrPatientCard.qslUnitIds.count() );
+       m_pDBLedgerDevice->setUnits( m_pDBLedgerDevice->units() + p_qslUnitIds.count() );
     }
-    m_pDBLedgerDevice->setTimeCard( p_inLength );
+    m_pDBLedgerDevice->setTimeCard( m_inCardTimeRemains );
 
     setMainProcessTime( p_inLength );
 }
@@ -1037,45 +1053,50 @@ void cFrmPanel::closeAttendance()
 
     if( poQuery ) delete poQuery;
 
-    if( m_vrPatientCard.uiPatientCardId != 0 )
+    if( m_vrPatientCards.size() > 0 )
     {
-        cDBPatientCard          obDBPatientCard;
-        cDBPatientCardHistory   obDBPatientCardHistory;
-
-        obDBPatientCard.load( m_vrPatientCard.uiPatientCardId );
-
-        // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
-        if( obDBPatientCard.patientCardTypeId() > 1 )
+        for( int i=0; i<m_vrPatientCards.size(); i++ )
         {
-            obDBPatientCard.setUnits( obDBPatientCard.units()-m_vrPatientCard.qslUnitIds.count() );
-            obDBPatientCard.setTimeLeft( obDBPatientCard.timeLeft()-m_vrPatientCard.inUnitTime+m_inCardTimeRemains );
+            stUsedPatientCards  *stTemp = m_vrPatientCards.at(i);
+            cDBPatientCard       obDBPatientCard;
 
-            obDBPatientCard.save();
+            obDBPatientCard.load( stTemp->uiPatientCardId );
 
-            for( int i=0; i<m_vrPatientCard.qslUnitIds.count(); i++ )
+            // Szerviz csoportba tartozo kartyanal nem kell levonni az egyseget es idot
+            if( obDBPatientCard.patientCardTypeId() > 1 )
             {
-                cDBPatientcardUnit obDBPatientcardUnit;
+                for( int j=0; j<stTemp->qslUnitIds.count(); j++ )
+                {
+                    cDBPatientcardUnit obDBPatientcardUnit;
 
-                obDBPatientcardUnit.load( m_vrPatientCard.qslUnitIds.at(i).toInt() );
-                obDBPatientcardUnit.setPanelId( m_uiId );
-                obDBPatientcardUnit.setDateTime( QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") );
-                obDBPatientcardUnit.setPrepared( false );
-                obDBPatientcardUnit.setActive( false );
-                obDBPatientcardUnit.save();
+                    obDBPatientcardUnit.load( stTemp->qslUnitIds.at(j).toInt() );
+
+                    obDBPatientcardUnit.setPanelId( m_uiId );
+                    obDBPatientcardUnit.setDateTime( QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") );
+                    obDBPatientcardUnit.setPrepared( false );
+                    obDBPatientcardUnit.setActive( false );
+                    obDBPatientcardUnit.save();
+                }
+
+                obDBPatientCard.synchronizeUnits();
+                obDBPatientCard.synchronizeTime();
+                obDBPatientCard.save();
+                obDBPatientCard.sendDataToWeb();
             }
-            obDBPatientCard.synchronizeUnits();
+
+            cDBPatientCardHistory   obDBPatientCardHistory;
+
+            QTime m_qtTemp = QTime( 0, stTemp->inUnitTime/60, stTemp->inUnitTime%60, 0 );
+
+            obDBPatientCardHistory.createNew();
+            obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
+            obDBPatientCardHistory.setPatientCardId( obDBPatientCard.id() );
+            obDBPatientCardHistory.setUnits( stTemp->qslUnitIds.count() );
+            obDBPatientCardHistory.setTime( m_qtTemp.toString("hh:mm:ss") );
+            obDBPatientCardHistory.setActive( true );
+
+            obDBPatientCardHistory.save();
         }
-
-        QTime m_qtTemp = QTime( 0, m_vrPatientCard.inUnitTime/60, m_vrPatientCard.inUnitTime%60, 0 );
-
-        obDBPatientCardHistory.createNew();
-        obDBPatientCardHistory.setLicenceId( g_poPrefs->getLicenceId() );
-        obDBPatientCardHistory.setPatientCardId( obDBPatientCard.id() );
-        obDBPatientCardHistory.setUnits( m_vrPatientCard.qslUnitIds.count() );
-        obDBPatientCardHistory.setTime( m_qtTemp.toString("hh:mm:ss") );
-        obDBPatientCardHistory.setActive( true );
-
-        obDBPatientCardHistory.save();
     }
 
     g_obLogger(cSeverity::INFO) << "Device action finished Id ["
@@ -1089,9 +1110,7 @@ void cFrmPanel::closeAttendance()
                                 << "]"
                                 << EOM;
 
-    m_vrPatientCard.uiPatientCardId = 0;
-    m_vrPatientCard.qslUnitIds      = QStringList();
-    m_vrPatientCard.inUnitTime      = 0;
+    m_vrPatientCards.clear();
     m_inCashToPay                   = 0;
     m_inCashNetToPay                = 0;
     m_inCashDiscountToPay           = 0;
@@ -1140,16 +1159,17 @@ bool cFrmPanel::isCanBeStartedByTime()
 //====================================================================================
 bool cFrmPanel::isCanBeStartedByCard()
 {
+    return true;  // Panel can be started with multiple cards
+/*
     bool    bRet = true;
 
-    if( /*g_obPatient.id() == 0 ||
-        g_uiPatientAttendanceId == 0 ||*/
-        m_vrPatientCard.uiPatientCardId > 0 )
+    if( m_vrPatientCard.uiPatientCardId > 0 )
     {
         bRet = false;
     }
 
     return bRet;
+*/
 }
 
 //====================================================================================

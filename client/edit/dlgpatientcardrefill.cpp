@@ -61,8 +61,6 @@ cDlgPatientCardRefill::cDlgPatientCardRefill( QWidget *p_poParent, cDBPatientCar
                 continue;
 
             cmbCardType->addItem( poQuery->value( 1 ).toString(), poQuery->value( 0 ) );
-//            if( m_poPatientCard->patientCardTypeId() == poQuery->value( 0 ) )
-//                cmbCardType->setCurrentIndex( cmbCardType->count()-1 );
         }
 
         cmbPatient->addItem( tr("<Not selected>"), 0 );
@@ -460,7 +458,7 @@ void cDlgPatientCardRefill::on_pbSell_clicked()
                 obDBShoppingCart.save();
             }
 
-//            m_poPatientCard->sendDataToGibbig( cGibbigAction::GA_PCREFILL );
+            m_poPatientCard->sendDataToWeb();
 
             QDialog::accept();
 
