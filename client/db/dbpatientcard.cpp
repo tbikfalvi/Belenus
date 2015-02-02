@@ -654,7 +654,7 @@ void cDBPatientCard::sendDataToWeb() throw()
             }
         }
 
-        g_poBlnsHttp->sendPatientCardData( qsMessageData );
+        g_poBlnsHttp->sendPatientCardData( barcode(), qsMessageData );
     }
     catch( cSevException &e )
     {

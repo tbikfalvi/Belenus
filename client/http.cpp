@@ -76,13 +76,14 @@ void cBlnsHttp::checkHttpServerAvailability()
 
 }
 //=================================================================================================
-void cBlnsHttp::sendPatientCardData( QString p_qsPatientCardData )
+void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCardData )
 //-------------------------------------------------------------------------------------------------
 {
     QString  qsQuery;
 
     qsQuery = "INSERT INTO httppatientcardinfo SET ";
     qsQuery += QString( "licenceId = \"%1\", " ).arg( g_poPrefs->getLicenceId() );
+    qsQuery += QString( "barcode = \"%1\", " ).arg( p_qsBarcode );
     qsQuery += QString( "patientcardInfoText = \"%1\", " ).arg( p_qsPatientCardData );
     qsQuery += QString( "active = 1, " );
     qsQuery += QString( "archive = \"NEW\" " );

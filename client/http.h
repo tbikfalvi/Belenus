@@ -60,7 +60,7 @@ public:
 
     void             setHost( const QString p_qsHost );
     void             setTimeout( const int p_inTimeout );
-    void             sendPatientCardData( QString p_qsPatientCardData );
+    void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData );
 
     void             checkHttpServerAvailability();
 

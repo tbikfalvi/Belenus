@@ -40,6 +40,7 @@ CREATE TABLE `licences` (
 CREATE TABLE `httppatientcardinfo` (
   `httpPatientcardInfoId`   int(10) unsigned        NOT NULL AUTO_INCREMENT,
   `licenceId`               int(10) unsigned        NOT NULL,
+  `barcode`                 varchar(20)             NOT NULL,
   `patientcardInfoText`     text                    NOT NULL,
   `active`                  tinyint(1)              DEFAULT 0,
   `archive`                 varchar(10)             NOT NULL,  
