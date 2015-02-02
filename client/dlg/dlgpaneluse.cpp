@@ -25,17 +25,20 @@ cPanelPCUnitUse::cPanelPCUnitUse(QWidget *p_poParent, QStringList *p_qslParamete
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 
     QString qsToolTip = tr("<b>Number of units:</b> %1<br>"
-                           "<b>Unit time:</b> %2 minute(s)<br>"
-                           "<b>Valid:</b> %3").arg( p_qslParameters->at(5) )
-                                       .arg( p_qslParameters->at(2) )
-                                       .arg( p_qslParameters->at(6) );
+                           "<b>Card type:</b> %2<br>"
+                           "<b>Unit time:</b> %3 minute(s)<br>"
+                           "<b>Valid:</b> %4").arg( p_qslParameters->at(5) )
+                                              .arg( p_qslParameters->at(6) )
+                                              .arg( p_qslParameters->at(2) )
+                                              .arg( p_qslParameters->at(7) );
 
     pbUseUnitType = new QPushButton( this );
     pbUseUnitType->setObjectName( QString::fromUtf8( "pbUseUnitType" ) );
     pbUseUnitType->setMinimumWidth( 200 );
     pbUseUnitType->setMinimumHeight( 30 );
     pbUseUnitType->setMaximumHeight( 30 );
-    pbUseUnitType->setText( tr("%1 minute(s) unit").arg( p_qslParameters->at(2) ) );
+    pbUseUnitType->setText( tr("%1 min. (%2)").arg( p_qslParameters->at(2) )
+                                              .arg( p_qslParameters->at(6) ) );
     pbUseUnitType->setToolTip( qsToolTip );
     pbUseUnitType->setIconSize( QSize(20,20) );
     pbUseUnitType->setIcon( QIcon("./resources/40x40_device_withcard.png") );
@@ -186,7 +189,7 @@ cDlgPanelUse::cDlgPanelUse( QWidget *p_poParent, unsigned int p_uiPanelId ) : QD
     pbInformation->setIcon( QIcon("resources/40x40_information.png") );
     pbInformation->setEnabled( false );
 
-    lblCardType->setText( tr("Card type : ") );
+//    lblCardType->setText( tr("Card type : ") );
     lblCardOwner->setText( tr("Owner : ") );
 
     m_poParent                  = p_poParent;
@@ -293,13 +296,29 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                 m_obDBPatientCard.load( m_obDBPatientCard.parentId() );
             }
 
-            QString qsQuery = QString( "SELECT patientCardUnitId, patientCardTypeId, unitTime, validDateFrom, validDateTo, COUNT(unitTime) "
-                                       "FROM patientcardunits "
-                                       "WHERE patientCardId=%1 "
-                                       "AND validDateFrom<=CURDATE() AND validDateTo>=CURDATE() "
-                                       "AND prepared=0 "
-                                       "AND active=1 "
-                                       "GROUP BY unitTime, validDateTo, patientCardTypeId ORDER BY validDateTo, patientCardUnitId" ).arg( m_obDBPatientCard.id() );
+            QString qsQuery = QString( "SELECT "
+                                            "patientcardunits.patientCardUnitId, "
+                                            "patientcardunits.patientCardTypeId, "
+                                            "patientcardunits.unitTime, "
+                                            "patientcardunits.validDateFrom, "
+                                            "patientcardunits.validDateTo, "
+                                            "COUNT(patientcardunits.unitTime), "
+                                            "name "
+                                       "FROM patientcardunits, patientcardtypes "
+                                       "WHERE "
+                                            "patientCardId=%1 "
+                                            "AND patientcardunits.validDateFrom<=CURDATE() "
+                                            "AND patientcardunits.validDateTo>=CURDATE() "
+                                            "AND prepared=0 "
+                                            "AND patientcardunits.active=1 "
+                                            "AND patientcardunits.patientCardTypeId=patientcardtypes.patientCardTypeId "
+                                       "GROUP BY "
+                                            "patientcardunits.unitTime, "
+                                            "patientcardunits.validDateTo, "
+                                            "patientcardunits.patientCardTypeId "
+                                       "ORDER BY "
+                                            "patientcardunits.validDateTo, "
+                                            "patientcardunits.patientCardUnitId" ).arg( m_obDBPatientCard.id() );
             QSqlQuery  *poQuery = g_poDB->executeQTQuery( qsQuery );
 
             while( poQuery->next() )
@@ -330,6 +349,7 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
                          << poQuery->value( 3 ).toString()
                          << poQuery->value( 4 ).toString()
                          << poQuery->value( 5 ).toString()
+                         << poQuery->value( 6 ).toString()
                          << qsValid;
                 cPanelPCUnitUse *pPanelUseFrame = new cPanelPCUnitUse( this, &qslUnits );
                 vlUnits->insertWidget( qvPanelUseUnits.count(), pPanelUseFrame );
@@ -363,18 +383,22 @@ void cDlgPanelUse::setPanelUsePatientCard(unsigned int p_uiPatientCardId)
 
     if( m_obDBPatientCard.id() > 0 )
     {
-        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patientcardtypes.name AS type, patients.name AS owner "
-                                                             "FROM patientcards JOIN patientcardtypes ON "
-                                                             "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId "
-                                                             "JOIN patients ON "
-                                                             "patientcards.patientId=patients.patientId "
-                                                             "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
+//        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patientcardtypes.name AS type, patients.name AS owner "
+//                                                             "FROM patientcards JOIN patientcardtypes ON "
+//                                                             "patientcards.patientCardTypeId=patientcardtypes.patientCardTypeId "
+//                                                             "JOIN patients ON "
+//                                                             "patientcards.patientId=patients.patientId "
+//                                                             "WHERE patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
+        QSqlQuery *poQuery = g_poDB->executeQTQuery( QString("SELECT patients.name AS owner "
+                                                             "FROM patientcards, patients "
+                                                             "WHERE patientcards.patientId=patients.patientId "
+                                                             "AND patientcards.patientCardId=%1").arg(m_obDBPatientCard.id()) );
         poQuery->first();
 
         qsValidPeriods.replace("\n","<br>");
         pbInformation->setEnabled( true );
-        lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
-        lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(1).toString() ) );
+//        lblCardType->setText( tr("Type : %1").arg( poQuery->value(0).toString() ) );
+        lblCardOwner->setText( tr("Owner : %1").arg( poQuery->value(0).toString() ) );
     }
 
     int nUnitHeight = (qvPanelUseUnits.count()-1)*50;
@@ -686,7 +710,7 @@ void cDlgPanelUse::on_ledPatientCardBarcode_textEdited(const QString &/*arg1*/)
         setPanelUsePatientCard( m_obDBPatientCard.id() );
         slotPatientCardUseUpdated();
         pbInformation->setEnabled( false );
-        lblCardType->setText( "" );
+//        lblCardType->setText( "" );
         lblCardOwner->setText( "" );
     }
 }

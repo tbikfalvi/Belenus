@@ -16,6 +16,23 @@ cReportLedger::cReportLedger(QWidget *parent, QString p_qsReportName) : cReport(
     _setDateStopEnabled( true );
     _setDateStopLabelText( tr("Last date of intervall :") );
     m_qdStopDate = QDate::currentDate();
+
+    _setDataTypeEnabled( true );
+    _setDataTypeLabelText( tr("Cassa owner :") );
+
+    QStringList qslDataTypes;
+
+    qslDataTypes << QString( "0|%1" ).arg( tr("All users") );
+
+    QSqlQuery   *poQueryResult = g_poDB->executeQTQuery( "SELECT userId, realName FROM users WHERE userId>1 AND active=1" );
+
+    while( poQueryResult->next() )
+    {
+        qslDataTypes << QString( "%1|%2" ).arg( poQueryResult->value(0).toString() ).arg( poQueryResult->value(1).toString() );
+    }
+
+    setFilterDataType( QString( "0|%1" ).arg( tr("All users") ) );
+    setFilterDataTypeList( qslDataTypes.join("#") );
 }
 //------------------------------------------------------------------------------------
 void cReportLedger::refreshReport()
@@ -41,35 +58,38 @@ void cReportLedger::refreshReport()
     addSubTitle( tr( "Shift list" ) );
     _reportPartCassaList();
 
-    // Product sold
-    addSeparator();
-    addSubTitle( tr( "Products sold" ) );
-    unsigned int uiProductSellTotal = _reportPartProductSell();
+    if( m_qslCassaIds.count() > 0 )
+    {
+        // Product sold
+        addSeparator();
+        addSubTitle( tr( "Products sold" ) );
+        unsigned int uiProductSellTotal = _reportPartProductSell();
 
-    // Patientcards sold
-    addSeparator();
-    addSubTitle( tr( "Patientcards sold" ) );
-    unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
+        // Patientcards sold
+        addSeparator();
+        addSubTitle( tr( "Patientcards sold" ) );
+        unsigned int uiPatientCardTotal = _reportPartPatientCardSell();
 
-    // Panel related data of the selected date
-    addSeparator();
-    addSubTitle( tr( "Occasionally usage of devices" ) );
-    unsigned int uiDeviceUsagesTotal = _reportPartPanelUse();
+        // Panel related data of the selected date
+        addSeparator();
+        addSubTitle( tr( "Occasionally usage of devices" ) );
+        unsigned int uiDeviceUsagesTotal = _reportPartPanelUse();
 
-    // Income based on payment methods
-    addSeparator();
-    addSubTitle( tr( "Income by payment methods" ) );
-    int nIncomeCard = _reportPartPaymentMethods();
+        // Income based on payment methods
+        addSeparator();
+        addSubTitle( tr( "Income by payment methods" ) );
+        int nIncomeCard = _reportPartPaymentMethods();
 
-    // Cassa expenses
-    addSeparator();
-    addSubTitle( tr( "Expenses" ) );
-    int nExpenses = _reportPartExpenses();
+        // Cassa expenses
+        addSeparator();
+        addSubTitle( tr( "Expenses" ) );
+        int nExpenses = _reportPartExpenses();
 
-    // Income summary
-    addSeparator();
-    addSubTitle( tr( "Income summary" ) );
-    _reportPartIncomeSummary( uiProductSellTotal, uiPatientCardTotal, uiDeviceUsagesTotal, nExpenses, nIncomeCard );
+        // Income summary
+        addSeparator();
+        addSubTitle( tr( "Income summary" ) );
+        _reportPartIncomeSummary( uiProductSellTotal, uiPatientCardTotal, uiDeviceUsagesTotal, nExpenses, nIncomeCard );
+    }
 
     finishReport();
 
@@ -81,14 +101,23 @@ void cReportLedger::_reportPartCassaList()
 {
     QString     qsQuery;
     QSqlQuery  *poQueryResult;
+    QString     qsCondition     = "";
+    QStringList qslFilterType   = filterType().split("|");
+
+    if( qslFilterType.at(0).toInt() > 0 )
+    {
+        qsCondition = QString( "cassa.userId=%1 AND " ).arg( qslFilterType.at(0).toInt() );
+    }
 
     qsQuery = QString( "SELECT cassaId, currentBalance, startDateTime, stopDateTime, cassa.modified, realName, cassa.userId "
                        "FROM cassa, users "
-                       "WHERE cassa.userId=users.userId AND ("
-                       " (DATE(cassa.startDateTime)>=\"%1\" AND DATE(cassa.startDateTime)<=\"%2\") OR "
-                       " (DATE(cassa.stopDateTime)>=\"%1\" AND DATE(cassa.stopDateTime)<=\"%2\") OR "
-                       " (DATE(cassa.modified)>=\"%1\" AND DATE(cassa.modified)<=\"%2\") "
-                       ") ORDER BY startDateTime" ).arg(filterDateStart().toString( "yyyy-MM-dd" )).arg(filterDateStop().toString( "yyyy-MM-dd" ));
+                       "WHERE %1 cassa.userId=users.userId AND ("
+                       " (DATE(cassa.startDateTime)>=\"%2\" AND DATE(cassa.startDateTime)<=\"%3\") OR "
+                       " (DATE(cassa.stopDateTime)>=\"%2\" AND DATE(cassa.stopDateTime)<=\"%3\") OR "
+                       " (DATE(cassa.modified)>=\"%2\" AND DATE(cassa.modified)<=\"%3\") "
+                       ") ORDER BY startDateTime" ).arg(qsCondition)
+                                                   .arg(filterDateStart().toString( "yyyy-MM-dd" ))
+                                                   .arg(filterDateStop().toString( "yyyy-MM-dd" ));
     poQueryResult = g_poDB->executeQTQuery( qsQuery );
 
     m_dlgProgress.setProgressMax( poQueryResult->size()+11 );
@@ -238,7 +267,7 @@ unsigned int cReportLedger::_reportPartPatientCardSell()
         unsigned int    uiCountPCTSum = 0;
         unsigned int    uiPricePCTSum = 0;
         QString         qsPricePCTSum = "";
-        QStringList     qslCells = QStringList();
+//        QStringList     qslCells = QStringList();
 
 //        for( int i=0; i<m_qslCassaIds.count(); i++ )
 //        {
@@ -334,7 +363,7 @@ unsigned int cReportLedger::_reportPartPanelUse()
 //        for( int i=0; i<m_qslCassaIds.count(); i++ )
 //        {
             int             nPricePanel  = _sumPanelUse( m_qslCassaIds.join(","), poQueryResult->value(0).toUInt() );
-            QString         qsPricePanel = "";
+//            QString         qsPricePanel = "";
 
 //            if( nPricePanel > 0 )
 //            {
@@ -438,7 +467,7 @@ unsigned int cReportLedger::_reportPartExpenses()
     return uiTotal;
 }
 //------------------------------------------------------------------------------------
-void cReportLedger::_reportPartPanelUseType(tePanelUse p_tePanelUse)
+/*void cReportLedger::_reportPartPanelUseType(tePanelUse p_tePanelUse)
 //------------------------------------------------------------------------------------
 {
     QString         qsQuery;
@@ -472,7 +501,7 @@ void cReportLedger::_reportPartPanelUseType(tePanelUse p_tePanelUse)
 
     finishTable();
     finishSection();
-}
+}*/
 //------------------------------------------------------------------------------------
 int cReportLedger::_reportPartPaymentMethods()
 //------------------------------------------------------------------------------------

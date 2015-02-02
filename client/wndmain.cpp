@@ -1747,10 +1747,6 @@ void cWndMain::on_action_UseDevice_triggered()
     obDlgPanelUse.enableCardUsage( mdiPanels->isCanBeStartedByCard() );
     obDlgPanelUse.enableCashUsage( mdiPanels->isCanBeStartedByTime() );
 
-    g_obLogger(cSeverity::DEBUG) << "Current prepared time: ["
-                                 << mdiPanels->mainProcessTime()
-                                 << "]"
-                                 << EOM;
     obDlgPanelUse.setPanelUseTime( mdiPanels->mainProcessTime() );
 
     if( m_inPanelStartMinute > 0 )
