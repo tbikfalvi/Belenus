@@ -25,6 +25,10 @@
 #include <QDateTime>
 #include <QStringList>
 
+#include <vector>
+
+using namespace std;
+
 //====================================================================================
 class cBlnsHttpAction
 {
@@ -64,6 +68,10 @@ public:
 
     void             checkHttpServerAvailability();
 
+protected:
+
+    void             timerEvent( QTimerEvent *p_poEvent );
+
 private:
 
     QHttp           *obHttp;
@@ -72,22 +80,33 @@ private:
     int              m_httpGetId;
 
     QString          m_qsHost;
+    QString          m_qsError;
     int              m_inTimeout;
+    int              m_inTimer;
+    QString          m_qsToken;
+
+    cBlnsHttpAction::teBlnsHttpAction           m_teBlnsHttpAction;
+    vector<cBlnsHttpAction::teBlnsHttpAction>   m_vrHttpActions;
 
     bool            _downloadFile( QString p_qsFileName );
+    void            _httpStartProcess();
+    void            _httpExecuteProcess();
+    void            _httpProcessResponse();
+    void            _httpSendCardData();
 
 signals:
 
     void             signalErrorOccured();
     void             signalActionProcessed( QString p_qsInfo );
+    void             signalDebugMessage(QString p_qsMessage);
 
 private slots:
-    void             _slotHttpRequestFinished(int requestId, bool error);
-    void             _slotUpdateDataReadProgress(int bytesRead, int totalBytes);
-    void             _slotReadResponseHeader(const QHttpResponseHeader &responseHeader);
-    void             _slotAuthenticationRequired(const QString &, quint16, QAuthenticator *);
+    void            _slotHttpRequestFinished(int requestId, bool error);
+    void            _slotUpdateDataReadProgress(int bytesRead, int totalBytes);
+    void            _slotReadResponseHeader(const QHttpResponseHeader &responseHeader);
+    void            _slotAuthenticationRequired(const QString &, quint16, QAuthenticator *);
 #ifndef QT_NO_OPENSSL
-    void             _slotSslErrors(const QList<QSslError> &errors);
+    void            _slotSslErrors(const QList<QSslError> &errors);
 #endif
 
 };

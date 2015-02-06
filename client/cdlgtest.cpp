@@ -1,5 +1,6 @@
 
 #include <QMenu>
+#include <QCryptographicHash>
 
 #include "belenus.h"
 #include "cdlgtest.h"
@@ -69,4 +70,19 @@ void cDlgTest::on_pbCreateLicenceCodes_clicked()
     } while( qsNumber.length() != 6 || i < 10 );
 
     ui->ledLicenceNumber->setText( qsNumber );
+}
+
+void cDlgTest::on_pbGenerateMd5Hash_clicked()
+{
+    ui->ledTimeStamp->setText( QString::number( QDateTime::currentDateTime().toTime_t() ) );
+
+    QString qsSource = "";
+
+    qsSource.append( ui->ledToken->text() );
+    qsSource.append( ui->ledTimeStamp->text() );
+    qsSource.append( ui->ledBarcode->text() );
+
+    QString blah = QString(QCryptographicHash::hash(qsSource.toStdString().c_str(),QCryptographicHash::Md5).toHex());
+
+    ui->ledMd5Hash->setText( blah );
 }

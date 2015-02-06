@@ -17,9 +17,13 @@
 #include <QTimer>
 #include <QStringList>
 #include <QMessageBox>
+#include <QCryptographicHash>
 
 #include "http.h"
 #include "belenus.h"
+#include "licenceManager.h"
+
+extern cLicenceManager g_obLicenceManager;
 
 //=================================================================================================
 cBlnsHttp::cBlnsHttp()
@@ -33,7 +37,14 @@ cBlnsHttp::cBlnsHttp()
     m_httpGetId             = 0;
 
     m_qsHost                = "";
+    m_qsError               = "";
     m_inTimeout             = 0;
+    m_inTimer               = 0;
+    m_qsToken               = "";
+
+    m_teBlnsHttpAction      = cBlnsHttpAction::HA_DEFAULT;
+
+    m_vrHttpActions.clear();
 
     obHttp = new QHttp( this );
 
@@ -52,8 +63,8 @@ cBlnsHttp::~cBlnsHttp()
 {
     cTracer obTrace( "cBlnsHttp::~cBlnsHttp" );
 
-//    if( m_inTimer > 0 )
-//        killTimer( m_inTimer );
+    if( m_inTimer > 0 )
+        killTimer( m_inTimer );
 
 //    if( m_httpManager )   delete m_httpManager;
 }
@@ -73,7 +84,9 @@ void cBlnsHttp::setTimeout( const int p_inTimeout )
 void cBlnsHttp::checkHttpServerAvailability()
 //-------------------------------------------------------------------------------------------------
 {
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
 
+    _httpStartProcess();
 }
 //=================================================================================================
 void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCardData )
@@ -90,13 +103,29 @@ void cBlnsHttp::sendPatientCardData(QString p_qsBarcode, QString p_qsPatientCard
 
     g_poDB->executeQTQuery( qsQuery );
 
-//    _activateProcess();
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_AUTHENTICATE );
+    m_vrHttpActions.push_back( cBlnsHttpAction::HA_PCSENDDATA );
 
+    _httpStartProcess();
 }
 //=================================================================================================
-// _downloadFile
+void cBlnsHttp::timerEvent(QTimerEvent *)
 //-------------------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cBlnsHttp::timerEvent" );
+
+    killTimer( m_inTimer );
+    m_inTimer = 0;
+
+    m_qsError.append( tr("HTTP timeout.\n") );
+    m_qsError.append( tr("%1 FAILED.").arg( cBlnsHttpAction::toStr( m_teBlnsHttpAction ) ) );
+    m_teBlnsHttpAction = cBlnsHttpAction::HA_DEFAULT;
+    emit signalDebugMessage( m_qsError );
+    emit signalErrorOccured();
+}
+//=================================================================================================
 bool cBlnsHttp::_downloadFile(QString p_qsFileName)
+//-------------------------------------------------------------------------------------------------
 {
     QUrl        url( p_qsFileName );
     QFileInfo   fileInfo(url.path());
@@ -115,8 +144,9 @@ bool cBlnsHttp::_downloadFile(QString p_qsFileName)
 
     if( !obFile->open(QIODevice::WriteOnly) )
     {
-        QMessageBox::warning( 0, tr("Warning"),
-                              tr("Unable to save the file\n\n%1\n\n%2.").arg( fileName ).arg( obFile->errorString() ) );
+        emit signalDebugMessage( tr("Unable to save the file\n\n%1\n\n%2.").arg( fileName )
+                                                                           .arg( obFile->errorString() ) );
+        emit signalErrorOccured();
         delete obFile;
         obFile = 0;
         return false;
@@ -138,7 +168,7 @@ bool cBlnsHttp::_downloadFile(QString p_qsFileName)
     return true;
 }
 //=================================================================================================
-// _progressText
+// _slotHttpRequestFinished
 //-------------------------------------------------------------------------------------------------
 void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
 {
@@ -164,8 +194,8 @@ void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
     if (error)
     {
         obFile->remove();
-        QMessageBox::warning( 0, tr("Warning"),
-                              QObject::tr("Error occured during downloading file:\n%1.").arg( obHttp->errorString() ) );
+        emit signalDebugMessage( tr("Error occured during downloading file:\n%1.").arg( obHttp->errorString() ) );
+        emit signalErrorOccured();
         delete obFile;
         obFile = 0;
         return;
@@ -174,14 +204,11 @@ void cBlnsHttp::_slotHttpRequestFinished(int requestId, bool error)
     delete obFile;
     obFile = 0;
 
-//    _log( QString("Downloading file finished. Next: %1\n").arg( m_teProcessStep ) );
-
-//    m_nTimer = startTimer( CONST_PROCESS_STEP_WAIT_MS );
+    _httpProcessResponse();
 }
 //=================================================================================================
-// _progressText
-//-------------------------------------------------------------------------------------------------
 void cBlnsHttp::_slotReadResponseHeader(const QHttpResponseHeader &responseHeader)
+//-------------------------------------------------------------------------------------------------
 {
     switch (responseHeader.statusCode())
     {
@@ -205,9 +232,8 @@ void cBlnsHttp::_slotReadResponseHeader(const QHttpResponseHeader &responseHeade
     }
 }
 //=================================================================================================
-// _progressText
-//-------------------------------------------------------------------------------------------------
 void cBlnsHttp::_slotUpdateDataReadProgress(int bytesRead, int totalBytes)
+//-------------------------------------------------------------------------------------------------
 {
     if (m_httpRequestAborted)
         return;
@@ -216,9 +242,8 @@ void cBlnsHttp::_slotUpdateDataReadProgress(int bytesRead, int totalBytes)
 //    _progressValue( bytesRead );
 }
 //=================================================================================================
-// _progressText
-//-------------------------------------------------------------------------------------------------
 void cBlnsHttp::_slotAuthenticationRequired(const QString &hostName, quint16, QAuthenticator *authenticator)
+//-------------------------------------------------------------------------------------------------
 {/*
     QDialog dlg;
     Ui::Dialog ui;
@@ -232,11 +257,10 @@ void cBlnsHttp::_slotAuthenticationRequired(const QString &hostName, quint16, QA
         authenticator->setPassword(ui.passwordEdit->text());
     }*/
 }
-//=================================================================================================
-// _progressText
-//-------------------------------------------------------------------------------------------------
 #ifndef QT_NO_OPENSSL
+//=================================================================================================
 void cBlnsHttp::_slotSslErrors(const QList<QSslError> &/*errors*/)
+//-------------------------------------------------------------------------------------------------
 {
 /*
     QString errorString;
@@ -256,7 +280,82 @@ void cBlnsHttp::_slotSslErrors(const QList<QSslError> &/*errors*/)
 //    }
 }
 #endif
+//=================================================================================================
+void cBlnsHttp::_httpStartProcess()
+//-------------------------------------------------------------------------------------------------
+{
+    cTracer obTrace( "cBlnsHttp::_httpStartProcess" );
 
+    if( !g_poPrefs->isBlnsHttpEnabled() )
+    {
+        g_obLogger(cSeverity::DEBUG) << "HTTP communication DISABLED" << EOM;
+        return;
+    }
+
+    if( m_vrHttpActions.size() < 1 )
+    {
+        g_obLogger(cSeverity::DEBUG) << "HTTP actions not prepared correctly" << EOM;
+        return;
+    }
+
+    m_teBlnsHttpAction = m_vrHttpActions.at(0);
+
+    _httpExecuteProcess();
+}
+//=================================================================================================
+void cBlnsHttp::_httpExecuteProcess()
+//-------------------------------------------------------------------------------------------------
+{
+    switch (m_teBlnsHttpAction)
+    {
+        case cBlnsHttpAction::HA_AUTHENTICATE:
+            // Empty token and request new from server
+            m_qsToken = "";
+            _downloadFile( "http://www.kiwisun.hu/kiwi_ticket/token.php" );
+            break;
+
+        case cBlnsHttpAction::HA_PCSENDDATA:
+            // Send first record of httpmessage table with previously requested token
+            _httpSendCardData();
+
+        default:
+            // Nothing to do
+            break;
+    }
+}
+//=================================================================================================
+void cBlnsHttp::_httpProcessResponse()
+//-------------------------------------------------------------------------------------------------
+{
+}
+//=================================================================================================
+void cBlnsHttp::_httpSendCardData()
+//-------------------------------------------------------------------------------------------------
+{
+    QString qsFileName  = "";
+    QString qsMd5Source = "";
+    QString qsTimeStamp = QString::number( QDateTime::currentDateTime().toTime_t() );
+    QString qsBarcode   = "";
+    QString qsCardData  = "";
+
+    qsMd5Source.append( m_qsToken );
+    qsMd5Source.append( qsTimeStamp );
+    qsMd5Source.append( qsBarcode );
+
+    QString qsMd5Hash = QString(QCryptographicHash::hash(qsMd5Source.toStdString().c_str(),QCryptographicHash::Md5).toHex());
+
+    qsFileName.append( "http://www.kiwisun.hu/kiwi_ticket/save.php" );
+    qsFileName.append( QString( "?token=%1" ).arg( m_qsToken ) );
+    qsFileName.append( QString( "&stamp=%1" ).arg( qsTimeStamp ) );
+    qsFileName.append( QString( "&code=%1" ).arg( qsMd5Hash ) );
+    qsFileName.append( QString( "&StudioId=%1" ).arg( g_obLicenceManager.licenceKey() ) );
+    qsFileName.append( QString( "&CardId=%1" ).arg( qsBarcode ) );
+    qsFileName.append( QString( "&CardData=%1" ).arg( qsCardData ) );
+
+/*
+    qsFileName.append( QString( "xxx=%1" ).arg(  ) );
+*/
+}
 
 
 
