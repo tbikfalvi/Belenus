@@ -1695,27 +1695,18 @@ is different :</string>
          <property name="title">
           <string> Http server settings </string>
          </property>
-         <layout class="QFormLayout" name="formLayout_6">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
-          <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_32">
+          <item>
            <widget class="QLabel" name="lblServerHost">
             <property name="text">
-             <string>Server Host:</string>
+             <string>Server address :</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item>
            <widget class="QLineEdit" name="ledServerHost">
             <property name="enabled">
              <bool>true</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
             </property>
            </widget>
           </item>
@@ -1736,7 +1727,7 @@ is different :</string>
             <item>
              <widget class="QCheckBox" name="chkEnableHttp">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="text">
                <string>Enable synchronization</string>

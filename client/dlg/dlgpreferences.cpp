@@ -245,7 +245,6 @@ cDlgPreferences::cDlgPreferences( QWidget *p_poParent )
 
         tbwPreferences->setTabEnabled( 5, g_obUser.isInGroup( cAccessGroup::SYSTEM ) );
     }
-    tbwPreferences->setTabEnabled( 5, false );
 }
 
 cDlgPreferences::~cDlgPreferences()

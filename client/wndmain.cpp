@@ -120,7 +120,7 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
     m_bActionProcessing             = false;
     m_bProgressErrorVisible         = false;
     m_nProgressCounter              = 0;
-    m_bGibbigConnected              = false;
+    m_bBlnsHttpConnected              = false;
     m_nCommunicationErrorCounter    = 0;
     m_nCommResetStep                = 0;
 
@@ -330,40 +330,40 @@ cWndMain::cWndMain( QWidget *parent ) : QMainWindow( parent )
 
     m_pbStatusKeyboard.setEnabled( false );
 
-//    if( !g_poPrefs->isFapados() )
-//    {
-//        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-//        m_pbStatusGibbig.setFlat( true );
-//        m_pbStatusGibbig.setText( "" );
-//        m_pbStatusGibbig.setIconSize( QSize(20,20) );
-//        m_pbStatusGibbig.setFixedSize( 22, 22 );
-//
-//        connect( &m_pbStatusGibbig, SIGNAL(clicked()), this, SLOT(on_GibbigIconClicked()) );
-//    }
+    if( !g_poPrefs->isFapados() )
+    {
+        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
+        m_pbStatusHttp.setFlat( true );
+        m_pbStatusHttp.setText( "" );
+        m_pbStatusHttp.setIconSize( QSize(20,20) );
+        m_pbStatusHttp.setFixedSize( 22, 22 );
+
+        connect( &m_pbStatusHttp, SIGNAL(clicked()), this, SLOT(on_BlnsHttpIconClicked()) );
+    }
 
     statusbar->addPermanentWidget( &m_lblStatusLeft, 3 );
     statusbar->addPermanentWidget( &m_pbStatusCommunication, 0 );
     statusbar->addPermanentWidget( &m_pbStatusKeyboard, 0 );
-//    if( !g_poPrefs->isFapados() )
-//    {
-//        statusbar->addPermanentWidget( &m_pbStatusGibbig, 0 );
-//    }
+    if( !g_poPrefs->isFapados() )
+    {
+        statusbar->addPermanentWidget( &m_pbStatusHttp, 0 );
+    }
     statusbar->addPermanentWidget( &m_lblStatusRight, 1 );
 
-//    g_poGibbig = new cGibbig();
+    g_poBlnsHttp = new cBlnsHttp();
+
+    if( !g_poPrefs->isFapados() )
+    {
+        connect( g_poBlnsHttp, SIGNAL(signalErrorOccured()),                      this, SLOT(on_BlnsHttpErrorOccured()) );
+        connect( g_poBlnsHttp, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_BlnsHttpActionFinished(QString)) );
+        connect( g_poBlnsHttp, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_BlnsHttpMessageArrived(QString)) );
+        connect( g_poBlnsHttp, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_BlnsHttpPatientCardUpdate(QString,QString)) );
 //
-//    if( !g_poPrefs->isFapados() )
-//    {
-//        connect( g_poGibbig, SIGNAL(signalErrorOccured()),                      this, SLOT(on_GibbigErrorOccured()) );
-//        connect( g_poGibbig, SIGNAL(signalActionProcessed(QString)),            this, SLOT(on_GibbigActionFinished(QString)) );
-//        connect( g_poGibbig, SIGNAL(signalDebugMessage(QString)),               this, SLOT(on_GibbigMessageArrived(QString)) );
-//        connect( g_poGibbig, SIGNAL(signalUpdatePatientCard(QString,QString)),  this, SLOT(on_GibbigPatientCardUpdate(QString,QString)) );
-//
-//        g_poGibbig->setHost( g_poPrefs->getServerAddress() );
-//        g_poGibbig->setUserName( g_poPrefs->getGibbigName() );
-//        g_poGibbig->setPassword( g_poPrefs->getGibbigPassword() );
-//        g_poGibbig->setTimeout( 10000 );
-//    }
+//        g_poBlnsHttp->setHost( g_poPrefs->getServerAddress() );
+//        g_poBlnsHttp->setUserName( g_poPrefs->getBlnsHttpName() );
+//        g_poBlnsHttp->setPassword( g_poPrefs->getBlnsHttpPassword() );
+        g_poBlnsHttp->setTimeout( g_poPrefs->getBlnsHttpMessageWaitTime()*1000 );
+    }
 
     this->setFocus();
 }
@@ -449,9 +449,9 @@ void cWndMain::on_pbLogin_clicked()
 
         updateTitle();
         loginUser();
-//        if( g_poPrefs->isGibbigEnabled() )
+//        if( g_poPrefs->isBlnsHttpEnabled() )
 //        {
-//            g_poGibbig->gibbigAuthenticate();
+//            g_poBlnsHttp->gibbigAuthenticate();
 //        }
     }
     catch( cSevException &e )
@@ -1492,9 +1492,9 @@ void cWndMain::on_action_Preferences_triggered()
             g_poPrefs->setSecondaryWindowSize( QSize( m_dlgSecondaryWindow->width(), m_dlgSecondaryWindow->height() ), true );
             m_dlgSecondaryWindow->hide();
         }
-//        if( g_poPrefs->isGibbigEnabled() )
+//        if( g_poPrefs->isBlnsHttpEnabled() )
 //        {
-//            g_poGibbig->gibbigAuthenticate();
+//            g_poBlnsHttp->gibbigAuthenticate();
 //        }
     }
 }
@@ -3155,44 +3155,44 @@ void cWndMain::on_action_Export_triggered()
 
 //    obDlgExportImport.exec();
 }
-/*
-void cWndMain::on_GibbigErrorOccured()
+
+void cWndMain::on_BlnsHttpErrorOccured()
 {
-    m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-    m_bGibbigConnected = false;
-    m_bProgressErrorVisible = true;
-    m_nProgressCounter = g_poPrefs->getGibbigMessageWaitTime()*4;
-    m_dlgProgress->showError( g_poGibbig->gibbigErrorStr() );
+    m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
+    m_bBlnsHttpConnected = false;
+//    m_bProgressErrorVisible = true;
+//    m_nProgressCounter = g_poPrefs->getBlnsHttpMessageWaitTime()*4;
+//    m_dlgProgress->showError( g_poBlnsHttp->gibbigErrorStr() );
 //    m_lblStatusLeft.setStyleSheet( "QLabel {font: bold; color: red;}" );
-//    m_lblStatusLeft.setText( g_poGibbig->gibbigErrorStr() );
-    g_poGibbig->gibbigClearError();
-    g_poPrefs->setGibbigEnabled( false, true );
+//    m_lblStatusLeft.setText( g_poBlnsHttp->gibbigErrorStr() );
+//    g_poBlnsHttp->gibbigClearError();
+    g_poPrefs->setBlnsHttpEnabled( false, true );
 }
 
-void cWndMain::on_GibbigActionFinished(QString p_qsInfo)
+void cWndMain::on_BlnsHttpActionFinished(QString p_qsInfo)
 {
     // GBMSG_XX
-    if( p_qsInfo.left(8).compare( "GBMSG_02" ) == 0 )
+    if( p_qsInfo.left(10).compare( "HTTPMSG_02" ) == 0 )
     {
-        m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_on.png" ) );
-        m_bGibbigConnected = true;
+        m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_enabled.png" ) );
+        m_bBlnsHttpConnected = true;
     }
-    g_obLogger(cSeverity::INFO) << "GIBBIG: " << p_qsInfo.right(p_qsInfo.length()-9) << EOM;
+    g_obLogger(cSeverity::INFO) << "HTTP: " << p_qsInfo.right(p_qsInfo.length()-11) << EOM;
 }
 
 // ez csak debug uzenetre kell, ha valamit ki akarunk irni pl log-ba
-void cWndMain::on_GibbigMessageArrived(QString p_qsMessage)
+void cWndMain::on_BlnsHttpMessageArrived(QString p_qsMessage)
 {
-    g_obLogger(cSeverity::WARNING) << "GIBBIG: " << p_qsMessage << EOM;
+    g_obLogger(cSeverity::WARNING) << "HTTP: " << p_qsMessage << EOM;
 }
 
-void cWndMain::on_GibbigIconClicked()
+void cWndMain::on_BlnsHttpIconClicked()
 {
     QMenu   qmMenu;
 
-    if( g_poPrefs->isGibbigEnabled() )
+    if( g_poPrefs->isBlnsHttpEnabled() )
     {
-        if( m_bGibbigConnected )
+        if( m_bBlnsHttpConnected )
             qmMenu.addAction( QIcon( "./resources/40x40_refresh.png" ), tr("Process actions") );
         else
             qmMenu.addAction( QIcon( "./resources/40x40_check_connection.png" ), tr("Test connection") );
@@ -3208,24 +3208,27 @@ void cWndMain::on_GibbigIconClicked()
 
     if( qaRet )
     {
-        if( qaRet->text().compare( tr("Test connection") ) == 0 ||
-            qaRet->text().compare( tr("Process actions") ) == 0 )
+        if( qaRet->text().compare( tr("Test connection") ) == 0 )
         {
-            g_poGibbig->gibbigAuthenticate();
+            g_poBlnsHttp->checkHttpServerAvailability();
+        }
+        else if( qaRet->text().compare( tr("Process actions") ) == 0 )
+        {
+            g_poBlnsHttp->processWaitingCardData();
         }
         else if( qaRet->text().compare( tr("Disable communication") ) == 0 )
         {
-            m_pbStatusGibbig.setIcon( QIcon( "./resources/20x20_gibbig_off.png" ) );
-            g_poPrefs->setGibbigEnabled( false, true );
+            m_pbStatusHttp.setIcon( QIcon( "./resources/40x40_http_disabled.png" ) );
+            g_poPrefs->setBlnsHttpEnabled( false, true );
         }
         else if( qaRet->text().compare( tr("Enable communication") ) == 0 )
         {
-            g_poPrefs->setGibbigEnabled( true, true );
-            g_poGibbig->gibbigAuthenticate();
+            g_poPrefs->setBlnsHttpEnabled( true, true );
+            g_poBlnsHttp->checkHttpServerAvailability();
         }
     }
 }
-*/
+
 void cWndMain::showAdWindows()
 {
     QSqlQuery *poQuery = g_poDB->executeQTQuery( QString( "SELECT advertisementId FROM advertisements WHERE active=1" ) );
@@ -3293,14 +3296,14 @@ void cWndMain::on_action_Advertisements_triggered()
                           tr("Please note that you should restart the application for the modifications to take effect."));
 }
 
-void cWndMain::on_GibbigPatientCardUpdate(QString p_qsMessage, QString p_qsId)
+void cWndMain::on_BlnsHttpPatientCardUpdate(QString /*p_qsMessage*/, QString /*p_qsId*/)
 {
-    QString qsBarcode = p_qsMessage.split("#").at(0);
-
-    cDBPatientCard  obDBPatientCard;
-
-    obDBPatientCard.load( qsBarcode );
-    obDBPatientCard.updateGibbigId( p_qsId );
+//    QString qsBarcode = p_qsMessage.split("#").at(0);
+//
+//    cDBPatientCard  obDBPatientCard;
+//
+//    obDBPatientCard.load( qsBarcode );
+//    obDBPatientCard.updateBlnsHttpId( p_qsId );
 }
 
 void cWndMain::on_CommunicationButtonClicked()

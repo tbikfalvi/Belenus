@@ -55,7 +55,7 @@ protected:
 private:
 
     QLabel                   m_lblStatusLeft;
-    QPushButton              m_pbStatusGibbig;
+    QPushButton              m_pbStatusHttp;
     QPushButton              m_pbStatusCommunication;
     QPushButton              m_pbStatusKeyboard;
     QLabel                   m_lblStatusRight;
@@ -78,7 +78,7 @@ private:
     bool                     m_bActionProcessing;
     bool                     m_bProgressErrorVisible;
     int                      m_nProgressCounter;
-    bool                     m_bGibbigConnected;
+    bool                     m_bBlnsHttpConnected;
     int                      m_nCommunicationErrorCounter;
     int                      m_nCommResetStep;
 
@@ -174,12 +174,12 @@ private slots:
     void on_action_ManageSkinTypes_triggered();
     void on_action_Import_triggered();
     void on_action_Export_triggered();
-//    void on_GibbigErrorOccured();
-//    void on_GibbigActionFinished( QString p_qsInfo );
-//    void on_GibbigMessageArrived(QString p_qsMessage);
-//    void on_GibbigIconClicked();
+    void on_BlnsHttpErrorOccured();
+    void on_BlnsHttpActionFinished( QString p_qsInfo );
+    void on_BlnsHttpMessageArrived(QString p_qsMessage);
+    void on_BlnsHttpIconClicked();
     void on_action_Advertisements_triggered();
-    void on_GibbigPatientCardUpdate(QString p_qsMessage,QString p_qsId);
+    void on_BlnsHttpPatientCardUpdate(QString p_qsMessage,QString p_qsId);
     void on_CommunicationButtonClicked();
     void on_action_PatientcardInformation_triggered();
     void on_KeyboardEnabled();

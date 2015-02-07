@@ -64,7 +64,6 @@ cCassa                   g_obCassa;
 cGeneral                 g_obGen;
 cDBGuest                 g_obGuest;
 cLicenceManager          g_obLicenceManager;
-//cGibbig                 *g_poGibbig;
 cBlnsHttp               *g_poBlnsHttp;
 
 // 'TO BE SOLVED' felirat, ahol még valamit meg kell oldani

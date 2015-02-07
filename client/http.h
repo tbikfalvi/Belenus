@@ -29,6 +29,14 @@
 
 using namespace std;
 
+#define HTTP_STATUS_DEFAULT         -1
+#define HTTP_ERROR_INVALID_TOKEN    -2
+#define HTTP_ERROR_WRONG_TOKEN      -3
+#define HTTP_ERROR_MD5_MISMATCH     -4
+#define HTTP_ERROR_INVALID_STUDIO   -5
+#define HTTP_ERROR_SERVER_SQL       -6
+#define HTTP_ERROR_UNKNOWN          -99
+
 //====================================================================================
 class cBlnsHttpAction
 {
@@ -37,17 +45,23 @@ public:
     {
         HA_DEFAULT = 0,
         HA_AUTHENTICATE,
-        HA_PCSENDDATA
+        HA_PCSENDDATA,
+        HA_PCUPDATERECORD,
+        HA_PROCESSQUEUE,
+        HA_PROCESSFINISHED
     };
 
     static const char *toStr( teBlnsHttpAction p_enGA )
     {
         switch( p_enGA )
         {
-            case HA_DEFAULT:        return "HTTPMSG_01 Unidentified ";              break;
-            case HA_AUTHENTICATE:   return "HTTPMSG_02 Authenticate ";              break;
-            case HA_PCSENDDATA:     return "HTTPMSG_03 PatientCardSendData ";       break;
-            default:                return "INVALID_IDENTIFIER";
+            case HA_DEFAULT:            return "HTTPMSG_01 Unidentified ";              break;
+            case HA_AUTHENTICATE:       return "HTTPMSG_02 Authenticate ";              break;
+            case HA_PCSENDDATA:         return "HTTPMSG_03 PatientCardSendData ";       break;
+            case HA_PCUPDATERECORD:     return "HTTPMSG_04 UpdateRecord ";              break;
+            case HA_PROCESSQUEUE:       return "HTTPMSG_05 ProcessWaitingData";         break;
+            case HA_PROCESSFINISHED:    return "HTTPMSG_99 ProcessFinished";            break;
+            default:                    return "INVALID_IDENTIFIER";
         }
     }
 };
@@ -65,6 +79,7 @@ public:
     void             setHost( const QString p_qsHost );
     void             setTimeout( const int p_inTimeout );
     void             sendPatientCardData( QString p_qsBarcode, QString p_qsPatientCardData );
+    void             processWaitingCardData();
 
     void             checkHttpServerAvailability();
 
@@ -84,15 +99,25 @@ private:
     int              m_inTimeout;
     int              m_inTimer;
     QString          m_qsToken;
+    int              m_inHttpProcessStep;
+    QString          m_qsBarcode;
+    QString          m_qsCardData;
+    QString          m_qsCardDataSendResponse;
 
-    cBlnsHttpAction::teBlnsHttpAction           m_teBlnsHttpAction;
+    cBlnsHttpAction::teBlnsHttpAction           m_teBlnsHttpProcess;
     vector<cBlnsHttpAction::teBlnsHttpAction>   m_vrHttpActions;
 
     bool            _downloadFile( QString p_qsFileName );
     void            _httpStartProcess();
     void            _httpExecuteProcess();
     void            _httpProcessResponse();
+    void            _httpGetToken();
     void            _httpSendCardData();
+    void            _readTokenFromFile();
+    void            _readCardSendResponseFromFile();
+    void            _sendProcessFinished();
+    void            _readResponseFromFile();
+    void            _updateProcessedRecord();
 
 signals:
 
